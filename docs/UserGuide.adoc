@@ -12,10 +12,10 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B4/main
 
-By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
+By: `T09-B4`      Since: `Nov 2017`      Licence: `MIT`
 
 == *Introduction*
-`The Classroom v1.4` is a program to maintain your contact list. You can use _**The Classroom**_
+`The Classroom` is a program to maintain your contact list. You can use _**The Classroom**_
  to add, delete, find, sort,  group contacts and even maintain a to-do list with your contacts.
 
 == *About*
@@ -73,6 +73,8 @@ image::Ui.png[width="790"]
 
 *Format:* `help`
 
+image::help.png[width="700"]
+
 *Suggestion for use:* If you are unsure on what commands are available or how a particular command work.
 
 ==== Adding a person: `add`
@@ -80,6 +82,8 @@ image::Ui.png[width="790"]
 *Description:* Adds a new person to the contact list.
 
 *Format:* `add` `n/NAME` `p/PHONE_NUMBER` `e/EMAIL` `a/ADDRESS` `[t/TAG]...`
+
+image::add.png[width="700"]
 
 [NOTE]
 Adding `TAGS` are optional.
@@ -97,6 +101,8 @@ Adding `TAGS` are optional.
 
 *Format:* `list`
 
+image::list.png[width="300"]
+
 *Suggestion for use:* If you want to view all contacts in the contact list.
 
 // tag::tags[]
@@ -105,6 +111,8 @@ Adding `TAGS` are optional.
 *Description:* Shows a list of all tags in the contact list.
 
 *Format:* `tags`
+
+image::tags.png[width="300"]
 
 *Suggestion for use:* If you want to view all existing tags in _**The Classroom**_.
 
@@ -115,6 +123,8 @@ Adding `TAGS` are optional.
 *Description:* Edits contact details of an existing person in the contact list.
 
 *Format:* `edit` `INDEX` `[n/NAME]` `[p/PHONE]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]...`
+
+image::edit.png[width="700"]
 
 ****
 * Edits the person at the specified `INDEX`. `INDEX` refers to the index number shown in the last person listing. The `INDEX` must be a *positive integer* (1, 2, 3, ...).
@@ -139,6 +149,8 @@ Adding `TAGS` are optional.
 *Description:* Favourites or unfavourites an existing person in the contact list.
 
 *Format:* `favourite` `INDEX`
+
+image::favourite.png[width="700"]
 
 ****
 * Favourites/Unfavourites the person at the specified `INDEX`. `INDEX` refers to the index number shown in the last person listing. The `INDEX` must be a *positive integer* (1, 2, 3, ...).
@@ -167,6 +179,8 @@ Favourites/Unfavourites the 1st person from the results of the `find` command.
 *Description:* Finds persons whose specified _field_ contain any of the given keywords.
 
 *Format:* `find` `[PREFIX KEYWORD]...`
+
+image::findc.png[width="300"]
 
 ****
 * `PREFIX` has to be given to specify which _field_ to search for.
@@ -212,6 +226,8 @@ Returns any person having tags `friends`, `colleagues`, or both.
 
 *Format:* `delete` `INDEX`
 
+image::delete.png[width="700"]
+
 ****
 * Deletes the person at the specified `INDEX`.
 * `INDEX` refers to the index number shown in the most recent listing.
@@ -235,6 +251,8 @@ Deletes the 1st person from the results of the `find` command.
 *Description:* Sorts the contact list according to the specified _data field_.
 
 *Format:* `sort` `DATAFIELD`
+
+image::sort.png[width="300"]
 
 ****
 * Possible `DATAFIELD` entries are: `Name`, `Phone`, `Email`, `Address`.
@@ -267,6 +285,8 @@ Sorts the contact list according to their phone numbers in reverse order without
 
 *Format:* `select` `INDEX`
 
+image::select.png[width="300"]
+
 ****
 * Selects the person and loads the Twitter search page of the person at the specified `INDEX`.
 * `INDEX` refers to the index number shown in the most recent listing.
@@ -290,6 +310,8 @@ Selects the 1st person from the results of the `find` command.
 
 *Format:* `history`
 
+image::history.png[width="300"]
+
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and following input respectively in the command box.
@@ -303,6 +325,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 *Description:* Restores the contact list to the state before the previous _undoable_ command was executed.
 
 *Format:* `undo`
+
+image::undo.png[width="150"]
 
 [NOTE]
 ====
@@ -336,6 +360,8 @@ Reverses the `clear` command followed by reversing the `delete` `1` command.
 
 *Format:* `redo`
 
+image::redo.png[width="150"]
+
 *Examples:*
 
 * `delete` `1` +
@@ -368,6 +394,7 @@ The second `redo` command reverses the first `undo` command and re-execute the `
 
 *Format:* `addtag` `INDEX...` `TAG...`
 
+image::addtagc.png[width="300"]
 
 ****
 * Adds multiple tags to multiple indexes as specified.
@@ -406,6 +433,8 @@ Adds the `friends` tag to the person from the second to fifth index in the conta
 *Description:* Removes the specified tag(s).
 
 *Format:* `removetag` `INDEX...` `TAG...`
+
+image::removetagc.png[width="300"]
 
 [NOTE]
 ====
@@ -476,6 +505,7 @@ Examples:
 * `removeremark 1 1 3`
 * `removeremark 2 1`
 
+*Suggestion for use:* If you want to add/remove a remark pertaining to a person to take note of a task you want to do with him/her.
 // end::remarkchecklist[]
 
 // tag::link[]
@@ -495,6 +525,8 @@ Examples:
 
 * `link 1 l/https://www.twitter.com/john.doe`
 
+*Suggestion for use:* If you want add a twitter link to a person so that you can identify him/her more easily or use the twitter messaging function to converse.
+
 // end::link[]
 
 ==== Clearing all entries : `clear`
@@ -502,6 +534,8 @@ Examples:
 *Description:* Clears all entries in _**The Classroom**_.
 
 *Format:* `clear`
+
+image::clear.png[width="300"]
 
 *Suggestion for use:* If you want to begin a brand new contact list.
 
@@ -557,88 +591,6 @@ The command keywords can be substituted by their aliases. +
 *Q*: How do I transfer my data to another Computer? +
 
 *A*: Install the app on the other computer and replace the empty data file with the file containing your data.
-
-== *Since v1.3*
-
-=== Enhanced `find` command to accept different fields
-
-Allows user to find persons based on other fields apart from name based on prefix given. +
-
-Format: `find n/John t/friends`
-
-=== Enhanced `remove` command to remove tag from specified index
-
-Allows user to remove tag from individual person in the address book by specifying the corresponding index. +
-
-Format: `remove friends 1`
-
-=== Enhanced `find` command to accept partial inputs
-
-Allows user to find persons using partial inputs. +
-
-Format: `find n/Jo t/fri`
-
-=== Enhanced `remove` command to remove multiple tags from a single index
-
-Allows user to remove multiple tags from one individual person in the address book by specifying the corresponding index. +
-
-Format: `remove friends family 1`
-
-=== Enhanced `remove` command to remove a tag from multiple indexes
-
-Allows user to remove a single tag from multiple person in the address book by specifying the corresponding indexes. +
-
-Format: `remove friends 1 3`
-
-=== Ability to add `tags` cumulatively to a person
-
-Adds tag(s) to a person in the address book by specifying the corresponding indexes. +
-
-Format: `addtag brother 1`
-
-=== Ability to remove multiple `tags` from multiple persons in one command
-
-Remove specified tags from multiple persons in the address book by specifying the corresponding indexes. +
-
-Format: `remove friends family 1 3`
-
-=== Enhanced `removetag` command to remove tag from range of index
-
-Allows user to remove tag from multiple persons in the address book by specifying the corresponding range of index. +
-
-Format: `removetag friends 1-4`
-
-=== Enhanced `addtag` command to add tag to a range of index
-
-Allows user to add tag to multiple persons in the address book by specifying the corresponding range of index. +
-
-Format: `addtag friends 1-4`
-
-
-=== Standardised `removetag` command
-
-Input of format has been changed to be consistent with the rest of commands. +
-
-Format: `removetag 1-4 friends`
-
-=== Standardised `addtag` command
-
-Input of format has been changed to be consistent with the rest of commands. +
-
-Format: `addtag 1-4 friends`
-
-=== Favourite a person using `favourite` command
-
-Allows user to favourite a person by specifying the person's corresponding index
-
-Format: `favourite 2`
-
-=== Sort the contact list using `sort` command
-
-Allows user to sort the contact list by either name, phone, email or address
-
-Format: `sort address`
-
 
 == *Coming in v2.0*
 
