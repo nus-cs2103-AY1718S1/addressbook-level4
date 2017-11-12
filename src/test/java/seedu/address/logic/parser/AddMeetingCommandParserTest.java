@@ -1,11 +1,7 @@
 package seedu.address.logic.parser;
-//@@author Sri-vatsa
-import static seedu.address.logic.commands.CommandTestUtil.DATE_1;
-import static seedu.address.logic.commands.CommandTestUtil.LOCATION_1;
-import static seedu.address.logic.commands.CommandTestUtil.NOTES_1;
-import static seedu.address.logic.commands.CommandTestUtil.PERSON_1;
-import static seedu.address.logic.commands.CommandTestUtil.TIME_1;
 
+import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.time.LocalDateTime;
@@ -21,6 +17,7 @@ import seedu.address.model.Meeting;
 
 import seedu.address.model.person.InternalId;
 
+//@@author Sri-vatsa
 public class AddMeetingCommandParserTest {
     private AddMeetingCommandParser parser = new AddMeetingCommandParser();
     @Test
@@ -31,90 +28,49 @@ public class AddMeetingCommandParserTest {
         Meeting expectedMeeting = new Meeting(localDateTime, "Computing", "Project meeting", ids);
 
         // Add meeting successfully
-        assertParseSuccess(parser, AddMeetingCommand.COMMAND_WORD + DATE_1 + TIME_1 + LOCATION_1 + NOTES_1
-                + PERSON_1, new AddMeetingCommand(expectedMeeting));
-        /*
-        // multiple phones - last phone accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple emails - last email accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple addresses - last address accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple tags - all accepted
-        Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                new AddCommand(expectedPersonMultipleTags));
-        */
-    }
-    /*
-    @Test
-    public void parse_optionalFieldsMissing_success() {
-        // zero tags
-        Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags().withSearchCount().build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
+        assertParseSuccess(parser, AddMeetingCommand.COMMAND_WORD + DATE_VALID + TIME_VALID + LOCATION_1
+                + NOTES_1 + PERSON_1, new AddMeetingCommand(expectedMeeting));
     }
 
+    //meeting date is in the past
     @Test
-    public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+    public void parse_allFieldsPresent_dateIsInThePast_failure() throws IllegalValueException {
 
-        // missing name prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_PAST + TIME_VALID + LOCATION_1
+                + NOTES_1 + PERSON_1, "Please enter a date & time that is in the future.");
+    }
 
-        // missing phone prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + VALID_PHONE_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
+    //missing fields
+    @Test
+    public void parse_missingFields_failure() {
 
-        // missing email prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + VALID_EMAIL_BOB + ADDRESS_DESC_BOB, expectedMessage);
+        //missing id
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_VALID + TIME_VALID + LOCATION_1
+                + NOTES_1, ADD_MEETING_INVALID_FORMAT);
 
-        // missing address prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + VALID_ADDRESS_BOB, expectedMessage);
+        //missing date
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + TIME_VALID + LOCATION_1
+                + NOTES_1 + PERSON_1, ADD_MEETING_INVALID_FORMAT);
 
-        // all prefixes missing
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + VALID_PHONE_BOB
-                + VALID_EMAIL_BOB + VALID_ADDRESS_BOB, expectedMessage);
+        //missing time
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_VALID + LOCATION_1
+                + NOTES_1 + PERSON_1, ADD_MEETING_INVALID_FORMAT);
+
+        //missing location
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_VALID + TIME_VALID
+                + NOTES_1 + PERSON_1, ADD_MEETING_INVALID_FORMAT);
+
+        //missing notes
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_VALID + TIME_VALID + LOCATION_1
+                 + PERSON_1, ADD_MEETING_INVALID_FORMAT);
     }
 
     @Test
-    public void parse_invalidValue_failure() {
-        // invalid name
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
+    public void parse_invalidDate_failure() {
 
-        // invalid phone
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_INVALID + TIME_VALID + LOCATION_1
+                + NOTES_1, ADD_MEETING_INVALID_FORMAT);
 
-        // invalid email
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
+    }
 
-        // invalid address
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + INVALID_ADDRESS_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                Address.MESSAGE_ADDRESS_CONSTRAINTS);
-
-        // invalid tag
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_TAG_CONSTRAINTS);
-
-        // two invalid values, only first invalid value reported
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + INVALID_ADDRESS_DESC, Name.MESSAGE_NAME_CONSTRAINTS);
-    }*/
 }

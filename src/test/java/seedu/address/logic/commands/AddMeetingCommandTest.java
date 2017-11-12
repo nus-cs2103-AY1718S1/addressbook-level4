@@ -1,10 +1,33 @@
 package seedu.address.logic.commands;
-//@@author Sri-vatsa
 
+import javafx.collections.ObservableList;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.*;
+import seedu.address.model.exceptions.DuplicateMeetingException;
+import seedu.address.model.exceptions.IllegalIdException;
+import seedu.address.model.person.InternalId;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.testutil.PersonBuilder;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.fail;
+
+//@@author Sri-vatsa
 public class AddMeetingCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -14,65 +37,51 @@ public class AddMeetingCommandTest {
         thrown.expect(NullPointerException.class);
         new AddMeetingCommand(null);
     }
-    /*
+
+    //successful meeting added without Asana configuration
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        AddCommandTest.ModelStubAcceptingPersonAdded modelStub = new AddCommandTest.ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_addMeeting_success() throws Exception {
+        ModelStubAcceptingMeetingAdded modelStub = new ModelStubAcceptingMeetingAdded();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        ArrayList<InternalId> ids = new ArrayList<>();
+        ids.add(new InternalId(2));
+        LocalDateTime localDateTime = LocalDateTime.of(2020, 10, 31, 18, 00);
+        Meeting expectedMeeting = new Meeting(localDateTime, "Computing", "Project meeting", ids);
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        CommandResult commandResult = getAddMeetingCommand(expectedMeeting, modelStub).execute();
+        assertEquals(AddMeetingCommand.MESSAGE_SUCCESS_ASANA_NO_CONFIG, commandResult.feedbackToUser);
     }
 
+    //Duplicate meeting
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        AddCommandTest.ModelStub modelStub = new AddCommandTest.ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_duplicateMeeting_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateMeetingException();
+
+        ArrayList<InternalId> ids = new ArrayList<>();
+        ids.add(new InternalId(2));
+        LocalDateTime localDateTime = LocalDateTime.of(2020, 10, 31, 18, 00);
+        Meeting expectedMeeting = new Meeting(localDateTime, "Computing", "Project meeting", ids);
+
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddMeetingCommand.MESSAGE_DUPLICATE_MEETING);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
-    }
-
-    @Test
-    public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
-
-        // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
-
-        // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
-
-        // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
-
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        getAddMeetingCommand(expectedMeeting, modelStub).execute();
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
-     *
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+     * Generates a new AddMeetingCommand with the details of the given person.
+     */
+    private AddMeetingCommand getAddMeetingCommand( Meeting meeting, Model model) {
+        AddMeetingCommand command = new AddMeetingCommand(meeting);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
+
     /**
      * A default model stub that have all of the methods failing.
-     *
+     */
     private class ModelStub implements Model {
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
@@ -105,6 +114,11 @@ public class AddMeetingCommandTest {
         public boolean deleteTag(Tag[] tags) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
             return false;
+        }
+
+        @Override
+        public void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
+            fail("This method should not be called.");
         }
 
         @Override
@@ -157,12 +171,12 @@ public class AddMeetingCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
-     *
-    private class ModelStubThrowingDuplicatePersonException extends AddCommandTest.ModelStub {
+     * A Model stub that always throw a DuplicateMeetingException when trying to add a meeting.
+     */
+    private class ModelStubThrowingDuplicateMeetingException extends ModelStub {
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException {
+            throw new DuplicateMeetingException();
         }
 
         @Override
@@ -172,14 +186,14 @@ public class AddMeetingCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
-     *
-    private class ModelStubAcceptingPersonAdded extends AddCommandTest.ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+     * A Model stub that always accept the meeting being added.
+     */
+    private class ModelStubAcceptingMeetingAdded extends ModelStub {
+        final ArrayList<ReadOnlyMeeting> meetingsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
+        public void addMeeting(ReadOnlyMeeting meeting) {
+            meetingsAdded.add(new Meeting(meeting));
         }
 
         @Override
@@ -187,5 +201,5 @@ public class AddMeetingCommandTest {
             return new AddressBook();
         }
     }
-    */
+
 }
