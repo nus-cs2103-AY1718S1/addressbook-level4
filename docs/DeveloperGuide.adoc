@@ -532,9 +532,9 @@ overdue parcels to display in the popup window.
 ** **Cons:** Only notifies users once an on startup of Ark only so users would not get any more notifications if they
 keep their application open constantly +
 * **Alternative 2:** Check uncompleted parcel list after every command and show popup if overdue parcels are found +
-** **Pros:** Users will be immediately notified of overdue parcels whenever parcel list is changed+
+** **Pros:** Users will be immediately notified of overdue parcels whenever parcel list is changed +
 ** **Cons:** May not be necessary since the user themselves would be the ones to `add` or `edit` the parcel
-causing the `OVERDUE` status, hence they would already know of the existence of overdue parcels.
+causing the `OVERDUE` status, hence they would already know of the existence of these overdue parcels.
 
 //end::overduePopup[]
 

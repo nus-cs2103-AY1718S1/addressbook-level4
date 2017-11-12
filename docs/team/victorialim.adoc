@@ -114,7 +114,3 @@ include::../DeveloperGuide.adoc[tag=overduePopup]
 
 * Changed the UI layout of ParcelList and ParcelCard
 (Pull requests https://github.com/CS2103AUG2017-T16-B1/main/pull/100[#100])
-
-== Project: Modulus
-
-{Optionally (not graded), you may include other projects in your portfolio.}
