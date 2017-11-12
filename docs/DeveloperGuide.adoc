@@ -350,11 +350,11 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // tag::bookmarkDesign[]
 === Bookmark & Clear Bookmark mechanism
 
-The underlying implementation of Bookmark (BM) and Clear Bookmark (CBM) is tag manipulation in the model component.
+The underlying implementation of `Bookmark` and `Clear Bookmark` is tag manipulation in the model component.
 Two methods were added to `Model` interface to support this feature (`addTag` and `removeAllTags`).
 
-Both BM and CBM extends from `UndoableCommand` as shown in **Figure 2.3.2** , which allows Undo/Redo by the user.
-Also, BM is an index based command like (`delete` or `edit`) +
+Both `Bookmark` and `Clear Bookmark` extends from `UndoableCommand` as shown in **Figure 2.3.2** , which allows Undo/Redo by the user.
+Also, `Bookmark` is an index based command like (`delete` or `edit`) +
 
 The following are the sequence diagrams each command +
 
@@ -495,7 +495,7 @@ private static final String TITLE = "MRT Map";
 The code above shows the setting up of `MrtWindow.java` for MrtWindow Browser.
 
 image::MrtMapButtonUI.png[width="600"]
-_Figure 3.6.3 : UI button added to the `MainWindow`.
+_Figure 3.6.3 : UI button added to the `MainWindow`_
 
 ==== Design Considerations
 
@@ -518,7 +518,7 @@ Following is the sequence diagram of `sort` command.
 
 image::SortCommandSequenceDiagram.png[width="600"]
 
-_Figure 3.7.1 : Sequence diagram of `sort` command.
+_Figure 3.7.1 : Sequence diagram of `sort` command_
 
     @Override
     public int compareTo(Place otherPlace) {
@@ -542,12 +542,16 @@ The method `loadUrl` will pass the Google Map url to link:{repoURL}/src/main/jav
 MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
                 + locationToGo.getName().fullName.replaceAll(" ", "+"));
 ----
+image::LocationWebsiteUI.png[width="800"]
+_Figure 3.6.3 : Singapore Botanic Gardens' website_
 // end::goto[]
+
 ---
+
 //tag::findCommand[]
 === Editing the Find Command to search by Name and Tag
 
-The Find command is able to search the Tourist Book by Name of the place of by the Tags of the place.
+The Find command is able to search the Tourist Book by Name of the place or by the Tags of the place.
 
 The user is able to invoke the command with `find` or `fd`, followed by a PREFIX.
 
