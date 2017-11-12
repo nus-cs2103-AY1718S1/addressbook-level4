@@ -82,18 +82,18 @@ delivered parcels, click on the `Completed Parcels` tab.
 
 Ark has an in-built Google Maps browser section in the main window and can be used to show you the locations
 of the delivery addresses of each parcel. This feature will be automatically used whenever you type `select`
-into the command box, and will display a Google Maps search of the postal code of the parcel's address in the
-browser section of the main window.
-//end::browser[]
-
-==== More About Browser Panel
+into the command box or click on a Parcel Card, and will display a Google Maps search of the postal code
+of the parcel's address in the browser section of the main window.
 
 image::Ark_Browser.png[width="890"]
 _Figure 4.11.1 : Selecting a parcel_
 
-Selecting a parcel activates the Browser Panel. In the diagram above, when the 4th parcel belonging to Cornelia
-Meier, at index 4, is selected, the Browser Panel is activated and displays the destination address of the parcel.
-In this case, Cornelia wants her parcel to be delivered to 10th Street Singapore 123114.
+Every time you select a parcel, the Browser Panel will show as the Parcel List Panel minimizes.
+As seen in figure 4.11.1 above, when the parcel belonging to Cornelia Meier, at index 4, is selected,
+the Parcel List Panel minimizes, showing the Browser Panel and  it displays the delivery destination address
+of the parcel. In this case, Cornelia wants her parcel to be delivered to 10th Street Singapore 123114.
+
+//end::browser[]
 
 === More About Parcel List Card
 
@@ -165,8 +165,8 @@ that do not have a `COMPLETED` status will  be added to the list of undelivered 
 
 Every time you startup Ark, if you have any parcels with the status `OVERDUE` in the parcel list,
 a separate window will popup notifying you of the number of overdue parcels that are in the list.
-The popup window will show for 7 seconds before closing itself. You can als close the window manually by clicking
-the `x` at the top right of th window. Figure 4.4.1 below is an example of what the popup window looks like:
+The popup window will show for 7 seconds before closing itself. You can also close the window manually by clicking
+the `x` at the top right of the window. Figure 4.4.1 below is an example of what the popup window looks like:
 
 image::Ark_Popup_Window.PNG[width="600"]
 _Figure 4.4.1 : Overdue Parcels Popup Window_
