@@ -293,7 +293,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @Subscribe
     private void handleThemeChanged(SwitchThemeEvent event) {
-        if (prefs.getAddressBookTheme() == darkTheme) {
+        if (prefs.getAddressBookTheme().equals(darkTheme)) {
             getRoot().getStylesheets().clear();
             getRoot().getStylesheets().add(brightTheme);
             getRoot().getStylesheets().add(brightExtension);
@@ -304,7 +304,6 @@ public class MainWindow extends UiPart<Region> {
             getRoot().getStylesheets().add(darkExtension);
             prefs.setAddressBookTheme(darkTheme);
         }
-
     }
     //@@author
 

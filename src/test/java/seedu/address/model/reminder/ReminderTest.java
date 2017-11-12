@@ -11,7 +11,6 @@ import seedu.address.model.event.Event;
 import seedu.address.model.property.PropertyManager;
 
 //@@author junyango
-
 public class ReminderTest {
     private static Event event;
     private static String message;
@@ -41,6 +40,7 @@ public class ReminderTest {
 
         reminder.setMessage("test");
         assertEquals("test", reminder.getMessage());
+        assertEquals("Message: test", reminder.getAsText());
     }
 
     @Test

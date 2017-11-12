@@ -35,7 +35,7 @@ public class PropertyTest {
     public void createProperty_preLoadedProperty_invalidValue() {
         Property newProperty = null;
         String value = "12";
-        String expectedMessage = "Phone numbers can only contain numbers, and should be at least 3 digits long";
+        String expectedMessage = "Phone numbers can only contain numbers, and should be at least 3 digits long.";
 
         try {
             newProperty = new Property("p", value);
