@@ -65,12 +65,13 @@ public class VcfImport {
                     case "ADR":
                         address = new Address(parameter);
                         break;
-                    case "RM":
+
+                    case "NOTE":
                         remark = new Remark(parameter);
                         break;
-                    case "TAG":
-                        Tag tag = new Tag(parameter);
-                        tagList.add(tag);
+
+                    case "CATEGORIES":
+                        tagList = parseTag(parameter);
                         break;
                     default:
                     }
@@ -85,5 +86,21 @@ public class VcfImport {
         }
         br.close();
         return importList;
+    }
+
+    /**
+     * Parses the parameters CATEGORIES field of the vCard into a Set of Tag Objects
+     * @param list String of tags to be imported.
+     * @throws IllegalValueException if tag does not conform to the requirements.
+     */
+    private static Set<Tag> parseTag(String list) throws IllegalValueException {
+        Set<Tag> tagSet = new HashSet<>();
+        String[] tagList = list.split(",");
+
+        for (String tag : tagList) {
+            tagSet.add(new Tag(tag));
+        }
+
+        return tagSet;
     }
 }

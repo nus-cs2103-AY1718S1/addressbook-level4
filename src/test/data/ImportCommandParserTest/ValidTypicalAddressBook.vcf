@@ -4,7 +4,7 @@ FN:Alice Pauline
 EMAIL:alice@example.com
 TEL:85355255
 ADR:123, Jurong West Ave 6, #08-111
-TAG:friends
+CATEGORIES:friends
 END:VCARD
 BEGIN:VCARD
 VERSON:2.1
@@ -12,8 +12,7 @@ FN:Benson Meier
 EMAIL:johnd@example.com
 TEL:98765432
 ADR:311, Clementi Ave 2, #02-25
-TAG:owesMoney
-TAG:friends
+CATEGORIES:owesMoneyfriends
 END:VCARD
 BEGIN:VCARD
 VERSON:2.1
@@ -21,7 +20,7 @@ FN:Carl Kurz
 EMAIL:heinz@example.com
 TEL:95352563
 ADR:wall street
-TAG:friends
+CATEGORIES:friends
 END:VCARD
 BEGIN:VCARD
 VERSON:2.1
@@ -29,7 +28,7 @@ FN:Daniel Meier
 EMAIL:cornelia@example.com
 TEL:87652533
 ADR:10th street
-TAG:colleagues
+CATEGORIES:colleagues
 END:VCARD
 BEGIN:VCARD
 VERSON:2.1
@@ -37,7 +36,7 @@ FN:Elle Meyer
 EMAIL:werner@example.com
 TEL:9482224
 ADR:michegan ave
-TAG:family
+CATEGORIES:family
 END:VCARD
 BEGIN:VCARD
 VERSON:2.1
@@ -45,7 +44,7 @@ FN:Fiona Kunz
 EMAIL:lydia@example.com
 TEL:9482427
 ADR:little tokyo
-TAG:friends
+CATEGORIES:friends
 END:VCARD
 BEGIN:VCARD
 VERSON:2.1
@@ -53,6 +52,6 @@ FN:George Best
 EMAIL:anna@example.com
 TEL:9482442
 ADR:4th street
-RM:Likes to swim
-TAG:friends
+NOTE:Likes to swim
+CATEGORIES:friends
 END:VCARD
