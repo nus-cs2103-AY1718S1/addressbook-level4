@@ -201,7 +201,7 @@ _Alias:_ `remove` `-`
 
 You can delete a group of people from the address book.
 
-Format:`delete I/INDEX INDEX ...` (or) `delete n/Name`
+Format:`delete I/INDEX INDEX ...` (or) `delete n/NAME`
 
 ****
 * Deletes person with given name or at these given specified `INDEX`.
@@ -547,16 +547,9 @@ The `redo` command fails as there are no `undo` commands executed previously
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
+
 // tag::bin[]
-=== Listing all persons removed: `bin-list` _[Since v1.5]_
-
-If you are worrying about deleting people wrongly, it would be a good way to see if they are in recycle bin.
-
-You can see a list of persons removed from the address book.
-
-Format: `bin-list`
-
-=== Restoring person(s) : `bin-restore` _[Since v1.5]_
+=== Restoring person(s) from recycle bin: `bin-restore` _[Since v1.5]_
 
 You find that people you wrongly deleted from address book in recycle bin, you can restore them back now.
 
@@ -566,18 +559,17 @@ Format: `bin-restore INDEX INDEX ...`
 
 ****
 * Recovers the people at these given specified `INDEX`.
-* The index refers to the index number shown in the most recent bin-list.
+* The index refers to the index number shown in the current list.
 * The index *must be a positive integer* 1, 2, 3, ...
 * The index must not be greater than the most recent bin size.
 ****
 
 Examples:
 
-* `bin-list` +
-`bin-restore 1 2` +
-Restores the 1st and 2nd person in the bin-list
+* `bin-restore 1 2` +
+Restores the 1st and 2nd person in the recycle bin
 
-=== Restoring person(s) : `bin-delete` _[Since v1.5]_
+=== Deleting person(s) in recycle bin : `bin-delete` _[Since v1.5]_
 
 If you want to keep your recycle bin clean, you can delete some of them from recycle bin. But you can't get them back.
 
@@ -587,23 +579,35 @@ Format: `bin-delete INDEX INDEX ...`
 
 ****
 * Recovers the people at these given specified `INDEX`.
-* The index refers to the index number shown in the most recent bin-list.
+* The index refers to the index number shown in the most current list.
 * The index *must be a positive integer* 1, 2, 3, ...
 * The index must not be greater than the most recent bin size.
 ****
 
 Examples:
 
-* `bin-list` +
-`bin-delete 1 2` +
-Delete the 1st and 2nd person in the bin-list
+* `bin-delete 1 2` +
+Delete the 1st and 2nd person in the recycle bin
 
-=== Clearing all contacts from bin : `bin-clear` _[Since v1.5]_
+=== Clearing all contacts from bin : `bin-fresh` _[Since v1.5]_
 
-Clears all entries in the bin.
+If you find all the information in recycle bin is useless, then just clear the recycle bin.
 
-Format: `clear-bin`
+You can clear the recycle bin.
+
+Format: `bin-fresh`
 // end::bin[]
+
+//tag::fontsize[]
+=== Increasing the font size of UI : `font` _[Coming in v2.0]_
+
+If you find it is uncomfortable to watch the UI because of the font size, you can choose to increase it or decrease it.
+
+You can increase or decrease the size of font.
+
+Format: `font -` `font +`
+
+//end::fontsize[]
 
 // tag::birthday[]
 === Adding the birthday to a person : `b-add` _[Since v1.4]_
@@ -737,21 +741,17 @@ e.g. `s-remove e/1 2 3`
 e.g. `export /desktop/new_folder`
 * *Bindelete* : `bin-delete INDEX INDEX...` +
 e.g. `bin-delete 1 2 3`
-* *Binlist* : `bin-list` +
-e.g. `bin-list`
 * *Binrestore* : `bin-restore INDEX INDEX...` +
 e.g. `bin-restore 1 2 3`
-* *Binclear* : `bin-clear` +
-e.g. `bin-clear`
+* *Binclear* : `bin-fresh` +
+e.g. `bin-fresh`
+* *Font* : `font` +
+e.g. `font +` ,`font -`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *BinList* : `bin-list`
-* *BinRestore* : `bin-restore INDEX INDEX...` +
-e.g. `bin-restore 1 2`
-* *BinClear* : `bin-clear`
 * *BirthdayAdd* : `b-add INDEX BIRTHDAY` +
 e.g. `b-add 1 18/10/1993`
 * *BirthdayRemove* : `b-remove INDEX` +

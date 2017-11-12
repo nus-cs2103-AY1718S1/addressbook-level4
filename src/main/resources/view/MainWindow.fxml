@@ -75,7 +75,7 @@
                                               </StackPane>
                                           </content>
                                       </Tab>
-                              <Tab text="Recyclebin ">
+                              <Tab closable="false" text="Recyclebin ">
                                  <content>
                                     <StackPane fx:id="recycleBinListPlaceHolder" prefHeight="150.0" prefWidth="200.0" />
                                  </content>

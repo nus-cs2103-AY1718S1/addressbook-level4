@@ -30,9 +30,9 @@ public class DeleteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1" + COMMAND_WORD + "Alex Yeoh";
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the recycle bin";
-    private boolean allvalid = true;
-    private boolean exist = false;
-    private boolean duplicate = false;
+    private boolean isValid = true;
+    private boolean isEmpty = false;
+    private boolean isDuplicate = false;
 
     private ArrayList<Index> targetIndexs = new ArrayList<>();
     private String target = "";
@@ -52,35 +52,35 @@ public class DeleteCommand extends UndoableCommand {
         ArrayList<ReadOnlyPerson> personstodelete =  new ArrayList<ReadOnlyPerson>();
         if (target != "") {
             for (ReadOnlyPerson p: lastShownList) {
-                if (p.getName().fullName.equals(target) && exist == true) {
+                if (p.getName().fullName.equals(target) && isEmpty == true) {
                     personstodelete.add(p);
-                    duplicate = true;
+                    isDuplicate = true;
                 }
                 if (p.getName().fullName.equals(target)) {
                     personstodelete.add(p);
-                    exist = true;
+                    isEmpty = true;
                 }
 
             }
         } else {
             for (Index s: targetIndexs) {
                 if (s.getZeroBased() >= lastShownList.size()) {
-                    allvalid = false;
+                    isValid = false;
                 } else {
                     personstodelete.add(lastShownList.get(s.getZeroBased()));
-                    exist = true;
+                    isEmpty = true;
                 }
             }
         }
 
-        if (exist && duplicate) {
+        if (isEmpty && isDuplicate) {
             List<String> duplicatePerson = Arrays.asList(target);
             NameContainsKeywordsPredicate updatedpredicate = new NameContainsKeywordsPredicate(duplicatePerson);
             model.updateFilteredPersonList(updatedpredicate);
             return new CommandResult("Duplicate persons exist, please choose one to delete.");
         }
 
-        if (allvalid && exist) {
+        if (isValid && isEmpty) {
             try {
                 model.deletePerson(personstodelete);
             } catch (PersonNotFoundException pnfe) {

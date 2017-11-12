@@ -24,7 +24,9 @@ public class HelpCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        if ("bin-clear".equals(commandword)) {
+        if ("theme".equals(commandword)) {
+            return new CommandResult(SwitchThemeCommand.MESSAGE_USAGE);
+        } else if ("bin-fresh".equals(commandword)) {
             return new CommandResult(BinclearCommand.MESSAGE_USAGE);
         } else if ("bin-delete".equals(commandword)) {
             return new CommandResult(BindeleteCommand.MESSAGE_USAGE);

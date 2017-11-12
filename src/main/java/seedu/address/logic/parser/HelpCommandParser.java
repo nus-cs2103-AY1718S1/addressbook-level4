@@ -22,6 +22,7 @@ import seedu.address.logic.commands.ScheduleAddCommand;
 import seedu.address.logic.commands.ScheduleRemoveCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SwitchThemeCommand;
 import seedu.address.logic.commands.TagAddCommand;
 import seedu.address.logic.commands.TagFindCommand;
 import seedu.address.logic.commands.TagRemoveCommand;
@@ -88,7 +89,7 @@ public class HelpCommandParser implements Parser<HelpCommand> {
         } else if (input.equals(ScheduleRemoveCommand.COMMAND_WORD)) {
             return new HelpCommand("scheduleremove");
         } else if (input.equals(BinclearCommand.COMMAND_WORD)) {
-            return new HelpCommand("bin-clear");
+            return new HelpCommand("bin-fresh");
         } else if (input.equals(BindeleteCommand.COMMAND_WORD)) {
             return new HelpCommand("bin-delete");
         } else if (input.equals(BinrestoreCommand.COMMAND_WORD)) {
@@ -97,6 +98,8 @@ public class HelpCommandParser implements Parser<HelpCommand> {
             return new HelpCommand("export");
         } else if (input.equals(UndoCommand.COMMAND_WORD)) {
             return new HelpCommand("undo");
+        } else if (input.equals(SwitchThemeCommand.COMMAND_WORD)) {
+            return new HelpCommand("theme");
         } else {
             return new HelpCommand();
         }
