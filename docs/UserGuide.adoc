@@ -105,9 +105,11 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::searching[]
+
 === Locating persons by name: `find` (alias `f`)
 
-Finds persons whose names is a close match to a given keywords. +
+Finds persons whose names starts with the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -124,29 +126,11 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names starting with `Betsy`, `Tim`, or `John`
-* `f Nam` +
-Returns `Nam`
+* `f Na` +
+Returns `Nam` (if Nam is the only close match).
+// end::searching[]
 
-=== Locating persons by tag: `findtag` (alias `ft`)
-
-Finds persons who has a tag that matches the given keyword. +
-Format: `findtag KEYWORD [MORE_KEYWORDS]` or `ft KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `friends` will match `Friends`
-* The order of the keywords does not matter. e.g. `CS2103 Groupmate` will match `Groupmate CS2103`
-* Only the tag is searched.
-****
-
-Examples:
-
-* `find friends` +
-Returns `Alex Yeoh` and `Bernice Yu`
-* `find colleagues` +
-Returns `Bernice Yu` and `Roy Balakrishnan`
-* `ft Malay` +
-Returns `Adil`
-
+// tag::filter[]
 === Locating persons by any parameter: `filter` (alias `fi`)
 
 Finds persons who has parameters that matches the given keyword. +
@@ -164,7 +148,7 @@ Examples:
 Returns `Alex Yeoh` and `Bernice Yu`
 * `filter colleagues` +
 Returns `Bernice Yu` and `Roy Balakrishnan`
-* `ft alex Colleagues` +
+* `fi alex Colleagues` +
 Returns `Alex Yeoh`, `Bernice Yu` and `Roy Balakrishnan`
 
 === Locating persons by all parameter: `filterall` (alias `fa`)
@@ -184,10 +168,12 @@ Examples:
 Returns `Alex Yeoh` and `Bernice Yu`
 * `filterall colleagues` +
 Returns `Bernice Yu` and `Roy Balakrishnan`
-* `ft Bernice Colleagues` +
+* `fa Bernice Colleagues` +
 Returns `Bernice Yu`
-* `ft colleagues friends` +
+* `fa colleagues friends` +
 Returns `Bernice Yu`
+
+// end::filter[]
 
 === Deleting a person : `delete` (alias `del`)
 
@@ -245,6 +231,8 @@ Selects the 1st person in the results of the `find` command.
 `select all` +
 Selects all persons currently displayed.
 
+// tag::appoint[]
+
 === Adding an appointment: `appoint`
 
 Since v1.3
@@ -255,7 +243,10 @@ Example: `appoint 1 ap/12/12/2020 15:12 60` +
 ****
 * If the person already have an appointment, the new appointment will override the old one
 * If ap/ is left blank, the old appointment will be deleted.
+* The user will be reminded 60 minutes before an appointment, ONLY WHEN the appointment was added from another session.
 ****
+
+// end::appoint[]
 
 // tag::removetag[]
 === Removing tag : `removetag`
@@ -296,9 +287,6 @@ Adds the 2nd person to the group CS2103 in the address book.
 Adds the 1st person from the results of the `find` command to the group Family.
 
 === Removing from groups : `ungroup`
-
-[NOTE]
-Coming in v2.0: ungroup
 
 Used to remove from a group person identified by the index used in the last person listing. +
 Format: `ungroup INDEX gn/GROUP_NAME` +
@@ -351,7 +339,7 @@ Examples:
 === Sending my contact detail to someone: `sharecontact`
 
 [NOTE]
-TBI in v2.0
+TBI in v2.0: command `sharecontact`
 
 Share my contact details to someone in the address book, indicated by INDEX.
 Format: `sharecontact INDEX`
@@ -452,6 +440,8 @@ Imports the data from the Documents folder and saves them in the current Contact
 Contact Pro data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+// tag::searching[]
+
 === Suggestions as you type
 
 [NOTE]
@@ -461,7 +451,19 @@ Commands and parameters will be suggested as you type, where applicable.
 === Autocomplete commands
 
 After you type first few characters, user can press TAB to autocomplete to the if there is a unique command starting +
-with those characters.
+with those characters. Note that for some commands, this doesn't really work well due to the similarities of the +
+commands (e.g. `filter` and `filterall`).`Filter` can't be autocompleted (but can be aliased) and `filterall` can +
+only be autocompleted when typed `filtera`.
+
+
+// end::searching[]
+
+// tag::facebook[]
+=== Social Media link
+
+Selecting a contact brings you directly to a list of Facebook profiles that match his/her name.
+
+// end::facebook[]
 
 == Course mode
 

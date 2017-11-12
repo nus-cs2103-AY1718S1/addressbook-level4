@@ -10,7 +10,7 @@ We are a team of students from the http://www.comp.nus.edu.sg[School of Computin
 
 === Artur Szalata
 image::arturs.jpg[width="150", align="left"]
-{empty}[https://github.com/arturs68[github]]
+{empty}[https://github.com/arturs68[github]][https://cs2103aug2017-t12-b1.github.io/main/team/arturs68.html[portfolio]]
 
 Roles: Team lead, testing +
 Responsibilities: Storage, Model

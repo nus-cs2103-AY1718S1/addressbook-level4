@@ -1,0 +1,118 @@
+= Test Script
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Loading the sample data
+
+Create a folder `data` in the directory where from where the jar file is going to be run. Rename the `SampleData.xml`
+file to `addressbook.xml` and copy it to the newly created `data` folder. When you run the application, 20 contacts
+will be loaded
+
+== Outline
+The test cases are designed so that each category of tests is self contained, meaning that completing one of them
+does not influence the outcome of the other tests. If you perform individual tests from a category, it might be in
+conflict with the assumptions about the current state of the data.
+
+== Test cases
+
+=== Grouping
+
+==== add to a group successfully
+
+* command: `group 2 gn/CS2103`
+* expected behavior: the second person on the list is successfully added to the group `CS2103`
+
+==== add to a group that contains spaces successfully
+
+* command: `group 2 gn/University NUS`
+* expected behavior: the second person on the list is successfully added to the group `University NUS`
+
+==== try to add to a group to which the person already belongs
+
+* command: `group 2 gn/CS2103`
+* expected behavior: relevant error message is issued
+
+==== try to add to a group with empty string as a name
+
+* command: `group 2 gn/`
+* expected behavior: relevant error message is issued
+
+==== try to remove from a group to which the person does not belong
+
+* command: `ungroup 2 gn/CS2104`
+* expected behavior: relevant error message is issued
+
+==== try to remove from a group by specifying a name with wrong capitalization
+
+* command: `ungroup 2 gn/university`
+* expected behavior: relevant error message is issued
+
+==== try to remove from a group by specifying empty string as a name
+
+* command: `ungroup 2 gn/`
+* expected behavior: relevant error message is issued
+
+==== remove from a group successfully
+
+* command: `ungroup 2 gn/University NUS`
+* command: `ungroup 2 gn/CS2104`
+* expected behavior: the second person on the list is successfully from the groups `University NUS` and `CS2104`
+
+=== Property - always sorted
+
+==== add a person so that the app inserts the card in the right order
+
+* command: `add n/Zbigniew Zaniewicz p/45342342 e/zz@gmail.com a/Podniebna 24, 20-738 Lublin`
+* expected behavior: the person is inserted on the 20th position, properly
+
+==== filter the persons so that the selected persons are listed sorted
+
+* command: `filter hasMyPencil`
+* expected behavior: 4 sorted entries are displayed
+
+==== cleanup after test
+
+* command: `list`
+* command: `delete 20`
+
+=== Remove tag
+
+==== try to remove a tag by specifying a tag that does not exits
+
+* command: `removeTag t/askFor`
+* expected behavior: relevant error message is issued
+
+==== remove a tag successfully
+
+* command: `removeTag t/askForHackathon`
+* expected behavior: the tag is removed from all the contacts (person 2 and 11)
+
+==== cleanup after test
+
+* command: `undo`
+
+=== Profile Picture
+
+==== try to add a picture specifying a wrong path
+
+* command: `pic 3 p/Garbage`
+* expected behavior: relevant error message is issued
+
+==== try to add a picture specifying a path that does not exits
+
+* command: `pic 3 p/C:\Users\Desktop\jarFolder`
+* expected behavior: relevant error message is issued
+
+==== add a picture successfully
+[NOTE]
+CORRECT_PATH means a correct path of a picture on your machine
+
+* command: `pic 3 p/CORRECT_PATH`
+* expected behavior: a picture that is found under CORRECT_PATH path is added to the 3rd person
+
+==== change a picture to the default one
+
+* command: `pic 3 p/default_pic.png`
+* expected behavior: a picture of the 3rd person is changed to the default one
+

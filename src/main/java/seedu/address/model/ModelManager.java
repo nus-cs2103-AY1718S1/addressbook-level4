@@ -14,7 +14,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -78,6 +80,21 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author namvd2709
+    @Override
+    public synchronized void addAppointment(Appointment appointment) throws IllegalValueException,
+                                        UniqueAppointmentList.ClashAppointmentException {
+        addressBook.addAppointment(appointment);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteAppointment(Appointment target) {
+        addressBook.removeAppointment(target);
+        indicateAddressBookChanged();
+    }
+
+    //@@author
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -135,6 +152,7 @@ public class ModelManager extends ComponentManager implements Model {
         return true;
     }
 
+    //@@author namvd2709
     @Override
     public Set<Appointment> getAllAppointments() {
         return addressBook.getAllAppointments();

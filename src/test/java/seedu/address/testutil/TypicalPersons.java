@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -42,7 +44,7 @@ public class TypicalPersons {
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").withAppointment("15/12/2017 12:00 60")
+            .withEmail("anna@example.com").withAddress("4th street").withAppointment("15/12/2019 00:00 60")
             .withGroups("University").build();
 
     // Manually added
@@ -70,8 +72,15 @@ public class TypicalPersons {
         for (ReadOnlyPerson person : getTypicalPersons()) {
             try {
                 ab.addPerson(person);
+                if (!person.getAppointment().value.equals("")) {
+                    ab.addAppointment(person.getAppointment());
+                }
             } catch (DuplicatePersonException e) {
-                assert false : "not possible";
+                assert false : "duplicate";
+            } catch (IllegalValueException e) {
+                assert false : "wrong value";
+            } catch (UniqueAppointmentList.ClashAppointmentException e) {
+                assert false : "clash";
             }
         }
         return ab;

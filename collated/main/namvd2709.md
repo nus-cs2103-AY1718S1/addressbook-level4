@@ -1,5 +1,5 @@
 # namvd2709
-###### /java/seedu/address/commons/util/StringUtil.java
+###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -23,7 +23,7 @@
         return sentence.toLowerCase().contains(phrase.toLowerCase());
     }
 ```
-###### /java/seedu/address/commons/util/StringUtil.java
+###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -55,7 +55,76 @@
         return false;
     }
 ```
-###### /java/seedu/address/logic/AutocompleteManager.java
+###### \java\seedu\address\logic\AppointmentReminder.java
+``` java
+package seedu.address.logic;
+
+import static java.time.temporal.ChronoUnit.MINUTES;
+
+import java.awt.EventQueue;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.swing.JOptionPane;
+
+import seedu.address.model.Model;
+import seedu.address.model.appointment.Appointment;
+
+/**
+ * Manages appointment reminder
+ */
+public class AppointmentReminder {
+    public AppointmentReminder(Model model) {
+        checkAppointment(model);
+    }
+
+    /**
+     * Constantly check for appointment
+     */
+    public void checkAppointment(Model model) {
+        Set<Appointment> appointments = model.getAllAppointments();
+        showAppointmentMessage(appointments);
+        Timer timer = new Timer();
+        final int minute = 60000;
+        timer.schedule(new TimerTask() {
+            public void run() {
+                showAppointmentMessage(appointments);
+            }
+        }, minute, minute);
+    }
+
+    /**
+     * Show message
+     */
+    private void showMessage(String message) {
+        EventQueue.invokeLater(() -> {
+            JOptionPane.showMessageDialog(null, message);
+        });
+    }
+
+    /**
+     * Check for any appointment in the next 60 min
+     */
+    private void showAppointmentMessage(Set<Appointment> appointments) {
+        LocalDateTime now = LocalDateTime.now();
+        Set<Appointment> toRemove = new HashSet<>();
+        for (Iterator<Appointment> appointmentIterator = appointments.iterator(); appointmentIterator.hasNext(); ) {
+            Appointment appointment = appointmentIterator.next();
+            if (now.until(appointment.getStart(), MINUTES) <= 60) {
+                String message = String.format("You have a meeting with %1$s at %2$s",
+                        appointment.getPerson().getName(), appointment.toString());
+                showMessage(message);
+                appointmentIterator.remove();
+            }
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\AutocompleteManager.java
 ``` java
 package seedu.address.logic;
 
@@ -68,14 +137,18 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterAllCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.GroupCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UngroupCommand;
 
 /**
  * Manage autocomplete logic when typing commands
@@ -88,13 +161,14 @@ public class AutocompleteManager {
         AddCommand.COMMAND_WORD, AppointCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
         EditCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, FindCommand.COMMAND_WORD, HelpCommand.COMMAND_WORD,
         GroupCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ListCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD,
-        SelectCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD
+        SelectCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD, UngroupCommand.COMMAND_WORD,
+        RemoveTagCommand.COMMAND_WORD, FilterCommand.COMMAND_WORD, FilterAllCommand.COMMAND_WORD
     };
 
     public AutocompleteManager() {}
 
 ```
-###### /java/seedu/address/logic/AutocompleteManager.java
+###### \java\seedu\address\logic\AutocompleteManager.java
 ``` java
     /**
      * attempt to autocomplete input into one of the commands
@@ -116,12 +190,14 @@ public class AutocompleteManager {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AppointCommand.java
+###### \java\seedu\address\logic\commands\AppointCommand.java
 ``` java
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.appointment.Appointment.MESSAGE_DATETIME_CONSTRAINT;
+import static seedu.address.model.appointment.Appointment.isAfterToday;
 
 import java.util.List;
 import java.util.Set;
@@ -144,12 +220,12 @@ public class AppointCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "appoint";
     public static final String MESSAGE_APPOINT_SUCCESS = "New appointment added: %1$s";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Appointment removed for person: %1$s";
-    public static final String MESSAGE_APPOINTMENT_CLASH = "Appointment clash";
+    public static final String MESSAGE_APPOINTMENT_CLASH = "Appointment clash with another in address book";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add an appointment to a person to the address book "
-            + "by the index number in the last person listing. "
+            + "by the index number in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[date (dd/mm/yy)] [time (hh:mm)] [duration (mins)";
+            + "[date (dd/mm/yyyy)] [time (hh:mm)] [duration (mins)";
 
     private final Index index;
     private final Appointment appointment;
@@ -171,20 +247,28 @@ public class AppointCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         Set<Appointment> appointments = model.getAllAppointments();
         UniqueAppointmentList uniqueAppointmentList = new UniqueAppointmentList();
-        uniqueAppointmentList.setAppointments(appointments);
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        if (uniqueAppointmentList.hasClash(appointment)) {
-            throw new CommandException("Appointment clash with another in address book");
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), appointment, personToEdit.getProfilePicture(),
                 personToEdit.getGroups(), personToEdit.getTags());
+
+        if (!personToEdit.getAppointment().value.equals("")) {
+            appointments.remove(personToEdit.getAppointment());
+        }
+        uniqueAppointmentList.setAppointments(appointments);
+
+        if (uniqueAppointmentList.hasClash(appointment)) {
+            throw new CommandException(MESSAGE_APPOINTMENT_CLASH);
+        }
+
+        if (!appointment.value.equals("") && !isAfterToday(appointment.getStart())) {
+            throw new CommandException(MESSAGE_DATETIME_CONSTRAINT);
+        }
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -227,7 +311,21 @@ public class AppointCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AppointCommandParser.java
+###### \java\seedu\address\logic\Logic.java
+``` java
+    /** Returns the appointment reminder */
+    AppointmentReminder getAppointmentReminder();
+}
+```
+###### \java\seedu\address\logic\LogicManager.java
+``` java
+    @Override
+    public AppointmentReminder getAppointmentReminder() {
+        return appointmentReminder;
+    }
+}
+```
+###### \java\seedu\address\logic\parser\AppointCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -280,7 +378,7 @@ public class AppointCommandParser implements Parser<AppointCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> appointment} into {@code Optional<Appointment>} if {@code appointment} present.
@@ -291,23 +389,67 @@ public class AppointCommandParser implements Parser<AppointCommand> {
         return appointment.isPresent() ? Optional.of(new Appointment(appointment.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /**
+     * Adds an appointment to address book.
+     */
+    public void addAppointment(Appointment a) throws IllegalValueException,
+            UniqueAppointmentList.ClashAppointmentException {
+        Appointment newAppointment = new Appointment(Appointment.getOriginalAppointment(a.toString()));
+        appointments.add(newAppointment);
+    }
+
+    /**
+     * Removes an appointment
+     */
+    public void removeAppointment(Appointment a) {
+        appointments.remove(a);
+    }
+
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+        Appointment oldAppointment = target.getAppointment();
+        Appointment newAppointment = editedPerson.getAppointment();
+        syncMasterTagListWith(editedPerson);
+        syncMasterGroupListWith(editedPerson);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        persons.setPerson(target, editedPerson);
+        appointments.remove(oldAppointment);
+        if (!newAppointment.value.equals("")) {
+            try {
+                appointments.add(newAppointment);
+            } catch (UniqueAppointmentList.DuplicateAppointmentException e) {
+                e.printStackTrace();
+            } catch (UniqueAppointmentList.ClashAppointmentException e) {
+                e.printStackTrace();
+            }
+        }
+```
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public Set<Appointment> getAllAppointments() {
         return persons.getAllAppointments();
     }
 
 ```
-###### /java/seedu/address/model/appointment/Appointment.java
+###### \java\seedu\address\model\appointment\Appointment.java
 ``` java
 package seedu.address.model.appointment;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Represents a Person's appointment created in the address book.
@@ -316,13 +458,15 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Appointment {
     public static final String MESSAGE_APPOINTMENT_CONSTRAINTS =
             "Appointment must be in exact format dd/MM/yyyy hh:mm duration, the date must be older than today";
-    public static final String DATETIME_PATTERN = "dd/MM/yyyy HH:mm";
-    private static final String MESSAGE_DURATION_CONSTRAINT = "Duration must be a positive integer in minutes";
-    private static final String MESSAGE_DATETIME_CONSTRAINT = "Date time cannot be in the past";
+    public static final String DATETIME_PATTERN = "dd/MM/uuuu HH:mm";
+    public static final String MESSAGE_DURATION_CONSTRAINT = "Duration must be a positive integer in minutes";
+    public static final String MESSAGE_DATETIME_CONSTRAINT = "Date time cannot be in the past";
+    public static final String MESSAGE_INVALID_DATETIME = "Date or time is invalid";
 
     public final String value;
     public final LocalDateTime start;
     public final LocalDateTime end;
+    private ReadOnlyPerson person;
 
     /**
      * Validates given appointment.
@@ -344,14 +488,14 @@ public class Appointment {
                 }
                 LocalDateTime startDateTime = getDateTime(date + " " + time);
                 LocalDateTime endDateTime = getEndDateTime(startDateTime, duration);
-                if (!isAfterToday(startDateTime) || !isAfterToday(endDateTime)) {
-                    throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINT);
-                }
-                this.value = appointment;
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN);
+                this.value = startDateTime.format(formatter) + " to " + endDateTime.format(formatter);
                 this.start = startDateTime;
                 this.end = endDateTime;
             } catch (ArrayIndexOutOfBoundsException iob) {
                 throw new IllegalValueException(MESSAGE_APPOINTMENT_CONSTRAINTS);
+            } catch (DateTimeParseException dtpe) {
+                throw new IllegalValueException(MESSAGE_INVALID_DATETIME);
             }
         }
     }
@@ -361,9 +505,18 @@ public class Appointment {
         return value;
     }
 
-    public static LocalDateTime getDateTime(String datetime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN);
+    public static LocalDateTime getDateTime(String datetime) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN)
+                .withResolverStyle(ResolverStyle.STRICT);
         return LocalDateTime.parse(datetime, formatter);
+    }
+
+    public void setPerson(ReadOnlyPerson person) {
+        this.person = person;
+    }
+
+    public ReadOnlyPerson getPerson() {
+        return person;
     }
 
     /**
@@ -392,6 +545,22 @@ public class Appointment {
         return startDateTime.plusMinutes(Integer.parseInt(duration));
     }
 
+    /**
+     * Method to help get back original appointment, for passing back to constructor
+     */
+    public static String getOriginalAppointment(String formattedAppointment) {
+        if (!formattedAppointment.equals("")) {
+            int splitter = formattedAppointment.indexOf("to");
+            String start = formattedAppointment.substring(0, splitter - 1);
+            String end = formattedAppointment.substring(splitter + 3);
+            LocalDateTime startDateTime = Appointment.getDateTime(start);
+            LocalDateTime endDateTime = Appointment.getDateTime(end);
+            long duration = startDateTime.until(endDateTime, MINUTES);
+            return start + " " + String.valueOf(duration);
+        }
+        return formattedAppointment;
+    }
+
     public LocalDateTime getStart() {
         return this.start;
     }
@@ -413,7 +582,7 @@ public class Appointment {
     }
 }
 ```
-###### /java/seedu/address/model/appointment/UniqueAppointmentList.java
+###### \java\seedu\address\model\appointment\UniqueAppointmentList.java
 ``` java
 package seedu.address.model.appointment;
 
@@ -539,6 +708,15 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
     }
+    /**
+     * Removes the equivalent person from the list.
+
+     */
+    public boolean remove(Appointment toRemove) {
+        requireNonNull(toRemove);
+        final boolean appointmentFound = internalList.remove(toRemove);
+        return appointmentFound;
+    }
 
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list.
@@ -559,13 +737,44 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Returns list of all appointments */
     Set<Appointment> getAllAppointments();
+
+    /** Add appointments */
+    void addAppointment(Appointment appointment) throws IllegalValueException,
+            UniqueAppointmentList.ClashAppointmentException;
+
+    /** Removes appointment */
+    void deleteAppointment(Appointment target);
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public synchronized void addAppointment(Appointment appointment) throws IllegalValueException,
+                                        UniqueAppointmentList.ClashAppointmentException {
+        addressBook.addAppointment(appointment);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteAppointment(Appointment target) {
+        addressBook.removeAppointment(target);
+        indicateAddressBookChanged();
+    }
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public Set<Appointment> getAllAppointments() {
+        return addressBook.getAllAppointments();
+    }
+
+```
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setAppointment(Appointment appointment) {
         this.appointment.set(requireNonNull(appointment));
@@ -582,9 +791,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
 ```
-###### /java/seedu/address/model/person/SortedUniquePersonList.java
+###### \java\seedu\address\model\person\SortedUniquePersonList.java
 ``` java
-
     /**
      * Returns all the appointments in the internal list
      */
@@ -592,35 +800,13 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         Set<Appointment> appointments = new HashSet<>();
 
         for (Person p: internalList) {
-            if (!p.getAppointment().value.equals("")) {
-                appointments.add(p.getAppointment());
+            Appointment appointment = p.getAppointment();
+            if (!appointment.value.equals("")) {
+                appointment.setPerson(p);
+                appointments.add(appointment);
             }
         }
         return appointments;
     }
 
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<ReadOnlyPerson> asObservableList() {
-        return FXCollections.unmodifiableObservableList(mappedList);
-    }
-
-    @Override
-    public Iterator<Person> iterator() {
-        return internalList.iterator();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof SortedUniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((SortedUniquePersonList) other).internalList));
-    }
-
-    @Override
-    public int hashCode() {
-        return internalList.hashCode();
-    }
-}
 ```

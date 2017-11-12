@@ -423,6 +423,7 @@ by specifying the correct path to the file. In case the picture cannot be access
 // end::profile[]
 
 // tag::searching[]
+
 === Searching mechanism
 Here, searching entails the autocomplete function, finding mechanism and suggesting mechanism.
 The search mechanism is done with user's usability in mind and is fully implemented such that it is most intuitive to use for the users.
@@ -446,7 +447,56 @@ will be shown as the user type commands. This has not been implemented but will 
 
 // end::searching[]
 
+// tag::appoint[]
+
+=== Appointment
+Appointment is stored in a `UniqueAppointmentList`, which makes sure that the appointment is unique and does not clash with other
+appointments.
+
+image::AppointmentSequenceDiagram.png[width="800"]
+
+
+==== Design Considerations
+**Aspect:** Storing appointments +
+**Alternative 1 (current choice):** Storing appointment using an in-memory UniqueAppointmentList. +
+**Pro:** Does not take up space. +
+**Cons:** Might be slow if there is a huge number of appointments (which is unlikely for a student) +
+**Alternative 2:** Storing appointment using a separate XML file +
+**Pro:** Will be faster if theres many appointments +
+**Cons:** Harder to understand. Does not follow convention of other commands.
+
+---
+**Aspect:** Number of appointments +
+**Alternative 1 (current choice):** Allows 1 appointment per contact. +
+**Pro:** Easier to manage (add, remove, overwrite, etc.) +
+**Cons:** Is limited in case user have multiple appointments with others. +
+**Alternative 2:** Allows multiple appointment per contact. +
+**Pro:** Catered to users with multiple appointments per contact. +
+**Cons:** Would be hard to view on address book person card, hard to manage.
+
+
+---
+**Aspect:** Appointment reminder +
+**Alternative 1 (current choice):** Only reminds if appointment is added from another session. +
+**Pro:** Does not spam user with appointments which he just added. +
+**Cons:** The user might add a lot of appointments in one session which he might forget. +
+**Alternative 2:** Reminds regardless of when appointment is added. +
+**Pro:** Helps forgetful users. +
+**Cons:** Most people will not need this.
+
+
+---
+**Aspect:** Appointment removal +
+**Alternative 1 (current choice):** Appointments need to be manually removed after expiry. +
+**Pro:** User has full control and will not miss out any appointments in the past. +
+**Cons:** Appointment reminder still work until manually removed. +
+**Alternative 2:** Appointments automatically removed after expiry. +
+**Pro:** No more reminders for expired appointments. +
+**Cons:** Users might forget to attend appointment, so reminder even after expiry can help.
+// end::appoint[]
+
 // tag::findtag[]
+
 === Find Tag
 
 The `FindTagCommand` allows the user to locate persons in the addressbook by their tag instead of their names.
@@ -483,6 +533,7 @@ image::FindTagSequenceDiagram.png[width="800"]
 
 // end::findtag[]
 
+// tag::filter[]
 === Filter feature implementation
 
 The `FilterCommand` and `FilterAllCommand` serve very similar functions to the `FindCommand` and `FindTagCommand`.
@@ -512,6 +563,28 @@ will output only contacts that match all keywords.
 **Alternative 2 (`FilterAllCommand`):** Utilising AND logic  +
 **Pros:** Allows finding of specific contacts with more than 1 tag. +
 **Cons:** Limits flexibility for power users that wish to view various contacts across more than 1 tag.
+
+// end::filter[]
+
+// tag::facebook[]
+=== Social Media link (Facebook)
+
+The `BrowserPanel` java file has been enhanced to display a Facebook user search of the selected contact's name rather +
+than a Google search.
+
+* The search includes the full name of the contact.
+
+==== Design Considerations
+**Aspect:** How the Facebook webpage is loaded  +
+**Alternative 1 (current choice):** Utilising a Facebook user search +
+**Pros:** Little chance of loading a wrong page, as the user is able to select the proper profile +
+          page from a list of closest matches.
+**Cons:** Will have to go throught the extra steps of locating and selecting a profile page +
+**Alternative 2 :** Loading a Facebook profile page that matches the selected contact's name  +
+**Pros:** Direct access to the selected contact's profile page for easy use. +
+**Cons:** Extremely likely to load the wrong profile page, due to overlapping names of millions of Facebook accounts.
+
+// end::facebook[]
 
 === Logging
 
@@ -757,6 +830,9 @@ Use case ends.
 [discrete]
 === Use case: Import persons
 
+[NOTE]
+TBI in v2.0
+
 *MSS*
 
 1. User import persons from an external csv file.
@@ -794,7 +870,6 @@ Use case resumes at step 2.
 *MSS*
 
 1. User adds an appointment to a contact through specifying the index.
-2. AddressBook sends an email to that contact.
 +
 Use case ends.
 
@@ -814,15 +889,11 @@ Use case ends.
 +
 Use case ends.
 
-* 2a. The email address is not correct and the email can't be delivered.
-+
-[none]
-** 2a1. AddressBook notifies the user.
-+
-Use case ends.
-
 [discrete]
 === Use case: Gradebook
+
+[NOTE]
+TBI in v2.0
 
 *MSS*
 
@@ -850,6 +921,8 @@ Use case resumes at step 2.
 
 [discrete]
 === Use case: Exam List
+[NOTE]
+TBI in v2.0
 
 *MSS*
 
@@ -876,6 +949,8 @@ Use case resumes at step 2.
 
 [discrete]
 === Use case: Weekly Schedule
+[NOTE]
+TBI in v2.0
 
 *MSS*
 
@@ -916,6 +991,7 @@ Use case resumes at step 2.
 .  Should be easily extensible.
 
 [appendix]
+// tag::addGroup[]
 == Ungroup
 Object diagram before performing `ungroup 1 gn/CS2103` (assuming Alice is the person with index 1).
 
@@ -925,7 +1001,7 @@ And after ungrouping. Note that the group `CS2103` is not kept by the AddressBoo
 persons linked to that group, so it is assumed to be obsolete.
 
 image::UngroupObjectDiagramAfter.png[width="800"]
-
+// end::addGroup[]
 
 [appendix]
 == Glossary
