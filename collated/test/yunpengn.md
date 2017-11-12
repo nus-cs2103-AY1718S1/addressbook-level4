@@ -721,6 +721,32 @@ public class ArgumentMultimapTest {
     }
 }
 ```
+###### \java\seedu\address\model\event\EventTest.java
+``` java
+    @Test
+    public void createEvent_viaSetProperties_checkCorrectness() throws Exception {
+        Event event = new Event(properties, new ArrayList<>());
+
+        assertEquals(name, event.getName());
+        assertEquals(dateTime, event.getTime());
+        assertEquals(address, event.getAddress());
+        assertEquals(0, event.getReminders().size());
+        assertEquals(3, event.getProperties().size());
+    }
+```
+###### \java\seedu\address\model\event\EventTest.java
+``` java
+    @Test
+    public void toString_checkCorrectness() throws Exception {
+        Event event = new Event(name, dateTime, address, new ArrayList<>());
+        String expected =
+                " Event: Mel Birthday |  Date/Time: 25 Dec, 2017 08:30 |  Address: Block 312, Amy Street 1";
+
+        assertEquals(expected, event.toString());
+        assertEquals(expected, event.getAsText());
+    }
+}
+```
 ###### \java\seedu\address\model\ModelManagerTest.java
 ``` java
     @Test
