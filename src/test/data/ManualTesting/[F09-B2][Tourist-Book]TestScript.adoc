@@ -3,415 +3,396 @@
 :toc-placement: preamble
 :imagesDir: images
 :stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
 
 This is a test script document to explain the steps to perform manual testing, including how to load the data file.
 
 == Quick Start
-. Download both .jar and .xml files
-. Put both files in the same folder
-. Create another folder named "data" and put the .xml file inside
+. Download both touristbook.jar and SampleData.xml files
+. Put both files in the same folder/location
+. Create another folder named "data" and put the SampleData.xml file inside
+. Rename the "SampleData.xml" to "addressbook.xml"
 . Run touristbook.jar
 
+====
+*Command Format*
+
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/Marina Bay Sands`.
+* Items in square brackets are OPTIONAL e.g `n/NAME [t/TAG]` can be used as `n/Marina Bay Sands t/attractions` or as `n/Marina Bay Sands`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/attractions`, `t/onestar t/twostars` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME a/ADDRESS`, `a/ADDRESS n/NAME` is also acceptable.
+====
+
 == Help Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The help command allows the user to view the available functions and commands. +
+Format: `help` or `h` or pressing kbd:[F1]
+
 [NOTE]
 ====
-This is a note.
+* The command is **case sensitive** +
+* The command will ignore any other subequent parameters after the command word.
+* The command is not an undoable command, thus the `undo` and `redo` command will not work.
 ====
-
 [WARNING]
 ====
-This is a warning.
+Please close the `help` window once check. The application cannot perform other tasks when `help` window is still running.
+This is a bug that is found in the base https://github.com/se-edu/addressbook-level4/issues/727[Addressbook-level 4].
 ====
+[discrete]
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `help`
+** *Expected output* +
+Display help window.
+It will display "Opened help window."
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `h`
+** *Expected output* +
+Display help window.
+It will display "Opened help window."
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. pressing kbd:[F1]
+** *Expected output* +
+Display help window.
+It will display "Opened help window."
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `help try`
+** *Expected output* +
+Display help window.
+It will display "Opened help window."
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `h 99`
+** *Expected output* +
+Display help window.
+It will display "Opened help window."
 
+[discrete]
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `HELP`
+** *Expected output* +
+It will display "Unknown command"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `H`
+** *Expected output* +
+It will display "Unknown command"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `HELP help`
+** *Expected output* +
+It will display "Unknown command"
 
 == Add Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The add command allows the user to add in any additional attractions or person +
+Format: `add n/NAME [ph/PHONE] [w/WEBSITE] [a/ADDRESS] p/POSTALCODE [t/TAG]...`  +
+or +
+`a n/NAME p/POSTALCODE`
+
+* The command is **case sensitive** +
+* The command require the user to key in only 2 **compulsory** fields `n/NAME` and `p/POSTALCODE`. Thus, inputs `[ph/PHONE]`, `[w/WEBSITE]` , `[a/ADDRESS]` and `[t/TAG]` are optional.
+* The command is an undoable command, thus the `undo` and `redo` command will work.
+* The command will reject if following requirement does not meet -
+** Phone numbers can only contain numbers, and should be at least `3` digits long +
+** Postal codes need to be exactly `6` digits.
+** Websites need to include `http://www` or `https://www` in front.
+
 [NOTE]
 ====
-This is a note.
+* Default values -
+. Phone `000`
+. Website `http://www.-.com
+. Address `-`
 ====
 
-[WARNING]
-====
-This is a warning.
-====
-=== Test Cases and Expected Outomes
-. Test Case Here
-** *Expected output*
-//Put expected output here
+****
+* If there are multiple names, phones, addresses, website or postalcodes the command will store the last input.
+For example : Command +
+`add n/Utown Starbucks ph/69101127 a/8 College Avenue West a/8 College Avenue West #B1-01 p/123456 p/138608` +
+Will store -  +
+** NAME = Utown Starbucks +
+** PHONE = 69101127 +
+** ADDRESS = 8 College Avenue West #B1-01+
+** POSTALCODE = 138608
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+* `Warning` for duplicate add only display when the application can find the exact same location in the list. +
+* This means that even differences in tag with exactly same addresse, name, phone and name will add the place to the list.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+* `IMPORTANT` not to forget key in kbd:[space] between each different inputs prefix.
+****
+[discrete]
+=== Positive Test Cases
+. `add n/Utown Starbucks ph/69101127 a/8 College Avenue West #B1-01 p/138608 w/http://www.starbucks.com.sg/ t/starbucks t/drinks`
+** *Expected output* +
+Utown Starbucks will be added to last slot in the list.
+It will display +
+"**New place added: Utown Starbucks Phone: 69101127 Address: 8 College Avenue West #B1-01 PostalCode: 138608 Website: http://www.starbucks.com.sg/ Tags: [starbucks][drinks]**"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `add n/Utown Starbucks n/Spore Italino a/1 Create Way, NUS University Town p/138602`
+** *Expected output* +
+Spore Italino will be added to last slot in the list.
+It will display +
+"**New place added: Spore Italino Phone: 000 Address: Create Way, NUS University Town PostalCode: 138602 Website: http://www.-.com Tags: **"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `add n/Utown Starbucks p/608549`
+** *Expected output* +
+Utown Starbucks will be added to last slot in the list.
+It will display +
+"**New place added: Starbucks Phone: 000 Address: - PostalCode: 608549 Website: http://www.-.com Tags: **"
+
+[discrete]
+=== Negative Test Cases
+. `add n/Utown Starbucks`
+** *Expected output* +
+Warning message will display.
+
+. `add n/Starbucks p/12345`
+** *Expected output* +
+Warning message will display. +
+"**Singapore Postal Code can only contain numbers, and should be just 6 digits long**"
+
+. `add n/Starbucks p/123456 ph/22`
+** *Expected output* +
+Warning message will display. +
+"**Phone numbers can only contain numbers, and should be at least 3 digits long**"
+
+. `add n/Starbucks p/123456 ph/333 w/hello.com`
+** *Expected output* +
+Warning message will display. +
+"**Place website should contain http://www https://www**"
 
 == List Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+This command allows user to list the places inside the tourist-book. +
+Format: `list` or `l`
+
 [NOTE]
 ====
-This is a note.
+* The command is **case sensitive** +
+* The command will ignore any other subequent parameters after the command word.
 ====
-
-[WARNING]
-====
-This is a warning.
-====
+[discrete]
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list`
+** *Expected output* +
+It will display "Listed all places"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `l`
+** *Expected output* +
+It will display "Listed all places"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list h`
+** *Expected output* +
+It will display "Listed all places"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `l help`
+** *Expected output* +
+It will display "Listed all places"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
+[discrete]
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `LIST`
+** *Expected output* +
+It will display "Unknown command"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `L`
+** *Expected output* +
+It will display "Unknown command"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `LIST l`
+** *Expected output* +
+It will display "Unknown command"
 
 == Bookmark Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
-[NOTE]
-====
-This is a note.
-====
+Adds a bookmark tag to the specified place from the address book. +
+Format: `bookmark INDEX`
 
-[WARNING]
-====
-This is a warning.
-====
+****
+* Bookmarks the place at the specified `INDEX`.
+* The command is **case sensitive**
+* The command is an undoable command, thus the `undo` and `redo` command will work.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ... and less then number of list shown in the most recent listing.
+****
+[discrete]
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list` +
+`bookmark 1`
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+** *Expected output* +
+Successfully bookmarked the first place in the list.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list` +
+`bookmark 1`
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+** *Expected output* +
+Error message "**Place already has that tag.**"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list` +
+`bookmark 5`
 
+** *Expected output* +
+Successfully bookmarked the first place in the list.
+
+[discrete]
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list` +
+`bookmark 45`
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+** *Expected output* +
+Error message "**The place index provided is invalid**"
+
+. `list` +
+`bookmark 1 2` +
+-There is kbd:[space] between `1` and `2`
+
+** *Expected output* +
+Error message for **Invalid input** display.
+
+. `list` +
+`bookmark 1 bookmark 2` +
+
+** *Expected output* +
+Error message for **Invalid input** display.
 
 == Show Bookmarks Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
-[NOTE]
-====
-This is a note.
-====
+List the bookmarked places.
+Format: `show_bookmark`
 
-[WARNING]
-====
-This is a warning.
-====
+****
+* The command is **case sensitive**
+* The command is an undoable command, thus the `undo` and `redo` command will work.
+****
+
+[discrete]
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list` +
+`show_bookmark` +
 
-. Test Case Here
 ** *Expected output*
-//Put expected output here
+It will list the two places that bookmarked earlier.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
+[discrete]
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list` +
+`show_BOOKMARK` +
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+** *Expected output* +
+Error message "**Unknown command**"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list` +
+`show_bookmark show_bookmark` +
+
+** *Expected output* +
+Error message for **Invalid input** display.
 
 == Clear Bookmarks Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
-[NOTE]
-====
-This is a note.
-====
+Clears all bookmarks from the address book. +
+Format: `clear_bookmark`
+****
+* The command is **case sensitive**
+* The command is an undoable command, thus the `undo` and `redo` command will work.
+****
 
-[WARNING]
-====
-This is a warning.
-====
+[discrete]
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list` +
+`show_bookmark` +
+`clear_bookmark` +
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+** *Expected output* +
+It will clear all the bookmarked places and list all the places. +
+When type `show_bookmark` it will list an empty page.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
+[discrete]
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list` +
+`bookmark 1` +
+`show_bookmark` +
+`clear`
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+** *Expected output* +
+Error message "**Unknown command**"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+== Confirm_clear Command
+Clears all entries from the Tourist-Book. +
+Format: `confirm_clear`
 
-== Clear Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
-[NOTE]
-====
-This is a note.
-====
+****
+* The command is **case sensitive**
+* The command is an undoable command, thus the `undo` and `redo` command will work.
+****
 
-[WARNING]
-====
-This is a warning.
-====
+[discrete]
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `confirm_clear` +
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-=== Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
+** *Expected output* +
+It will clear all the places in the tourist book +
+Message "**Tourist Book has been cleared!**"
 
 == Undo Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
-[NOTE]
-====
-This is a note.
-====
+Restores the Tourist Book to the state before the previous _undoable_ command was executed. +
+Format: `undo` or `un`
 
-[WARNING]
-====
-This is a warning.
-====
+****
+* The command is **case sensitive**
+* The command is an undoable command, thus the `undo` and `redo` command will work.
+****
+
+[discrete]
 === Positive Test Cases
-. Test Case Here
+. `undo`
 ** *Expected output*
-//Put expected output here
+It will revert back the clear command earlier+
+Message "**Tourist Book has been cleared!**"
 
-. Test Case Here
+. `delete 1` +
+`list` +
+`undo`
 ** *Expected output*
-//Put expected output here
+Reverses the `delete 1` command and add it back to the top of the list.
 
-. Test Case Here
+. `select 1` +
+`list` +
+`undo`
 ** *Expected output*
-//Put expected output here
+The `undo` command fails as there are no undoable commands executed previously.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
+[discrete]
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `UNDO`
+** *Expected output* +
+Error message "**Unknown command**"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+== Undo Command
+Reverses the most recent `undo` command. +
+Format: `redo` or `re`
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+****
+* The command is **case sensitive**
+****
 
-== Redo Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
-[NOTE]
-====
-This is a note.
-====
-
-[WARNING]
-====
-This is a warning.
-====
+[discrete]
 === Positive Test Cases
-. Test Case Here
+. `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo`
 ** *Expected output*
-//Put expected output here
+It reapplies the `delete 1` command.
 
-. Test Case Here
+. `undo`
+`delete 1` +
+`redo` +
 ** *Expected output*
-//Put expected output here
+The `redo` command fails as there are no `undo` commands executed previously.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
+[discrete]
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `REDO`
+** *Expected output* +
+Error message "**Unknown command**"
 
 == Delete Command
 //Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
