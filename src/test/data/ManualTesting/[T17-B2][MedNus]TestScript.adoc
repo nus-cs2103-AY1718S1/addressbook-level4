@@ -57,46 +57,89 @@ the command box easily and manual test more effectively and efficiently.
 == General Commands
 This section shows you the general commands which allow you to manipulate the filtered list display. +
 
+The following features of MedNus are tested in this section.
+
+* Help Command
+* Add Command
+* List Package
+* Bloodtype Command
+* Duplicates Command
+* Batch Command
+* Copy Command
+* Edit Command
+* Find Command
+* Delete Command
+* History Command
+* Undo Command
+* Redo Command
+* Clear Command
+* TagColor Command
+* Remark Command
+* Relation Command
+
 [cols=3,width="100%",options="header"]
 |=======================================================================
-|Command To Enter |Expected Output |Remarks
+|Command To Enter |Result display panel message |Other Observations
 
-|`help` |1. Result display panel posts message: `Opened help window`. +
-2. Help window pops up and shows user guide. |
+|`help` |`Opened help window` |Help window pops up and shows user guide.
 
-|`add n/Massimo Alioto` |1. Result display panel posts message: `New person added: Massimo Alioto Phone: - Email: - Address: - BloodType: - Remark:  Relationship:  Tags:` +
- 2. New contact added to the end of Contacts panel. |
+|`add n/Massimo Alioto` |`New person added: Massimo Alioto Phone: - Email: - Address: - BloodType: - Remark:  Relationship:  Tags:` |New contact added to the end of Contacts panel.
 
-|`add n/Sue Yoo  p/80000000 e/SY@gmail.com a/170 Bishan Street b/AB r/Allergic to Honey d/lunch, tomorrow 3pm to 4pm t/Fever` |1. Result display panel posts message:
-`New person added: Sue Yoo Phone: 80000000 Email: sy@gmail.com Address: 170 Bishan Street BloodType: AB Remark: Allergic to Honey Relationship:  Tags: [Fever]` +
-2. New contact added to the end of Contacts panel. |
+|`history` |`Entered commands (from most recent to earliest): +
+             add n/Massimo Alioto +
+             help` |
 
-|`list reverse` |1. Result display panel posts message: `Displayed list reverse`. +
-2. Contacts list in contacts panel reversed. |
+|`add n/Sue Yoo  p/80000000 e/SY@gmail.com a/170 Bishan Street b/AB r/Allergic to Honey d/lunch, tomorrow 3pm to 4pm t/Fever` |`New person added: Sue Yoo Phone: 80000000 Email: sy@gmail.com Address: 170 Bishan Street BloodType: AB Remark: Allergic to Honey Relationship:  Tags: [Fever]` |New contact added to the end of Contacts panel.
 
-|`list ascending` |1. Result display panel posts message: `Listed persons by name in ascending order`. +
-2. Contacts list in contacts panel sorted by name in ascending order. |
+|`list reverse` |`Displayed list reverse` |Contacts list in contacts panel reversed.
 
-|`list descending` |1. Result display panel posts message: `Listed persons by name in descending order` +
-2. Contacts list in contacts panel sorted by name in descending order. |
+|`list ascending` |`Listed persons by name in ascending order`. |Contacts list in contacts panel sorted by name in ascending order.
 
-|`list tag xraycentre and brokenfeet or fracture and xraycentre` |1. Result display panel posts message: `Listed all persons with specified tags` +
- 2. Contacts list in contacts panel filters Zeypher Lee and Thomas Lee. |
+|`list descending` |`Listed persons by name in descending order` |Contacts list in contacts panel sorted by name in descending order.
 
-|`bloodtype a` |1. Result display panel posts message: `2 persons listed!` +
- 2. Contacts list in contacts panel filters Irfan Ibrahim and Alex Yeoh. |
+|`list tag xraycentre and brokenfeet or fracture and xraycentre` |`Listed all persons with specified tags` |Contacts list in contacts panel filters Zeypher Lee and Thomas Lee.
+
+|`bloodtype a` |`2 persons listed!` |Contacts list in contacts panel filters Irfan Ibrahim and Alex Yeoh.
+
+|`list` |`Listed all persons` |All contacts listed in contacts panel.
 
 |`duplicates` |`2 persons listed!` |Finds all persons who share names with at least 1 other person in MedNus
 
-|`copy 2` |`Amanda Lee's email address has been copied to your clipboard.` |Copies email address of person at index 2 of the currently displayed list to your clipboard
+|`copy 2` |`Chen Ai Li's email address has been copied to your clipboard.` |Copies email address of person at index 2 of the currently displayed list to your clipboard
 
-|`batch Flu Fever` |`Deleted Persons with Tags: [[Flu], [Fever]]` |Removes all persons with tags `Flu` or `Fever` or both. Undo this by typing `undo` before proceeding to the next step
+|`batch Flu Fever` |`Deleted Persons with Tags: [[Flu], [Fever]]` |Removes all persons with tags `Flu` or `Fever` or both.
 
-|`command 4` |`some output` |Some remark
+|`undo` |`Undo success!` |All previously deleted contacts are added back.
 
-|`command 5` |`some output` |Some remark
+|`edit 1 p/81000000 e/ZLee@gmail.com r/Feverish 3 days after accident ` |`Edited Person: Zeypher Lee Phone: 81000000 Email: zlee@gmail.com Address: 121 Thomson Road BloodType: B Remark: Feverish 3 days after accident Relationship:  Tags: [XRayCentre][BrokenFeet]` |Zeypher Lee's information edited and reflected on contacts panel.
 
-|`command 6` |`some output` |Some remark
+|`find peter` |`2 persons listed!` |Peter Thomas Lee and Peter Griffin listed on contacts panel
+
+|`delete 1` |`Deleted Person: Peter Thomas Lee Phone: 83382131 Email: ptl@gmail.com Address: 193 Serangoon Street BloodType: B Remark:  Relationship:  Tags: [BrokenNeck][XRayCentre]` |Peter Thomas Lee deleted from contacts list.
+
+|`list` |`Listed all persons` |All contacts listed in contacts panel.
+
+|`clear` |`Address book has been cleared!` |Deletes all contacts
+
+|`undo` |`Undo success!` |Restores all contacts
+
+|`redo`|`Redo success!` |Deletes all contacts
+
+|`undo` |`Undo success!` |Restores all contacts
+
+|`tagcolor off` |`tag color set to off` |All Tags' color in contacts panel disabled
+
+|`tagcolor random` |`tag color set to random` |All Tags' color in contacts panel set to random
+
+|`tagcolor XRayCentre blue` |`XRayCentre tag color set to blue` |All tags named `XRayCentre` are changed to blue in color
+
+|`remark 1 r/` |`Remark successfully deleted` |Removes the remark of Zeypher Lee
+
+|`remark 1 r/Waiting for XRay result` |`Remark successfully added` |Added a remark to Zeypher Lee
+
+|`relation 1 rel/Son of Thomas Lee`|`Added relationship to Person: Zeypher Lee Phone: 81000000 Email: zlee@gmail.com Address: 121 Thomson Road BloodType: B Remark: Waiting for XRay result Relationship: Son of Thomas Lee Tags: [XRayCentre][BrokenFeet]` |Added a relationship field to Zeypher Lee
+
+|`relation 1 rel/`|`Removed relationship from Person: Zeypher Lee Phone: 81000000 Email: zlee@gmail.com Address: 121 Thomson Road BloodType: B Remark: Waiting for XRay result Relationship:  Tags: [XRayCentre][BrokenFeet]` |Removed existing relationship field from Zeypher Lee
 
 |=======================================================================
 
@@ -114,3 +157,8 @@ This section shows you commands related to appointments and calendar views. +
 |`command 3` |`some output` |Some remark
 
 |=======================================================================
+
+== Exiting MedNus
+
+> Command To Enter: `exit` +
+Result: MedNus Closes and quit.
