@@ -250,6 +250,7 @@ public class ArkBotTest {
         message = BOT_MESSAGE_FAILURE;
         bot.completeCommand().action().accept(context);
         waitForRunLater();
+        Thread.sleep(2000); // add wait so that exception can be caught and thrown
 
         // We verify that the sender was called only ONCE and sent message command success.
         Mockito.verify(sender, times(++numberOfFailures)).send(message, CHAT_ID);
