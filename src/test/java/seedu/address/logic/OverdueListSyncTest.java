@@ -13,10 +13,12 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.OverdueListCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -36,6 +38,7 @@ public class OverdueListSyncTest {
     public void setUp() {
         //assumes that the typicalAddressBook has at least 1 person in the overdue list.
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        ListObserver.init(model);
     }
 
     @Test
@@ -96,7 +99,7 @@ public class OverdueListSyncTest {
     /**
      * @return {@code DeleteCommand} with the parameter {@code index}.
      */
-    private DeleteCommand prepareDeleteCommand(Index index) {
+    private DeleteCommand prepareDeleteCommand(Index index) throws CommandException {
         DeleteCommand deleteCommand = new DeleteCommand(index);
         deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
@@ -114,7 +117,8 @@ public class OverdueListSyncTest {
     /**
      * @return {@code EditCommand} with the parameter {@code index} & {@code EditPersonDescriptor}.
      */
-    private EditCommand prepareEditCommand(Index index, EditCommand.EditPersonDescriptor descriptor) {
+    private EditCommand prepareEditCommand(Index index, EditCommand.EditPersonDescriptor descriptor) throws
+            CommandException {
         EditCommand editCommand = new EditCommand(index, descriptor);
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editCommand;

@@ -2,7 +2,9 @@ package seedu.address.logic.commands;
 
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -29,8 +31,17 @@ public class SelectCommand extends Command {
 
     private final Index targetIndex;
 
-    public SelectCommand() {
-        this.targetIndex = null;
+    public SelectCommand() throws CommandException {
+        ObservableList<ReadOnlyPerson> lastShownList = ListObserver.getCurrentFilteredList();
+        if (lastShownList.isEmpty()) {
+            throw new CommandException(MESSAGE_EMPTY_LIST_SELECTION_FAILURE);
+        }
+        if (ListObserver.getSelectedPerson() == null) {
+            targetIndex = Index.fromOneBased(INDEX_FIRST_PERSON);
+        } else {
+            targetIndex = Index.fromZeroBased((ListObserver.getIndexOfSelectedPersonInCurrentList().getZeroBased() + 1)
+                    % lastShownList.size());
+        }
     }
 
     public SelectCommand(Index targetIndex) {
@@ -40,41 +51,24 @@ public class SelectCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = listObserver.getCurrentFilteredList();
+        List<ReadOnlyPerson> lastShownList = ListObserver.getCurrentFilteredList();
 
-        Index selectIndex;
-
-        if (targetIndex == null) {
-            if (lastShownList.isEmpty()) {
-                throw new CommandException(MESSAGE_EMPTY_LIST_SELECTION_FAILURE);
-            }
-            if (model.getSelectedPerson() == null) {
-                selectIndex = Index.fromOneBased(INDEX_FIRST_PERSON);
-            } else {
-                selectIndex = Index.fromZeroBased((lastShownList.indexOf(model.getSelectedPerson()) + 1)
-                        % lastShownList.size());
-            }
-        } else {
-            selectIndex = targetIndex;
-        }
-
-        if (selectIndex.getZeroBased() >= lastShownList.size()) {
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        model.updateSelectedPerson(lastShownList.get(selectIndex.getZeroBased()));
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(selectIndex));
+        model.updateSelectedPerson(lastShownList.get(targetIndex.getZeroBased()));
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
 
-        String currentList = listObserver.getCurrentListName();
+        String currentList = ListObserver.getCurrentListName();
 
-        return new CommandResult(currentList + String.format(MESSAGE_SELECT_PERSON_SUCCESS, selectIndex.getOneBased()));
+        return new CommandResult(currentList + String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof SelectCommand // instanceof handles nulls
-                && ((this.targetIndex == null && ((SelectCommand) other).targetIndex == null) // both targetIndex null
-                || this.targetIndex.equals(((SelectCommand) other).targetIndex))); // state check
+                && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
     }
 }

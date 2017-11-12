@@ -27,19 +27,6 @@ public class UndoRedoStackTest {
     private UndoRedoStack undoRedoStack = new UndoRedoStack();
 
     @Test
-    public void push_nonUndoableCommand_redoStackClearedAndCommandNotAdded() {
-        // non-empty redoStack
-        undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne),
-                Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));
-        undoRedoStack.push(dummyCommandOne);
-        assertStackStatus(Collections.singletonList(dummyUndoableCommandOne), Collections.emptyList());
-
-        // empty redoStack
-        undoRedoStack.push(dummyCommandOne);
-        assertStackStatus(Collections.singletonList(dummyUndoableCommandOne), Collections.emptyList());
-    }
-
-    @Test
     public void push_undoableCommand_redoStackClearedAndCommandAdded() {
         // non-empty redoStack
         undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne),

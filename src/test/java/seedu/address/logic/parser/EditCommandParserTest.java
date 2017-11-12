@@ -58,6 +58,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
@@ -73,7 +74,7 @@ import seedu.address.model.person.PostalCode;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
-public class EditCommandParserTest {
+public class EditCommandParserTest extends CommandTest {
 
     private static final String TAG_EMPTY = " " + PREFIX_TAG;
 
@@ -83,7 +84,7 @@ public class EditCommandParserTest {
     private EditCommandParser parser = new EditCommandParser();
 
     @Test
-    public void parse_missingParts_failure() {
+    public void parse_missingParts_failure() throws Exception {
         // no field specified
         assertParseFailure(parser, "1", EditCommand.MESSAGE_NOT_EDITED);
 
@@ -92,7 +93,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_invalidPreamble_failure() {
+    public void parse_invalidPreamble_failure() throws Exception {
         // negative index
         assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
@@ -107,7 +108,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_invalidValue_failure() {
+    public void parse_invalidValue_failure() throws Exception {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
         assertParseFailure(parser, "1" + INVALID_HANDPHONE_DESC,
                 Handphone.MESSAGE_PHONE_CONSTRAINTS); // invalid handphone
@@ -147,7 +148,8 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_noIndexAllFieldsSpecified_success() {
+    public void parse_noIndexAllFieldsSpecified_success() throws Exception {
+        selectFirstPerson();
         String userInput = HANDPHONE_DESC_BOB + HOME_PHONE_DESC_BOB + TAG_DESC_HUSBAND + POSTAL_CODE_DESC_BOB
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND + DEBT_DESC_AMY
                 + DEADLINE_DESC_AMY + INTEREST_DESC_AMY + OFFICE_PHONE_DESC_BOB;
@@ -163,7 +165,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_allFieldsSpecified_success() {
+    public void parse_allFieldsSpecified_success() throws Exception {
         Index targetIndex = INDEX_SECOND_PERSON;
         String userInput = targetIndex.getOneBased() + HANDPHONE_DESC_BOB + TAG_DESC_HUSBAND + POSTAL_CODE_DESC_BOB
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND + DEBT_DESC_AMY
@@ -181,7 +183,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_someFieldsSpecified_success() {
+    public void parse_someFieldsSpecified_success() throws Exception {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + EMAIL_DESC_AMY;
 
@@ -192,7 +194,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_oneFieldSpecified_success() {
+    public void parse_oneFieldSpecified_success() throws Exception {
         // name
         Index targetIndex = INDEX_THIRD_PERSON;
         String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
@@ -262,7 +264,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_multipleRepeatedFields_acceptsLast() {
+    public void parse_multipleRepeatedFields_acceptsLast() throws Exception {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased()  + HANDPHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
                 + TAG_DESC_FRIEND + HANDPHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + POSTAL_CODE_DESC_AMY
@@ -278,7 +280,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_invalidValueFollowedByValidValue_success() {
+    public void parse_invalidValueFollowedByValidValue_success() throws Exception {
         // no other valid values specified
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + INVALID_HANDPHONE_DESC + HANDPHONE_DESC_BOB;
@@ -296,7 +298,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_resetTags_success() {
+    public void parse_resetTags_success() throws Exception {
         Index targetIndex = INDEX_THIRD_PERSON;
         String userInput = targetIndex.getOneBased() + TAG_EMPTY;
 

@@ -13,6 +13,7 @@ import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.BanCommand;
 import seedu.address.logic.commands.BorrowCommand;
@@ -23,6 +24,7 @@ import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.WhitelistCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -44,6 +46,7 @@ public class WhitelistSyncTest {
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        ListObserver.init(model);
     }
 
     @Test
@@ -419,7 +422,7 @@ public class WhitelistSyncTest {
     /**
      * Returns a {@code BorrowCommand} with the parameter {@code index} & {@code amount}.
      */
-    private BorrowCommand prepareBorrowCommand(Index index, Debt amount) {
+    private BorrowCommand prepareBorrowCommand(Index index, Debt amount) throws CommandException {
         BorrowCommand borrowCommand = new BorrowCommand(index, amount);
         borrowCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return borrowCommand;
@@ -428,7 +431,8 @@ public class WhitelistSyncTest {
     /**
      * Returns a {@code EditCommand} with the parameter {@code index} & {@code EditPersonDescriptor}.
      */
-    private EditCommand prepareEditCommand(Index index, EditCommand.EditPersonDescriptor descriptor) {
+    private EditCommand prepareEditCommand(Index index, EditCommand.EditPersonDescriptor descriptor) throws
+            CommandException {
         EditCommand editCommand = new EditCommand(index, descriptor);
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editCommand;
@@ -446,7 +450,7 @@ public class WhitelistSyncTest {
     /**
      * Returns a {@code RepaidCommand} with the parameter {@code index}.
      */
-    private RepaidCommand prepareRepaidCommand(Index index) {
+    private RepaidCommand prepareRepaidCommand(Index index) throws CommandException {
         RepaidCommand repaidCommand = new RepaidCommand(index);
         repaidCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return repaidCommand;
@@ -455,7 +459,7 @@ public class WhitelistSyncTest {
     /**
      * Returns a {@code UnbanCommand} with the parameter {@code index}.
      */
-    private UnbanCommand prepareUnbanCommand(Index index) {
+    private UnbanCommand prepareUnbanCommand(Index index) throws CommandException {
         UnbanCommand unbanCommand = new UnbanCommand(index);
         unbanCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return unbanCommand;
@@ -464,7 +468,7 @@ public class WhitelistSyncTest {
     /**
      * Returns a {@code PaybackCommand} with the parameter {@code index} & {@code amount}.
      */
-    private PaybackCommand preparePaybackCommand(Index index, Debt amount) {
+    private PaybackCommand preparePaybackCommand(Index index, Debt amount) throws CommandException {
         PaybackCommand paybackCommand = new PaybackCommand(index, amount);
         paybackCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return paybackCommand;
@@ -473,7 +477,7 @@ public class WhitelistSyncTest {
     /**
      * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
-    private DeleteCommand prepareDeleteCommand(Index index) {
+    private DeleteCommand prepareDeleteCommand(Index index) throws CommandException {
         DeleteCommand deleteCommand = new DeleteCommand(index);
         deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
@@ -482,7 +486,7 @@ public class WhitelistSyncTest {
     /**
      * Returns a {@code BanCommand} with the parameter {@code index}.
      */
-    private BanCommand prepareBanCommand(Index index) {
+    private BanCommand prepareBanCommand(Index index) throws CommandException {
         BanCommand banCommand = new BanCommand(index);
         banCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return banCommand;

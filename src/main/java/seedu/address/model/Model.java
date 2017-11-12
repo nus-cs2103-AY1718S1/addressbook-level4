@@ -151,8 +151,8 @@ public interface Model {
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
 
     /**
-     * Authenticates user
-     * @throws UserNotFoundException if user is not found
+     * Authenticates user.
+     * @throws UserNotFoundException if user is not found.
      * @throws IllegalValueException if username and password do not follow username and password requirements.
      */
     void authenticateUser(Username username, Password password) throws UserNotFoundException, IllegalValueException;
@@ -162,7 +162,6 @@ public interface Model {
      */
     void logout();
 
-    //@@author jaivigneshvenugopal
     /**
      * Updates the list shown in Person List Panel to the requested list.
      */
@@ -180,13 +179,14 @@ public interface Model {
     void sortBy(String order) throws IllegalArgumentException;
 
     /**
-     * Increase the debt of a person by the amount indicated
+     * Increase the debt of a person by the amount indicated.
+     * @return the person whose debt was increased.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
-    void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException;
+    ReadOnlyPerson addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException;
 
     /**
-     * Decrease the debt of a person by the amount indicated
+     * Decrease the debt of a person by the amount indicated.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
      */
@@ -198,12 +198,12 @@ public interface Model {
     //@@author jaivigneshvenugopal
     /**
      * Adds the picture of the person into app database and sets the person's display picture boolean status to true
-     * @return true if person's picture is successfully added
+     * @return true if person's picture is successfully added.
      */
     boolean addProfilePicture(ReadOnlyPerson person);
 
     /**
-     * Sets the person's display picture boolean status to false
+     * Sets the person's display picture boolean status to false.
      */
     void removeProfilePicture(ReadOnlyPerson person);
     //@@author

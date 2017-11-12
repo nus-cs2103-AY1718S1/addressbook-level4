@@ -67,6 +67,7 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -247,7 +248,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
-        assert getModel().getFilteredPersonList().size()
+        assert ListObserver.getCurrentFilteredList().size()
                 < getModel().getAddressBook().getPersonList().size();
         assertCommandSuccess(IDA);
 
