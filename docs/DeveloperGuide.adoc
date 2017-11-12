@@ -477,66 +477,79 @@ does not have to be aware of new `Predicates` +
 // end::find[]
 
 // tag::musiccommand[]
-=== Playing Music
-Unify has a built-in background music player.
+=== Music Player Mechanism
+The `music` command is extended with an additional command behind it. For example, `music play`, has `play` as the extended command. The `play` command at the back means that the system will play a music track. While `music stop` command
+will stop the current music track.
 
-The `music` command is extended with an additional command behind it. For example, `music play`, has play as the extended command. The `play` command at the back means that the system will play a music track. While `music pause` will pause the current music track.
-
-All these different actions are executed in the same `MusicCommand` class. This makes the commands easier to remember for the user as well, as anything related to `music` will start with `music` as a command.
+Both the `music play` and the `music stop` commands are executed in the same `MusicCommand` class. This also makes the commands easier to remember for the user as well, as anything related to `music` will start with `music` as a command.
 
 As shown below, additional extended commands can be added by having an additional case in the switch statement, as the extended commands are handled in a switch statement.
+In addition, the `MusicCommand` class will create a new `music thread`, this is to prevent the User Interface from freezing in the current thread. Currently, all music played will be in a loop until it is stopped by the user, through the `music stop` command.
 
 [source,java]
 ----
 public CommandResult execute() {
-        boolean genreExist = Arrays.asList(genreList).contains(genre);
+    boolean genreExist = Arrays.asList(GENRE_LIST).contains(genre);
         switch (command) {
         case "play":
-            if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
-                mediaPlayer.play();
-                return new CommandResult(MESSAGE_SUCCESS);
+            if (RadioCommand.isRadioPlaying()) {
+                RadioCommand.stopRadioPlayer();
             }
+            stopMusicPlayer();
             if (genreExist) {
-                String musicFile = "audio/music/" + genre + trackNumber + ".mp3";
-                MESSAGE_SUCCESS = genre.toUpperCase() + " Music Playing";
-                if (trackNumber < 2) {
-                    trackNumber++;
-                } else {
+                //check if current genre same previous playing music genre
+                //if different reset track number
+                if (!genre.equals(previousGenre)) {
                     trackNumber = 1;
                 }
-                if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-                    mediaPlayer.stop();
+                messageSuccess = genre.toUpperCase() + " Music " + trackNumber + " Playing";
+                music = new Music("audio/music/"
+                        + genre + trackNumber + ".mp3");
+                music.start();
+
+                if (trackNumber < maxTrackNumber) {
+                    trackNumber++;
+                } else {
+                    //reset track number back to 1
+                    trackNumber = 1;
                 }
-                Media sound = new Media(new File(musicFile).toURI().toString());
-                mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                mediaPlayer.setVolume(2.0);
-                mediaPlayer.play();
-                return new CommandResult(MESSAGE_SUCCESS);
+                //Text to Speech
+                new TextToSpeech(messageSuccess).speak();
+                //set current playing genre as previousGenre
+                previousGenre = genre;
+                return new CommandResult(messageSuccess);
             } else {
-                return new CommandResult(MESSAGE_USAGE);
+                return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));
             }
+        //Stop the music that is currently playing
         case "stop":
-            if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-                mediaPlayer.stop();
+            if (!isMusicPlaying()) {
+                //Text to Speech
+                new TextToSpeech(MESSAGE_NO_MUSIC_PLAYING).speak();
+                return new CommandResult(MESSAGE_NO_MUSIC_PLAYING);
             }
-            return new CommandResult(MESSAGE_MUSICSTOP);
-        case "pause":
-            if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-                mediaPlayer.pause();
-            }
-            MESSAGE_MUSICPAUSE = genre.toUpperCase() + " Music Paused";
-            return new CommandResult(MESSAGE_MUSICPAUSE);
+            stopMusicPlayer();
+            //Text to Speech
+            new TextToSpeech(MESSAGE_STOP).speak();
+            return new CommandResult(MESSAGE_STOP);
+
         default:
-            return new CommandResult(MESSAGE_USAGE);
+            return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));
         }
     }
-
+}
 ----
-[NOTE]
-The `trackNumber` has to be less than or equal to the number of each genre tracks you have in the `audio/music` folder. For example, if `trackNumber` is 2, it is required at least 2 mp3 files of each genre of music.
 
-image::MusicList.jpg[width="200"]
+
+{sp}
+
+image::header_note.png[width="400"]
+
+* If you wish to include more music tracks, you also have to change the variable `maxTrackNumber = 2` to the desired number. For example, if you wish to have 3 music tracks for each genre, you have to change it to `maxTrackNumber = 3` and ensure that each genre have at least 3 music tracks in the `resources/audio/music` folder.
+
+* You are also able to add a new genre of music, however make sure that it too has the equal number of music tracks as the other genres. In addition, you have to update the `GENRE_LIST` array to include the new genre that you have just added.
+
+* Adding more music tracks will result in a large .jar file size.
 
 The following sequence diagram shows how the music operation works:
 
@@ -546,7 +559,27 @@ The following activity diagram summarize what happens inside the `MusicCommand` 
 
 image::MusicActivityDiagram.png[width="400"]
 
+==== Prerequisites/Dependencies
+
+image::header_warning.png[width="400"]
+
+* The `trackNumber` has to be less than or equal to the number of each genre tracks you have in the `resources/audio/music` folder. For example, if `trackNumber` is 2, it is required to have at least 2 mp3 files of each genre of music.
+
+image::MusicList.jpg[width="200"]
+
+* The `resources/audio/music` folder cannot be empty.
+
+* You can only add music tracks that are encoded in .mp3 format.
+
 ==== Design Considerations
+
+**Aspect:** Naming of music tracks +
+**Alternative 1 (current choice):** Name begins with the genre followed by track number +
+**Pros:** Easy to maintain, as it allows addition of music tracks by adding more mp3 files and a change of only one or two variables in the code. +
+**Cons:** Require to have the same exact number of music tracks for each genre +
+**Alternative 2:** Any file name  +
+**Pros:** Able to hold music track title name, which can be use to display to the user in the result box +
+**Cons:** Requires an array to keep track of the music tracks for each genre. More code manipulation required when adding more music tracks +
 
 **Aspect:** Which music file to play first +
 **Alternative 1 (current choice):** Play the music file that starts with 1 then increase from there +
@@ -562,8 +595,17 @@ image::MusicActivityDiagram.png[width="400"]
 // end::radiocommand[]
 
 // tag::sharecommand[]
-=== Sending Email
-The sending email function is an external library and requires internet connection.
+=== Sharing of Contacts by Email
+The sharing of contacts by email function requires an external library. You have to add `compile 'javax.mail:mail:1.4.7'` to dependencies in `build.gradle` file. as shown below.
+
+[source,java]
+----
+dependencies {
+    compile 'javax.mail:mail:1.4.7'
+}
+----
+
+
 
 ==== Design Considerations
 
