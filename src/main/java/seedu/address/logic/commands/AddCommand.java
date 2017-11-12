@@ -80,12 +80,12 @@ public class AddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
 
-        //resets AddCommand
+        //resets AddCommand to eliminate unhandled Add and Reply Command
         if (isWaitingforReply) {
             isWaitingforReply = false;
         }
 
-        /* Check if the person to add contains any duplicate fields.
+        /* Checks if the person to add contains any duplicate fields.
          * If so, ReplyCommand to store the AddCommand to wait for further instructions.
          */
         try {
@@ -113,7 +113,7 @@ public class AddCommand extends UndoableCommand {
     }
 
     /**
-     * Check for duplicate fields shared with {@code toAdd} in current UniCity contacts. Once duplicate(s) are found,
+     * Checks for duplicate fields shared with {@code toAdd} in current UniCity contacts. Once duplicate(s) are found,
      * isWaitingforReply is set to true and a message is crafted to prompt users whether they want to continue
      * with the operation.
      */
@@ -126,8 +126,8 @@ public class AddCommand extends UndoableCommand {
         }
 
         for (ReadOnlyPerson contact: currentContacts) {
-            if (duplicateFields.contains(NAME_FIELD) && duplicateFields.contains(PHONE_FIELD) &&
-                    duplicateFields.contains(EMAIL_FIELD) && duplicateFields.contains(ADDRESS_FIELD)) {
+            if (duplicateFields.contains(NAME_FIELD) && duplicateFields.contains(PHONE_FIELD)
+                    && duplicateFields.contains(EMAIL_FIELD) && duplicateFields.contains(ADDRESS_FIELD)) {
                 //method found duplicates for all fields, no further concatenation of message. break from loop.
                 break;
             }
@@ -159,6 +159,10 @@ public class AddCommand extends UndoableCommand {
         result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, duplicateFields.trim()));
     }
 
+    /**
+     * Checks for similarities between the email fields for {@code toAdd} and {@code contact}. Updates isWaitingforReply
+     * and duplicateFields accordingly.
+     */
     private void checkDuplicateEmail(Person toAdd, ReadOnlyPerson contact) {
         if ((toAdd.getEmail().toString().trim().equalsIgnoreCase(contact.getEmail().toString().trim()))
                 && (!toAdd.getEmail().toString().trim().equals(DEFAULT_EMAIL))) {
@@ -171,6 +175,10 @@ public class AddCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Checks for similarities between the address fields for {@code toAdd} and {@code contact}. Updates isWaitingforReply
+     * and duplicateFields accordingly.
+     */
     private void checkDuplicateAddress(Person toAdd, ReadOnlyPerson contact) {
         if ((toAdd.getAddress().toString().trim().equalsIgnoreCase(contact.getAddress().toString().trim()))
                 && (!toAdd.getAddress().toString().trim().equals(DEFAULT_ADDRESS))) {
@@ -183,6 +191,10 @@ public class AddCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Checks for similarities between the phone fields for {@code toAdd} and {@code contact}. Updates isWaitingforReply
+     * and duplicateFields accordingly.
+     */
     private void checkDuplicatePhone(Person toAdd, ReadOnlyPerson contact) {
         if (toAdd.getPhone().toString().trim().equalsIgnoreCase(contact.getPhone().toString().trim())) {
             isWaitingforReply = true;
@@ -195,6 +207,10 @@ public class AddCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Checks for similarities between the name fields for {@code toAdd} and {@code contact}. Updates isWaitingforReply
+     * and duplicateFields accordingly.
+     */
     private void checkDuplicateName(Person toAdd, ReadOnlyPerson contact) {
         if (toAdd.getName().toString().trim().equalsIgnoreCase(contact.getName().toString().trim())) {
             isWaitingforReply = true;
@@ -206,8 +222,16 @@ public class AddCommand extends UndoableCommand {
         }
     }
 
-    public static boolean isWaitingforReply() { return isWaitingforReply; }
+    /**
+     * Checks if UniCity is awaiting for user's reply.
+     */
+    public static boolean isWaitingforReply() {
+        return isWaitingforReply;
+    }
 
+    /**
+     * Ensures continuation of AddCommand when user has replied.
+     */
     public static void reply() {
         isWaitingforReply = false;
     }
