@@ -686,7 +686,7 @@ access on a java https://docs.oracle.com/javase/8/docs/api/java/util/HashSet.htm
 
 // tag::dropdownlist[]
 === Drop-down List of Possible Commands
-The dynamic drop-down list is created using `org.controlsfx.control.textfield.TextFields` API.
+The dynamic drop-down list is created using `org.controlsfx.control.textfield.TextFields` https://controlsfx.bitbucket.io/org/controlsfx/control/textfield/TextFields.html#bindAutoCompletion-javafx.scene.control.TextField-javafx.util.Callback-[API] link:#api[(Application Programming Interface)].
 The `bindAutoCompletion` method in the `TestFields` creates a new auto-completion binding between the given textField and the given suggestion provider.
 
 The code below shows the exact implementation.
@@ -706,7 +706,7 @@ TextFields.bindAutoCompletion(commandTextField, sr -> {
 });
 ----
 
-Possible commands are checked against the user input and added to the HashSet `suggestedCommands` accordingly, which will be displayed as the drop-down list.
+Possible commands are checked against the user input and added to the Set `suggestedCommands` accordingly, which will be displayed as the drop-down list.
 
 A command is added if all three conditions are satisfied:
 
@@ -1258,10 +1258,10 @@ in as the subject of the email. The following shows an example of the compose wi
 image::EmailComposeWindow.png[width="600"]
 
 ==== Using `java.awt.Desktop` API
-Requesting the default email client to open a new compose window is achieved with the `java.awt.Desktop` class. However, not all platforms support the `Desktop` API.
+Requesting the default email client to open a new compose window is achieved with the `java.awt.Desktop` class. However, not all platforms support the `Desktop` https://docs.oracle.com/javase/7/docs/api/java/awt/Desktop.html[API].
 Therefore, it is crucial to check whether the API and the `MAIL` action are supported. A `CommandExecption` will be thrown if they are not supported.
 
-After confirming that the action can be supported on the platform, an URI is constructed using the recipient's email address and subject input by the user (if any).
+After confirming that the action can be supported on the platform, an URI link:#uri[(Uniform Resource Identifier)] is constructed using the recipient's email address and subject input by the user (if any).
 It is then passed into the `mail` method of `Desktop` class. The following code snippet shows the exact implementation.
 
 [source,java]
@@ -1309,7 +1309,7 @@ private void selectRecipient(Index index) {
 `EmailCommandParser` class is used to parse input arguments in the context of the `EmailCommand`. It maps the positive integer in the argument to `INDEX`,
 and the string following the prefix `s/` to `SUBJECT`. If the user did not input a subject, the subject would be an empty string.
 
-The `SUBJECT` string must be percent-encoded, which means all the spaces must be replaced with `%20`. This is to avoid follow the URI syntax standard.
+The `SUBJECT` string must be link:#percent-encoding[percent-encoded], which means all the spaces must be replaced with `%20`. This is to follow the URI syntax standard.
 Otherwise a `java.net.URISyntaxException` would be thrown when sending the URI. Above mentioned implementation is shown in the code snippet below.
 
 [source,java]

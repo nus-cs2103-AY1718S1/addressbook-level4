@@ -1,6 +1,13 @@
 [appendix]
 == Glossary
 
+[[api]]
+Application Programming Interface (API)
+
+....
+An Application Programming Interface specifies the interface through which other programs can interact with a software component. It is a contract between the component and its clients.
+....
+
 [[command-line-interface]]
 Command Line Interface (CLI)
 
@@ -50,6 +57,13 @@ Mainstream OS
 Windows, Linux, Unix, OS-X
 ....
 
+[[percent-encoding]]
+Percent-encoding
+
+....
+A mechanism for translating unprintable or special characters to a universally accepted format by web servers and browsers.
+....
+
 [[private-contact-detail]]
 Private contact detail
 
@@ -62,4 +76,12 @@ Rolodex
 
 ....
 The name of this application is Rolodex. It is used to refer to the java object of a similar name developed for this application under the application's model component. A Rolodex is also a rotating file device used to store business contact information. Its name is a combination of the words rolling and index.
+....
+
+[[uri]]
+Uniform Resource Identifier (URI)
+
+* Click http://www.ietf.org/rfc/rfc2396.txt[here] to see the full document on URI generic syntax.
+....
+A compact sequence of characters that identifies an abstract or physical resource.
 ....

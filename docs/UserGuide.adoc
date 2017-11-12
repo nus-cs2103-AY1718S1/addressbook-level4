@@ -203,7 +203,7 @@ Delete commands are _undoable_ with the `undo` command.
 
 //tag::dropdownlist[]
 === Drop-down List of Possible Commands
-It might be daunting for a new user to see all these commands and their formats. But with the help of the drop-down list, you do not need to memorise any of them.
+With the help of the drop-down list of suggestions, you do not need to memorise any command.
 
 When you type your commands inside the command box, you will notice that a drop-down list appears.
 
@@ -219,7 +219,7 @@ image::DropDownList2.png[width="300"]
 When the drop-down list is shown, you can:
 
 * Use `↑` and `↓` arrow keys to navigate through the list
-* Press `Enter` to select the highlighted option
+* Press kbd:[Enter] to select the highlighted option
 
 or
 
@@ -232,10 +232,11 @@ image::DropDownList3.png[width="800"]
 
 Now you can:
 
-* continue to type in the rest of the command input in the required format, or
+* press kbd:[Enter] to execute the command if no additional fields are required, or
+* continue to type in the rest of the command input, or
 * press kbd:[Tab] to activate auto-completion, see link:#autocomplete[3.2. Auto-completion] for details.
 
-If you want to see a list of all commands, simply type kbd:[Space] in an empty command box.
+If you want to see the list of all commands, simply type kbd:[Space] in an empty command box.
 The following list should appear.
 
 image::DropDownList4.png[width="300"]
@@ -248,7 +249,7 @@ Edits an existing person in Rolodex. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...` +
 [TIP]
 ====
-Press kbd:[Tab] after typing `edit` to generate the required field(s). See link:#autocomplete[3.19. Auto-completion] for more details.
+Press kbd:[Tab] after typing `edit` to generate the required field(s). See link:#autocomplete[3.2. Auto-completion] for more details.
 ====
 Alternatives: `edit` can be replaced by `change`, `modify` or `e` +
 Keyboard shortcut: kbd:[Ctrl+E]
@@ -282,7 +283,7 @@ Opens the 'compose new email' window of the default email client, with the recip
 Format: `email INDEX [s/SUBJECT]` +
 [TIP]
 ====
-Press kbd:[Tab] after typing `email` to generate the required field(s). See link:#autocomplete[3.19. Auto-completion] for more details.
+Press kbd:[Tab] after typing `email` to generate the required field(s). See link:#autocomplete[3.2. Auto-completion] for more details.
 ====
 Alternatives: `email` can be replaced by `mail`, `mailto`, `send` or `m` +
 Keyboard shortcut: kbd:[Ctrl+M]
@@ -302,7 +303,7 @@ Finds persons in Rolodex. +
 Format: `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` +
 [TIP]
 ====
-Press kbd:[Tab] after typing `find` to generate the required field(s). See link:#autocomplete[3.19. Auto-completion] for more details.
+Press kbd:[Tab] after typing `find` to generate the required field(s). See link:#autocomplete[3.2. Auto-completion] for more details.
 ====
 Alternatives: `find` can be replaced by `filter`, `search` or `f` +
 Keyboard shortcut: kbd:[Ctrl+F]
@@ -534,7 +535,7 @@ Selects the person identified by the index number used in the last person listin
 Format: `select INDEX` or `s INDEX` +
 [TIP]
 ====
-Press kbd:[Tab] after typing `select` to generate the required field(s). See link:#autocomplete[3.19. Auto-completion] for more details.
+Press kbd:[Tab] after typing `select` to generate the required field(s). See link:#autocomplete[3.2. Auto-completion] for more details.
 ====
 Keyboard shortcut: kbd:[Ctrl+S]
 
@@ -557,7 +558,7 @@ Selects the 1st person in the results of the `find` command.
 
 * You can directly add tag(s) to a person when you are adding him/her to Rolodex for the first time.
 See link:#add[3.1. Adding a Person] for more details.
-* To add tag(s) to existing contacts in Rolodex, you use the `edit INDEX t/TAG` command. See link:#edit[3.4. Editing a Person] for more details.
+* To add tag(s) to existing contacts in Rolodex, you use the `edit INDEX t/TAG` command. See link:#edit[3.6. Editing a Person] for more details.
 
 === `undo` or `u`: Undoing a Previous Command _(Since v1.3)_
 
