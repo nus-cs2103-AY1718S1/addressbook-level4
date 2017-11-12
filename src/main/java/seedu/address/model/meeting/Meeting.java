@@ -40,7 +40,9 @@ public class Meeting {
         this.displayName = new SimpleObjectProperty<>(person.getName());
         this.meetingName = meetingName;
         this.displayMeetingName = new SimpleObjectProperty<>(meetingName);
-        requireNonNull(time);
+        if (time == null) {
+            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
+        }
         String trimmedTime = time.trim();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm")
                 .withResolverStyle(ResolverStyle.STRICT);
@@ -60,7 +62,9 @@ public class Meeting {
     public Meeting(String meetingName, String time) throws IllegalValueException {
         this.meetingName = meetingName;
         this.displayMeetingName = new SimpleObjectProperty<>(meetingName);
-        requireNonNull(time);
+        if (time == null) {
+            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
+        }
         String trimmedTime = time.trim();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         try {
