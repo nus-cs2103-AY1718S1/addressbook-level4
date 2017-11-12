@@ -27,9 +27,6 @@ public class EditEventDescriptorTest {
         // same object -> returns true
         assertTrue(DESC_EVENT_FIRST.equals(DESC_EVENT_FIRST));
 
-        // null -> returns false
-        assertFalse(DESC_EVENT_FIRST.equals(null));
-
         // different types -> returns false
         assertFalse(DESC_EVENT_FIRST.equals(1));
 

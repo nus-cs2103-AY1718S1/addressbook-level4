@@ -51,25 +51,25 @@ public class PersonEventInteractionStorageTest {
 
     @Test
     public void testSaveAndRead() throws Exception {
-        saveAndRead();
+        assertsaveAndReadSuccess();
 
         // Disjoin an event
         Person person = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
         Event event = new Event(model.getFilteredEventList().get(INDEX_SECOND_EVENT.getZeroBased()));
         model.quitEvent(person, event);
-        saveAndRead();
+        assertsaveAndReadSuccess();
 
         // Join an event
         person = new Person(model.getFilteredPersonList().get(INDEX_THIRD_PERSON.getZeroBased()));
         event = new Event(model.getFilteredEventList().get(INDEX_THIRD_EVENT.getZeroBased()));
         model.joinEvent(person, event);
-        saveAndRead();
+        assertsaveAndReadSuccess();
     }
 
     /**
      * Save and read back the model, and check whether they are the same
      */
-    private void saveAndRead() throws Exception {
+    private void assertsaveAndReadSuccess() throws Exception {
         xmlAddressBookStorage.saveAddressBook(model.getAddressBook(), addressBookPath);
         xmlEventListStorage.saveEventStorage(model.getEventList(), eventListPath);
         ReadOnlyAddressBook readBackPerson = xmlAddressBookStorage.readAddressBook(addressBookPath).get();

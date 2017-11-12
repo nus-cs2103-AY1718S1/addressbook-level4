@@ -1,9 +1,9 @@
 :toc:
 :toc-title:
 :toc-placement: macro
-:imagesDir: images\
 :sectnums:
 :stylesDir: stylesheets
+:imagesDir: images
 :experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
