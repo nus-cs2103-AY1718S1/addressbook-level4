@@ -370,23 +370,90 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // tag::events[]
 === Events mechanism
 
+Events mechanism activates the Events mode in The Myth's Book, where the users are locked to using commands pertaining to `Events`,
+which are `AddEventCommand` and `DeleteEventCommand`, and commands that are common between Events and Persons, such as `ExitCommand`,
+`HelpCommand` and more.
+
+The events mechanism also lists down the list of events, which is facilitated by an `EventList`, which is stored in The Myth's Book.
+Similar to the PersonList and TagList, the list contains the different events with their information given by the user. This command inherits from `Command`.
+
+As seen in the diagram below, `EventsCommand` inherits `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+image::EventsCommandDiagram1.png[width="800"]
+Figure 5.2.1 Events Command Diagram 1
+
+The execution of EventsCommand is processed in this way:
+
+. User will execute `events` to activate the `Events` mode.
+. The execution of `events` posts events `TogglePanelEvent`, `PersonPanelUnselectEvent` and `AccessWebsiteRequestEvent`, which will
+  then be listened and handled by `handleToggleEvent` in `MainWindow`, `handleUnselectOfPersonCardEvent` in `MainWindow` and `handleAccessWebsiteEvent` in `BrowserPanel` respectively.
+. The `EventListPanel` will then be brought to front over `PersonListPanel`, showing the list of events from `EventList`.
+. Subsequently, `DetailsPanel`, which shows a person's details, will be removed and be replaced by `EventsDetailsPanel` which shows an event's details.
+. The `BrowserPanel` section will also display `Google Maps` when `events` is executed.
+
+Code of `EventsCommand`:
+[source,java]
+----
+public class EventsCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... events logic ...
+        EventsCenter.getInstance().post(new TogglePanelEvent(COMMAND_WORD));
+        EventsCenter.getInstance().post(new PersonPanelUnselectEvent());
+        EventsCenter.getInstance().post(new AccessWebsiteRequestEvent("https://maps.google.com/"));
+    }
+}
+----
+
+Listener for TogglePanelEvent in MainWindow.java:
+[source,java]
+----
+@Subscribe
+private void handleToggleEvent(TogglePanelEvent event) {
+    handleToggle(event.selectedPanel);
+}
+----
+
+Bringing of EventListPanel to front in MainWindow.java:
+[source,java]
+----
+public void handleToggle(String selectedPanel) {
+    if (selectedPanel.equals(EventsCommand.COMMAND_WORD)) {
+        eventListPanelPlaceholder.toFront();
+    } else if (selectedPanel.equals(ListCommand.COMMAND_WORD)) {
+        personListPanelPlaceholder.toFront();
+    }
+}
+----
+
+Listener for PersonPanelUnselectEvent in MainWindow.java:
+[source,java]
+----
+@Subscribe
+private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
+    detailsPanel = new DetailsPanel();
+    detailsPanelPlaceholder.getChildren().clear();
+    detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
+}
+----
+
 ==== Design Considerations
 // end::events[]
 
 // tag::addevent[]
 === Add Event mechanism
 
-Add event mechanism adds an event which stores in the The Myth's Book,
+Add event mechanism adds an event which stores in The Myth's Book,
 which will then be used in a Calendar in future implementation. A reminder feature will also be tagged on to the event.
 
-The add event mechanism is facilitated by a `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
+The add event mechanism is facilitated by an `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
 different events with their information given by the user. This command inherits from `UndoableCommand`.
 
 From Figure 5.2.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the SortCommand
 can be undoable, where the previous state of the address book before sorting is saved.
 
 image::AddEventDiagram.PNG[width="800"]
-Figure 5.2.1 AddEventCommand Logic Class Diagram
+Figure 5.3.1 AddEventCommand Logic Class Diagram
 
 Code of `AddEventCommand`:
 
@@ -443,8 +510,115 @@ public class UniqueEventList implements Iterable<Event> {
 // tag::deleteevent[]
 === Delete Event mechanism
 
-==== Design Considerations
+Delete event mechanism deletes an event which is stored in the The Myth's Book, which will then be updated in the `Calendar` upon deletion.
 
+The delete event mechanism is facilitated by an `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
+different events with their information given by the user. This command inherits from `UndoableCommand`.
+
+As seen in Figure 5.4.1 below, `DeleteEventCommand` inherits `UndoableCommand` which is an extra layer between abstract `Command` class and concrete commands that can be undone.
+When `DeleteEventCommand` is executed, the previous state of the address book before the deleting of an event is saved.
+
+image::DeleteEventCommandDiagram1.png[width="800"]
+_Figure 5.4.1 Delete Event Command Diagram_
+
+The exectuion of DeleteEventCommand is processed in this way:
+
+. User will execute `events` to enter Events mode, and user can look through the list of events that he or she may want to delete.
+
+. User will then execute `deleteevent 2`, with `2` being the `index` of the event that the user wants to delete, provided by the executed `events`.
+
+. The `EventList` in `AddressBook` will then delete the event specified by the user's execution of `deleteevent 2`.
+
+. The deleting of event in `AddressBook` posts an event `PopulateRequestEvent`, which will then be listened and handled by `handlePopulateEvent` in `MainWindow`.
+
+. The `Calendar` will look through the `EventList` and update the calendar by populating the dates of the calendar where there are events.
+
+Code of `DeleteEventCommand`:
+[source,java]
+----
+public class DeleteEventCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        // ... delete event logic ...
+
+        List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
+
+        ReadOnlyEvent eventToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        model.deleteEvent(eventToDelete);
+    }
+}
+----
+
+Removing of event in AddressBook.java:
+[source,java]
+----
+public class AddressBook implements ReadOnlyAddressBook {
+    public boolean deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
+        if (events.remove(event)) {
+            EventsCenter.getInstance().post(new PopulateRequestEvent(events));
+            return true;
+        } else {
+            throw new EventNotFoundException();
+        }
+    }
+}
+----
+
+Listener for PopulateRequestEvent in MainWindow.java:
+[source,java]
+----
+@Subscribe
+private void handlePopulateEvent(PopulateRequestEvent request) {
+    calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
+}
+----
+
+Updating of the deletion of event in Calendar.java:
+[source,java]
+----
+public class Calendar {
+    public void populateUpdatedCalendar(UniqueEventList eventList) {
+        for (AnchorPaneNode ap : allCalendarDays) {
+            ap.setStyle("calendar-color");
+            for (Event event1 : eventList) {
+                // ... populate updated calendar logic ...
+                if (newDate.equals(event1.getDate().toString())) {
+                    ap.getChildren();
+                    ap.setStyle("-fx-background-color: #ffebcd;");
+                }
+            }
+        }
+    }
+}
+----
+
+The following sequence diagram shows how the delete event operation works:
+
+As seen in the diagram below, when `deleteevent 1` is typed into the command line input, a new `DeleteEventCommand` is created.
+
+image::DeleteEventCommandDiagram2.png[width="800"]
+_Figure 5.4.2 Delete Event Command Diagram 2_
+
+As seen in Figure 5.4.3, when `deleteevent 1` is executed in `DeleteEventCommand`, it will remove the event in `UniqueEventList`.
+
+image::DeleteEventCommandDiagram3.png[width="800"]
+_Figure 5.4.3 Delete Event Command Diagram 3_
+
+As seen in the diagram below, when `deleteEvent` is executed in `AddressBook`, it will post an event `PopulateRequestEvent` in`EventsCenter`, which is handled by `MainWindow` and `Calendar`.
+
+image::DeleteEventCommandDiagram4.png[width="800"]
+_Figure 5.4.4 Delete Event Command Diagram 4_
+
+==== Design Considerations
+**Aspect:** Implementation of `DeleteEventCommand` +
+**Alternative 1 (current choice):** Extends to `UndoableCommand` +
+**Pros:** Users can undo their command when they make a mistake in deleting an event. +
+**Cons:** Developer needs to understand the implementation of UndoableCommand. +
+**Alternative 2:** Extends to `Command` +
+**Pros:** Developers do not need to understand the implementation of UndoableCommand. +
+**Cons:** Users are unable to undo their command when they make a mistake in deleting an event. +
 // end::deleteevent[]
 
 // tag::switch[]
@@ -455,7 +629,7 @@ The switch theme mechanism is facilitated by a `ThemesList`, which resides insid
 As seen in the diagram below, `SwitchThemeCommand` inherits `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
 
 image::SwitchThemeCommandDiagram1.png[width="800"]
-Figure 5.5.1 Switch Theme Command Diagram
+_Figure 5.5.1 Switch Theme Command Diagram 1_
 
 The execution of SwitchThemeCommand is processed in this way:
 
@@ -470,9 +644,9 @@ The execution of SwitchThemeCommand is processed in this way:
 . The execution of `switch 2` posts an event `ChangeThemeRequestEvent`, which will then be listened and handled by `handleChangeThemeEvent` in `MainWindow`.
 
 . The `Stylesheets` of the `MainWindow` will then remove the current existing CSS file, which is the current theme, and add the given `String` of the CSS file into `Stylesheets`.
-  That will set the current colour theme of `The Myth's Book` to the preferred colour theme.
+  That will set the current colour theme of The Myth's Book to the preferred colour theme.
 
-. Subsequently, the colour theme chosen will update `CurrentTheme` of `The Myth's Book` in `UserPrefs` through `LogicManager` and `ModelManager`. This will
+. Subsequently, the colour theme chosen will update `CurrentTheme` of The Myth's Book in `UserPrefs` through `LogicManager` and `ModelManager`. This will
   allow the application to check the latest colour theme before the application was closed and sets the application's colour theme to it through `MainWindow`.
 
 Code of SwitchThemeCommand:
@@ -492,7 +666,6 @@ Listener for ChangeThemeRequestEvent in MainWindow.java:
 ----
 @Subscribe
 private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
-    logger.info(LogsCenter.getEventHandlingLogMessage(event));
     handleChangeTheme(event.theme);
     browserPanel.setDefaultPage(event.theme);
     logic.setCurrentTheme(getCurrentTheme());
@@ -523,12 +696,14 @@ The following sequence diagram shows how the switch theme operation works:
 As seen in the diagram below, when `switch 1` is typed into the command line input, a new `SwitchThemeCommand` is created.
 
 image::SwitchThemeCommandDiagram2.png[width="800"]
+_Figure 5.5.2 Switch Theme Command Diagram 2_
 
 As seen in the diagram below, when `switch 1` is executed in `SwitchThemeCommand`, it will post `ChangeThemeRequestEvent` to the `EventsCenter`.
 
 image::SwitchThemeCommandDiagram3.png[width="800"]
+_Figure 5.5.3 Switch Theme Command Diagram 3_
 
-Upon detecting `ChangeThemeRequestEvent`, `Ui` will call `handleChangeTheme` to handle the event, update the `MainWindow` accordingly and update its status bar.
+Upon detecting `ChangeThemeRequestEvent`, `MainWindow` will call `handleChangeTheme` to handle the event.
 
 ==== Design Considerations
 
@@ -553,7 +728,7 @@ Upon detecting `ChangeThemeRequestEvent`, `Ui` will call `handleChangeTheme` to 
 === Theme List mechanism
 
 The theme list mechanism is facilitated by a `ThemesWindow`, which resides in `MainWindow`. `ThemesWindow` is a pop-up window that is populated by `Themes.html`, a HTML file
-consisting of a list of available colour themes in `The Myth's Book`.
+consisting of a list of available colour themes in The Myth's Book.
 
 `Themes.html` will then populate `ThemesWindow`. This command will inherit from `Command`.
 
@@ -641,7 +816,7 @@ As seen in the diagram below, when `themes` is typed into the command line input
 image::ThemeListCommandDiagram2.png[width="800"]
 Figure 5.6.2 Theme List Command Diagram 2
 
-As seen in the diagram below, when `themes` is executed in `ThemeListCommand`, it will post `ShowThemeRequestEvent` to the `EventsCenter`.
+As seen in the diagram below, when `themes` is executed in `ThemeListCommand`, it will post `ShowThemeRequestEvent` to the `EventsCenter`, which will be handled by `MainWindow` through `handleThemes`.
 
 image::ThemeListCommandDiagram3.png[width="800"]
 Figure 5.6.3 Theme List Command Diagram 3
