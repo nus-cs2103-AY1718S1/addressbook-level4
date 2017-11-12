@@ -31,17 +31,4 @@ public class SampleUserPersonUtil {
             throw new AssertionError("sample data cannot be invalid", e);
         }
     }
-
-    public static ReadOnlyPerson getDummySamplePerson() {
-        try {
-            ArrayList<Email> emails = new ArrayList<Email>();
-            emails.add(new Email("dummy@dummy.com"));
-            HashSet<WebLink> webLinks = new HashSet<>();
-            webLinks.add(new WebLink("default@facebook.com"));
-            return new Person (new Name("Dummy"), new Phone("11111111"), emails,
-                    new Address("Dummy"), new Remark(""), new HashSet<Tag>(), webLinks);
-        } catch (IllegalValueException e) {
-            throw new AssertionError("sample data cannot be invalid", e);
-        }
-    }
 }

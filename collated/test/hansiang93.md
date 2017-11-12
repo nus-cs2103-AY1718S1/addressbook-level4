@@ -1,5 +1,5 @@
 # hansiang93
-###### \java\guitests\guihandles\WebViewUtil.java
+###### /java/guitests/guihandles/WebViewUtil.java
 ``` java
 /**
  * Helper methods for dealing with {@code WebView}.
@@ -25,7 +25,7 @@ public class WebViewUtil {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FilterCommandTest.java
+###### /java/seedu/address/logic/commands/FilterCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -101,7 +101,7 @@ public class FilterCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\WebCommandTest.java
+###### /java/seedu/address/logic/commands/WebCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code WebCommand}.
@@ -183,7 +183,7 @@ public class WebCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FilterCommandParserTest.java
+###### /java/seedu/address/logic/parser/FilterCommandParserTest.java
 ``` java
 public class FilterCommandParserTest {
 
@@ -207,7 +207,7 @@ public class FilterCommandParserTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\WebCommandParserTest.java
+###### /java/seedu/address/logic/parser/WebCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code DeleteCommandParserTest}.
@@ -228,7 +228,7 @@ public class WebCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\testutil\TypicalWebLinks.java
+###### /java/seedu/address/testutil/TypicalWebLinks.java
 ``` java
 /**
  * A utility class containing a list of {@code Index} objects to be used in tests.
@@ -239,7 +239,7 @@ public class TypicalWebLinks {
     public static final String WEBLINK_SEARCH = WEBSITES_MAP.get("search");
 }
 ```
-###### \java\seedu\address\ui\BrowserPanelTest.java
+###### /java/seedu/address/ui/BrowserPanelTest.java
 ``` java
 public class BrowserPanelTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;

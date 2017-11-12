@@ -78,7 +78,7 @@ Shows a list of all persons in the address book, in the last sorted order. +
 Format: `list`
 
 // tag::sort[]
-=== Listing all persons in order: `sort`
+=== Listing current persons in order: `sort`
 
 Sorts the entire list of persons in the addressbook by the indicated format. Maintains
 the list of persons displayed, but sorted by the indicated format as well.
@@ -90,6 +90,11 @@ the list of persons displayed, but sorted by the indicated format as well.
 Examples:
 
 * 'sort name'
+* 'sort n'
+
+Proposed further enhancements: Sort by tag, weblinks
+Sort in ascending or descending order.
+Push nil entries to the back of the list.
 // end::sort[]
 
 === Editing a person : `edit`
@@ -333,11 +338,13 @@ command or via the User Profile Window (Press F2 in the main window). +
 
 The generated add command is displayed on the result display, as well as copied to your clipboard automatically. +
 
+image::ShareCommand.png[width="370" height="105"]
+
 Format: 'share'
 
 Proposed enhancements: Allow share to take in parameters to share a particular contact from the addressbook so that
 it works for all contacts and not just the userPerson.
-// end:shareCommand[]
+// end::shareCommand[]
 
 === Clearing all entries : `clear`
 
@@ -373,7 +380,7 @@ Format `web facebook||instagram||linkedin||personal`
 Contact must be selected before selecting the buttons.
 
 ====
-// end::viewAddress[]
+// end::viewSocialMedia[]
 
 // tag::changeTheme[]
 === Changing Theme
@@ -391,7 +398,9 @@ Format: `ChangeToTheme Index`
 === User Profile in the UI
 
 The User Profile Window can be accessed by clicking on "File" -> "User Profile". Pressing "F2" will also bring up the User
- Profile window.+
+ Profile window. +
+
+image::UserProfileMenuItem.png[width="208" height="315"]
 
 You can edit the User Profile directly from here. Changes, if any, are only saved when the "OK" button is clicked. +
 Invalid values will not be accepted, and changes will not be saved. For multiple emails, add emails with a comma followed
