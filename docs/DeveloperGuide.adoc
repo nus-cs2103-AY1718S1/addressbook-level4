@@ -318,8 +318,8 @@ Inputs:
 2. `find david` (Assume this command is valid and only 1 such person exist in the list)
 3. `delete 1` (Deletes david)
 4. `undo` (Undo deletion)
-4. `list` (List all)
-5. `redo` (Redo deletion of david)
+5. `list` (List all)
+6. `redo` (Redo deletion of david)
 
 Expected output:  David is deleted from the list. +
 Actual output: Alex is delete from the list. As Alex is index 1 in the list, he is deleted instead. +
