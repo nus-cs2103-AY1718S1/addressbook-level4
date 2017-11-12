@@ -137,11 +137,11 @@ public class AddressBookParser {
         } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_1)
                 || commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_2)) {
             return new FavouriteCommandParser().parse(arguments);
-            //@@author taojiashu
+
         } else if (commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_1)
                 || commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_2)) {
             return new ShowFavouriteCommand();
-
+            //@@author taojiashu
         } else if (commandWord.equalsIgnoreCase(AddBirthdayCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(AddBirthdayCommand.COMMAND_WORDVAR_2)) {
             return new AddBirthdayCommandParser().parse(arguments);
