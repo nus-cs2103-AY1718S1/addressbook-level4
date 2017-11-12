@@ -1166,31 +1166,86 @@ However, instead of stopping at the index, the remainder of the arguments after 
 When adding a new person, we have to note that a `Person` has four compulsory fields, `Name`, `Phone`, `Email` and `Address`.
 `Tag` and `Remark` are optional and have to be handled accordingly.
 
-The implementation for `Add` suggestions follow a decision flow model that can be seen through the following diagram:
+The implementation for `Add` suggestions follow a decision flow model that can be seen through the following activity diagram, from `AddCommandParser.parseArguments(rawArgs)` execution point of view:
 
+image::SuggestionAddActivityDiagram.png[width="600"]
 
+During the handling of a suggestible command arguments for an `Add` command,
 
+1. `rawArgs` is set to be the initial value of the remaining arguments.
+2. Mandatory `Phone` is checked first. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Phones are expected to match the phone regex,
+* having a minimum of digits, or
+* optionally prepended with a `+`,
+* making it easily distinguishable from other numeric formats like the index, building numbers or postal codes.
+3. Mandatory `Email` is checked. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Emails are expected to have the `@` character inside them and regex matching is straightforward,
+* making emails easily distinguishable from other fields.
+4. Existing `Tag` words are checked. If present, extract, remove and continue. Otherwise continue.
+* Words (remaining string delimited by whitespace) that are also tags in the Rolodex session are _existing tag words_.
+5. Tag prefixes (`t/`) are checked. If present, extract, remove and continue. Otherwise continue.
+* `t/TAG` behavior as per normal.
+6. Remark prefixes (`r/`) are checked. If present, extract, remove and continue. Otherwise continue.
+* `r/REMARKS` behavior as per normal.
+7. Mandatory `Address` is checked. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Addresses commonly begin with `Blk`, `Block` or a short number
+* Addresses are expected to be entered after a name (i.e. `COMMAND NAME ... ADDRESS`),
+making it _highly possible_ to obtain the address by getting the substring from the first occurrence of `Blk`, `Block` or the number to the end of the remaining string.
+8. Mandatory `Name` is checked. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Name is the last mandatory argument to be parsed.
+* Name must be non-empty and matches the defined name regex.
+* The unpredictable nature of name words makes it difficult to identify a person's name.
+* As seen in `Address`, if `Name` is entered after (to the right of) `Address`,
+there would be no remaining words to be parsed. Since `Name` must be non-empty, if it is empty, then `Name` is not present.
+
+[NOTE]
+As observed via the decision flow, the suggestion does not always suggest the correct format so it is up to the user to validate the command.
+
+Any missing compulsory fields will result in an immediate failure of the command as specified by a person's requirements.
+Optional arguments, on the other hand, may not be present and are represented as empty strings when sent to the final argument builder.
+
+If any of the prefixes are missing, they will be added when the parsed arguments are built, with the exception of optional arguments.
+
+Given a typical unformatted add command string without prefixes `add Bobby Lee bobby@lee.com 583 Lexington Avenue NY 10048 friends 95849301`:
+
+image::AddBobbyCommand.png[width="800"]
+
+We should receive the following suggestion `Did you mean add n/Bobby Lee p/95849301 e/bobby@lee.com a/583 Lexington Avenue NY 10048 t/friends?`:
+
+image::AddBobbySuggestion.png[width="800"]
+
+Using the decision flow modeled above, we can see that the argument suggestions were parsed in the following order:
+
+1. Bobby's phone, `95849301` is detected as a long number and is extracted first.
+2. The email, `bobby@lee.com` is detected as the `@` character is present and is extracted.
+3. The tag, `friends` is an existing tag in the currently loaded Rolodex and we can extract `friends` as a tag.
+4. The address, `583 Lexington Avenue NY 10048` begins with a short number and will be picked up till the end of the remaining string.
+5. The remainder of the arguments should only contain `Bobby Lee` and is matched as his name.
+
+[IMPORTANT]
 As the `Add` command's decision flow requires many acyclic execution paths to its parser, its corresponding NPath complexity
 is known to be large.
 
 ==== Edit Command Suggestions
+// TODO: Edit Mark
 
 Unlike the `Add` command, the `Edit` command only requires optional (minimum 1) fields and we handle all fields as such.
 However, the `Edit` command also requires <<Commands with a Single Index Type Argument, a mandatory argument of an index type>>,
 similar to <<Remark/Email Command Suggestions>>.
 
 
-
+[IMPORTANT]
 As the `Edit` command's decision flow requires many acyclic execution paths to its parser, its corresponding NPath complexity
 is known to be large.
 
 ==== Design Considerations
+// TODO: Design Considerations Mark
 
 **Aspect:** Parse Order +
 **Alternative 1 (current choice):** Parsing address before name in the `Add` command. +
 **Pros:** The application can be quickly reloaded onto the active window. +
 **Cons:** User might need to switch back and forth between the Rolodex directories. +
-**Alternative 2:** Reload `MainApp` with a new application instance. +
+**Alternative 2:** Dictionary attack. +
 **Constraint:** link:#java-fx[JavaFX] only allows launch(args) to be launched once per execution time on a code level.
 Another approach would be to reload the application with a loaded and built .jar. +
 **Pros:** Easier logic to understand for new developers. +
