@@ -329,10 +329,11 @@ Format: `changePicture INDEX PICTURE_PATH`
 * PICTURE_PATH refers to the path to the picture to change to.
 * The specified picture must be in either .png or . jpg format.
 ****
+
 // end::changePicture[]
 
 // tag::remark[]
-=== Add remark to a person
+=== Add remark to a contact: `remark`
 
 Adds a remark to an existing person in the address book.
 Format: remark INDEX r/REMARK
@@ -353,7 +354,7 @@ removes any remark from the person of index 4 in the address book.
 // end::remark[]
 
 // tag::sort[]
-=== Sort
+=== Sort: `sort`
 
 Sorts the contacts in the address book in alphabetical order
 Format: sort
