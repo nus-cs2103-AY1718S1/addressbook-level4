@@ -156,7 +156,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void sortMeeting() {
         addressBook.sortMeeting();
-        updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+        Predicate<Meeting> currPredicate = (Predicate<Meeting>) filteredMeeting.getPredicate();
+        if (currPredicate == null) {
+            updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+        } else {
+            updateFilteredMeetingList(currPredicate);
+        }
     }
 
     //@@author
