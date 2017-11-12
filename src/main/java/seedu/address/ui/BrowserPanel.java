@@ -99,6 +99,7 @@ public class BrowserPanel extends UiPart<Region> {
                 throw new MalformedURLException("URL is malformed in setContactImage()");
             }
         }
+
         contactImageCircle.setVisible(true);
         contactImageCircle.setFill(new ImagePattern(img));
         easeIn(contactImageCircle);

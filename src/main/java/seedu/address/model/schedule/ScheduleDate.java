@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -18,31 +19,36 @@ public class ScheduleDate {
             + "YYYY-MM-DD HH:MM";
 
 
-    public final String scheduleDate;
+    public final String scheduleDateString;
+    public final Date scheduleDate;
 
     /**
      * Validates given name.
      *
      * @throws ParseException if given name string is invalid.
      */
-    public ScheduleDate(String scheduleDate) throws ParseException {
-        requireNonNull(scheduleDate);
+    public ScheduleDate(String date) throws ParseException {
+        requireNonNull(date);
         DateFormat dateInput = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        /** Sanity check date input - Ensure date inputs are valid. **/
 
         try {
-            dateInput.parse(scheduleDate).toString();
+            scheduleDate = dateInput.parse(date);
         } catch (java.text.ParseException e) {
             throw new ParseException(MESSAGE_SCHEDULE_DATE_CONSTRAINTS);
         }
 
-        this.scheduleDate = scheduleDate;
+        this.scheduleDateString = date;
 
     }
 
     @Override
     public String toString() {
-        return scheduleDate;
+        return scheduleDateString;
     }
+
+    public Date getScheduleDate() {
+        return scheduleDate; }
 
     @Override
     public boolean equals(Object other) {

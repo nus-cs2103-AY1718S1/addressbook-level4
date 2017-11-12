@@ -43,15 +43,16 @@ public class AddCalendarCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + "p/2 " + PREFIX_CALENDAR_ID + "xderek105243x@gmail.com";
 
-    public static final String MESSAGE_CALENDAR_PULL_SUCCESS = "Added Google Calendar Events to %1$s.";
+    public static final String MESSAGE_CALENDAR_PULL_SUCCESS = "Added %1$s Google Calendar Event(s) to %2$s.";
     public static final String MESSAGE_INVALID_CALENDAR_ID = "Google Calendar ID is invalid.";
     public static final String MESSAGE_CALENDAR_PULL_FAIL = "Unable to pull events from Google Calendar.";
     public static final String MESSAGE_DATETIME_ERROR = "Error parsing datetime.";
-    public static final String MESSAGE_DUPLICATE_SCHEDULE = "Schedule already exists in the schedule list.";
+    public static final String MESSAGE_NO_UPDATE = "%1$s's schedule list is up-to-date.";
 
     private final Index personIndex;
     private final String calendarId;
 
+    private int addedEvents;
     /**
      * Creates an CreateGroupCommand to add the specified {@code ReadOnlyGroup}
      */
@@ -88,7 +89,12 @@ public class AddCalendarCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_CALENDAR_PULL_SUCCESS, personName));
+
+        if (addedEvents == 0) {
+            return new CommandResult(String.format(MESSAGE_NO_UPDATE, personName));
+        } else {
+            return new CommandResult(String.format(MESSAGE_CALENDAR_PULL_SUCCESS, addedEvents, personName));
+        }
 
     }
 
@@ -110,9 +116,14 @@ public class AddCalendarCommand extends UndoableCommand {
             for (Schedule s: scheduleList) {
                 try {
                     updatedScheduleList.add(s);
+                    addedEvents++;
                 } catch (DuplicateScheduleException dse) {
-                    throw new CommandException(MESSAGE_DUPLICATE_SCHEDULE);
+                    continue;
                 }
+            }
+
+            if (addedEvents > 0) {
+                updatedScheduleList.sort();
             }
 
         } catch (IOException e) {

@@ -1,10 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -27,50 +23,39 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.ReadOnlySchedule;
 import seedu.address.model.schedule.UniqueScheduleList;
-import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
+import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Adds a person to the address book.
+ * Removes an event from a person's schedule.
  */
-public class AddEventCommand extends UndoableCommand {
+public class DeleteEventCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "eadd";
-    public static final String COMMAND_ALT = "ea";
+    public static final String COMMAND_WORD = "edelete";
+    public static final String COMMAND_ALT = "ed";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to a person's schedule. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes event(s) from a person's schedule. "
             + " \nParameters: "
             + "p/PERSON INDEX "
-            + PREFIX_NAME + "EVENT NAME "
-            + PREFIX_START_DATE + "EVENT START DATE "
-            + PREFIX_END_DATE + "EVENT END DATE "
-            + "[" + PREFIX_DETAILS + "EVENT DETAILS]\n"
-            + "Date Format: YYYY-MM-DD HH:MM\n"
+            + "e/EVENT INDEX [EVENT INDEX...]\n"
             + "Example: " + COMMAND_WORD + " p/2 "
-            + PREFIX_NAME + "CS2103 Meeting "
-            + PREFIX_START_DATE + "2017-11-23 10:30 "
-            + PREFIX_END_DATE + "2017-11-23 11:45 "
-            + PREFIX_DETAILS + "Prepare for Demo";
+            + "e/1 2 3";
 
-    public static final String MESSAGE_SUCCESS = "Added %1$s to %2$s's schedule.";
-    public static final String MESSAGE_FAIL = "Unable to add event to %1$s's schedule.";
-    public static final String MESSAGE_DUPLICATE_SCHEDULE = "This event already exists in %1$s's schedule.";
-    public static final String MESSAGE_INVALID_DURATION = "Please ensure that event "
-            + "start time is before event end time.";
-    public static final String MESSAGE_INVALID_START_TIME = "Please enter a start time after %1$s.";
-    public static final String MESSAGE_INVALID_TIME = "Please enter a valid time.";
-
+    public static final String MESSAGE_SUCCESS = "Removed %1$s event(s) from %2$s.";
+    public static final String MESSAGE_FAIL = "Unable to remove event from %1$s's schedule.";
+    public static final String MESSAGE_NO_EVENTS = "%1$s's schedule list is empty.";
+    public static final String MESSAGE_NO_SUCH_EVENT = "Event does not exist.";
     private final Index personIndex;
-    private final ReadOnlySchedule schedule;
+    private Index[] eventIndexes;
 
     /**
      * Creates an AddEventCommand to add the specified {@code ReadOnlySchedule}
      */
-    public AddEventCommand(Index personIndex, ReadOnlySchedule toAdd) {
+    public DeleteEventCommand(Index personIndex, Index[] eventIndexes) {
         requireNonNull(personIndex);
-        requireNonNull(toAdd);
+        requireNonNull(eventIndexes);
         this.personIndex = personIndex;
-        this.schedule = toAdd;
+        this.eventIndexes = eventIndexes;
     }
 
     @Override
@@ -85,10 +70,11 @@ public class AddEventCommand extends UndoableCommand {
 
         ReadOnlyPerson toEdit = lastShownPersonList.get(personIndex.getZeroBased());
         String personName = toEdit.getName().toString();
-        String scheduleName = this.schedule.getName().fullName;
+        int numberOfEvents = this.eventIndexes.length;
+
         Person editedPerson;
         try {
-            editedPerson = addEventToPerson(toEdit, personName);
+            editedPerson = removeEventFromPerson(toEdit);
             model.updatePerson(toEdit, editedPerson);
         } catch (ParseException e) {
             throw new CommandException(String.format(MESSAGE_FAIL, personName));
@@ -98,42 +84,55 @@ public class AddEventCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, scheduleName, personName));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, numberOfEvents, personName));
 
     }
 
     /**
      * Creates and returns a {@code Person} with a schedule list.
      */
-    private Person addEventToPerson(ReadOnlyPerson personToEdit, String personName) throws ParseException {
+    private Person removeEventFromPerson(ReadOnlyPerson personToEdit) throws ParseException {
         Name updatedName = personToEdit.getName();
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();
         Address updatedAddress = personToEdit.getAddress();
-        ProfPic updatedProfPic = personToEdit.getProfPic();
         Favourite updatedFavourite = personToEdit.getFavourite();
+        ProfPic updatedProfPic = personToEdit.getProfPic();
         Set<Tag> updatedTags = personToEdit.getTags();
         Set<Group> updatedGroups = personToEdit.getGroups();
         UniqueScheduleList updatedScheduleList = personToEdit.scheduleProperty().get();
 
-        try {
-            updatedScheduleList.add(this.schedule);
-        } catch (DuplicateScheduleException e) {
-            throw new ParseException(String.format(MESSAGE_DUPLICATE_SCHEDULE, personName));
+        if (updatedScheduleList.asObservableList().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_NO_EVENTS, updatedName.fullName));
         }
 
-        /** Ensure scheduleList is in order **/
-        updatedScheduleList.sort();
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
-                updatedProfPic, updatedTags, updatedGroups, updatedScheduleList.toSet());
+        ReadOnlySchedule[] schedulesToDelete = new ReadOnlySchedule[eventIndexes.length];
+        for (int i = 0; i < eventIndexes.length; i++) {
+            try {
+                schedulesToDelete[i] = updatedScheduleList.asObservableList().get(eventIndexes[i].getZeroBased());
+            } catch (IndexOutOfBoundsException e) {
+                throw new ParseException(MESSAGE_NO_SUCH_EVENT);
+            }
+        }
+
+        for (int i = 0; i < eventIndexes.length; i++) {
+            try {
+                updatedScheduleList.remove(schedulesToDelete[i]);
+            } catch (ScheduleNotFoundException e) {
+                throw new ParseException(MESSAGE_NO_SUCH_EVENT);
+            }
+        }
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedFavourite, updatedProfPic, updatedTags, updatedGroups, updatedScheduleList.toSet());
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddEventCommand // instanceof handles nulls
-                && schedule.equals(((AddEventCommand) other).schedule)
-                && personIndex.equals(((AddEventCommand) other).personIndex));
+                || (other instanceof DeleteEventCommand // instanceof handles nulls
+                && eventIndexes.equals(((DeleteEventCommand) other).eventIndexes)
+                && personIndex.equals(((DeleteEventCommand) other).personIndex));
 
     }
 }

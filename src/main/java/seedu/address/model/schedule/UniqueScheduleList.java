@@ -3,6 +3,7 @@ package seedu.address.model.schedule;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -156,6 +157,20 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         assert CollectionUtil.elementsAreUnique(internalList);
         assert CollectionUtil.elementsAreUnique(other.internalList);
         return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
+    }
+
+    /** Sorts scheduleList by schedule end dateTime **/
+    public void sort() {
+        Collections.sort(internalList, (s1, s2) -> {
+            if (s1.getEndDateTime().scheduleDate.getTime() < s2.getEndDateTime().scheduleDate.getTime()) {
+                return -1;
+            } else if (s1.getEndDateTime().scheduleDate.getTime() == s2.getEndDateTime().scheduleDate.getTime()) {
+                return 0;
+            } else {
+                return 1;
+            }
+        });
+
     }
 
     @Override

@@ -49,12 +49,16 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             ScheduleDate eDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_END_DATE)).get();
             scheduleDetails = ParserUtil.parseScheduleDetails(argMultimap.getValue(PREFIX_DETAILS)).get();
 
-            if (!DateParserUtil.isAfterCurrentTime(sDate.toString())) {
+            if (!DateParserUtil.isAfterCurrentTime(sDate.scheduleDate)) {
                 throw new ParseException(String.format(AddEventCommand.MESSAGE_INVALID_START_TIME,
                         DateParserUtil.getCurrentTime()));
             }
 
-            if (!DateParserUtil.isValidEventDuration(sDate.toString(), eDate.toString())) {
+            if (!DateParserUtil.isValidTime(sDate.toString()) || !DateParserUtil.isValidTime(eDate.toString())) {
+                throw new ParseException(AddEventCommand.MESSAGE_INVALID_TIME);
+            }
+
+            if (!DateParserUtil.isValidEventDuration(sDate.scheduleDate, eDate.scheduleDate)) {
                 throw new ParseException(AddEventCommand.MESSAGE_INVALID_DURATION);
             }
 

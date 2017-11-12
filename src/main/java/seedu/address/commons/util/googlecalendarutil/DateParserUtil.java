@@ -46,37 +46,41 @@ public class DateParserUtil {
         return dateTimeMap;
     }
 
-    /** Ensures event start date is before event end date */
-    public static boolean isValidEventDuration(String startDateTime, String endDateTime) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-        try {
-            Date startDate = sdf.parse(startDateTime);
-            Date endDate = sdf.parse(endDateTime);
-            if (startDate.compareTo(endDate) > 0) {
-                return false;
-            }
-            return true;
-        } catch (java.text.ParseException e) {
-            throw new AssertionError("DateTime string should be valid.");
+    /** Ensures event start date is before event end date
+     * @param startDateTime
+     * @param endDateTime*/
+    public static boolean isValidEventDuration(Date startDateTime, Date endDateTime) {
+        if (startDateTime.compareTo(endDateTime) > 0) {
+            return false;
         }
-
+        return true;
     }
 
-    /** Ensures event start date is after current time */
-    public static boolean isAfterCurrentTime(String dateTime) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+    /** Ensures event start date is after current time
+     * @param dateTime*/
+    public static boolean isAfterCurrentTime(Date dateTime) {
         Date currentDateTime = new Date();
+        if (dateTime.compareTo(currentDateTime) < 0) {
+            return false;
+        }
+        return true;
+    }
+
+
+    /** Sanity checks date input **/
+    public static boolean isValidTime(String dateTime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        sdf.setLenient(false);
         try {
-            Date startDateTime = df.parse(dateTime);
-            if (startDateTime.compareTo(currentDateTime) < 0) {
-                return false;
-            }
+            sdf.parse(dateTime);
         } catch (java.text.ParseException e) {
-            throw new AssertionError("DateTime string should be valid.");
+            return false;
         }
 
         return true;
     }
+
+
 
     /** Returns yyyy-MM-dd hh:mm representation of current time */
     public static String getCurrentTime() {
@@ -84,6 +88,7 @@ public class DateParserUtil {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         return df.format(currentTime).toString();
     }
+
 
 
     /** Returns a Google Calendar-like representation of the duration of an event
@@ -103,15 +108,18 @@ public class DateParserUtil {
         StringBuilder durationString = new StringBuilder();
         durationString.append(sDateTimeMap.get(DAY) + ", ");
         durationString.append(sDateTimeMap.get(DATE) + " ");
-        durationString.append(sDateTimeMap.get(MONTH));
+        durationString.append(sDateTimeMap.get(MONTH) + " ");
+        durationString.append(sDateTimeMap.get(YEAR));
         if (sDateTimeMap.get(DATE).equals(eDateTimeMap.get(DATE))
-                && sDateTimeMap.get(MONTH).equals(eDateTimeMap.get(MONTH))) {
+                && sDateTimeMap.get(MONTH).equals(eDateTimeMap.get(MONTH))
+                && sDateTimeMap.get(YEAR).equals(eDateTimeMap.get(YEAR))) {
             durationString.append("\n" + sDateTimeMap.get(TIME) + " - " + eDateTimeMap.get(TIME));
         } else {
             durationString.append(", " + sDateTimeMap.get(TIME) + " - \n");
             durationString.append(eDateTimeMap.get(DAY) + ", ");
             durationString.append(eDateTimeMap.get(DATE) + " ");
-            durationString.append(eDateTimeMap.get(MONTH) + ", ");
+            durationString.append(eDateTimeMap.get(MONTH) + " ");
+            durationString.append(eDateTimeMap.get(YEAR) + ", ");
             durationString.append(eDateTimeMap.get(TIME));
         }
 

@@ -108,7 +108,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-
     @Override
     public void sortPerson(Comparator<ReadOnlyPerson> sortComparator, boolean isReverseOrder)
             throws NoPersonsException {
@@ -189,6 +188,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         updateFilteredPersonList(getGroupMembersPredicate(personList));
     }
+
 
     @Override
     public boolean equals(Object obj) {

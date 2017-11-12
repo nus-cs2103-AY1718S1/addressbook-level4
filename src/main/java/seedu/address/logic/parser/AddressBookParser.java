@@ -15,6 +15,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CreateGroupCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.DeleteGroupCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -141,6 +142,10 @@ public class AddressBookParser {
         case AddEventCommand.COMMAND_WORD:
         case AddEventCommand.COMMAND_ALT:
             return new AddEventCommandParser().parse(arguments);
+
+        case DeleteEventCommand.COMMAND_WORD:
+        case DeleteEventCommand.COMMAND_ALT:
+            return new DeleteEventCommandParser().parse(arguments);
 
         case ModListCommand.COMMAND_WORD:
         case ModListCommand.COMMAND_ALT:
