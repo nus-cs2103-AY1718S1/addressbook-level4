@@ -671,6 +671,7 @@ Since only one twitter link is allowed for each person, we have designed the lin
 with the current twitter link used in the link command so that it is easy to use for the user.
 
 image::LinkActivityDiagram.png[width="600"]
+_Figure 3.9.1a : Activity Diagram showing how link command is used_
 
 [NOTE]
 Only twitter link are allowed to be added.
