@@ -639,7 +639,7 @@ variable change to `true`. Similarly, the variable can be changed from `true` to
 **Pros:** It is easy to see and the Ui is clean +
 **Cons:** It is harder to implement as a new `ObjectProperty` has to be added to the `PersonCard` to update the UI of it +
 **Alternative 2**: The pinned person will just have a `Tag` that says `pinned` +
-**Pros:** It is easier to implement because a new `Tag` called `pinned` can just be added to the `Person` +
+**Pros:** It is easier to implement because `Tag` has already been implemented. A new `Tag` called `pinned` can just be added to the `Person` +
 **Cons:** It may not be noticeable if the person already has many `Tag` on them.
 // end::pinunpin[]
 
