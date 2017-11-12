@@ -4,7 +4,7 @@ import seedu.room.commons.events.BaseEvent;
 
 //@@author sushinoya
 /**
- * An event requesting to switch the tab.
+ * An event requesting to switch tabs between Residents List and Events List.
  */
 public class SwitchTabRequestEvent extends BaseEvent {
 

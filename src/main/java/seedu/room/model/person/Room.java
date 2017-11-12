@@ -14,10 +14,6 @@ public class Room {
                    + "UUU is unit number and A is an optional letter "
                    + "to denote exact room within a suite";
 
-    /*
-     * The first character of the room must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
     public static final String ROOM_VALIDATION_REGEX = "\\d{2}-\\d{3}[A-Z]?";
     public static final String ROOM_NOT_SET_DEFAULT = "Not Set";
 

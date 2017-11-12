@@ -16,7 +16,7 @@ import seedu.room.model.event.exceptions.EventNotFoundException;
 
 //@@author sushinoya
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
+ * A list of events that enforces uniqueness between its elements and does not allow nulls.
  * <p>
  * Supports a minimal set of list operations.
  *
