@@ -75,6 +75,16 @@ A debt collector will have the job to record down the collections for the day fr
 
 This is very similar to the `Payback` command, however, `Repaid` command excels in automating three different tasks so that life is indeed simpler for debt collectors to key in information in the system.
 
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=repaid]
+
+#End of Extract#
+
+---
 === Enhancement Added: Add/Remove Profile Picture
 
 ==== External behavior
@@ -94,6 +104,16 @@ include::../UserGuide.adoc[tag=delpic]
 
 A debt collector might need to conduct house visits to collect debts from people. Thus, having commands that allow the user to add/remove pictures for each individual debtors helps him/her quickly identify a specific debtor during official house visits.
 
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=setpath/addpic/delpic]
+
+#End of Extract#
+
+---
 === Other contributions
 
 * Set up sync between all commands and all lists (masterlist/blacklist/whitelist) (https://github.com/CS2103AUG2017-T17-B1/main/pull/166)

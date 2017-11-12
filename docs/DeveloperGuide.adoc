@@ -1206,7 +1206,7 @@ public ReadOnlyPerson removeProfilePic(ReadOnlyPerson person) {
 **Alternative 1 (current choice):** Pictures are not stored in Codii. Images are read from the path directory provided by the user
 **Pros:** Straightforward and simpler to implement. +
 **Cons:** Application cannot be easily transferred from one workstation to another. +
-*Alternative 2:** Store images in Codii similar to how XML files are stored +
+**Alternative 2:** Store images in Codii similar to how XML files are stored +
 **Pros:** Far lesser hassle in transferring application content to another workstation +
 **Cons:** The result of both implementations are very similar. However, this implementation is harder to execute. +
 // end::setpath/addpic/delpic[]
