@@ -58,13 +58,77 @@ _Command:_ +
 _Result:_ +
 `New person added: Martin Smith Phone: 85930167 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
 
-*Negative test case*
+*Negative test cases*
 
 . The value for one property is invalid +
 _Command:_ +
 `add n/Den Smith p/85930167 e/www.smith.com a/25 New York City`
 _Result:_ +
 `Person emails should be 2 alphanumeric/period strings separated by '@'.`
+
+. The person already exists +
+_Command:_ +
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends`
+_Result:_ +
+`This person already exists in the application.`
+
+==== Edit an existing contact
+
+To edit an existing contact, we need to use the `edit` command.
+
+*Positive test case*
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Let's edit the person called `Martin` we added just now (assume the index is `8`) +
+_Command:_ +
+`edit 8 p/86129854`
+_Result:_ +
+`Edited Person: Martin Smith Phone: 86129854 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
+
+*Negative test cases*
+
+. The index is invalid (assume there are fewer than 100 contacts in the application) +
+_Command:_ +
+`edit 100 a/Beijing, China` +
+_Result:_ +
+`The person index provided is invalid.`
+
+==== View the details of a person
+
+To view the details of an existing contact, we need to use the `select` command.
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Then, select the person we want to view (assume there is at least 1 contact in the application) +
+_Command:_ +
+`select 1` +
+_Result:_ +
+The person's details will be shown on the right-hand side of the interface.
+
+==== Delete an existing person
+
+To delete an existing contact, we need to use the `delete` command.
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Then, delete the first person (assume there is at least 1 contact in the application) +
+_Command:_ +
+`delete 1` +
+_Result:_ +
+`Deleted Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]`
 
 ==== Add avatar to an existing person
 
