@@ -6,6 +6,9 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
@@ -17,6 +20,7 @@ import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author hansiang93
+
 /**
  * The Browser Panel of the App.
  */
@@ -42,8 +46,20 @@ public class BrowserPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
+        browser.getEngine().setJavaScriptEnabled(true);
         loadDefaultPage();
         registerAsAnEventHandler(this);
+        browser.getEngine().getLoadWorker().stateProperty().addListener(
+                new ChangeListener<Worker.State>() {
+                    @Override
+                    public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
+
+                        if (newState == Worker.State.SUCCEEDED) {
+                            logger.info("Loaded this page: " + browser.getEngine().getLocation());
+                        }
+
+                    }
+                });
     }
 
 

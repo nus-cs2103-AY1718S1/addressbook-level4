@@ -91,6 +91,17 @@ This allows a user view the Social Links and Address of a contact directly withi
 
 === Other contributions
 
+* Done majority of Ui-related changes
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=userInterface]
+
+#End of Extract#
+
+---
+
 * Updated the GUI color scheme
 
 ---
@@ -102,4 +113,5 @@ include::../DeveloperGuide.adoc[tag=styling]
 
 ---
 
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Assisted on issues on the class forum (Issues https://github.com/nus-cs2103-AY1718S1/forum/issues/129[#129], https://github.com/nus-cs2103-AY1718S1/forum/issues/144[#144])
+* Participated in 1.4 bug tracking (Issues https://github.com/CS2103AUG2017-T17-B3/main/issues/60[#60], https://github.com/CS2103AUG2017-T14-B3/main/issues/78[#78], https://github.com/CS2103AUG2017-T14-B3/main/issues/79[#79], https://github.com/CS2103AUG2017-T14-B3/main/issues/83[#83], https://github.com/CS2103AUG2017-T14-B3/main/issues/84[#84])
