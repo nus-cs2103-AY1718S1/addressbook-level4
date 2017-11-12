@@ -32,6 +32,8 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String pinned;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -54,6 +56,13 @@ public class XmlAdaptedPerson {
         birthday = source.getBirthday().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+
+        if (source.isPinned()) {
+            pinned = "true";
+        } else {
+            pinned = "false";
+        }
+
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -75,7 +84,14 @@ public class XmlAdaptedPerson {
         final Birthday birthday = new Birthday(this.birthday);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+        final boolean pin;
+        if ("true".equals(pinned)) {
+            pin = true;
+        } else {
+            pin = false;
+        }
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, birthday, email, address, tags);
+        return new Person(name, phone, birthday, email, address, pin, tags);
     }
 }

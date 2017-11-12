@@ -76,6 +76,17 @@ public class TypicalPersons {
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
+        addPersonsToAddressBook(ab);
+        TypicalGroups.addGroupsToAddressBook(ab);
+
+        return ab;
+    }
+
+    /**
+     * Adds all persons to the sample address book
+     * @param ab
+     */
+    private static void addPersonsToAddressBook(AddressBook ab) {
         for (ReadOnlyPerson person : getTypicalPersons()) {
             try {
                 ab.addPerson(person);
@@ -83,7 +94,6 @@ public class TypicalPersons {
                 assert false : "not possible";
             }
         }
-        return ab;
     }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {

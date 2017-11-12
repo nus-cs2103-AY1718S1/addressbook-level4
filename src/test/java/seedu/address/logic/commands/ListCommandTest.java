@@ -15,6 +15,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.storage.Storage;
 import seedu.address.testutil.TypicalStorage;
 
+//@@author LimeFallacie
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
  */
@@ -49,7 +50,6 @@ public class ListCommandTest {
         assertCommandSuccess(listCommand, model, String.format(ListCommand.MESSAGE_SUCCESS, "."), expectedModel);
     }
 
-    //@@author LimeFallacie
     @Test
     public void execute_listFriends_success() {
         listCommand = new ListCommand("friends");

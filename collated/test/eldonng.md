@@ -1,4 +1,236 @@
 # eldonng
+###### \java\seedu\address\logic\commands\CreateGroupCommandTest.java
+``` java
+public class CreateGroupCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Storage storage = new TypicalStorage().setUp();
+
+    @Test
+    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingGroupAdded modelStub = new ModelStubAcceptingGroupAdded();
+        Group validGroup = new GroupBuilder().build();
+
+        CommandResult commandResult = getAddCommandForGroup(validGroup, modelStub).execute();
+
+        assertEquals(String.format(CreateGroupCommand.MESSAGE_SUCCESS, validGroup.getGroupName().fullName,
+                validGroup.getGroupMembers().size()), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validGroup), modelStub.groupsAdded);
+    }
+
+    @Test
+    public void execute_duplicatePerson_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateGroupException();
+        Group validGroup = new GroupBuilder().build();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(MESSAGE_DUPLICATE_GROUP);
+
+        getAddCommandForGroup(validGroup, modelStub).execute();
+    }
+    @Test
+    public void equals() throws IllegalValueException {
+
+        GroupName groupName1 = new GroupName("Group 1");
+        GroupName groupName2 = new GroupName("Group 2");
+        List<Index> groupList = new ArrayList<>();
+        CreateGroupCommand addGroup1Command = new CreateGroupCommand(groupName1, groupList);
+        CreateGroupCommand addGroup2Command = new CreateGroupCommand(groupName2, groupList);
+
+        // same object -> returns true
+        assertTrue(addGroup1Command.equals(addGroup1Command));
+
+        // same values -> returns true
+        CreateGroupCommand addGroup1CommandCopy = new CreateGroupCommand(groupName1, groupList);
+        assertTrue(addGroup1Command.equals(addGroup1CommandCopy));
+
+        // different types -> returns false
+        assertFalse(addGroup1Command.equals(1));
+
+        // null -> returns false
+        assertFalse(addGroup1Command.equals(null));
+
+        // different person -> returns false
+        assertFalse(addGroup1Command.equals(addGroup2Command));
+    }
+
+    /**
+     * Generates a new CreateGroupCommand with the details of the given group.
+     */
+    private CreateGroupCommand getAddCommandForGroup(Group group, Model model) {
+        CreateGroupCommand command = new CreateGroupCommand(group.getGroupName(),
+                        new ArrayList<>(Arrays.asList(Index.fromOneBased(1))));
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
+        return command;
+    }
+
+    /**
+     * A Model stub that always throw a DuplicateGroupException when trying to add a group.
+     */
+    private class ModelStubThrowingDuplicateGroupException extends ModelStub {
+        @Override
+        public void addGroup(ReadOnlyGroup group) throws DuplicateGroupException {
+            throw new DuplicateGroupException();
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            return FXCollections.observableList(new ArrayList<>(Arrays.asList(ALICE)));
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
+    /**
+     * A Model stub that always accept the group being added.
+     */
+    private class ModelStubAcceptingGroupAdded extends ModelStub {
+        final ArrayList<Group> groupsAdded = new ArrayList<>();
+
+        @Override
+        public void addGroup(ReadOnlyGroup group) throws DuplicateGroupException {
+            groupsAdded.add(new Group(group));
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            return FXCollections.observableList(new ArrayList<>(Arrays.asList(ALICE)));
+        }
+
+        @Override
+        public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
+            assert true;
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+}
+
+
+```
+###### \java\seedu\address\logic\commands\DeleteGroupCommandTest.java
+``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstGroupOnly;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_GROUP;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.storage.Storage;
+import seedu.address.testutil.TypicalStorage;
+
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteGroupCommand}.
+ */
+public class DeleteGroupCommandTest {
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Storage storage = new TypicalStorage().setUp();
+
+    @Test
+    public void execute_validIndexUnfilteredList_success() throws Exception {
+        ReadOnlyGroup groupToDelete = model.getGroupList().get(INDEX_FIRST_GROUP.getZeroBased());
+        DeleteGroupCommand deleteGroupCommand = prepareCommand(INDEX_FIRST_GROUP);
+
+        String expectedMessage = String.format(DeleteGroupCommand.MESSAGE_DELETE_GROUP_SUCCESS,
+                groupToDelete.getGroupName().fullName);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteGroup(groupToDelete);
+
+        assertCommandSuccess(deleteGroupCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getGroupList().size() + 1);
+        DeleteGroupCommand deleteGroupCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteGroupCommand, model, Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() throws Exception {
+        showFirstGroupOnly(model);
+
+        ReadOnlyGroup groupToDelete = model.getGroupList().get(INDEX_FIRST_GROUP.getZeroBased());
+        DeleteGroupCommand deleteGroupCommand = prepareCommand(INDEX_FIRST_GROUP);
+
+        String expectedMessage = String.format(DeleteGroupCommand.MESSAGE_DELETE_GROUP_SUCCESS,
+                groupToDelete.getGroupName().fullName);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteGroup(groupToDelete);
+
+        assertCommandSuccess(deleteGroupCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_throwsCommandException() {
+        showFirstGroupOnly(model);
+
+        Index outOfBoundIndex = INDEX_SECOND_GROUP;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getGroupList().size());
+
+        DeleteGroupCommand deleteGroupCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteGroupCommand, model, Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        DeleteGroupCommand deleteFirstGroupCommand = new DeleteGroupCommand(INDEX_FIRST_GROUP);
+        DeleteGroupCommand deleteSecondGroupCommand = new DeleteGroupCommand(INDEX_SECOND_GROUP);
+
+        // same object -> returns true
+        assertTrue(deleteFirstGroupCommand.equals(deleteFirstGroupCommand));
+
+        // same values -> returns true
+        DeleteGroupCommand deleteFirstCommandCopy = new DeleteGroupCommand(INDEX_FIRST_GROUP);
+        assertTrue(deleteFirstGroupCommand.equals(deleteFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(deleteFirstGroupCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(deleteFirstGroupCommand.equals(null));
+
+        // different group -> returns false
+        assertFalse(deleteFirstGroupCommand.equals(deleteSecondGroupCommand));
+    }
+
+    /**
+     * Returns a {@code DeleteGroupCommand} with the parameter {@code index}.
+     */
+    private DeleteGroupCommand prepareCommand(Index index) {
+        DeleteGroupCommand deleteGroupCommand = new DeleteGroupCommand(index);
+        deleteGroupCommand.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
+        return deleteGroupCommand;
+    }
+
+}
+```
 ###### \java\seedu\address\logic\commands\PinCommandTest.java
 ``` java
 /**
@@ -17,7 +249,6 @@ public class PinCommandTest {
         String expectedMessage = String.format(PinCommand.MESSAGE_PIN_PERSON_SUCCESS, personToPin);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.pinPerson(personToPin);
 
         assertCommandSuccess(pinCommand, model, expectedMessage, expectedModel);
 
@@ -46,6 +277,7 @@ public class PinCommandTest {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToPin = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        model.unpinPerson(personToPin);
         PinCommand pinCommand = prepareCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(PinCommand.MESSAGE_PIN_PERSON_SUCCESS, personToPin);
@@ -155,6 +387,299 @@ public class PinCommandTest {
         UnpinCommand unpinCommand = new UnpinCommand(index);
         unpinCommand.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
         return unpinCommand;
+    }
+}
+```
+###### \java\seedu\address\logic\commands\SelectGroupCommandTest.java
+``` java
+public class SelectGroupCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    private Model model;
+    private Storage storage;
+
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        storage = new TypicalStorage().setUp();
+    }
+
+    @Test
+    public void execute_validIndexUnfilteredList_success() {
+        Index lastPersonIndex = Index.fromOneBased(model.getGroupList().size());
+
+        assertExecutionSuccess(INDEX_FIRST_GROUP);
+        assertExecutionSuccess(INDEX_THIRD_GROUP);
+        assertExecutionSuccess(lastPersonIndex);
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_failure() {
+        Index outOfBoundsIndex = Index.fromOneBased(model.getGroupList().size() + 1);
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() {
+        showFirstGroupOnly(model);
+
+        assertExecutionSuccess(INDEX_FIRST_GROUP);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_failure() {
+        showFirstGroupOnly(model);
+
+        Index outOfBoundsIndex = INDEX_SECOND_GROUP;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getGroupList().size());
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        SelectGroupCommand selectFirstCommand = new SelectGroupCommand(INDEX_FIRST_GROUP);
+        SelectGroupCommand selectSecondCommand = new SelectGroupCommand(INDEX_SECOND_GROUP);
+
+        // same object -> returns true
+        assertTrue(selectFirstCommand.equals(selectFirstCommand));
+
+        // same values -> returns true
+        SelectGroupCommand selectFirstCommandCopy = new SelectGroupCommand(INDEX_FIRST_GROUP);
+        assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(selectFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(selectFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(selectFirstCommand.equals(selectSecondCommand));
+    }
+
+    /**
+     * Executes a {@code SelectCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
+     * is raised with the correct index.
+     */
+    private void assertExecutionSuccess(Index index) {
+        SelectGroupCommand selectGroupCommand = prepareCommand(index);
+
+        try {
+            CommandResult commandResult = selectGroupCommand.execute();
+            assertEquals(String.format(SelectGroupCommand.MESSAGE_SELECT_GROUP_SUCCESS, index.getOneBased()),
+                    commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+
+        JumpToGroupListRequestEvent lastEvent =
+                (JumpToGroupListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+    }
+
+    /**
+     * Executes a {@code SelectGroupCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * is thrown with the {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(Index index, String expectedMessage) {
+        SelectGroupCommand selectGroupCommand = prepareCommand(index);
+
+        try {
+            selectGroupCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(expectedMessage, ce.getMessage());
+            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
+        }
+    }
+
+    /**
+     * Returns a {@code SelectCommand} with parameters {@code index}.
+     */
+    private SelectGroupCommand prepareCommand(Index index) {
+        SelectGroupCommand selectGroupCommand = new SelectGroupCommand(index);
+        selectGroupCommand.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
+        return selectGroupCommand;
+    }
+}
+```
+###### \java\seedu\address\logic\commands\SetColourCommandTest.java
+``` java
+public class SetColourCommandTest {
+
+    private static final String VALID_TAG_FRIEND = "friends";
+    private static final String INVALID_TAG = "asd123";
+
+    private Model model;
+    private Storage storage;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        storage = new TypicalStorage().setUp();
+    }
+
+    @Test
+    public void execute_setColourTag_success() throws Exception {
+        SetColourCommand setColourCommand = new SetColourCommand(VALID_TAG_FRIEND, "red");
+        setColourCommand.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.setTagColour(VALID_TAG_FRIEND, "red");
+
+        assertCommandSuccess(setColourCommand, model,
+                String.format(SetColourCommand.SETCOLOUR_SUCCESS, VALID_TAG_FRIEND, "red"), expectedModel);
+    }
+
+    @Test
+    public void execute_setInvalidColour_failure() throws Exception {
+        SetColourCommand setColourCommand = new SetColourCommand(VALID_TAG_FRIEND, "nocolour");
+        setColourCommand.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
+
+       String expectedMessage = String.format(SetColourCommand.SETCOLOUR_INVALID_COLOUR, "nocolour");
+
+       assertCommandFailure(setColourCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void execute_setInvalidTag_failure() throws Exception {
+        SetColourCommand setColourCommand = new SetColourCommand(INVALID_TAG, "red");
+        setColourCommand.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
+
+        String expectedMessage = SetColourCommand.SETCOLOUR_INVALID_TAG;
+
+        assertCommandFailure(setColourCommand, model, expectedMessage);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\CreateGroupCommandParserTest.java
+``` java
+public class CreateGroupCommandParserTest {
+
+    private CreateGroupCommandParser parser = new CreateGroupCommandParser();
+
+    @Test
+    public void parse_allFieldsPresent_success() {
+        Group expectedGroup = new GroupBuilder().withGroupName(VALID_GROUP_NAME)
+                .withGroupMembers(Arrays.asList(ALICE)).build();
+        assertParseSuccess(parser, CreateGroupCommand.COMMAND_WORD + GROUP_NAME_DESC + GROUP_INDEX_DESC,
+                new CreateGroupCommand(expectedGroup.getGroupName(), Arrays.asList(Index.fromOneBased(1))));
+
+        //multiple same indexes - accepted
+        assertParseSuccess(parser, CreateGroupCommand.COMMAND_WORD + GROUP_NAME_DESC + GROUP_INDEX_DESC
+                + " " + VALID_INDEX, new CreateGroupCommand(expectedGroup.getGroupName(),
+                Arrays.asList(Index.fromOneBased(1), Index.fromOneBased(1))));
+    }
+
+    @Test
+    public void parse_compulsoryFieldMissing_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateGroupCommand.MESSAGE_USAGE);
+
+        // missing name prefix
+        assertParseFailure(parser, CreateGroupCommand.COMMAND_WORD + VALID_GROUP_NAME + GROUP_INDEX_DESC,
+                expectedMessage);
+
+        //missing all prefix
+        assertParseFailure(parser, CreateGroupCommand.COMMAND_WORD + VALID_GROUP_NAME + VALID_INDEX,
+                expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidValue_failure() {
+        //invalid group name
+        assertParseFailure(parser, CreateGroupCommand.COMMAND_WORD + INVALID_GROUP_NAME_DESC
+                + GROUP_INDEX_DESC, GroupName.MESSAGE_NAME_CONSTRAINTS);
+
+        //invalid index
+        assertParseFailure(parser, CreateGroupCommand.COMMAND_WORD + GROUP_NAME_DESC
+                + INVALID_GROUP_INDEX_DESC, MESSAGE_INVALID_INDEX);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\DeleteGroupCommandParserTest.java
+``` java
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the DeleteGroupCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the DeleteGroupCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class DeleteGroupCommandParserTest {
+
+    private DeleteGroupCommandParser parser = new DeleteGroupCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDeleteGroupCommand() {
+        assertParseSuccess(parser, "1", new DeleteGroupCommand(INDEX_FIRST_GROUP));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteGroupCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\SelectGroupCommandParserTest.java
+``` java
+/**
+ * Test scope: similar to {@code SelectCommandParserTest}.
+ * @see SelectCommandParserTest
+ */
+
+public class SelectGroupCommandParserTest {
+    private SelectGroupCommandParser parser = new SelectGroupCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsSelectGroupCommand() {
+        assertParseSuccess(parser, "1", new SelectGroupCommand(INDEX_FIRST_GROUP));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                SelectGroupCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\testutil\TypicalGroups.java
+``` java
+/**
+ * A utility class containing a list of {@code Group} objects to be used in tests.
+ */
+public class TypicalGroups {
+
+    public static final ReadOnlyGroup SAMPLE_GROUP_1 = new GroupBuilder().withGroupName("Sample Group 1")
+            .withGroupMembers(new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL))).build();
+
+    public static final ReadOnlyGroup SAMPLE_GROUP_2 = new GroupBuilder().withGroupName("Sample Group 2")
+            .withGroupMembers(new ArrayList<>(Arrays.asList(DANIEL, ELLE, FIONA))).build();
+
+    public static final ReadOnlyGroup SAMPLE_GROUP_3 = new GroupBuilder().withGroupName("Sample Group 3")
+            .withGroupMembers(new ArrayList<>(Arrays.asList(ALICE, GEORGE))).build();
+
+    /**
+     * Adds all the groups to the sample address book
+     * @param ab
+     */
+    public static void addGroupsToAddressBook(AddressBook ab) {
+        for (ReadOnlyGroup group : TypicalGroups.getTypicalGroups()) {
+            try {
+                ab.addGroup(group);
+            } catch (DuplicateGroupException e) {
+                assert false : "not possible";
+            }
+        }
+    }
+
+    public static List<ReadOnlyGroup> getTypicalGroups() {
+        return new ArrayList<>(Arrays.asList(SAMPLE_GROUP_1, SAMPLE_GROUP_2, SAMPLE_GROUP_3));
     }
 }
 ```
@@ -457,6 +982,8 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
             throw new AssertionError("targetPerson is retrieved from model.");
         } catch (CommandException ce) {
             throw new AssertionError("targetPerson unable to be pinned");
+        } catch (EmptyAddressBookException eabe) {
+            throw new AssertionError("address book is empty");
         }
         return targetPerson;
     }
@@ -474,6 +1001,8 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
             throw new AssertionError("targetPerson is retrieved from model.");
         } catch (CommandException ce) {
             throw new AssertionError("targetPerson unable to be unpinned");
+        } catch (EmptyAddressBookException eabe) {
+            throw new AssertionError("address book is empty");
         }
         return targetPerson;
     }
@@ -499,7 +1028,11 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
         try {
             for (Tag tag : listTags) {
                 if ("Pinned".equals(tag.tagName)) {
-                    model.unpinPerson(person);
+                    try {
+                        model.unpinPerson(person);
+                    } catch (EmptyAddressBookException eabe) {
+                        throw new AssertionError("EmptyAddressBookException error");
+                    }
                 }
 
             }

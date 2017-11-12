@@ -39,7 +39,6 @@ public class PinCommandTest {
         String expectedMessage = String.format(PinCommand.MESSAGE_PIN_PERSON_SUCCESS, personToPin);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.pinPerson(personToPin);
 
         assertCommandSuccess(pinCommand, model, expectedMessage, expectedModel);
 
@@ -68,6 +67,7 @@ public class PinCommandTest {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToPin = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        model.unpinPerson(personToPin);
         PinCommand pinCommand = prepareCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(PinCommand.MESSAGE_PIN_PERSON_SUCCESS, personToPin);

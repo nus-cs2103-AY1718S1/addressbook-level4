@@ -68,6 +68,9 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
+        if (!model.getFilteredPersonList().isEmpty()) {
+            model.sort("name");
+        }
 
         logic = new LogicManager(model, storage);
 
