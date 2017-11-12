@@ -107,7 +107,7 @@ public class Schedule {
         }
     }
 
-    //@@author
+    //@@author CT15
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
