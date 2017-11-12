@@ -4,13 +4,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBookX was developed by the team W13B3 from CS2103T AY17/18, National University of Singapore . +
+ABC Business Contacts was developed by the team W13B3 from CS2103T AY17/18, National University of Singapore . +
 
 == Project Team
 
 === Derrick Chua
 image::derrickchua.jpg[width="150", align="left"]
-{empty}[https://github.com/derrickchua[github]][https://github.com/CS2103AUG2017-W13-B3/main/tree/master/docs/team/derrickchua.adoc[portfolio]]
+{empty}[https://github.com/derrickchua[github]][<<derrickchua#, Portfolio>>]
 
 Role: Project Member +
 Responsibilities: UI, Scheduling and Tracking
