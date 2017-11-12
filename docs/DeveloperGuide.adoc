@@ -484,7 +484,7 @@ will stop the current music track.
 Both the `music play` and the `music stop` commands are executed in the same `MusicCommand` class. This also makes the commands easier to remember for the user as well, as anything related to `music` will start with `music` as a command.
 
 As shown below, additional extended commands can be added by having an additional case in the switch statement, as the extended commands are handled in a switch statement.
-In addition, the `MusicCommand` class will create a new `music thread`, this is to prevent the User Interface from freezing in the current thread. Currently, all music played will be in a loop until it is stopped by the user, through the `music stop` command.
+In addition, the `MusicCommand` class will create a new `music thread`, this is to prevent the User Interface from being non-responsive in the current thread. Currently, all music played will be in a loop until it is stopped by the user, through the `music stop` command.
 
 [source,java]
 ----
@@ -540,7 +540,6 @@ public CommandResult execute() {
 }
 ----
 
-
 {sp}
 
 image::header_note.png[width="400"]
@@ -553,11 +552,13 @@ image::header_note.png[width="400"]
 
 The following sequence diagram shows how the music operation works:
 
-image::MusicSequenceDiagram.png[width="800"]
+image::DG_seq_music.png[width="900"]
 
-The following activity diagram summarize what happens inside the `MusicCommand` when a user executes a new command:
+The following activity diagram summarises what happens inside the `MusicCommand` when a user executes a new command:
 
-image::MusicActivityDiagram.png[width="400"]
+image::DG_activity_music.png[width="700"]
+
+{sp}
 
 ==== Prerequisites/Dependencies
 
@@ -591,11 +592,128 @@ image::MusicList.jpg[width="200"]
 // end::musiccommand[]
 
 // tag::radiocommand[]
-=== Radio Commands
+=== Radio Player Mechanism
+The `radio` command is extended with an additional command behind it. For example, `radio play`, has `play` as the extended command. The `play` command at the back means that the system will play a radio broadcast channel. While `radio stop` command
+will stop the current radio player.
+
+Both the `radio play` and the `radio stop` commands are executed in the same `RadioCommand` class. This also makes the commands easier to remember for the user as well, as anything related to `radio` will start with `radio` as a command.
+In addition, the `RadioCommand` class will create a new `radio thread`, this is to prevent the User Interface from being non-responsive in the current thread. The radio thread will stream endlessly as the broadcast stream is 24h/7 unless it is shutdown.
+Hence, the radio thread will only be closed when the user execute the `radio stop` command.
+
+image::header_note.png[width="400"]
+
+* If you wish to include more radio broadcast station, just simply modify `radio.java` class as shown below, and add new case into the switch statement, with a valid url that streams in .mp3 codec.
+* Do note that only .mp3 stream urls can be used.
+
+[source,java]
+----
+public void run() {
+        BufferedInputStream in = null;
+        try {
+            switch (genre) {
+            case "chinese":
+                radioStreamUrl = "http://198.105.214.140:2000/Live?icy=http";
+                break;
+            case "classic":
+                radioStreamUrl = "http://media-sov.musicradio.com/ClassicFMMP3";
+                break;
+            case "news":
+                radioStreamUrl = "http://streams.kqed.org/kqedradio?";
+                break;
+            case "pop":
+                radioStreamUrl = "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_q";
+                break;
+            default:
+                radioStreamUrl = "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_q";
+                break;
+            }
+
+            in = new BufferedInputStream(new URL(radioStreamUrl).openStream());
+            player = new Player(in);
+            player.play();
+            in.close();
+        } catch (IOException e) {
+            logger.info("Invalid IO for BufferedInputStream: " + radioStreamUrl);
+        } catch (JavaLayerException e) {
+            logger.info("JavaLayerExeception: Invalid File Type for Radio Player");
+        }
+    }
+}
+----
+
+The following sequence diagram shows how the radio operation works:
+
+image::DG_seq_radio.png[width="900"]
+
+The following activity diagram summarises what happens inside the `RadioCommand` when a user executes a new command:
+
+image::DG_activity_radio.png[width="700"]
+
+{sp}
+
+==== Prerequisites/Dependencies
+
+The radio streaming function requires an external library. You have to add `compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'` to dependencies in `build.gradle` file. as shown below.
+
+[source,java]
+----
+dependencies {
+    compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'
+}
+----
+
+{sp}
+
+This library is required as it can convert input stream into .mp3 codec immediately.
+
+image::header_warning.png[width="400"]
+
+* In order for the radio player to work, it requires Internet connection, as it streams the radio broadcast through the Internet.
+* Remember to check the status of the stream urls. As it is possible but highly unlikely that one of those radio broadcast has shutdown.
 // end::radiocommand[]
 
 // tag::sharecommand[]
-=== Sharing of Contacts by Email
+=== Share Contacts by Email Mechanism
+
+The `share` command takes in the parameter that consists an `INDEX`, of which is the selected contact's details to be shared with.
+Followed by s/`INDEX` `EMAIL`, which are the parameters for the recipient email address. This format allows the parameters `INDEX` `EMAIL` found are interchangeable.
+
+By using the `isNumeric(string)` method, which returns us a boolean. If it return true, it means that input is an `INDEX`, otherwise it is an string.
+Next we want to check if those string values are indeed valid email addresses, use the isValidEmailAddress(string) to check whether is it a valid email address.
+This method requires the use of `javax.mail` api ,as it creates a new `InternetAddress` object and calls `validate()' method to check if the email address is valid or not.
+
+Once, we know the email address are valid. We have to create a new thread to send these emails. Because, if we were to send more than 2 emails,
+the main thread for the UI will be non-responsive.
+
+image::header_note.png[width="400"]
+
+* If you wish to change to a different host email address, just simply modify `sendEmail.java` class as shown below, and change the variable values, such as senderEmail, password, and the host.
+* If your sender's email is from `Gmail`, your host have to be `smtp.gmail.com`
+* If your sender's email is from `Outlook`, your host have to be `smtp-mail.outlook.com`
+* If your sender's email is from `Hotmail`, your host have to be `smtp.live.com`
+
+
+[source,java]
+----
+
+String senderEmail = "unifycs2103@gmail.com";
+String password = "CS2103CS2103";
+// For Gmail host
+String host = "smtp.gmail.com";
+----
+
+{sp}
+
+The following sequence diagram shows how the share operation works:
+
+image::DG_seq_share.png[width="900"]
+
+The following activity diagram summarises what happens inside the `ShareCommand` when a user executes a new command:
+
+image::DG_activity_share.png[width="700"]
+
+{sp}
+==== Prerequisites/Dependencies
 The sharing of contacts by email function requires an external library. You have to add `compile 'javax.mail:mail:1.4.7'` to dependencies in `build.gradle` file. as shown below.
 
 [source,java]
@@ -605,17 +723,21 @@ dependencies {
 }
 ----
 
+{sp}
 
+image::header_warning.png[width="400"]
+
+* In order for the sharing of contacts feature to work, it requires Internet connection first, as it's main function requires to sends an email to the recipients.
 
 ==== Design Considerations
 
 **Aspect:** What to use for subject header in email +
 **Alternative 1 (current choice):** Fixed subject header +
 **Pros:** Easy to implement. Prevent of abuse of subject header to send negative subject headers +
-**Cons:** Always the same subject headert +
+**Cons:** Always the same subject header +
 **Alternative 2:** Let user input the subject header +
 **Pros:** Different subject header can be used for different purpose. +
-**Cons:** Can be abused and send negative subject header +
+**Cons:** Can be abused and send negative subject header, leading to a bad reputation for Unify, as the recipients thinks that these offensive subject header is from Unify+
 
 // end::sharecommand[]
 

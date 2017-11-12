@@ -102,8 +102,8 @@ public class ShareCommand extends Command {
      * Returns true if string is numeric number. This method is to identify which are
      * index or email address in the s/ parameter.
      */
-    public boolean isNumeric(String s) {
-        return s != null && s.matches("[-+]?\\d*\\.?\\d+");
+    public boolean isNumeric(String str) {
+        return str != null && str.matches("[-+]?\\d*\\.?\\d+");
     }
 
     @Override

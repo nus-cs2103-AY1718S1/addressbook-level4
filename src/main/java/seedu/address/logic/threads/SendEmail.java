@@ -40,6 +40,7 @@ public class SendEmail extends Thread {
     public void run() {
         // Sender's email ID needs to be mentioned
         String senderEmail = "unifycs2103@gmail.com";
+        String password = "CS2103CS2103";
         // For Gmail host
         String host = "smtp.gmail.com";
         // Get system properties
@@ -53,7 +54,7 @@ public class SendEmail extends Thread {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(senderEmail, "CS2103CS2103");
+                        return new PasswordAuthentication(senderEmail, password);
                     }
                 }
         );
