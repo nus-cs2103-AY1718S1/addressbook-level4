@@ -93,7 +93,7 @@ public class AddCommandParserTest {
                 new AddCommand(expectedPersonMissingAddress));
         //missing email -> accepted
         Person expectedPersonMissingEmail = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(null).withAddress(VALID_ADDRESS_BOB).build();
+                .withEmail((String[]) null).withAddress(VALID_ADDRESS_BOB).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                         + EMAIL_DESC_EMPTY + ADDRESS_DESC_BOB,
                new AddCommand(expectedPersonMissingEmail));

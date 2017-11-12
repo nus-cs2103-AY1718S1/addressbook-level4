@@ -4,6 +4,7 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
+import static seedu.address.testutil.TypicalUserPerson.getTypicalUserPerson;
 
 import java.io.IOException;
 
@@ -19,7 +20,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.UserPerson;
-import seedu.address.model.util.SampleUserPersonUtil;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class StorageManagerTest {
@@ -86,6 +86,7 @@ public class StorageManagerTest {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
+    //@@author bladerail
     @Test
     public void handleUserProfileChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
@@ -93,9 +94,10 @@ public class StorageManagerTest {
                 new JsonUserPrefsStorage("dummy"),
                 new XmlUserProfileStorageExceptionThrowingStub("dummy"));
         storage.handleUserPersonChangedEvent(new UserPersonChangedEvent(
-                new UserPerson(SampleUserPersonUtil.getDummySamplePerson())));
+                new UserPerson(getTypicalUserPerson())));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
+    //@@author
 
 
     /**

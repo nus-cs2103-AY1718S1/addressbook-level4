@@ -191,14 +191,28 @@ Any new components added to the themes or stylesheets should utilise these base 
 
 // end::styling[]
 
+// tag::defaultPage[]
+=== Default.html
+
+image::defaultPage.png[width="600"]
+_Figure 2.4.1 : Default Landing page of the SocialBook App_
+
+The first page that the User sees is the landing page of the application. This landing page resides in the `default.html` file and the corresponding default theme along with it `DarkTheme.css`.
+
+This landing page is to present the first time users with some form of feedback when they are first introduced to the application.
+
+Additional Ui help such as arrows and pointers that can be implemented in the HTML with simple CSS stylings will be coming in `V2.0`.
+
+// end::defaultPage[]
+
 // tag::userInterface[]
 === DetailedPersonCard and PersonCard
 
 image::detailedPersonCard.png[width="600"]
-_Figure 2.4.1 : Majority of contact information is to be shown in the DetailedPersonCard_
+_Figure 2.5.1 : Majority of contact information is to be shown in the DetailedPersonCard_
 
 image::personCard.png[width="400"]
-_Figure 2.4.2 : Condensed information to be shown in PersonCard_
+_Figure 2.5.2 : Condensed information to be shown in PersonCard_
 
 The main design principles used here is to focus on the Social Aspect of the User's contacts.
 
@@ -431,7 +445,7 @@ image::UiClassDiagram.png[width="800"]
 As you can see from the diagram, `WebsiteButtonBar` resides within the `MainWindow`, despite not having any interactions with the BrowserPanel directly.
 
 
-Suppose that the user has just launched the application. The `BrowserPanel` not be loaded.
+Suppose that the user has just launched the application. The `BrowserPanel` will not be loaded.
 
 Once the User selects a person from the `PersonListPanel`, which is a `PersonCard`, the `SelectedPerson` is updated through the use of an event trigger. The `BrowserPanel` then stores this `SelectedPerson` until it is updated through listening for the event trigger.
 
@@ -475,7 +489,8 @@ listing, which is date added.
 ----
     public void sortPersons(String filterType) {
 
-        Comparator<ReadOnlyPerson> personComparator = (ReadOnlyPerson person1, ReadOnlyPerson person2) -> {
+        Comparator<ReadOnlyPerson> personComparator = (ReadOnlyPerson person1,
+                                                   ReadOnlyPerson person2) -> {
 
             String arg1;
             String arg2;
@@ -528,8 +543,14 @@ be sorted easily. +
 ==== Design Considerations
 **Aspect:** Sort Command vs List Command +
 **Pros:** A user might only want to enter sort once, but does not want to have to enter the entire command again
-to obtain the same listing. Thus, Sort Command will sort the list while List Command will redisplay the last shown list. +
+to obtain the same listing. Thus, Sort Command will sort the list while List Command will redisplay the last sorted list. +
 **Cons:** Multiple commands might confuse the user. +
+
+==== Design Considerations
+**Aspect:** Display entire list vs Display filtered list +
+**Current choice:** Display filtered list
+**Pros:** Good for those who want to see the filtered list sorted. Gives list command more value. +
+**Cons:** Extra code to remember previous predicate. +
 
 ==== Design Considerations
 **Aspect:** FilterType aliases +
@@ -554,28 +575,31 @@ upon initialisation of the app. Whenever the UserPerson is edited using the `Upd
 to the file.
 
 A UserProfile Window was added as a UI Component to display the User Profile information. Additionally, the User Profile
-can be modified from the textfields in the UI directly. The UserProfile is only saved when "OK" is clicked.
-The "Enter" button was added as an accelerator, which will click the "Cancel" button, so that unwanted changes will not be
-accidentally saved. Invalid values will be detected and changes will not be saved.
+can be modified from the textfields in the UI directly. The UserProfile is only saved when "OK" is clicked. Invalid values will be detected and changes will not be saved.
+The "Enter" key is added as an accelerator for the OK button and the "Escape" key is added as an accelerator for
+the cancel button. The UserProfile can be found under "File" --> "User Profile" and has an accelerator
+key "F2".
 
 image::UserProfileWindow.png[width="400" height="300"]
+
+image::UserProfileWindowInvalidEntry.png[width="400" height="300"]
 
 ==== Design Considerations
 **Aspect:** Choice of location for storing UserProfile Data +
 **Alternative 1 (current choice)**: Separately from AddressBook. +
 **Justification:** This path was chosen taking into consideration the two following cases:
-+ A User can have multiple AddressBooks, or multiple users can share one AddressBook.
-+ In the former case, the User would not have to modify his UserProfile for each AddressBook.
-+ In the latter case, an AddressBook should not be tied to only one UserPerson in particular.
-+ **Pros:** Greater flexibility, portability
-+ **Cons:** More code and java classes to maintain, changes the structure of `Model` to support multiple
-variables.
-+ **Alternative 2:** Together with AddressBook
-+ **Pros:** Easier to manage, with only one Storage file and fewer classes to maintain
-+ **Cons:** Reduced flexibility as now, both AddressBook data and UserProfile cannot be separated
+A User can have multiple AddressBooks, or multiple users can share one AddressBook. +
+In the former case, the User would not have to modify his UserProfile for each AddressBook. +
+In the latter case, an AddressBook should not be tied to only one UserPerson in particular. +
+**Pros:** Greater flexibility, portability +
+**Cons:** More code and java classes to maintain, changes the structure of `Model` to support multiple
+variables. +
+**Alternative 2:** Together with AddressBook +
+**Pros:** Easier to manage, with only one Storage file and fewer classes to maintain +
+**Cons:** Reduced flexibility as now, both AddressBook data and UserProfile cannot be separated
 
 ==== Further enhancements
-+ Share UserProfile with others
++ Modify settings and userPrefs in the UserProfile
 
 // end::UserProfile[]
 

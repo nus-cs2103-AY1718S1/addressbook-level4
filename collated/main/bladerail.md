@@ -1,5 +1,5 @@
 # bladerail
-###### \java\seedu\address\commons\events\model\UserPersonChangedEvent.java
+###### /java/seedu/address/commons/events/model/UserPersonChangedEvent.java
 ``` java
 /** Indicates the UserPerson in the model has changed*/
 public class UserPersonChangedEvent extends BaseEvent {
@@ -12,7 +12,7 @@ public class UserPersonChangedEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "UserPerson changed: " + userPerson.getName();
+        return "UserPerson changed: \n" + userPerson.getAsText();
     }
 
     public UserPerson getUserPerson() {
@@ -20,7 +20,7 @@ public class UserPersonChangedEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\CopyToClipboardRequestEvent.java
+###### /java/seedu/address/commons/events/ui/CopyToClipboardRequestEvent.java
 ``` java
 /**
  * Indicates a request for copying a string to clipboard
@@ -44,7 +44,7 @@ public class CopyToClipboardRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RemarkCommand.java
+###### /java/seedu/address/logic/commands/RemarkCommand.java
 ``` java
 /**
  * Changes the remark of an existing person in the address book.
@@ -64,7 +64,7 @@ public class RemarkCommand extends UndoableCommand {
             + PREFIX_REMARK + "likes dogs.";
 
 ```
-###### \java\seedu\address\logic\commands\RemarkCommand.java
+###### /java/seedu/address/logic/commands/RemarkCommand.java
 ``` java
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
     public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
@@ -140,7 +140,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ShareCommand.java
+###### /java/seedu/address/logic/commands/ShareCommand.java
 ``` java
 /**
  * Displays an add command for the user's contact
@@ -194,7 +194,7 @@ public class ShareCommand extends Command {
 }
 
 ```
-###### \java\seedu\address\logic\commands\SortCommand.java
+###### /java/seedu/address/logic/commands/SortCommand.java
 ``` java
 /**
  * Sorts all persons in the address book by indicated format.
@@ -215,7 +215,7 @@ public class SortCommand extends Command {
             + "Example: " + COMMAND_WORD + " name";
 
 ```
-###### \java\seedu\address\logic\commands\SortCommand.java
+###### /java/seedu/address/logic/commands/SortCommand.java
 ``` java
     public static final String MESSAGE_SUCCESS = "Sorted successfully by %1$s, Listed all persons.";
 
@@ -251,7 +251,7 @@ public class SortCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\UpdateUserCommand.java
+###### /java/seedu/address/logic/commands/UpdateUserCommand.java
 ``` java
 /**
  * Updates the model's UserPerson information.
@@ -274,7 +274,7 @@ public class UpdateUserCommand extends Command {
             + PREFIX_EMAIL + "johndoe@example.com";
 
 ```
-###### \java\seedu\address\logic\commands\UpdateUserCommand.java
+###### /java/seedu/address/logic/commands/UpdateUserCommand.java
 ``` java
     public static final String MESSAGE_UPDATE_USER_SUCCESS = "Successfully edited User Profile: %1s";
     public static final String MESSAGE_NOT_UPDATED = "At least one field to update must be provided.";
@@ -325,27 +325,27 @@ public class UpdateUserCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\Logic.java
+###### /java/seedu/address/logic/Logic.java
 ``` java
     /** Returns the userPerson */
     UserPerson getUserPerson();
 
 ```
-###### \java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     @Override
     public UserPerson getUserPerson() {
         return model.getUserPerson();
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case RemarkCommand.COMMAND_WORD:
         case RemarkCommand.COMMAND_ALIAS:
@@ -360,7 +360,7 @@ public class UpdateUserCommand extends Command {
             return new ShareCommand();
 
 ```
-###### \java\seedu\address\logic\parser\CliSyntax.java
+###### /java/seedu/address/logic/parser/CliSyntax.java
 ``` java
     public static final String ARG_DEFAULT = "default";
     public static final String ARG_NAME = "name";
@@ -374,9 +374,13 @@ public class UpdateUserCommand extends Command {
     public static final String ARG_REMARK = "remark";
     public static final String ARG_TAG = "tag";
     public static final String ARG_WEB_LINK = "weblink";
+```
+
+###### /java/seedu/address/logic/parser/CliSyntax.java
+``` java
 }
 ```
-###### \java\seedu\address\logic\parser\RemarkCommandParser.java
+###### /java/seedu/address/logic/parser/RemarkCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteCommand object
@@ -408,7 +412,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\SortCommandParser.java
+###### /java/seedu/address/logic/parser/SortCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new SortCommand object
@@ -483,7 +487,7 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\UpdateUserCommandParser.java
+###### /java/seedu/address/logic/parser/UpdateUserCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new UpdateUserCommand object
@@ -567,11 +571,11 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     }
 }
 ```
-###### \java\seedu\address\MainApp.java
+###### /java/seedu/address/MainApp.java
 ``` java
     protected Clipboard clipboard;
 ```
-###### \java\seedu\address\MainApp.java
+###### /java/seedu/address/MainApp.java
 ``` java
         try {
             userPersonOptional = storage.readUserProfile();
@@ -587,7 +591,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
             initialUser = new UserPerson();
         }
 ```
-###### \java\seedu\address\MainApp.java
+###### /java/seedu/address/MainApp.java
 ``` java
     /**
      * Returns a {@code UserPerson} using the file at {@code storage}'s user prefs file path,
@@ -622,15 +626,15 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     }
 
 ```
-###### \java\seedu\address\MainApp.java
+###### /java/seedu/address/MainApp.java
 ``` java
         this.clipboard = Clipboard.getSystemClipboard();
 ```
-###### \java\seedu\address\MainApp.java
+###### /java/seedu/address/MainApp.java
 ``` java
             storage.saveUserPerson(model.getUserPerson());
 ```
-###### \java\seedu\address\MainApp.java
+###### /java/seedu/address/MainApp.java
 ``` java
     @Subscribe
     public void handleCopyToClipboardRequestEvent (CopyToClipboardRequestEvent event) {
@@ -638,7 +642,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
         clipboard.setContent(event.getToCopy());
     }
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /**
      * Sorts the filteredPerson list by the filterType, one of [Name/Email/Address/Phone]
@@ -661,7 +665,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
      */
     void updateUserPerson(ReadOnlyPerson editedPerson);
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public UserPerson getUserPerson() {
@@ -669,19 +673,23 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     }
 
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void sortFilteredPersonList(String filterType) {
+        Predicate<? super ReadOnlyPerson> currPredicate = filteredPersons.getPredicate();
+        if (currPredicate == null) {
+            currPredicate = PREDICATE_SHOW_ALL_PERSONS;
+        }
         addressBook.sortPersons(filterType);
         ObservableList<ReadOnlyPerson> sortedList = this.addressBook.getPersonList();
         this.filteredPersons = new FilteredList<>(sortedList);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        filteredPersons.setPredicate(currPredicate);
         indicateAddressBookChanged();
     }
 
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void updateUserPerson(ReadOnlyPerson editedPerson) {
@@ -691,13 +699,13 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     }
 
     /** Raises an event to indicate the model has changed */
-    public void indicateUserPersonChanged() {
+    private void indicateUserPersonChanged() {
         raise(new UserPersonChangedEvent(userPerson));
         logger.info("Updated User Person: " + userPerson);
     }
 
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Sorts the internal list by order of a comparator, which by default is name.
@@ -738,7 +746,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
     }
 
 ```
-###### \java\seedu\address\model\person\UserPerson.java
+###### /java/seedu/address/model/person/UserPerson.java
 ``` java
 /**
  * Represents the user's Profile in the address book.
@@ -972,7 +980,7 @@ public class UserPerson implements ReadOnlyPerson {
     }
 }
 ```
-###### \java\seedu\address\model\UserPrefs.java
+###### /java/seedu/address/model/UserPrefs.java
 ``` java
     public String getUserProfileFilePath() {
         return userProfileFilePath;
@@ -983,7 +991,7 @@ public class UserPerson implements ReadOnlyPerson {
     }
 
 ```
-###### \java\seedu\address\model\util\SampleUserPersonUtil.java
+###### /java/seedu/address/model/util/SampleUserPersonUtil.java
 ``` java
 /**
  * Contains utility methods for creating sample UserPerson data.
@@ -1001,22 +1009,23 @@ public class SampleUserPersonUtil {
             throw new AssertionError("sample data cannot be invalid", e);
         }
     }
-
-    public static ReadOnlyPerson getDummySamplePerson() {
-        try {
-            ArrayList<Email> emails = new ArrayList<Email>();
-            emails.add(new Email("dummy@dummy.com"));
-            HashSet<WebLink> webLinks = new HashSet<>();
-            webLinks.add(new WebLink("default@facebook.com"));
-            return new Person (new Name("Dummy"), new Phone("11111111"), emails,
-                    new Address("Dummy"), new Remark(""), new HashSet<Tag>(), webLinks);
-        } catch (IllegalValueException e) {
-            throw new AssertionError("sample data cannot be invalid", e);
-        }
-    }
 }
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/Storage.java
+``` java
+    @Override
+    String getUserProfileFilePath();
+
+    @Override
+    Optional<UserPerson> readUserProfile() throws DataConversionException, IOException;
+
+    @Override
+    void saveUserPerson(UserPerson userPerson, String filePath) throws IOException;
+
+    void handleUserPersonChangedEvent(UserPersonChangedEvent upce);
+
+```
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     @Override
     public String getUserProfileFilePath() {
@@ -1042,7 +1051,7 @@ public class SampleUserPersonUtil {
     @Override
     @Subscribe
     public void handleUserPersonChangedEvent(UserPersonChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local User Profile data changed, saving to file"));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "\nLocal User Profile data changed, saving to file"));
         try {
             saveUserPerson(event.getUserPerson());
         } catch (IOException e) {
@@ -1051,7 +1060,7 @@ public class SampleUserPersonUtil {
     }
 
 ```
-###### \java\seedu\address\storage\UserProfileStorage.java
+###### /java/seedu/address/storage/UserProfileStorage.java
 ``` java
 /**
  * Represents a storage for {@link seedu.address.model.AddressBook}.
@@ -1082,7 +1091,7 @@ public interface UserProfileStorage {
 
 }
 ```
-###### \java\seedu\address\storage\XmlUserPerson.java
+###### /java/seedu/address/storage/XmlUserPerson.java
 ``` java
 /**
  * An Immutable UserPerson that is serializable to XML format
@@ -1140,7 +1149,7 @@ public class XmlUserPerson {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlUserProfileStorage.java
+###### /java/seedu/address/storage/XmlUserProfileStorage.java
 ``` java
 /**
  * A class to access UserProfile stored in the hard disk as an xml file
@@ -1219,6 +1228,14 @@ public class XmlUserProfileStorage implements UserProfileStorage {
     }
 }
 ```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+        setAccelerator(userProfileMenuItem, KeyCombination.valueOf("F2"));
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+        setAccelerator(userProfileMenuItem, KeyCombination.valueOf("F2"));
+```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
     /**
@@ -1232,7 +1249,7 @@ public class XmlUserProfileStorage implements UserProfileStorage {
     }
 
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     //Update the filteredPersonList when addressBook is changed, mainly for sort
     @Subscribe
@@ -1241,7 +1258,7 @@ public class XmlUserProfileStorage implements UserProfileStorage {
         personListPanel.setConnections(logic.getFilteredPersonList());
     }
 ```
-###### \java\seedu\address\ui\UserProfileWindow.java
+###### /java/seedu/address/ui/UserProfileWindow.java
 ``` java
 /**
  * Controller for the User Profile Window
@@ -1300,22 +1317,12 @@ public class UserProfileWindow extends UiPart<Region> {
 
     /**
      * Sets accelerators for the UserProfileWindow
-     * @param scene
+     * @param scene Current scene
      */
     private void setAccelerators(Scene scene) {
-        scene.getAccelerators().put(KeyCombination.valueOf("ENTER"), ()-> handleCancel());
-    }
+        scene.getAccelerators().put(KeyCombination.valueOf("ESC"), this::handleCancel);
+        scene.getAccelerators().put(KeyCombination.valueOf("ENTER"), this::handleOk);
 
-    /**
-     * Binds the individual UI elements to observe their respective {@code Person} properties
-     * so that they will be notified of any changes.
-     */
-    private void bindListeners(UserPerson userPerson) {
-        nameTextField.textProperty().bind(Bindings.convert(userPerson.nameProperty()));
-        phoneTextField.textProperty().bind(Bindings.convert(userPerson.phoneProperty()));
-        addressTextField.textProperty().bind(Bindings.convert(userPerson.addressProperty()));
-        emailTextField.textProperty().bind(Bindings.convert(userPerson.emailProperty()));
-        webLinkTextField.textProperty().bind(Bindings.convert(userPerson.webLinkProperty()));
     }
 
     /**
@@ -1339,7 +1346,7 @@ public class UserProfileWindow extends UiPart<Region> {
         try {
             updateUserPerson();
             raise(new UserPersonChangedEvent(userPerson));
-            logger.info("UserPerson updated via UserProfileWindow, saving");
+            logger.fine("UserPerson updated via UserProfileWindow, saving");
             stage.close();
         } catch (Exception e) {
             logger.fine("Invalid UserPerson modification");
@@ -1348,24 +1355,17 @@ public class UserProfileWindow extends UiPart<Region> {
 
     @Subscribe
     private void handleUserPersonChangedEvent(UserPersonChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logger.fine(LogsCenter.getEventHandlingLogMessage(event));
     }
 
     /**
      * Updates the user person
      */
-    void updateUserPerson() throws Exception {
+    private void updateUserPerson() throws Exception {
         try {
             userPerson.setName(new Name(nameTextField.getText()));
         } catch (IllegalValueException e) {
-            statusLabel.setText("Illegal Name value, only alphanumeric values accepted");
-            throw new Exception();
-        }
-
-        try {
-            userPerson.setPhone(new Phone(phoneTextField.getText()));
-        } catch (IllegalValueException e) {
-            statusLabel.setText("Illegal Phone number, only numeric values accepted");
+            statusLabel.setText(MESSAGE_NAME_CONSTRAINTS);
             throw new Exception();
         }
 
@@ -1378,14 +1378,29 @@ public class UserProfileWindow extends UiPart<Region> {
             userPerson.setEmail(emailList);
 
         } catch (IllegalValueException e) {
-            statusLabel.setText("Email(s) must be in x@x format");
+            statusLabel.setText(MESSAGE_EMAIL_CONSTRAINTS);
             throw new Exception();
         }
 
         try {
-            userPerson.setAddress(new Address(addressTextField.getText()));
+            if (phoneTextField.getText().equals("")) {
+                userPerson.setPhone(new Phone(null));
+            } else {
+                userPerson.setPhone(new Phone(phoneTextField.getText()));
+            }
         } catch (IllegalValueException e) {
-            statusLabel.setText("Please input a valid address value");
+            statusLabel.setText(MESSAGE_PHONE_CONSTRAINTS);
+            throw new Exception();
+        }
+
+        try {
+            if (phoneTextField.getText().equals("")) {
+                userPerson.setAddress(new Address(null));
+            } else {
+                userPerson.setAddress(new Address(addressTextField.getText()));
+            }
+        } catch (IllegalValueException e) {
+            statusLabel.setText(MESSAGE_ADDRESS_CONSTRAINTS);
             throw new Exception();
         }
 
@@ -1409,4 +1424,86 @@ public class UserProfileWindow extends UiPart<Region> {
         }
     }
 }
+```
+###### /resources/view/UserProfileWindow.fxml
+``` fxml
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER" fillHeight="false" prefHeight="35.0" prefWidth="200.0" VBox.vgrow="NEVER">
+         <children>
+            <Label contentDisplay="CENTER" text="User Profile">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
+         </children>
+      </HBox>
+      <GridPane VBox.vgrow="ALWAYS">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="163.0" />
+          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label contentDisplay="BOTTOM" text="Name">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Emails" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Phone" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Address" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Weblink" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="nameTextField" GridPane.columnIndex="1" />
+            <TextField fx:id="emailTextField" prefHeight="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="phoneTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="addressTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="webLinkTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+      <Label fx:id="statusLabel" text="Label" />
+      <ButtonBar prefHeight="40.0" prefWidth="200.0">
+        <buttons>
+          <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+            <Button fx:id="okButton" mnemonicParsing="false" onAction="#handleOk" text="OK" />
+        </buttons>
+      </ButtonBar>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>
 ```

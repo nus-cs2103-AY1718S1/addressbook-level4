@@ -1,5 +1,5 @@
 # hansiang93
-###### \java\seedu\address\commons\events\ui\WebsiteSelectionRequestEvent.java
+###### /java/seedu/address/commons/events/ui/WebsiteSelectionRequestEvent.java
 ``` java
 /**
  * Represents a selection change in the Person List Panel
@@ -23,7 +23,7 @@ public class WebsiteSelectionRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddCommand.java
+###### /java/seedu/address/logic/commands/AddCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " "
             + PREFIX_NAME + "{NAME} "
@@ -33,15 +33,15 @@ public class WebsiteSelectionRequestEvent extends BaseEvent {
             + "[" + PREFIX_TAG + "TAG]... "
             + "[" + PREFIX_WEB_LINK + "WEB LINK]...";
 ```
-###### \java\seedu\address\logic\commands\DeleteCommand.java
+###### /java/seedu/address/logic/commands/DeleteCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {index}";
 ```
-###### \java\seedu\address\logic\commands\DeleteTagCommand.java
+###### /java/seedu/address/logic/commands/DeleteTagCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {tag}";
 ```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {Index} "
             + PREFIX_PHONE + "{phone} "
@@ -49,7 +49,7 @@ public class WebsiteSelectionRequestEvent extends BaseEvent {
             + PREFIX_TAG + "{tag} "
             + PREFIX_WEB_LINK + "{weblink}";
 ```
-###### \java\seedu\address\logic\commands\FilterCommand.java
+###### /java/seedu/address/logic/commands/FilterCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -87,27 +87,27 @@ public class FilterCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindCommand.java
+###### /java/seedu/address/logic/commands/FindCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {keyword fragment}";
 ```
-###### \java\seedu\address\logic\commands\RemarkCommand.java
+###### /java/seedu/address/logic/commands/RemarkCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " "
             + "{Index} "
             + PREFIX_REMARK + "{Remark}";
 
 ```
-###### \java\seedu\address\logic\commands\SelectCommand.java
+###### /java/seedu/address/logic/commands/SelectCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {index}";
 ```
-###### \java\seedu\address\logic\commands\SortCommand.java
+###### /java/seedu/address/logic/commands/SortCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {[name/email/phone/address]}";
 
 ```
-###### \java\seedu\address\logic\commands\UpdateUserCommand.java
+###### /java/seedu/address/logic/commands/UpdateUserCommand.java
 ``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD
             + " " + PREFIX_NAME + "{NAME} "
@@ -117,7 +117,7 @@ public class FilterCommand extends Command {
             + PREFIX_WEB_LINK + "{WEBLINK} ";
 
 ```
-###### \java\seedu\address\logic\commands\WebCommand.java
+###### /java/seedu/address/logic/commands/WebCommand.java
 ``` java
 /**
  * Lists all persons in the address book to the user.
@@ -132,13 +132,36 @@ public class WebCommand extends Command {
             + "Parameters: 'facebook' OR 'instagram' OR 'maps' OR 'search' OR 'linkedin' OR 'personal'\n"
             + "Example: " + COMMAND_WORD + " facebook";
 
-```
-###### \java\seedu\address\logic\commands\WebCommand.java
-``` java
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD
-            + " {[facebook|instagram|linkedin|maps|search|personal]}";
+            + " {[facebook|instagram|maps|search|personal]}";
+
+    public static final String MESSAGE_SUCCESS = "WebLink loading...";
+
+    private final String targetWebsite;
+
+    public WebCommand(String targetWebsite) {
+        this.targetWebsite = targetWebsite;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        if (!WEBSITES_MAP.containsValue(targetWebsite)) {
+            throw new CommandException(Messages.MESSAGE_INVALID_WEBLINK_TAG);
+        }
+        EventsCenter.getInstance().post(new WebsiteSelectionRequestEvent(targetWebsite));
+
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof WebCommand // instanceof handles nulls
+                && targetWebsite.equals(((WebCommand) other).targetWebsite));
+    }
+}
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case FilterCommand.COMMAND_WORD:
         case FilterCommand.COMMAND_ALIAS:
@@ -149,14 +172,14 @@ public class WebCommand extends Command {
             return new ListCommand();
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case WebCommand.COMMAND_WORD:
         case WebCommand.COMMAND_ALIAS:
             return new WebCommandParser().parse(arguments);
 
 ```
-###### \java\seedu\address\logic\parser\FilterCommandParser.java
+###### /java/seedu/address/logic/parser/FilterCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FilterCommand object
@@ -182,7 +205,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\WebCommandParser.java
+###### /java/seedu/address/logic/parser/WebCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new SelectCommand object
@@ -196,7 +219,7 @@ public class WebCommandParser implements Parser<WebCommand> {
         WEBSITES_MAP.put("maps", "mapsView");
         WEBSITES_MAP.put("search", "searchView");
         WEBSITES_MAP.put("instagram", "instagram");
-        WEBSITES_MAP.put("linkedin", "linkedin");
+        WEBSITES_MAP.put("twitter", "twitter");
         WEBSITES_MAP.put("personal", "others");
     }
 
@@ -222,7 +245,7 @@ public class WebCommandParser implements Parser<WebCommand> {
     }
 }
 ```
-###### \java\seedu\address\ui\AutoCompleteSuggestions.java
+###### /java/seedu/address/ui/AutoCompleteSuggestions.java
 ``` java
 
 /**
@@ -258,6 +281,7 @@ public class AutoCompleteSuggestions {
         //suggestionList.addPossibleSuggestions(FilterCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(ListCommand.COMMAND_WORD);
         suggestionList.addPossibleSuggestions(SortCommand.COMMAND_WORD);
+        suggestionList.addPossibleSuggestions(SelectCommand.COMMAND_WORD);
         //suggestionList.addPossibleSuggestions(SortCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(HistoryCommand.COMMAND_WORD);
         suggestionList.addPossibleSuggestions(ExitCommand.COMMAND_WORD);
@@ -269,9 +293,11 @@ public class AutoCompleteSuggestions {
         suggestionList.addPossibleSuggestions(RemarkCommand.COMMAND_WORD);
         //suggestionList.addPossibleSuggestions(RemarkCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(UpdateUserCommand.COMMAND_WORD);
+        suggestionList.addPossibleSuggestions(ShareCommand.COMMAND_WORD);
         //suggestionList.addPossibleSuggestions(UpdateUserCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(WebCommand.COMMAND_WORD);
         //suggestionList.addPossibleSuggestions(WebCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(ChangeThemeCommand.COMMAND_WORD);
     }
 
     public static SuggestionProvider<String> getSuggestionList() {
@@ -279,8 +305,9 @@ public class AutoCompleteSuggestions {
     }
 }
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
+
 /**
  * The Browser Panel of the App.
  */
@@ -306,19 +333,37 @@ public class BrowserPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
+        browser.getEngine().setJavaScriptEnabled(true);
         loadDefaultPage();
         registerAsAnEventHandler(this);
+        browser.getEngine().getLoadWorker().stateProperty().addListener(
+                new ChangeListener<Worker.State>() {
+                    @Override
+                    public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
+                        if (newState == Worker.State.SUCCEEDED) {
+                            logger.info("Loaded this page: " + browser.getEngine().getLocation());
+                        }
+
+                    }
+                });
     }
 
 
+    /**
+     * Loads the selected Person's Google search by name page.
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
         logger.info("Loading Google search of " + person.getName());
     }
 
+    /**
+     * Loads the selected Person's address search via Google Maps search.
+     */
     private void loadPersonAddress(ReadOnlyPerson person) {
         loadPage(MAPS_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
+        logger.info("Loading Address search of " + person.getName());
     }
 
     /**
@@ -328,10 +373,10 @@ public class BrowserPanel extends UiPart<Region> {
         selectedPerson.getWebLinks().forEach(webLink -> {
             if (webLink.toStringWebLinkTag().equals("others")) {
                 loadPage(webLink.toStringWebLink());
+                logger.info("Loading Personal Page of " + selectedPerson.getName());
                 return;
             }
         });
-        logger.info("Loading Personal Page of " + selectedPerson.getName());
     }
 
     /**
@@ -341,10 +386,10 @@ public class BrowserPanel extends UiPart<Region> {
         selectedPerson.getWebLinks().forEach(webLink -> {
             if (websiteRequested.toLowerCase() == webLink.toStringWebLinkTag().trim().toLowerCase()) {
                 loadPage(webLink.toStringWebLink());
+                logger.info("Loading " + websiteRequested + " page of " + selectedPerson.getName());
                 return;
             }
         });
-        logger.info("Loading " + websiteRequested + "Page of " + selectedPerson.getName());
     }
 
     public void loadPage(String url) {
@@ -357,6 +402,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
+        logger.info("Loading Landing Page...");
     }
 
     /**
@@ -396,7 +442,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     public CommandBox(Logic logic) {
         super(FXML);
@@ -404,9 +450,12 @@ public class BrowserPanel extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        TextFields.bindAutoCompletion(commandTextField,
+                AutoCompleteSuggestions.getSuggestionList())
+                .setMinWidth(450);
     }
 ```
-###### \java\seedu\address\ui\DetailedPersonCard.java
+###### /java/seedu/address/ui/DetailedPersonCard.java
 ``` java
 
 /**
@@ -531,7 +580,8 @@ public class DetailedPersonCard extends UiPart<Region> {
         webLinks.getChildren().clear();
         person.getWebLinks().forEach(webLink -> {
             Label webLinkLabel = new Label(webLink.toStringWebLink());
-            webLinkLabel.setStyle("-fx-background-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()));
+            webLinkLabel.setStyle("-fx-background-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()) + ";"
+                                  + "-fx-text-fill: white;");
             webLinks.getChildren().add(webLinkLabel);
         });
     }
@@ -564,7 +614,7 @@ public class DetailedPersonCard extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
 
 /**
@@ -585,7 +635,7 @@ public class PersonCard extends UiPart<Region> {
         webLinkColors.put("others", "grey");
     }
 ```
-###### \java\seedu\address\ui\WebsiteButtonBar.java
+###### /java/seedu/address/ui/WebsiteButtonBar.java
 ``` java
 /**
  * The Button Bar above the browser of the App.
@@ -637,19 +687,24 @@ public class WebsiteButtonBar extends UiPart<Region> {
             buttonList.add(newbutton);
         });
         buttonList.add(searchButton);
-        buttonList.add(mapsButton);
+        if (!selectedPerson.addressProperty().get().toString().equals("-")) {
+            buttonList.add(mapsButton);
+        }
         buttonBar.getButtons().setAll(buttonList);
     }
 }
 ```
-###### \resources\view\DarkTheme.css
+###### /resources/view/DarkTheme.css
 ``` css
 * {
     -fx-base-background-color-0: #181b1d;
     -fx-base-background-color-1: #2e3138;
+    -fx-button-pressed-color: white;
+    -fx-button-hovor-color: #3a3a3a;
     -fx-base-text-fill-color: white;
     -fx-base-text-fill-color-alt: black;
     -fx-base-text-fill-color-labels: white;
+    -fx-base-text-fill-color-weblink-labels: white;
     -fx-label-text-fill-color: #010505;
     -fx-list-cell-even: #3c3e3f;
     -fx-list-cell-odd: #4a4f58;
@@ -659,14 +714,259 @@ public class WebsiteButtonBar extends UiPart<Region> {
 }
 
 ```
-###### \resources\view\DarkTheme2.css
+###### /resources/view/DarkTheme.css
+``` css
+/*adapted from https://codepen.io/joshcummingsdesign/pen/qOKaWd*/
+body {
+    background-color: #272727;
+    padding: 30px;
+}
+
+.fakeButtons {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    border: 1px 1px 1px 1px;
+    position: relative;
+    top: 6px;
+    left: 6px;
+    background-color: #ff3b47;
+    border-color: #9d252b;
+    display: inline-block;
+}
+
+.fakeMinimize {
+    left: 11px;
+    background-color: #ffc100;
+    border-color: #9d802c;
+}
+
+.fakeZoom {
+    left: 16px;
+    background-color: #00d742;
+    border-color: #049931;
+}
+
+.fakeMenu {
+    width: 1000px;
+    box-sizing: border-box;
+    height: 25px;
+    background-color: #bbb;
+    margin: 0 0 0 0;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.fakeScreen {
+    background-color: #151515;
+    box-sizing: border-box;
+    width: 1000px;
+    margin: 0 0 0 0;
+    padding: 45px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+p {
+    position: relative;
+    left: 20%;
+    margin-left: -8.5em;
+    text-align: left;
+    font-size: 1.25em;
+    font-family: monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+
+span {
+    color: #fff;
+    font-weight: bold;
+}
+
+.line1 {
+    color: #CDEE69;
+    -webkit-animation: type .5s 1s steps(40, end) forwards;
+    -moz-animation: type .5s 1s steps(40, end) forwards;
+    -o-animation: type .5s 1s steps(40, end) forwards;
+    animation: type .5s 1s steps(40, end) forwards;
+}
+
+.cursor1 {
+    -webkit-animation: blink 1s 2s 2 forwards;
+    -moz-animation: blink 1s 2s 2 forwards;
+    -o-animation: blink 1s 2s 2 forwards;
+    animation: blink 1s 2s 2 forwards;
+}
+
+.line2 {
+    color: #CDEE69;
+    -webkit-animation: type .5s 4.25s steps(20, end) forwards;
+    -moz-animation: type .5s 4.25s steps(20, end) forwards;
+    -o-animation: type .5s 4.25s steps(20, end) forwards;
+    animation: type .5s 4.25s steps(20, end) forwards;
+}
+
+.cursor2 {
+    -webkit-animation: blink 1s 5.25s 2 forwards;
+    -moz-animation: blink 1s 5.25s 2 forwards;
+    -o-animation: blink 1s 5.25s 2 forwards;
+    animation: blink 1s 5.25s 2 forwards;
+}
+
+.line3 {
+    color: #CDEE69;
+    -webkit-animation: type .5s 7.5s steps(20, end) forwards;
+    -moz-animation: type .5s 7.5s steps(20, end) forwards;
+    -o-animation: type .5s 7.5s steps(20, end) forwards;
+    animation: type .5s 7.5s steps(20, end) forwards;
+}
+
+.cursor3 {
+    -webkit-animation: blink 1s 8.5s 2 forwards;
+    -moz-animation: blink 1s 8.5s 2 forwards;
+    -o-animation: blink 1s 8.5s 2 forwards;
+    animation: blink 1s 8.5s 2 forwards;
+}
+
+.line4 {
+    color: #CDEE69;
+    -webkit-animation: type .5s 10.75s steps(20, end) forwards;
+    -moz-animation: type .5s 10.75s steps(20, end) forwards;
+    -o-animation: type .5s 10.75s steps(20, end) forwards;
+    animation: type .5s 10.75s steps(20, end) forwards;
+}
+
+.cursor4 {
+    -webkit-animation: blink 1s 11.75s forwards;
+    -moz-animation: blink 1s 11.75s forwards;
+    -o-animation: blink 1s 11.75s forwards;
+    animation: blink 1s 11.75s forwards;
+}
+
+.line5 {
+    color: #fff;
+    -webkit-animation: type .5s 15s steps(20, end) forwards;
+    -moz-animation: type .5s 15s steps(20, end) forwards;
+    -o-animation: type .5s 15s steps(20, end) forwards;
+    animation: type .5s 15s steps(20, end) forwards;
+}
+
+.cursor5 {
+    -webkit-animation: blink 1s 16s infinite;
+    -moz-animation: blink 1s 16s infinite;
+    -o-animation: blink 1s 16s infinite;
+    animation: blink 1s 16s infinite;
+}
+
+@-webkit-keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-o-keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes type {
+    to {
+        width: 50em;
+    }
+}
+
+@-moz-keyframes type {
+    to {
+        width: 50em;
+    }
+}
+
+@-o-keyframes type {
+    to {
+        width: 50em;
+    }
+}
+
+@keyframes type {
+    to {
+        width: 50em;
+    }
+}
+/*adapted from https://codepen.io/joshcummingsdesign/pen/qOKaWd*/
+```
+###### /resources/view/DarkTheme2.css
 ``` css
 * {
     -fx-base-background-color-0: #0b0c0d;
     -fx-base-background-color-1: #45484B;
+    -fx-button-pressed-color: white;
+    -fx-button-hovor-color: #3a3a3a;
     -fx-base-text-fill-color: white;
     -fx-base-text-fill-color-alt: black;
     -fx-base-text-fill-color-labels: white;
+    -fx-base-text-fill-color-weblink-labels: white;
     -fx-label-text-fill-color: #010505;
     -fx-list-cell-even: #676556;
     -fx-list-cell-odd: #524e3b;
@@ -891,26 +1191,21 @@ public class WebsiteButtonBar extends UiPart<Region> {
     -fx-background-color: -fx-base-background-color-0;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 8pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: -fx-base-text-fill-color;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: #3a3a3a;
+    -fx-background-color: -fx-button-hovor-color;
 }
 
 .button:pressed, .button:default:hover:pressed {
-    -fx-background-color: white;
+    -fx-background-color: -fx-button-pressed-color;
     -fx-text-fill: -fx-base-background-color-0;
 }
 
 .button:focused {
-    -fx-border-color: white, white;
-    -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
-    -fx-border-radius: 0, 0;
-    -fx-border-insets: 1 1 1 1, 0;
-}
+    -fx-border-color: -fx-base-text-fill-color, -fx-base-text-fill-color;
 
 .button:disabled, .button:default:disabled {
     -fx-opacity: 0.4;
@@ -920,7 +1215,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
 
 .button:default {
     -fx-background-color: -fx-focus-color;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: -fx-base-text-fill-color-labels;
 }
 
 .button:default:hover {
@@ -1103,7 +1398,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
 }
 
 #webLinks .label {
-    -fx-text-fill: -fx-base-text-fill-color-labels;
+    -fx-text-fill: -fx-base-text-fill-color-weblink-labels;
     -fx-background-color: transparent;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 4;
@@ -1112,7 +1407,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
     -fx-font-size: 11;
 }
 ```
-###### \resources\view\DetailedPersonListCard.fxml
+###### /resources/view/DetailedPersonListCard.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -1177,14 +1472,17 @@ public class WebsiteButtonBar extends UiPart<Region> {
   </GridPane>
 </HBox>
 ```
-###### \resources\view\LightTheme2.css
+###### /resources/view/LightTheme2.css
 ``` css
 * {
     -fx-base-background-color-0: #69D2E7;
     -fx-base-background-color-1: #A7DBD8;
+    -fx-button-pressed-color: #7a7a7a;
+    -fx-button-hovor-color: #3a3a3a;
     -fx-base-text-fill-color: black;
     -fx-base-text-fill-color-alt: white;
     -fx-base-text-fill-color-labels: white;
+    -fx-base-text-fill-color-weblink-labels: black;
     -fx-label-text-fill-color: #010505;
     -fx-list-cell-even: #E0E4CC;
     -fx-list-cell-odd: #A7DBD8;
@@ -1194,7 +1492,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
 }
 
 ```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
         <VBox fx:id="personList" maxWidth="400.0" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
@@ -1275,7 +1573,7 @@ public class WebsiteButtonBar extends UiPart<Region> {
     <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
 </VBox>
 ```
-###### \resources\view\WebsiteButtonbar.fxml
+###### /resources/view/WebsiteButtonbar.fxml
 ``` fxml
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>

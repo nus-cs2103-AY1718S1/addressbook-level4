@@ -25,7 +25,7 @@ Responsibilities: Project Management, Deployment, Ui development
 image::joshua.jpg[width="150", align="left"]
 {empty}[https://github.com/bladerail[github]] [<<joshua#, portfolio>>]
 
-Role: Team Member +
+Role: Developer +
 Responsibilities: Project Development
 
 

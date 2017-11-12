@@ -156,7 +156,7 @@ public class ParserUtilTest {
     //@@author
     @Test
     public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(!ParserUtil.parseEmail(Collections.emptyList()).isEmpty());
+        assertFalse(ParserUtil.parseEmail(Collections.emptyList()).isEmpty());
     }
     //@@author zhoukai07
     @Test

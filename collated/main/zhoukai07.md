@@ -1,5 +1,5 @@
 # zhoukai07
-###### \java\seedu\address\commons\events\ui\ChangeThemeRequestEvent.java
+###### /java/seedu/address/commons/events/ui/ChangeThemeRequestEvent.java
 ``` java
 import seedu.address.commons.events.BaseEvent;
 
@@ -20,7 +20,7 @@ public class ChangeThemeRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ChangeThemeCommand.java
+###### /java/seedu/address/logic/commands/ChangeThemeCommand.java
 ``` java
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
@@ -32,7 +32,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  */
 public class ChangeThemeCommand extends Command {
 
-    public static final String COMMAND_WORD = "ChangeToTheme";
+    public static final String COMMAND_WORD = "changeToTheme";
     public static final String COMMAND_ALIAS = "ct";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -52,7 +52,7 @@ public class ChangeThemeCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         String[] themeList = new String[]{"/view/DarkTheme.css", "/view/DarkTheme2.css", "/view/LightTheme.css",
-            "/view/LightTheme.css"};
+            "/view/LightTheme2.css"};
         if (targetIndex > themeList.length) {
             throw new CommandException(Messages.MESSAGE_INVALID_THEME_INDEX);
         }
@@ -62,18 +62,18 @@ public class ChangeThemeCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
             + "[" + PREFIX_ADD_TAG + "TAG]..."
             + "[" + PREFIX_REM_TAG + "TAG]..."
 ```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
         private boolean clearTags = false;
         private Set<Tag> toAdd;
         private Set<Tag> toRemove;
 ```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
         public void setToAdd(Set<Tag> toAdd) {
             this.toAdd = toAdd;
@@ -85,19 +85,19 @@ public class ChangeThemeCommand extends Command {
             this.clearTags = clearTags;
         }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case ChangeThemeCommand.COMMAND_WORD:
         case ChangeThemeCommand.COMMAND_ALIAS:
             return new ChangeThemeCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\ArgumentMultimap.java
+###### /java/seedu/address/logic/parser/ArgumentMultimap.java
 ``` java
     public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
     }
 ```
-###### \java\seedu\address\logic\parser\ChangeThemeCommandParser.java
+###### /java/seedu/address/logic/parser/ChangeThemeCommandParser.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -126,14 +126,14 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\CliSyntax.java
+###### /java/seedu/address/logic/parser/CliSyntax.java
 ``` java
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_ADD_TAG = new Prefix("+t/");
     public static final Prefix PREFIX_CLEAR_TAG = new Prefix("ClearTag");
     public static final Prefix PREFIX_REM_TAG = new Prefix("-t/");
 ```
-###### \java\seedu\address\logic\parser\EditCommandParser.java
+###### /java/seedu/address/logic/parser/EditCommandParser.java
 ``` java
     /**
      * Parses {@code Collection<String> emails} into a {@code ArrayList<Emails>} if {@code emails} is non-empty.
@@ -156,17 +156,17 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
         return Optional.of(ParserUtil.parseEmail(emailSetToParse));
     }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     private ObjectProperty<ArrayList<Email>> emails;
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     public void setEmail(ArrayList<Email> email) {
         this.emails.set(requireNonNull(email));
     }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
         Scene scene = new Scene(getRoot());
         String original = getClass().getResource("/view/DarkTheme.css").toExternalForm();
@@ -174,7 +174,7 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
         this.scene2 = scene;
         primaryStage.setScene(scene);
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
      * Allows for theme changes
@@ -205,7 +205,7 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
         primaryStage.setScene(scene2);
     }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     @Subscribe
     private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
@@ -214,14 +214,17 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
     }
 
 ```
-###### \resources\view\LightTheme.css
+###### /resources/view/LightTheme.css
 ``` css
 * {
     -fx-base-background-color-0: #EFF1F3;
     -fx-base-background-color-1: #DBD3D8;
+    -fx-button-pressed-color: #7a7a7a;
+    -fx-button-hovor-color: #999999;
     -fx-base-text-fill-color: #14141f;
     -fx-base-text-fill-color-alt: white;
     -fx-base-text-fill-color-labels: white;
+    -fx-base-text-fill-color-weblink-labels: black;
     -fx-label-text-fill-color: #b3b3b3;
     -fx-list-cell-even: #D8B4A0;
     -fx-list-cell-odd: #DBD3D8;
@@ -443,24 +446,24 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
     -fx-border-color: #e2e2e2;
     -fx-border-width: 1;
     -fx-background-radius: 0;
-    -fx-background-color: -fx-base-background-color-0;
+    -fx-background-color: -fx-base-background-color-1;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 8pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: -fx-base-text-fill-color;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: #3a3a3a;
+    -fx-background-color: -fx-button-hovor-color;
 }
 
 .button:pressed, .button:default:hover:pressed {
-    -fx-background-color: white;
+    -fx-background-color: -fx-button-pressed-color;
     -fx-text-fill: -fx-base-background-color-0;
 }
 
 .button:focused {
-    -fx-border-color: white, white;
+    -fx-border-color: -fx-base-text-fill-color, -fx-base-text-fill-color;
     -fx-border-width: 1, 1;
     -fx-border-style: solid, segments(1, 1);
     -fx-border-radius: 0, 0;
@@ -475,7 +478,7 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
 
 .button:default {
     -fx-background-color: -fx-focus-color;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: -fx-base-text-fill-color-labels;
 }
 
 .button:default:hover {
@@ -658,7 +661,7 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
 }
 
 #webLinks .label {
-    -fx-text-fill: -fx-base-text-fill-color-labels;
+    -fx-text-fill: -fx-base-text-fill-color-weblink-labels;
     -fx-background-color: transparent;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 4;
@@ -667,7 +670,7 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
     -fx-font-size: 11;
 }
 ```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
         <Menu mnemonicParsing="false" text="Theme">
             <MenuItem mnemonicParsing="false" onAction="#handleDarkTheme" text="Dark Theme"/>
