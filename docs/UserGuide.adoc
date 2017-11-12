@@ -468,13 +468,15 @@ image::video/theme.gif[width="790"]
 // tag::colorKeyword[]
 === Highlighting keywords : `color`
 
-The `color` command will highlight the command keywords. The valid attributes are __enable__ and __disable__. +
+The `color` command will highlight the command keywords. There are 2 attributes, namely: __enable__ and __disable__. +
 
 Command format in command box: `color ATTRIBUTE` +
 
 Valid example:
 
-* In *module list mode*, type `color enable` to enable highlighting of valid command keywords. +
+* Type `color enable` to enable highlighting of valid command keywords. keywords. +
+
+* Type `color disable` to disable highlighting of valid command keywords.  +
 
 image::video/color.gif[width="790"]
 

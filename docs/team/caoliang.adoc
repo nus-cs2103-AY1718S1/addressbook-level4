@@ -41,9 +41,12 @@ include::../DeveloperGuide.adoc[tag=colorKeyword]
 
 ==== External behavior
 
+---
 The timetable feature is used to display a timetable of all the lessons listed in a module.
 
 image::Ui.png[width="900"]
+
+---
 
 ==== Justification
 
@@ -64,9 +67,12 @@ include::../DeveloperGuide.adoc[tag=timetable]
 
 ==== External behavior
 
+---
 The sticky notes feature is used to display additional information about a module.
 
 image::stickynotes.png[width="900"]
+
+---
 
 ==== Justification
 
@@ -107,4 +113,7 @@ https://github.com/CS2103AUG2017-W13-B4/main/pull/139[#139], https://github.com/
 
 * Designed a logo for ModU (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/118/[#118])
 
-* Wrote useful issue on forum (Issues https://github.com/nus-cs2103-AY1718S1/forum/issues/208[#208])
+* Offering code for others to reuse (Issues https://github.com/nus-cs2103-AY1718S1/forum/issues/208[#208])
+
+* Bugs reported and suggestions posted for other team’s products (Issues https://github.com/CS2103AUG2017-W10-B2/main/issues/136[#136],
+https://github.com/CS2103AUG2017-W13-B2/main/issues/132[#132], https://github.com/CS2103AUG2017-W13-B2/main/issues/105[#105])
