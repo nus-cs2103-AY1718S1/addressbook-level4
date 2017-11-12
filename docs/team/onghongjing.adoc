@@ -5,7 +5,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Project: The Classroom
 The Classroom is a software address book application that is designed to help students manage their countless assignments and projects with others.
-Users will be able to add and remove contacts and tasks with those contacts, along with various other features that will facilitate their work management. 
+Users will be able to add and remove contacts and tasks with those contacts, along with various other features that will facilitate their work management.
 The user interacts with it using a CLI, and it is written in Java with a GUI created with JavaFX. +
 
 This portfolio page aims to document the enhancements I have added to The Classroom and provide details on how the user
