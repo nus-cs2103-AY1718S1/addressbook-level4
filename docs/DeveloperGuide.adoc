@@ -468,7 +468,7 @@ Current `DATAFIELD` entries that are allowed are: `Name`, `Phone`, `Email` and `
 
 Using `-ignorefav` after `DATAFIELD` will sort the contact list without prioritising favourites first. +
 
-Using `-reverse` after `DATAFIELD` will sort the contact list according to the `DATAFIELD` but in *reverse oreder* +
+Using `-reverse` after `DATAFIELD` will sort the contact list according to the `DATAFIELD` but in *reverse order* +
 
 The sort feature uses *JavaFX 8's* `SortedList` to wrap around the `FilteredList` in `ModelManager` to enable sorting. This is because `FilteredList` is *unmodifiable* as of *JavaFX 8* and thus cannot be sorted. +
 
