@@ -210,6 +210,7 @@ Example: export .txt C:/user/user/desktop
 
 `export .txt C:/address book` (on Windows) +
 `export .txt /Users/[YOUR USER NAME]/address book` (on MacOS)
+`export .txt /address book (on Linux)
 ```
 Successfully exported
 ```
