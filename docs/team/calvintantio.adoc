@@ -12,6 +12,7 @@ ConTag is an efficient and feature-packed desktop address book application for t
 ==== External behavior
 
 ---
+
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=help]
@@ -34,3 +35,80 @@ include::../DeveloperGuide.adoc[tag=help]
 #End of Extract#
 
 ---
+
+=== Enhancement Added: Schedule an Activity Multiple Persons
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=schedule]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+ConTag is targeted towards business users. It is, hence, important for the application to allow users to schedule activities with their contacts.
+
+In v1.3, ConTag can only allow users to schedule at most one activity with a contact. Moreover, only one person can be associated with an activity every time schedule command is executed.
+
+In v1.4, users can have multiple activities with a contact. Furthermore, an activity can be scheduled for multiple contacts at once.
+
+The improvement from v1.3 to v1.4 is based on the reasoning that there exists activities, such as meeting, that involve more than one people. It is also possible to have multiple different schedules with a contact.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=scheduleSingle]
+
+include::../DeveloperGuide.adoc[tag=scheduleMultiple]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Welcome Screen Display
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=welcomeScreen]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Welcome screen is another form of advertising as it displays clearly the application logo when the application is launched.
+
+It is understood that users may not like welcome screen. Therefore, users have the choice to enable and disable the welcome screen. However, it is hoped that the display of a random productivity quote together with the welcome screen will provide an incentive for the users to enable the welcome screen.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=welcomeScreen]
+
+include::../DeveloperGuide.adoc[tag=welcomeScreen]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Created the 2 different versions of ConTag logo for the documentations and the application
+* Enabled ConTag to take in command aliases as command identifiers in addition to only command words

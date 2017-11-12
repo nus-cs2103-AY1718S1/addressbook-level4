@@ -293,6 +293,7 @@ Locates the 2nd person's address in the address book.
 Locates the 1st person's address in the results of the `find` command.
 // end::locate[]
 
+// tag::schedule[]
 ==== Scheduling an activity: `schedule` [Since v1.3]
 
 => Alias: `sc` <=
@@ -312,7 +313,7 @@ Associates the specified schedule with the 1st and 3rd persons in the address bo
 * `find n/Betsy` +
 `schedule 1 d/25-12-2017 act/Christmas dinner` +
 Associates the specified schedule with the 1st person in the results of the `find` command.
-
+// end::schedule[]
 // tag::agenda[]
 ===== Viewing of user's agenda [Since v1.4]
 
@@ -469,6 +470,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::welcomeScreen[]
 ==== Enabling and disabling the welcome screen: `welcome` [Since v1.5]
 
 => Alias: `w` <=
@@ -492,6 +494,7 @@ If the welcome screen is successfully enabled, you should be able to see a the f
 
 image::WelcomeScreen.png[width="400"]
 _Figure 3.4.3.1: The welcome screen_
+// tag::welcomeScreen[]
 
 ==== Exiting the program : `exit`
 
