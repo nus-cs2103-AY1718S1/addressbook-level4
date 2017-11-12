@@ -136,7 +136,7 @@ A person must have at least 1 email. *[v1.3 update]*
 ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
 
 [TIP]
-Phone numbers may include country codes, beginning with '+' and with a white space between the code and the rest of the phone number.
+Phone numbers may optionally include country codes, beginning with '+' and with a white space between the code and the rest of the phone number.
 
 
 Examples:
@@ -392,6 +392,37 @@ Emails the 1st and 2nd person in the address book.
 `email 1` +
 Emails the 1st person in the results of the `find` command.
 
+//tag::backup[]
+==== Back up address book : `backup` [Since v1.5]
+
+=> Alias: `b` <=
+
+Create an exact copy of your address book in another directory anywhere on your PC.
+Format: `backup TARGET_DIRECTORY`
+
+****
+* Result of command will only display as either successful or unsuccessful.
+* If unsuccessful, check for the following:
+* Does the directory folder exist? Folders are not created by the application, only the file is.
+* Does a backup file `addressbook.xml` already exist in your specified folder? Rename or remove it
+to solve unsuccessful attempt, as the application will protect and not overwrite your data.
+****
+
+Examples:
+
+* `backup F:\Folder` +
+Backs up `addressbook.xml` at the location `F:\Folder\addressbook.xml`.
+* `b C:\Folder 2\addressbook.xml` +
+Backs up `addressbook.xml` at the above-specified location.
+
+Note:
+
+1. Entering `addressbook.xml` at the end of your target path is optional, as the application
+can take in either format.
+
+2. The path can include white spaces such as `\Folder 2\`, so do not replace spaces with other characters.
+//end::backup[]
+
 === Other navigation commands
 
 ==== Listing all persons : `list`
@@ -499,6 +530,8 @@ To *transfer data* to another Computer, install the app in the other computer an
 |=======================================================================
 |Commands Words |Commands Alias |Format|Example
 |link:#adding-a-person-code-add-code-last-updated-in-v1-3[Add] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL] a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
+
+|link:#opening-calendar-code-calendar-code-since-v1-3[Backup] |`b` |`backup TARGET_DIRECTORY` | backup F:\myFiles\
 
 |link:#opening-calendar-code-calendar-code-since-v1-3[Calendar] |`cl` |`calendar` |
 
