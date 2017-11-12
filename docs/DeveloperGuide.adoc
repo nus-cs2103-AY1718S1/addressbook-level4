@@ -883,6 +883,9 @@ public class CommandInputChangedEvent extends BaseEvent {
 }
 ----
 
+Components that adjust based on change in input, for example inline hints, can simply subscribe to this event.
+
+
 ==== Design Considerations
 
 **Aspect:** How to inform other components on input change +
@@ -894,13 +897,60 @@ public class CommandInputChangedEvent extends BaseEvent {
 **Cons:** Increases coupling. Difficult to pass instance of other components to `CommandTextField` +
 
 ___
-=== Hints and AutoComplete
+=== Displaying Inline Hints
 
+==== Inspiration
+We wish to display hints similar to how Apple's Spotlight displays their completion and hints.
+
+image::AppleSpotlightSuggestions.jpg[width="600"]
+
+[[inline-hint-terms]]
+==== Terms
+As of v1.5, an inline hint consists of a concatenation of an argument hint and a description.
+An argument hint is an inline suggestion for the next letters to type. For example **add |** n/, n/ being the argument hint.
+A description would describe the details of the current command you are typing.
+
+Please refer to the illustration below.
+
+image::InlineHintsArgumentAndDescription.png[width="800"]
+
+==== How we implemented it
+In `JavaFX` it is not possible to have a prompt text next to user's input in a `TextField`.
+
+In Unify, we have two `JavaFX` `TextFields` side by side. The input is keyed in the `CommandTextField` `TextField` while the inline hints are set in the `CommandBoxHints` `TextField`. These `TextFields` are placed in `HBox` and thus will not overlap.
+
+At the start, the `CommandTextField` will be empty and length 0.
+
+image::InlineHintsStart.png[width="800"]
+As the user keys in the input `CommandTextField` will grow based on the text keyed in with the the help of `TextUtil` methods. As the `CommandTextField` grows, the `HBox` will automatically push the `CommandBoxHints` to the right.
+
+image::InlineHintsTextFieldGrow.png[width="800"]
+
+[NOTE]
+We clamp the size of the `CommandTextField` to half of the window size so that we have sufficient room for the hints.
+
+image::InlineHintsWindowSize.png[width="800"]
+
+
+==== Design Considerations
+
+**Aspect:** Calculating displacement of hints to simulate inline hints +
+**Alternative 1 (current choice):** Put two resizeable `TextFields` side by side. Let the `HBox` handle the displacement +
+**Pros:** We have control on how big the `TextFields` can be. +
+**Cons:**  Difficult to test the resize calculation as font rendered is different according to OS. Difficult to implement as we have to account for user clicking/tabbing into the `CommandBoxHints` +
+**Alternative 2:** Overlay a label over the `CommandTextField`. The label will contain the user input + the inline hint  +
+
+image::InlineHintsOverlay.png[width="400"]
+**Pros:** Easy to implement. +
+**Cons:** Hints and Text mis-align when user input exceeds the length of the `TextField`, unable to find work around. +
+
+___
+=== Hints and AutoComplete Parsing
 Inline hints and tab autocompletion of user input is encapsulated by a `Hint` object.
 A `Hint` object will take in the current user input and/or other arguments (depending on the implementation of the concrete Hint).
 
 Inline hints can be accessed from `getArgumentHint()` and `getDescription()`.
-The next user input on tab can be accessed from `autocomplete`.
+The next user input on tab can be accessed from `autocomplete()`.
 
 Different commands have similar command format. Hence we separate some of the `Hints` to inherit from
 subclasses `FixedArgumentsHint`, `NoArgumentsHint`, `ArgumentsHint` to reuse the same logic.
@@ -910,14 +960,13 @@ The inheritance diagram is shown below:
 image::HintsClassDiagram.png[width="800"]
 
 ==== Why separate argument hints and description
-An argument hint is an inline suggestion for the next letters to type. For example **add |** n/, n/ being the argument hint.
-A description would describe the details of the current command you are typing.
+For explanation on what argument hints and description are, click link:#inline-hint-terms[here].
 
 We separate the hint like so for 2 reasons:
 
-. We can style the text differently
+. We can style the text differently (for v2.0)
 .. In the `CommandTextField` our argument hints should be the same size as our input while our description, which can get quite lengthy, can be smaller in size
-.. We can also have the description written in a separate
+.. We can also have the description displayed in a separate component
 . The `autocomplete()` output and argument hints are closely related.
 .. For many commands, we would want to autocomplete the argument hint. (eg. completing to the next prefix)
 
