@@ -1124,6 +1124,38 @@ Use case resumes at step 2
 +
 Use case ends
 
+[discrete]
+== Use case: Import storage files
+
+*MSS*
+
+1. User requests to import external XML file
+2. System requests for file location
+3. User provides file location
+4. System loads file and shows success message, along with the updated list
+Use case ends.
+
+*Extensions*
+
+* 1a. System detects there is no file location specified
+
+** 1a1. System outputs message saying that the input location is incorrect
+Use case ends.
+
+* 3a. System detects an invalid file location or finds invalid XML file
+
+** 3a1. System asks for a new file location
+
+** Steps 3 is repeated until a valid file location is entered
+
+Use cases resumes at step 4
+
+* 3b. System detects not enough storage on hard drive
+
+** 3b1. System tells user not enough space on hard drive
+
+Use case ends.
+
 
 [discrete]
 == Use case: Backup storage files
