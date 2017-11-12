@@ -23,7 +23,7 @@ public class DeleteCommand extends UndoableCommand {
             + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "%1$s has been deleted from the addressbook!";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "%1$s has been deleted from the address book!";
 
     private final Index targetIndex;
 
