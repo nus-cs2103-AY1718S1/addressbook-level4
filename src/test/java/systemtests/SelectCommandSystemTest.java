@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
 import org.junit.Test;
+import org.junit.Ignore;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
@@ -17,6 +18,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
+@Ignore
 public class SelectCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void select() {
