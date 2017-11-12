@@ -32,7 +32,7 @@ public class HighlightCommandTest {
         String highlightTag = listOfTags.get(0).getTagName();
         HighlightCommand highlightCommand = prepareCommand(highlightTag);
 
-        String expectedMessage = HighlightCommand.MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS + highlightTag;
+        String expectedMessage = String.format(HighlightCommand.MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS, highlightTag);
 
         ModelManager expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
         expectedModel.updateHighlightStatus(highlightTag);
@@ -45,7 +45,8 @@ public class HighlightCommandTest {
         String nonExistentTag = getNonExistentTag();
         HighlightCommand highlightCommand = prepareCommand(nonExistentTag);
 
-        assertCommandFailure(highlightCommand, model, HighlightCommand.MESSAGE_TAG_NOT_FOUND + nonExistentTag);
+        String expectedMessage = String.format(HighlightCommand.MESSAGE_TAG_NOT_FOUND, nonExistentTag);
+        assertCommandFailure(highlightCommand, model, expectedMessage);
     }
 
     @Test
@@ -53,7 +54,8 @@ public class HighlightCommandTest {
         String emptyTag = "";
         HighlightCommand highlightCommand = prepareCommand(emptyTag);
 
-        assertCommandFailure(highlightCommand, model, HighlightCommand.MESSAGE_TAG_NOT_FOUND + emptyTag);
+        String expectedMessage = String.format(HighlightCommand.MESSAGE_TAG_NOT_FOUND, emptyTag);
+        assertCommandFailure(highlightCommand, model, expectedMessage);
     }
 
     @Test

@@ -23,8 +23,8 @@ public class HighlightCommand extends UndoableCommand {
     public static final String MESSAGE_RESET_HIGHLIGHT = "Removed all highlights on Residents.";
     public static final String MESSAGE_NONE_HIGHLIGHTED = "No Highlighted Residents.";
 
-    public static final String MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS = "Highlighted residents with tag: ";
-    public static final String MESSAGE_TAG_NOT_FOUND = "Tag not found: ";
+    public static final String MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS = "Highlighted residents with tag: %1$s";
+    public static final String MESSAGE_TAG_NOT_FOUND = "Tag not found: %1$s";
 
     private final String highlightTag;
 
@@ -48,9 +48,9 @@ public class HighlightCommand extends UndoableCommand {
         } else {
             try {
                 model.updateHighlightStatus(highlightTag);
-                return new CommandResult(MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS + highlightTag);
+                return new CommandResult(String.format(MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS, highlightTag));
             } catch (TagNotFoundException e) {
-                throw new CommandException(MESSAGE_TAG_NOT_FOUND + highlightTag);
+                throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, highlightTag));
             }
         }
     }
