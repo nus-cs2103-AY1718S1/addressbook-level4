@@ -57,9 +57,9 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // Facebook search page of a person
         postNow(facebookEventStub);
-        URL expectedFacebookURL = new URL(FACEBOOK_SEARCH_URL + "Bob");
+        URL expectedFacebookUrl = new URL(FACEBOOK_SEARCH_URL + "Bob");
 
         //waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedFacebookURL, browserPanelHandle.getLoadedUrl());
+        assertEquals(expectedFacebookUrl, browserPanelHandle.getLoadedUrl());
     }
 }
