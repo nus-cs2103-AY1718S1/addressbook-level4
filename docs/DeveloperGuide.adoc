@@ -1495,6 +1495,41 @@ The QrGenSmsCommand to retrieve QrCode with the following codes.
 ----
 // end::qrsave[]
 
+// tag::sort[]
+=== Sort Command
+(Added in v1.2)
+
+The `sort` command is a feature we implemented to allow users to sort their contact details based on the name of the contacts. When we add in new contacts using the `add` feature, the contact
+will usually be added into the bottom of the address book.
+
+As the contacts in the addressbook gets larger and larger, it will be difficult to maintain the contacts as the contact details in the contact list panel will become messy and we will have to use the `find` feature constantly to look
+for the contact we want.
+
+The `sort` command starts off by taking in the `sort` command from the  `AddressBookParser` class and call a new `SortCommand` class.
+
+---
+  case SortCommand.COMMAND_WORD:
+  case SortCommand.COMMAND_ALIAS:
+     return new SortCommand();
+
+---
+
+The `SortCommand` class will then call the `sort()` method created in the `AddressBook` class to modify the array list that was used to maintain the contact details
+in the `UniquePersonList` class.
+
+The sorting algorithm lies in the `UniquePersonList` class where a self-defined comparator was implemented to sort the elements in the array list based on the name of the Person in the list.
+
+---
+    public void sort() {
+        internalList.sort((person1, person2) -> (
+                person1.getName().fullName
+                        .compareToIgnoreCase(person2.getName().fullName)));
+    }
+
+---
+
+// end::sort[]
+
 == Documentation
 
 We use asciidoc for riting documentation.
