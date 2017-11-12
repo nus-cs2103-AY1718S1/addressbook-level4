@@ -58,8 +58,10 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
     private static final int MILLISECONDS_SINCE_TYPING = 300;
     private static final int MILLISECONDS_PAUSE_BEFORE_PRESSING_CTRL = 100;
+    //Start and end position of the placeholder 'NAME' in the full format of add command
     private static final int START_OF_ADD_FIRST_FIELD = 6;
     private static final int END_OF_ADD_FIRST_FIELD = 10;
+    //Start and end position of the placeholder 'INDEX' in the full format of remark command
     private static final int START_OF_REMARK_FIRST_FIELD = 7;
     private static final int END_OF_REMARK_FIRST_FIELD = 12;
     private static final String[] LIST_OF_ALL_COMMANDS = {AddCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD,
@@ -67,6 +69,8 @@ public class CommandBox extends UiPart<Region> {
         FindCommand.COMMAND_WORD, HelpCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
         NewRolodexCommand.COMMAND_WORD, OpenRolodexCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD,
         RemarkCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD, StarWarsCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD};
+    //The distance from the start of the prefix to the start of placeholder is two
+    private static final int JUMP_TO_START_OF_PLACEHOLDER = 2;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -99,10 +103,13 @@ public class CommandBox extends UiPart<Region> {
         loadKeyboardIcons();
         keyboardIcon.setImage(keyboardIdle);
         pause = new PauseTransition(Duration.millis(MILLISECONDS_SINCE_TYPING));
+
         TextFields.bindAutoCompletion(commandTextField, sr -> {
             Set<String> suggestedCommands = new HashSet<>();
             for (String command: LIST_OF_ALL_COMMANDS) {
-                if (!command.equals(sr.getUserText()) && command.startsWith(sr.getUserText())) {
+                if (!sr.getUserText().isEmpty() && !command.equals(sr.getUserText())
+                        && command.startsWith(sr.getUserText().trim().toLowerCase())) {
+
                     suggestedCommands.add(command);
                 }
             }
@@ -151,23 +158,27 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
+
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
             break;
+
         case TAB:
+
             if (keyEvent.isShiftDown()) {
+                //nagivate to the previous field when shift+tab is pressed
                 selectPreviousField();
             } else {
                 autocomplete();
             }
 
-            //press control key to make the text selection in command box appear
+            //press control key to make the text selection highlight appear in command box
             pressCtrl();
             break;
+
         default:
             //key pressed does not match UP, DOWN or TAB
             //let JavaFx handle the keypress
@@ -185,7 +196,7 @@ public class CommandBox extends UiPart<Region> {
     /**
      * press control key, used to display selected text
      */
-    public void pressCtrl() {
+    private void pressCtrl() {
         //add pause to prevent pressing tab before the input is updated
         pause = new PauseTransition();
         pause.setDuration(Duration.millis(MILLISECONDS_PAUSE_BEFORE_PRESSING_CTRL));
@@ -279,10 +290,12 @@ public class CommandBox extends UiPart<Region> {
         input = commandTextField.getText();
         updateKeyboardIcon();
         setStyleToDefault();
+
         if (isFirstTab) {
             //only do this after the first tab which is used to display the full command format
             autoSelectFirstField();
         }
+
         if (needToUpdateSelection) {
             updateSelection();
         }
@@ -374,8 +387,8 @@ public class CommandBox extends UiPart<Region> {
 
     /**
      * Displays the full format of the command
-     * In the case of add or remark command, if the user is trying to navigate to the next field,
-     * auto select the next field
+     * In the case of add or remark command, if the user is trying to navigate to the next field (full format
+     * is already diaplayed), auto-select the next field
      */
     private void autocomplete() {
         input = commandTextField.getText().trim().toLowerCase();
@@ -383,6 +396,7 @@ public class CommandBox extends UiPart<Region> {
             displayFullFormat(input);
             needToUpdateSelection = false;
             isFirstTab = true;
+
         } else if (isAddCommandFormat(input)) {
             needToUpdateSelection = true;
 
@@ -410,8 +424,8 @@ public class CommandBox extends UiPart<Region> {
 
     /**
      * Changes text selection to the previous field
-     * only applies to add command
-     * (remark command only has two fields, using tab to toggle between the two fields is enough)
+     * Only applies to add command
+     * (Remark command only has two fields, using tab to toggle between the two fields is enough)
      */
     private void selectPreviousField() {
         input = commandTextField.getText().trim().toLowerCase();
@@ -440,14 +454,20 @@ public class CommandBox extends UiPart<Region> {
     private void selectPreviousField(int currentPosition, int[] fieldsPositionArray) {
         boolean changedCaretPosition = false;
         for (int i = 1; i < fieldsPositionArray.length - 1; i++) {
+            //check if the current position is in between field[i] and field[i + 1], if so, change selection
+            //to the placeholder of field[i - 1]
             if (currentPosition > fieldsPositionArray[i] && currentPosition <= fieldsPositionArray[i + 1]) {
-                commandTextField.positionCaret(fieldsPositionArray[i - 1] + 2);
+                commandTextField.positionCaret(fieldsPositionArray[i - 1] + JUMP_TO_START_OF_PLACEHOLDER);
                 changeSelectionToNextField();
                 changedCaretPosition = true;
             }
         }
         if (!changedCaretPosition) {
-            commandTextField.positionCaret(fieldsPositionArray[fieldsPositionArray.length - 2] + 2);
+            //if caret position is not changed in the above for loop,
+            //which means the caret is currently at the last field, then change selection to the second last field
+            //so that continuously pressing shift+tab will go in a cycle
+            commandTextField.positionCaret(fieldsPositionArray[fieldsPositionArray.length - 2]
+                    + JUMP_TO_START_OF_PLACEHOLDER);
             changeSelectionToNextField();
         }
     }
@@ -461,14 +481,19 @@ public class CommandBox extends UiPart<Region> {
     private void selectNextField(int currentPosition, int[] fieldsPositionArray) {
         boolean changedCaretPosition = false;
         for (int i = 0; i < fieldsPositionArray.length - 1; i++) {
+            //check if the current position is in between field[i] and field[i + 1], if so, change selection
+            //to the placeholder of field[i + 1]
             if (currentPosition > fieldsPositionArray[i] && currentPosition < fieldsPositionArray[i + 1]) {
-                commandTextField.positionCaret(fieldsPositionArray[i + 1] + 2);
+                commandTextField.positionCaret(fieldsPositionArray[i + 1] + JUMP_TO_START_OF_PLACEHOLDER);
                 changeSelectionToNextField();
                 changedCaretPosition = true;
             }
         }
         if (!changedCaretPosition) {
-            commandTextField.positionCaret(fieldsPositionArray[0] + 2);
+            //if caret position is not changed in the above for loop,
+            //which means the caret is currently at the last field, then change selection to the first field
+            //so that continuously pressing tab will go in a cycle
+            commandTextField.positionCaret(fieldsPositionArray[0] + JUMP_TO_START_OF_PLACEHOLDER);
             changeSelectionToNextField();
         }
     }
