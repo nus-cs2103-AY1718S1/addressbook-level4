@@ -54,7 +54,7 @@ To add a new contact, we need to use the `add` command.
 
 Let's add a new person called `Martin` into *BoNUS* +
 _Command:_ +
-`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends`
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends` +
 _Result:_ +
 `New person added: Martin Smith Phone: 85930167 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
 
@@ -62,13 +62,13 @@ _Result:_ +
 
 . The value for one property is invalid +
 _Command:_ +
-`add n/Den Smith p/85930167 e/www.smith.com a/25 New York City`
+`add n/Den Smith p/85930167 e/www.smith.com a/25 New York City` +
 _Result:_ +
 `Person emails should be 2 alphanumeric/period strings separated by '@'.`
 
 . The person already exists +
 _Command:_ +
-`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends`
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends` +
 _Result:_ +
 `This person already exists in the application.`
 
@@ -86,7 +86,7 @@ _Result:_ +
 
 . Let's edit the person called `Martin` we added just now (assume the index is `8`) +
 _Command:_ +
-`edit 8 p/86129854`
+`edit 8 p/86129854` +
 _Result:_ +
 `Edited Person: Martin Smith Phone: 86129854 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
 
@@ -231,18 +231,18 @@ _Command:_ +
 _Result:_ +
 `Deleted Event:  Event: Project Meeting for CS2101 |  Date/Time: 01 Dec, 2017 09:00 |  Address: SR09, School of Computing`
 
-
 *Negative Test Cases*
 
-. Invalid command +
+. Invalid index +
 _Command:_ +
 `deleteE -1` +
 _Result:_ +
-`Invalid command format!
-deleteE: Deletes the event identified by the index number used in the last event listing.
-Parameters: INDEX (must be a positive integer)`
+`Invalid command format!`
+`deleteE: Deletes the event identified by the index number used in the last event listing.`
+`Parameters: INDEX (must be a positive integer)`
 
-. Invalid index +
+. Person with the index not exist +
+2) Deletes an Event with index 11 on the Event List +
 _Command:_ +
 `deleteE 300` +
 _Result:_ +
@@ -273,6 +273,78 @@ At this point in time, you should see an event with name `Movie Date with Bro` a
 ==== Import data from `.xml` format
 
 To import data from a `.xml` file, we need to use the `import` command
+
+*Positive test cases*
+
+. If the XML file at `<BoNUS home folder>/bonus.xml` contains data recognizable by *BoNUS*, this command imports data
+that does not exist in *BoNUS* +
+_Command:_ +
+`import bonus.xml` +
+_Result:_ +
+`Imported data from: bonus.xml`
+
+*Negative test cases*
+
+. If the specified file is not found +
+_Command:_ +
+`import bonus.xml` +
+_Result:_ +
+`The specified file does not exist.`
+
+. If the specified file does not end with an extension of `.xml` +
+_Command:_ +
+`import bonus.notxml` +
+_Result:_ +
+`The file path does not point to an XML file.`
+
+. If a file name is not provided +
+_Command:_ +
+`import .xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. If the specified file name and any non-existent folder names contain any prohibited characters +
+_Command:_ +
+`import b%nus.xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. For `Windows` users, if the specified file path contains `/` as a name-separator +
+_Command:_ +
+`import folder/bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `maxOS` and `Linux` users, if the specified file path contains `\` as a name-separator +
+_Command:_ +
+`import folder\bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `Windows` users, if the specified file path contains consecutive name-separators `\\` +
+_Command:_ +
+`import folder\\bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. For `maxOS` and `Linux` users, if the specified file path contains consecutive name-separators `//` +
+_Command:_ +
+`import folder//bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. If the specified file path contains consecutive extension-separators `..` +
+_Command:_ +
+`import bonus..xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. If the data in the specified file is not recognizable by *BoNUS* +
+_Command:_ +
+`import bonus.xml` +
+_Result:_ +
+`The data in the specified XML file is not in the correct format as recognized by BoNUS.` +
+`Please try to import from another XML file.`
 
 ==== Import timetable from NUSMods website
 
@@ -314,6 +386,83 @@ _Result:_ +
 ==== Export data to `.xml` format
 
 To export data to a `.xml` file, we need to use the `export` command
+
+[NOTE]
+====
+Existing files will be overwritten.
+====
+
+*Positive test cases*
+
+. Exports the current data in *BoNUS* to `<BoNUS home folder>/bonus.xml` +
+_Command:_ +
+`export bonus.xml` +
+_Result:_ +
+`Exported address book data to: bonus.xml`
+
+. For `Windows` users, this command exports the current data in *BoNUS* to `<BoNUS home folder>\new_folder\bonus.xml`,
+after creating the non-existing folder `<BoNUS home folder>\new_folder` +
+_Command:_ +
+`export new_folder\bonus.xml` +
+_Result:_ +
+`Exported address book data to: new_folder\bonus.xml`
+
+. For `macOS` and `Linux` users, this command exports the current data in *BoNUS* to `<BoNUS home folder>/new_folder/bonus.xml`,
+after creating the non-existing folder `<BoNUS home folder>/new_folder` +
+_Command:_ +
+`export new_folder/bonus.xml` +
+_Result:_ +
+`Exported address book data to: new_folder/bonus.xml`
+
+*Negative test cases*
+
+. If the specified file does not end with an extension of `.xml` +
+_Command:_ +
+`export bonus.notxml` +
+_Result:_ +
+`The file path does not point to an XML file.`
+
+. If a file name is not provided +
+_Command:_ +
+`export .xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. If the specified file name and any non-existent folder names contain any prohibited characters +
+_Command:_ +
+`export b%nus.xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. For `Windows` users, if the specified file path contains `/` as a name-separator +
+_Command:_ +
+`export folder/bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `maxOS` and `Linux` users, if the specified file path contains `\` as a name-separator +
+_Command:_ +
+`export folder\bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `Windows` users, if the specified file path contains consecutive name-separators `\\` +
+_Command:_ +
+`export folder\\bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. For `maxOS` and `Linux` users, if the specified file path contains consecutive name-separators `//` +
+_Command:_ +
+`export folder//bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. If the specified file path contains consecutive extension-separators `..` +
+_Command:_ +
+`export bonus..xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
 
 === Email a contact on your contact list
 
@@ -444,7 +593,7 @@ _Result:_ +
 
 . If the regular expression provided is invalid +
 _Command:_ +
-`config --add-property s/w f/weight m/Weight must be a positive integer. r/*asf`
+`config --add-property s/w f/weight m/Weight must be a positive integer. r/*asf` +
 _Result:_ +
 `The regular expression you provided is invalid.`
 
