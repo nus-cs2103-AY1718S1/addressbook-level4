@@ -49,7 +49,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
-            
+
             /*if (targetIndex.getZeroBased() <= 0) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }*/
