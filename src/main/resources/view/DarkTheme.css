@@ -102,6 +102,7 @@
     -fx-background-color: -fx-focus-color;
 }
 
+/* @@author HouDenghao */
 .split-pane:horizontal .split-pane-divider {
     -fx-background-color: derive(#1d1d1d, 20%);
     -fx-border-color: transparent transparent transparent #4d4d4d;
@@ -113,7 +114,6 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
-/* @@author HouDenghao */
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
