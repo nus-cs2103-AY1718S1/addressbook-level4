@@ -1,0 +1,113 @@
+= Pang Er Yao - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imageDir: ../images
+:styleDir: ../stylesheets
+
+== Project Mobilize
+Mobilize is a organizing and planning desktop application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B3/main/blob/master/collated/main/eryao95.md[Functional code]][https://github.com/CS2103AUG2017-T11-B3/main/blob/master/collated/test/eryao95.md[Test code]]
+
+=== Enhancement Added: Birthday
+
+=== External Behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users may need to know the birthday of their friends and it is almost impossible to remember all of their friend's birthday.
+
+Hence, users can use the optional parameter to save the birthday of their friends. Since the parameter is optional, users can choose to use the birthday feature according to their own needs.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Deletetask
+
+==== External Behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletetask]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With the ever-changing hectic life of people now, our tasks may be cancelled anytime. Therefore, it will be more useful if users can delete tasks that are being cancelled.
+
+Hence, users can use the deletetask feature to delete away the task at any index at their choice.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletetask]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Findtag
+
+==== External Behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With so many friends and contacts, users may not remember the name of the person but only remembers what group did he categorize the person in. Therefore, it will be good if users can search the contacts using tags.
+
+Hence, users can use findtag feature to filter out all the people that are under that tag and look for the people that he is looking for.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Pop-ups for task that are overdue or close to deadline
+
+==== Justification
+
+When the users have many tasks at hand, it will be hard for users to check and remember all the tasks that are near the deadline.
+
+Hence, if there is a pop up, it could remind users of their tasks and allow user to complete their task by the deadline.
+
+=== Other Contributions
+
+* Updated and standardized the format and structure for user guide and developer guide.

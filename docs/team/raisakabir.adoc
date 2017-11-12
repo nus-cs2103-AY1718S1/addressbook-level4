@@ -1,0 +1,100 @@
+= Raisa Kabir - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Mobilize
+Mobilize is a desktop application built to help people organize their contacts and tasks. It is primarily written
+in Java and uses the Object Oriented Paradigm. The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B3/main/blob/master/collated/main/raisa2010.md[Functional code]] [https://github.com/CS2103AUG2017-T11-B3/main/blob/master/collated/test/raisa2010.md[Test code]]
+
+=== Enhancement Added: Add Task
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addtask]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Expands the breadth of the original code's function by allowing users to add tasks and plan their accordingly.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addtask]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Edit Task
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=edittask]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Tagging multiple contacts at the same time will enable users to easily use the tag function for various reasons including keeping track of tasks done by contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=edittask]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Tag Multiple Contacts and Tasks
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Tagging multiple contacts at the same time will enable users to easily use the tag function for various reasons including keeping track of tasks done by contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tag]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Added autocomplete feature (Pull request https://github.com/CS2103AUG2017-T11-B3/main/pull/96[#96])
+* Discovered bug during trial acceptance testing (https://github.com/CS2103AUG2017-T09-B4/main/issues/103[Issue #103])
+
