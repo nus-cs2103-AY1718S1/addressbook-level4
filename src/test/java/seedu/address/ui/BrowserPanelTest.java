@@ -12,8 +12,8 @@ import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import java.net.URL;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.address.MainApp;
