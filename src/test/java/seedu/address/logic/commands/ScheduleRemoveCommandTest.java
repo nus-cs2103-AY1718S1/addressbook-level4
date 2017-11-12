@@ -19,6 +19,7 @@ import org.junit.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -219,6 +220,7 @@ public class ScheduleRemoveCommandTest {
 
         private ArrayList<Event> eventList = new ArrayList<>();
         private AddressBook addressBookStub = new AddressBook();
+        private ObservableList<ReadOnlyPerson> filteredPersonListStub;
 
         @Override
         public void removeEvents(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons,
@@ -285,6 +287,12 @@ public class ScheduleRemoveCommandTest {
 
             return FXCollections.observableArrayList(eventList);
 
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            filteredPersonListStub = new FilteredList<ReadOnlyPerson>(addressBookStub.getPersonList());
+            filteredPersonListStub.filtered(predicate);
         }
     }
 }
