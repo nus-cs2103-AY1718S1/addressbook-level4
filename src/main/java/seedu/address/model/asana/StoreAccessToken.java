@@ -1,10 +1,11 @@
 package seedu.address.model.asana;
 
+import java.io.IOException;
+
 import com.asana.Client;
 import com.asana.OAuthApp;
-import seedu.address.storage.AsanaStorage.AsanaCredentials;
 
-import java.io.IOException;
+import seedu.address.storage.asana.storage.AsanaCredentials;
 
 //@@author Sri-vatsa
 /**

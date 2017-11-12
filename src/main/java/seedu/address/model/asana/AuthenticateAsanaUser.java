@@ -1,14 +1,18 @@
 package seedu.address.model.asana;
 
-import com.asana.Client;
-import com.asana.OAuthApp;
-import seedu.address.storage.AsanaStorage.AsanaCredentials;
+import java.awt.Desktop;
 
-import java.awt.*;
 import java.io.IOException;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import java.util.UUID;
+
+import com.asana.Client;
+import com.asana.OAuthApp;
+
+import seedu.address.storage.asana.storage.AsanaCredentials;
 
 //@@author Sri-vatsa
 /**

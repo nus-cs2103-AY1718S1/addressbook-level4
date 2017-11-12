@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
-import org.junit.Test;
-
 import static junit.framework.TestCase.assertEquals;
+
+import org.junit.Test;
 
 //@@author Sri-vatsa
 /**

@@ -5,7 +5,12 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTES;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
+
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.time.LocalDateTime;
@@ -19,8 +24,26 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddMeetingCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTagCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListByMostSearchedCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NextMeetingCommand;
+import seedu.address.logic.commands.PrefCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetUniqueKeyCommand;
+import seedu.address.logic.commands.SetupAsanaCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Meeting;
 import seedu.address.model.person.InternalId;
@@ -127,7 +150,7 @@ public class AddressBookParserTest {
         LocalDateTime localDateTime = LocalDateTime.parse(dateTime, formatter);
 
         //Create an expected new meeting
-        Meeting newMeeting = new Meeting(localDateTime,"Computing", "Coding Project", ids);
+        Meeting newMeeting = new Meeting(localDateTime, "Computing", "Coding Project", ids);
 
         //create new user-input based add meeting command
         AddMeetingCommand command = (AddMeetingCommand)

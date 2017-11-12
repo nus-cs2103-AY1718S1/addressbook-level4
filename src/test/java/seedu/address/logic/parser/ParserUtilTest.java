@@ -7,17 +7,25 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.InternalId;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -293,11 +301,11 @@ public class ParserUtilTest {
     public void parseDateTime_validValue_returnsDateTime() throws Exception {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HHmm");
         String dateTime = VALID_DATE + " " + VALID_TIME;
-        LocalDateTime localDateTime_expected = LocalDateTime.parse(dateTime, formatter);
+        LocalDateTime localDateTimeExpected = LocalDateTime.parse(dateTime, formatter);
 
-        LocalDateTime localDateTime_actual = ParserUtil.parseDateTime(VALID_DATE, VALID_TIME);
+        LocalDateTime localDateTimeActual = ParserUtil.parseDateTime(VALID_DATE, VALID_TIME);
 
-        assertEquals(localDateTime_expected, localDateTime_actual);
+        assertEquals(localDateTimeExpected, localDateTimeActual);
     }
 
     @Test

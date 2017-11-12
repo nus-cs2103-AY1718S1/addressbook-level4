@@ -1,13 +1,14 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-
-import seedu.address.storage.AsanaStorage.AsanaCredentials;
-import seedu.address.model.asana.AuthenticateAsanaUser;
-
 import java.io.IOException;
 
 import java.net.URISyntaxException;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+
+import seedu.address.model.asana.AuthenticateAsanaUser;
+
+import seedu.address.storage.asana.storage.AsanaCredentials;
 
 //@@author Sri-vatsa
 /**

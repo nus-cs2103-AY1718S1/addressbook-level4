@@ -1,15 +1,15 @@
 package seedu.address.logic.commands;
 
+import java.io.IOException;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.asana.StoreAccessToken;
-
-import java.io.IOException;
 
 //@@author Sri-vatsa
 /**
  * Sets Unique key produced by Asana on Asana's webpage
  */
-public class SetUniqueKeyCommand extends Command{
+public class SetUniqueKeyCommand extends Command {
 
     public static final String COMMAND_WORD = "setKey";
     public static final String COMMAND_ALIAS = "sk";

@@ -1,31 +1,36 @@
 package seedu.address.logic.commands;
 
-import javafx.collections.ObservableList;
-import org.junit.Assert;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.fail;
+
+import java.time.LocalDateTime;
+
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import seedu.address.commons.exceptions.IllegalValueException;
+
+import javafx.collections.ObservableList;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.*;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Meeting;
+import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyMeeting;
+import seedu.address.model.ReadOnlyMeetingList;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.exceptions.DuplicateMeetingException;
 import seedu.address.model.exceptions.IllegalIdException;
 import seedu.address.model.person.InternalId;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.function.Predicate;
-
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.fail;
 
 //@@author Sri-vatsa
 public class AddMeetingCommandTest {
@@ -72,7 +77,7 @@ public class AddMeetingCommandTest {
     /**
      * Generates a new AddMeetingCommand with the details of the given person.
      */
-    private AddMeetingCommand getAddMeetingCommand( Meeting meeting, Model model) {
+    private AddMeetingCommand getAddMeetingCommand (Meeting meeting, Model model) {
         AddMeetingCommand command = new AddMeetingCommand(meeting);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;

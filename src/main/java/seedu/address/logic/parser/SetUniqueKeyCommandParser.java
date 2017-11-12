@@ -8,7 +8,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses the user inputted access code, which is given by Asana upon {@code setupAsana}
  */
-public class SetUniqueKeyCommandParser implements Parser<SetUniqueKeyCommand>{
+public class SetUniqueKeyCommandParser implements Parser<SetUniqueKeyCommand> {
     @Override
     public SetUniqueKeyCommand parse(String userInput) throws ParseException {
         String accessCode;

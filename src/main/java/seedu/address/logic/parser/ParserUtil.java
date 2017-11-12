@@ -128,7 +128,7 @@ public class ParserUtil {
     public static Optional<String> parseLocation(Optional<String> location) throws IllegalValueException {
         requireNonNull(location);
         String userInput = location.get().trim();
-        if(userInput.isEmpty()) {
+        if (userInput.isEmpty()) {
             throw new IllegalValueException("Location cannot be empty.");
         }
         return location.isPresent() ? Optional.of(location.get()) : Optional.empty();
@@ -180,7 +180,7 @@ public class ParserUtil {
     public static Optional<String> parseNotes(Optional<String> notes) throws IllegalValueException {
         requireNonNull(notes);
         String userInput = notes.get().trim();
-        if(userInput.isEmpty()) {
+        if (userInput.isEmpty()) {
             throw new IllegalValueException("Location cannot be empty.");
         }
         return notes.isPresent() ? Optional.of(notes.get()) : Optional.empty();
@@ -201,7 +201,7 @@ public class ParserUtil {
             throw new IllegalValueException("Please make sure teh person id is a valid number");
         }
 
-        if(idSet.isEmpty()) {
+        if (idSet.isEmpty()) {
             throw new IllegalValueException("Invalid command format! \n"
                     + "addMeeting: Adds a meeting to the address book. Parameters: on DATE from TIME at LOCATION about "
                     + "NOTES with PERSON 1 with PERSON 2 ...\n"
@@ -219,7 +219,7 @@ public class ParserUtil {
         String trimmedInput = userInput.trim();
         String [] code = trimmedInput.split(" ");
 
-        if(!isAccessCodeValid(code[FIRST_ENTRY])) {
+        if (!isAccessCodeValid(code[FIRST_ENTRY])) {
             throw new IllegalValueException("Please make sure the access code you have copied follows the format:\n"
                     + "DIGIT/ALPHANUMERICS");
         }
@@ -241,7 +241,8 @@ public class ParserUtil {
 
             int firstPartOfAccessCode = Integer.parseInt(splitAccessCode[FIRST_ENTRY]);
 
-            if (!accessCode.contains("/") || firstPartOfAccessCode < LOWER_LIMIT || firstPartOfAccessCode > UPPER_LIMIT) {
+            if (!accessCode.contains("/") || firstPartOfAccessCode < LOWER_LIMIT
+                    || firstPartOfAccessCode > UPPER_LIMIT) {
                 isAccessCodeValid = false;
             }
         } catch (Exception e) {

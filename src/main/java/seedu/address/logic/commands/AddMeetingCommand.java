@@ -18,12 +18,13 @@ import seedu.address.model.Meeting;
 
 import seedu.address.model.ReadOnlyMeeting;
 
-import seedu.address.storage.AsanaStorage.AsanaCredentials;
 import seedu.address.model.asana.PostTask;
 
 import seedu.address.model.exceptions.DuplicateMeetingException;
 
 import seedu.address.model.exceptions.IllegalIdException;
+
+import seedu.address.storage.asana.storage.AsanaCredentials;
 
 //@@author Sri-vatsa
 /**
@@ -106,9 +107,8 @@ public class AddMeetingCommand extends Command {
             }
 
             return new CommandResult(String.format(MESSAGE_SUCCESS_BOTH, toAdd));
-        }
-        //only add meeting locally, not on Asana
-        else {
+        } else {
+            //only add meeting locally, not on Asana
             try {
                 model.addMeeting(toAdd);
             } catch (DuplicateMeetingException e) {
@@ -120,13 +120,11 @@ public class AddMeetingCommand extends Command {
             //there is a stable internet connection but Asana is not configured
             if (isThereInternetConnection() && !asanaCredentials.getIsAsanaConfigured()) {
                 return new CommandResult(MESSAGE_SUCCESS_ASANA_NO_CONFIG);
-            }
-            //No internet connection but Asana is configured
-            else if (!isThereInternetConnection() && asanaCredentials.getIsAsanaConfigured()) {
+            } else if (!isThereInternetConnection() && asanaCredentials.getIsAsanaConfigured()) {
+                //No internet connection but Asana is configured
                 return new CommandResult(MESSAGE_SUCCESS_NO_INET);
-            }
-            //There is no internet connection and Asana is not configured
-            else {
+            } else {
+                //There is no internet connection and Asana is not configured
                 return new CommandResult(MESSAGE_SUCCESS_LOCAL);
             }
         }
@@ -139,17 +137,24 @@ public class AddMeetingCommand extends Command {
                 && toAdd.equals(((AddMeetingCommand) other).toAdd));
     }
 
+    /**
+     * Check if there is an internet connection available
+     * @return isThereInternetCOnnection, true if there is a connection and false otherwise
+     */
     private boolean isThereInternetConnection() {
         Socket sock = new Socket();
-        InetSocketAddress addr = new InetSocketAddress(GOOGLE_ADDRESS,80);
+        InetSocketAddress addr = new InetSocketAddress(GOOGLE_ADDRESS, 80);
         try {
             sock.connect(addr, 300);
             return true;
         } catch (IOException e) {
             return false;
         } finally {
-            try {sock.close();}
-            catch (IOException e) {}
+            try {
+                sock.close();
+            } catch (IOException e) {
+                return false;
+            }
         }
     }
 }

@@ -6,6 +6,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 /**
  * Raises an exception when authentication/authorization fails
  */
-public class AsanaAuthenticationException extends IllegalValueException{
-    public AsanaAuthenticationException(String message) { super(message); }
+public class AsanaAuthenticationException extends IllegalValueException {
+    public AsanaAuthenticationException(String message) {
+        super(message);
+    }
 }

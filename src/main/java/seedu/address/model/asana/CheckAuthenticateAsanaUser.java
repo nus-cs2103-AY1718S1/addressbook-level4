@@ -1,7 +1,7 @@
 package seedu.address.model.asana;
 
 import seedu.address.model.exceptions.AsanaAuthenticationException;
-import seedu.address.storage.AsanaStorage.AsanaCredentials;
+import seedu.address.storage.asana.storage.AsanaCredentials;
 
 //@@author Sri-vatsa
 /**
@@ -13,7 +13,8 @@ public class CheckAuthenticateAsanaUser {
 
     public CheckAuthenticateAsanaUser() throws AsanaAuthenticationException {
         if (!isAuthenticated()) {
-           throw new AsanaAuthenticationException("Please make sure you have allowed OurAB to access your Asana account");
+            throw new AsanaAuthenticationException("Please make sure you have allowed "
+                    + "OurAB to access your Asana account");
         }
     }
 

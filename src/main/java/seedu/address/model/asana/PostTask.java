@@ -18,7 +18,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.exceptions.AsanaAuthenticationException;
-import seedu.address.storage.AsanaStorage.AsanaCredentials;
+import seedu.address.storage.asana.storage.AsanaCredentials;
 
 //@@author Sri-vatsa
 /***
@@ -39,7 +39,7 @@ public class PostTask extends Command {
 
         Client client;
         try {
-            CheckAuthenticateAsanaUser checkAuthenticateAsanaUser = new CheckAuthenticateAsanaUser();
+            new CheckAuthenticateAsanaUser();
             client = Client.accessToken((new AsanaCredentials()).getAccessToken());
             //get user data
             User user = client.users.me().execute();

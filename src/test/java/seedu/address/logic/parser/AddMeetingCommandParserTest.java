@@ -1,6 +1,14 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.ADD_MEETING_INVALID_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_INVALID;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_PAST;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_VALID;
+import static seedu.address.logic.commands.CommandTestUtil.LOCATION_1;
+import static seedu.address.logic.commands.CommandTestUtil.NOTES_1;
+import static seedu.address.logic.commands.CommandTestUtil.PERSON_1;
+import static seedu.address.logic.commands.CommandTestUtil.TIME_VALID;
+
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -34,7 +42,7 @@ public class AddMeetingCommandParserTest {
 
     //meeting date is in the past
     @Test
-    public void parse_allFieldsPresent_dateIsInThePast_failure() throws IllegalValueException {
+    public void parse_dateFromPast_failure() throws IllegalValueException {
 
         assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_PAST + TIME_VALID + LOCATION_1
                 + NOTES_1 + PERSON_1, "Please enter a date & time that is in the future.");

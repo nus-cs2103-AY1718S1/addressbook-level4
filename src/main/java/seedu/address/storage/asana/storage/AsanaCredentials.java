@@ -1,4 +1,4 @@
-package seedu.address.storage.AsanaStorage;
+package seedu.address.storage.asana.storage;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
