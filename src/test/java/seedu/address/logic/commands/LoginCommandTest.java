@@ -58,7 +58,7 @@ public class LoginCommandTest {
     private LoginCommand prepareCommand() {
         LoginCommand logincommand = new LoginCommand();
         logincommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        logincommand.setExecutor(Executors.newSingleThreadExecutor());
+        logincommand.setExecutor(Executors.newFixedThreadPool(4));
         return logincommand;
     }
 

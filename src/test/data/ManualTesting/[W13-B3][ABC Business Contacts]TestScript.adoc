@@ -1,5 +1,5 @@
-=Test Script
-==Set up
+= Test Script
+== Set up
 .    Change the name of `SampleData.xml` into `addressbook.xml`
 .    Move the `addressbook.xml` file into `~/data/`, where `~` is the directory you have the jar file located at
 .    Set up a dummy gmail account for use in synchronising contacts
@@ -9,13 +9,14 @@ Sync
 |=======================================================================
 |Index |Command |Expected Output
 |S1 |sync  |Error message: “Please login first”
-|S2 |login | Browser window opens for Google login
-|S3 |sync | Google Contacts will be updated with local contacts
-|S4 |logout | Error message: “Logged out!”
-|S5 |sync | Error message: “Please login first”
-|S6 |logout | Error message: “Failure logging out. Are you sure you are logged in?”
-|S7 |Disable your wifi-connection and run sync | Error message: “Unable to connect to the Internet. Please check your internet and firewall settings
+|S2 |login | Browser window opens for Google login (Please complete your login)
+|S3 |sync | Google Contacts will be updated with local contacts (Only after S2 is completed)
+|S4 |Disable your wifi-connection and run sync | Error message: “Unable to connect to the Internet. Please check your internet and firewall settings
 ”
+|S5 |logout | Error message: “Logged out!”
+|S6 |sync | Error message: “Please login first”
+|S7 |logout | Error message: “Failure logging out. Are you sure you are logged in?”
+|S8 |login | Browser window opens for Google login (Please complete your login)
 |=======================================================================
 
 Contacts
@@ -37,7 +38,7 @@ Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #0
 |C10 |add m/anything | Error message: Invalid command format!
 add: Adds a person to the address book. Parameters: n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...
 Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney
-(Inputting invalid prefixes is not allowed
+(Inputting invalid prefixes is not allowed)
 |C11 |a n/Luke t/multiple words | Error message: Tag names should be alphanumeric (multiple words in tag not allowed)
 |C12 |undo | Undo success! (Last successful command, adding Charlie Brown, is undone)
 |C13 |delete 1 | Deleted Person: Abraham Lionel Phone: No Phone Number Email: abraham@lionel.com Address: No Address Note: Has 3 children Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]
@@ -63,11 +64,11 @@ Example: edit 1 p/91234567 e/johndoe@example.com
 |C26 |undo| Undo success!
 |C27 |e 3 a/| Error message: Person addresses can take any values, and it should not be blank
 |C28 |note 1 Important note| Note Added: Abraham Lionel Phone: No Phone Number Email: abraham@lionel.com Address: No Address Note: Important note Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]
-| |note -1 Important note| Error message: Invalid command format!
+|C29 |note -1 Important note| Error message: Invalid command format!
 note: Modifies a note for the person identified by the index number used in the last person listing.
 Parameters: INDEX (must be a positive integer) [NOTE]
-|C29 |note 1 | Note Added: Abraham Lionel Phone: No Phone Number Email: abraham@lionel.com Address: No Address Note:  Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]
-|C30 |note | Error message: Invalid command format!
+|C30 |note 1 | Note Added: Abraham Lionel Phone: No Phone Number Email: abraham@lionel.com Address: No Address Note:  Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]
+|C31 |note | Error message: Invalid command format!
 note: Modifies a note for the person identified by the index number used in the last person listing.
 Parameters: INDEX (must be a positive integer) [NOTE]
 Example: note 1  Has 3 children.
@@ -100,13 +101,13 @@ Example: find n/alice bob charlie p/98765432 93250124 e/johnd@example.com a/Clem
 |O18 |sort | Error message: Invalid command format!
 sort: Sorts the list of contacts by the field specified and displays them as a list. Parameters: FIELD
 Example: sort tag
-|O19 |sort n| suggestion for `sort name` would pop up
-|O20 |sort name | List sorted successfully!
+|O19 |sort e| suggestion for `sort email` would pop up
+|O20 |sort email | List sorted successfully!
 |O21 |sort phone | List sorted successfully!
 |O22 |sort tag | List sorted successfully!
-|O23 |sort email | List sorted successfully!
+|O23 |sort name | List sorted successfully!
 |O24 |sort invalid | Error message: Field provided is invalid!
-|O25 |undo | Undo success!
+|O25 |undo | Undo success! (sort by name is undone)
 |O26 |redo | Redo success!
 |O27 |list| Listed all persons
 |=======================================================================
@@ -138,8 +139,8 @@ Example: deletemeeting 1”
 select: Selects the person identified by the index number used in the last person listing.
 Parameters: INDEX (must be a positive integer)
 Example: select 1”
-|M12 |dm 1| Deleted Meeting: Health insurance
-|M13 |undo| Undo success!
+|M12 |dm 1| Deleted Meeting: Health insurance (deleted on the originallist, not filtered list)
+|M13 |undo| Undo success! (undoes both bernice and abraham’s deletions)
 |M14 |click to select second contact| Alex Lim is selected, with 2 meetings
 |M15 |undo| Undo success!
 |M16 |undo| Undo success!
@@ -155,7 +156,7 @@ Tags
 |T3 |addtag 1 uncle|This person already has this tag.
 |T4 |deletetag| Error message : “Invalid command format! deletetag: Removes a given tag from a specified person. Parameters: INDEX (must be a positive integer) TAG NAME (one alphanumeric tag only) Example: deletetag 1 friends”
 |T5 |deletetag 1 uncle| Deleted Tag: uncle
-|T6 |deletetag 1 uncle| Deleted Tag: uncle
+|T6 |deletetag 1 uncle| Error message: This person does not have this tag.
 |T7 |find t/friend|9 persons listed!
 |T8 |deletetag all friend| Deleted Tag: friend (the list becomes empty
 |T9 |list|Listed all persons
@@ -184,7 +185,19 @@ resize: Resize the MainWindows to the specified (300<=)WIDTH(<=1920) and (230<=)
 |Z12 |resize 8| suggestion for `resize 800` would pop up
 |Z13 |resize 800 3000| Error message : `Invalid command format!
 resize: Resize the MainWindows to the specified (300<=)WIDTH(<=1920) and (230<=)HEIGHT(<=1080) Parameters: WIDTH HEIGHT Example: resize 1920 1080’
-|Z14 |exit| The application exits
+|Z14 |a n/Charlie Brown e/charlieb@example.com p/91191191 a/123 address road  |
+|Z15 | sync | Charlie Brown should appear as a Google Contact
+|Z16 |add a Google contact with Name: Mary Brown Phone: 81234567 Address:Singapore Email: mary@example.com| Google Contact should be added
+|Z17 |sync |”Synchronised” message, and Mary Brown should appear
+|Z18 |e 1 p/91234567 | “Edited Person: Abraham Lionel Phone: 91234567 Email: abraham@lionel.com Address: No Address Note: Has 3 children Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]”
+|Z19 |sync | “Synchronised” and Google Contact should now have Phone Number: 91234567 for Abraham Lionel
+|Z20 |Remove Abraham Lionel’s phone number | Abraham Lionel’s Google Contact phone number should be blank
+|Z21 |sync | “Synchronised” and Abraham Lionel’s phone number is now blank in ABC
+|Z22 |delete 1| Deleted Person: Abraham Lionel Phone: No Phone Number Email: abraham@lionel.com Address: No Address Note: Has 3 children Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]
+|Z23 |sync | “Synchronised” and Abraham Lionel should no longer appear in Google Contacts
+|Z24 |Delete Alex Lim in Google Contacts | Alex Lim should be deleted only in Google Contacts
+|Z25 |sync |The first entry in ABC, Alex Lim, is now deleted
+|Z26 |exit| The application exits
 |=======================================================================
 
 
