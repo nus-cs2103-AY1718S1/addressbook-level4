@@ -2,6 +2,8 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -18,6 +20,28 @@ import seedu.address.security.SecurityStubUtil;
 
 public class UnlockCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void equals() {
+        UnlockCommand firstCommand = new UnlockCommand("first");
+        UnlockCommand secondCommand = new UnlockCommand("second");
+
+        // same object -> returns true
+        assertTrue(firstCommand.equals(firstCommand));
+
+        // same values -> returns true
+        UnlockCommand firstCopy = new UnlockCommand("first");
+        assertTrue(firstCommand.equals(firstCopy));
+
+        // different types -> returns false
+        assertFalse(firstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(firstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstCommand.equals(secondCommand));
+    }
 
     @Test
     public void test_execute_whenSecured() throws ParseException, CommandException {
