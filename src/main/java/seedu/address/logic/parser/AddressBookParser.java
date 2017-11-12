@@ -83,9 +83,9 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
-        //case FindCommand.COMMAND_WORD:
-        //case FindCommand.COMMAND_ALIAS:
-            //return new FindCommandParser().parse(arguments);
+        case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_ALIAS:
+            return new FindCommandParser().parse(arguments);
 
         case ListByMostSearchedCommand.COMMAND_WORD:
         case ListByMostSearchedCommand.COMMAND_ALIAS:
