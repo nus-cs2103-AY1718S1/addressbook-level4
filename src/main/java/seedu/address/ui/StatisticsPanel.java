@@ -69,7 +69,7 @@ public class StatisticsPanel extends UiPart<Region> {
     @Subscribe
     private void handleFilteredPersonListChangedEvent(FilteredPersonListChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        statistics.initScore(event.getCurrentFilteredPersonList()); // Update currentList data
+        statistics.initScore(event.getCurrentFilteredPersonList()); // Updates the statistics instance values
         loadListStatistics();
     }
 

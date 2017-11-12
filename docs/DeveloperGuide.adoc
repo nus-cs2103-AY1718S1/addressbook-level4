@@ -1152,11 +1152,12 @@ E.g. `findtags track dance` does not narrow down the list of students returned t
 // tag::statisticspanel[]
 === Statistics Panel mechanism
 
-The `Statistics Panel` is implemented using the `Statistics` class.
-It supports the calculating of statistics for the current list of students in the `PersonListPanel`.
+The `Statistics Panel` is implemented using the `Statistics` class and The `FilteredPersonListChangedEvent` event.
+The `Statistics` class supports the calculating of statistics for the current list of students in the `PersonListPanel` and
+the `FilteredPersonListChangedEvent` indicates that the FilteredPersonList in the model has changed and is used to update the `Statsistics Panel`.
 
-When the user enters any `Command` that modifies the currentFilteredPersonList or modifies the addressBook data, the `Model` Component posts
-a `FilteredPersonListChangedEvent` containing the`filteredPersonsList` to the `EventsCenter`.
+Whenever the user enters any `Command` that modifies the addressBook data, the `Model` Component posts
+a `FilteredPersonListChangedEvent` containing the `filteredPersonsList` to the `EventsCenter`.
 
 The `FilteredPersonListChangedEvent` is implemented this way:
 
@@ -1189,22 +1190,22 @@ The `handleFilteredPersonListChangedEvent` event handler is implemented this way
     @Subscribe
     private void handleFilteredPersonListChangedEvent(FilteredPersonListChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        statistics.initScore(event.getCurrentFilteredPersonList()); // Update currentList data
+        statistics.initScore(event.getCurrentFilteredPersonList()); // Updates the statistics instance values
         loadListStatistics();
     }
 ```
 
-In the `handleFilteredPersonListChangedEvent` event handler, the `Statistics` instance in `StatisticsPanel` has its values updated by the `initScore()` method.
-This results in the statistical values returned from the `Statistics` class' methods tp be updated to those of the current `filteredPersonList` to change when called.
+When handling the event, the `Statistics` instance in `StatisticsPanel` has its values updated by the `initScore()` method.
+This means that the values returned from the `Statistics` class's getter methods when called are now updated.
 
-The `loadListStatistics()` of the `StatisticsPanel` class is then called. This updates and shows the statistic values of the current `filteredPersonList` on the `StatisticsPanel` in the User Interface.
+The `loadListStatistics()` method in `StatisticsPanel` is then called.
 
 The `loadListStatistics()` is implemented this way:
 
 ```
-/**
-     * Updates list Statistics in the Statistics panel
-     */
+    /**
+    * Updates list Statistics in the Statistics panel
+    */
     protected void loadListStatistics() {
         mean.setText(statistics.getMeanString());
         median.setText(statistics.getMedianString());
@@ -1217,10 +1218,8 @@ The `loadListStatistics()` is implemented this way:
     }
 ```
 
-The `Labels` (texts) in the User Interface are set to their corresponding values calculated from the `Statistics` instance's getter methods.
-
-//The following sequence diagram shows how the StatisticsPanel mechanism works:
-
+The `Labels` (texts) in the User Interface are set according to the updated `Statistics` instance's getter methods.
+This updates and shows the statistic values of the current `filteredPersonList` on the `StatisticsPanel` in the User Interface.
 
 //The following activity diagram shows how the StatisticsPanel mechanism works:
 
