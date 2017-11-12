@@ -1204,9 +1204,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |edit my friends' contact on Addressbook |
+|`* * *` |user |edit my friends' contact on UniCity |
 
-|`* * *` |user |exit Addressbook |continue using other functions in my operating system
+|`* * *` |user |exit UniCity |continue using other functions in my operating system
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
@@ -1240,7 +1240,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |fancy user |set a background wallpaper to my address book | personalise and beautify my address book
 
-|`*` |fancy user |change the color scheme and theme of my address book to my preference | personalise and beautify my Addressbook
+|`*` |fancy user |change the color scheme and theme of my address book to my preference | personalise and beautify UniCity
 |=======================================================================
 
 {More to be added}
@@ -1573,10 +1573,10 @@ Use case ends.
 *Extensions*
 
 [none]
-* 3a. User decides not to proceed to exit UniCity.
+* 3a. User decides not to proceed to exit UniCity by typing another command.
 +
 [none]
-** 3a1. UniCity displays exit aborted.
+** 3a1. UniCity aborts exiting and executes the new command.
 +
 Use case ends.
 
