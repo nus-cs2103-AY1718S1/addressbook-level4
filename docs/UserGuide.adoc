@@ -56,11 +56,11 @@ Upon launching Bamboo, you will notice that there are three distinct panels - *C
 
 * The *Contact* panel shows you all your contacts at a glance. Details such as the contact’s address, email and phone are omitted so you do not get bombarded with a slew of redundant information when you are looking for a person.
 
-* The *Groups* panel shows you all your groups at a glance. You can create groups to help organize and manage your contacts in a more logical and systematic manner. 
+* The *Groups* panel shows you all your groups at a glance. You can create groups to help organize and manage your contacts in a more logical and systematic manner.
 
-* The *Contact Detail* panel shows you the details of your contact such as their phone, email and address. You will be able to view a person’s schedule and get connected with their social media accounts. 
+* The *Contact Detail* panel shows you the details of your contact such as their phone, email and address. You will be able to view a person’s schedule and get connected with their social media accounts.
 
-As Bamboo is primarily a CLI-based application, most of your interaction with Bamboo will be through command inputs. 
+As Bamboo is primarily a CLI-based application, most of your interaction with Bamboo will be through command inputs.
 ====
 *Command Format*
 
