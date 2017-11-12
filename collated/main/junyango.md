@@ -51,7 +51,6 @@ public class SwitchToEventsListEvent extends BaseEvent {
 ```
 ###### /java/seedu/address/logic/commands/event/AddEventCommand.java
 ``` java
-
 /**
  * Adds an event to the address book.
  */
@@ -72,8 +71,6 @@ public class AddEventCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book";
-    public static final String MESSAGE_DUPLICATE_REMINDER = "This reminder already exists in the address book";
-
 
     private final Event toAdd;
 
@@ -81,22 +78,25 @@ public class AddEventCommand extends UndoableCommand {
      * Creates an AddEventCommand to add the specified {@code ReadOnlyEvent}
      */
     public AddEventCommand(ReadOnlyEvent event) {
+
         toAdd = new Event(event);
+        Reminder r = new Reminder(toAdd, "Reminder : You have an event!");
+        try {
+            toAdd.addReminder(r);
+        } catch (DuplicateReminderException dre) {
+            System.err.println("This should never happen. A new event should have no existing reminder");
+        }
     }
+
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
         try {
-            Reminder r = new Reminder(toAdd, "Reminder : You have an event!");
-            toAdd.addReminder(r);
             model.addEvent(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateEventException e) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
-        } catch (DuplicateReminderException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_REMINDER);
         }
     }
 

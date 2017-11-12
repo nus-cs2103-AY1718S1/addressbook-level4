@@ -45,3 +45,38 @@
     -fx-text-fill: white;
     -fx-text-alignment: left;
 }
+
+.calender-property-value {
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
+}
+
+.calender-propertyS-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 60px;
+    -fx-text-fill: lightpink;
+    -fx-text-alignment: right;
+}
+
+.calender-propertyM-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 60px;
+    -fx-text-fill: lightgoldenrodyellow;
+    -fx-text-alignment: right;
+}
+
+.calender-propertyT-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 60px;
+    -fx-text-fill: orangered;
+    -fx-text-alignment: right;
+}
+
+.calender-propertyW-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 60px;
+    -fx-text-fill: yellowgreen;
+    -fx-text-alignment: right;
+}
