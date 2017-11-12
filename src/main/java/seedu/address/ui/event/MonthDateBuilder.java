@@ -22,7 +22,6 @@ public class MonthDateBuilder {
         monthYearArray = new Integer[2];
         setMonthYearArray(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR)); //Set current month and year
         setNameOfMonth();
-        
         calendar.set(Calendar.MONTH, monthYearArray[0]);   //Sets month from monthYearArray in Calendar object
         calendar.set(Calendar.YEAR, monthYearArray[1]);    //Sets year from monthYearArray in Calendar object
 
