@@ -521,7 +521,6 @@ public class MrtMapLogic {
         populateAdjList();
     }
 
-
     /**
      * Return the minimum time require to travel to all station
      * for the specified souce station
@@ -601,8 +600,7 @@ public class MrtMapLogic {
 
         return minDurations;
     }
-
-
+    
     private int[] getMinTotalTime(int[] sourceIndexes) {
         int[] minTotalTimeList = new int[mrtStations.size()];
         for(int i = 0; i < sourceIndexes.length; i++) {
