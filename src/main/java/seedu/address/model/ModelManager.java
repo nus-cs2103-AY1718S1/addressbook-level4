@@ -104,8 +104,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author eldonng
     @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
+    public synchronized void deletePerson(ReadOnlyPerson... target) throws PersonNotFoundException {
+        for (ReadOnlyPerson person : target) {
+            addressBook.removePerson(person);
+        }
+
         raise(new NewGroupListEvent(getGroupList(), addressBook.getPersonList()));
 
         indicateAddressBookChanged();

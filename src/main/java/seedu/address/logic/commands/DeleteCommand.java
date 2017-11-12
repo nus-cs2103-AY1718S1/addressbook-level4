@@ -51,6 +51,7 @@ public class DeleteCommand extends UndoableCommand {
             }
         }
 
+        ReadOnlyPerson[] personsToDelete = new ReadOnlyPerson[targetIndexes.length];
         ReadOnlyPerson personToDelete;
         String[] personDeleteMessage = new String[targetIndexes.length];
         StringBuilder deleteMessage = new StringBuilder();
@@ -58,13 +59,15 @@ public class DeleteCommand extends UndoableCommand {
         for (int i = (targetIndexes.length - 1); i >= 0; i--) {
             int target = targetIndexes[i].getZeroBased();
             personToDelete = lastShownList.get(target);
-            try {
-                model.deletePerson(personToDelete);
-            } catch (PersonNotFoundException pnfe) {
-                assert false : "The target person cannot be missing";
-            }
+            personsToDelete[i] = personToDelete;
             personDeleteMessage[i] = MESSAGE_DELETE_PERSON_SUCCESS + personToDelete;
         }
+
+         try {
+            model.deletePerson(personsToDelete);
+         } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+         }
 
         for (String message : personDeleteMessage) {
             deleteMessage.append(message);

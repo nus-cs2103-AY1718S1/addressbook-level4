@@ -54,7 +54,7 @@ public interface Model {
     /**
      * Deletes the given person.
      */
-    void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    void deletePerson(ReadOnlyPerson... target) throws PersonNotFoundException;
 
     /**
      * Adds the given person
