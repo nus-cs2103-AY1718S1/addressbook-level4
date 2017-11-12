@@ -96,7 +96,7 @@ include::../DeveloperGuide.adoc[tag=theme]
 
 ---
 
-=== Enhancement Added: Theme Changer
+=== Enhancement Added: Import Addressbook
 
 ==== External behavior
 

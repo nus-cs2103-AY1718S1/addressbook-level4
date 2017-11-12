@@ -553,7 +553,7 @@ image::import_selection.png[width="250"]
 _Figure 3.19.1 : Using import feature from Menu toolbar_
 
 Users can now import external addressbooks from the GUI. Clicking on the `Import Addressbook` button will pop up a File Chooser dialog to allow users to choose the addressbook file. File Chooser dailog has been set to restrict *.xml* extention files only.
-// tag::import2[]
+// end::import2[]
 
 === Coming soon in `v2.0`
 
