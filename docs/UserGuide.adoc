@@ -786,6 +786,37 @@ of the list so that the user does not have to manually do so.
 
 //end::sortedList[]
 
+//tag::ArkBot[]
+
+=== ArkBot: A Telegram Bot Interface for Ark
+As a desktop application, isn't it rather cumbersome for a delivery man to check and update information on the go,
+when he is making his deliveries? We thought so to. As such we developed a Telegram Bot Interface for Ark so that the
+delivery man would be able to conveniently see which deliveries he has remaining and their addresses. Furthermore,
+he will be able to mark the deliveries as complete easily from the convenience of his phone.
+
+Like all Telegram Bots, each command must be prefixed with a `/` character. So if I were to want to trigger the help
+command, I would send `/help` to ArkBot. The command formats are identical to that of Ark to make things easy to recall.
+
+Here the commands that are available in ArkBot.
+
+[width="100%",cols="60%,<40%",options="header",]
+|=======================================================================
+|Command | Description
+|/all #/TRACKING_NUMBER n/NAME [p/PHONE_NUMBER] [e/EMAIL] a/ADDRESS d/DELIVERYDATE [s/STATUS] [t/TAG]...`
+ | Adds a parcel.
+|/list | Lists uncompleted parcel deliveries.
+|/find KEYWORD [MORE_KEYWORDS] | List uncompleted parcels with keywords in names.
+|/delete [Parcel Index] | Deletes a parcel.
+|/undo | Undo a command.
+|/redo | Redo a command.
+|/complete [Parcel Index] | Marks a parcel as completed.
+|/complete | Activates listen mode.
+|/cancel | Cancels listen mode.
+|/help | Brings up help dialogue with information on commands.
+|=======================================================================
+
+//end::ArkBot[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

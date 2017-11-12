@@ -820,7 +820,7 @@ use different tag names to refer to the same tag.
 
 === Maintain sorted mechanism
 image::AddParcelSdForLogic.png[width="890"]
-_Figure 4.13.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
+_Figure 4.14.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
 
 The list of parcels in Ark is maintained to be always in sorted order according to delivery dates,
 with the earliest being on the top. This is so that the user will be able to look at the more
@@ -848,7 +848,42 @@ potentially could disrupt the order of the list. +
 **Cons:** More difficult to implement as we'll need to implement our own sorting algorithm as opposed to
 just using the built in sorting methods. +
 
-//tag::sortedList[]
+//end::sortedList[]
+
+//tag::ArkBot[]
+
+=== ArkBot: A Telegram Bot Interface for Ark
+image::AddParcelSdForLogic.png[width="890"]
+_Figure 4.13.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
+
+ArkBot is written using https://github.com/rubenlagus/TelegramBots[TelegramBots], a Java library written by
+https://github.com/rubenlagus[rubenlagus] to create bots using https://core.telegram.org/bots/api[Telegram Bots API].
+
+At present the following commands have an equivalent in ArkBot: `add` `delete` `list` `find` `undo` `redo` `help`.
+
+ArkBot also has the added functionality of `complete` which is merely a wrapper around the `edit` command to mark parcel
+deliveries as complete. This is especially useful for our delivery man.
+
+Like all Telegram Bots, each command must be prefixed with a `/` character. So if I were to want to trigger the help
+command, I would send `/help` to ArkBot.
+
+If we enter the `complete` command into ArkBot without any parameters, we enter `listen` mode.
+
+In `listen` mode, ArkBot is waiting for a QR
+
+==== Design Considerations
+
+**Aspect:** Implementation of `maintainSorted` +
+**Alternative 1 (current choice):** Constant sort the list of parcels whenever there is a change that
+potentially could disrupt the order of the list. +
+**Pros:** Intuitive and guarantees that list is sorted in the right order +
+**Cons:** Many commands have to be changed +
+**Alternative 2:** Insert the new / edited parcel to fit into the sorted list. +
+**Pros:** Use less computation as the list of parcels is already sorted. +
+**Cons:** More difficult to implement as we'll need to implement our own sorting algorithm as opposed to
+just using the built in sorting methods. +
+
+//end::ArkBot[]
 
 == Documentation
 
