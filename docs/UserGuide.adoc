@@ -473,7 +473,7 @@ image::personPanel.png[width="500"]
 === Calendar Interface (Since v1.4)
 
 Calendar has been introduced to allow the hostel administrator to view events happening in the hostel.
-Events can be seen on calendar interface for clearer view since v1.5
+Events can be seen on calendar interface since v1.5
 
 image::Calendar_UI.png[width="790"]
 
