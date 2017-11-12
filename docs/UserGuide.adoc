@@ -37,20 +37,20 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `ABC.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your *ABC*.
-.  Double-click the file to start the app. The GUI should appear in a few seconds. (See Figure 3.1) +
+.  Double-click the file to start the app. The GUI should appear in a few seconds. (See Figure 3.1 for a labelled version of the GUI) +
 +
 
-image:Ui.png[width="790"] +
+image:Ui_labelled.png[width="600"] +
 _Figure 3.1_
 
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Here are some example commands you can try:
 
-* `>> ` *`list`* : lists all contacts
-* `>> ` **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to your *ABC*
-* `>> ` **`delete`**`3` : deletes the 3rd contact shown in the current list
-* `>> ` *`exit`* : exits the app
+* `>>  *list*` : lists all contacts
+* `>>  *add* n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to your *ABC*
+* `>> *delete* 3` : deletes the 3rd contact shown in the current list
+* `>> *exit*` : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
