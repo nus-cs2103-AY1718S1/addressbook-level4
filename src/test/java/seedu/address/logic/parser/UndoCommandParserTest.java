@@ -20,11 +20,12 @@ import seedu.address.logic.commands.UndoCommand;
  */
 public class UndoCommandParserTest {
 
+    public static final int ONE_UNDO = 1;
     private UndoCommandParser parser = new UndoCommandParser();
 
     @Test
     public void parse_validArgs_returnsUndoCommand() {
-        assertParseSuccess(parser, INDEX_ONE, new UndoCommand(1));
+        assertParseSuccess(parser, INDEX_ONE, new UndoCommand(ONE_UNDO));
     }
 
     @Test

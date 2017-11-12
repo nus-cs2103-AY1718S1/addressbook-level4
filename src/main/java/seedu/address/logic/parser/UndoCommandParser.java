@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.ParserUtil.EMPTY_STRING;
+import static seedu.address.logic.parser.ParserUtil.SPACE_STRING;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.UndoCommand;
@@ -13,7 +15,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class UndoCommandParser implements Parser<UndoCommand> {
 
     public static final int FIRST_PART_MESSAGE = 0;
-    public static final String EMPTY_MESSAGE = "";
     public static final int DEFAULT_CHOSEN_ONE = 1;
 
     /**
@@ -24,7 +25,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
      */
     public UndoCommand parse(String args) throws ParseException {
 
-        String[] splitArgs = args.trim().split(" ");
+        String[] splitArgs = args.trim().split(SPACE_STRING);
 
         int numUndo;
         try {
@@ -45,7 +46,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
      */
     private int getNumberOfUndoToBeDone(String splitArg) throws IllegalValueException {
         int numUndo;
-        if (splitArg.trim().equals(EMPTY_MESSAGE)) {
+        if (splitArg.trim().equals(EMPTY_STRING)) {
             numUndo = DEFAULT_CHOSEN_ONE;
         } else {
             numUndo = ParserUtil.parseNumber(splitArg);

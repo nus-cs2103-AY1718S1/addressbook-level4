@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.ParserUtil.EMPTY_STRING;
+import static seedu.address.logic.parser.ParserUtil.SPACE_STRING;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RedoCommand;
@@ -22,7 +24,7 @@ public class RedoCommandParser implements Parser<RedoCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public RedoCommand parse(String args) throws ParseException {
-        String[] splitArgs = args.trim().split(" ");
+        String[] splitArgs = args.trim().split(SPACE_STRING);
 
         int numRedo;
         try {
@@ -42,7 +44,7 @@ public class RedoCommandParser implements Parser<RedoCommand> {
      */
     private int getNumberRedoToBeDone(String splitArg) throws IllegalValueException {
         int numRedo;
-        if (splitArg.trim().equals("")) {
+        if (splitArg.trim().equals(EMPTY_STRING)) {
             numRedo = ParserUtil.parseNumber(NUMBER_ONE);
         } else {
             numRedo = ParserUtil.parseNumber(splitArg);

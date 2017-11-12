@@ -390,7 +390,8 @@ are any birthdays on that day.
 === Adding/Editing Remark to person : `remark`
 
 Adds or edits selected person's remark +
-Format: `remark INDEX /rMessage`
+If no remark is entered, considered as empty remark +
+Format: `remark INDEX Message`
 
 ****
 * Adds/Edits the remark of person at the specified `INDEX`.
@@ -400,7 +401,7 @@ Format: `remark INDEX /rMessage`
 
 Examples:
 
-* `remark 2 /rsmartest guy in the class` +
+* `remark 2 smartest guy in the class` +
 Adds/Edits the remark of the 2nd person in the address book.
 
 // end::remark[]
@@ -571,8 +572,8 @@ e.g. `image 4 remove`
 e.g. `map 2`
 * *Redo* : `redo (Optional:NUMBER)`
 e.g. `Redo 2`
-* *Remark* : `remark INDEX, r/MESSAGE`
-e.g. `Remark 2, r/remark`
+* *Remark* : `remark INDEX MESSAGE`
+e.g. `Remark 2 smart`
 * *RemoveTag* : `removetag TAG` +
 e.g. `removetag friends`
 * *Select* : `select INDEX` +

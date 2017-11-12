@@ -1362,13 +1362,13 @@ By creating this command, you will get a chance to learn how to implement a feat
 
 ==== Description
 Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
+Format: `remark INDEX [REMARK]`
 
 Examples:
 
-* `remark 1 r/Likes to drink coffee.` +
+* `remark 1 Likes to drink coffee.` +
 Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
+* `remark 1 ` +
 Removes the remark for the first person.
 
 ==== Step-by-step Instructions

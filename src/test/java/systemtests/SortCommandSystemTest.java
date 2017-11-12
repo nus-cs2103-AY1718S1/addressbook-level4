@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
+import static seedu.address.logic.parser.ParserUtil.EMPTY_STRING;
 import static seedu.address.logic.parser.ParserUtil.SPACE_STRING;
 import static seedu.address.testutil.TypicalPersons.AMY;
 
@@ -28,6 +29,8 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
     public static final String PARAM_INVALID = " xxx";
     public static final String PARAM_NUMBER = " number";
     public static final String PARAM_FAVOURITE = " favourite";
+    public static final String NEW_LINE = " \n";
+    public static final String DUPLICATE_EXCEPTION_MESSAGE = "toAdd already exists in the model.";
 
     @Test
     public void sort() throws Exception {
@@ -62,7 +65,7 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         /* Adds a person AMY to the addressBook */
         addAmyToModel(model);
 
-        /* Case: Sort all persons by number */
+        /* Case: Sort all persons by phone number */
         sortExecuteSuccess(model, PARAM_NUMBER);
 
         /* Case: Sort all persons by favourite */
@@ -94,7 +97,7 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         String command;
         String expectedResultMessage;
         command = SortCommand.COMMAND_WORD + message;
-        expectedResultMessage = SortCommand.MESSAGE_SORT_FAILURE + " \n" + SortCommand.MESSAGE_USAGE;
+        expectedResultMessage = SortCommand.MESSAGE_SORT_FAILURE + NEW_LINE + SortCommand.MESSAGE_USAGE;
         assertCommandFailure(command, expectedResultMessage);
     }
 
@@ -120,7 +123,7 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertApplicationDisplaysExpected(EMPTY_STRING, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
     }
@@ -135,7 +138,7 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         try {
             expectedModel.addPerson(toAdd);
         } catch (DuplicatePersonException dpe) {
-            throw new IllegalArgumentException("toAdd already exists in the model.");
+            throw new IllegalArgumentException(DUPLICATE_EXCEPTION_MESSAGE);
         }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
 

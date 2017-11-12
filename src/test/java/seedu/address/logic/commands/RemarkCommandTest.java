@@ -11,6 +11,8 @@ import org.junit.Test;
 //@@author justintkj
 public class RemarkCommandTest {
 
+    public static final Object NULL = null;
+
     @Test
     public void equals() {
         final RemarkCommand standardCommand = new RemarkCommand(INDEX_FIRST_PERSON, VALID_REMARK_AMY);
@@ -20,7 +22,7 @@ public class RemarkCommandTest {
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
         // null -> returns false
-        assertFalse(standardCommand.equals(null));
+        assertFalse(standardCommand.equals(NULL));
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));
         // different index -> returns false

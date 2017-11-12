@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.logic.parser.ParserUtil.EMPTY_STRING;
@@ -23,12 +22,12 @@ public class RemarkCommandParserTest {
 
         //Have remarks
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + SPACE_STRING + PREFIX_REMARK + SPACE_STRING + remark;
+        String userInput = targetIndex.getOneBased() + SPACE_STRING + remark;
         RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, remark);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         //No remarks
-        userInput = targetIndex.getOneBased() + SPACE_STRING + PREFIX_REMARK;
+        userInput = targetIndex.getOneBased() + SPACE_STRING;
         expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, EMPTY_STRING);
         assertParseSuccess(parser, userInput, expectedCommand);
     }

@@ -20,12 +20,12 @@ import seedu.address.logic.commands.RedoCommand;
  */
 public class RedoCommandParserTest {
 
-    public static final int NUMBER_ONE = 1;
+    public static final int ONE_REDO = 1;
     private RedoCommandParser parser = new RedoCommandParser();
 
     @Test
     public void parse_validArgs_returnsRedoCommand() {
-        assertParseSuccess(parser, INDEX_ONE, new RedoCommand(NUMBER_ONE));
+        assertParseSuccess(parser, INDEX_ONE, new RedoCommand(ONE_REDO));
     }
 
     @Test

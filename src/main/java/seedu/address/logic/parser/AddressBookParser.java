@@ -68,7 +68,9 @@ public class AddressBookParser {
             return emailCommand;
 
         case SortCommand.COMMAND_WORD:
-            return new SortCommandParser().parse(arguments);
+            Command sortCommand = new SortCommandParser().parse(arguments);
+            addValidInputToAutocomplete(userInput);
+            return sortCommand;
 
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:

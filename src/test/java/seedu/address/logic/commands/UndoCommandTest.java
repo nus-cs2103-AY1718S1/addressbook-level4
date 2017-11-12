@@ -20,6 +20,8 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 public class UndoCommandTest {
+    public static final int TWO_UNDO = 2;
+
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
@@ -56,7 +58,7 @@ public class UndoCommandTest {
     public void alternative() throws Exception {
         UndoRedoStack undoRedoStack = prepareStack(
                 Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
-        UndoCommand undoCommand = new UndoCommand(2);
+        UndoCommand undoCommand = new UndoCommand(TWO_UNDO);
         undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
         deleteCommandOne.execute();
         deleteCommandTwo.execute();
