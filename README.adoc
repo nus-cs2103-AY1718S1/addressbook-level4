@@ -10,7 +10,7 @@ image::docs/images/ContagDemo.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
-image::images/ContagDemo.png[width="600"]
+image::images/Ui.png[width="600"]
 endif::[]
 
 * Contag is an efficient and feature-packed address book desktop application custom-built for PC, capable of organizing contacts for even the most demanding business users and busiest frequent travellers.

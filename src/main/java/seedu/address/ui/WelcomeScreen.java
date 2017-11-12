@@ -121,7 +121,7 @@ public class WelcomeScreen extends UiPart<Region> {
         Text text = new Text(quotes[generateQuoteNumber()]);
         text.wrappingWidthProperty().set(345);
         text.setTextAlignment(TextAlignment.CENTER);
-        text.setFill(Color.valueOf("#551a8b"));
+        text.setFill(Color.valueOf("#f7d0af"));
         textPlaceHolder.getChildren().add(text);
 
         continueButton = new Button("Continue");

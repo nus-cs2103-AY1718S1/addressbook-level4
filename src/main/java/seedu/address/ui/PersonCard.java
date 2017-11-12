@@ -27,9 +27,9 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-    private static String[] colors = {"blue", "orange", "brown", "green", "pink",
-        "black", "royalblue", "salmon", "tomato", "teal",
-        "darkseagreen", "cornflowerblue", "hotpink", "yellowgreen", "palevioletred", "lightsteelblue", "lightcyan"};
+    private static String[] colors = {"#009B77", "DD4124", "D65076", "#45BBAC", "#EFC050",
+        "#5B5EA6", "#9B2335", "#55B4B0", "#E15D44", "#7FCDCD",
+        "#BC243C", "#C3447A", "#98B4D4", "#DFCFBE"};
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static Random random = new Random();
 

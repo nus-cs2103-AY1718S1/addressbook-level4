@@ -49,7 +49,16 @@ Key features you can expect:
 
 === Authors and Contributors
 The initial version of the user guide was written by Team SE-EDU.
-The current releases for ConTag are currently being orchestrated by a team of four, Aw Wen Hao , Calvin Tantio, Cheng Jin Ting, Chung Tin Long.
+
+The current releases for ConTag are currently being orchestrated by a team of four:
+
+ * Aw Wen Hao
+
+ * Calvin Tantio
+
+ * Cheng Jin Ting
+
+ * Chung Tin Long
 
 == Getting Started
 
@@ -103,8 +112,8 @@ Once you have familiarized yourself with the application, try typing a command's
 Shows the usage of the specific command identified. If no command is specified, opens help window. +
 Format: `help [COMMAND_IDENTIFIER]`
 
-[TIP]
-A command identifier includes all existing commands and their aliases.
+[NOTE]
+A valid command identifier includes all existing commands and their aliases.
 
 [NOTE]
 Close all help windows before executing `help [COMMAND_IDENTIFIER]`.
@@ -294,6 +303,7 @@ Locates the 2nd person's address in the address book.
 Locates the 1st person's address in the results of the `find` command.
 // end::locate[]
 
+// tag::schedule[]
 ==== Scheduling an activity: `schedule` [Since v1.3]
 
 => Alias: `sc` <=
@@ -301,9 +311,9 @@ Locates the 1st person's address in the results of the `find` command.
 Schedules an activity with person(s) specified by the index number(s). +
 Format: `schedule INDEX [UNIQUE INDEX]... d/DATE act/ACTIVITY`
 
-****
-* DATE must follow DD-MM-YYYY format.
-****
+[NOTE]
+DATE must follow DD-MM-YYYY format.
+
 
 Examples:
 
@@ -313,7 +323,7 @@ Associates the specified schedule with the 1st and 3rd persons in the address bo
 * `find n/Betsy` +
 `schedule 1 d/25-12-2017 act/Christmas dinner` +
 Associates the specified schedule with the 1st person in the results of the `find` command.
-
+// end::schedule[]
 // tag::agenda[]
 ===== Viewing of user's agenda [Since v1.4]
 
@@ -501,6 +511,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::welcomeScreen[]
 ==== Enabling and disabling the welcome screen: `welcome` [Since v1.5]
 
 => Alias: `w` <=
@@ -508,9 +519,23 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Enables or disables the welcome screen.
 Format: `welcome ENABLING_KEYWORD`
 
+Examples:
+
+* `welcome enable`
+
+* `welcome disable` +
+
 [NOTE]
-ENABLING_KEYWORD takes in 2 values: `enable` and `disable` +
 The welcome screen is disabled by default.
+
+[TIP]
+Try enabling the welcome screen, close and rerun ConTag.
+
+If the welcome screen is successfully enabled, you should be able to see a the following screen, as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome screen displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
+
+image::WelcomeScreen.png[width="400"]
+_Figure 3.4.3.1: The welcome screen_
+// end::welcomeScreen[]
 
 ==== Exiting the program : `exit`
 
@@ -564,6 +589,8 @@ To *transfer data* to another Computer, install the app in the other computer an
 |link:#scheduling-an-activity-code-schedule-code-since-v1-3[Schedule] |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12-2017 act/Christmas dinner`
 
 |link:#undoing-previous-command-code-undo-code[Undo] |`u`| `undo` |
+
+|link:#enabling-and-disabling-the-welcome-screen-code-welcome-code-since-v1-5[Welcome] | `w` | `welcome ENABLING_KEYWORD` | `welcome enable`
 
 |=======================================================================
 

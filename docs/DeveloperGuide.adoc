@@ -564,9 +564,9 @@ _Figure 4.2.4 : Code section in DeleteCommand.java_
 
 === Displaying the Usage of a Specific Command [Since v1.2]
 
-This function is an enhancement of the exisitng help function, which opens the help command. The modification allows the help command to take in an optional command identifier argument. If the command identifier is specified, the result display will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the Model and Logic components of the application.
+This function is an enhancement of the existing help function, which opens the help window. The modification allows the help command to take in an optional command identifier argument. If the command identifier is specified, the result display panel will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the Logic component of the application.
 
-For the Model component, `CommandIdentifier` is implemented this way in _Figure 4.2.1_:
+`CommandIdentifier` class is created to cater to the new type of argument that users can key in. The code snippet below shows how it is implemented.
 [source,java]
 ----
 public class CommandIdentifier {
@@ -582,28 +582,39 @@ public class CommandIdentifier {
     }
 
     public static boolean isValidCommandIdentifier(String test) {
-       // ... checks if the string argument is a valid command identifier ...
+       // ... returns true if the given string is a valid command identifier ...
     }
 }
 ----
-_Figure 4.2.1: Code section in CommandIdentifier.java_
+
 [NOTE]
 A valid command identifier includes all existing command and their aliases.
 
-For the Logic component, when the user key in help command in the command box, `HelpCommandParser` will be called. It parses user input that folows the help command, which may contain the optional command identifier argument, as shown in _Figure 4.2.2_:
+For the Logic component, `HelpCommandParser` has been created to parse user input that follows the `help` command word.
+
 [source,java]
 ----
-public HelpCommand parse(String args) throws ParseException {
-    // ... checks if the argument contains at most 1 word ...
+public class HelpCommandParser implements Parser<HelpCommand> {
 
-    // ... calls ParserUtil to parse command identifier ...
+    ...
+    @Override
+    public HelpCommand parse(String args) throws ParseException {
+        if (args.trim().contains(" ")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
 
-    // ... calls HelpCommand ...
+        try {
+            CommandIdentifier commandIdentifier = ParserUtil.parseCommandIdentifier(args);
+            return new HelpCommand(commandIdentifier);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+    }
 }
 ----
-_Figure 4.2.2: Code section in HelpCommandParser.java_
 
-To accomodate this enhancement, the following method is added into `ParserUtil`. The method takes in user input string and return a `CommandIdentifier` object, as shown in _Figure 4.2.3_:
+To accommodate this enhancement, the following method is added into `ParserUtil`. The method takes in user input string and return a `CommandIdentifier` object.
+
 [source,java]
 ----
 public static CommandIdentifier parseCommandIdentifier(String commandWord) throws IllegalValueException {
@@ -611,9 +622,9 @@ public static CommandIdentifier parseCommandIdentifier(String commandWord) throw
     return new CommandIdentifier(commandWord.trim());
 }
 ----
-_Figure 4.2.3: Code section in ParserUtil.java_
 
-Finally, the `CommandIdentifier` is passed into `HelpCommand` to do the command execution. The execute method in the `HelpCommand` is implemented as follows in _Figure 4.2.4_:
+Finally, the `CommandIdentifier` is passed into `HelpCommand` to do the command execution. The execute method in the `HelpCommand` is implemented as follows.
+
 [source,java]
 ----
 public CommandResult execute() {
@@ -622,15 +633,252 @@ public CommandResult execute() {
     // ... default case: opens help window ...
 }
 ----
-_Figure 4.2.4: Code section in HelpCommand.java_
 
-The `HelpCommand` execution is done in `AddressBookParser`. _Figure 4.2.5_ below shows the output of this function.
+The following sequence diagram shows an example that summarises how the `HelpCommand` is being called and executed.
+
+image::HelpCommandLogicComponent.png[width="800"]
+
+_Figure 4.2.1: Interactions Inside the Logic Component for the `help add` Command_
+
+_Figure 4.2.5_ below shows the enhanced help command in action.
 
 image::HelpEnhancementScreenShot.PNG[width="800"]
-_Figure 4.2.5 : Output of `HelpCommand` execution_
-// end::help[]
-//tag::locate[]
 
+_Figure 4.2.2: Enhanced `HelpCommand` execution_
+
+==== Design Considerations
+
+**Aspect:** Enhancement of `HelpCommand` +
+**Alternative 1 (current choice)**: Allowing the `HelpCommand` to take in an optional command identifier argument +
+**Pros:** Users can easily find out about the format of a specific command they want to key in. +
+**Cons:** Users have to know at least the command identifier of the command they want execute. +
+**Alternative 2:** Only allowing `HelpCommand` to open help window  +
+**Pros:** It is simpler and more intuitive for new users. +
+**Cons:** Users have to go through the user guide every time they forget the format of a certain command.
+// end::help[]
+
+//tag::scheduleSingle[]
+=== Scheduling an Activity with a Single Person [Since v1.3]
+
+The `ScheduleCommand` allows users to schedule and activity with one person in the contact list. It is one of the commands that extend `UndoableCommand`. This allows users to `undo` their scheduling. `UndoableCommand`, in turn, inherits from `Command` as shown in _Figure4.3.1_ below.
+
+image::ScheduleCommandLogicCommandClassDiagram.png[width="800"]
+
+_Figure 4.3.1: `ScheduleCommand` inherits from `UndoableCommand`
+
+
+The diagram in _Figure 4.3.2_ below shows the sequence of the schedule operation.
+
+image::ScheduleCommandLogic.png[width="800"]
+
+_Figure 4.3.2: Interactions Inside the Logic Component for the `schedule 1 d/15-12-2017 act/Meeting` Command_
+
+The `ScheduleCommand` takes in `Index`, which is already available in the original application, as well as `ScheduleDate` and `Activity`. The Model component of the application has been extended to include these two new classes.
+
+`DateUtil` has also been created to make sure that users enter a valid data which follows DD-MM-YYYY format. The code snippet below shows how `DateUtil` checks the validity of an input date.
+
+[source, java]
+----
+
+private static final String DATE_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}";
+
+public static boolean isValid(String date) {
+    return (hasValidFormat(date) && isActualDate(date));
+}
+
+public static boolean hasValidFormat(String date) {
+    requireNonNull(date);
+    date = date.trim();
+    return date.matches(DATE_VALIDATION_REGEX);
+}
+
+private static boolean isActualDate (String date) {
+    // ... check if the date exists by considering day, month and year ...
+}
+----
+
+The activity scheduled will be displayed together with the other components of a `Person` in the `PersonCard` as shown in _Figure 4.3.3_ below.
+
+image::ScheduleCommandSingleScreenShot.png[width="400"]
+
+_Figure 4.3.3: UI display of a successful `ScheduleCommand` execution_
+
+==== Design Considerations
+
+**Aspect:** Valid date format +
+**Alternative 1 (current choice)**: DD-MM-YYYY is the only valid date format +
+**Pros:** It is now possible to arrange the schedules based on which date comes first. +
+**Cons:** Users have lesser flexibility in inputting dates. +
+**Alternative 2:** Allowing users to key in dates in DD-MM format in addition to DD-MM-YYYY format  +
+**Pros:** This gives users a greater flexibility when keying in dates.  +
+**Cons:** This creates ambiguity when arranging the schedules based on dates.
+
+---
+
+**Aspect:** Creation of master schedule list +
+**Alternative 1 (current choice)**: Creation of a master schedule list that stores all the unique activities scheduled +
+**Pros:** It is possible to display the unique activities scheduled. +
+**Cons:** Master schedule list has to be synchronised with all the schedules attached to persons every time a schedule is added. +
+**Alternative 2:** Absence of master schedule list  +
+**Pros:** It is easier to implement.  +
+**Cons:** Users can only search for an activity scheduled by searching the person they have scheduled the activity with.
+
+---
+
+Both current choices above facilitate the creation of link:#viewing-of-user-s-agenda-since-v1-4[My Agenda] panel.
+
+Initially, the application can take in both DD-MM and DD-MM-YYYY date formats. After further considerations, DD-MM format is removed and is no longer accepted by the application owing to 2 reasons:
+
+* DD-MM date format introduces ambiguity when schedules need to be arranged according to dates.
+* It is impossible for users not to know the exact year in which an activity is scheduled.
+
+[NOTE]
+Since v1.4, schedules in both the `AgendaPanel` and the `PersonCard` are arranged based on dates.
+//end::scheduleSingle[]
+
+//tag::scheduleMultiple[]
+=== Scheduling an Activity with Multiple Persons [Since v1.4]
+
+This enhancement builds upon the schedule feature developed in v1.3, which allows users to schedule an activity with one person. Users can now input multiple indices to schedule an activity with multiple persons at the same time.
+
+The implementation of `Comparable` interface for `Schedule` allows the activities scheduled with a person to be displayed from the smallest date value. The code extract below shows how the `compareTo()` function is being defined in the `Schedule`.
+
+[source, java]
+----
+public class Schedule implements Comparable<Schedule> {
+    ...
+    @Override
+    public int compareTo(Schedule scheduleToCompare) {
+        String schedule1DateInString = this.getScheduleDate().value;
+        String schedule2DateInString = scheduleToCompare.getScheduleDate().value;
+
+        int schedule1Year = DateUtil.getYear(schedule1DateInString);
+        int schedule2Year = DateUtil.getYear(schedule2DateInString);
+        if (schedule1Year != schedule2Year) {
+            return schedule1Year - schedule2Year;
+        }
+
+        int schedule1Month = DateUtil.getMonth(schedule1DateInString);
+        int schedule2Month = DateUtil.getMonth(schedule2DateInString);
+        if (schedule1Month != schedule2Month) {
+            return schedule1Month - schedule2Month;
+        }
+
+        int schedule1Day = DateUtil.getDay(schedule1DateInString);
+        int schedule2Day = DateUtil.getDay(schedule2DateInString);
+        return schedule1Day - schedule2Day;
+    }
+}
+----
+
+The outcome of schedule multiple command execution is shown in _Figure 4.4.1_ below.
+
+image::ScheduleCommandMultipleScreenShot.png[width="400"]
+
+_Figure 4.4.1: UI display of a successful enhanced `ScheduleCommand` execution_
+
+==== Design Considerations
+
+**Aspect:** Data structure to support multiple `Index` +
+**Alternative 1 (current choice)**: Use Set to store indices input +
+**Pros:** The application becomes smart enough to eliminate duplicate indices input and speed up the execution of `ScheduleCommand` +
+**Alternative 2:** Use ArrayList to store indices input  +
+**Cons:** Users receive an error message if they input non-unique indices.
+
+---
+
+**Aspect:** Data structure to support scheduling multiple activities with a contact +
+**Alternative 1 (current choice)**: Use ArrayList to store multiple schedules +
+**Pros:** This makes it possible to arrange the schedules based on dates. +
+**Cons:** There is a need to check for duplicate schedules so that all the schedules attached to a person are unique. +
+**Alternative 2:** Use Set to store multiple schedules  +
+**Pros:** There is no need to specially check for duplicate schedules.  +
+**Cons:** The arrangement of the schedules will appear at random.
+//end::scheduleMultiple[]
+
+//tag::welcomeScreen[]
+=== Welcome Screen Display [Since v1.5]
+
+If enabled, the `WelcomeScreen` will be loaded before the `MainWindow`. The information regarding the enabling or disabling of `WelcomeScreen` is stored inside `preferences.json` file, which is accessed and modified by `UserPrefs` class.
+
+`UserPrefs` contains boolean variable `isWelcomeScreenEnabled`, which is initially set to false. This means that the `WelcomeScreen` is disabled by default.
+
+To facilitate the enabling and disabling of `WelcomeScreen`, `WelcomeCommand`, which takes in `EnablingKeyword` argument, is created.
+
+[NOTE]
+`EnablingKeyword` allows two possible values: `enable` and `disable`.
+
+Depending on the value of `EnablingKeyword`, `WelcomeCommand` will call one of the following two methods in `UserPrefs` to change the `isWelcomeScreenEnabled` value in `preferences.json`.
+
+[source, java]
+----
+public class UserPrefs {
+    ...
+    private boolean isWelcomeScreenEnabled = false;
+    ...
+    public void enableWelcomeScreen() {
+        isWelcomeScreenEnabled = true;
+    }
+
+    public void disableWelcomeScreen() {
+        isWelcomeScreenEnabled = false;
+    }
+    ...
+}
+----
+
+Every time the application is run, `UiManager` will call `getWelcomeScreenEnabledInfo()` in `UserPrefs` to check whether the `WelcomeScreen` is enabled. The code snippet below shows how this is implemented.
+
+[source, java]
+----
+public void start(Stage primaryStage) {
+    ...
+    try {
+        welcomeScreen = new WelcomeScreen(primaryStage, config, prefs, logic, model);
+        if (prefs.getWelcomeScreenEnabledInfo()) {
+            welcomeScreen.show(); //This should be called before creating other UI parts
+            welcomeScreen.fillInnerParts();
+        } else {
+            welcomeScreen.loadMainWindow();
+        }
+        ...
+    } catch (Throwable e) {
+        ...
+    }
+    ...
+}
+----
+
+_Figure 4.5.1_ below shows the UI display of the `WelcomeScreen`. The welcome screen displays the ConTag logo and 1 out of the default 15 productivity quotes at random.
+
+image::WelcomeScreen.png[width="400"]
+
+_Figure 4.5.1: The welcome screen_
+
+When the `Continue` button is pressed, `WelcomeScreen` will pass the `MainWindow` scene into the `primaryStage`, replacing `WelcomScreen` with `MainWindow`.
+
+==== Design Considerations
+
+**Aspect:** Nature of `WelcomeScreen` +
+**Alternative 1 (current choice)**: Users' action is required to close the welcome screen. +
+**Pros:** Users will have enough time to read the text on the welcome screen. +
+**Cons:** A button is required to handle the passing of scenes into the `primaryStage`. +
+**Alternative 2:** Welcome screen closes by itself after a fixed period of time.  +
+**Pros:** It does not require additional button; and hence is more straightforward to implement.  +
+**Cons:** Welcome screen can only display logo and minimum text as it is not guaranteed that users can read the text within the period the welcome screen is displayed.
+
+---
+
+**Aspect:** Disabling welcome screen +
+**Alternative 1 (current choice)**: Users have the choice to enable or disable welcome screen. +
+**Pros:** Users who want the welcome screen to be displayed can save time by skipping the welcome screen.
+**Cons:** A new command must be created to cater to this purpose. +
+**Alternative 2:** Welcome screen is always displayed when the application is run.  +
+**Pros:** This does not require additional command to be implemented.  +
+**Cons:** Users who think that welcome screen is unnecessary cannot skip the welcome screen.
+//end::welcomeScreen[]
+
+//tag::locate[]
 === Locating a contact's address [Since v1.2]
 
 This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.

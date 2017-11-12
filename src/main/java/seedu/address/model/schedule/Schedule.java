@@ -19,7 +19,7 @@ import seedu.address.model.person.UniquePersonNameList;
  * Represents a Schedule in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Schedule {
+public class Schedule implements Comparable<Schedule> {
     private static final Logger logger = LogsCenter.getLogger(Schedule.class);
 
     private ObjectProperty<ScheduleDate> scheduleDate;
@@ -107,7 +107,7 @@ public class Schedule {
         }
     }
 
-    //@@author
+    //@@author CT15
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -142,5 +142,27 @@ public class Schedule {
                 .append(" Person(s): ")
                 .append(getPersonInvolvedNames());
         return builder.toString();
+    }
+
+    @Override
+    public int compareTo(Schedule scheduleToCompare) {
+        String schedule1DateInString = this.getScheduleDate().value;
+        String schedule2DateInString = scheduleToCompare.getScheduleDate().value;
+
+        int schedule1Year = DateUtil.getYear(schedule1DateInString);
+        int schedule2Year = DateUtil.getYear(schedule2DateInString);
+        if (schedule1Year != schedule2Year) {
+            return schedule1Year - schedule2Year;
+        }
+
+        int schedule1Month = DateUtil.getMonth(schedule1DateInString);
+        int schedule2Month = DateUtil.getMonth(schedule2DateInString);
+        if (schedule1Month != schedule2Month) {
+            return schedule1Month - schedule2Month;
+        }
+
+        int schedule1Day = DateUtil.getDay(schedule1DateInString);
+        int schedule2Day = DateUtil.getDay(schedule2DateInString);
+        return schedule1Day - schedule2Day;
     }
 }

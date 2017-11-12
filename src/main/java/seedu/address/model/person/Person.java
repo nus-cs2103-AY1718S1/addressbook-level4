@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -35,7 +36,7 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Country country, Set<Email> emails, Address address, Set<Schedule> schedules,
+    public Person(Name name, Phone phone, Country country, Set<Email> emails, Address address, List<Schedule> schedules,
                   Set<Tag> tags) {
         requireAllNonNull(name, phone, country, emails, address, schedules, tags);
         this.name = new SimpleObjectProperty<>(name);
@@ -143,7 +144,7 @@ public class Person implements ReadOnlyPerson {
     /**
      * Replaces this person's schedules with the schedules in the argument schedule set.
      */
-    public void setSchedules(Set<Schedule> replacement) {
+    public void setSchedules(List<Schedule> replacement) {
         schedules.set(new UniqueScheduleList(replacement));
     }
 
@@ -157,8 +158,8 @@ public class Person implements ReadOnlyPerson {
      * if modification is attempted.
      */
     @Override
-    public Set<Schedule> getSchedules() {
-        return Collections.unmodifiableSet(schedules.get().toSet());
+    public List<Schedule> getSchedules() {
+        return schedules.get().asObservableList();
     }
 
     //@@author

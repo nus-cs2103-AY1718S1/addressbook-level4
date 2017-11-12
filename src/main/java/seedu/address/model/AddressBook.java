@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -180,7 +181,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         personSchedules.forEach(schedule -> masterScheduleObjects.put(schedule, schedule));
 
         // Rebuild the list of person schedules to point to the relevant schedules in the master schedule list.
-        final Set<Schedule> correctScheduleReferences = new HashSet<>();
+        final List<Schedule> correctScheduleReferences = new ArrayList<>();
         personSchedules.forEach(schedule -> correctScheduleReferences.add(masterScheduleObjects.get(schedule)));
         person.setSchedules(correctScheduleReferences);
     }

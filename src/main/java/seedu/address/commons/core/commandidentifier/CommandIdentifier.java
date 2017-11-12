@@ -83,7 +83,7 @@ public class CommandIdentifier {
     public final String value;
 
     /**
-     * Validates given command word.
+     * Validates given command identifier.
      *
      * @throws IllegalValueException if the given commandIdentifier string is invalid.
      */
@@ -96,7 +96,7 @@ public class CommandIdentifier {
     }
 
     /**
-     * Returns true if a given string is a valid existing command word.
+     * Returns true if a given string is a valid existing command identifier.
      */
     public static boolean isValidCommandIdentifier(String test) {
         return COMMAND_VALIDATION_LIST.contains(test);
