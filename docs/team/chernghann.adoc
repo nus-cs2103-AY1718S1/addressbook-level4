@@ -31,6 +31,7 @@ The Myth's Book is a software application that is coded in `Java` programming la
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=add1]
+image::UGPrefix.PNG[width="500"]
 include::../UserGuide.adoc[tag=add2]
 
 #End of Extract#

@@ -98,8 +98,9 @@ know more on the format of adding a contact.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]...`
 
-// end::add1[]
 Prefixes and its meaning:
+
+// end::add1[]
 
 [width="40%",cols="20%,<15%,<5%, <30%,<30%,options="header",]
 |=======================================================================
@@ -468,8 +469,8 @@ By typing this command, you will be able to add an event `ZoukOut` in The Myth's
 
 By typing this command, you will be able to add an event `Halloween Horror Night` in The Myth's Book.
 
-If input is correct, you will be able to see the event being added successfully into The Myth's Book and receive the following displayed result in the Results Display Panel.
-The date of the event on the calendar will be populated with a different shade of color to signify that there is an event on that date.
+If input is correct, you will be able to see the event being added successfully into The Myth's Book and receive the following displayed result in the Command Results Display Panel.
+The date of the event on the Calendar will be populated with a different shade of color to signify that there is an event on that date.
 
 image::eventresult.PNG[width="700"]
 
