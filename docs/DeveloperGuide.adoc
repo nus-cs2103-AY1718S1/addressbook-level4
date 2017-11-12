@@ -404,8 +404,8 @@ You will not be able to enter the birthday parameter when adding contacts. +
 Suppose that you have a list of persons. The birthday parameters of each contact will be empty if you have not modified them before. +
 You can then choose to add their birthday using the BirthdayCommand. For example if you want to add the birthday of the
 second person in your contact list, key in " `birthday 2 b/20/07/1994` "  where his birthday is 20/07/1994. +
-Similarly, you can edit their birthday using the same command.+
-To delete their birthday simply not key in anything for his birthday. For example, +
+Similarly, you can edit their birthday using the same command. +
+To delete their birthday, simply not key in anything for his birthday. For example,
 " `birthday 2 b/` "
 
 The following sequence diagram shows how the birthday operation works:
@@ -418,17 +418,17 @@ _Figure 4.3.1.1b : Interactions in the Birthday Command._
 **Aspect:** Adding Birthday parameter +
 **Alternative 1 (current choice):** Add birthday parameter separately after person object is created. +
 **Pros:** Lesser parameters to add while creating person class and easier to implement. +
-**Cons:** Slower for users to add in all the parameters +
+**Cons:** Slower for users to add in all the parameters. +
 **Alternative 2:**  Add birthday parameter during the creation of person object. +
 **Pros:** Faster for users to add in all the parameters. +
 **Cons:** More parameters to add while creating person class and harder to implement. +
 
 ---
 **Aspect:** Birthday commands with specific uses +
-**Alternative 1 (current choice):** Only one birthday command to add / edit / delete birthday from person +
+**Alternative 1 (current choice):** Only one birthday command to add / edit / delete birthday from person. +
 **Pros:** Convenient, lesser commands for users to remember. +
-**Cons:** Birthday command is very general and may be confusing to the user instead +
-**Alternative 2:**  Create other commands such as editBirthday and deleteBirthday +
+**Cons:** Birthday command is very general and may be confusing to the user instead. +
+**Alternative 2:**  Create other commands such as editBirthday and deleteBirthday. +
 **Pros:** Less convenient, many commands for users to remember. +
 **Cons:** Each command is specific and purpose of each command is clear. +
 
@@ -616,11 +616,13 @@ with the keyword.
 image::BeforeAndAfterFindReminder.png[width=850"]
 _Figure 4.6.3.1 Reminder list before and after the findReminder command_
 
-[Note]
-Only keywords are searched, incomplete keywords in command such as `findEmail alex@example` will not return contact
+
+[NOTE]
+====
+- Only keywords are searched, incomplete keywords in command such as `findEmail alex@example` will not return contact
 with email "alex@example.com". +
-* All find commands are case insensitive (e.g. "high" will match "High").
-* Only full words will be matched (e.g. "8123" will not match "81234567").
+- All find commands are case insensitive (e.g. "high" will match "High"). +
+====
 
 ==== Design Considerations
 
