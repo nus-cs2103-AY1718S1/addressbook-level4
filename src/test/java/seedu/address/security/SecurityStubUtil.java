@@ -85,6 +85,7 @@ public class SecurityStubUtil {
 
     /**
      * Represents a SecurityManager which indicates that the address book is secured.
+     * Throws EncryptOrDecryptException when call encryptAddressBook and decryptAddressBook methods.
      */
     private class SecurityStubEncryptOrDecryptException extends BaseSecurityStub {
 
