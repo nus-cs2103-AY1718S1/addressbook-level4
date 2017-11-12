@@ -224,6 +224,5 @@ public class Event implements ReadOnlyEvent {
     public String toString() {
         return getAsText();
     }
-
 }
 
