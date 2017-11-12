@@ -9,11 +9,8 @@ import seedu.address.ui.event.MonthDateBuilder;
 
 //@@author dennaloh
 public class EventCalendarTest {
-
+    private String[] monthDateArray;
     private MonthDateBuilder monthDateBuilder;
-
-    String[] monthDateArray;
-
 
     @Before
     public void setUp() {
@@ -23,7 +20,7 @@ public class EventCalendarTest {
     }
 
     @Test
-    public void test() throws Exception{
+    public void test() throws Exception {
         assertEquals(monthDateBuilder.getNameOfMonth(), "November");
         assertEquals(monthDateArray[6], 4);
     }
