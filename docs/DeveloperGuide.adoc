@@ -57,22 +57,40 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 The following describes the steps you would take to get started developing the application on your computer:
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+1) Fork this repo, and clone the fork to your computer
+
+image::fork.png[width="1000"]
+
+2) Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
+
+3) Set up the correct JDK version for Gradle +
+   (a) Click `Configure` > `Project Defaults` > `Project Structure`
+
+image::configure.png[width="500"]
+
+(b) Click `New...` and find the directory of the JDK
+
+image::newSDK.png[width="500"]
+
+4) Click `Import Project`
+
+image::import.png[width="500"]
+
+5) Locate the `build.gradle` file and select it. Click `OK`
+
+6) Click `Open as Project`
+
+7) Click `OK` to accept the default settings
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
+image::terminal.png[width="500"]
+
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
-. link:#testing[Run the tests] to ensure they all pass.
+1) Run the `seedu.address.MainApp` and try a few commands
+
+2) link:#testing[Run the tests] to ensure they all pass.
 
 === Configurations to do before writing code
 
@@ -80,12 +98,18 @@ This will generate all resources required by the application and tests.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+1) Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
+
+image::preferences.png[width="200"]
+
+2) Select `Editor` > `Code Style` > `Java`
+
+3) Click on the `Imports` tab to set the order
 
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
 * For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+
+image::codeStyle.png[width="500"]
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
@@ -108,8 +132,9 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 
 Here are some tips to get you started on coding:
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+1) Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+
+2) Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
 
