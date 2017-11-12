@@ -6,9 +6,4 @@ package seedu.address.commons.exceptions;
  * The reason can be wrong keyword.
  */
 public class EncryptOrDecryptException extends Exception {
-
-    public EncryptOrDecryptException() {
-        super();
-    }
-
 }

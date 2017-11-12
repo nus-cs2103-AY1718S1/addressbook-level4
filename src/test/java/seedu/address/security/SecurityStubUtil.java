@@ -1,8 +1,11 @@
 //@@author Hailinx
 package seedu.address.security;
 
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.exceptions.EncryptOrDecryptException;
 
@@ -25,6 +28,7 @@ public class SecurityStubUtil {
 
         @Override
         public void configSecurity(String... permittedCommands) {
+            fail("This method should not be called.");
         }
 
         @Override
@@ -34,6 +38,7 @@ public class SecurityStubUtil {
 
         @Override
         public void raise(BaseEvent event) {
+            EventsCenter.getInstance().post(event);
         }
 
         @Override
@@ -48,20 +53,22 @@ public class SecurityStubUtil {
 
         @Override
         public void encryptAddressBook(String password) throws IOException, EncryptOrDecryptException {
+            // simulate the execution
         }
 
         @Override
         public void decryptAddressBook(String password) throws IOException, EncryptOrDecryptException {
+            // simulate the execution
         }
     }
 
     /**
      * Represents a SecurityManager which indicates that the address book is secured.
      */
-    private class SecurityStubIoexception extends BaseSecurityStub {
+    private class SecurityStubIoException extends BaseSecurityStub {
 
 
-        public SecurityStubIoexception(boolean isSecured) {
+        public SecurityStubIoException(boolean isSecured) {
             super(isSecured);
         }
 
@@ -98,18 +105,18 @@ public class SecurityStubUtil {
     }
 
     public void initialUnSecuredSecurity() {
-        SecurityManager.getInstance(new BaseSecurityStub(false));
+        SecurityManager.setInstance(new BaseSecurityStub(false));
     }
 
     public void initialSecuredSecurity() {
-        SecurityManager.getInstance(new BaseSecurityStub(true));
+        SecurityManager.setInstance(new BaseSecurityStub(true));
     }
 
-    public void initialSecurityWithIoexception(boolean isSecured) {
-        SecurityManager.getInstance(new SecurityStubIoexception(isSecured));
+    public void initialSecurityWithIoException(boolean isSecured) {
+        SecurityManager.setInstance(new SecurityStubIoException(isSecured));
     }
 
     public void initialSecurityWithEncryptOrDecryptException(boolean isSecured) {
-        SecurityManager.getInstance(new SecurityStubEncryptOrDecryptException(isSecured));
+        SecurityManager.setInstance(new SecurityStubEncryptOrDecryptException(isSecured));
     }
 }

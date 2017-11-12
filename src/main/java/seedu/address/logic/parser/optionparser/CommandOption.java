@@ -25,7 +25,7 @@ public abstract class CommandOption<T extends Command> {
      * Checks whether {@code optionArgs} is valid.
      * @return true if {@code optionArgs} is not empty by default.
      */
-    boolean isValidOptionArgs() {
+    public boolean isValidOptionArgs() {
         return !optionArgs.isEmpty();
     }
 }

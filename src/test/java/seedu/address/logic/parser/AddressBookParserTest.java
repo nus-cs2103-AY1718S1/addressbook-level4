@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,6 +44,7 @@ import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.security.SecurityManager;
 import seedu.address.security.SecurityStubUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -327,6 +329,11 @@ public class AddressBookParserTest {
         } catch (ParseException e) {
             assertEquals(e.getMessage(), MESSAGE_IS_ENCRYPTD);
         }
+    }
+
+    @After
+    public void after() {
+        SecurityManager.setInstance(null);
     }
     //@@author
 }

@@ -1,14 +1,11 @@
 //@@author Hailinx
 package seedu.address.ui;
 
-import java.util.logging.Logger;
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.TodoItem;
 
 /**
@@ -16,7 +13,6 @@ import seedu.address.model.person.TodoItem;
  */
 public class TodoCard extends UiPart<Region> {
     private static final String FXML = "TodoCard.fxml";
-    private final Logger logger = LogsCenter.getLogger(TodoCard.class);
 
     @FXML
     private Label id;

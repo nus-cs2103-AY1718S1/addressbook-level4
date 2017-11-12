@@ -31,15 +31,17 @@ public class SecurityManager extends ComponentManager implements Security {
     }
 
     public static Security getInstance(Storage storage) {
-        instance = new SecurityManager(storage);
+        if (instance == null) {
+            instance = new SecurityManager(storage);
+        }
         return instance;
     }
 
-    public static Security getInstance(Security security) {
-        if (security != null) {
-            instance = security;
-        }
-        return instance;
+    /**
+     * Is used for testing.
+     */
+    public static void setInstance(Security security) {
+        instance = security;
     }
 
     @Override

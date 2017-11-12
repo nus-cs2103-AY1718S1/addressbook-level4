@@ -2,6 +2,7 @@
 package seedu.address.logic.parser.optionparser;
 
 import static seedu.address.logic.parser.FindCommandParser.PARSE_EXCEPTION_MESSAGE;
+import static seedu.address.logic.parser.optionparser.CommandOptionUtil.PREFIX_OPTION_INDICATOR;
 
 import java.util.Arrays;
 
@@ -28,8 +29,7 @@ public class FindOptionByName extends CommandOption<FindCommand> {
     }
 
     @Override
-    boolean isValidOptionArgs() {
-        return super.isValidOptionArgs()
-             && !optionArgs.contains("-");
+    public boolean isValidOptionArgs() {
+        return !optionArgs.isEmpty() && !optionArgs.contains(PREFIX_OPTION_INDICATOR);
     }
 }

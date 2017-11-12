@@ -43,20 +43,25 @@ public class SecurityUtilTest {
     }
 
     @Test
-    public void test_encrypt_noException() throws Exception {
-        String password = "tempPassword";
+    public void test_encrypt_noException() {
+        try {
+            String password = "tempPassword";
 
-        // encrypt normal file
-        write_tempXmlFile("a normal file");
-        SecurityUtil.encrypt(file, password);
+            // encrypt normal file
+            write_tempXmlFile("a normal file");
+            SecurityUtil.encrypt(file, password);
 
-        // encrypt a xml file
-        write_tempXmlFile(SecurityUtil.XML_STARTER + "<addressbook></addressbook>");
-        SecurityUtil.encrypt(file, password);
+            // encrypt a xml file
+            write_tempXmlFile(SecurityUtil.XML_STARTER + "<addressbook></addressbook>");
+            SecurityUtil.encrypt(file, password);
 
-        // encrypt file without content
-        write_tempXmlFile("");
-        SecurityUtil.encrypt(file, password);
+            // encrypt file without content
+            write_tempXmlFile("");
+            SecurityUtil.encrypt(file, password);
+        } catch (IOException | EncryptOrDecryptException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw exception.");
+        }
     }
 
     @Test

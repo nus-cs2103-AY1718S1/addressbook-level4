@@ -8,9 +8,6 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class ReloadAddressBookEvent extends BaseEvent {
 
-    public ReloadAddressBookEvent() {
-    }
-
     @Override
     public String toString() {
         return "Request to reload Address Book.";
