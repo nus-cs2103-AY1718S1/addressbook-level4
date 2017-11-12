@@ -494,7 +494,7 @@ If the welcome screen is successfully enabled, you should be able to see a the f
 
 image::WelcomeScreen.png[width="400"]
 _Figure 3.4.3.1: The welcome screen_
-// tag::welcomeScreen[]
+// end::welcomeScreen[]
 
 ==== Exiting the program : `exit`
 

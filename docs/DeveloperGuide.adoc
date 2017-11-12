@@ -661,7 +661,7 @@ _Figure 4.4.1: UI display of a successful enhanced `ScheduleCommand` execution_
 **Cons:** The arrangement of the schedules will appear at random.
 //end::scheduleMultiple[]
 
-//tag::welcomeWindow[]
+//tag::welcomeScreen[]
 === Welcome Screen Display [Since v1.5]
 
 If enabled, the `WelcomeScreen` will be loaded before the `MainWindow`. The information regarding the enabling or disabling of `WelcomeScreen` is stored inside `preferences.json` file, which is accessed and modified by `UserPrefs` class.
@@ -741,7 +741,7 @@ When the `Continue` button is pressed, `WelcomeScreen` will pass the `MainWindow
 **Alternative 2:** Welcome screen is always displayed when the application is run.  +
 **Pros:** This does not require additional command to be implemented.  +
 **Cons:** Users who think that welcome screen is unnecessary cannot skip the welcome screen.
-//end::welcomeWindow[]
+//end::welcomeScreen[]
 
 //tag::locate[]
 === Locating a contact's address [Since v1.2]
