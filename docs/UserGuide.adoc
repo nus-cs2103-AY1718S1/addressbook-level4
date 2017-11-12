@@ -59,7 +59,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 : adds a contact named `John Doe` to cherBook.
 * *`sort`* : sorts all contacts `alphabetically` by name.
 * **`findtags`**`scholarship` : lists contacts with the `scholarship` tag
-* *`schedules`* : `displays` your schedules inside the command box.
+* *`viewschedules`* : `displays` your schedules inside the command box.
 
 * **`tab`**`2` : switches to `bar` chart
 * **`delete`**`3` : deletes the `3rd` contact shown in the current list
@@ -123,7 +123,7 @@ Format: `help`
 Example:
 
 image::HelpImage.png[width="800"]
-_Figure 4.2 : There are two ways you can use 'help'_
+_Figure 5.1 : The two ways you can use 'help' in cherBook_
 
 === Adding a person: `add` `Since v1.0`
 
@@ -151,6 +151,11 @@ Examples:
 * `a n/Jane Doe pp/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
 * `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/97272231 pp/97979997 f/12A2 g/66 t/criminal`
 
+Example:
+
+image::AddImage.png[width="800"]
+_Figure 5.1 : How you can add contacts into your cherBook_
+
 === Listing all persons : `list` `Since v1.0`
 
 Shows you a list of all persons in cherBook. +
@@ -160,7 +165,7 @@ Shorthand: `l`
 Example:
 
 image::ListImage.png[width="800"]
-_Figure 4.5 : Lists all contacts in your cherBook_
+_Figure 5.2 : Lists all contacts in your cherBook_
 
 === Editing a person : `edit` `Since v1.0`
 
@@ -195,7 +200,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 Example:
 
 image::EditImage.png[width="800"]
-_Figure 4.6 : Edits a contact in your cherBook_
+_Figure 5.3 : Edits a contact in your cherBook_
 
 === Locating persons by name: `find` `Since v1.0`
 
@@ -221,6 +226,11 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+Example:
+
+image::FindImage.png[width="800"]
+_Figure 5.4 : Finds and displays all contacts in your cherBook with the specified keyword_
 
 === Deleting a person : `delete` `Since v1.0`
 
@@ -249,7 +259,7 @@ Deletes the 3rd person in cherBook.
 Example:
 
 image::DeleteImage.png[width="800"]
-_Figure 4.9 : Deletes the contact in your cherBook with the specified index_
+_Figure 5.5 : Deletes the contact in your cherBook with the specified index_
 
 === Selecting a person : `select` `Since v1.0`
 
@@ -275,6 +285,11 @@ Selects the 1st person in the results of the `find` command.
 `s 3` (`select 3` command) +
 Selects the 3rd person in cherBook.
 
+Example:
+
+image::SelectImage.png[width="800"]
+_Figure 5.6 : Selects the contact in your cherBook with the specified index_
+
 === Listing entered commands : `history` `Since v1.0`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -285,6 +300,11 @@ Shorthand: `h`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+Example:
+
+image::HistoryImage.png[width="800"]
+_Figure 5.7 : Displays a list of all your previous actions on cherBook_
 
 // tag::undoredo[]
 === Undoing previous command : `undo` `Since v1.0`
@@ -318,6 +338,11 @@ The `undo` command fails as there are no undoable commands executed previously.
 `l` (`list` comand) +
 `u` ( `undo` command reverses the `delete 1` command) +
 
+Example:
+
+image::UndoImage.png[width="800"]
+_Figure 5.8 : Undo your previous action on cherBook_
+
 === Redoing the previously undone command : `redo` `Since v1.0`
 
 Reverses the most recent `undo` command. +
@@ -344,17 +369,17 @@ The `redo` command fails as there are no `undo` commands executed previously.
 * `d 1` (`delete 1` command) +
 `u` (`undo` command reverses the `delete 1` command) +
 `r` (reapplies the `delete 1` command) +
+
+Example:
+
+image::RedoImage.png[width="800"]
+_Figure 5.9 : Redo your previous action on cherBook_
 // end::undoredo[]
 
 === Clearing all entries : `clear` `Since v1.0`
 //TODO: Celine to update this part, whether it clears schedules too?
 Clears all student and schedule entries from cherBook. +
 Format: `clear`
-
-=== Exiting the program : `exit` `Since v1.0`
-
-Exits the program. +
-Format: `exit`
 
 // tag::findtags[]
 === Locating persons by tags: `findtags` `Since v1.1`
@@ -385,6 +410,11 @@ Returns any person having both `friends` and `owesMoney` tags
 Returns any person having the tag `friends`
 * `ft Betsy Tim John` +
 Returns any person having both `friends` and `owesMoney` tags
+
+Example:
+
+image::FindTagsImage.png[width="800"]
+_Figure 5.10 : Find contacts on your cherBook with the specified tags_
 // end::findtags[]
 
 // tag::remark[]
@@ -419,14 +449,17 @@ Overwrites `remark` from the 2nd person in the address book and displays it as `
 Example:
 
 image::RemarkImage.png[width="800"]
-_Figure 4.12 : Add a remark to your contacts in cherBook_
+_Figure 5.11 : Add a remark to your contacts in cherBook_
 
 // end::remark[]
 
 // tag::sort[]
 === Sorting all persons : `sort` `Since v1.2`
 
-Shows a list of all persons in cherBook with their names sorted in alphabetical order. +
+Helps you sort all persons in cherBook. +
+Shows you a list of all persons in cherBook with their names sorted in alphabetical order. +
+If you want your list to be sorted at all times, you can use this sort command after adding contacts into cherBook, +
+After that, your contact list would always be sorted when you perform other commands on cherBook. +
 Format: `sort` +
 Shorthand: `st`
 
@@ -444,10 +477,15 @@ Sorts the list in alphabetical order.
 * `find Betsy` +
 `st` +
 Sorts the list in alphabetical order.
+
+Example:
+
+image::SortImage.png[width="800"]
+_Figure 5.12 : Sorts and displays all your contacts in cherBook_
 // end::sort[]
 
 // tag::schedule[]
-=== Scheduling a person : `schedule` `Since v1.4`
+=== Adding a schedule : `schedule` `Since v1.4`
 
 Schedules the person identified by the index number used in the last person listing. +
 Format: `addschedule INDEX s/[DATE]` +
@@ -471,13 +509,13 @@ Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule
 Example:
 
 image::AddScheduleImage.png[width="800"]
-_Figure 4.13 : Adds a schedule to your cherBook_
+_Figure 5.13 : Adds a schedule to your cherBook_
 // end::schedule[]
 
 // tag::viewschedule[]
 === Viewing my schedule : `viewschedule` `Since v1.5`
 
-Views your full schedule list. +
+View your full schedule list in cherBook. +
 Format: `viewschedules` +
 Shorthand: `viewsch`
 
@@ -497,7 +535,7 @@ Displays all your schedules in the command box.
 Example:
 
 image::ViewScheduleImage.png[width="800"]
-_Figure 4.14 : Views all your schedules in cherBook_
+_Figure 5.14 : View all your schedules in cherBook as shown in the box_
 // end::viewschedule[]
 
 === Deleting a schedule : `deleteschedule` `Since v1.5`
@@ -521,6 +559,11 @@ Deletes the 2nd schedule in the results of the `viewschedule` command which retu
 `deletesch 1` +
 Deletes the 1st schedule in the results of the `viewsch` command which returns a list of schedules.
 
+Example:
+
+image::DeleteScheduleImage.png[width="800"]
+_Figure 5.15 : Deletes the schedule in your cherBook with the specified index_
+
 // tag::tab[]
 === Switching between graphs: `tab` `Since v1.5`
 Switches between the line and bar chart in the `GraphPanel`. +
@@ -534,7 +577,40 @@ Example:
 
 * `tab 2` +
 Remains at tab 2 if tab 2 is selected else switches to tab 2.
+
+Examples:
+
+image::Tab1Image.png[width="800"]
+_Figure 5.16 : Displays the graph in your cherBook with the first tab index_
+
+
+image::Tab2Image.png[width="800"]
+_Figure 5.17 : Displays the graph in your cherBook with the second tab index_
 // end::tab[]
+
+=== Switching to home screen: `home` `Since v1.5`
+
+Switch all panels on the right to the home page. +
+The quotes on the home page is generated on random for you. +
+Format: `home`
+
+[NOTE]
+To select your contacts on this page, use the select command. This is to ensure that people who access your cherBook are unable to view the information of your contacts easily.
+
+Examples:
+
+image::HomeImage.png[width="800"]
+_Figure 5.18 : Returns to the home page of cherBook_
+
+=== Exiting the program : `exit` `Since v1.0`
+
+Exits the program. +
+Format: `exit`
+
+Example:
+
+image::ExitImage.png[width="800"]
+_Figure 5.19 : The two ways you can exit your cherBook_
 
 == Feature : Non - Commands
 
@@ -574,6 +650,11 @@ a message will be generated to inform you that the particular field is not recor
 | Tag | t/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 +
 |=======================================================================
 
+
+Example:
+
+image::OptionalInputsImage.png[width="800"]
+_Figure 6.1 : Displays optional inputs for your contacts_
 // end::optionalinputtagstwo[]
 
 
@@ -587,16 +668,6 @@ The details changes when another student from a different class is selected.
 You can use these graph to better understand the trends of `grades` in a glance to easily see who are the weaker or stronger students.
 // end::graphpanel[]
 
-Example:
-
-image::ExitImage.png[width="800"]
-_Figure 4.19 : Exits your cherBook_
-
-Example:
-
-image::ExitImage.png[width="800"]
-_Figure 4.19 : Exits your cherBook_
-
 // tag::randomisedUniqueTagColors[]
 === Randomised Unique Tag Colors: `Since v1.4`
 
@@ -608,7 +679,7 @@ Modifications were made to the range of possible colors. It is to ensure that th
 to match with the white font of the tag description. Thus, allowing you to be able to see the tag description clearly as seen in the following picture.
 
 image::TagColor.png[width="350"]
-_Figure 5.20.1 : Example of color tags_
+_Figure 6.2 : Example of color tags_
 
 // end::randomisedUniqueTagColors[]
 
@@ -643,6 +714,7 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | edit | `e` + | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
 | find | `f` + | `f KEYWORD [MORE_KEYWORDS]` +
 | findtags | `ft` + | `ft KEYWORD [MORE_KEYWORDS]` +
+| home | `home` | `home` +
 | delete | `d`  | `d 3` +
 | select | `s` + | `s INDEX` +
 | sort | `st` | `st` +
