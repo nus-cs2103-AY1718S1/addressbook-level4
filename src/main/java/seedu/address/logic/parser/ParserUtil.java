@@ -224,7 +224,6 @@ public class ParserUtil {
      * Parses {@code password} into a {@code Password} and returns it.
      * Leading and trailing whitespaces will be trimmed.
      * @throws IllegalValueException if the password does not meet length requirement and/or contains illegal characters
-
      */
     public static Password parsePassword(String password) throws IllegalValueException {
         requireNonNull(password);
@@ -237,7 +236,7 @@ public class ParserUtil {
      * is present.
      * Meant for parsing for Edit command.
      * See header comment of this class regarding the use of {@code Optional} parameters.
-     * @throws IllegalValueException when {@code totalDebt} is 0
+     * @throws IllegalValueException if {@code totalDebt} is zero
      */
     public static Optional<Debt> parseTotalDebt(Optional<String> totalDebt) throws IllegalValueException {
         requireNonNull(totalDebt);

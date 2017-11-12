@@ -8,7 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 
 //@@author jelneo
 /**
- * Handles login of a user
+ * Handles login of a user.
  */
 public class LoginCommand extends Command {
 
@@ -28,6 +28,10 @@ public class LoginCommand extends Command {
         this.password = password;
     }
 
+    /**
+     * Checks if a user is logged in.
+     * @return true is user is logged in, false otherwise
+     */
     public static boolean isLoggedIn() {
         return isLoggedIn;
     }
@@ -37,7 +41,7 @@ public class LoginCommand extends Command {
     }
 
     /**
-     * Verifies if user is valid
+     * Verifies if user is valid.
      * @throws UserNotFoundException if user is not valid
      * @throws IllegalValueException if either username or password do not meet the username or password requirements
      */

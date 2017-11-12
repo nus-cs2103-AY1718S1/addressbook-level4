@@ -323,7 +323,7 @@ public class Person implements ReadOnlyPerson {
 
     //@@author jelneo
     /**
-     * Sets total debt of a person to the given Debt.
+     * Sets the total debt of a person to {@code totalDebt}.
      * @param totalDebt must not be null and cannot be less than current debt
      */
     public void setTotalDebt(Debt totalDebt) throws IllegalValueException {

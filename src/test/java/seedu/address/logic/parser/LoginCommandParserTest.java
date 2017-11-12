@@ -83,5 +83,8 @@ public class LoginCommandParserTest {
 
         // no password
         assertParseFailure(parser, String.format(GUI_LOGIN_ARGS, TEST_USERNAME, ""), EMPTY_PASSWORD_MESSAGE);
+
+        // no username and password
+        assertParseFailure(parser, String.format(GUI_LOGIN_ARGS, "", ""), EMPTY_USERNAME_MESSAGE);
     }
 }

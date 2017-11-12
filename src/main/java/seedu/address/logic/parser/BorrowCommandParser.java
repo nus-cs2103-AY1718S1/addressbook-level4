@@ -12,7 +12,7 @@ import seedu.address.model.person.Debt;
 
 //@@author jelneo
 /**
- * Parses input arguments and creates a new BorrowCommand object
+ * Parses input arguments and creates a new {@code BorrowCommand} object.
  */
 public class BorrowCommandParser implements Parser<BorrowCommand> {
 
@@ -22,6 +22,11 @@ public class BorrowCommandParser implements Parser<BorrowCommand> {
     private static final int ARGS_LENGTH_WITHOUT_INDEX = 1;
 
 
+    /**
+     * Parses the given {@code String} of arguments in the context of the BorrowCommand
+     * and returns an BorrowCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     @Override
     public BorrowCommand parse(String args) throws ParseException, CommandException {
         requireNonNull(args);

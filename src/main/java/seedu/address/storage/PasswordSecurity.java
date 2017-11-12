@@ -14,12 +14,12 @@ import java.security.SecureRandom;
  */
 
 /**
- * Deals with password security
+ * Deals with password security.
  */
 public class PasswordSecurity {
 
     /**
-     * Generates a SHA-512 secure password using a given salt and password
+     * Generates a SHA-512 secure password using a given salt and password.
      * @param salt randomly generated text
      * @return a password that is hashed
      */
@@ -42,7 +42,7 @@ public class PasswordSecurity {
     }
 
     /**
-     * Generates a random salt
+     * Generates a random salt.
      */
     public static byte[] getSalt() {
         SecureRandom secureRandom = null;

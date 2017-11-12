@@ -44,6 +44,11 @@ public class BorrowCommandParserTest extends CommandTest {
     }
 
     @Test
+    public void parse_invalidNumberOfArguments_failure() {
+        assertParseFailure(parser, "1 200 300", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
     public void parse_validArguments() {
         try {
             Index index = Index.fromOneBased(Integer.valueOf(VALID_INDEX));

@@ -18,6 +18,9 @@ import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author jelneo
+/**
+ * Contains integration tests (interaction with the Model) for {@code LogoutCommand}.
+ */
 public class LogoutCommandTest extends CommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();

@@ -4,7 +4,6 @@ import static seedu.address.logic.commands.LoginCommand.isLoggedIn;
 
 import java.util.logging.Logger;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -22,7 +21,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author jelneo
 /**
- * Displays username and password fields
+ * Displays username and password fields.
  */
 public class LoginView extends UiPart<Region> {
     public static final String SEPARATOR = "|";
@@ -33,8 +32,6 @@ public class LoginView extends UiPart<Region> {
 
     private static boolean showingLoginView = false;
     private final Logic logic;
-    private ObjectProperty<Username> username;
-    private ObjectProperty<Password> password;
 
     @FXML
     private TextField usernameField;
@@ -45,6 +42,13 @@ public class LoginView extends UiPart<Region> {
         super(FXML);
         this.logic = logic;
         logger.info("Showing login view...");
+        addListeners();
+    }
+
+    /**
+     * Adds listeners to {@code usernameField} and {@code passwordField}.
+     */
+    private void addListeners() {
         usernameField.textProperty().addListener((unused1, unused2, unused3) -> {
         });
         passwordField.textProperty().addListener((unused1, unused2, unused3) -> {
@@ -79,7 +83,7 @@ public class LoginView extends UiPart<Region> {
     }
 
     /**
-     * Handles the key press event, {@code keyEvent}.
+     * Handles the button clicking event. Changes from the current login view to command box view.
      */
     @FXML
     private void handleBackToCommandView() {
@@ -95,8 +99,9 @@ public class LoginView extends UiPart<Region> {
     }
 
     /**
-     * Checks if {@code input} contains {@code SEPARATOR}
-     * @return true if {@code input} contains {@code SEPARATOR}
+     * Checks if {@code input} contains {@code SEPARATOR} characters.
+     * @return {@code true} if {@code input} contains {@code SEPARATOR},
+     * otherwise {@code false}
      */
     private boolean containSeparatorString(String input) {
         return input.contains(SEPARATOR);
