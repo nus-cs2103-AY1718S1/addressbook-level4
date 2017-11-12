@@ -6,14 +6,13 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.time.YearMonth;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.PopulateMonthEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-
-import java.time.YearMonth;
-
 
 /**
  * Represents a command which can be undone and redone.
