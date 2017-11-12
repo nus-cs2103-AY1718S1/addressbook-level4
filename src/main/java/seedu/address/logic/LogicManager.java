@@ -163,6 +163,11 @@ public class LogicManager extends ComponentManager implements Logic {
                     addressBookParser.disableParentToggle(),
                     "Successfully toggled to Child Commands in main parser",
                     "Failed to toggle to Child Commands in main parser");
+        } else if (event.getToggle().equals(ModelToggleEvent.Toggle.aliasEnabled)) {
+            logModelToggelForParser(
+                    addressBookParser.enableAliasToggle(),
+                    "Successfully toggled to Alias View in main parser",
+                    "Failed to toggle to Alias View in main parser");
         }
     }
 

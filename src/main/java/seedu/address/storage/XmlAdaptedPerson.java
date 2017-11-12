@@ -81,16 +81,40 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
-        final Name name = new Name(this.name);
-        final Phone phone = new Phone(this.phone);
-        final Email email = new Email(this.email);
-        final Address address = new Address(this.address);
-        final Birthday birthday = new Birthday(this.birthday);
+        Name name = new Name(0);
+        Birthday birthday = new Birthday(0);
+        Phone phone = new Phone(0);
+        Email email = new Email(0);
+        Address address = new Address(0);
+
+        if (!isEmptyField(this.name)) {
+            name = new Name(this.name);
+        }
+        if (!isEmptyField(this.phone)) {
+            phone = new Phone(this.phone);
+        }
+        if (!isEmptyField(this.email)) {
+            email = new Email(this.email);
+        }
+        if (!isEmptyField(this.address)) {
+            address = new Address(this.address);
+        }
+        if (!isEmptyField(this.birthday)) {
+            birthday = new Birthday(this.birthday);
+        }
+
         final Remark remark = new Remark(this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);
         final boolean isPrivate = this.isPrivate;
         final boolean isPinned = this.isPinned;
         final boolean isSelected = false;
         return new Person(name, phone, email, address, birthday, remark, tags, isPrivate, isPinned, isSelected);
+    }
+
+    /**
+     * Checks whether the person field is empty.
+     */
+    public boolean isEmptyField(String input) {
+        return input.equals(" ");
     }
 }

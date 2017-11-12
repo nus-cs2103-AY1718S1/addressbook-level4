@@ -11,7 +11,7 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
 
 
     private final PersonCard newSelection;
-    private final Index index;
+    private final String index;
 
     public PersonPanelSelectionChangedEvent(PersonCard newSelection) {
         this.newSelection = newSelection;
@@ -25,5 +25,9 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
 
     public PersonCard getNewSelection() {
         return newSelection;
+    }
+    
+    public String getSelectedIndex() {
+        return index;
     }
 }

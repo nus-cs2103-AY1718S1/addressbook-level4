@@ -144,6 +144,16 @@ public class AddCommandTest {
         public void unpinPerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
+        
+        @Override
+        public void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deselectPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
 
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)

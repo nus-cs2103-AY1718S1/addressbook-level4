@@ -1,7 +1,6 @@
 package guitests.guihandles;
 
 import javafx.stage.Stage;
-import seedu.address.TestApp;
 
 /**
  * Provides a handle for {@code MainWindow}.
@@ -13,7 +12,6 @@ public class MainWindowHandle extends StageHandle {
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
-    private final BrowserPanelHandle browserPanel;
     private final SearchBoxHandle searchField;
     private final SortMenuHandle sortMenu;
     private final HelpOverlayHandle helpOverlay;
@@ -26,11 +24,6 @@ public class MainWindowHandle extends StageHandle {
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
-        if (!TestApp.isFirstTimeOpen()) {
-            browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
-        } else {
-            browserPanel = null;
-        }
         searchField = new SearchBoxHandle(getChildNode(SearchBoxHandle.SEARCH_FIELD_ID));
         sortMenu = new SortMenuHandle(getChildNode(SortMenuHandle.SORT_MENU_ID));
         helpOverlay = new HelpOverlayHandle(getChildNode(HelpOverlayHandle.HELP_OVERLAY_ID));
@@ -54,10 +47,6 @@ public class MainWindowHandle extends StageHandle {
 
     public MainMenuHandle getMainMenu() {
         return mainMenu;
-    }
-
-    public BrowserPanelHandle getBrowserPanel() {
-        return browserPanel;
     }
 
     public SearchBoxHandle getSearchField() {

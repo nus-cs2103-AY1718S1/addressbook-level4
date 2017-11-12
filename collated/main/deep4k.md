@@ -52,7 +52,9 @@ public class ModelToggleEvent extends BaseEvent {
     public enum Toggle {
         personEnabled,
         taskEnabled,
-        parentEnabled
+        parentEnabled,
+        parentDisabled,
+        aliasEnabled
     }
 
     private final Toggle toggle;
@@ -200,6 +202,26 @@ public class UnaliasCommand extends UndoableCommand {
     }
 }
 
+
+```
+###### \java\seedu\address\logic\commands\DisableParentModeCommand.java
+``` java
+/**
+ * Disables all parent commands and only enables child command
+ */
+public class DisableParentModeCommand extends Command {
+
+    public static final String COMMAND_WORD = "child";
+
+    public static final String MESSAGE_SUCCESS = "Only child commands are enabled!";
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ModelToggleEvent(ModelToggleEvent.Toggle.parentDisabled));
+        EventsCenter.getInstance().post(new ToggleParentChildModeEvent(false));
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
 
 ```
 ###### \java\seedu\address\logic\commands\EnablePersonCommand.java
@@ -936,6 +958,16 @@ public class UnmarkTaskCommand extends UndoableCommand {
                     addressBookParser.enableParentToggle(),
                     "Successfully toggled to Parent Commands in main parser",
                     "Failed to toggle to Parent Commands in main parser");
+        } else if (event.getToggle().equals(ModelToggleEvent.Toggle.parentDisabled)) {
+            logModelToggelForParser(
+                    addressBookParser.disableParentToggle(),
+                    "Successfully toggled to Child Commands in main parser",
+                    "Failed to toggle to Child Commands in main parser");
+        } else if (event.getToggle().equals(ModelToggleEvent.Toggle.aliasEnabled)) {
+            logModelToggelForParser(
+                    addressBookParser.enableAliasToggle(),
+                    "Successfully toggled to Alias View in main parser",
+                    "Failed to toggle to Alias View in main parser");
         }
     }
 
@@ -1017,11 +1049,15 @@ public class AddressBookParser {
     private static final String MESSAGE_TASK_MODEL_MODE = "This command only works with tasks"
             + "\nPlease toggle to task view.";
 
+    private static final String MESSAGE_ALIAS_MODEL_MODE = "This command does not work in alias view"
+            + "\nPlease toggle to person or task view";
+
     private final Map<String, Parser<? extends Command>> commandMap;
     private final Map<String, ReadOnlyAliasToken> aliasMap;
     private final ObservableList<ReadOnlyAliasToken> aliasList = FXCollections.observableArrayList();
     private boolean isPersonEnabled;
     private boolean isTaskEnabled;
+    private boolean isAliasEnabled;
     private boolean isParentEnabled;
 
     public AddressBookParser() {
@@ -1029,6 +1065,7 @@ public class AddressBookParser {
         this.aliasMap = new HashMap<String, ReadOnlyAliasToken>();
         this.isPersonEnabled = true;
         this.isTaskEnabled = false;
+        this.isAliasEnabled = false;
         this.isParentEnabled = false;
     }
 
@@ -1051,10 +1088,12 @@ public class AddressBookParser {
         final String checkedCommandWord = commandWordCheck(commandWord);
         final String checkedArguments = argumentsCheck(checkedCommandWord, arguments);
 
-
         switch (checkedCommandWord) {
 
         case AddCommand.COMMAND_WORD:
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new AddCommandParser().parse(checkedArguments);
             } else {
@@ -1065,6 +1104,9 @@ public class AddressBookParser {
             if (!isParentEnabled) {
                 throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
             }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new EditCommandParser().parse(checkedArguments);
             } else {
@@ -1072,6 +1114,9 @@ public class AddressBookParser {
             }
 
         case SelectCommand.COMMAND_WORD:
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new SelectCommandParser().parse(checkedArguments);
             } else {
@@ -1082,6 +1127,9 @@ public class AddressBookParser {
             if (!isParentEnabled) {
                 throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
             }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new DeleteCommandParser().parse(checkedArguments);
             } else {
@@ -1091,6 +1139,9 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
             if (!isParentEnabled) {
                 throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
             } else {
                 return new ClearCommand();
             }
@@ -1099,6 +1150,9 @@ public class AddressBookParser {
             if (!isParentEnabled) {
                 throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
             }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new PinCommandParser().parse(arguments);
             } else {
@@ -1106,15 +1160,27 @@ public class AddressBookParser {
             }
 
         case ListPinCommand.COMMAND_WORD:
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new ListPinCommand();
             } else {
                 throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
             }
 
+        case ListAliasCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            return new ListAliasCommand();
+
         case UnpinCommand.COMMAND_WORD:
             if (!isParentEnabled) {
                 throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
             }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new UnpinCommandParser().parse(arguments);
@@ -1126,6 +1192,9 @@ public class AddressBookParser {
             if (!isParentEnabled) {
                 throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
             }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new HideCommandParser().parse(checkedArguments);
             } else {
@@ -1133,6 +1202,9 @@ public class AddressBookParser {
             }
 
         case FindCommand.COMMAND_WORD:
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new FindCommandParser().parse(checkedArguments);
             } else {
@@ -1140,6 +1212,9 @@ public class AddressBookParser {
             }
 
         case FindPinnedCommand.COMMAND_WORD:
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new FindPinnedCommandParser().parse(checkedArguments);
             } else {
@@ -1147,6 +1222,9 @@ public class AddressBookParser {
             }
 
         case RemarkCommand.COMMAND_WORD:
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new RemarkCommandParser().parse(checkedArguments);
             } else {
@@ -1154,6 +1232,9 @@ public class AddressBookParser {
             }
 
         case ListCommand.COMMAND_WORD:
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new ListCommand();
             } else {
@@ -1161,6 +1242,9 @@ public class AddressBookParser {
             }
 
         case SortCommand.COMMAND_WORD:
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new SortCommandParser().parse(checkedArguments);
             } else {
@@ -1174,6 +1258,9 @@ public class AddressBookParser {
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
             return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
@@ -1181,6 +1268,12 @@ public class AddressBookParser {
 
         case ParentModeCommand.COMMAND_WORD:
             return new ParentModeCommand();
+
+        case DisableParentModeCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            return new DisableParentModeCommand();
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
@@ -1207,6 +1300,9 @@ public class AddressBookParser {
             if (!isParentEnabled) {
                 throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
             }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new MarkTaskCommandParser().parse(checkedArguments);
             } else {
@@ -1216,6 +1312,9 @@ public class AddressBookParser {
         case UnmarkTaskCommand.COMMAND_WORD:
             if (!isParentEnabled) {
                 throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
             }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new UnmarkTaskCommandParser().parse(checkedArguments);
@@ -1227,6 +1326,9 @@ public class AddressBookParser {
             if (!isParentEnabled) {
                 throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
             }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new RenameTaskCommandParser().parse(checkedArguments);
             } else {
@@ -1236,6 +1338,9 @@ public class AddressBookParser {
         case RescheduleTaskCommand.COMMAND_WORD:
             if (!isParentEnabled) {
                 throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
             }
             if (!isPersonEnabled && isTaskEnabled) {
                 return new RescheduleTaskCommandParser().parse(checkedArguments);
@@ -1369,9 +1474,11 @@ public class AddressBookParser {
         commandMap.put("history", null);
         commandMap.put("list", null);
         commandMap.put("listpin", null);
+        commandMap.put("listalias", null);
         commandMap.put("redo", null);
         commandMap.put("undo", null);
         commandMap.put("parent", null);
+        commandMap.put("disable.p", null);
     }
 
     public boolean isCommandRegistered(String header) {
@@ -1393,6 +1500,7 @@ public class AddressBookParser {
      */
     public boolean enablePersonToggle() {
         isPersonEnabled = true;
+        isAliasEnabled = false;
         isTaskEnabled = false;
         return true;
     }
@@ -1404,6 +1512,7 @@ public class AddressBookParser {
      */
     public boolean enableTaskToggle() {
         isPersonEnabled = false;
+        isAliasEnabled = false;
         isTaskEnabled = true;
         return true;
     }
@@ -1415,6 +1524,26 @@ public class AddressBookParser {
      */
     public boolean enableParentToggle() {
         isParentEnabled = true;
+        return true;
+    }
+
+    /**
+     * Disables the parent command to be used by main parser
+     *
+     * @return true for confirmation of disableParentToggle
+     */
+    public boolean disableParentToggle() {
+        isParentEnabled = false;
+        return true;
+    }
+
+    /**
+     * Disables the parent command to be used by main parser
+     *
+     * @return true for confirmation of disableParentToggle
+     */
+    public boolean enableAliasToggle() {
+        isAliasEnabled = true;
         return true;
     }
 
@@ -3517,6 +3646,32 @@ public class XmlAdaptedTask {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(tasks);
     }
+```
+###### \java\seedu\address\ui\StatusBarFooter.java
+``` java
+/**
+ * Current clock and date display in statusfootbar
+ */
+class TimeClock extends Label {
+
+    private static final String DATE_TIME_PATTERN = "HH:mm, EEE d MMM yyyy";
+
+    public TimeClock() {
+        getTime();
+    }
+
+    private void getTime() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0), actionEvent -> {
+            Calendar time = Calendar.getInstance();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_TIME_PATTERN);
+            setText(simpleDateFormat.format(time.getTime()));
+            setTextFill(Color.web("#ffffff"));
+        }), new KeyFrame(Duration.seconds(1)));
+
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+}
 ```
 ###### \java\seedu\address\ui\TaskCard.java
 ``` java

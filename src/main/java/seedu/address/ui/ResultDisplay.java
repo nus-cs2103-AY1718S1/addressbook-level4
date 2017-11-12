@@ -8,7 +8,6 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -16,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.ListSizeEvent;
 import seedu.address.commons.events.ui.InvalidResultDisplayEvent;
@@ -97,6 +95,7 @@ public class ResultDisplay extends UiPart<Region> {
             imageDisplay.setImage(new Image(EDIT_ICON));
             break;
         case "find":
+        case "findpinned":
             listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(FIND_ICON));
             break;
@@ -113,6 +112,8 @@ public class ResultDisplay extends UiPart<Region> {
             imageDisplay.setImage(new Image(UNDO_ICON));
             break;
         case "sort":
+        case "list":
+        case "listpin":
             listSizeDisplay.setVisible(true);
             imageDisplay.setImage(new Image(SUCCESS_ICON));
             break;

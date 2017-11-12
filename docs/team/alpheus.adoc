@@ -44,6 +44,17 @@ include::../DeveloperGuide.adoc[tag=sort]
 
 === Enhancement Added: First time tutorial
 
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tutorial]
+
+#End of Extract#
+
+---
+
 ==== Justification
 
 Currently when new users launch Bluebird for the first time, they will be lost as to what Bluebird has to offer and also what different UI panels mean.
@@ -76,7 +87,7 @@ include::../UserGuide.adoc[tag=find]
 ==== Justification
 
 Users may want to search for the contact not just by their names, but also by their phone number, email
-, address and also their tags as well. This enhancement gives users the choice to decide how they would want
+, address and tags as well. This enhancement gives users the choice to decide how they would want
 to search for the contact they want.
 
 ==== Implementation
@@ -98,6 +109,7 @@ include::../DeveloperGuide.adoc[tag=find]
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=pinunpin]
+include::../UserGuide.adoc[tag=listpin]
 
 #End of Extract#
 
@@ -155,9 +167,11 @@ include::../DeveloperGuide.adoc[tag=parentmode]
 https://github.com/CS2103AUG2017-T15-B4/main/pull/73[#73], https://github.com/CS2103AUG2017-T15-B4/main/pull/118[#118],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/134[#134], https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#143],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/144[#144], https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
-https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208], https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245])
+https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208], https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/257[#257])
 * Updated a help overlay for Bluebird (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/189[#189], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208])
 * Added Bluebird result image feedback when inputting commands (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#142],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245])
-* Added toggling of Ui between Person, Task, Pinned, and All lists (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
-https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208], https://github.com/CS2103AUG2017-T15-B4/main/pull/216[#216])
+* Added toggling of Ui between Person, Task, Alias, Pinned, and All lists (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208], https://github.com/CS2103AUG2017-T15-B4/main/pull/216[#216],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/257[#257])

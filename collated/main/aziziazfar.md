@@ -25,9 +25,10 @@
             counter++;
         }
         StringBuilder builder = new StringBuilder();
-        for (ReadOnlyPerson toAppend: personsToDelete) {
+        for (ReadOnlyPerson toAppend : personsToDelete) {
             builder.append("\n" + toAppend.toString());
         }
+        EventsCenter.getInstance().post(new ListSizeEvent(personsToDelete.size()));
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, builder));
     }
 

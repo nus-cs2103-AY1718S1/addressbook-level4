@@ -8,10 +8,14 @@ public class Messages {
     public static final String MESSAGE_UNKNOWN_PARENT_COMMAND = "Chirp! Unknown command! "
             + "Press F2 for a list of commands and ESC to close it.";
     public static final String MESSAGE_UNKNOWN_CHILD_COMMAND = "Chirp! Unknown command!\n "
-            + "Want to add a new friend or task? use \"add\"\n"
-            + "Want to view list of friends or tasks? use \"list\" or \"listpin\"\n"
-            + "Want to find your friends or tasks? use \"find\"\n"
-            + "Made a mistake adding friends or tasks? use \"undo\"";
+            + "Want to add a new contact or task? use \"add\"\n"
+            + "Want to view list of contact or tasks? use \"list\" or \"listpin\"\n"
+            + "Want to find your contact or tasks? use \"find\"\n"
+            + "Want to find pinned contact? use \"findpin\"\n"
+            + "Want to add remark to your contact? use \"remark\"\n"
+            + "Made a mistake adding contact or tasks? use \"undo\"\n"
+            + "Want to view list of tasks? use \"task\"\n"
+            + "Want to view list of contact? use \"person\"";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Oh no! The format you typed is not correct. "
             + "Scroll down for the correct format.\n%1$s";
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "Oh no! This index provided seems to be "

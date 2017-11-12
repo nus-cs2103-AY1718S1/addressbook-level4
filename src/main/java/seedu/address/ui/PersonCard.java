@@ -15,7 +15,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -66,13 +65,13 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private ImageView pinImage;
-    
-    private Index personCardIndex;
+
+    private String personCardIndex;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
-        this.personCardIndex = Index.fromOneBased(displayedIndex);
+        this.personCardIndex = displayedIndex + "";
         id.setText(displayedIndex + ". ");
         initTags(person);
         initPin(person);
@@ -86,7 +85,7 @@ public class PersonCard extends UiPart<Region> {
         colors.add("royalblue");
         colors.add("steelblue");
         colors.add("slateblue");
-        colors.add("teal");     
+        colors.add("teal");
     }
 
     /**
@@ -117,6 +116,8 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author deep4k
+    
     /**
      * Sets the additional info needed for their respective {@code person } properties
      */
@@ -182,6 +183,8 @@ public class PersonCard extends UiPart<Region> {
         details.setAlignment(Pos.CENTER_LEFT);
 
     }
+    
+    //@@author
 
     /**
      * Shows the additional person details based on whether the person is selected or not
@@ -228,7 +231,7 @@ public class PersonCard extends UiPart<Region> {
     }
     //@@author
 
-    public Index getPersonCardIndex() {
+    public String getPersonCardIndex() {
         return this.personCardIndex;
     }
 

@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.person;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.model.ListSizeEvent;
 import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -29,6 +30,7 @@ public class FindPinnedCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
+        EventsCenter.getInstance().post(new ListSizeEvent(model.getFilteredPersonList().size()));
         EventsCenter.getInstance().post(new ToggleListPinStyleEvent());
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }

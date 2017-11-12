@@ -10,7 +10,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.TutorialMessages;
-import seedu.address.commons.events.ui.SwitchToBrowserEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -100,6 +99,5 @@ public class TutorialPanel extends UiPart<Region> {
     private void endTutorial() {
         mainWindow.unhighlightAll();
         browserPlaceHolder.getChildren().remove(this.getRoot());
-        raise(new SwitchToBrowserEvent());
     }
 }

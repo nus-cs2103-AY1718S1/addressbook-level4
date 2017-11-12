@@ -37,10 +37,6 @@ public class HelpOverlayTest extends AddressBookGuiTest {
         getPersonListPanel().click();
         getMainMenu().openHelpOverlayUsingAccelerator();
         assertHelpOverlayNotOpen();
-
-        getBrowserPanel().click();
-        getMainMenu().openHelpOverlayUsingAccelerator();
-        assertHelpOverlayNotOpen();
     }
 
 
