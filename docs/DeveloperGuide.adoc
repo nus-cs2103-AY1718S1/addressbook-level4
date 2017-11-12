@@ -1603,9 +1603,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Circles shows a list of persons
 3.  User requests to delete a specific person or multiple people in the list
-4.  AddressBook deletes the person
+4.  Circles deletes the person
 +
 Use case ends.
 
@@ -1619,7 +1619,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Circles shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1630,7 +1630,7 @@ Use case resumes at step 2.
 * a. 'name' to sort alphabetically by name
 * b. 'email' to sort alphabetically by email handle
 * c. 'phone' to sort by phone number
-2. AddressBook displays sorted list of persons according to specified field
+2. Circles displays sorted list of persons according to specified field
 
 Use case ends.
 
@@ -1638,9 +1638,9 @@ Use case ends.
 === Use case: Pin
 
 1. User finds a specific person
-2. AddressBook displays the person's details
+2. Circles displays the person's details
 3. User selects 'pin' option
-4. AddressBook will now display chosen person at top of list
+4. Circles will now display chosen person at top of list
 
 Use case ends.
 
@@ -1648,28 +1648,27 @@ Use case ends.
 === Use case: Listing by [tag]
 
 1. User inputs 'list [tag]' where [tag] is any user-specified tag
-2. AddressBook filters out all persons without [tag]
-3. AddressBook shows a list of all persons with [tag]
+2. Circles filters out all persons without [tag]
+3. Circles shows a list of all persons with [tag]
 
 Use case ends.
 
 [discrete]
-=== Use case: Exporting AddressBook data
+=== Use case: Exporting contact data
 
 1. User inputs 'export'
-2. AddressBook prompts User to select a location on terminal to save the data file
+2. Circles prompts User to select a location on terminal to save the data file
 3. User selects location
 4. A data file is generated in User-specified location
 
 Use case ends.
 
 [discrete]
-=== Use case: Importing AddressBook data
+=== Use case: Importing contact data
 
 1. User inputs 'import [location]', where [location] is the location of the data file
 * example: C:/User/Documents/myAddressBook
-2. AddressBook prompts for user confirmation (overwriting data)
-3. AddressBook overwrites current data with new imported data
+2. Circles overwrites current data with new imported data
 
 Use case ends.
 
