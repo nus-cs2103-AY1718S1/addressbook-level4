@@ -457,24 +457,6 @@ It is important to display `Favourite` in the user interface. `PersonCard` is mo
 **Cons:** Modifying original values directly can be potentially dangerous. The safer alternative is to create a duplicate, and perform operations on it. +
 // end::favourite[]
 
-=== Logging
-
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
-
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
-
-*Logging Levels*
-
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
-
-=== Configuration
-
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 // tag::filterbytags[]
 === Filter mechanism
@@ -703,7 +685,7 @@ The user has to ensure that an internet connection is established to succeed in 
 The add/remove tag mechanism is facilitated by the `FilteredList`, which resides in the `ModelManager`. It inherits
 from the `UndoableCommand` and is similar to the add/delete person function but deals with tags instead.
 
-The mechanism performs an addition or removal of a tag using a list of target indexes that is within the range of the
+The mechanism performs an addition/removal of a tag using a list of target indexes that is within the range of the
 default list and a tag to add/remove. By using the `FilteredList`, addition and removal of tags when the list is
 unfiltered or filtered by other commands such as the find command is possible. Furthermore tags can be added to/removed
 from multiple people at once.
@@ -735,24 +717,22 @@ calling the storage component, coupling is reduced. The implementation of `addTa
 [source,java]
 ----
         /**
-         * Adds given tag to the given indexes of the target persons shown in the last person listing.
-         */
-        @Override
-        public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
-                DuplicatePersonException {
-            for (int i = 0; i < targetIndexes.size(); i++) {
-                int targetIndex = targetIndexes.get(i).getZeroBased();
-                ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
+             * Adds given tag to the given indexes of the target persons shown in the last person listing.
+             */
+            @Override
+            public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd, String commandWord) throws PersonNotFoundException,
+                    DuplicatePersonException {
 
-                Person newPerson = new Person(oldPerson);
-                Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
-                newTags.add(toAdd);
-                newPerson.setTags(newTags);
+                for (Index index : targetIndexes) {
+                    int targetIndex = index.getZeroBased();
+                    ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
 
-                addressBook.updatePerson(oldPerson, newPerson);
-                indicateAddressBookChanged();
+                    Person newPerson = setTagsForNewPerson(oldPerson, toAdd, commandWord);
+
+                    addressBook.updatePerson(oldPerson, newPerson);
+                    indicateAddressBookChanged();
+                }
             }
-        }
 
 ----
 
@@ -840,6 +820,52 @@ priority.
 
 
 // end::find[]
+
+// tag::windowsize[]
+
+=== Change window size command mechanism
+
+The `ChangeWindowSizeCommand` is an event-driven mechanism. It is complemented by the `WindowSize` model which contains
+the data constants and functions related to the `WindowSize`. The sequence of events is as follows. When the user
+enters the command to change the window size, the logic component executes the `ChangeWindowSizeCommand`
+which in turns posts a `ChangeWindowSizeRequestEvent`. The User Interface component then handles the event
+`ChangeWindowSizeCommand`. This can be summarised by the sequence diagram below.
+
+image::SDChangeWindowSize.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Need for `WindowSize` model. +
+**Alternative 1 (current choice):** `WindowSize` model exists. +
+**Pros:**  Better code quality and it is used by other components in place of the `ChangeWindowSizeCommand`. +
+**Cons:**  First time developer must get used to referring to the model instead of the `ChangeWindowSizeCommand` +
+**Alternative 2:** All attributes and functions associated with the `WindowSize` model is to be placed in the
+`ChangeWindowSizeCommand`. +
+**Pros:** Convenient for first time developers to understand. +
+**Cons:** `ChangeWindowSizeCommand` is crowded with too much info that can be abstracted away as another class.
+Furthermore, the `ChangeWindowSizeCommand` must be imported unnecessarily when in use by other components
+
+// end::windowsize[]
+
+=== Logging
+
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+*Logging Levels*
+
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
+* `WARNING` : Can continue, but with caution
+* `INFO` : Information showing the noteworthy actions by the App
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
 
 == Documentation
 
