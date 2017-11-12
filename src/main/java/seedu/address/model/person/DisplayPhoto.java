@@ -18,8 +18,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Guarantees: immutability and validity.
  */
 public class DisplayPhoto {
-    // Display photos for sample persons in SampleDataUtil
-    public static final String SAMPLE_PHOTO_ALEX = "/images/sample_dp_one.png";
+    // Display photo for sample persons in SampleDataUtil
+    public static final String SAMPLE_PHOTO = "/images/sample_dp_one.png";
 
     private static final Logger logger = LogsCenter.getLogger(DisplayPhoto.class);
     private static final String MESSAGE_PHOTO_CONSTRAINTS = "Display photo: "
@@ -73,7 +73,7 @@ public class DisplayPhoto {
      * Returns if a given string is a path to one of the sample photos
      */
     private static boolean isSamplePhoto(String path) {
-        return path.equals(SAMPLE_PHOTO_ALEX);
+        return path.equals(SAMPLE_PHOTO);
     }
 
     /**
