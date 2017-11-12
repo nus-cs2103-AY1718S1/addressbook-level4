@@ -2184,7 +2184,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 Social user - a user who likes to know more information about the people around them so as to understand them better +
 Task-oriented user - a user who prefers to have purposeful functions which would help facilitate easier access towards executing his work +
-{More to be added}
 
 link:#the-myths-book---developer-guide[Back To Top]
 
@@ -2253,9 +2252,28 @@ Use case ends.
 
 *Extensions*
 
-* 1a. Person name is invalid
+* 1a. Person name is invalid.
++
 [none]
 ** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Find tag
+
+*MSS*
+
+1.  User requests to find person with tag keyword (tag of person)
+2.  AddressBook shows a list of persons with tags matching with user specified tags
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Tag name is invalid.
++
+[none]
+** 1a1. AddressBook shows an error image.
 +
 Use case ends.
 
@@ -2289,6 +2307,74 @@ Use case resumes at step 1.
 ** 5a2. User types in new, edited details
 +
 Use case resumes at step 3.
+
+=== Use case: Favourite person
+
+*MSS*
+
+1.  User requests to favourite person
+2.  User types in index of person to favourite
+3.  AddressBook favourites person
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Index is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2b. Person specified is already favourited.
++
+[none]
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Unfavourite person
+
+*MSS*
+
+1.  User requests to unfavourite person
+2.  User types in index of person to unfavourite
+3.  AddressBook unfavourites person
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Index is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2b. Person specified is already unfavourited.
++
+[none]
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: List favourited persons
+
+*MSS*
+
+1.  User requests to list favourited persons
+2.  AddressBook shows a list of favourited persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
 
 === Use case: Undo command
 
@@ -2327,13 +2413,13 @@ Use case ends.
 +
 Use case ends.
 
-=== Use case: List Birthdays
+=== Use case: List birthdays
 
 *MSS*
 
-1.  User wants to know if any person has a birthday today.
-2.  User requests birthdays command.
-3.  AddressBook lists all persons with birthday today.
+1.  User wants to know if any person has a birthday today
+2.  User requests birthdays command
+3.  AddressBook lists all persons with birthday today
 +
 Use case ends.
 
@@ -2344,28 +2430,104 @@ Use case ends.
 +
 Use case ends.
 
+=== Use case: List events
+
+*MSS*
+
+1.  User requests to list events
+2.  AddressBook lists all events
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
 === Use case: Add event
 
 *MSS*
 
-1. User requests to add event
-2. User types in details of event to add
-3. AddressBook shows details of event to add
-4. AddressBook request confirmation to add event
-5. User confirms adding of event
-6. AddressBok adds event to list of events
+1.  User requests to add event
+2.  User types in details of event to add
+3.  AddressBok adds event to list of events
++
+Use case ends.
 
-Use case ends
+*Extensions*
+
+* 2a. Details of event is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Delete event
+
+*MSS*
+
+1.  User requests to delete event
+2.  User types in index of event to delete
+3.  AddressBook deletes event from list of events
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Index is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: List themes
+
+*MSS*
+
+1.  User requests to list themes
+2.  AddressBook pops-up a window with the list of themes
++
+Use case ends.
+
+=== Use case: Switch theme
+
+*MSS*
+
+1.  User requests to switch theme
+2.  User types in index of theme to switch to
+3.  AddressBook switches to specified theme
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Index is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2b. AddressBook is already in theme specified by user.
++
+[none]
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
 
 === Use case: Access website
 
 *MSS*
 
-1. User chooses to access a contact's website.
-2. AddressBook requests for details of the access.
-3. User enters the requested details which includes the index of the desired contact.
-4. AddressBook shows the website of the desired contact for user to use.
-
+1.  User chooses to access a contact's website
+2.  AddressBook requests for details of the access
+3.  User enters the requested details which includes the index of the desired contact
+4.  AddressBook shows the website of the desired contact for user to use
++
 Use case ends.
 
 *Extensions*
@@ -2380,15 +2542,15 @@ Steps 3a1-3a2 are repeated until the data entered are correct.
 +
 Use case resumes at step 4.
 
-=== Use case: Access Location
+=== Use case: Access location
 
 *MSS*
 
-1. User chooses to access a contact's location.
-2. AddressBook requests for details of the access.
-3. User enters the requested details which includes the index of the desired contact.
-4. AddressBook shows the location of the desired contact for user to view.
-
+1.  User chooses to access a contact's location
+2.  AddressBook requests for details of the access
+3.  User enters the requested details which includes the index of the desired contact
+4.  AddressBook shows the location of the desired contact for user to view
++
 Use case ends.
 
 *Extensions*
@@ -2402,9 +2564,6 @@ Use case ends.
 Steps 3a1-3a2 are repeated until the data entered are correct.
 +
 Use case resumes at step 4.
-
-
-{More to be added}
 
 link:#the-myths-book---developer-guide[Back To Top]
 
