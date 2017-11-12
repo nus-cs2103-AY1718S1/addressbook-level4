@@ -20,15 +20,24 @@ public class MonthDateBuilder {
 
         monthDateArray = new String[MAX_NUMBER_DAYS];
         monthYearArray = new Integer[2];
-        monthYearArray[0] = calendar.get(Calendar.MONTH); //Stores current month in monthYearArray
-        monthYearArray[1] = calendar.get(Calendar.YEAR);  //Stores current year in monthYearArray
+        setMonthYearArray(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR)); //Set current month and year
         setNameOfMonth();
 
         calendar.set(Calendar.MONTH, monthYearArray[0]);   //Sets month from monthYearArray in Calendar object
         calendar.set(Calendar.YEAR, monthYearArray[1]);    //Sets year from monthYearArray in Calendar object
 
         setMonthAnchors();
-        setMonthArrays();
+        buildMonthArrays();
+    }
+
+    /**
+     * Stores desired month and year in monthYearArray
+     * @param month
+     * @param year
+     */
+    public void setMonthYearArray(Integer month, Integer year) {
+        monthYearArray[0] = month;
+        monthYearArray[1] = year;
     }
 
     /**
@@ -71,7 +80,7 @@ public class MonthDateBuilder {
     /**
      * Builds the monthly view with the required spaces and numbers
      */
-    public void setMonthArrays() {
+    public void buildMonthArrays() {
         Integer i = 0;
         Integer j = firstDayOfMonth;
         Integer a = firstDayOfMonth + maxDayOfMonth;
