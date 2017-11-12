@@ -64,7 +64,8 @@ public class ResultDisplay extends UiPart<Region> {
     private void handleNewListResultAvailable(ListSizeEvent event) {
         Label listSizeLabel = new Label(event.toString());
         listSizeLabel.setStyle("-fx-background-color: #00bf00;"
-                + " -fx-background-radius: 80 80 80 80");
+                + " -fx-background-radius: 80 80 80 80;"
+                + " -fx-background-size: 35px");
         listSizeDisplay.getChildren().setAll(listSizeLabel);
     }
 

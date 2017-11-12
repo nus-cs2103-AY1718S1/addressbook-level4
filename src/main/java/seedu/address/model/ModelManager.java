@@ -119,6 +119,19 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author
+
+    @Override
+    public synchronized void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.selectPerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deselectPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.deselectPerson(target);
+        indicateAddressBookChanged();
+    }
+
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);

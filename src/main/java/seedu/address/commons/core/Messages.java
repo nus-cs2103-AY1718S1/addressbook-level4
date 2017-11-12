@@ -25,5 +25,7 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_TASK_LISTED_OVERVIEW = "%1$d tasks listed!";
     public static final String MESSAGE_PERSON_ALREADY_PINNED = "Chirp! This person is already pinned.";
+    public static final String MESSAGE_PERSON_ALREADY_SELECTED = "Chirp! This person is already selected.";
     public static final String MESSAGE_PERSON_ALREADY_UNPINNED = "Chirp! This person is not pinned.";
+    public static final String MESSAGE_PERSON_BIRTHDAY_TODAY = "Chirp! Here are the birthdays for today.";
 }

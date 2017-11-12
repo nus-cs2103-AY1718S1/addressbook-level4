@@ -44,9 +44,13 @@ public interface ReadOnlyPerson {
 
     //@@author Alim95
     ObjectProperty<Boolean> pinProperty();
-
     boolean isPinned();
+
     //@@author
+
+    ObjectProperty<Boolean> selectProperty();
+
+    boolean isSelected();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

@@ -234,6 +234,32 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    /**
+     * Selects (@code toSelect) in this {@code AddressBook}.
+     *
+     * @throws PersonNotFoundException if the {@code toSelect} is not in this {@code AddressBook}.
+     */
+    public boolean selectPerson(ReadOnlyPerson toSelect) throws PersonNotFoundException {
+        if (persons.select(toSelect)) {
+            return true;
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+
+    /**
+     * Unpins (@code toDeselect) from this {@code AddressBook}.
+     *
+     * @throws PersonNotFoundException if the {@code toDeselect} is not in this {@code AddressBook}.
+     */
+    public boolean deselectPerson(ReadOnlyPerson toDeselect) throws PersonNotFoundException {
+        if (persons.deselect(toDeselect)) {
+            return true;
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+
     // ================ Tag-level operations ==============================
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);

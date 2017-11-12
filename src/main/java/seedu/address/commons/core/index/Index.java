@@ -10,6 +10,7 @@ package seedu.address.commons.core.index;
  */
 public class Index {
     private int zeroBasedIndex;
+    private int oneBasedIndex;
 
     /**
      * Index can only be created by calling {@link Index#fromZeroBased(int)} or
