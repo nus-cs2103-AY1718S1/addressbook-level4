@@ -58,6 +58,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
             throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
         } catch (IOException ioe) {
             throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
+        } catch (NullPointerException npe) {
+            throw new ParseException(ImportCommand.MESSAGE_FILE_INVALID);
         }
     }
 
