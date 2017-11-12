@@ -991,6 +991,7 @@ Use case resumes at step 2.
 .  Should be easily extensible.
 
 [appendix]
+// tag::addGroup[]
 == Ungroup
 Object diagram before performing `ungroup 1 gn/CS2103` (assuming Alice is the person with index 1).
 
@@ -1000,7 +1001,7 @@ And after ungrouping. Note that the group `CS2103` is not kept by the AddressBoo
 persons linked to that group, so it is assumed to be obsolete.
 
 image::UngroupObjectDiagramAfter.png[width="800"]
-
+// end::addGroup[]
 
 [appendix]
 == Glossary
