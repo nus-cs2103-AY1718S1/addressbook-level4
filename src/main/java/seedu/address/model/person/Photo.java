@@ -26,10 +26,6 @@ public class Photo {
      * Constructs with a given pathName.
      */
     public Photo(String pathName) throws IllegalValueException {
-        if (isUnknownPath(pathName)) {
-            throw new IllegalValueException(MESSAGE_PHOTO_NOT_FOUND);
-        }
-
         this.pathName = pathName;
     }
 
