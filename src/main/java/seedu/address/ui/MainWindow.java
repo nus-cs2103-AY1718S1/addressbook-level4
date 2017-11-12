@@ -231,9 +231,11 @@ public class MainWindow extends UiPart<Region> {
             if (stylesheet.endsWith("DarkTheme.css")) {
                 getRoot().getStylesheets().remove(stylesheet);
                 getRoot().getStylesheets().add("/view/BrightTheme.css");
+                break;
             } else if (stylesheet.endsWith("BrightTheme.css")) {
                 getRoot().getStylesheets().remove(stylesheet);
                 getRoot().getStylesheets().add("/view/DarkTheme.css");
+                break;
             }
         }
     }
