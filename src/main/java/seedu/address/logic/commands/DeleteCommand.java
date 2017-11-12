@@ -28,7 +28,7 @@ public class DeleteCommand extends UndoableCommand {
             + ": Deletes the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) or NAME(exactly same)\n"
             + "Example: " + COMMAND_WORD + " 1" + COMMAND_WORD + "Alex Yeoh";
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the recycle bin";
     private boolean isValid = true;
     private boolean isEmpty = false;
