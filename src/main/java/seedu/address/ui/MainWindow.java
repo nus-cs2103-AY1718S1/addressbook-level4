@@ -46,7 +46,9 @@ import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.logic.commands.person.ListPinCommand;
 import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -66,6 +68,7 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Model model;
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
@@ -135,12 +138,13 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
-    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic, Model model) {
         super(FXML);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.model = model;
         this.config = config;
         this.prefs = prefs;
 
@@ -387,18 +391,30 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author deep4k
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        if (event.getOldSelection() != null) {
+            try {
+                model.deselectPerson(event.getOldSelection().person);
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "The target person cannot be missing";
+                logger.warning("Failed to DESELECT person card based on clicks");
+            }
+        }
         try {
-            CommandResult result = logic.execute(SelectCommand.COMMAND_WORD
-                    + " " + event.getSelectedIndex());
-            raise(new NewResultAvailableEvent(result.feedbackToUser));
+            model.selectPerson(event.getNewSelection().person);
+            raise(new NewResultAvailableEvent(String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS,
+                    event.getSelectedIndex())));
             raise(new ValidResultDisplayEvent(SelectCommand.COMMAND_WORD));
-        } catch (CommandException | ParseException e) {
-            logger.warning("Failed to select person card based on clicks");
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+            logger.warning("Failed to SELECT person card based on clicks");
         }
     }
+    //author
 
     //@@author Alim95
 

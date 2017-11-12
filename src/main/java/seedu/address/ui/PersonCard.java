@@ -118,6 +118,8 @@ public class PersonCard extends UiPart<Region> {
             if (person.isSelected()) {
                 initDetails(person);
                 showPersonDetails();
+            } else {
+                personVbox.getChildren().remove(details);
             }
         });
     }

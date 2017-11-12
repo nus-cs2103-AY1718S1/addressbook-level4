@@ -24,11 +24,10 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Remark> remark;
-    private boolean isPrivate;
     private ObjectProperty<Boolean> isPinned;
     private ObjectProperty<Boolean> isSelected;
-
     private ObjectProperty<UniqueTagList> tags;
+    private boolean isPrivate;
 
     /**
      * Every field must be present and not null.
