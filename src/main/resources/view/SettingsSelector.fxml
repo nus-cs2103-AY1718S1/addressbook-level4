@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!-- @@author fongwz -->
 
 <?import javafx.scene.control.Label?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="150.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="150.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane prefWidth="150.0">
         <columnConstraints>
@@ -22,7 +23,7 @@
             <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="browserSelectorTitle" prefWidth="150.0" text="Label" />
+            <Label fx:id="browserSelectorTitle" alignment="CENTER" contentDisplay="CENTER" prefWidth="150.0" text="Label" />
             <ListView fx:id="browserSelectorList" GridPane.rowIndex="1" />
             <ListView fx:id="themeSelectorList" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
             <Label fx:id="themeSelectorTitle" text="Label" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
