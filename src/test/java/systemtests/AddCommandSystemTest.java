@@ -37,6 +37,7 @@ import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.JULIAN_NO_PHONE;
 import static seedu.address.testutil.TypicalPersons.KENDRICK_NO_ADDRESS;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPersons.LEMAR_NO_EMAIL;
 
 import org.junit.Test;
 
@@ -151,13 +152,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(JULIAN_NO_PHONE);
         /* Case: missing address -> accepted */
         assertCommandSuccess(KENDRICK_NO_ADDRESS);
+        /* Case: missing email -> accepted */
+        assertCommandSuccess(LEMAR_NO_EMAIL);
 
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-
-        /* Case: missing email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */

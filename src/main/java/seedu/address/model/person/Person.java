@@ -86,7 +86,7 @@ public class Person implements ReadOnlyPerson {
 
     //@@author zhoukai07
     public void setEmail(ArrayList<Email> email) {
-        this.emails.set(requireNonNull(email));
+        this.emails.set((email));
     }
     //@@author
 
