@@ -176,7 +176,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Fills up all the placeholders command box.
+     * Fills up the placeholder of command box.
      */
     void fillInnerPartsForCommandBox() {
         commandBoxPlaceholder.getChildren().clear();
@@ -184,7 +184,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Changes from command box to login view with text fields for username and password
+     * Changes from command box to login view with text fields for username and password.
      */
     public void fillCommandBoxWithLoginFields() {
         LoginView loginView = new LoginView(logic);

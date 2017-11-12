@@ -11,10 +11,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author jelneo
 /**
- * Updates debt field when a person borrows more money
+ * Updates debt field when a person borrows more money.
  */
 public class BorrowCommand extends UndoableCommand {
-
     public static final String COMMAND_WORD = "borrow";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": increase the debt of a person by "

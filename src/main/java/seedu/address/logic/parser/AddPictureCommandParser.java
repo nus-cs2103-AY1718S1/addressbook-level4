@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author jaivigneshvenugopal
 /**
- * Parses input arguments and creates a new AddPictureCommand object
+ * Parses input arguments and creates a new {@code AddPictureCommand} object
  */
 public class AddPictureCommandParser implements Parser<AddPictureCommand> {
 

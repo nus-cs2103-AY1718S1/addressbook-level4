@@ -9,10 +9,11 @@ import seedu.address.model.person.PersonContainsTagPredicate;
 
 //@@author jelneo
 /**
- * Filters contacts by tags in masterlist
+ * Filters contacts by tags in masterlist.
  */
 public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": filters the address book by tag(s)\n"
             + "Parameters: [ TAG ]...\n"
             + "Example: " + COMMAND_WORD + " friendly tricky";

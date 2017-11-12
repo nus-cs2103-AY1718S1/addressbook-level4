@@ -28,7 +28,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author jelneo
 /**
- * Contains integration tests (interaction with the Model) and unit tests for PaybackCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code PaybackCommand}.
  */
 public class PaybackCommandTest extends CommandTest {
 

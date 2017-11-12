@@ -30,7 +30,6 @@ public class CommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
-    private static LoginCommand loginCommand;
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -61,12 +60,11 @@ public class CommandBoxTest extends GuiUnitTest {
 
     //@@author jelneo
     /**
-     * Logs in to admin user account so that other GUI tests can test the main GUIs in the address book
+     * Logs into sample user account so that other GUI tests can test the main GUIs in the address book.
      */
     public void simulateLogin() {
-        Username username = null;
         try {
-            username = new Username(TEST_USERNAME);
+            Username username = new Username(TEST_USERNAME);
             Password password = new Password(TEST_PASSWORD);
             LoginCommand loginCommand = new LoginCommand(username, password);
             loginCommand.setData(model, new CommandHistory(), new UndoRedoStack());

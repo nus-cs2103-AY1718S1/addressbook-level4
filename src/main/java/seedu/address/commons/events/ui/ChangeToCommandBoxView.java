@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 
 //@@author jelneo
 /**
- * Indicate request to change to command box view
+ * Indicate request to change to command box view.
  */
 public class ChangeToCommandBoxView extends BaseEvent {
     @Override

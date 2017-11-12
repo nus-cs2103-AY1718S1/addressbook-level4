@@ -22,8 +22,10 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 //@@author jelneo
+/**
+ * Contains integration tests (interaction with the Model) for {@code LoginCommand}.
+ */
 public class LoginCommandTest extends CommandTest {
-
     private static final String TEST_USERNAME = "TESTloanShark97";
     private static final String TEST_PASSWORD = "TESThitMeUp123";
     private final boolean hasLoggedIn = true;
@@ -86,13 +88,13 @@ public class LoginCommandTest extends CommandTest {
     }
 
     /**
-     * Parses {@code uname} and {@pwd} into a {@code LoginCommand}.
+     * Parses {@code usernameInput} and {@passwordInput} into a {@code LoginCommand}.
      */
-    private LoginCommand prepareCommand(String uname, String pwd) {
+    private LoginCommand prepareCommand(String usernameInput, String passwordInput) {
         LoginCommand command = null;
         try {
-            Username username = new Username(uname);
-            Password password = new Password(pwd);
+            Username username = new Username(usernameInput);
+            Password password = new Password(passwordInput);
             command = new LoginCommand(username, password);
             command.setData(model, new CommandHistory(), new UndoRedoStack());
         } catch (IllegalValueException ive) {

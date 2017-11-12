@@ -10,7 +10,7 @@ import seedu.address.commons.core.LogsCenter;
 
 //@@author jelneo
 /**
- * The Start Up Panel will be loaded in place of the Browser Panel
+ * The {@code StartUpPanel} will be loaded in place of the {@code InfoPanel} on start up.
  */
 public class StartUpPanel extends UiPart<Region> {
     private static final String FXML = "StartUpPanel.fxml";
@@ -19,7 +19,6 @@ public class StartUpPanel extends UiPart<Region> {
     private ImageView welcome;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-
 
     public StartUpPanel(Stage stage) {
         super(FXML);

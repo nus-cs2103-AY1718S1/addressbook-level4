@@ -128,7 +128,7 @@ public class UiManager extends ComponentManager implements Ui {
     //@@author jelneo
     /**
      * Handles login event.
-     * Displays contacts in address book if login is successful
+     * Displays contacts in address book if login is successful.
      */
     @Subscribe
     public void handleLoginAppRequestEvent(LoginAppRequestEvent event) {
@@ -143,7 +143,7 @@ public class UiManager extends ComponentManager implements Ui {
 
     /**
      * Displays login view (which consists of username and password text fields) with buttons to navigate between
-     * this view and command box
+     * the login view and command box.
      */
     @Subscribe
     public void handleChangeToLoginViewEvent(ChangeToLoginViewEvent event) {
@@ -154,7 +154,7 @@ public class UiManager extends ComponentManager implements Ui {
 
     /**
      * Handles logout event.
-     * Displays login page when user logs out
+     * Displays login page when user logs out.
      */
     @Subscribe
     public void handleLogoutAppRequestEvent(LogoutAppRequestEvent event) {
@@ -168,7 +168,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     /**
-     * Changes from login view to command box
+     * Changes from login view to command box view.
      */
     @Subscribe
     private void handleBackToCommandViewRequest(ChangeToCommandBoxView event) {

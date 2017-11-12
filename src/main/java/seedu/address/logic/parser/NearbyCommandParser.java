@@ -9,7 +9,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author khooroko
 /**
- * Parses input arguments and creates a new NearbyCommand object
+ * Parses input arguments and creates a new {@code NearbyCommand} object
  */
 public class NearbyCommandParser implements Parser<NearbyCommand> {
 

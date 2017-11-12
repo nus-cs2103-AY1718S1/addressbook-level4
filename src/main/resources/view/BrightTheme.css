@@ -4,14 +4,14 @@
 }
 
 .label {
-    -fx-font-size: 11pt;
+    -fx-font-size: 15pt;
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: #0e0e0e;
     -fx-opacity: 0.9;
 }
 
 .label-bright {
-    -fx-font-size: 11pt;
+    -fx-font-size: 15pt;
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: black;
     -fx-opacity: 1;
@@ -25,7 +25,7 @@
 }
 
 .text-field {
-    -fx-font-size: 12pt;
+    -fx-font-size: 13pt;
     -fx-font-family: "Segoe UI Semibold";
 }
 
@@ -129,20 +129,20 @@
 
 .cell_small_label {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
+    -fx-font-size: 15px;
     -fx-text-fill: #31ffce;
     -fx-fill: #0e0e0e;
 }
 
 .window_big_label {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 32px;
+    -fx-font-size: 50px;
     -fx-text-fill: #191918;
 }
 
 .window_small_label {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 15px;
+    -fx-font-size: 24px;
     -fx-text-fill: #141413;
 }
 
@@ -170,7 +170,7 @@
 .result-display {
     -fx-background-color: whitesmoke;
     -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
+    -fx-font-size: 15pt;
     -fx-text-fill: black;
 }
 
@@ -238,7 +238,7 @@
     -fx-background-radius: 0;
     -fx-background-color: #d1d1d1;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-font-size: 11pt;
+    -fx-font-size: 13pt;
     -fx-text-fill: #d8d8d8;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
@@ -332,7 +332,7 @@
 }
 
 #commandTypeLabel {
-    -fx-font-size: 11px;
+    -fx-font-size: 13px;
     -fx-text-fill: #F70D1A;
 }
 
@@ -343,7 +343,7 @@
     -fx-border-insets: 0;
     -fx-border-width: 1;
     -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
+    -fx-font-size: 15pt;
     -fx-text-fill: black;
 }
 
@@ -376,19 +376,29 @@
 
 #repaymentInfoText {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
+    -fx-font-size: 20px;
     -fx-text-fill: #d83a3a;
 }
 
 #completedText {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
+    -fx-font-size: 20px;
     -fx-text-fill: #31b936;
 }
 
 #noDeadlineText {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
-    -fx-text-fill: #b9b9b9;
+    -fx-font-size: 20px;
+    -fx-text-fill: #727272;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#percentageInfo {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 22px;
+    -fx-text-fill: darkslategrey;
 }
 

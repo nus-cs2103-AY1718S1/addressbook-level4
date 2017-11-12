@@ -32,6 +32,11 @@ public class PaybackCommandParserTest extends CommandTest {
     }
 
     @Test
+    public void parse_invalidNumberOfArguments_failure() {
+        assertParseFailure(parser, "1 200 300", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
     public void parse_invalidArguments() {
         // invalid index and amount
         assertParseFailure(parser, INVALID_INDEX + " " + INVALID_DEBT_FIGURE, MESSAGE_INVALID_FORMAT);
@@ -41,16 +46,21 @@ public class PaybackCommandParserTest extends CommandTest {
 
         // invalid index but valid amount
         assertParseFailure(parser, INVALID_INDEX + " " + VALID_DEBT_FIGURE, MESSAGE_INVALID_FORMAT);
+
+        // without index but invalid amount
+        assertParseFailure(parser, " " + INVALID_DEBT_FIGURE, MESSAGE_INVALID_FORMAT);
     }
 
     @Test
     public void parse_validArguments() throws Exception {
         try {
+            //valid arguments with index
             Index index = Index.fromOneBased(Integer.valueOf(VALID_INDEX));
             Debt amount = new Debt(VALID_DEBT_FIGURE);
             PaybackCommand expectedPaybackCommand = new PaybackCommand(index, amount);
             assertParseSuccess(parser, VALID_INDEX + " " + VALID_DEBT_FIGURE, expectedPaybackCommand);
 
+            // valid arguments without index
             amount = new Debt(VALID_DEBT_FIGURE);
             expectedPaybackCommand = new PaybackCommand(amount);
             assertParseSuccess(parser, " " + VALID_DEBT_FIGURE, expectedPaybackCommand);

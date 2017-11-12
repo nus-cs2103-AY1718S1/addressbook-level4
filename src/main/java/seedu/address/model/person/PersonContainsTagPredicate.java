@@ -9,7 +9,7 @@ import seedu.address.model.tag.Tag;
 
 //@@author jelneo
 /**
- * Tests that a {@code Person}'s {@code Tag} matches any of the keywords given.
+ * Tests if a {@code Person}'s {@code Tag} matches any of the keywords given.
  */
 public class PersonContainsTagPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> tagKeywords;
@@ -20,7 +20,6 @@ public class PersonContainsTagPredicate implements Predicate<ReadOnlyPerson> {
 
     /**
      * Evaluates this predicate on the given person.
-     *
      * @return {@code true} if the person matches the predicate,
      * otherwise {@code false}
      */

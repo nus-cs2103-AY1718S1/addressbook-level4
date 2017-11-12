@@ -8,7 +8,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author khooroko
 /**
- * Parses input arguments and creates a new EditCommand object
+ * Parses input arguments and creates a new {@code EditCommand} object
  */
 public class SortCommandParser implements Parser<SortCommand> {
     /**
