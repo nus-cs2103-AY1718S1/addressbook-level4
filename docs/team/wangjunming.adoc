@@ -14,7 +14,9 @@ ModU uses the command line interface (CLI) as the main input. The natural langua
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/junming403.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/junming403.md[Test code]]
 
-*Contributions include some classes like `Addcommand` and `AddCommandTest`. This is because our product totally changed the model base from `person` to `lesson`. The command and test has been rewritten, although still based on original addCommand and addCommandTest.
+* [Note] Contributions include some classes like `Addcommand` and `AddCommandTest`. This is because our product totally changed the model base from `person` to `lesson`. The command and test has been rewritten, although still based on original addCommand and addCommandTest.
+* [Note] Due to the restriction of the app `Visual Paradigm`. The notation of sequence diagram is slightly different from the notation taught in CS2103T, for exmaple, the object creation has not been shown. We have asked Professor Damith about this and he agreed we can continue to use this app.
+* [Note] Some pictures in this graph might look strange because they are supposed to be gif in User Guide. [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/UserGuide.adoc[user guide]]
 
 === Enhancement Added: View/List/Edit/Delete
 
@@ -129,7 +131,3 @@ In v2.0, ModU should be an online platform for professors to plan the courses th
 * Generate JAR file for weekly milestones.
 * Fixed and discovered many bugs for the product, not only my own feature. See PR https://github.com/CS2103AUG2017-W13-B4/main/pull/325[#325], https://github.com/CS2103AUG2017-W13-B4/main/pull/322[#322], https://github.com/CS2103AUG2017-W13-B4/main/pull/307[#307], https://github.com/CS2103AUG2017-W13-B4/main/pull/306[#306], https://github.com/CS2103AUG2017-W13-B4/main/pull/298[#298], https://github.com/CS2103AUG2017-W13-B4/main/pull/278[#278], https://github.com/CS2103AUG2017-W13-B4/main/pull/225[#225]
 * Bugs/Suggestions found/proposed in acceptance testing in week 11. (Issues https://github.com/CS2103AUG2017-F09-B1/main/issues/87[#87], https://github.com/CS2103AUG2017-F09-B1/main/issues/86[#86], https://github.com/CS2103AUG2017-F09-B1/main/issues/84[#84])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
