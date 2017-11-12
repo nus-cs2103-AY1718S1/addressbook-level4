@@ -78,7 +78,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
     //@@author wishingmaid
     /** randomises which motivational page is used from the resource images folder */
-    private void setUpMotivationPage() {
+    private void setUpMotivationPage()  {
         Image image = new Image(getClass().getResource("/images/"
                 + motivationPages[random.nextInt(motivationPages.length)]).toExternalForm());
         splashPage.setImage(image);
