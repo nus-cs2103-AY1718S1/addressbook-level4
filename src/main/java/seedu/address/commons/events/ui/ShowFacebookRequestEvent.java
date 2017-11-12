@@ -1,12 +1,22 @@
 package seedu.address.commons.events.ui;
 
-//@@author LeeYingZheng
 import seedu.address.commons.events.BaseEvent;
 
+//@@author taojiashu
 /**
- * An event requesting to view the Facebook Log In page.
+ * Indicates a request to search a name in Facebook.
  */
 public class ShowFacebookRequestEvent extends BaseEvent {
+
+    public final String name;
+
+    public ShowFacebookRequestEvent(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
 
     @Override
     public String toString() {
