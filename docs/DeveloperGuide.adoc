@@ -1090,6 +1090,127 @@ public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson p) {
 // tag::setpath/addpic/delpic[]
 === Setpath/Addpic/Delpic command mechanism
 
+`Setpath`, `Addpic` and `Delpic` commands facilitate in updating a debtor's display picture. `Setpath` command sets the `path` to a folder that contains `JPG` format images of the debtors. This folder resides in the user's workspace.
+
+The images in the folder must initially be named after the debtors themselves. For example, a debtor named Alex Yeoh will have an image titled `AlexYeoh.jpg` in this folder.
+
+`Setpath` command modifies the destined `path` in the `ProfilePicturesFolder` `class`:
+
+[source, java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+    ProfilePicturesFolder.setPath(reformatPath(path));
+    return new CommandResult(MESSAGE_SUCCESS);
+}
+----
+
+`Addpic` command takes in an index as the input and uses `Logic` interface to execute a two-step process to update the person's display picture status. `LogicManager` calls `Model` interface to first search for the image in the path directory set by the `SetPath` command. This is done by first establishing the name of the image, and then searching for it in the required folder.
+
+[source, java]
+----
+@Override
+    public boolean addProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException {
+        String imageName = person.getName().toString().replaceAll("\\s+", "");
+        File imageFile = new File(ProfilePicturesFolder.getPath() + imageName + JPG_EXTENSION);
+
+        if (imageFile.exists()) {
+            addressBook.addProfilePic(person);
+            indicateAddressBookChanged();
+            return true;
+        } else {
+            throw new ProfilePictureNotFoundException();
+        }
+    }
+----
+
+`ModelManager` checks if the image exists in the path directory. If it does, it will then set the boolean value of the person's `hasDisplayPicture` variable to true.
+
+[source, java]
+----
+public ReadOnlyPerson addProfilePic(ReadOnlyPerson person) {
+        int index;
+        index = persons.getIndexOf(person);
+
+        Person newUpdatedPerson = new Person(person);
+        newUpdatedPerson.setHasDisplayPicture(true);
+        try {
+            updatePerson(person, newUpdatedPerson);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The target person cannot be a duplicate");
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("This is not possible as prior checks have been done");
+        }
+
+        return persons.getReadOnlyPerson(index);
+    }
+----
+
+When the `PersonCard` corresponding to the person is selected, `hasDisplayPicture` boolean value is obtained. If the value is `true`, the image will be retrieved from the previously set `path`. If it does not exist, a default image will be displayed.
+
+[source, java]
+----
+public DebtorProfilePicture(ReadOnlyPerson person) {
+        super(FXML);
+        String imageName = person.getName().toString().replaceAll("\\s+", "");
+        String imagePath = DEFAULT_PROFILEPIC_PATH;
+        Image image = new Image(getClass().getResource(imagePath).toExternalForm());
+
+        if (person.hasDisplayPicture()) {
+
+            imagePath = ProfilePicturesFolder.getPath() + imageName + JPG_EXTENSION;
+            File imageFile = new File(imagePath);
+
+            if (!imageFile.exists()) {
+                person.setHasDisplayPicture(false);
+                raise(new MissingDisplayPictureEvent(person));
+            } else {
+                try {
+                    image = new Image(imageFile.toURI().toURL().toExternalForm());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        profilePic.setImage(image);
+        profilePic.setFitWidth(450);
+        profilePic.setFitHeight(450);
+        profilePicPlaceHolder.setTopAnchor(this.getImageView(), 20.0);
+        profilePicPlaceHolder.setRightAnchor(this.getImageView(), 50.0);
+        registerAsAnEventHandler(this);
+    }
+----
+
+`Delpic` command, similarly, resets the person's `hasDisplayPicture` boolean value to false.
+
+[source, java]
+----
+
+public ReadOnlyPerson removeProfilePic(ReadOnlyPerson person) {
+        int index;
+        index = persons.getIndexOf(person);
+
+        Person newUpdatedPerson = new Person(person);
+        newUpdatedPerson.setHasDisplayPicture(false);
+        try {
+            updatePerson(person, newUpdatedPerson);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The target person cannot be a duplicate");
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("This is not possible as prior checks have been done");
+        }
+
+        return persons.getReadOnlyPerson(index);
+    }
+----
+
+**Aspect:** Storage of profile pictures in Codii. +
+**Alternative 1 (current choice):** Pictures are not stored in Codii. Images are read from the path directory provided by the user
+**Pros:** Straightforward and simpler to implement. +
+**Cons:** Application cannot be easily transferred from one workstation to another. +
+*Alternative 2:** Store images in Codii similar to how XML files are stored +
+**Pros:** Far lesser hassle in transferring application content to another workstation +
+**Cons:** The result of both implementations are very similar. However, this implementation is harder to execute. +
 
 === Logging
 
