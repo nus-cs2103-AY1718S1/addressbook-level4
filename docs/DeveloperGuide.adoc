@@ -670,28 +670,25 @@ The sorting process is case insensitive.
 
 The facebook mechanism is facilitated by `FacebookCommand`, which resides inside the commands folder of the logic component.
 
-The facebook mechanism displays the Facebook login page when the `facebook` command is entered.
+The facebook mechanism displays the Facebook search page of the person specified by the index number inputted.
 
 image::facebook-command-ui.png[width="800"]
 
-Upon execution, the `FacebookCommand` posts a `ShowFacebookRequestEvent` event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load Facebook page.
+Upon execution, the `FacebookCommand` posts a `ShowFacebookRequestEvent` event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load Facebook page. The `ShowFacebookRequestEvent` takes the name of the person specified by the index number as an argument.
 
-As part of the UI component, the `BrowserPanel` class loads the facebook page using a method called `loadFacebookPage`.
+As part of the UI component, the `BrowserPanel` class loads the facebook page using a method called `loadFacebookPage`. It handles the dispatched `ShowFacebookRequestEvent` event and calls the `loadFacebookPage` to mount the Facebook Page on the user interface.
 
-The `MainWindow` class sets up the browser panel by calling the `BrowserPanel`'s constructor.
-
-This class handles the dispatched `ShowFacebookRequestEvent` event and calls the browser panel's `loadFacebookPage` to mount the Facebook Page on the user interface.
-
+The Facebook search page is the mobile version of it. This is because the desktop version of Facebook search page cannot be displayed properly in the BrowsePanel due to some formatting issues.
 [NOTE]
 The user has to ensure that an internet connection is established to succeed in the command.
 
 ==== Design Considerations
 
 **Aspect:** Logging in to Facebook through CLI or GUI +
-**Alternative 1 (current choice):** User enters the command `facebook` in the command box without his username and password; once the log in page is loaded he will enter his username and password in the page itself.  +
+**Alternative 1 (current choice):** User enters the command `facebook INDEX` in the command box without his username and password; once the log in page is loaded he will enter his username and password in the page itself.  +
 **Pros:** Easy to implement and hassle-free. No need to import Facebook API, just load the page by parsing its URL into the relevant methods. +
 **Cons:** Defeats the purpose of a CLI application. User needs to navigate the log in page. +
-**Alternative 2:** User enters the command `facebook`, followed by his username and password in the command box. He is automatically logged into Facebook and is directed to Facebook's newsfeed page.  +
+**Alternative 2:** User enters the command `facebook INDEX`, followed by his username and password in the command box. He is automatically logged into Facebook and is directed to Facebook's newsfeed page.  +
 **Pros:** Saves users the trouble of navigating the facebook log in page. Adheres to the purpose of the application having a CLI. +
 **Cons:** More difficult to implement. May require the use of Facebook API which may cause unexpected regressions that developers may not know how to solve.
 // end::facebook[]
@@ -1207,9 +1204,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |edit my friends' contact on Addressbook |
+|`* * *` |user |edit my friends' contact on UniCity |
 
-|`* * *` |user |exit Addressbook |continue using other functions in my operating system
+|`* * *` |user |exit UniCity |continue using other functions in my operating system
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
@@ -1243,7 +1240,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |fancy user |set a background wallpaper to my address book | personalise and beautify my address book
 
-|`*` |fancy user |change the color scheme and theme of my address book to my preference | personalise and beautify my Addressbook
+|`*` |fancy user |change the color scheme and theme of my address book to my preference | personalise and beautify UniCity
 |=======================================================================
 
 {More to be added}
@@ -1380,6 +1377,36 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Find the Facebook profile of a person
+
+*MSS*
+
+1. User requests to view the Facebook profile of a person specified by an index number.
+2. UniCity loads the Facebook search page with the person's name.
++
+Use case ends.
+
+[discrete]
+=== Use case: Display a person's address on Google Maps
+
+*MSS*
+
+1. User requests to view the address of a person specified by an index number on Google Maps.
+2. UniCity displays the address on Google Maps.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The person's address is not entered.
++
+[none]
+** 2a1. UniCity displays an error message.
++
+Use case ends.
+
+[discrete]
 === Use case: List all persons
 
 *MSS*
@@ -1393,6 +1420,46 @@ Use case ends.
 
 [none]
 * 2a. The list is empty.
++
+[none]
+** 2a1. UniCity displays an empty list.
++
+Use case ends.
+
+discrete]
+=== Use case: Favourite a person
+
+*MSS*
+
+1. User requests to favourite a person specified by an index number.
+2. UniCity locates the person and marks this person as a favourite contact.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The index number is out of bound.
++
+[none]
+** 2a1. UniCity throws an exception.
++
+Use case ends.
+
+[discrete]
+=== Use case: List all favourite persons
+
+*MSS*
+
+1. User requests to view all favourite persons in the list.
+2. UniCity displays a list of all favourite contacts.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no favourite contacts in UniCity.
 +
 [none]
 ** 2a1. UniCity displays an empty list.
@@ -1576,10 +1643,10 @@ Use case ends.
 *Extensions*
 
 [none]
-* 3a. User decides not to proceed to exit UniCity.
+* 3a. User decides not to proceed to exit UniCity by typing another command.
 +
 [none]
-** 3a1. UniCity displays exit aborted.
+** 3a1. UniCity aborts exiting and executes the new command.
 +
 Use case ends.
 
