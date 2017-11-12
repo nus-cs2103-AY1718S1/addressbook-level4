@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
+import static seedu.address.logic.commands.CommandTestUtil.showHiddenPersonList;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -105,7 +106,7 @@ public class HideUnhideCommandTest {
 
         assertCommandSuccess(hideCommand, model, expectedMessage, expectedModel);
 
-        showFirstPersonOnly(model);
+        showHiddenPersonList(model);
 
         ReadOnlyPerson personToUnhide = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UnhideCommand unhideCommand = prepareUnhideCommand(INDEX_FIRST_PERSON);
@@ -113,7 +114,7 @@ public class HideUnhideCommandTest {
         expectedMessage = String.format(UnhideCommand.MESSAGE_UNHIDE_PERSON_SUCCESS, personToUnhide);
 
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        showFirstPersonOnly(expectedModel);
+        showHiddenPersonList(expectedModel);
         expectedModel.unhidePerson(personToHide);
         expectedModel.updateFilteredPersonList(predicate);
         expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ONLY_HIDDEN);

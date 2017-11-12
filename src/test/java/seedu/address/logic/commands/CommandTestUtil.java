@@ -136,6 +136,15 @@ public class CommandTestUtil {
     }
 
     /**
+     * Updates {@code model}'s filtered list to show all hidden person in the {@code model}'s address book.
+     */
+    public static void showHiddenPersonList(Model model) {
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ONLY_HIDDEN);
+
+        assert model.getFilteredPersonList().size() == 1;
+    }
+
+    /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
