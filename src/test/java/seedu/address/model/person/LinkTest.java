@@ -10,7 +10,7 @@ public class LinkTest {
 
     @Test
     public void equals() {
-        Link link = new Link("facebook.com");
+        Link link = new Link("twitter.com");
 
         // same object -> returns true
         assertTrue(link.equals(link));
@@ -26,7 +26,7 @@ public class LinkTest {
         assertFalse(link.equals(null));
 
         // different person -> returns false
-        Link differentLink = new Link("facebook.com/gg");
+        Link differentLink = new Link("twitter.com/gg");
         assertFalse(link.equals(differentLink));
     }
 }

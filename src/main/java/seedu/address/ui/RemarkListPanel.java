@@ -23,7 +23,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class RemarkListPanel extends UiPart<Region> {
     private static final String FXML = "RemarkListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(RemarkListPanel.class);
-    private final Integer firstIndexOfArray = 0;
 
     private final StringProperty displayed = new SimpleStringProperty("");
 
