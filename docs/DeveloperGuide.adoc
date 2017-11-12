@@ -448,6 +448,8 @@ Similiarly, the user can choose to implement the `logoutcommand` which would cal
 
 // end::PrivateDatabase[]
 
+---
+
 // tag::birthday[]
 === Birthday
 
@@ -456,66 +458,104 @@ Similiarly, the user can choose to implement the `logoutcommand` which would cal
 `BirthdayCommand` : It allows the adding, editing and removing of birthday parameter to/from a person. +
 
 
-The `BirthdayCommand` lies in the `commands` of `Logic`. and does not deal with `UndoableCommands`, thus the actions cannot be reversed.  The following diagram shows the inheritance diagram for commands:
+The `BirthdayCommand` lies in the `commands` of `Logic`. and deals with `UndoableCommands`, thus the actions can
+be reversed.  The following diagram shows the inheritance diagram for commands:
 
-image::logic_birthday.png[width="700"]
-_Figure 4.3.1.1a : Structure of Commands in the Logic Component.
+image::birthdayLogic.png[width="900"]
+_Figure 4.3.1.1a : Structure of Commands in the Logic Component._
 
-The user will not be able to enter the birthday parameter when adding contacts. +
-Suppose that the user has a list of persons. The birthday parameters will be empty if the user has not modified the persons yet.
-The user then adds the birthday through the BirthdayCommand : " `birthday 2 b/20/07/1994` "  where he adds the birthday parameter of the 2nd person in the list. +
+You will not be able to enter the birthday parameter when adding contacts. +
+Suppose that you have a list of persons. The birthday parameters of each contact will be empty if you have not modified them before. +
+You can then choose to add their birthday using the BirthdayCommand. For example if you want to add the birthday of the
+second person in your contact list, key in " `birthday 2 b/20/07/1994` "  where his birthday is 20/07/1994. +
+Similarly, you can edit their birthday using the same command. +
+To delete their birthday, simply not key in anything for his birthday. For example,
+" `birthday 2 b/` "
 
-After adding the birthday parameters of contacts, the user can choose to sort the contact list according to either their ages or birthdays or leave it as it is. +
 The following sequence diagram shows how the birthday operation works:
 
-image::birthday_sd.png[width="800"]
+image::birthdaySD.png[width="900"]
 _Figure 4.3.1.1b : Interactions in the Birthday Command._
 
-// end::birthday[]
-
-==== sortAgeCommand
-
-`sortAgeCommand` : Sorts the contact list in terms of their age, from the oldest to youngest. +
-
-==== sortBirthdayCommand
-
-`sortBirthdayCommand`: Sorts the contact list in from 1st January to 31st December, irregardless of their age. +
-
-// tag::birthdayDesignConsideration[]
 ==== Design Considerations
 
 **Aspect:** Adding Birthday parameter +
 **Alternative 1 (current choice):** Add birthday parameter separately after person object is created. +
 **Pros:** Lesser parameters to add while creating person class and easier to implement. +
-**Cons:** Slower for users to add in all the parameters +
+**Cons:** Slower for users to add in all the parameters. +
 **Alternative 2:**  Add birthday parameter during the creation of person object. +
 **Pros:** Faster for users to add in all the parameters. +
 **Cons:** More parameters to add while creating person class and harder to implement. +
 
-// end::birthdayDesignConsideration[]
+---
+**Aspect:** Birthday commands with specific uses +
+**Alternative 1 (current choice):** Only one birthday command to add / edit / delete birthday from person. +
+**Pros:** Convenient, lesser commands for users to remember. +
+**Cons:** Birthday command is very general and may be confusing to the user instead. +
+**Alternative 2:**  Create other commands such as editBirthday and deleteBirthday. +
+**Pros:** Less convenient, many commands for users to remember. +
+**Cons:** Each command is specific and purpose of each command is clear. +
 
-=== Tag & Retrieve mechanism
+---
 
-The `TagCommand`and `RetrieveCommand` reside in the `commands` of `Logic`.
+// end::birthday[]
+
+=== Tags Manipulation & Retrieve mechanism
+
+Three commands for tags manipulation, namely `TagCommand`, `UntagCommand` and `RetagCommand`, together with `RetrieveCommand`, all reside in the `commands` of `Logic`.
 
 ==== Tag command
 
-`TagCommand` : allows user to assign tags to the persons at the specified index in the last person listing.
+Tag command allows user to assign tags to the persons at the specified index in the last person listing.
 
-This command inherits from `UndoableCommand`. Thus, it can be undone.
+This command inherits from `UndoableCommand`. Thus, the tagging action can be undone.
 
-For every index specified, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside the `AddressBook` 's person list with the new person object.
+For every person at the index specified, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside `AddressBook` 's person list with the new person object.
 
 The following sequence diagram shows how the tag operation works:
 
 image::TagSequenceDiagram.png[width="800"]
 _Figure 4.4.1.1 : Interactions in the Tag Command._
 
+==== Untag command
+
+Untag command allows user to remove tags from the persons at the specified index in the last person listing.
+In addition, user can choose to:
+
+* Remove all tags from the persons at the specified index in the last person listing.
+* Remove the specified tags from all persons in the last person listing.
+* Remove all tags from all persons in the last person listing.
+
+This command inherits from `UndoableCommand`. Thus, the untagging action can be undone.
+
+Compared to `TagCommand`, `UntagCommand` has a boolean attribute called `toAllInFilteredList` to indicate whether untagging will be applied
+to all persons in filtered list or not.
+
+The following sequence diagram shows how the untag operation works:
+
+image::UntagSequenceDiagram.png[width="800"]
+_Figure 4.4.1.1 : Interactions in the Untag Command._
+
+Similar to tag command operation, for every person that will be untagged, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside `AddressBook` 's person list with the new person object.
+
+After having updated all relevant persons, `UntagCommand` will utilize `deleteUnusedTag()` of `Model` to remove any unused `Tag` inside `AddressBook` 's unique tag list.
+
+==== Retag command
+
+Retag command allows user to rename an existing tag to a new tag name.
+
+This command inherits from `UndoableCommand`. Thus, the retagging action can be undone.
+
+At the beginning of its execution, the command updates person filterd list with all persons inside the addressbook by calling `updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS)` of `Model`.
+After that, it will loop through the filtered list and perform update on persons with the specified old tag name similar to how `TagCommand` and `UntagCommand` updates persons.
+
+After having updated the person list of `AddressBook` where necessary, `RetagCommand` will call `deleteUnusedTag()` of `Model` on the old `Tag` to remove it from `AddressBook` 's unique tag list.
+
 ==== Retrieve command
 
-`RetrieveCommand` : allows user to list all persons that have been assigned an tag already existing inside the unique tag list.
+`RetrieveCommand` : allows user to list all persons that have been assigned a tag already existing inside the unique tag list.
 
-This command inherits from `Command`, so it cannot be undone.
+This command inherits from `Command`, so retrieving cannot be undone.
 
 Suppose that the address book already has a sufficiently large number of persons, some of whom have a certain `Tag`. The `UniqueTagList` will contain this tag. +
 
@@ -526,7 +566,7 @@ We will now parse the command argument to get the name of the tag which user wan
 [NOTE]
 If the tag name provided by user is empty or invalid, an `Exception` will be thrown during parsing.
 
-We use `TagContainsKeyWordPredicate` to test whether the tag is inside the tag list of each person in the address book and get the filtered person list with `getFilteredPersonList()` of `Model` to display to user.
+We use `TagContainsKeyWordPredicate` to test whether the tag is inside the tag list of each person in the address book and get the filtered person list with `updateFilteredPersonList()` of `Model` to display to user.
 
 [NOTE]
 If the filtered person list is empty, that means the tag user want to look for does not exist. User will then be notified of all existing tags.
@@ -538,7 +578,18 @@ _Figure 4.4.1.1 : Sequence Diagram for the Retrieve Command._
 
 ==== Design Considerations
 
-**Aspect:** Updating the filtered person list +
+**Aspect:** Adding tags to person's tag list +
+**Alternative 1 (current choice):** Use `Set` to implement person's tag list and to store tags to be added during command parsing. +
+**Pros:** Duplicated tags will be automatically taken care of. +
+**Cons:** The order of tags inside person's tag list is not maintained. Users may want the tags of their contacts
+to be arranged according to the time added. +
+**Alternative 2:**  Using `List` implement person's tag list and to store tags to be added. +
+**Pros:** Full control over the order of tags inside person's tag list. +
+**Cons:** Duplicated tags need to be handled manually. +
+
+---
+
+**Aspect:** Finding out all persons with the specififed tag +
 **Alternative 1 (current choice):** Go through every person in the addressbook to filter out those having the tag. +
 **Pros:** Easy to implement. +
 **Cons:** Slower if the addressbook contains a large number of persons +
@@ -550,39 +601,156 @@ _Figure 4.4.1.1 : Sequence Diagram for the Retrieve Command._
 
 The `Reminder` list mechanism works similar to the `Person` list. +
 It integrates the `Logic`, `Model`, `Storage`, `UI` component. +
-It consists of different commands that allow users to store reminders into the address book. +
+It consists of different commands that allow users to store reminders into the address book.
+The commands reside in the `commands` of `Logic` +
 
-==== Commands
-Resides in the `commands` of `Logic` +
+==== AddReminderCommand
+Adds information of reminders in address book. +
+e.g. `addReminder z/Proposal Submission p/Low d/12/11/2017 m/Submit to Manager t/Friends` +
 
-`AddReminderCommand`: Adds information of reminders in address book. +
- e.g. `addReminder z/Proposal Submission p/Low d/12/11/2017 m/Submit to Manager t/Friends` +
+==== EditReminderCommand
 
 ==== EditReminderCommand
 `EditReminderCommand`: Edits the details of reminders in address book. +
 e.g. `editReminder 2 p/Medium m/Submit to Department Head`
 
+==== DeleteReminderCommand
+
 `DeleteReminderCommand`: Deletes the reminder of the last reminder list. +
 e.g. `deleteReminder 3`
 
+==== SortPriorityCommand
+
 `SortPriorityCommand`: Sorts the reminder list in order of `priority` . +
-(*High* -> *Medium* -> *Low*) +
-e.g. `sortPriority`
+(Will be covered more in sort Mechanism)
+
+==== FindReminderCommand and FindPriorityCommand
 
 `findReminder` : Finds the reminder that contains the keyword. +
-e.g. `findReminder Project`
-
 `findPriority` : Finds the reminders that contains the keyword. +
-e.g. `findPriority High`
+(Will be covered more in Find Mechanism)
+
+// tag::listReminder[]
+==== listReminderCommand
 
 `listReminder` : Lists all the reminders in the reminder list. +
 e.g. `listReminder`
+
+// end::listReminder[]
 
 [NOTE]
 Missing details during adding of reminders will result in Invalid Command format.
 
 [NOTE]
 If an invalid Index is given during editing and deleting reminders, an `Exception` would be thrown.
+
+
+// tag::find[]
+=== Find Mechanism
+
+==== findPhoneCommand
+
+Finds contact with the phone number given. +
+e.g. `findPhone 87654321`
+
+==== findEmailCommand
+
+Finds the contact with the email given. +
+e.g. `findEmail alex@example.com`
+
+==== findReminderCommand
+
+Finds reminder(s) with same task name as the keyword given. +
+e.g. `findReminder project`
+
+==== findPriorityCommand
+
+Finds reminder(s) with the priority (Low / Medium / High) given. +
+e.g. `findPriority High`
+
+The 4 advanced find commands, as well as the original `find` command lies in the `commands` of `Logic`. and does not deal
+with `UndoableCommands`, thus the actions cannot be reversed. +
+The following diagram shows the inheritance diagram for `findPhone` command:
+
+image::findPhoneSD.png[width="900"]
+_Figure 4.6.1.1 Interactions in the findPhone command._
+
+Suppose the user keys in the command (e.g. `findReminder Proposal`) to search for all his reminders with the keyword
+"Proposal". The application searches through the entire reminder list and displays all reminders
+with the keyword.
+
+image::BeforeAndAfterFindReminder.png[width=850"]
+_Figure 4.6.3.1 Reminder list before and after the findReminder command_
+
+
+[NOTE]
+====
+- Only keywords are searched, incomplete keywords in command such as `findEmail alex@example` will not return contact
+with email "alex@example.com". +
+- All find commands are case insensitive (e.g. "high" will match "High"). +
+====
+
+==== Design Considerations
+
+**Aspect:** Number of Find command +
+**Alternative 1 (current choice):** Different find commands for each purpose +
+**Pros:** Fast and direct, convenient for user. +
+**Cons:** Many find commands for users to remember / Users may need to check for user guide or help function very often
+ to see the types of find commands available. +
+**Alternative 2:**  Users key in the word "find", application then shows the types of find available and users selects
+the type of find command he wants +
+**Pros:** Lesser commands to remember and checks user guide less often. +
+**Cons:** Slower and less direct. +
+
+---
+
+// end::find[]
+
+// tag::sort[]
+=== Sorting Mechanism
+
+==== sortCommand
+
+Sorts the contact list in alphabetical order. +
+e.g. `sort`
+
+==== sortAgeCommand
+
+Sorts the contact list in order of their age, from the oldest to youngest. +
+e.g. `sortAge`
+
+==== sortBirthdayCommand
+
+Sorts the contact list in from 1st January to 31st December, irregardless of their age. +
+e.g. `sortBirthday`
+
+==== sortPriority
+
+Sorts the reminder list in order of the task priority. (*High* -> *Medium* -> *Low*) +
+e.g. `sortPriority`
+
+The 4 sort commands support undoing and redoing of commands, similar to add, edit and delete commands.
+It inherits from `UndoableCommand` and uses the `Collection` class. +
+Given below is the Sequence Diagram for interactions within the Logic component for the execute("sort") API call.
+
+image::sortSD.png[width="800"]
+_Figure 4.7.1.1 Interactions in the sort command._
+
+==== Design Considerations
+
+**Aspect:** Number of Sort command +
+**Alternative 1 (current choice):** Different sort commands for each purpose +
+**Pros:** Fast and direct, convenient for user. +
+**Cons:** Many sort commands for users to remember / Users may need to check for user guide or help function very often
+ to see the types of sort commands available. +
+**Alternative 2:**  Users key in the word "sort", application then shows the types of sort available and users selects
+the type of sort command he wants +
+**Pros:** Lesser commands to remember and checks user guide less often. +
+**Cons:** Slower and less direct. +
+
+---
+
+// end::sort[]
 
 // tag::selectReminder[]
 
@@ -613,6 +781,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
 
 === Configuration
 
@@ -646,7 +815,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.2.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -1053,7 +1222,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 
 [discrete]

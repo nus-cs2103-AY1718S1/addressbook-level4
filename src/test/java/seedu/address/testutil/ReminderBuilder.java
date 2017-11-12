@@ -20,7 +20,7 @@ public class ReminderBuilder {
 
     public static final String DEFAULT_TASK = "James birthday";
     public static final String DEFAULT_PRIORITY = "Low";
-    public static final String DEFAULT_DATE = "02/02/2017 2017";
+    public static final String DEFAULT_DATE = "02/02/2017 20:17";
     public static final String DEFAULT_MESSAGE = "Buy present with others";
     public static final String DEFAULT_TAGS = "Watch";
 
@@ -94,7 +94,11 @@ public class ReminderBuilder {
      * Sets the {@code Date} of the {@code Reminder} that we are building.
      */
     public ReminderBuilder withDate(String date) {
-        this.reminder.setDate(new Date(date));
+        try {
+            this.reminder.setDate(new Date(date));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("date is expected to be unique.");
+        }
         return this;
     }
 
