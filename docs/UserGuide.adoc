@@ -138,28 +138,28 @@ You can add multiple parcels with the same tracking number. This allows you to r
 the number of parcels in your inventory exceeds the number of tracking numbers. There has been instances of this
 occurring during festive seasons such as Christmas. +
 The team is working on adding support for more types of tracking numbers such as those of
- link:https://www.ups.com/tracking/tracking.html[UPS] and link:https://www.fedex.com/sg/[FedEx] in the future.
+ link:https://www.ups.com/tracking/tracking.html[UPS] and link:https://www.fedex.com/sg/[FedEx] in the future. +
 //end::trackingNumber[]
 
 === Phone Field: Phone of Parcel Recipient
 
 The Phone field represents the phone number of the parcel's recipient. It can contain the phone number of the
-organisation or the person that you are delivering to the parcel to.
+organisation or the person that you are delivering to the parcel to. +
 
 You can only assign a single phone number to a each parcel. You may omit this field in your entry, preferably only
-when it is not provided.
+when it is not provided. +
 
-[Note]
+[NOTE]
 The Phone field will only allow you to add phone numbers with 3 or more digits. e.g. `1234 5678`; `1122 2344 5678`; +
 This is to allow you to add overseas numbers per the request of the parcel's recipient. +
-Phone numbers shorter than 3 digits will be rejected. e.g. `4`, `12`;
+Phone numbers shorter than 3 digits will be rejected. e.g. `4`, `12`; +
 
 === Address Field: Destination Address of Parcel Delivery
 
 The Address field represents the destination address of your parcel. This field contains the address that you should
 deliver your parcel to.
 
-[Note]
+[NOTE]
 The Address field will only allow you to add an address with at least a single character as the text representation of
 the address, and appended with a valid postal code, separated from the text representation of the address with space(s).
 e.g. `123, example street #05-26 S012345`. +
