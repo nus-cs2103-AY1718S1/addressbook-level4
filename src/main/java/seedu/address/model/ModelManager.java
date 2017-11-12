@@ -155,15 +155,13 @@ public class ModelManager extends ComponentManager implements Model {
         assert duplicateParcels != null : "duplicateParcels should not be null";
 
         for (ReadOnlyParcel parcel : parcels) {
-            ReadOnlyParcel parcelToAdd = new Parcel(parcel);
-
             try {
                 // throws duplicate parcel exception if parcel is non-unique
-                addressBook.addParcel(parcelToAdd);
+                addressBook.addParcel(parcel);
 
-                uniqueParcels.add(parcelToAdd);
+                uniqueParcels.add(parcel);
             } catch (DuplicateParcelException ive) {
-                duplicateParcels.add(parcelToAdd);
+                duplicateParcels.add(parcel);
             }
         }
 
