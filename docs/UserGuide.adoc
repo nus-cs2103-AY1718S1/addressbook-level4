@@ -83,6 +83,11 @@ Here’s how you can use them:
 . Status Panel
 * The `Status Panel` displays the results of your latest command.
 
+. Home Panel
+* The `Home Panel` is only displayed when you start up cherBook or when you type the `home` command.
+  It would be switched between the Student Details Panel, Statistics Panel and Graph Panel when you use a
+  `select` command.
+
 . Students Panel
 * The `Students Panel` contains a list of all the students in cherBook.
   You can enter commands like `find`, `findtags` and `sort` to narrow down the list of students in this panel.
@@ -98,7 +103,7 @@ Here’s how you can use them:
 * The `Graph Panel` displays either a line or bar chart containing grades of students in the currently selected student's class.
 
 [[features]]
-== Features
+== Features : Commands
 ====
 *Command Format*
 
@@ -141,29 +146,6 @@ Examples:
 * `a n/Jane Doe pp/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
 * `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/97272231 pp/97979997 f/12A2 g/66 t/criminal`
 
-// tag::optionalinputtagstwo[]
-
-=== Optional fields for adding a person `Since v1.3`
-
-You can find a list of optional input fields for the add command in the table below.
-
-[NOTE]
-====
-When you do not enter any of the optional fields,
-a message will be generated to inform you that the particular field is not recorded.
-====
-
-[width="100%",cols="10%,<10%,<80%",options="header",]
-|=======================================================================
-|Optional Field |Prefix | Example of user's input in cherBook's command box without the optional field
-| Student Phone Number | p/ +| add n/John pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 t/Smart +
-| Address | a/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com f/6C g/91 c/600321 t/Smart +
-| Postal Code | c/  | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 t/Smart +
-| Email | e/ + | add n/John p/97602611 pp/97272700 a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 t/Smart +
-| Tag | t/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 +
-|=======================================================================
-
-// end::optionalinputtagstwo[]
 
 === Listing all persons : `list` `Since v1.0`
 
@@ -225,37 +207,6 @@ Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-// tag::findtags[]
-=== Locating persons by tags: `findtags` `Since v1.1`
-
-Finds persons whose tags contain all of the given keywords. +
-Format: `findtags KEYWORD [MORE_KEYWORDS]` +
-Shorthand: `ft KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `friends` will match `Friends`
-* The order of the keywords does not matter. e.g. `friends owesMoney` will match `owesMoney friends`
-* Only the tags are searched.
-* Only full words will be matched e.g. `friends` will not match `closefriends`
-* Persons matching at least all keywords will be returned (i.e. `AND` search). e.g. `friends owesMoney` will not return people with only `friends` or only `owesMoney`
-****
-
-[TIP]
-Only one tag can be searched at any one time.
-
-
-Examples:
-
-* `findtags friends` +
-Returns any person having the tag `friends`
-* `findtags friends owesMoney` +
-Returns any person having both `friends` and `owesMoney` tags
-* `ft John` +
-Returns any person having the tag `friends`
-* `ft Betsy Tim John` +
-Returns any person having both `friends` and `owesMoney` tags
-// end::findtags[]
-
 === Deleting a person : `delete` `Since v1.0`
 
 Removes an existing person from cherBook. +
@@ -303,126 +254,6 @@ Selects the 1st person in the results of the `find` command.
 * `l` (`list` command) +
 `s 3` (`select 3` command) +
 Selects the 3rd person in cherBook.
-
-// tag::sort[]
-=== Sorting all persons : `sort` `Since v1.2`
-
-Shows a list of all persons in cherBook with their names sorted in alphabetical order. +
-Format: `sort` +
-Shorthand: `st`
-
-****
-* Sorts all cherBook contacts in alphabetical order.
-* The sort is case insensitive. e.g `hans` will match `Hans`
-* If cherBook is empty, sort does nothing.
-****
-
-Examples:
-
-* `list` +
-`sort` +
-Sorts the list in alphabetical order.
-* `find Betsy` +
-`st` +
-Sorts the list in alphabetical order.
-// end::sort[]
-
-// tag::remark[]
-=== Adding/Deleting a remark to a person : `remark` `Since v1.2`
-//TODO: Simlify and make the UG for remark operations more consise
-Adds or removes a remark from the specified person in cherBook +
-Format: `remark Index [rm/REMARK]` +
-Shorthand: `rm Index [rm/REMARK]`
-
-****
-* Adds or deletes a `remark` at the specific`INDEX`.
-* The index refers to the index number currently shown in the `Students Panel`.
-* The index *must be positive integer* 1, 2, 3, ...
-****
-
-[TIP]
-Addition of remarks on a person already with remarks will be overwritten. +
-Person with no remarks will display `(add a new remark)`. +
-Can only be changed through the use of the `remark` command.
-
-Examples:
-
-* `list` +
-`remark 2 rm/This is a remark` +
-Overwrites/adds the 1st person remark.
-* `find betsy` +
-`remark 1 rm/Betsy is a female` +
-Overwrites/adds the 1st person in the results of `find` command.
-* `list` +
-`remark 2 rm/` +
-removes `remark` from the 2nd person in the address book.
-
-// end::remark[]
-
-// tag::schedule[]
-=== Scheduling a person : `schedule` `Since v1.4`
-
-Schedules the person identified by the index number used in the last person listing. +
-Format: `schedule INDEX s/[DATE]` +
-Shorthand: `sch INDEX s/[DATE]`
-
-****
-* Schedules the person at the specified `INDEX` and adds them to the schedule list in cherBook.
-* The index refers to the index number currently shown in the `Students Panel`.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`schedule 2 s/tomorrow 7pm` +
-Schedules the 2nd person in cherBook for tomorrow at 7pm and adds the schedule to the schedule list.
-* `find Betsy` +
-`sch 1 s/25 december 2017 3pm` +
-Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
-// end::schedule[]
-
-// tag::viewschedule[]
-=== Viewing my schedule : `viewschedule` `Since v1.5`
-
-Views your full schedule list. +
-Format: `viewschedules` +
-Shorthand: `viewsch`
-
-****
-* Displays all your schedules in the command box.
-****
-
-Examples:
-
-* `list` +
-`viewschedules` +
-Displays all your schedules in the command box.
-* `find Betsy` +
-`viewsch` +
-Displays all your schedules in the command box.
-// end::viewschedule[]
-
-=== Deleting a schedule : `deleteschedule` `Since v1.5`
-
-Deletes the specified schedule from cherBook. +
-Format: `deleteschedule INDEX` +
-Shorthand: `dsch INDEX`
-
-****
-* Deletes the schedule at the specified `INDEX`.
-* The index refers to the schedule shown in schedules list.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `viewschedule` +
-`deleteschedule 2` +
-Deletes the 2nd schedule in the results of the `viewschedule` command which returns a list of schedules.
-* `viewsch` +
-`dsch 1` +
-Deletes the 1st schedule in the results of the `viewsch` command which returns a list of schedules.
 
 === Listing entered commands : `history` `Since v1.0`
 
@@ -505,6 +336,222 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+// tag::findtags[]
+=== Locating persons by tags: `findtags` `Since v1.1`
+
+Finds persons whose tags contain all of the given keywords. +
+Format: `findtags KEYWORD [MORE_KEYWORDS]` +
+Shorthand: `ft KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `Friends`
+* The order of the keywords does not matter. e.g. `friends owesMoney` will match `owesMoney friends`
+* Only the tags are searched.
+* Only full words will be matched e.g. `friends` will not match `closefriends`
+* Persons matching at least all keywords will be returned (i.e. `AND` search). e.g. `friends owesMoney` will not return people with only `friends` or only `owesMoney`
+****
+
+[TIP]
+Only one tag can be searched at any one time.
+
+
+Examples:
+
+* `findtags friends` +
+Returns any person having the tag `friends`
+* `findtags friends owesMoney` +
+Returns any person having both `friends` and `owesMoney` tags
+* `ft John` +
+Returns any person having the tag `friends`
+* `ft Betsy Tim John` +
+Returns any person having both `friends` and `owesMoney` tags
+// end::findtags[]
+
+// tag::remark[]
+=== Adding/Deleting a remark to a person : `remark` `Since v1.2`
+//TODO: Simlify and make the UG for remark operations more consise
+Adds or removes a remark from the specified person in cherBook +
+Format: `remark Index [rm/REMARK]` +
+Shorthand: `rm Index [rm/REMARK]`
+
+****
+* Adds or deletes a `remark` at the specific`INDEX`.
+* The index refers to the index number currently shown in the `Students Panel`.
+* The index *must be positive integer* 1, 2, 3, ...
+****
+
+[TIP]
+Addition of remarks on a person already with remarks will be overwritten. +
+Person with no remarks will display `(add a new remark)`. +
+Can only be changed through the use of the `remark` command.
+
+Examples:
+
+* `list` +
+`remark 2 rm/This is a remark` +
+Overwrites/adds the 1st person remark.
+* `find betsy` +
+`remark 1 rm/Betsy is a female` +
+Overwrites/adds the 1st person in the results of `find` command.
+* `list` +
+`remark 2 rm/` +
+removes `remark` from the 2nd person in the address book.
+
+// end::remark[]
+
+// tag::sort[]
+=== Sorting all persons : `sort` `Since v1.2`
+
+Shows a list of all persons in cherBook with their names sorted in alphabetical order. +
+Format: `sort` +
+Shorthand: `st`
+
+****
+* Sorts all cherBook contacts in alphabetical order.
+* The sort is case insensitive. e.g `hans` will match `Hans`
+* If cherBook is empty, sort does nothing.
+****
+
+Examples:
+
+* `list` +
+`sort` +
+Sorts the list in alphabetical order.
+* `find Betsy` +
+`st` +
+Sorts the list in alphabetical order.
+// end::sort[]
+
+// tag::schedule[]
+=== Scheduling a person : `schedule` `Since v1.4`
+
+Schedules the person identified by the index number used in the last person listing. +
+Format: `schedule INDEX s/[DATE]` +
+Shorthand: `sch INDEX s/[DATE]`
+
+****
+* Schedules the person at the specified `INDEX` and adds them to the schedule list in cherBook.
+* The index refers to the index number currently shown in the `Students Panel`.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`schedule 2 s/tomorrow 7pm` +
+Schedules the 2nd person in cherBook for tomorrow at 7pm and adds the schedule to the schedule list.
+* `find Betsy` +
+`sch 1 s/25 december 2017 3pm` +
+Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
+// end::schedule[]
+
+// tag::viewschedule[]
+=== Viewing my schedule : `viewschedule` `Since v1.5`
+
+Views your full schedule list. +
+Format: `viewschedules` +
+Shorthand: `viewsch`
+
+****
+* Displays all your schedules in the command box.
+****
+
+Examples:
+
+* `list` +
+`viewschedules` +
+Displays all your schedules in the command box.
+* `find Betsy` +
+`viewsch` +
+Displays all your schedules in the command box.
+// end::viewschedule[]
+
+=== Deleting a schedule : `deleteschedule` `Since v1.5`
+
+Deletes the specified schedule from cherBook. +
+Format: `deleteschedule INDEX` +
+Shorthand: `dsch INDEX`
+
+****
+* Deletes the schedule at the specified `INDEX`.
+* The index refers to the schedule shown in schedules list.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `viewschedule` +
+`deleteschedule 2` +
+Deletes the 2nd schedule in the results of the `viewschedule` command which returns a list of schedules.
+* `viewsch` +
+`dsch 1` +
+Deletes the 1st schedule in the results of the `viewsch` command which returns a list of schedules.
+
+
+// tag::tab[]
+=== Switching between graphs: `tab` `Since v1.5`
+Switches between the line and bar chart in the `GraphPanel`. +
+Format: `tab TABNUMBER`
+
+[NOTE]
+Valid numbers are determined by number of tabs available. In this case, only 1 and 2 are valid, which displays line or bar respectively. +
+Typing the same index on the selected graph would just do nothing.
+
+Example:
+
+* `tab 2` +
+Remains at tab 2 if tab 2 is selected else switches to tab 2.
+// end::tab[]
+
+== Feature : Non - Commands
+
+=== Saving the data `Since v1.0`
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+// tag::studentdetailspanel[]
+=== Student Details Panel `Since v1.3`
+
+cherBook uses the `Student Details Panel` to display details belonging to the currently selected student.
+The details changes automatically where there is a change to the list of students in the `Students Panel`.
+You can use these details to pick out relevant information you need from your student.
+// end::studentdetailspanel[]
+
+// tag::optionalinputtagstwo[]
+
+=== Optional fields for adding a person `Since v1.3`
+
+You can find a list of optional input fields for the add command in the table below.
+
+[NOTE]
+====
+When you do not enter any of the optional fields,
+a message will be generated to inform you that the particular field is not recorded.
+====
+
+[width="100%",cols="10%,<10%,<80%",options="header",]
+|=======================================================================
+|Optional Field |Prefix | Example of user's input in cherBook's command box without the optional field
+| Student Phone Number | p/ +| add n/John pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 t/Smart +
+| Address | a/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com f/6C g/91 c/600321 t/Smart +
+| Postal Code | c/  | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 t/Smart +
+| Email | e/ + | add n/John p/97602611 pp/97272700 a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 t/Smart +
+| Tag | t/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 +
+|=======================================================================
+
+// end::optionalinputtagstwo[]
+
+// tag::graphpanel[]
+=== Graph Panel `Since v1.3`
+
+cherBook uses a `GraphPanel` to plot the grades of all classmates of the selected student on a graph.
+The graphs are automatically sorted from the lowest grade to the highest.
+There are two tabs for you to choose from, line or bar and can be switch by using the `tab` command.
+The details changes when another student from a different class is selected.
+You can use these graph to better understand the trends of `grades` in a glance to easily see who are the weaker or stronger students.
+// end::graphpanel[]
+
 // tag::randomisedUniqueTagColors[]
 === Randomised Unique Tag Colors: `Since v1.4`
 
@@ -520,15 +567,6 @@ _Figure 5.20.1 : Example of color tags_
 
 // end::randomisedUniqueTagColors[]
 
-// tag::studentdetailspanel[]
-=== Student Details Panel `Since v1.3`
-
-cherBook uses the `Student Details Panel` to display details belonging to the currently selected student.
-The details changes automatically where there is a change to the list of students in the `Students Panel`.
-You can use these details to pick out relevant information you need from your student.
-// end::studentdetailspanel[]
-
-
 // tag::statisticspanel[]
 === Statistics Panel `Since v1.4`
 
@@ -538,35 +576,14 @@ E.g. When you enter the command `findtags studentCouncil`, the `Students Panel` 
 You can use these statistics to pick out trends in your student's grades and also monitor how well they are coping with their studies.
 // end::statisticspanel[]
 
-// tag::graphpanel[]
-=== Graph Panel `Since v1.3`
+// tag::homepanel[]
+=== Home Panel `Since v1.5`
 
-cherBook uses a `GraphPanel` to plot the grades of all classmates of the selected student on a graph.
-The graphs are automatically sorted from the lowest grade to the highest.
-There are two tabs for you to choose from, line or bar and can be switch by using the `tab` command.
-The details changes when another student from a different class is selected.
-You can use these graph to better understand the trends of `grades` in a glance to easily see who are the weaker or stronger students.
-// end::graphpanel[]
-
-// tag::tab[]
-=== Switching between graphs in GraphPanel : `tab` `Since v1.5`
-Switches between the line and bar chart in the `GraphPanel`. +
-Format: `tab TABNUMBER`
-
-[NOTE]
-Valid numbers are determined by number of tabs available. In this case, only 1 and 2 are valid, which displays line or bar respectively. +
-Typing the same index on the selected graph would just do nothing.
-
-Example:
-
-* `tab 2` +
-Remains at tab 2 if tab 2 is selected else switches to tab 2.
-// end::tab[]
-
-=== Saving the data `Since v1.0`
-
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+cherBook has a start up `Home panel` which displays a picture to help you unwind even just a tiny bit.
+It also displays random inspirational quotes to help you make yourself feel better.
+What is better then starting off a day right feeling good.
+These quotes changes every time the home page displayed through either calling then `home` command or starting the application.
+//end::homepanel[]
 
 // tag::commandshortcuts[]
 == Command Shortcuts
