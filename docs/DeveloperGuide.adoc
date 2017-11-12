@@ -1239,8 +1239,59 @@ If yes, then the function returns true else it returns false.
 // tag::findtag[]
 === Find Tag mechanism
 
+The find tag mechanism is facilitated by `TagContainsKeywordsPredicate`, a predicate class that finds persons in the address book with the tag specified by the user.
+It lists out all contacts that have the specified tag. Contacts with substrings of the tag will not be listed, unlike the Find mechanism. This command will inherit from `Command`.
+
+From Figure 5.11.1 below, the `FindTagCommand` inherits from `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+image::FindTagCommandDiagram1.png[width="800"]
+_Figure 5.11.1 Find Tag Command Diagram 1_
+
+The execution of FindTagCommand is processed in this way:
+
+. User will execute `findtag classmates` to find contacts in The Myth's Book with the tag `classmates`.
+
+. The execution of `findtag classmates` updates the `PersonList` in `AddressBook` with `TagContainsKeywordsPredicate`, which checks if the contacts in `PersonList` have the tag `classmates`.
+
+Code of `FindTagCommand`:
+[source,java]
+----
+public class FindTagCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... find tag logic ...
+        model.updateFilteredPersonList(predicate);
+    }
+}
+----
+
+Code of `TagContainsKeywordsPredicate`:
+[source,java]
+----
+public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return (keywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase
+                (person.getTagsText(), keyword)));
+    }
+}
+----
+
+The follow sequence diagram shows how the find tag operation works:
+
+As seen in Figure 5.11.2, when `findtag classmates` is typed into the command line input, a new `FindTagCommand` is created.
+
+image::FindTagCommandDiagram2.png[width="800"]
+
 ==== Design Considerations
 
+**Aspect:** Implementation of `TagContainsKeywordsPredicate` +
+**Alternative 1 (current choice):** Tag of contacts has to match with the tag specified by the user +
+**Pros:** Persons found are specific to the tags that the user wants to find. Easy to implement. +
+**Cons:** `FindTagcommand` cannot account for mistypes or account for cases where users can't remember the exact tag for his/her contacts. +
+**Alternative 2:** Substrings of the tag of contacts can be matched as well +
+**Pros:** `FindTagCommand` can account for cases where users do not remember the exact tag for his/her contacts. +
+**Cons:** Difficult to implement. Not exactly a big improvement to `FindTagCommand`. +
 // end::findtag[]
 
 // tag::favouriteunfavourite
@@ -1394,10 +1445,10 @@ public class NameContainsFavouritePredicate implements Predicate<ReadOnlyPerson>
 
 The following sequence diagram shows how the favourite list operation works:
 
-As seen in Figure 5.13.1, when `favourites` is typed into the command line input, a new `FavouriteListCommand` is created.
+As seen in Figure 5.13.2, when `favourites` is typed into the command line input, a new `FavouriteListCommand` is created.
 
 image::FavouriteListCommandDiagram2.png[width="800"]
-_Figure 5.13.1 Favourite List Command Diagram 2_
+_Figure 5.13.2 Favourite List Command Diagram 2_
 
 ==== Design Considerations
 
