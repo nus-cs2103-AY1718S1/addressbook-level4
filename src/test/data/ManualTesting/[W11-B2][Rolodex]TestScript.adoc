@@ -225,9 +225,8 @@ Invalid Command Suggestion
 4.  Press `Enter`
 
 [[expected-behavior]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior[]Expected
-Behavior
-   ++++++
+Expected Behavior
+++++++++++++++++
 
 * The 21st contact is deleted from Rolodex
 
@@ -245,9 +244,8 @@ Expected Behaviour
 * First contact is deleted from Rolodex
 
 [[edit-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#edit-command[]Edit
-Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Edit Command
+~~~~~~~~~~~~~
 
 [[basic-functionality2]]
 Basic Functionality
@@ -515,9 +513,8 @@ Expected Behaviour
 * In step 3, the command box should be selected
 
 [[email-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#email-command[]Email
-Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Email Command
+~~~~~~~~~~~~~~
 
 [[basic-functionality4]]
 Basic Functionality
@@ -599,19 +596,16 @@ Expected Behaviour
 * Subject should be “hello”
 
 [[find-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#find-command[]Find
-Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Find Command
+~~~~~~~~~~~~
 
 [[find-by-name]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#find-by-name[]Find by
-name
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Find by name
+^^^^^^^^^^^
 
 [[exact-matches]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#exact-matches[]Exact
-matches
-  +++++++++++++++++++++++++
+Exact matches
++++++++++++++
 
 1.  Type `find bravo`
 2.  Press `Enter`
@@ -623,9 +617,8 @@ Expected Behaviour
 * The contact list is filtered with contacts with the name “Bravo”
 
 [[fuzzy-matching]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#fuzzy-matching[]Fuzzy
-Matching
-   
+Fuzzy Matching
+++++++++++++++
 
 1.  Type `find brabo`
 2.  Press `Enter`
@@ -638,9 +631,8 @@ Expected Behaviour
 “brabo”, “Bravo” included.
 
 [[find-by-tag]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#find-by-tag[]Find by
-tag
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Find by tag
+^^^^^^^^^^^
 
 1.  Type `find friends`
 2.  Press `Enter`
@@ -652,8 +644,8 @@ Expected Behaviour
 * The contact list is filtered with contacts tagged as “friends”.
 
 [[sorting]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#sorting[]Sorting
-^^^^^^^^^^^^^^^^^^^^^^^
+Sorting
+^^^^^^^
 
 1.  Type `find friends n/desc`
 2.  Press `Enter`
@@ -747,9 +739,8 @@ Expected Behaviour
 * The contact list is filtered with contacts tagged as “friends”.
 
 [[help-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#help-command[]Help
-Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Help Command
+~~~~~~~~~~~~
 
 [[basic-functionality5]]
 Basic Functionality
@@ -765,9 +756,8 @@ Expected Behaviour
 * The Rolodex User Guide should be opened in a new window
 
 [[help-window-searching]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#help-window-searching[]Help
-Window Searching
-^^^^^^^
+Help Window Searching
+^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `add` into the search bar located at the top of the window
 2.  Press `Enter` or click the _Search_ button
@@ -795,9 +785,8 @@ Expected Behaviour
 * The Rolodex User Guide should be opened in a new window
 
 [[history-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#history-command[]History
-Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+History Command
+~~~~~~~~~~~~~~~
 
 [[basic-functionality6]]
 Basic Functionality
@@ -844,9 +833,8 @@ Expected Behaviour
 the result panel
 
 [[list-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#list-command[]List
-Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+List Command
+~~~~~~~~~~~~
 
 [[basic-functionality7]]
 Basic Functionality
@@ -897,8 +885,8 @@ Expected Behaviour
 * All contacts should be listed in Rolodex
 
 [[sorting1]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#sorting1[]Sorting
-^^^^^^^^^^^^^^^^^^^^^^^^
+Sorting
+^^^^^^^
 
 1.  Type `list p/asc a/desc`
 2.  Press `Enter`
@@ -939,14 +927,12 @@ Expected Behaviour
 * All contacts should be listed in Rolodex
 
 [[new-rolodex-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#new-rolodex-command[]New
-Rolodex Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+New Rolodex Command
+~~~~~~~~~~~~~~~~~~~
 
 [[creating-new-rolodex-at-relative-directory]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#creating-new-rolodex-at-relative-directory[]Creating
-New Rolodex at Relative Directory
-^^^^^
+Creating New Rolodex at Relative Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `new data/SampleData2.rldx` or `n data/SampleData2.rldx`
 2.  Press `Enter`
@@ -963,9 +949,8 @@ new Rolodex (i.e. the data file you are currently operating on)
 been cleared.
 
 [[creating-new-rolodex-at-system-directory]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#creating-new-rolodex-at-system-directory[]Creating
-New Rolodex at System Directory
-^
+Creating New Rolodex at System Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 [[windows]]
 Windows:
@@ -1074,22 +1059,20 @@ new Rolodex (i.e. `data/SampleData5.rldx`)
 been cleared.
 
 [[open-rolodex-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#open-rolodex-command[]Open
-Rolodex Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Open Rolodex Command
+~~~~~~~~~~~~~~~~~~~~
 
 [[requirements]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#requirements[]Requirements
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Requirements
+^^^^^^^^^^^^
 
 1.  Please complete the section
 https://cs2103aug2017-w11-b2.github.io/TestScript/#New-Rolodex-Command[New
 Rolodex Command] before proceeding with this section.
 
 [[opening-rolodex-at-relative-directory]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#opening-rolodex-at-relative-directory[]Opening
-Rolodex at Relative Directory
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Opening Rolodex at Relative Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `open data/SampleData2.rldx` or `o data/SampleData2.rldx`
 2.  Press `Enter`
@@ -1106,27 +1089,26 @@ opened Rolodex (i.e. `data/SampleData2.rldx`)
 been cleared.
 
 [[opening-rolodex-at-system-directory]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#opening-rolodex-at-system-directory[]Opening
-Rolodex at System Directory
+Opening Rolodex at System Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 [[windows1]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#windows1[]Windows:
-  +++++++++++++++
+Windows:
+++++++++
 
 1.  Type `open C:/Users/YOUR_USERNAME/Desktop/SampleData3.rldx`
 2.  Press `Enter`
 
 [[mac1]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#mac1[]Mac:
-  +++++++
+Mac:
+++++
 
 1.  Type `open /Users/YOUR_USERNAME/Desktop/SampleData3.rldx`
 2.  Press `Enter`
 
 [[linux1]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#linux1[]Linux:
-  +++++++++++
+Linux:
++++++++
 
 1.  Type `open /home/YOUR_USERNAME/Desktop/SampleData3.rldx`
 2.  Press `Enter`
@@ -1143,9 +1125,8 @@ new Rolodex (i.e. `data/SampleData.rldx`)
 been cleared.
 
 [[attempting-to-open-non-existent-rolodex]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#attempting-to-open-non-existent-rolodex[]Attempting
-to Open Non-Existent Rolodex
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Attempting to Open Non-Existent Rolodex
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `open data/SampleData4.rldx`
 2.  Press `Enter`
@@ -1218,9 +1199,8 @@ opened Rolodex (i.e. `data/SampleData.rldx`)
 been cleared.
 
 [[remark-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#remark-command[]Remark
-Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Remark Command
+~~~~~~~~~~~~~~
 
 [[basic-functionality8]]
 Basic Functionality
@@ -1333,9 +1313,8 @@ Expected Behaviour
 * The selected contact should have the remark “Hates dancing”
 
 [[undo-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#undo-command[]Undo
-Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Undo Command
+~~~~~~~~~~~~
 
 [[basic-functionality9]]
 Basic Functionality
@@ -1412,9 +1391,8 @@ Expected Behaviour
 * The first contact should remain in Rolodex
 
 [[redo-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#redo-command[]Redo
-Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Redo Command
+~~~~~~~~~~~
 
 [[basic-functionality10]]
 Basic Functionality
@@ -1494,9 +1472,8 @@ Expected Behaviour
 * The first contact should be deleted from Rolodex
 
 [[exit-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#exit-command[]Exit
-Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Exit Command
+~~~~~~~~~~~~
 
 1.  Type `exit` or `quit` or `close` or `bye` or `esc`
 2.  Press `Enter`
