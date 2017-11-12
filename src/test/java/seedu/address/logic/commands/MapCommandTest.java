@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.core.index.Selection;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -56,6 +57,13 @@ public class MapCommandTest {
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidPersonSelectionFailure() {
+        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
+        Selection.setPersonNotSelected();
+        assertExecutionFailure(indexLastPerson, Messages.MESSAGE_PERSON_NOT_SELECTED);
     }
 
     @Test
