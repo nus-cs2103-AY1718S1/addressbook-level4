@@ -216,14 +216,40 @@ University students would prefer having lesser things to worry about amidst thei
 students don't have to open multiple application or browsers. This would improve efficiency of using The Myth's Book and also the efficiency of the students doing their work, as they don't have to
 waste time opening additional browsers to send an email.
 
+=== Enhancement Proposed: To-Do List
+
+==== External Behaviour
+
+This enhancement will improve the overall structure of `Events` and `Birthdays`, where it will include reminders through the notification tray, when the day of the event or birthday is up.
+Furthermore, the `Events` and `Birthdays` would combine so that there are lesser commands for users to use, improving user experience and user-friendliness of The Myth's Book.
+This enhancement will also allow university students to tick off events that they have completed, and upcoming events will also be notified to the users, through a different background colour
+of the event in the event list.
+
+==== Justification
+
+University students would want to balance their social and study life. Hence, this enhancement will allow them to better schedule their events since they can take note of upcoming events, and plan
+accordingly. Moreover, this enhancement will prevent students from opening too many applications that will potentially cause multi-tasking, reducing university students' efficiency in doing their work.
+This enhancement will also improve user-friendliness and user experience of The Myth's Book as it reduces the number of commands that the university students have to know.
+
 === Other contributions
 
-* Acceptance Testing on `Team T16-B1` (https://github.com/CS2103AUG2017-T16-B1/main/issues[Issues])
+==== Software Contributions
+
 * Updated the GUI color scheme, structure, layout and overall outlook (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/97[#97], https://github.com/CS2103AUG2017-T15-B3/main/pull/124[#124])
-* Updated the images used in User Guide (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/106[#106])
 * Updated AddCommand and EditCommand so that the application will select the person added or edited (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/124[#124])
 * Created additional color scheme `Bright Theme` for users to choose (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/50[#50])
-* Created use cases in Developer Guide (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/39[#39])
-* Updated User Guide layout (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/102[#102], https://github.com/CS2103AUG2017-T15-B3/main/pull/152[#152])
 * Implemented randomised colors for tags in PersonCard (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/37[#37])
 * Implemented tests to increase overall test coverage (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/63[#63], https://github.com/CS2103AUG2017-T15-B3/main/pull/82[#82], https://github.com/CS2103AUG2017-T15-B3/main/pull/103[#103])
+
+==== Documentation Contributions
+
+* Updated the images used in User Guide (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/106[#106])
+* Created use cases in Developer Guide (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/39[#39])
+* Updated User Guide layout (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/102[#102], https://github.com/CS2103AUG2017-T15-B3/main/pull/152[#152])
+
+==== Acceptance Testing: Ark (Team T16-B1):
+
+* Found bug where the team's example for their add command does not work (Issue https://github.com/CS2103AUG2017-T16-B1/main/issues/157[#157])
+* Provided suggestion for them to provide a sample XML file for testers to test their import feature (Issue https://github.com/CS2103AUG2017-T16-B1/main/issues/158[#158])
+* Found possible bug where the team's undo command may be fixated on showing the list of all persons even if it was showing a list of something else (Issue https://github.com/CS2103AUG2017-T16-B1/main/issues/159[#159])
+* Provided suggestion and bug on the command `deleteTag` where it should only delete the tags of specified parcels and not all, and that the example provided is invalid (Issue https://github.com/CS2103AUG2017-T16-B1/main/issues/162[#162])
