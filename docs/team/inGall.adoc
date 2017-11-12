@@ -9,8 +9,7 @@ Gentleman's Guide is a desktop address book application modified from the Addres
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/main/inGall.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/test/inGall.md[Test code]]
 
 *Purpose of portfolio*: This portfolio is written to reflect the contributions made by the author to the Gentleman's Guide.
-It demonstrates the mechanism behind the features implemented and provide insights to users on how to use the product.
-It also provides justification to why these features are implemented.
+It demonstrates the mechanism behind the features implemented provides justification to why these features are implemented.
 
 === Enhancement Added : Birthday Feature, Find commands, Sort commands, listReminder command
 
