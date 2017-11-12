@@ -22,6 +22,7 @@ import seedu.address.logic.commands.ScheduleAddCommand;
 import seedu.address.logic.commands.ScheduleRemoveCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SwitchThemeCommand;
 import seedu.address.logic.commands.TagAddCommand;
 import seedu.address.logic.commands.TagFindCommand;
 import seedu.address.logic.commands.TagRemoveCommand;
@@ -97,6 +98,8 @@ public class HelpCommandParser implements Parser<HelpCommand> {
             return new HelpCommand("export");
         } else if (input.equals(UndoCommand.COMMAND_WORD)) {
             return new HelpCommand("undo");
+        } else if (input.equals(SwitchThemeCommand.COMMAND_WORD)) {
+            return new HelpCommand("theme");
         } else {
             return new HelpCommand();
         }

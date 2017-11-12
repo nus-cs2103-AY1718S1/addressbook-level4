@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.HelpCommand.SHOWING_HELP_MESSAGE;
 
+import javax.swing.*;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -97,5 +98,8 @@ public class HelpCommandTest {
 
         result = new HelpCommand("scheduleremove").execute();
         assertEquals(ScheduleRemoveCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result =  new HelpCommand("theme").execute();
+        assertEquals(SwitchThemeCommand.MESSAGE_USAGE, result.feedbackToUser);
     }
 }
