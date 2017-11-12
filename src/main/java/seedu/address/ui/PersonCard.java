@@ -112,7 +112,7 @@ public class PersonCard extends UiPart<Region> {
         if (person.addressProperty().get().toString().equals("-")) {
             addressicon.setStyle("-fx-opacity: " + 0.2);
         }
-        if (person.emailProperty().get().toString().equals("-")) {
+        if (person.emailProperty().get().toString().equals("[]")) {
             emailicon.setStyle("-fx-opacity: " + 0.2);
         }
     }
