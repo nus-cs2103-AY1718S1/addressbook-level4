@@ -63,7 +63,7 @@ public class AutoCompleteTest {
     }
 
     @Test
-    public void assert_autoCompleteListResetonEmptyStringInput_success() {
+    public void assert_autoCompleteListResetOnEmptyStringInput_success() {
         autoComplete.updateAutoCompleteList("");
         String[] baseCommands = autoComplete.getAutoCompleteList();
         assertTrue(Arrays.equals(AutoComplete.BASE_COMMANDS, baseCommands));

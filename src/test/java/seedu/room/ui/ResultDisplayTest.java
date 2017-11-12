@@ -28,7 +28,7 @@ public class ResultDisplayTest extends GuiUnitTest {
     public void display() {
         // default result text
         guiRobot.pauseForHuman();
-        assertEquals("", resultDisplayHandle.getText());
+        assertEquals("Welcome to Resident Book!", resultDisplayHandle.getText());
 
         // new result received
         postNow(NEW_RESULT_EVENT_STUB);

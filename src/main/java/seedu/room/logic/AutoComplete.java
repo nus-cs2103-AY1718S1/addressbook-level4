@@ -14,7 +14,7 @@ public class AutoComplete {
 
     public static final String[] BASE_COMMANDS = { "add", "addEvent", "addImage", "backup", "edit", "select", "delete",
         "deleteByTag", "deleteEvent", "deleteImage", "deleteTag", "clear", "find", "list", "highlight", "history",
-        "import", "exit", "help", "undo", "redo", "sort", "swaproom"
+        "import", "exit", "help", "undo", "redo", "sort", "swaproom", "switch"
     };
     private ArrayList<String> personsStringArray;
     private String[] autoCompleteList;

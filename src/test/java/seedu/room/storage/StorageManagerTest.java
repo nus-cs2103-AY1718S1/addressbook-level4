@@ -32,7 +32,6 @@ public class StorageManagerTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private StorageManager storageManager;
-    private File imageFolder;
 
     @Before
     public void setUp() {
