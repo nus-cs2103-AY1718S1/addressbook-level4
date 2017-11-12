@@ -215,7 +215,7 @@ public class DeleteGroupCommand extends UndoableCommand {
 /**
  * Pins an existing person on top of the address book
  */
-public class PinCommand extends UndoableCommand {
+public class PinCommand extends Command {
 
     public static final String COMMAND_WORD = "pin";
 
@@ -239,7 +239,7 @@ public class PinCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -292,8 +292,8 @@ public class SetColourCommand extends Command {
     private static final String[] colours = {"blue", "red", "brown", "green", "black", "purple", "indigo", "grey",
         "chocolate", "orange", "aquamarine"};
 
-    public String tag;
-    public String newColour;
+    private String tag;
+    private String newColour;
 
     public SetColourCommand(String tag, String colour) {
         this.tag = tag;
@@ -301,7 +301,7 @@ public class SetColourCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException{
+    public CommandResult execute() throws CommandException {
         try {
             if (isColourValid()) {
                 model.setTagColour(tag, newColour);
@@ -332,7 +332,7 @@ public class SetColourCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof SetColourCommand // instanceof handles nulls
                 && this.tag.equals(((SetColourCommand) other).tag)
-                && this.newColour.equals(((SetColourCommand) other).newColour));// state check
+                && this.newColour.equals(((SetColourCommand) other).newColour)); // state check
     }
 }
 ```
@@ -828,7 +828,12 @@ public class UniqueGroupList implements Iterable<Group> {
      */
     public boolean contains(ReadOnlyGroup toCheck) {
         requireNonNull(toCheck);
-        return internalList.contains(toCheck);
+        for (Group group: internalList) {
+            if (group.getGroupName().equals(toCheck.getGroupName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -981,8 +986,11 @@ public class UniqueGroupList implements Iterable<Group> {
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
+    public synchronized void deletePerson(ReadOnlyPerson... target) throws PersonNotFoundException {
+        for (ReadOnlyPerson person : target) {
+            addressBook.removePerson(person);
+        }
+
         raise(new NewGroupListEvent(getGroupList(), addressBook.getPersonList()));
 
         indicateAddressBookChanged();
