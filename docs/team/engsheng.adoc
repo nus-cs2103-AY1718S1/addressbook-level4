@@ -28,11 +28,9 @@ include::../UserGuide.adoc[tag=sharecommand]
 
 image::engsheng_header_justification.png[width="900"]
 
-Most of us enjoy listening to music while we do our work. Hence, by having a built-in music player, users can enjoy some tunes while they adding, or editing or any other related task in Unify address book.
+It is important to give users a way to share their contacts in their address book with another person. Hence, the `share` command helps user to easily share one of their contact in their address book to another person through email.
 
-You may ask, "Why can't I use other streaming services such as Spotify?" Well, the reason is that this does not require internet connection, and since it is already built-in, it encourages users to use it immediately
-without any second thought. Users would prefer this method as removes the hassle of requiring multiple clicks to finding a music to play by having just a single command execution to play some music.
-
+This is extremely useful when a friend of yours has changed his/her phone number or address, and since you have the latest details about him/her, you can easily share his/her contact to your mutual friends easily.
 
 image::engsheng_header_implementation.png[width="900"]
 
@@ -56,10 +54,10 @@ include::../UserGuide.adoc[tag=musiccommand]
 
 image::engsheng_header_justification.png[width="900"]
 
-Most of us enjoy listening to music while we do our work. Hence, by having a built-in music player, users can enjoy some tunes while they adding, or editing or any other related task in Unify address book.
+Most of us enjoys listening to music while we do our work. Hence, by having a built-in music player, users can enjoy some tunes while they adding, or editing or any other related task in Unify address book.
 
 You may ask, "Why can't I use other streaming services such as Spotify?" Well, the reason is that this does not require internet connection, and since it is already built-in, it encourages users to use it immediately
-without any second thought. Users would prefer this method as removes the hassle of requiring multiple clicks to finding a music to play by having just a single command execution to play some music.
+without any second thought. Users would prefer this method as it removes the hassle of requiring multiple clicks to find a music to play. Instead it only requires a single `music play` command to play some music.
 
 
 image::engsheng_header_implementation.png[width="900"]
@@ -84,10 +82,12 @@ include::../UserGuide.adoc[tag=radiocommand]
 
 image::engsheng_header_justification.png[width="900"]
 
-Most of us enjoy listening to music while we do our work. Hence, by having a built-in music player, users can enjoy some tunes while they adding, or editing or any other related task in Unify address book.
+Some users prefers to hear more than a couple of songs that Unify's music player could offer, hence radio streaming is a good alternative for users who has internet connection.
 
-You may ask, "Why can't I use other streaming services such as Spotify?" Well, the reason is that this does not require internet connection, and since it is already built-in, it encourages users to use it immediately
-without any second thought. Users would prefer this method as removes the hassle of requiring multiple clicks to finding a music to play by having just a single command execution to play some music.
+In addition, this radio player has a radio channel for "news", which gives users some information about current news, weather or even sales promotion.
+This allows users to share good sales promotion that were broadcasted over the radio channel with their friends as they can immediately contact their friends through using Unify. Users can also hear weather forecast from the radio broadcast and plan their activities carefully to avoid the stormy weather.
+
+Since the radio palyer is already built-in, it encourages users to use it immediately without any second thought. Users would prefer this method as it removes the hassle of requiring multiple clicks to find a radio station broadcast to play. Instead it only requires a single `radio play` command to play some radio broadcast over the internet.
 
 
 image::engsheng_header_implementation.png[width="900"]
@@ -141,7 +141,7 @@ include::../UserGuide.adoc[tag=editcommand]
 
 image::engsheng_header_justification.png[width="900"]
 
-Instead of separating remarks into another command. I have decided to implement it together with add and edit command instead. This streamline the process of adding and editing a remark. Even though, this involves editing existing code base, I believe the outcome is much better than having remarks as a separate command.
+Instead of separating remarks into another command. I have decided to implement it together with `add` and `edit` command instead. This streamline the process of adding and editing a remark. Even though, this involves editing existing code base, I believe the outcome is much better than having remarks as a separate command.
 
 image::engsheng_header_enhancementproposed.png[width="900"]
 
@@ -149,7 +149,7 @@ image::engsheng_header_enhancementproposed.png[width="900"]
 
 image::engsheng_header_proposed_stt.png[width="900"]
 
-Sometimes, we want another form of input. By having Speech-To-Text features implemented into Unify, we are able to give users a another form of input.
+Sometimes, users want another form of input. By having Speech-To-Text features implemented into Unify, we are able to give users a another form of input.
 
 This feature could be also extremely beneficial to users that suffers from slow typing or prefer to multitask
 and use their speech to execute commands instead. This feature may be also tied together with the existing Text-To-Speech feature to help users who may suffer from some form of disabilities, to give them a hands-free yet full user experience of Unify without any drawbacks.
