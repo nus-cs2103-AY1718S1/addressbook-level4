@@ -822,9 +822,7 @@ dependencies {
 **Cons:** Users may find it annoying as every action they take, the system will play an audio cue. +
 
 // end::audiblefeedback[]
-
 ---
-
 // tag::alias[]
 === Aliases
 
@@ -862,8 +860,94 @@ image::AliasSequenceDiagram.png[width="800"]
 **Alternative 2:** Pass the `UserPrefs` instance down to the parser +
 **Pros:** Less coupling. Follows Law of Demeter. +
 **Cons:** Heavy changes to code base to pass the instance downstream. +
+
+___
 // end::alias[]
 
+=== Listening for Input Change
+
+When the `CommandTextField` detects a change in its input, it will raise a `CommandInputChangedEvent`.
+The `CommandInputChangedEvent` will contain `currentInput` of the `CommandTextField`.
+
+[source, java]
+----
+public class CommandInputChangedEvent extends BaseEvent {
+
+    public final String currentInput;
+
+    public CommandInputChangedEvent(String newCurrentInput) {
+        currentInput = newCurrentInput;
+    }
+
+    //... mandatory event logic
+}
+----
+
+==== Design Considerations
+
+**Aspect:** How to inform other components on input change +
+**Alternative 1 (current choice):** Raise an event +
+**Pros:** Easy to implement. Less coupling with other components +
+**Cons:** Many Events raised which crowds logging.  +
+**Alternative 2:** Add other component's method directly to `CommandTextField` text property listener +
+**Pros:** No events raised. Has access to `CommandTextField` instance +
+**Cons:** Increases coupling. Difficult to pass instance of other components to `CommandTextField` +
+
+___
+=== Hints and AutoComplete
+
+Inline hints and tab autocompletion of user input is encapsulated by a `Hint` object.
+A `Hint` object will take in the current user input and/or other arguments (depending on the implementation of the concrete Hint).
+
+Inline hints can be accessed from `getArgumentHint()` and `getDescription()`.
+The next user input on tab can be accessed from `autocomplete`.
+
+Different commands have similar command format. Hence we separate some of the `Hints` to inherit from
+subclasses `FixedArgumentsHint`, `NoArgumentsHint`, `ArgumentsHint` to reuse the same logic.
+
+The inheritance diagram is shown below:
+
+image::HintsClassDiagram.png[width="800"]
+
+==== Why separate argument hints and description
+An argument hint is an inline suggestion for the next letters to type. For example **add |** n/, n/ being the argument hint.
+A description would describe the details of the current command you are typing.
+
+We separate the hint like so for 2 reasons:
+
+. We can style the text differently
+.. In the `CommandTextField` our argument hints should be the same size as our input while our description, which can get quite lengthy, can be smaller in size
+.. We can also have the description written in a separate
+. The `autocomplete()` output and argument hints are closely related.
+.. For many commands, we would want to autocomplete the argument hint. (eg. completing to the next prefix)
+
+___
+=== Avatar
+
+When users add a contact, they have an option to specify an avatar for the person. If entered with a valid
+path to a .jpg or .png, the image is stored under `data/images/avatars/` with a unique string id using Java's `UUID`.
+
+The `Avatar` will store the unique string id with its file format (eg UUID.png) as its value. +
+
+For contacts who were not given an `Avatar`. Their `Avatar` field will be an empty string. When selected, these people will have a default avatar.
+The activity diagram when a person is selected is shown below.
+
+image::GetAvatarActivityDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** How to save image +
+**Alternative 1 (current choice):** Duplicate image is saved with a unique string id under data +
+**Pros:** Application is easily portable - all image files stored in data folder +
+**Cons:** Many images are created after multiple testing. (images won't have the same name) +
+**Alternative 2:** The absolute file path of the image is saved. When avatar needs to be displayed, the image will be fetched from there. +
+**Pros:** Easy to implement. +
+**Cons:** Application is not portable. If the jar and data files are transferred to a different computer, the `Avatar` loaded will be the default one. +
+**Alternative 3:** Use online link to images +
+**Pros:** Easy to implement. +
+**Cons:** Application is not portable as it requires internet connection +
+
+___
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
