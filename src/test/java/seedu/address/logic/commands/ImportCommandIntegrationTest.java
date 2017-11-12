@@ -52,7 +52,7 @@ public class ImportCommandIntegrationTest {
     @Test
     public void execute_allParcelsAreDuplicates_throwsCommandException() {
         List<ReadOnlyParcel> parcels = model.getAddressBook().getParcelList();
-        assertCommandFailure(prepareCommand(parcels, model), model, ImportCommand.MESSAGE_FAILURE_DUPLICATE_PARCELS);
+        assertCommandFailure(prepareCommand(parcels, model), model, ImportCommand.MESSAGE_INVALID_DUPLICATE_PARCELS);
     }
 
     @Test

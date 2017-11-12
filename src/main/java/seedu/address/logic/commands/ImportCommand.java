@@ -20,7 +20,7 @@ public class ImportCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds the data of a storage file stored in "
             + "data/import/ directory into Ark.\n"
-            + "Parameters: FILE (Must be a valid addressbook file stored in xml format) i.e.\n"
+            + "Parameters: FILE (Must be a valid Ark storage file stored in xml format) i.e.\n"
             + "Example: " + COMMAND_WORD + " ark_storage";
 
     public static final String MESSAGE_SUCCESS_SUMMARY = "Summary: %1$d parcels added and %2$d duplicate "
@@ -28,7 +28,7 @@ public class ImportCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS_BODY = "Parcels added: %3$s\nDuplicate Parcels: %4$s";
     public static final String MESSAGE_SUCCESS = MESSAGE_SUCCESS_SUMMARY + MESSAGE_SUCCESS_BODY;
 
-    public static final String MESSAGE_FAILURE_DUPLICATE_PARCELS = "All parcels in the imported save file will create "
+    public static final String MESSAGE_INVALID_DUPLICATE_PARCELS = "All parcels in the imported save file will create "
             + "duplicate parcels";
     public static final String MESSAGE_INVALID_FILE_EMPTY = "File to import is empty";
 
@@ -62,7 +62,7 @@ public class ImportCommand extends UndoableCommand {
 
         // check if all parcels are duplicates
         if (storedParcels.containsAll(parcels)) {
-            throw new CommandException(MESSAGE_FAILURE_DUPLICATE_PARCELS);
+            throw new CommandException(MESSAGE_INVALID_DUPLICATE_PARCELS);
         }
 
         model.addAllParcels(parcels, uniqueParcels, duplicateParcels);
