@@ -248,14 +248,30 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //@@author Jeremy
+
+    /**
+     * Filters person list by name in ascending order.
+     *
+     * @return Filtered UniquePersonList.
+     */
     public ObservableList<ReadOnlyPerson> getPersonListSortByNameAscending() {
         return persons.asObservableListSortedByNameAsc();
     }
 
+    /**
+     * Filters person list by name in descending order.
+     *
+     * @return Filtered UniquePersonList.
+     */
     public ObservableList<ReadOnlyPerson> getPersonListSortByNameDescending() {
         return persons.asObservableListSortedByNameDsc();
     }
 
+    /**
+     * Filters person list in reverse order.
+     *
+     * @return Filtered UniquePersonList.
+     */
     public ObservableList<ReadOnlyPerson> getPersonListReversed() {
         return persons.asObservableListReversed();
     }

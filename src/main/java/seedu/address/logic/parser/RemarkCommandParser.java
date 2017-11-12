@@ -21,7 +21,9 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
      * Parses the given {@code String} of arguments in the context of the RemarkCommand
      * and returns an RemarkCommand object for execution.
      *
-     * @throws ParseException if the user input does not conform the expected format
+     * @param args input args entered by user.
+     * @return Remark command with user defined index and remark.
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public RemarkCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
@@ -47,6 +49,10 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
+     *
+     * @param argumentMultimap ArgumentMultimap parsed from input arguments and remark prefix.
+     * @param prefixes Remark prefix.
+     * @return True if none of the prefixes contains empty optional values.
      */
     private static boolean isPrefixPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());

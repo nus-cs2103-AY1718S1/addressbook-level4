@@ -19,6 +19,12 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         this.keywords = keywords;
     }
 
+    /**
+     * Checks if keywords contains "AND" or "OR".
+     *
+     * @param person ReadOnlyPerson to be evaluated.
+     * @return Predicate depending if "AND" or "OR" are present.
+     */
     @Override
     public boolean test(ReadOnlyPerson person) {
         boolean containsAndOr = keywords.toString().toLowerCase().contains("and")
@@ -37,11 +43,13 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
     }
 
-
     /**
-     * Returns the predicate for the case where the input text does not contain "AND" / "OR"
-     * Default Logic: Treated as "AND"
-     * Filters users who has ALL input tags
+     * Returns the predicate for the case where the input text does not contain "AND" / "OR".
+     * Default Logic: Treated as "AND".
+     * Filters users who has ALL input tags.
+     *
+     * @param person ReadOnlyPerson to be evaluated.
+     * @return True if person has all tags in keywords list.
      */
     private boolean predicateWithoutAndOr(ReadOnlyPerson person) {
         int foundTags = 0;
@@ -57,8 +65,11 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Returns the predicate for the case where the input text contains and / or
-     * If "AND" or "OR" is not specified, value treated as "AND"
+     * Returns the predicate for the case where the input text contains and / or.
+     * If "AND" or "OR" is not specified, value treated as "AND".
+     *
+     * @param person ReadOnlyPerson to be evaluated.
+     * @return True if person has all required tags.
      */
     private boolean predicateWithAndOr(ReadOnlyPerson person) {
         List<List<String>> finalPredicate = generateTagNestledList();
@@ -71,7 +82,11 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Returns true if person contains all tags in list
+     * Returns true if person contains all tags in input list
+     *
+     * @param listOfTags List of tags to be checked.
+     * @param person ReadOnlyPerson to be checked against.
+     * @return True if ReadOnlyPerson has all tags in the provided list.
      */
     private boolean evaluateListOfTags(List<String> listOfTags, ReadOnlyPerson person) {
         int foundTags = 0;
@@ -87,8 +102,10 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Returns a nestled list, containing all the list of tags which are seperated by "OR"
-     * or joined by "AND"
+     * Returns a nestled list, containing all the list of tags which are separated by "OR"
+     * or joined by "AND".
+     *
+     * @return Nestled list separated by "AND" or "OR".
      */
     private List<List<String>> generateTagNestledList() {
         List<List<String>> finalPredicate = new ArrayList<>();
@@ -112,7 +129,10 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Instantiates an empty stack and pushes a list of keywords into the stack
+     * Instantiates an empty stack and pushes a list of keywords into the stack.
+     *
+     * @param keywords Keywords to be pushed into stack for "AND" "OR" evaluation.
+     * @return Stack containing all the keywords passed by user.
      */
     private Stack<String> createStack(List<String> keywords) {
         Stack<String> myStack = new Stack<>();

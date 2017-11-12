@@ -28,7 +28,7 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
         String[] tagKeyWords = trimmedArgs.split("\\s+");
         List<String> evaluateList = Arrays.asList(tagKeyWords);
 
-        if (trimmedArgs.isEmpty() || invalidListTagArgs(evaluateList)) {
+        if (trimmedArgs.isEmpty() || isInvalidArgs(evaluateList)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ListByTagCommand.MESSAGE_USAGE));
         }
@@ -39,12 +39,15 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
     }
 
     /**
-     * Returns true if tag list argument is invalid.
-     * Tag list is invalid if
-     * 1. List starts or ends with "AND" or "OR"
-     * 2. "AND" or "OR" are clustered together
+     * Checks if tag list argument is invalid.
+     * Tag list is invalid if:
+     * 1. List starts or ends with "AND" or "OR".
+     * 2. "AND" or "OR" are clustered together.
+     *
+     * @param evaluateList list of input text to be evaluated.
+     * @return True if list argument is invalid.
      */
-    private boolean invalidListTagArgs(List<String> evaluateList) {
+    private boolean isInvalidArgs(List<String> evaluateList) {
         boolean multipleAndOrCluster = hasManyAndOrClustered(evaluateList);
         boolean startWithAndOr = startsWithAndOr(evaluateList);
         boolean endWithAndOr = endsWithAndOr(evaluateList);
@@ -52,7 +55,10 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
     }
 
     /**
-     * Returns true if list starts with "AND" or "OR"
+     * Checks if list starts with "AND" or "OR".
+     *
+     * @param evaluateList list of input text to be evaluated.
+     * @return True if list starts with "AND" or "OR.
      */
     private boolean startsWithAndOr(List<String> evaluateList) {
         boolean startWithAndOr = "and".equalsIgnoreCase(evaluateList.get(0))
@@ -61,7 +67,10 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
     }
 
     /**
-     * Returns true if list ends with "AND" or "OR"
+     * Checks if list ends with "AND" or "OR".
+     *
+     * @param evaluateList list of input text to be evaluated.
+     * @return True if list ends with "AND" or "OR.
      */
     private boolean endsWithAndOr(List<String> evaluateList) {
         boolean endWithAndOr = "and".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1))
@@ -70,7 +79,10 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
     }
 
     /**
-     * Returns true if "AND" or "OR" strings are clustered together
+     * Checks if "AND" or "OR" strings are clustered together.
+     *
+     * @param evaluateList list of input text to be evaluated.
+     * @return True if "AND" or "OR" strings are clustered together.
      */
     private boolean hasManyAndOrClustered(List<String> evaluateList) {
         String previousString = "";
