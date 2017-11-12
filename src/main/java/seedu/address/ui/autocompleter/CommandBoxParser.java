@@ -79,7 +79,8 @@ public class CommandBoxParser {
      * or if it is present but is still missing arguments
      */
     private boolean isMissing(ArgumentMultimap argMap, Prefix prefix) {
-        return !argMap.getValue(prefix).isPresent()
+        return prefix.equals(PREFIX_TAG)
+                || !argMap.getValue(prefix).isPresent()
                 || argMap.getValue(prefix).get().equals(EMPTY_STRING);
     }
 
