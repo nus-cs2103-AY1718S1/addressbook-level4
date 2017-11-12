@@ -387,7 +387,7 @@ Similar to the PersonList and TagList, the list contains the different events wi
 As seen in the diagram below, `EventsCommand` inherits `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
 
 image::EventsCommandDiagram1.png[width="800"]
-Figure 5.2.1 Events Command Diagram 1
+_Figure 5.2.1 EventsCommand Logic Class Diagram_
 
 The execution of EventsCommand is processed in this way:
 
@@ -466,6 +466,7 @@ The following sequence diagram shows how the events operation works:
 As seen in the diagram below, when `events` is typed into the command line input, a new `EventsCommand` is created.
 
 image::EventsCommandDiagram2.png[width="800"]
+_Figure 5.2.2 EventsCommand Logic Sequence Diagram_
 
 ==== Design Considerations
 **Aspect:** Implementation of `EventsCommand` +
@@ -483,11 +484,11 @@ image::EventsCommandDiagram2.png[width="800"]
 Add event mechanism adds an event which stores in the The Myth's Book. The add event mechanism is facilitated by an `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
 different events with their information given by the user. This command inherits from `UndoableCommand`.
 
-From Figure 5.2.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the SortCommand
+From Figure 5.3.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the SortCommand
 can be undoable, where the previous state of the address book before sorting is saved.
 
 image::AddEventDiagram.PNG[width="800"]
-Figure 5.3.1 AddEventCommand Logic Class Diagram
+_Figure 5.3.1 AddEventCommand Logic Class Diagram_
 
 The execution of AddEventCommand is processed in this way:
 
@@ -498,10 +499,10 @@ The execution of AddEventCommand is processed in this way:
   to update the list being filtered and also call an event `indicatedAddressBookChanged()` to show that the addressBook has be updated
   with additional event.
 
-The illustration of the execution is illustrated in Figure 5.2.2 below.
+The illustration of the execution is illustrated in Figure 5.3.2 below.
 
 image::addeventmodelseqdiagram.PNG[width="800"]
-Figure 5.2.2 AddEventCommand Model Sequence Diagram
+_Figure 5.3.2 AddEventCommand Model Sequence Diagram_
 
 Code of `AddEventCommand`:
 
@@ -571,7 +572,7 @@ As seen in Figure 5.4.1 below, `DeleteEventCommand` inherits `UndoableCommand` w
 When `DeleteEventCommand` is executed, the previous state of the address book before the deleting of an event is saved.
 
 image::DeleteEventCommandDiagram1.png[width="800"]
-_Figure 5.4.1 Delete Event Command Diagram_
+_Figure 5.4.1 DeleteEventCommand Logic Class Diagram_
 
 The execution of DeleteEventCommand is processed in this way:
 
@@ -651,17 +652,17 @@ The following sequence diagram shows how the delete event operation works:
 As seen in the diagram below, when `deleteevent 1` is typed into the command line input, a new `DeleteEventCommand` is created.
 
 image::DeleteEventCommandDiagram2.png[width="800"]
-_Figure 5.4.2 Delete Event Command Diagram 2_
+_Figure 5.4.2 DeleteEventCommand Logic Sequence Diagram_
 
 As seen in Figure 5.4.3, when `deleteevent 1` is executed in `DeleteEventCommand`, it will remove the event in `UniqueEventList`.
 
 image::DeleteEventCommandDiagram3.png[width="800"]
-_Figure 5.4.3 Delete Event Command Diagram 3_
+_Figure 5.4.3 DeleteEventCommand Logic & Model Sequence Diagram_
 
 As seen in the diagram below, when `deleteEvent` is executed in `AddressBook`, it will post an event `PopulateRequestEvent` in`EventsCenter`, which is handled by `MainWindow` and `Calendar`.
 
 image::DeleteEventCommandDiagram4.png[width="800"]
-_Figure 5.4.4 Delete Event Command Diagram 4_
+_Figure 5.4.4 DeleteEventCommand Logic, EventsCenter & UI Sequence Diagram_
 
 ==== Design Considerations
 **Aspect:** Implementation of `DeleteEventCommand` +
@@ -681,7 +682,7 @@ The switch theme mechanism is facilitated by a `ThemesList`, which resides insid
 As seen in the diagram below, `SwitchThemeCommand` inherits `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
 
 image::SwitchThemeCommandDiagram1.png[width="800"]
-_Figure 5.5.1 Switch Theme Command Diagram 1_
+_Figure 5.5.1 SwitchThemeCommand Logic Class Diagram_
 
 The execution of SwitchThemeCommand is processed in this way:
 
@@ -748,12 +749,12 @@ The following sequence diagram shows how the switch theme operation works:
 As seen in the diagram below, when `switch 1` is typed into the command line input, a new `SwitchThemeCommand` is created.
 
 image::SwitchThemeCommandDiagram2.png[width="800"]
-_Figure 5.5.2 Switch Theme Command Diagram 2_
+_Figure 5.5.2 SwitchThemeCommand Logic Sequence Diagram_
 
 As seen in the diagram below, when `switch 1` is executed in `SwitchThemeCommand`, it will post `ChangeThemeRequestEvent` to the `EventsCenter`.
 
 image::SwitchThemeCommandDiagram3.png[width="800"]
-_Figure 5.5.3 Switch Theme Command Diagram 3_
+_Figure 5.5.3 SwitchThemeCommand Logic, EventsCenter & UI Sequence Diagram_
 
 Upon detecting `ChangeThemeRequestEvent`, `MainWindow` will call `handleChangeTheme` to handle the event.
 
@@ -787,7 +788,7 @@ consisting of a list of available colour themes in The Myth's Book.
 As seen in the diagram below, the `ThemeListCommand` inherts from `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
 
 image::ThemeListCommandDiagram1.png[width="800"]
-_Figure 5.6.1 Theme List Command Diagram 1_
+_Figure 5.6.1 ThemeListCommand Logic Class Diagram_
 
 The execution of ThemeListCommand is processed in this way:
 
@@ -868,12 +869,12 @@ The following sequence diagram shows how the theme list operation works:
 As seen in the diagram below, when `themes` is typed into the command line input, a new `ThemeListcommand` is created.
 
 image::ThemeListCommandDiagram2.png[width="800"]
-_Figure 5.6.2 Theme List Command Diagram 2_
+_Figure 5.6.2 ThemeListCommand Logic Sequence Diagram_
 
 As seen in the diagram below, when `themes` is executed in `ThemeListCommand`, it will post `ShowThemeRequestEvent` to the `EventsCenter`, which will be handled by `MainWindow` through `handleThemes`.
 
 image::ThemeListCommandDiagram3.png[width="800"]
-_Figure 5.6.3 Theme List Command Diagram 3_
+_Figure 5.6.3 ThemeListCommand Logic, EventsCenter & UI Diagram_
 
 ==== Design Considerations
 
@@ -894,12 +895,12 @@ When the sort method is executed, it organizes the position of the people existi
 based on their names in alphabetical order. The sort mechanism touches all components of the software application
 but mainly involving the logic and model component.
 
-In the figure [Figure 5.4.1] below, the `SortCommand` inherits from `UndoableCommand`
+In the figure [Figure 5.7.1] below, the `SortCommand` inherits from `UndoableCommand`
 which is an extra layer between abstract `Command` class which belongs to the Logic Component.
 This allows the SortCommand to be undoable, where the previous state of the address book before sorting is saved.
 
 image::SortCommandLogicClassDiagram.PNG[width="600"]
-Figure 5.4.1 SortCommand Logic Class Diagram
+_Figure 5.7.1 SortCommand Logic Class Diagram_
 
 Suppose a user has an unorganized list of contacts and executes the `SortCommand` to organize his contacts.
 
@@ -947,17 +948,17 @@ public void sort() {
 
 ----
 The following sequence diagrams shows how the sort operation works:
-As seen in the figure [Figure 5.4.2] below, when sort is typed into command line input, new `SortCommand` is created.
+As seen in the figure [Figure 5.7.2] below, when sort is typed into command line input, new `SortCommand` is created.
 
 image::SortCommandLogicSequenceDiagram.PNG[width="600"]
-Figure 5.4.2 SortCommand Logic Sequence Diagram
+_Figure 5.7.2 SortCommand Logic Sequence Diagram_
 
-As seen in the figure [Figure 5.4.3] below, when `executeUndoableCommand` is called in SortCommand class, it will call the sort function in ModelManager.
+As seen in the figure [Figure 5.7.3] below, when `executeUndoableCommand` is called in SortCommand class, it will call the sort function in ModelManager.
 It will call the sort() function of its own class until it reaches InternalList.sort() where the sorting of
 contacts positions based on their names will be executed.
 
 image::SortCommandModelSequenceDiagram.PNG[width="600"]
-Figure 5.4.3 SortCommand Model Sequence Diagram
+_Figure 5.7.3 SortCommand Model Sequence Diagram_
 
 Finally, the execution will create a sorted addressbook where the names of contacts are alphabetically sorted
 and shown in the `PersonListPanel`.
@@ -1071,7 +1072,7 @@ into the `AddressBookParser` so that it can create a new `AccessCommand` and sto
 Sequence diagram for `Logic` Component for `AccessCommand` and its execution:
 
 image::AccessCommandLogicSequenceDiagram.PNG[width="800"]
-Figure 5.5.1 Access Command Logic Sequence Diagram
+_Figure 5.8.1 AccessCommand Logic Sequence Diagram_
 
 After creating a new `AccessCommand`, `LogicManager` will call execute on `AccessCommand`
 and this will result in the website of the person at the index inputted to be attained through the `ObservableList<ReadOnlyPerson>`
@@ -1082,7 +1083,7 @@ The process can be observed in the sequence diagram below
 where it shows the sequence of `execute()` method of `AccessCommand` and its event handling.
 
 image::AccessCommandEventsSequenceDiagram.PNG[width="800"]
-Figure 5.5.2 Access Command Model/EventsCenter/UI Sequence Diagram
+_Figure 5.8.2 AccessCommand Model, EventsCenter & UI Sequence Diagram_
 
 ==== Design Considerations
 **Aspect:** How accessing a website of a person executes +
@@ -1189,7 +1190,7 @@ into the `AddressBookParser` so that it can create a new `LocationCommand` and s
 Sequence diagram for `Logic` Component for `LocationCommand` and how it is executed:
 
 image::LocationCommandLogicSequenceDiagram.png[width="800"]
-Figure 5.6.1 LocationCommand Logic Sequence Diagram
+_Figure 5.9.1 LocationCommand Logic Sequence Diagram_
 
 After creating a new `LocationCommand`, `LogicManager` will call execute on `LocationCommand`
 and this will result in the address of the person at the index inputted to be attained through
@@ -1201,7 +1202,7 @@ The process can be observed in the sequence diagram below
 where it shows the sequence of `execute()` method of `LocationCommand` and its event handling.
 
 image::LocationCommandEventsSequenceDiagram.png[width="800"]
-Figure 5.6.2 LocationCommand Model/EventsCenter/UI Sequence Diagram
+_Figure 5.9.2 LocationCommand Model, EventsCenter & UI Sequence Diagram_
 
 ==== Design Considerations
 **Aspect:** How accessing a location of a person executes +
@@ -1287,7 +1288,7 @@ It lists out all contacts that have the specified tag. Contacts with substrings 
 From Figure 5.11.1 below, the `FindTagCommand` inherits from `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
 
 image::FindTagCommandDiagram1.png[width="800"]
-_Figure 5.11.1 Find Tag Command Diagram 1_
+_Figure 5.11.1 FindTagCommand Logic Class Diagram_
 
 The execution of FindTagCommand is processed in this way:
 
@@ -1324,6 +1325,7 @@ The follow sequence diagram shows how the find tag operation works:
 As seen in Figure 5.11.2, when `findtag classmates` is typed into the command line input, a new `FindTagCommand` is created.
 
 image::FindTagCommandDiagram2.png[width="800"]
+_Figure 5.11.2 FindTagCommand Logic Sequence Diagram_
 
 ==== Design Considerations
 
@@ -1345,7 +1347,7 @@ As seen in the diagram below,`FavouriteCommand` and `UnfavouriteCommand` inherit
 the previous state of the address book before favouriting or unfavouriting a person is saved.
 
 image::FavouriteCommandDiagram1.png[width="800"]
-_Figure 5.12.1 Favourite Command Diagram 1_
+_Figure 5.12.1 FavouriteCommand Logic Class Diagram_
 
 The execution of FavouriteCommand is processed in this way:
 
@@ -1435,7 +1437,7 @@ As seen in the diagram below, when `favourite 1` is typed into the command line 
 The same works for `UnfavouriteCommand` when `unfavourite 1` is typed into the command line input.
 
 image::FavouriteCommandDiagram2.png[width="800"]
-_Figure 5.12.2 Favourite Command Diagram 2_
+_Figure 5.12.2 FavouriteCommand Logic Sequence Diagram_
 
 ==== Design Considerations
 
@@ -1454,7 +1456,7 @@ The favourite list mechanism is facilitated by `NameContainsFavouritePredicate`,
 As seen in the diagram below, `FavouriteListCommand` inherits from `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
 
 image::FavouriteListCommandDiagram1.png[width="800"]
-_Figure 5.13.1 Favourite List Command Diagram 1_
+_Figure 5.13.1 FavouriteListCommand Logic Class Diagram_
 
 The execution of `FavouriteListCommand` is processed in this way:
 
@@ -1490,7 +1492,7 @@ The following sequence diagram shows how the favourite list operation works:
 As seen in Figure 5.13.2, when `favourites` is typed into the command line input, a new `FavouriteListCommand` is created.
 
 image::FavouriteListCommandDiagram2.png[width="800"]
-_Figure 5.13.2 Favourite List Command Diagram 2_
+_Figure 5.13.2 FavouriteListCommand Logic Sequence Diagram_
 
 ==== Design Considerations
 
@@ -1523,12 +1525,12 @@ return (((cal.get(Calendar.MONTH)) == Calendar.getInstance().get(Calendar.MONTH)
     }
 ----
 
-An overall view of birthdays command logic is shown in Figure 5.8.1
+An overall view of birthdays command logic is shown in Figure 5.14.1:
 
 image::BirthdayMechanism.png[width="800"]
-Figure 5.8.1 Birthdays Command Logic Sequence Diagram
+_Figure 5.14.1 Birthdays Command Logic Sequence Diagram_
 
-What the user finally sees is a list of people with their birthday today as shown in figure 5.8.2. This is because the `executeUndoableCommand()` which is overriden in the BirthdaysCommand class updates the `filteredPersonList`.
+What the user finally sees is a list of people with their birthday today. This is because the `executeUndoableCommand()` which is overriden in the BirthdaysCommand class updates the `filteredPersonList`.
 [source,java]
 ----
  @Override
@@ -1863,10 +1865,10 @@ The updating of different months and population of event nodes are done by the t
 
 ==== Dialog Box
 
-The mechanism behind the process of adding an event from the dialog box is shown in Figure 5.9.3.1 below.
+The mechanism behind the process of adding an event from the dialog box is shown in Figure 5.17.3.1 below.
 
 image::dialogaddeventsequencediagram.PNG[width="800"]
-Figure 5.9.3.1 Dialog Add Event Sequence Diagram
+_Figure 5.17.3.1 Dialog Add Event Model, EventsCenter & UI Sequence Diagram_
 
 From the startDialog method in `AnchorPaneNode` class, after receiving a valid Event, an `AddEventRequestEvent` object will be posted to `EventsCenter`.
 Then with the `@Subscribe` function, a handleAddEvent() method in `ModelManager` will be called to addEvent of the `AddressBook` object. The following code snippets
@@ -2018,7 +2020,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 6.3.1 : Saving documentation as PDF files in Chrome_
 
 link:#the-myths-book---developer-guide[Back To Top]
 
