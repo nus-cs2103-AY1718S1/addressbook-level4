@@ -176,8 +176,8 @@ public class AddCommand extends UndoableCommand {
     }
 
     /**
-     * Checks for similarities between the address fields for {@code toAdd} and {@code contact}. Updates isWaitingforReply
-     * and duplicateFields accordingly.
+     * Checks for similarities between the address fields for {@code toAdd} and {@code contact}. Updates
+     * isWaitingforReply and duplicateFields accordingly.
      */
     private void checkDuplicateAddress(Person toAdd, ReadOnlyPerson contact) {
         if ((toAdd.getAddress().toString().trim().equalsIgnoreCase(contact.getAddress().toString().trim()))
