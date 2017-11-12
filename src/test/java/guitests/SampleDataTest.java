@@ -48,13 +48,13 @@ public class SampleDataTest extends AddressBookGuiTest {
 
         for (int i = 0; i < tempList.length; i++) {
             Lesson lesson = tempList[i];
-            if(!uniqueList.contains(lesson.getCode())) {
+            if (!uniqueList.contains(lesson.getCode())) {
                 uniqueList.add(lesson.getCode());
             }
         }
 
         Lesson[] expectedList = new Lesson[uniqueList.size()];
-        for(int i = 0; i < uniqueList.size();i++) {
+        for (int i = 0; i < uniqueList.size(); i++) {
             expectedList[i] = tempList[i];
         }
 
