@@ -964,6 +964,10 @@ We make the help command to be able to alert the usage of a speified command.
 
 The way we do it is to make the help command paser to identify the command word after 'help' and show the command usage of that command.
 
+The following sequence diagram shows how help command works:
+
+image::HelpCommandSequenceDiagram.png[width="800"]
+
 For example, you can see the implementation of the help command parser as follow:
 [source,java]
 ----
@@ -997,12 +1001,37 @@ The way we deal with recycle bin storage is the same as we deal with addressbook
 
 [NOTE]
 If we find duplicate people when moving a person to recyclebin or moving a person to addressbook, then this person will be omitted and directly remove.
+
+==== Design Considerations
+
+**Aspect:**  How to deal with duplicate person in recycle bin +
+**Alternative 1 (current choice):**  Don't put a peron into the recycle bin if we find duplicate person in bin when we delete from address book. +
+**Pros:**  It is more convenient to restore a person if we keep the person in bin unique . +
+**Cons:**  The information of the second duplicate person will not be stored in adressbook. +
+**Alternative 2:** Put the person with duplicate one into recycle bin. +
+**Pros:**  It's less likely we will lose data when we delete. +
+**Cons:**  It is harder when we need to restore a person with duplicate persons in the bin.
+
+---
+
+**Aspect:**  Information to store in recycle bin +
+**Alternative 1 (current choice):**  Don't store the tag and event of a person, and store all the other information. +
+**Pros:**  It is more convenient to restore a person without affecting the tag list and event list in address book . +
+**Cons:**  Users may need to add the tag and event of a person retored from the recycle bin again. +
+**Alternative 2:** Store all the information of a perosn into recycle bin when the person is deleted from address book. +
+**Pros:**  Users don't need to edit the tag and evnet of restored person again. +
+**Cons:**  It costs a lot more work to reload a person with its own tag and event.
+
 // end::bin[]
 
 // tag::export[]
 === Exporting
 
 We are using 'java.io.File' and 'java.io.FileWriter' to export address book data.
+
+The following sequence diagram shows how export command works:
+
+image::ExportCommandSequenceDiagram.png[width="800"]
 
 * The filepath should be a complete path to a specific location of a empty txt file in your computer.
 * The order of the output information is 'person', 'event';
