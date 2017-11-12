@@ -127,7 +127,7 @@ public class PersonBuilder {
         this.person.setPinned(isPinned);
         return this;
     }
-    
+
     //@@author wynkheng
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
