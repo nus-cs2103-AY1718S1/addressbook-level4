@@ -12,7 +12,7 @@ public class Deadline {
     public final String date;
 
     /**
-     * Creates an empty deadline with no recur interval if the deadline is not specified.
+     * Creates a new deadline.
      */
     public Deadline(String date) {
         requireNonNull(date);

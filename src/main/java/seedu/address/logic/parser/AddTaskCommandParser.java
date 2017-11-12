@@ -84,12 +84,20 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
     }
 
     /**
-     * Returns true if a single deadline prefix has been used in an unquoted string in the given
+     * Returns true if a single deadline prefix has been used less than two times in an unquoted string in the given
      * {@code ArgumentMultimap}
      */
     private static boolean isSinglePrefixPresent(ArgumentMultimap argumentMultimap) {
-        return !(argumentMultimap.getValue(PREFIX_DEADLINE_BY).isPresent()
-                && argumentMultimap.getValue(PREFIX_DEADLINE_ON).isPresent()
-                && argumentMultimap.getValue(PREFIX_DEADLINE_FROM).isPresent());
+        int prefixCounter = 0;
+        if (argumentMultimap.getValue(PREFIX_DEADLINE_BY).isPresent()) {
+            prefixCounter++;
+        }
+        if (argumentMultimap.getValue(PREFIX_DEADLINE_ON).isPresent()) {
+            prefixCounter ++;
+        }
+        if (argumentMultimap.getValue(PREFIX_DEADLINE_FROM).isPresent()) {
+            prefixCounter++;
+        }
+        return prefixCounter < 2;
     }
 }
