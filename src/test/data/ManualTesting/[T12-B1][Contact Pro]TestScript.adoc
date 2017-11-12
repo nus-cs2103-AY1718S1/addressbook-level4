@@ -178,3 +178,42 @@ CORRECT_PATH means a correct path of a picture on your machine
 * command: `pic 3 p/default_pic.png`
 * expected behavior: a picture of the 3rd person is changed to the default one
 
+=== Filter
+
+==== Try to filter using a non-relevant keyword (does not pertain to any contact)
+
+* command: `filter zamboni`
+* expected behaviour: Empty list output
+
+==== Try to filter using a relevant keyword
+
+* command: `filter family`
+* expected behaviour: List of all contacts tagged/grouped as family
+
+==== Try to filter multiple contacts using multiple keywords
+
+* command: `filter family friends`
+* expected behaviour: List of all contacts tagged/grouped as friends or family
+
+=== FilterAll
+
+==== Try to filter using a non-relevant keyword (does not pertain to any contact)
+
+* command: `filterall zamboni`
+* expected behaviour: Empty list output
+
+==== Try to filter using a relevant keyword
+
+* command: `filterall family`
+* expected behaviour: List of all contacts tagged/grouped as family
+
+==== Try to filter specific contacts using multiple keywords
+
+* command: `filterall Alex friends`
+* expected behaviour: List of all contacts tagged/grouped as both friends and family
+
+==== Try to filter contacts using keywords that do not exist concurrently on a single contact
+
+* command: `filterall friends enemies`
+* expectred behaviour: Empty list output
+

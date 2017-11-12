@@ -28,7 +28,7 @@ Responsibility: Logic
 
 === Adil Azmoon
 image::0E9023CF-666A-4E2F-9B6D-A3DC80C647E1.jpg[width="150", align="left"]
-{empty}[http://github.com/adileyzekmoon[github]]
+{empty}[http://github.com/adileyzekmoon[github]][https://cs2103aug2017-t12-b1.github.io/main/team/adileyzekmoon.html[portfolio]]
 
 Role: Developer +
 Responsibilities: UI
