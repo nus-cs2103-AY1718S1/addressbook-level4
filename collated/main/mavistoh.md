@@ -1,5 +1,5 @@
 # mavistoh
-###### /java/seedu/address/commons/core/index/Index.java
+###### \java\seedu\address\commons\core\index\Index.java
 ``` java
     /**
      * Creates a new {@code Index[]} using a one-based index.
@@ -20,7 +20,7 @@
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteCommand.java
+###### \java\seedu\address\logic\commands\DeleteCommand.java
 ``` java
 /**
  * Deletes a person identified using it's last displayed index from the address book.
@@ -94,7 +94,7 @@ public class DeleteCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditCommand.java
+###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
         public void setBirthday(Birthday birthday) {
             this.birthday = birthday;
@@ -104,7 +104,7 @@ public class DeleteCommand extends UndoableCommand {
             return Optional.ofNullable(birthday);
         }
 ```
-###### /java/seedu/address/logic/parser/AddCommandParser.java
+###### \java\seedu\address\logic\parser\AddCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -177,7 +177,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/DeleteCommandParser.java
+###### \java\seedu\address\logic\parser\DeleteCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteCommand object
@@ -201,7 +201,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses {@code oneBasedIndex} into an {@code Index[]} and returns it. Leading and trailing whitespaces will be
@@ -244,7 +244,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     }
 
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
@@ -254,7 +254,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/model/person/Address.java
+###### \java\seedu\address\model\person\Address.java
 ``` java
     /**
      * Validates given address.
@@ -279,7 +279,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         return test.matches(ADDRESS_VALIDATION_REGEX) || test.matches(ADDRESS_EMPTY);
     }
 ```
-###### /java/seedu/address/model/person/Birthday.java
+###### \java\seedu\address\model\person\Birthday.java
 ``` java
 /**
  * Represents Person's birthday in the address book.
@@ -347,7 +347,7 @@ public class Birthday {
 
 }
 ```
-###### /java/seedu/address/model/person/Email.java
+###### \java\seedu\address\model\person\Email.java
 ``` java
     /**
      * Validates given email.
@@ -376,7 +376,7 @@ public class Birthday {
         return test.matches(EMAIL_VALIDATION_REGEX) || test.matches(EMAIL_EMPTY);
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     @Override
     public ObjectProperty<Name> nameProperty() {
@@ -445,7 +445,7 @@ public class Birthday {
     }
 
 ```
-###### /java/seedu/address/model/person/Phone.java
+###### \java\seedu\address\model\person\Phone.java
 ``` java
     /**
      * Validates given phone number.

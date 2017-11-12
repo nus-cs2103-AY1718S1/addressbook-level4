@@ -1,5 +1,5 @@
 # mavistoh
-###### /java/seedu/address/model/person/BirthdayTest.java
+###### \java\seedu\address\model\person\BirthdayTest.java
 ``` java
 public class BirthdayTest {
 
@@ -25,7 +25,7 @@ public class BirthdayTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Birthday} of the {@code EditBirthdayDescriptor} that we are building.
@@ -39,7 +39,7 @@ public class BirthdayTest {
         return this;
     }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
@@ -53,7 +53,7 @@ public class BirthdayTest {
         return this;
     }
 ```
-###### /java/systemtests/DeleteCommandSystemTest.java
+###### \java\systemtests\DeleteCommandSystemTest.java
 ``` java
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 

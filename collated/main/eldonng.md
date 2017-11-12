@@ -151,6 +151,14 @@ public class CreateGroupCommand extends UndoableCommand {
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, groupName, groupMembers.size()));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CreateGroupCommand // instanceof handles nulls
+                && this.groupName.equals(((CreateGroupCommand) other).groupName)
+                && this.indexes.equals(((CreateGroupCommand) other).indexes)); // state check
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\DeleteGroupCommand.java
@@ -181,7 +189,7 @@ public class DeleteGroupCommand extends UndoableCommand {
         List<ReadOnlyGroup> lastShownList = model.getGroupList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
         ReadOnlyGroup groupToDelete = lastShownList.get(targetIndex.getZeroBased());
@@ -280,11 +288,12 @@ public class SetColourCommand extends Command {
 
     public static final String SETCOLOUR_SUCCESS = "All tags [%1s] are now coloured %2s";
     public static final String SETCOLOUR_INVALID_COLOUR = "Unfortunately, %1s is unavailable to be set in addressbook";
+    public static final String SETCOLOUR_INVALID_TAG = "No such tag.";
     private static final String[] colours = {"blue", "red", "brown", "green", "black", "purple", "indigo", "grey",
         "chocolate", "orange", "aquamarine"};
 
-    private String tag;
-    private String newColour;
+    public String tag;
+    public String newColour;
 
     public SetColourCommand(String tag, String colour) {
         this.tag = tag;
@@ -292,16 +301,16 @@ public class SetColourCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException{
         try {
             if (isColourValid()) {
                 model.setTagColour(tag, newColour);
                 model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
                 return new CommandResult(String.format(SETCOLOUR_SUCCESS, tag, newColour));
             }
-            return new CommandResult(String.format(SETCOLOUR_INVALID_COLOUR, newColour));
+            throw new CommandException(String.format(SETCOLOUR_INVALID_COLOUR, newColour));
         } catch (IllegalValueException ive) {
-            return new CommandResult(ive.getMessage());
+            throw new CommandException(ive.getMessage());
         }
     }
 
@@ -316,6 +325,14 @@ public class SetColourCommand extends Command {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SetColourCommand // instanceof handles nulls
+                && this.tag.equals(((SetColourCommand) other).tag)
+                && this.newColour.equals(((SetColourCommand) other).newColour));// state check
     }
 }
 ```
@@ -579,6 +596,19 @@ public class UnpinCommandParser implements Parser<UnpinCommand> {
     }
 
     /**
+     * Replaces the target person from all groups with editedPerson
+     * @param target
+     * @param editedPerson
+     */
+    public void editPersonInGroup(ReadOnlyPerson target, ReadOnlyPerson editedPerson) {
+        groups.editPerson(target, editedPerson);
+    }
+
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+
+    /**
      * Removes a group from the address book
      * @throws GroupNotFoundException if the group is not found
      */
@@ -660,6 +690,10 @@ public class Group implements ReadOnlyGroup {
         return groupName.get();
     }
 
+    public void setGroupName(GroupName groupName) {
+        this.groupName.set(groupName);
+    }
+
     @Override
     public ObjectProperty<List<ReadOnlyPerson>> membersProperty() {
         return groupMembers;
@@ -668,6 +702,10 @@ public class Group implements ReadOnlyGroup {
     @Override
     public List<ReadOnlyPerson> getGroupMembers() {
         return groupMembers.get();
+    }
+
+    public void setGroupMembers(List<ReadOnlyPerson> groupMembersList) {
+        this.groupMembers.set(groupMembersList);
     }
 
     @Override
@@ -691,7 +729,7 @@ public class Group implements ReadOnlyGroup {
  */
 public class GroupName {
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Person names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Group names should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -833,6 +871,21 @@ public class UniqueGroupList implements Iterable<Group> {
         });
     }
 
+    /**
+     * replaces the target person with the new information to all groups
+     * @param target
+     * @param toAdd
+     */
+    public void editPerson(ReadOnlyPerson target, ReadOnlyPerson toAdd) {
+        requireNonNull(toAdd);
+        internalList.forEach(group -> {
+            if (group.getGroupMembers().contains(target)) {
+                group.getGroupMembers().remove(target);
+                group.getGroupMembers().add(toAdd);
+            }
+        });
+    }
+
     public void setGroups(UniqueGroupList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
@@ -955,7 +1008,7 @@ public class UniqueGroupList implements Iterable<Group> {
 ``` java
     @Override
     public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException,
-            EmptyAddressBookException{
+            EmptyAddressBookException {
         try {
             person.setPin();
             sort(SortCommand.ARGUMENT_NAME);
@@ -988,7 +1041,7 @@ public class UniqueGroupList implements Iterable<Group> {
                 return;
             }
         }
-        throw new IllegalValueException("No such tag!");
+        throw new IllegalValueException(SetColourCommand.SETCOLOUR_INVALID_TAG);
     }
 
     @Override
@@ -1250,6 +1303,12 @@ public class GroupListPanel extends UiPart<Region> {
     }
 
     @Subscribe
+    private void handleJumpToGroupListRequestEvent(JumpToGroupListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+
+    @Subscribe
     private void handleNewGroupListEvent(NewGroupListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setConnections(event.getGroupsList(), event.getPersonsList());
@@ -1495,12 +1554,13 @@ public class PersonInfo extends UiPart<Region> {
 ```
 ###### \resources\view\GroupListPanel.fxml
 ``` fxml
+
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="320.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="320.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="groupListView" prefHeight="210.0" prefWidth="320.0" styleClass="background" />
+      <ListView fx:id="groupListView" prefHeight="420.0" prefWidth="320.0" styleClass="background" />
    </children>
 </VBox>
 ```

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
@@ -34,6 +35,7 @@ import seedu.address.logic.commands.PinCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectGroupCommand;
+import seedu.address.logic.commands.SetColourCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnpinCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -154,6 +156,13 @@ public class AddressBookParserTest {
         SelectGroupCommand command = (SelectGroupCommand) parser.parseCommand(
                 SelectGroupCommand.COMMAND_WORD + " " + INDEX_FIRST_GROUP.getOneBased());
         assertEquals(new SelectGroupCommand(INDEX_FIRST_GROUP), command);
+    }
+
+    @Test
+    public void parseCommandSetColour() throws Exception {
+        SetColourCommand command = (SetColourCommand) parser.parseCommand(
+                SetColourCommand.COMMAND_WORD + " " + VALID_TAG_FRIEND + " "  + "red");
+        assertEquals(new SetColourCommand(VALID_TAG_FRIEND, "red"), command);
     }
 
     @Test
