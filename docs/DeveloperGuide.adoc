@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T09-B4/main/tree/master
 
-By: `T09-B4`      Since: `Nov 2017`      Licence: `MIT`
+By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 [big]#*Introduction*#
 
@@ -594,36 +594,18 @@ We want our remark command to function like a todo list, which enables users to 
 Since remarks can be different for different persons, it was placed under the Person class to allow for easy retrieval. +
 Since it is saved under the Person class, we are able to utilise the ReadOnlyPerson to compare persons, or extract specific information without risking a corruption in the storage file. +
 
-image::PersonRemarkAssociation.png[width ="400"]
-_Figure 3.8.1a : Association Diagram of Person and Remarks_
+image::UpdatedRemarkSequenceDiagram.png[width ="900"]
+_Figure 3.8.1a : Sequence Diagram of Remark command_
+
 
 As users accomplish tasks that were associated with specific persons, we want to allow them to remove remarks at any point in time. +
-To allow for easy user manipulation of the remarks of different persons, as there can be multiple remarks appended to a person, we provided an `addremark` and `removeremark` command to compliment the remark checklist +
+To allow for easy user manipulation of the remarks of different persons, we provided an `addremark` and `removeremark` command to compliment the remark checklist +
 From the `addremark` command, users can add remarks to a target person without clearing the existing remarks pertaining to that person. +
 From the `removeremark` command, users can select specific remarks to remove based on the remark index and target person index. +
 Implementation of both commands also can allow for mutiple addition and removal of remarks, although only one person can be affected at one time. +
 
-image::UpdateAddRemarkSequenceDiagram.png[width ="900"]
-_Figure 3.8.1b : Sequence Diagram of AddRemark command_
-
-image::UpdateRemoveRemarkSequenceDiagram.png[width ="900"]
-_Figure 3.8.1c : Sequence Diagram of RemoveRemark command_
-
 On top of this, we decided that remark checklist UI should be updated with any changes, either to selection or file storage. +
 Thus, we subscribed the remark panel UI to any person selection changes or person storage changes to allow for a constantly updated UI. +
-
-[source,java]
-----
-@Subscribe
-private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-    // ... Update display after person panel selection changed logic ...
-}
-
-@Subscribe
-public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
-    // ... Update display after address book changed logic ...
-}
-----
 
 Since remarks tend to be lengthy, we decided that a large amount of space on the app should be dedicated to them. +
 Instead of implementing similar UI design as the tags feature, we decided to display the remarks using a large stackpane. +
@@ -666,11 +648,6 @@ By having a link field under each person, we are able to load a twitter link whe
 
 image::person.png[width="400"]
 _Figure 3.9.1 : Attributes of Person class_
-
-Since only one twitter link is allowed for each person, we have designed the link command to replace any old twitter links
-with the current twitter link used in the link command so that it is easy to use for the user.
-
-image::LinkActivityDiagram.png[width="600"]
 
 [NOTE]
 Only twitter link are allowed to be added.
