@@ -559,7 +559,8 @@ Selects the 2nd parcel in the Ark. Expands browser section.
 `select 1` +
 Selects the 1st parcel in the results of the `find` command.
 
-//tag::tabs[]
+//tag::tabCommand[]
+
 === Selecting a tab : `tab`
 
 Selects the tab identified by the index number and switches the tab shown in the Parcel List Panel.
@@ -592,7 +593,8 @@ Examples:
 Selects the second tab "Completed Parcels" in the Parcel List Panel and displays its respective parcel list.
 * `tab 1` +
 Selects the first tab "All Parcels" in the Parcel List Panel and displays it respective parcel list .
-//end::tabs[]
+
+//end::tabCommand[]
 
 === Listing entered commands : `history`
 

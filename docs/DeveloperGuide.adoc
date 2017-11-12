@@ -463,6 +463,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 (default: `config.json`).
 
 //tag::browser[]
+
 === Google Maps Search Browser
 
 The google maps search browser enhancement resides within the `BrowserPanel`.
@@ -480,7 +481,29 @@ to the back of Google Map's search URL prefix to get a URL for the browser to lo
 ** **Pros:** Makes it easier for implementing additional features that utilizes the Maps API which would be required +
  in future versions of the Ark application. +
 ** **Cons:** More difficult to implement and integrate into a command line interface.
+
 //end::browser[]
+
+//tag::tabCommand[]
+
+=== Tab change mechanism
+
+The `tab` command is facilitated by the `TabCommand` class within `logic` and is an extension of the abstract class
+`Commands`. `TabCommandParser` first checks for valid arguments before returning a new `TabCommand` and it executes.
+A `JumpToTabRequestEvent` event is raised upon execution to be handled by the `ParcelListPanel` to display the
+switch the selected tab on the UI.
+
+==== Design Considerations
+
+**Aspect: XXX** +
+* **Alternative 1 (current choice):** XXX +
+** **Pros:** XXX +
+** **Cons:** XXX +
+* **Alternative 2:** XXX +
+** **Pros:** XXX +
+** **Cons:** XXX
+
+//end::tabCommand[]
 
 //tag::deleteTag[]
 

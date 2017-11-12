@@ -46,7 +46,7 @@ include::../DeveloperGuide.adoc[tag=browser]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=tabs]
+include::../UserGuide.adoc[tag=tabCommand]
 
 #End of Extract#
 
@@ -65,7 +65,7 @@ without the need for a mouse, a `tab` command is required.
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=tabs]
+include::../DeveloperGuide.adoc[tag=tabCommand]
 
 #End of Extract#
 
