@@ -136,6 +136,7 @@ public class UniqueLessonList implements Iterable<Lesson> {
     }
     //@@author
 
+    //@@author caoliangnus
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
