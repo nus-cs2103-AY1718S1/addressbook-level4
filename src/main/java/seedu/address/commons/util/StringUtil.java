@@ -65,7 +65,7 @@ public class StringUtil {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         if ((preppedWord.length() >= 2) && isWordInName(preppedWord, wordsInPreppedSentence)) {
-                return true;
+            return true;
         }
         return false;
     }
