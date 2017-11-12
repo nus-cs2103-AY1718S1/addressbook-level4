@@ -25,17 +25,6 @@ public class SetPathCommandTest extends CommandTest {
     }
 
     @Test
-    public void execute_setPathBackSlashReplacedToForwardSlash_success() throws Exception {
-        String path = "src\\main";
-        String expectedPath = "src/main/";
-
-        SetPathCommand setPathCommand = prepareSetPathCommand(path);
-        setPathCommand.execute();
-
-        assertTrue(ProfilePicturesFolder.getPath().equals(expectedPath));
-    }
-
-    @Test
     public void execute_setPathMissingForwardSlashGetsConcatenated_success() throws Exception {
         String path = "src/main";
         String expectedPath = "src/main/";
