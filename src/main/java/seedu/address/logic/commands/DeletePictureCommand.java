@@ -35,8 +35,6 @@ public class DeletePictureCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        String messageToDisplay = MESSAGE_DELETE_PICTURE_SUCCESS;
-
         model.removeProfilePicture(personToUpdate);
 
         ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
@@ -44,7 +42,7 @@ public class DeletePictureCommand extends UndoableCommand {
 
         String currentList = ListObserver.getCurrentListName();
 
-        return new CommandResult(currentList + String.format(messageToDisplay, personToUpdate.getName()));
+        return new CommandResult(currentList + String.format(MESSAGE_DELETE_PICTURE_SUCCESS, personToUpdate.getName()));
     }
 
     @Override

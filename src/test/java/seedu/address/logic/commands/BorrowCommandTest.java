@@ -84,7 +84,7 @@ public class BorrowCommandTest extends CommandTest {
     public void execute_noIndexNoSelection_failure() throws Exception {
         thrown.expect(CommandException.class);
         thrown.expectMessage(Messages.MESSAGE_NO_PERSON_SELECTED);
-        BorrowCommand borrowCommand = prepareCommand(new Debt(VALID_DEBT_FIGURE));
+        prepareCommand(new Debt(VALID_DEBT_FIGURE));
         fail(UNEXPECTED_EXECTION);
     }
 

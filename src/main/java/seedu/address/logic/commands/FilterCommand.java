@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import seedu.address.commons.core.ListObserver;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.PersonContainsTagPredicate;
 
 //@@author jelneo
@@ -26,7 +25,7 @@ public class FilterCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() {
         requireNonNull(model);
 
         model.deselectPerson();
