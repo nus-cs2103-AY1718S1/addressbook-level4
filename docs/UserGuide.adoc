@@ -15,7 +15,8 @@ endif::[]
 By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == *Introduction*
-`The Classroom v1.4` is a program to maintain your contact list. You can use _**The Classroom**_
+`The Classroom v1.5` is a program designed for students who are frequently involved in group and collaborative projects
+to maintain their contact list. You can use _**The Classroom**_
  to add, delete, find, sort,  group contacts and even maintain a to-do list with your contacts.
 
 == *About*
@@ -57,7 +58,8 @@ image::Ui.png[width="790"]
 ====
 *Understanding Command Format*
 
-* Words in `UPPER CASE` are the parameters supplied by the user.
+* Words in `UPPER CASE` are the parameters supplied by the user. +
+** Parameters are keywords corresponding to your input.
 ** e.g. In `add n/NAME`, `NAME` is the parameter.
 * Items in `square brackets` are optional.
 ** e.g Commands which specify `n/NAME [t/TAG]` can accept `n/John Doe t/friend` or `n/John Doe` as input.
@@ -89,7 +91,7 @@ Adding `TAGS` are optional.
 * `add` `n/John Doe` `p/98765432` `e/johnd@example.com` `a/John street, block 123, #01-01`
 * `add` `n/Betsy Crowe` `t/friend` `e/betsycrowe@example.com` `a/Newgate Prison` `p/1234567` `t/criminal`
 
-*Suggestion for use:* You want to add a new contact to you contact list.
+*Suggestion for use:* You want to add a new contact to your contact list.
 
 ==== Listing all persons : `list`
 
@@ -468,6 +470,7 @@ Remarks can be anything (including a blank) +
 GUI will display a list of person with pending remarks on the right.
 
 image::remarkchecklist.png[width="400"]
+_Figure 4.1.16.1 : Remark List indicating remark for David Li_
 
 Examples:
 
@@ -475,6 +478,8 @@ Examples:
 * `addremark 3 r/Finish project with him by tomorrow r/Eat supper with him at 10`
 * `removeremark 1 1 3`
 * `removeremark 2 1`
+
+Suggestion for use: You want to remind yourself that a particular contact likes to swim.
 
 // end::remarkchecklist[]
 
@@ -490,6 +495,7 @@ A person can have only one link, any changes will update the existing link to be
 Only twitter links are accepted
 
 image::twitterlink.png[width="500"]
+_Figure 4.1.17.1 : Browser displaying Twitter profile of contact with a link_
 
 Examples:
 
@@ -558,87 +564,6 @@ The command keywords can be substituted by their aliases. +
 
 *A*: Install the app on the other computer and replace the empty data file with the file containing your data.
 
-== *Since v1.3*
-
-=== Enhanced `find` command to accept different fields
-
-Allows user to find persons based on other fields apart from name based on prefix given. +
-
-Format: `find n/John t/friends`
-
-=== Enhanced `remove` command to remove tag from specified index
-
-Allows user to remove tag from individual person in the address book by specifying the corresponding index. +
-
-Format: `remove friends 1`
-
-=== Enhanced `find` command to accept partial inputs
-
-Allows user to find persons using partial inputs. +
-
-Format: `find n/Jo t/fri`
-
-=== Enhanced `remove` command to remove multiple tags from a single index
-
-Allows user to remove multiple tags from one individual person in the address book by specifying the corresponding index. +
-
-Format: `remove friends family 1`
-
-=== Enhanced `remove` command to remove a tag from multiple indexes
-
-Allows user to remove a single tag from multiple person in the address book by specifying the corresponding indexes. +
-
-Format: `remove friends 1 3`
-
-=== Ability to add `tags` cumulatively to a person
-
-Adds tag(s) to a person in the address book by specifying the corresponding indexes. +
-
-Format: `addtag brother 1`
-
-=== Ability to remove multiple `tags` from multiple persons in one command
-
-Remove specified tags from multiple persons in the address book by specifying the corresponding indexes. +
-
-Format: `remove friends family 1 3`
-
-=== Enhanced `removetag` command to remove tag from range of index
-
-Allows user to remove tag from multiple persons in the address book by specifying the corresponding range of index. +
-
-Format: `removetag friends 1-4`
-
-=== Enhanced `addtag` command to add tag to a range of index
-
-Allows user to add tag to multiple persons in the address book by specifying the corresponding range of index. +
-
-Format: `addtag friends 1-4`
-
-
-=== Standardised `removetag` command
-
-Input of format has been changed to be consistent with the rest of commands. +
-
-Format: `removetag 1-4 friends`
-
-=== Standardised `addtag` command
-
-Input of format has been changed to be consistent with the rest of commands. +
-
-Format: `addtag 1-4 friends`
-
-=== Favourite a person using `favourite` command
-
-Allows user to favourite a person by specifying the person's corresponding index
-
-Format: `favourite 2`
-
-=== Sort the contact list using `sort` command
-
-Allows user to sort the contact list by either name, phone, email or address
-
-Format: `sort address`
-
 
 == *Coming in v2.0*
 
@@ -673,6 +598,7 @@ Examples:
 * `login` `u/johndoeuser` `p/abcd1234`
 * `logout`
 
+// tag::enhancedfind[]
 === Ability to highlight keyword from the `Find Command` result
 
 Based on the user inputs, the corresponding keywords in the result of the Find Command will be highlighted. +
@@ -682,6 +608,9 @@ Command: `find` `n/ber` `a/serangoon`
 Result:
 
 image::highlight.png[width=""]
+_Figure 7.3.1 : Result display upon execution of Find command with highlighted keywords_
+
+// end::enhancedfind[]
 
 === Ability to `import` and `export` contact list manually or using a cloud service
 
