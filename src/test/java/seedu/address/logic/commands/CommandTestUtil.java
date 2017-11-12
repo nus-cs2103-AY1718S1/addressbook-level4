@@ -107,10 +107,10 @@ public class CommandTestUtil {
             + PREFIX_ENDTIME_TO + " " + VALID_ENDTIME_INTERNSHIP;
     public static final String TIME_DESC_GRAD_SCHOOL = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_GRAD_SCHOOL + " "
             + PREFIX_ENDTIME_TO + " " + VALID_ENDTIME_GRAD_SCHOOL;
-    public static final String MIXED_TIME_DESC_INTERNSHIP = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_INTERNSHIP +
-            " to " + VALID_ENDTIME_GRAD_SCHOOL;
-    public static final String MIXED_TIME_DESC_GRAD_SCHOOL = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_GRAD_SCHOOL +
-            " to " + VALID_ENDTIME_INTERNSHIP;
+    public static final String MIXED_TIME_DESC_INTERNSHIP = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_INTERNSHIP
+            + " to " + VALID_ENDTIME_GRAD_SCHOOL;
+    public static final String MIXED_TIME_DESC_GRAD_SCHOOL = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_GRAD_SCHOOL
+            + " to " + VALID_ENDTIME_INTERNSHIP;
     public static final String ENDTIME_DESC_PAPER = " " + PREFIX_TIME_AT + " "
             + VALID_ENDTIME_PAPER;
     public static final String TIME_DESC_GYM = " " + PREFIX_TIME_AT + " "
