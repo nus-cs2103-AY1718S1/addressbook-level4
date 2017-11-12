@@ -144,6 +144,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> uniqueParcels,
                                            List<ReadOnlyParcel> duplicateParcels) {
+
         assert parcels != null : "parcels should not be null";
         assert uniqueParcels != null : "uniqueParcels should not be null";
         assert duplicateParcels != null : "duplicateParcels should not be null";
@@ -152,7 +153,9 @@ public class ModelManager extends ComponentManager implements Model {
             ReadOnlyParcel parcelToAdd = new Parcel(parcel);
 
             try {
-                addressBook.addParcel(parcelToAdd); // throws duplicate parcel exception if parcel is non-unique
+                // throws duplicate parcel exception if parcel is non-unique
+                addressBook.addParcel(parcelToAdd);
+
                 uniqueParcels.add(parcelToAdd);
             } catch (DuplicateParcelException ive) {
                 duplicateParcels.add(parcelToAdd);
