@@ -846,8 +846,6 @@ image::UG_undo2.png[width="590"]
 
 image::divider.png[width="900"]
 
-
-
 === Redoing the previously undone command : `redo`
 image::UG_commandheader_redo.png[width="500"]
 
