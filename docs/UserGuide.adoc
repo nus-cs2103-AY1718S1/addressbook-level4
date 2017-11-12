@@ -19,13 +19,13 @@ toc::[]
 
 == About
 
-Sometimes do you feel that you have too many contacts but cannot manage them clearly? Or sometimes you have too many events but cannot remember all the participants involved in a event? Do not worry! Planno can help you to solve these problems!
+Sometimes do you feel that you have too many contacts and cannot manage them clearly? Or sometimes you have too many events and cannot remember all the participants involved in those events? Do not worry! Planno can help you to solve these problems! +
 
-Planno is a assistant that helps you to manage your contacts and events. It will tell you who are the participants according to the event. Moreover, it can tell you your contacts join in which event.
+Planno is an assistant that helps you to manage your contacts and events. It can tell you who the participants are of a particular event. Moreover, it can tell you your contacts join in which event. +
 
-Planno is more powerful than the other contact managers or task managers and it combines these two types of application into one. Furthermore, Planno is very simple to use and you only need to type some short commands. There are no click buttons and the program will only execute the command according to what you type.
+Planno is a command-line based application, and it has very few click buttons. Hence, you only need to remember some very simple command format to make full use of Planno’s function. +
 
-Do you feel excited? Let's get started!
+This user guide will give you a step by step instruction on how you can start up and use Planno, and a brief introduction of the features you can use in Planno. +
 
 == Getting Started
 
@@ -37,8 +37,8 @@ Before we start our journey on Planno, here are some simple steps for you to lau
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `planno.jar` link:{repoURL}/releases[here].
+.  Copy the file to a *clean folder* that you want to use as the home folder for Planno.
 .  Double-click the file to start the app. The GUI should appear in a few seconds, as shown in the figure below.
    Note that you will see some initial data if it is the first time to use.
 +
@@ -46,20 +46,22 @@ image::Ui.png[width="790"]
 _Figure 2: GUI_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Try some sample commands:
+e.g. If you type *`help`* and press kbd:[Enter], Planno will open the help window for you.
+.  Try some sample commands like these:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Person List.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 +
 [NOTE]
 For the details of each command, please refer to Features section.
 +
-.  Congratulations! If you can run Planno without any trouble, you can start trying this application. Otherwise, Please refer to FAQ and solve your problems.
+. Congratulations! Now you have successfully launched Planno, and you can start trying this application. If you have any trouble in launching Planno, please refer to FAQ and solve your problems.
 
 == Features
+
+As mentioned in the ABOUT, Planno supports command lines to perform its features. In this section, you will know what command format Planno supports, and what features Planno provides.
 
 === General
 
@@ -73,18 +75,35 @@ For the details of each command, please refer to Features section.
 * Command key wards are *case sensitive*. e.g. only `help` means help command, while `HELP`, `HElp`, `hElP` are not.
 ====
 
-****
-* Unless otherwise stated, all the example screenshots are operated based on the following stage:
+====
+*How does Planno Look Like*
 
-image::UG_add.png[width="790"]
-_Figure 3.1: base stage_
-****
+Planno consists of the following 4 components: +
+
+* Command Box: it is a single line below the FILE button where you should enter your command.
+* Result Display: it is the black box below command box where the feedback of you command will be displayed. The feedback is a message that indicates whether your command has been successfully executed. +
+* Person List: it is a red panel that contains a list of person cards (see Figure 3.1.1). Each person card displays a person’s name, tags, phone number, email, address and birthday.
+
+image::UG_personListPanel.png[]
+_Figure 3.1.1: person list panel_
+
+* Event List: it is a blue panel that contains a list of event cards (see Figure 3.1.2). Each event card displays an event’s name, description and date. Also, a number with an arrow sits on the right side of the event card.
+  If the event date is before today, the number will be appended with an up arrow, indicating how many days have passed since the event date.
+  Otherwise, if the event date is after today, the number will be appended with a down arrow, indicating how many days are left before the event.
+
+image::UG_eventListPanel.png[]
+_Figure 3.1.2: event list panel_
+
+* Information Board: it is a green panel displays the result of some commands. For example, the results of `displayEmails` command will display a list of emails in the information board.
+
+Now that you are familiar with what each part of Planno does, you can now continue to take a look at the commands Planno supports.
+====
 
 === Adding
+An add command can add a new person to the Person List, or a new event to the Event List
 
 ==== Adding a person : `add`
 
-You can use it to add a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 ****
@@ -98,7 +117,6 @@ Examples:
 
 // tag::addE[]
 ==== Adding an event : `addE`
-You can use it to add an event to the event list +
 Format: `addE en/EVENT_NAME ed/EVENT_DESCRIPTION et/EVENT_TIME`
 
 ****
@@ -123,24 +141,19 @@ Example:
 * `addE en/CS2101 meeting ed/Discuss how to conduct software demo. et/30/10/2017` +
 * `addE en/Submit assignment ed/Submit programming assignment 2 et/23/10/2017`
 
-You will see the following after typing 4 above example add command to
-*an empty address book and an empty event list*:
-
-image::UG_add.png[width="790"]
-_Figure 3.2.2: add command result_
 // end::addE[]
 
 === Listing
 
 ==== Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+This command shows a list of all persons in the Person List. +
 Format & Example: `list`
 
 // tag::listE[]
 ==== Listing all events : `listE`
 
-Shows a list of all events in the event list. +
+This command shows a list of all events in the Event List. +
 Format & Example: `listE`
 
 You will see the following after typing 2 above example list command:
@@ -167,12 +180,13 @@ _Figure 3.4: sort command result_
 // end::sort[]
 
 === Editing
+An edit command can modify the information of an existing person or event.
+
 ==== Editing a person : `edit`
-You can use it to edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* This command edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -192,7 +206,7 @@ You can use it to edits an existing event in the event list. +
 Format: `editE INDEX [en/NAME] [ed/DESCRIPTION] [et/TIME]`
 
 ****
-* Edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
+* This command edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * You need to type TIME as a date format DD/MM/YYYY.
@@ -205,10 +219,6 @@ Edits the event name and event time of 1st event to be `CS2103 project meeting` 
 * `editE 2 ed/Submit handwritten assignment.` +
 Edits the event description of 2nd event to be `Submit handwritten assignment`
 
-You will see the following after typing 4 above edit command:
-
-image::UG_edit.png[width="790"]
-_Figure 3.5: edit command result_
 // end::editE[]
 
 // tag::find[]
@@ -239,15 +249,14 @@ Returns any person having tag `friends`
 * `find t/colleagues John`
 Returns any person having name `John` or having tag `colleagues`
 
-You will see the following after typing `find John`:
+If you enter `find t/colleagues John` in your command box, you will see your person list like the following figure 3.6.1, and the result display like figure 3.6.2.
 
-image::UG_find_1.png[width="790"]
-_Figure 3.6.1: find command result 1_
+image::UG_find_result.png[]
+_Figure 3.6.1: person list after entering command “find t/colleagues John”_
 
-Subsequently, you will see the following after typing `find Betsy john`:
+image::UG_find_feedback.png[]
+_Figure 3.6.2: result display after entering command “find t/colleagues John”_
 
-image::UG_find_2.png[width="790"]
-_Figure 3.6.2: find command result 2_
 // end::find[]
 
 
@@ -275,16 +284,15 @@ Returns any event having names `Sports`or `Meeting`
 // end::findE[]
 
 === Deleting
+A delete command can delete a person from Person List,
+or delete an event from Event List.
+
 ==== Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX` +
 
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+This command deletes the person at the specified INDEX from Person List. +
+The index refers to the index number shown in the most recent listing, and it must be a positive integer 1, 2, 3, …
 
 Examples:
 
@@ -297,24 +305,16 @@ Deletes the 1st person in the results of the `find` command.
 
 ==== Deleting an event : `deleteE`
 
-Deletes the specified event from the event list. +
-Format: `deleteE INDEX`
-****
-* Deletes the event at the specified `INDEX`.
-* The index refers to the index number shown in the most recent event listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+Format: `deleteE INDEX` +
+
+This command deletes the event at the specified INDEX from Event List. +
+The index refers to the index number shown in the most recent listing, and it must be a positive integer 1, 2, 3, …
 
 Example:
 
 * `listE` +
 `deleteE 2` +
 Deletes the 2nd event in the event list.
-
-You will see the following after typing `delete 1` and `deleteE 1`:
-
-image::UG_delete.png[width="790"]
-_Figure 3.7: delete command result_
 
 === Selecting a person : `select`
 
@@ -344,8 +344,10 @@ _Figure 3.8: select command result_
 
 // tag::join[]
 === Connecting a person to an event : `join`
-You can use it to show a person is involved in an event. +
 Format : `join p/INDEX_P e/INDEX_E` +
+
+You can use it to indicate that a person is involved in an event. +
+
 ****
 * The person at position `INDEX_P` will be involved in the event at position `INDEX_E` .
 * The index *must be a positive integer* `1, 2, 3, ...`
@@ -359,17 +361,14 @@ Example:
 `join p/2 e/1` +
 The 2nd person in the address book will be involved in the 1st event in the event list.
 
-This command only displays a successful message. You cannot see explicit change in the panel. +
-You will see the following after typing above commands: +
-
-image::UG_join.png[width='790']
-_Figure 3.9: join result_
 // end::join[]
 
 // tag::disjoin[]
 === Disconnecting a person to an event : `disjoin`
-You can use it to show a person is not involved in an event any more. +
 Format : `disjoin p/INDEX_P e/INDEX_E` +
+
+You can use it to indicate that a person does not participate an event any more. +
+
 ****
 * The person at position `INDEX_P` will be involved in the event at position `INDEX_E` .
 * The index *must be a positive integer* `1, 2, 3, ...`
@@ -385,18 +384,13 @@ Assuming that you have typed `join p/2 e/1` before this example.
 `disjoin p/2 e/1` +
 The 2nd person in the address book will not be involved in the 1st event in the event list any more.
 
-This command only displays a successful message. You cannot see explicit change in the panel. +
-You will see the following after typing above commands: +
-
-image::UG_disjoin.png[width='790']
-_Figure 3.10: disjoin result_
 // end::disjoin[]
 
 // tag::showP[]
 === Showing all participants of an event : `showP`
-
-You can use it to view all participants who join a certain event. +
 Format: `showP EVENT_INDEX`
+
+The command shows you all persons who join the event at the specified EVENT_INDEX.
 
 ****
 * Shows all persons who join the event at the specified `EVENT_INDEX`.
@@ -405,24 +399,24 @@ Format: `showP EVENT_INDEX`
 ****
 
 Example: +
-Assuming that you have typed `join p/2 e/1` before this example.
 
-* `listE` +
+* `join p/2 e/1`
+ `listE` +
 `showP 1` +
 Shows all participants who are involved in the 1st event of event list.
 
-You will see the following after typing above commands: +
+Figure 3.11 shows the result of the example above: +
 
-image::UG_showPerson.png[width='790']
+image::UG_show person.png[width='790']
 _Figure 3.11: show persons result_
 
 // end::showP[]
 
 // tag::selectE[]
 === Selecting and showing all events which a person joins : `selectE`
-
-You can use it to view all events which a certain person joins. +
 Format: `selectE PERSON_INDEX`
+
+The command shows you all events which the person at the specified PERSON_INDEX joins
 
 ****
 * Selects and shows all events which the person at the specified `PERSON_INDEXS` joins.
@@ -442,7 +436,7 @@ Shows all events which the 1st person in the results of the `find` command joins
 
 You will see the following after typing `list` and `selectE 2`: +
 
-image::UG_selectEvent.png[width='790']
+image::UG_select event.png[width='790']
 _Figure 3.12: select events result_
 
 // end::selectE[]
@@ -477,7 +471,10 @@ You can use this command to attach a portrait to a person so that you can identi
 
 [NOTE]
 `portrait` command is the only way to change a person's portrait. +
-The default portrait for every person is the following picture:
+
+
+If a person has no portrait (i.e, only the default portrait),
+or the app cannot load the picture by the path that you provide, the following picture will be displayed:
 
 image::portraitDefault.png[]
 _Figure 3.14.1 default portrait_
@@ -492,22 +489,25 @@ Format: `portrait PERSON_INDEX p/IMAGE_FILE_PATH`
 
 Example: +
 
-* `portrait 1 p/C:/Users/My Profile/Images/sample picture.png` +
-The image named `sample picture.png` and located at `C:/Users/My Profile/Images/` will be attached to the first person.
-
-****
-* You can use either '\' or '/' to separate two subfolders.
-* The app will report an error if it cannot find the file by the path you provide.
-****
-Assume the `sample picture.png` looks like this:
+Assume that you have a picture `sample picture.png`. It is in `C:/Users/My Profile/Images`, and looks like this:
 
 image::portraitSample.png[]
 _Figure 3.14.2 the sample.png_
 
-Then you will see the following after typing the example portrait command
+Then, you can type this command to attach it to the first person in Person List:
+
+* `portrait 1 p/C:/Users/My Profile/Images/sample picture.png` +
+
+The first person will change like this (Figure 3.14.3):
 
 image::UG_portrait.png[]
-_Figure 3.14.3 attach a portrait_
+_Figure 3.14.3 portrait result_
+
+****
+* You can use either '\' or '/' to separate two subfolders.
+* If the app cannot load the picture by the path that you provide, the Result Display will still tell that you attach a portrait to that person,
+  but the image in person card will change to default image.
+****
 
 // end::portrait[]
 
@@ -542,15 +542,10 @@ _Figure 3.15.3 toggle result when information board and events list are displaye
 // end::toggle[]
 
 === Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
 Format & Example: `history`
 
-****
-* Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-****
-
-You will see the following after typing history command: +
+Lists all the commands that you have entered in reverse chronological order. Also, if you press the ↑ and ↓ arrows, the command box can display the previous and next input respectively.
+You will see the following in the Result Display after typing history command (note that you can use the scroll bar on the right to scroll down and see more history commands).:
 
 image::UG_history.png[width='790']
 _Figure 3.16: history result_
@@ -562,7 +557,8 @@ Restores the address book or event list to the state before the previous _undoab
 Format: `undo`
 
 ****
-* Undoable commands: those commands that modify the content in address book or event list(`add`, `delete`, `edit`, `clear`, `join` and `disjoin`).
+* Undoable commands: those commands that modify the content in address book or event list
+(`add`, `delete`, `edit`, `clear`, `join`, `disjoin`, and `portrait`).
 ****
 
 Examples:
@@ -580,21 +576,6 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
-
-You will see the following after typing `delete 1` and `clear`:
-
-image::UG_clear.png[width='790']
-_Figure 3.17.1: before undo_
-
-You will see the following after typing `undo` (undo `clear`):
-
-image::UG_undo1.png[width='790']
-_Figure 3.17.2: undo once_
-
-You will see the following after typing `undo` again (undo `delete 1`):
-
-image::UG_undo2.png[width='790']
-_Figure 3.17.3: undo twice_
 
 === Redoing the previously undone command : `redo`
 
@@ -618,21 +599,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 
-You will see the following after typing `delete 1`, `clear`, `undo` and `undo`:
-
-image::UG_undo2.png[width='790']
-_Figure 3.18.1: before redo_
-
-You will see the following after typing `redo` (redo `delete 1`):
-
-image::UG_redo1.png[width='790']
-_Figure 3.18.2: redo once_
-
-You will see the following after typing `redo` again (redo `clear`):
-
-image::UG_redo2.png[width='790']
-_Figure 3.18.2: redo twice
-
 // end::undoredo[]
 
 === Clearing all entries : `clear`
@@ -640,11 +606,8 @@ _Figure 3.18.2: redo twice
 Clears all entries from the address book and the event list. +
 Format & Example: `clear`
 
-****
-* You will clear both persons and events by typing this command.
-****
-
-You will see the following after clear command:
+You will clear all entries from the Person List and the Event List.
+The Person List, Information Board, and the Event List will be like the following figure 3.19:
 
 image::UG_clear.png[width="790"]
 _Figure 3.19: clear result_
@@ -652,7 +615,7 @@ _Figure 3.19: clear result_
 === Viewing help : `help`
 
 Format & Example: `help` +
-The help window is same as this user guide. +
+A help window which is same as this user guide will pop up. +
 
 === Exiting the program : `exit`
 
