@@ -3,7 +3,6 @@
 package seedu.address.model.person;
 
 import java.io.File;
-import java.net.MalformedURLException;
 
 import com.sun.media.jfxmedia.logging.Logger;
 
@@ -79,7 +78,8 @@ public class Avatar {
     public static boolean validFile(String avatarFilePath) {
         try {
             File f = new File(avatarFilePath);
-            Logger.logMsg(Logger.DEBUG, "File: " + avatarFilePath + " | Exists: " + Boolean.toString(f.exists()) + " | Can Read: " + Boolean.toString(f.canRead()));
+            Logger.logMsg(Logger.DEBUG, "File: " + avatarFilePath + " | Exists: " + Boolean.toString(f.exists())
+                          + " | Can Read: " + Boolean.toString(f.canRead()));
             return f.exists() && f.canRead();
         } catch (NullPointerException e) {
             Logger.logMsg(Logger.ERROR, "Error reading file at: " + avatarFilePath);
