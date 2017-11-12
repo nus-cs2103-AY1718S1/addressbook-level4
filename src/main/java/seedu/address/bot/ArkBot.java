@@ -8,7 +8,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.telegram.abilitybots.api.bot.AbilityBot;
@@ -19,9 +18,7 @@ import org.telegram.abilitybots.api.objects.Privacy;
 import org.telegram.abilitybots.api.sender.MessageSender;
 import org.telegram.telegrambots.api.methods.GetFile;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.api.objects.File;
-import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.PhotoSize;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
@@ -86,7 +83,6 @@ public class ArkBot extends AbilityBot {
 
     private Logic logic;
     private Model model;
-    private Optional<Message> lastKnownMessage;
     private boolean waitingForImage;
 
     public ArkBot(Logic logic, Model model, String botToken, String botUsername) {
@@ -165,7 +161,7 @@ public class ArkBot extends AbilityBot {
                         logic.execute(ListCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
                         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
-                        lastKnownMessage = sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
+                        sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
                                 ctx.chatId());
                     } catch (CommandException | ParseException e) {
                         sender.send("Sorry, I don't understand.",
@@ -192,17 +188,8 @@ public class ArkBot extends AbilityBot {
                         logic.execute(DeleteCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
                         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
-                        if (!this.lastKnownMessage.equals(null) && lastKnownMessage.isPresent()) {
-                            EditMessageText editedText =
-                                    new EditMessageText().setChatId(ctx.chatId())
-                                            .setMessageId(lastKnownMessage.get().getMessageId())
-                                            .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
-                            sender.editMessageText(editedText);
-                        } else {
-                            sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
-                                    ctx.chatId());
-                        }
-                    } catch (CommandException | ParseException | TelegramApiException e) {
+                        sender.send(parseDisplayParcels(formatParcelsForBot(parcels)), ctx.chatId());
+                    } catch (CommandException | ParseException e) {
                         sender.send(BOT_MESSAGE_FAILURE,
                                 ctx.chatId());
                     } catch (NullPointerException e) {
@@ -272,8 +259,7 @@ public class ArkBot extends AbilityBot {
                         logic.execute(FindCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
                         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
-                        lastKnownMessage = sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
-                                ctx.chatId());
+                        sender.send(parseDisplayParcels(formatParcelsForBot(parcels)), ctx.chatId());
                     } catch (CommandException | ParseException e) {
                         sender.send(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE),
                                 ctx.chatId());
@@ -302,21 +288,10 @@ public class ArkBot extends AbilityBot {
                             logic.execute(EditCommand.COMMAND_WORD + " "
                                     + combineArguments(ctx.arguments()) + BOT_SET_COMPLETED);
                             ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
-                            if (!this.lastKnownMessage.equals(null) && lastKnownMessage.isPresent()) {
-                                EditMessageText editedText =
-                                        new EditMessageText().setChatId(ctx.chatId())
-                                                .setMessageId(lastKnownMessage.get().getMessageId())
-                                                .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
-                                sender.editMessageText(editedText);
-                            } else {
-                                sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
-                                        ctx.chatId());
-                            }
+                            sender.send(parseDisplayParcels(formatParcelsForBot(parcels)), ctx.chatId());
                         }
                     } catch (CommandException | ParseException e) {
                         sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
-                    } catch (TelegramApiException e) {
-                        e.printStackTrace();
                     }
                 }))
                 .build();
@@ -470,24 +445,8 @@ public class ArkBot extends AbilityBot {
         logic.execute(EditCommand.COMMAND_WORD + " "
                 + indexOfParcel + BOT_SET_COMPLETED);
         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
-        // if we have a last known list message, we update it to reduce spamming the user with messages.
-        if (!this.lastKnownMessage.equals(null) && this.lastKnownMessage.isPresent()) {
-            EditMessageText editedText =
-                    new EditMessageText().setChatId(chatId)
-                            .setMessageId(this.lastKnownMessage.get().getMessageId())
-                            .setText(parseDisplayParcels(formatParcelsForBot(parcels)));
-            sender.editMessageText(editedText);
-            System.out.println("Here are the details of the parcel you just completed: \n"
-                    + retrievedParcel.toString());
-            sender.send("Here are the details of the parcel you just completed: \n"
+        sender.send("Here are the details of the parcel you just completed: \n"
                     + retrievedParcel.toString(), chatId);
-            this.waitingForImage = false;
-        } else { // There wasn't a last known message, so we send a new one.
-            System.out.println("Here are the details of the parcel you just completed2: \n"
-                    + retrievedParcel.toString());
-            this.lastKnownMessage = sender.send("Here are the details of the parcel you just completed: \n"
-                    + retrievedParcel.toString(), chatId);
-        }
 
     }
 
