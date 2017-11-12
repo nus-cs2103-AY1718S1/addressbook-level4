@@ -1,4 +1,5 @@
 = The Classroom - Test Script
+
 To start testing, replace addressbook.xml in the data folder with SampleData.xml after renaming.
 
 == Contact-related features
@@ -10,16 +11,113 @@ To start testing, replace addressbook.xml in the data folder with SampleData.xml
 === Redoing the previously undone command : `redo`
 
 === Editing a person : `edit`
+Input: `edit` +
+Expected result: Command failed, invalid command format +
+
+Input: `edit 3` +
+Expected result: Command failed, at least one field to edit must be provided +
+
+Input: `edit 45 p/98765432` +
+Expected result: Command failed, index is invalid +
+
+Input: `edit 5 n/Alex Yeoh p/87438807 e/alexyeoh@example.com a/Blk 30 Geylang Street 29, #06-40 t/friends` +
+Expected result: Command failed, person already exists in the address book +
+
+Input: `edit 5 n/` +
+Expected result: Command failed, name cannot be blank +
+
+Input: `edit 5 n/Ch@rlotte` +
+Expected result: Command failed, name can only contain alphanumeric characters and spaces +
+
+Input: `edit 5 p/nm` +
+Expected result: Command failed, phone can only contain numbers and should be at least 3 digits long +
+
+Input: `edit 5 e/char.com` +
+Expected result: Command failed, email should be 2 alphanumeric/period strings separated by '@' +
+
+Input: `edit 5 n/Charlotte Wee p/98765432 e/char@example.com a/Blk 10 Ang Mo Kio Street 74, #11-04 t/friends` +
+Expected result: Command success, name, phone, email, address and tag can be edited +
+
+Input: `undo` +
+Expected result: Command success, changes made by edit command can be undone +
 
 === Finding persons : `find`
 
 === Favouriting a person : `favourite`
+Input: `favourite` +
+Expected result: Command failed, invalid command format +
+
+Input: `favourite David` +
+Expected result: Command failed, invalid command format, parameter should be index +
+
+Input: `favourite 45` +
+Expected result:  Command failed, index is invalid +
+
+Input: `favourite 6` +
+Expected result: Command success, David has been favourited and is now index 1 +
+
+Input: `undo` +
+Expected result: Command success, favourite command can be undone +
+
+Input: `redo` +
+Expected result: Command success, David has been favourited again +
+
+Input: `favourite 1` +
+Expected result: Command success, David has been unfavourited using the favourite command +
 
 === Listing all persons : `list`
+Input: `find n/Alex` +
+Expected result: Command success, application now shows only 1 person +
+
+Input: `list` +
+Expected result: Command success, the application now shows all persons in the contact list +
 
 === Deleting a person : `delete`
+Input: `delete` +
+Expected result: Command failed, invalid command format +
+
+Input: `delete 45` +
+Expected result: Command failed, index is invalid +
+
+Input: `delete David` +
+Expected result: Command failed, invalid command format, parameter should be index +
+
+Input: `delete 6` +
+Expected result: Command success, David Li has now been deleted from the contact list +
+
+Input: `undo` +
+Expected result: Command success, delete command can be undone and David Li is back in the contact list +
 
 === Sorting the contact list : `sort`
+Input: `sort` +
+Expected result: Command failed, invalid command format +
+
+Input: `sort height` +
+Expected result: Command failed, invalid command format, no such datafield +
+
+Input: `favourite 6` +
+Expected result: Command success, David has been favourited and is now at index 1 +
+
+Input: `sort phone` +
+Expected result: Command success, contact list is now sorted by phone +
+
+Input: `sort EMAIL` +
+Expected result: Command success, contact list is now sorted by email, uppercase does not matter +
+
+Input: `sort address` +
+Expected result: Command success, contact list is now sorted by address +
+
+Input: `sort address -ignorefav` +
+Expected result:  Command success, contact list has been sorted by address ignoring favourites, David is not at index 1 anymore +
+
+Input: `sort address -reverse` +
+Expected result: Command success, contact list is now sorted by address in reverse order +
+
+Input: `sort name` +
+Expected result: Command success, contact list is now sorted by name +
+
+Input: `favourite 1` +
+Expected result: Command success, David has been unfavourited and is no longer at index 1 +
 
 === Selecting a person : `select`
 
@@ -44,5 +142,19 @@ To start testing, replace addressbook.xml in the data folder with SampleData.xml
 == Miscellaneous features
 
 === Viewing help : `help`
+Input: `help` +
+Expected result: Command success, the help window appears +
 
 === Listing entered commands : `history`
+Input: `tags` +
+Expected result: Command success, the application now shows a list of existing tags +
+
+Input: `list` +
+Expected result: Command success, the application now shows all the person in the contact list +
+
+Input: `history` +
+Expected result: Command success, the 3 most recent commands should be list, tags then help +
+
+=== Exiting the program : `exit`
+Input: `exit` +
+Expected result: Command success, the application has closed. +
