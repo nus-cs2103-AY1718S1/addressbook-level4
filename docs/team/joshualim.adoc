@@ -7,8 +7,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 The purpose of this portfolio page is to document my contributions for CS2103T Addressbook Application +
 (renamed to ConnectUs). It is a team project where we had to provide weekly incremental improvements on the application.
-Below you will find the features I helped implement, including snippets from the user guide and developer guide, as well as +
-future improvements suggested.
+Below you will find the features I helped implement, including snippets from the user guide and developer guide, as well as future improvements suggested.
 
 == Project: ConnectUs
 ConnectUs is a desktop address book application used to store contact information such as name, phone, email and address.

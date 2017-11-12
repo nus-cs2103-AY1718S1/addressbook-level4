@@ -250,7 +250,7 @@ Their location will be displayed on the browser panel on the right, as shown in 
 === Email a person : `email`
 (added in v1.3)
 
-To make your work more efficient, we have implemented an email feature that allows the application to open up email application such as outlook on your desktop with the contact's email ready for you to compose your email to your client. +
+To make your work more efficient, we have implemented an email feature that allows the application to open up an email application, such as outlook, on your desktop with the receiver's email filled.
 
 Format: `email INDEX`
 
