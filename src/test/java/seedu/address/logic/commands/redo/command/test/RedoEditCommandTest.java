@@ -4,10 +4,11 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.modifyPerson;
 import static seedu.address.logic.commands.UndoRedoCommandUtil.assertCommandAssertionError;
+import static seedu.address.logic.commands.UndoRedoCommandUtil.executeAndRecover;
 import static seedu.address.logic.commands.UndoRedoCommandUtil.prepareRedoCommand;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -24,6 +25,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 //@@author Adoby7
 /**
@@ -31,20 +33,23 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class RedoEditCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventList(), new UserPrefs());
-    private final EditCommand editCommandOne = new EditCommand(CARL, IDA);
-    private final EditCommand editCommandTwo = new EditCommand(DANIEL, HOON);
+    private final EditCommand.EditPersonDescriptor firstDescriptor = new EditPersonDescriptorBuilder(IDA).build();
+    private final EditCommand.EditPersonDescriptor secondDescriptor = new EditPersonDescriptorBuilder(HOON).build();
+    private final EditCommand editCommandOne = new EditCommand(INDEX_FIRST_PERSON, firstDescriptor);
+    private final EditCommand editCommandTwo = new EditCommand(INDEX_SECOND_PERSON, secondDescriptor);
 
     @Test
     public void execute() {
+        executeAndRecover(model, editCommandOne, editCommandTwo);
         RedoCommand redoCommand = prepareRedoCommand(model, editCommandOne, editCommandTwo);
         Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventList(), new UserPrefs());
 
         // multiple commands in redoStack
-        modifyPerson(expectedModel, CARL, IDA);
+        modifyPerson(expectedModel, INDEX_FIRST_PERSON, IDA);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in redoStack
-        modifyPerson(expectedModel, DANIEL, HOON);
+        modifyPerson(expectedModel, INDEX_SECOND_PERSON, HOON);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no command in redoStack

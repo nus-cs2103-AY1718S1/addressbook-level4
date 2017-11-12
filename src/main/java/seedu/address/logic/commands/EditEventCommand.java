@@ -41,9 +41,9 @@ public class EditEventCommand extends UndoableCommand {
             + PREFIX_EVENT_DESCRIPTION + "Discuss how to handle Q&A "
             + PREFIX_EVENT_TIME + "02/11/2017 ";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Event: %1$s";
+    public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This event already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book.";
 
     private Index index;
     private EditEventDescriptor editEventDescriptor;
@@ -67,22 +67,20 @@ public class EditEventCommand extends UndoableCommand {
         List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
 
-        if (eventToEdit == null && editedEvent == null) { // Distinguish with JUnit tests
-            eventToEdit = lastShownList.get(index.getZeroBased());
-            editedEvent = createEditedEvent(eventToEdit, editEventDescriptor);
-        }
+        eventToEdit = lastShownList.get(index.getZeroBased());
+        editedEvent = createEditedEvent(eventToEdit, editEventDescriptor);
 
         try {
             model.updateEvent(eventToEdit, editedEvent);
         } catch (DuplicateEventException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         } catch (EventNotFoundException pnfe) {
             throw new AssertionError("The target event cannot be missing");
         }
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedEvent));
+        return new CommandResult(String.format(MESSAGE_EDIT_EVENT_SUCCESS, editedEvent));
     }
 
     @Override
@@ -107,6 +105,23 @@ public class EditEventCommand extends UndoableCommand {
         }
     }
 
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EditEventCommand)) {
+            return false;
+        }
+
+        // state check
+        EditEventCommand e = (EditEventCommand) other;
+        return index.equals(e.index)
+            && editEventDescriptor.equals(e.editEventDescriptor);
+    }
     /**
      * Creates and returns a {@code Event} with the details of {@code eventToEdit}
      * edited with {@code editEventDescriptor}.
@@ -188,7 +203,7 @@ public class EditEventCommand extends UndoableCommand {
 
             return getEventName().equals(e.getEventName())
                     && getEventDescription().equals(e.getEventDescription())
-                    && getEventTime().equals(e.getEventName());
+                    && getEventTime().equals(e.getEventTime());
         }
     }
 }

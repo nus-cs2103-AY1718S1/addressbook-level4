@@ -122,6 +122,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    // @@author Adoby7
     @Override
     public Set<Tag> extractNewTag(ReadOnlyPerson person) {
         return addressBook.extractNewTags(person);
@@ -132,6 +133,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.separateMasterTagListWith(tagList);
         indicateAddressBookChanged();
     }
+    // @@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -192,7 +194,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedEvent);
 
         eventList.updateEvent(target, editedEvent);
-        indicateAddressBookChanged();
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         indicateEventListChanged();
     }
 

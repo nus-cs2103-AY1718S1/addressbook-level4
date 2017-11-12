@@ -74,18 +74,6 @@ public class EditCommand extends UndoableCommand {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
-    /**
-     * Assign original and edited persons directly
-     * Can only be used in test
-     * @param targetPerson Original person
-     * @param updatedPerson Edited person
-     */
-    public EditCommand (ReadOnlyPerson targetPerson, ReadOnlyPerson updatedPerson) {
-        this.personToEdit = targetPerson;
-        this.editedPerson = updatedPerson;
-        index = Index.fromOneBased(1);
-    }
-
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -94,10 +82,9 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        if (personToEdit == null && editedPerson == null) { // Distinguish with JUnit tests
-            personToEdit = lastShownList.get(index.getZeroBased());
-            editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-        }
+        personToEdit = lastShownList.get(index.getZeroBased());
+        editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+
 
         try {
             newTags = model.extractNewTag(editedPerson);

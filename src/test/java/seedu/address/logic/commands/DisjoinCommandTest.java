@@ -39,8 +39,10 @@ public class DisjoinCommandTest {
     @Test
     public void testDisjoinInvalidIndexFail() {
         final Index validIndex = INDEX_FIRST_EVENT;
-        final Index invalidLargeIndex = Index.fromOneBased(10000);
+        Index invalidLargeIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         DisjoinCommand invalidPersonIndexCommand = prepareCommand(invalidLargeIndex, validIndex, model);
+
+        invalidLargeIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
         DisjoinCommand invalidEventIndexCommand = prepareCommand(validIndex, invalidLargeIndex, model);
 
         String expectedMessage = Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;

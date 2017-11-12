@@ -12,9 +12,9 @@ import seedu.address.model.event.ReadOnlyEvent;
  */
 public class EventBuilder {
 
-    public static final String DEFAULT_NAME = "First meeting";
+    public static final String DEFAULT_NAME = "First project meeting";
     public static final String DEFAULT_DESCRIPTION = "Discuss coding";
-    public static final String DEFAULT_TIME = "01/01/2017";
+    public static final String DEFAULT_TIME = "01/10/2018";
     private Event event;
 
     public EventBuilder() {
@@ -37,37 +37,37 @@ public class EventBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code Event} that we are building.
+     * Sets the {@code EventName} of the {@code Event} that we are building.
      */
     public EventBuilder withName(String name) {
         try {
             this.event.setEventName(new EventName(name));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("name is expected to be unique.");
+            throw new IllegalArgumentException("Impossible.");
         }
         return this;
     }
 
     /**
-     * Sets the {@code Address} of the {@code Event} that we are building.
+     * Sets the {@code EventDescription} of the {@code Event} that we are building.
      */
     public EventBuilder withDescription(String description) {
         try {
             this.event.setEventDescription(new EventDescription(description));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("address is expected to be unique.");
+            throw new IllegalArgumentException("Impossible.");
         }
         return this;
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Event} that we are building.
+     * Sets the {@code EventTime} of the {@code Event} that we are building.
      */
     public EventBuilder withTime(String time) {
         try {
             this.event.setETime(new EventTime(time));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("phone is expected to be unique.");
+            throw new IllegalArgumentException("Impossible.");
         }
         return this;
     }

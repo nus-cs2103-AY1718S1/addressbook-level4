@@ -38,6 +38,7 @@ import seedu.address.model.person.exceptions.HaveParticipateEventException;
 import seedu.address.model.person.exceptions.NotParticipateEventException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EventDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -63,8 +64,9 @@ public class CommandTestUtil {
     public static final String VALID_EVENT_DESC_FIRST = "Discuss A & B 12354 ?";
     public static final String VALID_EVENT_DESC_SECOND = "??2Discuss A & B 12**354 ?";
     //@@author Adoby7
-    public static final String VALID_EVENT_TIME_FIRST = "03/11/2018";
+    public static final String VALID_EVENT_TIME_FIRST = "31/12/2018";
     public static final String VALID_EVENT_TIME_SECOND = "29/02/2020"; //leap year
+    public static final String VALID_EVENT_TIME_THIRD = "29/02/2000";
     //@@author
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
@@ -106,6 +108,8 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditEventCommand.EditEventDescriptor DESC_EVENT_FIRST;
+    public static final EditEventCommand.EditEventDescriptor DESC_EVENT_SECOND;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -114,6 +118,10 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withBirthday(VALID_BIRTHDAY_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_EVENT_FIRST = new EventDescriptorBuilder().withName(VALID_EVENT_NAME_FIRST)
+            .withDescription(VALID_EVENT_DESC_FIRST).withTime(VALID_EVENT_TIME_FIRST).build();
+        DESC_EVENT_SECOND = new EventDescriptorBuilder().withName(VALID_EVENT_NAME_SECOND)
+            .withDescription(VALID_EVENT_DESC_SECOND).withTime(VALID_EVENT_TIME_SECOND).build();
     }
 
     /**
@@ -233,13 +241,28 @@ public class CommandTestUtil {
     /**
      * Modify target person's details to be editedPerson's
      */
-    public static void modifyPerson(Model model, ReadOnlyPerson targetPerson, ReadOnlyPerson editedPerson) {
+    public static void modifyPerson(Model model, Index targetIndex, ReadOnlyPerson editedPerson) {
         try {
+            ReadOnlyPerson targetPerson = model.getFilteredPersonList().get(targetIndex.getZeroBased());
             model.updatePerson(targetPerson, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new AssertionError("Impossible.", dpe);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+
+    /**
+     * Modify target person's details to be editedEvent's
+     */
+    public static void modifyEvent(Model model, Index targetIndex, ReadOnlyEvent editedEvent) {
+        try {
+            ReadOnlyEvent targetEvent = model.getFilteredEventList().get(targetIndex.getZeroBased());
+            model.updateEvent(targetEvent, editedEvent);
+        } catch (DuplicateEventException e) {
+            throw new AssertionError("Impossible.", e);
+        } catch (EventNotFoundException e) {
+            throw new AssertionError("Event in filtered list must exist in model.", e);
         }
     }
 
