@@ -27,8 +27,6 @@ public class AddImageCommandParser implements Parser<AddImageCommand> {
 
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
-            System.out.println(index.getZeroBased());
-            System.out.println(argMultimap.getValue(PREFIX_IMAGE_URL).get());
             url = validImageFormat(argMultimap.getValue(PREFIX_IMAGE_URL).get());
         } catch (InvalidImageFormatException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_IMAGE_FORMAT,
