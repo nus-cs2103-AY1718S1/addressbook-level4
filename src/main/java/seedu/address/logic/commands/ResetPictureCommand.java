@@ -99,10 +99,4 @@ public class ResetPictureCommand extends UndoableCommand {
                 && this.targetIndex.equals(((ResetPictureCommand) other).targetIndex)); // state check
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ResetPictureCommand // instanceof handles nulls
-                && this.targetIndex.equals(((ResetPictureCommand) other).targetIndex)); // state check
-    }
 }
