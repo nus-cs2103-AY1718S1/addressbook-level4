@@ -29,7 +29,7 @@ public class ChooseCommandTest {
     @Test
     public void execute_invalidArgs_failure() {
         Selection.setPersonSelected();
-        assertExecutionFailure("gibberish", Messages.MESSAGE_INVALID_BROWSER_INDEX);
+        assertExecutionFailure("badargs", Messages.MESSAGE_INVALID_BROWSER_INDEX);
     }
 
     /**

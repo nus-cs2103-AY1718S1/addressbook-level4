@@ -12,15 +12,11 @@ This is a CLI(Command Line Interface)-based desktop Address Book application wri
 
 ==== External behavior
 
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
-
 * When you start typing in the command line, a helper box appears to show you the list of commands available.
 * e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
 * You can use the arrow keys to select commands that are displayed and press enter or tab to make it autofill for you in the command line.
 +
 image::commandboxhelper.PNG[width="790"]
-
-#End of Extract#
 
 ---
 
@@ -31,8 +27,6 @@ Speed up the use of the address book and make it easier for new users to learn t
 ---
 
 ==== Implementation
-
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
 
 The command box helper is meant to work similarly to the auto fill functions in IDEs. Two different classes are created, `CommandBoxHelper` and `HelperCard`.
 `CommandBoxHelper` contains a ListView which is populated by VBox containers holding the `HelperCard` class. `CommandBoxHelper` retrieves a list of commands and command templates from the `logic` class and performs a check to populate the listview everytime the user enters a key in the command box
@@ -51,15 +45,11 @@ desired command in the command helper.
 **Cons:** Fragile architecture, have to change a few functions every time an extra command is added. This involves hardcoding the additional command Strings into the functions.
 Slightly harder to display selection of command in the helper box to the user.
 
-#End of Extract#
-
 ---
 
 === Enhancement Added: Settings Pane and Choose command
 
 ==== External behavior
-
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
 
 Chooses what to display on the main screen. +
 Format: `choose [NEW_VALUE]` +
@@ -75,8 +65,6 @@ Examples:
 * `choose linkedin` +
 Displays the linkedin page of the current selected user on the display screen.
 
-#End of Extract#
-
 ---
 
 ==== Justification
@@ -87,8 +75,6 @@ Animated settings pane allow users to easily view their settings only when they 
 ---
 
 ==== Implementation
-
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
 
 The last selected display mode will be stored in `preferences.json` by default, which is set in `config.json` (coming in v1.4). The default mode of display will be set to `linkedin`.
 When a display mode is selected by the user via its command `choose`, an event is raised by the `ChooseCommand` object, via the following line :
@@ -125,8 +111,6 @@ image::SettingsPaneInOut.png[width="700"]
 **Pros:** Transitions are easier to implement and understand
 **Cons:** KeyValue objects are fit into a keyframe which is then fit into the timeline, which fits more into the concept of java's OOP and allows for more code reusability when we want to, for example, animate bouncing
 
-#End of Extract#
-
 ---
 
 === Enhancement Added: Meeting Display Panel
@@ -142,8 +126,6 @@ image::meeting_panel.PNG[width="700"]
 Key part of OurAB that is targeted at university students to help facilitate managing their meetings
 
 ==== Implementation
-
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
 
 When the user executes the `choose` command under the `meeting` keyword, an event is raised to hide the current display, which is a WebView.
 Since the meeting display cannot be implemented using a WebView, the root view of the BrowserPanel.fxml is first removed from the placeholder, then the view of MeetingPanel.fxml is added into the placeholder instead.
