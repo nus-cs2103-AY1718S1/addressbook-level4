@@ -500,6 +500,7 @@ _Figure 4.3.1.1b : Interactions in the Birthday Command._
 
 // end::birthday[]
 
+// tag::taggingfunctions[]
 === Tags Manipulation & Retrieve mechanism
 
 Three commands for tags manipulation, namely `TagCommand`, `UntagCommand` and `RetagCommand`, together with `RetrieveCommand`, all reside in the `commands` of `Logic`.
@@ -553,7 +554,7 @@ After having updated the person list of `AddressBook` where necessary, `RetagCom
 
 ==== Retrieve command
 
-`RetrieveCommand` : allows user to list all persons that have been assigned a tag already existing inside the unique tag list.
+Retrieve command allows user to list all persons that have been assigned a tag already existing inside the unique tag list.
 
 This command inherits from `Command`, so retrieving cannot be undone.
 
@@ -596,6 +597,7 @@ to be arranged according to the time added. +
 **Alternative 2:**  Create a list attribute for `Tag` to store all persons currently having that tag. +
 **Pros:** Faster to get the persons as the filtered person list is already created. +
 **Cons:** Requires to save the lists of all existing tags to storage file. +
+// end::taggingfunctions[]
 
 === Reminder list
 
@@ -766,6 +768,17 @@ will call different select reminder event. The subscribers to the events in the 
 appropriate `Reminder` card to display.
 
 // end::selectReminder[]
+
+// tag::viewcommand[]
+=== View profile mechanism
+
+View command allows user to open a full view of a contact's profile instead of having to see all details on the small card inside person list panel.
+Its usage is mainly intended for later releases of Gentleman's Guide when various new contact fields have been added. +
+
+When executed, `ViewCommand` raises a `ShowProfileRequestEvent` and calls `post()` of `EventCenter` to post the event to all registered subscribers.
+The subscribers of `BrowserPanel` will then be notified of the event and handle it by calling `handleShowProfileRequestEvent()`,
+which closes any children currently opening inside `BrowserPanel` and attempts to load `PersonProfile` onto the panel.
+// end::viewcommand[]
 
 === Logging
 
