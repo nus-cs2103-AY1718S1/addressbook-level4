@@ -43,7 +43,7 @@ public class SampleDataTest extends AddressBookGuiTest {
 
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
-        Person[] expectedList = SampleDataUtil.getSamplePersons();
-        assertListMatching(getPersonListPanel(), expectedList);
+        Person[] expectedPersonList = SampleDataUtil.getSamplePersons();
+        assertListMatching(getPersonListPanel(), expectedPersonList);
     }
 }
