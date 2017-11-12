@@ -573,98 +573,6 @@ The schedules would be listed in the `ResultDisplay` panel, and each schedule wo
 **Cons:** The user do not have the alternative to view information of the schedules from each individual contact. +
 // end::viewscheduleimplementation[]
 
-
-// tag::studentparentcontact[]
-=== Add Student/Parent Phone Contact mechanism
-
-The `student/parent phone contact` mechanism is facilitated by making changes
-to the Phone class in the model component. It enables the input
-of the phone contact information of the student and his/her parent.
-
-To ensure consistency across the user inputs for add command, the user will have to input p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)
-instead of p/ Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER).
-
-The following sequence diagram shows how the `student/parent phone contact` operation works:
-
-image::MultipleNumberSequenceDiagram.png[width="800"]
-_Figure 4.5.1 : Sequence Diagram of Student/Parent Phone Contact Operation_
-
-The following method replaces `/` with `:`````, `s` with `S`, and `p` with `P` in the user input string
-for appropriate presentation of `displayed person card phone information`:
-[source,java]
-----
-public static String changeToAppropriateUiFormat(String value) {
-        value = value.replace("/", ": ");
-        value = value.replace("s", "S");
-        value = value.replace("p", "P");
-        return value;
-    }
-----
-Validity of the `displayed person card phone information` is checked in the following method in the Phone class:
-[source,java]
-----
-public static boolean isValidPhone(String test) {
-        return test.matches(PHONE_VALIDATION_REGEX);
-    }
-----
-where the `PHONE_VALIDATION_REGEX` refers to:
-[source,java]
-----
-public static final String PHONE_VALIDATION_REGEX =
-"((Student: )(\d\d\d\d\d\d\d\d)( Parent: )(\d\d\d\d\d\d\d\d))|((Parent: )(\d\d\d\d\d\d\d\d))";
-----
-The regex ensures that the string for `displayed person card phone information` adheres to the
-correct format of `Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER)` or `Parent: (PARENT_NUMBER)` as it is optional to
-add the phone number of students.
-
-The phone numbers must be exactly `8 digits` long.
-
-image::PhoneDisplay.png[width="400"]
-_Figure 4.5.2 : Valid Displayed Person Card Phone Information_
-
-If the string format for `displayed person card phone information` is valid, the
-phone contact information of the student and his/her parent will be displayed
-below the student's name in the person card as seen in the figure above.
-
-image::message_constraint.png[width="1100"]
-_Figure 4.5.3 : Message to prompt Users to Enter Correct Phone Format_
-
-If the string format for `displayed person card phone information` is invalid, an `IllegalValueException`
-is thrown. The user will be prompted to follow the accepted format as seen in the figure above.
-[source,java]
-----
-public Phone(String phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        trimmedPhone = changeToAppropriateUiFormat(trimmedPhone);
-        if (!isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
-        }
-        this.value = trimmedPhone;
-    }
-----
-
-==== Design Considerations
-
-**Aspect:** Phone numbers  +
-**Alternative 1 (current choice):** Both the student's phone number and their parent's phone number is a single string. +
-**Pros:** Easy to implement as separate classes for student's phone and parent's phone is not required. +
-**Cons:** Harder to implement features that require solely the student's number or parent's number. +
-**Alternative 2:** Have a phoneStudent class for student's phone number and phoneParent class for parent's phone number. +
-**Pros:** Can edit properties of the student's phone number or parent's phone number separately. +
-**Cons:** Harder to implement as now there will be two phone classes instead of one. +
-
----
-
-**Aspect:** Validity of phone number +
-**Alternative 1 (current choice):** Only allow numbers that are exactly `8 digits` long. +
-**Pros:** Ensures consistency across all phone numbers. +
-**Cons:** Student's parents might not have foreign numbers that are not exactly `8 digits` long. +
-**Alternative 2:** Modify phone validity regex to allow any length of phone numbers. +
-**Pros:** Able to have phone numbers that are local or non-local. +
-**Cons:** Inconsistent phone lengths displayed, might look very messy. +
-// end::studentparentcontact[]
-
 // tag::optionalInput[]
 === Optional Inputs/Fields mechanism
 
@@ -692,6 +600,9 @@ The method can be seen in the code section below.
         }
         if (!input.contains("c/")) {
             input = input + " c/ (Postal code not recorded)";
+        }
+        if (!input.contains(" p/")) {
+            input = input + " p/ (Student phone not recorded)";
         }
         return input;
     }
@@ -1267,6 +1178,102 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+== Unused/Removed Features
+
+In this section, you will see features/implementations that are removed before the release of the final version. They will be
+accompanied by a link to their unused code should you need them for your future improvements of cherBook.
+
+// tag::studentparentcontact[]
+=== Add Student/Parent Phone Contact mechanism [https://github.com/CS2103AUG2017-T16-B2/main/blob/master/collated/unused/Lenaldnwj-unused.md[Functional code]]
+
+The `student/parent phone contact` mechanism is facilitated by making changes
+to the Phone class in the model component. It enables the input
+of the phone contact information of the student and his/her parent.
+
+To ensure consistency across the user inputs for add command, the user will have to input p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)
+instead of p/ Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER).
+
+The following sequence diagram shows how the `student/parent phone contact` operation works:
+
+image::MultipleNumberSequenceDiagram.png[width="800"]
+_Figure 4.5.1 : Sequence Diagram of Student/Parent Phone Contact Operation_
+
+The following method replaces `/` with `:`````, `s` with `S`, and `p` with `P` in the user input string
+for appropriate presentation of `displayed person card phone information`:
+[source,java]
+----
+public static String changeToAppropriateUiFormat(String value) {
+        value = value.replace("/", ": ");
+        value = value.replace("s", "S");
+        value = value.replace("p", "P");
+        return value;
+    }
+----
+Validity of the `displayed person card phone information` is checked in the following method in the Phone class:
+[source,java]
+----
+public static boolean isValidPhone(String test) {
+        return test.matches(PHONE_VALIDATION_REGEX);
+    }
+----
+where the `PHONE_VALIDATION_REGEX` refers to:
+[source,java]
+----
+public static final String PHONE_VALIDATION_REGEX =
+"((Student: )(\d\d\d\d\d\d\d\d)( Parent: )(\d\d\d\d\d\d\d\d))|((Parent: )(\d\d\d\d\d\d\d\d))";
+----
+The regex ensures that the string for `displayed person card phone information` adheres to the
+correct format of `Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER)` or `Parent: (PARENT_NUMBER)` as it is optional to
+add the phone number of students.
+
+The phone numbers must be exactly `8 digits` long.
+
+image::PhoneDisplay.png[width="400"]
+_Figure 4.5.2 : Valid Displayed Person Card Phone Information_
+
+If the string format for `displayed person card phone information` is valid, the
+phone contact information of the student and his/her parent will be displayed
+below the student's name in the person card as seen in the figure above.
+
+image::message_constraint.png[width="1100"]
+_Figure 4.5.3 : Message to prompt Users to Enter Correct Phone Format_
+
+If the string format for `displayed person card phone information` is invalid, an `IllegalValueException`
+is thrown. The user will be prompted to follow the accepted format as seen in the figure above.
+[source,java]
+----
+public Phone(String phone) throws IllegalValueException {
+        requireNonNull(phone);
+        String trimmedPhone = phone.trim();
+        trimmedPhone = changeToAppropriateUiFormat(trimmedPhone);
+        if (!isValidPhone(trimmedPhone)) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+        this.value = trimmedPhone;
+    }
+----
+
+==== Design Considerations
+
+**Aspect:** Phone numbers  +
+**Alternative 1 (current choice):** Both the student's phone number and their parent's phone number is a single string. +
+**Pros:** Easy to implement as separate classes for student's phone and parent's phone is not required. +
+**Cons:** Harder to implement features that require solely the student's number or parent's number. +
+**Alternative 2:** Have a phoneStudent class for student's phone number and phoneParent class for parent's phone number. +
+**Pros:** Can edit properties of the student's phone number or parent's phone number separately. +
+**Cons:** Harder to implement as now there will be two phone classes instead of one. +
+
+---
+
+**Aspect:** Validity of phone number +
+**Alternative 1 (current choice):** Only allow numbers that are exactly `8 digits` long. +
+**Pros:** Ensures consistency across all phone numbers. +
+**Cons:** Student's parents might not have foreign numbers that are not exactly `8 digits` long. +
+**Alternative 2:** Modify phone validity regex to allow any length of phone numbers. +
+**Pros:** Able to have phone numbers that are local or non-local. +
+**Cons:** Inconsistent phone lengths displayed, might look very messy. +
+// end::studentparentcontact[]
 
 == Documentation
 
