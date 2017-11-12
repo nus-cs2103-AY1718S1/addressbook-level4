@@ -110,7 +110,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortImportantTag() throws PersonNotFoundException, DuplicatePersonException {
+    public void filterImportantTag() throws PersonNotFoundException, DuplicatePersonException {
         ArrayList<ReadOnlyPerson> notImportantPersons = new ArrayList<ReadOnlyPerson>();
         ArrayList<ReadOnlyPerson> importantPersons = new ArrayList<ReadOnlyPerson>();
 

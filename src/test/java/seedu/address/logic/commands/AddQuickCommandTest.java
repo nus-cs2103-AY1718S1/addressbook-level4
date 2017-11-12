@@ -149,7 +149,7 @@ public class AddQuickCommandTest {
         }
 
         @Override
-        public void sortImportantTag() throws PersonNotFoundException, DuplicatePersonException {
+        public void filterImportantTag() throws PersonNotFoundException, DuplicatePersonException {
         }
 
         @Override
@@ -177,7 +177,7 @@ public class AddQuickCommandTest {
         }
 
         @Override
-        public void sortImportantTag() throws PersonNotFoundException, DuplicatePersonException {
+        public void filterImportantTag() throws PersonNotFoundException, DuplicatePersonException {
             throw new DuplicatePersonException();
         }
     }

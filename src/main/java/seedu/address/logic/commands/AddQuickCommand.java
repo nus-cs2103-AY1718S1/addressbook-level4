@@ -62,7 +62,7 @@ public class AddQuickCommand extends UndoableCommand {
             model.addPerson(toAdd);
             //@@author aver0214
             model.sortAllPersons();
-            model.sortImportantTag();
+            model.filterImportantTag();
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);

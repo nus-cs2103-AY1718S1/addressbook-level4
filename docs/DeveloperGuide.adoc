@@ -488,7 +488,145 @@ Alternative considered is to allow user input multiple details in each search. I
 * There will be no results returned in this scenario as input phone number does not match the phone number in the `Contact 1` although the name matches exactly.
 
 From the two scenarios, we know that unless the user knows the exact details (i.e. full name, exact phone number, exact email and etc) otherwise `finds` command with multiple details input is practically not useful as no results will be returned.
+
+**Aspect:** Finding person with other details. +
+**Alternative 1 (current choice):** Able to search with other details but only one type of detail for each search +
+**Pros:** Easier to be implemented when only one type of detail is used. +
+**Cons:** Repeating functions for different details. +
+**Alternative 2:** Able to find with multiple details. +
+**Pros:** Lesser repeated functions is possible. +
+**Cons:** Harder to implement and increased complexity may affect efficiency.
+
+---
 // end::finds[]
+
+// tag::important[]
+=== Important tag
+
+Any person that has `important` tag will be filtered and then insert to the top of the list. +
+
+It is implemented to check whether any person in addressbook has `important` tag each time `add` or `list` command is executed
+
+[source,java]
+----
+@Override
+    public void filterImportantTag() throws PersonNotFoundException, DuplicatePersonException {
+        ArrayList<ReadOnlyPerson> notImportantPersons = new ArrayList<ReadOnlyPerson>();
+        ArrayList<ReadOnlyPerson> importantPersons = new ArrayList<ReadOnlyPerson>();
+
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            // ...Check through and filter all persons in addressbook with important tag to importantPersons list...
+        }
+
+        /**
+         * If any tags in addressbook contains the {@code keyword}
+         * then proceed to insert the contact(s) in {@code importantPersons} to the top of the addressbook
+         */
+
+        if (importantPersons.size() != 0) {
+            // ...Perform logic to insert persons with important tag to the top...
+        }
+    }
+----
+
+==== Design Considerations
+
+**Aspect:** Perform insertion of persons with important tag to the top quickly. +
+**Alternative 1 (current choice):** Filter person with `important` tag to a list and those without to another list then merge the lists together. +
+**Pros:** Easy to implement and works well when there are not a lot of persons. +
+**Cons:** Time complexity is O(n2) hence slows down as more persons are being added over time. +
+**Alternative 2:** Create additional addressbook that stores only important contacts and execute merge only when a new person is added to the addressbook. +
+**Pros:** Able to achieve O(n) time complexity. +
+**Cons:** Additional addressbook is redundant and takes up memory space.
+
+---
+// end::important[]
+
+// tag::sort[]
+=== Sorted persons
+
+Persons stored in the addressbook will be sorted in ascending alphabetical order based on their name.
+
+Persons in the addressbook will be sorted each time the user execute `add` or `list` command.
+
+Sorting is achieved by using java Collection.sort() method with a specified NameComparator.
+
+[source,java]
+----
+public class NameComparator implements Comparator <ReadOnlyPerson> {
+
+    @Override
+    public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
+        return p1.getName().fullName.compareToIgnoreCase(p2.getName().fullName);
+    }
+}
+----
+
+The NameComparator compares two names and ignore their case.
+
+==== Design Considerations
+
+**Aspect:** Sort the persons in the list fast. +
+**Alternative 1 (current choice):** Use java Collection.sort() which is a merge sort algorithm. +
+**Pros:** Works well with few persons in the addressbook and merge sort algorithm is stable. +
+**Cons:** Time complexity is nlog(n) hence takes long to sort as more persons are being added over time. +
+**Alternative 2:** Implement insertion sort algorithm. +
+**Pros:** Able to achieve O(n) time complexity which is the fastest. +
+**Cons:** Addressbook has to be almost sorted to achieved O(n) time complexity, otherwise can result in O(n2).
+
+---
+// end::sort[]
+
+// tag::add[]
+=== Quicker add command
+
+Only name and phone number are the required fields. +
+
+Program will handle and create default objects for all other fields that are not fulfilled by user. +
+
+The function below is the code to create default values for empty fields.
+
+[source, java]
+----
+ public static Optional <String> getDetails(Optional <String> value, Prefix prefix) throws ParseException {
+        if (!value.isPresent()) {
+            if (prefix.equals(PREFIX_BIRTHDAY)) {
+                return value.ofNullable("00/00/0000");
+            } else if (prefix.equals(PREFIX_EMAIL)) {
+                return value.ofNullable("No email");
+            } else if (prefix.equals(PREFIX_ADDRESS)) {
+                return value.ofNullable("No address");
+            } else if (prefix.equals(PREFIX_REMARK)) {
+                return value.ofNullable("No remark");
+            }
+        }
+
+        return value;
+    }
+----
+
+==== Design Considerations
+
+**Aspect:** Allow empty fields for `add` command. +
+**Alternative 1 (current choice):** Create objects for empty fields with default values. +
+**Pros:** Allow user to add a person even without full details. +
+**Cons:** Nil.
+
+---
+// end::add[]
+
+// tag::birthday[]
+=== Add person(s) Birthday
+
+The `birthday` command is an improved version from `add` command. It allows user to add using with as phone number, birthday, email or tag.
+
+The user can use this command with 'b/dd/mm/yyyy'
+
+==== Design Considerations
+
+It is implemented to add birthday detail so that relevant to the user to identify the birthday for up coming event. i.e. if a user want to have an event they can identify who's birthday is on this month or next month.
+
+//end::birthday[]
 
 // tag::gmap[]
 === Google Map Mechanism
@@ -767,6 +905,20 @@ Results will then be created `CommandResult` and be wrapped with `NewResultAvail
 **Cons:** Does not give the user option to append or replace existing addressbook.
 
 // end::import[]
+
+// tag::photo[]
+=== Add photo to person(s)
+
+The adding `photo` is an new version for our app. It allows user to add photos for the person list that been added to Mybook, by clicking the command box and go to add photo
+it will sent a request to open an file from the local location, and import photo to Mybook.
+
+The user can use size of 100X100 of file 'png','jpg' or 'jpeg'
+
+==== Design Considerations
+
+It is implemented to add photo detail so that relevant to the user to identify user. i.e. if both user have same/similar pronunciation of name.
+
+//end::photo[]
 
 == Documentation
 

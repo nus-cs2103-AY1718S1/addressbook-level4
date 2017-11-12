@@ -53,11 +53,79 @@ include::../UserGuide.adoc[tag=important]
 
 Allows user to access contacts that are important conveniently.
 
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=important]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sorted contacts in alphabetical order
+
+==== Logic
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows user to scroll through the list to look for persons easily.
+
+=== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Quick adding of a person
+
+==== Logic
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To facilitate quicker adding and making it possible to add when user do have all of a person's details.
+
+=== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
 === Other contributions
 
-* Provide assistance to team members when needed.
+* Provide assistance to team members.
 * Assign repository labels and milestones.
 * Issuing the project version release.
+* Maintaining project documentations relevancy.
 
 
 

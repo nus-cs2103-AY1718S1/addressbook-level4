@@ -56,6 +56,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+// tag::add[]
 === Adding a person: `add`
 
 Adds a person to the address book +
@@ -69,6 +70,7 @@ Examples:
 
 * `add n/John Doe p/98765432 b/21/07/1991 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison b/21/07/1991 p/1234567 t/criminal`
+// end::add[]
 
 === Listing all persons : `list`
 
@@ -383,6 +385,7 @@ Contacts in user myBook app that has `Important` or `important` tag will always 
 User using versions before v1.2 should add a new person with `important` tag first to enjoy this feature.
 // end::important[]
 
+//tag::birthday[]
 === Add Birthday
 
 *Author*: Wei Ren Kai
@@ -390,7 +393,9 @@ User using versions before v1.2 should add a new person with `important` tag fir
 All persons can now add in their birthday on the command line
 Format `b/dd/mm/yyyy` allow Mybook to keep track all students birthday
 Easy to identify who's birthday is coming up on that month.
+//end::birthday[]
 
+// tag::sort[]
 === Sorted Contacts (v1.3)
 
 *Author*: Soh Hong Hwee
@@ -398,6 +403,7 @@ Easy to identify who's birthday is coming up on that month.
 All persons displayed will be sorted in ascending alphabetical order based on their name. +
 Using `List` command will always display all persons in sorted ascedning alphabetical order. +
 Persons with `Important` or `important` tag will be at the top in ascending alphabetical order then follow by other persons.
+// end::sort[]
 
 // tag::gmap2[]
 === Gmap command accepts person name (v1.3)
@@ -464,7 +470,7 @@ Changes the addressbook theme to theme `INDEX` of one, which is default *DarkThe
 
 === Remarking a person with `remark` command (v1.3)
 
-*Author*: Beh Bee Yee
+*Author*: Teh Bee Yee
 
 Edits the remark for a person specified in the INDEX. +
 Format: `remark INDEX r/[REMARK]`
@@ -490,15 +496,17 @@ Removes the remark for the first person.
 User can now add a person with just name and phone details. +
 All other details that are not provided will be filled in by default values as shown in `Figure 3.15.1`.
 
-image::Default_for_empty_fields.png[width="400"]
+image::Default_for_empty_fields.png[width="250"]
 _Figure 3.15.1 : Default values for empty fields_
 
+//tag::photo[]
 === Option Menu `Add photo` (v1.4)
 
 *Author*: Wei Ren Kai
 
 This feature is to add photo to individual. +
 Display the photo data into browser panel with a photo size of 100X100.
+//end::photo[]
 
 // tag::import1[]
 === Import XML addressbook command (v1.4)
@@ -530,7 +538,7 @@ folder *data* into local addressbook.
 
 === Add a remark in `add` command (v1.4)
 
-*Author*: Soh Hong Hwee
+*Author*: Teh Bee Yee
 
 Add remark to a person in `add` command with `r/` prefix. +
 Format: `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS r/[REMARK] [t/TAG]...`
