@@ -176,6 +176,7 @@ _Result:_ +
 === Add/view/edit/delete events
 
 ==== Listing of events
+. First, let's start by listing all the events in **BoNUS** +
 *Positive test case* +
 _Command:_ +
 `listE` +
@@ -184,14 +185,16 @@ _Result:_ +
 
 You should see that the application automatically switches from contact list to event list after the command listE.
 
-
 *Negative test case* +
+
+. Incorrect capitalization of command +
 _Command:_ +
 `ListE` +
 _Result:_ +
 `Unknown command` +
+. Invalid spelling +
 _Command:_ +
-`lIsTE` +
+`listEE` +
 _Result:_ +
 `Unknown command`
 
@@ -210,56 +213,60 @@ or if the expression is not simple or clear enough.
 * Avoid putting the year first when using the non-standard format.
 ====
 
-To add an event, we need to use `addE n/NAME dt/DATE_TIME a/ADDRESS` of the event.
-
-1) Adds a new event with Name `CS3201 Project Meeting`, DateTime `17112017 1530`, Address `School of Computing, SR09, NUS`
-
-
+. Let's start by adding an Event called `CS3201 Project Meeting` into **BoNUS**. +
 _Command:_ +
 `addE n/CS3201 Project Meeting dt/17112017 15:30 a/School Of Computing, SR09, NUS` +
 _Result:_ +
-`New event added:  Event: CS3201 Project Meeting |  Date/Time: 17 Nov, 2017 15:30 |  Address: School Of Computing, SR09, NUS`
-
-
-2) Adds a new event with Name `CS1231 Project Meeting`, DateTime `19112017 15:30`, Address `School of Computing, DR1, NUS` +
-_Command:_ +
-`addE n/CS1231 Project Meeting dt/19112017 15:30 a/School Of Computing, DR1, NUS` +
-_Result:_ +
-`New event added:  Event: CS1231 Project Meeting |  Date/Time: 19 Nov, 2017 15:30 |  Address: School of Computing, DR1, NUS`
-
+`New event added:  Event: CS3201 Project Meeting |  Date/Time: 17 Nov, 2017 15:30 |  Address: School Of Computing, SR09, NUS` +
+You should see a new Event Card with the name CS3201 Project Meeting added into **BoNUS**.
 
 
 ==== Deleting of Events +
 
-1) Deletes an Event with index 8 on the Event List
+*Positive Test Case*
 
+. Deletes an Event with index 8 on the Event List +
 _Command:_ +
 `deleteE 8` +
 _Result:_ +
 `Deleted Event:  Event: Project Meeting for CS2101 |  Date/Time: 01 Dec, 2017 09:00 |  Address: SR09, School of Computing`
 
-2) Deletes an Event with index 11 on the Event List
+
+*Negative Test Cases*
+
+. Invalid command +
 _Command:_ +
-`deleteE 11` +
+`deleteE -1` +
 _Result:_ +
-`Deleted Event:  Event: Family Dinner |  Date/Time: 11 Dec, 2017 19:00 |  Address: Home Sweet Home`
+`Invalid command format!
+deleteE: Deletes the event identified by the index number used in the last event listing.
+Parameters: INDEX (must be a positive integer)`
+
+. Invalid index +
+_Command:_ +
+`deleteE 300` +
+_Result:_ +
+`The event index provided is invalid`
 
 
 
 ==== Editing of Events
-1) Edits Event from index 7 of Event list with a edited name of Movie Date with Bro
+
+*Positive test case*
+
+. First, let's list all the events in *BoNUS* +
 _Command:_ +
-editE 7 n/Movie Date with Bro +
+`listE` +
+_Result:_ +
+`Listed all events`
+
+. Let's try to edit an event from index 6 of Event list.
+_Command:_ +
+editE 6 n/Movie Date with Bro +
 _Result:_ +
 `Edited Event:  Event: Movie Date with Bro |  Date/Time: 22 Nov, 2017 22:00 |  Address: Golden Village Yishun` +
-2) Edits Event from index 6 of Event list with an edited date/time of 18112017 15:00 +
-_Command:_ +
-editE 6 dt/18112017 15:00 +
-_Result:_ +
-`Edited Event:  Event: Family Lunch |  Date/Time: 18 Nov, 2017 15:00 |  Address: Sakae Sushi, Causeway Point`
 
-At this point in time, Movie Date with bro should be at index 7 while
-Family Lunch would be at index 5.
+At this point in time, you should see an event with name `Movie Date with Bro` at index 6 of Event List.
 
 === Import/export data
 
@@ -307,6 +314,90 @@ _Result:_ +
 ==== Export data to `.xml` format
 
 To export data to a `.xml` file, we need to use the `export` command
+
+=== Email a contact on your contact list
+
+To email anyone on your contact list, you can use the `email` command.
+
+*Positive test case*
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Emailing Alex Yeoh +
+_Command:_ +
+`email 1` +
+_Result:_ +
+`Opened email to Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]` +
+
+At this point in time, you should see the default email application of your OS to be opened with the email of Alex already input at To:
+
+*Negative test cases*
+
+. Invalid command and Invalid index +
+_Command:_ +
+`email -1` +
+_Result:_ +
+`Invalid command format!
+The person index provided is invalid`.
+
+. Invalid index
+_Command:_ +
+`email 300000` +
+_Result:_ +
+`The person index provided is invalid`.
+
+=== Searching up a contact on Google Maps
+
+To search up a person's address on Google Maps, you can use the `gmap` command
+
+*Positive test case*
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Next, let's try to search up a person's address on Google Maps! +
+_Command:_ +
+`gmap 1`  +
+_Result:_ +
+`Opened Google Maps to get to Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]`
+
+At this point in time, you should see a browser opening Google Maps with `Alex Yeoh` 's address.
+
+*Negative test cases*
+
+. Invalid command and invalid index +
+_Command:_ +
+`gmap -1` +
+_Result:_ +
+`gmap: Opens Google Maps in default browser with the address of the person identified by the index number used in the last person listing being the Destination.
+Parameters: INDEX (must be a positive integer)`
+
+. Invalid index
+_Command:_ +
+`gmap 300000` +
+_Result:_ +
+`The person index provided is invalid`
+
+=== Switch themes
+
+To switch themes, we need to use the `theme` command.
+
+*Positive test case*
+
+. Let's try to switch themes
+_Command:_ +
+`theme` +
+_Result:_ +
+`Theme switched!`
+
+At this point in time, you should see the theme being switched from dark to bright theme.
 
 === Advance setting
 
