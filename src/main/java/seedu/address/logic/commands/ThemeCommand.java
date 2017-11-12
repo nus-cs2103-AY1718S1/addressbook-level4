@@ -22,17 +22,16 @@ public class ThemeCommand extends Command {
     @Override
     public CommandResult execute() {
 
-        String themeToChange = (theme == "DarkTheme.css") ? "LightTheme.css" : "DarkTheme.css";
+        String themeToChange = (theme.equals("DarkTheme.css")) ? "LightTheme.css" : "DarkTheme.css";
 
         EventsCenter.getInstance().post(new ThemeRequestEvent(themeToChange));
-
-        theme = themeToChange;
 
         return new CommandResult(String.format(MESSAGE_SWITCH_THEME_SUCCESS, themeToChange));
 
     }
 
 
+    @Override
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack,
                         RecentlyDeletedQueue queue, String theme) {
         this.theme = theme;
