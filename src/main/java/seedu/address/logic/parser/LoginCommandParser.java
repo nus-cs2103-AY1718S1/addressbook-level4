@@ -15,7 +15,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author jelneo
 /**
- * Parses input arguments and creates a new LoginCommand object.
+<<<<<<< Updated upstream
+ * Parses input arguments and creates a new {@code LoginCommand} object
  */
 public class LoginCommandParser implements Parser<LoginCommand> {
 

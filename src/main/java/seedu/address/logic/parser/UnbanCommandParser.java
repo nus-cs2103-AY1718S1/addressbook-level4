@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author jaivigneshvenugopal
 /**
- * Parses input arguments and creates a new UnbanCommand object
+ * Parses input arguments and creates a new {@code UnbanCommand} object
  */
 public class UnbanCommandParser implements Parser<UnbanCommand> {
     /**

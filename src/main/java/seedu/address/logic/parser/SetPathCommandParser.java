@@ -5,7 +5,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author jaivigneshvenugopal
 /**
- * Parses input arguments and creates a new SetPathCommand object
+ * Parses input arguments and creates a new {@code SetPathCommand} object
  */
 public class SetPathCommandParser {
 

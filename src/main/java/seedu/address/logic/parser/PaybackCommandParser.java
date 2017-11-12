@@ -12,7 +12,7 @@ import seedu.address.model.person.Debt;
 
 //@@author jelneo
 /**
- * Parses input arguments and creates a new PaybackCommand object.
+ * Parses input arguments and creates a new {@code PaybackCommand} object
  */
 public class PaybackCommandParser implements Parser<PaybackCommand> {
 

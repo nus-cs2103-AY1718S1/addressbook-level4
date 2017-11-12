@@ -12,7 +12,7 @@ import seedu.address.model.person.Debt;
 
 //@@author jelneo
 /**
- * Parses input arguments and creates a new BorrowCommand object.
+ * Parses input arguments and creates a new {@code BorrowCommand} object
  */
 public class BorrowCommandParser implements Parser<BorrowCommand> {
 

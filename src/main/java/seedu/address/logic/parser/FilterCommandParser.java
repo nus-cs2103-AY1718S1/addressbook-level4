@@ -11,7 +11,7 @@ import seedu.address.model.tag.Tag;
 
 //@@author jelneo
 /**
- * Parses input arguments and creates a new FilterCommand object.
+ * Parses input arguments and creates a new {@code FilterCommand} object
  */
 public class FilterCommandParser implements Parser<FilterCommand> {
 
