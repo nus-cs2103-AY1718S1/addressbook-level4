@@ -18,5 +18,5 @@ public class CommandWordList {
             LoginCommand.COMMAND_WORD, NoteCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD,
             ResizeCommand.COMMAND_WORD, RestoreBackupCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD,
             SortCommand.COMMAND_WORD, SyncCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD,
-            DeleteMeetingCommand.COMMAND_WORD);
+            DeleteMeetingCommand.COMMAND_WORD, LogoutCommand.COMMAND_WORD);
 }

@@ -26,6 +26,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.NoteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ResizeCommand;
@@ -147,6 +148,7 @@ public class SuggestionHeuristic {
         case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
         case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
         case LoginCommand.COMMAND_WORD: case LoginCommand.COMMAND_ALIAS:
+        case LogoutCommand.COMMAND_WORD: case LogoutCommand.COMMAND_ALIAS:
         case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
         case SyncCommand.COMMAND_WORD: case SyncCommand.COMMAND_ALIAS:
         case UndoCommand.COMMAND_WORD: case UndoCommand.COMMAND_ALIAS:
