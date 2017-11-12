@@ -1247,7 +1247,7 @@ public class EventListPanel extends UiPart<Region> {
      */
     @Subscribe
     private void handleThemeChanged(SwitchThemeEvent event) {
-        if (prefs.getAddressBookTheme() == darkTheme) {
+        if (prefs.getAddressBookTheme().equals(darkTheme)) {
             getRoot().getStylesheets().clear();
             getRoot().getStylesheets().add(brightTheme);
             getRoot().getStylesheets().add(brightExtension);
@@ -1258,7 +1258,6 @@ public class EventListPanel extends UiPart<Region> {
             getRoot().getStylesheets().add(darkExtension);
             prefs.setAddressBookTheme(darkTheme);
         }
-
     }
 ```
 ###### \resources\view\event\EventListCard.fxml
