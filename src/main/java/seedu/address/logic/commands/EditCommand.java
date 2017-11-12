@@ -53,7 +53,7 @@ public class EditCommand extends UndoableCommand {
     public static final String COMMAND_WORD_ALIAS = "e";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the last person listing or of the currently selected person if no"
+            + "by the index number used in the last person listing or of the currently selected person if no "
             + "index is specified. "
             + "Existing values will be overwritten by the input values. At least one field must be present.\n"
             + "Parameters: [INDEX]\n"
@@ -76,7 +76,7 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_POSTAL_CODE + " " + "123456";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_INVALID_TOTAL_DEBT = "Total debt cannot be less than current debt";
 

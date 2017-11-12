@@ -35,9 +35,9 @@ import seedu.address.model.tag.Tag;
  */
 public class ParserUtil {
 
-    public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INVALID_TOTAL_DEBT = "Total debt cannot be set to zero.";
-    public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer";
+    public static final String MESSAGE_INVALID_TOTAL_DEBT = "Total debt cannot be set to zero";
+    public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be

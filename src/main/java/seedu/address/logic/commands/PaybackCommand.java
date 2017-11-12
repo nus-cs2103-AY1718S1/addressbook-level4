@@ -27,7 +27,7 @@ public class PaybackCommand extends UndoableCommand {
             + "Example 2: " + COMMAND_WORD + " 100.50";
 
     public static final String MESSAGE_PAYBACK_SUCCESS = "%1$s has paid $%2$s back";
-    public static final String MESSAGE_PAYBACK_FAILURE = "Amount paid back cannot be more than the debt owed.";
+    public static final String MESSAGE_PAYBACK_FAILURE = "Amount paid back cannot be more than the debt owed";
 
     private final ReadOnlyPerson personThatPaidBack;
     private final Debt amount;

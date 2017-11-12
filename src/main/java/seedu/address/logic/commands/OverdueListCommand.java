@@ -14,7 +14,7 @@ public class OverdueListCommand extends Command {
     public static final String COMMAND_WORD = "overduelist";
     public static final String COMMAND_WORD_ALIAS = "ol";
 
-    public static final String MESSAGE_SUCCESS = "Listed all debtors with overdue debt.";
+    public static final String MESSAGE_SUCCESS = "Listed all debtors with overdue debt";
 
     @Override
     public CommandResult execute() {
