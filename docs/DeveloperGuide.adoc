@@ -1016,6 +1016,14 @@ The suggestion mechanism is implemented at Rolodex's parser level under the logi
 The suggestion is stored as an instance object to be evaluated only if the next command matches any of the suggestion's _affirmation commands_, `y`, `yes`, `k`, `ok`, `yea` or `yeah`, otherwise, the suggestion is destroyed.
 Upon receiving a bogus command, the command string is evaluated by the suggestion object which determines if it can be turned into a valid suggestion to be executed.
 
+For this section's explanation of the suggestions mechanism, the terms _commandWord_, _arguments_ or _rawArgs_ are usually a reference to the following:
+
+image::SuggestionParseLabel.png[]
+
+* _commandWord_: The first resulting word in a whitespace delimited string.
+* _rawArgs_: The raw argument string to be parsed for the suggestion, after excluding the _commandWord_.
+* _arguments_: Can be the same meaning or _rawArgs_ or mean arguments in a broader context. Please adjust to the context if necessary.
+
 The high level sequence diagram for a bogus `udon is yummy` request can be seen below:
 
 image::SuggestionHighLevelSequenceDiagram.png[]
