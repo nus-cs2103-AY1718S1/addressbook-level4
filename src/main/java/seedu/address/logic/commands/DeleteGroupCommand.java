@@ -35,7 +35,7 @@ public class DeleteGroupCommand extends UndoableCommand {
         List<ReadOnlyGroup> lastShownList = model.getGroupList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
         }
 
         ReadOnlyGroup groupToDelete = lastShownList.get(targetIndex.getZeroBased());

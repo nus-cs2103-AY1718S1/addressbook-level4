@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -16,6 +17,8 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -38,6 +41,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_GROUP_NAME = "Group 1";
+    public static final String VALID_INDEX = "1";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -55,8 +60,12 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_NULL = "";
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String GROUP_NAME_DESC = " " + PREFIX_NAME + VALID_GROUP_NAME;
+    public static final String GROUP_INDEX_DESC = " " + PREFIX_INDEX + VALID_INDEX;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
+    public static final String INVALID_GROUP_NAME_DESC = " " + PREFIX_NAME + "Chit-Chat"; //'-' not allowed in names
+    public static final String INVALID_GROUP_INDEX_DESC = " " + PREFIX_INDEX + "-1"; //'-1' not a valid index
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_BIRTHDAY_DESC = " " + PREFIX_BIRTHDAY + "01011995"; // '-' is required
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
@@ -135,4 +144,28 @@ public class CommandTestUtil {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
     }
+
+    /**
+     * Updates {@code model}'s filtered group list to show only the first group in the {@code model}'s address book
+     */
+    public static void showFirstGroupOnly(Model model) {
+        ReadOnlyGroup group = model.getAddressBook().getGroupList().get(0);
+        model.updateFilteredGroupList(readOnlyGroup ->
+                readOnlyGroup.getGroupName().fullName.equals(group.getGroupName().fullName));
+
+        assert model.getGroupList().size() == 1;
+    }
+
+    /**
+     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstGroup(Model model) {
+        ReadOnlyGroup firstGroup = model.getGroupList().get(0);
+        try {
+            model.deleteGroup(firstGroup);
+        } catch (GroupNotFoundException gnfe) {
+            throw new AssertionError("Group in filtered list must exist in model.", gnfe);
+        }
+    }
 }
+

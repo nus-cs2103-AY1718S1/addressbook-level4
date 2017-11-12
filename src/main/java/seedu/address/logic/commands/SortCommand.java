@@ -4,6 +4,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyAddressBookException;
 
 //@@author LimeFallacie
 /**
@@ -23,6 +24,8 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_SORT_SUCCESS = "Sorted all persons by %s.";
 
+    public static final String MESSAGE_NO_CONTACTS_TO_SORT = "There are no contacts available to sort";
+
     private String sortType;
 
     public SortCommand(String type) {
@@ -35,6 +38,8 @@ public class SortCommand extends Command {
             model.sort(sortType);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_USAGE); //It will never reach here.
+        } catch (EmptyAddressBookException eabe) {
+            throw new CommandException(MESSAGE_NO_CONTACTS_TO_SORT);
         }
 
         //lists all contacts after sorting

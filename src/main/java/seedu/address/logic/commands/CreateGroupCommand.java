@@ -71,4 +71,12 @@ public class CreateGroupCommand extends UndoableCommand {
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, groupName, groupMembers.size()));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CreateGroupCommand // instanceof handles nulls
+                && this.groupName.equals(((CreateGroupCommand) other).groupName)
+                && this.indexes.equals(((CreateGroupCommand) other).indexes)); // state check
+    }
 }

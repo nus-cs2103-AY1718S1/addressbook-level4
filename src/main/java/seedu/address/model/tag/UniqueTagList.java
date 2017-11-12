@@ -10,7 +10,6 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -24,13 +23,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class UniqueTagList implements Iterable<Tag> {
 
     private final ObservableList<Tag> internalList = FXCollections.observableArrayList();
-    private Tag pinTag;
 
     /**
      * Constructs empty TagList.
      */
     public UniqueTagList() {
-        pinTag = createPinTag();
     }
 
     /**
@@ -40,24 +37,10 @@ public class UniqueTagList implements Iterable<Tag> {
     public UniqueTagList(Set<Tag> tags) {
         requireAllNonNull(tags);
         internalList.addAll(tags);
-        pinTag = createPinTag();
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
-    //@@author eldonng
-    /**
-     * Creates a pin tag
-     * @return a Pin Tag to be used to add or remove person to be pinned in the address book
-     */
-    private Tag createPinTag() {
-        try {
-            return new Tag("Pinned");
-        } catch (IllegalValueException ive) {
-            return null; //Will not reach here
-        }
-
-    }
     /**
      * Returns all tags in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
@@ -110,28 +93,6 @@ public class UniqueTagList implements Iterable<Tag> {
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
-
-    //@@author eldonng
-    /**
-     * Adds a pin tag to the tag list
-     */
-    public void addPinTag() {
-        internalList.add(pinTag);
-    }
-
-    //@@author eldonng
-    /**
-     * Removes a pin tag from the tag list
-     * @throws IllegalValueException
-     */
-    public void removePinTag() throws IllegalValueException {
-        if (contains(pinTag)) {
-            internalList.remove(pinTag);
-        } else {
-            throw new IllegalValueException("Unable to find tag");
-        }
-    }
-
 
     @Override
     public Iterator<Tag> iterator() {

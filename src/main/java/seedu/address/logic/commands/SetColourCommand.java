@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
 //@@author eldonng
@@ -20,6 +21,7 @@ public class SetColourCommand extends Command {
 
     public static final String SETCOLOUR_SUCCESS = "All tags [%1s] are now coloured %2s";
     public static final String SETCOLOUR_INVALID_COLOUR = "Unfortunately, %1s is unavailable to be set in addressbook";
+    public static final String SETCOLOUR_INVALID_TAG = "No such tag.";
     private static final String[] colours = {"blue", "red", "brown", "green", "black", "purple", "indigo", "grey",
         "chocolate", "orange", "aquamarine"};
 
@@ -32,16 +34,16 @@ public class SetColourCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         try {
             if (isColourValid()) {
                 model.setTagColour(tag, newColour);
                 model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
                 return new CommandResult(String.format(SETCOLOUR_SUCCESS, tag, newColour));
             }
-            return new CommandResult(String.format(SETCOLOUR_INVALID_COLOUR, newColour));
+            throw new CommandException(String.format(SETCOLOUR_INVALID_COLOUR, newColour));
         } catch (IllegalValueException ive) {
-            return new CommandResult(ive.getMessage());
+            throw new CommandException(ive.getMessage());
         }
     }
 
@@ -56,5 +58,13 @@ public class SetColourCommand extends Command {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SetColourCommand // instanceof handles nulls
+                && this.tag.equals(((SetColourCommand) other).tag)
+                && this.newColour.equals(((SetColourCommand) other).newColour)); // state check
     }
 }
