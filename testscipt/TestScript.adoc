@@ -99,7 +99,6 @@ Phone numbers can only contain numbers, and should be at least 3 digits long
 ```
 
 ---
-<!— Self note to team (delete when fixed): the warning message doesn’t seem right. I can create email with j@e —>
 `add n/John Doe p/98765432 e/johnd!example.com a/311, Clementi Ave 2, #02-25`
 ```
 Person emails should be 2 alphanumeric/period strings separated by '@'
@@ -116,7 +115,7 @@ Example: edit 1 p/91234567 e/johndoe@example.com
 ```
 
 ---
-`edit 1 p/91234567 e/johndoe@example.com`
+`edit 3 p/91234567 e/johndoe@example.com `
 ```
 Edited Person: Alex Yeoh Phone: 91234567 Email: johndoe@example.com Address: Blk 30 Geylang Street 29, #06-40 Comments: Blk 30 Geylang Street 29, #06-40 Appointments: 20/10/2017 10:10:50 Tags: [student]
 ```
@@ -132,7 +131,7 @@ Example: edit 1 p/91234567 e/johndoe@example.com
 
 === Delete
 
-`delete 7`
+`delete 21`
 ```
 Deleted Person: John Doe Phone: 98765432 Email: johnd@example.com Address: 311, Clementi Ave 2, #02-25 Comments: 311, Clementi Ave 2, #02-25 Appointments:  Tags:
 ```
@@ -171,6 +170,12 @@ Unable to convert file data.
 File merged successfully.
 ```
 
+---
+`undo`
+```
+Undo success!
+```
+
 === Find
 
 `find`
@@ -193,11 +198,74 @@ Examples:
 ---
 `find ap/15:50`
 ```
-1 persons listed!
+2 persons listed!
 ```
 ---
-=== Export
+`find r/2017 T12`
+```
+5 persons listed!
+```
 
+---
+`find r/2016 T12`
+```
+2 persons listed!
+```
+
+---
+`find n/david alex ap/15:50 c/funny r/friends`
+```
+5 persons listed!
+```
+
+=== Add multiple persons with a .txt file
+
+`multiple`
+```
+Invalid command format!
+multiple: Adds multiple person to the address book. Parameters: FILE_PATH
+Example: multiple ./data/personsToAdd.txt
+```
+
+---
+`multiple`
+```
+Invalid person format!
+Person format in .txt file: Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS i/AVATAR IMAGE FILE [r/TAG]...
+Example: multiple n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 i/john_doe.png r/friends r/owesMoney
+```
+
+---
+`multiple abc`
+```
+Unable to open file 'abc'
+```
+
+---
+`multiple data/personstoadd.txt`
+```
+New person(s) added:
+Casey Teo Phone: 85355255 Email: caseyteo@gmail.com Address: 123, Jurong West Ave 6, #08-111 Comments: 123, Jurong West Ave 6, #08-111 Appointments:  Tags: [2017][T12]
+Benson Kim Phone: 98765432 Email: bensonkim@hotmail.com Address: 311, Clementi Ave 2, #02-25 Comments: 311, Clementi Ave 2, #02-25 Appointments:  Tags: [2017][T12]
+Andrew Lam Phone: 95352563 Email: andrewlam@example.com Address: wall street 1 Comments: wall street 1 Appointments:  Tags: [2017][T12]
+Tom Tan Phone: 8482424 Email: tomtan@gmail.com Address: little india 1 Comments: little india 1 Appointments:  Tags: [2016][T12]
+Tiffany Chua Phone: 98774621 Email: tiffanychua@example.com Address: Block 312, Amy Street 1 Comments: Block 312, Amy Street 1 Appointments:  Tags: [2016][T12]
+Harry Toh Phone: 22222222 Email: harrytoh@hotmail.com Address: Block 123, Bobby Street 3 Comments: Block 123, Bobby Street 3 Appointments:  Tags: [friend][husband]
+Adison Pauline Phone: 85355255 Email: adison@gmail.com Address: 123, Jurong West Ave 6, #08-111 Comments: 123, Jurong West Ave 6, #08-111 Appointments:  Tags: [2016][T17]
+Henesy Meier Phone: 98765432 Email: hene@gmail.com Address: 311, Clementi Ave 3, #02-25 Comments: 311, Clementi Ave 3, #02-25 Appointments:  Tags: [2016][T17]
+Robert Kurz Phone: 95352563 Email: kurz@hotmail.com Address: wall street 2 Comments: wall street 2 Appointments:  Tags: [2016][T17]
+Gerald Dela Phone: 8482424 Email: gerald@hotmail.com Address: little india 2 Comments: little india 2 Appointments:  Tags: [2016][T17]
+Donavan King Phone: 98374237 Email: donavan@gmail.com Address: Block 312, Amy Street 1 Comments: Block 312, Amy Street 1 Appointments:  Tags: [2017][T17]
+John Choo Phone: 87635123 Email: johnchoo@hotmail.com Address: Block 123, Bobby Street 3 Comments: Block 123, Bobby Street 3 Appointments:  Tags: [2017][T17]
+```
+
+---
+`undo`
+```
+Undo success!
+```
+
+=== Export
 `export`
 ```
 Invalid command format!
@@ -205,19 +273,16 @@ export: export the address book to a chosen file type
 Parameters: export .txt [PATH]
 Example: export .txt C:/user/user/desktop
 ```
-
 ---
-
 `export .txt C:/address book` (on Windows) +
-`export .txt /Users/[YOUR USER NAME]/address book` (on MacOS)
-`export .txt /address book (on Linux)
+`export .txt /Users/[YOUR USER NAME]/address book` (on MacOS) +
+`export .txt /home/address book` (on Linux)
+
 ```
 Successfully exported
 ```
 Also please check that the respective path has an `addressbook.txt` file containing all contacts.
-
 ---
-
 `export .txt`
 ```
 Invalid command format!
@@ -225,20 +290,14 @@ export: export the address book to a chosen file type
 Parameters: export .txt [PATH]
 Example: export .txt C:/user/user/desktop
 ```
-
 ---
-
 `export .txt C:\Windows` (on Windows only. Linux and MacOS do not apply)
 ```
 Access denied
 ```
-
 ---
-
 === Email Login
-
 *Note*: UI buttons will not update automatically if logged in (or out) from console. However, clicking the login button will update the login status accordingly.
-
 `email_login`
 ```
 Invalid command format!
@@ -246,9 +305,7 @@ email_login: log in with an email address
 Parameters: email_login "[EMAIL]" "[PASSWORD]"
 Example: email_login "example@gmail.com"" example password"
 ```
-
 ---
-
 `email_login cs2103testacc@gmail.com "testpass"` +
 `email_login cs2103testacc@gmail.com testpass` +
 `email_login "cs2103testacc@gmail.com" testpass`
@@ -258,25 +315,17 @@ email_login: log in with an email address
 Parameters: email_login "[EMAIL]" "[PASSWORD]"
 Example: email_login "example@gmail.com"" example password"
 ```
-
 ---
-
 `email_login "123@hotmail.com" "password"`
-
 ```
 Log in failed: The email domain is not supported
 ```
-
 ---
-
 `email_login "123hotmail" "password"`
-
 ```
 The given email is not valid
 ```
-
 ---
-
 `email_login "cs2103testacc@gmail.com" "wrongpass"`
 ```
 Log in failed: It could be one of the following reasons:
@@ -284,21 +333,15 @@ Log in failed: It could be one of the following reasons:
 2. Your email and password combination is not correct
 3. Allow less secure apps is not enable in your email
 ```
-
 ---
-
 `email_login "cs2103testacc@gmail.com" "testpass"`
 ```
 Successfully logged in as cs2103testacc@gmail.com
 ```
-
 ---
-
 === Email Send
 *Before testing this section please enter this command `email_login "cs2103testacc@gmail.com" "testpass"`*
-
 ---
-
 `email_send`
 ```
 Invalid command format!
@@ -307,13 +350,10 @@ Requires an logged in email using email_login
 Parameters: email_send "[RECIPIENTS]" "[TITLE]" "[BODY]"
 Example: email_send "example@gmail.com;example2@yahoo.com" "Test" "Test Body"
 ```
-
 ---
-
 `email_send cs2103testacc@gmail.com "Title" "Body"` +
 `email_send "cs2103testacc@gmail.com" Title Body` +
 `email_send cs2103testacc@gmail.com "Title" "Body"`
-
 ```
 Invalid command format!
 email_send: Send an email to one or more recipients
@@ -321,41 +361,27 @@ Requires an logged in email using email_login
 Parameters: email_send "[RECIPIENTS]" "[TITLE]" "[BODY]"
 Example: email_send "example@gmail.com;example2@yahoo.com" "Test" "Test Body"
 ```
-
 ---
-
 `email_send "cs2103testacc@gmail.com" "Title" "Body"`
-
 ```
 Successfully sent
 ```
-
 ---
 *Please substitute `[ANY OF YOUR EMAIL]` with a suitable email address.*
-
 `email_send "cs2103testacc@gmail.com;[ANY OF YOUR EMAIL]" "Title" "Body"`
-
 ```
 Successfully sent
 ```
 Also please check that you have received an email from cs2103testacc@gmail.com with correct title and body.
-
 ---
-
 === Email Logout
-
 `email_logout`
-
 ```
 Logged out
 ```
-
 ---
-
 === Find Without Matching Whole Keyword
-
 `find_contain`
-
 ```
 Invalid command format!
 find_contain: Finds all persons whose name / phone / address / email contains the given string
@@ -363,31 +389,21 @@ Parameters: find_contain PREFIX_PERSON_ATTRIBUTE/STRING [MORE_PARAMETERS]...Exam
 1) find_contain n/david li p/91
 2) find_contain e/gmail a/jurong
 ```
-
 ---
-
 `find_contain n/David Beckham`
-
 ```
 1 persons listed!
 ```
-
 ---
-
 `find_contain n/avid`
-
 ```
 2 persons listed!
 ```
-
 ---
-
 `find_contain n/vi p/99`
-
 ```
 2 persons listed
 ```
 ___
-
 
 
