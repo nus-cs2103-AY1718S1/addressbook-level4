@@ -385,9 +385,15 @@ image::TextFilePath.png[width="600"]
 
 * Note: The file name cannot contain illegal file path characters, which includes the following: /:*?"<>|
 
+
 The result of the created .txt file is illustrated in the figure below
 
 image::PrintedTxtFile.png[width="800"]
+
+Examples:
+
+* `print FILENAME` +
+Prints the entire addressbook by listing all the contacts, and the associated insurance policies with each contact.
 //end::print[]
 
 
@@ -402,6 +408,12 @@ Format: `why INDEX`
 
 After executing, the user will be presented with a feedback which looks something like this:
 "Because John Doe lives in 123 Clementi Ave 2"
+
+Examples:
+
+* `list` +
+`why 1` +
+Returns "Because Kelvin Liew appreciates you"
 // end::why[]
 
 === Exiting the program : `exit`
