@@ -233,6 +233,8 @@ This enhancement will also improve user-friendliness and user experience of The 
 
 === Other contributions
 
+This section outlines the additional contributions by Chan Kin Hung Dickson for The Myth's Book and Ark (Software by Team T16-B1).
+
 ==== Software Contributions
 
 * Updated the GUI color scheme, structure, layout and overall outlook (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/97[#97], https://github.com/CS2103AUG2017-T15-B3/main/pull/124[#124])
