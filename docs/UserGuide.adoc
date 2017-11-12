@@ -1,4 +1,4 @@
-= DeathNote v1.5 - User Guide
+= DeathNote v2.0 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -17,9 +17,6 @@ By: `CS2103AUG2017-W10-B3`      Since: `Jun 2016`      Licence: `MIT`
 This user guide contains all the essential information required to make full use of DeathNote. It also includes the
 description of the application's system function, abilities and step-by-step procedures to be able to use DeathNote
 effectively.
-
-Besides managing contacts, Death Note brings entertainment to you by having aliases for its commands and the entertainment
-it brings is only limited by your creativity.
 
 == Getting Started
 
@@ -106,7 +103,7 @@ This section covers commonly used commands.
 
 //tag::add[]
 
-=== Add a person: `add` / `a` / `curse` _[Since v1.2]_
+=== Add a person: `add` / `a` / `curse` kbd:[V2.0]
 
 Adds a person to DeathNote +
 
@@ -132,7 +129,7 @@ Adds a person to DeathNote +
 * `add n/Dwayne Johnson pic/C:\Users\user\Desktop\TheRock.png`
 //end::profilepictureadd[]
 
-=== Add a remark : `remark` _[Since v1.1]_
+=== Add a remark : `remark` kbd:[V2.0]
 //tag::remark[]
 Adds or edits remarks to the person identified by the INDEX
 
@@ -148,7 +145,7 @@ Edits the remark for the first person to Likes to drink coffee.
 * `remark 2 r/` +
 Removes the remark for the second person.
 
-=== Edit a person : `edit` / `e` / `mutate` _[Since v1.2]_
+=== Edit a person : `edit` / `e` / `mutate` kbd:[V2.0]
 
 Edits an existing person in DeathNote. +
 
@@ -204,7 +201,7 @@ Deletes the 1st person in the results of the `find` command.
 
 //tag::find[]
 
-=== Find a person: `find` / `f` / `summon` _[Improved since v1.3]_
+=== Find a person: `find` / `f` / `summon` kbd:[V2.0]
 
 Finds persons who matches the given attributes. +
 
@@ -263,7 +260,7 @@ Shows a list of all persons in DeathNote. +
 
 //tag::opennew[]
 
-=== Create new DeathNote : `new` / `n` _[Since v1.4]_
+=== Create new DeathNote : `new` / `n` kbd:[V2.0]
 
 Opens a new instance of DeathNote.
 
@@ -277,7 +274,7 @@ Opens a new instance of DeathNote.
 . Locate your desired DeathNote data file on the pop-up window. The file will be in an xml format.
 . Select the file and click Save
 
-=== Open existing DeathNote : `open` / `o` _[Since v1.4]_
+=== Open existing DeathNote : `open` / `o` kbd:[V2.0]
 
 Opens another existing instance of DeathNote.
 
@@ -304,7 +301,7 @@ Exits DeathNote. +
 This section contains more sophisticated usage of DeathNote.
 
 //tag::brem[]
-=== View birthday reminder : `reminders` / `rem` _[Since v1.4]_
+=== View birthday reminder : `reminders` / `rem` kbd:[V2.0]
 
 Opens the birthday Reminders Window. The same can be done by clicking Reminders --> Birthdays
 
@@ -396,7 +393,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 //tag::theme[]
-=== Change theme : `theme` _[Since v1.2]_
+=== Change theme : `theme` kbd:[V2.0]
 Changes the theme of DeathNote. +
 
   Format: theme
@@ -418,7 +415,7 @@ image::darkTheme.png[width="200"]
 
 //end::theme[]
 
-=== Sorting Behavior _[Since v1.3]_
+=== Sorting Behavior kbd:[V2.0]
 
 Listed persons are sorted automatically in alphabetical order. No command is required.
 

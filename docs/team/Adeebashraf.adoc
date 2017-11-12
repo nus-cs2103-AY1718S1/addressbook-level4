@@ -40,7 +40,7 @@ This feature allows users to further personalize each contact with more paramete
 
 ---
 #Start of Extract [from: Developer Guide]#
-
+include::../DeveloperGuide.adoc[tag=parameter]
 #End of Extract#
 
 ---

@@ -61,6 +61,7 @@ public class Picture {
     public Picture(String fileLocation) throws IllegalValueException {
         String trimmedFileLocation = fileLocation == null ? null : fileLocation.trim();
         if (!isValidPicture(trimmedFileLocation)) {
+            System.out.println(fileLocation);
             throw new IllegalValueException(MESSAGE_PROFILEPICTURE_CONSTRAINTS);
         }
 
