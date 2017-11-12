@@ -29,6 +29,26 @@ public class SwitchToEventsListEventTest {
     }
 }
 ```
+###### \java\seedu\address\commons\exceptions\InvalidFilePathExceptionTest.java
+``` java
+public class InvalidFilePathExceptionTest {
+    private ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void createException_getMessage_checkCorrectness() throws Exception {
+        thrown.expect(ReminderNotFoundException.class);
+        Exception exception = new InvalidFilePathException(Avatar.INVALID_PATH_MESSAGE);
+        assertEquals(Avatar.INVALID_PATH_MESSAGE, exception.getMessage());
+    }
+
+    @Test
+    public void createException_emptyMessage_checkCorrectness() throws Exception {
+        thrown.expect(ReminderNotFoundException.class);
+        Exception exception = new InvalidFilePathException();
+        assertEquals(null, exception.getMessage());
+    }
+}
+```
 ###### \java\seedu\address\commons\util\UrlUtilTest.java
 ``` java
 public class UrlUtilTest {
@@ -319,7 +339,6 @@ public class ModuleInfoTest {
     }
 
     @Test
-    @Ignore
     public void createModuleInfo_fromJsonUrl_checkCorrectness() throws Exception {
         assertEquals("CS1101S", info.getModuleCode());
 
@@ -332,16 +351,21 @@ public class ModuleInfoTest {
         ModuleInfo another = getSampleModule();
         assertEquals(info, info);
         assertEquals(info, another);
+        assertNotEquals(info, "");
     }
 
     @Test
-    @Ignore
     public void toString_checkCorrectness() throws Exception {
         String expected = "Module Code: CS1101S\n"
                 + "Module Title: Programming Methodology\n"
                 + "Module Credit: 5\n"
                 + "Examination Date: Wed Nov 29 17:00:00 SGT 2017";
         assertEquals(expected, info.toString());
+    }
+
+    @Test
+    public void hashCode_checkCorrectness() {
+        assertEquals("CS1101S".hashCode(), info.hashCode());
     }
 
     private static ModuleInfo getSampleModule() throws Exception {
@@ -672,7 +696,8 @@ public class AvatarTest {
         File file = new File(path);
 
         Avatar avatar = new Avatar(path);
-        assertEquals(file.toURI().toString(), avatar.getPath());
+        assertEquals(path, avatar.getPath());
+        assertEquals(file.toURI().toString(), avatar.getUri());
     }
 
     @Test
@@ -939,7 +964,7 @@ public class PropertyTest {
     public void createProperty_preLoadedProperty_invalidValue() {
         Property newProperty = null;
         String value = "12";
-        String expectedMessage = "Phone numbers can only contain numbers, and should be at least 3 digits long";
+        String expectedMessage = "Phone numbers can only contain numbers, and should be at least 3 digits long.";
 
         try {
             newProperty = new Property("p", value);

@@ -22,11 +22,15 @@ public class TagColorChangedEvent extends BaseEvent {
 ###### \java\seedu\address\commons\util\FileUtil.java
 ``` java
     /**
-     * Checks whether the given file is an image (according to its MIME type).
+     * Checks whether the given file is an image (according to its MIME type).<br>
+     *
+     * Notice: This check is not accurate and may lead to security problems.
      */
     public static boolean isImage(File file) {
         String type = TYPE_MAP.getContentType(file);
-        return type.split("/")[0].equals("image");
+        return type.split("/")[0].equals("image")
+                // To allow the image downloaded from Internet, especially png file.
+                || type.equals("application/octet-stream");
     }
 ```
 ###### \java\seedu\address\commons\util\JsonUtil.java
@@ -510,7 +514,7 @@ public class ModuleInfo {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(moduleCode);
+        return moduleCode.hashCode();
     }
 
     @Override
@@ -1018,6 +1022,7 @@ public class Avatar {
     public static final String FILE_NOT_IMAGE = "The provided file exists, but it is not an image.";
 
     private String path;
+    private String uri;
 
     public Avatar(String path) throws IllegalValueException {
         requireNonNull(path);
@@ -1033,7 +1038,8 @@ public class Avatar {
             throw new IllegalValueException(FILE_NOT_IMAGE);
         }
 
-        this.path = file.toURI().toString();
+        this.path = path;
+        this.uri = file.toURI().toString();
     }
 
     /**
@@ -1050,21 +1056,25 @@ public class Avatar {
         return path;
     }
 
+    public String getUri() {
+        return uri;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Avatar // instanceof handles nulls
-                && this.path.equals(((Avatar) other).path));
+                && this.uri.equals(((Avatar) other).uri));
     }
 
     @Override
     public int hashCode() {
-        return path.hashCode();
+        return uri.hashCode();
     }
 
     @Override
     public String toString() {
-        return "Avatar from " + path;
+        return "Avatar from " + uri;
     }
 }
 ```
@@ -1431,17 +1441,17 @@ public class PropertyManager {
                 // Adds name as a pre-loaded property.
                 addNewProperty("n", "Name",
                         "Person names should only contain alphanumeric characters and spaces, "
-                                + "and it should not be blank",
+                                + "and it should not be blank.",
                         "[\\p{Alnum}][\\p{Alnum} ]*");
 
                 // Adds email as a pre-loaded property.
                 addNewProperty("e", "Email",
-                        "Person emails should be 2 alphanumeric/period strings separated by '@'",
+                        "Person emails should be 2 alphanumeric/period strings separated by '@'.",
                         "[\\w\\.]+@[\\w\\.]+");
 
                 // Adds phone number as a pre-loaded property.
                 addNewProperty("p", "Phone",
-                        "Phone numbers can only contain numbers, and should be at least 3 digits long",
+                        "Phone numbers can only contain numbers, and should be at least 3 digits long.",
                         "\\d{3,}");
 
                 // Adds address as a pre-loaded property.
@@ -1450,9 +1460,9 @@ public class PropertyManager {
 
                 // Adds date/time as a pre-loaded property.
                 addNewProperty("dt", "DateTime", "Event date & time should be "
-                                + "simple and clear enough for the application to understand", DEFAULT_REGEX);
+                                + "simple and clear enough for the application to understand.", DEFAULT_REGEX);
             } catch (DuplicatePropertyException dpe) {
-                throw new AssertionError("Pre-loaded properties cannot be invalid", dpe);
+                throw new AssertionError("Pre-loaded properties cannot be invalid.", dpe);
             }
 
             initialized = true;
@@ -1969,7 +1979,12 @@ public class XmlAdaptedPerson {
         final Person person = new Person(properties, tags);
 
         if (avatar != null) {
-            person.setAvatar(new Avatar(avatar));
+            try {
+                person.setAvatar(new Avatar(avatar));
+            } catch (IllegalValueException ive) {
+                // TODO: Better error handling
+                ive.printStackTrace();
+            }
         }
 
         return person;
@@ -2241,7 +2256,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
      */
     private void setAvatar() {
         if (person.getAvatar() != null) {
-            Platform.runLater(() -> avatar.setImage(new Image(person.getAvatar().getPath(), 200, 200, false, true)));
+            Platform.runLater(() -> avatar.setImage(new Image(person.getAvatar().getUri(), 200, 200, false, true)));
         }
     }
 }
@@ -2329,6 +2344,7 @@ public class PropertyLabel extends Label {
 ###### \resources\view\person\PersonDetailsPanel.fxml
 ``` fxml
 
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -2337,8 +2353,6 @@ public class PropertyLabel extends Label {
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-
 <VBox prefHeight="600.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
 
    <children>

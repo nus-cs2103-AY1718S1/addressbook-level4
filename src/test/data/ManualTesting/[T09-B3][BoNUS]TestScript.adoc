@@ -46,7 +46,93 @@ for more information.
 
 === Add/view/edit/delete contacts
 
+==== Add a new contact
+
+To add a new contact, we need to use the `add` command.
+
+*Positive test case*
+
+Let's add a new person called `Martin` into *BoNUS* +
+_Command:_ +
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends`
+_Result:_ +
+`New person added: Martin Smith Phone: 85930167 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
+
+*Negative test cases*
+
+. The value for one property is invalid +
+_Command:_ +
+`add n/Den Smith p/85930167 e/www.smith.com a/25 New York City`
+_Result:_ +
+`Person emails should be 2 alphanumeric/period strings separated by '@'.`
+
+. The person already exists +
+_Command:_ +
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends`
+_Result:_ +
+`This person already exists in the application.`
+
+==== Edit an existing contact
+
+To edit an existing contact, we need to use the `edit` command.
+
+*Positive test case*
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Let's edit the person called `Martin` we added just now (assume the index is `8`) +
+_Command:_ +
+`edit 8 p/86129854`
+_Result:_ +
+`Edited Person: Martin Smith Phone: 86129854 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
+
+*Negative test cases*
+
+. The index is invalid (assume there are fewer than 100 contacts in the application) +
+_Command:_ +
+`edit 100 a/Beijing, China` +
+_Result:_ +
+`The person index provided is invalid.`
+
+==== View the details of a person
+
+To view the details of an existing contact, we need to use the `select` command.
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Then, select the person we want to view (assume there is at least 1 contact in the application) +
+_Command:_ +
+`select 1` +
+_Result:_ +
+The person's details will be shown on the right-hand side of the interface.
+
+==== Delete an existing person
+
+To delete an existing contact, we need to use the `delete` command.
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Then, delete the first person (assume there is at least 1 contact in the application) +
+_Command:_ +
+`delete 1` +
+_Result:_ +
+`Deleted Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]`
+
 ==== Add avatar to an existing person
+
+*Positive test case*
 
 To add avatar to a contact, we need to use the `avatar` command.
 
@@ -56,21 +142,47 @@ _Command:_ +
 _Result:_ +
 `Listed all persons`
 
+. Then move an image file (`.jpg` or `.png`) into the home folder where you use *BoNUS*. Maybe you want to use the
+logo of Java from https://www.hostingireland.ie/images/java-logo.png[here] as a sample.
+
 . Add avatar to the third person in the listing (assume there are at least three contacts) +
 _Command:_ +
-`avatar 3 http://profileengine.com/large/420503790/nus.soc`
+`avatar 3 java-logo.png`
+
+[NOTE]
+====
+* Do not move, rename or delete the image you use as an avatar; otherwise, it will not be shown in *BoNUS*.
+* You are suggested to move the image into the home folder where you use *BoNUS*.
+* Do not be _nasty_ about the input file. If you provide an invalid file that looks like an image but is not an actual image,
+the area reserved for avatar will simply become transparent.
+====
+
+*Negative test cases*
+
+. Use an invalid index +
+_Command:_ +
+`avatar -1 java-logo.png` +
+_Result:_ +
+`Invalid command format!` +
+`Index is not a non-zero unsigned integer.`
+
+. Use a non-existing file +
+_Command:_ +
+`avatar 1 no-java.png` +
+_Result:_ +
+`Invalid command format!` +
+`The provided image path does not exist.`
 
 === Add/view/edit/delete events
 
 ==== Listing of events
 *Positive test case* +
 _Command:_ +
-`listE`  +
+`listE` +
 _Result:_ +
 `Listed all events`
 
-You should see that the application automatically switches from contact list to event list after
-the command listE.
+You should see that the application automatically switches from contact list to event list after the command listE.
 
 
 *Negative test case* +
@@ -98,7 +210,7 @@ or if the expression is not simple or clear enough.
 * Avoid putting the year first when using the non-standard format.
 ====
 
-To add an event, we need to use addE n/NAME dt/DATE_TIME a/ADDRESS of the event.
+To add an event, we need to use `addE n/NAME dt/DATE_TIME a/ADDRESS` of the event.
 
 1) Adds a new event with Name `CS3201 Project Meeting`, DateTime `17112017 1530`, Address `School of Computing, SR09, NUS`
 
@@ -159,6 +271,12 @@ To import data from a `.xml` file, we need to use the `import` command
 
 To import timetable from NUSMods website, we need to use the `import --nusmods` command.
 
+
+[NOTE]
+====
+Make sure you have stable Internet connection when you are going to test this command.
+====
+
 *Positive test cases*
 
 . Open your browser, and copy-paste your NUSMods timetable URL +
@@ -167,7 +285,7 @@ It should look like +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]
 
 . Let's display the event listing first +
 _Command:_ +
-`listE`
+`listE` +
 _Result:_ +
 You should see the event listing interface.
 

@@ -108,11 +108,15 @@ public class FileUtil {
 
     //@@author yunpengn
     /**
-     * Checks whether the given file is an image (according to its MIME type).
+     * Checks whether the given file is an image (according to its MIME type).<br>
+     *
+     * Notice: This check is not accurate and may lead to security problems.
      */
     public static boolean isImage(File file) {
         String type = TYPE_MAP.getContentType(file);
-        return type.split("/")[0].equals("image");
+        return type.split("/")[0].equals("image")
+                // To allow the image downloaded from Internet, especially png file.
+                || type.equals("application/octet-stream");
     }
     //@@author
 
