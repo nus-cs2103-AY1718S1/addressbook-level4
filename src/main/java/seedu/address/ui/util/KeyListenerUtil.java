@@ -38,10 +38,10 @@ public class KeyListenerUtil {
     public static final KeyCombination KEY_COMBINATION_UNDO = KeyCombination.valueOf(UndoCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_REDO = KeyCombination.valueOf(RedoCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_LIST = KeyCombination.valueOf(ListCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_OPEN_FILE = KeyCombination
-            .valueOf(OpenRolodexCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_NEW_FILE = KeyCombination
-            .valueOf(NewRolodexCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_OPEN_FILE =
+            KeyCombination.valueOf(OpenRolodexCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_NEW_FILE =
+            KeyCombination.valueOf(NewRolodexCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_ADD = KeyCombination.valueOf(AddCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_EDIT = KeyCombination.valueOf(EditCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_FIND = KeyCombination.valueOf(FindCommand.COMMAND_HOTKEY);
@@ -68,10 +68,11 @@ public class KeyListenerUtil {
                     KEY_COMBINATION_NEW_FILE,
                     KEY_COMBINATION_ADD,
                     KEY_COMBINATION_EDIT,
-                    KEY_COMBINATION_EMAIL,
                     KEY_COMBINATION_FIND,
                     KEY_COMBINATION_SELECT,
                     KEY_COMBINATION_DELETE,
-                    KEY_COMBINATION_DELETE_ALTERNATIVE
+                    KEY_COMBINATION_DELETE_ALTERNATIVE,
+                    KEY_COMBINATION_REMARK,
+                    KEY_COMBINATION_EMAIL
             ));
 }
