@@ -1,4 +1,4 @@
-package seedu.address.model.socialMedia;
+package seedu.address.model.socialmedia;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -13,8 +13,8 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.socialMedia.exceptions.DuplicateSocialMediaException;
-import seedu.address.model.socialMedia.exceptions.SocialMediaNotFoundException;
+import seedu.address.model.socialmedia.exceptions.DuplicateSocialMediaException;
+import seedu.address.model.socialmedia.exceptions.SocialMediaNotFoundException;
 
 
 /**
@@ -143,8 +143,8 @@ public class UniqueSocialMediaList implements Iterable<SocialMedia> {
     public boolean equals(Object other) {
         assert CollectionUtil.elementsAreUnique(internalList);
         return other == this // short circuit if same object
-                || (other instanceof seedu.address.model.socialMedia.UniqueSocialMediaList // instanceof handles nulls
-                && this.internalList.equals(((seedu.address.model.socialMedia.UniqueSocialMediaList) other).internalList
+                || (other instanceof seedu.address.model.socialmedia.UniqueSocialMediaList // instanceof handles nulls
+                && this.internalList.equals(((seedu.address.model.socialmedia.UniqueSocialMediaList) other).internalList
         ));
     }
 
@@ -152,7 +152,7 @@ public class UniqueSocialMediaList implements Iterable<SocialMedia> {
      * Returns true if the element in this list is equal to the elements in {@code other}.
      * The elements do not have to be in the same order.
      */
-    public boolean equalsOrderInsensitive(seedu.address.model.socialMedia.UniqueSocialMediaList other) {
+    public boolean equalsOrderInsensitive(seedu.address.model.socialmedia.UniqueSocialMediaList other) {
         assert CollectionUtil.elementsAreUnique(internalList);
         assert CollectionUtil.elementsAreUnique(other.internalList);
         return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));

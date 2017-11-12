@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Email {
 
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
-            "Person emails should be 2 alphanumeric/period strings separated by '@'. " 
+            "Person emails should be 2 alphanumeric/period strings separated by '@'. "
                     + "Email can be empty. An empty email will be represented as \"---\"";
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
 
@@ -35,7 +35,7 @@ public class Email {
      * Returns if a given string is a valid person email.
      */
     public static boolean isValidEmail(String test) {
-        return test.equals("---") || test.matches(EMAIL_VALIDATION_REGEX);
+        return "---".equals(test) || test.matches(EMAIL_VALIDATION_REGEX);
     }
 
     @Override

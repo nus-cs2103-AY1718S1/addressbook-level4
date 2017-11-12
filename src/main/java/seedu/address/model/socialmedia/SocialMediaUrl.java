@@ -1,4 +1,4 @@
-package seedu.address.model.socialMedia;
+package seedu.address.model.socialmedia;
 
 import static java.util.Objects.requireNonNull;
 
