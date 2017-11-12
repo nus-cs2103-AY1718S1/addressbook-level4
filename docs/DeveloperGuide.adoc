@@ -383,11 +383,10 @@ The execution of AddEventCommand is processed in this way:
 
 . User will execute and create a new `AddEventCommand` so as to add an event into The Myth's Book.
 . When `executeUndoable()` of `AddEventCommand` is called, `model.addEvent()` in the method will be processed.
-. The `internalList` of the address book is then accessed and sorted through a `lambda` function which
-  compares the name of everyone and necessarily switches the position between contacts throughout the `internalList` by comparing names between person r1 and r2 sequentially.
-. After `internalList` is sorted, function `updateFilterPersonList(PREDICATE_SHOW_ALL_PERSONS)` is called
-  to update the list being filtered and also call an event `indicatedAddressBookChanged()`
-  to update the `PersonListPanel` of the GUI being shown.
+. The `internalList` of the AddressBook will store all the Events.
+. After `internalList` has added the event, function `updateFilterEventList(PREDICATE_SHOW_ALL_EVENT)` is called
+  to update the list being filtered and also call an event `indicatedAddressBookChanged()` to show that the addressBook has be updated
+  with additional event.
 
 Code of `AddEventCommand`:
 
@@ -404,11 +403,6 @@ Code of `AddEventCommand`:
     }
 ----
 
-A UniqueEventList is also created to store the list of Events in AddressBook.java
-
-Code of `UniqueEventList.java` when an Event is created and stored into the UniqueEventList:
-
-The new Events will be stored in UniqueEventList in AddressBook.
 ----
 public class UniqueEventList implements Iterable<Event> {
 
@@ -424,6 +418,18 @@ public class UniqueEventList implements Iterable<Event> {
     ...
 }
 ----
+
+Code from `ModelManager`
+
+----
+    @Override
+    public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+        addressBook.addEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateAddressBookChanged();
+    }
+----
+
 
 ==== Design Consideration
 **Aspect:** Implementation of `AddEventCommand` +
