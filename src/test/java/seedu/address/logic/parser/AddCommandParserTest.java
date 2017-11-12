@@ -114,7 +114,7 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                         + HOME_NUM_DESC_BOB + EMAIL_DESC_BOB + SCH_EMAIL_DESC_BOB
                         + WEBSITE_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB
-                        + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                        + TAG_DESC_FRIEND + TAG_DESC_HUSBAND,
                 new AddCommand(expectedPersonMultipleTags));
     }
 

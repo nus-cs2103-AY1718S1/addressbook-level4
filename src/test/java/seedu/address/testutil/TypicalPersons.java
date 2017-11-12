@@ -79,12 +79,12 @@ public class TypicalPersons {
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
             .withHomeNumber("67512082").withEmail("stefan@example.com").withSchEmail("hoonguy@u.nus.edu")
             .withWebsite("https://www.facebook.com/hoon")
-            .withAddress("little india").withBirthday("12/11/1998").withFavourite("false")
+            .withAddress("little india").withBirthday("12/10/1998").withFavourite("false")
             .build();
     public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withHomeNumber("67521341").withEmail("hans@example.com").withSchEmail("idamueller@u.nus.edu")
             .withWebsite("https://www.facebook.com/ida")
-            .withAddress("chicago ave").withBirthday("12/11/1998").withFavourite("false")
+            .withAddress("chicago ave").withBirthday("12/10/1998").withFavourite("false")
             .build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
