@@ -129,10 +129,12 @@ that are in your possession. This field is important because a single person can
 him. Hence, you can use our Tracking Number to differentiate between the different parcels that are allocated to a
 single recipient. You can also use tracking numbers to identify specific parcels to be allocated
 
+[NOTE]
 Ark only supports tracking numbers for registered articles managed by SingPost at this instance. These
 numbers include two `R`s followed by nine digits and ending with `SG`. e.g. `RR123456789SG` +
 You can read more about SingPost Registered Article tracking number
  link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here]. +
+Tracking numbers that do not conform to the above format will be rejected e.g. `rr123545679sg`; `RR#12345678SG`;
 
 [NOTE]
 You can add multiple parcels with the same tracking number. This allows you to reuse tracking numbers in the event when
@@ -166,6 +168,7 @@ deliver your parcel to.
 The Address field will only allow you to add an address with at least a single character as the text representation of
 the address, and appended with a valid postal code, separated from the text representation of the address with space(s).
 e.g. `123, example street #05-26 S012345`; +
+Invalid address entries include the following: e.g. `123, example street #05-26`
 You can learn more about valid postal code entries below. +
 
 //tag::postalCode[]
@@ -174,7 +177,7 @@ You can learn more about valid postal code entries below. +
 
 Ark can store the postal address of locations in Singapore. It only accepts values of `s` or `S` followed by 6 digits.
 The postal code of a parcel is used to query Google Maps when the `select` command is executed or when a parcel in the
-Parcel List Panel is clicked.
+Parcel List Panel is clicked. Invalid values would include the following: `213661`; `s#11122`;
 
 *Postal codes must be appended to the end of the address text.* e.g. Suppose you are adding a new parcel into Ark and
 entered `add ...(Some info)... a/NUS School of Computing, COM1, 13 Computing Drive, S117417 ...(More info required
@@ -200,6 +203,7 @@ or the person that you are delivering to the parcel to.
 
 [NOTE]
 The Email field will only allow alphanumeric or periods characters separated by an `@` character. e.g. `John@example.com`
+Invalid Email entries include the following: e.g. `John_Doe@example.com`; `JaneDoe.example.com`;
 
 //tag::deliveryDate[]
 [#delivery-date]
@@ -226,6 +230,9 @@ delivered by. +
 
 To input a `Status`, you can type case-insensitive formats of the above Status. e.g. `pending` or `Pending` are valid
 inputs to add a `PENDING` `Status`.
+
+[NOTE]
+Values other than the above values will be rejected. e.g. `PROCESSING`, `PROCESSED`;
 //end::status[]
 
 //tag::tags[]
@@ -244,6 +251,7 @@ To input a `Tag`, you can type insensitive formats of any of the above `Tags`. e
 to add a `FROZEN` `Tag`.
 
 [NOTE]
+Values other than the above values will be rejected. e.g. `friends`, `colleagues`.
 If your use of Ark requires more tags to be made available, please contact our team and we will see to your request.
 //end::tags[]
 
