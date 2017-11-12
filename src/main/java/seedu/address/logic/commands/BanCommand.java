@@ -35,21 +35,18 @@ public class BanCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        String messageToDisplay = MESSAGE_BAN_PERSON_SUCCESS;
-        ReadOnlyPerson targetPerson = personToBan;
-
         if (personToBan.isBlacklisted()) {
-            messageToDisplay = MESSAGE_BAN_BLACKLISTED_PERSON_FAILURE;
-        } else {
-            targetPerson = model.addBlacklistedPerson(personToBan);
+            throw new CommandException(String.format(MESSAGE_BAN_BLACKLISTED_PERSON_FAILURE, personToBan.getName()));
         }
+
+        ReadOnlyPerson targetPerson = model.addBlacklistedPerson(personToBan);
 
         ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
         reselectPerson(targetPerson);
 
         String currentList = ListObserver.getCurrentListName();
 
-        return new CommandResult(currentList + String.format(messageToDisplay, personToBan.getName()));
+        return new CommandResult(currentList + String.format(MESSAGE_BAN_PERSON_SUCCESS, personToBan.getName()));
     }
 
     @Override

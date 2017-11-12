@@ -37,21 +37,18 @@ public class RepaidCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        String messageToDisplay = MESSAGE_REPAID_PERSON_SUCCESS;
-        ReadOnlyPerson targetPerson = personToWhitelist;
-
         if (personToWhitelist.getDebt().toNumber() == 0) {
-            messageToDisplay = MESSAGE_REPAID_PERSON_FAILURE;
-        } else {
-            targetPerson = model.addWhitelistedPerson(personToWhitelist);
+            throw new CommandException(String.format(MESSAGE_REPAID_PERSON_FAILURE, personToWhitelist.getName()));
         }
+
+        ReadOnlyPerson targetPerson = model.addWhitelistedPerson(personToWhitelist);
 
         ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
         reselectPerson(targetPerson);
 
         String currentList = ListObserver.getCurrentListName();
 
-        return new CommandResult(currentList + String.format(messageToDisplay, targetPerson.getName()));
+        return new CommandResult(currentList + String.format(MESSAGE_REPAID_PERSON_SUCCESS, targetPerson.getName()));
     }
 
     @Override

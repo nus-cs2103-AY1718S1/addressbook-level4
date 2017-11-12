@@ -28,20 +28,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class UnbanCommandTest extends CommandTest {
 
     @Test
-    public void execute_unbanPersonWhoIsNotBlacklisted_failure() throws Exception {
-        ReadOnlyPerson personToUnban = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-
-        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
-                + String.format(UnbanCommand.MESSAGE_UNBAN_PERSON_FAILURE, personToUnban.getName());
-
-        UnbanCommand unbanCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-        assertCommandSuccess(unbanCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ReadOnlyPerson personToUnban = model.getFilteredBlacklistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UnbanCommand unbanCommand = prepareCommand(INDEX_FIRST_PERSON);
@@ -53,6 +39,17 @@ public class UnbanCommandTest extends CommandTest {
         expectedModel.removeBlacklistedPerson(personToUnban);
 
         assertCommandSuccess(unbanCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_unbanPersonWhoIsNotBlacklisted_failure() throws Exception {
+        ReadOnlyPerson personToUnban = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        String expectedMessage = String.format(UnbanCommand.MESSAGE_UNBAN_PERSON_FAILURE, personToUnban.getName());
+
+        UnbanCommand unbanCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        assertCommandFailure(unbanCommand, model, expectedMessage);
     }
 
     //@@author khooroko

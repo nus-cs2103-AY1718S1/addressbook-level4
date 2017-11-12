@@ -20,7 +20,6 @@ import org.junit.Test;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.CommandTest;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -109,13 +108,9 @@ public class FilterCommandTest extends CommandTest {
     private void assertCommandSuccess(FilterCommand command, String expectedMessage,
                                       List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
-        try {
-            CommandResult commandResult = command.execute();
-            assertEquals(expectedMessage, commandResult.feedbackToUser);
-            assertEquals(expectedList, model.getFilteredPersonList());
-            assertEquals(expectedAddressBook, model.getAddressBook());
-        } catch (CommandException ce) {
-            ce.printStackTrace();
-        }
+        CommandResult commandResult = command.execute();
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }

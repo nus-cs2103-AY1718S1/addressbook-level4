@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -27,19 +28,19 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class AddPictureCommandTest extends CommandTest {
 
+    // This test fails if AlicePauline.jpg resides in src/main/resources/images/profilePics
     @Test
-    public void execute_validIndexUnfilteredListInvalidPath_success() {
+    public void execute_validIndexUnfilteredListInvalidPath_failure() {
         try {
             ReadOnlyPerson personToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
             AddPictureCommand addPictureCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-            String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
-                    + String.format(AddPictureCommand.MESSAGE_ADDPIC_FAILURE, personToUpdate.getName());
+            String expectedMessage = String.format(AddPictureCommand.MESSAGE_ADDPIC_FAILURE, personToUpdate.getName());
 
             ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
             expectedModel.addProfilePicture(personToUpdate);
 
-            assertCommandSuccess(addPictureCommand, model, expectedMessage, expectedModel);
+            assertCommandFailure(addPictureCommand, model, expectedMessage);
             assertTrue(personToUpdate.getAsText().equals(model.getFilteredPersonList()
                     .get(INDEX_FIRST_PERSON.getZeroBased()).getAsText()));
         } catch (CommandException ce) {

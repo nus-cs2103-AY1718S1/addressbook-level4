@@ -36,14 +36,13 @@ public class UnbanCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        String messageToDisplay = MESSAGE_UNBAN_PERSON_SUCCESS;
         ReadOnlyPerson targetPerson = personToUnban;
 
         try {
             if (personToUnban.isBlacklisted()) {
                 targetPerson = model.removeBlacklistedPerson(personToUnban);
             } else {
-                messageToDisplay = MESSAGE_UNBAN_PERSON_FAILURE;
+                throw new CommandException(String.format(MESSAGE_UNBAN_PERSON_FAILURE, personToUnban.getName()));
             }
         } catch (PersonNotFoundException e) {
             assert false : "The target person is not in blacklist";
@@ -53,7 +52,7 @@ public class UnbanCommand extends UndoableCommand {
 
         String currentList = ListObserver.getCurrentListName();
 
-        return new CommandResult(currentList + String.format(messageToDisplay, targetPerson.getName()));
+        return new CommandResult(currentList + String.format(MESSAGE_UNBAN_PERSON_SUCCESS, targetPerson.getName()));
     }
 
     @Override
