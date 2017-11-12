@@ -18,12 +18,13 @@ Role: Developer +
 Responsibilities: UI + Integration + Deliverables and Deadlines
 
 * Features Implemented : +
-** ?
-** ?
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/74[Appointment Setting]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/190[Calendar View]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/55[Tag Colors]
 
 * Other Contributions : +
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/101[Revamped Developer Guide content] with Ru Shan
-** ?
+** https://github.com/CS2103AUG2017-W09-B2/main/issues/121[Uncover bugs for other teams]
 
 '''
 

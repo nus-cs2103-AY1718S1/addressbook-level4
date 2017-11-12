@@ -164,12 +164,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<ReadOnlyPerson> listAppointment() {
-            fail("This method should not be called");
-            return null;
-        }
-
-        @Override
         public ObservableList<ReadOnlyPerson> listNameAscending() {
             fail("This method should not be called");
             return null;

@@ -243,10 +243,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
-    public ObservableList<ReadOnlyPerson> getPersonListSortByAppointment() {
-        return persons.asObservableListSortedByAppointment();
-    }
-
     //@@author Jeremy
 
     /**

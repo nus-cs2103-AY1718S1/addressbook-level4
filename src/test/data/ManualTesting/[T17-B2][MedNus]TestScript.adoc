@@ -150,15 +150,27 @@ This section shows you commands related to appointments and calendar views. +
 |=======================================================================
 |Command To Enter |Expected Output |Remarks
 
-|`appt` |`Rearranged contacts to show upcoming appointments.` |Contacts are sorted according to appointments
 
-|`appt 1 d/Dinner, tonight 7pm` |`some output` |Some remark
+|`appt 1 d/Dinner, tomorrow 7pm` |`New appointment added. ` |Appointment added for 1 hour (default) at the next day 7pm
 
-|`command 3` |`some output` |Some remark
+|`appt 2 d/Lunch, tomorrow 12pm to 2pm` | `New appointment added. ` |Appointment added accordingly, next day 12pm to 2pm.
+
+|`calendar w` |`View changed.` |Calendar view changed to week view
+
+|`calendar m` |`View changed.` |Calendar view changed to month view
+
+|`calendar y` |`View changed.` |Calendar view changed to year view
+
+|`calendar d` |`View changed.` |Calendar view changed to day view
+
+|`cancel dinner with zeypher lee`| `Appointment canceled.` | Appointment with Zeypher cancelled
+
+|`cancel lunch with thomas lee`|`Appointment canceled.` | Appointment with Thomas cancelled
+
 
 |=======================================================================
 
 == Exiting MedNus
 
-> Command To Enter: `exit` +
+Command To Enter: `exit` +
 Result: MedNus Closes and quit.

@@ -46,14 +46,6 @@ public class AddAppointmentCommand extends UndoableCommand {
     private final Index index;
     private final Appointment appointment;
 
-
-    //For sorting
-    public AddAppointmentCommand() {
-        this.index = null;
-        this.appointment = null;
-    }
-
-    //For setting appointments
     public AddAppointmentCommand(Index index, Appointment appointment) {
         this.index = index;
         this.appointment = appointment;
@@ -61,14 +53,11 @@ public class AddAppointmentCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        if (appointment == null && index == null) {
-            model.listAppointment();
-            return new CommandResult(SORT_APPOINTMENT_FEEDBACK);
-        }
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         requireNonNull(index);
+        requireNonNull(appointment);
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -329,10 +318,6 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
 
         String[] args = userInput.split(" ");
 
-        if (args.length == 1) {
-            return new AddAppointmentCommand();
-        }
-
         ArgumentMultimap argumentMultimap =
                 ArgumentTokenizer.tokenize(userInput, PREFIX_DATE);
 
@@ -538,16 +523,6 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
         indicateAddressBookChanged();
     }
 
-    /**
-     * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull appointment date,
-     * in chronological order
-     */
-    @Override
-    public ObservableList<ReadOnlyPerson> listAppointment() {
-        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByAppointment();
-        return FXCollections.unmodifiableObservableList(list);
-    }
-
 ```
 ###### \java\seedu\address\model\person\Appointment.java
 ``` java
@@ -728,40 +703,6 @@ public class AppointmentNotFoundException extends Exception {
     public void setAppointment(List<Appointment> appointments) {
         this.appointments.set(new AppointmentList(appointments));
     }
-```
-###### \java\seedu\address\model\person\UniquePersonList.java
-``` java
-    /**
-     * @return the backing list that is sorted by appointment dates
-     */
-    public ObservableList<ReadOnlyPerson> asObservableListSortedByAppointment() {
-
-        internalList.sort((o1, o2) -> {
-            if (getLatest(o1.getAppointments()) != null && getLatest(o2.getAppointments()) != null
-                    && getLatest(o2.getAppointments()).getDate()
-                    .before(getLatest(o1.getAppointments()).getDate())) {
-                return 1;
-            } else {
-                return -1;
-            }
-        });
-
-        return FXCollections.unmodifiableObservableList(mappedList);
-    }
-
-    /**
-     * Search the list and returns the next most recent appointment
-     */
-    private Appointment getLatest(List<Appointment> appointments) {
-        Date date = Calendar.getInstance().getTime();
-        for (Appointment appointment : appointments) {
-            if (!appointment.getDate().before(date)) {
-                return appointment;
-            }
-        }
-        return null;
-    }
-
 ```
 ###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java

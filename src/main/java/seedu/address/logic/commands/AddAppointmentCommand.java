@@ -41,14 +41,6 @@ public class AddAppointmentCommand extends UndoableCommand {
     private final Index index;
     private final Appointment appointment;
 
-
-    //For sorting
-    public AddAppointmentCommand() {
-        this.index = null;
-        this.appointment = null;
-    }
-
-    //For setting appointments
     public AddAppointmentCommand(Index index, Appointment appointment) {
         this.index = index;
         this.appointment = appointment;
@@ -56,14 +48,11 @@ public class AddAppointmentCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        if (appointment == null && index == null) {
-            model.listAppointment();
-            return new CommandResult(SORT_APPOINTMENT_FEEDBACK);
-        }
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         requireNonNull(index);
+        requireNonNull(appointment);
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
