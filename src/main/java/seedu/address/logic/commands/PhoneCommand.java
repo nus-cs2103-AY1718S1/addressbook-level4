@@ -49,7 +49,6 @@ public class PhoneCommand extends UndoableCommand {
             + "NAME\n"
             + "Example: " + COMMAND_WORD + " byName" + " add" + " 6583609887" + "Alex Yeoh";
 
-    private static final String COMMAND_SHOW_ALL_PHONES  = "showAllPhones";
     private static final String COMMAND_ADD = "add";
     private static final String COMMAND_REMOVE = "remove";
     private static final String PERSON_NOT_FOUND_EXCEPTION_MESSAGE = "The target person cannot be missing.\n";
@@ -188,11 +187,7 @@ public class PhoneCommand extends UndoableCommand {
             logger.info("Execute update phone command");
             CommandResult commandResult;
             switch (action) {
-            case COMMAND_SHOW_ALL_PHONES:
-                String allPhones = String.format(PRIMARY_PHONE_MESSAGE, primaryPhone)
-                        + uniquePhoneList.getAllPhone();
-                commandResult =  new CommandResult(allPhones);
-                break;
+
             case COMMAND_ADD:
                 String successAdditionMessage = String.format(ADD_PHONE_SUCCESS_MESSAGE, phone.number);
                 String infoAddition = String.format(TOTAL_NUMBER_OF_PHONES, uniquePhoneList.getSize() + 1)
