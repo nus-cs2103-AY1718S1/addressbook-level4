@@ -19,7 +19,7 @@ Responsibilities: Storage, Model
 
 === Vu Duc Nam
 image::namvd2709.jpg[width="150", align="left"]
-{empty}[https://github.com/namvd2709[github]]
+{empty}[https://github.com/namvd2709[github]][https://cs2103aug2017-t12-b1.github.io/main/team/namvd2709.html[portfolio]]
 
 Role: Project Manager +
 Responsibility: Logic

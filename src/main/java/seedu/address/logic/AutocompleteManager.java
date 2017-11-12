@@ -49,8 +49,12 @@ public class AutocompleteManager {
     public String attemptAutocomplete(String matcher) {
         ArrayList<String> matches = new ArrayList<>();
         for (String command: commands) {
-            if (StringUtil.containsWordsStartWithString(command, matcher)) {
-                matches.add(command);
+            try {
+                if (StringUtil.containsWordsStartWithString(command, matcher)) {
+                    matches.add(command);
+                }
+            } catch (IllegalArgumentException iae) {
+                throw new IllegalArgumentException("Can't autocomplete because wrong argument");
             }
         }
         if (matches.size() == 1) {
