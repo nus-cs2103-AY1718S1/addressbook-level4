@@ -25,6 +25,8 @@ making keying in commands much easier.
 
 ==== Implementation
 
+include::../DeveloperGuide.adoc[leveloffset=2,tag=dropdownlist]
+
 === Enhancement Added: Auto-completion
 
 ==== External behavior

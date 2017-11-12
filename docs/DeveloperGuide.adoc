@@ -684,11 +684,65 @@ access on a java https://docs.oracle.com/javase/8/docs/api/java/util/HashSet.htm
 
 // end::commandAbbreviations[]
 
+// tag::dropdownlist[]
+=== Drop-down List of Possible Commands
+The dynamic drop-down list is created using `org.controlsfx.control.textfield.TextFields` API.
+The `bindAutoCompletion` method in the `TestFields` creates a new auto-completion binding between the given textField and the given suggestion provider.
+
+The code below shows the exact implementation.
+
+[source,java]
+----
+TextFields.bindAutoCompletion(commandTextField, sr -> {
+    Set<String> suggestedCommands = new HashSet<>();
+    for (String command: LIST_OF_ALL_COMMANDS) {
+        if (!sr.getUserText().isEmpty() && !command.equals(sr.getUserText())
+            && command.startsWith(sr.getUserText().trim().toLowerCase())) {
+
+            suggestedCommands.add(command);
+        }
+    }
+    return suggestedCommands;
+});
+----
+
+Possible commands are checked against the user input and added to the HashSet `suggestedCommands` accordingly, which will be displayed as the drop-down list.
+
+A command is added if all three conditions are satisfied:
+
+* The user input is not empty.
+** This is to prevent the drop-down list from appearing every time the command box is cleared after the execution of a command.
+* The user input is not a valid command.
+** There is no need to display the drop-down list of suggestions when the user has typed in a correct command.
+* The command starts with the user input.
+** This is to suggest the possible commands that the user is trying to type.
+
+==== Design Considerations
+
+**Aspect:** Implementation +
+**Alternative 1 (current choice):** Make use of `TestFields` API +
+**Pros:** Easy to implement +
+**Pros:** List is dynamic. +
+**Cons:** User cannot see the full format of the commands in the drop-down list. +
+**Alternative 2:** Use ComboBox +
+**Pros:** User can see the required fields for each command in the drop-down box. +
+**Cons:** As user selects an option, the command is executed with the place holders, resulting in an invalid command. User has to manually select the placeholders and change accordingly.
+
+**Aspect:** Auto-completion binding +
+**Alternative 1 (current choice):** Only suggest commands that starts with user input +
+**Pros:** Suggested commands are accurate. +
+**Cons:** The list usually only display one or two options because not many commands start with the same alphabet. +
+**Alternative 2:** Suggest commands that contain the user input. +
+**Pros:** More suggestions would be displayed. +
+**Pros:** User has a higher chance of finding the desired command when a typo is made. +
+**Cons:** Most of the time, inaccurate suggestions are not necessary.
+// end::dropdownlist[]
+
 // tag::auto-completion[]
 === Auto-completion Mechanism
 Auto-completion mechanism is implemented in `CommandBox` class under UI component.
 
-Auto-completion is activated when `TAB` key is pressed. This is done by adding a case in the keypress handler in `CommandBox`.
+Auto-completion is activated when kbd:[Tab] key is pressed. This is done by adding a case in the keypress handler in `CommandBox`.
 [source,java]
 ----
 @FXML
@@ -701,20 +755,20 @@ private void handleKeyPress(KeyEvent keyEvent) {
     }
 ----
 
-When `TAB` is pressed, the current input in the command box is checked against the list of commands.
+When kbd:[Tab] is pressed, the current input in the command box is checked against the list of commands.
 
 * If the input command is a valid command that requires additional field(s), the full format of the command is displayed in the command box.
 At the same time, the placeholder for the first field that the user needs to key in is selected (as shown below).
 
 image::AutoCompletionAfterTab.png[width="450"]
 
-* If the input is already in the required format of the add command, the `TAB` is meant to navigate to the next input field (only `add` command require multiple fields).
+* If the input is already in the required format of the add command, the kbd:[Tab] is meant to navigate to the next input field (only `add` command require multiple fields).
 The current caret position is checked and used to determine the current field the user is at.
 The anchor and caret positions are reset to the start and end of the next field so that the placeholder is selected (as shown below).
 
 image::AutoCompletionNextField.png[width="450"]
 
-Below is an activity diagram for `TAB` keypress which activates autocompletion.
+Below is an activity diagram for kbd:[Tab] keypress which activates auto-completion.
 
 image::AutoCompleteActivityDiagram.png[width="800"]
 
@@ -729,13 +783,6 @@ image::AutoCompleteActivityDiagram.png[width="800"]
 **Pros:** Allows for different formatting for different fields (Commands can have a different colour from the fields) +
 **Cons:** Original structure will be disrupted. Command box will no longer be single line text input, which have consequences such as the user cannot backspace or select through the entire line.
 
-**Aspect:** auto-completion drop-down list +
-**Alternative 1 (current choice):** Continue to use the original TextField and use external library to bind auto-completion +
-**Pros:** Easy to implement +
-**Cons:** User cannot see the full format of the commands in the drop-down list +
-**Alternative 2:** Use ComboBox +
-**Pros:** User can see the required fields for each command in the drop-down box +
-**Cons:** As user selects an option, the command is executed with the place holders, resulting in an invalid command. User has to manually select the placeholders and change accordingly.
 // end::auto-completion[]
 
 // tag::shortcut[]
