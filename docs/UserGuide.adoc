@@ -1,6 +1,5 @@
 ﻿
 = PocketBook - User Guide
-
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -49,6 +48,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* All commands can word with cammel case e.g. add and AdD are both acceptable.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
@@ -67,18 +67,19 @@ Alternative Format : `add NAME, BLOCK STREET UNIT PHONENUMBER EMAIL BIRTHDAY`
 A person can have any number of tags (including 0) +
 For alternative format, name needs to be the first field followed by `,`. The rest do not need to be in any order. +
 Fields have to follow these formats: +
+Commas and spacebars do not affect the acceptance of the fields. +
 Block : Block (1 to 3 digits). Example : Block 1, Block 11, Block 111 +
 Unit : #(1 to 2 digits)-(1-3 digits)(Optional:Character). Example: #01-111B +
 Street : (1 Word) street (1 to 2 digits). Example : Jurong Street 11 +
 Number : (8 digits). Example: ,11111111, or 11111111 +
 Email : (1 alphanumericword)@(1 alphanumericword).(1 alphanumericword). Example: Jason@example.com +
+(Optional) Birthday: (1 to 2 digit)-(1 to 2 digit)-(4digit). Birthday shouldn't be in the future and has to be a valid date. Example : 12-12-2012
 (Optional) Postal Code: singapore (6digits). Example :Singapore 655900 +
-(Optional) Birthday: (1 to 2 digit)-(1 to 2 digit)-(4digit). Birthday shouldnt be in the future and has to be a valid date. Example : 12-12-2012
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/Handsome b/11-11-2011`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal r/Swimmer b/ 9-9-2012`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal r/Swimmer b/ 09-09-2012`
 * `a n/Donald Pua t/friend e/donana@example.com a/Porsche street p/3153357 t/cleaner`
 * `add Jason, Block 111 jurong street 55 #01-111 92008822 jason@example.com 11-11-2011`
 * `add Dexter,jurong street 15 Block 12 #01-111 singapore 666999 92008822 jason@example.com 92008822 11-11-2011`
@@ -113,10 +114,12 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * `e 2 n/Donald Pua t/` +
 Edits the name of the 2nd person to be `Donald Pua` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by name or tag: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Can also be used to find all members of a specified tag. +
+Format: `find (KEYWORD [MORE_KEYWORDS] | t/KEYWORD)` +
+	`f KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -124,6 +127,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Only one tag may be searched for at a time e.g. `find t\friends t\colleagues` is invalid
 * The command cannot search by both tag and name simultaneously, e.g. `find John t\enemies` is invalid
 ****
 
@@ -206,12 +210,15 @@ Selects the 1st person in the results of the `find` command.
 Selects the 1st person in the results of the `find` command.
 
 // tag::sort[]
-=== Sort all persons : `sort`
 
+=== Sort all persons : `sort`
 Sort all the persons according to their names in alphabetical order. +
+Cannot sort if list is empty +
+
 Format: `sort ARGUMENT`
 ****
 * Sorts the storage list of all persons in ascending order
+* Sorting is permanent, will be updated into storage.
 * Valid Arguments are:
 ** `name` (alt: `n`)
 ** `number` (alt: `num`, `no`)
@@ -237,10 +244,10 @@ Sorts all the persons by email in alphabetical order.
 Sorts all the persons by remark in alphabetical order.
 * `sort birthday` +
 Sorts all the persons by birthday in alphabetical order.
-* `sort numtimessearched` +
-Sorts all the persons by the number of times they have been searched for with `find`.
 * `sort favourite` +
 Sorts all the persons by favourite in alphabetical order.
+* `sort numtimessearched` +
+Sorts all the persons by number of times searched in alphabetical order.
 
 // end::sort[]
 
@@ -307,7 +314,6 @@ Format: `removetag [INDEX] TAG`
 Examples:
 
 * `removetag friends` +
-
 Removes the tag `friends` from all persons
 * `removetag 1 NUS` +
 Removes the tag `NUS` from first person
@@ -377,7 +383,6 @@ Removes the birthday of the 3rd person in the address book.
 
 When you first start the app, the app will check through all the birthdays of your contacts and notify you if there
 are any birthdays on that day.
-
 // end::birthday[]
 
 // tag::remark[]
@@ -444,7 +449,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo 1` (reverses the `clear` command) +
 `u` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo` `r`
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -512,9 +517,9 @@ There is no need to save manually.
 
 === AutoComplete
 
-A drop-down list of valid input prompts are filtered as when user types a command.
-Users can navigate between the filtered command with the kbd:[&uarr;] kbd:[&darr;]arrow keys.
-All valid commands will be saved and updated in the storage, expanding the list of recommended inputs for the user.
+A drop-down list of valid input prompts are filtered as when user types a command. +
+Users can navigate between the filtered command with the +
+All valid commands will be saved and updated in the storage, expanding the list of recommended inputs for the user. +
 Autocomplete data are saved in the XML automatically after any valid new command that user uses. +
 There is no need to save manually. A new empty Autcomplete.xml file will be created if deleted.
 
@@ -524,7 +529,7 @@ There is no need to save manually. A new empty Autcomplete.xml file will be crea
 
 === Error Sound from invalid command
 
-Error beep sound will be played from ErrorSound.mp3 file every time an invalid command is entered by the user.
+Error beep sound will be played from ErrorSound.mp3 file every time an invalid command is entered by the user. +
 Sound will be played whenever an invalid command triggers ParseException or CommandException
 
 // end::errorsound[]

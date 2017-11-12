@@ -27,7 +27,7 @@ public interface Model {
 
     //@@author justintkj
     /**Sorts all the people in the current database*/
-    void sortPerson(String sortType);
+    String sortPerson(String sortType);
     //@@author
 
     /** Adds the given person */

@@ -36,9 +36,9 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
-    public static final String MESSAGE_USAGE_ALT = COMMAND_WORD + ": Adds a person to the address book. "
-            + "NAME,NUMBER EMAIL ADDRESS" + "\nExample: add John Doe, 98765432 johnd@example.com"
-            + " Jurong Street 55, Block 101, #02-25 11-11-2011";
+    public static final String MESSAGE_USAGE_ALT = COMMAND_WORD + ": Adds a person to the address book.\n"
+            + "NAME,NUMBER EMAIL ADDRESS (OPTIONAL) BIRTHDAY POSTAL CODE" + "\nExample: add John Doe, 98765432"
+            + " johnd@example.com" + " Jurong Street 55, Block 101, #02-25 11-11-2011";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
 

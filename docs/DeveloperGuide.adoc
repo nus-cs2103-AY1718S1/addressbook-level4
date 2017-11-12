@@ -500,7 +500,8 @@ if (person.getFavourite().toString().equals(TRUE_STRING)) {
 **Cons:** More code, read string instead of boolean, typo may result in non-toggle +
 **Alternative 2:** use a boolean to indicate highlight +
 **Pros:** Rigid structure for red color and no color +
-**Cons:** Not good for furthur enhancements +
+**Cons:** Not good for further enhancements +
+
 ---
 
 // end::favourite[]
@@ -574,7 +575,8 @@ e.close();
 autocomplete drop-down list.
 **Pros:** Little code needed, storage base expands over usage time +
 **Cons:** May not be automated test friendly as invalid command may be interpreted as valid command due to using the
-kbd:[Enter].
+Enter key.
+
 ---
 // end::autocomplete[]
 
@@ -652,10 +654,10 @@ return new AddCommand(person);
 ==== Design Considerations
 
 **Aspect:** Adding a person to pocketBook(Alternative) +
-**Alternative 1 (current choice):** searches the string given for valid regex. +
+**Alternative 1 (current choice):** Searches the string given for valid regex. +
 **Pros:** No strict format to remember, natural for users to add user +
-**Cons:** Users may not be familiar with independent fields constaints. +
-**Alternative 2:** uses a prefix for each individual field. +
+**Cons:** Users may not be familiar with independent fields constraints. +
+**Alternative 2:** Uses a prefix for each individual field. +
 **Pros:** Less constraints on individual fields +
 **Cons:** Users have to refer for different prefixes meaning and how to use them.
 
@@ -1520,6 +1522,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |able to create multiple copies of addressbooks | use different addressbooks for different situations
 
+|`* *` |user |able to favourite a selected user | find favourite users easily
+
+|`* *` |user |able to finish my commands automatically | save time on typing repeated commands
+
 |`*` |user that likes to use tags | remove a specified tag from every person with one command | minimize effort and
  save time
 
@@ -1550,6 +1556,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |startup the app with a picture/inspirational quote instead of a blank background | decorate the GUI, make it look prettier
 
 |`*` |user |see when I added/last edited a contact to the addressbook | know when the data is out of date
+
+|`*` |user |prompted by sound when entered invalid command | know theres an error with the input
+
+|`*` |user |add a person without strict format | it is more user inituitive.
 |=======================================================================
 
 {More to be added}
@@ -1979,6 +1989,96 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Adding a person
+
+*MSS*
+
+1.  User enters all relevant details of the person in no order (Except for name)
+2.  Addressbook reads and adds the person in
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Compulsary fields - Given detail of person in invalid format.
++
+[none]
+** 1a1. Addressbook prompts user with error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Using a command- shortcut
+
+*MSS*
+
+1.  User enters first alphabet of command instead of the entire word
+2.  Addressbook processes the command
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Compulsary fields - Given detail of command in invalid format.
++
+[none]
+** 1a1. Addressbook prompts user with error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: ErrorSound
+
+*MSS*
+
+1.  User enters an invalid command
+2.  Errou sound occurs
++
+Use case ends.
+
+[discrete]
+=== Use case: Favourite a person
+
+*MSS*
+
+1.  User requests favourite/unfavourite a selected person
+2.  Addressbook highlights/unhighlight the selected person
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given location or name is invalid (wrong format or duplicate name).
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Autocomplete
+
+*MSS*
+
+1.  User requests types a command halfway
+2.  Addressbook shows a drop-down list of most relevant commands that has been used.
+3.  User chooses command by arrow key or mouse click.
+4.  Command gets executed
+
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Too many commands to be shown.
++
+[none]
+** 2a1. Sliding bar allows user to access more relevant commands.
+** 2a2. User chooses the input needed.
++
+Use case resumes at step 3.
 
 [discrete]
 === Use case: Add Instagram account information to person

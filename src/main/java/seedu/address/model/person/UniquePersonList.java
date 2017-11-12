@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.ParserUtil.EMPTY_STRING;
+import static seedu.address.logic.parser.ParserUtil.INDEX_ZERO;
 import static seedu.address.logic.parser.ParserUtil.SORTADD_ARGS;
 import static seedu.address.logic.parser.ParserUtil.SORTBIRTHDAY_ARGS;
 import static seedu.address.logic.parser.ParserUtil.SORTEMAIL_ARGS;
@@ -9,7 +11,6 @@ import static seedu.address.logic.parser.ParserUtil.SORTNAME_ARGS;
 import static seedu.address.logic.parser.ParserUtil.SORTNUMTIMESSEARCHED_ARGS;
 import static seedu.address.logic.parser.ParserUtil.SORTNUM_ARGS;
 import static seedu.address.logic.parser.ParserUtil.SORTREMARK_ARGS;
-import static seedu.address.logic.parser.ParserUtil.stringContainsItemFromList;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,6 +35,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class UniquePersonList implements Iterable<Person> {
 
+    public static final String EMPTY_LIST = "EMPTY";
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
@@ -46,28 +48,28 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public UniquePersonList () {
         comparatorMap = new HashMap<String, Comparator<Person>>();
-        for (String arg:SORTNAME_ARGS) {
-            comparatorMap.put(arg, Comparator.comparing(Person::getName));
-        }
-        for (String arg:SORTNUM_ARGS) {
-            comparatorMap.put(arg, Comparator.comparing(Person::getPhone));
-        }
-        for (String arg:SORTADD_ARGS) {
-            comparatorMap.put(arg, Comparator.comparing(Person::getAddress));
-        }
-        for (String arg:SORTEMAIL_ARGS) {
-            comparatorMap.put(arg, Comparator.comparing(Person::getEmail));
-        }
-        for (String arg:SORTREMARK_ARGS) {
-            comparatorMap.put(arg, Comparator.comparing(Person::getRemark));
-        }
-        for (String arg:SORTBIRTHDAY_ARGS) {
-            comparatorMap.put(arg, Comparator.comparing(Person::getBirthday));
-        }
-        for (String arg:SORTFAVOURITE_ARGS) {
-            comparatorMap.put(arg, Comparator.comparing(Person::getFavourite));
+        updateComparatorMapWithArg(SORTNAME_ARGS, Comparator.comparing(Person::getName));
+        updateComparatorMapWithArg(SORTNUM_ARGS, Comparator.comparing(Person::getPhone));
+        updateComparatorMapWithArg(SORTADD_ARGS, Comparator.comparing(Person::getAddress));
+        updateComparatorMapWithArg(SORTEMAIL_ARGS, Comparator.comparing(Person::getEmail));
+        updateComparatorMapWithArg(SORTREMARK_ARGS, Comparator.comparing(Person::getRemark));
+        updateComparatorMapWithArg(SORTBIRTHDAY_ARGS, Comparator.comparing(Person::getBirthday));
+        updateComparatorMapWithArg(SORTFAVOURITE_ARGS, Comparator.comparing(Person::getFavourite));
+        updateComparatorMapWithArg(SORTNUMTIMESSEARCHED_ARGS, Comparator.comparing(Person::getNumTimesSearched));
+    }
+
+    /**
+     * Connects argument used with it's relevant comparator
+     *
+     * @param arrayOfValidArg array of valid arguments
+     * @param comparatorUsed comparator used for the array of valid arguments
+     */
+    private void updateComparatorMapWithArg(String[] arrayOfValidArg, Comparator comparatorUsed) {
+        for (String arg:arrayOfValidArg) {
+            comparatorMap.put(arg, comparatorUsed);
         }
     }
+
     //@@author
 
     /**
@@ -81,13 +83,40 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Sorts the internalList as declared by the arguments
      */
-    public void sort(String sortType) {
-        if (stringContainsItemFromList(sortType, SORTNUMTIMESSEARCHED_ARGS)) {
-            Collections.sort(internalList, (Person p1, Person p2) ->
-                    p2.getNumTimesSearched().getValue() - p1.getNumTimesSearched().getValue());
-        } else {
-            Collections.sort(internalList, comparatorMap.get(sortType));
+    public String sort (String sortType) {
+        if (internalList.size() == INDEX_ZERO) {
+            return EMPTY_LIST;
         }
+        Collections.sort(internalList, comparatorMap.get(sortType));
+        return findFullNameSort(sortType);
+    }
+
+    /**
+     * Finds the full name output from all the valid args
+     * @param sortType the argument user used
+     * @return full name sort type
+     */
+    public String findFullNameSort (String sortType) {
+        return findFullSortType(sortType, SORTNAME_ARGS) + findFullSortType(sortType, SORTNUM_ARGS)
+                + findFullSortType(sortType, SORTADD_ARGS) + findFullSortType(sortType, SORTEMAIL_ARGS)
+                + findFullSortType(sortType, SORTREMARK_ARGS) + findFullSortType(sortType, SORTBIRTHDAY_ARGS)
+                + findFullSortType(sortType, SORTFAVOURITE_ARGS)
+                + findFullSortType(sortType, SORTNUMTIMESSEARCHED_ARGS);
+    }
+    /**
+     * Returns index zero of array if sortType is inside the array
+     *
+     * @param sortType the argument user used
+     * @param sortParam list of all argument that has the same meaning
+     * @return index zero of array
+     */
+    public String findFullSortType (String sortType, String[] sortParam) {
+        for (String arg: sortParam) {
+            if (arg.trim().toLowerCase().equals(sortType.trim().toLowerCase())) {
+                return sortParam[INDEX_ZERO];
+            }
+        }
+        return EMPTY_STRING;
     }
     //@@author
 

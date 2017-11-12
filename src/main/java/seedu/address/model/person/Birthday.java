@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.AddCommandParser.INDEX_ONE;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,6 +20,8 @@ public class Birthday implements Comparable {
             "Birthdays can only contain numbers, and should be in the format dd-mm-yyyy";
     public static final String MESSAGE_WRONG_DATE = "Date entered is wrong";
     public static final String MESSAGE_LATE_DATE = "Date given should be before today %1$s";
+    public static final int SCALE_YEAR = 10000;
+    public static final int SCALE_MONTH = 100;
     private static final String DASH = "-";
     private static final int DEFAULT_VALUE = 0;
     private static final String NOT_SET = "Not Set";
@@ -148,6 +151,11 @@ public class Birthday implements Comparable {
     @Override
     public int compareTo(Object o) {
         Birthday comparedBirthday = (Birthday) o;
-        return this.value.compareTo(comparedBirthday.toString());
+        if (this.value.equals(NOT_SET)) {
+            return INDEX_ONE;
+        }
+        return this.year * SCALE_YEAR + this.month * SCALE_MONTH + this.day
+                - (comparedBirthday.getYear() * SCALE_YEAR + comparedBirthday.getMonth() * SCALE_MONTH
+                        + comparedBirthday.getDay());
     }
 }

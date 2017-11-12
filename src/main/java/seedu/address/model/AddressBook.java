@@ -52,9 +52,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      *     Sort Persons according to sortType
      */
-    public void sortPersons(String sortType) {
-        persons.sort(sortType);
+    public String sortPersons(String sortType) {
+        String sortedType = persons.sort(sortType);
         syncMasterTagListWith(persons);
+        return sortedType;
     }
     //@@author
 

@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.person.UniquePersonList.EMPTY_LIST;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 
 //@@author justintkj
@@ -19,9 +21,10 @@ public class SortCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " address"
             + "Example: " + COMMAND_WORD + " remark"
             + "Example: " + COMMAND_WORD + " email"
+            + "Example: " + COMMAND_WORD + " favourite"
             + "Example: " + COMMAND_WORD + " birthday"
-            + "Example: " + COMMAND_WORD + " numTimesSearched"
-            + "Example: " + COMMAND_WORD + " favourite";
+            + "Example: " + COMMAND_WORD + " numTimesSearched";
+    public static final String EMPTY_LIST_EXCEPTION_MESSAGE = "List is empty!";
 
 
     private String sortType;
@@ -32,8 +35,11 @@ public class SortCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        model.sortPerson(sortType);
-        return new CommandResult(MESSAGE_SORT_SUCCESS + sortType);
+        String fullsortname = model.sortPerson(sortType);
+        if (fullsortname.equals(EMPTY_LIST)) {
+            throw new CommandException(EMPTY_LIST_EXCEPTION_MESSAGE);
+        }
+        return new CommandResult(MESSAGE_SORT_SUCCESS + fullsortname);
     }
 
     @Override

@@ -46,17 +46,17 @@ import seedu.address.model.tag.Tag;
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
-    public static final int SIZE_2 = 2;
+    public static final int SIZE_1 = 1;
     public static final String EMAIL_REGEX = "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
-    public static final String EMAIL_EXCEPTION_MESSAGE = "invalid email\n Example: Jason@example.com";
+    public static final String EMAIL_EXCEPTION_MESSAGE = "invalid email\nExample: Jason@example.com\n";
     public static final String BLOCK_REGEX = "block \\d{1,3}";
-    public static final String BLOCK_EXCEPTION_MESSAGE = "invalid address, Block Number. \nExample: Block 123"
+    public static final String BLOCK_EXCEPTION_MESSAGE = "invalid address, Block Number. \nExample: Block 123\n"
             + AddCommand.MESSAGE_USAGE_ALT;
     public static final String STREET_REGEX = "[a-zA-z]+ street \\d{1,2}";
-    public static final String STREET_EXCEPTION_MESSAGE = "invalid address, Street. \nExample: Jurong Street 11"
+    public static final String STREET_EXCEPTION_MESSAGE = "invalid address, Street. \nExample: Jurong Street 11\n"
             + AddCommand.MESSAGE_USAGE_ALT;
     public static final String UNIT_REGEX = "#\\d\\d-\\d{1,3}[a-zA-Z]{0,1}";
-    public static final String UNIT_EXCEPTION_MESSAGE = "invalid address, Unit. \n Example: #01-12B"
+    public static final String UNIT_EXCEPTION_MESSAGE = "invalid address, Unit. \nExample: #01-12B\n"
             + AddCommand.MESSAGE_USAGE_ALT;
     public static final String POSTAL_REGEX = "singapore \\d{6,6}";
     public static final String PHONE_REGEX = "\\d{8}";
@@ -64,8 +64,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             + AddCommand.MESSAGE_USAGE_ALT;
     public static final String BIRTHDAY_REGEX = "\\d{1,2}-\\d{1,2}-\\d{4,4}";
 
-    public static final String BIRTHDAY_EXCEPTION_MESSAGE = "invalid birthday,\n Example: 12-09-1994";
-    public static final String NAME_EXCEPTION_MESSAGE = "Missing Name!\n" + AddCommand.MESSAGE_USAGE_ALT;
+    public static final String BIRTHDAY_EXCEPTION_MESSAGE = "invalid birthday,\n Example: 12-09-1994\n";
+    public static final String NAME_EXCEPTION_MESSAGE = "Missing Name! Name should follow with a comma\n"
+            + "Example: Johnny,\n" + AddCommand.MESSAGE_USAGE_ALT;
     public static final String FALSE = "false";
     public static final String DEFAULT = "default";
     public static final String ALTERNATIVE_METHOD_LOG_MESSAGE = "Adding a person using alternative method ";
@@ -125,7 +126,7 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private AddCommand alternativeCreateNewPerson(String args) throws IllegalValueException {
         String[] allArgs = args.split(COMMA_STRING);
-        checkNameFormat(allArgs);
+        checkNameFormat(args);
 
         //Initial person's details
         Name name = new Name(allArgs[INDEX_ZERO]);
@@ -136,7 +137,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         String blocknum;
         String streetnum;
         String unitnum;
-        String postalnum = "";
+        String postalnum = EMPTY_STRING;
         Address address;
         Favourite favourite = new Favourite(FALSE);
         ProfilePicture picture = new ProfilePicture(DEFAULT);
@@ -299,8 +300,8 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @param allArgs input string given by user
      * @throws IllegalValueException Nothing conforms to legal email format
      */
-    private void checkNameFormat(String[] allArgs) throws IllegalValueException {
-        if (allArgs.length < SIZE_2) {
+    private void checkNameFormat(String allArgs) throws IllegalValueException {
+        if (!allArgs.contains(COMMA_STRING)) {
             throw new IllegalValueException(NAME_EXCEPTION_MESSAGE);
         }
     }
@@ -317,28 +318,24 @@ public class AddCommandParser implements Parser<AddCommand> {
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-        Remark remark;
-        Birthday birthday;
-        if (argMultimap.getValue(PREFIX_REMARK).equals(Optional.empty())) {
-            remark = new Remark("");
-        } else {
+        Remark remark = new Remark(EMPTY_STRING);
+        Birthday birthday = new Birthday(EMPTY_STRING);
+        if (!argMultimap.getValue(PREFIX_REMARK).equals(Optional.empty())) {
             remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
-        }
-        if (argMultimap.getValue(PREFIX_BIRTHDAY).equals(Optional.empty())) {
-            birthday = new Birthday("");
-        } else {
-            birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
         }
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Favourite favourite = new Favourite(Favourite.COLOR_OFF);
         ProfilePicture picture = new ProfilePicture(DEFAULT);
+        if (!argMultimap.getValue(PREFIX_BIRTHDAY).equals(Optional.empty())) {
+            birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
+        }
         ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList, picture,
                 favourite);
         return new AddCommand(person);
     }
 
     /**
-     * Checks if all prefixes are present
+     * Checks if all compulsary prefixes are present
      *
      * @param argMultimap All the prefixes to be used
      * @throws ParseException Missing prefix

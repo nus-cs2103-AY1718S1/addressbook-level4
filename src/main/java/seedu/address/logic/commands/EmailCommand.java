@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.AddCommandParser.INDEX_FIVE;
+import static seedu.address.logic.parser.ParserUtil.EMPTY_STRING;
+import static seedu.address.logic.parser.ParserUtil.INDEX_ZERO;
 
 import java.util.Date;
 import java.util.List;
@@ -51,6 +54,10 @@ public class EmailCommand extends Command {
     public static final String SMTP_AUTHENTICATION = "mail.smtp.auth";
     public static final String SMTP_STARTTLS = "mail.smtp.starttls.required";
     public static final String SMTP = "smtp";
+    public static final String LINE_SEPARATOR = "line.separator";
+    public static final String TEAM_SIGNATURE_MESSAGE = "This is a generated mail provided by CS2103F09B3 Team.";
+    public static final String INTERNET_CONNECTION_ERROR_MESSAGE = "Check if you are connected to a valid"
+            + " internet connection";
     public final Index index;
     public final String subject;
     public final String message;
@@ -101,7 +108,7 @@ public class EmailCommand extends Command {
             sendMessage(host, user, pass, mailSession, composedMessage);
 
         } catch (Exception ex) {
-            throw new CommandException(INCORRECT_EMAIL_FORMAT);
+            throw new CommandException(INTERNET_CONNECTION_ERROR_MESSAGE);
         }
         return new CommandResult(CORRECT_EMAIL_FORMAT + personToEmail.getName());
     }
@@ -199,11 +206,11 @@ public class EmailCommand extends Command {
      * @return New message attached with signature
      */
     private String teamSignatureGenerator() {
-        String newLine = "";
-        for (int i = 0; i < 5; i++) {
-            newLine += System.getProperty("line.separator");
+        String newLine = EMPTY_STRING;
+        for (int i = INDEX_ZERO; i < INDEX_FIVE; i++) {
+            newLine += System.getProperty(LINE_SEPARATOR);
         }
-        return this.message + newLine + "This is a generated mail provided by CS2103F09B3 Team.";
+        return this.message + newLine + TEAM_SIGNATURE_MESSAGE;
     }
 
     @Override

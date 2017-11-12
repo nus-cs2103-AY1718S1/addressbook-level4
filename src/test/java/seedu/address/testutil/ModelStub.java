@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import static org.junit.Assert.fail;
+import static seedu.address.logic.parser.ParserUtil.EMPTY_STRING;
 
 import java.util.function.Predicate;
 
@@ -44,8 +45,9 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void sortPerson(String target) {
+    public String sortPerson(String target) {
         fail("This method should not be called.");
+        return EMPTY_STRING;
     }
 
     @Override

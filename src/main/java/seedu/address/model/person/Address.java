@@ -68,7 +68,7 @@ public class Address implements Comparable {
     @Override
     public int compareTo(Object o) {
         Address comparedAddress = (Address) o;
-        return this.value.compareTo(comparedAddress.toString());
+        return this.value.toLowerCase().compareTo(comparedAddress.toString().toLowerCase());
     }
 
 }

@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -40,7 +41,7 @@ public class ParserUtil {
     public static final String[] SORTREMARK_ARGS = {"remark", "r", "rem"};
     public static final String[] SORTBIRTHDAY_ARGS = {"birthday", "bday", "b"};
     public static final String[] SORTNUMTIMESSEARCHED_ARGS = {"numtimessearched", "timessearched", "searches", "s"};
-    public static final String[] SORTFAVOURITE_ARGS = {"favourite"};
+    public static final String[] SORTFAVOURITE_ARGS = {"favourite", "f"};
 
     public static final String EMPTY_STRING = "";
     public static final String SPACE_STRING = " ";
@@ -61,7 +62,7 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
-    //@@author justintkj
+
     /**
      * Parses {@code number} into an {@code Integer} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -90,25 +91,33 @@ public class ParserUtil {
         return false;
     }
 
+    //@@author justintkj
     /**
      * Parses {@code sortType}returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not valid sorting type).
      */
     public static String parseSortType(String sortType) throws IllegalValueException {
         String toSort = sortType.trim().toLowerCase();
-        if (!stringContainsItemFromList(toSort, SORTNAME_ARGS)
-                && !stringContainsItemFromList(toSort, SORTNUM_ARGS)
-                && !stringContainsItemFromList(toSort, SORTADD_ARGS)
-                && !stringContainsItemFromList(toSort, SORTEMAIL_ARGS)
-                && !stringContainsItemFromList(toSort, SORTREMARK_ARGS)
-                && !stringContainsItemFromList(toSort, SORTBIRTHDAY_ARGS)
-                && !stringContainsItemFromList(toSort, SORTREMARK_ARGS)
-                && !stringContainsItemFromList(toSort, SORTFAVOURITE_ARGS)
-                && !stringContainsItemFromList(toSort, SORTNUMTIMESSEARCHED_ARGS)) {
+        String[] allValidArgs = mergeValidArg(SORTNAME_ARGS, SORTNUM_ARGS, SORTEMAIL_ARGS, SORTREMARK_ARGS,
+                SORTBIRTHDAY_ARGS, SORTFAVOURITE_ARGS, SORTNUMTIMESSEARCHED_ARGS, SORTADD_ARGS);
+        if (!stringContainsItemFromList(toSort, allValidArgs)) {
             throw new IllegalValueException(MESSAGE_INVALID_SORT);
         }
         return toSort;
+    }
+
+    /**
+     * Merges multiple array into one
+     *
+     * @param arrays All the arrays to be merged
+     * @return One new array will all inputs from previous
+     */
+    public static String[] mergeValidArg(String[] ...arrays) {
+        return Stream.of(arrays)
+                .flatMap(Stream::of)
+                .toArray(String[]::new);
     }
     //@@author
 

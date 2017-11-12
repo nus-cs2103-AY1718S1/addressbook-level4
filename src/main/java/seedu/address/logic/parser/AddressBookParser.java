@@ -40,6 +40,8 @@ public class AddressBookParser {
      * Used for initial separation of command word and args.
      */
     public static final String MISSING_AUTOCOMPLETEFILE = "Autocomplete.xml may be missing";
+    public static final String COMMAND_WORD = "commandWord";
+    public static final String ARGUMENTS = "arguments";
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     //@@author justintkj
@@ -56,8 +58,8 @@ public class AddressBookParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
-        final String arguments = matcher.group("arguments");
+        final String commandWord = matcher.group(COMMAND_WORD);
+        final String arguments = matcher.group(ARGUMENTS);
         switch (commandWord.toLowerCase()) {
 
         case EmailCommand.COMMAND_WORD:

@@ -31,9 +31,9 @@ Responsibilities:
 
 '''
 
-=== Justin Tan
+=== Justin Tan Kun Jie
 image::justintkj.jpg[width="150", align="left"]
-{empty}[https://github.com/justintkj[github]] [<<justintkj#, portfolio>>]
+{empty}[https://github.com/justintkj[github]] [<<JustinTanKunJie#, portfolio>>]
 
 Role: Developer +
 Responsibilities:

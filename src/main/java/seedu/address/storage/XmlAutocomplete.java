@@ -25,7 +25,7 @@ public class XmlAutocomplete {
     private static String[] possibleSuggestion = {"add", "birthday", "clear", "list", "help", "removetag", "image",
         "edit", "find", "delete", "select", "favourite", "history", "undo", "redo", "email", "sort", "sort name",
         "map", "sort number", "sort email", "sort address", "sort remark", "sort birthday", "sort favourite",
-        "exit", "fuzzyfind"};
+        "exit", "fuzzyfind", "sort numtimessearched"};
     private static ArrayList<String> mainPossibleSuggestion = new ArrayList<String>(Arrays.asList(possibleSuggestion));
 
     /**

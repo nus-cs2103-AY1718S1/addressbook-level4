@@ -7,7 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Counts number of times a person has been searched for
  * Guarantees: immutable;
  */
-public class NumTimesSearched {
+public class NumTimesSearched implements Comparable {
 
     public static final String MESSAGE_NUM_TIMES_SEARCHED_CONSTRAINTS =
             "Initial value of NumTimesSearched should be >= 0";
@@ -64,5 +64,12 @@ public class NumTimesSearched {
         return other == this // short circuit if same object
                 || (other instanceof NumTimesSearched // instanceof handles nulls
                 && this.value == ((NumTimesSearched) other).value); // state check
+    }
+
+    //@@author justintkj
+    @Override
+    public int compareTo(Object o) {
+        NumTimesSearched comparedSearched = (NumTimesSearched) o;
+        return comparedSearched.getValue() - this.value;
     }
 }

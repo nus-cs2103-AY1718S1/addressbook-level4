@@ -38,6 +38,6 @@ public class Remark implements Comparable {
     @Override
     public int compareTo(Object o) {
         Remark comparedRemark = (Remark) o;
-        return this.value.compareTo(comparedRemark.toString());
+        return this.value.toLowerCase().compareTo(comparedRemark.toString().toLowerCase());
     }
 }

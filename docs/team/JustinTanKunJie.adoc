@@ -36,6 +36,7 @@ Vice versa, multiple `redo` is made to undo multiple number of undo.
 include::../DeveloperGuide.adoc[tag=multipleundoredo]
 
 #End of Extract#
+
 ---
 
 === Enhancement Added: `Sort`
@@ -61,6 +62,8 @@ The sort should be automatically updated in storage as it is inefficient for use
 ==== Implementation
 
 ---
+Note : I implemented the foundation of sort. +
+While Jo added the numsearched fields and command alias for sort, i refractored to use streams to reduce excessive "for loops". +
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=sort]
@@ -147,7 +150,7 @@ include::../UserGuide.adoc[tag=autocomplete]
 
 It reduces the amout of time needed to type a specified command and acts as a quick reference to a list of vaid command. +
 When the user types a command in the CLI, recommended valid commmands are shown as a drop-down list for the user to choose. +
-User can choose from the list of valid command via the keyboardd:[&uarr;] or keyboard:[&darr;] and select via kbd:[Enter]. +
+User can choose from the list of valid command via the keyboard:[&uarr;] or keyboard:[&darr;] and select via keyboard:[Enter]. +
 Valid commands needs to be saved and increase the drop down list to provide more relevant commands for the user progressively. +
 When XML file is deleted, a new XML file will be created, populated with a standard list of commands.
 
