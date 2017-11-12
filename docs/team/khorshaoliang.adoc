@@ -3,8 +3,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: Blast!
+Blast! is a desktop address book application developed with tutors and sales persons in mind The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and more than 6 kLoC.
 
 *Code contributed*: [https://github.com/KhorSL/main[Functional code]] [https://github.com/KhorSL/main[Test code]]
 
@@ -19,6 +19,16 @@ include::../UserGuide.adoc[tag=multiple]
 
 #End of Extract#
 
+---
+
+==== Internal Behaviour
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=multiple]
+
+#End of Extract#
 ---
 
 ==== Justification
@@ -40,6 +50,17 @@ include::../UserGuide.adoc[tag=find]
 
 ---
 
+==== Internal behavior
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
 ==== Justification
 
 Allowing users to find persons based on tags will allow users to know the relationship with their contact.
@@ -52,6 +73,17 @@ Allowing users to find persons based on tags will allow users to know the relati
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=merge]
+
+#End of Extract#
+
+---
+
+==== Internal behavior
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=merge]
 
 #End of Extract#
 
