@@ -62,6 +62,7 @@ public class AddCommand extends UndoableCommand {
     public static final String PHONE_FIELD = "phone";
     public static final String ADDRESS_FIELD = "address";
     public static final String EMAIL_FIELD = "email";
+    public static final String FIELD_SEPERATOR = ", ";
 
     private static boolean isWaitingforReply;
     private CommandResult result;
@@ -167,10 +168,10 @@ public class AddCommand extends UndoableCommand {
         if ((toAdd.getEmail().toString().trim().equalsIgnoreCase(contact.getEmail().toString().trim()))
                 && (!toAdd.getEmail().toString().trim().equals(DEFAULT_EMAIL))) {
             isWaitingforReply = true;
-            if (!duplicateFields.equals("")) {
-                duplicateFields += ", " + EMAIL_FIELD;
-            } else {
+            if (duplicateFields.isEmpty()) {
                 duplicateFields = EMAIL_FIELD;
+            } else {
+                duplicateFields += FIELD_SEPERATOR + EMAIL_FIELD;
             }
         }
     }
@@ -183,10 +184,10 @@ public class AddCommand extends UndoableCommand {
         if ((toAdd.getAddress().toString().trim().equalsIgnoreCase(contact.getAddress().toString().trim()))
                 && (!toAdd.getAddress().toString().trim().equals(DEFAULT_ADDRESS))) {
             isWaitingforReply = true;
-            if (!duplicateFields.equals("")) {
-                duplicateFields += ", " + ADDRESS_FIELD;
-            } else {
+            if (duplicateFields.isEmpty()) {
                 duplicateFields = ADDRESS_FIELD;
+            } else {
+                duplicateFields += FIELD_SEPERATOR + ADDRESS_FIELD;
             }
         }
     }
@@ -198,10 +199,10 @@ public class AddCommand extends UndoableCommand {
     private void checkDuplicatePhone(Person toAdd, ReadOnlyPerson contact) {
         if (toAdd.getPhone().toString().trim().equalsIgnoreCase(contact.getPhone().toString().trim())) {
             isWaitingforReply = true;
-            if (!duplicateFields.equals("")) {
-                duplicateFields += ", " + PHONE_FIELD;
-            } else {
+            if (duplicateFields.isEmpty()) {
                 duplicateFields = PHONE_FIELD;
+            } else {
+                duplicateFields += FIELD_SEPERATOR + PHONE_FIELD;
             }
 
         }
@@ -214,10 +215,10 @@ public class AddCommand extends UndoableCommand {
     private void checkDuplicateName(Person toAdd, ReadOnlyPerson contact) {
         if (toAdd.getName().toString().trim().equalsIgnoreCase(contact.getName().toString().trim())) {
             isWaitingforReply = true;
-            if (!duplicateFields.equals("")) {
-                duplicateFields += ", " + NAME_FIELD;
-            } else {
+            if (duplicateFields.isEmpty()) {
                 duplicateFields = NAME_FIELD;
+            } else {
+                duplicateFields += FIELD_SEPERATOR + NAME_FIELD;
             }
         }
     }
