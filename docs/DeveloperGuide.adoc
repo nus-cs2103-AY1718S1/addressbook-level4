@@ -586,53 +586,72 @@ _Figure 4.3.3: UI display of a successful `ScheduleCommand` execution
 **Cons:** Users can only search for an activity scheduled by searching the person they have scheduled the activity with.
 
 Both current choices above facilitate the creation of link:#viewing-of-user-s-agenda-since-v1-4[My Agenda] panel.
+
+Initially, the application can take in both DD-MM and DD-MM-YYYY date formats. After further considerations, DD-MM format is removed and is no longer accepted by the application owing to 2 reasons:
+
+* DD-MM date format introduces ambiguity when schedules need to be arranged according to dates.
+* It is impossible for users not to know the exact year in which an activity is scheduled.
+
+[NOTE]
+Since v1.4, schedules in both the `AgendaPanel` and the `PersonCard` are arranged based on dates.
 //end::scheduleSingle[]
 
 //tag::scheduleMultiple[]
 === Scheduling an Activity with Multiple Persons [Since v1.4]
 
-This enhancement builds upon the schedule feature developed in v1.3, which allows users to schedule an activity with one person. The code snippet from `ScheduleCommand` below shows how scheduling an activity with multiple persons is achieved.
+This enhancement builds upon the schedule feature developed in v1.3, which allows users to schedule an activity with one person. Users can now input multiple indices to schedule an activity with multiple persons at the same time.
+
+The implementation of `Comparable` interface for `Schedule` allows the activities scheduled with a person to be displayed from the smallest date value. The code extract in _Figure 4.4.1_ below shows how the `compareTo()` function is being defined in the `Schedule`.
 
 [source, java]
 ----
-@Override
-public CommandResult executeUndoableCommand() throws CommandException {
+public class Schedule implements Comparable<Schedule> {
+    ...
+    @Override
+    public int compareTo(Schedule scheduleToCompare) {
+        String schedule1DateInString = this.getScheduleDate().value;
+        String schedule2DateInString = scheduleToCompare.getScheduleDate().value;
 
-    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-    for (Index index: indices) {
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        int schedule1Year = DateUtil.getYear(schedule1DateInString);
+        int schedule2Year = DateUtil.getYear(schedule2DateInString);
+        if (schedule1Year != schedule2Year) {
+            return schedule1Year - schedule2Year;
         }
 
-        ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
-        Schedule schedule = new Schedule(date, activity, schedulePerson.getName());
-
-        Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
-
-        if (!schedulePerson.getSchedules().contains(schedule)) {
-            schedules.add(schedule);
+        int schedule1Month = DateUtil.getMonth(schedule1DateInString);
+        int schedule2Month = DateUtil.getMonth(schedule2DateInString);
+        if (schedule1Month != schedule2Month) {
+            return schedule1Month - schedule2Month;
         }
 
-        Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(),
-                schedulePerson.getCountry(), schedulePerson.getEmails(), schedulePerson.getAddress(), schedules,
-                schedulePerson.getTags());
-        try {
-            model.updatePerson(schedulePerson, scheduleAddedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
+        int schedule1Day = DateUtil.getDay(schedule1DateInString);
+        int schedule2Day = DateUtil.getDay(schedule2DateInString);
+        return schedule1Day - schedule2Day;
     }
-    model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
-
-    return new CommandResult(String.format(MESSAGE_SCHEDULE_SUCCESS, indices.size()));
 }
 ----
 
+The outcome of schedule multiple command execution is shown in _Figure 4.4.2_ below.
+
+image::ScheduleCommandMultipleScreenShot.png[width="800"]
+
+_Figure 4.4.2: UI display of an enhanced successful `ScheduleCommand` execution
+
 ==== Design Considerations
+
+**Aspect:** Data structure to support multiple `Index` +
+**Alternative 1 (current choice)**: Use Set to store indices input +
+**Pros:** The application becomes smart enough to eliminate duplicate indices input and speed up the execution of `ScheduleCommand` +
+**Alternative 2:** Use ArrayList to store indices input  +
+**Cons:** Users receive an error message if they input non-unique indices.
+
+**Aspect:** Data structure to support scheduling multiple activities with one `Person` +
+**Alternative 1 (current choice)**: DD-MM-YYYY is the only valid date format +
+**Pros:** It is now possible to arrange the dates based on which date comes first. +
+**Cons:** Users have lesser flexibility in inputting dates. +
+**Alternative 2:** Allowing users to key in dates in DD-MM format in addition to DD-MM-YYYY format  +
+**Pros:** This gives users a greater flexibility when keying in dates.  +
+**Cons:** This creates ambiguity when arranging the schedules based on dates.
 //end::scheduleMultiple[]
 
 //tag::welcomeWindow[]
