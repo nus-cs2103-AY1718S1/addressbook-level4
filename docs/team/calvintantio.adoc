@@ -102,8 +102,6 @@ It is understood that users may not like welcome screen. Therefore, users have t
 
 include::../DeveloperGuide.adoc[tag=welcomeScreen]
 
-include::../DeveloperGuide.adoc[tag=welcomeScreen]
-
 #End of Extract#
 
 ---
