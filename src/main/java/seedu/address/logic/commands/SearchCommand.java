@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
+
+import static seedu.address.logic.commands.FindCommand.NO_RESULTS;
 
 //@@author martyn-wong
 /**
@@ -25,8 +28,15 @@ public class SearchCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         model.updateFilteredPersonList(predicate);
+
+        int searchResultsCount = model.getFilteredPersonList().size();
+
+        if (searchResultsCount != NO_RESULTS) {
+            model.recordSearchHistory();
+        }
+
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 

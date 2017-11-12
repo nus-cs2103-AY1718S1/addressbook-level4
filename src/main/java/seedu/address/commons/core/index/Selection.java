@@ -1,5 +1,6 @@
 package seedu.address.commons.core.index;
 
+//@@author martyn-wong
 /**
  * To get or set the selection state of the application
  */
