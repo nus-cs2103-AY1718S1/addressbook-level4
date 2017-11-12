@@ -1,5 +1,5 @@
 # itsdickson
-###### /java/guitests/guihandles/ThemesWindowHandle.java
+###### \java\guitests\guihandles\ThemesWindowHandle.java
 ``` java
 
 import java.net.URL;
@@ -35,7 +35,7 @@ public class ThemesWindowHandle extends StageHandle {
     }
 }
 ```
-###### /java/guitests/ThemesWindowTest.java
+###### \java\guitests\ThemesWindowTest.java
 ``` java
 
 import static org.junit.Assert.assertTrue;
@@ -71,7 +71,7 @@ public class ThemesWindowTest extends AddressBookGuiTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FavouriteCommandTest.java
+###### \java\seedu\address\logic\commands\FavouriteCommandTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -168,7 +168,7 @@ public class FavouriteCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FavouriteListCommandTest.java
+###### \java\seedu\address\logic\commands\FavouriteListCommandTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -220,7 +220,7 @@ public class FavouriteListCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindTagCommandTest.java
+###### \java\seedu\address\logic\commands\FindTagCommandTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -321,7 +321,7 @@ public class FindTagCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SwitchThemeCommandTest.java
+###### \java\seedu\address\logic\commands\SwitchThemeCommandTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -361,11 +361,9 @@ public class SwitchThemeCommandTest {
 
     @Test
     public void execute_validIndexValidSwitch_success() throws Exception {
-        String themeToChange = model.getThemesList().get(INDEX_SECOND_PERSON.getZeroBased());
-
         SwitchThemeCommand switchThemeCommand = prepareCommand(INDEX_SECOND_PERSON);
 
-        String expectedMessage = String.format(SwitchThemeCommand.MESSAGE_SWITCH_THEME_SUCCESS, themeToChange);
+        String expectedMessage = SwitchThemeCommand.MESSAGE_LIGHT_THEME_SUCCESS;
         CommandResult commandResult = switchThemeCommand.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
@@ -416,7 +414,7 @@ public class SwitchThemeCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ThemeListCommandTest.java
+###### \java\seedu\address\logic\commands\ThemeListCommandTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -442,7 +440,7 @@ public class ThemeListCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UnfavouriteCommandTest.java
+###### \java\seedu\address\logic\commands\UnfavouriteCommandTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -540,7 +538,7 @@ public class UnfavouriteCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FavouriteCommandParserTest.java
+###### \java\seedu\address\logic\parser\FavouriteCommandParserTest.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -567,7 +565,7 @@ public class FavouriteCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FindTagCommandParserTest.java
+###### \java\seedu\address\logic\parser\FindTagCommandParserTest.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -603,7 +601,7 @@ public class FindTagCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/SwitchThemeCommandParserTest.java
+###### \java\seedu\address\logic\parser\SwitchThemeCommandParserTest.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -631,7 +629,7 @@ public class SwitchThemeCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/UnfavouriteCommandParserTest.java
+###### \java\seedu\address\logic\parser\UnfavouriteCommandParserTest.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -659,7 +657,7 @@ public class UnfavouriteCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Favourite} of the {@code EditPersonDescriptor} that we are building.
@@ -669,7 +667,7 @@ public class UnfavouriteCommandParserTest {
         return this;
     }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Boolean} of the {@code Person} that we are building.
@@ -679,7 +677,7 @@ public class UnfavouriteCommandParserTest {
         return this;
     }
 ```
-###### /java/seedu/address/ui/ThemesWindowTest.java
+###### \java\seedu\address\ui\ThemesWindowTest.java
 ``` java
 
 import static org.junit.Assert.assertEquals;
@@ -714,7 +712,62 @@ public class ThemesWindowTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/systemtests/FindTagCommandSystemTest.java
+###### \java\systemtests\AddCommandSystemTest.java
+``` java
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)} except that the result
+     * display box displays {@code expectedResultMessage} and the model related components equal to
+     * {@code expectedModel}. Executes {@code command} instead.
+     * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyPerson)
+     */
+    private void assertCommandSuccess(String command, ReadOnlyPerson toAdd) {
+        Model expectedModel = getModel();
+        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
+        try {
+            expectedModel.addPerson(toAdd);
+        } catch (DuplicatePersonException dpe) {
+            throw new IllegalArgumentException("toAdd already exists in the model.");
+        }
+        int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        executeCommand(command);
+        int postExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        if (preExecutionSelectedCardIndex == postExecutionSelectedCardIndex) {
+            assertSelectedCardUnchanged();
+        } else {
+            assertSelectedCardChanged(Index.fromZeroBased(postExecutionSelectedCardIndex));
+        }
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)}
+     * except that the selected card is deselected.
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
+     */
+    private void assertUndoCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardDeselected();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)}
+     * except that the selected card changed.
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
+     */
+    private void assertRedoCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardChanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+```
+###### \java\systemtests\FindTagCommandSystemTest.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
@@ -738,6 +791,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void findtag() {
+        executeCommand("list");
         /* Case: find 1 person in address book, command with leading spaces and trailing spaces
          * -> 1 person found
          */
