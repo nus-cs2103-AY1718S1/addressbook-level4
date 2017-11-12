@@ -73,7 +73,7 @@ public class EditTaskCommand extends UndoableCommand {
         this.index = index;
         this.editTaskDescriptor = new EditTaskDescriptor(editTaskDescriptor);
     }
-
+    //@@author ShaocongDong
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyTask> lastShownList = model.getSortedTaskList();

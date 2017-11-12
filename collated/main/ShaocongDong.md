@@ -441,6 +441,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTime;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 
@@ -465,10 +468,17 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
         }
 
         try {
-            String name = ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME)).get();
-            String description = ParserUtil.parseString(argMultimap.getValue(PREFIX_DESCRIPTION)).get();
-            String startDateTime = ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME)).get();
-            String endDateTime = ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).get();
+            Name name = new Name(ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME)).get());
+            Description description =
+                    new Description(ParserUtil.parseString(argMultimap.getValue(PREFIX_DESCRIPTION)).get());
+            DateTime startDateTime =
+                    new DateTime(ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME)).get());
+            DateTime endDateTime =
+                    new DateTime(ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).get());
+
+            if (startDateTime.compareTo(endDateTime) == -1) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
+            }
 
             Optional<Integer> priority = ParserUtil.parseInteger(argMultimap.getValue(PREFIX_PRIORITY));
 
@@ -573,6 +583,91 @@ public class SelectTaskCommandParser implements Parser<SelectTaskCommand> {
     }
 }
 ```
+###### /java/seedu/address/logic/parser/EditTaskCommandParser.java
+``` java
+    /**
+     * Parses the given {@code String} of arguments in the context of the EditTaskCommand
+     * and returns an EditTaskCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public EditTaskCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_START_DATE_TIME,
+                        PREFIX_END_DATE_TIME, PREFIX_TAG);
+
+        Index index;
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE));
+        }
+
+        EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
+        try {
+            Optional<String> parserName = ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME));
+            if (parserName.isPresent()) {
+                editTaskDescriptor.setName(new Name(parserName.get()));
+            }
+            Optional<String> parserDescription = ParserUtil.parseString(argMultimap.getValue(PREFIX_DESCRIPTION));
+            if (parserDescription.isPresent()) {
+                editTaskDescriptor.setDescription(new Description(parserDescription.get()));
+            }
+
+            Optional<String> parserStart = ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME));
+            DateTime startDateTime = null;
+            if (parserStart.isPresent()) {
+                //editTaskDescriptor.setStart(new DateTime(parserStart.get()));
+                startDateTime = new DateTime(parserStart.get());
+                editTaskDescriptor.setStart(new DateTime(parserStart.get()));
+            }
+
+            Optional<String> parserEnd = ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME));
+            DateTime endDateTime = null;
+            if (parserEnd.isPresent()) {
+                //editTaskDescriptor.setEnd(new DateTime(parserEnd.get()));
+                endDateTime = new DateTime(parserEnd.get());
+                editTaskDescriptor.setEnd(new DateTime(parserEnd.get()));
+            }
+
+            // additional checking for dateTime validity
+            if (startDateTime != null && endDateTime != null) {
+                if (startDateTime.compareTo(endDateTime) == -1) {
+                    throw new ParseException(EditTaskCommand.MESSAGE_DATE_TIME_TASK);
+                }
+            }
+
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
+        if (!editTaskDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditTaskCommand.MESSAGE_NOT_EDITED);
+        }
+
+        return new EditTaskCommand(index, editTaskDescriptor);
+    }
+
+    /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
+     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Tag>} containing zero tags.
+     */
+    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
+        assert tags != null;
+
+        if (tags.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
+        return Optional.of(ParserUtil.parseTags(tagSet));
+    }
+
+}
+
+```
 ###### /java/seedu/address/logic/commands/TaskByPriorityCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -657,6 +752,184 @@ public class DeleteTaskCommand extends UndoableCommand {
                 && this.targetIndex.equals(((DeleteTaskCommand) other).targetIndex)); // state check
     }
 }
+```
+###### /java/seedu/address/logic/commands/EditTaskCommand.java
+``` java
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyTask> lastShownList = model.getSortedTaskList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyTask taskToEdit = lastShownList.get(index.getZeroBased());
+
+        Task editedTask = null;
+        try {
+            editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+        } catch (IllegalValueException e) {
+            throw new CommandException(MESSAGE_DATE_TIME_TASK);
+        }
+
+        try {
+            model.updateTask(taskToEdit, editedTask);
+        } catch (DuplicateTaskException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        } catch (TaskNotFoundException tnfe) {
+            throw new AssertionError("The target task cannot be missing");
+        }
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
+    }
+
+    /**
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
+     * edited with {@code editTaskDescriptor}.
+     */
+    private static Task createEditedTask(ReadOnlyTask taskToEdit,
+                                             EditTaskDescriptor editTaskDescriptor) throws IllegalValueException {
+        assert taskToEdit != null;
+
+        Name updatedTaskName = editTaskDescriptor.getName().orElse(taskToEdit.getName());
+        Description updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
+        DateTime updatedStartDateTime = editTaskDescriptor.getStartDateTime().orElse(taskToEdit.getStartDateTime());
+        DateTime updatedEndDateTime = editTaskDescriptor.getEndDateTime().orElse(taskToEdit.getEndDateTime());
+        if (updatedStartDateTime.compareTo(updatedEndDateTime) == -1) {
+            throw new IllegalValueException(MESSAGE_DATE_TIME_TASK);
+        }
+        Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
+        Boolean updateComplete = editTaskDescriptor.getComplete().orElse(taskToEdit.getComplete());
+        //Remark updatedRemark = taskToEdit.getRemark(); // edit command does not allow editing remarks
+        Integer originalPriority = taskToEdit.getPriority(); // edit command is not used to update priority
+        Integer id = taskToEdit.getId();
+        ArrayList<Integer> peopleIds = taskToEdit.getPeopleIds();
+        return new Task(updatedTaskName, updatedDescription, updatedStartDateTime, updatedEndDateTime,
+                updatedTags, updateComplete, originalPriority, id, peopleIds);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EditTaskCommand)) {
+            return false;
+        }
+
+        // state check
+        EditTaskCommand e = (EditTaskCommand) other;
+        return index.equals(e.index)
+                && editTaskDescriptor.equals(e.editTaskDescriptor);
+    }
+
+    /**
+     * Stores the details to edit the task with. Each non-empty field value will replace the
+     * corresponding field value of the task.
+     */
+    public static class EditTaskDescriptor {
+        private Name taskName;
+        private Description description;
+        private DateTime start;
+        private DateTime end;
+        private Set<Tag> tags;
+        private Boolean complete;
+
+        public EditTaskDescriptor() {}
+
+        public EditTaskDescriptor(EditTaskDescriptor toCopy) {
+            this.taskName = toCopy.taskName;
+            this.description = toCopy.description;
+            this.start = toCopy.start;
+            this.end = toCopy.end;
+            this.tags = toCopy.tags;
+            this.complete = toCopy.complete;
+        }
+
+        /**
+         * Returns true if at least one field is edited.
+         */
+        public boolean isAnyFieldEdited() {
+            return CollectionUtil.isAnyNonNull(this.taskName, this.description, this.start, this.end,
+                    this.tags, this.complete);
+        }
+
+        public void setName(Name taskName) {
+            this.taskName = taskName;
+        }
+
+        public Optional<Name> getName() {
+            return Optional.ofNullable(taskName);
+        }
+
+        public void setDescription(Description description) {
+            this.description = description;
+        }
+
+        public Optional<Description> getDescription() {
+            return Optional.ofNullable(description);
+        }
+
+        public void setStart(DateTime start) {
+            this.start = start;
+        }
+
+        public Optional<DateTime> getStartDateTime() {
+            return Optional.ofNullable(start);
+        }
+
+        public void setEnd(DateTime end) {
+            this.end = end;
+        }
+
+        public Optional<DateTime> getEndDateTime() {
+            return Optional.ofNullable(end);
+        }
+
+        public void setTags(Set<Tag> tags) {
+            this.tags = tags;
+        }
+
+        public Optional<Set<Tag>> getTags() {
+            return Optional.ofNullable(tags);
+        }
+
+        public void setComplete(Boolean complete) {
+            this.complete = complete;
+        }
+
+        public Optional<Boolean> getComplete() {
+            return Optional.ofNullable(complete);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            // short circuit if same object
+            if (other == this) {
+                return true;
+            }
+
+            // instanceof handles nulls
+            if (!(other instanceof EditTaskDescriptor)) {
+                return false;
+            }
+
+            // state check
+            EditTaskDescriptor e = (EditTaskDescriptor) other;
+
+            return getName().equals(e.getName())
+                    && getDescription().equals(e.getDescription())
+                    && getStartDateTime().equals(e.getStartDateTime())
+                    && getEndDateTime().equals(e.getEndDateTime())
+                    && getTags().equals(e.getTags())
+                    && getComplete().equals(e.getComplete());
+        }
+    }
+}
+
 ```
 ###### /java/seedu/address/logic/commands/SelectTaskCommand.java
 ``` java
@@ -776,8 +1049,8 @@ public class AddTaskCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "picnic "
             + PREFIX_DESCRIPTION + "have fun at Botanic Garden "
-            + PREFIX_START_DATE_TIME + "26/11/2017 12:00pm "
-            + PREFIX_END_DATE_TIME + "26/11/2017 15:00pm "
+            + PREFIX_START_DATE_TIME + "26-11-2017 12:00pm "
+            + PREFIX_END_DATE_TIME + "26-11-2017 15:00pm "
             + PREFIX_PRIORITY + "3 "
             + PREFIX_TAG + "friends ";
 
@@ -1106,6 +1379,9 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTime;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 
@@ -1114,8 +1390,6 @@ import seedu.address.model.task.Task;
  */
 public class XmlAdaptedTask {
 
-    @XmlElement
-    private static Integer nextId;
     @XmlElement(required = true)
     private String taskName;
     @XmlElement(required = true)
@@ -1149,11 +1423,10 @@ public class XmlAdaptedTask {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedTask(ReadOnlyTask source) {
-        nextId = Task.getNextId();
-        taskName = source.getName();
-        taskDescription = source.getDescription();
-        startDateTime = source.getStartDateTime();
-        endDateTime = source.getEndDateTime();
+        taskName = source.getName().toString();
+        taskDescription = source.getDescription().toString();
+        startDateTime = source.getStartDateTime().toString();
+        endDateTime = source.getEndDateTime().toString();
         tagged = new ArrayList<>();
         id = source.getId();
         for (Tag tag : source.getTags()) {
@@ -1170,15 +1443,14 @@ public class XmlAdaptedTask {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Task toModelType() throws IllegalValueException {
-        Task.setNextId(nextId);
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
-        final String taskName = this.taskName;
-        final String taskDescription = this.taskDescription;
-        final String startDateTime = this.startDateTime;
-        final String endDateTime = this.endDateTime;
+        final Name taskName = new Name(this.taskName);
+        final Description taskDescription = new Description(this.taskDescription);
+        final DateTime startDateTime = new DateTime(this.startDateTime);
+        final DateTime endDateTime = new DateTime(this.endDateTime);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Boolean complete = this.complete;
         final ArrayList<Integer> peopleIndices = new ArrayList<>(this.peopleIndices);
@@ -1266,6 +1538,92 @@ public interface ReadOnlyTaskBook {
 
 }
 ```
+###### /java/seedu/address/model/task/ReadOnlyTask.java
+``` java
+package seedu.address.model.task;
+
+import java.util.ArrayList;
+import java.util.Set;
+
+import javafx.beans.property.ObjectProperty;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
+
+/**
+ * A read-only immutable interface for a task in the taskBook.
+ * Implementations should guarantee: details are present and not null, field values are validated.
+ */
+public interface ReadOnlyTask {
+
+    // Content property
+    ObjectProperty<Name> nameProperty();
+    Name getName();
+    ObjectProperty<Description> descriptionProperty();
+    Description getDescription();
+    ObjectProperty<DateTime> startTimeProperty();
+    DateTime getStartDateTime();
+    ObjectProperty<DateTime> endTimeProperty();
+    DateTime getEndDateTime();
+
+    // functional property
+    ObjectProperty<Integer> priorityProperty();
+    Integer getPriority();
+    ObjectProperty<UniqueTagList> tagProperty();
+    Set<Tag> getTags();
+    ObjectProperty<Boolean> completeProperty();
+    Boolean getComplete();
+    ObjectProperty<Integer> idProperty();
+    Integer getId();
+    ObjectProperty<ArrayList<Integer>> peopleIdsProperty();
+    ArrayList<Integer> getPeopleIds();
+
+    /**
+     * Returns true if both have the same state. (interfaces cannot override .equals)
+     * state checking involves content property and functional property (priority, tag, and complete)
+     */
+    default boolean isSameStateAs(ReadOnlyTask other) {
+        return other == this // short circuit if same object
+                || (other != null // this is first to avoid NPE below
+                && other.getName().equals(this.getName()) // state checks here onwards
+                && other.getDescription().equals(this.getDescription())
+                && other.getStartDateTime().equals(this.getStartDateTime())
+                && other.getEndDateTime().equals(this.getEndDateTime())
+                && other.getComplete().equals(this.getComplete())
+                //&& other.getId().equals(this.getId())
+                && other.getPriority().equals(this.getPriority())
+                && other.getTags().equals(this.getTags()));
+    }
+
+    /**
+     * Formats the task as text, showing all contact details.
+     */
+    default String getAsText() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" Description: ")
+                .append(getDescription())
+                .append(" Start: ")
+                .append(getStartDateTime())
+                .append(" End: ")
+                .append(getEndDateTime())
+                .append(" Complete: ")
+                .append(getComplete())
+                .append(" Priority: ")
+                .append(getPriority())
+                .append(" Tags: ");
+        getTags().forEach(builder::append);
+        return builder.toString();
+    }
+
+    /**
+     * return true if the underlying two tasks have the same content.
+     * @param other
+     * @return
+     */
+    boolean equals(Object other);
+
+}
+```
 ###### /java/seedu/address/model/task/TaskNameContainsKeywordsPredicate.java
 ``` java
 package seedu.address.model.task;
@@ -1279,16 +1637,16 @@ import seedu.address.commons.util.StringUtil;
  * Tests that a {@code ReadOnlyTask}'s {@code Name} matches any of the keywords given.
  */
 public class TaskNameContainsKeywordsPredicate implements Predicate<ReadOnlyTask> {
-    private final List<String> keywords;
+    private final List<Name> keywords;
 
-    public TaskNameContainsKeywordsPredicate(List<String> keywords) {
+    public TaskNameContainsKeywordsPredicate(List<Name> keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(ReadOnlyTask task) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(task.getName(), keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(task.getName().toString(), keyword.toString()));
     }
 
     @Override
@@ -1351,11 +1709,10 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class Task implements ReadOnlyTask {
 
-    private static Integer nextId = 0;
-    private ObjectProperty<String> taskName;
-    private ObjectProperty<String> taskDescription;
-    private ObjectProperty<String> startDateTime;
-    private ObjectProperty<String> endDateTime;
+    private ObjectProperty<Name> taskName;
+    private ObjectProperty<Description> taskDescription;
+    private ObjectProperty<DateTime> startDateTime;
+    private ObjectProperty<DateTime> endDateTime;
     private ObjectProperty<Integer> taskPriority;
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<Boolean> complete;
@@ -1367,12 +1724,9 @@ public class Task implements ReadOnlyTask {
      */
     public Task () {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
-        this.startDateTime = new SimpleObjectProperty<>("");
-        this.endDateTime = new SimpleObjectProperty<>("");
         this.complete = new SimpleObjectProperty<>(false);
         this.taskPriority = new SimpleObjectProperty<>(1);
-        this.id = new SimpleObjectProperty<>(nextId);
-        nextId++;
+        this.id = new SimpleObjectProperty<>(this.hashCode());
         this.peopleIds = new SimpleObjectProperty<>(new ArrayList<Integer>());
     }
 
@@ -1383,7 +1737,7 @@ public class Task implements ReadOnlyTask {
      * @param startDateTime, the start date and time of this task
      * @param endDateTime, the end date and time of this task
      */
-    public Task (String name, String description, String startDateTime, String endDateTime) {
+    public Task (Name name, Description description, DateTime startDateTime, DateTime endDateTime) {
         this();
         this.taskName = new SimpleObjectProperty<>(name);
         this.taskDescription = new SimpleObjectProperty<>(description);
@@ -1401,7 +1755,7 @@ public class Task implements ReadOnlyTask {
      * @param endDateTime
      * @param priority
      */
-    public Task (String name, String description, String startDateTime, String endDateTime,
+    public Task (Name name, Description description, DateTime startDateTime, DateTime endDateTime,
                  int priority) {
         this();
         this.taskName = new SimpleObjectProperty<>(name);
@@ -1419,7 +1773,7 @@ public class Task implements ReadOnlyTask {
      * @param endDateTime, the end date and time of this task
      * @param tags, the tag set
      */
-    public Task (String name, String description, String startDateTime, String endDateTime,
+    public Task (Name name, Description description, DateTime startDateTime, DateTime endDateTime,
                  Set<Tag> tags, Boolean state) {
         this();
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -1442,7 +1796,7 @@ public class Task implements ReadOnlyTask {
      * @param tags, the tag set
      * @param priority, the priority value
      */
-    public Task (String name, String description, String startDateTime, String endDateTime,
+    public Task (Name name, Description description, DateTime startDateTime, DateTime endDateTime,
                  Set<Tag> tags, Boolean state, Integer priority) {
         this();
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -1465,7 +1819,7 @@ public class Task implements ReadOnlyTask {
      * @param tags, the tag set
      * @param priority, the priority value
      */
-    public Task (String name, String description, String startDateTime, String endDateTime,
+    public Task (Name name, Description description, DateTime startDateTime, DateTime endDateTime,
                  Set<Tag> tags, Boolean state, Integer priority, Integer id, ArrayList<Integer> peopleIds) {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.taskName = new SimpleObjectProperty<>(name);
@@ -1491,26 +1845,10 @@ public class Task implements ReadOnlyTask {
     }
 
     /**
-     * get nextId
-     * @return nextId
-     */
-    public static Integer getNextId() {
-        return nextId;
-    }
-
-    /**
-     * set nextId
-     * @param nextOne
-     */
-    public static void setNextId(Integer nextOne) {
-        nextId = nextOne;
-    }
-
-    /**
      * get name from this task
      * @return name
      */
-    public String getName () {
+    public Name getName () {
         return taskName.get();
     }
 
@@ -1518,7 +1856,7 @@ public class Task implements ReadOnlyTask {
      * get description from this task
      * @return description
      */
-    public String getDescription () {
+    public Description getDescription () {
         return taskDescription.get();
     }
 
@@ -1526,11 +1864,11 @@ public class Task implements ReadOnlyTask {
         return Collections.unmodifiableSet(tags.get().toSet());
     }
 
-    public String getStartDateTime () {
+    public DateTime getStartDateTime () {
         return startDateTime.get();
     }
 
-    public String getEndDateTime () {
+    public DateTime getEndDateTime () {
         return endDateTime.get();
     }
 
@@ -1551,19 +1889,19 @@ public class Task implements ReadOnlyTask {
         return taskPriority.get();
     }
 
-    public ObjectProperty<String> nameProperty() {
+    public ObjectProperty<Name> nameProperty() {
         return taskName;
     }
 
-    public ObjectProperty<String> descriptionProperty() {
+    public ObjectProperty<Description> descriptionProperty() {
         return taskDescription;
     }
 
-    public ObjectProperty<String> startTimeProperty() {
+    public ObjectProperty<DateTime> startTimeProperty() {
         return startDateTime;
     }
 
-    public ObjectProperty<String> endTimeProperty() {
+    public ObjectProperty<DateTime> endTimeProperty() {
         return endDateTime;
     }
 
@@ -1579,20 +1917,20 @@ public class Task implements ReadOnlyTask {
         return complete;
     }
 
-    public void setName(String name) {
+    public void setName(Name name) {
         this.taskName.set(requireNonNull(name));
     }
 
-    public void setDescription(String description) {
-        this.taskName.set(requireNonNull(description));
+    public void setDescription(Description description) {
+        this.taskDescription.set(requireNonNull(description));
     }
 
-    public void setStartDateTime(String startDateTime) {
-        this.taskName.set(requireNonNull(startDateTime));
+    public void setStartDateTime(DateTime startDateTime) {
+        this.startDateTime.set(requireNonNull(startDateTime));
     }
 
-    public void setEndDateTime(String endDateTime) {
-        this.taskName.set(requireNonNull(endDateTime));
+    public void setEndDateTime(DateTime endDateTime) {
+        this.endDateTime.set(requireNonNull(endDateTime));
     }
 
     /**
@@ -1795,6 +2133,218 @@ public class UniqueTaskList implements Iterable<Task> {
     public int hashCode() {
         return internalList.hashCode();
     }
+}
+```
+###### /java/seedu/address/model/task/DateTime.java
+``` java
+package seedu.address.model.task;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * Generic dateTime Class specially catered for our task (start time and end time)
+ * we apply abstraction design pattern here and we check differently from how current public package does
+ * Current format is very rigid, changing it to be more flexible will be a future enhancement
+ */
+public class DateTime {
+    public static final String MESSAGE_DATE_TIME_FORMAT_CONSTRAINTS =
+            "The date time input should follow this format: dd-mm-YYYY "
+                    + "hh:mm[am/pm] day-month-year hour(12):minute am/pm";
+
+    public static final String MESSAGE_DATE_TIME_VALUE_CONSTRAINTS =
+            "The format is correct but the values are not: dd-mm-YYYY "
+                    + "hh:mm[am/pm] day-month-year hour(12):minute am/pm";
+
+    /**
+     * The data time input in our app currently have following rigit format
+     * dd-mm-YYYY hh:mm[am/pm] day-month-year hour:minute am/pm
+     */
+    public static final String DATE_TIME_VALIDATION_REGEX =
+            "\\d{2}-\\d{2}-\\d{4}\\s{1}\\d{2}:\\d{2}pm|\\d{2}-\\d{2}-\\d{4}\\s{1}\\d{2}:\\d{2}am";
+
+    private int day;
+    private int month;
+    private int year;
+    private int hour;
+    private int minute;
+    private String state;
+
+    /**
+     * Constructor and checker for the date time object
+     *
+     * @param dateTime
+     * @throws IllegalValueException
+     */
+    public DateTime(String dateTime) throws IllegalValueException {
+        //check the format:
+        if (!isValidDateTime(dateTime)) {
+            throw new IllegalValueException(MESSAGE_DATE_TIME_FORMAT_CONSTRAINTS);
+        }
+
+        //Now we can safely proceed to decompose the inputs
+        day = Integer.parseInt(dateTime.substring(0, 2));
+        month = Integer.parseInt(dateTime.substring(3, 5));
+        year = Integer.parseInt(dateTime.substring(6, 10));
+        hour = Integer.parseInt(dateTime.substring(11, 13));
+        minute = Integer.parseInt(dateTime.substring(14, 16));
+        state = dateTime.substring(16);
+
+        // value checking helper
+        boolean isLeapYear = ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0));
+
+        //check the values:
+        if (month < 0 || month > 12) {
+            throw new IllegalValueException(MESSAGE_DATE_TIME_VALUE_CONSTRAINTS);
+        } else if (day < 0) {
+            throw new IllegalValueException(MESSAGE_DATE_TIME_VALUE_CONSTRAINTS);
+        } else {
+            if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+                if (day > 31) {
+                    throw new IllegalValueException(MESSAGE_DATE_TIME_VALUE_CONSTRAINTS);
+                }
+            } else if (month == 2) {
+                if ((isLeapYear && day > 29) || (!isLeapYear && day > 28)) {
+                    throw new IllegalValueException(MESSAGE_DATE_TIME_VALUE_CONSTRAINTS);
+                }
+            } else {
+                if (day > 30) {
+                    throw new IllegalValueException(MESSAGE_DATE_TIME_VALUE_CONSTRAINTS);
+                }
+            }
+        }
+
+        if (hour < 0 || hour > 12) {
+            throw new IllegalValueException(MESSAGE_DATE_TIME_VALUE_CONSTRAINTS);
+        }
+
+        if (minute < 0 || minute > 60) {
+            throw new IllegalValueException(MESSAGE_DATE_TIME_VALUE_CONSTRAINTS);
+        }
+
+        if (!(state.equals("am") || state.equals("pm"))) {
+            throw new IllegalValueException(MESSAGE_DATE_TIME_VALUE_CONSTRAINTS);
+        }
+        // At this point, the values and formats are both correct.
+    }
+
+    public static boolean isValidDateTime(String test) {
+        return test.matches(DATE_TIME_VALIDATION_REGEX);
+    }
+
+    /**
+     * Convert our date time object to String
+     *
+     * @return
+     */
+    public String toString() {
+        String dayString = helperFormat(Integer.toString(day));
+        String monthString = helperFormat(Integer.toString(month));
+        String yearString = Integer.toString(year);
+        String hourString = helperFormat(Integer.toString(hour));
+        String minuteString = helperFormat(Integer.toString(minute));
+        return dayString + "-" + monthString + "-" + yearString + " " + hourString + ":" + minuteString + state;
+    }
+
+    /**
+     * Hashcode getter for our date time object
+     *
+     * @return the string representation's hash code
+     */
+    public int hashCode() {
+        return this.toString().hashCode();
+    }
+
+    /**
+     * Helper for making toString format correct
+     *
+     * @param input
+     * @return
+     */
+    private String helperFormat(String input) {
+        if (input.length() < 2) {
+            return "0" + input;
+        }
+        return input;
+    }
+
+    public int getDay () {
+        return day;
+    }
+
+    public int getMonth () {
+        return month;
+    }
+
+    public int getYear () {
+        return year;
+    }
+
+    public int getHour () {
+        return hour;
+    }
+
+    public int getMinute () {
+        return minute;
+    }
+
+    public String getState () {
+        return state;
+    }
+
+    /**
+     * comparing two date time object part by part
+     * @param others , a dateTime object
+     * @return 1 if the argument DateTime is bigger
+     */
+    public int compareTo(DateTime others) {
+        int othersDay = others.getDay();
+        int othersMonth = others.getMonth();
+        int othersYear = others.getYear();
+        int othersHour = others.getHour();
+        int othersMinute = others.getMinute();
+        String othersState = others.getState();
+        if (year < othersYear) {
+            return 1;
+        } else if (year > othersYear) {
+            return -1;
+        } else {
+            if (month < othersMonth) {
+                return 1;
+            } else if (month > othersMonth) {
+                return -1;
+            } else {
+                if (day < othersDay) {
+                    return 1;
+                } else if (day > othersDay) {
+                    return -1;
+                } else {
+                    // at this point, the two has exactly the same day
+                    if (state.equals("am") && othersState.equals("pm")) {
+                        return 1;
+                    } else if (state.equals("pm") && othersState.equals("am")) {
+                        return -1;
+                    } else {
+                        // same state, now we compare the time
+                        if (hour < othersHour) {
+                            return 1;
+                        } else if (hour > othersHour) {
+                            return -1;
+                        } else {
+                            if (minute < othersMinute) {
+                                return 1;
+                            } else if (minute > othersMinute) {
+                                return -1;
+                            } else {
+                                return 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 }
 ```
 ###### /java/seedu/address/model/TaskBook.java

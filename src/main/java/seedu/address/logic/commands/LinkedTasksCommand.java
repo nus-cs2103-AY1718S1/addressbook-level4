@@ -37,7 +37,7 @@ public class LinkedTasksCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson targetPerson = lastShownList.get(targetIndex.getOneBased());
+        ReadOnlyPerson targetPerson = lastShownList.get(targetIndex.getZeroBased());
 
         model.updateFilteredTaskList(task->task.getPeopleIds().contains(targetPerson.getId()));
         return new CommandResult(String.format(MESSAGE_LINKED_TASKS_SUCCESS, targetPerson.getName()));
