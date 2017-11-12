@@ -75,10 +75,9 @@ public class UntagCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (toAllInFilteredList) {
-            for (ReadOnlyPerson personToUntag : lastShownList) {
-                removeTagsFromPerson(personToUntag, tags);
-                deleteUnusedTagsInTagList(new ArrayList<>(personToUntag.getTags()));
-            }
+            removeTagsFromPersons(lastShownList, tags);
+            deleteUnusedTagsInTagList(new ArrayList<>(tags.isEmpty()
+                    ? new ArrayList<>(model.getAddressBook().getTagList()) : tags));
             return (tags.isEmpty()) ? new CommandResult(MESSAGE_SUCCESS_ALL_TAGS_IN_LIST)
                     : new CommandResult(String.format(MESSAGE_SUCCESS_MULTIPLE_TAGS_IN_LIST, joinList(tags)));
         }
@@ -89,29 +88,32 @@ public class UntagCommand extends UndoableCommand {
             }
         }
 
-        ArrayList<Name> toBeUntaggedPersonNames = new ArrayList<>();
+        List<ReadOnlyPerson> personsToUpdate = new ArrayList<>();
+        List<Name> toBeUntaggedPersonNames = new ArrayList<>();
         if (tags.isEmpty()) {
             for (Index targetIndex : targetIndexes) {
-                ReadOnlyPerson personToUntag = lastShownList.get(targetIndex.getZeroBased());
-                removeTagsFromPerson(personToUntag, tags);
-                toBeUntaggedPersonNames.add(personToUntag.getName());
-                deleteUnusedTagsInTagList(new ArrayList<>(personToUntag.getTags()));
+                ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+                personsToUpdate.add(person);
+                toBeUntaggedPersonNames.add(person.getName());
             }
+            removeTagsFromPersons(personsToUpdate, tags);
+            deleteUnusedTagsInTagList(new ArrayList<>(model.getAddressBook().getTagList()));
             return new CommandResult(String.format(MESSAGE_SUCCESS_ALL_TAGS, targetIndexes.size()) + " "
                     + joinList(toBeUntaggedPersonNames));
         }
 
-        ArrayList<Name> alreadyUntaggedPersonNames = new ArrayList<>();
+        List<Name> alreadyUntaggedPersonNames = new ArrayList<>();
         for (Index targetIndex : targetIndexes) {
-            ReadOnlyPerson personToUntag = lastShownList.get(targetIndex.getZeroBased());
-            if (Collections.disjoint(personToUntag.getTags(), tags)) {
-                alreadyUntaggedPersonNames.add(personToUntag.getName());
+            ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+            if (Collections.disjoint(person.getTags(), tags)) {
+                alreadyUntaggedPersonNames.add(person.getName());
                 continue;
             }
-            removeTagsFromPerson(personToUntag, tags);
-            toBeUntaggedPersonNames.add(personToUntag.getName());
+            personsToUpdate.add(person);
+            toBeUntaggedPersonNames.add(person.getName());
         }
 
+        removeTagsFromPersons(personsToUpdate, tags);
         deleteUnusedTagsInTagList(tags);
 
         if (alreadyUntaggedPersonNames.size() > 0) {
@@ -136,26 +138,28 @@ public class UntagCommand extends UndoableCommand {
     /**
      * Removes a tag from the person
      * Removes all tags if tag is not specified
-     * @param person to be untagged
+     * @param persons to be untagged
      * @param tags to be removed
      */
-    private void removeTagsFromPerson(ReadOnlyPerson person, List<Tag> tags) throws CommandException {
-        Person untaggedPerson = new Person(person);
-        UniqueTagList updatedTags = new UniqueTagList();
-        if (!tags.isEmpty()) {
-            updatedTags = new UniqueTagList(person.getTags());
-            for (Tag t : tags) {
-                updatedTags.remove(t);
+    private void removeTagsFromPersons(List<ReadOnlyPerson> persons, List<Tag> tags) throws CommandException {
+        for (ReadOnlyPerson person : persons) {
+            Person untaggedPerson = new Person(person);
+            UniqueTagList updatedTags = new UniqueTagList();
+            if (!tags.isEmpty()) {
+                updatedTags = new UniqueTagList(person.getTags());
+                for (Tag t : tags) {
+                    updatedTags.remove(t);
+                }
             }
-        }
-        untaggedPerson.setTags(updatedTags.toSet());
+            untaggedPerson.setTags(updatedTags.toSet());
 
-        try {
-            model.updatePerson(person, untaggedPerson);
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException e) {
-            throw new AssertionError("The target person cannot be missing");
+            try {
+                model.updatePerson(person, untaggedPerson);
+            } catch (DuplicatePersonException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException e) {
+                throw new AssertionError("The target person cannot be missing");
+            }
         }
     }
 

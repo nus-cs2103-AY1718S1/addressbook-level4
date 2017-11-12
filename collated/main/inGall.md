@@ -33,7 +33,7 @@ public class AddReminderCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TASK + "Proposal submission "
             + PREFIX_PRIORITY + "Low "
-            + PREFIX_DATE + "25/12/2017 1500 "
+            + PREFIX_DATE + "25/12/2017 15:00 "
             + PREFIX_MESSAGE + "Submit to manager "
             + PREFIX_TAG + "Work "
             + PREFIX_TAG + "John";
@@ -660,7 +660,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Sort names of contacts by alphabetical order
  */
-public class SortAgeCommand extends Command {
+public class SortAgeCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sortAge";
     public static final String COMMAND_ALIAS = "sa";
 
@@ -674,7 +674,7 @@ public class SortAgeCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         Boolean isEmpty = model.checkIfPersonListEmpty(contactList);
         if (!isEmpty) {
@@ -700,7 +700,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Sort names of contacts by alphabetical order
  */
-public class SortBirthdayCommand extends Command {
+public class SortBirthdayCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sortBirthday";
     public static final String COMMAND_ALIAS = "sb";
 
@@ -714,7 +714,7 @@ public class SortBirthdayCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         Boolean isEmpty = model.checkIfPersonListEmpty(contactList);
         if (!isEmpty) {
@@ -740,7 +740,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
   * Sort names of contacts by alphabetical order
   */
-public class SortCommand extends Command {
+public class SortCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sort";
     public static final String COMMAND_ALIAS = "s";
 
@@ -754,7 +754,7 @@ public class SortCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         Boolean isEmpty = model.checkIfPersonListEmpty(contactList);
         if (!isEmpty) {
@@ -780,7 +780,7 @@ import seedu.address.model.reminder.ReadOnlyReminder;
 /**
  * Sort reminders in order or priority.
  */
-public class SortPriorityCommand extends Command {
+public class SortPriorityCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sortPriority";
     public static final String COMMAND_ALIAS = "sp";
 
@@ -794,7 +794,7 @@ public class SortPriorityCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         model.updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
         Boolean isEmpty = model.checkIfReminderListEmpty(contactList);
         if (!isEmpty) {

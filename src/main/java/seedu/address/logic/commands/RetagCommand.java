@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -13,7 +15,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
- * Replace a tag name in the last filtered list by a new tag name from the address book.
+ * Replaces a tag name in person list by a new tag name from the address book.
  */
 public class RetagCommand extends UndoableCommand {
 
@@ -25,9 +27,9 @@ public class RetagCommand extends UndoableCommand {
         + "Parameters: OLDTAGNAME + NEWTAGNAME\n"
         + "Example: " + COMMAND_WORD + " friends enemies";
 
-    public static final String MESSAGE_SUCCESS = "%s tag successfully replaced by %s.";
+    public static final String MESSAGE_SUCCESS = "%s tag in person list successfully replaced by %s.";
 
-    public static final String MESSAGE_TAG_NOT_FOUND = "%s tag not found.";
+    public static final String MESSAGE_TAG_NOT_FOUND = "%s tag not found in person list.";
     public static final String MESSAGE_INVALID_ARGS = "Target tag name is the same as new tag name. \n%1$s";
     public static final String MESSAGE_DUPLICATE_TAG = "One or more persons already have this tag.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
@@ -49,27 +51,32 @@ public class RetagCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        if (!model.getAddressBook().getTagList().contains(targetTag)) {
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        List<ReadOnlyPerson> lastShownListCopy = new ArrayList<>(model.getFilteredPersonList());
+
+        if (!tagUsedInPersonList(lastShownListCopy, targetTag)) {
             throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, targetTag.toString()));
         }
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        for (ReadOnlyPerson person : lastShownList) {
+        for (ReadOnlyPerson person : lastShownListCopy) {
             Person retaggedPerson = new Person(person);
             UniqueTagList updatedTags = new UniqueTagList(retaggedPerson.getTags());
             if (updatedTags.contains(targetTag)) {
+                updatedTags.remove(targetTag);
+            } else {
+                continue;
+            }
+
+            if (!updatedTags.contains(newTag)) {
                 try {
-                    updatedTags.remove(targetTag);
                     updatedTags.add(newTag);
                 } catch (UniqueTagList.DuplicateTagException e) {
                     throw new CommandException(MESSAGE_DUPLICATE_TAG);
                 }
-            } else {
-                continue;
             }
-            retaggedPerson.setTags(updatedTags.toSet());
 
+            retaggedPerson.setTags(updatedTags.toSet());
             try {
                 model.updatePerson(person, retaggedPerson);
             } catch (DuplicatePersonException dpe) {
@@ -81,6 +88,18 @@ public class RetagCommand extends UndoableCommand {
 
         model.deleteUnusedTag(targetTag);
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetTag.toString(), newTag.toString()));
+    }
+
+    /**
+     * Checks whether a tag is used inside person list
+     */
+    public boolean tagUsedInPersonList(List<ReadOnlyPerson> pesonList, Tag tag) {
+        for (ReadOnlyPerson person : pesonList) {
+            if (person.getTags().contains(tag)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

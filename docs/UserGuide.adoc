@@ -1,4 +1,4 @@
-= Gentleman's Guide (V1.5) - User Guide
+= Gentleman's Guide (V1.5rc) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -44,8 +44,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Here are some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`add`** `n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`delete`** `3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  You can refer to the link:#features[Features] section below for details of each command.
@@ -180,8 +180,8 @@ Edits the task name of the 2nd reminder to be `Progress Report` and clears all e
 // tag::birthday[]
 === Modifying birthday to person: `birthday`
 
-*As a Gentleman, you respect those around you. As a Gentleman, you remember the day of their conception.
-Thus you add their birthdays into the Gentleman's Guide.*
+*As a Gentleman, you respect those around you and want them to feel appreciated.
+Start off by remembering their birthdays and add it into the Gentleman's Guide.*
 
 Adds / Edits / Removes a birthday to an existing person in the Gentleman's Guide. +
 Format: `birthday INDEX [b/dd/mm/yyyy]`
@@ -189,7 +189,7 @@ Format: `birthday INDEX [b/dd/mm/yyyy]`
 ****
 * Add / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
-* For removing : input nothing after " `b/` "
+* For removing : Simply input nothing after " `b/` "
 ****
 
 Now you can be the best boss in the world, without all the effort!
@@ -200,6 +200,9 @@ Examples:
 Adds / changes birthday of the 1st person to be `20/07/1995`
 * `birthday 3 b/` +
 Removes the birthday of the 3rd person.
+
+image::samplePersonCard.png[width="400"]
+_Figure 3.8.1 Birthday on a person card_
 
 // end::birthday[]
 
@@ -229,14 +232,15 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 // tag::find[]
 === Locating persons by emails: `findEmail`
 
-*You received an email from an unknown source. As a Gentleman, you do not ask who it is.
-Thus, you look for the email in the Gentleman's Guide.*
+*You received an email from an unknown source. You have no time to check through your entire list
+to see if you know the person. Instead you use the findEmail command in the Gentleman's Guide.*
 
-Finds persons whose emails is same as the keyword. +
+Finds person(s) whose email(s) is same as the keyword(s). +
 Format: `findEmail KEYWORD [MORE_KEYWORDS]`
 
 ****
-* Only the email is searched.
+* The search is case insensitive. e.g `Alexyeoh@example.com` will match `alexyeoh@example.com`
+* Only emails are searched.
 * Only full words will be matched e.g. `johnny` will not match `johnny@example.con`
 * Multiple emails can be searched at one time.
 ****
@@ -246,19 +250,19 @@ Examples:
 * `findEmail alex@example.com` +
 Returns person with the email `alex@example.com`
 * `findEmail alex@example.com jamie@example.com` +
-Returns person with emails `alex@example.com` , `jamie@example.com`
+Returns persons with email `alex@example.com` or `jamie@example.com`
 
 === Locating persons by phone number: `findPhone`
 
 *You received a phone call from an unknown number. As a Gentleman, you have to know who you are addressing.
 Thus, you search for the number on the Gentleman's Guide before answering.*
 
-Finds persons whose phone is same as the keyword. +
+Finds person(s) whose phone is same as the keyword(s). +
 Format: `findPhone KEYWORD [MORE_KEYWORDS]`
 
 ****
-* Only the numbers is searched.
-* Only full words will be matched e.g. `9567` will not match `95678432`
+* Only numbers are searched.
+* Only full numbers will be matched e.g. `9567` will not match `95678432`
 * Multiple phone numbers can be searched at one time.
 ****
 
@@ -271,14 +275,14 @@ Returns person with numbers `87655678` , `98435670`
 
 === Locating reminders by task names: `findReminder`
 
-*As a Gentleman, you want to know when your next date with The Lady is.
-Thus, you search for "date" on the Gentleman's Guide.*
+*As a Gentleman, you want to know when your project submission deadline is.
+Thus, you search for "project" on the Gentleman's Guide to show all reminders with task name "project".*
 
 Finds reminders whose task names contain any of the given keywords. +
 Format: `findReminder KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `proposals` will match `Proposals`
+* The search is case insensitive. e.g `proposal` will match `Proposal`
 * The order of the keywords does not matter. e.g. `Proposal Submission` will match `Submission Proposal`
 * Only the task name is searched.
 * Only full words will be matched e.g. `proposal` will not match `proposals`
@@ -292,6 +296,9 @@ Returns `Proposal` and `Proposal Submission`
 * `findReminder Meeting Project Work` +
 Returns any reminder having task names `Meeting`, `Proposal Submission`
 
+image::BeforeAndAfterFindReminder.png[width="600"]
+_Figure 3.12.1 Reminder list before and after the findReminder command_
+
 
 === Locating reminders by priority: `findPriority`
 
@@ -303,7 +310,7 @@ Format: `findPriority KEYWORD [MORE_KEYWORDS]`
 
 ****
 * Only Low / Medium / High is searched.
-* The search is case sensitive. e.g `low` will not match `Low`
+* The search is case insensitive. e.g `low` will match `Low`
 * Only full words will be matched e.g. `Hig` will not match `High`
 * Multiple priorities can be searched at one time.
 ****
@@ -402,20 +409,34 @@ image::selectReminder.PNG[width="800"]
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
-
 Examples:
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the Gentleman's Guide.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+* `select 2` +
+Selects the 2nd reminder in the Gentleman's Guide.
 
 // end::selectReminder[]
 
+// tag::view[]
+=== Opening full profile of a person : `view`
+
+*The Gentleman comes across the contact of an old friend who he has not seen for a long time.
+Thus, he uses the view command to open his friend's full profile which he had stored inside the Gentleman's Guide.*
+
+Views profile of the person identified by the index number used in the last person listing. +
+Format: `view INDEX`
+
+****
+* Views profile of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+// end::view[]
+
 // tag::sort[]
 === Sorting all entries by name: `sort`
+
+*As a Gentleman, you are well-organized and you would want your contact list to be neat.
+You use the sort command to sort the names of your contacts in alphabetical order.*
 
 Sorts all entries in the Gentleman's Guide by alphabetical order. +
 Format: `sort`
@@ -425,49 +446,43 @@ Below is an illustration of an unsorted and sort list of contacts.
 **Before**
 
 image::unsortedlist.png[width="300"]
-_Figure 3.16.1 : Unsorted reminder list ._
+_Figure 3.17.1 : Unsorted reminder list._
 
 **After**
 
 image::sortedlist.png[width="300"]
-_Figure 3.16.2 : Sorted reminder list (In alphabetical order) ._
+_Figure 3.17.2 : Sorted reminder list (In alphabetical order)._
 
 === Sorting all entries by age : `sortAge`
+
+*You may be interested in seeing who's the oldest friend in your contact list. Use the sortAge command.*
 
 Sorts all entries in the person list by their age, from the oldest to youngest. +
 Format: `sortAge`
 
 === Sorting all entries by birthday: `sortBirthday`
 
+*Or you may be interested in checking upcoming birthdays of your friends and give them a surprise.*
+
 Sorts all entries in the person list by their birthday, from 1st Jan to 31st Dec. +
 Format: `sortBirthday`
 
 === Sorting all entries by priority: `sortPriority`
 
-Sorts all entires in the reminder list by their priority, from High to Medium to Low. +
+*As a Gentleman, you keep your priorities right, and you set an example to everyone. So bring your priorities
+forward now!*
+
+Sorts all entries in the reminder list by their priority, from High to Medium to Low. +
 Format: `sortPriority`
 
 // end::sort[]
 
-=== Retrieving all persons having an existing tag : `retrieve`
-
-Lists all contacts having a certain existing tag in the Gentleman's Guide. +
-Format: `retrieve TAG`
-
-****
-* Retrieves all persons having the specified `TAG` tag.
-* The tag name *must be alphanumeric*
-****
-
-Examples:
-
-* `retrieve friends` +
-Retrieves all persons with the "friends" tag in the Gentleman's Guide.
-
+// tag::tagsmanipulation[]
 === Tagging multiple persons : `tag`
 
-*As a Gentleman, you want to keep track of what relevant information such as where you met your contacts.
-Thus you tag your contacts*
+*As a Gentleman, you want to keep track of the relevant information about your contacts such as
+where you met the contact owners and what your current relationships with them are.
+Thus, you tag your contacts for easy reference.*
 
 Tags the persons identified by the index numbers used in the last person listing. +
 Format: `tag INDEX,[MORE_INDEXES],... TAG`
@@ -487,8 +502,9 @@ Assigns the "friends" tag to the 1st, 2nd and 3rd persons in the results of the 
 
 === Untagging multiple persons : `untag`
 
-*As a Gentleman, you want to be up to date of relevant information about your contacts.
-Thus you can untag your contacts*
+*As a Gentleman, you want to be up to date of the relevant information about your contacts.
+You see some tags containing information that is no longer suitable to describe the contacts.
+Thus, you untag them from your contacts.*
 
 Removes the specified tags from the persons identified by the index numbers used in the last person listing. +
 Format: `tag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...`
@@ -520,12 +536,14 @@ Removes the "friends" and "enemies" tags from all persons in the results of the 
 `untag -a` +
 Removes all tags from all persons in the results of the `list` command.
 
-=== Renaming an existing tag : `retag`
+=== Renaming a tag in contact list : `retag`
 
-*As a Gentleman, you want to be up to date of relevant information about your contacts.
-Thus you can retag your contacts*
+*As a Gentleman, you want to be up to date of the relevant information about your contacts.
+You will soon transfer to another department of the company to obtain more work experience.
+Separation with your current colleagues is sad, but nothing can be done.
+Thus, you rename the "colleagues" tag to "exColleagues".*
 
-Renames a certain existing tag to a new tag name. +
+Renames a certain tag in contact list to a new tag name. +
 Format: `retag OLD_TAG NEW_TAG`
 
 ****
@@ -536,8 +554,30 @@ Format: `retag OLD_TAG NEW_TAG`
 
 Examples:
 
-* `retag enemies friends` +
-Renames the existing "enemies" tag in the Gentleman's Guide to "friends".
+* `retag colleagues exColleagues` +
+Renames the existing "colleagues" tag in the Gentleman's Guide to "exColleagues".
+// end::tagsmanipulation[]
+
+// tag::retrieve[]
+=== Retrieving all persons having an existing tag : `retrieve`
+
+*After having worked in the new department for quite a time, you feel like having a reunion with your former colleagues.
+Thus, you use the retrieve command to quickly get their contacts so that you can send invitations to all of them at the same time
+ while avoiding leaving someone out accidentally.*
+
+Lists all contacts having a certain existing tag in the Gentleman's Guide. +
+Format: `retrieve TAG`
+
+****
+* Retrieves all persons having the specified `TAG` tag.
+* The tag name *must be alphanumeric*
+****
+
+Examples:
+
+* `retrieve exColleagues` +
+Retrieves all persons with the "exColleagues" tag in the Gentleman's Guide.
+// end::retrieve[]
 
 === Listing entered commands : `history`
 
@@ -706,18 +746,20 @@ e.g. `findPriority Medium`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *View* : `view INDEX` +
+e.g.`view 2`
 * *Sort by Name* : `sort`
 * *Sort by Age* : `sortAge`
 * *Sort by Birthday* : `sortBirthday`
 * *Sort by Priority* : `sortPriority`
-* *Retrieve* : `retrieve TAG` +
-e.g.`retrieve family`
 * *Tag* : `tag INDEX,[MORE_INDEXES],... TAG` +
 e.g.`tag 1,2,3 friends`
 * *Untag* : `untag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...` +
 e.g.`untag 1,2,3 friends/enemies`
 * *Retag* : `retag OLD_TAG NEW_TAG` +
-e.g.`retag enemies friends`
+e.g.`retag colleagues exColleagues`
+* *Retrieve* : `retrieve TAG` +
+e.g.`retrieve exColleagues`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

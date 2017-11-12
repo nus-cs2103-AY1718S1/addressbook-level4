@@ -1,9 +1,15 @@
 //@@author cqhchan
 package seedu.address.ui;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -16,6 +22,13 @@ import seedu.address.model.reminder.ReadOnlyReminder;
  * An UI component that displays information of a {@code Reminder}.
  */
 public class ReminderCard extends UiPart<Region> {
+
+    public static final int TIMER_DELAY = 0; // in milliseconds
+    public static final int TIMER_PERIOD = 3600000; // in milliseconds
+
+    public static final int GREEN_WARNING_DAYS_LEFT = 7;
+    public static final int YELLOW_WARNING_DAYS_LEFT = 3;
+    public static final int ORANGE_WARNING_DAYS_LEFT = 0;
 
     private static final String FXML = "ReminderListCard.fxml";
 
@@ -48,6 +61,8 @@ public class ReminderCard extends UiPart<Region> {
     private Label message;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label daysCountdown;
 
     public ReminderCard(ReadOnlyReminder reminder, int displayedIndex) {
         super(FXML);
@@ -55,6 +70,7 @@ public class ReminderCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(reminder);
         bindListeners(reminder);
+        initCountdown(reminder);
     }
 
     private static String getColorForTag(String tagValue) {
@@ -91,6 +107,66 @@ public class ReminderCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * @param reminder
+     */
+    private void initCountdown(ReadOnlyReminder reminder) {
+        // Calculates the day difference between the reminder's date and the current date
+        // Todo: Minus 1 day in day difference if the current time passes the reminder's time
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDate deadline = LocalDate.parse(reminder.getDate().toString(), dateFormatter);
+        LocalDate currentTime = LocalDate.now();
+        int daysBetween = (int) ChronoUnit.DAYS.between(currentTime, deadline);
+
+        setDaysCountdownBasedOnDays(daysBetween);
+        if (daysBetween >= ORANGE_WARNING_DAYS_LEFT) { // Only start the countdown if the deadline is not overdue
+            startDaysCountdown(deadline);
+        }
+    }
+
+    /**
+     * Starts the countdown.
+     */
+    private void startDaysCountdown(LocalDate date) {
+        final Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                LocalDate currentDate = LocalDate.now();
+                int newDaysBetween = (int) ChronoUnit.DAYS.between(currentDate, date);
+                Platform.runLater(() -> setDaysCountdownBasedOnDays(newDaysBetween));
+            }
+        };
+        timer.scheduleAtFixedRate(task, TIMER_DELAY, TIMER_PERIOD);
+    }
+
+    private void setDaysCountdownBasedOnDays(int days) {
+        setDaysCountdownContentBasedOnDays(days);
+        setDaysCountdownColorBasedOnDays(days);
+    }
+
+    private void setDaysCountdownContentBasedOnDays(int days) {
+        if (days > ORANGE_WARNING_DAYS_LEFT) {
+            daysCountdown.setText(days + " day(s)" + " left");
+        } else if (days == ORANGE_WARNING_DAYS_LEFT) {
+            daysCountdown.setText("today");
+        } else {
+            daysCountdown.setText("overdue");
+        }
+    }
+
+    private void setDaysCountdownColorBasedOnDays(int days) {
+        if (days >= GREEN_WARNING_DAYS_LEFT) {
+            daysCountdown.setStyle("-fx-text-fill: " + "greenyellow");
+        } else if (days >= YELLOW_WARNING_DAYS_LEFT) {
+            daysCountdown.setStyle("-fx-text-fill: " + "yellow");
+        } else if (days >= ORANGE_WARNING_DAYS_LEFT) {
+            daysCountdown.setStyle("-fx-text-fill: " + "orange");
+        } else {
+            daysCountdown.setStyle("-fx-text-fill: " + "red");
+        }
+    }
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -99,7 +175,7 @@ public class ReminderCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof ReminderCard)) {
             return false;
         }
 
