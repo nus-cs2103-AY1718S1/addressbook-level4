@@ -559,6 +559,8 @@ As we can see, the time that this contact will expire is to the nearest hour, do
 minute
 
 // end::temporaryperson[]
+
+//tag::import[]
 === Import mechanism
 
 The import mechanism is essentially adding multiple contacts to the resident book automatically by referencing a xml file. It is implemented by calling add function repeatedly till all the new contacts have been added to the current contact list.
@@ -575,12 +577,29 @@ public ImportCommand(String filePath) {
 
 [NOTE]
 If the filePath is invalid, then there are no file that is readable and hence, an exception will be thrown. Users will be notified to check their filePath.
+If the file specified is exactly the same as the current ResidentBook, there is nothing to import. The NoUniqueImport Exception will be throw. Users will be notified to check their file.
+
+The following is the NoUniqueImport Exception.
+[source,java]
+----
+public class NoUniqueImport extends Exception {
+    public NoUniqueImport(String message) {
+        super(message);
+    }
+}
+----
 
 The following activity diagram summarize what happens inside the `ImportCommand` when a user executes this command:
 
 image::ImportCommandActivityDiagram.png[width="300"]
 
 Future enhancements may include a selection option from the UI and allowing the users to specify if they would like to overwrite contacts with identical names.
+
+//tage::backup
+=== Backup Command
+The backup command saves the current ResidentBook into backup.xml located in the project location. One consideration for this mechanism is that backup should only happen when necessary, as it will take up a lot of space. +
+A future enhancement can allow user to specify backup location and file name.
+
 
 
 // tag::sort[]
@@ -636,7 +655,11 @@ Also, by default, the list is sorted by name.
 
 === RemoveTag Command
 
-The RemoveTag command is implemented for fast removal of a tag from all entries in the address book. It is implemented by updating the tag list of entries.
+The RemoveTag command is implemented for fast removal of a tag from all entries in the address book. It is implemented by updating the tag list of Residents. +
+The motivation for implementing such a command is that the hostel/hotel administrator may need to mass delete a Tag from the person. For example, deleting the "RA" (Resident Assistant) +
+tag when the old batch of RA steps down from operations.
+
+The difference between the RemoveTag and Delete Person by Tag is that RemoveTag does not remove any Resident from the ResidentBook. It just removes all the specified tags attached to the Resident.
 
 The following shows the implementation method, where user will specify the tagName:
 [source,java]
@@ -647,7 +670,7 @@ public RemoveTagCommand(String tagName) {
 ----
 
 [NOTE]
-If the tagName is invalid, there will be no exception raised or handled as a removal of invalid tagName essentially does not change the address book.
+If the tagName is invalid, the TagNotFoundException will be raised.
 
 === Delete persons by tag
 
