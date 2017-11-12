@@ -1,4 +1,6 @@
-package seedu.address.ui;
+package seedu.address.ui.autocompleter;
+
+import static java.util.Objects.requireNonNull;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERY_DATE;
@@ -62,7 +64,7 @@ public enum AutocompleteCommand {
     private static final String[] commandsWithPrefixes = {"add", "edit"};
 
     public static AutocompleteCommand getInstance(String commandName) {
-
+        requireNonNull(commandName);
         switch (commandName) {
         case AddCommand.COMMAND_WORD:
             return ADD;
@@ -114,12 +116,30 @@ public enum AutocompleteCommand {
         }
     }
 
-    public static boolean hasIndexParameter (String command) {
-        return Arrays.asList(commandsWithIndexes).contains(command);
+    /**
+     * Returns true if {@code command} takes in an {@code Index} as an argument
+     */
+    public static boolean hasIndexParameter (String command) throws IllegalArgumentException {
+        try {
+            return Arrays.asList(commandsWithIndexes).contains(command);
+        } catch (NullPointerException e) {
+            return false;
+        } catch (IllegalArgumentException ie) {
+            throw new IllegalArgumentException();
+        }
     }
 
-    public static boolean hasPrefixParameter (String command) {
-        return Arrays.asList(commandsWithPrefixes).contains(command);
+    /**
+     * Returns true if {@code command} takes in a {@code Prefix} as an argument
+     */
+    public static boolean hasPrefixParameter (String command) throws IllegalArgumentException {
+        try {
+            return Arrays.asList(commandsWithPrefixes).contains(command);
+        } catch (NullPointerException e) {
+            return false;
+        } catch (IllegalArgumentException ie) {
+            throw new IllegalArgumentException();
+        }
     }
 
 
