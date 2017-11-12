@@ -3,11 +3,13 @@
 package seedu.address.model.person;
 
 import java.io.File;
-import java.net.MalformedURLException;
+
+import com.sun.media.jfxmedia.logging.Logger;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
+import seedu.address.MainApp;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -20,20 +22,18 @@ public class Avatar {
 
     private ObjectProperty<Image> avatarImage;
     private String avatarFilePath;
+    private String avatarFileName;
 
     public Avatar() {
         // Default object -> 'generic' avatar
-        this.avatarFilePath = new File(DEFAULT_AVATAR_IMAGE_PATH).getPath();
+        this.avatarFilePath = MainApp.class.getResource(DEFAULT_AVATAR_IMAGE_PATH).getFile();
+        Logger.logMsg(Logger.DEBUG, "USING DEFAULT PATH: " + this.avatarFilePath);
     }
 
     public Avatar(String avatarFilePath) throws IllegalValueException {
         if (validFile(avatarFilePath)) {
             File imgFile = new File(avatarFilePath);
-            try {
-                this.avatarFilePath = imgFile.toURI().toURL().toString();
-            } catch (MalformedURLException e) {
-                throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
-            }
+            this.avatarFilePath = avatarFilePath;
         } else {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
@@ -53,7 +53,8 @@ public class Avatar {
      *
      */
     public void constructImageProperty() {
-        Image imgObj = new Image(this.avatarFilePath);
+        File imgFile = new File(this.avatarFilePath);
+        Image imgObj = new Image(imgFile.toURI().toString());
         this.avatarImage = new SimpleObjectProperty<Image>(imgObj);
     }
 
@@ -77,8 +78,12 @@ public class Avatar {
     public static boolean validFile(String avatarFilePath) {
         try {
             File f = new File(avatarFilePath);
+            Logger.logMsg(Logger.DEBUG, "File: " + avatarFilePath + " | Exists: " + Boolean.toString(f.exists())
+                          + " | Can Read: " + Boolean.toString(f.canRead()));
             return f.exists() && f.canRead();
         } catch (NullPointerException e) {
+            Logger.logMsg(Logger.ERROR, "Error reading file at: " + avatarFilePath);
+            Logger.logMsg(Logger.ERROR, e.toString());
             return false;
         }
     }

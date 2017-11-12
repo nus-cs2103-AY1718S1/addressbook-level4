@@ -65,7 +65,8 @@ public class AppointCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getComment(), appoint, personToEdit.getTags());
+                personToEdit.getAddress(), personToEdit.getComment(), appoint, personToEdit.getAvatar(),
+                                         personToEdit.getTags());
 
         try {
             model.updatePerson(personToEdit, editedPerson);

@@ -62,6 +62,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         avatar = source.getAvatar().getAvatarFilePath();
+        System.out.println("Avatar field saved as: " + avatar);
         comment = source.getComment().value;
         appoint = source.getAppoint().value;
         tagged = new ArrayList<>();
@@ -86,14 +87,10 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
 
         //@@author vsudhakar
-        Avatar avatar;
+        Avatar avatar = null;
         try {
-            if (Avatar.validFile(this.avatar)) {
-                avatar = new Avatar(this.avatar);
-            } else {
-                avatar = new Avatar();
-            }
-        } catch (Exception e) {
+            avatar = new Avatar(this.avatar);
+        } catch (IllegalValueException e) {
             avatar = new Avatar();
         }
         //@@author
