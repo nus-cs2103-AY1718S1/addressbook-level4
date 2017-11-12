@@ -57,9 +57,9 @@ This section shows you commands related to appointments and calendar views. +
 |=======================================================================
 |Command To Enter |Expected Output |Remarks
 
-|`command 1` |`some output` |Some remark
+|`appt` |`Rearranged contacts to show upcoming appointments.` |Contacts are sorted according to appointments
 
-|`command 2` |`some output` |Some remark
+|`appt 1 d/Dinner, tonight 7pm` |`some output` |Some remark
 
 |`command 3` |`some output` |Some remark
 

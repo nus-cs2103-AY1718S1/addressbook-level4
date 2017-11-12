@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -109,9 +111,9 @@ public class UniquePersonList implements Iterable<Person> {
     public ObservableList<ReadOnlyPerson> asObservableListSortedByAppointment() {
 
         internalList.sort((o1, o2) -> {
-            if (!o1.getAppointments().isEmpty() && !o2.getAppointments().isEmpty()
-                    && o2.getAppointments().get(0).getDate()
-                    .before(o1.getAppointments().get(0).getDate())) {
+            if (getLatest(o1.getAppointments()) != null && getLatest(o2.getAppointments()) != null
+                    && getLatest(o2.getAppointments()).getDate()
+                    .before(getLatest(o1.getAppointments()).getDate())) {
                 return 1;
             } else {
                 return -1;
@@ -119,6 +121,19 @@ public class UniquePersonList implements Iterable<Person> {
         });
 
         return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    /**
+     * Search the list and returns the next most recent appointment
+     */
+    private Appointment getLatest(List<Appointment> appointments) {
+        Date date = Calendar.getInstance().getTime();
+        for (Appointment appointment : appointments) {
+            if (!appointment.getDate().before(date)) {
+                return appointment;
+            }
+        }
+        return null;
     }
 
     //@@author Jeremy

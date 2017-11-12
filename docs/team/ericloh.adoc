@@ -69,3 +69,10 @@ include::../DeveloperGuide.adoc[tag=appointmentimplementation]
 
 ---
 
+=== Enhancement Proposed (for Version 2.0)
+* More CLI for calendar view. Allow users to go to a selected date.
+* Make deletion of appointments easier. Remove the need to type in the whole description to delete.
+
+=== Other Contributions
+* https://github.com/CS2103AUG2017-W09-B2/main/issues/121[Uncover bugs for other teams]
+
