@@ -661,11 +661,13 @@ sortPersons() takes in the old list of persons, sorts them alphabetically, and r
 in alphabetical order. This method is called in both setPerson and setPersons methods in ReadOnlyPerson, after a new person
 is added into the address book.
 
+
 Example, add a new person named "Kelvin Liew"
 
 image::BeforeAddingKelvin.png[width="800"]
 
-After the new contact "Kelvin Liew is added, he is well placed between Irfan Ibrahim and Mary Jane.
+
+After the new contact "Kelvin Liew" is added, he is well placed between Irfan Ibrahim and Mary Jane.
 
 image::AfterAddingKelvin.png["width="800"]
 

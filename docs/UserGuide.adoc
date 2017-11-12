@@ -377,17 +377,17 @@ file is saved.
 
 For example: the user intends to print the address book as FILEPATH.txt
 
-image::PrintCommandSuccess.png[width="380"]
+image::PrintCommandSuccess.png[width="800"]
 
 Now, he can find his FILEPATH.txt file along side the .jar file directory.
 
-image::TextFilePath.png[width="380"]
+image::TextFilePath.png[width="600"]
 
 * Note: The file name cannot contain illegal file path characters, which includes the following: /:*?"<>|
 
 The result of the created .txt file is illustrated in the figure below
 
-image::PrintedTxtFile.png[width="380"]
+image::PrintedTxtFile.png[width="800"]
 //end::print[]
 
 
