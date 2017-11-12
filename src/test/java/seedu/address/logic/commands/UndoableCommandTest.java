@@ -8,7 +8,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
-import seedu.address.logic.ListObserver;
+import seedu.address.commons.core.ListObserver;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -38,9 +38,7 @@ public class UndoableCommandTest {
 
     @Test
     public void redo() throws Exception {
-        showFirstPersonOnly(model);
-
-        // redo() should cause the model's filtered list to show all persons
+        // redo() should delete the first person from model
         dummyCommand.redo();
         deleteFirstPerson(expectedModel);
         assertEquals(expectedModel, model);
@@ -52,7 +50,7 @@ public class UndoableCommandTest {
     class DummyCommand extends UndoableCommand {
         DummyCommand(Model model) {
             this.model = model;
-            this.listObserver = new ListObserver(model);
+            ListObserver.init(model);
         }
 
         @Override

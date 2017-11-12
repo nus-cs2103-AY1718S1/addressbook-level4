@@ -5,12 +5,13 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -33,6 +34,11 @@ public class SortCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Before
+    public void setUp() {
+        ListObserver.init(model);
+    }
 
     @Test
     public void execute_allOrderings_success() throws Exception {
