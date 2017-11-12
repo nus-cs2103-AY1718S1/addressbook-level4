@@ -23,8 +23,6 @@ public class SwitchTabCommand extends Command {
     private final String tabName;
 
     public SwitchTabCommand(int targetIndex) {
-        System.out.println("The command received: " + targetIndex);
-
         this.targetIndex = targetIndex;
         if (targetIndex == 1) {
             tabName = "Residents";

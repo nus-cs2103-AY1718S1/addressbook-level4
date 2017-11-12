@@ -20,6 +20,11 @@ public class SwitchTabCommandParser implements Parser<SwitchTabCommand> {
     public SwitchTabCommand parse(String args) throws ParseException {
         try {
             int index = ParserUtil.parseIndex(args).getOneBased();
+
+            if (index > 2 || index < 1) {
+                throw new IllegalValueException(MESSAGE_INVALID_COMMAND_FORMAT);
+            }
+
             return new SwitchTabCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(
