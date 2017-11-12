@@ -491,6 +491,7 @@ Adds avatar to the 2nd person in the address book.
 * You are suggested to move the image into the home folder where you use *BoNUS*.
 ====
 
+// tag::themeSwitch[]
 === Switching themes : `(t)theme`
 
 Switches between Dark Theme and Bright Theme. +
@@ -513,6 +514,7 @@ _Figure 5.15.1 : Bright Theme_
 
 image::DarkTheme.png[width="400"]
 _Figure 5.15.2 : Dark Theme_
+// end::themeSwitch[]
 
 === Listing entered commands : `(his)history`
 

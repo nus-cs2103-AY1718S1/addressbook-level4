@@ -43,6 +43,34 @@ include::../DeveloperGuide.adoc[tag=autoReminders]
 
 ---
 
+=== Enhancement Added: Switch Themes
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=themeSwitch]
+
+
+---
+
+==== Justification
+
+As the target audience for **BoNUS** are students, we aim to allow students to personalize their own **BoNUS**. Therefore,
+to kick start such an initiative, we decided to allow the switching of themes between Dark and Bright Themes. Also, this adds
+to the aesthetic aspect of our product, attracting more students to start using **BoNUS**.
+
+To further develop on this aspect of personalisation, we seek to add more themes for students to personalize their own
+**BoNUS** in future releases.
+
+==== Realization
+
+---
+
+include::../DeveloperGuide.adoc[tag=themeSwitch]
+
+---
+
 === Enhancement proposed: Booking of facilities from NUS
 
 ==== External behavior
@@ -86,8 +114,6 @@ With facilitated transition towards **BoNUS**, your life can now be better organ
 
 === Other contributions
 
-* Added a command to switch in between bright and dark themes for students to personalize BoNUS.
-(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/166[#166])
 * Introduced Events component in BoNUS
 (Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/55[#55], https://github.com/CS2103AUG2017-T09-B3/main/pull/73[#73], https://github.com/CS2103AUG2017-T09-B3/main/pull/76[#76])
 * Modified small parts of the UI
@@ -96,4 +122,7 @@ With facilitated transition towards **BoNUS**, your life can now be better organ
 (Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/140[#140], https://github.com/CS2103AUG2017-T09-B3/main/pull/55[#55], https://github.com/CS2103AUG2017-T09-B3/main/pull/182[#182])
 * Assisted Project UNIBOOK in bug reporting
 (Issues https://github.com/CS2103AUG2017-T13-B2/main/issues/73[#73])
+* Assisted Project BlueBird in bug reporting
+(Issues https://github.com/CS2103AUG2017-T15-B4/main/issues/268[#268])
+
 
