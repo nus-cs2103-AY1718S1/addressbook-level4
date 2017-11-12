@@ -237,7 +237,7 @@ public class ArkBotTest {
         bot.completeCommand().action().accept(context);
         ReadOnlyParcel oldParcel = parcels.get(parcels.size() - 1);
         ReadOnlyParcel editedParcel = new ParcelBuilder(oldParcel).withStatus("Completed").build();
-        model.editParcelCommand(oldParcel, editedParcel);
+        model.updateParcel(oldParcel, editedParcel);
         waitForRunLater();
 
         // We verify that the sender was called only ONCE and sent message command success.
@@ -250,9 +250,8 @@ public class ArkBotTest {
         message = BOT_MESSAGE_FAILURE;
         bot.completeCommand().action().accept(context);
         waitForRunLater();
-        Thread.sleep(2000); // add wait so that exception can be caught and thrown
 
-        // We verify that the sender was called only ONCE and sent message command success.
+        // We verify that the sender was called only ONCE and sent message command failure.
         Mockito.verify(sender, times(++numberOfFailures)).send(message, CHAT_ID);
 
         /*=============================== COMPLETE COMMAND SUCCESS TEST (NO INPUT) ==================================*/

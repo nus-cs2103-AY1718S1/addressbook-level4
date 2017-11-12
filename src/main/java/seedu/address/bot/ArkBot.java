@@ -74,7 +74,7 @@ public class ArkBot extends AbilityBot {
                                                 + "will return the details of the parcel embedded in the QR code.\n\n"
                                                 + "Refer to our [User Guide](https://github.com/CS2103AUG2017-T16-B1"
                                                 + "/main/blob/master/docs/UserGuide.adoc) for more information.";
-    private static final String BOT_SET_COMPLETED = " " + "s/Completed";
+    private static final String BOT_SET_COMPLETED = "s/Completed";
     private static final String DEFAULT_BOT_TOKEN = "339790464:AAGUN2BmhnU0I2B2ULenDdIudWyv1d4OTqY";
     private static final String DEFAULT_BOT_USERNAME = "ArkBot";
     private static final Privacy PRIVACY_SETTING = Privacy.PUBLIC;
@@ -164,8 +164,7 @@ public class ArkBot extends AbilityBot {
                         sender.send(parseDisplayParcels(formatParcelsForBot(parcels)),
                                 ctx.chatId());
                     } catch (CommandException | ParseException e) {
-                        sender.send("Sorry, I don't understand.",
-                                ctx.chatId());
+                        sender.send("Sorry, I don't understand.", ctx.chatId());
                     }
                 }))
                 .build();
@@ -190,8 +189,7 @@ public class ArkBot extends AbilityBot {
                         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
                         sender.send(parseDisplayParcels(formatParcelsForBot(parcels)), ctx.chatId());
                     } catch (CommandException | ParseException e) {
-                        sender.send(BOT_MESSAGE_FAILURE,
-                                ctx.chatId());
+                        sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
@@ -280,15 +278,18 @@ public class ArkBot extends AbilityBot {
                 .locality(Locality.ALL)
                 .privacy(PRIVACY_SETTING)
                 .action(ctx -> Platform.runLater(() -> {
+                    String input = combineArguments(ctx.arguments());
                     try {
-                        if (combineArguments(ctx.arguments()).trim().equals("")) {
+                        if (input.trim().equals("")) {
                             this.waitingForImage = true;
                             sender.send(BOT_MESSAGE_COMPLETE_COMMAND, ctx.chatId());
-                        } else {
+                        } else if (containsAllNumbers(input.trim())) {
                             logic.execute(EditCommand.COMMAND_WORD + " "
-                                    + combineArguments(ctx.arguments()) + BOT_SET_COMPLETED);
+                                    + input + BOT_SET_COMPLETED);
                             ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
                             sender.send(parseDisplayParcels(formatParcelsForBot(parcels)), ctx.chatId());
+                        } else {
+                            sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
                         }
                     } catch (CommandException | ParseException e) {
                         sender.send(BOT_MESSAGE_FAILURE, ctx.chatId());
@@ -525,6 +526,14 @@ public class ArkBot extends AbilityBot {
         }
 
         return null;
+    }
+
+    /**
+     * Returns true if a given string contains all numbers.
+     */
+    public static boolean containsAllNumbers(String test) {
+        String regex = "\\d+";
+        return test.matches(regex);
     }
 
     @VisibleForTesting
