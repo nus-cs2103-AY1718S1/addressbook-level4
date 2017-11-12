@@ -6,7 +6,8 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
-<StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+
+<StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <!-- @@author Alim95 -->
    <ImageView fx:id="imageDisplay" fitHeight="106.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
       <StackPane.margin>
@@ -24,7 +25,7 @@
    </TextArea>
    <FlowPane fx:id="listSizeDisplay" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="32.0">
       <StackPane.margin>
-         <Insets bottom="159.0" left="65.0" />
+         <Insets bottom="153.0" left="-85.0" />
       </StackPane.margin>
    </FlowPane>
 </StackPane>
