@@ -582,11 +582,9 @@ public class EventCardTest extends GuiUnitTest {
 ``` java
 
 import static junit.framework.TestCase.assertEquals;
-import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalEvents.getTypicalEvents;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysEvent;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardEventsEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -625,16 +623,6 @@ public class EventListPanelTest extends GuiUnitTest {
             assertCardDisplaysEvent(expectedEvent, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
         }
-    }
-
-    @Test
-    public void handleJumpToListRequestEvent() {
-        postNow(JUMP_TO_SECOND_EVENT);
-        guiRobot.pauseForHuman();
-
-        EventCardHandle expectedCard = eventListPanelHandle.getEventCardHandle(INDEX_SECOND_PERSON.getZeroBased());
-        EventCardHandle selectedCard = eventListPanelHandle.getHandleToSelectedCard();
-        assertCardEventsEquals(expectedCard, selectedCard);
     }
 }
 ```
