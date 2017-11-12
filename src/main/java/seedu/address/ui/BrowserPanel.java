@@ -24,15 +24,15 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
     //@@author Sri-vatsa
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String LINKEDIN_SEARCH_URL_PREFIX = "https://www.linkedin.com/search/results/";
-    public static final String LINKEDIN_SEARCH_PEOPLE = "people/";
-    public static final String LINKEDIN_SEARCH_PARAM_LOCATION = "?facetGeoRegion=%5B%22sg%3A0%22%5D";
-    public static final String LINKEDIN_SEARCH_PARAM_FIRST_NAME = "&firstName=";
-    public static final String LINKEDIN_SEARCH_PARAM_LAST_NAME = "&lastName=";
-    public static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
+    private static final String LINKEDIN_SEARCH_URL_PREFIX = "https://www.linkedin.com/search/results/";
+    private static final String LINKEDIN_SEARCH_PEOPLE = "people/";
+    private static final String LINKEDIN_SEARCH_PARAM_LOCATION = "?facetGeoRegion=%5B%22sg%3A0%22%5D";
+    private static final String LINKEDIN_SEARCH_PARAM_FIRST_NAME = "&firstName=";
+    private static final String LINKEDIN_SEARCH_PARAM_LAST_NAME = "&lastName=";
+    private static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
+    private static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
     //@@author
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -169,14 +169,18 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event)
             throws CommandException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (event.getBrowserSelection().equals("linkedin")) {
-            loadLinkedIn();
-        } else if (event.getBrowserSelection().equals("google")) {
-            hasLinkedinBeenChosen = false;
-            hasMapsBeenChosen = false;
-            loadPersonPage(personSelected);
-        } else if (event.getBrowserSelection().equals("maps")) {
-            loadPersonMap(personSelected);
+        switch (event.getBrowserSelection()) {
+            case "linkedin":
+                loadLinkedIn();
+                break;
+            case "google":
+                setLinkedinChosenFalse();
+                setMapsChosenFalse();
+                loadPersonPage(personSelected);
+                break;
+            case "maps":
+                loadPersonMap(personSelected);
+                break;
         }
     }
 
