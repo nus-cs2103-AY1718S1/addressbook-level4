@@ -38,8 +38,6 @@ public class UniquePhoneList implements Iterable<Phone> {
         internalList.add(phone);
     }
 
-    //@@author
-    //@@author willxujun
     /**
      * Returns all phones in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
@@ -48,8 +46,7 @@ public class UniquePhoneList implements Iterable<Phone> {
         assert CollectionUtil.elementsAreUnique(internalList);
         return new HashSet<>(internalList);
     }
-    //@@author
-    //@@author eeching
+
     /**
      * Returns true if the list contains an equivalent phone as the given argument.
      */

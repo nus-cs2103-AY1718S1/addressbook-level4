@@ -14,6 +14,7 @@ import seedu.address.model.person.exceptions.PhoneNotFoundException;
 import seedu.address.model.person.phone.Phone;
 import seedu.address.model.person.phone.UniquePhoneList;
 
+//@@author eeching
 public class UniquePhoneListTest {
 
     @Rule
@@ -121,3 +122,4 @@ public class UniquePhoneListTest {
     }
 
 }
+//@@author

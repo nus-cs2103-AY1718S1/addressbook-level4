@@ -1,5 +1,5 @@
 # eeching
-###### \java\seedu\address\logic\commands\PhoneCommand.java
+###### /java/seedu/address/logic/commands/PhoneCommand.java
 ``` java
 /**
  * Adds or updates a custom field of a person identified using it's last displayed index from the address book.
@@ -7,7 +7,6 @@
 public class PhoneCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "updatePhone";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Updates one person's additional phone identified by the index"
             + " number used in the last person listing.\n"
@@ -17,7 +16,22 @@ public class PhoneCommand extends UndoableCommand {
             + "VALUE"
             + "Example: " + COMMAND_WORD + " 1" + " add" + " 6583609887";
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    private static final String COMMAND_SHOW_ALL_PHONES  = "showAllPhones";
+    private static final String COMMAND_ADD = "add";
+    private static final String COMMAND_REMOVE = "remove";
+    private static final String PERSON_NOT_FOUND_EXCEPTION_MESSAGE = "The target person cannot be missing.\n";
+    private static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.\n";
+    private static final String PHONE_NOT_FOUND_EXCEPTION_MESSAGE = "Phone number to be removed is not found in"
+            + " the list.\n";
+    private static final String DUPLICATE_PHONE_EXCEPTION_MESSAGE = "Phone number to be added already exists in"
+            + " the list.\n";
+    private static final String INVALID_COMMAND_MESSAGE = "Command is invalid, please check again.\n";
+    private static final String PRIMARY_PHONE_MESSAGE = "The primary phone number is %s.\n";
+    private static final String ADD_PHONE_SUCCESS_MESSAGE = "Phone number %s has been added.\n";
+    private static final String REMOVE_PHONE_SUCCESS_MESSAGE = "Phone number %s has been removed.\n";
+    private static final String TOTAL_NUMBER_OF_PHONES = "The updated phone list now has %s phone numbers.\n";
+
+    private final Logger logger = LogsCenter.getLogger(PhoneCommand.class);
 
     private final Index targetIndex;
 
@@ -46,9 +60,9 @@ public class PhoneCommand extends UndoableCommand {
         Set<Tag> tags = personToUpdatePhoneList.getTags();
         UniqueCustomFieldList customFields = personToUpdatePhoneList.getCustomFieldList();
 
-        if (action.equals("remove")) {
+        if (action.equals(COMMAND_REMOVE)) {
             uniquePhoneList.remove(phone);
-        } else if (action.equals("add")) {
+        } else if (action.equals(COMMAND_ADD)) {
             uniquePhoneList.add(phone);
         }
 
@@ -58,11 +72,34 @@ public class PhoneCommand extends UndoableCommand {
         return personUpdated;
     }
 
+    public Index getIndex() {
+        return targetIndex;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public Phone getPhone() {
+        return phone;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof PhoneCommand // instanceof handles nulls
+                && this.targetIndex.equals(((PhoneCommand) other).getIndex())
+                && this.action.equals(((PhoneCommand) other).getAction())
+                && this.phone.equals(((PhoneCommand) other).getPhone()));
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
+        logger.info("Get the person of the specified index.");
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            logger.warning(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -74,37 +111,50 @@ public class PhoneCommand extends UndoableCommand {
             try {
                 model.updatePerson(personToUpdatePhoneList, personUpdated);
             } catch (DuplicatePersonException dpe) {
+                logger.warning("Invalid person " + MESSAGE_DUPLICATE_PERSON);
                 throw new CommandException(MESSAGE_DUPLICATE_PERSON);
             } catch (PersonNotFoundException pnfe) {
-                throw new AssertionError("The target person cannot be missing");
+                logger.warning("Invalid person " + PERSON_NOT_FOUND_EXCEPTION_MESSAGE);
+                throw new CommandException(PERSON_NOT_FOUND_EXCEPTION_MESSAGE);
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-            if (action.equals("showAllPhones")) {
-                String str = "The primary number is " + primaryPhone + "\n";
-                return new CommandResult(str + uniquePhoneList.getAllPhone());
-            } else if (action.equals("add")) {
-                String successMessage = "Phone number " + phone.number + " has been added, ";
-                String info = "the updated phone list now has " + (uniquePhoneList.getSize() + 1)
-                        + " phone numbers, and the primary phone number is " + primaryPhone;
-                return new CommandResult(successMessage + info);
-            } else if (action.equals("remove")) {
-                String successMessage = "Phone number " + phone.number + " has been removed, ";
-                String info = "the updated phone list now has " + (uniquePhoneList.getSize() + 1)
-                        + " phone numbers, and the primary phone number is " + primaryPhone;
-                return new CommandResult(successMessage + info);
-            } else {
-                return new CommandResult("command is invalid, please check again");
+            logger.info("Execute update phone command");
+            CommandResult commandResult;
+            switch (action) {
+            case COMMAND_SHOW_ALL_PHONES:
+                String allPhones = String.format(PRIMARY_PHONE_MESSAGE, primaryPhone)
+                        + uniquePhoneList.getAllPhone();
+                commandResult =  new CommandResult(allPhones);
+                break;
+            case COMMAND_ADD:
+                String successAdditionMessage = String.format(ADD_PHONE_SUCCESS_MESSAGE, phone.number);
+                String infoAddition = String.format(TOTAL_NUMBER_OF_PHONES, uniquePhoneList.getSize() + 1)
+                        + String.format(PRIMARY_PHONE_MESSAGE, primaryPhone);
+                commandResult = new CommandResult(successAdditionMessage + infoAddition);
+                break;
+            case COMMAND_REMOVE:
+                String successRemovalMessage = String.format(REMOVE_PHONE_SUCCESS_MESSAGE, phone.number);
+                String infoRemoval = String.format(TOTAL_NUMBER_OF_PHONES, uniquePhoneList.getSize() + 1)
+                        + String.format(PRIMARY_PHONE_MESSAGE, primaryPhone);
+                commandResult = new CommandResult(successRemovalMessage + infoRemoval);
+                break;
+            default :
+                commandResult = new CommandResult(INVALID_COMMAND_MESSAGE);
             }
+            logger.info("Result: " + commandResult.feedbackToUser);
+            return commandResult;
         } catch (PhoneNotFoundException e) {
-            return new CommandResult("Phone number to be removed is not found in the list");
+            logger.warning(PHONE_NOT_FOUND_EXCEPTION_MESSAGE);
+            return new CommandResult(PHONE_NOT_FOUND_EXCEPTION_MESSAGE);
         } catch (DuplicatePhoneException e) {
-            return new CommandResult("Phone number to be added already exists in the list");
+            logger.warning(DUPLICATE_PHONE_EXCEPTION_MESSAGE);
+            return new CommandResult(DUPLICATE_PHONE_EXCEPTION_MESSAGE);
         }
     }
 }
 ```
-###### \java\seedu\address\logic\parser\PhoneCommandParser.java
+###### /java/seedu/address/logic/parser/PhoneCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new object
@@ -130,70 +180,13 @@ public class PhoneCommandParser implements Parser<PhoneCommand> {
             return new PhoneCommand(index, action, phone);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CustomCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PhoneCommand.MESSAGE_USAGE));
         }
     }
 
 }
 ```
-###### \java\seedu\address\model\person\Birthday.java
-``` java
-/**
- * Represents a Person's address in the address book.
- * Guarantees: immutable;
- */
-
-public class Birthday {
-    public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person birthday should be in the format dd/mm/yyyy, default is 00/00/0000";
-
-
-    public static final String BIRTHDAY_VALIDATION_REGEX =
-            "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$";
-
-    public final String value;
-
-    /**
-     * Validates given address.
-     *
-     * @throws IllegalValueException if given address string is invalid.
-     */
-    public Birthday(String birthday) throws IllegalValueException {
-        requireNonNull(birthday);
-        if (!isValidBirthday(birthday)) {
-            throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
-        }
-        this.value = birthday;
-    }
-
-    /**
-     * Returns true if a given string is a valid person email.
-     */
-    public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Birthday // instanceof handles nulls
-                && this.value.equals(((Birthday) other).value)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
-
-}
-```
-###### \java\seedu\address\model\person\exceptions\DuplicatePhoneException.java
+###### /java/seedu/address/model/person/exceptions/DuplicatePhoneException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Phone objects.
@@ -204,26 +197,14 @@ public class DuplicatePhoneException extends DuplicateDataException {
     }
 }
 ```
-###### \java\seedu\address\model\person\exceptions\NoLocalNumberException.java
-``` java
-/**
- * Signals that the operation will result in duplicate Phone objects.
- */
-
-public class NoLocalNumberException extends Exception {
-    public NoLocalNumberException() {
-        super("no local number added");
-    }
-}
-```
-###### \java\seedu\address\model\person\exceptions\PhoneNotFoundException.java
+###### /java/seedu/address/model/person/exceptions/PhoneNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified phone.
  */
 public class PhoneNotFoundException extends Exception {}
 ```
-###### \java\seedu\address\model\person\phone\UniquePhoneList.java
+###### /java/seedu/address/model/person/phone/UniquePhoneList.java
 ``` java
 /**
  * A list of phones that enforces no nulls and uniqueness between its elements.
@@ -248,9 +229,15 @@ public class UniquePhoneList implements Iterable<Phone> {
         internalList.add(phone);
     }
 
-```
-###### \java\seedu\address\model\person\phone\UniquePhoneList.java
-``` java
+    /**
+     * Returns all phones in this list as a Set.
+     * This set is mutable and change-insulated against the internal list.
+     */
+    public Set<Phone> toSet() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return new HashSet<>(internalList);
+    }
+
     /**
      * Returns true if the list contains an equivalent phone as the given argument.
      */
@@ -292,6 +279,7 @@ public class UniquePhoneList implements Iterable<Phone> {
     }
 
 
+
     public String getAllPhone() {
 
         if (internalList.size() > 1) {
@@ -330,16 +318,6 @@ public class UniquePhoneList implements Iterable<Phone> {
                 && this.internalList.equals(((seedu.address.model.person.phone.UniquePhoneList) other).internalList));
     }
 
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(seedu.address.model.person.phone.UniquePhoneList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
-    }
-
     @Override
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);
@@ -348,261 +326,108 @@ public class UniquePhoneList implements Iterable<Phone> {
 
 }
 ```
-###### \java\seedu\address\ui\WeatherWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
-public class WeatherWindow extends UiPart<Region> {
-
-    public static final String USERGUIDE_FILE_PATH = "https://www.yahoo.com/news/weather";
-
-    private static final Logger logger = LogsCenter.getLogger(WeatherWindow.class);
-    private static final String FXML = "HelpWindow.fxml";
-    private static final String TITLE = "Weather";
-
-    @FXML
-    private WebView browser;
-
-    private final Stage dialogStage;
-
-    public WeatherWindow() throws JAXBException, IOException {
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
+        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+```
+###### /java/seedu/address/ui/StatusBarFooter.java
+``` java
+    public StatusBarFooter(int totalPersons) throws JAXBException, IOException {
         super(FXML);
-        Scene scene = new Scene(getRoot());
-        //Null passed as the parent stage to make it non-modal.
-        dialogStage = createDialogStage(TITLE, null, scene);
-        dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
-
-        browser.getEngine().load(USERGUIDE_FILE_PATH);
+        setSyncStatus(SYNC_STATUS_INITIAL);
+        setTotalPersons(totalPersons);
+        setSaveWeather(getWeather());
+        registerAsAnEventHandler(this);
     }
 
     /**
-     * Shows the Yahoo weather window.
-     * @throws IllegalStateException
-     * <ul>
-     *     <li>
-     *         if this method is called on a thread other than the JavaFX Application Thread.
-     *     </li>
-     *     <li>
-     *         if this method is called during animation or layout processing.
-     *     </li>
-     *     <li>
-     *         if this method is called on the primary stage.
-     *     </li>
-     *     <li>
-     *         if {@code dialogStage} is already showing.
-     *     </li>
-     * </ul>
+     * Set the total number of person in the current address Book
      */
-    public void show() {
-        logger.fine("Showing Yahoo weather window.");
-        dialogStage.showAndWait();
+    private void setTotalPersons(int totalPersons) {
+        this.totalPersons.setText(totalPersons + " person(s) in total");
     }
-
-
-}
 ```
-###### \java\seedu\address\ui\YahooWeatherRequest.java
+###### /java/seedu/address/ui/StatusBarFooter.java
 ``` java
-public class YahooWeatherRequest {
-    private final String woeid = "1062617";
+    private void setSaveWeather(String weather) {
+        Platform.runLater(() -> this.weatherReport.setText(weather));
+    }
+```
+###### /java/seedu/address/ui/StatusBarFooter.java
+``` java
+    private String getWeather() throws JAXBException {
+        try {
+            WeatherRequest request = new WeatherRequest();
+            return request.getSgWeather();
+        } catch (IOException e) {
+            logger.warning("no internet connection");
+            return NO_INTERNET_CONNECTION_WARNING;
+        }
 
-    public String getYahooWeatherConditionSg() throws JAXBException, IOException {
+    }
+```
+###### /java/seedu/address/ui/WeatherRequest.java
+``` java
+public class WeatherRequest {
+
+    private static final String WHERE_ON_EARTH_IDENTIFIER = "1062617"; //this is Yahoo's woeid for Singapore
+    private static final int WEATHER_INDEX_FROM_CHANNEL = 1;
+    private static final int TEMPERATURE_INDEX_FROM_CHANNEL = 3;
+    private static final int DAY_INDEX_FROM_CHANNEL = 4;
+    private static final int MONTH_INDEX_FROM_CHANNEL = 5;
+    private static final int DATE_INDEX_FROM_CHANNEL = 6;
+    private static final int STARTING_INDEX_WEATHER = 6;
+    private static final int STARTING_INDEX_TEMPERATURE = 5;
+    private static final int END_INDEX_TEMPERATURE = 7;
+    private static final int STARTING_INDEX_DAY = 5;
+    private static final String LOCATION_INFORMATION = "Singapore GMT +0800";
+    private static final String DEGREE_CELSIUS = "℃, ";
+
+
+
+    public String getSgWeather() throws JAXBException, IOException {
 
         YahooWeatherService service = new YahooWeatherService();
-        Channel channel = service.getForecast(woeid, DegreeUnit.CELSIUS);
+        Channel channel = service.getForecast(WHERE_ON_EARTH_IDENTIFIER, DegreeUnit.CELSIUS);
 
-        return conditionStringParser(channel.getItem().getCondition().toString());
+        return weatherParser(channel.getItem().getCondition().toString());
     }
 
     /**
-     * Format the string returned from Yahoo Weather
+     * Extract the weather information from channel
      */
-    private String conditionStringParser (String rawString) {
-        int startIndex = 0;
-        int endIndex = 0;
-        final int unusedTermIndex = 1;
-        final String degree  = "\u00b0";
-
-        for (int i = 0; i < rawString.length(); i++) {
-            if (rawString.charAt(i) == '[') {
-                startIndex = i;
-            }
-
-            if (rawString.charAt(i) == ']') {
-                endIndex = i;
-            }
+    private String weatherParser (String rawString) {
+        ArrayList<String> information = new ArrayList<>();
+        StringTokenizer st = new StringTokenizer(rawString);
+        while (st.hasMoreTokens()) {
+            information.add(st.nextToken());
         }
 
-        String removedOverHeadString = rawString.substring(startIndex, endIndex);
-        ArrayList<String> splitStrings = new ArrayList<String>();
-        for (String piece : removedOverHeadString.split(",")) {
-            splitStrings.add(piece);
-        }
-        splitStrings.remove(unusedTermIndex);
-        splitStrings.set(1, splitStrings.get(1) + degree);
+        StringBuilder builder =  new StringBuilder();
+        String weather = information.get(WEATHER_INDEX_FROM_CHANNEL)
+                .substring(STARTING_INDEX_WEATHER) + " ";
+        String temperature = information.get(TEMPERATURE_INDEX_FROM_CHANNEL)
+                .substring(STARTING_INDEX_TEMPERATURE, END_INDEX_TEMPERATURE) + DEGREE_CELSIUS;
+        String date = information.get(DAY_INDEX_FROM_CHANNEL).substring(STARTING_INDEX_DAY)
+                + ", " + information.get(MONTH_INDEX_FROM_CHANNEL) + " "
+                + information.get(DATE_INDEX_FROM_CHANNEL) + ", ";
+        String location = LOCATION_INFORMATION;
 
-        StringBuilder builder = new StringBuilder();
-        splitStrings.stream().forEach(e -> builder
-                .append(Arrays.stream(e.split("="))
-                        .reduce((first, second) -> second).get() + " "));
+        builder.append(weather)
+               .append(temperature)
+               .append(date)
+               .append(location);
 
         return builder.toString();
+
     }
 }
 ```
-###### \resources\view\LightTheme.css
-``` css
-/**
- * Shared
- */
-.root * {
-    midLight: derive(white, -70%);
-    -fx-font-family: "Helvetica";
-    -fx-background-color: transparent;
-    -fx-text-fill: black;
-}
-
-.scroll-bar .thumb {
-    -fx-background-color: derive(grey, -20%);
-}
-
-
-/**
- * Background
- */
-.background {
-    -fx-background-color: derive(grey, -20%);
-    background-color: #f2f2f2; /* Used in the default.html file */
-    background-image: url("../images/bg_01.jpg");
-    background-size: 550px;
-    background-position: center 10px;
-    background-repeat: no-repeat;
-}
-
-
-/**
- * Menu Bar
- */
-.context-menu {
-    -fx-background-color: derive(grey, 90%);
-}
-
-.context-menu .label {
-    -fx-text-fill: black;
-}
-
-.menu-bar {
-    -fx-background-color: #fafafa;
-}
-
-.menu-bar .label {
-    -fx-font-size: 14pt;
-    -fx-text-fill: black;
-    -fx-opacity: 0.9;
-}
-
-
-/**
- * Command Box
- */
-#commandTextField {
-    -fx-font-size: 20pt;
-    -fx-font-weight: bold;
-    -fx-border-width: 1;
-}
-
-
-/**
- * Result Display
- */
-#resultDisplay .content {
-    -fx-background-color: #fafafa;
-    -fx-background-radius: 5;
-    /*
-    -fx-border-color: transparent transparent black transparent;
-    */
-}
-
-
-/**
- * Person List
- */
-#personListVBox #name, #personListVBox #id{
-    -fx-font-size: 15pt;
-}
-
-#personListVBox .scroll-bar:horizontal .thumb {
-   /*
-    -fx-background-color: transparent;
-    */
-    -fx-background-color: blue;
-}
-
-/**
- * List Cell
- */
-.list-cell:filled:odd {
-    -fx-background-color: #fafafa;
-}
-
-.list-cell:filled:even {
-    -fx-background-color: #f2f2f2;
-}
-
-.list-cell:filled:hover {
-    -fx-background-color: rgba(192, 192, 192, 5);
-}
-
-.list-cell:filled:selected {
-    -fx-background-color: rgba(192, 192, 192, 10);
-}
-
-
-/**
- * Cell
- */
-.cell_big_label {
-    -fx-font-size: 20px;
-    -fx-text-fill: black;
-    -fx-font-weight: normal;
-}
-
-.cell_small_label {
-    -fx-font-size: 13px;
-    -fx-text-fill: #424242;
-    -fx-font-weight: lighter;
-}
-
-
-/**
- * Status Bar
- */
-.status-bar {
-    -fx-background-color: #fafafa;
-    -fx-text-fill: black;
-    -fx-font-weight: bold;
-}
-
-
-/**
- * Tags
- */
-#tags {
-    -fx-hgap: 7;
-    -fx-vgap: 3;
- }
-
-#tags .label {
-    -fx-text-fill: black;
-    -fx-padding: 1 3 1 3;
-    -fx-border-radius: 2;
-    -fx-background-radius: 2;
-    -fx-font-size: 11;
-    -fx-font-weight: bold;
- }
-```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
 
-<VBox xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="topContainer" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
@@ -613,7 +438,6 @@ public class YahooWeatherRequest {
     <MenuBar fx:id="menuBar" styleClass="menu-bar" VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" styleClass="menu-bar-item" text="Exit" />
-            <MenuItem fx:id="weatherForecast" mnemonicParsing="false" onAction="#handleWeather" text="Weather Forecast" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" styleClass="menu-bar-item" text="Help" />
@@ -637,6 +461,9 @@ public class YahooWeatherRequest {
    </SplitPane>
 
   <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
+      <padding>
+          <Insets bottom="5" left="10" right="10" top="5" />
+      </padding>
   </StackPane>
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5" VBox.vgrow="ALWAYS">
@@ -644,7 +471,10 @@ public class YahooWeatherRequest {
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin></StackPane>
     </VBox>
       <GridPane minWidth="1000" prefHeight="650">
       <StackPane fx:id="personInformationPanelPlaceholder" GridPane.columnIndex="1" GridPane.rowIndex="0" />
@@ -672,4 +502,21 @@ public class YahooWeatherRequest {
       <URL value="@Extensions.css" />
    </stylesheets>
 </VBox>
+```
+###### /resources/view/StatusBarFooter.fxml
+``` fxml
+<GridPane styleClass="grid-pane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
+        <ColumnConstraints />
+    </columnConstraints>
+    <StatusBar fx:id="syncStatus" styleClass="anchor-pane" />
+    <StatusBar fx:id="totalPersons" styleClass="anchor-pane" GridPane.columnIndex="1" />
+    <StatusBar fx:id="weatherReport" nodeOrientation="RIGHT_TO_LEFT" styleClass="anchor-pane" GridPane.columnIndex="2" />
+    <rowConstraints>
+        <RowConstraints />
+    </rowConstraints>
+</GridPane>
 ```
