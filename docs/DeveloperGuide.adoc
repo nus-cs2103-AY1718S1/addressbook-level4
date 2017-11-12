@@ -996,6 +996,101 @@ to cycle through the themes. +
 **Cons:** Troublesome to implement considering that we intend to use only two themes.
 // end::theme[]
 
+// tag::repaid[]
+=== Repaid command mechanism
+
+The `repaid` command allow users to indicate that the specified debtor has completely repaid all of his/her debt. The `RepaidCommand` extends `UndoableCommand` so that it can be undone and redone if necessary.
+
+The command requires the index of the person the user wishes to update. However, indicating the index is optional if the person is the current selected person in the person list panel.
+
+The `RepaidCommand` is executed in `LogicManager`. It checks if the person selected has already repaid all his/her debt. If the person has done so, the command will then throw an `Exception` indicating that he/she has already repaid his/her debt.
+
+If the person has not completely repaid his/her debt, `LogicManager` will then call the `Model` `Interface` to execute a three-step process on that person, using a single method. `ModelManager` will firstly reset the person's debt to zero.
+
+[source, java]
+----
+public ReadOnlyPerson resetPersonDebt(ReadOnlyPerson p) throws PersonNotFoundException {
+    int index;
+    index = persons.getIndexOf(p);
+
+    Person existingPerson = new Person(p);
+    try {
+        existingPerson.setDebt(new Debt(Debt.DEBT_ZER0_VALUE));
+    } catch (IllegalValueException e) {
+        assert false : "The target value cannot be of illegal value";
+    }
+
+    persons.remove(p);
+
+    try {
+        persons.add(index, existingPerson);
+    } catch (DuplicatePersonException dpe) {
+        assert false : "There should be no duplicate when resetting the debt of a person";
+    }
+
+    return persons.getReadOnlyPerson(index);
+}
+----
+
+Secondly, it will set the `dateRepaid` field of the person to the date the command was called.
+
+[source, java]
+----
+public ReadOnlyPerson setDateRepaid(ReadOnlyPerson p) throws PersonNotFoundException {
+    int index;
+    index = persons.getIndexOf(p);
+
+    Person existingPerson = new Person(p);
+    existingPerson.setDateRepaid(new DateRepaid(formatDate(new Date())));
+
+    persons.remove(p);
+
+    try {
+        persons.add(index, existingPerson);
+    } catch (DuplicatePersonException dpe) {
+        assert false : "There should be no duplicate when resetting the date repaid field of a person";
+    }
+
+    return persons.getReadOnlyPerson(index);
+}
+----
+
+Finally, the person will be added into a list called `Whitelist`, given that he was not initially blacklisted.
+
+[source, java]
+----
+public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson p) {
+    int index;
+    index = persons.getIndexOf(p);
+
+    Person newWhitelistedPerson = new Person(p);
+    newWhitelistedPerson.setIsWhitelisted(true);
+    try {
+        updatePerson(p, newWhitelistedPerson);
+    } catch (DuplicatePersonException e) {
+        throw new AssertionError("The target person cannot be a duplicate");
+    } catch (PersonNotFoundException e) {
+        throw new AssertionError("This is not possible as prior checks have been done");
+    }
+    return persons.getReadOnlyPerson(index);
+}
+----
+
+`ModelManager` will then return the updated `ReadOnlyPerson` `Object` back to `LogicManager`.
+
+**Aspect:** Three-step process in one `Command`. +
+**Alternative 1 (current choice):** All three methods internally change the `Person` `Object`. Thus, each method will output the updated `ReadOnlyPerson` Object. The other methods will use obtain this and further update the `ReadOnlyPerson` `Object`
+**Pros:** Straightforward and simple to implement. +
+**Cons:** Some methods will fail to update the person as intended. If the person is blacklisted, he/she will not be added into the whitelist. +
+**Alternative 2:** Include three separate methods in model interface to execute the three-step process +
+**Pros:** Easy to observe the methods that will fail +
+**Cons:** Methods in Model Interface will seem to have less abstraction than intended +
+// end::repaid[]
+
+// tag::setpath/addpic/delpic[]
+=== Setpath/Addpic/Delpic command mechanism
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
