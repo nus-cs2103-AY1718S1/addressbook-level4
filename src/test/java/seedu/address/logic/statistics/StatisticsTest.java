@@ -61,14 +61,6 @@ public class StatisticsTest {
     }
 
     @Test
-    public void getQuartile2String() throws Exception {
-        assertEquals(statistics4.getQuartile2String(), "12.0");
-        assertEquals(statistics5.getQuartile2String(), "12.5");
-        assertEquals(statistics6.getQuartile2String(), NO_PERSONS_MESSAGE);
-        assertEquals(statistics7.getQuartile2String(), INSUFFICIENT_DATA_MESSAGE);
-    }
-
-    @Test
     public void getQuartile3String() throws Exception {
         assertEquals(statistics4.getQuartile3String(), "16.0");
         assertEquals(statistics5.getQuartile3String(), "14.0");
