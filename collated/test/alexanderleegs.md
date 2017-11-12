@@ -210,7 +210,7 @@ public class DeleteTagCommandTest {
             prepareCommand(newTag);
             fail("Expected IllegalValueException to be thrown");
         } catch (IllegalValueException ive) {
-            assertEquals(null, ive.getMessage(), "Tags names should be alphanumeric");
+            assertEquals(null, ive.getMessage(), Tag.MESSAGE_TAG_CONSTRAINTS);
         }
     }
 

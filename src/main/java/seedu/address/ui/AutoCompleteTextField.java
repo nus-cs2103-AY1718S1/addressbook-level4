@@ -16,7 +16,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * This class enables auto-completion feature as a drop down menu from the command box.
  */
-public class TabCompleteTextField extends TextField {
+public class AutoCompleteTextField extends TextField {
 
     private static final int MAX_ENTRIES = 5;
 
@@ -25,11 +25,11 @@ public class TabCompleteTextField extends TextField {
     private String prefixWords;
     private String lastWord;
 
-    public TabCompleteTextField() {
+    public AutoCompleteTextField() {
         super();
-        // calls updateHeuristic() whenever there is a change to the text of the command box.
+        // calls generateSuggestions() whenever there is a change to the text of the command box.
         textProperty().addListener((unused1, unused2, unused3) -> generateSuggestions());
-        // hides the drop down menu whenever the focus in not on the command box
+        // hides the drop down menu when the focus changes
         focusedProperty().addListener((unused1, unused2, unused3) -> dropDownMenu.hide());
     }
 
@@ -41,13 +41,14 @@ public class TabCompleteTextField extends TextField {
     private void generateSuggestions() {
         splitWords();
         SortedSet<String> matchedWords = heuristic.getSuggestions(prefixWords, lastWord);
-        if (matchedWords.size() > 0) {
-            fillDropDown(matchedWords);
-            if (!dropDownMenu.isShowing()) {
-                dropDownMenu.show(TabCompleteTextField.this, Side.BOTTOM, 0, 0);
-            }
-        } else {
+        if (matchedWords.size() <= 0) {
             dropDownMenu.hide();
+            return;
+        }
+
+        fillDropDown(matchedWords);
+        if (!dropDownMenu.isShowing()) {
+            dropDownMenu.show(AutoCompleteTextField.this, Side.BOTTOM, 0, 0);
         }
     }
 

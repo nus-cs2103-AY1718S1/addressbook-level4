@@ -210,9 +210,31 @@ public class DeleteMeetingCommand extends UndoableCommand {
 
         Meeting meetingToDelete = lastShownList.get(targetIndex.getZeroBased());
 
+        ReadOnlyPerson personToEdit = meetingToDelete.getPerson();
+        Person editedPerson = createEditedPerson(personToEdit, meetingToDelete);
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Not creating a new person");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+
         model.deleteMeeting(meetingToDelete);
 
         return new CommandResult(String.format(MESSAGE_DELETE_MEETING_SUCCESS, meetingToDelete.meetingName));
+    }
+
+    /**
+     * Creates and returns a {@code Person} with the {@code meetingToDelete} removed
+     * from {@code personToEdit}.
+     */
+    private static Person createEditedPerson(ReadOnlyPerson personToEdit, Meeting meetingToDelete) {
+        Set<Meeting> oldMeetings = new HashSet<>(personToEdit.getMeetings());
+        oldMeetings.remove(meetingToDelete);
+        Person editedPerson = new Person(personToEdit);
+        editedPerson.setMeetings(oldMeetings);
+        return editedPerson;
     }
 
     @Override
@@ -269,40 +291,54 @@ public class DeleteTagCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
 
         if (index == null) {
-            try {
-                model.deleteTag(targetTag);
-            } catch (DuplicatePersonException | PersonNotFoundException ex) {
-                throw new AssertionError("The target person cannot be missing");
-            } catch (TagNotFoundException tnfe) {
-                throw new CommandException(Messages.MESSAGE_INVALID_TAG_DISPLAYED);
-            }
+            deleteAllTags();
         } else {
-            List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-            if (index.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-
-            ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-
-            Set<Tag> oldTags = new HashSet<Tag>(personToEdit.getTags());
-            if (!(oldTags.contains(targetTag))) {
-                throw new CommandException(MESSAGE_NO_TAG);
-            }
-            Person editedPerson = new Person(personToEdit);
-            oldTags.remove(targetTag);
-            editedPerson.setTags(oldTags);
-
-            try {
-                model.updatePerson(personToEdit, editedPerson);
-            } catch (DuplicatePersonException dpe) {
-                throw new AssertionError("Not creating a new person");
-            } catch (PersonNotFoundException pnfe) {
-                throw new AssertionError("The target person cannot be missing");
-            }
+            deleteOneTag();
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS, targetTag.tagName));
+    }
+
+    /**
+     * Deletes all instances of a tag from the address book.
+     */
+    private void deleteAllTags() throws CommandException {
+        try {
+            model.deleteTag(targetTag);
+        } catch (DuplicatePersonException | PersonNotFoundException ex) {
+            throw new AssertionError("The target person cannot be missing");
+        } catch (TagNotFoundException tnfe) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TAG_DISPLAYED);
+        }
+    }
+
+    /**
+     * Deletes a single tag from a person.
+     */
+    private void deleteOneTag() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+
+        Set<Tag> oldTags = new HashSet<Tag>(personToEdit.getTags());
+        if (!(oldTags.contains(targetTag))) {
+            throw new CommandException(MESSAGE_NO_TAG);
+        }
+        Person editedPerson = new Person(personToEdit);
+        oldTags.remove(targetTag);
+        editedPerson.setTags(oldTags);
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Not creating a new person");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
     }
 
     @Override
@@ -388,7 +424,7 @@ public class SortCommand extends UndoableCommand {
 ###### \java\seedu\address\logic\parser\AddMeetingCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new AddTagCommand object
+ * Parses input arguments and creates a new AddMeetingCommand object
  */
 public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
     /**
@@ -452,7 +488,7 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
 ``` java
 
 /**
- * Parses input arguments and creates a new DeleteTagCommand object
+ * Parses input arguments and creates a new DeleteMeetingCommand object
  */
 public class DeleteMeetingCommandParser implements Parser<DeleteMeetingCommand> {
     /**
@@ -545,14 +581,11 @@ public class SortCommandParser implements Parser<SortCommand> {
         final UniqueMeetingList personMeetings = new UniqueMeetingList(person.getMeetings());
         meetings.mergeFrom(personMeetings);
 
-        // Create map with values = meeting object references in the master list
-        // used for checking person meeting references
-        final Map<Meeting, Meeting> masterMeetingObjects = new HashMap<>();
-        meetings.forEach(meeting -> masterMeetingObjects.put(meeting, meeting));
+        final Map<Meeting, Meeting> masterMeetingObjectReferences = new HashMap<>();
+        meetings.forEach(meeting -> masterMeetingObjectReferences.put(meeting, meeting));
 
-        // Rebuild the list of person meetings to point to the relevant meetings in the master tag list.
         final Set<Meeting> correctMeetingReferences = new HashSet<>();
-        personMeetings.forEach(meeting -> correctMeetingReferences.add(masterMeetingObjects.get(meeting)));
+        personMeetings.forEach(meeting -> correctMeetingReferences.add(masterMeetingObjectReferences.get(meeting)));
         person.setMeetings(correctMeetingReferences);
     }
 
@@ -572,8 +605,12 @@ public class SortCommandParser implements Parser<SortCommand> {
         meetings.remove(meeting);
     }
 
+    /**
+     * Sorts contacts by {@code field}.
+     */
     public void sort(String field) {
         persons.sort(field);
+        sortMeeting();
     }
 
 ```
@@ -604,16 +641,18 @@ public class Meeting {
     private ObjectProperty<String> displayMeetingName;
 
     /**
-     * Validates given tag name.
+     * Validates given meeting name.
      *
-     * @throws IllegalValueException if the given tag name string is invalid.
+     * @throws IllegalValueException if the given meeting name string is invalid.
      */
     public Meeting(ReadOnlyPerson person, String meetingName, String time) throws IllegalValueException {
         setPerson(person);
         this.displayName = new SimpleObjectProperty<>(person.getName());
         this.meetingName = meetingName;
         this.displayMeetingName = new SimpleObjectProperty<>(meetingName);
-        requireNonNull(time);
+        if (time == null) {
+            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
+        }
         String trimmedTime = time.trim();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm")
                 .withResolverStyle(ResolverStyle.STRICT);
@@ -633,7 +672,9 @@ public class Meeting {
     public Meeting(String meetingName, String time) throws IllegalValueException {
         this.meetingName = meetingName;
         this.displayMeetingName = new SimpleObjectProperty<>(meetingName);
-        requireNonNull(time);
+        if (time == null) {
+            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
+        }
         String trimmedTime = time.trim();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         try {
@@ -739,7 +780,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
     private final ObservableList<Meeting> internalList = FXCollections.observableArrayList();
 
     /**
-     * Constructs empty TagList.
+     * Constructs empty MeetingList.
      */
     public UniqueMeetingList() {}
 
@@ -923,7 +964,12 @@ public class UniqueMeetingList implements Iterable<Meeting> {
     @Override
     public void sortMeeting() {
         addressBook.sortMeeting();
-        updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+        Predicate<Meeting> currPredicate = (Predicate<Meeting>) filteredMeeting.getPredicate();
+        if (currPredicate == null) {
+            updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+        } else {
+            updateFilteredMeetingList(currPredicate);
+        }
     }
 
 ```
@@ -961,127 +1007,170 @@ public class TagNotFoundException extends Exception {}
 ``` java
     /**
      * Sorts the list by field.
-     * TO DO: More abstraction. Comparators in respective classes?
      */
     public void sort(String field) {
         switch (field) {
         case "name":
-            Collections.sort(internalList, new Comparator<Person>() {
-                public int compare(Person one, Person other) {
-                    String oneName = one.getName().toString().toLowerCase();
-                    String otherName = other.getName().toString().toLowerCase();
-                    return oneName.compareTo(otherName);
-                }
-            });
+            sortName();
             break;
         case "phone":
-            Collections.sort(internalList, new Comparator<Person>() {
-                public int compare(Person one, Person other) {
-                    return one.getPhone().toString().compareTo(other.getPhone().toString());
-                }
-            });
+            sortPhone();
             break;
         case "email":
-            Collections.sort(internalList, new Comparator<Person>() {
-                public int compare(Person one, Person other) {
-                    String oneEmail = one.getEmail().toString().toLowerCase();
-                    String otherEmail = other.getEmail().toString().toLowerCase();
-                    String noEmail = "no email";
-                    if (oneEmail.equals(noEmail)) {
-                        if (otherEmail.equals(noEmail)) {
-                            return 0;
-                        } else {
-                            return 1;
-                        }
-                    } else if (otherEmail.equals(noEmail)) {
-                        return -1;
-                    } else {
-                        return oneEmail.compareTo(otherEmail);
-                    }
-                }
-            });
+            sortEmail();
             break;
         case "address":
-            Collections.sort(internalList, new Comparator<Person>() {
-                public int compare(Person one, Person other) {
-                    String oneAddress = one.getAddress().toString().toLowerCase();
-                    String otherAddress = other.getAddress().toString().toLowerCase();
-                    String noAddress = "no address";
-                    if (oneAddress.equals(noAddress)) {
-                        if (otherAddress.equals(noAddress)) {
-                            return 0;
-                        } else {
-                            return 1;
-                        }
-                    } else if (otherAddress.equals(noAddress)) {
-                        return -1;
-                    } else {
-                        return oneAddress.compareTo(otherAddress);
-                    }
-                }
-            });
+            sortAddress();
             break;
         case "tag":
-            Collections.sort(internalList, new Comparator<Person>() {
-                public int compare(Person one, Person other) {
-                    Set<Tag> oneTags = one.getTags();
-                    ArrayList<String> oneTagsString = new ArrayList<String>();
-                    for (Tag tag : oneTags) {
-                        oneTagsString.add(tag.toString().toLowerCase());
-                    }
-                    Collections.sort(oneTagsString);
-                    Set<Tag> otherTags = other.getTags();
-                    ArrayList<String> otherTagsString = new ArrayList<String>();
-                    for (Tag tag : otherTags) {
-                        otherTagsString.add(tag.toString().toLowerCase());
-                    }
-                    Collections.sort(otherTagsString);
-                    for (int i = 0; i < Math.min(oneTagsString.size(), otherTagsString.size()); i++) {
-                        if (!(oneTagsString.get(i).equals(otherTagsString.get(i)))) {
-                            return oneTagsString.get(i).compareTo(otherTagsString.get(i));
-                        }
-                    }
-                    if (oneTagsString.size() < otherTagsString.size()) {
-                        return 1;
-                    } else if (oneTagsString.size() > otherTagsString.size()) {
-                        return -1;
-                    } else {
-                        return 0;
-                    }
-                }
-            });
+            sortTag();
+            break;
+        case "meeting":
+            sortMeeting();
             break;
         default:
-            // case "meeting"
-            Collections.sort(internalList, new Comparator<Person>() {
-                public int compare(Person one, Person other) {
-                    Set<Meeting> oneMeetings = one.getMeetings();
-                    ArrayList<String> oneMeetingsString = new ArrayList<String>();
-                    for (Meeting meeting : oneMeetings) {
-                        oneMeetingsString.add(meeting.toString().toLowerCase());
-                    }
-                    Collections.sort(oneMeetingsString);
-                    Set<Meeting> otherMeetings = other.getMeetings();
-                    ArrayList<String> otherMeetingsString = new ArrayList<String>();
-                    for (Meeting meeting : otherMeetings) {
-                        otherMeetingsString.add(meeting.toString().toLowerCase());
-                    }
-                    Collections.sort(otherMeetingsString);
-                    for (int i = 0; i < Math.min(oneMeetingsString.size(), otherMeetingsString.size()); i++) {
-                        if (!(oneMeetingsString.get(i).equals(otherMeetingsString.get(i)))) {
-                            return oneMeetingsString.get(i).compareTo(otherMeetingsString.get(i));
-                        }
-                    }
-                    if (oneMeetingsString.size() < otherMeetingsString.size()) {
-                        return 1;
-                    } else if (oneMeetingsString.size() > otherMeetingsString.size()) {
-                        return -1;
-                    } else {
+            throw new AssertionError("Sort field should always be valid");
+        }
+    }
+
+    /**
+     * Sorts the list by name.
+     */
+    private void sortName() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            public int compare(Person one, Person other) {
+                String oneName = one.getName().toString().toLowerCase();
+                String otherName = other.getName().toString().toLowerCase();
+                return oneName.compareTo(otherName);
+            }
+        });
+    }
+
+    /**
+     * Sorts the list by phone number.
+     */
+    private void sortPhone() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            public int compare(Person one, Person other) {
+                return one.getPhone().toString().compareTo(other.getPhone().toString());
+            }
+        });
+    }
+
+    /**
+     * Sorts the list by email.
+     */
+    private void sortEmail() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            public int compare(Person one, Person other) {
+                String oneEmail = one.getEmail().toString().toLowerCase();
+                String otherEmail = other.getEmail().toString().toLowerCase();
+                String noEmail = "no email";
+                if (oneEmail.equals(noEmail)) {
+                    if (otherEmail.equals(noEmail)) {
                         return 0;
+                    } else {
+                        return 1;
+                    }
+                } else if (otherEmail.equals(noEmail)) {
+                    return -1;
+                } else {
+                    return oneEmail.compareTo(otherEmail);
+                }
+            }
+        });
+    }
+
+    /**
+     * Sorts the list by address.
+     */
+    private void sortAddress() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            public int compare(Person one, Person other) {
+                String oneAddress = one.getAddress().toString().toLowerCase();
+                String otherAddress = other.getAddress().toString().toLowerCase();
+                String noAddress = "no address";
+                if (oneAddress.equals(noAddress)) {
+                    if (otherAddress.equals(noAddress)) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                } else if (otherAddress.equals(noAddress)) {
+                    return -1;
+                } else {
+                    return oneAddress.compareTo(otherAddress);
+                }
+            }
+        });
+    }
+
+    /**
+     * Sorts the list by tag.
+     */
+    private void sortTag() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            public int compare(Person one, Person other) {
+                Set<Tag> oneTags = one.getTags();
+                ArrayList<String> oneTagsString = new ArrayList<String>();
+                for (Tag tag : oneTags) {
+                    oneTagsString.add(tag.toString().toLowerCase());
+                }
+                Collections.sort(oneTagsString);
+                Set<Tag> otherTags = other.getTags();
+                ArrayList<String> otherTagsString = new ArrayList<String>();
+                for (Tag tag : otherTags) {
+                    otherTagsString.add(tag.toString().toLowerCase());
+                }
+                Collections.sort(otherTagsString);
+                for (int i = 0; i < Math.min(oneTagsString.size(), otherTagsString.size()); i++) {
+                    if (!(oneTagsString.get(i).equals(otherTagsString.get(i)))) {
+                        return oneTagsString.get(i).compareTo(otherTagsString.get(i));
                     }
                 }
-            });
-        }
+                if (oneTagsString.size() < otherTagsString.size()) {
+                    return 1;
+                } else if (oneTagsString.size() > otherTagsString.size()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+    }
+
+    /**
+     * Sorts the list by meeting time.
+     */
+    private void sortMeeting() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            public int compare(Person one, Person other) {
+                Set<Meeting> oneMeetings = one.getMeetings();
+                ArrayList<String> oneMeetingsString = new ArrayList<String>();
+                for (Meeting meeting : oneMeetings) {
+                    oneMeetingsString.add(meeting.toString().toLowerCase());
+                }
+                Collections.sort(oneMeetingsString);
+                Set<Meeting> otherMeetings = other.getMeetings();
+                ArrayList<String> otherMeetingsString = new ArrayList<String>();
+                for (Meeting meeting : otherMeetings) {
+                    otherMeetingsString.add(meeting.toString().toLowerCase());
+                }
+                Collections.sort(otherMeetingsString);
+                for (int i = 0; i < Math.min(oneMeetingsString.size(), otherMeetingsString.size()); i++) {
+                    if (!(oneMeetingsString.get(i).equals(otherMeetingsString.get(i)))) {
+                        return oneMeetingsString.get(i).compareTo(otherMeetingsString.get(i));
+                    }
+                }
+                if (oneMeetingsString.size() < otherMeetingsString.size()) {
+                    return 1;
+                } else if (oneMeetingsString.size() > otherMeetingsString.size()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
     }
 ```
 ###### \java\seedu\address\model\ReadOnlyAddressBook.java
@@ -1095,7 +1184,7 @@ public class TagNotFoundException extends Exception {}
 ###### \java\seedu\address\storage\XmlAdaptedMeeting.java
 ``` java
 /**
- * JAXB-friendly adapted version of the Tag.
+ * JAXB-friendly adapted version of the Meeting.
  */
 public class XmlAdaptedMeeting implements XmlAdaptedClass<Meeting> {
 

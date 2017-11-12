@@ -97,6 +97,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateNewPersonInfoAvailable(person);
     }
 
+    //@@author newalter
     /**
      * raise a new NewPersonInfoEvent whenever a person is added or edited
      * @param person the person added or edited
@@ -104,6 +105,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateNewPersonInfoAvailable(ReadOnlyPerson person) {
         raise(new NewPersonInfoEvent(person));
     }
+    //@@author
 
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
@@ -177,12 +179,11 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
-    //@@author newalter
+
     @Override
     public Predicate<? super ReadOnlyPerson> getPersonListPredicate() {
         return filteredPersons.getPredicate();
     }
-    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {

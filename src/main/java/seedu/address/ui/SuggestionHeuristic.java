@@ -92,16 +92,17 @@ public class SuggestionHeuristic {
         if (lastWord.equals("")) {
             return empty;
         }
-        SortedSet<String> suggestionsSet = parseCommandWord(prefixWords);
-        return suggestionsSet.subSet(lastWord + Character.MIN_VALUE, lastWord + Character.MAX_VALUE);
+        SortedSet<String> suggestionSet = getSuggestionSet(prefixWords);
+        return suggestionSet.subSet(lastWord + Character.MIN_VALUE, lastWord + Character.MAX_VALUE);
     }
 
     /**
-     * According to the command word
-     * two parts by the last occurrence of space.
-     * Store them into prefixWords and lastWord respectively.
+     * Returns the relevant SortedSet to generate suggestions from
+     * according to the context in the prefixWords
+     * @param prefixWords words that have been keyed in before the last word
+     * @return a SortedSet for generating suggestions
      */
-    private SortedSet<String> parseCommandWord(String prefixWords) {
+    private SortedSet<String> getSuggestionSet(String prefixWords) {
         String commandWord = prefixWords.trim().split("\\s+")[0];
 
         switch (commandWord) {

@@ -267,6 +267,15 @@ public class ArgumentWildcardMatcherTest {
         List<String> expected = Arrays.asList("fa\\S*", "\\S*s\\S*", "g\\S*d", "a\\Sb");
         assertEquals(keywords, expected);
     }
+
+    @Test
+    public void null_argFail() {
+        try {
+            ArgumentWildcardMatcher.processKeywords(null);
+        } catch (Exception e) {
+            assertEquals(e.getClass(), NullPointerException.class);
+        }
+    }
 }
 ```
 ###### \java\seedu\address\logic\parser\FindCommandParserTest.java
@@ -319,7 +328,8 @@ public class ResizeCommandParserTest {
         // invalid arguments that are out of bound
         assertParseFailure(parser, String.format("%d %d", ResizeCommand.MAX_WIDTH + 1, ResizeCommand.MAX_HEIGHT),
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ResizeCommand.MESSAGE_USAGE));
-
+        assertParseFailure(parser, String.format("%d %d", ResizeCommand.MAX_WIDTH, MainWindow.getMinHeight() - 1),
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ResizeCommand.MESSAGE_USAGE));
 
     }
 }
@@ -398,7 +408,7 @@ public class ContainsTagsPredicateTest {
 ###### \java\systemtests\AddressBookSystemTest.java
 ``` java
     /**
-     * Presses Tab and executes {@code command} in the application's {@code CommandBox}.
+     * Presses {@code keyPresses} and executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
      */
     protected void pressAndExecuteCommand(String command, KeyCode... keyPresses) {

@@ -16,4 +16,13 @@ public class ArgumentWildcardMatcherTest {
         List<String> expected = Arrays.asList("fa\\S*", "\\S*s\\S*", "g\\S*d", "a\\Sb");
         assertEquals(keywords, expected);
     }
+
+    @Test
+    public void null_argFail() {
+        try {
+            ArgumentWildcardMatcher.processKeywords(null);
+        } catch (Exception e) {
+            assertEquals(e.getClass(), NullPointerException.class);
+        }
+    }
 }

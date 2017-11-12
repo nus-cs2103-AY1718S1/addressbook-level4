@@ -69,8 +69,81 @@ public class LoginCommandTest {
     private LoginCommand prepareCommand() {
         LoginCommand logincommand = new LoginCommand();
         logincommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        logincommand.setExecutor(Executors.newSingleThreadExecutor());
+        logincommand.setExecutor(Executors.newFixedThreadPool(4));
         return logincommand;
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show no one.
+     */
+    private void showNoPerson(Model model) {
+        model.updateFilteredPersonList(p -> false);
+
+        assert model.getFilteredPersonList().isEmpty();
+    }
+}
+```
+###### \java\seedu\address\logic\commands\LogoutCommandTest.java
+``` java
+
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code LogoutCommand}.
+ */
+public class LogoutCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_addLogout_success() throws Exception {
+
+        LogoutCommand logoutCommand = prepareCommand();
+
+        java.io.File filetoDelete =
+                new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
+        filetoDelete.mkdirs();
+        filetoDelete.createNewFile();
+        String expectedMessage = String.format(LogoutCommand.MESSAGE_SUCCESS);
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        assertCommandSuccess(logoutCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_addLogout_failure() throws Exception {
+
+        LogoutCommand logoutCommand = prepareCommand();
+
+        java.io.File filetoDelete =
+                new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
+        filetoDelete.delete();
+        String expectedMessage = String.format(LogoutCommand.MESSAGE_FAILURE);
+        assertCommandFailure(logoutCommand, model, expectedMessage);
+    }
+
+
+    @Test
+    public void equals() {
+        LogoutCommand logoutFirstCommand = new LogoutCommand();
+        LogoutCommand logoutSecondCommand = new LogoutCommand();
+
+        // same object -> returns true
+        assertTrue(logoutFirstCommand.equals(logoutFirstCommand));
+
+        // different types -> returns false
+        assertFalse(logoutFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(logoutFirstCommand.equals(null));
+
+        // returns true
+        assertTrue(logoutFirstCommand.equals(logoutSecondCommand));
+    }
+
+    /**
+     * Returns a {@code LogoutCommand} with the parameter {@code index}.
+     */
+    private LogoutCommand prepareCommand() {
+        LogoutCommand logoutcommand = new LogoutCommand();
+        return logoutcommand;
     }
 
     /**
@@ -118,7 +191,7 @@ public class NoteCommandTest {
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.updatePerson(personToNote, editedPerson);
-
+        showFirstPersonOnly(expectedModel);
         assertCommandSuccess(noteCommand, model, expectedMessage, expectedModel);
     }
 

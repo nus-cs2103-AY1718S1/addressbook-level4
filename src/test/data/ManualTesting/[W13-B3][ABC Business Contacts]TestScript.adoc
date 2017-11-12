@@ -1,5 +1,7 @@
 = Test Script
+
 == Set up
+
 .    Change the name of `SampleData.xml` into `addressbook.xml`
 .    Move the `addressbook.xml` file into `~/data/`, where `~` is the directory you have the jar file located at
 .    Set up a dummy gmail account for use in synchronising contacts
