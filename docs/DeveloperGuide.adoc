@@ -939,7 +939,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |onging user |have a backup of my addressbook data |restore my addressbook if the storage file becomes corrupted
+|`* * *` |ongoing user |have a backup of my addressbook data |restore my addressbook if the storage file becomes corrupted
 
 |`* * *` |user |add a new parcel |
 
@@ -947,15 +947,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a parcel by name |locate details of parcels without having to go through the entire list
 
-|`* * *` |user |filter parcels by tags |view specific parcels that are assigned with specific tags
-
 |`* * *` |user |the browser to automatically search for the address of the selected parcel in Google Maps | so that
 I can automatically get information on how to get to an address automatically, on click.
-
-|`* * *` |delivery man who travels a lot |to know the shortest distance from one contact's address to another |
-
-|`* * *` |delivery man who travels a lot |set a reference location |find the shortest distance from my reference
-location to a parcel's delivery location
 
 |`* * *` |delivery company |be able to keep track of my deliveries |deliver the packages on time
 
@@ -963,12 +956,8 @@ location to a parcel's delivery location
 
 |`* * *` |delivery company |sort my deliveries by date |know which packages are more urgent to handle
 
-|`* * *` |delivery man|generate deliver route based on my list of deliveries |know schedule for the day
-
 |`* * *` |delivery company |add a list of deliveries in one shot using Comma Separated Values |conveniently parse
 information from other sources
-
-|`* * *` |delivery company |add deliveries individually |
 
 |`* * *` |delivery company |check for deliveries close to deadline |better prepare for busy periods
 
@@ -976,36 +965,49 @@ information from other sources
 
 |`* *` |new user |to have an autocomplete for the commands |I do not need to remember the format of commands
 
-|`* *` |user |store the sender and receiver addresses |use these addresses as destinations/sources of my deliveries
+|`* *` |lazy user |to be notified of the most optimal path of completing my deliveries based on travelling distance |
 
 |`* *` |lazy user |send and receive parcel details to and from other companies |minimize the amount of data inputs
 
 |`* *` |forgetful user |be reminded of a parcel's delivery date (if valid) |in case I forget the date
 
-|`* *` |user |share details with contacts with a specific tag |minimize chance of someone else seeing them by accident
+|`* *` |forgetful user |view daily deliveries |keep track of daily deliveries
 
 |`* *` |busy user |add and remove tasks |use addressbook as a task manager
 
-|`* *` |user with a changing schedule |edit created tasks |change the details of task
+|`* *` |user |store the sender and receiver addresses |use these addresses as destinations/sources of my deliveries
+
+|`* *` |user |share details with contacts with a specific tag |minimize chance of someone else seeing them by accident
 
 |`* *` |user |assign contacts and locations to tasks |link my tasks with people and places
 
 |`* *` |user |assign an expiry date to tasks |tasks are deleted automatically
 
-|`* *` |lazy user |to be notified of the most optimal path of completing my deliveries based on travelling distance |
+|`* *` |user |filter parcels by tags |view specific parcels that are assigned with specific tags
 
 |`* *` |user |filter tasks according to location |be notified of deliveries I have at a specific location
 
-|`* *` |forgetful user |view daily deliveries |keep track of daily deliveries
-
 |`* *` |user |retrieve my exact location on my device |remember the current address and store my location
+
+|`* *` |user with a changing schedule |edit created tasks |change the details of task
+
+|`* *` |delivery man|be able to check the status of my deliveries on the go|
+
+|`* *` |delivery man|be able to update the status of my deliveries on the go|
+
+|`* *` |delivery man|be able to check the address of the delivery I have to make on the go|
+
+|`* *` |delivery man|generate deliver route based on my list of deliveries |know schedule for the day
+
+|`* *` |delivery man who travels a lot |to know the shortest distance from one contact's address to another |
+
+|`* *` |delivery man who travels a lot |set a reference location |find the shortest distance from my reference
+location to a parcel's delivery location
 
 |`*` |new user |input instructions into a chatbot interface |I do not need to remember the format of commands
 
 |`*` |user with many parcels in the address book |sort parcels by name |locate a parcel easily
 |=======================================================================
-
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -1018,9 +1020,9 @@ information from other sources
 *MSS*
 
 1.  User requests to list parcels
-2.  AddressBook shows a list of parcels and maximizes the `ParcelListPanel` in the `MainWindow` UI
+2.  Ark shows a list of parcels and maximizes the `ParcelListPanel` in the `MainWindow` UI
 3.  User requests to delete a specific parcel in the list
-4.  AddressBook deletes the parcel
+4.  Ark deletes the parcel
 +
 Use case ends
 
@@ -1034,9 +1036,55 @@ Use case ends
 * 3a. The given index is invalid
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Ark shows an error message.
 +
 Use case resumes at step 2
+
+[discrete]
+=== Use case: Add parcel
+
+*MSS*
+
+1.  Use enters add command with the fields: name, tracking number, email, phone number, delivery date, delivery status
+and tags.
+2.  Ark validates that fields are correct.
+3.  Ark adds parcel
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 2a. Ark detects errors in some fields.
++
+[none]
+** 2a1. Ark shows an error message.
++
+Use case ends
+
+[none]
+* 1a. The user does not input an email.
++
+[none]
+** 1a1. Ark adds parcel with `NIL` in the email field.
++
+Use case ends
+
+[none]
+* 1b. The user does not input a phone number.
++
+[none]
+** 1b1. Ark adds parcel with `NIL` in the phone number field.
++
+Use case ends
+
+[none]
+* 1c. The user does not input a status.
++
+[none]
+** 1c1. Ark adds parcel with `PENDING` in the status field.
++
+Use case ends
 
 [discrete]
 === Use case: Add parcel by prompt
@@ -1044,19 +1092,19 @@ Use case resumes at step 2
 *MSS*
 
 1.  User requests to add parcels without further details
-2.  AddressBook prompts user to input parcel identification number of parcel to add
+2.  Ark prompts user to input parcel identification number of parcel to add
 3.  User inputs identification number as requested
-4.  AddressBook prompts user to input name of recipient of parcel to add
+4.  Ark prompts user to input name of recipient of parcel to add
 5.  User inputs name of recipient as requested
-6.  AddressBook prompts user to input phone number of recipient of parcel to add
+6.  Ark prompts user to input phone number of recipient of parcel to add
 7.  User inputs phone number as requested
-8.  AddressBook prompts user to input email of recipient of parcel to add
+8.  Ark prompts user to input email of recipient of parcel to add
 9.  User inputs email as requested
-10.  AddressBook prompts user to input delivery address of parcel to add
+10.  Ark prompts user to input delivery address of parcel to add
 11.  User inputs address as requested
-12.  AddressBook prompts user to input tags of parcel to add
+12.  Ark prompts user to input tags of parcel to add
 13.  User inputs tags as requested [optional]
-14.  AddressBook adds parcel
+14.  Ark adds parcel
 +
 Use case ends
 
@@ -1066,7 +1114,7 @@ Use case ends
 * 3a. The user does not input a parcel identification number
 +
 [none]
-** 3a1. AddressBook shows an error message
+** 3a1. Ark shows an error message
 +
 Use case resumes at step 2
 
@@ -1074,14 +1122,14 @@ Use case resumes at step 2
 * 5a. The user does not input a name
 +
 [none]
-** 5a1. AddressBook shows an error message
+** 5a1. Ark shows an error message
 +
 Use case resumes at step 4
 
 * 7a. The user does not input a valid phone number
 +
 [none]
-** 7a1. AddressBook shows an error message
+** 7a1. Ark shows an error message
 +
 Use case resumes at step 6
 
@@ -1089,29 +1137,59 @@ Use case resumes at step 6
 * 9a. The user does not input a valid email
 +
 [none]
-** 9a1. AddressBook shows an error message
+** 9a1. Ark shows an error message
 +
 Use case resumes at step 8
 
 * 11a. The user does not input a valid address
 +
 [none]
-** 11a1. AddressBook shows an error message
+** 11a1. Ark shows an error message
 +
 Use case resumes at step 10
 
 * 13a. The user does not input a tag
 +
 [none]
-** 13a1. AddressBook shows that no tag has been entered
+** 13a1. Ark shows that no tag has been entered
 +
 Use case resumes at step 14
 
 [none]
-* 14. AddressBook shows error message if same parcel found
+* 14. Ark shows error message if same parcel found
 +
 Use case ends
 
+[discrete]
+=== Use case: Understanding Delivery Dates
+
+*MSS*
+
+1.  User adds a parcel with valid inputs and with `today` as input after delivery date prefix `d/`
+2.  Ark recognises the intent
+3.  Ark adds parcel with the current date on the user's machine
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 1a. The user inputs an more complicated date query such as `the week before christmas eve`
++
+[none]
+** 1a1. Ark recognises the intent
+** 1a2. Ark adds parcel with the date 17-12-2017, with the year being the current year
++
+Use case ends
+
+[none]
+* 1b. The user inputs an invalid date query such as `pen pineapple apple pen`
++
+[none]
+** 1b1. Ark does not recognise the intent
+** 1b2. Ark shows an error message
++
+Use case ends
 
 [discrete]
 === Use case: Upload image of Parcel from local files
@@ -1119,11 +1197,11 @@ Use case ends
 *MSS*
 
 1.  User requests to list parcels
-2.  AddressBook shows a list of parcels and maximizes the `ParcelListPanel` in the `MainWindow` UI
+2.  Ark shows a list of parcels and maximizes the `ParcelListPanel` in the `MainWindow` UI
 3.  User requests to upload image of a specific parcel in the list
-4.  AddressBook prompts for location of image
+4.  Ark prompts for location of image
 5.  User inputs file path
-6.  AddressBook updates image
+6.  Ark updates image
 +
 Use case ends
 
@@ -1137,14 +1215,14 @@ Use case ends.
 * 6a. The file path given is invalid
 +
 [none]
-** 6a1. AddressBook shows an error message
+** 6a1. Ark shows an error message
 +
 Use case resumes at step 4
 
 * 6b. The file type of file given is invalid
 +
 [none]
-** 6b1. AddressBook shows an error message
+** 6b1. Ark shows an error message
 +
 Use case resumes at step 4
 
@@ -1154,7 +1232,7 @@ Use case resumes at step 4
 *MSS*
 
 1.  User requests to set reference location
-2.  AddressBook updates reference location
+2.  Ark updates reference location
 +
 Use case ends
 
@@ -1194,16 +1272,26 @@ Windows, Linux, Unix, OS-X
 [appendix]
 == Product Survey
 
-*Product Name*
+Table 1. *Swift*, reviewed by A. Pen Gwyn +
+|===
+| Pros | Cons
+| Clean UI | Cannot keep track of how parcel is handled e.g Fragile
+| Automated dispatching | Expensive
+| Proprietary batching algorithm |
+|===
 
-Author: ...
+Table 2. *Parcel Management Software*, reviewed by P. Tato +
+|===
+| Pros | Cons
+| Able to keep track of large amounts of data | Poor UI
+| Fast and Reliable  | Cannot add multiple parcels quickly
+| Able to generate delivery routes |
+|===
 
-Pros:
+Table 3. *Journey*, reviewed by John Prodman +
+|===
+| Pros | Cons
+| Clean and Intuitive UI | Slow response time
+| Automated delivery scheduling |
+|===
 
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
