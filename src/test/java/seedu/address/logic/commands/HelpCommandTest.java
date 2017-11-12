@@ -8,9 +8,10 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.logic.CommandTest;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
-public class HelpCommandTest {
+public class HelpCommandTest extends CommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 

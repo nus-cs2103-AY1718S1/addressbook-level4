@@ -16,6 +16,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
 import seedu.address.logic.commands.AddCommand;
@@ -56,7 +57,7 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
-public class AddressBookParserTest {
+public class AddressBookParserTest extends CommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 

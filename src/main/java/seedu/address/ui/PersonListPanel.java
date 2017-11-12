@@ -1,9 +1,5 @@
 package seedu.address.ui;
 
-import static seedu.address.logic.ListObserver.BLACKLIST_NAME_DISPLAY_FORMAT;
-import static seedu.address.logic.ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT;
-import static seedu.address.logic.ListObserver.OVERDUELIST_NAME_DISPLAY_FORMAT;
-import static seedu.address.logic.ListObserver.WHITELIST_NAME_DISPLAY_FORMAT;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 
 import java.util.logging.Logger;
@@ -19,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.DeselectionEvent;
@@ -26,9 +23,6 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.NearbyPersonNotInCurrentListEvent;
 import seedu.address.commons.events.ui.NearbyPersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.logic.commands.BlacklistCommand;
-import seedu.address.logic.commands.OverdueListCommand;
-import seedu.address.logic.commands.WhitelistCommand;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -50,7 +44,7 @@ public class PersonListPanel extends UiPart<Region> {
         super(FXML);
         setConnections(personList);
         this.currentListName = currentListName;
-        selectionDisplay.setText(getCurrentListDisplayName());
+        selectionDisplay.setText(ListObserver.getCurrentListName());
         registerAsAnEventHandler(this);
     }
 
@@ -75,23 +69,7 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     private String getSelectionMessage(int oneBasedIndex) {
-        return getCurrentListDisplayName() + String.format(MESSAGE_SELECT_PERSON_SUCCESS, oneBasedIndex);
-    }
-
-    private String getCurrentListDisplayName() {
-        switch (currentListName) {
-        case BlacklistCommand.COMMAND_WORD:
-            return BLACKLIST_NAME_DISPLAY_FORMAT;
-
-        case WhitelistCommand.COMMAND_WORD:
-            return WHITELIST_NAME_DISPLAY_FORMAT;
-
-        case OverdueListCommand.COMMAND_WORD:
-            return OVERDUELIST_NAME_DISPLAY_FORMAT;
-
-        default:
-            return MASTERLIST_NAME_DISPLAY_FORMAT;
-        }
+        return ListObserver.getCurrentListName() + String.format(MESSAGE_SELECT_PERSON_SUCCESS, oneBasedIndex);
     }
 
     /**
@@ -136,7 +114,7 @@ public class PersonListPanel extends UiPart<Region> {
     @Subscribe
     private void handleDeselectionEvent(DeselectionEvent event) {
         personListView.getSelectionModel().clearSelection();
-        selectionDisplay.setText(getCurrentListDisplayName());
+        selectionDisplay.setText(ListObserver.getCurrentListName());
     }
 
     @Subscribe

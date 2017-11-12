@@ -7,7 +7,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIE
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,23 +14,19 @@ import java.util.List;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.ListObserver;
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
-public class FindCommandTest {
+public class FindCommandTest extends CommandTest {
     public static final String ONE_OR_MORE_SPACES_REGEX = "\\s+";
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void equals() {

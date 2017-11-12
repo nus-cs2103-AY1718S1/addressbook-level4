@@ -13,9 +13,9 @@ public class Username {
     public static final int USERNAME_MIN_LENGTH = 6;
     public static final String MESSAGE_USERNAME_CHARACTERS_CONSTRAINTS = "Username can only consist of uppercase "
                                                                             + "letters (A-Z), lowercase letters (a-z),"
-                                                                            + " digits (0-9) and underscores (_).";
+                                                                            + " digits (0-9) and underscores (_)";
     public static final String MESSAGE_USERNAME_LENGTH_CONSTRAINTS = "Length of username cannot be less than "
-                                                                          + USERNAME_MIN_LENGTH + " characters.";
+                                                                          + USERNAME_MIN_LENGTH + " characters";
     public static final String USERNAME_VALIDATION_REGEX = "^[a-zA-Z0-9_]+$";
 
     private String value;

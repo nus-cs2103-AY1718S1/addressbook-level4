@@ -39,7 +39,7 @@ import seedu.address.model.tag.Tag;
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
-    public static final String MESSAGE_INVALID_DEBT = "Unable to add a person with no debt.";
+    public static final String MESSAGE_INVALID_DEBT = "Unable to add a person with no debt";
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand

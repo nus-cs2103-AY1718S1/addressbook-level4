@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -24,41 +25,39 @@ public class RepaidCommand extends UndoableCommand {
     public static final String MESSAGE_REPAID_PERSON_SUCCESS = "%1$s has now repaid his/her debt";
     public static final String MESSAGE_REPAID_PERSON_FAILURE = "%1$s has already repaid debt!";
 
-    private final Index targetIndex;
+    private final ReadOnlyPerson personToWhitelist;
 
-    public RepaidCommand() {
-        this.targetIndex = null;
+    public RepaidCommand() throws CommandException {
+        personToWhitelist = selectPersonForCommand();
     }
 
-    public RepaidCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
+    public RepaidCommand(Index targetIndex) throws CommandException {
+        personToWhitelist = selectPersonForCommand(targetIndex);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
         String messageToDisplay = MESSAGE_REPAID_PERSON_SUCCESS;
-
-        ReadOnlyPerson personToWhitelist = selectPerson(targetIndex);
+        ReadOnlyPerson targetPerson = personToWhitelist;
 
         if (personToWhitelist.getDebt().toNumber() == 0) {
             messageToDisplay = MESSAGE_REPAID_PERSON_FAILURE;
         } else {
-            model.addWhitelistedPerson(personToWhitelist);
+            targetPerson = model.addWhitelistedPerson(personToWhitelist);
         }
 
-        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        reselectPerson(targetPerson);
 
-        String currentList = listObserver.getCurrentListName();
+        String currentList = ListObserver.getCurrentListName();
 
-        return new CommandResult(currentList + String.format(messageToDisplay, personToWhitelist.getName()));
+        return new CommandResult(currentList + String.format(messageToDisplay, targetPerson.getName()));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof RepaidCommand // instanceof handles nulls
-                && ((this.targetIndex == null && ((RepaidCommand) other).targetIndex == null) // both targetIndex null
-                || this.targetIndex.equals(((RepaidCommand) other).targetIndex))); // state check
+                && this.personToWhitelist.equals(((RepaidCommand) other).personToWhitelist)); // state check
     }
 }

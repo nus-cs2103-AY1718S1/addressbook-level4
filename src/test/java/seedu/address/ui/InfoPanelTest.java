@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.InfoPanelHandle;
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -34,6 +35,7 @@ public class InfoPanelTest extends GuiUnitTest {
     @Before
     public void setUp() {
         logicStub = new LogicManager(new ModelManager());
+        ListObserver.init(new ModelManager());
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
 
         guiRobot.interact(() -> infoPanel = new InfoPanel(logicStub));

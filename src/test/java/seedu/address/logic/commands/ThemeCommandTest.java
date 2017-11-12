@@ -5,11 +5,13 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.logic.CommandTest;
+
 //@@author khooroko
 /**
  * Contains integration tests (interaction with the Model) for {@code ThemeCommand}.
  */
-public class ThemeCommandTest {
+public class ThemeCommandTest extends CommandTest {
 
     @Test
     public void execute_changeTheme_success() {

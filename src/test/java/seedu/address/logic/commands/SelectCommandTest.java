@@ -8,37 +8,27 @@ import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.ListObserver;
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code SelectCommand}.
  */
-public class SelectCommandTest {
+public class SelectCommandTest extends CommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
-
-    private Model model;
-
-    @Before
-    public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    }
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
@@ -83,31 +73,36 @@ public class SelectCommandTest {
     @Test
     public void execute_emptyList_failure() {
         model = new ModelManager();
+        ListObserver.init(model);
         assertExecutionFailure(null, SelectCommand.MESSAGE_EMPTY_LIST_SELECTION_FAILURE);
     }
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON);
-        SelectCommand selectThirdCommand = new SelectCommand();
+        try {
+            SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON);
+            SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON);
+            SelectCommand selectThirdCommand = new SelectCommand();
 
-        // same object -> returns true
-        assertTrue(selectFirstCommand.equals(selectFirstCommand));
-        assertTrue(selectThirdCommand.equals(selectThirdCommand));
+            // same object -> returns true
+            assertTrue(selectFirstCommand.equals(selectFirstCommand));
+            assertTrue(selectThirdCommand.equals(selectThirdCommand));
 
-        // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON);
-        assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
+            // same values -> returns true
+            SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON);
+            assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
 
-        // different types -> returns false
-        assertFalse(selectFirstCommand.equals(1));
+            // different types -> returns false
+            assertFalse(selectFirstCommand.equals(1));
 
-        // null -> returns false
-        assertFalse(selectFirstCommand.equals(null));
+            // null -> returns false
+            assertFalse(selectFirstCommand.equals(null));
 
-        // different person -> returns false
-        assertFalse(selectFirstCommand.equals(selectSecondCommand));
+            // different person -> returns false
+            assertFalse(selectFirstCommand.equals(selectSecondCommand));
+        } catch (CommandException ce) {
+            ce.printStackTrace();
+        }
     }
 
     /**
@@ -115,14 +110,12 @@ public class SelectCommandTest {
      * is raised with the correct index.
      */
     private void assertExecutionSuccess(Index index) {
-        SelectCommand selectCommand = prepareCommand(index);
-
-        ListObserver listObserver = new ListObserver(model);
         try {
+            SelectCommand selectCommand = prepareCommand(index);
             CommandResult commandResult = selectCommand.execute();
             assertEquals(ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
                     + String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS,
-                    listObserver.getIndexofSelectedPersonInCurrentList().getOneBased()), commandResult.feedbackToUser);
+                    ListObserver.getIndexOfSelectedPersonInCurrentList().getOneBased()), commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
@@ -131,7 +124,7 @@ public class SelectCommandTest {
         if (index != null) {
             assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
         }
-        assertEquals(listObserver.getIndexofSelectedPersonInCurrentList(),
+        assertEquals(ListObserver.getIndexOfSelectedPersonInCurrentList(),
                 Index.fromZeroBased(lastEvent.targetIndex));
     }
 
@@ -140,9 +133,8 @@ public class SelectCommandTest {
      * is thrown with the {@code expectedMessage}.
      */
     private void assertExecutionFailure(Index index, String expectedMessage) {
-        SelectCommand selectCommand = prepareCommand(index);
-
         try {
+            SelectCommand selectCommand = prepareCommand(index);
             selectCommand.execute();
             fail("The expected CommandException was not thrown.");
         } catch (CommandException ce) {
@@ -154,7 +146,7 @@ public class SelectCommandTest {
     /**
      * Returns a {@code SelectCommand} with parameters {@code index}.
      */
-    private SelectCommand prepareCommand(Index index) {
+    private SelectCommand prepareCommand(Index index) throws CommandException {
         SelectCommand selectCommand;
         if (index == null) {
             selectCommand = new SelectCommand();
