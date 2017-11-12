@@ -274,7 +274,7 @@ _Figure 4.8.1 : Rubrika main page_
 image::sort-2.png[width="790"]
 _Figure 4.8.1 : Sort confirmation message_
 
-Your list of contacts should not be displayed in the specified order based on your choice.
+Your list of contacts should now be displayed in the specified order based on your choice.
 
 Do take note that:
 ****
