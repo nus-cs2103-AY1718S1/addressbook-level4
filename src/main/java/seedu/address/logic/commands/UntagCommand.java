@@ -74,9 +74,11 @@ public class UntagCommand extends UndoableCommand {
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> personsToUpdate = new ArrayList<>();
 
         if (toAllInFilteredList) {
-            removeTagsFromPersons(lastShownList, tags);
+            personsToUpdate.addAll(lastShownList);
+            removeTagsFromPersons(personsToUpdate, tags);
             deleteUnusedTagsInTagList(new ArrayList<>(tags.isEmpty()
                     ? new ArrayList<>(model.getAddressBook().getTagList()) : tags));
             return (tags.isEmpty()) ? new CommandResult(MESSAGE_SUCCESS_ALL_TAGS_IN_LIST)
@@ -89,7 +91,6 @@ public class UntagCommand extends UndoableCommand {
             }
         }
 
-        List<ReadOnlyPerson> personsToUpdate = new ArrayList<>();
         List<Name> toBeUntaggedPersonNames = new ArrayList<>();
         if (tags.isEmpty()) {
             for (Index targetIndex : targetIndexes) {
@@ -137,12 +138,14 @@ public class UntagCommand extends UndoableCommand {
     }
 
     /**
-     * Removes a tag from the person
+     * Removes specified tags from the person list
      * Removes all tags if tag is not specified
      * @param persons to be untagged
      * @param tags to be removed
      */
     private void removeTagsFromPersons(List<ReadOnlyPerson> persons, List<Tag> tags) throws CommandException {
+        assert persons != null;
+
         for (ReadOnlyPerson person : persons) {
             Person untaggedPerson = new Person(person);
             UniqueTagList updatedTags = new UniqueTagList();
