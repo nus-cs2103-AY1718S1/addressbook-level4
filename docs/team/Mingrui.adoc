@@ -3,6 +3,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
++ifdef::env-github[]
+ +https://cs2103aug2017-w11-b2.github.io/main/team/Mingrui.html[Please click here to view portfolio.]
+ +endif::[]
+ +
+ +ifndef::env-github[]
 == Project: Rolodex
 include::../../README.adoc[tag=applicationDescription]
 
