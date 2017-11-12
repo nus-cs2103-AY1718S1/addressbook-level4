@@ -5,14 +5,14 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.3">
-<title>Death Note v1.5 - User Guide</title>
+<title>DeathNote v2.0 - User Guide</title>
 <link rel="stylesheet" href="stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>Death Note v1.5 - User Guide</h1>
+<h1>DeathNote v2.0 - User Guide</h1>
 </div>
 <div id="content">
 <div id="preamble">
@@ -21,9 +21,13 @@
 <p>By: <code>CS2103AUG2017-W10-B3</code>      Since: <code>Jun 2016</code>      Licence: <code>MIT</code></p>
 </div>
 <div class="paragraph">
-<p>This user guide contains all the essential information required to make full use of Death Note. It also includes the
-description of the application&#8217;s system function, abilities and step-by-step procedures to be able to use Death Note
+<p>This user guide contains all the essential information required to make full use of DeathNote. It also includes the
+description of the application&#8217;s system function, abilities and step-by-step procedures to be able to use DeathNote
 effectively.</p>
+</div>
+<div class="paragraph">
+<p>Besides managing contacts, Death Note brings entertainment to you by having aliases for its commands and the entertainment
+it brings is only limited by your creativity.</p>
 </div>
 </div>
 <div id="toc" class="toc">
@@ -31,36 +35,36 @@ effectively.</p>
 <ul class="sectlevel1">
 <li><a href="#getting-started">1. Getting Started</a>
 <ul class="sectlevel2">
-<li><a href="#introduction">1.1. Introduction</a></li>
-<li><a href="#installation">1.2. Installation</a></li>
-<li><a href="#30-second-tutorial">1.3. 30-Second Tutorial</a></li>
+<li><a href="#installation">1.1. Installation</a></li>
+<li><a href="#30-second-tutorial">1.2. 30-Second Tutorial</a></li>
+<li><a href="#command-line-syntax">1.3. Command Line Syntax</a></li>
 <li><a href="#getting-help">1.4. Getting Help</a></li>
 </ul>
 </li>
-<li><a href="#basic-usage">2. Basic Usage</a>
+<li><a href="#common-usage">2. Common Usage</a>
 <ul class="sectlevel2">
-<li><a href="#command-line-syntax">2.1. Command Line Syntax</a></li>
-<li><a href="#adding-a-person-code-add-code-code-a-code-em-since-v1-2-em">2.2. Adding a person: <code>add</code> / <code>a</code> <em>[Since v1.2]</em></a></li>
-<li><a href="#listing-all-persons-code-list-code-code-l-code">2.3. Listing all persons : <code>list</code> / <code>l</code></a></li>
-<li><a href="#sorting-all-persons">2.4. Sorting all persons</a></li>
-<li><a href="#editing-a-person-code-edit-code-code-e-code-em-since-v1-2-em">2.5. Editing a person : <code>edit</code> / <code>e</code> <em>[Since v1.2]</em></a></li>
-<li><a href="#deleting-a-person-code-delete-code-code-d-code">2.6. Deleting a person : <code>delete</code> / <code>d</code></a></li>
-<li><a href="#selecting-a-person-code-select-code-code-s-code">2.7. Selecting a person : <code>select</code> / <code>s</code></a></li>
-<li><a href="#adding-remarks-code-remark-code-em-since-v1-1-em">2.8. Adding Remarks : <code>remark</code> <em>[Since v1.1]</em></a></li>
-<li><a href="#listing-entered-commands-code-history-code-code-h-code">2.9. Listing entered commands : <code>history</code> / <code>h</code></a></li>
-<li><a href="#undoing-previous-command-code-undo-code-code-u-code">2.10. Undoing previous command : <code>undo</code> / <code>u</code></a></li>
-<li><a href="#redoing-the-previously-undone-command-code-redo-code-code-r-code">2.11. Redoing the previously undone command : <code>redo</code> / <code>r</code></a></li>
-<li><a href="#clearing-all-entries-code-clear-code-code-c-code">2.12. Clearing all entries : <code>clear</code> / <code>c</code></a></li>
-<li><a href="#open-birthday-reminders-window-code-reminders-code-code-rem-code">2.13. Open Birthday Reminders Window : <code>reminders</code> / <code>rem</code></a></li>
-<li><a href="#change-theme-of-the-application-code-theme-code-em-since-v1-2-em">2.14. Change theme of the application : <code>theme</code> <em>[Since v1.2]</em></a></li>
-<li><a href="#exiting-the-program-code-exit-code">2.15. Exiting the program : <code>exit</code></a></li>
-<li><a href="#open-or-create-new-contact-list-em-since-v1-3-em">2.16. Open or create new contact list <em>[Since v1.3]</em></a></li>
-<li><a href="#saving-the-data">2.17. Saving the data</a></li>
+<li><a href="#add-a-person-code-add-code-code-a-code-code-curse-code-em-since-v1-2-em">2.1. Add a person: <code>add</code> / <code>a</code> / <code>curse</code> <em>[Since v1.2]</em></a></li>
+<li><a href="#add-a-remark-code-remark-code-em-since-v1-1-em">2.2. Add a remark : <code>remark</code> <em>[Since v1.1]</em></a></li>
+<li><a href="#edit-a-person-code-edit-code-code-e-code-code-mutate-code-em-since-v1-2-em">2.3. Edit a person : <code>edit</code> / <code>e</code> / <code>mutate</code> <em>[Since v1.2]</em></a></li>
+<li><a href="#delete-a-person-code-delete-code-code-d-code-code-destroy-code">2.4. Delete a person : <code>delete</code> / <code>d</code> / <code>destroy</code></a></li>
+<li><a href="#find-a-person-code-find-code-code-f-code-code-summon-code-em-improved-since-v1-3-em">2.5. Find a person: <code>find</code> / <code>f</code> / <code>summon</code> <em>[Improved since v1.3]</em></a></li>
+<li><a href="#select-a-person-code-select-code-code-s-code">2.6. Select a person : <code>select</code> / <code>s</code></a></li>
+<li><a href="#list-all-persons-code-list-code-code-l-code">2.7. List all persons : <code>list</code> / <code>l</code></a></li>
+<li><a href="#create-new-deathnote-code-new-code-code-n-code-em-since-v1-4-em">2.8. Create new DeathNote : <code>new</code> / <code>n</code> <em>[Since v1.4]</em></a></li>
+<li><a href="#open-existing-deathnote-code-open-code-code-o-code-em-since-v1-4-em">2.9. Open existing DeathNote : <code>open</code> / <code>o</code> <em>[Since v1.4]</em></a></li>
+<li><a href="#exit-deathnote-code-exit-code">2.10. Exit DeathNote : <code>exit</code></a></li>
 </ul>
 </li>
 <li><a href="#advanced-topics">3. Advanced Topics</a>
 <ul class="sectlevel2">
-<li><a href="#aliases">3.1. Aliases</a></li>
+<li><a href="#view-birthday-reminder-code-reminders-code-code-rem-code-em-since-v1-4-em">3.1. View birthday reminder : <code>reminders</code> / <code>rem</code> <em>[Since v1.4]</em></a></li>
+<li><a href="#clear-all-entries-code-clear-code-code-c-code-code-purge-code">3.2. Clear all entries : <code>clear</code> / <code>c</code> / <code>purge</code></a></li>
+<li><a href="#undo-previous-command-code-undo-code-code-u-code">3.3. Undo previous command : <code>undo</code> / <code>u</code></a></li>
+<li><a href="#redo-the-previously-undone-command-code-redo-code-code-r-code">3.4. Redo the previously undone command : <code>redo</code> / <code>r</code></a></li>
+<li><a href="#list-entered-commands-code-history-code-code-h-code">3.5. List entered commands : <code>history</code> / <code>h</code></a></li>
+<li><a href="#change-theme-code-theme-code-em-since-v1-2-em">3.6. Change theme : <code>theme</code> <em>[Since v1.2]</em></a></li>
+<li><a href="#sorting-behavior-em-since-v1-3-em">3.7. Sorting Behavior <em>[Since v1.3]</em></a></li>
+<li><a href="#saving-mechanism">3.8. Saving Mechanism</a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -78,18 +82,7 @@ effectively.</p>
 <h2 id="getting-started"><a class="link" href="#getting-started">1. Getting Started</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="introduction"><a class="link" href="#introduction">1.1. Introduction</a></h3>
-<div class="paragraph">
-<p>Death Note allows you to store the name, profile picture, phone number, email, address, birthday and website of
-your contacts. It also allows you to add tags and remarks to people stored inside.</p>
-</div>
-<div class="paragraph">
-<p>Besides managing contacts, Death Note brings entertainment to you by having aliases for its commands and the amount
-of entertainment it brings is only limited by your creativity.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="installation"><a class="link" href="#installation">1.2. Installation</a></h3>
+<h3 id="installation"><a class="link" href="#installation">1.1. Installation</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -109,13 +102,13 @@ This app will not work with earlier versions of Java 8.
 </div>
 </li>
 <li>
-<p>Download the latest <code>DeathNote.jar</code> <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/releases">here</a>.</p>
+<p>Download the latest <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/releases"><code>DeathNote.jar</code></a> application.</p>
 </li>
 <li>
-<p>Copy the file to the folder you want to use as the home folder for Death Note.</p>
+<p>Place the application to the folder of your choice. This will be your home folder for DeathNote.</p>
 </li>
 <li>
-<p>Double-click the file to start the program. You should see the graphical user interface (GUI) appear in a few seconds.</p>
+<p>Double-click the file to start the application. You should see the graphical user interface (GUI) appear in a few seconds.</p>
 <div class="imageblock">
 <div class="content">
 <img src="images/Ui.png" alt="Ui" width="800">
@@ -126,9 +119,9 @@ This app will not work with earlier versions of Java 8.
 </div>
 </div>
 <div class="sect2">
-<h3 id="30-second-tutorial"><a class="link" href="#30-second-tutorial">1.3. 30-Second Tutorial</a></h3>
+<h3 id="30-second-tutorial"><a class="link" href="#30-second-tutorial">1.2. 30-Second Tutorial</a></h3>
 <div class="paragraph">
-<p>Let&#8217;s get started. Here is a quick demonstration showing how to perform basic contact management.</p>
+<p>Let&#8217;s get started. Here is a quick demonstration showing how to perform basic contact management with DeathNote.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -160,7 +153,7 @@ New person added: Carol Remarks:</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To view everyone in your Death Note:</p>
+<p>To view everyone in your DeathNote:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -169,12 +162,31 @@ Listed all persons</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>To remove the third person shown on the list from your Death Note:</p>
+<p>To remove the third person shown on the list from your DeathNote:</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>&gt; delete 3</pre>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="command-line-syntax"><a class="link" href="#command-line-syntax">1.3. Command Line Syntax</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Words in <code>UPPER_CASE</code> are parameters to be replaced by the user. <code>add n/NAME</code> can be written as <code>add n/John Doe</code>.</p>
+</li>
+<li>
+<p>Items in square brackets are optional. <code>n/NAME [p/PHONE]</code> can be written as both <code>n/John Doe p/93456635</code> and as <code>n/John Doe</code>.</p>
+</li>
+<li>
+<p>Items with <code>…</code>​ after them can be used multiple (including zero) times. <code>[t/TAG]&#8230;&#8203;</code> can be written as <code>`, `t/friend</code>, <code>t/friend t/family</code>.</p>
+</li>
+<li>
+<p>Parameters can be in any order. If the command specifies <code>n/NAME p/PHONE</code>, <code>p/PHONE n/NAME</code> is also acceptable.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
@@ -186,7 +198,7 @@ Listed all persons</pre>
 <p><strong>User Guide</strong></p>
 </div>
 <div class="paragraph">
-<p>In Death Note command box, type <code>help</code> and a pop-up window will show up containing this User Guide.</p>
+<p>In DeathNote command box, type <code>help</code> to see a pop-up window containing this user guide.</p>
 </div>
 <div class="paragraph">
 <p><strong>GitHub Issue</strong></p>
@@ -205,69 +217,49 @@ the developers will look into it.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="basic-usage"><a class="link" href="#basic-usage">2. Basic Usage</a></h2>
+<h2 id="common-usage"><a class="link" href="#common-usage">2. Common Usage</a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="command-line-syntax"><a class="link" href="#command-line-syntax">2.1. Command Line Syntax</a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Words in <code>UPPER_CASE</code> are the parameters to be supplied by the user e.g. in <code>add n/NAME</code>, <code>NAME</code> is a parameter which can be used as <code>add n/John Doe</code>.</p>
-</li>
-<li>
-<p>Items in square brackets are optional e.g <code>n/NAME [t/TAG]</code> can be used as <code>n/John Doe t/friend</code> or as <code>n/John Doe</code>.</p>
-</li>
-<li>
-<p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>[t/TAG]&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>t/friend</code>, <code>t/friend t/family</code> etc.</p>
-</li>
-<li>
-<p>Parameters can be in any order e.g. if the command specifies <code>n/NAME p/PHONE_NUMBER</code>, <code>p/PHONE_NUMBER n/NAME</code> is also acceptable.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="adding-a-person-code-add-code-code-a-code-em-since-v1-2-em"><a class="link" href="#adding-a-person-code-add-code-code-a-code-em-since-v1-2-em">2.2. Adding a person: <code>add</code> / <code>a</code> <em>[Since v1.2]</em></a></h3>
 <div class="paragraph">
-<p>Adds a person to Death Note<br></p>
+<p>This section covers commonly used commands.</p>
+</div>
+<div class="sect2">
+<h3 id="add-a-person-code-add-code-code-a-code-code-curse-code-em-since-v1-2-em"><a class="link" href="#add-a-person-code-add-code-code-a-code-code-curse-code-em-since-v1-2-em">2.1. Add a person: <code>add</code> / <code>a</code> / <code>curse</code> <em>[Since v1.2]</em></a></h3>
+<div class="paragraph">
+<p>Adds a person to DeathNote<br></p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Format: `add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`</pre>
+<pre>Format: add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Shorthand: `a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`</pre>
+<pre>Shorthand: a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Alias: `mutate n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`</pre>
+<pre>Evil Format: curse n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Only the <strong>NAME</strong> field is compulsory<br></p>
+<p>Only <code>NAME</code> field is compulsory<br></p>
 </li>
 <li>
-<p>Birthday is in dd/MM/yyyy format<br></p>
+<p>Birthday must be in DD/MM/YYYY format<br></p>
 </li>
 <li>
-<p>Picture should be in PNG format<br></p>
+<p>Website must start with <code>https`</code><br></p>
+</li>
+<li>
+<p>Picture must be in PNG format<br></p>
+</li>
+<li>
+<p>Person can have any number of <code>TAG</code> s.</p>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>TIPS:<br></p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>A person can have any number of TAGS.</p>
-</li>
-</ol>
 </div>
 <div class="paragraph">
 <p><span class="big green">Examples</span>:</p>
@@ -278,19 +270,10 @@ the developers will look into it.</p>
 <p><code>add n/Abel</code></p>
 </li>
 <li>
-<p><code>add n/Dickson p/97741234 e/dickson@example.com</code></p>
+<p><code>add n/Boby p/97741234 e/boby@example.com b/15/02/1992 w/https:www.website.com/</code></p>
 </li>
 <li>
-<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01</code></p>
-</li>
-<li>
-<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/15/02/1992</code></p>
-</li>
-<li>
-<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 w/https:www.website.com/</code></p>
-</li>
-<li>
-<p><code>add n/Zulu t/friend e/zulu@example.com a/Newgate Prison p/1234567 t/criminal</code></p>
+<p><code>add n/Carol pic/C:\Users\user\Desktop\Carol.png t/actor t/neighbor</code></p>
 </li>
 <li>
 <p><code>add n/Dwayne Johnson pic/C:\Users\user\Desktop\TheRock.png</code></p>
@@ -299,55 +282,53 @@ the developers will look into it.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-all-persons-code-list-code-code-l-code"><a class="link" href="#listing-all-persons-code-list-code-code-l-code">2.3. Listing all persons : <code>list</code> / <code>l</code></a></h3>
+<h3 id="add-a-remark-code-remark-code-em-since-v1-1-em"><a class="link" href="#add-a-remark-code-remark-code-em-since-v1-1-em">2.2. Add a remark : <code>remark</code> <em>[Since v1.1]</em></a></h3>
 <div class="paragraph">
-<p>Shows a list of all persons in Death Note.<br></p>
+<p>Adds or edits remarks to the person identified by the INDEX</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Format: `list`</pre>
+<pre>Format: remark INDEX r/[REMARK]</pre>
 </div>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>Shorthand: `l`</pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="sorting-all-persons"><a class="link" href="#sorting-all-persons">2.4. Sorting all persons</a></h3>
 <div class="paragraph">
-<p>Listed persons are sorted automatically in alphabetical order. No command is required.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="editing-a-person-code-edit-code-code-e-code-em-since-v1-2-em"><a class="link" href="#editing-a-person-code-edit-code-code-e-code-em-since-v1-2-em">2.5. Editing a person : <code>edit</code> / <code>e</code> <em>[Since v1.2]</em></a></h3>
-<div class="paragraph">
-<p>Edits an existing person in Death Note.<br></p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Format: `edit INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Shorthand: `e INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Alias: `mutate INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`</pre>
-</div>
+<p><span class="big green">Examples</span>:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Birthday is in dd/MM/yyyy format<br></p>
+<p><code>remark 1 r/Likes to drink coffee</code><br>
+Edits the remark for the first person to Likes to drink coffee.</p>
 </li>
 <li>
-<p>Picture should be in PNG format<br></p>
+<p><code>remark 2 r/</code><br>
+Removes the remark for the second person.</p>
 </li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="edit-a-person-code-edit-code-code-e-code-code-mutate-code-em-since-v1-2-em"><a class="link" href="#edit-a-person-code-edit-code-code-e-code-code-mutate-code-em-since-v1-2-em">2.3. Edit a person : <code>edit</code> / <code>e</code> / <code>mutate</code> <em>[Since v1.2]</em></a></h3>
+<div class="paragraph">
+<p>Edits an existing person in DeathNote.<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: edit INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: e INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Evil Format: mutate INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Edits the person at the specified <code>INDEX</code>. The index refers to the index number shown in the last person listing. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
 </li>
@@ -384,27 +365,80 @@ Edits the website of the 2nd person to be <a href="https://www.yahoo.com/" class
 </li>
 <li>
 <p><code>edit 1 pic/C:\pictures\clown.png</code><br>
-Edits the picture of the 1st person to the picture specified in the path i.e. clown.png
-=== Locating persons: <code>find</code> / <code>f</code> <em>[Improved since v1.3]</em></p>
+Edits the picture of the 1st person to the picture specified in the path i.e. clown.png</p>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect2">
+<h3 id="delete-a-person-code-delete-code-code-d-code-code-destroy-code"><a class="link" href="#delete-a-person-code-delete-code-code-d-code-code-destroy-code">2.4. Delete a person : <code>delete</code> / <code>d</code> / <code>destroy</code></a></h3>
+<div class="paragraph">
+<p>Deletes the specified person from DeathNote.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: delete INDEX</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: d INDEX</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Evil Format: destroy INDEX</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deletes the person at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the most recent listing.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="big green">Examples</span>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code><br>
+<code>delete 2</code><br>
+Deletes the 2nd person in the displayed list.</p>
+</li>
+<li>
+<p><code>find Betsy</code><br>
+<code>delete 1</code><br>
+Deletes the 1st person in the results of the <code>find</code> command.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="find-a-person-code-find-code-code-f-code-code-summon-code-em-improved-since-v1-3-em"><a class="link" href="#find-a-person-code-find-code-code-f-code-code-summon-code-em-improved-since-v1-3-em">2.5. Find a person: <code>find</code> / <code>f</code> / <code>summon</code> <em>[Improved since v1.3]</em></a></h3>
 <div class="paragraph">
 <p>Finds persons who matches the given attributes.<br></p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]... `</pre>
+<pre>Format: find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...`</pre>
+<pre>Shorthand: f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Format: `summon [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]... `</pre>
+<pre>Evil Format: summon [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...</pre>
 </div>
 </div>
 <div class="ulist">
@@ -447,69 +481,18 @@ Returns a contact named "John" with phone number "96654253".</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-person-code-delete-code-code-d-code"><a class="link" href="#deleting-a-person-code-delete-code-code-d-code">2.6. Deleting a person : <code>delete</code> / <code>d</code></a></h3>
-<div class="paragraph">
-<p>Deletes the specified person from Death Note.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Format: `delete INDEX`</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Shorthand: `d INDEX`</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Format: `destroy INDEX`</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Deletes the person at the specified <code>INDEX</code>.</p>
-</li>
-<li>
-<p>The index refers to the index number shown in the most recent listing.</p>
-</li>
-<li>
-<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><span class="big green">Examples</span>:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>list</code><br>
-<code>delete 2</code><br>
-Deletes the 2nd person in the displayed list.</p>
-</li>
-<li>
-<p><code>find Betsy</code><br>
-<code>delete 1</code><br>
-Deletes the 1st person in the results of the <code>find</code> command.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="selecting-a-person-code-select-code-code-s-code"><a class="link" href="#selecting-a-person-code-select-code-code-s-code">2.7. Selecting a person : <code>select</code> / <code>s</code></a></h3>
+<h3 id="select-a-person-code-select-code-code-s-code"><a class="link" href="#select-a-person-code-select-code-code-s-code">2.6. Select a person : <code>select</code> / <code>s</code></a></h3>
 <div class="paragraph">
 <p>Selects the person identified by the index number used in the last person listing.<br></p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Format: `select INDEX` +</pre>
+<pre>Format: select INDEX</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Shorthand: `s INDEX`</pre>
+<pre>Shorthand: s INDEX</pre>
 </div>
 </div>
 <div class="ulist">
@@ -547,44 +530,159 @@ Selects the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-remarks-code-remark-code-em-since-v1-1-em"><a class="link" href="#adding-remarks-code-remark-code-em-since-v1-1-em">2.8. Adding Remarks : <code>remark</code> <em>[Since v1.1]</em></a></h3>
+<h3 id="list-all-persons-code-list-code-code-l-code"><a class="link" href="#list-all-persons-code-list-code-code-l-code">2.7. List all persons : <code>list</code> / <code>l</code></a></h3>
 <div class="paragraph">
-<p>Adds or edits remarks to the person identified by the INDEX</p>
+<p>Shows a list of all persons in DeathNote.<br></p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Format: remark INDEX r/[REMARK]</pre>
+<pre>Format: list</pre>
 </div>
 </div>
-<div class="paragraph">
-<p><span class="big green">Examples</span>:</p>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: l</pre>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>remark 1 r/Likes to drink coffee.
-Edits the remark for the first person to Likes to drink coffee.</p>
-</li>
-<li>
-<p>remark 1 r/
-Removes the remark for the first person.</p>
-</li>
-</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-entered-commands-code-history-code-code-h-code"><a class="link" href="#listing-entered-commands-code-history-code-code-h-code">2.9. Listing entered commands : <code>history</code> / <code>h</code></a></h3>
+<h3 id="create-new-deathnote-code-new-code-code-n-code-em-since-v1-4-em"><a class="link" href="#create-new-deathnote-code-new-code-code-n-code-em-since-v1-4-em">2.8. Create new DeathNote : <code>new</code> / <code>n</code> <em>[Since v1.4]</em></a></h3>
 <div class="paragraph">
-<p>Lists all the commands that you have entered in reverse chronological order.<br></p>
+<p>Opens a new instance of DeathNote.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Format: `history`</pre>
+<pre>Format: new PATH</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Shorthand: `h`</pre>
+<pre>Shorthand: n PATH</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>New</code> On GUI:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to the top menu and click File &gt; New.</p>
+</li>
+<li>
+<p>Locate your desired DeathNote data file on the pop-up window. The file will be in an xml format.</p>
+</li>
+<li>
+<p>Select the file and click Save</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="open-existing-deathnote-code-open-code-code-o-code-em-since-v1-4-em"><a class="link" href="#open-existing-deathnote-code-open-code-code-o-code-em-since-v1-4-em">2.9. Open existing DeathNote : <code>open</code> / <code>o</code> <em>[Since v1.4]</em></a></h3>
+<div class="paragraph">
+<p>Opens another existing instance of DeathNote.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: open PATH</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: o PATH</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>Open</code> On GUI:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to the top menu and click File &gt; Open.</p>
+</li>
+<li>
+<p>Locate your desired DeathNote data file on the pop-up window. The file will be in an xml format.</p>
+</li>
+<li>
+<p>Select the file and click Open</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="exit-deathnote-code-exit-code"><a class="link" href="#exit-deathnote-code-exit-code">2.10. Exit DeathNote : <code>exit</code></a></h3>
+<div class="paragraph">
+<p>Exits DeathNote.<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: exit</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="advanced-topics"><a class="link" href="#advanced-topics">3. Advanced Topics</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section contains more sophisticated usage of DeathNote.</p>
+</div>
+<div class="sect2">
+<h3 id="view-birthday-reminder-code-reminders-code-code-rem-code-em-since-v1-4-em"><a class="link" href="#view-birthday-reminder-code-reminders-code-code-rem-code-em-since-v1-4-em">3.1. View birthday reminder : <code>reminders</code> / <code>rem</code> <em>[Since v1.4]</em></a></h3>
+<div class="paragraph">
+<p>Opens the birthday Reminders Window. The same can be done by clicking Reminders -&#8594; Birthdays</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/birthdayalarmwindow.JPG" alt="birthdayalarmwindow">
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: reminders</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: rem</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clear-all-entries-code-clear-code-code-c-code-code-purge-code"><a class="link" href="#clear-all-entries-code-clear-code-code-c-code-code-purge-code">3.2. Clear all entries : <code>clear</code> / <code>c</code> / <code>purge</code></a></h3>
+<div class="paragraph">
+<p>Clears all entries from DeathNote.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: clear</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: c</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Evil Format: purge</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="undo-previous-command-code-undo-code-code-u-code"><a class="link" href="#undo-previous-command-code-undo-code-code-u-code">3.3. Undo previous command : <code>undo</code> / <code>u</code></a></h3>
+<div class="paragraph">
+<p>Restores the DeathNote to the state before the previous <em>undoable</em> command was executed.<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: undo</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: u</pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -595,37 +693,7 @@ Removes the remark for the first person.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Pressing the <kbd>&uarr;</kbd> and <kbd>&darr;</kbd> arrows will display the previous and next input respectively in the command box.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="undoing-previous-command-code-undo-code-code-u-code"><a class="link" href="#undoing-previous-command-code-undo-code-code-u-code">2.10. Undoing previous command : <code>undo</code> / <code>u</code></a></h3>
-<div class="paragraph">
-<p>Restores the Death Note to the state before the previous <em>undoable</em> command was executed.<br></p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Format: `undo`</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Shorthand: `u`</pre>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Undoable commands: those commands that modify the Death Note&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
+<p>Undoable commands: those commands that modify the DeathNote&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
 </div>
 </td>
 </tr>
@@ -657,18 +725,18 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 </div>
 </div>
 <div class="sect2">
-<h3 id="redoing-the-previously-undone-command-code-redo-code-code-r-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code-code-r-code">2.11. Redoing the previously undone command : <code>redo</code> / <code>r</code></a></h3>
+<h3 id="redo-the-previously-undone-command-code-redo-code-code-r-code"><a class="link" href="#redo-the-previously-undone-command-code-redo-code-code-r-code">3.4. Redo the previously undone command : <code>redo</code> / <code>r</code></a></h3>
 <div class="paragraph">
 <p>Reverses the most recent <code>undo</code> command.<br></p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Format: `redo`</pre>
+<pre>Format: redo</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Shorthand: `r`</pre>
+<pre>Shorthand: r</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -698,51 +766,43 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </div>
 </div>
 <div class="sect2">
-<h3 id="clearing-all-entries-code-clear-code-code-c-code"><a class="link" href="#clearing-all-entries-code-clear-code-code-c-code">2.12. Clearing all entries : <code>clear</code> / <code>c</code></a></h3>
+<h3 id="list-entered-commands-code-history-code-code-h-code"><a class="link" href="#list-entered-commands-code-history-code-code-h-code">3.5. List entered commands : <code>history</code> / <code>h</code></a></h3>
 <div class="paragraph">
-<p>Clears all entries from Death Note.</p>
+<p>Lists all the commands that you have entered in reverse chronological order.<br></p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Format: `clear`</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Shorthand: `c`</pre>
+<pre>Format: history</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Alias: `purge`</pre>
+<pre>Shorthand: h</pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Pressing the <kbd>&uarr;</kbd> and <kbd>&darr;</kbd> arrows will display the previous and next input respectively in the command box.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="open-birthday-reminders-window-code-reminders-code-code-rem-code"><a class="link" href="#open-birthday-reminders-window-code-reminders-code-code-rem-code">2.13. Open Birthday Reminders Window : <code>reminders</code> / <code>rem</code></a></h3>
+<h3 id="change-theme-code-theme-code-em-since-v1-2-em"><a class="link" href="#change-theme-code-theme-code-em-since-v1-2-em">3.6. Change theme : <code>theme</code> <em>[Since v1.2]</em></a></h3>
 <div class="paragraph">
-<p>Opens the birthday Reminders Window. The same can be done by clicking Reminders -&#8594; Birthdays</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/birthdayalarmwindow.JPG" alt="birthdayalarmwindow">
-</div>
-</div>
-<div class="paragraph">
-<p>Format: <code>reminders</code></p>
-</div>
-<div class="paragraph">
-<p>Shorthand: <code>rem</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="change-theme-of-the-application-code-theme-code-em-since-v1-2-em"><a class="link" href="#change-theme-of-the-application-code-theme-code-em-since-v1-2-em">2.14. Change theme of the application : <code>theme</code> <em>[Since v1.2]</em></a></h3>
-<div class="paragraph">
-<p>Changes the theme of Death Note.<br></p>
+<p>Changes the theme of DeathNote.<br></p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Format: `theme`</pre>
+<pre>Format: theme</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -785,151 +845,19 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 <img src="images/darkTheme.png" alt="darkTheme" width="200">
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="sorting-behavior-em-since-v1-3-em"><a class="link" href="#sorting-behavior-em-since-v1-3-em">3.7. Sorting Behavior <em>[Since v1.3]</em></a></h3>
 <div class="paragraph">
-<p>Aliases for themes: holy, evil</p>
+<p>Listed persons are sorted automatically in alphabetical order. No command is required.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">2.15. Exiting the program : <code>exit</code></a></h3>
+<h3 id="saving-mechanism"><a class="link" href="#saving-mechanism">3.8. Saving Mechanism</a></h3>
 <div class="paragraph">
-<p>Exits Death Note.<br></p>
+<p>The data used in DeathNote is saved in the hard disk automatically after executing
+command that changes the data. There is no need to save manually.</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>Format: `exit`</pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="open-or-create-new-contact-list-em-since-v1-3-em"><a class="link" href="#open-or-create-new-contact-list-em-since-v1-3-em">2.16. Open or create new contact list <em>[Since v1.3]</em></a></h3>
-<div class="paragraph">
-<p>Opens or creates another Death Note data file from within the application.</p>
-</div>
-<div class="paragraph">
-<p><code>Open</code> On GUI:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Go to the top menu and click File &gt; Open.</p>
-</li>
-<li>
-<p>Locate your desired Death Note data file on the pop-up window. The file will be in an xml format.</p>
-</li>
-<li>
-<p>Select the file and click Open</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><code>New</code> On GUI:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Go to the top menu and click File &gt; New.</p>
-</li>
-<li>
-<p>Locate your desired Death Note data file on the pop-up window. The file will be in an xml format.</p>
-</li>
-<li>
-<p>Select the file and click Save</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">2.17. Saving the data</a></h3>
-<div class="paragraph">
-<p>The data used in Death Note data is saved in the hard disk automatically after any
-command that changes the data is executed. There is no need to save manually.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="advanced-topics"><a class="link" href="#advanced-topics">3. Advanced Topics</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This section contains more sophisticated usage of Death Note.</p>
-</div>
-<div class="sect2">
-<h3 id="aliases"><a class="link" href="#aliases">3.1. Aliases</a></h3>
-<div class="paragraph">
-<p>Most of the commands have an associated alias. This is for experienced users to increase their productivity when using
-Death Note.</p>
-</div>
-<table class="tableblock frame-all grid-all" style="width: 59%;">
-<colgroup>
-<col style="width: 33%;">
-<col style="width: 33%;">
-<col style="width: 33%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Command</th>
-<th class="tableblock halign-left valign-top">Shorthand</th>
-<th class="tableblock halign-left valign-top">Aliases</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>a</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>curse</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>list</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>l</code></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>e</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mutate</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>find</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>f</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>summon</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>d</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>destroy</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>select</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>s</code></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>history</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>h</code></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>undo</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>u</code></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redo</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>r</code></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clear</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>c</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>purge</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>theme</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>t</code></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 </div>
@@ -947,63 +875,84 @@ Death Note.</p>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="command-summary"><a class="link" href="#command-summary">5.1. Command Summary</a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Help</strong> : <code>help</code><br></p>
-</li>
-<li>
-<p><strong>Add</strong> <code>add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [pic/FILEPATH] [w/WEBSITE] [t/TAG]&#8230;&#8203;</code><br>
-e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/20/10/2000 pic/C:\Picuture\profile.png w/https://www.yahoo.com/ t/friend t/colleague</code><br></p>
-</li>
-<li>
-<p><strong>List</strong> : <code>list</code><br></p>
-</li>
-<li>
-<p><strong>Sort</strong> : <code>sort</code><br></p>
-</li>
-<li>
-<p><strong>Edit</strong> : <code>edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [pic/FILEPATH] [w/WEBSITE] [t/TAG]&#8230;&#8203;</code><br>
-e.g. <code>edit 2 n/James Lee e/jameslee@example.com</code><br></p>
-</li>
-<li>
-<p><strong>Profile</strong>: <code>profile C:\Users\User\Pictures\Saved Pictures\alex.jpg</code><br></p>
-</li>
-<li>
-<p><strong>Find</strong> : <code>find KEYWORD [MORE_KEYWORDS]</code><br>
-e.g. <code>find James Jake</code></p>
-</li>
-<li>
-<p><strong>Delete</strong> : <code>delete INDEX</code><br>
-e.g. <code>delete 3</code><br></p>
-</li>
-<li>
-<p><strong>Select</strong> : <code>select INDEX</code><br>
-e.g.<code>select 2</code></p>
-</li>
-<li>
-<p><strong>Remark</strong> : <code>remark index r/Likes to drink coffee</code><br></p>
-</li>
-<li>
-<p><strong>History</strong> : <code>history</code><br></p>
-</li>
-<li>
-<p><strong>Undo</strong> : <code>undo</code><br></p>
-</li>
-<li>
-<p><strong>Redo</strong> : <code>redo</code><br></p>
-</li>
-<li>
-<p><strong>Clear</strong> : <code>clear</code><br></p>
-</li>
-<li>
-<p><strong>Theme</strong> : <code>theme light</code><br></p>
-</li>
-<li>
-<p><strong>Exit</strong> : <code>exit</code><br></p>
-</li>
-</ul>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 12%;">
+<col style="width: 88%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Command</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [pic/PATH] [w/WEBSITE] [t/TAG]&#8230;&#8203;</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>remark</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>remark INDEX r/REMARK</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [pic/PATH] [w/WEBSITE] [t/TAG]&#8230;&#8203;</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete INDEX</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>find</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]&#8230;&#8203;</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>select</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>select INDEX</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>list</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>list</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>new</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>new PATH</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>open</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>open PATH</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>exit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>exit</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>reminders</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>reminders</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clear</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clear</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>undo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>undo</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redo</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>history</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>history</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>theme</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>theme light</code> <code>theme dark</code></p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="available-parameters"><a class="link" href="#available-parameters">5.2. Available Parameters</a></h3>
@@ -1023,7 +972,7 @@ e.g.<code>select 2</code></p>
 <p><strong>Address</strong>:  a/&lt;Address of person (can be any value)&gt;<br></p>
 </div>
 <div class="paragraph">
-<p><strong>Birthday</strong>: b/&lt;(dd/MM/yyyy)&gt;<br></p>
+<p><strong>Birthday</strong>: b/&lt;DD/MM/YYYY&gt;<br></p>
 </div>
 <div class="paragraph">
 <p><strong>Profile Picture</strong>: pic/&lt;VALID FILE PATH&gt;<br></p>
@@ -1059,7 +1008,7 @@ e.g.<code>select 2</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-12 20:11:48 +08:00
+Last updated 2017-11-12 21:50:51 +08:00
 </div>
 </div>
 </body>

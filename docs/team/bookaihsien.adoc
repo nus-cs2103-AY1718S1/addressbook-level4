@@ -4,12 +4,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: DeathNote
-DeathNote is a desktop address book application used for teaching Software Engineering principles. The user interacts
-with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
 *Code contributed*:
-[https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/main/chrisboo.md[Functional code]]
-[https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/test/chrisboo.md[Test code]]
+https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/main/chrisboo.md[Functional code]
+https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/test/chrisboo.md[Test code]
+
+DeathNote is a desktop address book application to remember the people you hate. The user interacts with the application
+mainly using a command line interface, and minimal GUI interface created with JavaFX. The project is written in Java.
 
 === Enhancement Added: Improve flexibility of `add` command
 
@@ -19,11 +20,7 @@ with it using a CLI, and it has a GUI created with JavaFX. It is written in Java
 
 #Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
-Adds a person to Death Note +
-
-  Format: `add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
-
-  Shorthand: `a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
+include::../UserGuide.adoc[tag=add]
 
 #End of Extract#
 
@@ -31,56 +28,21 @@ Adds a person to Death Note +
 
 ==== Justification
 
-This feature allows flexibility in the usage of Death Note.
+Most of the time we don't have the full contact information about a person. This feature allows them to use DeathNote just as well.
 
 ==== Implementation
 
 ---
 
-#Start of Extract [from: Developer Guide]#
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
 
-This is done by allowing the creation of `Phone`, `Email`, etc. objects with `null` parameter.
-
-Problems arise when these field classes can created with a `null` parameter. Necessary changes are mostly about additional
-checks of `null` in its respective class:
-
-----
-    public Phone(String phone) throws IllegalValueException {
-        String trimmedPhone = phone == null ? null : phone.trim();
-        if (!isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
-        }
-        this.value = trimmedPhone;
-    }
-----
-
-----
-    public static boolean isValidPhone(String test) {
-        return test == null || test.matches(PHONE_VALIDATION_REGEX);
-    }
-----
-
-----
-    public boolean equals(Object other) {
-        if (other == this) { // short circuit if same object
-            return true;
-        } else if (!(other instanceof Phone)) { // instanceof handle nulls
-            return false;
-        } else if (this.value == ((Phone) other).value) {
-            return true;
-        } else if (this.value != null && this.value.equals(((Phone) other).value)) { // state check
-            return true;
-        }
-
-        return false;
-    }
-----
+include::../DeveloperGuide.adoc[tag=add]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Added: Open or create new address book
+=== Enhancement Added: Working with Multiple DeathNote
 
 ==== External behavior
 
@@ -88,19 +50,7 @@ checks of `null` in its respective class:
 
 #Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
-Opens or creates another Death Note data file from within the application.
-
-`Open` On GUI:
-
-. Go to the top menu and click File > Open.
-. Locate your desired Death Note data file on the pop-up window. The file will be in an xml format.
-. Select the file and click Open
-
-`New` On GUI:
-
-. Go to the top menu and click File > New.
-. Locate your desired Death Note data file on the pop-up window. The file will be in an xml format.
-. Select the file and click Save
+include::../UserGuide.adoc[tag=opennew]
 
 #End of Extract#
 
@@ -108,21 +58,15 @@ Opens or creates another Death Note data file from within the application.
 
 ==== Justification
 
-This feature allows user to manage different version of address book. Suitable when more than one user
-are using the app on the same device.
+This feature allows multiple users to use the same application on the same device but accessing their own version of DeathNote.
 
 ==== Implementation
 
 ---
 
-#Start of Extract [from: Developer Guide]#
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
 
-image::OpenAddressBookEvent.png[width="800"]
-_Figure 4.2.1 : Open New Address Book Sequence Diagram_
-
-As you can see from the diagram, when the `Open` button is clicked in the Application, it raises an event and triggers `MainApp` to update new Application metadata and restart the UI.
-
-This loads the selected XML file which opens a new address book with contacts from selected XML file.
+include::../DeveloperGuide.adoc[tag=opennew]
 
 #End of Extract#
 
@@ -130,24 +74,13 @@ This loads the selected XML file which opens a new address book with contacts fr
 
 === Enhancement Added: Improve `find` command
 
-
 ==== External behavior
 
 ---
 
 #Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
-Finds persons who matches the given attributes. +
-
-  Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]... `
-
-  Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...`
-
-* Searches based on the input and prefix.
-* The search is case insensitive for NAME. e.g `hans` will match `Hans`
-* The order of the keywords for NAME does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* The other prefixes require the exact words
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+include::../UserGuide.adoc[tag=find]
 
 #End of Extract#
 
@@ -155,15 +88,15 @@ Finds persons who matches the given attributes. +
 
 ==== Justification
 
-This allows user to find a person faster and easier.
+This feature allows user to find by name, phone number, tags etc.
 
 ==== Implementation
 
 ---
 
-#Start of Extract [from: Developer Guide]#
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
 
-
+include::../DeveloperGuide.adoc[tag=find]
 
 #End of Extract#
 
@@ -171,6 +104,6 @@ This allows user to find a person faster and easier.
 
 === Other contributions
 
+. Set up project website.
 . Add shorthand to commands.
 . Add Appveyor, Coveralls and Codeacy to the project for efficient integrations.
-. Add AddressBook file name as window title (pr https://github.com/CS2103AUG2017-W10-B3/DeathNote/pull/27[#27]).

@@ -1,4 +1,4 @@
-= Death Note v1.5 - User Guide
+= DeathNote v2.0 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -14,19 +14,14 @@ endif::[]
 
 By: `CS2103AUG2017-W10-B3`      Since: `Jun 2016`      Licence: `MIT`
 
-This user guide contains all the essential information required to make full use of Death Note. It also includes the
-description of the application's system function, abilities and step-by-step procedures to be able to use Death Note
+This user guide contains all the essential information required to make full use of DeathNote. It also includes the
+description of the application's system function, abilities and step-by-step procedures to be able to use DeathNote
 effectively.
 
+Besides managing contacts, Death Note brings entertainment to you by having aliases for its commands and the entertainment
+it brings is only limited by your creativity.
+
 == Getting Started
-
-=== Introduction
-
-Death Note allows you to store the name, profile picture, phone number, email, address, birthday and website of
-your contacts. It also allows you to add tags and remarks to people stored inside.
-
-Besides managing contacts, Death Note brings entertainment to you by having aliases for its commands and the amount
-of entertainment it brings is only limited by your creativity.
 
 === Installation
 
@@ -36,15 +31,15 @@ of entertainment it brings is only limited by your creativity.
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `DeathNote.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for Death Note.
-.  Double-click the file to start the program. You should see the graphical user interface (GUI) appear in a few seconds.
+.  Download the latest link:{repoURL}/releases[`DeathNote.jar`] application.
+.  Place the application to the folder of your choice. This will be your home folder for DeathNote.
+.  Double-click the file to start the application. You should see the graphical user interface (GUI) appear in a few seconds.
 +
 image::Ui.png[width="800"]
 
 === 30-Second Tutorial
 
-Let's get started. Here is a quick demonstration showing how to perform basic contact management.
+Let's get started. Here is a quick demonstration showing how to perform basic contact management with DeathNote.
 
 image::usage.gif[width="768"]
 
@@ -68,18 +63,25 @@ Intuitive. Now you want to find the information about Bob.
 1 persons listed!
 ....
 
-To view everyone in your Death Note:
+To view everyone in your DeathNote:
 
 ....
 > list
 Listed all persons
 ....
 
-To remove the third person shown on the list from your Death Note:
+To remove the third person shown on the list from your DeathNote:
 
 ....
 > delete 3
 ....
+
+=== Command Line Syntax
+
+* Words in `UPPER_CASE` are parameters to be replaced by the user. `add n/NAME` can be written as `add n/John Doe`.
+* Items in square brackets are optional. `n/NAME [p/PHONE]` can be written as both `n/John Doe p/93456635` and as `n/John Doe`.
+* Items with `…`​ after them can be used multiple (including zero) times. `[t/TAG]...` can be written as ``, `t/friend`, `t/friend t/family`.
+* Parameters can be in any order. If the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
 
 === Getting Help
 
@@ -87,7 +89,7 @@ There are several forms of help available.
 
 *User Guide*
 
-In Death Note command box, type `help` and a pop-up window will show up containing this User Guide.
+In DeathNote command box, type `help` to see a pop-up window containing this user guide.
 
 *GitHub Issue*
 
@@ -98,73 +100,63 @@ the developers will look into it.
 
 Contact us directly by emailing to `kaihsien.boo[at]u.nus.edu`.
 
-== Basic Usage
+== Common Usage
 
-=== Command Line Syntax
+This section covers commonly used commands.
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+//tag::add[]
 
-=== Adding a person: `add` / `a` _[Since v1.2]_
+=== Add a person: `add` / `a` / `curse` _[Since v1.2]_
 
-//tag::bday[]
+Adds a person to DeathNote +
 
-Adds a person to Death Note +
+  Format: add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
 
-  Format: `add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
+  Shorthand: a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
 
-  Shorthand: `a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
+  Evil Format: curse n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
 
-  Alias: `mutate n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
-
-* Only the *NAME* field is compulsory +
-* Birthday is in dd/MM/yyyy format +
-* Picture should be in PNG format +
-
-TIPS: +
-
-1. A person can have any number of TAGS.
-
-//end::bday[]
+* Only `NAME` field is compulsory +
+//end::add[]
+* Birthday must be in DD/MM/YYYY format +
+* Website must start with `https`` +
+* Picture must be in PNG format +
+* Person can have any number of `TAG` s.
 
 [big green]#Examples#:
 
 * `add n/Abel`
-* `add n/Dickson p/97741234 e/dickson@example.com`
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/15/02/1992`
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 w/https:www.website.com/`
-* `add n/Zulu t/friend e/zulu@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Boby p/97741234 e/boby@example.com b/15/02/1992 w/https:www.website.com/`
+* `add n/Carol pic/C:\Users\user\Desktop\Carol.png t/actor t/neighbor`
 //tag::profilepictureadd[]
 * `add n/Dwayne Johnson pic/C:\Users\user\Desktop\TheRock.png`
 //end::profilepictureadd[]
 
-=== Listing all persons : `list` / `l`
+=== Add a remark : `remark` _[Since v1.1]_
+//tag::remark[]
+Adds or edits remarks to the person identified by the INDEX
 
-Shows a list of all persons in Death Note. +
+  Format: remark INDEX r/[REMARK]
 
-  Format: `list`
+//end::remark[]
 
-  Shorthand: `l`
+[big green]#Examples#:
 
-=== Sorting all persons
+* `remark 1 r/Likes to drink coffee` +
+Edits the remark for the first person to Likes to drink coffee.
 
-Listed persons are sorted automatically in alphabetical order. No command is required.
+* `remark 2 r/` +
+Removes the remark for the second person.
 
-=== Editing a person : `edit` / `e` _[Since v1.2]_
+=== Edit a person : `edit` / `e` / `mutate` _[Since v1.2]_
 
-Edits an existing person in Death Note. +
+Edits an existing person in DeathNote. +
 
-  Format: `edit INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
+  Format: edit INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
 
-  Shorthand: `e INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
+  Shorthand: e INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
 
-  Alias: `mutate INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
-
-* Birthday is in dd/MM/yyyy format +
-* Picture should be in PNG format +
+  Evil Format: mutate INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
@@ -184,40 +176,17 @@ Edits the website of the 2nd person to be https://www.yahoo.com/ and change the 
 * `edit 1 pic/C:\pictures\clown.png` +
 Edits the picture of the 1st person to the picture specified in the path i.e. clown.png
 //end::profilepictureedit[]
-=== Locating persons: `find` / `f` _[Improved since v1.3]_
 
-Finds persons who matches the given attributes. +
+=== Delete a person : `delete` / `d` / `destroy`
 
-  Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]... `
+Deletes the specified person from DeathNote.
 
-  Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...`
+  Format: delete INDEX
 
-  Format: `summon [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]... `
+  Shorthand: d INDEX
 
-* Searches based on the input and prefix.
-* The search is case insensitive for NAME. e.g `hans` will match `Hans`
-* The order of the keywords for NAME does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* The other prefixes require the exact words
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+  Evil Format: destroy INDEX
 
-[big green]#Examples#:
-
-* `find n/John` +
-Returns `john` and `John Doe`
-* `find n/Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-* `find n/John p/96654253`
-Returns a contact named "John" with phone number "96654253".
-
-=== Deleting a person : `delete` / `d`
-
-Deletes the specified person from Death Note.
-
-  Format: `delete INDEX`
-
-  Shorthand: `d INDEX`
-
-  Format: `destroy INDEX`
 
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
@@ -233,13 +202,41 @@ Deletes the 2nd person in the displayed list.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select` / `s`
+//tag::find[]
+
+=== Find a person: `find` / `f` / `summon` _[Improved since v1.3]_
+
+Finds persons who matches the given attributes. +
+
+  Format: find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...
+
+  Shorthand: f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...
+
+  Evil Format: summon [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...
+
+* Searches based on the input and prefix.
+* The search is case insensitive for NAME. e.g `hans` will match `Hans`
+* The order of the keywords for NAME does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The other prefixes require the exact words
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+//end::find[]
+
+[big green]#Examples#:
+
+* `find n/John` +
+Returns `john` and `John Doe`
+* `find n/Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+* `find n/John p/96654253`
+Returns a contact named "John" with phone number "96654253".
+
+=== Select a person : `select` / `s`
 
 Selects the person identified by the index number used in the last person listing. +
 
- Format: `select INDEX` +
+  Format: select INDEX
 
-  Shorthand: `s INDEX`
+  Shorthand: s INDEX
 
 * Selects the person and loads the website of the person at the specified `INDEX` if the person has a website.
 * Selects the person and goole search the person at the specified `INDEX` if the person does not have a website.
@@ -256,49 +253,91 @@ Selects the 2nd person in the displayed list.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== List all persons : `list` / `l`
 
-=== Adding Remarks : `remark` _[Since v1.1]_
-//tag::remark[]
-Adds or edits remarks to the person identified by the INDEX
+Shows a list of all persons in DeathNote. +
 
-  Format: remark INDEX r/[REMARK]
+  Format: list
 
-//end::remark[]
+  Shorthand: l
 
-[big green]#Examples#:
+//tag::opennew[]
 
-* remark 1 r/Likes to drink coffee.
-Edits the remark for the first person to Likes to drink coffee.
+=== Create new DeathNote : `new` / `n` _[Since v1.4]_
 
-* remark 1 r/
-Removes the remark for the first person.
+Opens a new instance of DeathNote.
 
+  Format: new PATH
 
-=== Listing entered commands : `history` / `h`
+  Shorthand: n PATH
 
-Lists all the commands that you have entered in reverse chronological order. +
+`New` On GUI:
 
-  Format: `history`
+. Go to the top menu and click File > New.
+. Locate your desired DeathNote data file on the pop-up window. The file will be in an xml format.
+. Select the file and click Save
 
-  Shorthand: `h`
+=== Open existing DeathNote : `open` / `o` _[Since v1.4]_
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+Opens another existing instance of DeathNote.
+
+  Format: open PATH
+
+  Shorthand: o PATH
+
+`Open` On GUI:
+
+. Go to the top menu and click File > Open.
+. Locate your desired DeathNote data file on the pop-up window. The file will be in an xml format.
+. Select the file and click Open
+
+//end::opennew[]
+
+=== Exit DeathNote : `exit`
+
+Exits DeathNote. +
+
+  Format: exit
+
+== Advanced Topics
+
+This section contains more sophisticated usage of DeathNote.
+
+//tag::brem[]
+=== View birthday reminder : `reminders` / `rem` _[Since v1.4]_
+
+Opens the birthday Reminders Window. The same can be done by clicking Reminders --> Birthdays
+
+image::../images/birthdayalarmwindow.JPG[]
+
+  Format: reminders
+
+  Shorthand: rem
+
+//end::brem[]
+
+=== Clear all entries : `clear` / `c` / `purge`
+
+Clears all entries from DeathNote.
+
+  Format: clear
+
+  Shorthand: c
+
+  Evil Format: purge
 
 // tag::undoredo[]
-=== Undoing previous command : `undo` / `u`
+=== Undo previous command : `undo` / `u`
 
-Restores the Death Note to the state before the previous _undoable_ command was executed. +
+Restores the DeathNote to the state before the previous _undoable_ command was executed. +
 
-  Format: `undo`
+  Format: undo
 
-  Shorthand: `u`
+  Shorthand: u
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the Death Note's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the DeathNote's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 [big green]#Examples#:
@@ -317,13 +356,13 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo` / `r`
+=== Redo the previously undone command : `redo` / `r`
 
 Reverses the most recent `undo` command. +
 
-  Format: `redo`
+  Format: redo
 
-  Shorthand: `r`
+  Shorthand: r
 
 [big green]#Examples#:
 
@@ -343,33 +382,24 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear` / `c`
+=== List entered commands : `history` / `h`
 
-Clears all entries from Death Note.
+Lists all the commands that you have entered in reverse chronological order. +
 
-  Format: `clear`
+  Format: history
 
-  Shorthand: `c`
+  Shorthand: h
 
-  Alias: `purge`
-
-//tag::brem[]
-=== Open Birthday Reminders Window : `reminders` / `rem`
-
-Opens the birthday Reminders Window. The same can be done by clicking Reminders --> Birthdays
-
-image::../images/birthdayalarmwindow.JPG[]
-
-Format: `reminders`
-
-Shorthand: `rem`
-//end::brem[]
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
 
 //tag::theme[]
-=== Change theme of the application : `theme` _[Since v1.2]_
-Changes the theme of Death Note. +
+=== Change theme : `theme` _[Since v1.2]_
+Changes the theme of DeathNote. +
 
-  Format: `theme`
+  Format: theme
 
 [big green]#Examples#:
 
@@ -386,62 +416,16 @@ image::lightTheme.png[width="200"]
 
 image::darkTheme.png[width="200"]
 
-Aliases for themes: holy, evil
-
 //end::theme[]
 
-=== Exiting the program : `exit`
+=== Sorting Behavior _[Since v1.3]_
 
-Exits Death Note. +
+Listed persons are sorted automatically in alphabetical order. No command is required.
 
-  Format: `exit`
+=== Saving Mechanism
 
-=== Open or create new contact list _[Since v1.3]_
-//tag::openbook[]
-Opens or creates another Death Note data file from within the application.
-
-`Open` On GUI:
-
-. Go to the top menu and click File > Open.
-. Locate your desired Death Note data file on the pop-up window. The file will be in an xml format.
-. Select the file and click Open
-
-`New` On GUI:
-
-. Go to the top menu and click File > New.
-. Locate your desired Death Note data file on the pop-up window. The file will be in an xml format.
-. Select the file and click Save
-// end::openbook[]
-
-=== Saving the data
-
-The data used in Death Note data is saved in the hard disk automatically after any
-command that changes the data is executed. There is no need to save manually.
-
-== Advanced Topics
-
-This section contains more sophisticated usage of Death Note.
-
-=== Aliases
-
-Most of the commands have an associated alias. This is for experienced users to increase their productivity when using
-Death Note.
-
-[width="59%",cols="25%,25%,25%",options="header",]
-|=======================================================================
-|Command |Shorthand |Aliases
-|`add` |`a`|`curse`
-|`list`|`l`|
-|`edit`|`e`|`mutate`
-|`find`|`f`|`summon`
-|`delete`|`d`|`destroy`
-|`select`|`s`|
-|`history`|`h`|
-|`undo`|`u`|
-|`redo`|`r`|
-|`clear`|`c`|`purge`
-|`theme`|`t`|
-|=======================================================================
+The data used in DeathNote is saved in the hard disk automatically after executing
+command that changes the data. There is no need to save manually.
 
 == FAQ
 
@@ -452,28 +436,26 @@ Death Note.
 
 === Command Summary
 
-* *Help* : `help` +
-* *Add* `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [pic/FILEPATH] [w/WEBSITE] [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/20/10/2000 pic/C:\Picuture\profile.png w/https://www.yahoo.com/ t/friend t/colleague` +
-* *List* : `list` +
-* *Sort* : `sort` +
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [pic/FILEPATH] [w/WEBSITE] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com` +
-* *Profile*: `profile C:\Users\User\Pictures\Saved Pictures\alex.jpg` +
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3` +
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *Remark* : `remark index r/Likes to drink coffee` +
-* *History* : `history` +
-* *Undo* : `undo` +
-* *Redo* : `redo` +
-* *Clear* : `clear` +
-* *Theme* : `theme light` +
-* *Exit* : `exit` +
-
+[width="100%",cols="12%,88%",options="header",]
+|=======================================================================
+|Command |Syntax
+|`add`      |`add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [pic/PATH] [w/WEBSITE] [t/TAG]...`
+|`remark`   |`remark INDEX r/REMARK`
+|`edit`     |`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [pic/PATH] [w/WEBSITE] [t/TAG]...`
+|`delete`   |`delete INDEX`
+|`find`     |`find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...`
+|`select`   |`select INDEX`
+|`list`     |`list`
+|`new`      |`new PATH`
+|`open`     |`open PATH`
+|`exit`     |`exit`
+|`reminders`|`reminders`
+|`clear`    |`clear`
+|`undo`     |`undo`
+|`redo`     |`redo`
+|`history`  |`history`
+|`theme`    |`theme light` `theme dark`
+|=======================================================================
 
 === Available Parameters
 Here is the list of all available parameters:
@@ -486,7 +468,7 @@ Here is the list of all available parameters:
 
 *Address*:  a/<Address of person (can be any value)> +
 
-*Birthday*: b/<(dd/MM/yyyy)> +
+*Birthday*: b/<DD/MM/YYYY> +
 
 *Profile Picture*: pic/<VALID FILE PATH> +
 
