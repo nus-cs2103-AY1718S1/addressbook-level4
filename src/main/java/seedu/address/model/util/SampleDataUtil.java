@@ -47,72 +47,71 @@ public class SampleDataUtil {
                 new Person(new Name("Roy Balakrishnannan"), new Phone("92624417"), new Email("royb@example.com"),
                     new Address("Blk 45 Aljunied Street 85, #11-31"),
                     getTagSet("colleagues")),
-                    new Person(new Name("Ameens"), new Phone("67740637"),
+                new Person(new Name("Ameens"), new Phone("67740637"),
                         new Email("alamaan@ex.com"), new Address("12 Clementi Rd, 129742"),
                         getTagSet("restaurant")
                     ),
-                    new Person(
-                            new Name("McDonalds"), new Phone("67771440"), new Email("mc@hotmail.com"),
-                            new Address("10 Kent Ridge Crescent, Kent Ridge Campus,Faculty of Engineering Annexe," +
-                                    " National University of Singapore, 117587"), getTagSet("restaurant")
+                new Person(new Name("McDonalds"), new Phone("67771440"), new Email("mc@hotmail.com"),
+                            new Address("10 Kent Ridge Crescent, Kent Ridge Campus,Faculty of Engineering Annexe,"
+                                    + " National University of Singapore, 117587"), getTagSet("restaurant")
                     ),
-                    new Person(
+                new Person(
                             new Name("Pizza Hut"), new Phone("66843153"), new Email("ph@we.com"),
-                            new Address("2 College Avenue West #01-04 University Town Edusports " +
-                                    "National University of Si, 138607"), getTagSet("restaurant")
+                            new Address("2 College Avenue West #01-04 University Town Edusports "
+                                    + "National University of Si, 138607"), getTagSet("restaurant")
                     ),
-                    new Person(
+                new Person(
                             new Name("KFC"), new Phone("66591792"), new Email("kendeji@gmail.com"),
                             new Address("3155 COMMONWEALTH AVENUE WEST #B1-32/33 THE CLEMENTI MALL, 129588"),
                             getTagSet("restaurant")
                     ),
-                    new Person(
+                new Person(
                             new Name("Pastamania"), new Phone("67342329"), new Email("pasta@good.com"),
                             new Address("50 Jurong Gateway Rd, 04-26, Singapore 608549"),
                             getTagSet("restaurant")
                     ),
-                    new Person(
+                new Person(
                             new Name("Old Cheng Du"), new Phone("62226858"), new Email("Chengdudelicous@hotmail.com"),
                             new Address("80 Pagoda St, 059239"),
                             getTagSet("restaurant")
                     ),
-                    new Person(
+                new Person(
                             new Name("Chuan Garden"), new Phone("65320356"), new Email("Chuan@this.that"),
                             new Address("42 Mosque St, Singapore 059520"),
                             getTagSet("restaurant")
                     ),
-                    new Person(
+                new Person(
                             new Name("Old Chang Kee"), new Phone("63032344"), new Email("ock@hotmail.com"),
                             new Address("10 Kent Ridge Cres, Singapore 119260"),
                             getTagSet("restaurant")
                     ),
-                    new Person(
+                new Person(
                             new Name("LiHo"), new Phone("62656903"), new Email("liHo@ex.com"),
-                            new Address("Stall #08, National University of Singapore, " +
-                                    "21 Lower Kent Ridge Road, Level 2 Yusof Ishak House, 119077"),
+                            new Address("Stall #08, National University of Singapore, "
+                                    + "21 Lower Kent Ridge Road, Level 2 Yusof Ishak House, 119077"),
                             getTagSet("restaurant")
                     ),
-                    new Person(
+                new Person(
                             new Name("Sarpinos"), new Phone("66363636"), new Email("sarpino@gmail.com"),
                             new Address("31 Lower Kent Ridge Road, Yusof Ishak House, #01-04, 119078"),
                             getTagSet("restaurant")
                     ),
-                    new Person(
+                new Person(
                             new Name("Lu Lechuan"), new Phone("00000000"), new Email("ahchuang@nus.edu.sg"),
                             new Address("NUS"),
                             getTagSet("CS2103")
                     ),
-                    new Person(
+                new Person(
                             new Name("Xu Yiqing"), new Phone("11111111"), new Email("eeching@nus.edu.sg"),
                             new Address("NUS"),
                             getTagSet("CS2103")
                     ),
-                    new Person(
+                new Person(
                             new Name("Ng Zu Yao"), new Phone("22222222"), new Email("zuyao@nus.edu.sg"),
                             new Address("NUS"),
                             getTagSet("CS2103")
                     ),
-                    new Person(
+                new Person(
                             new Name("Xu Jun"), new Phone("33333333"), new Email("xujun@nus.edu.sg"),
                             new Address("NUS"),
                             getTagSet("CS2103")
