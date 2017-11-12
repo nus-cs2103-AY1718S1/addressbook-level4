@@ -94,6 +94,68 @@ conflict with the assumptions about the current state of the data.
 
 === Profile Picture
 
+=== Autocomplete
+
+==== Testing all autocomplete functions
+
+* `ad` + TAB -> `add`
+* `ap` + TAB -> `appoint`
+* `c` + TAB -> `clear`
+* `d` + TAB -> `delete`
+* `ed` + TAB -> `edit`
+* `ex` + TAB -> `exit`
+* `fi` + TAB -> FAILS
+* `filtera` + TAB -> `filterall`
+* `fin` + TAB -> `find`
+* `he` + TAB -> `help`
+* `hi` + TAB -> `history`
+* `l` + TAB -> `list`
+* `red` + TAB -> `redo`
+* `rem` + TAB -> `removetag`
+* `s` + TAB -> `select`
+* `und` + TAB -> `undo`
+* `ung` + TAB -> `ungroup`
+
+=== Appointment
+
+==== Adding new appointment
+* Command: `appoint 1 ap/01/01/2020 00:05 15`
+* Expected result: New appointment added for person...
+
+==== Overriding appointment, even if clashing with the current one
+* Command: `appoint 1 ap/01/01/2020 00:00 15`
+* Expected result: New appointment added for person...
+
+==== Removing appointment
+* Command: `appoint 1 ap/`
+* Expected result: Appointment removed for person...
+* Command: `undo`
+* Expected result: Undo success!
+
+==== Adding invalid appointments
+* Command: `appoint 2 ap/01/13/2020 00:00 15`
+* Expected result: Date or time is invalid
+* Command: `appoint 2 ap/29/02/2019 00:00 15`
+* Expected result: Date or time is invalid
+* Command: `appoint 2 ap/01/01/2019 24:00 15`
+* Expected result: Date or time is invalid
+* Command: `appoint 2 ap/01/01/2019 00:00 random`
+* Expected result: Duration must be a positive integer in minutes
+* Command: `appoint 2 ap/01/01/2000 00:00 1`
+* Expected result: Date time cannot be in the past
+* Command: `appoint 2 ap/01/01/2020 00:05 1`
+* Expected result: Appointment clash with another in address book
+
+==== Testing appointment reminders
+* Note that contact pro will only reminds if the appointment has been added from a different session.
+* Steps to test:
+** Add an appointment that is a bit more than 1 hour than the current time. For example, if current time is
+17/11/2017 14:30, then add an appointment that starts around 17/11/2017 15:32: +
+`appoint 1 ap/17/11/2017 15:32`
+** Close the app.
+** Start a new session.
+** Appointment reminder will have a notifying message 60 minutes before the appointment starts, at around 14:32.
+
 ==== try to add a picture specifying a wrong path
 
 * command: `pic 3 p/Garbage`
