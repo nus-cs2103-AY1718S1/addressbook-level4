@@ -25,6 +25,9 @@ public class UiStyle {
 
     private static Random random = new Random();
 
+    private UiStyle() {
+    }
+
     public static UiStyle getInstance() {
         if (instance == null) {
             instance = new UiStyle();
@@ -40,10 +43,6 @@ public class UiStyle {
 
     public static String getRandomHexColor() {
         return String.format(HEX_COLOR, Integer.toHexString(random.nextInt(MAX_HEX_COLOR)));
-    }
-
-    public static String getSpecificHexColor(String hexString) {
-        return String.format(HEX_COLOR, hexString);
     }
 
     /**
