@@ -389,15 +389,15 @@ Parameters: find_contain PREFIX_PERSON_ATTRIBUTE/STRING [MORE_PARAMETERS]...Exam
 
 === Comment
 
-`comment 4 c/Likes programming.`
+`comment 3 c/Likes programming.`
 ```
-Added comment to Person: David Li Phone: 91031282 Email: lidavid@example.com Address: Blk 436 Serangoon Gardens Street 26, #16-43 Comments: Likes programming. Appointments:  Tags: [family]
+Added comment to Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Comments: Likes programming. Appointments:  Tags: [friends]
 ```
 
 ---
 `comment 4 c/`
 ```
-Removed comment from Person: David Li Phone: 91031282 Email: lidavid@example.com Address: Blk 436 Serangoon Gardens Street 26, #16-43 Comments:  Appointments:  Tags: [family]
+Removed comment from Person: Bernice Yu Phone: 99272758 Email: berniceyu@example.com Address: Blk 30 Lorong 3 Serangoon Gardens, #07-18 Comments:  Appointments: 20/10/2017 15:50 Tags: [colleagues][friends]
 ```
 
 ---
@@ -417,15 +417,15 @@ Example: comment 1 c/Likes to swim.
 
 === Appoint
 
-`appoint 3 ap/25/12/2017 14:30`
+`appoint 2 ap/25/12/2017 14:30`
 ```
-Added appoint to Person: Charlotte Oliveiro Phone: 93210283 Email: charlotte@example.com Address: Blk 11 Ang Mo Kio Street 74, #11-04 Comments: Likes to play computer games. Appointments: 25/12/2017 14:30 Tags: [neighbours]
+Added appoint to Person: Bill Gates Phone: 11122345 Email: bill.g@microsoft.com Address: 311, Clementi Ave 2, #02-25 Comments:  Appointments: 25/12/2017 14:30 Tags: [2016][T12]
 ```
 
 ---
-`appoint 3 ap/`
+`appoint 4 ap/`
 ```
-Removed appoint from Person: Charlotte Oliveiro Phone: 93210283 Email: charlotte@example.com Address: Blk 11 Ang Mo Kio Street 74, #11-04 Comments: Likes to play computer games. Appointments:  Tags: [neighbours]
+Removed appoint from Person: Bernice Yu Phone: 99272758 Email: berniceyu@example.com Address: Blk 30 Lorong 3 Serangoon Gardens, #07-18 Comments:  Appointments:  Tags: [colleagues][friends]
 ```
 
 ---
