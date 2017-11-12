@@ -18,7 +18,7 @@ public class LinkCommandParserTest {
 
     @Test
     public void parse_indexSpecified_failure() throws Exception {
-        final Link link = new Link("facebook.com");
+        final Link link = new Link("twitter.com");
 
         // have link
         Index targetIndex = INDEX_FIRST_PERSON;

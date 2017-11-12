@@ -1,0 +1,48 @@
+= The Classroom - Test Script
+To start testing, replace addressbook.xml in the data folder with SampleData.xml after renaming.
+
+== Contact-related features
+
+=== Adding a person: `add`
+
+=== Undoing previous command : `undo`
+
+=== Redoing the previously undone command : `redo`
+
+=== Editing a person : `edit`
+
+=== Finding persons : `find`
+
+=== Favouriting a person : `favourite`
+
+=== Listing all persons : `list`
+
+=== Deleting a person : `delete`
+
+=== Sorting the contact list : `sort`
+
+=== Selecting a person : `select`
+
+=== Linking Twitter to a person : `link`
+
+=== Clearing all entries : `clear`
+
+== Tag-related features
+
+=== Listing all tags : `tags`
+
+=== Adding tag(s) : `addtag`
+
+=== Removing tag(s) : `removetag`
+
+== Remark-related features
+
+=== Add a remark note to contact: `addremark`
+
+=== Remove a remark note from contact: `removeremark`
+
+== Miscellaneous features
+
+=== Viewing help : `help`
+
+=== Listing entered commands : `history`

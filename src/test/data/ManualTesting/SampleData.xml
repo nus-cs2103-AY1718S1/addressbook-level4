@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Ahmad Johnson</name>
+        <phone>82623417</phone>
+        <email>ahmadj@example.com</email>
+        <address>Blk 555 Hougang Street 31, #04-48</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>friends</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Ashley Ashley</name>
+        <phone>82623417</phone>
+        <email>ashleyashley@example.com</email>
+        <address>Blk 771 Kent Ridge Street 90, #03-21</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remarked>Discuss about project direction</remarked>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>neighbours</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <remarked>Finish up the introduction for presentation</remarked>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>family</tagged>
+        <link>twitter.com/_david_li_</link>
+    </persons>
+    <persons>
+        <name>Erfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>eirfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Foy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>foyb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>colleagues</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Games Willian</name>
+        <phone>82623417</phone>
+        <email>gamesW@example.com</email>
+        <address>Blk 38 Aljunied Street 84, #10-28</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Hojack Wee</name>
+        <phone>82623417</phone>
+        <email>Hojack@example.com</email>
+        <address>Blk 382 Hougang Street 84, #07-28</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Jack Power</name>
+        <phone>82623417</phone>
+        <email>jackPower@example.com</email>
+        <address>Blk 122 Kent Ridge Street 12, #02-28</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Koung Ashley</name>
+        <phone>82233417</phone>
+        <email>kashleyy@example.com</email>
+        <address>Blk 222 Kent Ridge Street 32, #03-19</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Lacob Yasim</name>
+        <phone>82664417</phone>
+        <email>LacobYas@example.com</email>
+        <address>Blk 512 Sengkang Street 81, #03-19</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Mua Wei Zong</name>
+        <phone>87431107</phone>
+        <email>muaweizh@example.com</email>
+        <address>Blk 8 Geylang Street 99, #02-40</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>friends</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Orence Yu</name>
+        <phone>99271513</phone>
+        <email>orenceyu@example.com</email>
+        <address>Blk 18 Lorong 4 Serangoon Gardens, #03-18</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Pharlotte Manny</name>
+        <phone>88810283</phone>
+        <email>pharlotteman@example.com</email>
+        <address>Blk 78 Ang Mo Kio Street 21, #09-31</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>neighbours</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Qavid Lee</name>
+        <phone>81241423</phone>
+        <email>leeqavid@example.com</email>
+        <address>Blk 551 Serangoon Gardens Street 71, #14-12</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>family</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Qur Irfan</name>
+        <phone>90002313</phone>
+        <email>qurirfan@example.com</email>
+        <address>Blk 37 Tampines Street 19, #16-32</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Roystan tan</name>
+        <phone>88231423</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>colleagues</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Sheng Yi</name>
+        <phone>82623007</phone>
+        <email>shengyi@example.com</email>
+        <address>Blk 18 Aljunied Street 84, #02-28</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Tim Jan Lee</name>
+        <phone>82623417</phone>
+        <email>timleejan@example.com</email>
+        <address>Blk 90 Kent Ridge Street 89, #07-28</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Zachary Tan</name>
+        <phone>82623417</phone>
+        <email>jacobYas@example.com</email>
+        <address>Blk 333 Sengkang Street 81, #02-22</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <persons>
+        <name>Zack Jojo</name>
+        <phone>82623417</phone>
+        <email>zackjojo@example.com</email>
+        <address>Blk 213 Sengkang Street 42, #12-82</address>
+        <favouriteStatus>false</favouriteStatus>
+        <tagged>classmates</tagged>
+        <link></link>
+    </persons>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+</addressbook>

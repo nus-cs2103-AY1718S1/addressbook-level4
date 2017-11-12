@@ -594,9 +594,8 @@ We want our remark command to function like a todo list, which enables users to 
 Since remarks can be different for different persons, it was placed under the Person class to allow for easy retrieval. +
 Since it is saved under the Person class, we are able to utilise the ReadOnlyPerson to compare persons, or extract specific information without risking a corruption in the storage file. +
 
-image::UpdatedRemarkSequenceDiagram.png[width ="900"]
-_Figure 3.8.1a : Sequence Diagram of Remark command_
-
+image::PersonRemarkAssociation.png[width ="400"]
+_Figure 3.8.1a : Association Diagram of Person and Remarks_
 
 As users accomplish tasks that were associated with specific persons, we want to allow them to remove remarks at any point in time. +
 To allow for easy user manipulation of the remarks of different persons, as there can be multiple remarks appended to a person, we provided an `addremark` and `removeremark` command to compliment the remark checklist +
@@ -604,7 +603,11 @@ From the `addremark` command, users can add remarks to a target person without c
 From the `removeremark` command, users can select specific remarks to remove based on the remark index and target person index. +
 Implementation of both commands also can allow for mutiple addition and removal of remarks, although only one person can be affected at one time. +
 
-image::PersonRemarkAssociation.png[width ="400"]
+image::UpdateAddRemarkSequenceDiagram.png[width ="900"]
+_Figure 3.8.1b : Sequence Diagram of AddRemark command_
+
+image::UpdateRemoveRemarkSequenceDiagram.png[width ="900"]
+_Figure 3.8.1c : Sequence Diagram of RemoveRemark command_
 
 On top of this, we decided that remark checklist UI should be updated with any changes, either to selection or file storage. +
 Thus, we subscribed the remark panel UI to any person selection changes or person storage changes to allow for a constantly updated UI. +
