@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.HelpCommand.COMMAND_QUICK_HELP;
+
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -19,6 +21,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.Model;
@@ -151,6 +154,9 @@ public class WelcomeScreen extends UiPart<Region> {
         mainWindow.show(); //This should be called before creating other UI parts
         mainWindow.fillInnerParts();
         mainWindow.openReminderWindowIfRequired();
+        //@@author icehawker
+        raise(new NewResultAvailableEvent(COMMAND_QUICK_HELP, false));
+        //@@author
     }
 
     void show() {

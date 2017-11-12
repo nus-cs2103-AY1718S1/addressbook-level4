@@ -19,8 +19,9 @@ public class Country {
     public static final String DEFAULT_COUNTRY_CODE = "";
     public static final String DEFAULT_COUNTRY = "Country Unavailable";
     private static List<String> codeList;
+    private static Map <String, String> countryMap;
     public final String value;
-    public final Map <String, String> countryMap;
+
 
     /**
      * Converts a country code to country name.
@@ -301,7 +302,10 @@ public class Country {
         return output;
     }
 
-    public String getName(String code) {
+    /**
+     * Generic code-to-name lookup (Does not require Country object instantiation).
+     */
+    public static String getName(String code) {
         return countryMap.getOrDefault(code, DEFAULT_COUNTRY);
     }
 

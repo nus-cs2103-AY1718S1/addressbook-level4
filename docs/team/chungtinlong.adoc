@@ -24,7 +24,9 @@ include::../UserGuide.adoc[tag=copy]
 ==== Justification
 
 Multiple emails are copied rather than other fields as it is the most used mode of communication in a personal computer (PC),
-which is where this application resides.
+which is where this application resides. We expect this feature to be used for people who do not use their PC's native Mail app feature,
+in which case the Email command cannot be used. Those who want to share their contacts' email details with others can also
+save time with this command.
 
 Phone numbers are seldom used as PCs do not typically have the ability to perform voice calls, and even web calls such as
 Skype calls are usually able to take in both email and phone number inputs. Meanwhile, the physical address does not have

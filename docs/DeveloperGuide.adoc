@@ -896,18 +896,33 @@ _Figures 4.5.4: Applied use of command in email application_
 
 ==== Design Considerations for `CopyCommand`
 
-
-
-Why it is implemented that way
-
 There was no way to copy emails from the listed contacts in the previous version, so a user would have to refer to the address book application while typing it into their email application or browser manually. As email addresses are almost always meant to be utilized in an electronic device, an automatic ‘copy’ command of all requested email addresses is the most efficient and user-friendly way of text selection for this type of information.
 
-Alternatives considered
+Multiple emails are copied rather than other fields as it is the most used mode of communication in a personal computer (PC),
+which is where this application resides. We expect this feature to be used for people who do not use their PC's native Mail app feature,
+in which case the Email command cannot be used. Those who want to share their contacts' email details with others can also
+save time with this command.
 
-It is possible to provide the same output text in the console message to user, which was the first iteration of this feature. However, since the resultant string was only meant to be copied either way, this implementation would cause the user to perform one more action per email address output request, as they would have to manually copy the output to their system clipboard.
+*Alternatives considered*
+
+Phone numbers are seldom used as PCs do not typically have the ability to perform voice calls, and even web calls such as
+Skype calls are usually able to take in both email and phone number inputs. Meanwhile, the physical address does not have
+an urgent need to be copied as the Locate command in our app already copies the address and displays it on Google Maps.
+As such, until user feedback proves otherwise, copying email addresses is the main priority for this feature.
+
+In terms of mode of input, current multiple email copy works with one or more indices as the user can already filter for a small list of people
+that may be of interest, cutting the amount of scrolling significantly. In addition, as we assume that most users
+using the application would not have to send email to a massive number of recipients at a time, which may cause our implementation
+to become prohibitively inefficient.
+
+However, eventually allowing the command to accept a range of indices (copy 1 - 4 rather than 1 2 3 4), and even a "copy all"
+command that takes in all currently displayed contacts, are potential planned features for v 2.0. We may need to conduct investigation
+of user preferences and usage patterns to decide which input methods to include, as allowing too many modes of input can be
+confusing to novice users and inefficient for the app to process (thereby increasing wait time and resource usage).
 
 Alternatively, it may also be possible to permanently display all fields in each contact listing as selectable text. However, this means that the user is required to select each line of text via user interface rather than command line, which contradicts a core requirement of the project.
 
+//tag::CopyCommand[]
 ---
 
 //tag::calendar[]
@@ -1301,6 +1316,146 @@ _Figure 4.10.5: Output of `EmailCommand.java` execution_
 ---
 
 //end::email[]
+//tag::country_code[]
+=== Country of contact [Since v1.3]
+
+When a contact is added or edited, its phone number is checked for existence of a country code prefix, e.g. "+1 ".
+The country code is extracted from the phone number in several steps:
+
+1) The incoming phone number is first checked for either being with, or without a country code prefix.
+If it is identified to have one, it will then be checked against a list of valid country codes.
+
+[source,java]
+----
+    private static final String PHONE_VALIDATION_REGEX = "\\d{4,16}";
+    // with country code prefix
+    // current regex DOES NOT INCLUDE codes from 1000 onwards!
+    private static final String PHONE_VALIDATION_REGEX_ALT =
+        "\\+(9[976]\\d|8[987530]\\d|6[987]\\d|5[90]\\d|42\\d|3[875]\\d|2[98654321]\\d|9[8543210]|8[6421]|"
+                + "6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\\s\\d{4,16}$";
+
+----
+_Figure 4.11.1: From Phone.java; checks for either any valid string of numbers (top), or a specific list of
+existing countries' codes if the plus sign is detected._
+
+2) The plus sign `+` is detected, triggering the extraction.
+
+3) The digits are taken until a white space is detected, denoting the end of the country code.
+
+[source,java]
+----
+public static String trimCode(String trimmedPhone) {
+    // only attempt to extract country code if regex is ALT
+    if (trimmedPhone.matches(PHONE_VALIDATION_REGEX_ALT)) {
+        // take pattern: end with whitespace (expected for ALT regex)
+        String[] split = trimmedPhone.split("\\s+");
+        return (split[0].trim()).substring(1);
+    } else {
+        return DEFAULT_COUNTRY_CODE.trim();
+    }
+
+----
+_Figure 4.11.2: From Phone.java; extracts the digits starting after plus sign and before white space._
+
+Observe in Figure 4.11.3 below, that the contact shows `Country Unavailable` when a generic phone number
+is used without a country code prefix. When its phone number field is edited in Figure 4.11.4, the country
+name field automatically changes to `Singapore` upon returning the command.
+
+image::country_code demo 1.PNG[width="400"]
+_Figure 4.11.3 : Copy from a single contact_
+
+image::country_code demo 2.PNG[width="400"]
+_Figure 4.11.4 : Copy from multiple contacts_
+
+Note that as shown in Figure 4.11.5, country codes that do not belong to any valid country or state will be
+rejected. The current list of acceptable codes can be listed with the command `help codes`.
+
+image::country_code demo 3.PNG[width="600"]
+_Figure 4.11.5 : Copy from multiple contacts_
+
+==== Design Considerations for `Country`
+
+Most importantly, this feature allows the user to skip the input of a new contact's country, and makes the country section
+of the Address input optional as well. This reduces the number of steps during contact creation and modification.
+
+This implementation involves detecting the start and end of the country code prefix in a phone number with "+" and " "
+respectively because this is a widely used international convention, and the plus sign and first white space are unique.
+This allows for completely reliable detection of the start and end of every country code. Codes are validated against a current
+local database of all valid country codes (at time of application release) and invalid codes are rejected, so that users are
+notified of user input errors immediately.
+
+The default "Country not available" status for numbers with no country code are designed to give completeness and symmetry to
+the contact list, so that users are not left wondering if the "missing" line in some contacts are from deliberate design.
+We expect to update shortly and be able to detect and infer the country name from the Address.
+
+A future update will include support for multiple phone numbers as a standard, with multiple countries displayed if phone
+numbers differ in country codes, as well.
+
+*Alternatives Considered*
+
+This idea started with creating a field for standalone input of Country name. However, as this would be a tedious extra step that
+many users may skip, we decided to infer this field from existing information instead. Depending on user feedback, we may want to re-open
+the idea of allowing custom user-defined input, concurrent to a default country inference when a contact is first made.
+
+---
+//end::country_code[]
+//start::quick_start[]
+=== Quick-Start Help [Since v.1.5]
+
+At application launch, the result display box (directly beneath the command box where user inputs commands) shows a handy list
+of command names and keyboard hotkey shortcuts. This reminds users of valid command keywords at a glance, and should greatly
+reduce the learning curve for novice users, without affecting users who do not need it.
+
+Since this display used to launch completely empty, placing any useful information inside was essentially a zero-cost way to
+increase information displayed. As this box is a pre-emptive Help feature, it currently resides in HelpCommand despite being
+first called at launch, rather than by the user. However, in addition to this, a user enter `help command` to make this quick guide re-appear.
+
+[source,java]
+----
+// Directly raise a result to the result pane to make use of its space at application launch
+
+raise(new NewResultAvailableEvent(COMMAND_QUICK_HELP, false));
+
+----
+_Figure 4.12.1: From WelcomeScreen.java_
+
+Figure 4.12.2 shows the quick help list of shortcuts, commands and their aliases. Figure 4.12.3 shows this display re-appearing
+after the user enters `help command`.
+
+image::country_code demo 1.PNG[width="400"]
+_Figure 4.12.3 : Quick-start help on application launch_
+
+image::quick_help demo 1.PNG[width="400"]
+_Figure 4.12.3 : Quick-start help through entering help command_
+
+==== Design Considerations for `Quick-Start Help`
+
+As there is only about 3 lines' worth of space in the result display box, we needed to prioritize the most important
+information to the user. Since a Command Line Interface (CLI) may have a steeper learning curve stemming from users being
+unable to remember commands, this was our primary concern. However, there was insufficient space to include
+the parameter inputs for each command. As we did create specific 3-line quick help for all commands, there was no urgent need to
+include extra details within this quick summary of commands.
+
+This lack of space also forced us to make full use of the space by using 4 spaces between each command listed, rather than
+a new line for each command. This reasonably compact layout should also be more efficient for users to glance at, rather than
+in a long straight line in either direction.
+
+*Alternatives considered*
+
+We could instead have placed this information in a completely new display box in the app. Although this meant that the quick
+help would be available all the time, we already had significant space demands by the existing 3 other major feature panels
+on the app. As such, it was unfeasible to add even more panes to the window and risk complicating the interface too.
+
+---
+//end::quick_start[]
+//start::backup[]
+=== Contact Backup [Since v1.5]
+
+
+
+
+
+---
 
 === Logging
 

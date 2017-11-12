@@ -26,8 +26,8 @@ public class BackupCommand extends Command {
     public static final String BACKUP_DIR_SUFFIX = "addressbook.xml";
     public static final String BACKUP_DIR_SUFFIX_ALT = "\\addressbook.xml";
 
-    private static final String BACKUP_SUCCESS_MESSAGE = "Address Book backed up at directory: %1$s.";
-    private static final String BACKUP_FAILURE_MESSAGE = "Address Book could not be backed up at directory: %1$s. "
+    public static final String BACKUP_SUCCESS_MESSAGE = "Address Book backed up at directory: %1$s.";
+    public static final String BACKUP_FAILURE_MESSAGE = "Address Book could not be backed up at directory: %1$s. "
             + "Please check target path.";
     private String address;
 
@@ -49,6 +49,10 @@ public class BackupCommand extends Command {
         }
 
         return new CommandResult(String.format(BACKUP_SUCCESS_MESSAGE, address));
+    }
+
+    public String getLocation() {
+        return this.address;
     }
 
     @Override
