@@ -173,6 +173,121 @@ This section shows you commands related to appointments and calendar views. +
 
 |`cancel lunch with thomas lee`|`Appointment canceled.` | Appointment with Thomas cancelled
 
+|=======================================================================
+
+== Negative Test Cases
+This section shows you the result message when commands are invalid or when only the commmand word is entered. +
+
+[cols=3,width="100%",options="header"]
+|=======================================================================
+|Command To Enter |Result display panel message |Other Observations
+
+|`appointment`|`Invalid command format! +
+                appointment: Adds an appointment to a person in address book. +
+                appt: Shorthand equivalent for add. +
+                Parameters: n/PERSON d/DESCRIPTION, TIME +
+                Example 1:appointment n/John Doe d/Lunch, Next Monday 3pm` |Message on how to use `appointment` is shown.
+
+|`add`|`Invalid command format! +
+        add: Adds a person to the address book. +
+        a: Shorthand equivalent for add. +
+        Parameters: n/NAME [p/PHONE][e/EMAIL][a/ADDRESS][b/BLOODTYPE][r/REMARK][d/DATE][t/TAG]... +
+        Example 1: a n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/O r/Broke his foot during soccer practice t/friends t/owesMoney d/2020/10/10 00:00 +
+        Example 2: add n/Mary Jane p/87678977 e/maryj@example.com a/170, Bugis Ave 3, #01-05 b/A r/Healthy t/wife ` |Message on how to use `add` is shown
+
+|`add n/!?`|`Person names should only contain alphanumeric characters and spaces, and it should not be blank` |Invalid NAME
+
+|`add n/Test p/test`|`Phone numbers can only contain numbers, and should be at least 3 digits long` |Invalid PHONE
+
+|`add n/Test e/test`|`Person emails should be 2 alphanumeric/period strings separated by '@'` |Invalid email
+
+|`add n/Test b/C`|`Person blood type should not be blank.
+                   Valid inputs are: A, A+, A-, B, B+, B-, O, O+, O-, AB, AB+, AB-.
+                   Both capital letters and small letters are allowed.` |Invalid BLOODTYPE
+
+|`batch test`|`One of the tags is not in use. Remove it and try again.` |Tag does not exist
+
+|`bloodtype`|`Invalid command format! +
+              bloodtype: Finds all persons of a blood type  and displays them as a list with index numbers. +
+              Example: bloodtype AB+ +
+              Example: bt O` |Message on how to use `bloodtype` is shown
+
+|`calendar`|`Invalid command format! +
+             calendar: Changes calendar view. +
+             cal: Short hand equivalent for calendar. +
+             Parameter: +
+             Day view: d +
+             Week view: w +
+             Month view: m +
+             Year view: y` |Message on how to use `calendar` is shown
+
+|`cancel`|`Invalid command format! +
+           cancel: Cancels an appointment from a person. +
+           Parameters: DESCRIPTION with PERSON NAME +
+           Example 1:cancel Lunch with John Doe` |Message on how to use `cancel` for appointment is shown
+
+|`copy`|`Invalid command format! +
+         copy: Copies email address of the person identified by index numbers used in the last person listing. +
+         c: Shorthand equivalent for Copy. +
+         Parameters: INDEX (must be a positive integer) +
+         Example 1: c 1 +
+         Example 2: copy 1` |Message on how to `copy` for email is shown
+
+|`delete`|`Invalid command format! +
+           delete: Deletes the person identified by the index number used in the last person listing. +
+           d: Shorthand equivalent for Delete. +
+           Parameters: INDEX (must be a positive integer) +
+           Example 1: d 1 +
+           Example 2: delete 1` |Message on how to use `delete` is shown
+
+|`edit`|`Invalid command format! +
+         edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values. +
+         e: Shorthand equivalent for Edit. +
+         Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK]...[d/DATE][t/TAG]... +
+         Example 1: e 1 p/91234567 e/johndoe@example.com r/Broke his foot during soccer practice +
+         Example 2: edit 2 p/92873847 e/maryjane@example.com t/student ` |Message on how to use `edit` is shown
+
+|`find`|`Invalid command format!
+         find: Finds all persons whose names contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers.
+         f: Shorthand equivalent for Find.
+         Parameters: KEYWORD [MORE_KEYWORDS]...
+         Example 1: f alice bob charlie
+         Example 2: find alice bob charlie ` |Message on how to use `find` is shown
+
+|`list tag`|`Invalid command format! +
+             list tag: Finds all persons whose names contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers. +
+             Parameters: KEYWORD [AND/OR] [KEYWORD]... +
+             Example: list tag colleague and family` |Message on how to use `list tag` is shown
+
+|`list x`|`Invalid input detected. Valid list variations: +
+           list +
+           list tag [TAG/s] +
+           list asc +
+           list ascending +
+           list dsc +
+           list descending +
+           list rev +
+           list reverse ` |Message on the valid `list` commands is shown
+
+|`relation`|`Invalid command format! +
+             relation: Edits the relationship of the person identified by the index number used in the last person listing. Existing relationship will be overwritten by the input. +
+             Parameters: INDEX (must be a positive integer) rel/[RELATIONSHIP] +
+             Example 1: relation 1 rel/John Doe +
+             Example 2: rel 1 rel/Mary Jane +
+             Example 3: relation 1` |Message on how to use `relation` is shown
+
+|`remark`|`Invalid command format! +
+           remark: Adds a person to the address book. +
+           Parameters: INDEX r/Likes to drink coffee +
+           Example 1: remark 1 r/Likes to drink coffee +
+           Removing Remarks: remark 1 r/` |Message on how to use `remark` is shown
+
+|`tagcolor`|`Invalid tagcolor command. +
+             tc: Shorthand equivalent for tagcolor. +
+             tagcolor: TagColor sets color for AddressBook +
+             Parameters: tagcolor random/off || tagcolor TAGNAME COLOR` |Message on how to use `tagcolor` is shown
+
+|`tagcolor helper green`|`No such tag` |Tag does not exist.
 
 |=======================================================================
 
