@@ -12,12 +12,12 @@ import seedu.address.logic.commands.exceptions.CommandException;
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
-    public static final String MESSAGE_SUCCESS = "List has been sorted by %1$s!";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the addressbook by specified ordering in "
             + "intuitive order. If no ordering is specified, the addressbook is sorted by name.\n"
             + "Parameters: ORDERING (i.e. \"name\", \"debt\", \"deadline\" or \"cluster\")\n"
             + "Example: " + COMMAND_WORD + " debt";
     public static final String DEFAULT_ORDERING = "name";
+    public static final String MESSAGE_SUCCESS = "List has been sorted by %1$s!";
 
     private final String order;
 
