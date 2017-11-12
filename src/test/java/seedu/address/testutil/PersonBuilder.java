@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import static java.util.Arrays.asList;
 
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -39,7 +40,7 @@ public class PersonBuilder {
             Country defaultCountry = new Country(DEFAULT_COUNTRY);
             Set<Email> defaultEmail = SampleDataUtil.getEmailSet(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
-            Set<Schedule> defaultSchedule = SampleDataUtil.getScheduleSet(asList(DEFAULT_SCHEDULE_DATE),
+            List<Schedule> defaultSchedule = SampleDataUtil.getScheduleSet(asList(DEFAULT_SCHEDULE_DATE),
                     asList(DEFAULT_ACTIVITY), asList(DEFAULT_NAME));
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
 

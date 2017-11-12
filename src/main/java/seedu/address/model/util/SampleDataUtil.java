@@ -2,6 +2,7 @@ package seedu.address.model.util;
 
 import static java.util.Arrays.asList;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -84,10 +85,10 @@ public class SampleDataUtil {
      * Returns a schedule set containing the list of schedule dates and activities given.
      * pre-condition: the number of elements in scheduleDates must be the same as that of activities.
      */
-    public static Set<Schedule> getScheduleSet(List<String> scheduleDates, List<String> activities,
+    public static List<Schedule> getScheduleSet(List<String> scheduleDates, List<String> activities,
                                                List<String> peopleInvolved)
             throws IllegalValueException {
-        HashSet<Schedule> schedules = new HashSet<>();
+        List<Schedule> schedules = new ArrayList<>();
         Set<Name> personInvolvedSet = new HashSet<>();
         for (int i = 0; i < scheduleDates.size(); i++) {
             personInvolvedSet.add(new Name(peopleInvolved.get(i)));
