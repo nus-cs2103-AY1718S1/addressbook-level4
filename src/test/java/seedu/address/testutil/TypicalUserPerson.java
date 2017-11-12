@@ -16,12 +16,12 @@ public class TypicalUserPerson {
     public static final ReadOnlyPerson JAMES = new PersonBuilder().withName("James Wong")
             .withAddress("456 Rochor Ave 3").withEmail("james@gmail.com")
             .withPhone("84712836")
-            .withWebLinks("jameswong@facebook.com").build();
+            .withWebLinks("https://www.facebook.com/jameswong").build();
 
     public static final ReadOnlyPerson WILLIAM = new PersonBuilder().withName("William Sim")
             .withAddress("112 Clementi Ave 4").withEmail("william@hotmail.com")
             .withPhone("91332588")
-            .withWebLinks("williamsim@facebook.com").build();
+            .withWebLinks("https://www.facebook.com/william").build();
 
     private TypicalUserPerson() {} // prevents instantiation
 

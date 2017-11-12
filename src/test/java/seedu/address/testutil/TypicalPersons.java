@@ -29,35 +29,35 @@ public class TypicalPersons {
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255")
             .withTags("friend")
-            .withWebLinks("https://www.facebook.com/alice, https://www.instagram.com/alice/")
+            .withWebLinks("https://www.facebook.com/alice", "https://www.instagram.com/alice/")
             .build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friend")
-            .withWebLinks("https://www.facebook.com/benson, https://www.instagram.com/benson/")
+            .withWebLinks("https://www.facebook.com/benson", "https://www.instagram.com/benson/")
             .build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
-            .withWebLinks("https://www.facebook.com/carl, https://www.instagram.com/carl/")
+            .withWebLinks("https://www.facebook.com/carl", "https://www.instagram.com/carl/")
             .build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street")
             .withTags("owesMoney", "friend")
-            .withWebLinks("https://www.facebook.com/daniel, https://www.instagram.com/daniel/")
+            .withWebLinks("https://www.facebook.com/daniel", "https://www.instagram.com/daniel/")
             .build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave")
             .withTags("owesMoney", "friend")
-            .withWebLinks("https://www.facebook.com/elle, https://www.instagram.com/elle/")
+            .withWebLinks("https://www.facebook.com/elle", "https://www.instagram.com/elle/")
             .build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo")
-            .withWebLinks("https://www.facebook.com/fiona, https://www.instagram.com/fiona/")
+            .withWebLinks("https://www.facebook.com/fiona", "https://www.instagram.com/fiona/")
             .build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("94824423")
             .withEmail("anna@example.com").withAddress("4th street").withRemark("Likes to swim")
-            .withWebLinks("https://www.facebook.com/george, https://www.instagram.com/george/")
+            .withWebLinks("https://www.facebook.com/george", "https://www.instagram.com/george/")
             .build();
 
     // Manually added
