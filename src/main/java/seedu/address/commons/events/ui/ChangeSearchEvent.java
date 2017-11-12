@@ -4,7 +4,7 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Indicates a request for changing search mode for browser
+ * Indicates a request for changing search mode of browser
  */
 public class ChangeSearchEvent extends BaseEvent {
 
