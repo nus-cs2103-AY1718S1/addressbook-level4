@@ -133,7 +133,7 @@ public class CalendarBox {
     }
 
     /**
-     * Make the skeleton for the calendar, i.e. grids for one month, and label the days
+     * Make the skeleton for the calendar, i.e. grids for one month, and label for days of the week
      */
     private void makeCalendarSkeleton() {
         // Create the calendar grid pane
