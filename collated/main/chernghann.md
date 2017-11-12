@@ -1,6 +1,9 @@
 # chernghann
-###### /java/seedu/address/commons/events/ui/AddEventRequestEvent.java
+###### \java\seedu\address\commons\events\ui\AddEventRequestEvent.java
 ``` java
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.event.ReadOnlyEvent;
+
 /**
  * Indicates a request to add Event.
  */
@@ -18,7 +21,7 @@ public class AddEventRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/CalendarPanelSelectionEvent.java
+###### \java\seedu\address\commons\events\ui\CalendarPanelSelectionEvent.java
 ``` java
 import seedu.address.commons.events.BaseEvent;
 
@@ -41,7 +44,52 @@ public class CalendarPanelSelectionEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/logic/commands/AddEventCommand.java
+###### \java\seedu\address\commons\events\ui\PopulateMonthEvent.java
+``` java
+import java.time.YearMonth;
+
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Indicates a request to add Event.
+ */
+public class PopulateMonthEvent extends BaseEvent {
+
+    public final YearMonth yearMonth;
+
+    public PopulateMonthEvent(YearMonth date) {
+        this.yearMonth = date;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\PopulateRequestEvent.java
+``` java
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.event.UniqueEventList;
+
+/**
+ * Indicates a request to add Event.
+ */
+public class PopulateRequestEvent extends BaseEvent {
+
+    public final UniqueEventList eventList;
+
+    public PopulateRequestEvent(UniqueEventList eventList) {
+        this.eventList = eventList;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\logic\commands\AddEventCommand.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -65,10 +113,10 @@ public class AddEventCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_DATE + "DATE "
-            + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_ADDRESS + "ADDRESS\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "ZoukOut "
-            + PREFIX_DATE + "05/12/2017 "
+            + PREFIX_DATE + "5/12/2017 "
             + PREFIX_ADDRESS + "Sentosa Beach, Siloso";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
@@ -92,7 +140,6 @@ public class AddEventCommand extends UndoableCommand {
         } catch (DuplicateEventException e) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         }
-
     }
 
     @Override
@@ -103,7 +150,7 @@ public class AddEventCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddEventCommandParser.java
+###### \java\seedu\address\logic\parser\AddEventCommandParser.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -117,9 +164,9 @@ import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Date;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 
 /**
  * Parses input arguments and creates a new AddEventCommand object
@@ -140,7 +187,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
         }
 
         try {
-            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            EventName name = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME)).get();
             Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
 
@@ -162,28 +209,27 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
 
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
         this.events.setEvent(events);
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public void addEvent(ReadOnlyEvent p) throws DuplicateEventException {
-        Event newEvent = new Event(p);
-        events.add(newEvent);
+        events.add(p);
         EventsCenter.getInstance().post(new PopulateRequestEvent(events));
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         return events.asObservableList();
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
 
     @Override
@@ -207,7 +253,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/event/Date.java
+###### \java\seedu\address\model\event\Date.java
 ``` java
 import static java.util.Objects.requireNonNull;
 
@@ -267,7 +313,7 @@ public class Date {
 
 }
 ```
-###### /java/seedu/address/model/event/Event.java
+###### \java\seedu\address\model\event\Event.java
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -277,7 +323,6 @@ import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 
 /**
  * Represents a Event in the address book.
@@ -285,14 +330,14 @@ import seedu.address.model.person.Name;
  */
 public class Event implements ReadOnlyEvent {
 
-    private ObjectProperty<Name> name;
+    private ObjectProperty<EventName> name;
     private ObjectProperty<Date> date;
     private ObjectProperty<Address> address;
 
     /**
      * Every field must be present and not null.
      */
-    public Event(Name name, Date date, Address address) {
+    public Event(EventName name, Date date, Address address) {
         requireAllNonNull(name, date, address);
         this.name = new SimpleObjectProperty<>(name);
         this.date = new SimpleObjectProperty<>(date);
@@ -306,17 +351,17 @@ public class Event implements ReadOnlyEvent {
         this(source.getName(), source.getDate(), source.getAddress());
     }
 
-    public void setName(Name name) {
+    public void setName(EventName name) {
         this.name.set(requireNonNull(name));
     }
 
     @Override
-    public ObjectProperty<Name> nameProperty() {
+    public ObjectProperty<EventName> nameProperty() {
         return name;
     }
 
     @Override
-    public Name getName() {
+    public EventName getName() {
         return name.get();
     }
 
@@ -368,13 +413,76 @@ public class Event implements ReadOnlyEvent {
 
 }
 ```
-###### /java/seedu/address/model/event/exceptions/BuildEvent.java
+###### \java\seedu\address\model\event\EventName.java
+``` java
+import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * Represents a Events's name in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ */
+public class EventName {
+
+    public static final String MESSAGE_EVENT_NAME_CONSTRAINTS =
+            "Event names should only contain alphanumeric characters and spaces, and it should not be blank";
+
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String EVENT_NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}'!, ]*";
+
+    public final String fullName;
+
+    /**
+     * Validates given name.
+     *
+     * @throws IllegalValueException if given name string is invalid.
+     */
+    public EventName(String name) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!isValidName(trimmedName)) {
+            throw new IllegalValueException(MESSAGE_EVENT_NAME_CONSTRAINTS);
+        }
+        this.fullName = trimmedName;
+    }
+
+    /**
+     * Returns true if a given string is a valid person name.
+     */
+    public static boolean isValidName(String test) {
+        return test.matches(EVENT_NAME_VALIDATION_REGEX);
+    }
+
+
+    @Override
+    public String toString() {
+        return fullName;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof seedu.address.model.person.Name // instanceof handles nulls
+                && this.fullName.equals(((seedu.address.model.person.Name) other).fullName)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return fullName.hashCode();
+    }
+}
+```
+###### \java\seedu\address\model\event\exceptions\BuildEvent.java
 ``` java
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Date;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 
 /**
  * A utility class to help with building Event objects.
@@ -388,7 +496,7 @@ public class BuildEvent {
 
     public BuildEvent() {
         try {
-            Name defaultName = new Name(DEFAULT_NAME);
+            EventName defaultName = new EventName(DEFAULT_NAME);
             Date defaultDate = new Date(DEFAULT_DATE);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
 
@@ -404,7 +512,7 @@ public class BuildEvent {
      */
     public BuildEvent withName(String name) {
         try {
-            this.event.setName(new Name(name));
+            this.event.setName(new EventName(name));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("name is expected to be unique.");
         }
@@ -441,7 +549,7 @@ public class BuildEvent {
 
 }
 ```
-###### /java/seedu/address/model/event/exceptions/DuplicateEventException.java
+###### \java\seedu\address\model\event\exceptions\DuplicateEventException.java
 ``` java
 import seedu.address.commons.exceptions.DuplicateDataException;
 
@@ -454,20 +562,22 @@ public class DuplicateEventException extends DuplicateDataException {
     }
 }
 ```
-###### /java/seedu/address/model/event/exceptions/EventNotFoundException.java
+###### \java\seedu\address\model\event\exceptions\EventNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified event
  */
 
-public class EventNotFoundException extends Exception{
+public class EventNotFoundException extends Exception {
+    public EventNotFoundException() {
+        super("event not found!");
+    }
 }
 ```
-###### /java/seedu/address/model/event/ReadOnlyEvent.java
+###### \java\seedu\address\model\event\ReadOnlyEvent.java
 ``` java
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 
 /**
  * A read-only immutable interface for a Person in the addressbook.
@@ -475,8 +585,8 @@ import seedu.address.model.person.Name;
  */
 public interface ReadOnlyEvent {
 
-    ObjectProperty<Name> nameProperty();
-    Name getName();
+    ObjectProperty<EventName> nameProperty();
+    EventName getName();
     ObjectProperty<Date> dateProperty();
     Date getDate();
     ObjectProperty<Address> addressProperty();
@@ -508,7 +618,7 @@ public interface ReadOnlyEvent {
 
 }
 ```
-###### /java/seedu/address/model/event/UniqueEventList.java
+###### \java\seedu\address\model\event\UniqueEventList.java
 ``` java
 import static java.util.Objects.requireNonNull;
 
@@ -629,17 +739,17 @@ public class UniqueEventList implements Iterable<Event> {
     }
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Adds the given event */
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Returns an unmodifiable view of the filtered event list */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
      * Updates the filter of the filtered events list to filter by the given {@code predicate}.
@@ -647,7 +757,7 @@ public class UniqueEventList implements Iterable<Event> {
      */
     void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
@@ -656,7 +766,7 @@ public class UniqueEventList implements Iterable<Event> {
         indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyEvent} backed by the internal list of
@@ -673,7 +783,7 @@ public class UniqueEventList implements Iterable<Event> {
         filteredEvents.setPredicate(predicate);
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Subscribe
     private void handleAddEvent(AddEventRequestEvent event) throws DuplicateEventException {
@@ -683,7 +793,7 @@ public class UniqueEventList implements Iterable<Event> {
         indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/person/HomeNumber.java
+###### \java\seedu\address\model\person\HomeNumber.java
 ``` java
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -702,7 +812,7 @@ public class HomeNumber {
     public final String value;
 
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setHomeNumber(HomeNumber homeNumber) {
         this.homeNumber.set(requireNonNull(homeNumber));
@@ -718,7 +828,7 @@ public class HomeNumber {
         return homeNumber.get();
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setSchEmail(SchEmail schEmail) {
         this.schEmail.set(requireNonNull(schEmail));
@@ -735,7 +845,7 @@ public class HomeNumber {
     }
 
 ```
-###### /java/seedu/address/model/person/SchEmail.java
+###### \java\seedu\address\model\person\SchEmail.java
 ``` java
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -753,21 +863,21 @@ public class SchEmail {
     public final String value;
 
 ```
-###### /java/seedu/address/model/ReadOnlyAddressBook.java
+###### \java\seedu\address\model\ReadOnlyAddressBook.java
 ``` java
     ObservableList<ReadOnlyEvent> getEventList();
 ```
-###### /java/seedu/address/storage/Storage.java
+###### \java\seedu\address\storage\Storage.java
 ``` java
     Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException;
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
     public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException {
         return readAddressBook(backUpLocation.getAddressBookFilePath());
     }
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
 
     @Override
@@ -783,7 +893,7 @@ public class SchEmail {
     }
 
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
     private void backUpAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         String backupPath = backUpLocation.getAddressBookFilePath();
@@ -791,7 +901,62 @@ public class SchEmail {
         saveAddressBook(addressBook, backupPath);
     }
 ```
-###### /java/seedu/address/ui/AnchorPaneNode.java
+###### \java\seedu\address\storage\XmlAdaptedEvent.java
+``` java
+import javax.xml.bind.annotation.XmlElement;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.event.Date;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.person.Address;
+
+/**
+ * JAXB-friendly version of the Person.
+ */
+public class XmlAdaptedEvent {
+
+    @XmlElement(required = true)
+    private String name;
+    @XmlElement(required = true)
+    private String address;
+    @XmlElement (required = true)
+    private String date;
+
+    /**
+     * Constructs an XmlAdaptedEvent.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedEvent() {}
+
+
+    /**
+     * Converts a given Person into this class for JAXB use.
+     *
+     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     */
+    public XmlAdaptedEvent(ReadOnlyEvent source) {
+        name = source.getName().fullName;
+        date = source.getDate().value;
+        address = source.getAddress().value;
+    }
+
+    /**
+     * Converts this jaxb-friendly adapted person object into the model's Person object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     */
+    public Event toModelType() throws IllegalValueException {
+        final EventName name = new EventName(this.name);
+        final Date date = new Date(this.date);
+        final Address address = new Address(this.address);
+
+        return new Event(name, date, address);
+    }
+}
+```
+###### \java\seedu\address\ui\AnchorPaneNode.java
 ``` java
 
 /**
@@ -871,13 +1036,14 @@ public class AnchorPaneNode extends AnchorPane {
     }
 }
 ```
-###### /java/seedu/address/ui/Calendar.java
+###### \java\seedu\address\ui\Calendar.java
 ``` java
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -885,7 +1051,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.PopulateMonthEvent;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.UniqueEventList;
 
 /**
@@ -902,7 +1071,7 @@ public class Calendar {
      * Create a calendar view
      * @param yearMonth year month to create the calendar of
      */
-    public Calendar(YearMonth yearMonth) {
+    public Calendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> eventList) {
         currentYearMonth = yearMonth;
         // Create the calendar grid pane
         GridPane calendar = new GridPane();
@@ -919,9 +1088,9 @@ public class Calendar {
         }
 
         // Days of the week labels
-        Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"),
-                                      new Text("Tuesday"), new Text("Wednesday"), new Text("Thursday"),
-                                      new Text("Friday"), new Text("Saturday") };
+        Text[] dayNames = new Text[]{new Text("Sunday"), new Text("Monday"),
+                                     new Text("Tuesday"), new Text("Wednesday"), new Text("Thursday"),
+                                     new Text("Friday"), new Text("Saturday")};
 
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
@@ -946,16 +1115,17 @@ public class Calendar {
         titleBar.setSpacing(5);
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
-        populateCalendar(yearMonth);
+        populateCalendar(yearMonth, eventList);
         // Create the calendar view
         view = new VBox(titleBar, dayLabels, calendar);
     }
 
     /**
      * Set the days of the calendar to correspond to the appropriate date
+     * Also, used to populate the calendar when switching different months
      * @param yearMonth year and month of month to render
      */
-    public void populateCalendar(YearMonth yearMonth) {
+    public void populateCalendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> events) {
         // Get the date we want to start with on the calendar
         LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
         // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
@@ -972,8 +1142,19 @@ public class Calendar {
             ap.setDate(calendarDate);
             ap.setTopAnchor(txt, 5.0);
             ap.setLeftAnchor(txt, 5.0);
+            ap.setStyle("calendar-color");
             ap.getChildren().add(txt);
             calendarDate = calendarDate.plusDays(1);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+            String newDate = formatter.format(ap.getDate());
+            for (ReadOnlyEvent event : events) {
+                String date = event.getDate().toString();
+                if (newDate.equals(date)) {
+                    ap.getChildren();
+                    ap.setStyle("-fx-background-color: #ffebcd;");
+                }
+            }
         }
         // Change the title of the calendar
         calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
@@ -984,7 +1165,7 @@ public class Calendar {
      */
     public void previousMonth() {
         currentYearMonth = currentYearMonth.minusMonths(1);
-        populateCalendar(currentYearMonth);
+        EventsCenter.getInstance().post(new PopulateMonthEvent(currentYearMonth));
     }
 
     /**
@@ -992,7 +1173,7 @@ public class Calendar {
      */
     public void nextMonth() {
         currentYearMonth = currentYearMonth.plusMonths(1);
-        populateCalendar(currentYearMonth);
+        EventsCenter.getInstance().post(new PopulateMonthEvent(currentYearMonth));
     }
 
     public VBox getView() {
@@ -1008,56 +1189,43 @@ public class Calendar {
     }
 
     /**
-     * populating updated calendar for the swithc buttons for the change of months.
+     * populating updated calendar for the switch buttons for the add of events
      * @param eventList
-     * @param yearMonth
      */
-
-    public void populateUpdatedCalendar(UniqueEventList eventList, YearMonth yearMonth) {
-        // Get the date we want to start with on the calendar
-        yearMonth = currentYearMonth;
-        LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
-        // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
-        while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
-            calendarDate = calendarDate.minusDays(1);
-        }
-        // Populate the calendar with day numbers
+    public void populateUpdatedCalendar(UniqueEventList eventList) {
         for (AnchorPaneNode ap : allCalendarDays) {
-            if (ap.getChildren().size() != 0) {
-                ap.getChildren().remove(0);
-            }
-            Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
-            txt.getStyleClass().add("calendar-color");
-            ap.setDate(calendarDate);
-            ap.setTopAnchor(txt, 5.0);
-            ap.setLeftAnchor(txt, 5.0);
-            ap.getChildren().add(txt);
-            calendarDate = calendarDate.plusDays(1);
-        }
-
-        for (AnchorPaneNode ap : allCalendarDays) {
+            ap.setStyle("calendar-color");
             for (Event event1 : eventList) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
                 String newDate = formatter.format(ap.getDate());
                 if (newDate.equals(event1.getDate().toString())) {
                     ap.getChildren();
-                    ap.setStyle("-fx-background-color: #fff8dc;");
+                    ap.setStyle("-fx-background-color: #ffebcd;");
                 }
             }
-            // Change the title of the calendar
-            calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
         }
     }
 }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
+    /**
+     * this method is to populate the calendar when there is an add event.
+     * @param request
+     */
     @Subscribe
     private void handlePopulateEvent(PopulateRequestEvent request) {
         logger.info(LogsCenter.getEventHandlingLogMessage(request));
-        // calendar.populateNewCalendar(request.event);
-        calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
+        calendar.populateUpdatedCalendar(request.eventList);
     }
 
-}
+    /**
+     * For populating the calendar when starting the application and changing the months
+     * @param request
+     */
+    @Subscribe
+    private void handlePopulateMonthEvent(PopulateMonthEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        calendar.populateCalendar(request.yearMonth, logic.getFilteredEventList());
+    }
 ```
