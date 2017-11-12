@@ -231,7 +231,28 @@ public class UploadPhotoCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/CustomCommandParser.java
+###### \java\seedu\address\logic\commands\WeatherCommand.java
+``` java
+/**
+ * Open the Yahoo Weather Window.
+ */
+public class WeatherCommand extends Command {
+
+    public static final String COMMAND_WORD = "weather";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Opens Yahoo Weather Window.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String SHOWING_WEATHER_MESSAGE = "Opened Yahoo Weather Window.";
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ShowWeatherRequestEvent());
+        return new CommandResult(SHOWING_WEATHER_MESSAGE);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\CustomCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new CustomCommand object

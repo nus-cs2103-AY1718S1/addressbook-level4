@@ -10,10 +10,11 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.PhoneCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.phone.Phone;
-//@@author eeching
+
 /**
  * Parses input arguments and creates a new object
  */
+//@@author eeching
 public class PhoneCommandParser implements Parser<PhoneCommand> {
 
     private static final String BY_NAME_IDENTIFIER = "byName";
@@ -29,10 +30,7 @@ public class PhoneCommandParser implements Parser<PhoneCommand> {
             StringTokenizer st = new StringTokenizer(args);
             String personIdentifier = st.nextToken();
             String action = st.nextToken();
-            String value = "00000";
-            if (st.hasMoreTokens()) {
-                value = st.nextToken();
-            }
+            String value = st.nextToken();
             Phone phone = new Phone(value);
 
 
