@@ -19,7 +19,7 @@ endif::[]
 * Circles allows you to create groups, to manage project groups easily
 * What's new in v1.5:
 ** A more sophisticated GUI that includes Group listings.
-** Export and import your contacts.
+** Export and import your contacts list.
 ** Enabled optional fields when saving a contact.
 
 == Site Map
