@@ -381,6 +381,9 @@ If your use of Ark requires more tags to be made available, please contact our t
 
 === Viewing help : `help`
 
+Whenever you are unsure of Arks functions or commands, you can type `help` into the command box.
+Ark will then open this user guide in a new window for you to view.
+
 Format: `help`
 
 === Adding a parcel: `add`
@@ -440,10 +443,10 @@ Format: `import FILE_NAME`
 
 Shows a list of all parcels in Ark and expands the Parcel List Panel section in the main window.
 The Parcel List section is scrollable and shows you all the information of a parcel.
-You can see an example in the picture below. +
+You can see an example in the figure 6.4.1 below. +
 
-image::Ark_Parcel_List.png[width="790"]
-_Figure 5.4.1 : The `list` command displays the list of all the parcels in Ark_
+image::Ark_Parcel_List.png[width="1700"]
+_Figure 6.4.1 : The `list` command displays the list of all the parcels in Ark_
 
 Format: `list`
 
