@@ -101,9 +101,9 @@ Contact us directly by emailing to `kaihsien.boo[at]u.nus.edu`.
 
 This section covers commonly used commands.
 
-=== Add a person: `add` / `a` / `curse` kbd:[V2.0]
-
 //tag::add[]
+
+=== Add a person: `add` / `a` / `curse` kbd:[V2.0]
 
 Adds a person to DeathNote +
 
