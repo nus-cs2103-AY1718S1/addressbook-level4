@@ -18,7 +18,7 @@
             </VBox.margin></Label>
             <TextFlow prefHeight="50.0" prefWidth="400.0">
                 <children>
-                    <Text fx:id="dateField" fill="gray" styleClass="window_small_label" text="Date:" />
+                    <Text fx:id="dateField" styleClass="window_small_text" text="Date:" />
                     <Label fx:id="date" styleClass="window_small_label" text="\$date" />
                 </children>
             <padding>
@@ -27,7 +27,7 @@
             </TextFlow>
             <TextFlow prefHeight="50.0" prefWidth="400.0">
                 <children>
-                    <Text fx:id="addressField" fill="gray" styleClass="window_small_label" text="Address: " />
+                    <Text fx:id="addressField" styleClass="window_small_text" text="Address: " />
                     <Label fx:id="address" alignment="TOP_LEFT" maxHeight="800.0" styleClass="window_small_label" text="\$address" wrapText="true" />
                 </children>
             <padding>

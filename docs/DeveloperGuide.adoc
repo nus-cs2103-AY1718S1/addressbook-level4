@@ -374,17 +374,120 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::events[]
+=== Events mechanism
+
+Events mechanism activates the Events mode in The Myth's Book, where the users are locked to using commands pertaining to `Events`,
+which are `AddEventCommand` and `DeleteEventCommand`, and commands that are common between Events and Persons, such as `ExitCommand`,
+`HelpCommand` and more.
+
+The events mechanism also lists down the list of events, which is facilitated by an `EventList`, which is stored in The Myth's Book.
+Similar to the PersonList and TagList, the list contains the different events with their information given by the user. This command inherits from `Command`.
+
+As seen in the diagram below, `EventsCommand` inherits `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+image::EventsCommandDiagram1.png[width="800"]
+Figure 5.2.1 Events Command Diagram 1
+
+The execution of EventsCommand is processed in this way:
+
+. User will execute `events` to activate the `Events` mode.
+. The execution of `events` posts events `TogglePanelEvent`, `PersonPanelUnselectEvent` and `AccessWebsiteRequestEvent`, which will
+  then be listened and handled by `handleToggleEvent` in `MainWindow`, `handleUnselectOfPersonCardEvent` in `MainWindow` and `handleAccessWebsiteEvent` in `BrowserPanel` respectively.
+. The `EventListPanel` will then be brought to front over `PersonListPanel`, showing the list of events from `EventList`.
+. Subsequently, `DetailsPanel`, which shows a person's details, will be removed and be replaced by `EventsDetailsPanel` which shows an event's details.
+. The `BrowserPanel` section will also display `Google Maps` when `events` is executed.
+
+Code of `EventsCommand`:
+[source,java]
+----
+public class EventsCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... events logic ...
+        EventsCenter.getInstance().post(new TogglePanelEvent(COMMAND_WORD));
+        EventsCenter.getInstance().post(new PersonPanelUnselectEvent());
+        EventsCenter.getInstance().post(new AccessWebsiteRequestEvent("https://maps.google.com/"));
+    }
+}
+----
+
+Listener for TogglePanelEvent in MainWindow.java:
+[source,java]
+----
+@Subscribe
+private void handleToggleEvent(TogglePanelEvent event) {
+    handleToggle(event.selectedPanel);
+}
+----
+
+Bringing of EventListPanel to front in MainWindow.java:
+[source,java]
+----
+public void handleToggle(String selectedPanel) {
+    if (selectedPanel.equals(EventsCommand.COMMAND_WORD)) {
+        eventListPanelPlaceholder.toFront();
+    } else if (selectedPanel.equals(ListCommand.COMMAND_WORD)) {
+        personListPanelPlaceholder.toFront();
+    }
+}
+----
+
+Listener for PersonPanelUnselectEvent in MainWindow.java:
+[source,java]
+----
+@Subscribe
+private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
+    detailsPanel = new DetailsPanel();
+    detailsPanelPlaceholder.getChildren().clear();
+    detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
+}
+----
+
+Listener for AccessWebsiteRequestEvent in BrowserPanel.java:
+[source,java]
+----
+@Subscribe
+private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
+    handleWebsiteAccess(event.website);
+}
+----
+
+Displaying of Google Maps in BrowserPanel.java:
+[source,java]
+----
+public void handleWebsiteAccess(String website) {
+    loadPage(website);
+}
+----
+
+The following sequence diagram shows how the events operation works:
+
+As seen in the diagram below, when `events` is typed into the command line input, a new `EventsCommand` is created.
+
+image::EventsCommandDiagram2.png[width="800"]
+
+==== Design Considerations
+**Aspect:** Implementation of `EventsCommand` +
+**Alternative 1 (current choice):** Extends to `Command` +
+**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class. +
+**Cons:** Users may want to undo `EventsCommand` as they may not have wanted to be in Events mode. +
+**Alternative 2:** Extends to `UndoableCommand` +
+**Pros:** Users can undo `EventsCommand` when they mistype the command. +
+**Cons:** Developers need to learn the implementation of `UndoableCommand`. Unnecessary to extend to `UndoableCommand` since users can type `ListCommand` to go back to Persons mode. +
+// end::events[]
+
 // tag::addevent[]
 === Add Event mechanism
 
-Add event mechanism adds an event which stores in the The Myth's Book. The add event mechanism is facilitated by a `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
+Add event mechanism adds an event which stores in the The Myth's Book. The add event mechanism is facilitated by an `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
 different events with their information given by the user. This command inherits from `UndoableCommand`.
 
 From Figure 5.2.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the SortCommand
 can be undoable, where the previous state of the address book before sorting is saved.
 
 image::AddEventDiagram.PNG[width="800"]
-Figure 5.2.1 AddEventCommand Logic Class Diagram
+Figure 5.3.1 AddEventCommand Logic Class Diagram
 
 The execution of AddEventCommand is processed in this way:
 
@@ -456,28 +559,149 @@ Code from `ModelManager`
 **Cons:** Developer might get confused with the different use of imports as Name and Address are from person while Date is from events. +
 // end::addevent[]
 
+// tag::deleteevent[]
+=== Delete Event mechanism
+
+Delete event mechanism deletes an event which is stored in the The Myth's Book, which will then be updated in the `Calendar` upon deletion.
+
+The delete event mechanism is facilitated by an `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
+different events with their information given by the user. This command inherits from `UndoableCommand`.
+
+As seen in Figure 5.4.1 below, `DeleteEventCommand` inherits `UndoableCommand` which is an extra layer between abstract `Command` class and concrete commands that can be undone.
+When `DeleteEventCommand` is executed, the previous state of the address book before the deleting of an event is saved.
+
+image::DeleteEventCommandDiagram1.png[width="800"]
+_Figure 5.4.1 Delete Event Command Diagram_
+
+The execution of DeleteEventCommand is processed in this way:
+
+. User will execute `events` to enter Events mode, and user can look through the list of events that he or she may want to delete.
+
+. User will then execute `deleteevent 2`, with `2` being the `index` of the event that the user wants to delete, provided by the executed `events`.
+
+. The `EventList` in `AddressBook` will then delete the event specified by the user's execution of `deleteevent 2`.
+
+. The deleting of event in `AddressBook` posts an event `PopulateRequestEvent`, which will then be listened and handled by `handlePopulateEvent` in `MainWindow`.
+
+. The `Calendar` will look through the `EventList` and update the calendar by populating the dates of the calendar where there are events.
+
+Code of `DeleteEventCommand`:
+[source,java]
+----
+public class DeleteEventCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        // ... delete event logic ...
+
+        List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
+
+        ReadOnlyEvent eventToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        model.deleteEvent(eventToDelete);
+    }
+}
+----
+
+Removing of event in AddressBook.java:
+[source,java]
+----
+public class AddressBook implements ReadOnlyAddressBook {
+    public boolean deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
+        if (events.remove(event)) {
+            EventsCenter.getInstance().post(new PopulateRequestEvent(events));
+            return true;
+        } else {
+            throw new EventNotFoundException();
+        }
+    }
+}
+----
+
+Listener for PopulateRequestEvent in MainWindow.java:
+[source,java]
+----
+@Subscribe
+private void handlePopulateEvent(PopulateRequestEvent request) {
+    calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
+}
+----
+
+Updating of the deletion of event in Calendar.java:
+[source,java]
+----
+public class Calendar {
+    public void populateUpdatedCalendar(UniqueEventList eventList) {
+        for (AnchorPaneNode ap : allCalendarDays) {
+            ap.setStyle("calendar-color");
+            for (Event event1 : eventList) {
+                // ... populate updated calendar logic ...
+                if (newDate.equals(event1.getDate().toString())) {
+                    ap.getChildren();
+                    ap.setStyle("-fx-background-color: #ffebcd;");
+                }
+            }
+        }
+    }
+}
+----
+
+The following sequence diagram shows how the delete event operation works:
+
+As seen in the diagram below, when `deleteevent 1` is typed into the command line input, a new `DeleteEventCommand` is created.
+
+image::DeleteEventCommandDiagram2.png[width="800"]
+_Figure 5.4.2 Delete Event Command Diagram 2_
+
+As seen in Figure 5.4.3, when `deleteevent 1` is executed in `DeleteEventCommand`, it will remove the event in `UniqueEventList`.
+
+image::DeleteEventCommandDiagram3.png[width="800"]
+_Figure 5.4.3 Delete Event Command Diagram 3_
+
+As seen in the diagram below, when `deleteEvent` is executed in `AddressBook`, it will post an event `PopulateRequestEvent` in`EventsCenter`, which is handled by `MainWindow` and `Calendar`.
+
+image::DeleteEventCommandDiagram4.png[width="800"]
+_Figure 5.4.4 Delete Event Command Diagram 4_
+
+==== Design Considerations
+**Aspect:** Implementation of `DeleteEventCommand` +
+**Alternative 1 (current choice):** Extends to `UndoableCommand` +
+**Pros:** Users can undo their command when they make a mistake in deleting an event. +
+**Cons:** Developer needs to understand the implementation of UndoableCommand. +
+**Alternative 2:** Extends to `Command` +
+**Pros:** Developers do not need to understand the implementation of UndoableCommand. +
+**Cons:** Users are unable to undo their command when they make a mistake in deleting an event. +
+// end::deleteevent[]
+
 // tag::switch[]
 === Switch Theme mechanism
 
-The switch theme mechanism is facilitated by a `ThemesList`, which resides inside `AddressBook`. `ThemesList` contains a list of CSS files, in which each file are of differing colour themes for the application user interface. It sets the theme of the application to the theme specified by the index given by the user. This command will inherit from `Command`.
+The switch theme mechanism is facilitated by a `ThemesList`, which resides inside `AddressBook`. `Themes` contains a list of CSS files, in which each file are of differing colour themes for the application user interface. It sets the theme of the application to the theme specified by the index given by the user. This command will inherit from `Command`.
+
+As seen in the diagram below, `SwitchThemeCommand` inherits `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
 
 image::SwitchThemeCommandDiagram1.png[width="800"]
+_Figure 5.5.1 Switch Theme Command Diagram 1_
 
-As seen in the diagram above, `SwitchThemeCommand` inherits `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+The execution of SwitchThemeCommand is processed in this way:
 
-Suppose that the user has just launched the application. The `ThemesList` will be initialised based on the current existing colour themes.
+. User has just launched the application. The `Themes` will be initialised based on `CurrentTheme` which resides in `ModelManager`.
 
-The user executes `themeslist` to look through the existing colour themes, and pick one that he or she wants.
+. User will execute `themes` to look through the existing colour themes, and pick one that he or she wants.
 
-The user will then execute `switch 2`, with `2` being the `index` of the theme that the user prefers, provided by the executed `themeslist`.
+. User will then execute `switch 2`, with `2` being the `index` of the theme that the user prefers, provided by the executed `themes`.
 
-The `ThemesList` will take the `index` provided by the user, and return a `String` of the CSS file name based on the `index`.
+. The `ThemesList` will take the `index` provided by the user, and return a `String` of the CSS file name based on the `index`.
 
-The execution of `switch 2` toggles an event `ChangeThemeRequestEvent`, which will then be listened and handled by `MainWindow`.
+. The execution of `switch 2` posts an event `ChangeThemeRequestEvent`, which will then be listened and handled by `handleChangeThemeEvent` in `MainWindow`.
 
-The `Stylesheets` of the `MainWindow` will then remove the current existing CSS file, which is the current theme, and add the given `String` of the CSS file into `Stylesheets`. That will set the current colour theme of `The Myth's Book` to the preferred colour theme.
+. The `Stylesheets` of the `MainWindow` will then remove the current existing CSS file, which is the current theme, and add the given `String` of the CSS file into `Stylesheets`.
+  That will set the current colour theme of The Myth's Book to the preferred colour theme.
 
-Code of SwitchThemeCommand :
+. Subsequently, the colour theme chosen will update `CurrentTheme` of The Myth's Book in `UserPrefs` through `LogicManager` and `ModelManager`. This will
+  allow the application to check the latest colour theme before the application was closed and sets the application's colour theme to it through `MainWindow`.
+
+Code of SwitchThemeCommand:
 [source, java]
 ----
 public class SwitchThemeCommand extends Command {
@@ -489,38 +713,49 @@ public class SwitchThemeCommand extends Command {
 }
 ----
 
-Listener for ChangeThemeRequestEvent in MainWindow.java :
+Listener for ChangeThemeRequestEvent in MainWindow.java:
 [source,java]
 ----
 @Subscribe
 private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
-    logger.info(LogsCenter.getEventHandlingLogMessage(event));
     handleChangeTheme(event.theme);
+    browserPanel.setDefaultPage(event.theme);
+    logic.setCurrentTheme(getCurrentTheme());
 }
 ----
 
-Removing and adding of CSS file into Stylesheets in MainWindow.java :
+Removing and adding of CSS file into Stylesheets in MainWindow.java:
 [source, java]
 ----
 public void handleChangeTheme(String theme) {
     if (getRoot().getStylesheets().size() > 1) {
         getRoot().getStylesheets().remove(CURRENT_THEME_INDEX);
     }
-    getRoot().getStylesheets().add("/view/" + theme);
+    getRoot().getStylesheets().add(VIEW_PATH + theme);
+}
+----
+
+Setting of default theme of application based on UserPrefs in MainWindow.java:
+[source, java]
+----
+private void setWindowDefaultTheme(UserPrefs prefs) {
+    getRoot().getStylesheets().add(prefs.getTheme());
 }
 ----
 
 The following sequence diagram shows how the switch theme operation works:
 
-image::SwitchThemeCommandDiagram2.png[width="800"]
+As seen in the diagram below, when `switch 1` is typed into the command line input, a new `SwitchThemeCommand` is created.
 
-As seen in the diagram above, when `switch 1` is typed into the command line input, a new `SwitchThemeCommand` is created.
+image::SwitchThemeCommandDiagram2.png[width="800"]
+_Figure 5.5.2 Switch Theme Command Diagram 2_
+
+As seen in the diagram below, when `switch 1` is executed in `SwitchThemeCommand`, it will post `ChangeThemeRequestEvent` to the `EventsCenter`.
 
 image::SwitchThemeCommandDiagram3.png[width="800"]
+_Figure 5.5.3 Switch Theme Command Diagram 3_
 
-As seen in the diagram above, when `switch 1` is executed in `SwitchThemeCommand`, it will post `ChangeThemeRequestEvent` to the `EventsCenter`.
-
-Upon detecting `ChangeThemeRequestEvent`, `Ui` will call `handleChangeTheme` to handle the event, update the `MainWindow` accordingly and update its status bar.
+Upon detecting `ChangeThemeRequestEvent`, `MainWindow` will call `handleChangeTheme` to handle the event.
 
 ==== Design Considerations
 
@@ -536,11 +771,119 @@ Upon detecting `ChangeThemeRequestEvent`, `Ui` will call `handleChangeTheme` to 
 
 **Aspect:** How switch theme executes +
 **Alternative 1 (current choice):** Taking in index (type Integer) as the argument. +
-**Pros:** Simple to implement since the index will tally with `ThemesList`. Simple to use since users don't have to remember the names and look at the index in `ThemesList`. +
-**Cons:** Maybe less favourable for users when the size of `ThemesList` increase. +
+**Pros:** Simple to implement since the index will tally with `Themes`. Simple to use since users don't have to remember the names and look at the index in `Themes`. +
+**Cons:** Maybe less favourable for users when the size of `Themes` increase. +
 **Alternative 2:** Taking in theme's name (type String) as the argument. +
 **Pros:** Might be more favourable for long-time users since names may be easier to remember than numbers after using the application for a long time. +
 **Cons:** Harder to implement and test. +
+
+=== Theme List mechanism
+
+The theme list mechanism is facilitated by a `ThemesWindow`, which resides in `MainWindow`. `ThemesWindow` is a pop-up window that is populated by `Themes.html`, a HTML file
+consisting of a list of available colour themes in The Myth's Book.
+
+`Themes.html` will then populate `ThemesWindow`. This command will inherit from `Command`.
+
+As seen in the diagram below, the `ThemeListCommand` inherts from `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+image::ThemeListCommandDiagram1.png[width="800"]
+_Figure 5.6.1 Theme List Command Diagram 1_
+
+The execution of ThemeListCommand is processed in this way:
+
+. When the user execute `themes`, it posts an event `ShowThemeRequestEvent`, which will then be listened and handled by `handleShowThemeEvent` in `MainWindow`.
+
+. `gradle` will then convert the document `Themes.adoc` into `Themes.html` file.
+
+. `ThemesWindow` will then be activated, and will be populated by `Themes.html`.
+
+Code of ThemeListCommand:
+[source, java]
+----
+public class ThemeListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... theme list logic ...
+        EventsCenter.getInstance().post(new ShowThemeRequestEvent());
+    }
+}
+----
+
+Code of ThemesWindow.java:
+[source,java]
+----
+public ThemesWindow() {
+    // ... themes window logic ...
+    dialogStage = createDialogStage(TITLE, null, scene);
+    dialogStage.setMaximized(true);
+    FxViewUtil.setStageIcon(dialogStage, ICON);
+
+    String userGuideUrl = getClass().getResource(THEMES_FILE_PATH).toString();
+    browser.getEngine().load(userGuideUrl);
+}
+
+public void show() {
+    // ... show logic ...
+    dialogStage.showAndWait();
+}
+----
+
+Listener for ShowThemeRequestEvent in MainWindow.java:
+[source,java]
+----
+@Subscribe
+private void handleShowThemesEvent(ShowThemeRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    handleThemes();
+}
+----
+
+Creating and showing of ThemesWindow in MainWindow.java:
+[source,java]
+----
+@FXML
+public void handleThemes() {
+    ThemesWindow themesWindow = new ThemesWindow();
+    themesWindow.show();
+}
+----
+
+Including of Themes.html in build.gradle:
+[source,java]
+----
+task deployOfflineDocs(type: Copy) {
+    into('src/main/resources/docs')
+
+    from ("${asciidoctor.outputDir}/html5") {
+        include 'stylesheets/*'
+        include 'images/*'
+        include 'UserGuide.html'
+        include 'Themes.html'
+    }
+}
+----
+
+The following sequence diagram shows how the theme list operation works:
+
+As seen in the diagram below, when `themes` is typed into the command line input, a new `ThemeListcommand` is created.
+
+image::ThemeListCommandDiagram2.png[width="800"]
+_Figure 5.6.2 Theme List Command Diagram 2_
+
+As seen in the diagram below, when `themes` is executed in `ThemeListCommand`, it will post `ShowThemeRequestEvent` to the `EventsCenter`, which will be handled by `MainWindow` through `handleThemes`.
+
+image::ThemeListCommandDiagram3.png[width="800"]
+_Figure 5.6.3 Theme List Command Diagram 3_
+
+==== Design Considerations
+
+**Aspect:** How theme list executes +
+**Alternative 1 (current choice):** Showing the list of themes through a pop-up window populated by a HTML file. +
+**Pros:** Improve user-friendliness because users will be able to see how each theme looks like, and will be able to decide and choose which theme they prefer easily. +
+**Cons:** Developers need to learn the implementation of `gradle`, `asciidoctor` and `deployOfflineDocs`.
+**Alternative 2:** Showing the list of themes through `CommandResult` in `ResultDisplay`.
+**Pros:** Simple to implement since the list of themes can come as `String` and do not need to convert asciidoc to HTML file. Developers do not need to learn implementation of `gradle`, `asciidoctor` and `deployOfflineDocs`. +
+**Cons:** Reduce user-friendliness since users will not be able to see how each theme looks like, and will not be able to decide and choose preferred theme. +
 // end::switch[]
 
 // tag::sort[]
@@ -934,6 +1277,231 @@ If yes, then the function returns true else it returns false.
 **Pros:** No exception cases +
 **Cons:** No purpose of using find as if you search for one character, all contacts might get filtered +
 // end::find[]
+
+// tag::findtag[]
+=== Find Tag mechanism
+
+The find tag mechanism is facilitated by `TagContainsKeywordsPredicate`, a predicate class that finds persons in the address book with the tag specified by the user.
+It lists out all contacts that have the specified tag. Contacts with substrings of the tag will not be listed, unlike the Find mechanism. This command will inherit from `Command`.
+
+From Figure 5.11.1 below, the `FindTagCommand` inherits from `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+image::FindTagCommandDiagram1.png[width="800"]
+_Figure 5.11.1 Find Tag Command Diagram 1_
+
+The execution of FindTagCommand is processed in this way:
+
+. User will execute `findtag classmates` to find contacts in The Myth's Book with the tag `classmates`.
+
+. The execution of `findtag classmates` updates the `PersonList` in `AddressBook` with `TagContainsKeywordsPredicate`, which checks if the contacts in `PersonList` have the tag `classmates`.
+
+Code of `FindTagCommand`:
+[source,java]
+----
+public class FindTagCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... find tag logic ...
+        model.updateFilteredPersonList(predicate);
+    }
+}
+----
+
+Code of `TagContainsKeywordsPredicate`:
+[source,java]
+----
+public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return (keywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase
+                (person.getTagsText(), keyword)));
+    }
+}
+----
+
+The follow sequence diagram shows how the find tag operation works:
+
+As seen in Figure 5.11.2, when `findtag classmates` is typed into the command line input, a new `FindTagCommand` is created.
+
+image::FindTagCommandDiagram2.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `TagContainsKeywordsPredicate` +
+**Alternative 1 (current choice):** Tag of contacts has to match with the tag specified by the user +
+**Pros:** Persons found are specific to the tags that the user wants to find. Easy to implement. +
+**Cons:** `FindTagcommand` cannot account for mistypes or account for cases where users can't remember the exact tag for his/her contacts. +
+**Alternative 2:** Substrings of the tag of contacts can be matched as well +
+**Pros:** `FindTagCommand` can account for cases where users do not remember the exact tag for his/her contacts. +
+**Cons:** Difficult to implement. Not exactly a big improvement to `FindTagCommand`. +
+// end::findtag[]
+
+// tag::favouriteunfavourite
+=== Favourite/Unfavourite mechanism
+
+The favourite/unfavourite mechanism is facilitated by the `Favourite` field that resides in `Person`. These commands will inherit from `UndoableCommand`.
+
+As seen in the diagram below,`FavouriteCommand` and `UnfavouriteCommand` inherits `UndoableCommand`, which is an extra layer between abstract Command class and concrete commands that can be undone. When `FavouriteCommand` or `UnfavouriteCommand` is executed,
+the previous state of the address book before favouriting or unfavouriting a person is saved.
+
+image::FavouriteCommandDiagram1.png[width="800"]
+_Figure 5.12.1 Favourite Command Diagram 1_
+
+The execution of FavouriteCommand is processed in this way:
+
+. User will execute `list` to view the list of persons in The Myth's Book.
+
+. User will then execute `favourite 1`, with `1` being the `index` of the person that the user wants to favourite, provided by the executed `list`.
+
+. The `PersonList` in `AddressBook` will then favourite the person specified by the user's execution of `favourite 1`.
+
+. The `PersonCard` will be notified through `BindListeners` that the person specified is favourited, and will set the favourite icon beside the person's name.
+
+The execution of UnfavouriteCommand is processed similarly, but the person will be unfavourited, and the favourite icon will be removed instead.
+The execution of UnfavouriteCommand will also enable the display of `FavouriteList`.
+
+Code of `FavouriteCommand`:
+[source,java]
+----
+public class FavouriteCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... favourite logic ...
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        ReadOnlyPerson personToFavourite = lastShownList.get(targetIndex.getZeroBased());
+
+        model.favouritePerson(personToFavourite);
+    }
+}
+----
+
+Code of `UnfavouriteCommand`:
+[source,java]
+----
+public class UnfavouriteCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... unfavourite logic ...
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        ReadOnlyPerson personToUnfavourite = lastShownList.get(targetIndex.getZeroBased());
+
+        model.unfavouritePerson(personToUnfavourite);
+    }
+}
+----
+
+Favouriting/Unfavouriting of person in AddressBook.java:
+[source,java]
+----
+public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+    persons.favouritePerson(target);
+}
+
+public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+    persons.unfavouritePerson(target);
+}
+----
+
+Listener for change of favourite field in PersonCard.java:
+[source,java]
+----
+private void bindListeners(ReadOnlyPerson person) {
+    // ... listeners logic for other fields ...
+    person.favouriteProperty().addListener((observable, oldValue, newValue) -> {
+        initFavourite(person);
+    });
+}
+----
+
+Setting visibility of favourite icon beside name in PersonCard.java:
+[source,java]
+----
+private void initFavourite(ReadOnlyPerson person) {
+    if (person.isFavourite()) {
+        favouriteImage.setVisible(true);
+    } else {
+        favouriteImage.setVisible(false);
+    }
+}
+----
+
+The following sequence diagram shows how the favourite/unfavourite operation works:
+
+As seen in the diagram below, when `favourite 1` is typed into the command line input, a new `FavouriteCommand` is created.
+The same works for `UnfavouriteCommand` when `unfavourite 1` is typed into the command line input.
+
+image::FavouriteCommandDiagram2.png[width="800"]
+_Figure 5.12.2 Favourite Command Diagram 2_
+
+==== Design Considerations
+
+**Aspect:** Implementation of `FavouriteCommand` and `UnfavouriteCommand` +
+**Alternative 1 (current choice):** Extending to `UndoableCommand` class. +
+**Pros:** Better for users to undo `FavouriteCommand` or `UnfavouriteCommand` if he/she favourites/unfavourites the wrong person. +
+**Cons:** Developers need to learn the implementation of `UndoableCommand`. +
+**Alternative 2:** Extending to `Command` class. +
+**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class. +
+**Cons:** `FavouriteCommand` cannot be undone and have to call `UnfavouriteCommand` or vice versa to undo mistyped command +
+
+=== Favourite List mechanism
+
+The favourite list mechanism is facilitated by `NameContainsFavouritePredicate`, a predicate class that checks if a person is favourited. It lists out all contacts that are favourited. This command will inherit from `Command`.
+
+As seen in the diagram below, `FavouriteListCommand` inherits from `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+image::FavouriteListCommandDiagram1.png[width="800"]
+_Figure 5.13.1 Favourite List Command Diagram 1_
+
+The execution of `FavouriteListCommand` is processed in this way:
+
+. User will execute `favourites` to display a list of favourited persons in The Myth's Book.
+
+. The execution of `favourites` updates the `PersonList` in `AddressBook` with `NameContainsFavouritePredicate`, which checks if a person is favourited.
+
+Code of `FavouriteListCommand`:
+[source,java]
+----
+public class FavouriteListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... favourite list logic ...
+        model.updateFilteredPersonList(predicate);
+    }
+}
+----
+
+Code of `NameContainsFavouritePredicate`:
+[source,java]
+----
+public class NameContainsFavouritePredicate implements Predicate<ReadOnlyPerson> {
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return person.getFavourite();
+    }
+}
+----
+
+The following sequence diagram shows how the favourite list operation works:
+
+As seen in Figure 5.13.2, when `favourites` is typed into the command line input, a new `FavouriteListCommand` is created.
+
+image::FavouriteListCommandDiagram2.png[width="800"]
+_Figure 5.13.2 Favourite List Command Diagram 2_
+
+==== Design Considerations
+
+**Aspect:** Implementation of `FavouriteListCommand` +
+**Alternative 1 (current choice):** Extends to `Command` +
+**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class. +
+**Cons:** Users may want to undo `FavouriteListCommand` as they may not have wanted to list the favourited persons. +
+**Alternative 2:** Extends to `UndoableCommand` +
+**Pros:** Users can undo `FavouriteListCommand` when they mistype the command. +
+**Cons:** Developers need to learn the implementation of `UndoableCommand`. Unnecessary to extend to `UndoableCommand` since users can type `ListCommand` to go back to the list of all persons. +
+// end::favouriteunfavourite
 
 //tag::birthday[]
 === Birthdays mechanism
