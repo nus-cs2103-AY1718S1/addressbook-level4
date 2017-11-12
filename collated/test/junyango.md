@@ -619,7 +619,7 @@ public class SwitchThemeTest {
 
     @Test
     public void execute_switch_success() {
-        CommandResult result = new SwitchThemeCommand().executeUndoableCommand();
+        CommandResult result = new SwitchThemeCommand().execute();
         assertEquals(MESSAGE_SUCCESS, result.feedbackToUser);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof SwitchThemeEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
@@ -851,6 +851,7 @@ public class EventTest {
     private static Name name;
     private static DateTime dateTime;
     private static Address address;
+    private static Set<Property> properties;
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -859,6 +860,11 @@ public class EventTest {
         name = new Name(VALID_NAME_EVENT1);
         dateTime = new DateTime(VALID_DATE_EVENT1);
         address = new Address(VALID_ADDRESS_AMY);
+
+        properties = new HashSet<>();
+        properties.add(name);
+        properties.add(dateTime);
+        properties.add(address);
     }
 
     @Test
@@ -873,6 +879,9 @@ public class EventTest {
         assertEquals(3, event.getProperties().size());
     }
 
+```
+###### \java\seedu\address\model\event\EventTest.java
+``` java
     @Test
     public void equal_twoSameStateEvent_checkCorrectness() throws Exception {
         Event event = new Event(name, dateTime, address, new ArrayList<>());
@@ -882,7 +891,7 @@ public class EventTest {
         Event copied = new Event(event);
         assertEquals(event, copied);
     }
-}
+
 ```
 ###### \java\seedu\address\model\event\UniqueEventListTest.java
 ``` java
@@ -1074,7 +1083,6 @@ public class EventNameContainsKeywordsPredicateTest {
 ```
 ###### \java\seedu\address\model\reminder\ReminderTest.java
 ``` java
-
 public class ReminderTest {
     private static Event event;
     private static String message;
@@ -1094,7 +1102,6 @@ public class ReminderTest {
 
         assertEquals(event, reminder.getEvent());
         assertEquals(message, reminder.getMessage());
-
     }
 
     @Test
@@ -1114,7 +1121,6 @@ public class ReminderTest {
         assertEquals(reminder1, reminder2);
     }
 
-}
 ```
 ###### \java\seedu\address\testutil\EditEventDescriptorBuilder.java
 ``` java

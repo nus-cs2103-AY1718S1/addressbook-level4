@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.imports;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
@@ -39,6 +40,7 @@ public class ModuleInfoTest {
         ModuleInfo another = getSampleModule();
         assertEquals(info, info);
         assertEquals(info, another);
+        assertNotEquals(info, "");
     }
 
     @Test
@@ -49,6 +51,11 @@ public class ModuleInfoTest {
                 + "Module Credit: 5\n"
                 + "Examination Date: Wed Nov 29 17:00:00 SGT 2017";
         assertEquals(expected, info.toString());
+    }
+
+    @Test
+    public void hashCode_checkCorrectness() {
+        assertEquals("CS1101S".hashCode(), info.hashCode());
     }
 
     private static ModuleInfo getSampleModule() throws Exception {

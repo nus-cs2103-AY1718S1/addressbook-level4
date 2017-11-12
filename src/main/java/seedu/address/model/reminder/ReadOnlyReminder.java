@@ -29,10 +29,7 @@ public interface ReadOnlyReminder {
      * Formats the reminder as text, showing all contact details.
      */
     default String getAsText() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(" Message: ")
-                .append(getMessage());
-        return builder.toString();
+        return "Message: " + getMessage();
     }
 
 }

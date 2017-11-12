@@ -42,7 +42,7 @@ public class ModuleInfo {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(moduleCode);
+        return moduleCode.hashCode();
     }
 
     @Override
