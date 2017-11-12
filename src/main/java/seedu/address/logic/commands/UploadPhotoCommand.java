@@ -70,7 +70,7 @@ public class UploadPhotoCommand extends Command {
         }
 
         LoggingCommand loggingCommand = new LoggingCommand();
-        loggingCommand.keepLog("", "Uploaded image to " + targetIndex.getOneBased());
+        loggingCommand.keepLog("", "Uploaded photo to " + targetIndex.getOneBased());
         return new CommandResult(String.format(MESSAGE_UPLOAD_IMAGE_SUCCESS, personToUploadImage));
     }
 

@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -71,15 +70,12 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
-    //@@author JasmineSee
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
-        File photoPath = new File("photos/" + target.getEmail().toString() + ".png");
-        photoPath.delete();
         indicateAddressBookChanged();
     }
-    //@@author
+
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);

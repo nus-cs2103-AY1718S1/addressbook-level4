@@ -1,5 +1,5 @@
 # danielweide
-###### /java/seedu/address/commons/events/ui/QrEvent.java
+###### \java\seedu\address\commons\events\ui\QrEvent.java
 ``` java
 /**
  * Represents a selection change in the Qr Event
@@ -19,7 +19,7 @@ public class QrEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ClearLogCommand.java
+###### \java\seedu\address\logic\commands\ClearLogCommand.java
 ``` java
 public class ClearLogCommand extends Command {
     public static final String COMMAND_WORD = "clearlog";
@@ -37,11 +37,11 @@ public class ClearLogCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/LoggingCommand.java
+###### \java\seedu\address\logic\commands\LoggingCommand.java
 ``` java
 public class LoggingCommand {
     /**
-     *keepLog Method to Write Activity Log To The ConnectUsLog.txt file
+     * Writes onto ConnectUsLog.txt field when new action is executed
      */
     public void keepLog(String logText, String functionType) {
         try (FileWriter fileWrite = new FileWriter("ConnectUsLog.txt", true);
@@ -53,7 +53,7 @@ public class LoggingCommand {
         }
     }
     /**
-     * startUpLog Method will record the time when the application starts
+     * Starts recording activity the moment application starts up
      */
     public void startUpLog() {
         try (FileWriter fileWrite = new FileWriter("ConnectUsLog.txt", true);
@@ -66,7 +66,7 @@ public class LoggingCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/QrCallCommand.java
+###### \java\seedu\address\logic\commands\QrCallCommand.java
 ``` java
 public class QrCallCommand extends Command {
 
@@ -108,11 +108,11 @@ public class QrCallCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/QrGenCallCommand.java
+###### \java\seedu\address\logic\commands\QrGenCallCommand.java
 ``` java
 public class QrGenCallCommand {
     /**
-     * Method to Generate PhoneCall QRCode
+     * Generate PhoneCall QRCode
      */
     public String qrCall(String phoneNum) {
         String qrCodeA = "http://";
@@ -141,11 +141,11 @@ public class QrGenCallCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/QrGenSaveContactCommand.java
+###### \java\seedu\address\logic\commands\QrGenSaveContactCommand.java
 ``` java
 public class QrGenSaveContactCommand {
     /**
-     * Method to Generate SaveContact for Phone QRCode
+     * Generates SaveContact QR Link in forms of String
      */
     public String qrSaveContact(String phoneNum, String contactName, String contactEmail) {
         String qrA = "http://";
@@ -179,16 +179,15 @@ public class QrGenSaveContactCommand {
         String qrCodeF = "&ecc=L";
         String lineE = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF;
         String fullQr = lineA + newName + lineB + newName + lineC + phoneNum + lineD + contactEmail + lineE;
-        System.out.println(fullQr);
         return fullQr;
     }
 }
 ```
-###### /java/seedu/address/logic/commands/QrGenSmsCommand.java
+###### \java\seedu\address\logic\commands\QrGenSmsCommand.java
 ``` java
 public class QrGenSmsCommand {
     /**
-     * Method to Generate SMS to Contact QRCode
+     * Generates SMS QR Link in forms of String
      */
     public String qrSms(String phoneNum, String contactName) {
         String qrCodeA = "http://";
@@ -218,7 +217,7 @@ public class QrGenSmsCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/QrSaveContactCommand.java
+###### \java\seedu\address\logic\commands\QrSaveContactCommand.java
 ``` java
 public class QrSaveContactCommand extends Command {
 
@@ -260,7 +259,7 @@ public class QrSaveContactCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/QrSmsCommand.java
+###### \java\seedu\address\logic\commands\QrSmsCommand.java
 ``` java
 public class QrSmsCommand extends Command {
 
@@ -302,13 +301,11 @@ public class QrSmsCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/parser/QrCallCommandParser.java
+###### \java\seedu\address\logic\parser\QrCallCommandParser.java
 ``` java
 public class QrCallCommandParser implements Parser<QrCallCommand> {
     /**
-     * Parses the given {@code String} of arguments in the context of the QrCallCommand
-     * and returns an QrCallCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Parses input arguments and creates a new QrCallCommand object
      */
     public QrCallCommand parse(String args) throws ParseException {
         try {
@@ -321,13 +318,11 @@ public class QrCallCommandParser implements Parser<QrCallCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/QrSaveContactCommandParser.java
+###### \java\seedu\address\logic\parser\QrSaveContactCommandParser.java
 ``` java
 public class QrSaveContactCommandParser implements Parser<QrSaveContactCommand> {
     /**
-     * Parses the given {@code String} of arguments in the context of the QrCallCommand
-     * and returns an QrCallCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Parses input arguments and creates a new QrSaveContactCommand object
      */
     public QrSaveContactCommand parse(String args) throws ParseException {
         try {
@@ -340,13 +335,11 @@ public class QrSaveContactCommandParser implements Parser<QrSaveContactCommand> 
     }
 }
 ```
-###### /java/seedu/address/logic/parser/QrSmsCommandParser.java
+###### \java\seedu\address\logic\parser\QrSmsCommandParser.java
 ``` java
 public class QrSmsCommandParser implements Parser<QrSmsCommand> {
     /**
-     * Parses the given {@code String} of arguments in the context of the QrCallCommand
-     * and returns an QrCallCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Parses input arguments and creates a new QrSmsCommand object
      */
     public QrSmsCommand parse(String args) throws ParseException {
         try {

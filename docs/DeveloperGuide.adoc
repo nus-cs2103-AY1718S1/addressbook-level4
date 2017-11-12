@@ -153,7 +153,7 @@ Each of the four components
 
 
 The following figure below shows the class diagram of the logic component.
-
+[[figure3.1.2]]
 image::LogicClassDiagram.png[width="800"]
 _Figure 3.1.2 : Class Diagram of the Logic Component_
 
@@ -271,7 +271,7 @@ Some examples of common classes includes: `StringUtil` , `FileUtil`, `IllegalVal
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
-// tag::joshua[]
+// tag::email[]
 
 === Email Function
 (added in v1.2)
@@ -310,6 +310,9 @@ _Figure 4.1.1 : Sequence Diagram of the Email function_
 
 ---
 
+//end::email[]
+// tag::googlemaps[]
+
 === Displaying a contact's location on Google Maps
 (added in v1.2)
 
@@ -339,6 +342,9 @@ The browser will then render the new URL it has received. Below is the code snip
 The browser's user agent had to be set to ** "Mozilla/5.0 "
                                                           + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0" **because
 there were unicode issue's when load Google Maps on Mac computers.
+
+//end::googlemaps[]
+// tag::mapping[]
 
 === Mapping a command to a JavaFX Button
 (added in v1.2)
@@ -390,7 +396,110 @@ When the DeleteButton is pressed, it will be handled by the handleDeleteButtonPr
         logger.info("Result: " + commandResult.feedbackToUser);
     }
 ----
-// end::joshua[]
+
+//end::mapping[]
+// tag::form[]
+
+=== Edit form implementation and validation
+
+image::form.png[width="150"]
+_Figure 4.4.1 : Edit Person Form_
+
+This section describes how the edit form has been implemented.
+
+Similar to the deleteButton, the editButton has been mapped to the `edit` command. Refering to _Figure 4.4.1_, this +
+command will be called whenever the `Save` button is pressed. Fields that have changed in TextFields 1, 2, 3, 4 and 5 (`Name`, `Phone`, `Email`, `Address` and `Tags`) would be be saved for the currently selected user. Thus, we have to make sure that the user
+inputs the correct command parameters into the `edit` command so that there would be no input errors.
+
+Textfields for each of the 5 fields are implemented this way, in this example, here's how the name field gets saved:
+[source,java]
+----
+public class NameTextField extends UiPart<Region> {
+
+    public static final String ERROR_STYLE_CLASS = "error";
+    private static final String FXML = "NameTextField.fxml";
+    private final Logger logger = LogsCenter.getLogger(CommandBox.class);
+
+    @FXML
+    private TextField nameTextField;
+
+    public NameTextField() {
+        super(FXML);
+        registerAsAnEventHandler(this);
+    }
+    public String getNameTextField() {
+        return nameTextField.getText();
+    }
+
+    public void setNameTextField(String text) {
+        nameTextField.setText(text);
+    }
+    public TextField getObject() {
+        return nameTextField;
+    }
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setNameTextField(event.getNewSelection().person.getName().toString());
+    }
+}
+----
+
+As shown above, whenever a user selects a new contact, the details of that contact would be displayed on the textfield +
+through the use of this event listener:
+
+[source,java]
+----
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setNameTextField(event.getNewSelection().person.getName().toString());
+    }
+----
+
+The user can now modify the selected field, in this case, the name field. Once he is happy with the changes, he goes +
+on to click the save button.
+
+Shown below is a code snippet of where the save button gets instantiated. It takes in the textfields as parameters:
+
+[source,java]
+----
+//extracted from MainWindow.java
+// void fillInnerPats()
+// ...
+
+        editButton = new EditButton(logic, nameTextField, phoneTextField,
+                emailTextField, addressTextField, tagTextField);
+----
+
+Before the contact details are saved, `EditButton` does a check on whether the inputs are valid:
+
+[source,java]
+----
+    public static String checkInput(String name, String phone, String email, String address, String tag) {
+        if (name.matches(".*\\d+.*") || name.isEmpty()) {
+            return NAME_ERROR;
+        }
+        if (!phone.matches("[0-9]+")) {
+            return PHONE_ERROR;
+        }
+        if (!email.contains("@") || !email.contains(".")) {
+            return EMAIL_ERROR;
+        }
+        //check tag doesnt end with a special character
+        String[] tagSplit = tag.split(",");
+        for (int i = 0; i < tagSplit.length; i++) {
+            if (!tagSplit[i].matches("[a-zA-Z0-9]*")) {
+                return TAG_ERROR;
+            }
+        }
+        return VALIDATION_SUCCESS;
+    }
+----
+
+The contact would only be saved if this function returns a `VALIDATION_SUCCESS`, else it would output an input format error.
+
+// end::form[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -402,9 +511,9 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 4.4.1 : Class Diagram for Logic Command_
+_Figure 4.5.1 : Class Diagram for Logic Command_
 
-As you can see in _Figure 4.4.1_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see in _Figure 4.5.1_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -439,25 +548,25 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-As shown in _Figure 4.4.2_ below, the user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+As shown in _Figure 4.5.2_ below, the user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 4.4.2: Undoable Command example_
+_Figure 4.5.2: Undoable Command example_
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example in _Figure 4.4.3_, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example in _Figure 4.5.3_, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 4.4.3: Undoable Command example_
+_Figure 4.5.3: Undoable Command example_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack` as shown in _Figure 4.4.4_. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack` as shown in _Figure 4.5.4_. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 4.4.4: Undoable Command example_
+_Figure 4.5.4: Undoable Command example_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -466,7 +575,7 @@ The following link:#sequence-diagram[sequence diagram] shows how the undo operat
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-_Figure 4.4.5_ : Sequence Diagram of the Undo and Redo function._
+_Figure 4.5.5_ : Sequence Diagram of the Undo and Redo function._
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -476,17 +585,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 4.4.6: Undoable Command example_
+_Figure 4.5.6: Undoable Command example_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 4.4.7: Undoable Command example_
+_Figure 4.5.7: Undoable Command example_
 
 The following link:#activity-diagram[activity diagram]summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 4.4.8: Undoable Command Activity Diagram_
+_Figure 4.5.8: Undoable Command Activity Diagram_
 
 ==== Design Considerations
 
@@ -750,7 +859,7 @@ _Figure 4.8.1: Remove Tag Sequence Diagram_
 === Change colour theme mechanism
 (added in v1.2)
 
-You can customise the look of the application by changing the color theme.
+You can customise the look of the application by changing the color theme. This feature can be done on the GUI or the CLI.
 
 The colour theme options are implemented by the `UI`
 on the `MainWindow` MenuBar as MenuItems. +
@@ -759,6 +868,13 @@ on the `MainWindow` MenuBar as MenuItems. +
 will trigger the onAction method "handleWhiteTheme". +
 * The method adds the stylesheet to the `VBox` that is specific for the colour theme chosen and removes the stylesheets
 that belongs to other colours. +
+
+For the CLI, the `ChangeThemeCommand` makes use of the `EventsCenter` to post the event `ThemeChangeEvent` whenever the command is executed.
+
+* When the command is executed, the theme inputted by you would be saved as a String variable to the `ThemeChangeEvent`.
+* The method "handleThemeCommand" on the `MainWindow` is subscribed to the `ThemeChangeEvent` and will check with the saved theme to handle
+the specific themes.
+* The same onAction methods will be triggered for the different specific themes and follows the GUI implementation as above.
 
 The diagrams shows the UI of the additional colour themes:
 
@@ -904,6 +1020,480 @@ And for each `ReadOnlyPerson` object found in the array, the required informatio
 **Cons:** Requires an `Export` button to be created, involves UI component.
 
 // end::export[]
+
+// tag::deletephoto[]
+=== Delete photo mechanism
+(added in v1.5)
+
+The delete photo mechanism is similar to the upload photo mechanism where it is also implemented by `EventsCenter` and `Logic`.
+
+* After inputting the command with the index of the person in the argument, `DeletePhotoCommandParser` will parse in the index into `DeletePhotoCommand`. +
+* At the execute() method of `DeletePhotoCommand`, the method first checks if the index given is larger than the current filteredPersonList. If it is, a `CommandException` will be thrown to indicate invalid index. +
+* Next, the method will get the `ReadOnlyPerson` object based on the index given.
+* A method called isPhotoExist will check if there is an existing photo for the current person before deleting the photo as shown in the code below:
+[source,java]
+----
+     if (isPhotoExist(personToDeleteImage)) {
+                deletePhoto(personToDeleteImage);
+                EventsCenter.getInstance().post(new PhotoChangeEvent());
+            } else {
+                throw new CommandException(String.format(MESSAGE_DELETE_IMAGE_FAILURE));
+            }
+----
+* The event is raised to allow instant display of the modification of the photo. To implement this, `PersonCard` is registered as an event handler and includes a @Subscribe handlePhotoChange to handle the event of deleting the photo. +
+* The handlePhotoChange method will set the `ImageView` to the default image file path in the project directory.
+
+[NOTE]
+If the person does not have an existing uploaded photo, a 'CommandException' will be thrown to specify that the person does not have a photo to delete.
+
+// end::deletephoto[]
+
+// tag::deletesallphotos[]
+=== Deletes all photos mechanism
+(added in v1.5)
+
+The deletes all photos mechanism is similar to the delete photo mechanism where it is also implemented by `EventsCenter` and `Logic`.
+
+* After entering the command, the execute() method in `DeletesAllPhotosCommand` will delete all the photos in the project directory. +
+
+==== Design Considerations
+**Aspect:** Implementation of code +
+**Alternative 1 (current choice):** Implementing this feature in a separate `DeletesAllPhotosCommand` class +
+**Pros:** Separation of Concerns Principle (SoC) is not violated as the `DeletesAllPhotosCommand` class simply handles the deletion of all photos. +
+**Cons:** One more command has to be added which can inconvenience the user. +
+**Alternative 2 :** Implementing this feature in the `DeletePhotoCommand` class by having the same command and different parameters +
+**Pros:** There will be one less command which makes it more convenient to the user. +
+**Cons:** This will violate Separation of Concerns Principle (SoC) as even though both classes concerns the deletion of photos, `DeletePhotoCommand` +
+is specifically concerned in deleting a person's photo while `DeletesAllPhotosCommand` is concerned with deleting all photos.
+
+// end::deletesallphotos[]
+
+=== LoggingCommand Function
+(added in v1.2)
+// tag::loggingcom[]
+In this section, we explain how logging is done in the application whenever an important action is taken by user.
+
+Whenever an action such as "Add", "Clear", "Delete", "Edit", "Email", "Import", "List", "Redo", "RemoveTag", "Undo", "UploadPhoto", "DeletePhoto" & "DeletesAllPhotos" is executed, the LoggingCommand method will be called and information of the action is recorded in ConnectUsLog.txt with a timestamp.
+
+With slight modification to link:#figure3.1.2[Figure 3.1.2], we have the following diagram showing the Class Diagram on how LoggingCommand is implemented in the system.
+
+image::LogCommandClassDia.png[]
+_Figure 4.15.1 : Class Diagram of LoggingCommand function_
+
+The sequence diagram uses delete command as an example on how LoggingCommand is implemented.
+image::loggingcommandseq.png[]
+_Figure 4.15.2 : An example of Sequence Diagram for LoggingCommand function used for delete_
+
+This is how you can use the LoggingCommand method in your code.
+[source,java]
+----
+   LoggingCommand loggingCommand = new LoggingCommand();
+   loggingCommand.keepLog("Information", "Type of Action such as Add,Clear,etc.");
+----
+[NOTE]
+With reference to the code for LoggingCommand, the "information" indicate the data that the user are editing with while "type of action" indicate the action taken by the user.
+// end::loggingcom[]
+
+=== ClearLog Function
+(added in v1.3)
+// tag::clearlog[]
+[NOTE]
+This action is irreversible.
+
+In this section, we will explain how users can clear their log for ConnectUsLog.txt file.
+
+In cases, where you want to keep your logfile organised by clearing logfile such as after checks or confirmation of log details. The logfile information is no longer useful to the user and this method allow that action.
+
+This function has been mapped to `ClearLogButton` and 'clearlog' 'cl' for commandline.
+
+The following sequence diagram describes how 'ClearLogCommand' delete ConnectUsLog.txt file when method is called.
+
+image::clearlogseq.png[]
+_Figure 4.16.1 : Sequence Diagram of the ClearLogCommand_
+
+The ClearLog Method is implemented in the 'ClearLogButton' with the following codes.
+[source,java]
+----
+       @FXML
+       private void handleClearLogButtonPressed() throws CommandException, ParseException, IOException {
+           Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want clear the log?",
+                   ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+           alert.showAndWait();
+           if (alert.getResult() == ButtonType.YES) {
+               ClearLogCommand clearLogCommand = new ClearLogCommand();
+               clearLogCommand.execute();
+               logger.info("Log has been cleared.");
+           }
+       }
+----
+
+The ClearLog Method implementation for commandline with the following codes.
+[source,java]
+----
+    public CommandResult execute() throws CommandException, IOException {
+        File file = new File("ConnectUsLog.txt");
+        file.delete();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+----
+// end::clearlog[]
+
+=== QrCall Function
+(added in v1.4)
+// tag::qrcall[]
+In this section, we explain how users can generation Quick Response(QR) Code for calling with any contact number available in the addressbook.
+
+To make user experience more convenience, QR Code can make calling easy through the use of Smartphone with QR Scanner application installed.
+
+This function has been mapped to `QrButton` and `qrcall` `qc` for commandline.
+
+The following sequence diagram describes how 'QrCall' Generates QR Code using commandline.
+
+image::QrCallCommand.png[]
+_Figure 4.17.1 : Sequence Diagram of the QrCallCommand_
+
+The QrCallCommandParser Method is implemented with the following code.
+[source,java]
+----
+          public QrCallCommand parse(String args) throws ParseException {
+              try {
+                  Index index = ParserUtil.parseIndex(args);
+                  return new QrCallCommand(index);
+              } catch (IllegalValueException ive) {
+                  throw new ParseException(
+                          String.format(MESSAGE_INVALID_COMMAND_FORMAT, QrCallCommand.MESSAGE_USAGE));
+              }
+          }
+----
+
+The QrCallCommand Method implementation for commandline with the following codes.
+[source,java]
+----
+     @Override
+        public CommandResult execute() throws CommandException {
+
+            List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            int indexOfPersonInList = targetIndex.getOneBased() - 1;
+            EventsCenter.getInstance().post(new QrEvent(lastShownList.get(indexOfPersonInList)));
+            return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+        }
+----
+
+The QrEvent Method implementation for commandline with the following codes.
+[source,java]
+----
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName();
+        }
+        public ReadOnlyPerson getPerson() {
+            return person;
+        }
+----
+
+The QrButton Method implementation for commandline with the following codes.
+[source,java]
+----
+    @FXML
+    private void handleQrButtonPressed() throws CommandException, ParseException, IOException {
+        if ( person != null) {
+            bp.loadQrCode(person);
+            logger.info("QR Code displayed");
+        } else {
+            logger.info(MESSAGE_FAIL);
+        }
+    }
+----
+
+The BrowserPanel Method implementation for commandline with the following codes.
+[source,java]
+----
+       public void loadQrCode(ReadOnlyPerson person) {
+           QrGenCallCommand qrGenCallCommand = new QrGenCallCommand();
+           browser.getEngine().setUserAgent("Mozilla/5.0 "
+                   + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+           loadPage(qrGenCallCommand.qrCall(person.getPhone().toString()));
+       }
+----
+
+The QrGenCallCommand to retrieve QrCode with the following codes.
+[source,java]
+----
+       public String qrCall(String phoneNum) {
+              String qrCodeA = "http://";
+              String qrCodeB = "api.qrserver.com/";
+              String qrCodeC = "v1/";
+              String qrCodeD = "create-qr-code/";
+              String qrCodeE = "?color=000000";
+              String qrCodeF = "&bgcolor=FFFFFF";
+              String qrCodeG = "&data";
+              String qrCodeH = "=tel";
+              String qrCodeI = "%3A";
+              String qrCodeJ = "&qzone";
+              String qrCodeK = "=1";
+              String qrCodeL = "&margin";
+              String qrCodeM = "=0";
+              String qrCodeN = "&size";
+              String qrCodeO = "=500x500";
+              String qrCodeP = "&ecc";
+              String qrCodeQ = "=L";
+              String qrLineA = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF
+                      + qrCodeG + qrCodeH + qrCodeI;
+              String qrLineB = qrCodeJ + qrCodeK + qrCodeL + qrCodeM + qrCodeN + qrCodeO
+                      + qrCodeP + qrCodeQ;
+              String fullQr = qrLineA + phoneNum + qrLineB;
+              return fullQr;
+          }
+----
+// end::qrcall[]
+
+=== QrSms Function
+(added in v1.4)
+// tag::qrsms[]
+In this section, we explain how users can generation Quick Response(QR) Code for Sms(Short Message Services) with any contact number available in the addressbook.
+
+To make user experience more convenience, QR Code can make sms easy through the use of Smartphone with QR Scanner application installed.
+
+This function has been mapped to `QrSmsButton` and `qrsms` `qs` for commandline.
+
+The following sequence diagram describes how 'QrSms' Generates QR Code using commandline.
+
+image::QrSmsCommand.png[]
+_Figure 4.18.1 : Sequence Diagram of the QrSmsCommand_
+
+The QrSmsCommandParser Method is implemented with the following code.
+[source,java]
+----
+ public QrSmsCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new QrSmsCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, QrSmsCommand.MESSAGE_USAGE));
+        }
+    }
+----
+
+The QrSmsCommand Method implementation for commandline with the following codes.
+[source,java]
+----
+   @Override
+       public CommandResult execute() throws CommandException {
+
+           List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+           if (targetIndex.getZeroBased() >= lastShownList.size()) {
+               throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+           }
+           int indexOfPersonInList;
+           indexOfPersonInList = targetIndex.getOneBased() - 1;
+           EventsCenter.getInstance().post(new QrSmsEvent(lastShownList.get(indexOfPersonInList)));
+           return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+       }
+----
+
+The QrSmsEvent Method implementation for commandline with the following codes.
+[source,java]
+----
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName();
+        }
+        public ReadOnlyPerson getPerson() {
+            return person;
+        }
+----
+
+The QrSmsButton Method implementation for commandline with the following codes.
+[source,java]
+----
+     @FXML
+        private void handleQrSmsButtonPressed() throws CommandException, ParseException, IOException {
+            if ( person != null) {
+                bp.loadSmsQrCode(person);
+                logger.info("QR Code displayed");
+            } else {
+                logger.info(MESSAGE_FAIL);
+            }
+        }
+----
+
+The BrowserPanel Method implementation for commandline with the following codes.
+[source,java]
+----
+ public void loadSmsQrCode(ReadOnlyPerson person) {
+        QrGenSmsCommand qrGenSmsCommand = new QrGenSmsCommand();
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+        loadPage(qrGenSmsCommand.qrSms(person.getPhone().toString(), person.getName().fullName));
+    }
+----
+
+The QrGenSmsCommand to retrieve QrCode with the following codes.
+[source,java]
+----
+  public String qrSms(String phoneNum, String contactName) {
+        String qrCodeA = "http://";
+        String qrCodeB = "api.qrserver.com/";
+        String qrCodeC = "v1/";
+        String qrCodeD = "create-qr-code/";
+        String qrCodeE = "?color=000000";
+        String qrCodeF = "&bgcolor=FFFFFF";
+        String qrCodeG = "&data";
+        String qrCodeH = "=SMSTO";
+        String qrCodeI = "%3A";
+        String qrCodeJ = "&qzone";
+        String qrCodeK = "=1";
+        String qrCodeL = "&margin";
+        String qrCodeM = "=0";
+        String qrCodeN = "&size";
+        String qrCodeO = "=500x500";
+        String qrCodeP = "&ecc";
+        String qrCodeQ = "=L";
+        String qrLineA = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF
+                + qrCodeG + qrCodeH + qrCodeI;
+        String qrLineB = qrCodeI + "Dear+" + contactName + "%2C";
+        String qrLineC = qrCodeJ + qrCodeK + qrCodeL + qrCodeM + qrCodeN + qrCodeO
+                + qrCodeP + qrCodeQ;
+        String fullQr = qrLineA + phoneNum + qrLineB + qrLineC;
+        return fullQr;
+    }
+----
+// end::qrsms[]
+
+=== QrSaveContact Function
+(added in v1.4)
+// tag::qrsave[]
+[NOTE]
+Currently only available for Android Users.
+
+In this section, we explain how users can generation Quick Response(QR) Code for saving contact into their android smartphone.
+
+To make user experience more convenience, QR Code can make saving contact easy through the use of Smartphone with QR Scanner application installed.
+
+This function has been mapped to `QrSaveButton` and `qrsave` `qrs` for commandline.
+
+The following sequence diagram describes how 'QrSave' Generates QR Code using commandline.
+
+image::QrSaveContactCommand.png[]
+_Figure 4.19.1 : Sequence Diagram of the QrSaveContactCommand_
+
+The QrSaveContactCommandParser Method is implemented with the following code.
+[source,java]
+----
+    public QrSaveContactCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new QrSaveContactCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, QrSaveContactCommand.MESSAGE_USAGE));
+        }
+    }
+----
+
+The QrSaveContactCommand Method implementation for commandline with the following codes.
+[source,java]
+----
+   @Override
+      public CommandResult execute() throws CommandException {
+
+          List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+          if (targetIndex.getZeroBased() >= lastShownList.size()) {
+              throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+          }
+          int indexOfPersonInList = 0;
+          indexOfPersonInList = targetIndex.getOneBased() - 1;
+          EventsCenter.getInstance().post(new QrSaveEvent(lastShownList.get(indexOfPersonInList)));
+          return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+      }
+----
+
+The QrSaveEvent Method implementation for commandline with the following codes.
+[source,java]
+----
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+    public ReadOnlyPerson getPerson() {
+        return person;
+    }
+----
+
+The QrSaveButton Method implementation for commandline with the following codes.
+[source,java]
+----
+    @FXML
+    private void handleQrSaveButtonPressed() throws CommandException, ParseException, IOException {
+        if ( person != null) {
+            bp.loadSaveQrCode(person);
+            logger.info("QR Code displayed");
+        } else {
+            logger.info(MESSAGE_FAIL);
+        }
+    }
+----
+
+The BrowserPanel Method implementation for commandline with the following codes.
+[source,java]
+----
+ public void loadSaveQrCode(ReadOnlyPerson person) {
+        QrGenSaveContactCommand qrGenSaveContactCommand = new QrGenSaveContactCommand();
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+        loadPage(qrGenSaveContactCommand.qrSaveContact(person.getPhone().toString(), person.getName().fullName,
+                person.getEmail().toString()));
+    }
+----
+
+The QrGenSmsCommand to retrieve QrCode with the following codes.
+[source,java]
+----
+    public String qrSaveContact(String phoneNum, String contactName, String contactEmail) {
+        String qrA = "http://";
+        String qrB = "api.qrserver.com/";
+        String qrC = "v1/";
+        String qrD = "create-qr-code/";
+        String qrE = "?color=000000";
+        String qrF = "&bgcolor=FFFFFF";
+        String qrG = "&data=BEGIN";
+        String qrH = "%3AVCARD";
+        String qrI = "%0AVERSION";
+        String qrJ = "%3A2.1%0";
+        String qrK = "AFN%3A";
+        String lineA = qrA + qrB + qrC + qrD + qrE + qrF + qrG + qrH + qrI
+                + qrJ + qrK;
+        String newName = contactName.replace(' ', '+');
+        String lineB = "%0AN%3A%3B";
+        String qrL = "%0ATEL";
+        String qrM = "%3BWORK";
+        String qrN = "%3BVOICE%3A";
+        String lineC = qrL + qrM + qrN;
+        String qrO = "%0AEMAIL";
+        String qrP = "%3BWORK";
+        String qrQ = "%3BINTERNET%3A";
+        String lineD = qrO + qrP + qrQ;
+        String qrCodeA = "%0AEND";
+        String qrCodeB = "%3AVCARD";
+        String qrCodeC = "%0A&qzone=1";
+        String qrCodeD = "&margin=0";
+        String qrCodeE = "&size=500x500";
+        String qrCodeF = "&ecc=L";
+        String lineE = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF;
+        String fullQr = lineA + newName + lineB + newName + lineC + phoneNum + lineD + contactEmail + lineE;
+        System.out.println(fullQr);
+        return fullQr;
+    }
+----
+// end::qrsave[]
 
 == Documentation
 
@@ -1310,6 +1900,14 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |personalize the application |feel more familiar with the application
 
+|`* *` |user |check what command or changes was done at any point in time | can rectify mistakes committed to keep addressbook up to date
+
+|`* *` |user |avoid careless mistake when keying number for calling | be more productive and careless free
+
+|`* *` |user |avoid careless mistake when keying number for sending of sms | be more productive and careless free
+
+|`* *` |user |save user contact to my smart phone | be more productive and careless free. As well as saving time from manual input for huge number of contact information.
+
 |=======================================================================
 
 === Unlikely to have
@@ -1317,7 +1915,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`*` |user |upload images to different contacts |so that i can easily identify them
+|`*` |user |upload images to different contacts |so that I can easily identify them
+
+|`*` |user |delete images of different contacts |so that I can remove outdated photos
 
 |`*` |user |plan out the best path for each contact based on what i select |take advantage of the most efficient routes.
 |=======================================================================

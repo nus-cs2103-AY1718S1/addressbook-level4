@@ -20,6 +20,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ThemeChangeEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -117,6 +118,7 @@ public class MainWindow extends UiPart<Region> {
     //@@author
     @FXML
     private VBox vBox;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -178,6 +180,7 @@ public class MainWindow extends UiPart<Region> {
         });
     }
     //@@author blaqkrow
+
     /**
      * Fills up all the placeholders of this window.
      */
@@ -284,6 +287,7 @@ public class MainWindow extends UiPart<Region> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
+
     void show() {
         primaryStage.show();
     }
@@ -297,11 +301,12 @@ public class MainWindow extends UiPart<Region> {
     }
 
     //@@author JasmineSee
+
     /**
      * Changes to default dark theme.
      */
     @FXML
-    private void handleBlackTheme() {
+    public void handleBlackTheme() {
         if (vBox.getStylesheets().contains("view/DarkTheme.css")) {
             vBox.getStylesheets().remove("view/DarkTheme.css");
         }
@@ -313,8 +318,9 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Changes to white theme.
      */
+
     @FXML
-    private void handleWhiteTheme() {
+    public void handleWhiteTheme() {
         if (vBox.getStylesheets().contains("view/WhiteTheme.css")) {
             vBox.getStylesheets().remove("view/WhiteTheme.css");
         }
@@ -328,7 +334,7 @@ public class MainWindow extends UiPart<Region> {
      * Changes to green theme.
      */
     @FXML
-    private void handleGreenTheme() {
+    public void handleGreenTheme() {
         if (vBox.getStylesheets().contains("view/GreenTheme.css")) {
             vBox.getStylesheets().remove("view/GreenTheme.css");
         }
@@ -336,6 +342,22 @@ public class MainWindow extends UiPart<Region> {
         vBox.getStylesheets().remove("view/DarkTheme.css");
         vBox.getStylesheets().add("view/GreenTheme.css");
     }
+
+    /**
+     * Handles event for change theme command.
+     */
+    @Subscribe
+    public void handleThemeCommand(ThemeChangeEvent event) {
+        String theme = event.getTheme();
+        if (theme.equals("dark")) {
+            handleBlackTheme();
+        } else if (theme.equals("white")) {
+            handleWhiteTheme();
+        } else if (theme.equals("green")) {
+            handleGreenTheme();
+        }
+    }
+
     //@@author
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;

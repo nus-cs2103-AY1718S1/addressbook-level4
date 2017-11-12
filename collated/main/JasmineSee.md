@@ -1,5 +1,5 @@
 # JasmineSee
-###### /java/seedu/address/commons/events/ui/PhotoChangeEvent.java
+###### \java\seedu\address\commons\events\ui\PhotoChangeEvent.java
 ``` java
 /**
  * Indicates that a photo change is occurring.
@@ -15,8 +15,187 @@ public class PhotoChangeEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditCommand.java
+###### \java\seedu\address\commons\events\ui\ThemeChangeEvent.java
 ``` java
+
+/**
+ * Indicates that a theme change is occurring.
+ */
+public class ThemeChangeEvent extends BaseEvent {
+
+    private String theme;
+
+    public ThemeChangeEvent(String theme) {
+        this.theme = theme;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ChangeThemeCommand.java
+``` java
+/**
+ * Changes colour theme of application.
+ */
+public class ChangeThemeCommand extends Command {
+
+    public static final String COMMAND_WORD = "theme";
+    public static final String COMMAND_ALIAS = "th";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Changes colour theme. Current colour themes: Dark, White, Green\n"
+            + "Parameters: Colour theme\n"
+            + "Example: " + COMMAND_WORD + " white";
+
+    public static final String MESSAGE_CHANGE_THEME_SUCCESS = "Theme changed";
+
+    private final String theme;
+
+    public ChangeThemeCommand(String theme) {
+
+        this.theme = theme;
+
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        EventsCenter.getInstance().post(new ThemeChangeEvent(theme));
+        return new CommandResult(String.format(MESSAGE_CHANGE_THEME_SUCCESS));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ChangeThemeCommand // instanceof handles nulls
+                && theme.equals(((ChangeThemeCommand) other).theme));
+    }
+
+
+}
+```
+###### \java\seedu\address\logic\commands\DeletePhotoCommand.java
+``` java
+
+/**
+ * Delete photo of specified person.
+ */
+public class DeletePhotoCommand extends Command {
+    public static final String COMMAND_WORD = "dphoto";
+    public static final String COMMAND_ALIAS = "dp";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes image of the person identified by the index number used "
+            + "in the last person listing or from all images.\n"
+            + "Parameters: INDEX (must be a positive integer).\n"
+            + "Example: " + COMMAND_WORD + " 1\n";
+
+    public static final String MESSAGE_DELETE_IMAGE_SUCCESS = "Deleted photo of Person: %1$s";
+    public static final String MESSAGE_DELETE_IMAGE_FAILURE = "Person does not have a photo to delete";
+    private final Index targetIndex;
+
+    public DeletePhotoCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToDeleteImage = lastShownList.get(targetIndex.getZeroBased());
+
+        if (isPhotoExist(personToDeleteImage)) {
+            deletePhoto(personToDeleteImage);
+            EventsCenter.getInstance().post(new PhotoChangeEvent());
+        } else {
+            throw new CommandException(String.format(MESSAGE_DELETE_IMAGE_FAILURE));
+        }
+
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "Deleted photo of " + targetIndex.getOneBased());
+
+        return new CommandResult(String.format(MESSAGE_DELETE_IMAGE_SUCCESS, personToDeleteImage));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeletePhotoCommand // instanceof handles nulls
+                && this.targetIndex.equals(((DeletePhotoCommand) other).targetIndex)); // state check
+    }
+
+    /**
+     * Checks if person's photo exist.
+     */
+    public boolean isPhotoExist(ReadOnlyPerson target) {
+        Path path = Paths.get("photos/" + target.getEmail().toString() + ".png");
+        if (Files.exists(path)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Deletes photo of the person identified using it's last displayed index from the address book.
+     */
+    public void deletePhoto(ReadOnlyPerson target) {
+        File photoPath = new File("photos/" + target.getEmail().toString() + ".png");
+        photoPath.delete();
+    }
+
+}
+```
+###### \java\seedu\address\logic\commands\DeletesAllPhotosCommand.java
+``` java
+
+/**
+ * Deletes all photos from all persons.
+ */
+public class DeletesAllPhotosCommand extends Command {
+    public static final String COMMAND_WORD = "daphotos";
+    public static final String COMMAND_ALIAS = "dap";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes all photos from all persons. "
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_DELETE_ALL_IMAGE_SUCCESS = "Deleted all photos";
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        deletesAllPhotos();
+        EventsCenter.getInstance().post(new PhotoChangeEvent());
+
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "Deleted all photos");
+
+        return new CommandResult(String.format(MESSAGE_DELETE_ALL_IMAGE_SUCCESS));
+    }
+    /**
+     * Deletes all photos of persons in the address book.
+     */
+    public void deletesAllPhotos() {
+        File dir = new File("photos/");
+        for (File file : dir.listFiles()) {
+            if (!(file.getName().equals("default.jpeg"))) {
+                file.delete();
+            }
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+
         /**
          * Returns true if email field is edited.
          */
@@ -24,20 +203,32 @@ public class PhotoChangeEvent extends BaseEvent {
             return CollectionUtil.isAnyNonNull(this.email);
         }
 ```
-###### /java/seedu/address/logic/commands/EditCommand.java
+###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
+
     /**
-     * Renames image file of person to new email if image of person exists.
+     * Adds image file of person to new email if image of person exists.
      */
-    private void renamePhoto(String oldEmail, String newEmail) {
-        File oldFile = new File("src/main/photos/" + oldEmail + ".png");
-        File newFile = new File("src/main/photos/" + newEmail + ".png");
+    private void addPhoto(String oldEmail, String newEmail) {
+        File oldFile = new File("photos/" + oldEmail + ".png");
+        File newFile = new File("photos/" + newEmail + ".png");
         if (oldFile.exists()) {
-            oldFile.renameTo(newFile);
+
+            try {
+                newFile.mkdirs();
+                newFile.createNewFile();
+                BufferedImage image;
+                image = ImageIO.read(oldFile);
+                ImageIO.write(image, "png", newFile);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Logger.getLogger(UploadPhotoCommand.class.getName()).log(Level.SEVERE, null, e);
+            }
         }
     }
 ```
-###### /java/seedu/address/logic/commands/RemoveTagCommand.java
+###### \java\seedu\address\logic\commands\RemoveTagCommand.java
 ``` java
 /**
  * Removes specified tag from all persons from the address book.
@@ -101,7 +292,7 @@ public class RemoveTagCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/TagCommand.java
+###### \java\seedu\address\logic\commands\TagCommand.java
 ``` java
 /**
  * Lists all persons in the address book to the user.
@@ -137,8 +328,9 @@ public class TagCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UploadPhotoCommand.java
+###### \java\seedu\address\logic\commands\UploadPhotoCommand.java
 ``` java
+
 /**
  * Uploads image file to specified person.
  */
@@ -159,8 +351,6 @@ public class UploadPhotoCommand extends Command {
     private final String filePath;
     private final FileChooser fileChooser = new FileChooser();
     private Stage stage;
-    private ImageView imageView = new ImageView();
-    private HashMap<Email, String> photoList;
 
     public UploadPhotoCommand(Index targetIndex, String filePath) {
         this.targetIndex = targetIndex;
@@ -175,7 +365,6 @@ public class UploadPhotoCommand extends Command {
         }
         ReadOnlyPerson personToUploadImage = lastShownList.get(targetIndex.getZeroBased());
         File imageFile;
-        //  Photo targetPhoto = lastShownList.get(targetIndex.getZeroBased()).getPhoto();
 
         if (filePath.equals("")) {
             imageFile = handleFileChooser();
@@ -184,16 +373,14 @@ public class UploadPhotoCommand extends Command {
         }
 
         if (isValidImageFile(imageFile)) {
-            imageFile = saveFile(imageFile, personToUploadImage.getEmail());
+            saveFile(imageFile, personToUploadImage.getEmail());
             EventsCenter.getInstance().post(new PhotoChangeEvent());
         } else {
             throw new CommandException(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
         }
 
-        // ReadOnlyPerson editedPerson = lastShownList.get(targetIndex.getZeroBased());
-        // editedPerson.getPhoto().setPath(imageFile.getPath());
-        // photoList.put(personToUploadImage.getEmail(), imageFile.getPath());
-        // EventsCenter.getInstance().registerHandler(handler);
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "Uploaded photo to " + targetIndex.getOneBased());
         return new CommandResult(String.format(MESSAGE_UPLOAD_IMAGE_SUCCESS, personToUploadImage));
     }
 
@@ -231,15 +418,13 @@ public class UploadPhotoCommand extends Command {
     /**
      * Reads and saves image file into project directory folder "photos".
      */
-    private File saveFile(File file, Email email) {
+    private void saveFile(File file, Email email) {
 
         File path = new File("photos/" + email.toString() + ".png");
 
         try {
             path.mkdirs();
             path.createNewFile();
-            //     System.out.println(path.getPath());
-            //  BufferedImage image = new BufferedImage(100, 100, 1);
             BufferedImage image;
             image = ImageIO.read(file);
             ImageIO.write(image, "png", path);
@@ -248,12 +433,77 @@ public class UploadPhotoCommand extends Command {
             e.printStackTrace();
             Logger.getLogger(UploadPhotoCommand.class.getName()).log(Level.SEVERE, null, e);
         }
-        return path;
     }
 
 }
 ```
-###### /java/seedu/address/logic/parser/RemoveTagCommandParser.java
+###### \java\seedu\address\logic\parser\ChangeThemeCommandParser.java
+``` java
+
+/**
+ * Parses input arguments and creates a new ChangeThemeCommand object
+ */
+public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ChangeThemeCommand
+     * and returns an ChangeThemeCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ChangeThemeCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim().toLowerCase();
+        if (trimmedArgs.isEmpty() || !isThemeAvailable(trimmedArgs)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
+        }
+
+        String theme = trimmedArgs;
+
+        return new ChangeThemeCommand(theme);
+    }
+
+    /**
+     * Checks if inputted theme is one of the available themes.
+     */
+    public boolean isThemeAvailable(String args) {
+        if (args.equals("dark") || args.equals("white") || args.equals("green")) {
+            return true;
+        }
+        return false;
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\DeletePhotoCommandParser.java
+``` java
+
+/**
+ * Parses input arguments and creates a new DeletePhotoCommand object
+ */
+public class DeletePhotoCommandParser implements Parser<DeletePhotoCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeletePhotoCommand
+     * and returns an DeletePhotoCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeletePhotoCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new DeletePhotoCommand(index);
+
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePhotoCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+
+```
+###### \java\seedu\address\logic\parser\RemoveTagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RemoveTagCommand object
@@ -289,7 +539,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/TagCommandParser.java
+###### \java\seedu\address\logic\parser\TagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new TagCommand object
@@ -315,16 +565,16 @@ public class TagCommandParser implements Parser<TagCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/UploadPhotoCommandParser.java
+###### \java\seedu\address\logic\parser\UploadPhotoCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new UploadImageCommand object
+ * Parses input arguments and creates a new UploadPhotoCommand object
  */
 public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the UploadImageCommand
-     * and returns an UploadImageCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the UploadPhotoCommand
+     * and returns an UploadPhotoCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
      */
@@ -334,11 +584,14 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
 
             String indexString = argsArr[0];
             String filePath = "";
+
             if (argsArr.length > 1) {
                 filePath = argsArr[1];
             }
+
             Index index = ParserUtil.parseIndex(indexString);
             return new UploadPhotoCommand(index, filePath);
+
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadPhotoCommand.MESSAGE_USAGE));
@@ -347,38 +600,11 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
 }
 
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
 ```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public void resetData(ReadOnlyAddressBook newData, boolean isUndo) {
-        addressBook.resetData(newData);
-
-        if (!isUndo) {
-            File dir = new File("photos/");
-            for (File file : dir.listFiles()) {
-                if (!(file.getName().equals("default.jpeg"))) {
-                    file.delete();
-                }
-            }
-        }
-        indicateAddressBookChanged();
-    }
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
-        File photoPath = new File("photos/" + target.getEmail().toString() + ".png");
-        photoPath.delete();
-        indicateAddressBookChanged();
-    }
-```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
@@ -394,7 +620,7 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
         }
     }
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
      * Returns true if the list contains a person with identical email in the given argument.
@@ -422,7 +648,7 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
         internalList.add(new Person(toAdd));
     }
 ```
-###### /java/seedu/address/model/tag/TagContainsKeywordsPredicate.java
+###### \java\seedu\address\model\tag\TagContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
@@ -449,27 +675,28 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
+
     /**
      * Changes to default dark theme.
      */
     @FXML
-    private void handleBlackTheme() {
+    public void handleBlackTheme() {
         if (vBox.getStylesheets().contains("view/DarkTheme.css")) {
             vBox.getStylesheets().remove("view/DarkTheme.css");
         }
         vBox.getStylesheets().remove("view/WhiteTheme.css");
         vBox.getStylesheets().remove("view/GreenTheme.css");
         vBox.getStylesheets().add("view/DarkTheme.css");
-        // this.scene.setFill(Color.BLUE);
     }
 
     /**
      * Changes to white theme.
      */
+
     @FXML
-    private void handleWhiteTheme() {
+    public void handleWhiteTheme() {
         if (vBox.getStylesheets().contains("view/WhiteTheme.css")) {
             vBox.getStylesheets().remove("view/WhiteTheme.css");
         }
@@ -483,7 +710,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
      * Changes to green theme.
      */
     @FXML
-    private void handleGreenTheme() {
+    public void handleGreenTheme() {
         if (vBox.getStylesheets().contains("view/GreenTheme.css")) {
             vBox.getStylesheets().remove("view/GreenTheme.css");
         }
@@ -491,8 +718,24 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         vBox.getStylesheets().remove("view/DarkTheme.css");
         vBox.getStylesheets().add("view/GreenTheme.css");
     }
+
+    /**
+     * Handles event for change theme command.
+     */
+    @Subscribe
+    public void handleThemeCommand(ThemeChangeEvent event) {
+        String theme = event.getTheme();
+        if (theme.equals("dark")) {
+            handleBlackTheme();
+        } else if (theme.equals("white")) {
+            handleWhiteTheme();
+        } else if (theme.equals("green")) {
+            handleGreenTheme();
+        }
+    }
+
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -512,43 +755,43 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-
-        Path path = Paths.get(filePath + person.getEmail().toString() + ".png");
-        if (Files.exists(path)) {
-            File filePic = new File(filePath + person.getEmail().toString() + ".png");
-            Image image = new Image(filePic.toURI().toString(), 150, 150, false, false);
-            photo.setImage(image);
-        } else {
-            File fileDefault = new File(filePath + "default.jpeg");
-
-            Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
-            photo.setImage(image);
-        }
+        setImage();
 
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
     }
+
     /**
      * Handles photo change
      */
     @Subscribe
     private void handlePhotoChange(PhotoChangeEvent event) {
+        setImage();
+    }
+
+    /**
+     * Handles logic and set images
+     */
+    private void setImage() {
 
         File file = new File(filePath + person.getEmail().toString() + ".png");
-        //}
         Path path = Paths.get(filePath + person.getEmail().toString() + ".png");
 
         if (Files.exists(path)) {
             Image image = new Image(file.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
-            //   System.out.println("Photo changed " + person.getName().fullName);
+
+        } else {
+            File fileDefault = new File(defaultFilePath);
+            Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
+            photo.setImage(image);
         }
 
     }
 ```
-###### /resources/view/GreenTheme.css
+###### \resources\view\GreenTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#527623, 20%);
@@ -925,7 +1168,7 @@ h2 {
     -fx-font-size: 11;
 }
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\view\MainWindow.fxml
 ``` fxml
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
     <Menu mnemonicParsing="false" text="File">
@@ -935,11 +1178,11 @@ h2 {
       <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
     </Menu>
 ```
-###### /resources/view/PersonListCard.fxml
+###### \resources\view\PersonListCard.fxml
 ``` fxml
    <ImageView fx:id="photo" fitHeight="150.0" fitWidth="157.0" pickOnBounds="true" preserveRatio="true" />
 ```
-###### /resources/view/WhiteTheme.css
+###### \resources\view\WhiteTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#e6e6e6, 20%);

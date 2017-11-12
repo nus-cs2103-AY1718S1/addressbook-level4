@@ -7,7 +7,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ConnectUs is a desktop address book application used for handling contact information such as name, phone, email, address and tags.
 Users can sort, import and export contacts to and from the application, as well as filter contacts based on the tags for convenience and efficiency.
 The user interacts with it using a CLI, and it has GUI elements created in JavaFX. Some commands can be done on both the command line and GUI such as emailing a contact,
-editing details of a contact, uploading photo to a contact and generating a QR code to scan the chosen contact's number on the phone for easy calling and messaging of the contact on the phone.
+editing details of a contact, uploading photo to a contact and generating a QR code to scan the chosen contact's number on the phone for easy saving, calling and messaging of the contact on the phone.
 The GUI has some additional elements where other than the display of all the details of the contacts, the user can view the location of the contact based on the contact's address on Google Maps,
 as well as change the colour theme.
 It is written in Java, and has about 6 kLoC. +
@@ -87,6 +87,7 @@ include::../DeveloperGuide.adoc[tag=removetag]
 ---
 #Start of Extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag=changetheme]
 include::../UserGuide.adoc[tag=colourtheme]
 
 #End of Extract#
@@ -97,8 +98,9 @@ include::../UserGuide.adoc[tag=colourtheme]
 
 This feature was added to allow users to personalize the application by changing to the colour theme of their preference.
 Some users may want to feel more familiar with the application or they may want a design change once in a while. This feature can help cater to these users. +
-The theme can be changed by clicking on the `File` drop down menu and selecting the theme. This is to make it user-friendly and
-easier for users to change the colour theme as the colour themes are all listed in the menu and they can directly change the colour theme by simply clicking instead of
+The theme can be changed by typing the command on the command line interface or by clicking on the `File` drop down menu and selecting the theme.  +
+The purpose of including a `File` dropdown menu is because it is user-friendly and easier for users to change the colour theme as the  +
+colour themes are all listed in the menu and they can directly change the colour theme by simply clicking instead of +
 having to type in the command line and searching for what available colour themes there are.
 
 ==== Implementation
@@ -127,7 +129,6 @@ include::../UserGuide.adoc[tag=uploadphoto]
 
 ==== Justification
 
-====== Upload photo feature
 Since ConnectUs is mainly targeted at business professionals, it is important to know their client's face and by having a feature to upload photo to the contacts,
 users can easily remember the client's face by seeing the photo of their contacts in the application. +
 The feature allows users to upload photo by either choosing the image from a file explorer or typing in the file path of the image on the command line.
@@ -140,6 +141,66 @@ This is to allow the user flexibility in choosing the method they prefer to uplo
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=uploadphoto]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Delete photo of a contact
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletephoto]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+In cases where photos are outdated or uploaded to the wrong contact, users can also delete the photo of a contact. +
+The feature allows users to delete the photo of a specific contact by typing `dphoto INDEX`. The command is similar +
+to the upload photo command so that it will be easier for the users to remember.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletephoto]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Deletes all photos
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletesallphotos]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To make it convenient for the users if all the photos of the contacts are outdated,
+this feature can help them to delete all the photos of the contacts with just a simple command. +
+The command is executed by typing `daphotos` and the command is easy for the users to remember.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletesallphotos]
 
 #End of Extract#
 

@@ -54,43 +54,45 @@ public class EditButton extends UiPart<Region> {
     }
 
     /**
-     * Handles the Enter button pressed event.
+     * Handles the edit button pressed event.
      */
     @FXML
     private void handleEditButtonPressed() throws CommandException, IllegalValueException, IOException {
         StringBuilder command = new StringBuilder();
         CommandResult commandResult;
+        Alert alert;
         String checkInputResult = checkInput(nameTextField.getNameTextField(), phoneTextField.getPhoneTextField(),
                 emailTextField.getEmailTextField(), addressTextFieldTextField.getAddressTextField(),
                 tagTextField.getTagTextArea());
+
         if (checkInputResult.equals(NAME_ERROR)) {
             nameTextField.getObject().setStyle("-fx-text-inner-color: red;");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter name without numerical values!",
+            alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid name!",
                     ButtonType.OK);
             alert.showAndWait();
-            throw new IllegalValueException("Input contains illegal characters!");
+            throw new IllegalValueException("Name contains illegal characters!");
         }
         if (checkInputResult.equals(PHONE_ERROR)) {
             phoneTextField.getObject().setStyle("-fx-text-inner-color: red;");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter phone no. without character values!",
+            alert = new Alert(Alert.AlertType.ERROR, "Please enter phone no. without character values!",
                     ButtonType.OK);
             alert.showAndWait();
-            throw new IllegalValueException("Input contains illegal characters!");
+            throw new IllegalValueException("Phone number contains illegal characters!");
         }
         if (checkInputResult.equals(EMAIL_ERROR)) {
             emailTextField.getObject().setStyle("-fx-text-inner-color: red;");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid email address!",
+            alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid email address!",
                     ButtonType.OK);
             alert.showAndWait();
-            throw new IllegalValueException("Input contains illegal characters!");
+            throw new IllegalValueException("Email contains illegal characters!");
         }
         if (checkInputResult.equals(TAG_ERROR)) {
             tagTextField.getObject().setStyle("-fx-text-inner-color: red;");
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a tag in the"
-                    + " form: 'tag1','tag2','tag3',... ",
+            alert = new Alert(Alert.AlertType.ERROR, "Please enter a tag in the"
+                    + " form: 'tag1','tag2','tag3',... Tags should contain Alphanumeric characters only!",
                     ButtonType.OK);
             alert.showAndWait();
-            throw new IllegalValueException("Input contains illegal characters!");
+            throw new IllegalValueException("Tags contains illegal characters!");
         } else {
             nameTextField.getObject().setStyle("-fx-text-inner-color: black;");
             phoneTextField.getObject().setStyle("-fx-text-inner-color: black;");
@@ -112,15 +114,21 @@ public class EditButton extends UiPart<Region> {
     }
     /**
      * Handles checking of content passed into the form
+     * @param name the name entered in nameTextField
+     * @param phone the name entered in phoneTextField
+     * @param email the name entered in emailTextField
+     * @param address the name entered in addressTextField
+     * @param tag the name entered in tagTextArea
+     * @return the corresponding format error, else if no error, return success
      */
     public static String checkInput(String name, String phone, String email, String address, String tag) {
-        if (name.matches(".*\\d+.*")) {
+        if (name.matches(".*\\d+.*") || name.isEmpty()) {
             return NAME_ERROR;
         }
-        if (!phone.matches("[0-9]+") || phone.length() != 8) {
+        if (!phone.matches("[0-9]+")) {
             return PHONE_ERROR;
         }
-        if (!email.contains("@") || !email.contains(".com")) {
+        if (!email.contains("@") || !email.contains(".")) {
             return EMAIL_ERROR;
         }
         //check tag doesnt end with a special character

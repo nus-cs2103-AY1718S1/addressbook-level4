@@ -7,12 +7,12 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
 /**
- * Method to Keep Track of User Activity Log
+ * Keeps track of user activity with ConnectUsLog.txt
  */
 //@@author danielweide
 public class LoggingCommand {
     /**
-     *keepLog Method to Write Activity Log To The ConnectUsLog.txt file
+     * Writes onto ConnectUsLog.txt field when new action is executed
      */
     public void keepLog(String logText, String functionType) {
         try (FileWriter fileWrite = new FileWriter("ConnectUsLog.txt", true);
@@ -24,7 +24,7 @@ public class LoggingCommand {
         }
     }
     /**
-     * startUpLog Method will record the time when the application starts
+     * Starts recording activity the moment application starts up
      */
     public void startUpLog() {
         try (FileWriter fileWrite = new FileWriter("ConnectUsLog.txt", true);

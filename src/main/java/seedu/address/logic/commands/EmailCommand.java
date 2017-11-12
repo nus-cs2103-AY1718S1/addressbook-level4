@@ -12,7 +12,7 @@ import seedu.address.ui.OpenEmailClient;
 
 //@@author blaqkrow
 /**
- * The UI component that is responsible for emailing the selected person.
+ * Emails the selected person using the specified index in the list.
  */
 public class EmailCommand extends Command {
     public static final String COMMAND_WORD = "email";
@@ -24,11 +24,13 @@ public class EmailCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
     private LoggingCommand lg = new LoggingCommand();
+
     private final Index emailIndex;
+
     public EmailCommand(Index emailIndex) {
         this.emailIndex = emailIndex;
     }
-    public void openEmail() {}
+
     @Override
     public CommandResult execute() throws CommandException, IOException {
 

@@ -1,5 +1,5 @@
 # blaqkrow
-###### /java/seedu/address/commons/events/ui/PersonPanelSelectionChangedEvent.java
+###### \java\seedu\address\commons\events\ui\PersonPanelSelectionChangedEvent.java
 ``` java
 /**
  * Represents a selection change in the Person List Panel
@@ -27,7 +27,7 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
         return  selectionIndex; }
 }
 ```
-###### /java/seedu/address/commons/events/ui/QrSaveEvent.java
+###### \java\seedu\address\commons\events\ui\QrSaveEvent.java
 ``` java
 /**
  * Represents a selection change in the Qr Event
@@ -47,7 +47,7 @@ public class QrSaveEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/QrSmsEvent.java
+###### \java\seedu\address\commons\events\ui\QrSmsEvent.java
 ``` java
 /**
  * Represents a selection change in the Qr Event
@@ -67,7 +67,7 @@ public class QrSmsEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EmailCommand.java
+###### \java\seedu\address\logic\commands\EmailCommand.java
 ``` java
 /**
  * The UI component that is responsible for emailing the selected person.
@@ -81,7 +81,7 @@ public class EmailCommand extends Command {
             + ": Emails the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
-
+    private LoggingCommand lg = new LoggingCommand();
     private final Index emailIndex;
     public EmailCommand(Index emailIndex) {
         this.emailIndex = emailIndex;
@@ -99,11 +99,12 @@ public class EmailCommand extends Command {
 
         OpenEmailClient emailClient = new OpenEmailClient(personToEmail.getEmail().toString());
         emailClient.sendMail();
+        lg.keepLog("Email client opened!", "Email");
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
 ```
-###### /java/seedu/address/logic/parser/EmailCommandParser.java
+###### \java\seedu\address\logic\parser\EmailCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteCommand object
@@ -127,7 +128,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
 
 }
 ```
-###### /java/seedu/address/ui/AddressTextField.java
+###### \java\seedu\address\ui\AddressTextField.java
 ``` java
 /**
  * The UI component that is responsible for saving and displaying the currently selected contact's name.
@@ -165,14 +166,14 @@ public class AddressTextField extends UiPart<Region> {
 }
 
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     public static final String DEFAULT_PAGE = "default.html";
     //public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps/place/";
     //public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     /**
      * loads webpage
@@ -236,7 +237,7 @@ public class AddressTextField extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/ClearLogButton.java
+###### \java\seedu\address\ui\ClearLogButton.java
 ``` java
 /**
  * The UI component that is responsible for deleting selected contacts in the PersonListPanel.
@@ -273,7 +274,7 @@ public class ClearLogButton extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/DeleteButton.java
+###### \java\seedu\address\ui\DeleteButton.java
 ``` java
 /**
  * The UI component that is responsible for deleting selected contacts in the PersonListPanel.
@@ -322,12 +323,17 @@ public class DeleteButton extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/EditButton.java
+###### \java\seedu\address\ui\EditButton.java
 ``` java
 /**
  * The UI component that is responsible for editing selected contacts in the PersonListPanel.
  */
 public class EditButton extends UiPart<Region> {
+    public static final String NAME_ERROR = "NAME_ERROR";
+    public static final String EMAIL_ERROR = "EMAIL_ERROR";
+    public static final String PHONE_ERROR = "PHONE_ERROR";
+    public static final String TAG_ERROR = "TAG_ERROR";
+    public static final String VALIDATION_SUCCESS = "VALIDATION_SUCCESS";
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "EditButton.fxml";
     private static NameTextField nameTextField;
@@ -338,6 +344,7 @@ public class EditButton extends UiPart<Region> {
     private static int selectedIndex;
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
+    private LoggingCommand lg = new LoggingCommand();
 
     @FXML
     private Button editButton;
@@ -357,19 +364,80 @@ public class EditButton extends UiPart<Region> {
      * Handles the Enter button pressed event.
      */
     @FXML
-    private void handleEditButtonPressed() throws CommandException, ParseException, IOException {
+    private void handleEditButtonPressed() throws CommandException, IllegalValueException, IOException {
         StringBuilder command = new StringBuilder();
-        command.append("edit " + getSelectedIndex() + " n/"
-                + nameTextField.getNameTextField() + " p/" + phoneTextField.getPhoneTextField() + " e/"
-                + emailTextField.getEmailTextField()
-                + " a/" + addressTextFieldTextField.getAddressTextField());
-        String tagTextArea = tagTextField.getTagTextArea();
-        String[] tagSplit = tagTextArea.split(",");
-        for (String s : tagSplit) {
-            command.append(" t/" + s.trim());
+        CommandResult commandResult;
+        String checkInputResult = checkInput(nameTextField.getNameTextField(), phoneTextField.getPhoneTextField(),
+                emailTextField.getEmailTextField(), addressTextFieldTextField.getAddressTextField(),
+                tagTextField.getTagTextArea());
+        if (checkInputResult.equals(NAME_ERROR)) {
+            nameTextField.getObject().setStyle("-fx-text-inner-color: red;");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid name!",
+                    ButtonType.OK);
+            alert.showAndWait();
+            throw new IllegalValueException("Input contains illegal characters!");
         }
-        CommandResult commandResult = logic.execute(command.toString());
-        logger.info("Result: " + commandResult.feedbackToUser);
+        if (checkInputResult.equals(PHONE_ERROR)) {
+            phoneTextField.getObject().setStyle("-fx-text-inner-color: red;");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter phone no. without character values!",
+                    ButtonType.OK);
+            alert.showAndWait();
+            throw new IllegalValueException("Input contains illegal characters!");
+        }
+        if (checkInputResult.equals(EMAIL_ERROR)) {
+            emailTextField.getObject().setStyle("-fx-text-inner-color: red;");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid email address!",
+                    ButtonType.OK);
+            alert.showAndWait();
+            throw new IllegalValueException("Input contains illegal characters!");
+        }
+        if (checkInputResult.equals(TAG_ERROR)) {
+            tagTextField.getObject().setStyle("-fx-text-inner-color: red;");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a tag in the"
+                    + " form: 'tag1','tag2','tag3',... ",
+                    ButtonType.OK);
+            alert.showAndWait();
+            throw new IllegalValueException("Input contains illegal characters!");
+        } else {
+            nameTextField.getObject().setStyle("-fx-text-inner-color: black;");
+            phoneTextField.getObject().setStyle("-fx-text-inner-color: black;");
+            emailTextField.getObject().setStyle("-fx-text-inner-color: black;");
+            tagTextField.getObject().setStyle("-fx-text-inner-color: black;");
+            command.append("edit " + getSelectedIndex() + " n/"
+                    + nameTextField.getNameTextField() + " p/" + phoneTextField.getPhoneTextField() + " e/"
+                    + emailTextField.getEmailTextField()
+                    + " a/" + addressTextFieldTextField.getAddressTextField());
+            String tagTextArea = tagTextField.getTagTextArea();
+            String[] tagSplit = tagTextArea.split(",");
+            for (String s : tagSplit) {
+                command.append(" t/" + s.trim());
+            }
+            commandResult = logic.execute(command.toString());
+            logger.info("Result: " + commandResult.feedbackToUser);
+            lg.keepLog(commandResult.feedbackToUser, "Edited");
+        }
+    }
+    /**
+     * Handles checking of content passed into the form
+     */
+    public static String checkInput(String name, String phone, String email, String address, String tag) {
+        if (name.matches(".*\\d+.*") || name.isEmpty()) {
+            return NAME_ERROR;
+        }
+        if (!phone.matches("[0-9]+")) {
+            return PHONE_ERROR;
+        }
+        if (!email.contains("@") || !email.contains(".")) {
+            return EMAIL_ERROR;
+        }
+        //check tag doesnt end with a special character
+        String[] tagSplit = tag.split(",");
+        for (int i = 0; i < tagSplit.length; i++) {
+            if (!tagSplit[i].matches("[a-zA-Z0-9]*")) {
+                return TAG_ERROR;
+            }
+        }
+        return VALIDATION_SUCCESS;
     }
     private void setSelectedIndex(int i) {
         selectedIndex = i;
@@ -387,7 +455,7 @@ public class EditButton extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/EmailButton.java
+###### \java\seedu\address\ui\EmailButton.java
 ``` java
 /**
  * The UI component that is responsible for emailing the selected person.
@@ -399,6 +467,7 @@ public class EmailButton extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private String selectedEmail  = "";
+    private LoggingCommand lg = new LoggingCommand();
 
     @FXML
     private Button emailButton;
@@ -414,6 +483,7 @@ public class EmailButton extends UiPart<Region> {
     private void handleEmailButtonPressed() throws CommandException, ParseException, IOException {
         OpenEmailClient emailClient = new OpenEmailClient(this.selectedEmail);
         emailClient.sendMail();
+        lg.keepLog("Email client opened!", "Email");
     }
 
     @Subscribe
@@ -426,7 +496,7 @@ public class EmailButton extends UiPart<Region> {
 
 }
 ```
-###### /java/seedu/address/ui/EmailTextField.java
+###### \java\seedu\address\ui\EmailTextField.java
 ``` java
 /**
  * The UI component that is responsible for saving and displaying the currently selected contact's name.
@@ -454,6 +524,10 @@ public class EmailTextField extends UiPart<Region> {
         emailTextField.setText(text);
     }
 
+    public TextField getObject() {
+        return emailTextField;
+    }
+
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -464,7 +538,7 @@ public class EmailTextField extends UiPart<Region> {
 }
 
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -540,8 +614,9 @@ public class EmailTextField extends UiPart<Region> {
     @FXML
     private StackPane qrSaveButtonPlaceholder;
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
+
     /**
      * Fills up all the placeholders of this window.
      */
@@ -597,7 +672,7 @@ public class EmailTextField extends UiPart<Region> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 ```
-###### /java/seedu/address/ui/NameTextField.java
+###### \java\seedu\address\ui\NameTextField.java
 ``` java
 /**
  * The UI component that is responsible for saving and displaying the currently selected contact's name.
@@ -623,7 +698,9 @@ public class NameTextField extends UiPart<Region> {
     public void setNameTextField(String text) {
         nameTextField.setText(text);
     }
-
+    public TextField getObject() {
+        return nameTextField;
+    }
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -631,7 +708,7 @@ public class NameTextField extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/OpenEmailClient.java
+###### \java\seedu\address\ui\OpenEmailClient.java
 ``` java
 /**
  * Handles the opening of email client
@@ -661,7 +738,7 @@ public class OpenEmailClient {
     }
 }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
@@ -677,8 +754,9 @@ public class OpenEmailClient {
             tags.getChildren().add(tagLabel);
         });
     }
+
 ```
-###### /java/seedu/address/ui/PersonListPanel.java
+###### \java\seedu\address\ui\PersonListPanel.java
 ``` java
     private void setEventHandlerForSelectionChangeEvent() {
         ObservableList<Integer> index = personListView.getSelectionModel().getSelectedIndices();
@@ -691,7 +769,7 @@ public class OpenEmailClient {
                 });
     }
 ```
-###### /java/seedu/address/ui/PhoneTextField.java
+###### \java\seedu\address\ui\PhoneTextField.java
 ``` java
 /**
  * The UI component that is responsible for saving and displaying the currently selected contact's name.
@@ -719,6 +797,9 @@ public class PhoneTextField extends UiPart<Region> {
     public void setPhoneTextField(String text) {
         phoneTextField.setText(text);
     }
+    public TextField getObject() {
+        return phoneTextField;
+    }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
@@ -729,7 +810,7 @@ public class PhoneTextField extends UiPart<Region> {
 
 }
 ```
-###### /java/seedu/address/ui/QrButton.java
+###### \java\seedu\address\ui\QrButton.java
 ``` java
 /**
  * The UI component that is responsible for deleting selected contacts in the PersonListPanel.
@@ -772,7 +853,7 @@ public class QrButton extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/QrSaveButton.java
+###### \java\seedu\address\ui\QrSaveButton.java
 ``` java
 /**
  * The UI component that is responsible for deleting selected contacts in the PersonListPanel.
@@ -817,7 +898,7 @@ public class QrSaveButton extends UiPart<Region> {
 
 }
 ```
-###### /java/seedu/address/ui/QrSmsButton.java
+###### \java\seedu\address\ui\QrSmsButton.java
 ``` java
 /**
  * The UI component that is responsible for deleting selected contacts in the PersonListPanel.
@@ -863,7 +944,7 @@ public class QrSmsButton extends UiPart<Region> {
 }
 
 ```
-###### /java/seedu/address/ui/TagTextField.java
+###### \java\seedu\address\ui\TagTextField.java
 ``` java
 /**
  * The UI component that is responsible for saving and displaying the currently selected contact's name.
@@ -912,47 +993,50 @@ public class TagTextField extends UiPart<Region> {
         }
         setTagTextArea(currTags.toString());
     }
+    public TextArea getObject() {
+        return tagTextArea;
+    }
 
 
 }
 
 ```
-###### /resources/view/AddressTextField.fxml
+###### \resources\view\AddressTextField.fxml
 ``` fxml
 <?import javafx.scene.control.TextField?>
 
 
 <TextField fx:id="addressTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
 ```
-###### /resources/view/DeleteButton.fxml
+###### \resources\view\DeleteButton.fxml
 ``` fxml
 <?import javafx.scene.control.Button?>
 
 
 <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDeleteButtonPressed" text="Delete" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
 ```
-###### /resources/view/EditButton.fxml
+###### \resources\view\EditButton.fxml
 ``` fxml
 <?import javafx.scene.control.Button?>
 
 
 <Button fx:id="editButton" mnemonicParsing="false" onAction="#handleEditButtonPressed" text="Save" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
 ```
-###### /resources/view/EmailButton.fxml
+###### \resources\view\EmailButton.fxml
 ``` fxml
 <?import javafx.scene.control.Button?>
 
 
 <Button fx:id="emailButton" mnemonicParsing="false" onAction="#handleEmailButtonPressed" text="Email" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
 ```
-###### /resources/view/EmailTextField.fxml
+###### \resources\view\EmailTextField.fxml
 ``` fxml
 <?import javafx.scene.control.TextField?>
 
 
 <TextField fx:id="emailTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\view\MainWindow.fxml
 ``` fxml
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4352226720647773, 0.569838056680162">
     <VBox fx:id="personList" minWidth="340" prefWidth="340.0" SplitPane.resizableWithParent="false">
@@ -1037,21 +1121,21 @@ public class TagTextField extends UiPart<Region> {
          </children>
       </VBox>
 ```
-###### /resources/view/NameTextField.fxml
+###### \resources\view\NameTextField.fxml
 ``` fxml
 <?import javafx.scene.control.TextField?>
 
 
 <TextField fx:id="nameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
 ```
-###### /resources/view/PhoneTextField.fxml
+###### \resources\view\PhoneTextField.fxml
 ``` fxml
 <?import javafx.scene.control.TextField?>
 
 
 <TextField fx:id="phoneTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
 ```
-###### /resources/view/QrButton.fxml
+###### \resources\view\QrButton.fxml
 ``` fxml
 
 <?import javafx.scene.control.Button?>
@@ -1059,7 +1143,7 @@ public class TagTextField extends UiPart<Region> {
 
 <Button fx:id="qrButton" mnemonicParsing="false" onAction="#handleQrButtonPressed" text="Call" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
 ```
-###### /resources/view/TagTextField.fxml
+###### \resources\view\TagTextField.fxml
 ``` fxml
 <?import javafx.scene.control.TextArea?>
 

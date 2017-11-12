@@ -7,10 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ClearLogCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeletePhotoCommand;
+import seedu.address.logic.commands.DeletesAllPhotosCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -148,6 +151,18 @@ public class AddressBookParser {
         case QrSaveContactCommand.COMMAND_WORD:
         case QrSaveContactCommand.COMMAND_ALIAS:
             return new QrSaveContactCommandParser().parse(arguments);
+
+        case ChangeThemeCommand.COMMAND_WORD:
+        case ChangeThemeCommand.COMMAND_ALIAS:
+            return new ChangeThemeCommandParser().parse(arguments);
+
+        case DeletePhotoCommand.COMMAND_WORD:
+        case DeletePhotoCommand.COMMAND_ALIAS:
+            return new DeletePhotoCommandParser().parse(arguments);
+
+        case DeletesAllPhotosCommand.COMMAND_WORD:
+        case DeletesAllPhotosCommand.COMMAND_ALIAS:
+            return new DeletesAllPhotosCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

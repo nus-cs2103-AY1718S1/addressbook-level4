@@ -8,14 +8,12 @@ import seedu.address.logic.commands.QrSmsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new QrCallCommand object
+ * Parses input arguments and creates a new QrSmsCommand object
  */
 //@@author danielweide
 public class QrSmsCommandParser implements Parser<QrSmsCommand> {
     /**
-     * Parses the given {@code String} of arguments in the context of the QrCallCommand
-     * and returns an QrCallCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Parses input arguments and creates a new QrSmsCommand object
      */
     public QrSmsCommand parse(String args) throws ParseException {
         try {

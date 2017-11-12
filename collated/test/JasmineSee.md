@@ -1,4 +1,133 @@
 # JasmineSee
+###### \java\seedu\address\logic\commands\DeletePhotoCommandTest.java
+``` java
+
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code DeletePhotoCommand}.
+ */
+public class DeletePhotoCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private String validFilePath = "./src/test/resources/photos/connectus_icon.png";
+
+    @Test
+    public void execute_validIndexPhotoExist_success() throws Exception {
+        prepareUploadPhoto(INDEX_FIRST_PERSON, validFilePath);
+        ReadOnlyPerson personToDeletePhoto = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeletePhotoCommand deletePhotoCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(DeletePhotoCommand.MESSAGE_DELETE_IMAGE_SUCCESS, personToDeletePhoto);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        assertCommandSuccess(deletePhotoCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexPhotoExist_throwsCommandException() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        DeletePhotoCommand deletePhotoCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deletePhotoCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexPhotoNotExist_throwsCommandException() throws Exception {
+        DeletePhotoCommand deletePhotoCommand = prepareCommand(INDEX_SECOND_PERSON);
+
+        assertCommandFailure(deletePhotoCommand, model, DeletePhotoCommand.MESSAGE_DELETE_IMAGE_FAILURE);
+    }
+
+    @Test
+    public void equals() {
+        DeletePhotoCommand firstCommand = new DeletePhotoCommand(INDEX_FIRST_PERSON);
+        DeletePhotoCommand secondCommand = new DeletePhotoCommand(INDEX_SECOND_PERSON);
+
+        // same object -> returns true
+        assertTrue(firstCommand.equals(firstCommand));
+
+        // same values -> returns true
+        DeletePhotoCommand firstCommandCopy = new DeletePhotoCommand(INDEX_FIRST_PERSON);
+        assertTrue(firstCommand.equals(firstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(firstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(firstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstCommand.equals(secondCommand));
+    }
+
+    /**
+     * Returns a {@code DeletePhotoCommand} with the parameter {@code index}.
+     */
+    private DeletePhotoCommand prepareCommand(Index index) {
+        DeletePhotoCommand deletePhotoCommand = new DeletePhotoCommand(index);
+        deletePhotoCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deletePhotoCommand;
+    }
+
+    /**
+     * Preload photos to test data.
+     */
+    private void prepareUploadPhoto(Index index, String filePath) throws CommandException {
+        UploadPhotoCommand uploadPhotoCommand = new UploadPhotoCommand(index,
+                filePath);
+        uploadPhotoCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        uploadPhotoCommand.execute();
+    }
+
+}
+```
+###### \java\seedu\address\logic\commands\DeletesAllPhotosCommandTest.java
+``` java
+
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code DeletesAllPhotosCommand}.
+ */
+public class DeletesAllPhotosCommandTest {
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_success() throws Exception {
+        prepareUploadPhotos();
+
+        DeletesAllPhotosCommand deletesPhotoCommand = prepareCommand();
+
+        String expectedMessage = String.format(DeletesAllPhotosCommand.MESSAGE_DELETE_ALL_IMAGE_SUCCESS);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        assertCommandSuccess(deletesPhotoCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Returns a {@code DeletesAllPhotosCommand}.
+     */
+    private DeletesAllPhotosCommand prepareCommand() {
+        DeletesAllPhotosCommand deletesAllPhotosCommand = new DeletesAllPhotosCommand();
+        deletesAllPhotosCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deletesAllPhotosCommand;
+    }
+
+    /**
+     * Preload photos to test data.
+     */
+    private void prepareUploadPhotos() throws CommandException {
+        UploadPhotoCommand uploadPhotoCommand1 = new UploadPhotoCommand(INDEX_FIRST_PERSON,
+                "./src/test/resources/photos/connectus_icon.png");
+        UploadPhotoCommand uploadPhotoCommand2 = new UploadPhotoCommand(INDEX_SECOND_PERSON,
+                "./src/test/resources/photos/connectus_icon.png");
+        uploadPhotoCommand1.setData(model, new CommandHistory(), new UndoRedoStack());
+        uploadPhotoCommand2.setData(model, new CommandHistory(), new UndoRedoStack());
+        uploadPhotoCommand1.execute();
+        uploadPhotoCommand2.execute();
+    }
+
+}
+```
 ###### \java\seedu\address\logic\commands\RemoveTagCommandTest.java
 ``` java
 /**
@@ -157,6 +286,7 @@ public class TagCommandTest {
 ```
 ###### \java\seedu\address\logic\commands\UploadPhotoCommandTest.java
 ``` java
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code UploadPhotoCommand}.
  */
@@ -167,7 +297,7 @@ public class UploadPhotoCommandTest {
     private String invalidFilePath = "./src/test/resources/photos/default.jpeg";
 
     @Test
-    public void execute_validIndex_success() throws Exception {
+    public void execute_validIndexValidFile_success() throws Exception {
         ReadOnlyPerson personToUploadPhoto = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UploadPhotoCommand uploadPhotoCommand = prepareCommand(INDEX_FIRST_PERSON,
                 validFilePath);
@@ -177,6 +307,8 @@ public class UploadPhotoCommandTest {
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         assertCommandSuccess(uploadPhotoCommand, model, expectedMessage, expectedModel);
+
+        deletePhoto(personToUploadPhoto); //delete uploaded test case photo after success
     }
 
     @Test
@@ -190,7 +322,6 @@ public class UploadPhotoCommandTest {
 
     @Test
     public void execute_validIndexInvalidFile_throwsCommandException() throws Exception {
-        ReadOnlyPerson personToUploadPhoto = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UploadPhotoCommand uploadPhotoCommand = prepareCommand(INDEX_FIRST_PERSON,
                 invalidFilePath);
 
@@ -228,6 +359,57 @@ public class UploadPhotoCommandTest {
         return uploadPhotoCommand;
     }
 
+    /**
+     * Deletes uploaded test photo after successful check.
+     */
+    private void deletePhoto(ReadOnlyPerson personToUploadPhoto) {
+        File file = new File("photos/" + personToUploadPhoto.getEmail().toString() + ".png");
+        file.delete();
+
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\ChangeThemeCommandParserTest.java
+``` java
+public class ChangeThemeCommandParserTest {
+    private ChangeThemeCommandParser parser = new ChangeThemeCommandParser();
+    private String validTheme = "white";
+
+    @Test
+    public void parse_validArgs_returnsChangeThemeCommand() {
+        ChangeThemeCommand expectedThemeCommand =
+                new ChangeThemeCommand(validTheme);
+        assertParseSuccess(parser, "white", expectedThemeCommand);
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() { //checks for unavailable colour themes
+        assertParseFailure(parser, "blue",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_emptyString_throwsParseException() {
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\DeletePhotoCommandParserTest.java
+``` java
+public class DeletePhotoCommandParserTest {
+    private DeletePhotoCommandParser parser = new DeletePhotoCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDeletePhotoCommand() {
+        assertParseSuccess(parser, "1", new DeletePhotoCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePhotoCommand.MESSAGE_USAGE));
+    }
 }
 ```
 ###### \java\seedu\address\logic\parser\RemoveTagCommandParserTest.java
