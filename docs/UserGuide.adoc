@@ -132,9 +132,11 @@ realised a certain temporary resident stills remains in your address book after 
 ===============
 
 
-Example of temporary resident that stays for 2 days:
+Example of temporary resident that stays for 1 days:
 
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com r/09-109 p/1234567 temp/2 t/guest t/tour t/student` +
+* `add n/James Bond e/Jamesbond@example.com r/09-100 p/98765432 temp/1 t/hero` +
+
+image::TempPersonMessage.png[width="800"]
 
 // end::temporaryperson[]
 
@@ -319,6 +321,8 @@ Examples:
 * `deletebytag friend` will delete all persons who have a tag of `friend`
 
 * If Alice has tags "RA" and "CollegeMaster", `deletebytag RA` will erase Alice from the ResidentBook.
+
+image::deletebytagMessage.png[width='800']
 
 // end::deletebytag[]
 
