@@ -14,6 +14,8 @@ ModU uses the command line interface (CLI) as the main input. The natural langua
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/junming403.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/junming403.md[Test code]]
 
+*Contributions include some classes like `Addcommand` and `AddCommandTest`. This is because our product totally changed the model base from `person` to `lesson`. The command and test has been rewritten, although still based on original addCommand and addCommandTest.
+
 === Enhancement Added: View/List/Edit/Delete
 
 ==== External behavior
