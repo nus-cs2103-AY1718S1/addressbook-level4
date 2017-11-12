@@ -531,9 +531,16 @@ image::ScheduleCommandLogicCommandClassDiagram.png[width="800"]
 
 _Figure 4.3.1: `ScheduleCommand` inherits from `UndoableCommand`
 
-To accommodate the execution of `ScheduleCommand`, the application's model component is extended to include `ScheduleDate` and `Activity`.
 
-`DateUtil` is also created to make sure that users enter a valid data which follows DD-MM-YYYY format. The code snippet below shows how `DateUtil` checks the validity of an input date.
+The diagram in _Figure 4.3.2_ below shows the sequence of the schedule operation.
+
+image::ScheduleCommandLogic.png[width="800"]
+
+_Figure 4.3.2: Interactions Inside the Logic Component for the `schedule 1 d/15-12-2017 act/Meeting` Command_
+
+The `ScheduleCommand` takes in `Index`, which is already available in the original application, as well as `ScheduleDate` and `Activity`. The Model component of the application has been extended to include these two new classes.
+
+`DateUtil` has also been created to make sure that users enter a valid data which follows DD-MM-YYYY format. The code snippet below shows how `DateUtil` checks the validity of an input date.
 
 [source, java]
 ----
@@ -554,12 +561,6 @@ private static boolean isActualDate (String date) {
     // ... check if the date exists by considering day, month and year ...
 }
 ----
-
-The diagram in _Figure 4.3.2_ below shows the sequence of the schedule operation.
-
-image::ScheduleCommandLogic.png[width="800"]
-
-_Figure 4.3.2: Interactions Inside the Logic Component for the `schedule 1 d/15-12-2017 act/Meeting` Command_
 
 The activity scheduled will be displayed together with the other components of a `Person` in the `PersonCard` as shown in _Figure 4.3.3_ below.
 
@@ -656,6 +657,7 @@ _Figure 4.4.1: UI display of a successful enhanced `ScheduleCommand` execution_
 
 //tag::welcomeWindow[]
 === Welcome Window [Since v1.5]
+
 
 ==== Design Considerations
 //end::welcomeWindow[]
