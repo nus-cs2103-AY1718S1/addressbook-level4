@@ -98,22 +98,26 @@ public class HighlightCommandTest {
 
     @Test
     public void equals() {
-        String testTag = "test";
-        String otherTestTag = "other test";
-        HighlightCommand highlightCommandFirst = new HighlightCommand(testTag);
-        HighlightCommand highlightCommandSecond = new HighlightCommand(otherTestTag);
+        String tagRa = "RA";
+        String tagExchange = "Exchange";
+        HighlightCommand highlightCommandRa = new HighlightCommand(tagRa);
+        HighlightCommand highlightCommandRaDuplicate = new HighlightCommand(tagRa);
+        HighlightCommand highlightCommandExchange = new HighlightCommand(tagExchange);
 
         // same object -> returns true
-        assertTrue(highlightCommandFirst.equals(highlightCommandFirst));
+        assertTrue(highlightCommandRa.equals(highlightCommandRa));
+
+        // different object same values -> returns true
+        assertTrue(highlightCommandRa.equals(highlightCommandRaDuplicate));
 
         // different argument -> returns false
-        assertFalse(highlightCommandFirst.equals(highlightCommandSecond));
+        assertFalse(highlightCommandRa.equals(highlightCommandExchange));
 
-        // different values -> returns false
-        assertFalse(highlightCommandFirst.equals(1));
+        // different object type -> returns false
+        assertFalse(highlightCommandRa.equals(tagRa));
 
         // null -> returns false
-        assertFalse(highlightCommandFirst.equals(null));
+        assertFalse(highlightCommandRa.equals(null));
     }
 
     /**
