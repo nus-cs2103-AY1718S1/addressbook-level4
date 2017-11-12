@@ -51,7 +51,7 @@ public class EditEventCommandTest {
     }
 
     @Test
-    public void execute_invalidPersonIndexFilteredList_failure() {
+    public void testInvalidIndexInFilteredListFailure() {
         showFirstEventOnly(model);
         Index invalidIndex = INDEX_SECOND_PERSON;
         // ensures that the index is still in bounds of list
