@@ -537,7 +537,25 @@ Sort extends command which makes it an undoable command.
 
 Sort command can only be executed only if the person list is not empty.
 
-It uses the sort method from the collection class to sort the array list of persons in the address book.
+It uses the sort method from the collection class to sort the array list of persons in the address book:
+
+[source, java]
+----
+public Boolean sortPersonList(ArrayList<ReadOnlyPerson> personlist) {
+        if (filteredPersons.isEmpty()) {
+            return false;
+        }
+        personlist.addAll(filteredPersons);
+        Collections.sort(personlist, Comparator.comparing(name -> name.toString().toLowerCase()));
+
+        try {
+            addressBook.setPersons(personlist);
+        } catch (DuplicatePersonException e) {
+            System.out.println("Address book cannot not have duplicate persons");
+        }
+        return true;
+}
+----
 // end::sort[]
 
 // tag::theme[]

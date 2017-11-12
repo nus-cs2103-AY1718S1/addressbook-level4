@@ -47,7 +47,7 @@ Responsibilities: Storage
 
 === Javyn Thun
 image::javyn.jpg[width="150", align="left"]
-{empty}[http://github.com/JavynThun[github]] [<<javynthun#, portfolio>>]
+{empty}[http://github.com/JavynThun[github]] [https://github.com/CS2103AUG2017-T10-B4/main/blob/master/docs/team/javyn.adoc]
 
 Role: Developer +
 Responsibilities: Model
