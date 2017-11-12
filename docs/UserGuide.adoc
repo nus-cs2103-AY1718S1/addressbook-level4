@@ -432,6 +432,15 @@ Format: `view INDEX`
 ****
 // end::view[]
 
+Examples:
+
+* `list` +
+`view 2` +
+Views profile of the 2nd person in the Gentleman's Guide.
+* `find Betsy` +
+`view 1` +
+Views profile of the 1st person in the results of the `find` command.
+
 // tag::sort[]
 === Sorting all entries by name: `sort`
 
