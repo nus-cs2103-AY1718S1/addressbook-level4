@@ -562,6 +562,17 @@ image::DG_activity_music.png[width="700"]
 
 ==== Prerequisites/Dependencies
 
+The music player function requires an external library. You have to add `compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'` to your dependencies in `build.gradle` file. as shown below.
+
+[source,java]
+----
+dependencies {
+    compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'
+}
+----
+
+{sp}
+
 image::header_warning.png[width="400"]
 
 * The `trackNumber` has to be less than or equal to the number of each genre tracks you have in the `resources/audio/music` folder. For example, if `trackNumber` is 2, it is required to have at least 2 mp3 files of each genre of music.
@@ -588,7 +599,7 @@ image::MusicList.jpg[width="200"]
 **Cons:** Always start at the same music track first +
 **Alternative 2:** Play a random music file +
 **Pros:** Has a chance to be different the next time the user starts playing music. +
-**Cons:** User does not know which song is going to be played next. +
+**Cons:** User does not know which song is going to be played next.
 // end::musiccommand[]
 
 // tag::radiocommand[]
@@ -653,7 +664,7 @@ image::DG_activity_radio.png[width="700"]
 
 ==== Prerequisites/Dependencies
 
-The radio streaming function requires an external library. You have to add `compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'` to dependencies in `build.gradle` file. as shown below.
+The radio streaming function requires an external library. You have to add `compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'` to your dependencies in `build.gradle` file. as shown below.
 
 [source,java]
 ----
@@ -716,7 +727,7 @@ image::DG_activity_share.png[width="700"]
 
 ==== Prerequisites/Dependencies
 
-The sharing of contacts by email function requires an external library. You have to add `compile 'javax.mail:mail:1.4.7'` to dependencies in `build.gradle` file. as shown below.
+The sharing of contacts by email function requires an external library. You have to add `compile 'javax.mail:mail:1.4.7'` to your dependencies in `build.gradle` file. as shown below.
 
 [source,java]
 ----
@@ -739,9 +750,62 @@ image::header_warning.png[width="400"]
 **Cons:** Always the same subject header +
 **Alternative 2:** Let user input the subject header +
 **Pros:** Different subject header can be used for different purpose. +
-**Cons:** Can be abused and send negative subject header, leading to a bad reputation for Unify, as the recipients thinks that these offensive subject header is from Unify+
+**Cons:** Can be abused and send negative subject header, leading to a bad reputation for Unify, as the recipients thinks that these offensive subject header is from Unify.
 
 // end::sharecommand[]
+
+// tag::audiblefeedback[]
+=== Audible Feedback Mechanism
+Audio feedback are created by using 2 different audio cues. First is the typing sound, that is created by playing a .mp3 sound file using the `Audio.java` class. You may use this class to play a sound file without looping. You just have to create a new `Audio`
+object with an `audioFileName` of which is your .mp3 resource file.
+
+The second audio cue comes from the Text-To-Speech feature, which plays an human-like speech back to the user when they have successful execute a command.
+This be easily added for any new commands by creating a new `TextToSpeech` object with the string `word` that you want it speak. Next call the `TextToSpeech.speak()` method to run the Text-To-Speech feature.
+
+For example, `new TextToSpeech("hello").speak();` will cause the system to say "hello" when it is executed.
+
+==== Prerequisites/Dependencies
+The audio play back function requires an external library. You have to add `compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'` to your dependencies in `build.gradle` file. as shown below.
+
+[source,java]
+----
+dependencies {
+    compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'
+}
+----
+
+{sp}
+
+The Text-To-Speech feature requires an external library. You have to add `compile 'javax.mail:mail:1.4.7'` to your dependencies +
+and `url "https://oss.sonatype.org/content/repositories/snapshots"` to your maven repositories in `build.gradle` file. as shown below.
+
+[source,java]
+----
+repositories {
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+}
+dependencies {
+    compile group: 'org.jvoicexml', name: 'cmu_us_kal', version: '1.2.3-SNAPSHOT'
+    compile group: 'org.jvoicexml', name: 'cmu_time_awb', version: '1.2.3-SNAPSHOT'
+}
+
+----
+
+{sp}
+
+==== Design Considerations
+
+**Aspect:** When to use Text-To-Speech audio feedback +
+**Alternative 1 (current choice):** Successful and unsuccessful command execution excluding invalid commands +
+**Pros:** Giving audible feedback when users needed it the most, such as confirmation of successful command execution +
+**Cons:** Invalid commands have no audio feedback +
+**Alternative 2:** All commands, including invalid commands have audio feedback +
+**Pros:** Users able to have audible feedback for every action they take +
+**Cons:** Users may find it annoying as every action they take, the system will play an audio cue. +
+
+// end::audiblefeedback[]
 
 // tag::alias[]
 === Aliases
