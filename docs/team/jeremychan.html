@@ -28,7 +28,7 @@
 <li><a href="#enhancement-added-themes">3. Enhancement Added: Themes</a>
 <ul class="sectlevel2">
 <li><a href="#external-behavior-2">3.1. External behavior</a></li>
-<li><a href="#change-theme-of-the-application-code-theme-code-kbd-v2-0-kbd">3.2. Change theme of the application : <code>theme</code> <kbd>V2.0</kbd></a></li>
+<li><a href="#change-theme-code-theme-code-kbd-v2-0-kbd">3.2. Change theme : <code>theme</code> <kbd>V2.0</kbd></a></li>
 <li><a href="#justification-2">3.3. Justification</a></li>
 <li><a href="#implementation-2">3.4. Implementation</a></li>
 <li><a href="#theme-mechanism">3.5. Theme mechanism</a></li>
@@ -67,16 +67,7 @@
 <h2 id="project-deathnote"><a class="link" href="#project-deathnote">1. Project: DeathNote</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>DeathNote is a Command-line Interface (CLI) desktop address book application which is able to manage contacts easily.
-The user interacts with the application using a CLI, using commands to manage contacts; adding, deleting or editing contacts.</p>
-</div>
-<div class="paragraph">
-<p>The aim of DeathNote, besides managing contacts, is to be able to bring entertainment to the user.
-DeathNote has a small twist on being an address book application as it has aliases for its commands
-and the amount of entertainment can only be determined by the user&#8217;s creativity.</p>
-</div>
-<div class="paragraph">
-<p>It has a GUI created with JavaFX. It is written in Java, and has about 6k Lines of Code (LoC).</p>
+<p>DeathNote is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.</p>
 </div>
 <div class="paragraph">
 <p><strong>Code contributed</strong>: [<a href="https://github.com/Jemereny/addressbook-level4/blob/master/collated/main/Jemereny.md">Functional code</a>] [<a href="https://github.com/Jemereny/addressbook-level4/blob/master/collated/test/Jemereny.md">Test code</a>]</p>
@@ -96,20 +87,6 @@ and the amount of entertainment can only be determined by the user&#8217;s creat
 <div class="content">
 <img src="../images/personCard.png" alt="personCard">
 </div>
-</div>
-<div class="paragraph">
-<p>Profile picture can be added using <code>add</code> command while adding a contact or <code>edit</code> command if the contact already exists.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>add n/Dwayne Johnson pic/C:\Users\user\Desktop\TheRock.png</code></p>
-</li>
-<li>
-<p><code>edit 1 pic/C:\pictures\clown.png</code><br>
-Edits the picture of the 1st person to the picture specified in the path i.e. clown.png</p>
-</li>
-</ul>
 </div>
 </div>
 <div class="sect2">
@@ -164,25 +141,21 @@ The data that we save in our xml file will be "pictureName.png" plus the picture
 <div class="paragraph">
 <p>Once the existence of the file is checked, we check the size of the file so that we do not save very large files
 as we do not want our data file to be too large.<br>
-We resize the files if they are too large by shrinking it into a shorter width and height.<br>
-We also rename the file with a unique ID so that picture names will not collide and be overwritten.</p>
+We resize the files if they are too large by shrinking it into a shorter width and height.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Picture(<span class="predefined-type">String</span> fileLocation) {
 ...
-    String newFileName = <span class="predefined-type">UUID</span>.randomUUID().toString() + PICTURE_SUFFIX;
-
-    <span class="predefined-type">File</span> src = <span class="keyword">new</span> <span class="predefined-type">File</span>(trimmedFileLocation);
-    <span class="predefined-type">File</span> dest = <span class="keyword">new</span> <span class="predefined-type">File</span>(PICTURE_SAVE_LOCATION + newFileName);
+    File src = <span class="keyword">new</span> <span class="predefined-type">File</span>(trimmedFileLocation);
+    <span class="predefined-type">File</span> dest = <span class="keyword">new</span> <span class="predefined-type">File</span>(PICTURE_SAVE_LOCATION + fileName);
 
     <span class="comment">// If file is too big, resize it.</span>
     <span class="keyword">if</span> (src.length() &gt; PICTURE_MAX_SIZE) {
-        resizeAndSaveImage(src, newFileName);
+        resizeAndSaveImage(src, fileName);
     } <span class="keyword">else</span> {
         copyImage(src, dest);
     }
-    <span class="local-variable">this</span>.value = newFileName;
 ...
 }</code></pre>
 </div>
@@ -263,13 +236,13 @@ time if the file is too big+</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="change-theme-of-the-application-code-theme-code-kbd-v2-0-kbd"><a class="link" href="#change-theme-of-the-application-code-theme-code-kbd-v2-0-kbd">3.2. Change theme of the application : <code>theme</code> <kbd>V2.0</kbd></a></h3>
+<h3 id="change-theme-code-theme-code-kbd-v2-0-kbd"><a class="link" href="#change-theme-code-theme-code-kbd-v2-0-kbd">3.2. Change theme : <code>theme</code> <kbd>V2.0</kbd></a></h3>
 <div class="paragraph">
-<p>Changes the theme of Death Note.<br></p>
+<p>Changes the theme of DeathNote.<br></p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Format: `theme`</pre>
+<pre>Format: theme</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -477,25 +450,6 @@ time if the file is too big+</p>
 <img src="../images/tagcolor.png" alt="tagcolor">
 </div>
 </div>
-<div class="paragraph">
-<p>Tags can be added using <code>add</code> command while adding a contact or <code>edit</code> command if the contact already exists.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>add n/Dwayne Johnson t/friend</code><br>
-Adds Dwayne Johnson as a contact and adds a "friend" tag to the contact</p>
-</li>
-<li>
-<p><code>edit 1 t/colleague</code><br>
-Edits the tag of the 1st person to be "colleague"</p>
-</li>
-<li>
-<p><code>edit 1 t/</code><br>
-Removes all tag from the 1st person</p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect2">
 <h3 id="justification-4"><a class="link" href="#justification-4">5.2. Justification</a></h3>
@@ -548,12 +502,7 @@ This increases the number of colors we can have for tags tremendously.<br></p>
 <h3 id="external-behavior-5"><a class="link" href="#external-behavior-5">6.1. External behavior</a></h3>
 <hr>
 <div class="paragraph">
-<p>List is sorted by name alphabetically automatically.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/personList.png" alt="personList">
-</div>
+<p>List is sorted by name alphabetically</p>
 </div>
 </div>
 <div class="sect2">
@@ -616,7 +565,7 @@ This increases the number of colors we can have for tags tremendously.<br></p>
 <p>Increased test coverage from 87% to 88% (Pull request: <a href="https://github.com/CS2103AUG2017-W10-B3/main/pull/83">#86</a>)</p>
 </li>
 <li>
-<p>Reported bug on (Pull requests: <a href="https://github.com/CS2103AUG2017-T15-B4/main/issues/234">T15-B4 #234</a>, <a href="https://github.com/CS2103AUG2017-T15-B4/main/issues/236">T15-B4 #236</a>)</p>
+<p>Reported bug on (Pull request: <a href="https://github.com/CS2103AUG2017-T15-B4/main/issues/234">T15-B4 #234</a>)</p>
 </li>
 </ol>
 </div>
@@ -625,7 +574,7 @@ This increases the number of colors we can have for tags tremendously.<br></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-11 20:09:01 +08:00
+Last updated 2017-11-10 01:06:50 +08:00
 </div>
 </div>
 </body>

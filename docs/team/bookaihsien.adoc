@@ -108,5 +108,6 @@ include::../DeveloperGuide.adoc[tag=find]
 
 === Other contributions
 
+. Set up project website.
 . Add shorthand to commands.
 . Add Appveyor, Coveralls and Codeacy to the project for efficient integrations.
