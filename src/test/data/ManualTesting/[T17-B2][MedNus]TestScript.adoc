@@ -103,7 +103,7 @@ The following features of MedNus are tested in this section.
 
 |`bloodtype a` |`2 persons listed!` |Contacts list in contacts panel filters Irfan Ibrahim and Alex Yeoh.
 
-|`bLoOdTyPe aB` |`2 persons listed!` |Contacts list in contacts panel filters Sue Yoo, Charlotte Oliveiro, Charles Goh and Amanda Lee.
+|`bLoOdTyPe aB` |`4 persons listed!` |Contacts list in contacts panel filters Sue Yoo, Charlotte Oliveiro, Charles Goh and Amanda Lee.
 
 |`list` |`Listed all persons` |All contacts listed in contacts panel.
 
@@ -115,9 +115,9 @@ The following features of MedNus are tested in this section.
 
 |`undo` |`Undo success!` |All previously deleted contacts are added back.
 
-|`edit 1 p/81000000 e/ZLee@gmail.com r/Feverish 3 days after accident ` |`Edited Person: Zeypher Lee Phone: 81000000 Email: zlee@gmail.com Address: 121 Thomson Road BloodType: B Remark: Feverish 3 days after accident Relationship:  Tags: [XRayCentre][BrokenFeet]` |Zeypher Lee's information edited and reflected on contacts panel.
+|`edit 1 p/81000000 e/ZLee@gmail.com r/Feverish 3 days after accident` |`Edited Person: Zeypher Lee Phone: 81000000 Email: zlee@gmail.com Address: 121 Thomson Road BloodType: B Remark: Feverish 3 days after accident Relationship:  Tags: [XRayCentre][BrokenFeet]` |Zeypher Lee's information edited and reflected on contacts panel.
 
-|`E 1 a/435 clEmENTI aVe 3 e/zEyPHerLeE@HOTmAil.com b/b+ ` |`Edited Person: Zeypher Lee Phone: 81000000 Email: zeypherlee@hotmail.com Address: 435 Clementi Ave 3 BloodType: B+ Remark: Feverish 3 days after accident Relationship:  Tags: [XRayCentre][BrokenFeet]` |Zeypher Lee's information edited and reflected on contacts panel.
+|`E 1 a/435 clEmENTI aVe 3 e/zEyPHerLeE@HOTmAil.com b/b+` |`Edited Person: Zeypher Lee Phone: 81000000 Email: zeypherlee@hotmail.com Address: 435 Clementi Ave 3 BloodType: B+ Remark: Feverish 3 days after accident Relationship:  Tags: [XRayCentre][BrokenFeet]` |Zeypher Lee's information edited and reflected on contacts panel.
 
 |`find peter` |`2 persons listed!` |Peter Thomas Lee and Peter Griffin listed on contacts panel
 
