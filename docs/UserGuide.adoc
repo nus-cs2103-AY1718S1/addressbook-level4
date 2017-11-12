@@ -1,4 +1,4 @@
-= DeathNote v2.0 - User Guide
+= DeathNote v1.5 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
