@@ -361,11 +361,9 @@ public class SwitchThemeCommandTest {
 
     @Test
     public void execute_validIndexValidSwitch_success() throws Exception {
-        String themeToChange = model.getThemesList().get(INDEX_SECOND_PERSON.getZeroBased());
-
         SwitchThemeCommand switchThemeCommand = prepareCommand(INDEX_SECOND_PERSON);
 
-        String expectedMessage = String.format(SwitchThemeCommand.MESSAGE_SWITCH_THEME_SUCCESS, themeToChange);
+        String expectedMessage = SwitchThemeCommand.MESSAGE_LIGHT_THEME_SUCCESS;
         CommandResult commandResult = switchThemeCommand.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
@@ -714,6 +712,61 @@ public class ThemesWindowTest extends GuiUnitTest {
     }
 }
 ```
+###### /java/systemtests/AddCommandSystemTest.java
+``` java
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)} except that the result
+     * display box displays {@code expectedResultMessage} and the model related components equal to
+     * {@code expectedModel}. Executes {@code command} instead.
+     * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyPerson)
+     */
+    private void assertCommandSuccess(String command, ReadOnlyPerson toAdd) {
+        Model expectedModel = getModel();
+        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
+        try {
+            expectedModel.addPerson(toAdd);
+        } catch (DuplicatePersonException dpe) {
+            throw new IllegalArgumentException("toAdd already exists in the model.");
+        }
+        int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        executeCommand(command);
+        int postExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        if (preExecutionSelectedCardIndex == postExecutionSelectedCardIndex) {
+            assertSelectedCardUnchanged();
+        } else {
+            assertSelectedCardChanged(Index.fromZeroBased(postExecutionSelectedCardIndex));
+        }
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)}
+     * except that the selected card is deselected.
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
+     */
+    private void assertUndoCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardDeselected();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)}
+     * except that the selected card changed.
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
+     */
+    private void assertRedoCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardChanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+```
 ###### /java/systemtests/FindTagCommandSystemTest.java
 ``` java
 
@@ -738,6 +791,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void findtag() {
+        executeCommand("list");
         /* Case: find 1 person in address book, command with leading spaces and trailing spaces
          * -> 1 person found
          */

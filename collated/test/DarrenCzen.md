@@ -1,5 +1,5 @@
 # DarrenCzen
-###### \java\guitests\guihandles\EventsDetailsPanelHandle.java
+###### /java/guitests/guihandles/EventsDetailsPanelHandle.java
 ``` java
 /**
  * A handle to the {@code EventsDetailsPanel} of the application.
@@ -56,7 +56,7 @@ public class EventsDetailsPanelHandle extends NodeHandle<Node> {
     }
 
 ```
-###### \java\seedu\address\logic\commands\AccessCommandTest.java
+###### /java/seedu/address/logic/commands/AccessCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code AccessCommand}.
@@ -213,7 +213,7 @@ public class AccessCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\LocationCommandTest.java
+###### /java/seedu/address/logic/commands/LocationCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code LocationCommand}.
@@ -368,7 +368,7 @@ public class LocationCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\SortCommandTest.java
+###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
 public class SortCommandTest {
 
@@ -459,7 +459,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AccessCommandParserTest.java
+###### /java/seedu/address/logic/parser/AccessCommandParserTest.java
 ``` java
 public class AccessCommandParserTest {
     private AccessCommandParser parser = new AccessCommandParser();
@@ -477,7 +477,7 @@ public class AccessCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParserTest.java
+###### /java/seedu/address/logic/parser/AddCommandParserTest.java
 ``` java
     @Test
     public void parse_compulsoryFieldMissing_failure() {
@@ -574,7 +574,7 @@ public class AccessCommandParserTest {
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_access() throws Exception {
@@ -584,7 +584,7 @@ public class AccessCommandParserTest {
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_location() throws Exception {
@@ -600,7 +600,7 @@ public class AccessCommandParserTest {
     }
 
 ```
-###### \java\seedu\address\logic\parser\LocationCommandParserTest.java
+###### /java/seedu/address/logic/parser/LocationCommandParserTest.java
 ``` java
 public class LocationCommandParserTest {
     private LocationCommandParser parser = new LocationCommandParser();
@@ -618,7 +618,7 @@ public class LocationCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
 ``` java
     @Test
     public void parseWebsite_null_throwsNullPointerException() throws Exception {
@@ -647,7 +647,7 @@ public class LocationCommandParserTest {
     }
 
 ```
-###### \java\seedu\address\model\person\AddressTest.java
+###### /java/seedu/address/model/person/AddressTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -657,9 +657,9 @@ public class LocationCommandParserTest {
         assertTrue(addressX.equals(addressY) && addressY.equals(addressX));
         assertTrue(addressX.hashCode() == addressY.hashCode());
     }
-
+}
 ```
-###### \java\seedu\address\model\person\BirthdayTest.java
+###### /java/seedu/address/model/person/BirthdayTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -669,9 +669,12 @@ public class LocationCommandParserTest {
         assertTrue(birthdayX.equals(birthdayY) && birthdayY.equals(birthdayX));
         assertTrue(birthdayX.hashCode() == birthdayY.hashCode());
     }
+}
+
+
 
 ```
-###### \java\seedu\address\model\person\EmailTest.java
+###### /java/seedu/address/model/person/EmailTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -681,9 +684,9 @@ public class LocationCommandParserTest {
         assertTrue(emailX.equals(emailY) && emailY.equals(emailX));
         assertTrue(emailX.hashCode() == emailY.hashCode());
     }
-
+}
 ```
-###### \java\seedu\address\model\person\HomeNumberTest.java
+###### /java/seedu/address/model/person/HomeNumberTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -693,9 +696,9 @@ public class LocationCommandParserTest {
         assertTrue(homeNumberX.equals(homeNumberY) && homeNumberY.equals(homeNumberX));
         assertTrue(homeNumberX.hashCode() == homeNumberY.hashCode());
     }
-
+}
 ```
-###### \java\seedu\address\model\person\NameTest.java
+###### /java/seedu/address/model/person/NameTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -716,7 +719,7 @@ public class LocationCommandParserTest {
         assertEquals(newName.toString(), expectedName.toString());
     }
 ```
-###### \java\seedu\address\model\person\PhoneTest.java
+###### /java/seedu/address/model/person/PhoneTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -728,7 +731,7 @@ public class LocationCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\person\SchEmailTest.java
+###### /java/seedu/address/model/person/SchEmailTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -738,9 +741,9 @@ public class LocationCommandParserTest {
         assertTrue(schEmailX.equals(schEmailY) && schEmailY.equals(schEmailX));
         assertTrue(schEmailX.hashCode() == schEmailY.hashCode());
     }
-
+}
 ```
-###### \java\seedu\address\model\person\WebsiteTest.java
+###### /java/seedu/address/model/person/WebsiteTest.java
 ``` java
 public class WebsiteTest {
 
@@ -783,7 +786,7 @@ public class WebsiteTest {
     }
 }
 ```
-###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Website} of the {@code EditPersonDescriptor} that we are building.
@@ -798,7 +801,7 @@ public class WebsiteTest {
     }
 
 ```
-###### \java\seedu\address\testutil\PersonBuilder.java
+###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Website} of the {@code Person} that we are building.
@@ -813,7 +816,7 @@ public class WebsiteTest {
     }
 
 ```
-###### \java\seedu\address\ui\BrowserPanelTest.java
+###### /java/seedu/address/ui/BrowserPanelTest.java
 ``` java
 public class BrowserPanelTest extends GuiUnitTest {
     private static final String ALICE_WEBSITE = "https://twitter.com/alice";
@@ -860,7 +863,7 @@ public class BrowserPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### \java\seedu\address\ui\EventsDetailsPanelTest.java
+###### /java/seedu/address/ui/EventsDetailsPanelTest.java
 ``` java
 public class EventsDetailsPanelTest extends GuiUnitTest {
     private static final String MESSAGE_EMPTY_STRING = "";

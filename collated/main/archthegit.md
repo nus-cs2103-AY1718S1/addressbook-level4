@@ -9,7 +9,7 @@
 ###### /java/seedu/address/commons/events/ui/PersonPanelUnselectEvent.java
 ``` java
 /**
- * event to unselect a person card in the case of a delete
+ * Represents an unselection in the Person List Panel
  */
 public class PersonPanelUnselectEvent extends BaseEvent {
 
@@ -23,7 +23,7 @@ public class PersonPanelUnselectEvent extends BaseEvent {
 ``` java
 
 /**
- * Event to handle info change in the case of edit
+ * Represents a selection change in Person
  */
 
 public class PersonSelectionChangedEvent extends BaseEvent {
@@ -71,11 +71,22 @@ public class PersonSelectionChangedEvent extends BaseEvent {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         if (preppedWord.length() >= 2) {
-            for (String wordInSentence : wordsInPreppedSentence) {
-                if ((wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()))
-                        && (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()))) {
-                    return true;
-                }
+            if (TestIfWordIsInName(preppedWord, wordsInPreppedSentence)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if keyword is a substring of the name ignoring cases.
+     * @param preppedWord
+     * @param wordsInPreppedSentence
+     * @return
+     */
+    private static boolean TestIfWordIsInName(String preppedWord, String[] wordsInPreppedSentence) {
+        for (String wordInSentence : wordsInPreppedSentence) {
+            if ((wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()))
+                    && (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()))) {
+                return true;
             }
         }
         return false;
@@ -124,6 +135,7 @@ public class BirthdaysCommand extends Command {
             + "who have their birthdays today.\n"
             + "Parameters: KEYWORD \n"
             + "Example: " + COMMAND_WORD;
+    public static final String MESSAGE_SUCCESS = "Listed all people with birthdays";
 
     private CheckIfBirthday check = new CheckIfBirthday();
 
@@ -134,6 +146,7 @@ public class BirthdaysCommand extends Command {
         model.updateFilteredPersonList(check);
         return new CommandResult(getBirthdayMessageSummary(model.getFilteredPersonList().size()));
     }
+
 
 }
 ```
@@ -198,12 +211,32 @@ public class Birthday {
             + "|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
 
     public static final String BIRTHDAY_TEMPORARY = "NIL";
-
     public final String value;
 
-```
-###### /java/seedu/address/model/person/Birthday.java
-``` java
+    /**
+     * Validates given birthday.
+     *
+     * @throws IllegalValueException if given birthday string is invalid.
+     */
+    public Birthday(String birthday) throws IllegalValueException {
+        if (birthday == null) {
+            this.value = BIRTHDAY_TEMPORARY;
+        } else {
+            String trimmedBirthday = birthday.trim();
+            if (!isValidBirthday(trimmedBirthday)) {
+                throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+            }
+            this.value = trimmedBirthday;
+        }
+    }
+
+    /**
+     * Returns true if a given string is a valid person birthday.
+     */
+    public static boolean isValidBirthday(String test) {
+        return test.matches(BIRTHDAY_VALIDATION_REGEX)
+                || test.matches(BIRTHDAY_TEMPORARY);
+    }
     @Override
     public String toString() {
         return value;
@@ -319,7 +352,6 @@ public class DetailsPanel extends UiPart<Region> {
 
     private Logic logic;
 
-    private ObservableList<ReadOnlyPerson> personList;
 
     @FXML
     private Pane pane;
@@ -355,8 +387,6 @@ public class DetailsPanel extends UiPart<Region> {
     private Label homePhone;
     @FXML
     private FlowPane tags;
-
-    private ListView<PersonCard> personListView;
 
     public DetailsPanel() {
         super(FXML);
@@ -492,6 +522,7 @@ public class DetailsPanel extends UiPart<Region> {
         loadPersonInfo(event.getNewSelection());
     }
 
+
 }
 
 
@@ -504,7 +535,6 @@ public class DetailsPanel extends UiPart<Region> {
         detailsPanel = new DetailsPanel();
         detailsPanelPlaceholder.getChildren().clear();
         detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
-
     }
 ```
 ###### /java/seedu/address/ui/UiPart.java
@@ -523,43 +553,43 @@ public class DetailsPanel extends UiPart<Region> {
         <FlowPane fx:id="tags" prefHeight="50.0" prefWidth="774.0" />
         <TextFlow prefHeight="50.0" prefWidth="100.0">
             <children>
-                <Text fx:id="phoneField" fill="gray" styleClass="window_small_label" text="Phone: " />
+                <Text fx:id="phoneField" styleClass="window_small_text" text="Phone: " />
                 <Label fx:id="phone" styleClass="window_small_label" text="\$phone" />
             </children>
         </TextFlow>
         <TextFlow prefHeight="50.0" prefWidth="100.0">
             <children>
-                <Text fx:id="homePhoneField" fill="gray" styleClass="window_small_label" text="Home Phone: " />
+                <Text fx:id="homePhoneField" styleClass="window_small_text" text="Home Phone: " />
                 <Label fx:id="homePhone" styleClass="window_small_label" text="\$homePhone" />
             </children>
         </TextFlow>
         <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
-                <Text fx:id="addressField" fill="gray" styleClass="window_small_label" text="Address: " />
+                <Text fx:id="addressField" styleClass="window_small_text" text="Address: " />
                 <Label fx:id="address" alignment="TOP_LEFT" maxHeight="800.0" styleClass="window_small_label" text="\$address" wrapText="true" />
             </children>
         </TextFlow>
         <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
-                <Text fx:id="emailField" fill="gray" styleClass="window_small_label" text="Email: " />
+                <Text fx:id="emailField" styleClass="window_small_text" text="Email: " />
                 <Label fx:id="email" styleClass="window_small_label" text="\$email" />
             </children>
         </TextFlow>
         <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
-                <Text fx:id="schoolEmailField" fill="gray" styleClass="window_small_label" text="School Email: " />
+                <Text fx:id="schoolEmailField" styleClass="window_small_text" text="School Email: " />
                 <Label fx:id="schoolEmail" styleClass="window_small_label" text="\$schoolEmail" />
             </children>
         </TextFlow>
         <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
-                <Text fx:id="birthdayField" fill="gray" styleClass="window_small_label" text="Birthday: " />
+                <Text fx:id="birthdayField" styleClass="window_small_text" text="Birthday: " />
                 <Label fx:id="birthday" styleClass="window_small_label" text="\$birthday" />
             </children>
         </TextFlow>
         <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
-                <Text fx:id="websiteField" fill="gray" styleClass="window_small_label" text="Website: " />
+                <Text fx:id="websiteField" styleClass="window_small_text" text="Website: " />
                 <Label fx:id="website" styleClass="window_small_label" text="\$website" />
             </children>
         </TextFlow>

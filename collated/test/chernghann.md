@@ -1,5 +1,5 @@
 # chernghann
-###### \java\guitests\guihandles\EventCardHandle.java
+###### /java/guitests/guihandles/EventCardHandle.java
 ``` java
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -45,7 +45,7 @@ public class EventCardHandle extends NodeHandle<Node> {
 
 }
 ```
-###### \java\guitests\guihandles\EventListPanelHandle.java
+###### /java/guitests/guihandles/EventListPanelHandle.java
 ``` java
 
 import java.util.List;
@@ -180,7 +180,7 @@ public class EventListPanelHandle extends NodeHandle<ListView<EventCard>> {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddEventCommandTest.java
+###### /java/seedu/address/logic/commands/AddEventCommandTest.java
 ``` java
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -219,7 +219,7 @@ public class AddEventCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddEventParserTest.java
+###### /java/seedu/address/logic/parser/AddEventParserTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_ADDRESS_B_DESC;
@@ -280,7 +280,7 @@ public class AddEventParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\AddressBookTest.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
     @Test
     public void getEventList_modifyList_throwsUnsupportedOperationException() {
@@ -288,7 +288,7 @@ public class AddEventParserTest {
         addressBook.getEventList().remove(0);
     }
 ```
-###### \java\seedu\address\model\event\DateTest.java
+###### /java/seedu/address/model/event/DateTest.java
 ``` java
 public class DateTest {
     @Test
@@ -307,7 +307,7 @@ public class DateTest {
     }
 }
 ```
-###### \java\seedu\address\model\event\EventNameTest.java
+###### /java/seedu/address/model/event/EventNameTest.java
 ``` java
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -333,7 +333,7 @@ public class EventNameTest {
     }
 }
 ```
-###### \java\seedu\address\model\UniqueEventListTest.java
+###### /java/seedu/address/model/UniqueEventListTest.java
 ``` java
 import org.junit.Rule;
 import org.junit.Test;
@@ -353,7 +353,7 @@ public class UniqueEventListTest {
     }
 }
 ```
-###### \java\seedu\address\testutil\AddEventUtil.java
+###### /java/seedu/address/testutil/AddEventUtil.java
 ``` java
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
@@ -386,7 +386,7 @@ public class AddEventUtil {
     }
 }
 ```
-###### \java\seedu\address\testutil\EventBuilder.java
+###### /java/seedu/address/testutil/EventBuilder.java
 ``` java
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Date;
@@ -459,7 +459,7 @@ public class EventBuilder {
 
 }
 ```
-###### \java\seedu\address\testutil\TypicalEvents.java
+###### /java/seedu/address/testutil/TypicalEvents.java
 ``` java
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_ADDRESS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_DATE;
@@ -518,7 +518,7 @@ public class TypicalEvents {
     }
 }
 ```
-###### \java\seedu\address\ui\EventCardTest.java
+###### /java/seedu/address/ui/EventCardTest.java
 ``` java
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
@@ -578,15 +578,13 @@ public class EventCardTest extends GuiUnitTest {
     }
 }
 ```
-###### \java\seedu\address\ui\EventListPanelTest.java
+###### /java/seedu/address/ui/EventListPanelTest.java
 ``` java
 
 import static junit.framework.TestCase.assertEquals;
-import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalEvents.getTypicalEvents;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysEvent;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardEventsEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -626,19 +624,9 @@ public class EventListPanelTest extends GuiUnitTest {
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
         }
     }
-
-    @Test
-    public void handleJumpToListRequestEvent() {
-        postNow(JUMP_TO_SECOND_EVENT);
-        guiRobot.pauseForHuman();
-
-        EventCardHandle expectedCard = eventListPanelHandle.getEventCardHandle(INDEX_SECOND_PERSON.getZeroBased());
-        EventCardHandle selectedCard = eventListPanelHandle.getHandleToSelectedCard();
-        assertCardEventsEquals(expectedCard, selectedCard);
-    }
 }
 ```
-###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+###### /java/seedu/address/ui/testutil/GuiTestAssert.java
 ``` java
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedEvent}.
@@ -658,7 +646,7 @@ public class EventListPanelTest extends GuiUnitTest {
         assertEquals(expectedCard.getEventAddress(), actualCard.getEventAddress());
     }
 ```
-###### \java\systemtests\AddEventCommandSystemTest.java
+###### /java/systemtests/AddEventCommandSystemTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_ADDRESS_A_DESC;
