@@ -1,0 +1,20 @@
+= Script for Manual Testing
+
+== Introduction
+This document will explain the step-by-step procedure to perform manual testing.
+asdfsdf +
+
+== Setting up
+
+=== Downloading the application
+.  You can download the latest version of `Codii` link:https://github.com/CS2103AUG2017-T17-B1/main/releases[here]. +
+.  Make sure that the `codii.jar` is saved in a folder without any other jar files. This will be the `main` folder for your `Codii` application.
+
+=== Loading the sample data
+. Open up the jar file from the `main` folder.
+. Log into Codii. Details on logging in, including a working sample username and password, can be found link:https://github.com/CS2103AUG2017-T17-B1/main/blob/master/docs/UserGuide.adoc#logging-into-the-address-book-application-using-command-line-interface-cli-code-login-code[here]. +
+. You have to make a change to the address book to generate a `data folder`. Simply key in `delete 1` to delete the dummy contact inside.
+. Exit the application by keying in `exit` into the command box.
+. Within the `main` folder, there is a new `data` that has been generated. Replace the `addressbook.xml` file with the `sample data` file. Ensure that there is only one `.xml` file in the `data`folder.
+. Rename the file to `addressbook.xml`.
+

@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
     <persons>
+        <name>Dummy to Delete</name>
+        <handphone>91111111</handphone>
+        <homePhone>61111111</homePhone>
+        <officePhone>60000001</officePhone>
+        <email>dummy@example.com</email>
+        <address>Dummy avenue</address>
+        <postalCode>101312</postalCode>
+        <debt>12345</debt>
+        <totalDebt>12345</totalDebt>
+        <interest>No interest set.</interest>
+        <dateBorrow>Thu, 09 Nov, Year 2017</dateBorrow>
+        <deadline>No deadline set.</deadline>
+        <dateRepaid>NOT REPAID</dateRepaid>
+        <lastAccruedDate>Thu, 09 Nov, Year 2017</lastAccruedDate>
+        <isBlacklisted>false</isBlacklisted>
+        <isWhitelisted>false</isWhitelisted>
+        <hasOverdueDebt>false</hasOverdueDebt>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
         <name>Amy Bee</name>
         <handphone>91111111</handphone>
         <homePhone>61111111</homePhone>
