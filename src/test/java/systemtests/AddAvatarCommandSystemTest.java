@@ -23,6 +23,16 @@ public class AddAvatarCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, index, VALID_PATH);
     }
 
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * Also verifies that the selected card and status bar remain unchanged, and the command box has the error style.
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
     private void assertCommandSuccess(String command, Index toAdd, String path) throws Exception {
         Model model = getModel();
         ReadOnlyPerson personToAdd = model.getFilteredPersonList().get(toAdd.getZeroBased());
