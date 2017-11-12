@@ -30,6 +30,7 @@ public class BrowserPanel extends UiPart<Region> {
     private static final String LINKEDIN_SEARCH_PARAM_FIRST_NAME = "&firstName=";
     private static final String LINKEDIN_SEARCH_PARAM_LAST_NAME = "&lastName=";
     private static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
+    //@@author martyn-wong
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
     private static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
@@ -169,18 +170,17 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event)
             throws CommandException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        switch (event.getBrowserSelection()) {
-            case "linkedin":
-                loadLinkedIn();
-                break;
-            case "google":
-                setLinkedinChosenFalse();
-                setMapsChosenFalse();
-                loadPersonPage(personSelected);
-                break;
-            case "maps":
-                loadPersonMap(personSelected);
-                break;
+        if (event.getBrowserSelection().equals("linkedin")) {
+            loadLinkedIn();
+
+        } else if (event.getBrowserSelection().equals("google")) {
+            setLinkedinChosenFalse();
+            setMapsChosenFalse();
+            loadPersonPage(personSelected);
+
+        } else if (event.getBrowserSelection().equals("maps")) {
+            loadPersonMap(personSelected);
+
         }
     }
 
