@@ -9,7 +9,7 @@ import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TestUtil.getPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
-//import org.junit.Ignore;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -21,7 +21,6 @@ import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-//@Ignore
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
