@@ -1011,10 +1011,211 @@ private void clearHighlights(WebEngine engine) {
 // end::helpWindowHighlight[]
 
 // tag::suggestion[]
-== Suggestions Mechanism
-// The suggestion mechanism is implemented at Rolodex's parser level under the logic component.
-// TODO: v1.5
-This feature is a work in progress for v1.5.
+=== Suggestions Mechanism
+The suggestion mechanism is implemented at Rolodex's parser level under the logic component.
+The suggestion is stored as an instance object to be evaluated only if the next command matches any of the suggestion's _affirmation commands_, `y`, `yes`, `k`, `ok`, `yea` or `yeah`, otherwise, the suggestion is destroyed.
+Upon receiving a bogus command, the command string is evaluated by the suggestion object which determines if it can be turned into a valid suggestion to be executed.
+
+The high level sequence diagram for a bogus `udon is yummy` request can be seen below:
+
+image::SuggestionHighLevelSequenceDiagram.png[]
+
+1. User enters a bogus command `udon is yummy`.
+2. `RolodexParser` parses the command and separates the string `udon is yummy` into the commandWord, `udon` and arguments, `is yummy`.
+* `udon` is not a recognized command word
+* The execution is passed on to a new Suggestion instance.
+3. Suggestion determines which command abbreviation `udon` is closest to up to a _specified threshold_, which in this case, is `undo`.
+* Since `undo` does not require any arguments, the supplied arguments `is yummy` are ignored
+* The suggestion is noted as a suggestible exception.
+4. The suggestion is stored as an instance variable in `RolodexParser`.
+5. `RolodexParser` throws a `SuggestibleParseException` to be handled separately from `ParseException` by UI elements.
+* The `CommandBox` is cleared to make way for the user to easily enter any of the suggestion _affirmation commands_.
+* The `ResultDisplay` panel displays a formatted string for the suggestion of the command to be alternatively executed.
+6. At this point, the user enters an _affirmation command_, `k` for the `RolodexParser` to be handled.
+7. As a suggestion is present in `RolodexParser`, the user input `k` is converted into the parsed `Suggestion` and handled as usual.
+
+The behaviour of the `undo` operation remains unchanged, as explained in the <<Undo/Redo Mechanism>> section.
+The suggestions are not limited `undo` commands and are applicable to all commands in the Rolodex. +
+Levenshtein distance is used to determine the closest command to the whitespace delimited first user input.
+If two command abbreviations are of equal distance to the bogus word, an arbitrary command is selected for the suggestion. +
+
+The suggestions are handled differently by different types of `Command`.
+
+==== Commands with No Arguments
+
+The behaviour of commands that are known to have no arguments by default, namely,
+
+* `Clear`
+* `List`
+* `History`
+* `Exit`
+* `Help`
+* `Undo`
+* `Redo`
+
+are handled in a manner similar to `undo` as described above. The arguments are ignored.
+
+==== Commands with a Single Index Type Argument
+
+The commands that hold a single, indexed type argument are
+
+* `Delete`
+* `Select`
+
+These commands require an argument of an index type, within the range from 1 to the total number of persons in the Rolodex.
+The behaviour of index parsing can be seen as such:
+
+[source,java]
+----
+public static int parseFirstIndex(String value, int rolodexSize) throws NumberFormatException {
+    Matcher m = Pattern.compile(INDEX_VALIDATION_REGEX).matcher(value);
+    while (m.find()) {
+        int firstIndex = Math.abs(Integer.parseInt(m.group()));
+        if (firstIndex > 0 && firstIndex <= rolodexSize) {
+            return firstIndex;
+        }
+    }
+    throw new NumberFormatException();
+}
+----
+
+The algorithm searches for instances of an integer in the supplied string and checks if it falls within the possible range of indices.
+If no more integers can be found, the method throws a `NumberFormatException` to be converted into an non-suggestible `ParseException`.
+
+Sometimes users may include the index in the command word, without a whitespace separation. To handle such a case,
+we first look for the index within the arguments, as usual. If no valid indices are found, we search the command word instead.
+
+==== Commands with Directory Type Arguments
+
+The commands that hold a single file path argument are
+
+* `Open`
+* `New`
+
+Arguments for these commands are parsed by using the same filepath validation as seen in <<Open File and New File Mechanism>>,
+except with looser regex that does not validate from the beginning to the end of the string given.
+
+[source,java]
+----
+public static final String FILEPATH_REGEX_NON_STRICT = "(.+)/([^/]+)";
+----
+
+The rest of the string is then formatted into a valid file path and a `.rldx` extension is added to the end of the string.
+
+[source,java]
+----
+public static String parseFirstFilePath(String value) throws IllegalArgumentException {
+    Matcher m = Pattern.compile(FILEPATH_REGEX_NON_STRICT).matcher(replaceBackslashes(value).trim());
+    if (m.find() && isValidRolodexStorageFilepath(m.group())) {
+        return m.group().replaceAll(ROLODEX_FILE_EXTENSION, "").trim() + ROLODEX_FILE_EXTENSION;
+    }
+    throw new IllegalArgumentException();
+}
+----
+
+==== Find Command Suggestions
+
+The `find` command uses a simpler suggestion format by simply taking all arguments, checking if it is not empty and returning it all together.
+
+[source,java]
+----
+public static String parseArguments(String rawArgs) {
+    // Check if null and is a non-empty string.
+    requireNonNull(rawArgs);
+    if (!rawArgs.trim().isEmpty()) {
+        return " " + rawArgs.trim();
+    }
+    return null;
+}
+----
+
+==== Remark/Email Command Suggestions
+
+The `Remark` and `Email` command are in the format of
+
+1. a command word followed by,
+2. an index then,
+3. a memo field.
+
+For the remark command, the memo is simply the remark to be entered into the person's remark field, preceded by the prefix `r/`. +
+The email command's memo field is the subject of the email to be sent, preceded by the prefix `s/`.
+
+Similar to <<Commands with a Single Index Type Argument>>, if the index does not exist in the arguments, the command word is checked instead.
+
+[source,java]
+----
+public static String parseArguments(String commandWord, String rawArgs) {
+    // Check if index (number) exists, removes Remark prefix (if it exists) and re-adds it before returning.
+    if (isParsableIndex(rawArgs, getLastRolodexSize())) {
+        String indexString = Integer.toString(parseFirstIndex(rawArgs, getLastRolodexSize()));
+        String remark = parseRemoveFirstIndex(rawArgs, getLastRolodexSize()).trim().replace(PREFIX_REMARK.toString(), "");
+        return " " + indexString + " " + PREFIX_REMARK + remark;
+    } else if (isParsableIndex(commandWord, getLastRolodexSize())) {
+        String indexString = Integer.toString(parseFirstIndex(commandWord, getLastRolodexSize()));
+        String remark = rawArgs.trim().replace(PREFIX_REMARK.toString(), "");
+        return " " + indexString + " " + PREFIX_REMARK + remark;
+    }
+    return null;
+}
+----
+
+However, instead of stopping at the index, the remainder of the arguments after the index has been removed is parsed as the memo field's contents.
+
+==== Add Command Suggestions
+
+When adding a new person, we have to note that a `Person` has four compulsory fields, `Name`, `Phone`, `Email` and `Address`.
+`Tag` and `Remark` are optional and have to be handled accordingly.
+
+The implementation for `Add` suggestions follow a decision flow model that can be seen through the following diagram:
+
+
+
+As the `Add` command's decision flow requires many acyclic execution paths to its parser, its corresponding NPath complexity
+is known to be large.
+
+==== Edit Command Suggestions
+
+Unlike the `Add` command, the `Edit` command only requires optional (minimum 1) fields and we handle all fields as such.
+However, the `Edit` command also requires <<Commands with a Single Index Type Argument, a mandatory argument of an index type>>,
+similar to <<Remark/Email Command Suggestions>>.
+
+
+
+As the `Edit` command's decision flow requires many acyclic execution paths to its parser, its corresponding NPath complexity
+is known to be large.
+
+==== Design Considerations
+
+**Aspect:** Parse Order +
+**Alternative 1 (current choice):** Parsing address before name in the `Add` command. +
+**Pros:** The application can be quickly reloaded onto the active window. +
+**Cons:** User might need to switch back and forth between the Rolodex directories. +
+**Alternative 2:** Reload `MainApp` with a new application instance. +
+**Constraint:** link:#java-fx[JavaFX] only allows launch(args) to be launched once per execution time on a code level.
+Another approach would be to reload the application with a loaded and built .jar. +
+**Pros:** Easier logic to understand for new developers. +
+**Cons:** Building and debugging with a second .jar will be confusing and problematic to any development workflow. +
+**Alternative 3:** Open a new window with the loaded data. +
+**Pros:** The user can continue to operate on the previous Rolodex application. +
+**Cons:** The developer would have to spend time configuring different `EventsCenter` posts for the different application windows.
+
+---
+
+**Aspect:** Saving only to files with `.rldx` extensions +
+**Alternative 1 (current choice):** Write to the active directory only if it has a `.rldx` extension. +
+**Pros:** The application control becomes stricter, preventing users from writing to a file with say a `.png` extension. +
+**Cons:** Extensions become forced even for valid databases with `.xml` file types. +
+**Alternative 2:** Allow writable to all file extensions. +
+**Pros:** Users can have more freedom in choice of file naming. +
+**Cons:** If the user accidentally writes to a file that is not a valid database, the user would corrupt the file data.
+
+---
+
+**Aspect:** Separating `open` and `new` commands +
+**Alternative 1 (current choice):** Two commands, one for opening existing files and one for creating new files. +
+**Pros:** The user can easily be notified if a file exists or if it has been moved. +
+**Cons:** The user would have to take note of two commands instead of one. +
+
 // end::suggestion[]
 
 === Logging
