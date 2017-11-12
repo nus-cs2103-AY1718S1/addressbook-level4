@@ -11,14 +11,14 @@
     -fx-text-fill: #ffffff;
     -fx-opacity: 0.9;
 }
-
+/* @@author Melvin-leo */
 .label-warning {
     -fx-font-size: 30pt;
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: white;
     -fx-opacity: 0.9;
 }
-
+/* @@author nelsonqyj */
 .label-bright {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -107,6 +107,7 @@
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
+    -fx-background-color: derive(#3d4691, 20%)
 }
 
 .list-cell:filled:even {

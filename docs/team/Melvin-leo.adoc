@@ -1,0 +1,95 @@
+= Melvin Leo - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ScheduBook
+_ScheduBook_ is a desktop address book application that can be used by students or businessmen to better manage their schedules with their peers or acquaintances. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java and currently has about 9 kLoC. +
+ +
+This project is a product of Software Engineering, CS2103T in NUS. _ScheduBook_ is proudly developed by my team based on https://github.com/se-edu/addressbook-level4[AddressBook(Level4)], by https://se-edu.github.io/[SE-EDU] team, initial address book application created to be used for teaching Software Engineering principles.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B2/main/blob/master/collated/main/Melvin-leo.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B2/main/blob/master/collated/test/Melvin-leo.md[Test code]]
+
+=== Enhancement Added: Meeting Class
+
+==== External behavior
+
+---
+
+
+include::../UserGuide.adoc[tag=meetingCard]
+
+
+---
+
+==== Justification
+
+For the ease of the user, the meeting cards are positioned and presented in such a way that the user can retrieve the information he/she wants immediately without much effort. Furthermore, the colours are also implemented for the user to keep track of his/her upcoming meetings. The name and the phone number of the person who the user will be meeting are shown so that if needed, the user can contact that person with ease.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=meetingClass]
+
+include::../DeveloperGuide.adoc[tag=meetingCard]
+
+---
+
+=== Enhancement Added: Reminder Pop up
+
+==== External behavior
+
+---
+
+
+include::../UserGuide.adoc[tag=popUp]
+
+
+---
+
+==== Justification
+
+This implementation further boost our capability of reminding of _ScheduBook_. After implementing the meeting cards, we realised that despite the coloured card, there were no significant reminder that can really catch the eye of the users. However, this pop up reminder is significant to a large extent and most of the details are shown to the user. Furthermore, the user will have to acknowledge the pop up before actually entering the application.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=meetingPopup]
+
+
+---
+
+=== Enhancement Added: Automatic deletion of past meetings
+
+==== External behavior
+
+---
+
+
+include::../UserGuide.adoc[tag=autodelete]
+
+
+---
+
+==== Justification
+
+In order for _ScheduBook_ to be more user-friendly and convenient, automatic deletion of meetings that have past the scheduled date and time should be implemented, since there is no need for the application to remind user of an overdue meeting.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=autoDelete]
+
+
+---
+
+=== Enhancement Proposed: Search command by tags
+
+=== Other contributions
+
+
+
+== Project: FPGA audio Fx (Verilog programming for EE2020 in NUS)
