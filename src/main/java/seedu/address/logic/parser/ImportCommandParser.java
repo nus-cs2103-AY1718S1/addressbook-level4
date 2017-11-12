@@ -40,11 +40,12 @@ public class ImportCommandParser implements Parser<ImportCommand> {
             fr = new FileReader(filename);
             br = new BufferedReader(fr);
 
+            // Create Default values
             String currLine;
-            String name = null;
+            String name = "Example name";
             String email = null;
-            String address = null;
-            String phone = null;
+            String address = "13 Computing Drive";
+            String phone = "11111111";
             Set<Tag> tagList = new HashSet<Tag>();
 
             while ((currLine = br.readLine()) != null) {
@@ -67,6 +68,10 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
                 if (currLine.contains("END")) {
                     try {
+                        if (email == null) {
+                            email = name.replaceAll("\\s+", "") + "@example.com";
+                        }
+
                         Name n = new Name(name);
                         Phone pe = new Phone(phone);
                         Email e = new Email(email);
