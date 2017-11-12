@@ -380,6 +380,9 @@ Example:
 * `email_login "cs2103testacc@gmail.com" "testpass"`
 ****
 
+*Note*: The Login Button in the User Interface will not update automatically if an email is logged in through console. However, clicking on the Login / Logout button will
+update the login status accordingly.
+
 // end::emaillogin[]
 
 // tag::emailsend[]
