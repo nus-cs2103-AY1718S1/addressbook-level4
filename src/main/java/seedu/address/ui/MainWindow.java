@@ -129,7 +129,6 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         MainContactPanel mainContactPanel;
-
         mainContactPanel = new MainContactPanel();
         browserPlaceholder.getChildren().add(mainContactPanel.getRoot());
 

@@ -230,7 +230,7 @@ public class MainContactPanel extends UiPart<Region> {
         name.setText("" + person.getName());
         name.setStyle("-fx-font-size: 60;");
         name.setWrapText(true);
-        //easeIn(name);
+        easeIn(name);
 
         //Set values of other labels
         Label phone = (Label) contactDetailsVBox.getChildren().get(1);
@@ -251,14 +251,13 @@ public class MainContactPanel extends UiPart<Region> {
             labels[i].setGraphic(icon);
             labels[i].setWrapText(true);
             labels[i].setStyle("-fx-font-size: 17");
-            //    easeIn(labels[i]);
+            easeIn(labels[i]);
         }
         currentPerson = person;
     }
 
     private void setSchedule(ReadOnlyPerson person) {
         schedulePlaceholder.setVisible(true);
-
         ScheduleListPanel scheduleList = new ScheduleListPanel(person.scheduleProperty().get().asObservableList());
         schedulePlaceholder.getChildren().add(scheduleList.getRoot());
         //scheduleListView.setStyle("-fx-alignment: center-left; -fx-padding: 0 0 0 10;");
@@ -266,7 +265,6 @@ public class MainContactPanel extends UiPart<Region> {
         easeIn(schedulePlaceholder);
         currentPerson = person;
     }
-
 
     /**
      * Animates any node passed into this method with an ease-in

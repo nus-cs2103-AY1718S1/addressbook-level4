@@ -77,7 +77,10 @@ public class RemoveFavouriteCommand extends UndoableCommand {
     /**
      * Creates and returns a {@code Person} with the the Favourite attribute set to true.
      */
-    private static Person removeFavePerson(ReadOnlyPerson personToEdit) {
+    private static Person removeFavePerson(ReadOnlyPerson personToEdit) throws DuplicatePersonException {
+        if (!personToEdit.getFavourite().getStatus()) {
+            throw new DuplicatePersonException();
+        }
         Name updatedName = personToEdit.getName();
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();

@@ -19,7 +19,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AddSocialMediaCommandParser implements Parser<AddSocialMediaCommand> {
 
-
     public static final Prefix PREFIX_PERSON = new Prefix("p/");
     private String socialMediaUrl;
     /**
@@ -69,5 +68,4 @@ public class AddSocialMediaCommandParser implements Parser<AddSocialMediaCommand
         };
 
     }
-
 }

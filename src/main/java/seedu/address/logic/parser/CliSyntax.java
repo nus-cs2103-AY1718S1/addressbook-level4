@@ -23,5 +23,4 @@ public class CliSyntax {
     public static final Prefix PREFIX_INSTAGRAM = new Prefix("in/");
     public static final Prefix PREFIX_GOOGLEPLUS = new Prefix("gp/");
 
-
 }
