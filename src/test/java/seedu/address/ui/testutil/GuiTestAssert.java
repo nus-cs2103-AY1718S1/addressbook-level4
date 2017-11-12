@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import guitests.guihandles.DetailsPanelHandle;
+import guitests.guihandles.EventCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -36,6 +38,26 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
+
+    //@@author chernghann
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedEvent}.
+     */
+    public static void assertCardDisplaysEvent(ReadOnlyEvent expectedEvent, EventCardHandle actualCard) {
+        assertEquals(expectedEvent.getName().fullName, actualCard.getEventName());
+        assertEquals(expectedEvent.getDate().value, actualCard.getEventDate());
+        assertEquals(expectedEvent.getAddress().value, actualCard.getEventAddress());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertCardEventsEquals(EventCardHandle expectedCard, EventCardHandle actualCard) {
+        assertEquals(expectedCard.getEventName(), actualCard.getEventName());
+        assertEquals(expectedCard.getEventDate(), actualCard.getEventDate());
+        assertEquals(expectedCard.getEventAddress(), actualCard.getEventAddress());
+    }
+    //@@author
 
     //@@author archthegit
     /**

@@ -11,8 +11,10 @@ The Myth’s Book is a Command Line Input based software which helps caters to s
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/archthegit.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/test/archthegit.md[Test code]][https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/unused/archthegit.md[Unused code]]
 
 == Purpose of Project Portfolio
-The purpose of this project portfolio is to showcase my contribution to the Myth's Book, A project for the introductory Software Engineering module (CS2103T) at the National University of Singapore. It highlights some of the key features I implemented during the course of this module and the technical details behind how these features were implemented. It also demonstrates my ability to work with a large code base (approx. 8KLoC)
 
+The purpose of this project portfolio is to showcase my contribution to the Myth's Book, A project for the introductory Software Engineering module (CS2103T) at the National University of Singapore. It highlights some of the key features I implemented during the course of this module and the technical details behind how these features were implemented. It also demonstrates my ability to work with a large code base (approx. 8KLoC).
+
+---
 === Enhancement Added: Modified Find Command (V1.0)
 
 ==== External behavior
