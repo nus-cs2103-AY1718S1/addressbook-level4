@@ -140,6 +140,7 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    //@@author Haozhe321
     /**
      * Removes the persons who have the tag supplied
      *
@@ -159,6 +160,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new CommandException(Messages.MESSAGE_INVALID_TAG_FOUND);
         }
     }
+    //@@author
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
@@ -173,9 +175,11 @@ public class UniquePersonList implements Iterable<Person> {
         sortBy(currentlySortedBy);
     }
 
+    //@@author Haozhe321
     public ObservableList<Person> getInternalList() {
         return internalList;
     }
+    //@@author
 
     /**
      * Sorts the Person's List by sorting criteria

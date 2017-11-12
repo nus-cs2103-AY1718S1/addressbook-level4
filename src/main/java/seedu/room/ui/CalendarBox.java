@@ -107,9 +107,9 @@ public class CalendarBox {
 
     /**
      * Create the title bar for the calendar above the calendar grids
-     * @param titleBar
-     * @param previousMonth
-     * @param nextMonth
+     * @param titleBar titleBar represented by a HBox
+     * @param previousMonth Button for previous month
+     * @param nextMonth Button for next month
      */
     public void makeCalendarTitleBar(HBox titleBar, Button previousMonth, Button nextMonth) {
         HBox.setMargin(previousMonth, new Insets(0, 13, 0, 13));
@@ -148,7 +148,7 @@ public class CalendarBox {
     /**
      * Make the days in a week on the calendar
      * @param dayNames a Text array containing all the days in a week
-     * @param gridPane
+     * @param gridPane the overall pane for the calendar
      */
     public void makeDays(Text[] dayNames, GridPane gridPane) {
         gridPane.setPrefWidth(600);
@@ -167,7 +167,7 @@ public class CalendarBox {
     }
 
     /**
-     * Create 5 by 7 grids for calendar
+     * Create 5 by 7 grids inside calendar
      * @param calendar
      */
     public void createGrid(GridPane calendar) {
@@ -200,7 +200,8 @@ public class CalendarBox {
 
     /**
      * Create a HashMap of LocalDate and Arraylist of ReadOnlyEvent to use for populating events on calendar
-     * @param eventList
+     * Each key in the HashMap can contain one or more events in the value of the HashMap, stored using an ArrayList
+     * @param eventList list of ReadOnlyEvent
      * @return HashMap of LocalDate and Arraylist of ReadOnlyEvent
      */
     public HashMap<LocalDate, ArrayList<ReadOnlyEvent>> eventsHashMap(ObservableList<ReadOnlyEvent> eventList) {
@@ -237,7 +238,7 @@ public class CalendarBox {
 
     /**
      * Set up the AnchorPaneNode to prepare for date and event population
-     * @param node individual AnchorPaneNode
+     * @param node Individual AnchorPaneNode
      */
     public void setupAnchorPaneNode(AnchorPaneNode node) {
         node.setId("calendarCell");
@@ -249,7 +250,7 @@ public class CalendarBox {
 
     /**
      * Light up today's grid
-     * @param node
+     * @param node Individual AnchorPaneNode
      * @param calendarDate
      */
     public void setupToday(AnchorPaneNode node, LocalDate calendarDate) {

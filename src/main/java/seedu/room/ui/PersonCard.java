@@ -82,13 +82,15 @@ public class PersonCard extends UiPart<Region> {
     }
 
     //@@author Haozhe321
-    //following method gets the color related to a specified tag
+    /**
+     * Get the color related to a specified tag
+     * @param tag the tag that we want to get the colour for
+     * @return color of the tag in String
+     */
     private static String getColorForTag(String tag) {
         if (!tagColor.containsKey(tag)) { //if the hashmap does not have this tag
             String chosenColor = colors.get(random.nextInt(colors.size()));
             tagColor.put(tag, chosenColor); //put the tag and color in
-            /*after this color is chosen, remove from the available list of colors to avoid
-            repeating */
         }
         return tagColor.get(tag);
     }
