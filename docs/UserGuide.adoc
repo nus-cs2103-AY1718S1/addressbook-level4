@@ -235,9 +235,9 @@ know more on the format of adding a contact.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]...`
 
-Prefixes and its meaning:
-
 // end::add1[]
+
+Prefixes and its meaning:
 
 [width="40%",cols="20%,<15%,<5%, <30%,<30%,options="header",]
 |=======================================================================
