@@ -36,7 +36,7 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `pimp.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for PIMP.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 
@@ -51,10 +51,10 @@ _A breakdown of the different information that a contact contains._
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`list`*: lists all contacts
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`: adds a contact named `John Doe` to PIMP.
+* **`delete`**`3`: deletes the 3rd contact shown in the current list
+* *`exit`*: exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
@@ -68,27 +68,27 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 * The alias stated below refers to the command shortcut you can use instead of typing the full command. e.g. `e 1 n/Ben` instead of `edit 1 n/Ben`
+====
 
 PIMP has numerous commands. The following section describes the basic commands.
-
-====
 
 === Basic Commands
 
 These are the most basic commands required for the usage of PIMP.
 
-==== Viewing help : `help`
+==== Viewing help: `help`
 
 Opens the help window, showing this user guide. +
 Format: `help` +
 Alias: `h`
 
-This command takes no arguments.
+This command takes no arguments, i.e. the command can be typed as it is (`help`) without any additional
+words to type.
 
 // tag::quickhelp[]
-==== Viewing quick help : `quickhelp` (Since v1.5)
+==== Viewing quick help: `quickhelp` (Since v1.5)
 
-List all the available command words of the address book. +
+List all the available command words of PIMP. +
 Format: `quickhelp` +
 Alias: `qh`
 
@@ -97,7 +97,7 @@ This command takes no arguments.
 
 ==== Adding a person: `add`
 
-Adds a person to the address book. +
+Adds a person to PIMP. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
 Alias: `a`
 
@@ -127,22 +127,13 @@ Alias Example:
 
 * `a n/Ben p/12345678 e/ben@ten.com a/Unicorn Lane t/SuperHero`
 
-==== Listing all persons : `list`
+==== Listing all persons: `list`
 
-Shows a list of persons in the address book. +
+Shows a list of all persons in PIMP. +
 Format: `list`
+Alias: `l`
 
-A list of all persons is shown.
-
-Examples:
-
-* `list` +
-Lists all persons.
-
-
-Alias example:
-
-* `l`
+This command takes no arguments.
 
 ==== Locating persons by name: `find`
 
@@ -151,11 +142,12 @@ Format: `find KEYWORD [MORE_KEYWORDS]` +
 Alias: `f`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case insensitive, e.g. `hans` will match `Hans`.
+* The order of the keywords does not matter, e.g. `Hans Bo` will match `Bo Hans`.
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Persons matching at least one keyword will be returned (i.e. `OR` search),
+e.g. `Hans Bo` will return `Hans Gruber` and `Bo Yang`.
 ****
 
 Examples:
@@ -173,7 +165,16 @@ Alias example:
 // tag::findregex[]
 ==== Locating persons by name: `findregex` (Since v1.2)
 
-Finds persons whose names match the regex given. Note that only the name is searched.  +
+Finds persons whose names match the regex given. Note that only the name is searched.
+
+A _regex_ (regular expression) is a powerful way to search text. The user can supply
+a series of characters that can be used to match the given text. For example, with the
+question mark (`?`), the letter before the question mark may either exist or not exist.
+Hence, `Joh?n` will match both `John` (with the `h` before the question mark), as well
+as `Jon` (without the `h`).
+
+More information about regex can be found at http://www.vogella.com/tutorials/JavaRegularExpressions/article.html.
+
 Format: `findregex REGEX` +
 Alias: `fr`
 
@@ -206,7 +207,8 @@ Alias example:
 
 * `ft friends`
 // end::findtag[]
-==== Selecting a person : `select`
+
+==== Selecting a person: `select`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX` +
@@ -222,7 +224,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in PIMP.
 
 * `find Betsy` +
 `select 1` +
@@ -232,9 +234,9 @@ Alias example:
 
 * `s 1`
 
-==== Editing a person : `edit`
+==== Editing a person: `edit`
 
-Edits an existing person in the address book. +
+Edits an existing person in PIMP. +
 Format: `edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL]... [a/ADDRESS]... [f/FACEBOOK] [t/TWITTER] [i/INSTAGRAM] [t/TAG]...` +
 Alias: `e`
 
@@ -261,9 +263,9 @@ Alias example:
 
 * `e 1 p/12345678`
 
-==== Deleting a person : `delete`
+==== Deleting a person: `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from PIMP. +
 Format: `delete INDEX` +
 Alias: `d`
 
@@ -277,7 +279,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in PIMP.
 
 * `find Betsy` +
 `delete 1` +
@@ -287,7 +289,7 @@ Alias example:
 
 * `d 1`
 
-==== Clearing all entries : `clear`
+==== Clearing all entries: `clear`
 
 Clears all entries from PIMP. +
 Format: `clear` +
@@ -295,7 +297,7 @@ Alias: `c`
 
 This command takes no arguments.
 
-==== Exiting the program : `exit`
+==== Exiting the program: `exit`
 
 Exits the program. +
 Format: `exit` +
@@ -308,9 +310,9 @@ This command takes no arguments.
 These are advanced commands available in PIMP that might be useful for the user.
 
 // tag::addremovetags[]
-==== Adding/Removing tag/s to existing contact : `tags` (Since v1.2)
+==== Adding/Removing tag/s to existing contact: `tags` (Since v1.2)
 
-Add one or more tags to an existing person in the address book. +
+Add one or more tags to an existing person in PIMP. +
 Format: `tags TYPE INDEX TAG [MORE TAGS]...` +
 Alias: `t`
 
@@ -336,9 +338,9 @@ Alias example:
 // end::addremovetags[]
 
 // tag::remark[]
-==== Changing a person's remark : `remark` (Since v1.2)
+==== Changing a person's remark: `remark` (Since v1.2)
 
-Changes the remark of an existing person in the address book. +
+Changes the remark of an existing person in PIMP. +
 Format: `remark INDEX r/[Remark]` +
 Alias: `re`
 
@@ -353,7 +355,7 @@ Examples:
 
 * `list` +
 `remark 1 r/Loves beer` +
-Changes the remark of the 1st person in the address book to "Loves beer".
+Changes the remark of the 1st person in PIMP to "Loves beer".
 
 * `find Tony` +
 `remark 2 r/Going overseas` +
@@ -365,7 +367,7 @@ Alias example:
 // end::remark[]
 
 // tag::socialmedia[]
-==== Accessing a person's social media : `socialmedia` (Since v1.4)
+==== Accessing a person's social media: `socialmedia` (Since v1.4)
 
 Access a person's social media profile on the browser. +
 Format: `socialmedia TYPE INDEX` +
@@ -382,22 +384,22 @@ Examples:
 
 * `list` +
 `socialmedia facebook 1` +
-Loads the Facebook account of the 1st person in the address book.
+Loads the Facebook account of the 1st person in PIMP.
 
 * `find Tony` +
 `socialmedia instagram 2` +
 Loads the Instagram account of the 2nd person returned by the `find` command.
 // end::socialmedia[]
 
-==== Viewing contacts with birthday in current month : `birthday`
+==== Viewing contacts with birthday in current month: `birthday` (Not implemented yet. Coming in v2.0)
 View a list of persons with birthdays in the current month. +
 Format: `birthday` +
 Alias: `bd`
 
 This command takes no arguments.
-
 // tag::size[]
-==== Increasing/decreasing font size : `size` (Since v1.3)
+
+==== Increasing/decreasing font size: `size` (Since v1.3)
 
 Increases the font size by the number given, in pts. +
 Format: `size [AMOUNT]`
@@ -423,19 +425,19 @@ Resets the font size back to the default.
 // end::size[]
 
 // tag::accessdisplay[]
-==== Toggling the display of the access counts : `accessdisplay` (Since v1.4)
+==== Toggling the display of the access counts: `accessdisplay` (Since v1.4)
 Toggles the display option for the access count numbers. +
 Format: `accessdisplay TYPE` +
-Alias: `ad`
+Alias: `ad` +
 TYPE can be either 'on' or 'off'
 
 Examples:
 
-* `accessdisplay off`
+* `accessdisplay off` +
 The description cards on the left plane no longer display access counts.
 
 // end::accessdisplay[]
-==== Listing entered commands : `history`
+==== Listing entered commands: `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` +
@@ -443,15 +445,15 @@ Alias: `h`
 
 This command takes no arguments.
 
-[NOTE]
-=====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-=====
+****
+* Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+* The list of commands are numbered from the most recent to least recent.
+****
 
 // tag::undoredo[]
-==== Undoing previous command : `undo`
+==== Undoing previous command: `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores PIMP to the state before the previous _undoable_ command was executed. +
 Format: `undo [AMOUNT]` +
 Alias: `u`
 
@@ -463,7 +465,7 @@ Alias: `u`
 
 [NOTE]
 =====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify PIMP's content (`add`, `delete`, `edit` and `clear`).
 =====
 
 Examples:
@@ -494,7 +496,7 @@ Alias example:
 
 * `u 1`
 
-==== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command: `redo`
 
 Reverses the most recent `undo` commands. +
 Format: `redo [AMOUNT]` +
@@ -527,7 +529,7 @@ Alias example:
 // end::undoredo[]
 
 // tag::statistics[]
-==== Viewing statistics : `statistics` (Since v1.3)
+==== Viewing statistics: `statistics` (Since v1.3)
 
 Displays four charts based on information calculated in PIMP. The information displayed includes +
 1. Number of contacts added in the past 2 years, broken down by month in a bar chart. +
@@ -537,11 +539,13 @@ Displays four charts based on information calculated in PIMP. The information di
 
 Format: `statistics` +
 Alias: `st`
+
+This command takes no arguments.
 // end::statistics[]
 
-==== Exporting all entries : `export` (Not implemented yet. Coming in v2.0)
+==== Exporting all entries: `export` (Not implemented yet. Coming in v2.0)
 
-Exports all entries in the address book into the given format and stores it at the given location. +
+Exports all entries in PIMP into the given format and stores it at the given location. +
 Format: `export FORMAT LOCATION`
 
 ****
@@ -566,66 +570,58 @@ The contact list will automatically be sorted in A-Z order. It will refresh and 
 
 ==== Viewing total number of persons stored
 
-The column titled "Total: " at the bottom of the screen contains a numerical value
+The column with the people icon at the top left of the screen contains a numerical value
 representing the total number of persons in the last person listing.
 
-==== Viewing newly added persons (Since v1.2)
-
-The column titled "New: " at the bottom of the screen contains a numerical value
-representing the total number of newly added persons in the last person listing.
-A newly added person is defined as a person that was added in the current month.
 // tag::access[]
 ==== Viewing access counts (Since v1.3)
 
-At the left side of the screen where the address book entries are displayed, we can see a heart icon, with a number beside it, which describes the number of times this entry has been accessed. Clicking on this entry, or modifying it using any of the edit, add/remove tag commands will increase this counter. This can be toggled on and off using the `accessdisplay` command.
+At the left side of the screen where entries of PIMP are displayed, we can see a heart icon, with a number beside it, which describes the number of times this entry has been accessed. Clicking on this entry, or modifying it using any of the edit, add/remove tag commands will increase this counter. This can be toggled on and off using the `accessdisplay` command.
 // end::access[]
 
 ==== Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Data for PIMP are saved in the hard disk automatically after any command that changes the data.
 There is no need to save manually.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous PIMP folder.
 
 == Command Summary
 
-* *Help* : `help`
-* *Quick Help* : `quickhelp`
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
+* *Open Help*: `help`
+* *Open Quick Help*: `quickhelp`
+* *Add*: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *List* : `list`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *List*: `list`
+* *Find*: `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *Find Regex* : `findregex REGEX` +
+* *Find by Regex*: `findregex REGEX` +
 e.g. `findregex Joh?n`
-* *Find Tag* : `findtag tag` +
+* *Find by Tag*: `findtag tag` +
 e.g. `findtag friends`
-* *Select* : `select INDEX` +
+* *Select*: `select INDEX` +
 e.g.`select 2`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER]... [e/EMAIL]... [a/ADDRESS]... [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
+* *Edit*: `edit INDEX [n/NAME] [p/PHONE_NUMBER]... [e/EMAIL]... [a/ADDRESS]... [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Delete* : `delete INDEX` +
+* *Delete*: `delete INDEX` +
 e.g. `delete 3`
-* *Clear* : `clear`
-* *Exit* : `exit`
-* *Add Tags* : `tags add INDEX TAG [MORE TAGS]...` +
-e.g. `addtags 1 friends classmate`
-* *Remove Tags* : `tags remove INDEX TAG [MORE TAGS]...` +
-e.g. `removetags 2 neighbour`
-* *Remark* : `remark INDEX r/REMARK` +
+* *Clear*: `clear`
+* *Exit*: `exit`
+* *Add Tags*: `tags add INDEX TAG [MORE TAGS]...` +
+e.g. `tags add 1 friends classmate`
+* *Remove Tags*: `tags remove INDEX TAG [MORE TAGS]...` +
+e.g. `tags remove 2 neighbour`
+* *Remark*: `remark INDEX r/REMARK` +
 e.g.`remark 4 r/new remark`
-* *Social Media* : `socialmedia TYPE INDEX` +
+* *Access social media*: `socialmedia TYPE INDEX` +
 e.g. `socialmedia facebook 1`
-* *Birthday* : `birthday`
-* *Font size* : `size AMOUNT` +
-* *Toggle access display* : `accessdisplay TYPE` +
+* *Change font size*: `size AMOUNT` +
+* *Toggle access display*: `accessdisplay TYPE` +
 e.g. `size 3`
-* *History* : `history`
-* *Undo* : `undo [AMOUNT]`
-* *Redo* : `redo [AMOUNT]`
-* *Statistics* `statistics`
-* *Export* : `export FORMAT LOCATION` +
-e.g. `export JSON ~/contacts.json`
+* *History*: `history`
+* *Undo*: `undo [AMOUNT]`
+* *Redo*: `redo [AMOUNT]`
+* *Statistics*: `statistics`

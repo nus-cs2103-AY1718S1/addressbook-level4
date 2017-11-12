@@ -18,15 +18,15 @@ By: `Team PIMP (W10-B1)`      Since: `Sep 2017`      Licence: `MIT`
 
 === Software Outline
 
-PIMP (Personal Information Manager Program) is a command line interface (CLI) address book that allows users to maintain their contacts. This program allows users to store various properties of their contacts, such as their home addresses, email addresses, phone numbers, or even custom tags. It also allows users to view the social media profiles of their address book entries. Since PIMP is targeted at young socialites, it includes many functionalities suitable for such an audience, such as birthday alerts. The program has four main components, namely the `User Interface (UI)`, `Logic`, `Model` and `Storage` components. Addressbook data is stored locally in an .xml file.
+PIMP (Personal Information Management Program) is a command line interface (CLI) address book that allows users to maintain their contacts. This program allows users to store various properties of their contacts, such as their home addresses, email addresses, phone numbers, or even custom tags. It also allows users to view the social media profiles of their address book entries. Since PIMP is targeted at young socialites, it includes many functionalities suitable for such an audience, such as birthday alerts. The program has four main components, namely the `User Interface (UI)`, `Logic`, `Model` and `Storage` components. Addressbook data is stored locally in an .xml file.
 
 === Purpose of Developer Guide
 
-This developer guide aims to give an overview to any developer who wishes to modify this addressbook to include more features, or to better suit their own needs. This developer guide will help any aspiring developer set up a suitable Java environment to develop this program in, as well as understand the different components of the addressbook and how they interact with each other. The functions available to the user will also be included, and various implementation details will be described. Various test cases have been made available to other developers, and a brief overview of the usage of these tests will also be included.
+This developer guide aims to give an overview to any developer who wishes to modify PIMP to include more features, or to better suit their own needs. This developer guide will help any aspiring developer set up a suitable Java environment to develop this program in, as well as understand the different components of PIMP and how they interact with each other. The functions available to the user will also be included, and various implementation details will be described. Various test cases have been made available to other developers, and a brief overview of the usage of these tests will also be included.
 
 A few documentation guidelines will also be described, so that any improvements made can be documented in a consistent style for the convenience of future developers.
 
-Various user profiles, user stories and use cases have also been included, so that future developers can gain some insight as to the design decisions made during the development process. Potential improvements that can be made to the address book can also be found in this section.
+Various user profiles, user stories and use cases have also been included, so that future developers can gain some insight as to the design decisions made during the development process.
 
 == Setting up
 
@@ -57,7 +57,7 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Locate the `build.gradle` file and select it. Click `OK`
 . Click `Open as Project`
 . Click `OK` to accept the default settings
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+. Open a command prompt/terminal window and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
@@ -105,7 +105,7 @@ When you are ready to start coding,
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 2.1.1: Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -114,20 +114,20 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* At app launch: Initializing the components in the correct sequence, and connecting them up with each other.
+* At shut down: Shutting down the components and invoking cleanup method where necessary.
 
 link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `EventsCenter`: This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
+* `LogsCenter`: Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of four components:
 
-* link:#ui-component[*`UI`*] : The UI of the App.
-* link:#logic-component[*`Logic`*] : The command executor.
-* link:#model-component[*`Model`*] : Holds the data of the App in-memory.
-* link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+* link:#ui-component[*`UI`*]: The link:#ui[UI] of the App.
+* link:#logic-component[*`Logic`*]: The command executor.
+* link:#model-component[*`Model`*]: Holds the data of the App in-memory.
+* link:#storage-component[*`Storage`*]: Reads data from, and writes data to, the hard disk.
 
 Each of the four components
 
@@ -137,7 +137,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 2.1.2: Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -145,7 +145,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 2.1.3a: Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -153,7 +153,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 2.1.3b: Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -163,15 +163,15 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 2.2.1: Structure of the UI Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `PeopleCount`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component,
+The `UI` component
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
@@ -180,49 +180,51 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 2.3.1: Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 2.3.2: Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
-*API* :
+*API*:
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+. `Logic` uses the `AddressBookParser` class to parse the user command.
+. This results in a `Command` object which is executed by the `LogicManager`.
+. The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 2.3.1: Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 2.4.1: Structure of the Model Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model` component
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores the Address Book data.
+* Exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed'
+e.g. the UI can be bound to this list through Logic so that the UI automatically updates
+when the data in the list change.
+* Does not depend on any of the other three components.
 
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 2.5.1: Structure of the Storage Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* Can save `UserPref` objects in JSON format and read it back.
+* Can save the Address Book data in XML format and read it back.
 
 === Common classes
 
@@ -235,13 +237,13 @@ This section describes some noteworthy details on how certain features are imple
 // tag::undoredo[]
 === Undo/Redo mechanism
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of PIMP (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of PIMP before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -276,7 +278,7 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in PIMP. The current state of PIMP is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
@@ -289,7 +291,7 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo 1`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore PIMP to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -300,7 +302,7 @@ The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores PIMP to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -333,7 +335,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 **Aspect:** How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire PIMP.
 ** **Pros:** Easy to implement.
 ** **Cons:** May have performance issues in terms of memory usage.
 
@@ -345,13 +347,13 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 **Aspect:** Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
+* **Alternative 1 (current choice):** Only include commands that modifies PIMP (`add`, `clear`, `edit`).
 ** **Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost).
 ** **Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`.
 
 * **Alternative 2:** Include all commands.
 ** **Pros:** Might be more intuitive for the user.
-** **Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view.
+** **Cons:** User have no way of skipping such commands if he or she just want to reset the state of PIMP and not the view.
 ** **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 ---
@@ -413,11 +415,11 @@ AccessCount is implemented as an additional property of the `person` class. It i
 
 [source, java]
 ----
-    private void updateAccessCount(PersonCard oldValue,PersonCard newValue) {
-        if (oldValue == null || oldValue.person.getName() != newValue.person.getName()) {
-            newValue.person.incrementAccess();
-        }
+private void updateAccessCount(PersonCard oldValue,PersonCard newValue) {
+    if (oldValue == null || oldValue.person.getName() != newValue.person.getName()) {
+        newValue.person.incrementAccess();
     }
+}
 ----
 
 There is a need for such an unusual condition since edit commands themselves will also change the selected person card.
@@ -437,7 +439,7 @@ Success was found when the access count was implemented separately for editing c
 
 Users may not want the number of accesses to each entry to be displayed at all time, since it might be embarassing if it is seen that they have frequently accessed a particular entry. Such users may use the `accessdisplay off` command to hide the number of accesses.
 
-Access display is implemented with two personcard javafx files, `PersonCardList.fxml` and `PersonCardListNoAccess.fxml`. Both cards are loaded when PIMP is started, and constantly updated in the background. When the user desires to switch from one to the other, this allows for a smooth transition, without any load times.
+Access display is implemented with two `PersonCard` JavaFX files, `PersonCardList.fxml` and `PersonCardListNoAccess.fxml`. Both cards are loaded when PIMP is started, and constantly updated in the background. When the user desires to switch from one to the other, this allows for a smooth transition, without any load times.
 
 // end::accessdisplay[]
 
@@ -454,7 +456,7 @@ interface to swap out the `BrowserPanel` for the `StatisticsPanel` class. When o
 The `StatisticsPanel` extends the `UiPart<Region>` and utilises the `Statistics` class to collect data.
 
 image::StatisticsPanelSequenceDiagram.png[width="800"]
-_Figure 4.3.1 : Triggering the ToggleStatisticsPanelEvent to display statistics_
+_Figure 4.3.1: Triggering the ToggleStatisticsPanelEvent to display statistics_
 
 When a `ToggleStatisticsPanelEvent` event is posted, the `MainWindow` instance will initialise a new
 `StatisticsPanel` which will then initialise the `Statistics` class for information to be calculated.
@@ -476,23 +478,23 @@ an `ArrayList<Integer>` data structure that will be displayed by the `BarChart` 
 ----
 public ArrayList<Integer> getNewPersonsAddByMonth(int displayYears) {
 
-        ArrayList<Integer> countByMonth = new ArrayList<>(Collections.nCopies(displayYears * 12 + 1, 0));
+    ArrayList<Integer> countByMonth = new ArrayList<>(Collections.nCopies(displayYears * 12 + 1, 0));
 
-        personList.forEach((p) -> {
-            Date givenDate = p.getCreatedAt();
-            ZonedDateTime given = givenDate.toInstant().atZone(ZoneId.of("UTC"));
+    personList.forEach((p) -> {
+        Date givenDate = p.getCreatedAt();
+        ZonedDateTime given = givenDate.toInstant().atZone(ZoneId.of("UTC"));
 
-            int personAddedYear = Integer.parseInt(Year.from(given).toString());
-            int personAddedMonth = Month.from(given).getValue();
+        int personAddedYear = Integer.parseInt(Year.from(given).toString());
+        int personAddedMonth = Month.from(given).getValue();
 
-            int indOffset = calculateCountByMonthOffset(personAddedMonth, personAddedYear);
-            if (indOffset >= 0 && indOffset <= displayYears * 12) {
-                countByMonth.set(indOffset, countByMonth.get(indOffset) + 1);
-            }
-        });
+        int indOffset = calculateCountByMonthOffset(personAddedMonth, personAddedYear);
+        if (indOffset >= 0 && indOffset <= displayYears * 12) {
+            countByMonth.set(indOffset, countByMonth.get(indOffset) + 1);
+        }
+    });
 
-        return countByMonth;
-    }
+    return countByMonth;
+}
 ----
 
 ==== Design Considerations
@@ -542,7 +544,7 @@ Searching by tag is implemented by the `FindTagCommand` class. This command allo
 
 The `FindTagCommand` class is implemented by calling `TagContainsKeywordsPredicate` as opposed to `NameContainsKeywordsPredicate`. This class tells us if a certain `person` object has any tag that matches the desired keyword. Implementing it this way allows us to extend functionality that was already implemented with a similar structure. In the future, implementing other search functions could build on these current search options.
 
-Since this search function involves iterating searching through all tags of all `person` objects in the address book, it could take up to O(pt) time, where p is the number of `person` objects in the address book, and t is the number of tags per person. To ensure that this will not take up too much time, an alternative implementation considered was to maintain a list of all tags, and maintain a list of `person` objects for each tag that is updated whenever a suitable command is inputted. These commands would be any command that could affect the list of `person` objects that have the tag, say `delete`, `add` or `edit`. This would then offset some of the time required for the search onto these other commands.
+Since this search function involves iterating searching through all tags of all `person` objects in PIMP, it could take up to O(pt) time, where p is the number of `person` objects in PIMP, and t is the number of tags per person. To ensure that this will not take up too much time, an alternative implementation considered was to maintain a list of all tags, and maintain a list of `person` objects for each tag that is updated whenever a suitable command is inputted. These commands would be any command that could affect the list of `person` objects that have the tag, say `delete`, `add` or `edit`. This would then offset some of the time required for the search onto these other commands.
 
 However, since these other commands are more commonly used, we decided not to slow down these commands for the performance of the `FingTagCommand` function. Instead, we simply allowed the `FindTagCommand` to search through all possibilities each time it is called.
 
@@ -554,32 +556,30 @@ The `EditCommand` currently allows the user to edit all the fields of a contact,
 
 The `AddRemoveTagsCommand` was added to allow users to add or remove only certain tags without compromising the entire tags list of the contact.
 
-In the backend, `AddRemoveTagsCommand` actually uses the same mechanics as `EditCommand`, where the person is updated as a whole. What it means is the `Person` to be targeted is firstly duplicated, then the tags list is being changed to add/remove certain tags, and the new `Person` object is used to update in the address book.
+In the backend, `AddRemoveTagsCommand` actually uses the same mechanics as `EditCommand`, where the person is updated as a whole. What it means is the `Person` to be targeted is firstly duplicated, then the tags list is being changed to add/remove certain tags, and the new `Person` object is used to update in PIMP.
 
 [source,java]
 ----
 ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson;
+Person editedPerson;
 
-        if (isAdd) {
-            editedPerson = addTagsToPerson(personToEdit, tags);
-        } else {
-            editedPerson = removeTagsFromPerson(personToEdit, tags);
-        }
+if (isAdd) {
+    editedPerson = addTagsToPerson(personToEdit, tags);
+} else {
+    editedPerson = removeTagsFromPerson(personToEdit, tags);
+}
 
-
-        try {
-            model.updatePerson(personToEdit, editedPerson);
+model.updatePerson(personToEdit, editedPerson);
 ----
 
 For `AddRemoveTagsParser`, the first whitespace in the argument is removed, then being split with the regex " " to remove all whitespaces. The split array now has the individual arguments. The first argument is the TYPE, which can be either "add" or "remove". The second argument is the INDEX, and the third onwards are the tags to be added or removed.
 
 [source,java]
 ----
-    private static final int ARGUMENT_START_INDEX = 1;
-    private static final int TYPE_ARGUMENT_INDEX = 0;
-    private static final int INDEX_ARGUMENT_INDEX = 1;
-    private static final int TAG_ARGUMENT_INDEX = 2;
+private static final int ARGUMENT_START_INDEX = 1;
+private static final int TYPE_ARGUMENT_INDEX = 0;
+private static final int INDEX_ARGUMENT_INDEX = 1;
+private static final int TAG_ARGUMENT_INDEX = 2;
 ----
 
 After parsing, the TYPE, INDEX, and set of tags is passed to the `AddRemoveTagsCommand` constructor. Using the `Set<Tag>` that the user entered, we can easily use `addAll()` or `removeAll()` to create the `Person` object with the tags we want.
@@ -592,9 +592,9 @@ After parsing, the TYPE, INDEX, and set of tags is passed to the `AddRemoveTagsC
 ** **Pros:** Easy to implement as code already exist.
 ** **Cons:** Have to touch on other details (e.g. phone, address, etc.) apart from tags.
 
-* **Alternative 2:** Update the Set<Tag> directly by exposing it with a getter and setter
+* **Alternative 2:** Update the `Set<Tag>` directly by exposing it with a getter and setter
 ** **Pros:** Isolate to only touch on tags
-** **Cons:** Breaks the idea that each person in address book is read-only.
+** **Cons:** Breaks the idea that each person in PIMP is read-only.
 
 **Aspect:** Commands to add and remove tags.
 
@@ -616,16 +616,15 @@ Users can use the command `socialmedia TYPE INDEX` to load the contact's social 
 A new event `ChangeBrowserPanelUrlEvent` is created for the purpose when the browser panel URL needs to be changed. Previously, the URL was completely handled within the BrowserPanel UI and not exposed to the other components.
 With this event, other components will be able to call it and change the url of the browser. In the case of `SocialMediaCommand`, the URL will be changed to Facebook, Twitter, or Instagram according to the TYPE that the user indicated in the command.
 
-
 Subsequently, the `BrowserPanel` UI will handle the event and change the URL accordingly.
 
 [source, java]
 ----
 @Subscribe
-    private void handleChangeBrowserPanelUrlEvent(ChangeBrowserPanelUrlEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPage(event.url);
-    }
+private void handleChangeBrowserPanelUrlEvent(ChangeBrowserPanelUrlEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    loadPage(event.url);
+}
 ----
 
 To call the event, simply invoke the `EventsCenter` and post that event like such:
@@ -655,30 +654,35 @@ This command leverages on the `CommandResult` message to display the list of val
 
 // tag::size[]
 === Changing Font Size
-The size of the font size change is stored in the model. When there is a change in the font size, the model posts the
-`FontSizeChangeRequestEvent` event, which is listened by some UI components. These UI components will update its font
-sizes accordingly. It will also set the `fontSizeChange` static variable in these UI classes, so that new instances
-of the UI component can have its font size updated accordingly.
+The size of the font size change is stored in the model. This is exposed by the
+logic component, so that user interface components can query this data. Additionally,
+when there are changes in the font size, the `FontSizeRefreshRequestEvent` will be
+posted. Some UI components listen to this event, so that existing components can
+refresh its font size to the new font size.
 
-The upper bound and the lower bound of the font size changes is set in the model. Hence, when the font size change
-gets out of bounds, it can be caught in the model level and a `FontSizeOutOfBoundsException` is thrown.
+There is an upper and lower bound of the font size, which is set in the model.
+Hence, when the font size change gets out of bounds, the error can be caught
+in the model and a `FontSizeOutOfBoundsException` is thrown, without the font
+size change being propagated to the user interface.
 
 ==== Design considerations
-*Aspect:* Commands to change font size
+*Aspect:* Where to store the font size change
 
-* **Alternative 1 (current choice):** Font size change is stored in the model as well as UI
-** **Pros:** Cleaner implementation, no extra coupling between UI and Logic is introduced
-** **Cons:** This implementation will only allow one model to exist at one time, since if more models exist, there
-might be conflicting font size changes
+* **Alternative 1 (current choice):** Font size change is stored in the model
+** **Pros:** There is a single source of truth for font size change. It is not
+duplicated across components
+** **Cons:** UI needs to query model (through logic) for the font size every
+time the user interface instantiates a new object
 
-* **Alternative 2:** Font size change is stored in the UI
-** **Pros:** Model is not involved, less coupling
-** **Cons:** Tighter coupling between logic and UI, since now logic needs to listen for events from UI (if font change
-is out of bounds)
+* **Alternative 2:** Font size change is stored in the model as well as UI
+** **Pros:** No extra coupling between components
+** **Cons:** There are more than one sources of truth, which may confuse the
+developer
 
-* **Alternative 3:** Font size change is stored in the model
-** **Pros:** Font size change is not duplicated across components
-** **Cons:** UI needs to query model every time UI instantiates a new object
+* **Alternative 3:** Font size change is stored in the UI
+** **Pros:** When the font size changes, the model is not involved at all
+** **Cons:** The logic component will now depend on UI, since the logic component
+needs to listen for events from UI (if the font change is out of bounds, for example)
 
 // end::size[]
 
@@ -692,15 +696,15 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 *Logging Levels*
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+* `SEVERE`: Critical problem detected which may possibly cause the termination of the application
+* `WARNING`: Can continue, but with caution
+* `INFO`: Information showing the noteworthy actions by the App
+* `FINE`: Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
 === Configuration
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
-
+Certain properties of the application can be controlled (e.g. app name,
+logging level) through the configuration file (default: `config.json`).
 
 == Documentation
 
@@ -730,7 +734,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.6.1: Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -755,7 +759,7 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 *Method 3: Using Gradle (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library used, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
 To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
@@ -802,7 +806,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, PIMP depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -899,15 +903,14 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
-[discrete]
 === Use case: Delete person
 
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  PIMP shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  PIMP deletes the person
 +
 Use case ends.
 
@@ -921,7 +924,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. PIMP shows an error message.
 +
 Use case resumes at step 2.
 
@@ -930,9 +933,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  PIMP shows a list of persons
 3.  User requests to add a remark to a specific person in the list
-4.  AddressBook adds the remark to the specific person
+4.  PIMP adds the remark to the specific person
 +
 Use case ends.
 
@@ -946,7 +949,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. PIMP shows an error message.
 +
 Use case resumes at step 2.
 
@@ -955,9 +958,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  PIMP shows a list of persons
 3.  User requests to view the remarks of a specific person in the list
-4.  AddressBook displays remarks of the specific person
+4.  PIMP displays remarks of the specific person
 +
 Use case ends.
 
@@ -970,7 +973,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 
-** 3a1. AddressBook shows an error message.
+** 3a1. PIMP shows an error message.
 +
 Use case resumes at step 2.
 
@@ -979,11 +982,11 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to import data from an external source
-2.  AddressBook prompts for the location of the data file
+2.  PIMP prompts for the location of the data file
 3.  User enters data file location
-4.  AddressBook displays all contacts made available from data file
+4.  PIMP displays all contacts made available from data file
 5.  User chooses which contacts to import
-6.  AddressBook displays an updated list of persons
+6.  PIMP displays an updated list of persons
 +
 Use case ends.
 
@@ -992,14 +995,14 @@ Use case ends.
 * 3a. The given data file is of the wrong file type
 +
 
-** 3a1. AddressBook shows an error message.
+** 3a1. PIMP shows an error message.
 +
 Use case resumes at step 2.
 
-* 5a. The address book is full
+* 5a. The PIMP is full
 +
 
-** 5a1. AddressBook shows an error message.
+** 5a1. PIMP shows an error message.
 +
 Use case ends.
 
@@ -1008,9 +1011,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  PIMP shows a list of persons
 3.  User requests to add/remove tags to/from a specific person in the list
-4.  AddressBook adds/removes the tags to/from the specific person
+4.  PIMP adds/removes the tags to/from the specific person
 +
 Use case ends.
 
@@ -1023,34 +1026,41 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 
-** 3a1. AddressBook shows an error message.
+** 3a1. PIMP shows an error message.
 +
 Use case resumes at step 2.
 
 * 3b. No tags are given.
 +
-** 3b1. AddressBook shows an error message.
+** 3b1. PIMP shows an error message.
 +
 Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  Should be initialised and ready for user input within 1 second
-.  Should require at most 100MB of memory in RAM
-.  Should still allow for address book viewing even without an internet connection
+. Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+. Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+. Should be initialised and ready for user input within 1 second
+. Should require at most 100MB of memory in RAM
+. Should still allow viewing PIMP even without an internet connection
 
 [appendix]
 == Glossary
+
+[[ui]]
+UI
+
+....
+User Interface, i.e. the display that is shown to the user
+....
 
 [[mainstream-os]]
 Mainstream OS
 
 ....
-Windows, Linux, Unix, OS-X
+Windows, Linux, Unix, OS X
 ....
 
 [[private-contact-detail]]
@@ -1059,5 +1069,3 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
-
-[appendix]
