@@ -380,7 +380,7 @@ Examples:
 * `m-show 1` +
 Shows the address of person with index 1 on the google map
 
-=== Finding the route from user's current location to the person seleted: `m-route` _[Since v1.3]_
+=== Finding the route from user's current location to the person selected: `m-route` _[Since v1.3]_
 
 Not only can iConnect show the location, it can also show you how to go there! Simply by adding your current location, it will show you the shortest path from your current address to your friend's home in the Google map.
 
@@ -454,7 +454,7 @@ Removes a single event with the index 1.
 Removes 3 events with the index 1, 2 and 3.
 
 // tag::export[]
-=== Making a backup address book: `export` _[Coming in v1.4]_
+=== Making a backup address book: `export` _[Since v1.4]_
 
 If you want to keep your address book clean and worry about how to get the contacts back, just export the information.
 
