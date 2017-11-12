@@ -31,11 +31,11 @@ It is written in Java, and has about 30 kLoC.
 
 ---
 
-=== Enhancement Added: Add Command aliases for all commands
+=== Enhancement Added: Command aliases feature
 
 ==== External behavior
 
-Following the list table of shortcuts below, all commands under the `Shorthand` column will behave exactly like the full full command in the `Command` column.
+Following the list table of shortcuts below, all commands under the `Shorthand` column will behave exactly like the full command in the `Command` column.
 
 ---
 #Start of Extract [from: User Guide]#
@@ -50,51 +50,21 @@ include::../UserGuide.adoc[tag= commandshortcuts]
 
 Being a command line application, there is a need to be able to enter commands quickly and without error.
 Hence, the usage of shorthand commands for the more verbose full commands are needed.
-By adding shorthand commands, it reduces the number of key presses needed for the user to execute commands.
-This also helps reduce the probability of misspelling commands by users who are not touch typists.
+By adding shorthand commands, the number of key presses needed for the user to execute commands is reduced.
+This also reduces the chance of users misspelling commands.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
-//TODO: write up for developer guide
-//include::../DeveloperGuide.adoc[tag= commandshortcuts]
+
+include::../DeveloperGuide.adoc[tag= commandshortcuts]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Added: Add Grades and FormClass attributes to the Student
-
-==== External behavior
-
----
-#Start of Extract [from: User Guide]#
-//TODO: write up for user guide
-//include::../UserGuide.adoc[tag= ]
-
-#End of Extract#
-
----
-
-==== Justification
-
-One of the main features cherBook has is calculating statistics for a list of students, and the Grades attribute is needed for it.
-Similarly, with comparing the statistics of different classes as a upcoming feature, the FormClass attribute is also needed.
-
-==== Implementation
-
----
-
-#Start of Extract [from: Developer Guide]#
-//TODO: write up for developer guide
-//include::../DeveloperGuide.adoc[tag= ]
-
-#End of Extract#
-
----
-
-=== Enhancement Added: FindTags
+=== Enhancement Added: FindTags feature
 
 ==== External behavior
 
@@ -126,7 +96,7 @@ include::../DeveloperGuide.adoc[tag= findtags]
 
 ---
 
-=== Enhancement Added: Statistics Panel
+=== Enhancement Added: Statistics Panel feature
 
 ==== External behavior
 
@@ -141,7 +111,8 @@ include::../UserGuide.adoc[tag= statisticspanel ]
 
 ==== Justification
 
-This panel is needed to display the statistics of the students currently in the Students Panel.
+The `StatisticsPanel` is needed to display the statistics of the students currently in the `Students Panel`.
+The statistics provided helps teachers monitor their student's academics and identify the weaker students that need more help.
 
 ==== Implementation
 
@@ -202,6 +173,7 @@ The `sendemail` command removes this process and streamlines the process by brin
 
 https://nushortcuts.herokuapp.com/[`NUShortcuts`] is a web application to provide walking shortcuts around NUS with step by step picture guides .
 This was done from May 2017 to Aug 2017 for `CP2106` - Orbital Programme  offered by the School of Computing (SoC) in the National University of Singapore (NUS).
+This web application was built using the `MeteorJS` framework and is deployed on a `Heroku` server.
 
 https://nushortcuts.herokuapp.com/[`NUShortcuts`] offers three route types: Fastest route, Sheltered route and Least Stairs route.
 Users can search for their destination in NUS, choose their desired path and follow the picture guides to their destination.
@@ -209,5 +181,3 @@ For better travel time estimates, they can indicate their mode of transport and 
 My team also implemented a ranking system to track the most popular and frequently searched locations.
 One of the biggest features I implemented was the algorithm behind the calculation of the shortest paths around NUS.
 Some of the other features I implemented include the feedback page where users can give feedback on how to improve NUShortcuts.
-
-This web application was built using the `MeteorJS` framework and is deployed on a `Heroku` server.
