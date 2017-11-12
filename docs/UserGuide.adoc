@@ -741,29 +741,6 @@ image::UG_musicstop2.png[width="590"]
 {sp}+
 
 image::divider.png[width="900"]
-
-=== Pausing music : `music pause`
-image::UG_commandheader_musicpause.png[width="500"]
-
-Going for a short break and don't want to miss that catchy chorus?
-`music pause` pauses the current music track playing. +
-
-image::UG_header_format.png[width="400"]
-Format: `music pause`
-
-image::UG_header_stepbystep.png[width="400"]
-{sp}+
-image:step1.png[width="70"] Type `music pause` into the command box, and press kbd:[Enter] to execute it.
-
-image::UG_musicpause1.png[width="590"]
-
-image:step2.png[width="70"] If your genre is Pop, the result box will display "POP Music Paused". +
-
-image::UG_musicpause2.png[width="590"]
-
-{sp}+
-
-image::divider.png[width="900"]
 // end::musiccommand[]
 
 // tag::radiocommand[]
@@ -949,7 +926,7 @@ image::UG_mainheader_commandsummary.png[width="900"]
 [cols="3*^"]
 |===
 | *COMMAND* | *FORMAT* | *EXAMPLE*
-| *Add* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS r/REMARK [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Loves Tea t/friend t/colleague`
+| *Add* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS r/REMARK i/AVATAR_FILE_PATH [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Loves Tea i/d:/pictures/betsy.png t/friend t/colleague`
 | *Alias* | `alias [ALIAS COMMAND]` | `alias unfriend delete 1`
 | *Clear* | `clear` | `clear`
 | *Delete* | `delete INDEX` | `delete 3`
@@ -976,5 +953,6 @@ image::UG_mainheader_glossary.png[width="900"]
 [cols="2*^"]
 |===
 | *TERMS* | *EXPLAINATION*
+| *Avatar* | A picture representing a particular person.
 | *Command Line Interface (CLI)* |  Is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines).
 | *Text-To-Speech (TTS)* |  A system that converts normal language text into speech; other systems render symbolic linguistic representations like phonetic transcriptions into speech. Or a speech synthesiser
