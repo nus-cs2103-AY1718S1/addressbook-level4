@@ -156,7 +156,6 @@ This section shows you commands related to appointments and calendar views. +
 |=======================================================================
 |Command To Enter |Expected Output |Remarks
 
-
 |`appt 1 d/Dinner, tomorrow 7pm` |`New appointment added.` |Appointment added for 1 hour (default) at the next day 7pm
 
 |`appt 2 d/Lunch, tomorrow 12pm to 2pm` | `New appointment added.` |Appointment added accordingly, next day 12pm to 2pm.
@@ -171,7 +170,7 @@ This section shows you commands related to appointments and calendar views. +
 
 |`cancel dinner with zeypher lee`| `Appointment canceled.` | Appointment with Zeypher cancelled
 
-|`cancel lunch with thomas lee`|`Appointment canceled.` | Appointment with Thomas cancelled
+|`cancel lunch with wilson low`|`Appointment canceled.` | Appointment with Wilson cancelled
 
 |=======================================================================
 
@@ -180,72 +179,77 @@ This section shows you the result message when commands are invalid or when only
 
 [cols=3,width="100%",options="header"]
 |=======================================================================
-|Command To Enter |Result display panel message |Other Observations
+|Command To Enter |Result display panel message |Problem
 
-|`appointment`|`Invalid command format! +
-                appointment: Adds an appointment to a person in address book. +
-                appt: Shorthand equivalent for add. +
-                Parameters: n/PERSON d/DESCRIPTION, TIME +
-                Example 1:appointment n/John Doe d/Lunch, Next Monday 3pm` |Message on how to use `appointment` is shown.
+|`appointment 1 Dinner, tomorrow 7pm`|`Invalid command format! +
+                                       appointment: Adds an appointment to a person in address book. +
+                                       appt: Shorthand equivalent for add. +
+                                       Parameters: appointment INDEX d/DESCRIPTION, TIME +
+                                       Example 1:appointment 1 d/Lunch, Next Monday 3pm` |Adding without date prefix
 
-|`add`|`Invalid command format! +
+|`add Massimo Alioto`|`Invalid command format! +
         add: Adds a person to the address book. +
         a: Shorthand equivalent for add. +
         Parameters: n/NAME [p/PHONE][e/EMAIL][a/ADDRESS][b/BLOODTYPE][r/REMARK][d/DATE][t/TAG]... +
         Example 1: a n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/O r/Broke his foot during soccer practice t/friends t/owesMoney d/2020/10/10 00:00 +
-        Example 2: add n/Mary Jane p/87678977 e/maryj@example.com a/170, Bugis Ave 3, #01-05 b/A r/Healthy t/wife` |Message on how to use `add` is shown
+        Example 2: add n/Mary Jane p/87678977 e/maryj@example.com a/170, Bugis Ave 3, #01-05 b/A r/Healthy t/wife` |Adding without prefix
 
-|`add n/!?`|`Person names should only contain alphanumeric characters and spaces, and it should not be blank` |Invalid NAME
+|`add n/!?`|`Person names should only contain alphanumeric characters and spaces, and it should not be blank` |Invalid name
 
-|`add n/Test p/test`|`Phone numbers can only contain numbers, and should be at least 3 digits long` |Invalid PHONE
+|`add n/Test p/test`|`Phone numbers can only contain numbers, and should be at least 3 digits long` |Invalid phone
 
 |`add n/Test e/test`|`Person emails should be 2 alphanumeric/period strings separated by '@'` |Invalid email
 
 |`add n/Test b/C`|`Person blood type should not be blank.
                    Valid inputs are: A, A+, A-, B, B+, B-, O, O+, O-, AB, AB+, AB-.
-                   Both capital letters and small letters are allowed.` |Invalid BLOODTYPE
+                   Both capital letters and small letters are allowed.` |Invalid bloodtype
 
 |`batch test`|`One of the tags is not in use. Remove it and try again.` |Tag does not exist
 
 |`bloodtype`|`Invalid command format! +
               bloodtype: Finds all persons of a blood type  and displays them as a list with index numbers. +
               Example: bloodtype AB+ +
-              Example: bt O` |Message on how to use `bloodtype` is shown
+              Example: bt O` |Missing trailing argument
 
-|`calendar`|`Invalid command format! +
+|`calendar s`|`Invalid command format! +
              calendar: Changes calendar view. +
              cal: Short hand equivalent for calendar. +
              Parameter: +
              Day view: d +
              Week view: w +
              Month view: m +
-             Year view: y` |Message on how to use `calendar` is shown
+             Year view: y` |Invalid trailing argument
 
-|`cancel`|`Invalid command format! +
+|`cancel dinner`|`Invalid command format! +
            cancel: Cancels an appointment from a person. +
            Parameters: DESCRIPTION with PERSON NAME +
-           Example 1:cancel Lunch with John Doe` |Message on how to use `cancel` for appointment is shown
+           Example 1:cancel Lunch with John Doe` |Incomplete command input
 
-|`copy`|`Invalid command format! +
+|`cancel dinner with massimo alioto` |`No such appointment found +
+                                       Please refer to the appointment description.` |Appointment does not exist
+
+|`copy Wilson Low`|`Invalid command format! +
          copy: Copies email address of the person identified by index numbers used in the last person listing. +
          c: Shorthand equivalent for Copy. +
          Parameters: INDEX (must be a positive integer) +
          Example 1: c 1 +
-         Example 2: copy 1` |Message on how to `copy` for email is shown
+         Example 2: copy 1` |Invalid argument type
 
-|`delete`|`Invalid command format! +
+|`delete Wilson Low`|`Invalid command format! +
            delete: Deletes the person identified by the index number used in the last person listing. +
            d: Shorthand equivalent for Delete. +
            Parameters: INDEX (must be a positive integer) +
            Example 1: d 1 +
            Example 2: delete 1` |Message on how to use `delete` is shown
 
-|`edit`|`Invalid command format! +
+|`delete 100`|`The person index provided is invalid` |Input value larger than number of contacts in MedNus
+
+|`edit 1 Wilson Low 81007890`|`Invalid command format! +
          edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values. +
          e: Shorthand equivalent for Edit. +
          Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK]...[d/DATE][t/TAG]... +
          Example 1: e 1 p/91234567 e/johndoe@example.com r/Broke his foot during soccer practice +
-         Example 2: edit 2 p/92873847 e/maryjane@example.com t/student` |Message on how to use `edit` is shown
+         Example 2: edit 2 p/92873847 e/maryjane@example.com t/student` |Missing Prefixes
 
 |`find`|`Invalid command format!
          find: Finds all persons whose names contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers.
@@ -254,10 +258,10 @@ This section shows you the result message when commands are invalid or when only
          Example 1: f alice bob charlie
          Example 2: find alice bob charlie` |Message on how to use `find` is shown
 
-|`list tag`|`Invalid command format! +
+|`list tag brokenfeet and or xraycentre`|`Invalid command format! +
              list tag: Finds all persons whose names contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers. +
              Parameters: KEYWORD [AND/OR] [KEYWORD]... +
-             Example: list tag colleague and family` |Message on how to use `list tag` is shown
+             Example: list tag colleague and family` |Incorrect use of "and" and "or"
 
 |`list x`|`Invalid input detected. Valid list variations: +
            list +
@@ -276,11 +280,13 @@ This section shows you the result message when commands are invalid or when only
              Example 2: rel 1 rel/Mary Jane +
              Example 3: relation 1` |Message on how to use `relation` is shown
 
-|`remark`|`Invalid command format! +
+|`relation wilson low rel/Father of Thomas Lee` |`Index is not a non-zero unsigned integer.` |Index required instead of name
+
+|`remark 1`|`Invalid command format! +
            remark: Adds a person to the address book. +
            Parameters: INDEX r/Likes to drink coffee +
            Example 1: remark 1 r/Likes to drink coffee +
-           Removing Remarks: remark 1 r/` |Message on how to use `remark` is shown
+           Removing Remarks: remark 1 r/` |Missing trailing arguments
 
 |`tagcolor helper green`|`No such tag` |Tag does not exist.
 
