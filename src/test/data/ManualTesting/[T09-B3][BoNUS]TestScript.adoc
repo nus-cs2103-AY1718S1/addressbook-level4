@@ -269,8 +269,8 @@ To import data from a `.xml` file, we need to use the `import` command
 
 *Positive test cases*
 
-. If the XML file at `<BoNUS home folder>/bonus.xml` contains data recognizable by *BoNUS*, this command imports the
-data that do not exist in *BoNUS* into the application +
+. If the XML file at `<BoNUS home folder>/bonus.xml` contains data recognizable by *BoNUS*, this command imports data
+that does not exist in *BoNUS* +
 _Command:_ +
 `import bonus.xml` +
 _Result:_ +
