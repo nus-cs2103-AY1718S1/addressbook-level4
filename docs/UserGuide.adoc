@@ -166,19 +166,19 @@ Returns any person having names `Betsy`, `Tim`, `John` or living at `Clementi St
 // tag::sort[]
 === Sorting list of persons: `sort` _[Since v1.2]_
 
-Sorts the full list of persons based on the specified attribute. +
+Suppose you wish to have your list of persons ordered by a specific attribute, you may use the `sort` command to do so. Be it name, email, phone, address or even the time it was first added. You can also choose to specify whether the attribute should be sorted in ascending or descending order, allowing you to have control over how your person panel should appear. +
 
-Format: `sort [n/(ASC OR DSC)]`
+Format: `sort [n/(asc OR dsc)]`
 
 [TIP]
-The list can be sorted by one of the following attribute: name, phone, email, address, time added.
+Persons tagged as favourite will be sorted at the top of the list, followed by the rest of the contacts.
 
 ****
 * Sort command only accepts one attribute.
 * The list can be sorted by one of the following attribute: name, phone, email, address, time added.
 * Sorting order depends on the specified choice.
-* The `ASC` signifies sorting in ascending order.
-* The `DSC` signifies sorting in descending order.
+* The `asc` signifies sorting in ascending order.
+* The `dsc` signifies sorting in descending order.
 * Entering command without any argument will default to name in ascending order.
 * Entering command without specifying order will default to ascending order.
 ****
@@ -187,9 +187,9 @@ Examples:
 
 * `sort` +
 Returns list of persons sorted by name added in ascending order
-* `sort p/ASC` +
+* `sort p/asc` +
 Returns list of persons sorted by phone in ascending order
-* `sort t/DSC` +
+* `sort t/dsc` +
 Returns list of persons sorted by time added in descending order
 // tag::sort[]
 
@@ -402,21 +402,27 @@ Shows the route from `Clementi Street` to the address of person with index numbe
 Shows the route from `John street, block 123, #01-01` to the address of person with index number `7`
 // end::map[]
 
-=== Schedule an Event: s-add _[Since v1.4]_
+=== Adding an Event to Schedule: `s-add` _[Since v1.4]_
 
-Adds an event, along with the members involved, into the calendar.
+With many commitments at hand, it is easy to overlook an event in your schedule. `s-add` allows you to add an event to your calendar and also the people who will be involved in the event.
 
-Format: `s-add [m/INDEX INDEX…] n/NAME t/TIME d/DURATION`
+Format: `s-add [m/INDEX INDEX…] n/NAME t/TIME [d/DURATION]`
 
 [TIP]
-It is possible to create an event without any members.
+You may create an event without any members or create a past event to keep track of your past schedule too.
+
+[TIP]
+Mouse over the greyed-out date in your calendar to see your events for the day.
+
+[TIP]
+You will be notified in the result panel if the newly added event clashes with another event in your calendar.
 
 ****
-* Creates an event with the given event name, event time and duration.
+* Creates an event with the given event name, event time, duration and members.
 * Members added will be reflected in the event list panel.
 * The index must be a positive integer 1, 2, 3, ...
-* TIME will be added in the following format: yyyy-MM-dd HH:mm
-* Duration must be a positive integer and is in minutes.
+* TIME will be added in the following format: `yyyy-MM-dd HH:mm`
+* If duration is specified, it must be in the following format: `#d#h#m` (day/hour/minute)
 ****
 
 Examples:
@@ -424,29 +430,29 @@ Examples:
 * `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/120` +
 Adds a two-hour long event called ‘iConnect Conference’ on 4th of December 2017 at 8:45AM ,with the specified person at index 1, 2 and 3 into the addressbook calendar.
 * `s-add n/Exam Date t/2017-12-04 14:30 d/120` +
-Adds a two-hour long event called ‘Exam Date’ on 4th of December 2017 at 2:30PM into the addressbook calendar.
+Adds a two-hour long event called ‘Exam Date’ on 4th of December 2017 at 2:30PM into the addressbook calendar.+
+* `s-add n/Email Reminder t/2017-12-04 14:30` +
+Adds an event called ‘Email Reminder’ on 4th of December 2017 at 2:30PM into the addressbook calendar.
 
-=== Cancel an Event: s-remove _[Since v1.4]_
+=== Removing an Event from Schedule: `s-remove` _[Since v1.4]_
 
-Removes an event from the calendar.
+Suppose you want to remove multiple events from your calendar, you can use the `s-remove` command with the indexes of events to be deleted.
 
-Format: `s-remove e/INDEX INDEX...`
-
-[TIP]
-It is possible to remove multiple events with a single command.
+Format: `s-remove I/INDEX INDEX...`
 
 ****
-* INDEX is referring to the index of an event in the event list panel
+* `INDEX` in this case is referring to the index of events in the event list panel
 * The index must be a positive integer 1, 2, 3, ...
 * Person details will be updated each time a deletion of event is made.
 ****
 
 Examples:
 
-* `s-remove 1` +
+* `s-remove I/1` +
 Removes a single event with the index 1.
-* `s-remove 1 2 3` +
+* `s-remove I/1 2 3` +
 Removes 3 events with the index 1, 2 and 3.
+
 // tag::export[]
 === Making a backup address book: `export` _[Coming in v1.4]_
 
