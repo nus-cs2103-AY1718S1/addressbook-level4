@@ -63,7 +63,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 == Layout
 These are the main components of the Ark user interface that will help you to interact with Ark. +
 
-image::Ark_Main_Window_Sections.png[width="890"] //CHANGE
+image::Ark_Main_Window_Numbered.png[width="890"]
 _Figure 4 : This is the main window of Ark with each section color coded_
 
 1. *Menu Bar* - Click on the options here to access the main or help menu.
@@ -78,7 +78,7 @@ delivered parcels, click on the `Completed Parcels` tab.
 
 === More About Browser Panel
 
-image::Browser_Display_After_Selection.png[width="890"] //CHANGE
+image::Ark_Browser.png[width="890"]
 _Figure 4.1.1 : Selecting a parcel_
 
 Selecting a parcel activates the Browser Panel. In the diagram above, when the 4th parcel belonging to Cornelia
@@ -87,7 +87,7 @@ In this case, Cornelia wants her parcel to be delivered to 10th Street Singapore
 
 === More About Parcel List Panel
 
-image::ParcelCard.png[width="890"] //CHANGE
+image::ParcelCard.png[width="890"]
 _Figure 4.2.1 : Labelled Parcel Card_
 
 1. *Parcel Index* - This is the index number of the parcel in the displayed list.
