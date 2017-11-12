@@ -26,7 +26,7 @@ public class EmailManager implements Email {
     public static final String MESSAGE_LOGIN_FAILED = "It could be one of the following reasons: \n"
             + "1. Your Internet connection is not working\n"
             + "2. Your email and password combination is not correct\n"
-            + "3. Allow less secure apps is not enable in your Gmail account";
+            + "3. Allow less secure apps is not enable in your email";
     private String currentEmail;
     private String currentEmailProvider;
     private Authenticator currentAuthenticator;

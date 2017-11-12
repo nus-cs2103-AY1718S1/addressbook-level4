@@ -54,9 +54,26 @@ public class FunctionButtons extends UiPart<Region> {
      */
     @FXML
     private void openEmailLoginWindow() {
-        if (loginButton.getText().equals("Login")) {
+        boolean isLoggedIn = false;
+        try {
+            if (!(logic.execute("email_address")).feedbackToUser.equals("Not logged in")) {
+                isLoggedIn = true;
+            }
+        } catch (ParseException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        } catch (CommandException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+
+        if (!isLoggedIn && loginButton.getText().equals("Login")) {
             EmailLoginWindow emailLoginWindow = new EmailLoginWindow(logic, stage, this, prefs);
             emailLoginWindow.show();
+        } else if (isLoggedIn && loginButton.getText().equals("Login")) {
+            loginButton.setText("Logout");
+            updateLoginStatus();
+        } else if (!isLoggedIn && loginButton.getText().equals("Logout")) {
+            loginButton.setText("Login");
+            updateLoginStatus();
         } else {
             try {
                 CommandResult commandResult = logic.execute(EmailLogoutCommand.COMMAND_WORD);
