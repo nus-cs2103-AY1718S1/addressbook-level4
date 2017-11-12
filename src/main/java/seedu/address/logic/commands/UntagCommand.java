@@ -49,7 +49,8 @@ public class UntagCommand extends UndoableCommand {
             + "removed from person list.";
     public static final String MESSAGE_SUCCESS_ALL_TAGS_IN_LIST = "All tags in person list successfully removed.";
 
-    public static final String MESSAGE_TAG_NOT_FOUND = "%s tag(s) not found in person list.";
+    public static final String MESSAGE_TAG_NOT_FOUND = "%s tag(s) not found in person list." + "\n"
+            + "You may want to refer to the following existing tags inside the unfiltered person list: %s";
     public static final String MESSAGE_PERSONS_DO_NOT_HAVE_TAGS = "%d person(s) do not have any of the specified tags:";
     public static final String MESSAGE_EMPTY_INDEX_LIST = "Please provide one or more indexes! \n%1$s";
     public static final String MESSAGE_INVALID_INDEXES = "One or more person indexes provided are invalid.";
@@ -82,8 +83,13 @@ public class UntagCommand extends UndoableCommand {
             }
         }
 
-        if (!tags.isEmpty() && Collections.disjoint(model.getAddressBook().getTagList(), tags)) {
-            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, joinTagList(tags)));
+        Set<Tag> uniqueTags = new HashSet<>();
+        for (ReadOnlyPerson person : model.getAddressBook().getPersonList()) {
+            uniqueTags.addAll(person.getTags());
+        }
+        if (!tags.isEmpty() && Collections.disjoint(uniqueTags, tags)) {
+            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND,
+                    joinTagList(tags), joinTagList(new ArrayList<>(uniqueTags))));
         }
 
         if (toAllPersonsInFilteredList) {

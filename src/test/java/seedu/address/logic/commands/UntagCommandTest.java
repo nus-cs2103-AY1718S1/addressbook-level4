@@ -20,7 +20,10 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.StringJoiner;
 
 import org.junit.Test;
 
@@ -303,12 +306,21 @@ public class UntagCommandTest {
         Tag firstNotFoundTag = new Tag("tagOne");
         Tag secondNotFoundTag = new Tag("tagTwo");
 
+        Set<Tag> uniqueTags = new HashSet<>();
+        for (ReadOnlyPerson person : model.getAddressBook().getPersonList()) {
+            uniqueTags.addAll(person.getTags());
+        }
+        StringJoiner joiner = new StringJoiner(", ");
+        for (Tag tag : uniqueTags) {
+            joiner.add(tag.toString());
+        }
+
         UntagCommand command = prepareCommand(false,
                 Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON),
                 Arrays.asList(firstNotFoundTag, secondNotFoundTag));
 
         String expectedMessage = String.format(MESSAGE_TAG_NOT_FOUND,
-                firstNotFoundTag.toString() + ", " + secondNotFoundTag.toString());
+                firstNotFoundTag.toString() + ", " + secondNotFoundTag.toString(), joiner.toString());
 
         assertCommandFailure(command, model, expectedMessage);
     }
