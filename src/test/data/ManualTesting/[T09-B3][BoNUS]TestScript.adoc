@@ -94,6 +94,16 @@ Commands are case sensitive.
 
 ==== Adding of events
 
+[NOTE]
+====
+* The standard format for time should be `DDMMYYYY HH:MM` in 24-hour format.
+* However, the application may sometimes be _smart_ enough to interpret what you typed. For example, if you type `this afternoon`
+or `tomorrow evening`, it will be automatically converted to the standard format.
+* Do NOT try to _challenge_ the application, it is not promised to produce an expected result if you use non-standard format
+or if the expression is not simple or clear enough.
+* Avoid putting the year first when using the non-standard format.
+====
+
 To add an event, we need to use addE n/NAME dt/DATE_TIME a/ADDRESS of the event.
 
 1) Adds a new event with Name `CS3201 Project Meeting`, DateTime `17112017 1530`, Address `School of Computing, SR09, NUS`
