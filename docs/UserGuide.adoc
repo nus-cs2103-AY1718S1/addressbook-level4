@@ -501,7 +501,7 @@ help fill in commands as well as the prefixes for you without requiring you to f
 with the needed fields. Ark autocompletion is smart and knows exactly what field you need, all you have to do is press
 kbd:[Tab] and let Ark handle the rest!
 
-*Autocomplete for commands* +
+*Autocomplete for commands:* +
 To make use of the autocomplete feature for commands, simply type in the first few letters of the command you want
 to use:
 
@@ -527,30 +527,58 @@ In this case, you can press tab to cycle through the different options available
 image::autocompleteWithExitCommandCycle.PNG[width="400"]
 _Figure 5.21.4 : Pressing kbd:[Tab] again will cycle to the next matching command_
 
-*Autocomplete for prefixes and indexes* +
+*Autocomplete for prefixes:* +
 For commands that require prefixes, you can press kbd:[Tab] after filling in the command word.Ark will bring you to the
 next missing prefix for you to fill in. After this, you can then press tab to cycle through the list of prefixes.
 
 image::autocompleteWithFullAddCommandAndOnePrefix.PNG[width="400"]
-_Figure 5.21.4 : After filling in the command into the text field, pressing kbd:[Tab] will bring you
+_Figure 5.21.5 : After filling in the command into the text field, pressing kbd:[Tab] will bring you
  to the first missing prefix_
 
 image::autocompleteWithFullAddCommandAndOnePrefixCycle.PNG[width="400"]
-_Figure 5.21.5 : Pressing kbd:[Tab] will cycle to the next missing prefix_
+_Figure 5.21.6 : Pressing kbd:[Tab] will cycle to the next missing prefix_
 
+Alternatively, you can also enter the first letter of the prefix you want before you press kbd:[Tab] and Ark will fill
+in the `/` character for you.
 
+image::autocompleteWithFullAddCommandAndPartOfPrefix.PNG[width="400]
+_Figure 5.21.7 : Fill in the command you want along with the first letter of the prefix you want_
+
+image::autocompleteWithFullAddCommandAndOnePrefix.PNG[width="400"]
+_Figure 5.21.8 : Pressing kbd:[Tab] append the `/` character for you_
+
+After you have chosen the prefix you want, simply enter in the details as needed.
+
+image::autocompleteWithFullAddCommandAndOnePrefixFilled.PNG[width="400"]
+_Figure 5.21.9 : Fill in the needed details as per normal_
+
+After you are done entering the needed details of the prefix, press kbd:[Tab] to move on to the next prefix. Note
+that if your input ends with the first character of a prefix preceded by a space (e.g " n"),
+you will need to press kbd:[Space] before you press kbd:[Tab] to get the outcome you want.
+
+image::autocompleteWithFullAddCommandAndOnePrefixFilledNext.PNG[width="400"]
+_Figure 5.21.10 : Pressing kbd:[Tab] will fill in the next missing prefix_
+
+*Autocomplete for indexes:* +
 For commands that require indexes, you can press kbd:[Tab] after filling in the command word. Ark will then
 allow you to cycle through the indexes available by pressing kbd:[Tab]
 
 image::autocompleteWithStartOfSelectCommand.PNG[width="400"]
-_Figure 5.21.6 : After filling in the command into the text field, pressing kbd:[Tab] will bring you
+_Figure 5.21.11 : After filling in the command into the text field, pressing kbd:[Tab] will bring you
  to the first available index_
 
 image::autocompleteWithStartOfSelectCommandCycle.PNG[width="400"]
-_Figure 5.21.7 : Pressing kbd:[Tab] will cycle to the next available index_
-Examples:
+_Figure 5.21.12 : Pressing kbd:[Tab] will cycle to the next available index_
+
+*Examples:*
 
 * `a` + kbd:[Tab] (auto-completes with `add` in the command line input)
+* `e` + kbd:[Tab] + kbd:[Tab] (cycles to `exit` command)
+* `edit` + kbd:[Tab] + kbd:[Tab] (auto-completes with `edit 1` on the first tab and then cycles
+ to `edit 2` on the second tab)
+* `add` + kbd:[Tab] + kbd:[Tab] (auto-completes with `edit #/` on the first tab and then cycles
+  to `edit n/` on the second tab)
+
 //end::autocomplete[]
 
 //tag::tooltip[]
