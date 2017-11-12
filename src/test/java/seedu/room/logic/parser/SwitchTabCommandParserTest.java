@@ -14,17 +14,17 @@ public class SwitchTabCommandParserTest {
     private SwitchTabCommandParser parser = new SwitchTabCommandParser();
 
     @Test
-    public void parse_validArgs_returnsSwapCommand() {
+    public void parseValidArgsReturnsSwitchTabCommand() {
         assertParseSuccess(parser, " 1", new SwitchTabCommand(1));
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
+    public void parseInvalidArgsThrowsParseException() {
         assertParseFailure(parser, " a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwitchTabCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_invalidNumArgs_throwsParseException() {
+    public void parseInvalidNumArgsThrowsParseException() {
         assertParseFailure(parser, " 3", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 SwitchTabCommand.MESSAGE_USAGE));
     }

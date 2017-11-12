@@ -18,7 +18,7 @@ public class SwitchTabCommandTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @Test
-    public void execute_switchtab_success() {
+    public void executeSwitchTabSuccess() {
         try {
             CommandResult result = new SwitchTabCommand(1).execute();
             assertEquals(String.format(MESSAGE_SWITCH_TAB_SUCCESS, "Residents"), result.feedbackToUser);
@@ -30,7 +30,7 @@ public class SwitchTabCommandTest {
     }
 
     @Test
-    public void execute_switchtab_failure() {
+    public void executeSwitchTabFailure() {
         try {
             CommandResult result = new SwitchTabCommand(5).execute();
             fail("This should never be called");
