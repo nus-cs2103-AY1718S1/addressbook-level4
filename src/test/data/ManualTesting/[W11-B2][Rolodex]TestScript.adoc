@@ -142,9 +142,8 @@ Expected Behaviour
 * Name, phone, email and address fields are compulsory
 
 [[keyboard-shortcut]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut[]Keyboard
-Shortcut
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
 
 1.  Press `Ctrl` + `+`
 2.  Type `Alice Ken` and press `Tab`
@@ -174,7 +173,7 @@ Basic Functionality
 
 [[expected-behaviour7]]
 Expected Behaviour
-   +++++++++
++++++++++++++++++
 
 * First contact is deleted from Rolodex
 
@@ -187,7 +186,7 @@ Abbreviations
 
 [[expected-behaviour8]]
 Expected Behaviour
-   +++++++++
++++++++++++++++++
 
 * Second contact is deleted from Rolodex
 
@@ -198,13 +197,13 @@ Expected Behaviour
 
 [[expected-behaviour9]]
 Expected Behaviour
-   +++++++++
++++++++++++++++++
 
 * Third contact is deleted from Rolodex
 
 [[auto-completion1]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion1[]Auto-completion
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Auto-Completion
+^^^^^^^^^^^^^^^
 
 1.  Type `delete` and press `Tab`
 2.  Type `1` and press `Enter`
@@ -233,9 +232,8 @@ Behavior
 * The 21st contact is deleted from Rolodex
 
 [[keyboard-shortcut1]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut1[]Keyboard
-Shortcut
-
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
 
 1.  Press `Ctrl` + `D`
 2.  Type `1` and press `Enter`
@@ -282,8 +280,8 @@ Expected Behaviour
 * The tag `edited` should be removed from A
 
 [[abbreviations2]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations2[]Abbreviations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Abbreviations
+^^^^^^^^^^^^^
 
 1.  Type `e 1 n/B`
 2.  Press `Enter`
@@ -317,9 +315,8 @@ Expected Behaviour
 * Email of first contact should now be %22modified@mail.com"
 
 [[drop-down-list1]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list1[]Drop-down
-List
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Drop-Down List
+^^^^^^^^^^^^^^
 
 1.  Type `e`
 2.  Press `↓` until the `edit` option is highlighted in the drop-down
@@ -339,8 +336,8 @@ Expected Behaviour
 panel
 
 [[auto-completion2]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion2[]Auto-completion
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Auto-Completion
+^^^^^^^^^^^^^^^
 
 1.  Type `edit`
 2.  Press `Tab`
@@ -412,9 +409,8 @@ Expected Behaviour
 * Address of first contact should now be “3 computing drive”
 
 [[keyboard-shortcut2]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut2[]Keyboard
-Shortcut
-
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
 
 1.  Press `Ctrl` + `E`
 2.  Type `1 n/bob`
@@ -427,9 +423,8 @@ Expected Behaviour
 * First contact should be renamed to bob
 
 [[select-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#select-command[]Select
-Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Select Command
+~~~~~~~~~~~~~~
 
 [[basic-functionality3]]
 Basic Functionality
@@ -444,22 +439,20 @@ Expected Behaviour
 * The first contact should be selected
 
 [[abbreviations3]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations3[]Abbreviations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Abbreviations
+^^^^^^^^^^^^^
 
 1.  Type `s 2`
 
 [[expected-behaviour25]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour25[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The second contact should be selected
 
 [[drop-down-list2]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list2[]Drop-Down
-List
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Drop-Down List
+^^^^^^^^^^^^^^
 
 1.  Type `s`
 2.  Press `↓` until the `select` option is highlighted in the drop-down
@@ -475,8 +468,8 @@ Expected Behaviour
 * The third contact should be selected
 
 [[auto-completion3]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion3[]Auto-completion
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Auto-Completion
+^^^^^^^^^^^^^^^
 
 1.  Type `s`
 2.  Press `Tab`
@@ -506,9 +499,8 @@ Expected Behaviour
 * The first contact should be selected
 
 [[keyboard-shortcut3]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut3[]Keyboard
-Shortcut
-
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
 
 1.  Press `Esc`
 2.  Press `↓` or `↑` several times
@@ -556,8 +548,8 @@ Expected Behaviour
 (Subject field is optional)
 
 [[auto-completion4]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion4[]Auto-completion
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Auto-Completion
+^^^^^^^^^^^^^^^
 
 1.  Type `M`
 2.  Press `Tab`
@@ -591,9 +583,8 @@ Expected Behaviour
 * Subject should be “hello”
 
 [[keyboard-shortcut4]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut4[]Keyboard
-Shortcut
-
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
 
 1.  Press `Ctrl` + `M`
 2.  Type `1 s/hello`
@@ -626,8 +617,8 @@ matches
 2.  Press `Enter`
 
 [[expected-behavior1]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior1[]Expected
-behavior
+Expected Behaviour
++++++++++++++++++
 
 * The contact list is filtered with contacts with the name “Bravo”
 
@@ -640,8 +631,8 @@ Matching
 2.  Press `Enter`
 
 [[expected-behavior2]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior2[]Expected
-Behavior
+Expected Behaviour
++++++++++++++++++
 
 * The contact list is filtered with contacts roughly matching the name
 “brabo”, “Bravo” included.
@@ -655,9 +646,8 @@ tag
 2.  Press `Enter`
 
 [[expected-behavior3]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior3[]Expected
-Behavior
-   +++++++
+Expected Behaviour
++++++++++++++++++
 
 * The contact list is filtered with contacts tagged as “friends”.
 
@@ -669,9 +659,8 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#sorting[]Sorting
 2.  Press `Enter`
 
 [[expected-behavior4]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior4[]Expected
-Behavior
-   +++++++
+Expected Behaviour
++++++++++++++++++
 
 * The contact list is filtered with contacts tagged as “friends”, sorted
 by descending order of name.
@@ -682,9 +671,8 @@ by descending order of name.
 2.  Press `Enter`
 
 [[expected-behavior5]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior5[]Expected
-Behavior
-   +++++++
+Expected Behaviour
++++++++++++++++++
 
 * The contact list is filtered with contacts tagged as “friends”, sorted
 by descending phone.
@@ -695,9 +683,8 @@ by descending phone.
 2.  Press `Enter`
 
 [[expected-behavior6]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior6[]Expected
-Behavior
-   +++++++
+Expected Behaviour
++++++++++++++++++
 
 * The contact list is filtered with contacts tagged as “friends”, sorted
 by descending phone.
@@ -708,16 +695,15 @@ by descending phone.
 2.  Press `Enter`
 
 [[expected-behavior7]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior7[]Expected
-Behavior
-   +++++++
+Expected Behaviour
++++++++++++++++++
 
 * The contact list is filtered with contacts tagged as “friends”, sorted
 by descending phone, then by ascending address.
 
 [[auto-completion5]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion5[]Auto-completion
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Auto-Completion
+^^^^^^^^^^^^^^^
 
 1.  Type `find`
 2.  Press `Tab`
@@ -725,25 +711,22 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion5[]Auto-comple
 4.  Press `Enter`
 
 [[expected-behavior8]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior8[]Expected
-Behavior
-   +++++++
+Expected Behaviour
++++++++++++++++++
 
 * The contact list is filtered with contacts roughly matching the name
 “brabo”, “Bravo” included.
 
 [[keyboard-shortcut5]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut5[]Keyboard
-Shortcut
-
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
 
 1.  Press `Ctrl` + `F`
 2.  Type `school` and press `Enter`
 
 [[expected-behavior9]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior9[]Expected
-Behavior
-   +++++++
+Expected Behavior
++++++++++++++++++
 
 * The contact list is filtered with contacts tagged as “school”.
 
@@ -758,9 +741,8 @@ Invalid Command Suggestion
 4.  Press `Enter`
 
 [[expected-behavior10]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior10[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * The contact list is filtered with contacts tagged as “friends”.
 
@@ -777,9 +759,8 @@ Basic Functionality
 2.  Press `Enter`
 
 [[expected-behavior11]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior11[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * The Rolodex User Guide should be opened in a new window
 
@@ -792,9 +773,8 @@ Window Searching
 2.  Press `Enter` or click the _Search_ button
 
 [[expected-behavior12]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior12[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * All words “add” in the document should be highlighted in yellow
 
@@ -809,9 +789,8 @@ Invalid Command Suggestion
 4.  Press `Enter`
 
 [[expected-behavior13]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior13[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * The Rolodex User Guide should be opened in a new window
 
@@ -828,9 +807,8 @@ Basic Functionality
 2.  Press `Enter`
 
 [[expected-behavior14]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior14[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * Entered commands from most recent to earliest should be displayed on
 the result panel
@@ -846,24 +824,21 @@ Invalid Command Suggestion
 4.  Press `Enter`
 
 [[expected-behavior15]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior15[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * Entered commands from most recent to earliest should be displayed on
 the result panel
 
 [[keyboard-shortcut6]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut6[]Keyboard
-Shortcut
-
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
 
 1.  Type `Ctrl` + `H`
 
 [[expected-behavior16]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior16[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * Entered commands from most recent to earliest should be displayed on
 the result panel
@@ -881,23 +856,21 @@ Basic Functionality
 2.  Press `Enter`
 
 [[expected-behavior17]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior17[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * All contacts should be listed in Rolodex
 
 [[abbreviations4]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations4[]Abbreviations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Abbreviations
+^^^^^^^^^^^^^
 
 1.  Type `l`
 2.  Press `Enter`
 
 [[expected-behavior18]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior18[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * All contacts should be listed in Rolodex
 
@@ -907,9 +880,8 @@ Behavior
 2.  Press `Enter`
 
 [[expected-behavior19]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior19[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * All contacts should be listed in Rolodex
 
@@ -919,9 +891,8 @@ Behavior
 2.  Press `Enter`
 
 [[expected-behavior20]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior20[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * All contacts should be listed in Rolodex
 
@@ -933,9 +904,8 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#sorting1[]Sorting
 2.  Press `Enter`
 
 [[expected-behavior21]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior21[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * The contact list should be sorted by ascending phone, then by
 descending address.
@@ -951,23 +921,20 @@ Invalid Command Suggestion
 4.  Press `Enter`
 
 [[expected-behavior22]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior22[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * All contacts should be listed in Rolodex
 
 [[keyboard-shortcut7]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut7[]Keyboard
-Shortcut
-
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
 
 1.  Press `Ctrl` + `L`
 
 [[expected-behavior23]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior23[]Expected
-Behavior
-   ++++++++
+Expected Behaviour
++++++++++++++++++
 
 * All contacts should be listed in Rolodex
 
@@ -1001,22 +968,22 @@ New Rolodex at System Directory
 ^
 
 [[windows]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#windows[]Windows:
-  ++++++++++++++
+Windows:
+++++++++
 
 1.  Type `new C:/Users/YOUR_USERNAME/Desktop/SampleData.rldx`
 2.  Press `Enter`
 
 [[mac]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#mac[]Mac:
-  ++++++
+Mac:
++++++
 
 1.  Type `new /Users/YOUR_USERNAME/Desktop/SampleData.rldx`
 2.  Press `Enter`
 
 [[linux]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#linux[]Linux:
-  ++++++++++
+Linux:
+++++++
 
 1.  Type `new /home/YOUR_USERNAME/Desktop/SampleData.rldx`
 2.  Press `Enter`
@@ -1032,9 +999,8 @@ new Rolodex (i.e. the data file you are currently operating on)
 been cleared.
 
 [[attempting-to-re-create-existing-rolodex]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#attempting-to-re-create-existing-rolodex[]Attempting
-to Re-Create Existing Rolodex
-^
+Attempting to Re-Create Existing Rolodex
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `new data/SampleData.rldx`
 2.  Press `Enter`
@@ -1048,8 +1014,8 @@ command instead.
 * The original SampleData.rldx should not be overwritten or changed.
 
 [[auto-completion6]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion6[]Auto-completion
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Auto-Completion
+^^^^^^^^^^^^^^^
 
 1.  Type `new`
 2.  Press `Tab`
@@ -1089,8 +1055,7 @@ new Rolodex (i.e. `data/SampleData4.rldx`)
 been cleared.
 
 [[keyboard-shortcut8]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut8[]Keyboard
-Shortcut
+Keyboard Shortcut
 
 
 1.  Press `Ctrl` + `N`
@@ -1194,8 +1159,8 @@ command instead.
 * The original SampleData.rldx should not be overwritten or changed.
 
 [[auto-completion7]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion7[]Auto-completion
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Auto-Completion
+^^^^^^^^^^^^^^^
 
 1.  Type `open`
 2.  Press `Tab`
@@ -1234,9 +1199,8 @@ new Rolodex (i.e. `data/SampleData2.rldx`)
 been cleared.
 
 [[keyboard-shortcut9]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut9[]Keyboard
-Shortcut
-
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
 
 1.  Press `Ctrl` + `O`
 2.  Type `data/SampleData.rldx`
@@ -1274,8 +1238,8 @@ Expected Behaviour
 * The selected contact should have the remark “Loves to talk.”
 
 [[abbreviations5]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations5[]Abbreviations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Abbreviations
+^^^^^^^^^^^^^
 
 1.  Type `rmk 3 r/Loves to sing.`
 2.  Press `Enter`
@@ -1315,8 +1279,8 @@ Expected Behaviour
 * The selected contact should have the remark “Loves to eat.”
 
 [[auto-completion8]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion8[]Auto-completion
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Auto-Completion
+^^^^^^^^^^^^^^^
 
 1.  Type `remark` and press `Tab`
 2.  Type `1`
@@ -1333,9 +1297,8 @@ Expected Behaviour
 * The selected contact should have the remark “Loves to swim.”
 
 [[keyboard-shortcut10]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut10[]Keyboard
-shortcut
-^
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
 
 1.  Press `Ctrl` + `R`
 2.  Type `1`
@@ -1389,8 +1352,8 @@ Expected Behaviour
 * The first contact should remain in Rolodex
 
 [[abbreviations6]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations6[]Abbreviations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Abbreviations
+^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `undo`
@@ -1403,9 +1366,8 @@ Expected Behaviour
 * The first contact should remain in Rolodex
 
 [[drop-down-list3]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list3[]Drop-Down
-List
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Drop-Down List
+^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `u`
@@ -1437,9 +1399,8 @@ Expected Behaviour
 * The first contact should remain in Rolodex
 
 [[keyboard-shortcut11]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut11[]Keyboard
-Shortcut
-^
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Press `Ctrl` + `Z`
@@ -1471,8 +1432,8 @@ Expected Behaviour
 * The first contact should be deleted from Rolodex
 
 [[abbreviations7]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations7[]Abbreviations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Abbreviations
+^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `undo` and press `Enter`
@@ -1486,9 +1447,8 @@ Expected Behaviour
 * The first contact should be deleted from Rolodex
 
 [[drop-down-list4]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list4[]Drop-Down
-List
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Drop-Down List
+^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `undo` and press `Enter`
@@ -1520,9 +1480,8 @@ Expected Behaviour
 * The first contact should be deleted from Rolodex
 
 [[keyboard-shortcut12]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut12[]Keyboard
-Shortcut
-^
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `undo` and press `Enter`
