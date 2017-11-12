@@ -12,8 +12,8 @@ import seedu.address.model.module.Remark;
 public interface ReadOnlyAddressBook {
 
     /**
-     * Returns an unmodifiable view of the modules list.
-     * This list will not contain any duplicate modules.
+     * Returns an unmodifiable view of the lesson list.
+     * This list will not contain any duplicate lessons.
      */
     ObservableList<ReadOnlyLesson> getLessonList();
 

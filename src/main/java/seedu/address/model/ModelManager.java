@@ -37,8 +37,9 @@ import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
+//@@author caoliangnus
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the ModU data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
@@ -51,7 +52,7 @@ public class ModelManager extends ComponentManager implements Model {
     private ReadOnlyLesson currentViewingLesson;
     private String currentViewingAttribute;
 
-    //@@author caoliangnus
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -259,8 +260,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author caoliangnus
     /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyModule} backed by the internal list of
-     * {@code addressBook}
+     * Returns an unmodifiable view of the list of {@code ReadOnlyLesson}
      */
     @Override
     public ObservableList<ReadOnlyLesson> getFilteredLessonList() {
@@ -330,6 +330,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author
 
+    //@@author caoliangnus
     @Override
     public void handleListingUnit() {
         ListingUnit unit = ListingUnit.getCurrentListingUnit();

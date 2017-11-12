@@ -44,6 +44,7 @@ public interface Model {
     HashSet<Code> getUniqueCodeSet();
     //@@author
 
+    //@@author caoliangnus
     /**
      * Clears existing backing model and replaces with the provided new data.
      */
@@ -106,6 +107,7 @@ public interface Model {
     void unbookAllSlot();
     //@@author
 
+    //@@author caoliangnus
     /**
      * Replaces the given lesson {@code target} with {@code editedLesson}.
      *
@@ -179,6 +181,7 @@ public interface Model {
     String getCurrentViewingAttribute();
     //@@author
 
+    //@@author caoliangnus
     /** Returns an unmodifiable view of the list of remarks */
     ObservableList<Remark> getFilteredRemarkList();
 
