@@ -21,6 +21,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -56,6 +57,7 @@ public class AddFavouriteCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
 
+
         if (personToEdit.getFavourite().getStatus()) {
             throw new CommandException(MESSAGE_ALREADY_FAVOURITE);
         }
@@ -78,6 +80,7 @@ public class AddFavouriteCommand extends UndoableCommand {
      * Creates and returns a {@code Person} with the the Favourite attribute set to true.
      */
     private static Person createFavePerson(ReadOnlyPerson personToEdit) {
+
         Name updatedName = personToEdit.getName();
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();
@@ -87,8 +90,16 @@ public class AddFavouriteCommand extends UndoableCommand {
         Set<Tag> updatedTags = personToEdit.getTags();
         Set<Group> updatedGroups = personToEdit.getGroups();
         Set<Schedule> updatedSchedule = personToEdit.getSchedule();
+        Set<SocialMedia> updateSocialMediaList = personToEdit.getSocialMedia();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
-                updatedProfPic, updatedTags, updatedGroups, updatedSchedule);
+                updatedProfPic, updatedTags, updatedGroups, updatedSchedule, updateSocialMediaList);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddFavouriteCommand // instanceof handles nulls
+                && this.targetIndex.equals(((AddFavouriteCommand) other).targetIndex)); // state check
     }
 }

@@ -30,7 +30,6 @@ public class EventParserUtil {
     /** Get events ordered by start time */
     private static final String QUERY = "/events?singleEvents=true&orderBy=startTime&key=";
 
-
     private static Schedule getSingleSchedule(JsonNode event) throws IllegalValueException {
         String name = event.at(EVENT_NAME).asText();
         String details = event.at(EVENT_DETAILS).asText();

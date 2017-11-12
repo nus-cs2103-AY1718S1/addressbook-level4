@@ -30,7 +30,6 @@ public class ScheduleDate {
     public ScheduleDate(String date) throws ParseException {
         requireNonNull(date);
         DateFormat dateInput = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-        /** Sanity check date input - Ensure date inputs are valid. **/
 
         try {
             scheduleDate = dateInput.parse(date);

@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Bamboo
 Bamboo is a desktop address book application developed as part of a Software Engineering module requirement. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B4/main/blob/collate/collated/main/Procrastinatus.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B4/main/blob/collate/collated/test/Procrastinatus.md[Test code]]
 
 === Enhancement Added: GUI
 
@@ -17,13 +17,40 @@ Bamboo is a desktop address book application developed as part of a Software Eng
 
 include::../UserGuide.adoc[tag=undoredo]
 
+=== Deleting person(s) : `delete`
+
+Deletes the specified person(s) from the address book. +
+Format: `delete INDEX [INDEX...]` +
+Alias: `d`
+
+****
+* Deletes the person(s) at the specified `INDEX(s)`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2 3 4` +
+Deletes the 2nd, 3rd and 4th persons in the address book.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
+
+
+
 #End of Extract#
 
 ---
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+== Multi-delete
+
+Multi-delete allows users to delete single, as well as multiple persons in one command.
+This prevents the need for executing multiple delete commands to delete multiple persons,
+which provides convenience.
 
 ==== Implementation
 
@@ -32,19 +59,176 @@ include::../UserGuide.adoc[tag=undoredo]
 
 include::../DeveloperGuide.adoc[tag=undoredo]
 
+=== Purpose
+
+This document serves as the developers' guide for developing Bamboo.
+It assumes that you have an intermediate level of understanding of Java.
+It describes how to start developing Bamboo with the Intellij IDE,
+as well as the structure of various components in the Bamboo application.
+
+== Setting up
+
+This section provides developers with the steps required to set up everything before beginning development
+on Bamboo.
+
+=== UI component
+
+The `UI` component, or user interface, houses all the different front-end components that users see upon running
+Bamboo. It allows users to interact with Bamboo through its components, such as buttons and input boxes.
+
+image::UiClassDiagram.png[width="800"]
+_Figure 2.2.1 : Structure of the UI Component_
+
+*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+
+The UI consists of a `MainWindow` that is made up of parts (e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `GroupListPanel`, `StatusBarFooter`, `MainContactPanel`, etc.). All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
+`.fxml` files should only be used to *define the basic layout or content placeholders* in the UI. *Actual content values should be instantiated by code* as much as possible.
+
+The `.fxml` files may not immediately reflect all the UI parts that are seen in `Scene Builder`. This is because some UI parts are instantiated by code only on run-time, so opening the `.fxml` files in `Scene Builder` will not show certain parts of the UI
+(e.g. the circular contact image in the contact details panel, instantiated inside `setContactImage()` in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetailsPanel.java[`ContactDetailsPanel.java`]).
+
+The `UI` component does the following things:
+
+* Uses `.fxml` and resource files (e.g. images, fonts) in `src\main\resources` that gives the application its look.
+* Executes user commands using the `Logic` component.
+* Binds itself to some data in the `Model` so that the UI can automatically update when data in the `Model` component changes.
+* Responds to events raised from various parts of the application (through event subscribers such as `handlePersonPanelSelectionChangedEvent` in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetailsPanel.java[`ContactDetailsPanel.java`]) and updates the UI accordingly.
+* Animates certain parts of the application, mostly in the contact details panel.
+
+=== User Interface (UI)
+
+==== Layout of the user interface (since V1.1)
+
+The application uses various panels such as `StackPanes` and `BorderPanes` inside `.fxml` files that define the basic layout, with no content inside of it.
+Content is usually created or instantiated by code.
+
+==== Layout of the contact details panel (since V1.2)
+
+The main contact panel (MainContactPanel.fxml) uses a 2x2 `GridPane` to show the following:
+
+ * Contact's image
+ * Contact's details
+ * Four social media icons
+ * Contact's schedule
+
+==== Layout of contact's image and social icons (since V1.2)
+
+The (0, 0) and (1, 0) cells of the main contact panel contain nested `BorderPane` objects. These `BorderPanes` then create `Circle` objects.
+
+These `Circle` objects are created when the `setContactImage()` and `setIcons()` methods are run. These two methods run inside `handlePersonPanelSelectionChangedEvent()` when the user selects a person in the person list panel.
+
+The reason for using `BorderPane` objects is to allow centering and resizing of the `Circle` objects. Using a `Pane` will not allow for positioning of objects, while using a `StackPane` will not allow for resizing of objects inside of it.
+A `BorderPane` supports both positioning and resizing of objects inside of it.
+
+==== Layout of the contact's details (since V1.2)
+
+The (1,0) cell of the main contact panel contains a `VBox` object that creates four empty `Label` objects in `setupContactDetailsBox()`.
+The values of these `Label` objects are updated in `setContactDetails()` when a person is selected in the person list panel.
+
+The `setContactDetails()` method takes in a `ReadOnlyPerson` object as an argument, which holds the values of a person's contact details that are used to update the `Label` objects.
+
+==== Animation in the contact details panel (since V1.2)
+
+UI parts (nodes) in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetailsPanel.java[`ContactDetailsPanel.java`] are passed into a method called `easeIn` in the same file. This method takes in `Node` objects and animates them through the use of various `Transitions` objects.
+
+`ParallelTransition` is used to play multiple `Transition` objects simultaneously. In this case, it plays `FadeTransition` and `TranslateTransition` together, resulting in what looks like text and images fading in from nothing.
+
+=== Troubleshooting Testing
+
+**Problem: `HelpWindowTest` fails with a `BoundsLocatorException`.**
+
+* Reason: The window size of the test application is too small.
+* Solution: Open `src/test/java/seedu/address/TestApp.java` and find the `initPrefs` method. Find `new GuiSettings` inside the method and enlarge the window size accordingly.
+
+== Glossary
+
+[[checkstyle]]
+Checkstyle
+
+....
+A development tool to help programmers write Java code that adheres to a coding standard by automatically checking Java code.
+....
+
+[[command]]
+Command(s)
+
+....
+Keywords that are used to do certain tasks. The list of commands for the application can be accessed by typing "help" in the application. All commands extend the "Command" class
+....
+
+[[eventscenter]]
+Events Center
+
+....
+The events center is a module in the application that handles any user inputs or events that occur, reducing direct coupling between components.
+....
+
+[[forking]]
+Forking
+
+....
+The cloning/copying of a repository.
+....
+
+[[jdk]]
+Java Development Kit.
+
+....
+The development kit that is required for developing the application (default location is "C:\Program Files\Java\jdkx.x.x_xxx", where the x's denote the version number).
+....
+
+[[json]]
+JavaScript Object Notation
+
+....
+An easy-to-read data storage format.
+....
+
+[[parser]]
+Parser
+
+....
+Parsers are used to verify the format of commands used. e.g. Adding a contact while parsing given parameters such as email and tags.
+....
+
+[[tag]]
+Tag(s)
+
+....
+The label(s) attached to a contact for the purpose of identification or related groupings.
+....
+
+[[travisci]]
+Continuous Integration (CI)
+
+....
+Build automation tool that helps developers understand if their application is working by building, testing and reporting on the build sequences the developer has configured. This project uses Travis and AppVeyor.
+....
+
+[[ui]]
+User Interface (UI)
+
+....
+The user interface is a front-facing component and is what the user sees. It is used to show information, as well as get user input for different operations such as adding and deleting contacts.
+....
+
+[[undoredostack]]
+Undo/redo stack mechanism
+
+....
+The application's state(s) that are stored on two stacks, which allow undo's and redo's, reverting the state of the application to before or after commands are run respectively.
+....
+
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
-
-{Explain similar to the Undo/Redo feature above.}
-
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
-== Project:
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+* Changed the GUI (components, color scheme, etc.)
+* Wrote additional tests
+* Removed default browser
+* Added social media (with cjianhui)
+* Added multi-delete

@@ -21,6 +21,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -62,7 +63,6 @@ public class RemoveFavouriteCommand extends UndoableCommand {
 
         Person editedPerson = removeFavePerson(personToEdit);
 
-
         try {
             model.updateFavouritePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
@@ -87,9 +87,16 @@ public class RemoveFavouriteCommand extends UndoableCommand {
         Set<Tag> updatedTags = personToEdit.getTags();
         Set<Group> updatedGroups = personToEdit.getGroups();
         Set<Schedule> updatedSchedule = personToEdit.getSchedule();
+        Set<SocialMedia> updatedSocialMediaList = personToEdit.getSocialMedia();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
-                updatedProfPic, updatedTags, updatedGroups, updatedSchedule);
+                updatedProfPic, updatedTags, updatedGroups, updatedSchedule, updatedSocialMediaList);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof RemoveFavouriteCommand // instanceof handles nulls
+                && this.targetIndex.equals(((RemoveFavouriteCommand) other).targetIndex)); // state check
+    }
 }

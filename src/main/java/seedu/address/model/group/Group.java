@@ -22,7 +22,7 @@ public class Group implements ReadOnlyGroup {
 
     private ObjectProperty<GroupName> groupName;
     /**
-     *  A Group will have an empty persons list by default
+     * A Group will have an empty persons list by default
      */
     private ObjectProperty<UniquePersonList> groupMembers =
             new SimpleObjectProperty<>(new UniquePersonList());
@@ -51,6 +51,7 @@ public class Group implements ReadOnlyGroup {
         requireNonNull(name);
         this.groupName = new SimpleObjectProperty<>(new GroupName(name));
     }
+
     /**
      * Creates a copy of the given ReadOnlyGroup.
      */
@@ -108,7 +109,6 @@ public class Group implements ReadOnlyGroup {
     public Set<Person> getMembers() {
         return groupMembers.get().toSet();
     }
-
 
 
 }

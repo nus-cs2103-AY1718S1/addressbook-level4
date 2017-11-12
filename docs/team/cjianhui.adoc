@@ -6,16 +6,20 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: Bamboo
 Bamboo is a desktop address book application developed as part of a Software Engineering module requirement. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B4/main/blob/collate/collated/main/cjianhui.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B4/main/blob/collate/collated/test/cjianhui.md[Test code]]
 
-=== Enhancement Added: Sort
+=== Enhancement Added: Sort, Group Functions, Add Events from Google Calendar
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=sort]
+
+include::../UserGuide.adoc[tag=group]
+
+include::../UserGuide.adoc[tag=calendar]
 
 #End of Extract#
 
@@ -23,28 +27,31 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+* Having a "sort" command allows our users to list contacts in the address book in the order that they desire.
+This can be useful as the user may want to view contacts in alphabetical order, or sorted by their email addresses.
+
+* The Group System is meant to be a total overhaul and improvement over the tagging system. Tags do not show you
+at a glance which other contacts share the same tags as the current one, nor are they intuitive in terms of managing contacts
+as a 'group'. With the group feature, a user can see at one glance the group members in the same group and add, remove
+them in a intuitive manner.
+
+* Having a `cadd` command which pulls events from Google Calendar for a contact is useful and meaningful as people tend to keep
+track of their schedule through a calendar of some sort and Google Calendar is a commonly used service.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=sort]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
-
-{Explain similar to the Undo/Redo feature above.}
+=== Enhancement Proposed: Add social media integration
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
 == Project:
 
-{Optionally (not graded), you may include other projects in your portfolio.}

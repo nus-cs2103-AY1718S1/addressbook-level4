@@ -29,9 +29,19 @@ public class TypicalPersons {
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255")
             .withTags("friends").build();
+    public static final ReadOnlyPerson ALICEALT = new PersonBuilder().withName("Alice Pauline")
+            .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
+            .withPhone("85355255")
+            .withProfPic("Alice Pauline.png")
+            .withTags("friends").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
+            .withTags("owesMoney", "friends").build();
+    public static final ReadOnlyPerson BENSONALT = new PersonBuilder().withName("Benson Meier")
+            .withAddress("311, Clementi Ave 2, #02-25")
+            .withEmail("johnd@example.com").withPhone("98765432")
+            .withFavourite(true)
             .withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").build();
@@ -76,8 +86,27 @@ public class TypicalPersons {
         return ab;
     }
 
+    /**
+     * Returns an {@code AddressBook} with all the typical persons.
+     */
+    public static AddressBook getAltAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (ReadOnlyPerson person : getAltPersons()) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
+
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    public static List<ReadOnlyPerson> getAltPersons() {
+        return new ArrayList<>(Arrays.asList(ALICEALT, BENSONALT, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 
     public static AddressBook getEmptyAddressBook() {

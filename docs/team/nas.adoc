@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Bamboo
 Bamboo is a desktop address book application developed as part of a Software Engineering module requirement. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B4/main/blob/collate/collated/main/nassy93.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B4/main/blob/collate/collated/test/nassy93.md[Test code]]
 
 === Enhancement Added: Favourite Function
 
@@ -15,7 +15,7 @@ Bamboo is a desktop address book application developed as part of a Software Eng
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=faveSystem]
 
 #End of Extract#
 
@@ -23,28 +23,64 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+* Having a "Favourite Contacts" system allows our users to find information about contacts that they frequently contact.
+This saves users time that would have been spent searching through the address book for that one specific contact
+as they are able to find their favourite contacts the moment they open Bamboo!
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=faveSystem]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Added: Profile Picture Function
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=profPicSystem]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+* Allowing all contacts to have profile pictures allows us to identify forgotten contacts easier as people tend to forget
+names but remember faces or pictures associated with certain people.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=profPicSystem]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `backup` and `restore`
+
+An enhancement that i proposed was to be able to backup all contacts to an external file or online backup service. +
+This would allow users to have peace of mind in case of data corruption and the commands can also be used when
+users decide to move to other devices and yet want to continue using Bamboo on new devices.
+
+* **backup fp/FILEPATH**: This command would backup all contact data(persons and groups) in Bamboo into an external
+xml file at the given filepath. e.g. "backup fp/C:\temp\backup.xml"
+
+* **restore fp/FILEPATH**: This command would purge and then restore all contact data in Bamboo from an external xml
+file at the given filepath e.g. "restore fp/C:\temp\backup.xml"
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Bug fix for small problem in cadd function (Commit
+https://github.com/CS2103AUG2017-W09-B4/main/commit/027e506c917ea4d4bb7df200dcbe3471dc2aa97b[#36])
 
-== Project:
-
-{Optionally (not graded), you may include other projects in your portfolio.}

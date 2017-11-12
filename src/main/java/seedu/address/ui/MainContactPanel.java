@@ -2,8 +2,9 @@ package seedu.address.ui;
 
 import java.io.File;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -12,14 +13,19 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -28,8 +34,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.web.WebView;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -37,18 +44,13 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * The Browser Panel of the App.
  */
-public class BrowserPanel extends UiPart<Region> {
+public class MainContactPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
-    private static final String FXML = "BrowserPanel.fxml";
+    private static final String FXML = "MainContactPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-
-    @FXML
-    private WebView browser;
 
     @FXML
     private Circle contactImageCircle;
@@ -74,13 +76,17 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private StackPane schedulePlaceholder;
 
+    //This is needed for setting the click listener in setIcons(), if not the
+    //circles won't be able to pass a parameter for the method it calls inside
+    //its listener.
+    private ReadOnlyPerson currentPerson;
+
     private ParallelTransition pt;
 
-    public BrowserPanel() {
+    public MainContactPanel() {
         super(FXML);
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
-        loadDefaultPage();
         //Setup needed JFX nodes which will be updated upon selecting persons
         setupContactImageCircle();
         setupContactDetailsVBox();
@@ -89,12 +95,17 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void setContactImage(ReadOnlyPerson person) throws MalformedURLException {
-        Image img = null;
+        Image img;
         if ("maleIcon.png".equals(person.getProfPic().getPath())) {
             img = new Image("images/maleIcon.png");
         } else {
             try {
-                img = new Image(new File("images/" + person.getProfPic().getPath()).toURI().toURL().toString());
+                File tmp = new File("images/" + person.getProfPic().getPath());
+                if (tmp.exists()) {
+                    img = new Image(new File("images/" + person.getProfPic().getPath()).toURI().toURL().toString());
+                } else { // Failsafe to set contact's image to default if set image is missing
+                    img = new Image("images/maleIcon.png");
+                }
             } catch (MalformedURLException e) {
                 throw new MalformedURLException("URL is malformed in setContactImage()");
             }
@@ -103,6 +114,7 @@ public class BrowserPanel extends UiPart<Region> {
         contactImageCircle.setVisible(true);
         contactImageCircle.setFill(new ImagePattern(img));
         easeIn(contactImageCircle);
+        currentPerson = person;
     }
 
     private void setupContactImageCircle() {
@@ -150,9 +162,48 @@ public class BrowserPanel extends UiPart<Region> {
                     socialIconPlaceholders[i].widthProperty().divide(3),
                     socialIconPlaceholders[i].heightProperty().divide(3))
             );
+            //Set up mouse click listeners to run method to open social pages
+            cir.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    openSocialIconPage(currentPerson);
+                }
+            });
             cir.setFill(new ImagePattern(new Image(imgUrls[i])));
             socialIconPlaceholders[i].setCenter(cir);
             easeIn(cir);
+        }
+    }
+
+    /**
+     * Loads the social page in a new window.
+     * There is no controller file for the social media window fxml
+     * as it is essentially only a WebView.
+     */
+    private void openSocialIconPage(ReadOnlyPerson person) {
+        try {
+            //Load the component
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/view/SocialMediaPageWindow.fxml"));
+            AnchorPane parent = fxmlLoader.load();
+            //Get the webview from the loaded component then put URL
+            WebView socialPageView = (WebView) parent.getChildren().get(0);
+            String temp = person.getSocialMedia().iterator().next().getName().url;
+            socialPageView.getEngine().load(temp);
+            //Create the scene and stage
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            //Setup window size based on the user's screen size
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            stage.setWidth(screenBounds.getWidth() / 1.4);
+            stage.setHeight(screenBounds.getHeight() / 1.2);
+            //Set title and show the scene
+            stage.setTitle("Social Media Window");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new window for social media page.", e);
         }
     }
 
@@ -160,35 +211,10 @@ public class BrowserPanel extends UiPart<Region> {
         schedulePlaceholder.setVisible(false);
     }
 
-    private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
-    }
-
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
-    }
-
-    /**
-     * Loads a default HTML file with a background that matches the general theme.
-     */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
-    }
-
-    /**
-     * Frees resources allocated to the browser.
-     */
-    public void freeResources() {
-        browser = null;
-    }
-
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event)
             throws MalformedURLException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
         setContactImage(event.getNewSelection().person);
         setContactDetails(event.getNewSelection().person);
         setIcons();
@@ -227,14 +253,18 @@ public class BrowserPanel extends UiPart<Region> {
             labels[i].setStyle("-fx-font-size: 17");
             //    easeIn(labels[i]);
         }
+        currentPerson = person;
     }
 
     private void setSchedule(ReadOnlyPerson person) {
         schedulePlaceholder.setVisible(true);
+
         ScheduleListPanel scheduleList = new ScheduleListPanel(person.scheduleProperty().get().asObservableList());
         schedulePlaceholder.getChildren().add(scheduleList.getRoot());
         //scheduleListView.setStyle("-fx-alignment: center-left; -fx-padding: 0 0 0 10;");
         //easeIn(schedulePlaceholder);
+        easeIn(schedulePlaceholder);
+        currentPerson = person;
     }
 
 
@@ -242,14 +272,14 @@ public class BrowserPanel extends UiPart<Region> {
      * Animates any node passed into this method with an ease-in
      */
     private void easeIn(Node node) {
-        FadeTransition ft = new FadeTransition(Duration.millis(400), node);
+        FadeTransition ft = new FadeTransition(Duration.millis(500), node);
         ft.setFromValue(0);
         ft.setToValue(1);
         TranslateTransition tt = new TranslateTransition();
         tt.setNode(node);
-        tt.setFromX(20);
-        tt.setToX(0);
-        tt.setDuration(Duration.millis(400));
+        tt.setFromY(20);
+        tt.setToY(0);
+        tt.setDuration(Duration.millis(500));
         tt.setInterpolator(Interpolator.EASE_IN);
         ParallelTransition pt = new ParallelTransition();
         pt.getChildren().addAll(ft, tt);

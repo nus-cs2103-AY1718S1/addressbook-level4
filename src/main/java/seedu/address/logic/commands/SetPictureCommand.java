@@ -27,6 +27,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
 //@@author nassy93
@@ -48,8 +49,10 @@ public class SetPictureCommand extends UndoableCommand {
     public static final String MESSAGE_INVALID_FILE = "File at given file path was not type .png";
     public static final String MESSAGE_FILE_NOT_EXIST = "File does not exist at given file path";
 
+    private static String type;
     private final Index targetIndex;
     private final String filePath;
+
 
     public SetPictureCommand(Index index, ProfPic filePath) {
         requireNonNull(index);
@@ -61,6 +64,7 @@ public class SetPictureCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         final File file = new File(filePath);
+        System.out.println(filePath);
         String fileType;
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -70,7 +74,11 @@ public class SetPictureCommand extends UndoableCommand {
         }
         try {
             fileType = Files.probeContentType(file.toPath());
-            if (!("image/png".equals(fileType))) { // jpeg or png?
+            if ("image/png".equals(fileType)) { // png verification
+                type = ".png";
+            } else if ("image/jpeg".equals(fileType)) { // jpg verification
+                type = ".jpg";
+            } else {
                 throw new CommandException(MESSAGE_INVALID_FILE);
             }
         } catch (IOException ioException) {
@@ -81,7 +89,7 @@ public class SetPictureCommand extends UndoableCommand {
 
 
         // copy picture to resource/image folder and name copied file as PERSON_NAME.png
-        Path dest = new File("images/" + personToEdit.getName().toString() + ".png").toPath();
+        Path dest = new File("images/" + personToEdit.getName().toString() + type).toPath();
 
         try {
             Files.createDirectories(Paths.get("images")); // Creates missing directories if any
@@ -112,13 +120,14 @@ public class SetPictureCommand extends UndoableCommand {
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();
         Address updatedAddress = personToEdit.getAddress();
-        ProfPic updatedProfPic = new ProfPic(updatedName + ".png");
+        ProfPic updatedProfPic = new ProfPic(updatedName + type);
         Favourite updatedFavourite = personToEdit.getFavourite();
         Set<Tag> updatedTags = personToEdit.getTags();
         Set<Group> updatedGroups = personToEdit.getGroups();
         Set<Schedule> updatedSchedule = personToEdit.getSchedule();
+        Set<SocialMedia> updatedSocialMediaList = personToEdit.getSocialMedia();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
-                updatedProfPic, updatedTags, updatedGroups, updatedSchedule);
+                updatedProfPic, updatedTags, updatedGroups, updatedSchedule, updatedSocialMediaList);
     }
 }

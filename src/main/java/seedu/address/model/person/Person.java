@@ -13,6 +13,8 @@ import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.UniqueScheduleList;
+import seedu.address.model.socialmedia.SocialMedia;
+import seedu.address.model.socialmedia.UniqueSocialMediaList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -47,6 +49,12 @@ public class Person implements ReadOnlyPerson {
     *  A Person will have an empty schedule list by default
     */
     private ObjectProperty<UniqueScheduleList> schedule = new SimpleObjectProperty<>(new UniqueScheduleList());
+
+
+    /**
+     *  A Person will have an empty social media url list by default
+     */
+    private ObjectProperty<UniqueSocialMediaList> socialMedia = new SimpleObjectProperty<>(new UniqueSocialMediaList());
 
 
     /**
@@ -97,6 +105,23 @@ public class Person implements ReadOnlyPerson {
 
     /**
      * Every field must be present and not null.
+     * Constructor for Social Media feature
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<SocialMedia> socialMedias,
+                  Favourite favourite, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, favourite, tags, socialMedias);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.favourite = new SimpleObjectProperty<>(favourite);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.socialMedia = new SimpleObjectProperty<>(new UniqueSocialMediaList(socialMedias));
+    }
+
+    /**
+     * Every field must be present and not null.
      * Constructor for Group feature
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Group> groups) {
@@ -117,8 +142,9 @@ public class Person implements ReadOnlyPerson {
      * Constructor for XMLAdaptedPerson
      */
     public Person(Name name, Phone phone, Email email, Address address, Favourite favourite,
-                  ProfPic profPic, Set<Tag> tags, Set<Group> groups, Set<Schedule> schedule) {
-        requireAllNonNull(name, phone, email, address, tags, groups, schedule);
+                  ProfPic profPic, Set<Tag> tags, Set<Group> groups, Set<Schedule> schedule,
+                  Set<SocialMedia> socialMedia) {
+        requireAllNonNull(name, phone, email, address, tags, groups, schedule, socialMedia);
 
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -131,6 +157,8 @@ public class Person implements ReadOnlyPerson {
         // protect internal groups from changes in the arg list
         this.groups = new SimpleObjectProperty<>(new UniqueGroupList(groups));
         this.schedule = new SimpleObjectProperty<>(new UniqueScheduleList(schedule));
+        // protect internal social media from changes in the arg list
+        this.socialMedia = new SimpleObjectProperty<>(new UniqueSocialMediaList(socialMedia));
     }
 
     /**
@@ -138,7 +166,8 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFavourite(),
-                source.getProfPic(), source.getTags(), source.getGroups(), source.getSchedule());
+                source.getProfPic(), source.getTags(), source.getGroups(), source.getSchedule(),
+                source.getSocialMedia());
     }
 
     public void setName(Name name) {
@@ -197,10 +226,8 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    public void setFavourite() {
-        Favourite fav = new Favourite(false);
-        this.favourite.set(fav);
-    }
+    public void setFavourite(Favourite fav) {
+        this.favourite.set(fav); }
 
     @Override
     public ObjectProperty<Favourite> favouriteProperty() {
@@ -213,8 +240,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setProfPic(ProfPic profPic) {
-        this.profPic.set(profPic);
-    }
+        this.profPic.set(profPic); }
 
     @Override
     public ObjectProperty<ProfPic> profPicProperty() {
@@ -278,6 +304,16 @@ public class Person implements ReadOnlyPerson {
      */
     public void setSchedule(Set<Schedule> replacement) {
         schedule.set(new UniqueScheduleList(replacement)); }
+
+    @Override
+    public Set<SocialMedia> getSocialMedia() {
+        return Collections.unmodifiableSet(socialMedia.get().toSet());
+    }
+
+    @Override
+    public ObjectProperty<UniqueSocialMediaList> socialMediaProperty() {
+        return socialMedia;
+    }
 
     @Override
     public boolean equals(Object other) {
