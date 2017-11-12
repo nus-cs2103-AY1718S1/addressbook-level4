@@ -1,5 +1,8 @@
 package seedu.address.commons.core.index;
 
+/**
+ * To get or set the selection state of the application
+ */
 public class Selection {
 
     private static boolean isPersonSelected = false;
