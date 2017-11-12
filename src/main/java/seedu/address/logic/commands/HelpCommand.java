@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.commandidentifier.CommandIdentifier;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Country;
 
 /**
@@ -52,11 +51,6 @@ public class HelpCommand extends Command {
         this.commandIdentifier = targetCommandIdentifier;
     }
 
-    //@@author icehawker
-    public HelpCommand(String startUpHelp) throws IllegalValueException {
-        this.commandIdentifier = new CommandIdentifier(startUpHelp);
-    }
-    //@@author CT15
     @Override
     public CommandResult execute() {
         String commandResult;
