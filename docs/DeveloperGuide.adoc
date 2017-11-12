@@ -437,7 +437,37 @@ private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
 }
 ----
 
+Listener for AccessWebsiteRequestEvent in BrowserPanel.java:
+[source,java]
+----
+@Subscribe
+private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
+    handleWebsiteAccess(event.website);
+}
+----
+
+Displaying of Google Maps in BrowserPanel.java:
+[source,java]
+----
+public void handleWebsiteAccess(String website) {
+    loadPage(website);
+}
+----
+
+The following sequence diagram shows how the events operation works:
+
+As seen in the diagram below, when `events` is typed into the command line input, a new `EventsCommand` is created.
+
+image::EventsCommandDiagram2.png[width="800"]
+
 ==== Design Considerations
+**Aspect:** Implementation of `EventsCommand`
+**Alternative 1 (current choice):** Extends to `Command`
+**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class.
+**Cons:** Users may want to undo `EventsCommand` as they may not have wanted to be in Events mode.
+**Alternative 2:** Extends to `UndoableCommand`
+**Pros:** Users can undo `EventsCommand` when they mistype the command.
+**Cons:** Developers need to learn the implementation of `UndoableCommand`. Unnecessary to extend to `UndoableCommand` since users can type `ListCommand` to go back to Persons mode.
 // end::events[]
 
 // tag::addevent[]
