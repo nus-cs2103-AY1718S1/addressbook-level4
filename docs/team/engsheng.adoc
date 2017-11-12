@@ -3,40 +3,41 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== image:engsheng_projectheader.png[width="900"]
-`UNIFY` is a Command Line Interface AddressBook that helps users manage your contacts efficiently. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 12 kLoC.
+== Project: Unify Address Book
+image::engsheng_projectheader.png[width="900"]
+`Unify` is a Command Line Interface AddressBook that helps users manage your contacts efficiently. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 12 kLoC.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/main/hanselblack.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/test/hanselblack.md[Test code]]
 
-=== image:engsheng_header_enhancementadded.png[width="900"]
-This section provides the list of enhancement that has been added to UNIFY address book.
+{sp}
 
-==== image:engsheng_header_music.png[width="500"]
-==== External behavior
+image::engsheng_header_enhancementadded.png[width="900"]
 
----
-#Start of Extract [from: User Guide]#
+{sp}
+
+image::engsheng_header_music.png[width="900"]
+
+{sp}
+
+image::engsheng_header_externalbehavior.png[width="900"]
 
 include::../UserGuide.adoc[tag=musiccommand]
 
-#End of Extract#
+{sp}
 
----
+image::engsheng_header_justification.png[width="900"]
 
-==== Justification
+Most of us enjoy listening to music while we do our work. Hence, by having a built-in music player, users can enjoy some tunes while they adding, or editing or any other related task in Unify address book.
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+You may ask, "Why can't I use other streaming services such as Spotify?" Well, the reason is that this does not require internet connection, and since it is already built-in, it encourages users to use it immediately
+without any second thought. Users would prefer this method as removes the hassle of requiring multiple clicks to finding a music to play by having just a single command execution to play some music.
 
-==== Implementation
 
----
-#Start of Extract [from: Developer Guide]#
+image::engsheng_header_implementation.png[width="900"]
 
 include::../DeveloperGuide.adoc[tag=musiccommand]
 
-#End of Extract#
-
----
+{sp}+
 
 === image:engsheng_header_enhancementproposed.png[width="900"]
 === Enhancement Proposed: Add command `remark`
