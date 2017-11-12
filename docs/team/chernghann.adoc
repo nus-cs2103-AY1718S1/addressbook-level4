@@ -3,16 +3,23 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+== Purpose
+
+This project portfolio showcases my contributions to The Myth's Book, a software engineering product made by
+my team and I during our study in National University of Singapore. The portfolio provides an outline of our project and
+showcases my contributions and justifications made to The Myth's Book.
+
 == Project: The Myth's Book
 
-The Myth's Book is a `Command Line Input` based software dedicated for university students to store useful information of their contacts.
-This application caters to students who are efficient and comfortable in typing out command line inputs to manipulate with the details of their contacts
-There are several features ranging from tracking of birthday dates and upcoming events through a calendar. It also provides a convenient access to friend's webpage
-and even Google Maps through the in-built browser panel. The Myth's Book is a software application that is coded in `Java` programming language.
+The Myth's Book is an address book dedicated for university students to store useful information such
+as websites, phone numbers and emails of the people around them for personal usage. The application helps students
+to keep track of birthday dates and upcoming events through a calendar and facilitate convenient access to their friend's website
+and even Google Maps location through the in-built browser panel in the application. Furthermore, there are many
+useful tools such as finding group tags (e.g. friends, neighbours) and switching themes for better user preference and usability.
 
-My contributions to this project are improving the `add` function to include additional fields such as `HomeNumber` and `SchoolEmail` , a new `AddEvent`
-command to allow the students to create and store upcoming events into The Myth's Book and a `Calendar` for the students to view the events. Each of this
-enhancements are further explained below.
+The Myth's Book is a `Command Line Input` based software which helps caters to students who are efficient and comfortable
+in typing out command line inputs to manipulate with information of their contacts in the address book.
+The Myth's Book is a software application that is coded in `Java` programming language.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/chernghann.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/test/chernghann.md[Test code]]
 
@@ -95,15 +102,18 @@ include::../DeveloperGuide.adoc[tag=calendar]
 
 ---
 
-=== Enhancement Proposed: Sending of Text Messages
+=== Enhancement Proposed 1: School Timetable
 
-Most of the University students have their phone numbers linked to popular instant messaging service platform such as Whatsapp and Telegram.
-The enhancement that I am proposing is a function in The Myth's Book will allow the user to send text messages to the big platforms mentioned earlier.
-This will allow The Myth's Book to become an all-in-one application for the university students.
+Nusmods is commonly used by students in National University of Singapore to plan for their school modules and organising their timetable.
+I am proposing an in-app timetable that caters to the all the different universities in Singapore. Similar to Nusmods, the students
+will be able to key in their module code and plan out their timetable in The Myth's Book. Thankfully for the Nusmods api, I believe that
+this enhancement could be achieve in a few month's time and be implemented in the next version of The Myth's Book.
 
-* Considerations:
-- Having an in-app messaging service without tapping into using Whatsapp Web or Telegram Desktop functions
-- Account based application such that the messages are secured and personal for the user.
+=== Enhancement Proposed 2: Name Card Recognition
+
+As we attempt to allow The Myth's Book to reach out to the target audience, I feel that the working adults could also use this application
+at work. Thus, this enhancement that I propose is for the working adults who tend to have name cards or business cards. User of
+the application can then simply use their laptop's web camera feature to scan the name card and store the details of the contact.
 
 === Other contributions
 * Acceptance Testing
@@ -111,7 +121,12 @@ This will allow The Myth's Book to become an all-in-one application for the univ
 - Found a bug in implementation (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/113[#113])
 
 * Documentation
-- Included a `Back to Top` for User Guide and Developer Guide.
+- Included a `Back to Top` button for both User Guide and Developer Guide that improves user friendliness.
+
+Software Contributions
 
 * Storage
 - Included ability to readBackUpAddressBook (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/48[#45])
+
+* Test coverages
+- Increase test coverages (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/151[#151], https://github.com/CS2103AUG2017-T15-B3/main/pull/158[#158])

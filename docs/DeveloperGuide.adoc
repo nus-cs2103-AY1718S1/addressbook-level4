@@ -959,6 +959,8 @@ Figure 5.8.2 What the user sees
 //tag::calendar[]
 === Calendar mechanism
 
+==== Creating Calendar Layout
+
 The Calendar is created with GridPanes and VBox. The following code snippets describes how the `AnchorPaneNode` object fills up the
 GridPane of the calendar. At the end of the method, the VBox gathers all the required parameters to get the view of the calendar.
 
@@ -995,23 +997,11 @@ GridPane of the calendar. At the end of the method, the VBox gathers all the req
             ap.getChildren().add(txt);
             dayLabels.add(ap, col++, 0);
         }
-
-        // Create calendarTitle and buttons to change current month
-        calendarTitle = new Text();
-        calendarTitle.getStyleClass().add("calendar-color");
-        Button previousMonth = new Button("<");
-        previousMonth.setOnAction(e -> previousMonth());
-        Button nextMonth = new Button(">");
-        nextMonth.setOnAction(e -> nextMonth());
-        HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
-        titleBar.setSpacing(5);
-        titleBar.setAlignment(Pos.BASELINE_CENTER);
-        // Populate calendar with the appropriate day numbers
-        populateCalendar(yearMonth, eventList);
-        // Create the calendar view
-        view = new VBox(titleBar, dayLabels, calendar);
+        ...
     }
 ----
+
+==== Populating Calendar
 
 Now, you have the Calendar outline, the populateCalendar method calendar called will then populate the Calendar with the individual dates of the months.
 During the process, we would check if is there any events that are on the date corresponding to the AnchorPaneNode. If it tallies, the AnchorPaneNode will
@@ -1056,6 +1046,9 @@ be populated with a change in background color.
     }
 ----
 
+View the full code at https://github.com/CS2103AUG2017-T15-B3/main/blob/master/src/main/java/seedu/address/ui/Calendar.java[Calendar] ,
+https://github.com/CS2103AUG2017-T15-B3/main/blob/master/src/main/java/seedu/address/ui/AnchorPaneNode.java[AnchorPaneNode]
+
 The updating of different months and population of event nodes are done by the two separate methods that will post events to
 `EventsCenter` to update the calendar based on the `UniqueEventList`.
 
@@ -1070,10 +1063,12 @@ The updating of different months and population of event nodes are done by the t
     }
 ----
 
-The mechanism behind the process of adding an event from the dialog box is shown in Figure 5.9.1 below.
+==== Dialog Box
+
+The mechanism behind the process of adding an event from the dialog box is shown in Figure 5.9.3.1 below.
 
 image::dialogaddeventsequencediagram.PNG[width="800"]
-Figure 5.9.1 Dialog Add Event Sequence Diagram
+Figure 5.9.3.1 Dialog Add Event Sequence Diagram
 
 From the startDialog method in `AnchorPaneNode` class, after receiving a valid Event, an `AddEventRequestEvent` object will be posted to `EventsCenter`.
 Then with the `@Subscribe` function, a handleAddEvent() method in `ModelManager` will be called to addEvent of the `AddressBook` object. The following code snippets
