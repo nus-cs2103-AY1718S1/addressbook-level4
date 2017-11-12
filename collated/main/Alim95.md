@@ -963,6 +963,41 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     }
 
 ```
+###### \java\seedu\address\model\util\SampleDataUtil.java
+``` java
+    public static Task[] getSampleTask() {
+        try {
+            return new Task[]{
+                new Task(new Header("Pick up a new book")),
+                new Task(new Header("Learn basic Thai")),
+                new Task(new Header("Update collation of codes"),
+                        DateTimeParserUtil.nattyParseDateTime("yesterday")),
+                new Task(new Header("Go grocery shopping"),
+                        DateTimeParserUtil.nattyParseDateTime("today")),
+                new Task(new Header("Help Jimmy with math"),
+                        DateTimeParserUtil.nattyParseDateTime("tonight")),
+                new Task(new Header("Go for fishing trip"),
+                        DateTimeParserUtil.nattyParseDateTime("tmr night")),
+                new Task(new Header("Fetch Jimmy from soccer practise"),
+                        DateTimeParserUtil.nattyParseDateTime("two days later")),
+                new Task(new Header("Go to the gym"),
+                        DateTimeParserUtil.nattyParseDateTime("2 days later")),
+                new Task(new Header("Clean up house with Jimmy"),
+                        DateTimeParserUtil.nattyParseDateTime("this weekend")),
+                new Task(new Header("Go for parent teacher meeting"),
+                        DateTimeParserUtil.nattyParseDateTime("next week")),
+                new Task(new Header("Pay off debt"),
+                        DateTimeParserUtil.nattyParseDateTime("next week")),
+                new Task(new Header("Look for new recipes"),
+                        DateTimeParserUtil.nattyParseDateTime("next week")),
+                new Task(new Header("Finish up project"),
+                        DateTimeParserUtil.nattyParseDateTime("two weeks later")),
+            };
+        } catch (IllegalValueException e) {
+            throw new AssertionError("sample task data cannot be invalid", e);
+        }
+    }
+```
 ###### \java\seedu\address\ui\AliasCard.java
 ``` java
 /**

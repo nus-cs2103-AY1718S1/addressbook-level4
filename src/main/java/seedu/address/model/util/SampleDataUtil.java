@@ -66,6 +66,7 @@ public class SampleDataUtil {
         }
     }
 
+    //@@author Alim95
     public static Task[] getSampleTask() {
         try {
             return new Task[]{
@@ -98,6 +99,7 @@ public class SampleDataUtil {
             throw new AssertionError("sample task data cannot be invalid", e);
         }
     }
+    //@@author
 
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
