@@ -28,7 +28,7 @@ public class LogoutCommandTest {
         LogoutCommand logoutCommand = prepareCommand();
 
         java.io.File filetoDelete =
-                new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
+                new java.io.File("data/StoredCredential");
         filetoDelete.mkdirs();
         filetoDelete.createNewFile();
         String expectedMessage = String.format(LogoutCommand.MESSAGE_SUCCESS);
@@ -42,7 +42,7 @@ public class LogoutCommandTest {
         LogoutCommand logoutCommand = prepareCommand();
 
         java.io.File filetoDelete =
-                new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
+                new java.io.File("data/StoredCredential");
         filetoDelete.delete();
         String expectedMessage = String.format(LogoutCommand.MESSAGE_FAILURE);
         assertCommandFailure(logoutCommand, model, expectedMessage);

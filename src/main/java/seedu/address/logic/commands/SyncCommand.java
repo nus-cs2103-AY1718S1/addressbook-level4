@@ -601,7 +601,7 @@ public class SyncCommand extends Command {
      */
     private void saveStatus(Serializable object) {
         try {
-            FileOutputStream saveFile = new FileOutputStream("syncedIDs.dat");
+            FileOutputStream saveFile = new FileOutputStream("data/syncedIDs.dat");
             ObjectOutputStream out = new ObjectOutputStream(saveFile);
             out.writeObject(object);
             out.close();
@@ -618,7 +618,7 @@ public class SyncCommand extends Command {
     private Object loadStatus() {
         Object result = null;
         try {
-            FileInputStream saveFile = new FileInputStream("syncedIDs.dat");
+            FileInputStream saveFile = new FileInputStream("data/syncedIDs.dat");
             ObjectInputStream in = new ObjectInputStream(saveFile);
             result = in.readObject();
             in.close();

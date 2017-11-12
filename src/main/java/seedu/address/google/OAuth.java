@@ -51,7 +51,7 @@ public class OAuth extends Observable {
 
     /** Directory to store user credentials. */
     private final java.io.File dataStoreDir =
-            new java.io.File(System.getProperty("user.home"), ".store/addressbook");
+            new java.io.File("data/");
 
     /**
      * Global instance of the {@link DataStoreFactory}. The best practice is to make it a single

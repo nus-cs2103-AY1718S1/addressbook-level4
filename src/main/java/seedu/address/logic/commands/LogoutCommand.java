@@ -25,10 +25,10 @@ public class LogoutCommand extends Command {
 
     /** Directory to store user credentials. */
     private final java.io.File dataStoreDir =
-            new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
+            new java.io.File("data/StoredCredential");
 
     private final java.io.File syncedIDs =
-            new java.io.File("syncedIDs.dat");
+            new java.io.File("data/syncedIDs.dat");
 
     @Override
     public CommandResult execute() throws CommandException {
