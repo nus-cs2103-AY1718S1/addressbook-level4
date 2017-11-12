@@ -275,11 +275,8 @@ Returns `john` and `John Doe`
 * `findByName Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-<<<<<<< HEAD
-// tag::findByAddress[]
-=======
 // end::find1[]
->>>>>>> 56cf6ff83cd5ce3e2016315f65ce749fe377e916
+// tag::findByAddress[]
 
 === Locating persons by address: `findByAddress`
 
