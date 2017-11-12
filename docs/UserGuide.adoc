@@ -20,8 +20,8 @@ By: `MedNus`      Since: `OCT 2017`      Licence: `MIT`
 MedNus is a custom address book made for medical professionals. +
  +
 You can find many different features available in MedNus that are useful for medical professionals such as +
-recording appointments, listing your patients based on blood type and even saving a canvas drawing of your +
-patient's injury. +
+recording appointments, listing your patients based on blood type and provides you with various keyboard and +
+command shortcuts so that you can work efficiently and effectively. +
  +
 With MedNus's unique UI theme, keyboard shortcuts and productivity features, you can do your job effectively +
 and productively. +
@@ -451,6 +451,8 @@ Removing a Remark: You can remove a remark by typing 'r/' without specifying any
 *Format:* `remark INDEX r/` +
 
 *Examples:*
+
+You can refer to Figure 18 below for an example on using the `remark` command. +
 
 image::remarkexample.png[width="800"]
     Figure 18: Remark Command Usage Diagram
