@@ -161,6 +161,7 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndUnpinned;
     }
 
+    //@@author deep4k
     /**
      * Selects the equivalent person in the list.
      *

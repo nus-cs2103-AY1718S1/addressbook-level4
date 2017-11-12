@@ -184,15 +184,6 @@ public class SortFindPanel extends UiPart<Region> {
     }
 
     /**
-     * Switches style to person view.
-     */
-    private void switchToPersonView() {
-        searchBox.setPromptText("Search Person...");
-        sortMenu.setVisible(true);
-        searchBox.setVisible(true);
-    }
-
-    /**
      * Switches style to alias view.
      */
     private void switchToAliasView() {
@@ -204,6 +195,7 @@ public class SortFindPanel extends UiPart<Region> {
      * Switches style to pinned person search.
      */
     private void switchToPinnedPersonSearchStyle() {
+        searchBox.setText("");
         searchBox.setPromptText("Search Pinned...");
     }
 
@@ -211,6 +203,7 @@ public class SortFindPanel extends UiPart<Region> {
      * Switches style to all person search.
      */
     private void switchToAllPersonSearchStyle() {
+        searchBox.setText("");
         searchBox.setPromptText("Search Person...");
     }
 
@@ -218,8 +211,19 @@ public class SortFindPanel extends UiPart<Region> {
      * Switches style to task view.
      */
     private void switchToTaskView() {
+        searchBox.setText("");
         searchBox.setPromptText("Search Task...");
         sortMenu.setVisible(false);
+        searchBox.setVisible(true);
+    }
+
+    /**
+     * Switches style to person view.
+     */
+    private void switchToPersonView() {
+        searchBox.setText("");
+        searchBox.setPromptText("Search Person...");
+        sortMenu.setVisible(true);
         searchBox.setVisible(true);
     }
 

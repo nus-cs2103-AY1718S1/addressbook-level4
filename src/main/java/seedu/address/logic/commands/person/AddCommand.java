@@ -8,6 +8,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToNewPersonRequestEvent;
+import seedu.address.commons.events.ui.ToggleListAllStyleEvent;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -56,6 +60,11 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addPerson(toAdd);
+            EventsCenter.getInstance().post(new ToggleListAllStyleEvent());
+            //@@author Alim95
+            EventsCenter.getInstance()
+                    .post(new JumpToNewPersonRequestEvent(Index.fromOneBased(model.getFilteredPersonList().size())));
+            //@@author
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);

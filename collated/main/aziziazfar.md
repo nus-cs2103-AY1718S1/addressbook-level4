@@ -109,9 +109,10 @@
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             boolean isPrivate = false;
             boolean isPinned = false;
+            boolean isSelected = false;
 
             ReadOnlyPerson person = new Person(name, phone, email, address, birthday, remark, tagList,
-                    isPrivate, isPinned);
+                    isPrivate, isPinned, isSelected);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
