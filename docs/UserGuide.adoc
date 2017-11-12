@@ -496,20 +496,45 @@ browser section of the main window.
 
 //tag::autocomplete[]
 === Autocomplete
+Trying to type in long commands can be quite a hassle. That is why Ark comes with tab autocompletion which is able to
+help fill in commands as well as the prefixes for you without requiring you to fully type out the command
+with the needed fields. Ark autocompletion is smart and knows exactly what field you need, all you have to do is press
+kbd:[Tab] and let Ark handle the rest!
 
-Ark comes with tab autocompletion which is able to complete a command for you
-without requiring you to type out the command fully. +
-To make use of this feature, simply key in the first few characters of the command you with to enter and press the
-kbd:[Tab] key.
-Ark will then fill in the rest of the command for you in the command box.
-Then press kbd:[Enter] key to enter the command.
+*Autocomplete for commands* +
+To make use of the autocomplete feature for commands, simply type in the first few letters of the command you want
+to use:
 
-There is more than one possibility for the autocompletion, Ark will display the possible options to you as shown in the
+image::autocompleteWithStartOfAddCommand.PNG[width="400"]
+
+now press the kbd:[Tab] key: +
+
+image::autocompleteWithFullAddCommand.PNG[width="400"]
+
+Ark will then fill in the rest for you if there is a match.
+
+If there is more than one possibility for the autocompletion, Ark will display the possible options to you as shown in the
 below.
 
-image::TabAutocompleteMultipleExample.PNG[width="400"]
+image::autocompleteWithEditCommandCycle.PNG[width="400"]
 _Figure 5.21.1 : If there are multiple autocomplete options, the options will be displayed in the result window_
 
+In this case, you can press tab to cycle through the different options available.
+
+image::autocompleteWithExitCommandCycle.PNG[width="400"]
+
+*Autocomplete for prefixes and indexes* +
+For commands that require prefixes, you can press kbd:[Tab] after filling in the command word.Ark will bring you to the
+next missing prefix for you to fill in. After this, you can then press tab to cycle through the list of prefixes.
+
+image::autocompleteWithFullAddCommandAndOnePrefix.PNG[width="400"]
+image::autocompleteWithFullAddCommandAndOnePrefixCycle.PNG[width="400"]
+
+For commands that require indexes, you can press kbd:[Tab] after filling in the command word. Ark will then
+allow you to cycle through the indexes available by pressing kbd:[Tab]
+
+image::autocompleteWithStartOfSelectCommand.PNG[width="400"]
+image::autocompleteWithStartOfSelectCommandCycle.PNG[width="400"]
 Examples:
 
 * `a` + kbd:[Tab] (auto-completes with `add` in the command line input)
