@@ -8,7 +8,7 @@ ConTag is an efficient and feature-packed desktop address book application for t
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/main/icehawker.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/test/icehawker.md[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Copy email address(es) of selected contacts
+=== => Enhancement Added 1: Copy email address(es) of selected contacts
 
 ==== External behavior
 
@@ -23,8 +23,12 @@ include::../UserGuide.adoc[tag=copy]
 
 ==== Justification
 
+---
+
 Multiple emails are copied rather than other fields as it is the most used mode of communication in a personal computer (PC),
-which is where this application resides.
+which is where this application resides. We expect this feature to be used for people who do not use their PC's native Mail app feature,
+in which case the Email command cannot be used. Those who want to share their contacts' email details with others can also
+save time with this command.
 
 Phone numbers are seldom used as PCs do not typically have the ability to perform voice calls, and even web calls such as
 Skype calls are usually able to take in both email and phone number inputs. Meanwhile, the physical address does not have
@@ -41,6 +45,8 @@ command that takes in all currently displayed contacts, are potential planned fe
 of user preferences and usage patterns to decide which input methods to include, as allowing too many modes of input can be
 confusing to novice users and inefficient for the app to process (thereby increasing wait time and resource usage).
 
+---
+
 ==== Implementation
 
 ---
@@ -52,7 +58,7 @@ include::../DeveloperGuide.adoc[tag=copy]
 
 ---
 
-=== Enhancement Added: Infer name of country from a phone number's country code, and display it on the contact's panel
+=== => Enhancement Added 2: Detect contact's country from code prefix in phone number, and display country name on profile.
 
 ==== External behavior
 
@@ -63,12 +69,23 @@ include::../UserGuide.adoc[tag=country_code]
 
 #End of Extract#
 
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=country_code2]
+
+#End of Extract#
+
 ---
 
 ==== Justification
 
+---
 Most importantly, this feature allows the user to skip the input of a new contact's country, and makes the country section
 of the Address input optional as well. This reduces the number of steps during contact creation and modification.
+
+Simultaneously, it allows contacts to be filtered and searched by country without the expense of effort having to manually label
+them earlier.
 
 This implementation involves detecting the start and end of the country code prefix in a phone number with "+" and " "
 respectively because this is a widely used international convention, and the plus sign and first white space are unique.
@@ -83,6 +100,8 @@ We expect to update shortly and be able to detect and infer the country name fro
 A future update will include support for multiple phone numbers as a standard, with multiple countries displayed if phone
 numbers differ in country codes, as well.
 
+---
+
 ==== Implementation
 
 ---
@@ -94,10 +113,84 @@ include::../DeveloperGuide.adoc[tag=country_code]
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== => Enhancement Added 3: Backup address book to any location.
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+
+The Backup function makes it easier for the user to secure their valuable information, with no room for error.
+As such, the implementation forbids overwriting another addressbook.xml file when writing a new one. Users must
+rename or remove existing `addressbook.xml` files in the same location to avoid accidentally losing information that
+they still need.
+
+In addition, Backup should allow users to type a path without typing file name `addressbook.xml` (which is required for
+the code to write to the new file copy). This is because the file name is always constant, and those who do not know
+the file name or are familiar with the app can choose not to include it in the path provided, thus saving time and
+preventing confusion.
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+
+=== => Enhancement Added 4: Display a quick-start help guide in result display panel on start-up.
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=quick_start]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As there is only about 3 lines' worth of space in the result display box, we needed to prioritize the most important information
+to the user. Since a Command Line Interface (CLI) may have a steeper learning curve stemming from users being unable to remember commands,
+this was our primary concern. However, there was insufficient space to include the parameter inputs for each command. As we did
+create specific 3-line quick help for all commands, there was no urgent need to include extra details within this quick summary of commands.
+
+This lack of space also forced us to make full use of the space by using 4 spaces between each command listed, rather than a new line
+for each command. This reasonably compact layout should also be more efficient for users to glance at, rather than in a long straight
+line in either direction.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=quick_start]
+
+#End of Extract#
+
+---
+
 
 === Other contributions
 
-*
+* Creating JUnit tests to ensure application is in working order during development.
+* Revamping User Guide e.g. formatting and feature grouping.

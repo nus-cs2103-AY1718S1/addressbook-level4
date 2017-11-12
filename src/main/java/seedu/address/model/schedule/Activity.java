@@ -42,7 +42,7 @@ public class Activity {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Activity // instanceof handles nulls
-                && this.value.equals(((Activity) other).value)); // state check
+                && this.value.equalsIgnoreCase(((Activity) other).value)); // state check
     }
 
     @Override

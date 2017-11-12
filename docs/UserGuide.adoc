@@ -49,7 +49,16 @@ Key features you can expect:
 
 === Authors and Contributors
 The initial version of the user guide was written by Team SE-EDU.
-The current releases for ConTag are currently being orchestrated by a team of four, Aw Wen Hao , Calvin Tantio, Cheng Jin Ting, Chung Tin Long.
+
+The current releases for ConTag are currently being orchestrated by a team of four:
+
+ * Aw Wen Hao
+
+ * Calvin Tantio
+
+ * Cheng Jin Ting
+
+ * Chung Tin Long
 
 == Getting Started
 
@@ -62,7 +71,7 @@ This app will not work with earlier versions of Java 8 and below.
 .  Copy the file to your home folder of choice.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::ContagDemo.png[width="790"]
+image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -103,9 +112,14 @@ Once you have familiarized yourself with the application, try typing a command's
 Shows the usage of the specific command identified. If no command is specified, opens help window. +
 Format: `help [COMMAND_IDENTIFIER]`
 
-[TIP]
-A command identifier includes all existing commands and their aliases.
+[NOTE]
+A valid command identifier includes all existing commands and their aliases.
 
+// tag::quick_start[]
+[TIP]
+You can count on the quick-start help list of commands in the result display upon application start
+if you need a quick reminder of the function you need to enter!
+// end::quick_start[]
 [NOTE]
 Close all help windows before executing `help [COMMAND_IDENTIFIER]`.
 
@@ -134,11 +148,17 @@ A person must have at least 1 email. *[v1.3 update]*
 
 [TIP]
 ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
+// tag::country_code[]
+[TIP]
+Phone numbers may optionally include country codes, beginning with '+' and with a white space between the code and the rest of the phone number.
+
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/123, John street, #01-01, Singapore 407989`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/1234567 t/criminal`
+* `add n/John Doe p/+1 98765432 e/johnd@example.com a/123, John street, #01-01, Singapore 407989`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/12345678 t/criminal`
+
+// end::country_code[]
 
 ==== Editing a person : `edit` [Last updated in v1.3]
 
@@ -152,6 +172,11 @@ Ensure that you have input the correct prefix [n/NAME] , [p/PHONE] , [e/EMAIL]  
 
 [TIP]
 ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
+// tag::country_code2[]
+[TIP]
+Can't figure how to change a contact's country?
+Country name is automatically inferred from any country code input in the phone number.
+// end::country_code2[]
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -167,6 +192,7 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
 // end::multipleemails[]
 
 // tag::deletemultiple[]
@@ -184,7 +210,6 @@ Format: `delete INDEX [UNIQUE INDEX]...`
 * If there is more than one index, the indices indicated must be different from each other.
 ****
 
-[INFO]
 *v1.1 update:* This feature allows the deleting of more than 1 person.
 
 Examples:
@@ -286,6 +311,7 @@ Locates the 2nd person's address in the address book.
 Locates the 1st person's address in the results of the `find` command.
 // end::locate[]
 
+// tag::schedule[]
 ==== Scheduling an activity: `schedule` [Since v1.3]
 
 => Alias: `sc` <=
@@ -293,9 +319,9 @@ Locates the 1st person's address in the results of the `find` command.
 Schedules an activity with person(s) specified by the index number(s). +
 Format: `schedule INDEX [UNIQUE INDEX]... d/DATE act/ACTIVITY`
 
-****
-* DATE must follow DD-MM-YYYY format.
-****
+[NOTE]
+DATE must follow DD-MM-YYYY format.
+
 
 Examples:
 
@@ -305,7 +331,7 @@ Associates the specified schedule with the 1st and 3rd persons in the address bo
 * `find n/Betsy` +
 `schedule 1 d/25-12-2017 act/Christmas dinner` +
 Associates the specified schedule with the 1st person in the results of the `find` command.
-
+// end::schedule[]
 // tag::agenda[]
 ===== Viewing of user's agenda [Since v1.4]
 
@@ -386,6 +412,37 @@ Emails the 1st and 2nd person in the address book.
 `email 1` +
 Emails the 1st person in the results of the `find` command.
 
+//tag::backup[]
+==== Back up address book : `backup` [Since v1.5]
+
+=> Alias: `b` <=
+
+Create an exact copy of your address book in another directory anywhere on your PC.
+Format: `backup TARGET_DIRECTORY`
+
+****
+* Result of command will only display as either successful or unsuccessful.
+* If unsuccessful, check for the following:
+* Does the directory folder exist? Folders are not created by the application, only the file is.
+* Does a backup file `addressbook.xml` already exist in your specified folder? Rename or remove it
+to solve unsuccessful attempt, as the application will protect and not overwrite your data.
+****
+
+Examples:
+
+* `backup F:\Folder` +
+Backs up `addressbook.xml` at the location `F:\Folder\addressbook.xml`.
+* `b C:\Folder 2\addressbook.xml` +
+Backs up `addressbook.xml` at the above-specified location.
+
+Note:
+
+1. Entering `addressbook.xml` at the end of your target path is optional, as the application
+can take in either format.
+
+2. The path can include white spaces such as `\Folder 2\`, so do not replace spaces with other characters.
+//end::backup[]
+
 === Other navigation commands
 
 ==== Listing all persons : `list`
@@ -462,6 +519,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::welcomeScreen[]
 ==== Enabling and disabling the welcome screen: `welcome` [Since v1.5]
 
 => Alias: `w` <=
@@ -469,9 +527,23 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Enables or disables the welcome screen.
 Format: `welcome ENABLING_KEYWORD`
 
+Examples:
+
+* `welcome enable`
+
+* `welcome disable` +
+
 [NOTE]
-ENABLING_KEYWORD takes in 2 values: `enable` and `disable` +
 The welcome screen is disabled by default.
+
+[TIP]
+Try enabling the welcome screen, close and rerun ConTag.
+
+If the welcome screen is successfully enabled, you should be able to see a the following screen, as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome screen displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
+
+image::WelcomeScreen.png[width="400"]
+_Figure 3.4.3.1: The welcome screen_
+// end::welcomeScreen[]
 
 ==== Exiting the program : `exit`
 
@@ -494,17 +566,19 @@ To *transfer data* to another Computer, install the app in the other computer an
 |Commands Words |Commands Alias |Format|Example
 |link:#adding-a-person-code-add-code-last-updated-in-v1-3[Add] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL] a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
 
+|link:#opening-calendar-code-calendar-code-since-v1-3[Backup] |`b` |`backup TARGET_DIRECTORY` | backup F:\myFiles\
+
 |link:#opening-calendar-code-calendar-code-since-v1-3[Calendar] |`cl` |`calendar` |
 
 |link:#clearing-all-entries-code-clear-code[Clear] | `c`| `clear` |
 
-|link:#getting-email-addresses-code-copy-code-since-v1-3[Copy] |`cp` |`copy INDEX [UNIQUE INDEX]...`|
+|link:#getting-email-addresses-code-copy-code-since-v1-3[Copy] |`cp` |`copy INDEX [UNIQUE INDEX]...`| `copy 1 2`
 
-|link:#deleting-person-s-code-delete-code-last-updated-in-v1-1[Delete] |`d`|`delete INDEX [UNIQUE INDEX]...`|
+|link:#deleting-person-s-code-delete-code-last-updated-in-v1-1[Delete] |`d`|`delete INDEX [UNIQUE INDEX]...`| `delete 3`
 
 |link:#editing-a-person-code-edit-code[Edit] | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
 
-|link:#emailing-persons-code-email-code-since-v1-5[Email] |`em` |`delete INDEX [UNIQUE INDEX]...`| `email 2`
+|link:#emailing-persons-code-email-code-since-v1-5[Email] |`m` |`delete INDEX [UNIQUE INDEX]...`| `email 2`
 
 |link:#exiting-the-program-code-exit-code[Exit] |  | `exit` |
 
@@ -523,6 +597,8 @@ To *transfer data* to another Computer, install the app in the other computer an
 |link:#scheduling-an-activity-code-schedule-code-since-v1-3[Schedule] |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12-2017 act/Christmas dinner`
 
 |link:#undoing-previous-command-code-undo-code[Undo] |`u`| `undo` |
+
+|link:#enabling-and-disabling-the-welcome-screen-code-welcome-code-since-v1-5[Welcome] | `w` | `welcome ENABLING_KEYWORD` | `welcome enable`
 
 |=======================================================================
 

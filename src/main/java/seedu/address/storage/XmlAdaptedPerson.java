@@ -99,7 +99,7 @@ public class XmlAdaptedPerson {
         final Country country = new Country(phone.getCountryCode());
         final Set<Email> emails = new HashSet<>(personEmails);
         final Address address = new Address(this.address);
-        final Set<Schedule> schedules = new HashSet<>(personSchedules);
+        final List<Schedule> schedules = new ArrayList<>(personSchedules);
         final Set<Tag> tags = new HashSet<>(personTags);
 
         logger.info("Name: " + name.toString()

@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
@@ -36,7 +37,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
      * Creates a UniqueScheduleList using given schedules.
      * Enforces no nulls.
      */
-    public UniqueScheduleList(Set<Schedule> schedules) {
+    public UniqueScheduleList(List<Schedule> schedules) {
         requireAllNonNull(schedules);
         internalList.addAll(schedules);
 

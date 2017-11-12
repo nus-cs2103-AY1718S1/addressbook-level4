@@ -223,6 +223,7 @@ public class MainWindow extends UiPart<Region> {
         }
     }
 
+    //@@author
     /**
      * Opens the help window.
      */

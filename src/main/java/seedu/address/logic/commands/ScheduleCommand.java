@@ -5,6 +5,8 @@ import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTIVITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -68,7 +70,7 @@ public class ScheduleCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_SCHEDULE_SUCCESS, indices.size()));
     }
 
-    //@@author 17navasaw
+    //@@author CT15
     /**
      * Updates address book model with new schedule set for each person.
      * @param model Model of address book.
@@ -90,11 +92,13 @@ public class ScheduleCommand extends UndoableCommand {
             ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
             Schedule schedule = new Schedule(date, activity, schedulePersonNames);
 
-            Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
+            List<Schedule> schedules = new ArrayList<>(schedulePerson.getSchedules());
 
             if (!schedulePerson.getSchedules().contains(schedule)) {
                 schedules.add(schedule);
             }
+
+            Collections.sort(schedules);
 
             Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(),
                     schedulePerson.getCountry(), schedulePerson.getEmails(), schedulePerson.getAddress(), schedules,
@@ -109,6 +113,7 @@ public class ScheduleCommand extends UndoableCommand {
         }
     }
 
+    //@@author 17navasaw
     /**
      * Returns a set of person names involved in the scheduling of the activity.
      * @param model Model of address book.
@@ -132,7 +137,7 @@ public class ScheduleCommand extends UndoableCommand {
         return schedulePersonNames;
     }
 
-    //@@ CT15
+    //@@author CT15
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.commandidentifier.CommandIdentifier;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Country;
 
 /**
@@ -34,14 +33,15 @@ public class HelpCommand extends Command {
                     + CalendarCommand.COMMAND_WORD + " / " + CalendarCommand.COMMAND_ALIAS + ";     "
                     + EditCommand.COMMAND_WORD + " / " + EditCommand.COMMAND_ALIAS + ";     "
                     + ExitCommand.COMMAND_WORD + " / " + ExitCommand.COMMAND_ALIAS + ";     "
-                    + FindCommand.COMMAND_WORD + " / " + FindCommand.COMMAND_ALIAS + "; \n"
-                    + HelpCommand.COMMAND_WORD + " / " + HelpCommand.COMMAND_ALIAS + ";     "
+                    + FindCommand.COMMAND_WORD + " / " + FindCommand.COMMAND_ALIAS + ";     "
+                    + HelpCommand.COMMAND_WORD + " / " + HelpCommand.COMMAND_ALIAS + "; \n"
                     + HistoryCommand.COMMAND_WORD + " / " + HistoryCommand.COMMAND_ALIAS + ";     "
                     + ListCommand.COMMAND_WORD + " / " + ListCommand.COMMAND_ALIAS + ";     "
                     + RedoCommand.COMMAND_WORD + " / " + RedoCommand.COMMAND_ALIAS + ";     "
                     + ScheduleCommand.COMMAND_WORD + " / " + ScheduleCommand.COMMAND_ALIAS + ";     "
                     + LocateCommand.COMMAND_WORD + " / " + LocateCommand.COMMAND_ALIAS + ";     "
                     + UndoCommand.COMMAND_WORD + " / " + UndoCommand.COMMAND_ALIAS + ";     "
+                    + BackupCommand.COMMAND_WORD + " / " + BackupCommand.COMMAND_ALIAS + ";     "
                     + Country.COMMAND_WORD;
 
     //@@author CT15
@@ -51,11 +51,6 @@ public class HelpCommand extends Command {
         this.commandIdentifier = targetCommandIdentifier;
     }
 
-    //@@author icehawker
-    public HelpCommand(String startUpHelp) throws IllegalValueException {
-        this.commandIdentifier = new CommandIdentifier(startUpHelp);
-    }
-    //@@author CT15
     @Override
     public CommandResult execute() {
         String commandResult;
