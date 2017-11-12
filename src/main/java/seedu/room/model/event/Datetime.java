@@ -116,7 +116,6 @@ public class Datetime {
      */
     public static boolean isSingleDayEvent(String test) {
         String[] components = test.split(" ");
-        String date = components[0];
         String startTime = components[1];
 
         //If the format is dd/mm/yyyy hhmm k
