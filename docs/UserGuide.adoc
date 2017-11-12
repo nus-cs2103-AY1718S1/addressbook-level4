@@ -226,7 +226,7 @@ This command helps you enter into `Persons` mode, and subsequently lists all you
 
 Format: `list`
 
-// tag::add[]
+// tag::add1[]
 === Adding a person: `add`
 
 The `add` command helps you to add a person to The Myth's Book. +
@@ -236,6 +236,8 @@ know more on the format of adding a contact.
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]...`
 
 Prefixes and its meaning:
+
+// end::add1[]
 
 [width="40%",cols="20%,<15%,<5%, <30%,<30%,options="header",]
 |=======================================================================
@@ -248,6 +250,7 @@ Prefixes and its meaning:
 |-|-|.|`t`|tag
 |=======================================================================
 
+// tag::add2[]
 You can follow the examples below to guide you on how to add an individual.
 
 Examples:
@@ -269,7 +272,8 @@ Website, address, home number, school email, and birthday are optional fields.
 Website should follow this format `https://www.anyName.com/anyContent` where both `anyName` and `anyContent` can be alphanumeric. +
 You must have `https://www.` and a domain name like `.com` or `.net` in the inputted website or it will result in inputted format error. +
 Birthday should be in proper format of "dd/mm/yyyy" where all numbers inputted for birthday are integers.
-//end::add[]
+
+//end::add2[]
 
 // tag::sort[]
 === Sorting all persons : `sort`
@@ -575,10 +579,10 @@ By typing this command, you will be able to add an event `ZoukOut` in The Myth's
 
 By typing this command, you will be able to add an event `Halloween Horror Night` in The Myth's Book.
 
-If input is correct, you will be able to see the event being added successfully into The Myth's Book and receive the following displayed result in the Results Display Panel.
-The date of the event on the calendar will be populated with a different shade of color to signify that there is an event on that date.
+If input is correct, you will be able to see the event being added successfully into The Myth's Book and receive the following displayed result in the Command Results Display Panel.
+The date of the event on the Calendar will be populated with a different shade of color to signify that there is an event on that date.
 
-image::sampleeventresult.PNG[width="700"]
+image::eventresult.PNG[width="700"]
 Figure 8.2.1 `addevent` Result for Add Event Command
 
 A `Invalid Command Format` will appear if you have keyed in invalid fields for the event.
