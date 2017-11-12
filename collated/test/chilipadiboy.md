@@ -259,9 +259,9 @@ public class ThemeCommandTest extends AddressBookGuiTest {
 
     @Test
     public void executethemechange() {
-        CommandResult result = new ThemeCommand("light").executeUndoableCommand();
+        CommandResult result = new ThemeCommand("light").execute();
         assertEquals(ThemeCommand.MESSAGE_SUCCESS, result.feedbackToUser);
-        CommandResult result2 = new ThemeCommand("dark").executeUndoableCommand();
+        CommandResult result2 = new ThemeCommand("dark").execute();
         assertEquals(ThemeCommand.MESSAGE_SUCCESS, result2.feedbackToUser);
     }
 }

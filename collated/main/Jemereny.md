@@ -8,7 +8,7 @@ import seedu.address.ui.UiStyle;
 /**
  * change the theme of the address book
  */
-public class ThemeCommand extends Command {
+public class ThemeCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "theme";
     public static final String COMMAND_SHORT = "t";
@@ -28,7 +28,7 @@ public class ThemeCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult executeUndoableCommand() {
         if (theme.equalsIgnoreCase(ThemeCommand.LIGHT_THEME) || theme.equalsIgnoreCase(ThemeCommand.LIGHT_THEME2)) {
             UiStyle.getInstance().setToLightTheme();
         } else {
@@ -156,7 +156,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -216,26 +215,26 @@ public class Picture {
         if (trimmedFileLocation != null) {
             String[] split = splitFileLocation(trimmedFileLocation);
 
+            // When we save the file, it is a single file name there is nothing to split.
+            // No need to copy it either
+            // last value before '/' is picture we want
+            String fileName = split[split.length - 1];
+
             // length will give 1 when it is the file we saved
             // in that case just put PICTURE_IMAGE_LOCATION to find it
             if (split.length != 1) {
-                // Rename and copied files to avoid clashing
-                String newFileName = UUID.randomUUID().toString() + PICTURE_SUFFIX;
 
                 File src = new File(trimmedFileLocation);
-                File dest = new File(PICTURE_SAVE_LOCATION + newFileName);
+                File dest = new File(PICTURE_SAVE_LOCATION + fileName);
 
                 // If file is too big, resize it.
                 if (src.length() > PICTURE_MAX_SIZE) {
-                    resizeAndSaveImage(src, newFileName);
+                    resizeAndSaveImage(src, fileName);
                 } else {
                     copyImage(src, dest);
                 }
-                this.value = newFileName;
-            } else {
-                // Last value is file name
-                this.value = split[split.length - 1];
             }
+            this.value = fileName;
         } else {
             this.value = null;
         }
