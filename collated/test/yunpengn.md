@@ -29,21 +29,33 @@ public class SwitchToEventsListEventTest {
     }
 }
 ```
+###### \java\seedu\address\commons\exceptions\InvalidFileExtensionExceptionTest.java
+``` java
+public class InvalidFileExtensionExceptionTest {
+    @Test
+    public void createException_getMessage_checkCorrectness() throws Exception {
+        Exception exception = new InvalidFileExtensionException(Avatar.INVALID_PATH_MESSAGE);
+        assertEquals(Avatar.INVALID_PATH_MESSAGE, exception.getMessage());
+    }
+
+    @Test
+    public void createException_emptyMessage_checkCorrectness() throws Exception {
+        Exception exception = new InvalidFileExtensionException();
+        assertEquals(null, exception.getMessage());
+    }
+}
+```
 ###### \java\seedu\address\commons\exceptions\InvalidFilePathExceptionTest.java
 ``` java
 public class InvalidFilePathExceptionTest {
-    private ExpectedException thrown = ExpectedException.none();
-
     @Test
     public void createException_getMessage_checkCorrectness() throws Exception {
-        thrown.expect(ReminderNotFoundException.class);
         Exception exception = new InvalidFilePathException(Avatar.INVALID_PATH_MESSAGE);
         assertEquals(Avatar.INVALID_PATH_MESSAGE, exception.getMessage());
     }
 
     @Test
     public void createException_emptyMessage_checkCorrectness() throws Exception {
-        thrown.expect(ReminderNotFoundException.class);
         Exception exception = new InvalidFilePathException();
         assertEquals(null, exception.getMessage());
     }
@@ -321,6 +333,30 @@ public class ImportNusmodsCommandTest {
 
         int getEventCount() {
             return countEvent;
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\commands\imports\ImportScriptCommandTest.java
+``` java
+public class ImportScriptCommandTest {
+    @Test
+    public void createCommand_allPresent_checkCorrectness() throws Exception {
+        ImportCommand command = new ImportScriptCommand("some script file");
+        assertNotNull(command);
+    }
+
+    @Test
+    public void execute_allPresent_checkCorrectness() throws Exception {
+        ImportCommand command = new ImportScriptCommand("some script file");
+        command.setData(new ImportScriptModelStub(), new CommandHistory(), new UndoRedoStack());
+        assertEquals("The script has been imported.", command.execute().feedbackToUser);
+    }
+
+    private class ImportScriptModelStub extends ModelStub {
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
         }
     }
 }
@@ -682,6 +718,32 @@ public class ArgumentMultimapTest {
         ArgumentMultimap map = new ArgumentMultimap();
         map.put(new Prefix(""), preamble);
         assertEquals(preamble, map.getPreamble());
+    }
+}
+```
+###### \java\seedu\address\model\event\EventTest.java
+``` java
+    @Test
+    public void createEvent_viaSetProperties_checkCorrectness() throws Exception {
+        Event event = new Event(properties, new ArrayList<>());
+
+        assertEquals(name, event.getName());
+        assertEquals(dateTime, event.getTime());
+        assertEquals(address, event.getAddress());
+        assertEquals(0, event.getReminders().size());
+        assertEquals(3, event.getProperties().size());
+    }
+```
+###### \java\seedu\address\model\event\EventTest.java
+``` java
+    @Test
+    public void toString_checkCorrectness() throws Exception {
+        Event event = new Event(name, dateTime, address, new ArrayList<>());
+        String expected =
+                " Event: Mel Birthday |  Date/Time: 25 Dec, 2017 08:30 |  Address: Block 312, Amy Street 1";
+
+        assertEquals(expected, event.toString());
+        assertEquals(expected, event.getAsText());
     }
 }
 ```
@@ -1160,13 +1222,94 @@ public class UniquePropertyMapTest {
 ###### \java\seedu\address\model\reminder\exceptions\ReminderNotFoundExceptionTest.java
 ``` java
 public class ReminderNotFoundExceptionTest {
-    private ExpectedException thrown = ExpectedException.none();
-
     @Test
     public void createException_toString_checkCorrectness() throws Exception {
-        thrown.expect(ReminderNotFoundException.class);
         Exception exception = new ReminderNotFoundException("Some message here");
         assertEquals("Some message here", exception.toString());
+    }
+}
+```
+###### \java\seedu\address\model\reminder\ReminderTest.java
+``` java
+    @Test
+    public void createViaName__alternativeConstructor_checkCorrectness() {
+        Reminder reminder = new Reminder("some name here", message);
+        assertEquals("some name here", reminder.getName());
+    }
+
+    @Test
+    public void copyReminder_alternativeConstructor_checkCorrectness() {
+        Reminder reminder1 = new Reminder(event, message);
+        Reminder reminder2 = new Reminder(reminder1);
+
+        assertEquals(reminder1, reminder2);
+    }
+
+    @Test
+    public void toString_checkCorrectness() {
+        Reminder reminder = new Reminder(event, message);
+        assertNotNull(reminder);
+
+        assertEquals("Message: You have an event", reminder.getAsText());
+        assertEquals("Message: You have an event", reminder.toString());
+    }
+
+    @Test
+    public void hashCode_checkCorrectness() {
+        Reminder reminder = new Reminder(event, message);
+        assertNotNull(reminder);
+
+        assertEquals(Objects.hash(reminder.eventProperty(), reminder.messageProperty()), reminder.hashCode());
+    }
+}
+```
+###### \java\seedu\address\model\reminder\UniqueReminderListTest.java
+``` java
+public class UniqueReminderListTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private static final Reminder reminder = new Reminder(EVENT1, "Some message");
+
+    @Test
+    public void create_viaList_checkCorrectness() throws Exception {
+        List<ReadOnlyReminder> list = new ArrayList<>();
+        list.add(reminder);
+        UniqueReminderList uniqueList = new UniqueReminderList(list);
+        assertEquals(list.size(), uniqueList.toList().size());
+    }
+
+    @Test
+    public void add_checkSize_checkCorrectness() throws Exception {
+        UniqueReminderList list = new UniqueReminderList();
+        list.add(reminder);
+        assertEquals(1, list.toList().size());
+    }
+
+    @Test
+    public void add_hasDuplicate_checkCorrectness() throws Exception {
+        thrown.expect(DuplicateReminderException.class);
+
+        UniqueReminderList list = new UniqueReminderList();
+        list.add(reminder);
+        list.add(reminder);
+    }
+
+    @Test
+    public void toList_checkSize_checkCorrectness() {
+        UniqueReminderList list = new UniqueReminderList();
+        assertEquals(0, list.toList().size());
+    }
+
+    @Test
+    public void equals_checkCorrectness() {
+        UniqueReminderList list1 = new UniqueReminderList();
+        UniqueReminderList list2 = new UniqueReminderList();
+
+        assertEquals(list1, list1);
+        assertEquals(list1, list2);
+        assertNotEquals(list1, null);
+        assertNotEquals(list1, 1);
     }
 }
 ```
@@ -1213,6 +1356,16 @@ public class AddAvatarCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, index, VALID_PATH);
     }
 
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * Also verifies that the selected card and status bar remain unchanged, and the command box has the error style.
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
     private void assertCommandSuccess(String command, Index toAdd, String path) throws Exception {
         Model model = getModel();
         ReadOnlyPerson personToAdd = model.getFilteredPersonList().get(toAdd.getZeroBased());
