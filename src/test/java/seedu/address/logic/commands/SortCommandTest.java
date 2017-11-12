@@ -23,19 +23,18 @@ public class SortCommandTest {
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        sortCommand = new SortCommand();
-        sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        sortCommand = prepareCommand(model);
     }
 
     @Test
     public void execute_sortingList_success() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        SortCommand command = new SortCommand();
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        CommandResult result = command.execute();
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        sortCommand = prepareCommand(model);
+        CommandResult result = sortCommand.execute();
         assertEquals(result.feedbackToUser, SortCommand.MESSAGE_SUCCESS);
     }
 
+    //======================================== HELPER METHODS ==========================================
     /**
      * Generates a new {@code SortCommand} which upon execution, sorts the contacts by name in {@code model}.
      */
