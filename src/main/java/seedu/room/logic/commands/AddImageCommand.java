@@ -27,7 +27,7 @@ import seedu.room.model.tag.Tag;
 /**
  * Allows the addition of an image to a resident currently in the resident book
  */
-public class AddImageCommand extends Command {
+public class AddImageCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addImage";
     public static final String COMMAND_ALIAS = "ai";
 
@@ -38,6 +38,7 @@ public class AddImageCommand extends Command {
             + "[ Image Url ]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + "/Users/username/Downloads/person-placeholder.jpg";
+    public static final String MESSAGE_VALID_IMAGE_FORMATS = "Allowed formats: JPG/JPEG/PNG/BMP";
 
     public static final String MESSAGE_ADD_IMAGE_SUCCESS = "Successfully changed image for Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the resident book.";
@@ -58,7 +59,7 @@ public class AddImageCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
