@@ -388,6 +388,11 @@ The execution of AddEventCommand is processed in this way:
   to update the list being filtered and also call an event `indicatedAddressBookChanged()` to show that the addressBook has be updated
   with additional event.
 
+The illustration of the execution is illustrated in Figure 5.2.2 below.
+
+image::addeventmodelseqdiagram.PNG[width="800"]
+Figure 5.2.2 AddEventCommand Model Sequence Diagram
+
 Code of `AddEventCommand`:
 
 ----
