@@ -287,7 +287,7 @@ public class Autocompleter {
     }
 
     /**
-     * Returns true if the {@code index is numeric
+     * Returns true if the {@code index} is numeric
      */
     private boolean isNumeric (String index) {
         return index.matches("[0-9]+");
