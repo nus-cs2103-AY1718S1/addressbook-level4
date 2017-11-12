@@ -12,8 +12,8 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 *Portfolio*: This portfolio is a summary of the work that I contributed to the Gentleman's Guide and a brief explanation
 of the functions and implementations of those enhancements.
 
-=== Enhancement Added : Private Database System
-==== External Behaviour
+== Enhancement Added : Private Database System
+=== External Behaviour
 #Start of extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag = create]
@@ -24,8 +24,12 @@ include::../UserGuide.adoc[tag = logout]
 
 #End of extract [from: User Guide]#
 
+=== Justification
 
-===== Private Database Implementation
+Privacy is a integral part of daily life. By adding a simple password system. One can prevent majority of unauthorised access
+by snooping eyes. This also allows the user a piece of mind that his private database cannot be recklessly and easily accessed by others.
+
+=== Private Database Implementation
 
 
 #Start of extract [from: Developer Guide]#
@@ -36,26 +40,27 @@ include::../DeveloperGuide.adoc[tag = PrivateDatabase]
 
 
 
-=== Enhancement Added : Select/Edit Reminder
+== Enhancement Added : Select Reminder
 
+=== External Behaviour
 #Start of extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag = create]
+include::../UserGuide.adoc[tag = selectReminder]
 
-include::../UserGuide.adoc[tag = login]
-
-include::../UserGuide.adoc[tag = logout]
 
 #End of extract [from: User Guide]#
 
-==== External Behaviour
+=== Justification
 
-===== Select Reminder Function `selectreminder`
+As the user may include long messages and the reminder card is unable to view the entire message due to space constrains,
+thus selecting the reminder allows for easy viewing of the reminder.
+
+=== Select Reminder Function `selectreminder`
 
 include::../DeveloperGuide.adoc[tag = selectReminder]
 
-=== Enhancement Proposed
+== Enhancement Proposed
 
-=== Other Contributions
+== Other Contributions
 
-== Project
+

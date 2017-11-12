@@ -383,7 +383,9 @@ Selects the 2nd person in the Gentleman's Guide.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Selecting a Reminder : `selectReminder`
+// tag::selectReminder[]
+
+=== Selecting a reminder : `selectReminder`
 
 *As a Gentleman, you take detailed notes of your Reminders.
 Thus you select your Reminder in the Gentleman's Guide for easy viewing.*
@@ -392,6 +394,8 @@ Selects the Reminder identified by the index number used in the last reminder li
 Format: `selectReminder INDEX` +
 Or +
 Formal: Clicking the reminder on the Gui.
+
+image::selectReminder.PNG[width="800"]
 
 ****
 * Selects the Reminder and loads the Google search page the person at the specified `INDEX`.
@@ -407,6 +411,9 @@ Selects the 2nd person in the Gentleman's Guide.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+// end::selectReminder[]
+
 // tag::sort[]
 === Sorting all entries by name: `sort`
 
@@ -626,6 +633,9 @@ e.g. `create u/JamesBond p/ShakenNotStirred`
 // tag::login[]
 
 === Logging in to private database : `login`
+
+*The Lady has left the room. There are urgent matters you have to attend to while she is gone. As a Gentleman, you
+login into the Gentleman's Guide to get James Bond's number. You have a mission tonight.*
 
 Login into a Private Database +
 Format: `login u/USERNAME p/PASSWORD`
