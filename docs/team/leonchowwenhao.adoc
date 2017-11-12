@@ -8,7 +8,7 @@ Planno is a desktop application which combines the functionality of an address b
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/main/leonchowwenhao.md[Functional code]] [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/test/leonchowwenhao.md[Test code]]
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: selectE command
 
 ==== External behavior
 
@@ -16,6 +16,39 @@ Planno is a desktop application which combines the functionality of an address b
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=selectE]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The current design of Planno allows the users to see the person list on the left and the event list on the right.
+However, the user will not be able to see which events a person has joined unless he/she uses the join, showP or display command to check each event individually.
+This process is tedious for the user.
+This is why the selectE command was added, to ensure that the user will be able to find such information quickly and easily. +
+
+The event list is filtered so the user will not be distracted by other events which are not related to their query.
+E.g. selectE 1, event list only displayed events joined by the person at the first index.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=selectE]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: toggle
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=toggle]
 
 #End of Extract#
@@ -24,28 +57,35 @@ include::../UserGuide.adoc[tag=toggle]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+As Planno is not capable sending emails with a command, the in-app browser is used instead if the user wants to send emails.
+However, the amount of space to display the browser alongside the other information boards is limited.
+If everything was displayed at the same time, Planno will look very cluttered and messy.
+This is why the toggle command is added.
+The user can switch between the browser and information boards as and when they need.
+Allowing the user to have a comfortable experience using the app while not sacrificing the functionality. +
+
+The toggling of the browser affects the information board and event list.
+The latter two are chosen to be swapped with the browser to allow the user a comfortable experience with the browser while not making Planno just a browser.
+Swapping just the information board will have the browser be too small for the user to use comfortably.
+Swapping the person list, information board and event list will have Planno become a browser instead of an addressbook and task manager application.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=selectE]
 include::../DeveloperGuide.adoc[tag=toggle]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Add command `email`
 
 {Explain similar to the Undo/Redo feature above.}
 
 === Other contributions
 
+* Wrote the code for the person field, birthday (Pull requests https://github.com[#28], https://github.com[#31])
 * Wrote the code for the storage component for events (Pull requests https://github.com[#33], https://github.com[#34])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+* Corrected language errors in UG & DG.
