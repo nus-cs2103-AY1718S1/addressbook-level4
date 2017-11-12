@@ -23,7 +23,7 @@ public class Deadline {
     public static final String DASH_CHARACTER = "-";
     public static final String NO_DEADLINE_SET = "No deadline set.";
     public static final String MESSAGE_DEADLINE_CONSTRAINTS =
-            "Deadline can only contain input of the format XX-XX-XXXX, taking X as an integer.";
+            "Deadline can only contain input of the format XX-XX-XXXX, taking X as an integer";
 
     public final String value; // format of DD-MM-YYYY.
     public final String valueToDisplay; // format of DAY, DD MM, 'Year' YYYY.
