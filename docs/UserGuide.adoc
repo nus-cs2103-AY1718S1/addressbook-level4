@@ -371,9 +371,25 @@ Command words: `print`
 
 Saves the entire address book into a printable .txt file. +
 Format: `print FILENAME`
+
+After executing the command, the user can find the saved file as FILENAME.txt in the same directory where the project/.jar
+file is saved.
+
+For example: the user intends to print the address book as FILEPATH.txt
+
+image::PrintCommandSuccess.png[width="380"]
+
+Now, he can find his FILEPATH.txt file along side the .jar file directory.
+
+image::TextFilePath.png[width="380"]
+
+* Note: The file name cannot contain illegal file path characters, which includes the following: /:*?"<>|
+
+The result of the created .txt file is illustrated in the figure below
+
+image::PrintedTxtFile.png[width="380"]
 //end::print[]
 
-After executing the command, the user can find the saved file in the docs/books folder as FILENAME.txt
 
 // tag::why[]
 === Easter egg : `why`
@@ -381,11 +397,11 @@ After executing the command, the user can find the saved file in the docs/books 
 
 Command words: `why`
 
-Prints out a line telling the user a reason why for a particular person
+Prints out a line telling the user "why" for a particular person
 Format: `why INDEX`
 
 After executing, the user will be presented with a feedback which looks something like this:
-"Because John Joe lives in 123 Clementi Ave 2"
+"Because John Doe lives in 123 Clementi Ave 2"
 // end::why[]
 
 === Exiting the program : `exit`
