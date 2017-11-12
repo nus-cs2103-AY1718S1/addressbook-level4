@@ -54,7 +54,7 @@ A simple modification for aesthetic purpose
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=changeTheme]
+include::../UserGuide.adoc[tag=changeTheme]
 
 #End of Extract#
 

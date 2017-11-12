@@ -90,6 +90,10 @@ the list of persons displayed, but sorted by the indicated format as well.
 Examples:
 
 * 'sort name'
+* 'sort n'
+
+Proposed enhancements: Sort by tag, weblinks
+Sort in ascending or descending order.
 // end::sort[]
 
 === Editing a person : `edit`
@@ -337,7 +341,7 @@ Format: 'share'
 
 Proposed enhancements: Allow share to take in parameters to share a particular contact from the addressbook so that
 it works for all contacts and not just the userPerson.
-// end:shareCommand[]
+// end::shareCommand[]
 
 === Clearing all entries : `clear`
 
@@ -373,7 +377,7 @@ Format `web facebook||instagram||linkedin||personal`
 Contact must be selected before selecting the buttons.
 
 ====
-// end::viewAddress[]
+// end::viewSocialMedia[]
 
 // tag::changeTheme[]
 === Changing Theme

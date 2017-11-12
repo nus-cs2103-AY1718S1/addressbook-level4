@@ -459,7 +459,8 @@ listing, which is date added.
 ----
     public void sortPersons(String filterType) {
 
-        Comparator<ReadOnlyPerson> personComparator = (ReadOnlyPerson person1, ReadOnlyPerson person2) -> {
+        Comparator<ReadOnlyPerson> personComparator = (ReadOnlyPerson person1,
+                                                   ReadOnlyPerson person2) -> {
 
             String arg1;
             String arg2;
@@ -538,9 +539,11 @@ upon initialisation of the app. Whenever the UserPerson is edited using the `Upd
 to the file.
 
 A UserProfile Window was added as a UI Component to display the User Profile information. Additionally, the User Profile
-can be modified from the textfields in the UI directly. The UserProfile is only saved when "OK" is clicked.
-The "Enter" button was added as an accelerator, which will click the "Cancel" button, so that unwanted changes will not be
-accidentally saved. Invalid values will be detected and changes will not be saved.
+can be modified from the textfields in the UI directly. The UserProfile is only saved when "OK" is clicked. Invalid values will be detected and changes will not be saved.
+The "Enter" key is added as an accelerator for the OK button and the "Escape" key is added as an accelerator for
+the cancel button.
+
+image::UserProfileMenuItem.png[width="208" height="315"]
 
 image::UserProfileWindow.png[width="400" height="300"]
 
@@ -548,15 +551,15 @@ image::UserProfileWindow.png[width="400" height="300"]
 **Aspect:** Choice of location for storing UserProfile Data +
 **Alternative 1 (current choice)**: Separately from AddressBook. +
 **Justification:** This path was chosen taking into consideration the two following cases:
-+ A User can have multiple AddressBooks, or multiple users can share one AddressBook.
-+ In the former case, the User would not have to modify his UserProfile for each AddressBook.
-+ In the latter case, an AddressBook should not be tied to only one UserPerson in particular.
-+ **Pros:** Greater flexibility, portability
-+ **Cons:** More code and java classes to maintain, changes the structure of `Model` to support multiple
-variables.
-+ **Alternative 2:** Together with AddressBook
-+ **Pros:** Easier to manage, with only one Storage file and fewer classes to maintain
-+ **Cons:** Reduced flexibility as now, both AddressBook data and UserProfile cannot be separated
+A User can have multiple AddressBooks, or multiple users can share one AddressBook. +
+In the former case, the User would not have to modify his UserProfile for each AddressBook. +
+In the latter case, an AddressBook should not be tied to only one UserPerson in particular. +
+**Pros:** Greater flexibility, portability +
+**Cons:** More code and java classes to maintain, changes the structure of `Model` to support multiple
+variables. +
+**Alternative 2:** Together with AddressBook +
+**Pros:** Easier to manage, with only one Storage file and fewer classes to maintain +
+**Cons:** Reduced flexibility as now, both AddressBook data and UserProfile cannot be separated
 
 ==== Further enhancements
 + Share UserProfile with others
