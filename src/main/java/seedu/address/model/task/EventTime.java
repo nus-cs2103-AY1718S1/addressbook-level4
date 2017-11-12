@@ -2,6 +2,10 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Represents the time of an event or task in the task manager.
+ * Guarantees: immutable.
+ */
 public class EventTime {
 
     public final String time;

@@ -2,6 +2,7 @@ package seedu.address.logic.commands.tasks;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_FROM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
@@ -24,6 +25,7 @@ import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
+
 //@@ raisa2010
 /**
  * Edits the details of an existing task in the task manager.
@@ -40,8 +42,9 @@ public class EditTaskCommand extends UndoableCommand {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + "DESCRIPTION] "
-            + "[" + PREFIX_DEADLINE_BY + "/" + PREFIX_DEADLINE_ON + " DEADLINE] "
+            + "[" + PREFIX_DEADLINE_BY + "/" + PREFIX_DEADLINE_ON + "/" + PREFIX_DEADLINE_FROM + " DEADLINE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
+            + "Task Descriptions containing deadline or time prefixes must be in double quotes [\"\"].\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_DEADLINE_BY + " 10-25-2017 [dates must be in (M)M(d)d(yy)yy format]";
 
@@ -53,8 +56,8 @@ public class EditTaskCommand extends UndoableCommand {
     private final EditTaskCommand.EditTaskDescriptor editTaskDescriptor;
 
     /**
-     * @param index of the task in the filtered task list to edit
-     * @param editTaskDescriptor details to edit the task with
+     * @param index of the task in the filtered task list to edit.
+     * @param editTaskDescriptor details to edit the task with.
      */
     public EditTaskCommand(Index index, EditTaskCommand.EditTaskDescriptor editTaskDescriptor) {
         requireNonNull(index);

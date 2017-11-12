@@ -26,10 +26,10 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.DateTimeFormatter;
+import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.EventTime;
-import seedu.address.model.task.DateTimeValidator;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -171,11 +171,11 @@ public class ParserUtil {
             Date parsedDate = parseDate(date.get());
             return Optional.of(new Deadline(DateTimeFormatter.formatDate(parsedDate)));
         }
-            return Optional.empty();
+        return Optional.empty();
     }
 
     /**
-     * Parses a {@code Optional<String> time into a {@code EventTime} is the {@code time} is present.
+     * Parses a {@code Optional<String> time} into a {@code EventTime} is the {@code time} is present.
      */
     public static Optional<EventTime[]> parseEventTimes(Optional<String> dateTime) throws IllegalValueException {
         requireNonNull(dateTime);

@@ -3,15 +3,10 @@ package seedu.address.model.task;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Optional;
-import java.util.logging.Logger;
-
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author raisa2010
 /**
- * Represents a date for a task in the task manager.
+ * Contains methods to validate dates and times input by users into the task manager.
  */
 public abstract class DateTimeValidator {
 
@@ -26,11 +21,17 @@ public abstract class DateTimeValidator {
     public static final int MAX_DAYS_IN_MONTH = 31;
     public static final int MAX_DAYS_IN_FEB = 29;
 
-    public static final String MESSAGE_DATE_CONSTRAINTS = "Date is invalid";
-    public static final String MESSAGE_TIME_CONSTRAINTS = "Time is invalid";
+    public static final String MESSAGE_DATE_CONSTRAINTS = "Date is invalid! Invalid values include values such as 32 "
+            + "Jan, 32-01-2019.\n"
+            + "Invalid formats include \"next thursday\", \"th\", \"the 25th\" (without specifying the month), "
+            + "and any date not using the (M)M(d)d(YY)YY format.";
+    public static final String MESSAGE_TIME_CONSTRAINTS = "Time is invalid! Invalid values include values such as "
+            + "29:00, 29pm or 2900.\n"
+            + "Invalid formats include 100 (instead of 1:00), 1900 (instead of 19:00) and 11 (instead of 11 am or pm";
 
     /**
      * Validates a given {@code inputDate} given in an MDY format.
+     * Works around some limitations of the Pretty Time NLP.
      */
     public static boolean isDateValid(String inputDate) {
         String trimmedDate = inputDate.trim();

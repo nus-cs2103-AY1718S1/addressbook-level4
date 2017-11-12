@@ -3,10 +3,11 @@ package seedu.address.logic.commands.tasks;
 import static java.util.Objects.requireNonNull;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_FROM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ENDTIME_TO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
-import javax.swing.plaf.synth.SynthDesktopIconUI;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CommandResult;
@@ -26,8 +27,10 @@ public class AddTaskCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the task manager. "
             + "Parameters: "
             + "DESCRIPTION "
-            + PREFIX_DEADLINE_BY + "/" + PREFIX_DEADLINE_ON + " DEADLINE DATE "
-            + PREFIX_TAG + "TAG";
+            + PREFIX_DEADLINE_BY + "/" + PREFIX_DEADLINE_ON  + "/" + PREFIX_DEADLINE_FROM + " DEADLINE DATE "
+            + PREFIX_TIME_AT + " START TIME " + PREFIX_ENDTIME_TO + " END TIME "
+            + PREFIX_TAG + "TAG.\n"
+            + "Task Descriptions containing deadline or time prefixes must be in double quotes [\"\"].";
 
     public static final String MESSAGE_SUCCESS = "Task has been added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the task manager";
