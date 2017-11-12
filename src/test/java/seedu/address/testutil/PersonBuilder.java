@@ -127,6 +127,18 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code PortraitPath} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPortrait(String portraitPath) {
+        try {
+            this.person.setPortraitPath(new PortraitPath(portraitPath));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("sample portrait path must be valid.");
+        }
+        return this;
+    }
+
     public Person build() {
         return this.person;
     }
