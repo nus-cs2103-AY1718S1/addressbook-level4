@@ -510,7 +510,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Setting the path to local profile pictures folder : `setpath`
 
 Sets the folder location to access and import debtors' profile pictures. +
-Paths should be absolute paths and not relative ones. Importantly, paths should point to the folder rather than the picture itself. +
+Paths should be absolute paths and not relative ones. Also, paths should point to the folder rather than the picture itself. +
 
 It is recommended to create a folder and fill it up with the necessary profile pictures for the application. If there is a need to add a new picture, it should be added into this specific folder. +
 
