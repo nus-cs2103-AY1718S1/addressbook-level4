@@ -158,7 +158,7 @@ public class LinkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "link";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a facebook link to person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a twitter link to person identified "
             + "by the index number used in the last person listing. "
             + "Existing links will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
@@ -781,7 +781,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class RemarkListPanel extends UiPart<Region> {
     private static final String FXML = "RemarkListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(RemarkListPanel.class);
-    private final Integer firstIndexOfArray = 0;
 
     private final StringProperty displayed = new SimpleStringProperty("");
 
