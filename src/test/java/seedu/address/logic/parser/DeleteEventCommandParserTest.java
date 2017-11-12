@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.DeleteEventCommand;
 
+//@@author archthegit
+
 public class DeleteEventCommandParserTest {
     private DeleteEventCommandParser parser = new DeleteEventCommandParser();
 
@@ -24,3 +26,4 @@ public class DeleteEventCommandParserTest {
     }
 }
 
+//@@author
