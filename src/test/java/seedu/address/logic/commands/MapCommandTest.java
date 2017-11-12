@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -16,6 +17,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.core.index.Selection;
+import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -23,6 +25,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author martyn-wong
@@ -39,6 +42,12 @@ public class MapCommandTest {
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
+    }
+
+    @Test
+    public void execute_validArgs_success() {
+        Selection.setPersonSelected();
+        assertExecutionSuccess(INDEX_FIRST_PERSON);
     }
 
     @Test
@@ -86,6 +95,22 @@ public class MapCommandTest {
 
         // different person -> returns false
         assertFalse(mapFirstCommand.equals(mapSecondCommand));
+    }
+
+    /**
+     * Executes a {@code MapCommand} with the given {@code arguments},
+     */
+    private void assertExecutionSuccess(Index index) {
+        MapCommand mapCommand = prepareCommand(index);
+        ReadOnlyPerson personToMap = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        String expectedMessage = String.format(MapCommand.MESSAGE_MAP_SHOWN_SUCCESS, personToMap);
+
+        try {
+            CommandResult commandResult = mapCommand.execute();
+            assertEquals(expectedMessage, commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Assert Execution Failed: ", ce);
+        }
     }
 
     /**
