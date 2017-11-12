@@ -494,6 +494,7 @@ Format: `export PATH`
 * Export all the information of contacts to the given local address.
 ****
 // end::export[]
+
 === Selecting a person : `select` _[Since v1.1]_
 
 _Alias:_ `choose`
@@ -643,7 +644,6 @@ If you find it is uncomfortable to watch the UI because of the font size, you ca
 You can increase or decrease the size of font.
 
 Format: `font -` `font +`
-
 //end::fontsize[]
 
 // tag::birthday[]
@@ -751,11 +751,11 @@ There is no need to save manually.
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 *Q*: Can I use this app without network connection? +
-*A*: You can achieve most of the commands offline except for those features using the browser window (e.g. `select` or `m-show`).
+*A*: You can achieve most of the commands offline except for those features using the browser window (e.g. `select` and `m-show`).
 
 == Command Summary
 
-* *Help* : `help COMMAND_WORD`
+* *Help* : `help COMMAND_WORD` +
 e.g. `help list`
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
@@ -764,12 +764,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]` +
 e.g. `find n/James p/8765 e/jamesho@example.com a/clementi street`
-* *Sort* : `sort [n/(ASC/DSC)] [p/(ASC/DSC)] [e/(ASC/DSC)] [a/(ASC/DSC)]` +
-e.g. `sort n/ASC`
-* *Delete* : `delete I/INDEX INDEX...` +
-e.g. `delete I/3 4`
-* *TagAdd* : `t-add INDEX... TAG` +
-e.g. `t-add 3 4 friends`
+* *Sort* : `sort [n/(asc/dsc)] [p/(asc/dsc)] [e/(asc/dsc)] [a/(asc/dsc)] [t/(asc/dsc)]` +
+e.g. `sort n/asc`
 * *TagAddFavourite* : `t-add INDEX... favourite` +
 e.g. `t-add 3 4 favourite`
 * *TagRemove* : `t-remove INDEX... TAG` +
@@ -786,7 +782,7 @@ e.g. `m-show 1`
 e.g. `m-show 1 a/NUS`
 * *ScheduleAdd* : `s-add [m/INDEX INDEX…] n/NAME t/TIME d/DURATION` +
 e.g. `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/120`
-* *ScheduleRemove* : `s-remove e/INDEX INDEX...` +
+* *ScheduleRemove* : `s-remove I/INDEX INDEX...` +
 e.g. `s-remove e/1 2 3`
 * *Export* : `export PATH` +
 e.g. `export /desktop/new_folder`
