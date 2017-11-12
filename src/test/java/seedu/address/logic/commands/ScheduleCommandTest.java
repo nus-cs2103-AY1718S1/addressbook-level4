@@ -66,8 +66,7 @@ public class ScheduleCommandTest {
     @Test
     public void executeScheduleCommand_targetIndexExceededListSize() throws CommandException, DuplicatePersonException {
         Index targetIndex = Index.fromOneBased(1000);
-        Calendar date = Calendar.getInstance();
-        ScheduleCommand scheduleCommand = new ScheduleCommand(targetIndex, date);
+        ScheduleCommand scheduleCommand = createNewScheduleCommand(targetIndex);
         Model model = createAndSetModel(scheduleCommand);
         model.addPerson(TypicalPersons.ALICE);
         thrown.expect(CommandException.class);
@@ -96,10 +95,18 @@ public class ScheduleCommandTest {
     /**
      * Returns a model that is set
      */
-    public Model createAndSetModel(ScheduleCommand scheduleCommand) {
+    private Model createAndSetModel(ScheduleCommand scheduleCommand) {
         Model model = new ModelManager();
         scheduleCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return model;
     }
-    //@@author
+
+    /**
+     * Creates a new ScheduleCommand
+     */
+    private ScheduleCommand createNewScheduleCommand(Index index) {
+        Calendar date = Calendar.getInstance();
+        ScheduleCommand scheduleCommand = new ScheduleCommand(index, date);
+        return scheduleCommand;
+    }
 }
