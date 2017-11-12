@@ -14,9 +14,11 @@ endif::[]
 
 By: `CS2103Aug2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
 
+**Table of Contents**
+
 == About
 
-This user guide will give you an overview of how to use Codii.
+This user guide gives you an overview of how to use Codii.
 This guide includes step-by-step instructions on how each command work, FAQs and a summary of every command you will learn.
 
 The terms used in this guide are as follows: +
@@ -29,7 +31,7 @@ The terms used in this guide are as follows: +
 
 == Introduction
 
-Codii is a free to use address book catered to suit the needs of debt collectors. You can enter debtors into Codii,
+Codii is a free-to-use address book catered to suit the needs of debt collectors. You can enter debtors into Codii,
 track the amount of debt owed, manage deadlines, ban and unban debtors and even organise them by location.
 
 Codii is available for the Linux, Windows, and Mac OS operating systems.
@@ -653,6 +655,8 @@ transferred to whitelist and date repaid is set to the date the command is execu
 *A*: Yes. +
 
 == Command Summary
+
+A quick summary of all available commands for your easy reference:
 
 * *Login* : `login USERNAME PASSWORD` +
 e.g. `login userAcc_123 pa$$_Word!@#&`
