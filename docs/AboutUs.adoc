@@ -37,7 +37,7 @@ Responsibilities: Storage & Model
 
 '''
 
-=== Darren Chin
+=== Darren Chin Jhun Pyng
 image::darrenczen.png[width="150", align="left"]
 {empty}[http://github.com/DarrenCzen[github]]
 
