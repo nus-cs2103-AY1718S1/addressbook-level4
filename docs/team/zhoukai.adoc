@@ -46,7 +46,7 @@ include::../UserGuide.adoc[tag=changeTheme]
 
 ==== Justification
 
-A simple modification for aesthetic purpose. User is able to change theme both on the UI and using command line. 
+A simple modification for aesthetic purpose. User is able to change theme both on the UI and using command line.
 
 ==== Implementation
 
