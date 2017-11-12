@@ -183,27 +183,38 @@ public class Autocompleter {
 
         // Current command word has a prefix parameter in its arguments
         if (AutocompleteCommand.hasPrefixParameter(commandWord)) {
-
-            ArrayList<String> missingPrefixes = parser.getMissingPrefixes(arguments);
-            if (lastCharIsStartOfPrefix(commandBoxText)) {
-                state = AutocompleteState.COMMAND_COMPLETE_PREFIX;
-                return;
-            }
-
-            if (lastTwoCharactersArePrefix(commandBoxText)) {
-                setIndexToOneIfNeeded();
-                if (missingPrefixes.size() > possibleAutocompleteResults.size()) {
-                    possibleAutocompleteResults = missingPrefixes;
-                }
-                state = AutocompleteState.COMMAND_CYCLE_PREFIX;
-                return;
-            }
-
-            possibleAutocompleteResults = missingPrefixes;
-            state = AutocompleteState.COMMAND_NEXT_PREFIX;
+            updateStateForCommandsWithPrefixes(commandBoxText, arguments);
+            return;
         } else {
             state = AutocompleteState.COMMAND;
         }
+
+    }
+
+    /**
+     * Updates the {@code AutocompleteState} of the autocompleter for {@code Command} that requires prefixes
+     *
+     * @param commandBoxText the current text inside the {@code CommandBox}
+     * @param arguments the {@code String} of arguments identified by the parser
+     */
+    private void updateStateForCommandsWithPrefixes(String commandBoxText, String arguments) {
+        ArrayList<String> missingPrefixes = parser.getMissingPrefixes(arguments);
+        if (lastCharIsStartOfPrefix(commandBoxText)) {
+            state = AutocompleteState.COMMAND_COMPLETE_PREFIX;
+            return;
+        }
+
+        if (lastTwoCharactersArePrefix(commandBoxText)) {
+            setIndexToOneIfNeeded();
+            if (missingPrefixes.size() > possibleAutocompleteResults.size()) {
+                possibleAutocompleteResults = missingPrefixes;
+            }
+            state = AutocompleteState.COMMAND_CYCLE_PREFIX;
+            return;
+        }
+
+        possibleAutocompleteResults = missingPrefixes;
+        state = AutocompleteState.COMMAND_NEXT_PREFIX;
 
     }
 
