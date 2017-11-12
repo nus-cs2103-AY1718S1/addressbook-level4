@@ -695,7 +695,7 @@ public class ExtendedPersonDisplay extends UiPart<Region> {
         <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0">
                 <image>
-                    <Image url="@../../../../docs/images/icons/name(white).png" />
+                    <Image url="@../images/name(white).png" />
                 </image>
             </ImageView>
         </graphic>
@@ -707,7 +707,7 @@ public class ExtendedPersonDisplay extends UiPart<Region> {
       <graphic>
               <ImageView fitHeight="20.0" fitWidth="20.0">
                   <image>
-                      <Image url="@../../../../docs/images/icons/phone(white).png" />
+                      <Image url="@../images/phone(white).png" />
                   </image>
               </ImageView>
       </graphic>
@@ -719,7 +719,7 @@ public class ExtendedPersonDisplay extends UiPart<Region> {
       <graphic>
               <ImageView fitHeight="20.0" fitWidth="20.0">
                   <image>
-                      <Image url="@../../../../docs/images/icons/email(white).png" />
+                      <Image url="@../images/email(white).png" />
                   </image>
               </ImageView>
       </graphic>
@@ -731,7 +731,7 @@ public class ExtendedPersonDisplay extends UiPart<Region> {
       <graphic>
               <ImageView fitHeight="20.0" fitWidth="20.0">
                   <image>
-                      <Image url="@../../../../docs/images/icons/address(white).png" />
+                      <Image url="@../images/address(white).png" />
                   </image>
               </ImageView>
       </graphic>
@@ -743,7 +743,7 @@ public class ExtendedPersonDisplay extends UiPart<Region> {
       <graphic>
               <ImageView fitHeight="20.0" fitWidth="20.0">
                   <image>
-                      <Image url="@../../../../docs/images/icons/birthday(white).png" />
+                      <Image url="@../images/birthday(white).png" />
                   </image>
               </ImageView>
       </graphic>

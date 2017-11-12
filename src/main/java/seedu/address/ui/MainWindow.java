@@ -188,7 +188,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     //@@author vivekscl
-    /*
+    /**
      * Sets the window size to the user defined size.
      */
     private void setWindowUserDefinedSize(double newWidth, double newHeight) {

@@ -1,4 +1,58 @@
 # vivekscl
+###### /java/seedu/address/model/windowsize/WindowSizeTest.java
+``` java
+public class WindowSizeTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void isValidWindowSize() {
+        // invalid window sizes
+        assertFalse(WindowSize.isValidWindowSize("")); // empty string
+        assertFalse(WindowSize.isValidWindowSize(" ")); // spaces only
+        assertFalse(WindowSize.isValidWindowSize(CommandTestUtil.INVALID_WINDOW_SIZE_INPUT)); // invalid window size
+
+        // valid window sizes
+        assertTrue(WindowSize.isValidWindowSize(WindowSize.SMALL_WINDOW_SIZE_INPUT));
+        assertTrue(WindowSize.isValidWindowSize(WindowSize.MEDIUM_WINDOW_SIZE_INPUT));
+        assertTrue(WindowSize.isValidWindowSize(WindowSize.BIG_WINDOW_SIZE_INPUT));
+    }
+
+    @Test
+    public void getUserDefinedWindowWidth_validWidth_validResult() {
+        assertTrue(WindowSize.SMALL_WIDTH
+                == WindowSize.getUserDefinedWindowWidth(WindowSize.SMALL_WINDOW_SIZE_INPUT));
+        assertTrue(WindowSize.MEDIUM_WIDTH
+                == WindowSize.getUserDefinedWindowWidth(WindowSize.MEDIUM_WINDOW_SIZE_INPUT));
+        assertTrue(WindowSize.BIG_WIDTH
+                == WindowSize.getUserDefinedWindowWidth(WindowSize.BIG_WINDOW_SIZE_INPUT));
+    }
+
+    @Test
+    public void getUserDefinedWindowHeight_validHeight_validResult() {
+        assertTrue(WindowSize.SMALL_HEIGHT
+                == WindowSize.getUserDefinedWindowHeight(WindowSize.SMALL_WINDOW_SIZE_INPUT));
+        assertTrue(WindowSize.MEDIUM_HEIGHT
+                == WindowSize.getUserDefinedWindowHeight(WindowSize.MEDIUM_WINDOW_SIZE_INPUT));
+        assertTrue(WindowSize.BIG_HEIGHT
+                == WindowSize.getUserDefinedWindowHeight(WindowSize.BIG_WINDOW_SIZE_INPUT));
+    }
+
+    @Test
+    public void getUserDefinedWindowWidth_invalidWidth_invalidResult() {
+        thrown.expect(AssertionError.class);
+        WindowSize.getUserDefinedWindowWidth("");
+
+    }
+
+    @Test
+    public void getUserDefinedWindowHeight_invalidHeight_invalidResult() {
+        thrown.expect(AssertionError.class);
+        WindowSize.getUserDefinedWindowHeight("");
+    }
+}
+```
 ###### /java/seedu/address/model/ModelManagerTest.java
 ``` java
     /*
@@ -89,12 +143,12 @@
     public void execute_multipleKeywords_noPersonFound() {
         String keywordsAsString = "kun ell car";
         FindCommand command = prepareCommand(keywordsAsString);
-        String targets = model.getClosestMatchingName(
+        String closestMatchingNames = model.getClosestMatchingName(
                 new NameContainsKeywordsPredicate(Arrays.asList(keywordsAsString.split("\\s+"))));
-        List<String> targetsAsList = Arrays.asList(targets.split("\\s+"));
+        List<String> targetsAsList = Arrays.asList(closestMatchingNames.split("\\s+"));
         String expectedMessage = String.format(MESSAGE_NO_PERSON_FOUND, keywordsAsString,
                 String.join(", ", targetsAsList));
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
 ```
@@ -113,11 +167,11 @@ public class ChangeWindowSizeCommandTest {
     @Test
     public void executeChangeWindowSizeSuccess() throws Exception {
         ChangeWindowSizeCommand changeWindowSizeCommand =
-                prepareCommand(ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM);
+                prepareCommand(WindowSize.SMALL_WINDOW_SIZE_INPUT);
         CommandResult commandResult = changeWindowSizeCommand.execute();
 
-        String expectedMessage = ChangeWindowSizeCommand.MESSAGE_SUCCESS + ChangeWindowSizeCommand.SMALL_WIDTH
-                + " x " + ChangeWindowSizeCommand.SMALL_HEIGHT;
+        String expectedMessage = ChangeWindowSizeCommand.MESSAGE_SUCCESS + WindowSize.SMALL_WIDTH
+                + " x " + WindowSize.SMALL_HEIGHT;
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ChangeWindowSizeRequestEvent);
@@ -126,9 +180,9 @@ public class ChangeWindowSizeCommandTest {
     @Test
     public void executeInvalidChangeWindowSizeFailure() throws Exception {
         ChangeWindowSizeCommand changeWindowSizeCommand =
-                prepareCommand(ChangeWindowSizeCommand.INVALID_WINDOW_SIZE_PARAM);
+                prepareCommand(CommandTestUtil.INVALID_WINDOW_SIZE_INPUT);
 
-        String expectedMessage = ChangeWindowSizeCommand.MESSAGE_WINDOW_SIZE_CONSTRAINTS;
+        String expectedMessage = WindowSize.MESSAGE_WINDOW_SIZE_CONSTRAINTS;
 
         assertCommandFailure(changeWindowSizeCommand, model, expectedMessage);
     }
@@ -136,11 +190,11 @@ public class ChangeWindowSizeCommandTest {
     @Test
     public void equals() {
         ChangeWindowSizeCommand changeWindowSizeToSmall =
-                new ChangeWindowSizeCommand(ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM);
+                new ChangeWindowSizeCommand(WindowSize.SMALL_WINDOW_SIZE_INPUT);
         ChangeWindowSizeCommand changeWindowSizeToMedium =
-                new ChangeWindowSizeCommand(ChangeWindowSizeCommand.MEDIUM_WINDOW_SIZE_PARAM);
+                new ChangeWindowSizeCommand(WindowSize.MEDIUM_WINDOW_SIZE_INPUT);
         ChangeWindowSizeCommand changeWindowSizeToBig =
-                new ChangeWindowSizeCommand(ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM);
+                new ChangeWindowSizeCommand(WindowSize.BIG_WINDOW_SIZE_INPUT);
 
         // same object -> returns true
         assertTrue(changeWindowSizeToSmall.equals(changeWindowSizeToSmall));
@@ -525,6 +579,25 @@ public class RedoCommandParserTest {
     }
 }
 ```
+###### /java/seedu/address/logic/parser/ChangeWindowSizeCommandParserTest.java
+``` java
+public class ChangeWindowSizeCommandParserTest {
+
+    private ChangeWindowSizeCommandParser parser = new ChangeWindowSizeCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsChangeWindowSizeCommand() {
+        assertParseSuccess(parser, "small",
+                new ChangeWindowSizeCommand(WindowSize.SMALL_WINDOW_SIZE_INPUT));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeWindowSizeCommand.MESSAGE_USAGE));
+    }
+}
+```
 ###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
@@ -565,13 +638,6 @@ public class RedoCommandParserTest {
         assertEquals(new AddTagCommand(indexes, toAdd), command);
     }
 
-    @Test
-    public void parseCommand_changeWindowSizeCommand() throws Exception {
-        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD) instanceof ChangeWindowSizeCommand);
-        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD + " "
-            + ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM) instanceof ChangeWindowSizeCommand);
-    }
-
 ```
 ###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
@@ -580,6 +646,12 @@ public class RedoCommandParserTest {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_1) instanceof UndoCommand);
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_2 + " 2") instanceof UndoCommand);
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_3 + " 3") instanceof UndoCommand);
+    }
+
+    @Test
+    public void parseCommand_changeWindowSizeCommand() throws Exception {
+        assertTrue(parser.parseCommand(ChangeWindowSizeCommand.COMMAND_WORD + " "
+                + WindowSize.BIG_WINDOW_SIZE_INPUT) instanceof ChangeWindowSizeCommand);
     }
 
 ```
@@ -607,13 +679,13 @@ public class UndoCommandParserTest {
      */
     public void clickOnWindowSizesUsingMenu(String windowSize) {
         switch(windowSize) {
-        case ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM:
+        case WindowSize.SMALL_WINDOW_SIZE_INPUT:
             clickOnMenuItemsSequentially("Window", "Small (800x600)");
             break;
-        case ChangeWindowSizeCommand.MEDIUM_WINDOW_SIZE_PARAM:
+        case WindowSize.MEDIUM_WINDOW_SIZE_INPUT:
             clickOnMenuItemsSequentially("Window", "Medium (1024x720)");
             break;
-        case ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM:
+        case WindowSize.BIG_WINDOW_SIZE_INPUT:
             clickOnMenuItemsSequentially("Window", "Big (1600x1024)");
             break;
         default:
@@ -624,25 +696,25 @@ public class UndoCommandParserTest {
     }
 
 ```
-###### /java/guitests/ChangeWindowSizeTest.java
+###### /java/guitests/ChangeWindowSizeGuiTest.java
 ``` java
-public class ChangeWindowSizeTest extends  AddressBookGuiTest {
+public class ChangeWindowSizeGuiTest extends  AddressBookGuiTest {
 
     @Test
     public void openWindow() {
 
         //use menu button
-        getMainMenu().clickOnWindowSizesUsingMenu(ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM);
-        assertChangeWindowSizeByClickingSuccess(ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM);
+        getMainMenu().clickOnWindowSizesUsingMenu(WindowSize.SMALL_WINDOW_SIZE_INPUT);
+        assertChangeWindowSizeByClickingSuccess(WindowSize.SMALL_WINDOW_SIZE_INPUT);
 
-        getMainMenu().clickOnWindowSizesUsingMenu(ChangeWindowSizeCommand.MEDIUM_WINDOW_SIZE_PARAM);
-        assertChangeWindowSizeByClickingSuccess(ChangeWindowSizeCommand.MEDIUM_WINDOW_SIZE_PARAM);
+        getMainMenu().clickOnWindowSizesUsingMenu(WindowSize.MEDIUM_WINDOW_SIZE_INPUT);
+        assertChangeWindowSizeByClickingSuccess(WindowSize.MEDIUM_WINDOW_SIZE_INPUT);
 
-        getMainMenu().clickOnWindowSizesUsingMenu(ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM);
-        assertChangeWindowSizeByClickingSuccess(ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM);
+        getMainMenu().clickOnWindowSizesUsingMenu(WindowSize.BIG_WINDOW_SIZE_INPUT);
+        assertChangeWindowSizeByClickingSuccess(WindowSize.BIG_WINDOW_SIZE_INPUT);
 
         //use command box
-        runCommand(ChangeWindowSizeCommand.COMMAND_WORD + " " + ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM);
+        runCommand(ChangeWindowSizeCommand.COMMAND_WORD + " " + WindowSize.SMALL_WINDOW_SIZE_INPUT);
         assertChangeToSmallWindowSizeByCommandWordSuccess();
     }
 
@@ -650,8 +722,8 @@ public class ChangeWindowSizeTest extends  AddressBookGuiTest {
      * Asserts that typed out command to change the window size is a success.
      */
     private void assertChangeToSmallWindowSizeByCommandWordSuccess() {
-        assertEquals(ChangeWindowSizeCommand.MESSAGE_SUCCESS + ChangeWindowSizeCommand.SMALL_WIDTH + " x "
-            + ChangeWindowSizeCommand.SMALL_HEIGHT, getResultDisplay().getText());
+        assertEquals(ChangeWindowSizeCommand.MESSAGE_SUCCESS + WindowSize.SMALL_WIDTH + " x "
+                + WindowSize.SMALL_HEIGHT, getResultDisplay().getText());
         guiRobot.pauseForHuman();
     }
 
@@ -660,17 +732,17 @@ public class ChangeWindowSizeTest extends  AddressBookGuiTest {
      */
     private void assertChangeWindowSizeByClickingSuccess(String windowSize) {
         switch(windowSize) {
-        case ChangeWindowSizeCommand.SMALL_WINDOW_SIZE_PARAM:
-            assertTrue(ChangeWindowSizeCommand.SMALL_WIDTH == getCurrentWindowWidth());
-            assertTrue(ChangeWindowSizeCommand.SMALL_HEIGHT == getCurrentWindowHeight());
+        case WindowSize.SMALL_WINDOW_SIZE_INPUT:
+            assertTrue(WindowSize.SMALL_WIDTH == getCurrentWindowWidth());
+            assertTrue(WindowSize.SMALL_HEIGHT == getCurrentWindowHeight());
             break;
-        case ChangeWindowSizeCommand.MEDIUM_WINDOW_SIZE_PARAM:
-            assertTrue(ChangeWindowSizeCommand.MEDIUM_WIDTH == getCurrentWindowWidth());
-            assertTrue(ChangeWindowSizeCommand.MEDIUM_HEIGHT == getCurrentWindowHeight());
+        case WindowSize.MEDIUM_WINDOW_SIZE_INPUT:
+            assertTrue(WindowSize.MEDIUM_WIDTH == getCurrentWindowWidth());
+            assertTrue(WindowSize.MEDIUM_HEIGHT == getCurrentWindowHeight());
             break;
-        case ChangeWindowSizeCommand.BIG_WINDOW_SIZE_PARAM:
-            assertTrue(ChangeWindowSizeCommand.BIG_WIDTH == getCurrentWindowWidth());
-            assertTrue(ChangeWindowSizeCommand.BIG_HEIGHT == getCurrentWindowHeight());
+        case WindowSize.BIG_WINDOW_SIZE_INPUT:
+            assertTrue(WindowSize.BIG_WIDTH == getCurrentWindowWidth());
+            assertTrue(WindowSize.BIG_HEIGHT == getCurrentWindowHeight());
             break;
         default:
             assert false : "Invalid window size provided";

@@ -1,15 +1,13 @@
 package seedu.address.model.windowsize;
 
-import static java.util.Objects.requireNonNull;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
 //@@author vivekscl
 /**
- * Represents a Tag in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidWindowSize(String)}
+ * Represents the window size.
+ * Since all methods and attributes are static, an instance of this class will not be made.
+ * Hence, the class is set to final with a default private constructor to prevent accidental creation of this class.
+ * Guarantees: immutable; window size is valid as declared in {@link #isValidWindowSize(String)}
  */
-public class WindowSize {
+public final class WindowSize {
 
     public static final String MESSAGE_WINDOW_SIZE_CONSTRAINTS = "The only allowed sizes are small, med and big";
 
@@ -27,24 +25,9 @@ public class WindowSize {
     public static final String MEDIUM_WINDOW_SIZE_INPUT = "med";
     public static final String BIG_WINDOW_SIZE_INPUT = "big";
 
-
-    public final String windowSize;
+    private WindowSize() {}
 
     /**
-     * Validates given window size.
-     *
-     * @throws IllegalValueException if the given window size string is invalid.
-     */
-    public WindowSize(String windowSize) throws IllegalValueException {
-        requireNonNull(windowSize);
-        String trimmedWindowSize = windowSize.trim();
-        if (!isValidWindowSize(trimmedWindowSize)) {
-            throw new IllegalValueException(MESSAGE_WINDOW_SIZE_CONSTRAINTS);
-        }
-        this.windowSize = trimmedWindowSize;
-    }
-
-    /*
      * Returns the appropriate width according to the given windowSize.
      */
     public static double getUserDefinedWindowWidth(String windowSize) {
@@ -61,14 +44,14 @@ public class WindowSize {
             width = BIG_WIDTH;
             break;
         default:
-            assert false : "Window size must be specified";
+            assert false : "Window size must be specified correctly";
             break;
         }
 
         return width;
     }
 
-    /*
+    /**
      * Returns the appropriate height according to the given windowSize.
      */
     public static double getUserDefinedWindowHeight(String windowSize) {
@@ -85,7 +68,7 @@ public class WindowSize {
             height = BIG_HEIGHT;
             break;
         default:
-            assert false : "Window size must be specified";
+            assert false : "Window size must be specified correctly";
             break;
         }
 
@@ -96,15 +79,11 @@ public class WindowSize {
      * Returns true if given windowSize is a valid window size.
      */
     public static boolean isValidWindowSize(String windowSize) {
-        return (windowSize.equalsIgnoreCase(SMALL_WINDOW_SIZE_INPUT)
-                || windowSize.equalsIgnoreCase(MEDIUM_WINDOW_SIZE_INPUT)
-                || windowSize.equalsIgnoreCase(BIG_WINDOW_SIZE_INPUT));
+        boolean isSmallWindowSize = windowSize.equalsIgnoreCase(SMALL_WINDOW_SIZE_INPUT);
+        boolean isMediumWindowSize = windowSize.equalsIgnoreCase(MEDIUM_WINDOW_SIZE_INPUT);
+        boolean isBigWindowSize = windowSize.equalsIgnoreCase(BIG_WINDOW_SIZE_INPUT);
+        return isSmallWindowSize || isMediumWindowSize || isBigWindowSize;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof WindowSize // instanceof handles nulls
-                && this.windowSize.equals(((WindowSize) other).windowSize)); // state check
-    }
+
 }

@@ -82,12 +82,12 @@ public class FindCommandTest {
     public void execute_multipleKeywords_noPersonFound() {
         String keywordsAsString = "kun ell car";
         FindCommand command = prepareCommand(keywordsAsString);
-        String targets = model.getClosestMatchingName(
+        String closestMatchingNames = model.getClosestMatchingName(
                 new NameContainsKeywordsPredicate(Arrays.asList(keywordsAsString.split("\\s+"))));
-        List<String> targetsAsList = Arrays.asList(targets.split("\\s+"));
+        List<String> targetsAsList = Arrays.asList(closestMatchingNames.split("\\s+"));
         String expectedMessage = String.format(MESSAGE_NO_PERSON_FOUND, keywordsAsString,
                 String.join(", ", targetsAsList));
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
     //@@author
@@ -117,7 +117,6 @@ public class FindCommandTest {
     private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
-
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(expectedList, model.getFilteredPersonList());
         assertEquals(expectedAddressBook, model.getAddressBook());
