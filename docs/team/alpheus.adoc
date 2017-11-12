@@ -161,7 +161,22 @@ include::../DeveloperGuide.adoc[tag=parentmode]
 
 ---
 
+=== Enhancement Proposed: Import/Export Google contacts
+This allows for easy transfer of contacts from the user's phone when they first use Bluebird.
+
+=== Enhancement Proposed: Cloud Storage
+Bluebird will prompt user to select if they would like to upload and save their data to a cloud storage
+every time they exit the application. This ensures that users need not worry about losing important
+contacts/tasks should anything happen to their computer.
+
+
 === Other contributions
+
+Acceptance Testing for other applications
+
+* Found a bug for switch theme (Issue https://github.com/CS2103AUG2017-T09-B3/main/issues/194[#194])
+
+Contribution to Bluebird
 
 * Updated the UI of Bluebird
 (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/14[#14], https://github.com/CS2103AUG2017-T15-B4/main/pull/58[#58],
