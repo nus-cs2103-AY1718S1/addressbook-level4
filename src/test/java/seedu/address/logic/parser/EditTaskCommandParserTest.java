@@ -226,7 +226,7 @@ public class EditTaskCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
-//@@author
+    //@@author
     @Test
     public void parse_resetTags_success() {
         Index targetIndex = INDEX_THIRD_TASK;

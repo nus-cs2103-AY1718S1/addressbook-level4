@@ -31,7 +31,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.address.testutil.TypicalTasks.GYM;
 import static seedu.address.testutil.TypicalTasks.INTERNSHIP;
 import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_FINISH;
-import static seedu.address.testutil.TypicalTasks.QUIZ;
 
 import org.junit.Test;
 
@@ -43,10 +42,10 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.tasks.EditTaskCommand;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
-import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.TaskBuilder;

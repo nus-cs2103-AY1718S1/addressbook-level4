@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
@@ -18,10 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.persons.EditCommand;
 import seedu.address.logic.commands.tasks.EditTaskCommand;
@@ -31,7 +27,6 @@ import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.task.DateTimeFormatter;
-import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.TaskContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -116,8 +111,10 @@ public class CommandTestUtil {
             " to " + VALID_ENDTIME_GRAD_SCHOOL;
     public static final String MIXED_TIME_DESC_GRAD_SCHOOL = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_GRAD_SCHOOL +
             " to " + VALID_ENDTIME_INTERNSHIP;
-    public static final String ENDTIME_DESC_PAPER = " " + PREFIX_TIME_AT + " " + VALID_ENDTIME_PAPER;
-    public static final String TIME_DESC_GYM = " " + PREFIX_TIME_AT + " " + VALID_STARTTIME_GYM + " "
+    public static final String ENDTIME_DESC_PAPER = " " + PREFIX_TIME_AT + " "
+            + VALID_ENDTIME_PAPER;
+    public static final String TIME_DESC_GYM = " " + PREFIX_TIME_AT + " "
+            + VALID_STARTTIME_GYM + " "
             + PREFIX_ENDTIME_TO + " " + VALID_ENDTIME_GYM;
     public static final String TAG_DESC_URGENT = " " + PREFIX_TAG + VALID_TAG_URGENT;
     public static final String TAG_DESC_GROUP = " " + PREFIX_TAG + VALID_TAG_GROUP;

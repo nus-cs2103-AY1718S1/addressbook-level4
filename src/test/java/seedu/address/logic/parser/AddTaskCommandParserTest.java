@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_INTERNSHIP;
@@ -42,9 +41,9 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.ReadOnlyTask;
-import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Task;
 import seedu.address.testutil.TaskBuilder;
 
@@ -78,7 +77,7 @@ public class AddTaskCommandParserTest  {
         // prefix repeated in description - correct prefix accepted
         Task expectedTaskWithPrefixInDesc = new TaskBuilder().withDescription(UNQUOTED_DESCRIPTION_PAPER)
                 .withDeadline(VALID_DEADLINE_PAPER).withStartTime(VALID_STARTTIME_INTERNSHIP)
-                .withEndTime(VALID_ENDTIME_INTERNSHIP) .withTags(VALID_TAG_URGENT).build();
+                .withEndTime(VALID_ENDTIME_INTERNSHIP).withTags(VALID_TAG_URGENT).build();
         assertParseSuccess(parser, DESCRIPTION_QUOTED_PAPER + DEADLINE_DESC_PAPER + TIME_DESC_INTERNSHIP
                 + TAG_DESC_URGENT, new AddTaskCommand(expectedTaskWithPrefixInDesc));
 
