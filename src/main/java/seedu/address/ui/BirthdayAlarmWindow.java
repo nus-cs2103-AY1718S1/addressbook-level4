@@ -2,9 +2,13 @@
 package seedu.address.ui;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -38,19 +42,30 @@ public class BirthdayAlarmWindow extends UiPart<Region> implements Initializable
 
     private final Stage dialogStage;
 
-    public BirthdayAlarmWindow(ReadOnlyAddressBook ab) {
+    public BirthdayAlarmWindow(ReadOnlyAddressBook ab) throws ParseException {
         super(FXML);
-        ObservableList<ReadOnlyPerson> pl;
+        ObservableList<ReadOnlyPerson> pl = FXCollections.observableArrayList();
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
         dialogStage.setResizable(true);
-        pl = ab.getPersonList();
+        pl.addAll(ab.getPersonList());
+        for (int i = pl.size() - 1; i >= 0; i--) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate storedDate = LocalDate.parse(pl.get(i).getBirthday().value, dtf);
+            LocalDate currentDate = LocalDate.now();
+            int bdayMonth = storedDate.getMonthValue();
+            int currentMonth = currentDate.getMonthValue();
+            if (bdayMonth < currentMonth) {
+                pl.remove(i); //removes entry before current month
+            }
+
+        }
+
         FilteredList<ReadOnlyPerson> fd = new FilteredList(pl);
         SortedList<ReadOnlyPerson> sl = new SortedList<>(fd);
         BirthdayTable.setItems(sl);
         sl.comparatorProperty().bind(BirthdayTable.comparatorProperty());
-
     }
 
     /**

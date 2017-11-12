@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.io.File;
+import java.text.ParseException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -234,7 +235,7 @@ public class MainWindow extends UiPart<Region> {
 
     //@@author chilipadiboy
     @FXML
-    private void handlebirthdayalarms() {
+    private void handlebirthdayalarms() throws ParseException {
         BirthdayAlarmWindow birthdayAlarmWindow = new BirthdayAlarmWindow(logic.getReadOnlyAddressBook());
         birthdayAlarmWindow.show();
     }
@@ -264,7 +265,7 @@ public class MainWindow extends UiPart<Region> {
 
     //@@author chilipadiboy
     @Subscribe
-    private void handleShowBirthdayAlarmEvent (ShowBirthdayAlarmRequestEvent event) {
+    private void handleShowBirthdayAlarmEvent (ShowBirthdayAlarmRequestEvent event) throws ParseException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handlebirthdayalarms();
     }
