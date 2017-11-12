@@ -314,6 +314,32 @@ When type `show_bookmark` it will list an empty page.
 ** *Expected output* +
 Error message "**Unknown command**"
 
+== Delete Command
+Deletes the specified place from the Tourist-Book. +
+ Format: `delete INDEX` or `del INDEX`
+
+****
+* Deletes the place at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+[discrete]
+=== Positive Test Cases
+. `list`
+`del 3` +
+
+** *Expected output* +
+Successful delete message will display
+
+[discrete]
+=== Negative Test Cases
+. `delete 55` +
+
+** *Expected output* +
+Display "**The place index provided is invalid**"
+As the [INDEX] is out of the range the list.
+
 == Confirm_clear Command
 Clears all entries from the Tourist-Book. +
 Format: `confirm_clear`
@@ -382,7 +408,7 @@ Format: `redo` or `re`
 ** *Expected output*
 It reapplies the `delete 1` command.
 
-. `undo`
+. `undo` +
 `delete 1` +
 `redo` +
 ** *Expected output*
@@ -394,97 +420,55 @@ The `redo` command fails as there are no `undo` commands executed previously.
 ** *Expected output* +
 Error message "**Unknown command**"
 
-== Delete Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
-[NOTE]
-====
-This is a note.
-====
-
-[WARNING]
-====
-This is a warning.
-====
-=== Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-=== Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
 == Direction Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
-[NOTE]
-====
-This is a note.
-====
+Displays the directions from location A to selected destination. +
+Format: `dir [INDEX_FROM] [INDEX_TO]`
 
-[WARNING]
-====
-This is a warning.
-====
+****
+* Displays the location from `INDEX_FROM` to `INDEX_TO`. The index refers to the index number shown in the last place listing.
+* Both fields must be provided.
+* If there are three or more INDEX then the command will take the first two INDEX.
+* The index *must be a positive integer* >= 1 and within the range of the list shown
+****
+
+[discrete]
 === Positive Test Cases
-. Test Case Here
+. `list` +
+`dir 1 2` +
 ** *Expected output*
-//Put expected output here
+ Display the directions from the location at index 1 to index 2 of the places listing in BrowserPanel.
 
-. Test Case Here
+. `list` +
+`dir 4 1` +
 ** *Expected output*
-//Put expected output here
+ Display the directions from the location at index 4 to index 1 of the places listing in BrowserPanel.
 
-. Test Case Here
+. `list` +
+`dir 1 2 5` +
 ** *Expected output*
-//Put expected output here
+ Display the directions from the location at index 1 to index 2 of the places listing in BrowserPanel.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
+[discrete]
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list` +
+`dir 1 1` +
+** *Expected output* +
+Error message "**The place index provided is invalid**"
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list` +
+`dir 1 0` +
+** *Expected output* +
+**Invalid Input** message display.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `list` +
+`dir 0 0` +
+** *Expected output* +
+**Invalid Input** message display.
+
+. `list` +
+`dir 10000 2000` +
+** *Expected output* +
+Error message "**The place index provided is invalid**"
 
 == Edit Command
 //Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
