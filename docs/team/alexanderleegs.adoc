@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: ABC Business Contacts
-ABC Business Contacts (ABC) is a desktop Business Contact Management application. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+*ABC Business Contacts* (ABC) is a free desktop contact management application that provides the user with a quick and convenient way to manage a large number of contacts and keep track of appointments. The user can store contacts as well as other information and retrieve them efficiently with the help of *ABC*. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/alexanderleegs.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/alexanderleegs.md[Test code]]
 
@@ -51,7 +51,7 @@ include::../UserGuide.adoc[tag=addremovemeeting]
 
 ==== Justification
 
-Users frequently need to arrange meetings. This allows them to add meetings to specific people. They are also able to delete the meeting if it has been cancelled or has already passed.
+Businessmen frequently need to arrange meetings. This allows them to add meetings to specific people. They are also able to delete the meeting if it has been cancelled or has already passed.
 
 
 === Enhancement Added: Sort
@@ -79,3 +79,4 @@ ABC should be able to automatically delete meetings once the date has passed. Th
 
 * Updated various commands to work correctly with meetings (Pull requests https://github.com/CS2103AUG2017-W13-B3/main/pull/124[#124], https://github.com/CS2103AUG2017-W13-B3/main/pull/125[#125])
 * Updated sort command to move contacts with empty fields to the back of the list (Pull request https://github.com/CS2103AUG2017-W13-B3/main/pull/121[#121])
+* Discovered bugs during acceptance testing (Issues https://github.com/CS2103AUG2017-W15-B3/main/issues/95[#95], https://github.com/CS2103AUG2017-W15-B3/main/issues/102[#102])
