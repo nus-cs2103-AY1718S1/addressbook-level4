@@ -1,6 +1,12 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+import java.util.List;
 
 //@@author derrickchua
 
@@ -26,7 +32,15 @@ public class LogoutCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        SyncCommand.client = null;
+        SyncCommand.clientFuture = null;
         syncedIDs.delete();
+        try {
+            resetIDs();
+        } catch (Exception e) {
+            assert false;
+        }
+
         if (dataStoreDir.delete()) {
             return new CommandResult(String.format(MESSAGE_SUCCESS));
         } else {
@@ -34,6 +48,15 @@ public class LogoutCommand extends Command {
         }
 
 
+    }
+
+    private void resetIDs () throws DuplicatePersonException, PersonNotFoundException {
+        List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+
+        for (ReadOnlyPerson person : personList) {
+            Person updated = SyncCommand.setId(person, "");
+            model.updatePerson(person, updated);
+        }
     }
 
     @Override
