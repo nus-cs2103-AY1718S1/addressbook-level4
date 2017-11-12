@@ -851,7 +851,7 @@ just using the built in sorting methods. +
 
 //tag::ArkBot[]
 
-=== ArkBot: A Telegram Bot Interface for Ark
+=== ArkBot: Telegram Bot Interface for Ark
 ArkBot is written using https://github.com/rubenlagus/TelegramBots[TelegramBots], a Java library written by
 https://github.com/rubenlagus[rubenlagus] to create bots using https://core.telegram.org/bots/api[Telegram Bots API].
 
