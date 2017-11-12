@@ -212,7 +212,7 @@ image::divider.png[width="900"]
 === Clearing all entries : `clear`
 image::UG_commandheader_clear.png[width="500"]
 
-If you want to empty Unify from all contacts, Unify's `clear` command clears all entries from the address book. +
+If you want to empty Unify from all contacts, Unify's `clear` command clears all entries from the address book.
 
 image::UG_header_format.png[width="400"]
 Format: `clear`
@@ -1070,7 +1070,7 @@ image::UG_mainheader_glossary.png[width="900"]
 
 [cols="2*^"]
 |===
-| *TERMS* | *EXPLAINATION*
+| *TERMS* | *EXPLANATION*
 | *Avatar* | A picture representing a particular person.
 | *Command Line Interface (CLI)* |  Is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines).
 | *Text-To-Speech (TTS)* |  A system that converts normal language text into speech; other systems render symbolic linguistic representations like phonetic transcriptions into speech. Or a speech synthesiser
