@@ -567,28 +567,24 @@ and has to be updated whenever we edit other parcel details as well.
 //end::deleteTag[]
 
 //tag::backup[]
-
 === Backup Mechanism
 
 The back up mechanism is facilitated by a `backupAddressBook()` method within the `StorageManager`. It supports the
 backing up of AddressBook data in Ark. +
 
 image::BackupSequenceDiagram.png[width="600"]
-_Figure 4.6.1 : Sequence diagram describing the operation of the `storageManager` when it is initialized_
+_Diagram 4.6.1 : Sequence diagram describing the operation of the `storageManager` when it is initialized_
 
-The `backupAddressBook()` method is called automatically when `storageManager` is initialised in `MainApp#init()`,
-a method that is called when `Ark` is launched. The method utilises the `StorageManager#saveAddressBook()` method and
-stores the backup in the same directory as the main `AddressBook` storage file. The backup file is saved and named with
-the name of the main `AddressBook` storage file appended with `-backup.xml`. i.e. If the main `AddressBook` storage file
- is named as `addressbook.xml`, the backup storage file will be saved as `addressbook.xml-backup.xml`.
-
-//end::backup[]
+As seen in the sequence diagram above, the `backupAddressBook()` method is called when `storageManager` is initialised
+in `MainApp#init()`. This method is called when Ark launches. From the diagram above, the backup() method is called.
+This backup method first checks if there is a save file loaded into Ark. If there is a save file loaded into Ark, a
+backup will be called. Otherwise, Ark does not backup the missing save file.
 
 ==== Design Considerations
 
 **Aspect: Implementation of `StorageManager#backupAddressBook`** +
 
-* **Alternative 1 (current choice):** use the `aveAddressBook()` method to implement logic. +
+* **Alternative 1 (current choice):** use the `saveAddressBook()` method to implement logic. +
 ** **Pros:** It becomes easier to implement method rather than writing out a separate logic for `backupAddressBook()`. It
 makes updates easier since enhancements to `saveAddressBook()` will also enhance `backupAddressBook()`. +
 ** **Cons:** This implementation increases the coupling of `backupAddressBook()` and
@@ -602,14 +598,15 @@ be implemented in both `saveAddressBook()` and `backupAddressBook()` +
 
 ---
 
-**Aspect: Trigger to execute `backupAddressBook`** +
+**Aspect: Trigger to execute the backup command** +
+
 * **Alternative 1 (current choice):** Automatically backup data on Ark on launch of the software. +
 ** **Pros:** This implementation ensures that the if the user corrupts the data of Ark during a session. The user will be
 able to revert to the start of the session, which is ensured to be a workable instance of the Ark software. +
 ** **Cons:** This does not give the most recent copy of the data of the Ark if many changes were made in a single session. +
 * **Alternative 2:** Backup data on Ark every few minutes +
 ** **Pros:** Provides a very recent copy of the data on Ark. +
-** **Cons:** More tedious and difficult to implement. User may also be running another process at that point of time. It
+** **Cons:** More tedious and difficult to implement. User may also be running another process at that point of time. This
 could cause a bottleneck if there is a lot of data to be saved, and multiple backup calls are queued one after the
 other. +
 * **Alternative 3:** Backup data after a fixed number of `UndoableCommand`s. +
@@ -618,35 +615,62 @@ other. +
 the corruption of the data is caused by a several of commands, it becomes difficult to ensure that the backup file
 provides a workable copy of the data of Ark.
 
-//tag::import[]
+---
 
+**Aspect: Choice of backing up if there is no save file.** +
+
+* **Alternative 1 (current choice):** Ark does not backup if it cannot read the save file +
+** **Pros:** Backup data will not be overwritten in the event that Ark is not able to read the designated save file for
+reasons such as the save file being corrupted/missing+
+** **Cons:** Additional overhead to check if Ark is able to read the designated save file. +
+* **Alternative 2:** Ark backs up even if the save file does not exist. +
+** **Pros:** Less overhead needed to check if Ark is able to read the designated save file. +
+** **Cons:** Backup data could be overwritten in the event the designated save file is corrupted/missing. +
+//end::backup[]
+
+//tag::import[]
 === Import Mechanism
 
-To use this command, type `import (FILE_NAME)` into the `CommandBox`.
+To use this command, you can type `import (FILE_NAME)` into the `CommandBox`. e.g. `import ark_save`
 
 The `Import` mechanism allows users to import parcels from valid `Ark` storage files stored as `.xml` files into the
-current instance of `Ark`. This mecahnism is facilitated by a `readAddressBook` method within`XmlAddressBookStorage` to
-load the parcels stored in the `xml` file and an `addAllParcels` method defined in `ModelManager` to add the parcels in
+current instance of `Ark`. This mechanism is facilitated by a `readAddressBook` method within `XmlAddressBookStorage` to
+load the parcels stored in the `xml` file and an `ModelManager#addAllParcels` to add the parcels in
 the storage file into the current instance of `Ark`. +
 
-Since the `Import` mechanism modifies the state of the data in `Ark`, it has to be undoable. Thus, it inherits from
-`UndoableCommands` interface rather than inheriting from the `Command` interface directly. +
-
-[NOTE]
-The file to be imported has to be stored in the `./data/import` folder. i.e. calling `import ark.xml` will import the
-file `./data/import/ark.xml`. +
-If the user enters a file name that is not alphanumeric or a file name that is not in a `.xml` format, the parcel will
-throw an Exception. This is to prevent a directory traversal attack on Ark. Read more about directory traversal
-attacks link:https://www.acunetix.com/websitesecurity/directory-traversal/[here] +
+Since the `Import` mechanism modifies the data stored in `Ark`, it has to be an undoable command. Thus, it inherits from
+the `UndoableCommands` interface rather than inheriting direclty from the `Command` interface. +
 
 The following sequence diagram shows how the `import` operation works:
 
 image::ImportSequenceDiagram.png[width="1000"]
 _Figure 4.7.1 : Sequence diagram describing the operation of `import` when it is executed_
 
+As seen in the sequence diagram above, the command is first parsed to create an `ImportCommandParser`. This parser
+takes the arguments of the input as the name of the file to import and converts it to a full file path string to
+locate the file to import. Thereafter, it loads the file to import into Ark and reads the data. This returns a list of
+parcels that are used in create an `ImportCommand`.
+
+When the command is executed, the following sequence of events take place:
+
+image::ImportCommandExecutionFrame.png[width="1200"]
+_Figure 4.7.2 : Reference frame for the execution of the Import Command_
+
+As seen in the diagram above, when the command is executed, the `executeUndoableMethod` methods calls
+`ModelManager#addAllParcels` method. In this method, all unique parcels are added into the running instance of Ark.
+If the parcel is not unique such that it will create a duplicate parcel in the inventory, the parcel is ignored and
+the process continues until the last parcel has been added.
+
 [NOTE]
-The `ImportCommand` will only add parcels non-duplicate parcels. Duplicate parcels are ignored. If all the parcels to be
- imported into Ark are duplicates, then no parcels are imported and an Exception is thrown.
+The file to be imported has to be stored in the `./data/import` folder. i.e. calling `import ark_save` will import the
+file `./data/import/ark_save.xml`. +
+If the user enters a file name that contains characters other than alphanumeric characters or a file name that is
+not in a `.xml` format, the command will throw an Exception.
+
+[WARNING]
+The `ImportCommand` will only add non-duplicate parcels. Duplicate parcels are ignored. +
+If all the parcels to be imported into Ark are duplicates, then no parcels are imported and an Exception is thrown. +
+If the file to import is either, a `CommandException` will be thrown
 
 ==== Design Considerations
 
@@ -668,7 +692,7 @@ feature has to be manually implemented in `ImportCommand` as well.
 
 **Aspect: Arguments to import files** +
 
-* **Alternative 1 (current choice):** Backup save files from only one location +
+* **Alternative 1 (current choice):** Imports save files from only one location +
 ** **Pros:** User will only stored his save files at one location, he will not store them at random locations and lose
 track of them. User only has to type the name of the file and does not need to type the full file path to locate
 the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
@@ -681,14 +705,15 @@ the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 
 **Aspect: Allowed file names that can be imported** +
 
-* **Alternative 1 (current choice):** File Names can only be alphanumeric and be in the `.xml` format. +
-** **Pros:** Ark is protected from directory traversal attacks. +
+* **Alternative 1 (current choice):** File Names can only contain alphanumeric and underscore characters and be in the
+`.xml` format. +
+** **Pros:** Users will constraint their file naming to contain more semantic names rather than having symbols in their
+ naming of Ark save files. +
 ** **Cons:** The user has restrictions on the file naming conventions he can use to name his import files +
 * **Alternative 2:** No file name check +
 ** **Pros:** Allows user to name his files following any conventions and be successfully imported into Ark. +
-** **Cons:** Makes Ark vulnerable to simple directory traversal attack where user can access files outside the
+** **Cons:** Makes Ark vulnerable to simple directory traversals where user can access files outside the
 `data/import/` directory. +
-
 //end::import[]
 
 //tag::autocomplete[]

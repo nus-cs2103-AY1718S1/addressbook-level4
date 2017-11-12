@@ -37,6 +37,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
      */
     public ImportCommand parse(String arg) throws ParseException {
         String trimmedArgument = arg.trim();
+
         if (!isValidFileName(trimmedArgument)) {
             throw new ParseException(MESSAGE_INVALID_FILE_NAME);
         }
