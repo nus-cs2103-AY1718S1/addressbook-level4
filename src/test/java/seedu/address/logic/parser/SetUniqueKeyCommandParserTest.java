@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 import seedu.address.logic.commands.SetUniqueKeyCommand;
 
+//@@author Sri-vatsa
 public class SetUniqueKeyCommandParserTest {
     private SetUniqueKeyCommandParser parser = new SetUniqueKeyCommandParser();
 
