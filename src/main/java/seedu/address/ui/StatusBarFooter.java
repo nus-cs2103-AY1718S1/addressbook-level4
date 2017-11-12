@@ -23,6 +23,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
+    private static final String NO_INTERNET_CONNECTION_WARNING = "Weather report available once connect to internet :)";
 
     /**
      * Used to generate time stamps.
@@ -41,23 +42,26 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar syncStatus;
     @FXML
-    private StatusBar saveLocationStatus;
+    private StatusBar weatherReport;
     @FXML
     private StatusBar totalPersons;
 
-
+    //@@author eeching
     public StatusBarFooter(int totalPersons) throws JAXBException, IOException {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
-        setSaveLocation(getWeatherCondition());
         setTotalPersons(totalPersons);
+        setSaveWeather(getWeather());
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Set the total number of person in the current address Book
+     */
     private void setTotalPersons(int totalPersons) {
         this.totalPersons.setText(totalPersons + " person(s) in total");
     }
-
+    //@@author
     /**
      * Sets the clock used to determine the current time.
      */
@@ -72,19 +76,26 @@ public class StatusBarFooter extends UiPart<Region> {
         return clock;
     }
 
-    private void setSaveLocation(String location) {
-        Platform.runLater(() -> this.saveLocationStatus.setText(location));
+    private void setSaveWeather(String weather) {
+        Platform.runLater(() -> this.weatherReport.setText(weather));
     }
 
     private void setSyncStatus(String status) {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
-    private String getWeatherCondition() throws JAXBException, IOException {
-        YahooWeatherRequest request = new YahooWeatherRequest();
-        return request.getYahooWeatherConditionSg();
-    }
+    //@@author eeching
+    private String getWeather() throws JAXBException {
+        try {
+            WeatherRequest request = new WeatherRequest();
+            return request.getSgWeather();
+        } catch (IOException e) {
+            logger.warning("no internet connection");
+            return NO_INTERNET_CONNECTION_WARNING;
+        }
 
+    }
+    //@@author
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         long now = clock.millis();

@@ -33,8 +33,9 @@ public class PhoneCommandTest {
 
         PhoneCommand phoneCommand = prepareCommand(INDEX_FIRST_PERSON, "add", new Phone("2333"));
 
-        String expectedMessage = "Phone number 2333 has been added, the updated phone list now has 3 phone numbers, "
-                + "and the primary phone number is 85355255";
+        String expectedMessage = "Phone number 2333 has been added.\n"
+                + "The updated phone list now has 3 phone numbers.\n"
+                + "The primary phone number is 85355255.\n";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
@@ -49,8 +50,9 @@ public class PhoneCommandTest {
 
         PhoneCommand phoneCommand = prepareCommand(INDEX_FIRST_PERSON, "remove", new Phone("25555"));
 
-        String expectedMessage = "Phone number 25555 has been removed, the updated phone list now has 2 phone numbers,"
-                + " and the primary phone number is 85355255";
+        String expectedMessage = "Phone number 25555 has been removed.\n"
+                + "The updated phone list now has 2 phone numbers.\n"
+                + "The primary phone number is 85355255.\n";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
@@ -65,7 +67,7 @@ public class PhoneCommandTest {
 
         PhoneCommand phoneCommand = prepareCommand(INDEX_FIRST_PERSON, "add", new Phone("24444"));
 
-        String expectedMessage = "Phone number to be added already exists in the list";
+        String expectedMessage = "Phone number to be added already exists in the list.\n";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
@@ -80,7 +82,7 @@ public class PhoneCommandTest {
 
         PhoneCommand phoneCommand = prepareCommand(INDEX_FIRST_PERSON, "remove", new Phone("2333"));
 
-        String expectedMessage = "Phone number to be removed is not found in the list";
+        String expectedMessage = "Phone number to be removed is not found in the list.\n";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
@@ -95,7 +97,7 @@ public class PhoneCommandTest {
 
         PhoneCommand phoneCommand = prepareCommand(INDEX_FIRST_PERSON, "showAllPhones", new Phone("000"));
 
-        String expectedMessage = "The primary number is 85355255\n"
+        String expectedMessage = "The primary phone number is 85355255.\n"
                 + "The additional phone number(s) are/is \n"
                 + "1/ 24444\n"
                 + "2/ 2333\n";
@@ -113,16 +115,12 @@ public class PhoneCommandTest {
 
         PhoneCommand phoneCommand = prepareCommand(INDEX_FIRST_PERSON, "IHaveNoIdeaWhatToType", new Phone("000"));
 
-        String expectedMessage = "command is invalid, please check again";
+        String expectedMessage = "Command is invalid, please check again.\n";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
         assertCommandSuccess(phoneCommand, model, expectedMessage, expectedModel);
     }
-
-
-
-
 
     /**
      * Returns a {@code CustomCommand} with the parameters {@code index + CustomFieldName + CustomFieldValue}.
