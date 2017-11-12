@@ -6,12 +6,16 @@ import java.util.List;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -22,7 +26,7 @@ public class PersonCard extends UiPart<Region> {
     private static final String FXML = "PersonListCard.fxml";
     private static List<String> colors = new ArrayList<String>();
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
-
+    public final ReadOnlyPerson person;
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -30,39 +34,50 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-
-    public final ReadOnlyPerson person;
-
     @FXML
     private HBox cardPane;
+    @FXML
+    private VBox personVbox;
     @FXML
     private Label name;
     @FXML
     private Label id;
     @FXML
-    private Label phone;
+    private Label phone = new Label();
     @FXML
-    private Label address;
+    private Label address = new Label();
     @FXML
-    private Label email;
+    private Label email = new Label();
     @FXML
-    private Label birthday;
+    private Label birthday = new Label();
+    @FXML
+    private HBox details = new HBox();
+    @FXML
+    private ImageView phoneImage = new ImageView();
+    @FXML
+    private ImageView locationImage = new ImageView();
+    @FXML
+    private ImageView emailImage = new ImageView();
+    @FXML
+    private ImageView giftImage = new ImageView();
     @FXML
     private Label remark;
     @FXML
     private FlowPane tags;
     @FXML
     private ImageView pinImage;
+    
+    private Index personCardIndex;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
+        this.personCardIndex = Index.fromOneBased(displayedIndex);
         id.setText(displayedIndex + ". ");
         initTags(person);
         initPin(person);
         bindListeners(person);
         /* add colors to colors list*/
-        colors.add("aqua");
         colors.add("cadetblue");
         colors.add("cornflowerblue");
         colors.add("dodgerblue");
@@ -71,7 +86,7 @@ public class PersonCard extends UiPart<Region> {
         colors.add("royalblue");
         colors.add("steelblue");
         colors.add("slateblue");
-        colors.add("teal");
+        colors.add("teal");     
     }
 
     /**
@@ -79,11 +94,8 @@ public class PersonCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
+
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
@@ -96,6 +108,88 @@ public class PersonCard extends UiPart<Region> {
                 pinImage.setImage(null);
             }
         });
+        person.selectProperty().addListener((observable, oldValue, newValue) -> {
+            details.getChildren().clear();
+            if (person.isSelected()) {
+                initDetails(person);
+                showPersonDetails();
+            }
+        });
+    }
+
+    /**
+     * Sets the additional info needed for their respective {@code person } properties
+     */
+    private void initDetails(ReadOnlyPerson person) {
+
+        phone.setId("phone");
+        address.setId("address");
+        email.setId("email");
+        birthday.setId("birthday");
+
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+
+        phone.setMaxHeight(Control.USE_COMPUTED_SIZE);
+        phone.setWrapText(true);
+
+        address.setMaxHeight(Control.USE_COMPUTED_SIZE);
+        address.setWrapText(true);
+
+        email.setMaxHeight(Control.USE_COMPUTED_SIZE);
+        email.setWrapText(true);
+
+        birthday.setMaxHeight(Control.USE_COMPUTED_SIZE);
+        birthday.setWrapText(true);
+
+        phoneImage.setImage(new Image("/images/telephone.png"));
+        phoneImage.setSmooth(true);
+        phoneImage.setPreserveRatio(true);
+        phoneImage.setFitHeight(80);
+        phoneImage.setFitWidth(40);
+
+        locationImage.setImage(new Image("/images/location.png"));
+        locationImage.setSmooth(true);
+        locationImage.setPreserveRatio(true);
+        locationImage.setFitHeight(100);
+        locationImage.setFitWidth(40);
+
+        giftImage.setImage(new Image("/images/gift.png"));
+        giftImage.setSmooth(true);
+        giftImage.setPreserveRatio(true);
+        giftImage.setFitHeight(100);
+        giftImage.setFitWidth(40);
+
+        emailImage.setImage(new Image("/images/email.png"));
+        emailImage.setSmooth(true);
+        emailImage.setPreserveRatio(true);
+        emailImage.setFitHeight(100);
+        emailImage.setFitWidth(40);
+
+        details.setId("details");
+        details.getChildren().add(phoneImage);
+        details.getChildren().add(phone);
+        details.getChildren().add(locationImage);
+        details.getChildren().add(address);
+        details.getChildren().add(emailImage);
+        details.getChildren().add(email);
+        details.getChildren().add(giftImage);
+        details.getChildren().add(birthday);
+        details.setSpacing(10);
+        details.setMaxSize(Control.USE_COMPUTED_SIZE, Control.USE_COMPUTED_SIZE);
+        details.setAlignment(Pos.CENTER_LEFT);
+
+    }
+
+    /**
+     * Shows the additional person details based on whether the person is selected or not
+     */
+    private void showPersonDetails() {
+        personVbox.getChildren().add(details);
+        personVbox.setAlignment(Pos.CENTER_LEFT);
+
     }
 
     /**
@@ -132,8 +226,11 @@ public class PersonCard extends UiPart<Region> {
             pinImage.setImage(null);
         }
     }
-
     //@@author
+
+    public Index getPersonCardIndex() {
+        return this.personCardIndex;
+    }
 
     @Override
     public boolean equals(Object other) {

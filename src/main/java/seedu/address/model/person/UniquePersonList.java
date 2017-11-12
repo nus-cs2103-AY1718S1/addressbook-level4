@@ -49,6 +49,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     //@@author Alim95
+
     /**
      * Sorts the list in order.
      */
@@ -72,6 +73,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     //@@author
+
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
@@ -124,6 +126,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     //@@author Alim95
+
     /**
      * Pins the equivalent person in the list.
      *
@@ -153,6 +156,37 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return personFoundAndUnpinned;
     }
+
+    /**
+     * Selects the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean select(ReadOnlyPerson toSelect) throws PersonNotFoundException {
+        requireNonNull(toSelect);
+        final int indexToSelect = internalList.indexOf(toSelect);
+        final boolean personFoundAndPinned = internalList.get(indexToSelect).setSelected(true);
+        if (!personFoundAndPinned) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndPinned;
+    }
+
+    /**
+     * Deselects the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean deselect(ReadOnlyPerson toDeselect) throws PersonNotFoundException {
+        requireNonNull(toDeselect);
+        final int indexToSelect = internalList.indexOf(toDeselect);
+        final boolean personFoundAndUnpinned = internalList.get(indexToSelect).setSelected(false);
+        if (!personFoundAndUnpinned) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndUnpinned;
+    }
+
 
     //@@author
     public void setPersons(UniquePersonList replacement) {

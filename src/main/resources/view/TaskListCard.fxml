@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox fx:id="cardPane" alignment="CENTER_LEFT" styleClass="hbox" stylesheets="@../../../../../sampletesta/src/main/resources/view/TasksPanel.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="cardPane" alignment="CENTER_LEFT" styleClass="hbox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane alignment="CENTER_LEFT" style="-fx-background-color: transparent;">
          <HBox.margin>

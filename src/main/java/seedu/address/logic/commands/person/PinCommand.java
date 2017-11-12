@@ -48,9 +48,9 @@ public class PinCommand extends Command {
         }
 
         try {
-            model.pinPerson(personToPin);
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
+                model.pinPerson(personToPin);
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "The target person cannot be missing";
         }
         return new CommandResult(String.format(MESSAGE_PIN_PERSON_SUCCESS, personToPin));
     }

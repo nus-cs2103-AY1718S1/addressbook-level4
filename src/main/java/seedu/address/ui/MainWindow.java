@@ -29,6 +29,7 @@ import seedu.address.commons.events.ui.ToggleListAllStyleEvent;
 import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
 import seedu.address.commons.events.ui.ToggleSortByLabelEvent;
 import seedu.address.commons.events.ui.ToggleToAllPersonViewEvent;
+import seedu.address.commons.events.ui.ToggleToChildModeEvent;
 import seedu.address.commons.events.ui.ToggleToParentModeEvent;
 import seedu.address.commons.events.ui.ToggleToTaskViewEvent;
 import seedu.address.commons.events.ui.UpdatePinnedPanelEvent;
@@ -399,6 +400,11 @@ public class MainWindow extends UiPart<Region> {
         helpMenu.setVisible(true);
     }
 
+    @Subscribe
+    private void handleToggleToChildModeEvent(ToggleToChildModeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        helpMenu.setVisible(false);
+    }
 
     @Subscribe
     private void handleToggleToAllPersonViewEvent(ToggleToAllPersonViewEvent event) {

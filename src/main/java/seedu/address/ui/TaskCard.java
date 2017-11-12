@@ -106,7 +106,7 @@ public class TaskCard extends UiPart<Region> {
             taskVbox.getChildren().add(time);
             taskVbox.setAlignment(Pos.CENTER_LEFT);
             time.setAlignment(Pos.CENTER_LEFT);
-            time.setFont(Font.font("Segoe UI Semibold", FontPosture.ITALIC, 11));
+            time.setFont(Font.font("Verdana", FontPosture.ITALIC, 11));
         }
 
     }

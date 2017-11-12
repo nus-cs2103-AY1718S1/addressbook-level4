@@ -26,6 +26,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Remark> remark;
     private boolean isPrivate = false;
     private ObjectProperty<Boolean> isPinned;
+    private ObjectProperty<Boolean> isSelected;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -33,7 +34,7 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Remark remark, Set<Tag> tags,
-                  boolean isPrivate, boolean isPinned) {
+                  boolean isPrivate, boolean isPinned, boolean isSelected) {
         requireAllNonNull(name, phone, email, address, birthday, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -45,6 +46,7 @@ public class Person implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.isPrivate = isPrivate;
         this.isPinned = new SimpleObjectProperty<>(isPinned);
+        this.isSelected = new SimpleObjectProperty<>(isSelected);
     }
 
     /**
@@ -52,7 +54,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getBirthday(),
-                source.getRemark(), source.getTags(), source.isPrivate(), source.isPinned());
+                source.getRemark(), source.getTags(), source.isPrivate(), source.isPinned(), source.isSelected());
     }
 
     public void setName(Name name) {
@@ -99,6 +101,16 @@ public class Person implements ReadOnlyPerson {
         return true;
     }
     //@@author
+    
+    @Override
+    public ObjectProperty<Boolean> selectProperty(){ return isSelected; }
+    
+    public boolean isSelected(){ return isSelected.get(); }
+    
+    public boolean setSelected(boolean isSelected) {
+        this.isSelected.set(isSelected);
+        return true;
+    }
 
     @Override
     public ObjectProperty<Phone> phoneProperty() {

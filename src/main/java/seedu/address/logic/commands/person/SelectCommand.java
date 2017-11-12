@@ -1,8 +1,10 @@
 package seedu.address.logic.commands.person;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -10,6 +12,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Selects a person identified using it's last displayed index from the address book.
@@ -25,6 +28,8 @@ public class SelectCommand extends Command {
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
 
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
     private final Index targetIndex;
 
     public SelectCommand(Index targetIndex) {
@@ -38,6 +43,27 @@ public class SelectCommand extends Command {
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        for (ReadOnlyPerson person : lastShownList) {
+            try {
+                model.deselectPerson(person);
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "The target person cannot be missing";
+            }
+
+        }
+
+        ReadOnlyPerson personToSelect = lastShownList.get(targetIndex.getZeroBased());
+
+        if (personToSelect.isSelected()) {
+            throw new CommandException(Messages.MESSAGE_PERSON_ALREADY_SELECTED);
+        }
+
+        try {
+            model.selectPerson(personToSelect);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
