@@ -4,7 +4,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 
 //@@author Choony93
-
 /**
  * Indicates a request to change theme to targeted index
  */

@@ -7,7 +7,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.UiPart;
 
 //@@author Choony93
-
 /**
  * Set theme of current addressbook based on index listed or theme name.
  */
