@@ -71,7 +71,7 @@ This app will not work with earlier versions of Java 8 and below.
 .  Copy the file to your home folder of choice.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::ContagDemo.PNG[width="790"]
+image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
