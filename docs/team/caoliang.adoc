@@ -106,3 +106,5 @@ https://github.com/CS2103AUG2017-W13-B4/main/pull/58/[#58], https://github.com/C
 https://github.com/CS2103AUG2017-W13-B4/main/pull/139[#139], https://github.com/CS2103AUG2017-W13-B4/main/pull/144[#144],)
 
 * Designed a logo for ModU (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/118/[#118])
+
+* Wrote useful issue on forum (Issues https://github.com/nus-cs2103-AY1718S1/forum/issues/208[#208])

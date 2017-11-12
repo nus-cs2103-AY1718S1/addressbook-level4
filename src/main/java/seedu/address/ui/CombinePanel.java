@@ -11,6 +11,8 @@ import java.net.URL;
 import java.time.DayOfWeek;
 import java.util.Objects;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -60,6 +62,8 @@ public class CombinePanel extends UiPart<Region> {
     private static final int ROW = 6;
     private static final int COL = 13;
     private static final int START_TIME = 8;
+
+    private static final Pattern LOCATION_KEYWORD_PATTERN = Pattern.compile(".*(?=-)");
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
@@ -288,7 +292,19 @@ public class CombinePanel extends UiPart<Region> {
     /************* BROWSER PANNEL *********/
 
     private void loadLessonPage(ReadOnlyLesson lesson) {
-        loadPage(NUS_MAP_SEARCH_URL_PREFIX + lesson.getLocation().toString());
+        loadPage(NUS_MAP_SEARCH_URL_PREFIX + getImportantKeywords(lesson.getLocation().toString()));
+    }
+
+    /**
+     * Get substring before hyphen.
+     */
+    private String getImportantKeywords(String location) {
+        Matcher matcher = LOCATION_KEYWORD_PATTERN.matcher(location);
+        if (matcher.find()) {
+            return matcher.group(0);
+        } else {
+            return location;
+        }
     }
 
 

@@ -453,6 +453,7 @@ public class EditCommand extends UndoableCommand {
             logger.info("---[Edit failure]Editing would results in duplicate time slot.");
             throw new CommandException(MESSAGE_DUPLICATE_BOOKEDSLOT);
         } catch (IllegalValueException ive) {
+
             logger.info("---???Edit failure???Editing illegal value.");
             model.updateLocationList();
             throw new CommandException(ive.getMessage());
@@ -1229,6 +1230,7 @@ public class ViewCommand extends Command {
             break;
 
         default:
+
             logger.info("---[View success]Viewing failed, invalid listing unit: LESSON");
             throw new CommandException(MESSAGE_VIEW_LESSON_FAILURE);
         }

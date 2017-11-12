@@ -103,6 +103,9 @@ These are the 4 list modes currently supported by ModU. They will be further exp
 The help command will open the user guide in a new window and provide explanations of every command available in the application. +
 
 Command format in command box: `help`
+
+image::video/help.gif[width="790"]
+
 // end::help[]
 
 // tag::list[]
@@ -123,7 +126,7 @@ Valid examples: +
 
 * To switch to *marked list mode*, type `list marked` to list all marked lessons in ModU. +
 
-//image::video/list.gif[width="490"]
+image::video/list.gif[width="790"]
 
 // end::list[]
 
@@ -145,7 +148,8 @@ Valid examples:
 
 * Type `add m/CS2100 ct/LEC v/LT19 gp/1 ts/MON[1400-1600] l/Wong Weng Fai l/Suppiah` to add a lesson with more than one lecturers.
 
-//image::video/add.gif[width="490"]
+image::video/add.gif[width="790"]
+
 // end::add[]
 
 // tag::mark[]
@@ -164,6 +168,9 @@ Valid examples:
 Next, type `mark 1` to add lesson into the marked list. +
 
 * In *lesson list mode*, type `mark 1` to add the lesson into the marked list.
+
+image::video/mark.gif[width="790"]
+
 // end::mark[]
 
 // tag::unmark[]
@@ -181,6 +188,8 @@ Valid example:
 * Type `list marked` to list all marked lessons in ModU. +
 Next, type `unmark 1` to remove the lesson at index 1 from the marked list. +
 
+image::video/unmark.gif[width="790"]
+
 // end::unmark[]
 
 // tag::view[]
@@ -191,7 +200,8 @@ The `view` command will display all lessons in a module or a location. +
 Command format in command box: `view INDEX` +
 
 [TIP]
-This is the only command that allows you to switch to *lesson list mode*. +
+This command allows you to switch to *lesson list mode*. +
+Another command that allows you to switch to lesson list mode is list marked.+
 
 Valid examples:
 
@@ -199,7 +209,7 @@ Valid examples:
 
 * In *location list mode*, type `view 2` to view all lessons conducted at this location. +
 
-//image::video/view.gif[width="490"]
+image::video/view.gif[width="790"]
 
 // end::view[]
 
@@ -213,7 +223,7 @@ Command format in command box: `edit INDEX [m/MODULE_CODE] [ct/CLASS_TYPE] [v/VE
 [TIP]
 At least one of the optional fields must be provided. +
 Existing values will be updated to the input values. +
-The prefix can be omitted in both *module list mode* and *location list mode*. +
+The prefix is omitted in both *module list mode* and *location list mode*. +
 
 Valid examples:
 
@@ -224,14 +234,11 @@ Next, type `edit 2 CS2101` to rename all the lessons associated with the module 
 Next, type `edit 2 LT19` to relocate all the lessons associated with the location at index 2 to LT19. +
 
 * In *lesson list mode*, type `view 2` to view the lesson at index 2. +
-Next, type `edit 2 v/LT19` to relocate the lesson to LT19. Note that for this example, the prefix is compulsory. +
+Next, type `edit 2 v/LT30` to relocate the lesson to LT30. Note that for this example, the prefix is compulsory. +
 
-//
-//image::video/edit.gif[width="490"]
-//
-//image::video/editModule.gif[width="490"]
-//
-//image::video/editLocation.gif[width="740"]
+
+image::video/edit.gif[width="790"]
+
 // end::edit[]
 
 // tag::find[]
@@ -264,7 +271,7 @@ Next, type `view 1` to go into *lesson list mode* of module at index 1. +
 Type `find FRI` to display all lessons that contain the keyword FRI. +
 
 
-//image::video/find.gif[width="790"]
+image::video/find.gif[width="790"]
 // end::find[]
 
 // tag::sort[]
@@ -283,7 +290,8 @@ Valid examples:
 
 * In *location list mode*, type `sort` to arrange the locations in an alphabetical order.
 
-//image::video/sortModule.gif[width="790"]
+image::video/sort.gif[width="790"]
+
 // end::sort[]
 
 // tag::delete[]
@@ -300,7 +308,8 @@ Valid examples:
 
 * In *lesson list mode*, type `delete 1` to remove the lesson at index 1. +
 
-//image::video/delete.gif[width="790"]
+image::video/delete.gif[width="790"]
+
 // end::delete[]
 
 // tag::select[]
@@ -316,7 +325,8 @@ Valid examples:
 
 * In *location list mode*, type `select 1` to display NUS campus map of the location at index 1. +
 
-//image::video/select.gif[width="790"]
+image::video/select.gif[width="790"]
+
 // end::select[]
 
 // tag::history[]
@@ -330,7 +340,8 @@ Command format in command box: `history` +
 [TIP]
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box. +
 
-//image::video/history.gif[width="790"]
+image::video/history.gif[width="790"]
+
 // end::history[]
 
 
@@ -353,6 +364,8 @@ Next, type `undo` to restore the state of the list before `delete 1` was execute
 * In *module list mode*, type `clear` to remove all registered modules in ModU. +
 Next, type `undo` to restore the state of the list before `clear` was executed. +
 
+image::video/undoValid.gif[width="790"]
+
 Invalid examples:
 
 * In *module list mode*, type `delete 1` to remove the module at index 1. +
@@ -364,7 +377,7 @@ The `undo` command fails because the list mode has changed from *module list mod
 Next, type `undo` in the command box. +
 The `undo` command fails as there are no undoable commands executed previously. +
 
-//image::video/undo.gif[width="790"]
+image::video/undoInvalid.gif[width="790"]
 
 === Redoing the previously undone command : `redo`
 
@@ -385,13 +398,16 @@ Type `undo` to restore the state of the list before `delete 1` was executed. +
 Type `redo` to re-execute `delete 1`. +
 Type `redo` to re-execute `clear`. +
 
+image::video/redoValid.gif[width="790"]
+
 Invalid example:
 
 * In *lesson list mode*, type `delete 1` to remove the module at index 1. +
 Next, type `redo` in the command box. +
 The `redo` command fails as there are no `undo` commands executed previously. +
 
-//image::video/redo.gif[width="790"]
+image::video/redoInvalid.gif[width="790"]
+
 // end::undoredo[]
 
 
@@ -402,7 +418,8 @@ The `clear` command will clear all data stored in ModU. +
 
 Command format in command box: `clear` +
 
-//image::video/clear.gif[width="790"]
+image::video/clear.gif[width="790"]
+
 // end::clear[]
 
 // tag::exit[]
@@ -412,7 +429,8 @@ The `exit` command will exit ModU. +
 
 Command format in command box: `exit` +
 
-//image::video/edit.gif[width="790"]
+image::video/edit.gif[width="790"]
+
 // end::exit[]
 
 
@@ -428,8 +446,24 @@ Valid example:
 
 * In *module list mode*, type `customise fx/large` to increase the font size from the current size to large. +
 
+image::video/customise.gif[width="790"]
+
 // end::customise[]
 
+// tag::theme[]
+=== Change theme : `theme`
+
+The theme command will change the theme of the application. There are 2 themes to choose from, namely: light (default) and dark. +
+
+Command format in command box:: `theme`
+
+Valid example:
+
+* Type theme dark to switch the theme from light to dark.
+
+image::video/theme.gif[width="790"]
+
+// end::theme[]
 
 // tag::colorKeyword[]
 === Highlighting keywords : `color`
@@ -442,10 +476,9 @@ Valid example:
 
 * In *module list mode*, type `color enable` to enable highlighting of valid command keywords. +
 
-//image::video/color.gif[width="790"]
+image::video/color.gif[width="790"]
 
 // end::colorKeyword[]
-
 
 
 // tag::remark[]
@@ -476,23 +509,11 @@ Examples:
 
 * `remark -d 1` +
 Delete the remark in current remark panel with index 1.
+
+
+image::video/remark.gif[width="790"]
+
 // end::remark[]
-
-// tag::theme[]
-=== Change theme : `theme`
-
-Change between light (default) and dark theme +
-Format: `theme`
-
-[TIP]
-Toggle between light and dark theme. If the current theme is light, executing `theme` will change the theme to be dark theme.
-
-Examples:
-
-* `theme dark`
-* `theme light`
-// end::theme[]
-
 
 
 === Saving the data
