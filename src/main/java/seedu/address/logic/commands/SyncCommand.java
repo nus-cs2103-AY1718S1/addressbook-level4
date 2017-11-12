@@ -48,6 +48,7 @@ public class SyncCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Synchronised";
     public static final String MESSAGE_FAILURE = "Please login first";
+    public static final String MESSAGE_FAILURE_INTERNET = "Unable to connect to the Internet. Please check your internet and firewall settings";
 
     private static PeopleService client;
 
@@ -87,6 +88,8 @@ public class SyncCommand extends Command {
                 }
 
                 saveStatus(syncedIDs);
+            } catch (java.net.UnknownHostException e) {
+                throw new CommandException(MESSAGE_FAILURE_INTERNET);
             } catch (Exception e) {
                 e.printStackTrace();
             }
