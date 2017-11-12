@@ -47,9 +47,9 @@ public class SetColourCommandTest {
         SetColourCommand setColourCommand = new SetColourCommand(VALID_TAG_FRIEND, "nocolour");
         setColourCommand.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
 
-       String expectedMessage = String.format(SetColourCommand.SETCOLOUR_INVALID_COLOUR, "nocolour");
+        String expectedMessage = String.format(SetColourCommand.SETCOLOUR_INVALID_COLOUR, "nocolour");
 
-       assertCommandFailure(setColourCommand, model, expectedMessage);
+        assertCommandFailure(setColourCommand, model, expectedMessage);
     }
 
     @Test

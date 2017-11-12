@@ -14,7 +14,6 @@ import seedu.address.logic.commands.SelectGroupCommand;
  * Test scope: similar to {@code SelectCommandParserTest}.
  * @see SelectCommandParserTest
  */
-
 public class SelectGroupCommandParserTest {
     private SelectGroupCommandParser parser = new SelectGroupCommandParser();
 
