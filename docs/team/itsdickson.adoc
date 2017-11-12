@@ -55,6 +55,7 @@ include::../DeveloperGuide.adoc[tag=favouriteunfavourite]
 ---
 #Start of Extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag=brighttheme]
 include::../UserGuide.adoc[tag=themes]
 include::../UserGuide.adoc[tag=switch]
 
@@ -109,7 +110,7 @@ include::../DeveloperGuide.adoc[tag=events]
 
 === Enhancement Added: Delete Event
 
-(Pull Request https://github.com/CS2103AUG2017-T15-B3/main/pull/135[#135])
+(Pull Request https://github.com/CS2103AUG2017-T15-B3/main/pull/107[#107])
 
 ==== External behavior
 
@@ -132,6 +133,36 @@ include::../UserGuide.adoc[tag=deleteevent]
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=deleteevent]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Find Tag
+
+(Pull Requests https://github.com/CS2103AUG2017-T15-B3/main/pull/86[#86], https://github.com/CS2103AUG2017-T15-B3/main/pull/103[#103])
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findtag]
 
 #End of Extract#
 
