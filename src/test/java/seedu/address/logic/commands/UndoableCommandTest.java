@@ -6,6 +6,8 @@ import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -14,6 +16,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class UndoableCommandTest {
@@ -57,10 +60,14 @@ public class UndoableCommandTest {
         @Override
         public CommandResult executeUndoableCommand() throws CommandException {
             ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(0);
+            ArrayList<ReadOnlyPerson> deleteList = new ArrayList<>();
+            deleteList.add(personToDelete);
             try {
-                model.deletePerson(personToDelete);
+                model.deletePerson(deleteList);
             } catch (PersonNotFoundException pnfe) {
                 fail("Impossible: personToDelete was retrieved from model.");
+            } catch (DuplicatePersonException d) {
+                fail("Impossible: personToDelete was unique from model");
             }
             return new CommandResult("");
         }

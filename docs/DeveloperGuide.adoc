@@ -957,7 +957,8 @@ Moreover, if there is more than one person in the list with the name give, then 
 // end::delete[]
 
 // tag::help[]
-===Improvement on HelpCommand
+
+=== Improvement on HelpCommand
 
 We make the help command to be able to alert the usage of a speified command.
 
@@ -980,7 +981,7 @@ If the input command word after 'help' can not be identified, then you will see 
 // end::help[]
 
 // tag::bin[]
-===RecycleBin Mechanism
+=== RecycleBin Mechanism
 
 We design a recycle bin in the iConnect to store the person removed from address book. In this way, users can restore the people they wrongly deleted. You may think that it can be done by udno/redo command. Actually, if users want to restore a person they deleted long time ago, then the undo/redo command would not hlep.
 
@@ -990,9 +991,8 @@ The way we deal with recycle bin storage is the same as we deal with addressbook
 
 *Bin commands*
 
-* `bin-list` : List all the people in the recycle bin in list.
 * `bin-delete` : Delete the people in the recycle bin by index as shown in the list.
-* `bin-clear` : Delete all the peopel in the recycle bin.
+* `bin-fresh` : Delete all the peopel in the recycle bin.
 * `bin-restore` : Restore the people in the recycle bin to address book by index.
 
 [NOTE]
@@ -1000,12 +1000,12 @@ If we find duplicate people when moving a person to recyclebin or moving a perso
 // end::bin[]
 
 // tag::export[]
-===Exporting
+=== Exporting
 
 We are using 'java.io.File' and 'java.io.FileWriter' to export address book data.
 
 * The filepath should be a complete path to a specific location of a empty txt file in your computer.
-* The order of the output information is 'person', 'tag', 'event';
+* The order of the output information is 'person', 'event';
 // end::export[]
 
 === Logging

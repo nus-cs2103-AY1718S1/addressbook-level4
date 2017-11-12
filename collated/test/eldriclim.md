@@ -1,5 +1,5 @@
 # eldriclim
-###### \java\seedu\address\logic\commands\SortCommandTest.java
+###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
 public class SortCommandTest {
 
@@ -281,7 +281,7 @@ public class SortCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\SortCommandParserTest.java
+###### /java/seedu/address/logic/parser/SortCommandParserTest.java
 ``` java
 public class SortCommandParserTest {
 
@@ -346,7 +346,7 @@ public class SortCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\event\EventDurationTest.java
+###### /java/seedu/address/model/event/EventDurationTest.java
 ``` java
 public class EventDurationTest {
 
@@ -394,7 +394,7 @@ public class EventDurationTest {
     }
 }
 ```
-###### \java\seedu\address\model\event\EventNameTest.java
+###### /java/seedu/address/model/event/EventNameTest.java
 ``` java
 public class EventNameTest {
 
@@ -423,7 +423,7 @@ public class EventNameTest {
 
 }
 ```
-###### \java\seedu\address\model\event\EventTest.java
+###### /java/seedu/address/model/event/EventTest.java
 ``` java
 public class EventTest {
 
@@ -560,7 +560,7 @@ public class EventTest {
     }
 }
 ```
-###### \java\seedu\address\model\event\EventTimeTest.java
+###### /java/seedu/address/model/event/EventTimeTest.java
 ``` java
 public class EventTimeTest {
 
@@ -601,7 +601,7 @@ public class EventTimeTest {
     }
 }
 ```
-###### \java\seedu\address\model\event\MemberListTest.java
+###### /java/seedu/address/model/event/MemberListTest.java
 ``` java
 public class MemberListTest {
 
@@ -690,7 +690,7 @@ public class MemberListTest {
 
 }
 ```
-###### \java\seedu\address\model\UniqueEventListTest.java
+###### /java/seedu/address/model/UniqueEventListTest.java
 ``` java
 public class UniqueEventListTest {
     private UniqueEventList eventList = new UniqueEventList();

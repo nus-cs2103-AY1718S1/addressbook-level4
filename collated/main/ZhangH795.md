@@ -1,5 +1,88 @@
 # ZhangH795
-###### \java\seedu\address\logic\commands\TagAddCommand.java
+###### /java/seedu/address/logic/commands/SwitchThemeCommand.java
+``` java
+/**
+ * Shows the location of a person on Google map identified using it's last displayed index from the address book.
+ */
+public class SwitchThemeCommand extends Command {
+
+    public static final String COMMAND_WORD = "theme";
+    public static final String DARK_THEME_WORD1 = "dark";
+    public static final String DARK_THEME_WORD2 = "Twilight";
+    public static final String BRIGHT_THEME_WORD1 = "bright";
+    public static final String BRIGHT_THEME_WORD2 = "Sunburst";
+    public static final String DEFAULT_THEME_WORD1 = "default";
+    public static final String DEFAULT_THEME_WORD2 = "Minimalism";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Change into the theme of choice of iConnect.\n"
+            + "Available themes: 1.Twilight 2.Sunburst 3.Minimalism\n"
+            + "Parameters: THEME\n"
+            + "Example: " + COMMAND_WORD + " Twilight";
+
+    public static final String MESSAGE_THEME_CHANGE_SUCCESS = "Theme changed to: %1$s";
+    public static final String MESSAGE_INVALID_INDEX = "The index %1$s is invalid.\n";
+    public static final String MESSAGE_UNKNOWN_THEME = "The theme %1$s is unknown.\n";
+
+    private final String userThemeInput;
+    private String themeChoice;
+
+    public SwitchThemeCommand(String themeChoice) {
+        this.userThemeInput = themeChoice;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        if (userThemeInput.matches("\\d+")) {
+            if ("1".equals(userThemeInput)) {
+                themeChoice = DARK_THEME_WORD2;
+            } else if ("2".equals(userThemeInput)) {
+                themeChoice = BRIGHT_THEME_WORD2;
+            } else if ("3".equals(userThemeInput)) {
+                themeChoice = DEFAULT_THEME_WORD2;
+            } else {
+                throw new CommandException(String.format(MESSAGE_INVALID_INDEX, userThemeInput));
+            }
+        } else {
+            if (userThemeInput.toLowerCase().contains(DARK_THEME_WORD1)
+                    || DARK_THEME_WORD1.contains(userThemeInput.toLowerCase())
+                    || userThemeInput.toLowerCase().contains(DARK_THEME_WORD2.toLowerCase())
+                    || DARK_THEME_WORD2.toLowerCase().contains(userThemeInput.toLowerCase())) {
+                themeChoice = DARK_THEME_WORD2;
+            } else if (userThemeInput.toLowerCase().contains(BRIGHT_THEME_WORD1)
+                    || BRIGHT_THEME_WORD1.contains(userThemeInput.toLowerCase())
+                    || userThemeInput.toLowerCase().contains(BRIGHT_THEME_WORD2.toLowerCase())
+                    || BRIGHT_THEME_WORD2.toLowerCase().contains(userThemeInput.toLowerCase())) {
+                themeChoice = BRIGHT_THEME_WORD2;
+            } else if (userThemeInput.toLowerCase().contains(DEFAULT_THEME_WORD1)
+                    || DEFAULT_THEME_WORD1.contains(userThemeInput.toLowerCase())
+                    || userThemeInput.toLowerCase().contains(DEFAULT_THEME_WORD2.toLowerCase())
+                    || DEFAULT_THEME_WORD2.toLowerCase().contains(userThemeInput.toLowerCase())) {
+                themeChoice = DEFAULT_THEME_WORD2;
+            } else {
+                throw new CommandException(String.format(MESSAGE_UNKNOWN_THEME, userThemeInput));
+            }
+        }
+        if (themeChoice.equals(DARK_THEME_WORD2)) {
+            EventsCenter.getInstance().post(new ChangeDarkThemeEvent());
+        } else if (themeChoice.equals(BRIGHT_THEME_WORD2)) {
+            EventsCenter.getInstance().post(new ChangeBrightThemeEvent());
+        } else {
+            EventsCenter.getInstance().post(new ChangeDefaultThemeEvent());
+        }
+        return new CommandResult(String.format(MESSAGE_THEME_CHANGE_SUCCESS, userThemeInput));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SwitchThemeCommand // instanceof handles nulls
+                && this.userThemeInput.equals(((SwitchThemeCommand) other).userThemeInput)); // state check
+    }
+}
+```
+###### /java/seedu/address/logic/commands/TagAddCommand.java
 ``` java
 /**
  * Edits the details of an existing person in the address book.
@@ -68,7 +151,17 @@ public class TagAddCommand extends UndoableCommand {
                 throw new AssertionError("The target person cannot be missing");
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            editedPersonDisplay.append(String.format(MESSAGE_ADD_TAG_SUCCESS, editedPerson));
+
+            int tagListStringStartIndex = 1;
+            int tagListStringEndIndex;
+            String tagChangedDisplayRaw = editedPerson.getTags().toString();
+            tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
+            String tagChangedDisplay = editedPerson.getName() + " Tag List: "
+                    + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
+
+            editedPersonDisplay.append(String.format(MESSAGE_ADD_TAG_SUCCESS, tagChangedDisplay));
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(index.get(0)));
+
             if (i != index.size() - 1) {
                 editedPersonDisplay.append("\n");
             }
@@ -271,7 +364,7 @@ public class TagAddCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TagFindCommand.java
+###### /java/seedu/address/logic/commands/TagFindCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose name contains a certain tag.
@@ -295,6 +388,12 @@ public class TagFindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
+        if (model.getFilteredPersonList().size() > 0) {
+            Index defaultIndex = new Index(0);
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
+        } else {
+            EventsCenter.getInstance().post(new ClearPersonListEvent());
+        }
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
@@ -306,7 +405,7 @@ public class TagFindCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TagRemoveCommand.java
+###### /java/seedu/address/logic/commands/TagRemoveCommand.java
 ``` java
 
 /**
@@ -384,7 +483,18 @@ public class TagRemoveCommand extends UndoableCommand {
                 throw new AssertionError("The target person cannot be missing");
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            editedPersonDisplay.append(String.format(MESSAGE_REMOVE_TAG_SUCCESS, editedPerson));
+
+            int tagListStringStartIndex = 1;
+            int tagListStringEndIndex;
+            String tagChangedDisplayRaw = editedPerson.getTags().toString();
+            tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
+            String tagChangedDisplay = editedPerson.getName() + " Tag List: "
+                    + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
+
+            editedPersonDisplay.append(String.format(MESSAGE_REMOVE_TAG_SUCCESS, tagChangedDisplay));
+            Index defaultIndex = new Index(0);
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
+
             if (i != indexList.size() - 1) {
                 editedPersonDisplay.append("\n");
             }
@@ -618,7 +728,30 @@ public class TagRemoveCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\TagAddCommandParser.java
+###### /java/seedu/address/logic/parser/SwitchThemeCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new SwitchThemeCommand object
+ */
+public class SwitchThemeCommandParser implements Parser<SwitchThemeCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the SwitchThemeCommand
+     * and returns an SwitchThemeCommand object for execution.
+     * @throws ParseException if the user input does not provide any input
+     */
+    public SwitchThemeCommand parse(String args) throws ParseException {
+        String userInput = args.trim();
+        if (userInput.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwitchThemeCommand.MESSAGE_USAGE));
+        } else {
+            return new SwitchThemeCommand(userInput);
+        }
+    }
+}
+```
+###### /java/seedu/address/logic/parser/TagAddCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new TagAddCommand object
@@ -692,7 +825,7 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\TagFindCommandParser.java
+###### /java/seedu/address/logic/parser/TagFindCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new TagFindCommand object
@@ -716,7 +849,7 @@ public class TagFindCommandParser implements Parser<TagFindCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\TagRemoveCommandParser.java
+###### /java/seedu/address/logic/parser/TagRemoveCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new TagRemoveCommand object
@@ -791,7 +924,7 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
 
 }
 ```
-###### \resources\view\BrightTheme.css
+###### /resources/view/BrightTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#1d1d1d, 20%);

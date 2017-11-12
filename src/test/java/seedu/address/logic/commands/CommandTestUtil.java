@@ -19,6 +19,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -159,10 +160,14 @@ public class CommandTestUtil {
      */
     public static void deleteFirstPerson(Model model) {
         ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(0);
+        ArrayList<ReadOnlyPerson> deleteList = new ArrayList<>();
+        deleteList.add(firstPerson);
         try {
-            model.deletePerson(firstPerson);
+            model.deletePerson(deleteList);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        } catch (DuplicatePersonException d) {
+            throw new AssertionError("Person in the filtered list should not be duplicate", d);
         }
     }
 }

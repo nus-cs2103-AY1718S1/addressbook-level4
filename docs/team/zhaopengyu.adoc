@@ -49,8 +49,9 @@ include::../DeveloperGuide.adoc[tag=bin]
 
 ---
 
-=== Enhancement Proposed: Enable change of font size
+=== Enhancement Proposed:
 
+include::../UserGuide.adoc[tag=fontsize]
 
 === Other contributions
 

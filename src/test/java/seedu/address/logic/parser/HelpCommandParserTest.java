@@ -26,6 +26,7 @@ import seedu.address.logic.commands.ScheduleAddCommand;
 import seedu.address.logic.commands.ScheduleRemoveCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SwitchThemeCommand;
 import seedu.address.logic.commands.TagAddCommand;
 import seedu.address.logic.commands.TagFindCommand;
 import seedu.address.logic.commands.TagRemoveCommand;
@@ -102,11 +103,13 @@ public class HelpCommandParserTest {
 
         assertParseSuccess(parser, ScheduleRemoveCommand.COMMAND_WORD, new HelpCommand("scheduleremove"));
 
-        assertParseSuccess(parser, BinclearCommand.COMMAND_WORD, new HelpCommand("bin-clear"));
+        assertParseSuccess(parser, BinclearCommand.COMMAND_WORD, new HelpCommand("bin-fresh"));
 
         assertParseSuccess(parser, BindeleteCommand.COMMAND_WORD, new HelpCommand("bin-delete"));
 
         assertParseSuccess(parser, BinrestoreCommand.COMMAND_WORD, new HelpCommand("bin-restore"));
+
+        assertParseSuccess(parser, SwitchThemeCommand.COMMAND_WORD, new HelpCommand("theme"));
 
         assertParseSuccess(parser, ExportCommand.COMMAND_WORD, new HelpCommand("export"));
 

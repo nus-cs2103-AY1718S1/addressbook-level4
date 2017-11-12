@@ -124,11 +124,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         ArrayList<ReadOnlyPerson> target = new ArrayList<>();
         target.add(targetPerson);
         try {
-            if (model.getRecycleBin().getPersonList().contains(targetPerson)) {
-                model.deletePerson(targetPerson);
-            } else {
-                model.deletePerson(target);
-            }
+            model.deletePerson(target);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");
         } catch (DuplicatePersonException d) {

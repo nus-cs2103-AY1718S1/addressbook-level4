@@ -70,13 +70,17 @@ public class DeleteCommandTest {
 
         personsToDelete1.add(INDEX_FIRST_PERSON);
 
+        ArrayList<ReadOnlyPerson> deletelist = new ArrayList<>();
+
+        deletelist.add(personToDelete);
+
         DeleteCommand deleteCommand1 = prepareCommand(personsToDelete1);
 
         String expectedMessage1 = DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 
         ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
 
-        expectedModel1.deletePerson(personToDelete);
+        expectedModel1.deletePerson(deletelist);
 
         assertCommandSuccess(deleteCommand1, model, expectedMessage1, expectedModel1);
     }
@@ -110,6 +114,11 @@ public class DeleteCommandTest {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
         personsToDelete1.clear();
+
+        ArrayList<ReadOnlyPerson> deletelist = new ArrayList<>();
+
+        deletelist.add(personToDelete);
+
         String deleteName = personToDelete.getName().fullName;
 
         DeleteCommand deleteCommand1 = prepareCommand(deleteName);
@@ -118,7 +127,7 @@ public class DeleteCommandTest {
 
         ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
 
-        expectedModel1.deletePerson(personToDelete);
+        expectedModel1.deletePerson(deletelist);
 
         assertCommandSuccess(deleteCommand1, model, expectedMessage1, expectedModel1);
     }
@@ -139,14 +148,23 @@ public class DeleteCommandTest {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
         personsToDelete1.clear();
+
         personsToDelete1.add(INDEX_FIRST_PERSON);
+
+        ArrayList<ReadOnlyPerson> deletelist = new ArrayList<>();
+
+        deletelist.add(personToDelete);
+
         DeleteCommand deleteCommand = prepareCommand(personsToDelete1);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+
+        expectedModel.deletePerson(deletelist);
+
         showNoPerson(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -159,13 +177,19 @@ public class DeleteCommandTest {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
         personsToDelete1.clear();
+
+        ArrayList<ReadOnlyPerson> deletelist = new ArrayList<>();
+
+        deletelist.add(personToDelete);
+
         String deleteName = personToDelete.getName().fullName;
+
         DeleteCommand deleteCommand = prepareCommand(deleteName);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        expectedModel.deletePerson(deletelist);
         showNoPerson(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
