@@ -1,4 +1,4 @@
-package seedu.address.logic;
+package seedu.address.commons.core;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
