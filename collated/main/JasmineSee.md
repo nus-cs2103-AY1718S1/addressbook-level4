@@ -776,17 +776,21 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
      */
     private void setImage() {
 
-        File file = new File(filePath + person.getEmail().toString() + ".png");
-        Path path = Paths.get(filePath + person.getEmail().toString() + ".png");
+        File file = new File(FILE_PATH + person.getEmail().toString() + ".png");
+        Path path = Paths.get(FILE_PATH + person.getEmail().toString() + ".png");
 
         if (Files.exists(path)) {
             Image image = new Image(file.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
 
         } else {
-            File fileDefault = new File(defaultFilePath);
-            Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
-            photo.setImage(image);
+            URL url = getClass().getResource(DEFAULT_FILE_PATH);
+            try {
+                Image img = new Image(url.openStream(), 150, 150, false, false);
+                photo.setImage(img);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }
