@@ -2,6 +2,8 @@ package systemtests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_PROMPT_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
@@ -9,6 +11,7 @@ import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC_SUGGESTION;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
@@ -28,8 +31,14 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.EditCommand.COMMAND_WORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.person.Name.NAME_REPLACEMENT_REGEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.AMY;
@@ -45,14 +54,10 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
@@ -68,7 +73,7 @@ public class EditCommandSystemTest extends RolodexSystemTest {
          * -> edited
          */
         Index index = INDEX_FIRST_PERSON;
-        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
+        String command = " " + COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
                 + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB + " "
                 + REMARK_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
         ReadOnlyPerson personToEdit = getModel().getLatestPersonList().get(index.getZeroBased());
@@ -105,14 +110,14 @@ public class EditCommandSystemTest extends RolodexSystemTest {
 
         /* Case: edit some fields excluding name -> edited with no change in index */
         index = INDEX_FIRST_PERSON;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
+        command = COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
         personToEdit = getModel().getLatestPersonList().get(index.getZeroBased());
         editedPerson = new PersonBuilder(personToEdit).withTags(VALID_TAG_FRIEND).build(personToEdit.getTags());
         assertCommandSuccess(command, index, editedPerson, index);
 
         /* Case: edit some fields including name -> edited with change in index */
         index = INDEX_SECOND_PERSON;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY;
+        command = COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY;
         personToEdit = getModel().getLatestPersonList().get(index.getZeroBased());
         editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .build(personToEdit.getTags());
@@ -122,7 +127,7 @@ public class EditCommandSystemTest extends RolodexSystemTest {
 
         /* Case: empty tag parameter -> no effect */
         index = INDEX_FIRST_PERSON;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
+        command = COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
         personToEdit = getModel().getLatestPersonList().get(index.getZeroBased());
         assertCommandSuccess(command, index, personToEdit, index);
 
@@ -132,7 +137,7 @@ public class EditCommandSystemTest extends RolodexSystemTest {
         showPersonsWithName(KEYWORD_MATCHING_MEIER.concat("bb"));
         index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getLatestPersonList().size());
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
+        command = COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
         personToEdit = getModel().getLatestPersonList().get(index.getZeroBased());
         editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_BOB).build();
         newIndex = INDEX_SECOND_PERSON;
@@ -164,57 +169,73 @@ public class EditCommandSystemTest extends RolodexSystemTest {
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
         /* Case: invalid index (0) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + NAME_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        command = COMMAND_WORD + " 0" + NAME_DESC_BOB;
+        assertCommandFailure(command,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
-        /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " -1" + NAME_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        /* Case: invalid index (-1) -> rejected, suggested as 1 instead */
+        String commandword = EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next();
+        command = commandword + " -1" + NAME_DESC_BOB;
+        assertCommandFailure(command, "",
+                String.format(MESSAGE_PROMPT_COMMAND, commandword + " 1" + NAME_DESC_BOB));
 
         /* Case: invalid index (size + 1) -> rejected */
         invalidIndex = getModel().getLatestPersonList().size() + 1;
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
-                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        command = COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB;
+        assertCommandFailure(command, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: missing index -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + NAME_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        command = EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + NAME_DESC_BOB;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: missing all fields -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
-                EditCommand.MESSAGE_NOT_EDITED);
+        command = COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased();
+        assertCommandFailure(command, EditCommand.MESSAGE_NOT_EDITED);
 
-        /* Case: invalid name -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " "
-                + INDEX_FIRST_PERSON.getOneBased() + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS);
+        /* Case: invalid name -> rejected, suggested as valid name */
+        commandword = EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next();
+        command = commandword + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_NAME_DESC;
+        assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND,
+                        commandword + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_NAME_DESC_SUGGESTION));
 
-        /* Case: invalid phone -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_PHONE_DESC,
-                Phone.MESSAGE_PHONE_CONSTRAINTS);
+        /* Case: invalid phone -> rejected, suggested to include phone as address */
+        command = COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_PHONE_DESC;
+        assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND,
+                COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_ADDRESS
+                        + INVALID_PHONE_DESC.replace(PREFIX_PHONE.toString(), "")
+                        .trim().replaceAll(NAME_REPLACEMENT_REGEX, "")));
 
-        /* Case: invalid email -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " "
-                + INDEX_FIRST_PERSON.getOneBased() + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS);
+        /* Case: invalid email -> rejected, suggested to include as name */
+        commandword = EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next();
+        command = commandword + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_EMAIL_DESC;
+        assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND,
+                commandword + " " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + PREFIX_NAME + INVALID_EMAIL_DESC.replaceAll(PREFIX_EMAIL.toString(), "")
+                        .trim().replaceAll(NAME_REPLACEMENT_REGEX, "")));
 
-        /* Case: invalid address -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_ADDRESS_DESC,
-                Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        /* Case: invalid address -> rejected, address constraints shown */
+        command = COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_ADDRESS_DESC;
+        assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
-        /* Case: invalid tag -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " "
-                + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS);
+        /* Case: invalid tag -> rejected, suggested to include tag as name */
+        commandword = EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next();
+        command = commandword + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC;
+        assertCommandFailure(command, "", String.format(MESSAGE_PROMPT_COMMAND,
+                commandword + " " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + PREFIX_NAME + INVALID_TAG_DESC.replace(PREFIX_TAG.toString(), "")
+                        .trim().replaceAll(NAME_REPLACEMENT_REGEX, "")));
 
         /* Case: edit a person with new values same as another person's values -> rejected */
         executeCommand(PersonUtil.getAddCommand(BOB));
         assertTrue(getModel().getRolodex().getPersonList().contains(BOB));
         index = INDEX_FIRST_PERSON;
         assertFalse(getModel().getLatestPersonList().get(index.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        command = COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        command = COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
     }
@@ -302,10 +323,25 @@ public class EditCommandSystemTest extends RolodexSystemTest {
      * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
+        assertCommandFailure(command, command, expectedResultMessage);
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays {@code command}.<br>
+     * 2. Asserts that result display box displays {@code expectedCommandBox}.<br>
+     * 3. Asserts that the model related components equal to the current model.<br>
+     * 4. Asserts that the selected card and status bar remain unchanged.<br>
+     * 5. Asserts that the command box has the error style.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedCommandBox, String expectedResultMessage) {
         Model expectedModel = getModel();
 
         executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertApplicationDisplaysExpected(expectedCommandBox, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();

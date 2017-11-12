@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_PROMPT_COMMAND;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_DESCENDING;
@@ -33,14 +34,15 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NewCommand;
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.StarWarsCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.exceptions.SuggestibleParseException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonDataContainsKeywordsPredicate;
 import seedu.address.model.person.Remark;
@@ -156,17 +158,17 @@ public class RolodexParserTest {
     @Test
     public void parseCommandOpen() throws Exception {
         String validRolodexFile = "valid/filePath/valid.rldx";
-        OpenCommand command = (OpenCommand) parser.parseCommand(
-                OpenCommand.COMMAND_WORD + " " + validRolodexFile);
-        assertEquals(new OpenCommand(validRolodexFile), command);
+        OpenRolodexCommand command = (OpenRolodexCommand) parser.parseCommand(
+                OpenRolodexCommand.COMMAND_WORD + " " + validRolodexFile);
+        assertEquals(new OpenRolodexCommand(validRolodexFile), command);
     }
 
     @Test
     public void parseCommandNew() throws Exception {
         String validRolodexFile = "valid/filePath/valid.rldx";
-        NewCommand command = (NewCommand) parser.parseCommand(
-                NewCommand.COMMAND_WORD + " " + validRolodexFile);
-        assertEquals(new NewCommand(validRolodexFile), command);
+        NewRolodexCommand command = (NewRolodexCommand) parser.parseCommand(
+                NewRolodexCommand.COMMAND_WORD + " " + validRolodexFile);
+        assertEquals(new NewRolodexCommand(validRolodexFile), command);
     }
 
     @Test
@@ -211,9 +213,9 @@ public class RolodexParserTest {
     }
 
     @Test
-    public void parseCommandListInvalidArgumentThrowsParseException() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+    public void parseCommandListInvalidArgumentThrowsSuggestibleParseException() throws Exception {
+        thrown.expect(SuggestibleParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_PROMPT_COMMAND, ListCommand.COMMAND_WORD));
         parser.parseCommand(ListCommand.COMMAND_WORD + " 3");
         parser.parseCommand(ListCommand.COMMAND_WORD + " Bazinga");
     }

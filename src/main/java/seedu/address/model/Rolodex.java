@@ -24,6 +24,8 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Rolodex implements ReadOnlyRolodex {
 
+    private static final String DESC_ROLODEX = "%1$s persons, %2$s tags";
+
     private final UniquePersonList persons;
     private final UniqueTagList tags;
 
@@ -86,9 +88,8 @@ public class Rolodex implements ReadOnlyRolodex {
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
         syncMasterTagListWith(newPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
+        // in the person list. Acceptable since suggestions can match recently deleted tags in the session.
         persons.add(newPerson);
     }
 
@@ -108,7 +109,6 @@ public class Rolodex implements ReadOnlyRolodex {
 
         Person editedPerson = new Person(editedReadOnlyPerson);
         syncMasterTagListWith(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
@@ -166,8 +166,7 @@ public class Rolodex implements ReadOnlyRolodex {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
-        // TODO: refine later
+        return String.format(DESC_ROLODEX, persons.asObservableList().size(), tags.asObservableList().size());
     }
 
     @Override

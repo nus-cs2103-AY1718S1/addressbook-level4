@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rolodex>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <remark>Owes me money.</remark>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remark></remark>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <remark>Bakes delicious cheesecakes.</remark>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <remark>99 years old this year.</remark>
+        <tagged>grandpa</tagged>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark>Star Wars fan.</remark>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Adam Brown</name>
+        <phone>1111111</phone>
+        <email>adam@gmail.com</email>
+        <address>972, Pansy Street, #08-12, 093173</address>
+        <remark>Likes to swim.</remark>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Betsy Choo</name>
+        <phone>2222222</phone>
+        <email>benchoo@nus.edu.sg</email>
+        <address>222, beta street, #06-04B, 433222</address>
+        <remark>Secretive.</remark>
+        <tagged>classmate</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlie Dickson</name>
+        <phone>3333333</phone>
+        <email>charlie.d@nus.edu.sg</email>
+        <address>333B, gamma street, #09-364, 150333</address>
+        <remark>Smart guy in class.</remark>
+        <tagged>school</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Dickson Ee</name>
+        <phone>4444444</phone>
+        <email>dickson@nus.edu.sg</email>
+        <address>444, delta's street, #24-629, 984444</address>
+        <remark>Owns a restaurant at Rochester Avenue.</remark>
+        <tagged>chef</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Esther Potato</name>
+        <phone>5555555</phone>
+        <email>esther@not.a.real.potato</email>
+        <address>111, epsilon street, #01-02, 098111</address>
+        <remark>Looks like a potato.</remark>
+        <tagged>tubers</tagged>
+        <tagged>starchy</tagged>
+    </persons>
+    <persons>
+        <name>Bravo Smith</name>
+        <phone>85559555</phone>
+        <email>bravo.e@nus.edu.sg</email>
+        <address>108, Alexandra Street</address>
+        <remark>Noisy</remark>
+        <tagged>roommate</tagged>
+    </persons>
+    <persons>
+        <name>The Boss</name>
+        <phone>12345678</phone>
+        <email>topman@rolodex.co</email>
+        <address>102, Monopolis Street</address>
+        <remark>Gave me a promotion :)</remark>
+        <tagged>boss</tagged>
+    </persons>
+    <persons>
+        <name>Shawn Dickson</name>
+        <phone>98324719</phone>
+        <email>shaaaawn@gmail.com</email>
+        <address>800, Rochester Street, #01-43</address>
+        <remark>Stepped on my shoe.</remark>
+        <tagged>enemy</tagged>
+    </persons>
+    <persons>
+        <name>Alpha Charlie</name>
+        <phone>92819383</phone>
+        <email>alpha.potato@nus.edu.sg</email>
+        <address>114, Alpha Street, #01-27</address>
+        <remark>Visits every Christmas.</remark>
+        <tagged>cousin</tagged>
+        <tagged>relative</tagged>
+    </persons>
+    <persons>
+        <name>Sammy Lee</name>
+        <phone>22345678</phone>
+        <email>alpha.sashimi@nus.edu.sg</email>
+        <address>329, Long Beach Street, #04-44</address>
+        <remark>Loves sushi.</remark>
+        <tagged>foodie</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bravo</name>
+        <phone>22345678</phone>
+        <email>bravo.unagi@hotmail.com</email>
+        <address>111, bravo street</address>
+        <remark>Treats me to sushi every weekend!</remark>
+        <tagged>uncle</tagged>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>John Doe</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>John street, block 123, #01-01</address>
+        <remark>Stranger I met online.</remark>
+        <tagged>internet</tagged>
+    </persons>
+    <persons>
+        <name>Betsy Crowe</name>
+        <phone>1234567</phone>
+        <email>betsycrow@newgate.com</email>
+        <address>Newgate Prison</address>
+        <remark>Stole my house key.</remark>
+        <tagged>friend</tagged>
+        <tagged>criminal</tagged>
+    </persons>
+    <persons>
+        <name>Ken Alice</name>
+        <phone>95231039</phone>
+        <email>alive@live.com</email>
+        <address>600, Ken Street</address>
+        <remark></remark>
+        <tagged>cca</tagged>
+        <tagged>school</tagged>
+    </persons>
+    <persons>
+        <name>Alpha Charlie</name>
+        <phone>92819383</phone>
+        <email>alpha.potatn@nus.edu.sg</email>
+        <address>114, Alpha Street, #01-27</address>
+        <remark>Visits every Christmas.</remark>
+        <tagged>cousin</tagged>
+        <tagged>relative</tagged>
+    </persons>
+    <persons>
+        <name>Hansel Black</name>
+        <phone>98457634</phone>
+        <email>hanselblack@gmail.com</email>
+        <address>424 Hansel Ave Singapore</address>
+        <remark></remark>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Ken Kruger</name>
+        <phone>8630984652</phone>
+        <email>ken@sensorkit.io</email>
+        <address>415 Madison Ave. 4th Floor, New York, NY 10017</address>
+        <remark></remark>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Jolyn Tan</name>
+        <phone>98434632</phone>
+        <email>jolyn@gmail.com</email>
+        <address>Blk 424 bcd Street Singapore</address>
+        <remark>Awesome</remark>
+        <tagged>awesome</tagged>
+    </persons>
+    <persons>
+        <name>Alex Ang</name>
+        <phone>98384753</phone>
+        <email>azy@gm.com</email>
+        <address>424 abc Street Singapore</address>
+        <remark>Awesome</remark>
+        <tagged>awesome</tagged>
+    </persons>
+    <persons>
+        <name>Tan Mingrui</name>
+        <phone>93457634</phone>
+        <email>mr@g.com</email>
+        <address>Singapore</address>
+        <remark>Awesome</remark>
+        <tagged>awesome</tagged>
+    </persons>
+    <persons>
+        <name>Jane Doe</name>
+        <phone>94734753</phone>
+        <email>vampire@john</email>
+        <address>1 Dddd</address>
+        <remark>Suck your blood</remark>
+        <tagged>vampire</tagged>
+    </persons>
+    <tags>cca</tags>
+    <tags>secretive</tags>
+    <tags>boss</tags>
+    <tags>uncle</tags>
+    <tags>starchy</tags>
+    <tags>grandpa</tags>
+    <tags>classmate</tags>
+    <tags>enemy</tags>
+    <tags>school</tags>
+    <tags>tubers</tags>
+    <tags>roommate</tags>
+    <tags>friend</tags>
+    <tags>criminal</tags>
+    <tags>foodie</tags>
+    <tags>chef</tags>
+    <tags>neighbours</tags>
+    <tags>cousin</tags>
+    <tags>friends</tags>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>online</tags>
+    <tags>stranger</tags>
+    <tags>family</tags>
+    <tags>asshole</tags>
+    <tags>internet</tags>
+    <tags>relative</tags>
+    <tags>awesome</tags>
+    <tags>vampire</tags>
+</rolodex>

@@ -1,3 +1,9 @@
+@font-face {
+    src: url("fonts/segoe-ui.ttf"),
+         url("fonts/segou-ui-light.ttf"),
+         url("fonts/segou-ui-semibold.otf");
+}
+
 .root {
     -fx-background-color: #f7f5f4;
     -fx-accent: derive(#f7f5f4, -10%);
@@ -154,14 +160,7 @@
      -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
 }
 
-.result-text-area {
-    -fx-background-color: transparent;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 16px;
-    -fx-text-fill: gray;
-}
-
-.person-detail-panel {
+.person-detail-pane {
     -fx-background-color: #ffffff;
     -fx-background-radius: 10 10 10 10;
     -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
@@ -361,7 +360,11 @@
 }
 
 #resultDisplay {
-    -fx-prompt-text-fill: gray;
+    -fx-background-color: transparent;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 16px;
+    -fx-text-fill: #746d75;
+    -fx-prompt-text-fill: #746d75;
 }
 
 #resultDisplay .content {

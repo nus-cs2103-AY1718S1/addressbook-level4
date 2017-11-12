@@ -1,57 +1,72 @@
 package systemtests;
 
 import static seedu.address.TestApp.SAVE_LOCATION_FOR_TESTING;
+import static seedu.address.TestApp.SECONDARY_SAVE_LOCATION;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.util.StringUtil.replaceBackslashes;
-import static seedu.address.logic.commands.NewCommand.MESSAGE_ALREADY_EXISTS;
-import static seedu.address.logic.commands.NewCommand.MESSAGE_CREATING;
-import static seedu.address.storage.util.RolodexStorageUtil.ROLODEX_FILE_EXTENSION;
-import static seedu.address.testutil.TestUtil.generateRandomSandboxDirectory;
+import static seedu.address.logic.commands.OpenRolodexCommand.MESSAGE_NOT_EXIST;
+import static seedu.address.logic.commands.OpenRolodexCommand.MESSAGE_OPENING;
+import static seedu.address.testutil.TestUtil.getFilePathInSandboxFolder;
 
 import java.io.IOException;
 
 import org.junit.After;
 import org.junit.Test;
 
-import seedu.address.logic.commands.NewCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.Storage;
 import seedu.address.storage.XmlRolodexStorage;
 
-public class NewCommandSystemTest extends RolodexSystemTest {
+public class OpenRolodexCommandSystemTest extends RolodexSystemTest {
 
     private static final String DIRECTORY_VALID_DEFAULT = replaceBackslashes(SAVE_LOCATION_FOR_TESTING);
 
+    private static final String DIRECTORY_VALID_DIFFERENT = replaceBackslashes(SECONDARY_SAVE_LOCATION);
+
     @Test
-    public void newFile() {
-        /* Case: Create a new directory with different random valid filepath,
-         * command with leading spaces and trailing spaces
+    public void open() {
+        /* Case: open a new directory with different valid filepath, command with leading spaces and trailing spaces
          * -> opened
          */
-        String newFilePath = generateRandomSandboxDirectory(ROLODEX_FILE_EXTENSION);
-        String commandString = "         " + NewCommand.COMMAND_WORD + "  " + newFilePath + "      ";
+        String newFilePath = DIRECTORY_VALID_DIFFERENT;
+        String commandString = "         " + OpenRolodexCommand.COMMAND_WORD + "  " + newFilePath + "      ";
         assertCommandSuccess(commandString, newFilePath);
 
-        /* Case: Create a different random directory but with single constructor test
+        /* Case: open back original directory with valid filepath, normal command
          * -> opened
          */
-        newFilePath = generateRandomSandboxDirectory(ROLODEX_FILE_EXTENSION);
+        newFilePath = DIRECTORY_VALID_DEFAULT;
+        commandString = OpenRolodexCommand.COMMAND_WORD + " " + newFilePath;
+        assertCommandSuccess(commandString, newFilePath);
+
+        /* Case: open back different directory but with single constructor test
+         * -> opened
+         */
+        newFilePath = DIRECTORY_VALID_DIFFERENT;
         assertCommandSuccess(newFilePath);
 
-        /* Case: try Creating a new file that already exists
-         * -> fail. Remain on current file, prompts to use `open` command.
+        /* Case: open back default directory but with single constructor test
+         * -> opened
          */
         newFilePath = DIRECTORY_VALID_DEFAULT;
-        commandString = NewCommand.COMMAND_WORD + " " + newFilePath;
-        assertCommandFailure(commandString, String.format(MESSAGE_ALREADY_EXISTS, newFilePath));
+        assertCommandSuccess(newFilePath);
 
-        /*Case: try Creating file that is not a valid formatted directory
+        /* Case: try opening file that does not exist
+         * -> fail. Remain on current file, prompts to use `new` command.
+         */
+        newFilePath = replaceBackslashes(getFilePathInSandboxFolder("notFound.rldx"));
+        commandString = OpenRolodexCommand.COMMAND_WORD + " " + newFilePath;
+        assertCommandFailure(commandString, String.format(MESSAGE_NOT_EXIST, newFilePath));
+
+        /*Case: try opening file that is not a valid formatted directory
          * -> fail. Remain on current file, displays invalid command format.
          */
         newFilePath = "invalidParseDirectory.xml";
-        commandString = NewCommand.COMMAND_WORD + " " + newFilePath;
-        assertCommandFailure(commandString, String.format(MESSAGE_INVALID_COMMAND_FORMAT, NewCommand.MESSAGE_USAGE));
+        commandString = OpenRolodexCommand.COMMAND_WORD + " " + newFilePath;
+        assertCommandFailure(commandString,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenRolodexCommand.MESSAGE_USAGE));
     }
 
     @After
@@ -73,7 +88,7 @@ public class NewCommandSystemTest extends RolodexSystemTest {
 
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
-     * box displays {@code OpenCommand#MESSAGE_OPENING} with the valid filePath, and the model related components
+     * box displays {@code OpenRolodexCommand#MESSAGE_OPENING} with the valid filePath, and the model related components
      * equal to {@code expectedModel}.
      * These verifications are done by
      * {@code RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
@@ -82,13 +97,13 @@ public class NewCommandSystemTest extends RolodexSystemTest {
      * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Storage)
      */
     private void assertCommandSuccess(String filePath) {
-        assertCommandSuccess(NewCommand.COMMAND_WORD + " " + filePath, filePath);
+        assertCommandSuccess(OpenRolodexCommand.COMMAND_WORD + " " + filePath, filePath);
     }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String)}. Executes {@code command}
      * instead.
-     * @see OpenCommandSystemTest#assertCommandSuccess(String)
+     * @see OpenRolodexCommandSystemTest#assertCommandSuccess(String)
      */
     private void assertCommandSuccess(String command, String filePath) {
         getStorage().setNewRolodexStorage(new XmlRolodexStorage(filePath));
@@ -99,10 +114,10 @@ public class NewCommandSystemTest extends RolodexSystemTest {
      * Performs the same verification as {@code assertCommandSuccess(String, String)} except that the result
      * display box displays {@code expectedResultMessage} and the model related components equal to
      * {@code expectedModel}.
-     * @see OpenCommandSystemTest#assertCommandSuccess(String, String)
+     * @see OpenRolodexCommandSystemTest#assertCommandSuccess(String, String)
      */
     private void assertCommandSuccess(String command, String filePath, Storage expectedStorage) {
-        String expectedResultMessage = String.format(MESSAGE_CREATING, filePath);
+        String expectedResultMessage = String.format(MESSAGE_OPENING, filePath);
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedStorage);
