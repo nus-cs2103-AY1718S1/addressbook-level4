@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.FindCommand.NO_RESULTS;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
-
-import static seedu.address.logic.commands.FindCommand.NO_RESULTS;
 
 //@@author martyn-wong
 /**
