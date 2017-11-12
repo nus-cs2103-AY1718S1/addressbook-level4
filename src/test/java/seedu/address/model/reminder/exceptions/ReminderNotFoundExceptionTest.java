@@ -3,7 +3,6 @@ package seedu.address.model.reminder.exceptions;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 //@@author yunpengn
 public class ReminderNotFoundExceptionTest {

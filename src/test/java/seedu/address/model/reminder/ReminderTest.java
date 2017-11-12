@@ -53,7 +53,7 @@ public class ReminderTest {
 
     //@@author yunpengn
     @Test
-    public void createViaName__alternativeConstructor_checkCorrectness() {
+    public void createUsingName_alternativeConstructor_checkCorrectness() {
         Reminder reminder = new Reminder("some name here", message);
         assertEquals("some name here", reminder.getName());
     }

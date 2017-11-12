@@ -15,10 +15,10 @@ import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
 //@@author yunpengn
 public class UniqueReminderListTest {
+    private static final Reminder reminder = new Reminder(EVENT1, "Some message");
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    private static final Reminder reminder = new Reminder(EVENT1, "Some message");
 
     @Test
     public void create_viaList_checkCorrectness() throws Exception {
