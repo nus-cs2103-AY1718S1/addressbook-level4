@@ -105,6 +105,9 @@ public class Autocompleter {
         }
     }
 
+    /**
+     * Returns true if {@code currentCommand} is IMPORT or FIND
+     */
     private boolean isImportOrFindCommand() {
         return currentCommand.equals(AutocompleteCommand.IMPORT)
                 || currentCommand.equals(AutocompleteCommand.FIND);

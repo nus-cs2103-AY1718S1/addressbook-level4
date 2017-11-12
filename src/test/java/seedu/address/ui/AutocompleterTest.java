@@ -197,6 +197,18 @@ public class AutocompleterTest extends GuiUnitTest {
                 EMPTY_STRING, "EDIT", "COMMAND_NEXT_PREFIX");
     }
 
+    @Test
+    public void autocomplete_forFindAndImport() throws Exception {
+        // autocomplete should do nothing if arguments are already filled in for find
+        assertAutocompleteSuccess("find abcd", "find abcd", EMPTY_STRING,
+                "FIND", "COMMAND");
+
+        // autocomplete should do nothing if arguments are already filled in for import
+        assertAutocompleteSuccess("import fileName", "import fileName", EMPTY_STRING,
+                "IMPORT", "COMMAND");
+
+    }
+
     /**
      * Simulates an autocomplete with {@code commandBoxText} and verifies that the resulting string matches
      * {@code expectedResult} also verifies that the logged details match {@code expectedCommand}
