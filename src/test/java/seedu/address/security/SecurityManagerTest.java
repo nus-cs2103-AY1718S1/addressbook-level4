@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.ReloadAddressBookEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.EncryptOrDecryptException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -51,6 +52,17 @@ public class SecurityManagerTest {
     public void test_isSecured() {
         Security security = SecurityManager.getInstance(storage);
         Assert.assertFalse(security.isSecured());
+    }
+
+    @Test
+    public void test_raise() {
+        try {
+            Security security = SecurityManager.getInstance(storage);
+            security.raise(new ReloadAddressBookEvent());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw exception.");
+        }
     }
 
     @Test
