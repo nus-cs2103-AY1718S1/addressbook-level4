@@ -18,7 +18,7 @@ image::contag_logo_ugdg.png[align="center"]
 
 {empty} +
 
-By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
+By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Aug 2017`      Licence: `MIT`
 
 == Introduction
 
@@ -1176,13 +1176,15 @@ The schedule list to be reminded in the `AddressBook` is formed during every syn
 
 [source,java]
 ----
-private void syncMasterScheduleListWith(Person person) {
+public class AddressBook implements ReadOnlyAddressBook {
+    private void syncMasterScheduleListWith(Person person) {
 
-     // ... merge person schedules and sort master schedule list ...
+         // ... merge person schedules and sort master schedule list ...
 
-     setSchedulesToRemind();
+         setSchedulesToRemind();
 
-     // ... check person schedule references ...
+         // ... check person schedule references ...
+    }
 }
 ----
 _Figure 4.9.2: Code section in AddressBook.java_
@@ -1191,29 +1193,31 @@ Scheduled activities whose due date is 1 day after the date the user starts the 
 
 [source,java]
 ----
-public static boolean doesScheduleNeedReminder(Schedule schedule) {
-     // Date user opens application
-     LocalDate currentDate = LocalDate.now();
+public class Schedule {
+    public static boolean doesScheduleNeedReminder(Schedule schedule) {
+         // Date user opens application
+         LocalDate currentDate = LocalDate.now();
 
-     String scheduleDateString = schedule.getScheduleDate().value;
+         String scheduleDateString = schedule.getScheduleDate().value;
 
-     LocalDate scheduleDateToAlter = currentDate;
-     // build schedule date based on String
-     LocalDate scheduleDate = scheduleDateToAlter.withDayOfMonth(DateUtil.getDay(scheduleDateString))
-             .withMonth(DateUtil.getMonth(scheduleDateString))
-             .withYear(DateUtil.getYear(scheduleDateString));
+         LocalDate scheduleDateToAlter = currentDate;
+         // build schedule date based on String
+         LocalDate scheduleDate = scheduleDateToAlter.withDayOfMonth(DateUtil.getDay(scheduleDateString))
+                 .withMonth(DateUtil.getMonth(scheduleDateString))
+                 .withYear(DateUtil.getYear(scheduleDateString));
 
-     // Check if scheduled activity is one day after current date
-     LocalDate dayBeforeSchedule = scheduleDate.minusDays(1);
-     final boolean isYearEqual = (dayBeforeSchedule.getYear() == currentDate.getYear());
-     final boolean isMonthEqual = (dayBeforeSchedule.getMonthValue() == currentDate.getMonthValue());
-     final boolean isDayEqual = (dayBeforeSchedule.getDayOfMonth() == currentDate.getDayOfMonth());
+         // Check if scheduled activity is one day after current date
+         LocalDate dayBeforeSchedule = scheduleDate.minusDays(1);
+         final boolean isYearEqual = (dayBeforeSchedule.getYear() == currentDate.getYear());
+         final boolean isMonthEqual = (dayBeforeSchedule.getMonthValue() == currentDate.getMonthValue());
+         final boolean isDayEqual = (dayBeforeSchedule.getDayOfMonth() == currentDate.getDayOfMonth());
 
-     if (isYearEqual && isMonthEqual && isDayEqual) {
-         return true;
-     } else {
-         return false;
-     }
+         if (isYearEqual && isMonthEqual && isDayEqual) {
+             return true;
+         } else {
+             return false;
+         }
+    }
 }
 ----
 _Figure 4.9.3: Code section in Schedule.java_

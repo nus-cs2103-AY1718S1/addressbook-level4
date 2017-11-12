@@ -30,6 +30,7 @@ public class AgendaPanel extends UiPart<Region> {
         super(FXML);
         agendaHeader.getStyleClass().remove("label");
         setConnections(scheduleList);
+        scheduleCardListView.setPlaceholder(new Label("No Schedules Available!"));
     }
 
     /**

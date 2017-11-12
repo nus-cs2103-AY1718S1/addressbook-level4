@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Cheng Wei Hong</name>
+        <phone>+1 5553954830</phone>
+        <country>United States</country>
+        <emails>weihong@gmail.com</emails>
+        <address>District 1, 1656 Union Street, Eureka 7074456600</address>
+        <tagged>USA</tagged>
+        <tagged>UX</tagged>
+        <tagged>Lead</tagged>
+    </persons>
+    <persons>
+        <name>Liam William</name>
+        <phone>+1 5559385930</phone>
+        <country>United States</country>
+        <emails>lianw@overworkedstudio.com</emails>
+        <address>District 1, 1656 Union Street, Eureka 7074456600</address>
+        <tagged>USA</tagged>
+        <tagged>UX</tagged>
+        <tagged>Lead</tagged>
+    </persons>
+    <persons>
+        <name>Mark Cuban</name>
+        <phone>+1 5554663356</phone>
+        <country>United States</country>
+        <emails>cmc@overworkedstudio.com</emails>
+        <address>District 1, 1656 Union Street, Eureka 7074456600</address>
+        <tagged>USA</tagged>
+        <tagged>UX</tagged>
+    </persons>
+    <persons>
+        <name>Taylor Swift</name>
+        <phone>+1 555345324</phone>
+        <country>United States</country>
+        <emails>tswift@overworkedstudio.com</emails>
+        <address>District 1, 1656 Union Street, Eureka 7074456600</address>
+        <tagged>USA</tagged>
+        <tagged>UX</tagged>
+        <tagged>Lead</tagged>
+    </persons>
+    <persons>
+        <name>Boonrawd Brewery Co Ltd</name>
+        <phone>+66 2424000</phone>
+        <country>Thailand</country>
+        <emails>pr_relations@boonrawd.co.th</emails>
+        <address>999 Samsen Road, Dusit, Bangkok 10300 Thailand</address>
+        <scheduled>Date: 21-11-2017 Activity: Meet clients Person(s): Bangkok Cable Co Ltd; Boonrawd Brewery Co Ltd; </scheduled>
+        <scheduled>Date: 30-11-2017 Activity: Meeting with PR head Person(s): Boonrawd Brewery Co Ltd; </scheduled>
+        <tagged>companies</tagged>
+        <tagged>Thailand</tagged>
+    </persons>
+    <persons>
+        <name>Bangkok Cable Co Ltd</name>
+        <phone>+66 0225445509</phone>
+        <country>Thailand</country>
+        <emails>bcc@bangkokcable.com</emails>
+        <address>187 Ratchadamri Rd, Lumphini Pathum Wan, Bangkok 10330</address>
+        <scheduled>Date: 01-12-2017 Activity: Meeting with president Person(s): Bangkok Cable Co Ltd; </scheduled>
+        <scheduled>Date: 21-11-2017 Activity: Meet clients Person(s): Bangkok Cable Co Ltd; Boonrawd Brewery Co Ltd; </scheduled>
+        <tagged>companies</tagged>
+        <tagged>Thailand</tagged>
+    </persons>
+    <persons>
+        <name>Viva Industrial Trust</name>
+        <phone>+65 62295579</phone>
+        <country>Singapore</country>
+        <emails>vivaitrust@gmail.com</emails>
+        <address>750, Chai Chee Rd, Singapore 469000</address>
+        <scheduled>Date: 03-12-2017 Activity: Investment talks Person(s): Procter and Gamble; Viva Industrial Trust; </scheduled>
+        <scheduled>Date: 02-12-2017 Activity: Investment talk Person(s): Viva Industrial Trust; </scheduled>
+        <tagged>companies</tagged>
+    </persons>
+    <persons>
+        <name>Procter and Gamble</name>
+        <phone>+65 67125000</phone>
+        <country>Singapore</country>
+        <emails>pg@gmail.com</emails>
+        <address>9 N Buona Vista Dr, The Metropolis, Singapore 138588</address>
+        <scheduled>Date: 03-12-2017 Activity: Investment talks Person(s): Procter and Gamble; Viva Industrial Trust; </scheduled>
+        <tagged>companies</tagged>
+    </persons>
+    <schedules>Date: 21-11-2017 Activity: Meet clients Person(s): Bangkok Cable Co Ltd; Boonrawd Brewery Co Ltd; </schedules>
+    <schedules>Date: 30-11-2017 Activity: Meeting with PR head Person(s): Boonrawd Brewery Co Ltd; </schedules>
+    <schedules>Date: 01-12-2017 Activity: Meeting with president Person(s): Bangkok Cable Co Ltd; </schedules>
+    <schedules>Date: 02-12-2017 Activity: Investment talk Person(s): Viva Industrial Trust; </schedules>
+    <schedules>Date: 03-12-2017 Activity: Investment talks Person(s): Procter and Gamble; Viva Industrial Trust; </schedules>
+    <tags>USA</tags>
+    <tags>companies</tags>
+    <tags>UX</tags>
+    <tags>Lead</tags>
+    <tags>Thailand</tags>
+</addressbook>
