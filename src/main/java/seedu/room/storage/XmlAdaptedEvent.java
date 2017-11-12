@@ -42,7 +42,6 @@ public class XmlAdaptedEvent {
 
     /**
      * Converts this jaxb-friendly adapted event object into the model's Event object.
-     *
      * @throws IllegalValueException if there were any data constraints violated in the adapted event
      */
     public Event toModelType() throws IllegalValueException {

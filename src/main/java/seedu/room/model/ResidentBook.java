@@ -247,7 +247,6 @@ public class ResidentBook implements ReadOnlyResidentBook {
     //@@author sushinoya
     /**
      * Sorts the UniquePersonList, persons.
-     *
      * @throws AlreadySortedException if the list is already sorted by given criteria.
      */
     public void sortBy(String sortCriteria) throws AlreadySortedException {
@@ -259,8 +258,6 @@ public class ResidentBook implements ReadOnlyResidentBook {
         }
     }
 
-    ////
-    //@@author sushinoya
     /**
      * Swaps the rooms between two residents.
      * @throws PersonNotFoundException if the persons specified are not found in the list.
@@ -269,6 +266,7 @@ public class ResidentBook implements ReadOnlyResidentBook {
         throws PersonNotFoundException {
         persons.swapRooms(person1, person2);
     }
+    //@@author
 
     //// util methods
 

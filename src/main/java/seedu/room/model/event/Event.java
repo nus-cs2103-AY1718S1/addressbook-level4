@@ -140,6 +140,7 @@ public class Event implements ReadOnlyEvent {
                 && this.datetime.getValue().equals(otherEvent.datetime.getValue());
     }
 
+    //@@ author
     @Override
     public int compareTo(Object otherEvent) {
 
