@@ -454,7 +454,9 @@ Commands and parameters will be suggested as you type, where applicable.
 === Autocomplete commands
 
 After you type first few characters, user can press TAB to autocomplete to the if there is a unique command starting +
-with those characters.
+with those characters. Note that for some commands, this doesn't really work well due to the similarities of the +
+commands (e.g. `filter` and `filterall`).`Filter` can't be autocompleted (but can be aliased) and `filterall` can +
+only be autocompleted when typed `filtera`.
 
 
 // end::searching[]
