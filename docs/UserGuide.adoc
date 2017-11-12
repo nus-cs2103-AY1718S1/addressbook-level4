@@ -692,7 +692,7 @@ image::divider.png[width="900"]
 === Playing music : `music play`
 image::UG_commandheader_musicplay.png[width="500"]
 
-Want to listen to some of your favourite tunes, but do not have any internet connection currently? Fear not! Unify has got you covered! Unify's `music play` command plays a music track
+Want to listen to some of your favourite tunes, but do not have any internet connection currently? Fear not! Unify has got you covered! Unify's `music play [GENRE]` command plays a music track
 from a specific genre from a list of built-in mp3 music. You are able to select from three different genre, such as "pop", "dance" and "classic".
 
 image::UG_header_format.png[width="400"]
@@ -707,7 +707,7 @@ input the same command `music play pop` again to go to the next pop song.
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
-image:step1.png[width="70"] To start up your day with some songs, type `music play` into the command box, then follows by a `[GENRE]` and press kbd:[Enter] to execute it.
+image:step1.png[width="70"] To start off your day with some songs, type `music play` into the command box, then follows by a `[GENRE]` and press kbd:[Enter] to execute it.
 
 image::UG_musicplay1.png[width="590"]
 
@@ -729,7 +729,7 @@ image::divider.png[width="900"]
 === Stopping music : `music stop`
 image::UG_commandheader_musicstop.png[width="500"]
 
-Maybe the music is getting distracting or you're just not in the mood for some tunes.
+Maybe the music is getting a little distracting or you are just not in the mood for some tunes.
 `music stop` stops the current music track playing so that you can focus on the task at hand.+
 
 image::UG_header_format.png[width="400"]
@@ -749,7 +749,7 @@ image::UG_musicstop2.png[width="590"]
 
 image::header_note.png[width="400"]
 
-* If there is no music currently playing and you try to stop the music player, you may encounter "No music is currently playing" in the result box instead. No worries! It is not a problem at all! Just issue the `music stop`
+* If there is no music currently playing and you try to stop the music player, you may encounter "No music is currently playing" in the result box instead at your image:step2.png[width="70"]. No worries! It is not a problem at all! Just issue the `music stop`
 command only, when there is music currently playing.
 
 image::UG_musicstop2a.png[width="590"]
@@ -763,27 +763,34 @@ image::divider.png[width="900"]
 === Playing radio : `radio play`
 image::UG_commandheader_radioplay.png[width="500"]
 
-Want to listen to some of your favourite tunes? Unify's got you covered! Unify's `music play` command plays a music track
-from a specific genre from a list of built in mp3 music. If you had already paused a track, `music play` resumes playing that track. +
+Want to hear the latest pop songs or the latest news? Tune in to Unify's radio player using the `radio play [GENRE]` command. There are four different `[GENRE]` to choose from,
+as "pop", "chinese", "classic" and "news". However, do note that this radio player requires internet connection in order to work!
 
 image::UG_header_format.png[width="400"]
 Format: `radio play [GENRE]`
 
 image::header_note.png[width="400"]
 
-* The genre can only be pop, classic, news `music play` alone will play pop songs as default.
-
-* This requires internet connection!
+* The genre can only be "pop", "chinese", "classic" or "news" `radio play` alone will play pop radio station as default.
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
-image:step1.png[width="70"] Type `music play` into the command box, then follows by a `genre` and press kbd:[Enter] to execute it.
+image:step1.png[width="70"] To play some radio broadcast, type `radio play` into the command box, then follows by a `[GENRE]` and press kbd:[Enter] to execute it.
 
 image::UG_radioplay1.png[width="590"]
 
-image:step2.png[width="70"] If your genre is Pop, the result box will display "POP Music Playing". +
+image:step2.png[width="70"] If your [GENRE] is "pop", the result box will display "POP Radio Playing".
 
 image::UG_radioplay2.png[width="590"]
+
+{sp}+
+
+image::header_warning.png[width="400"]
+
+* Unify's radio player requires internet connection!
+* Otherwise, your  image:step2.png[width="70"] will have the result box displaying "Not Connected to the Internet".
+
+image::UG_nointernet.png[width="590"]
 
 {sp}+
 
@@ -792,24 +799,31 @@ image::divider.png[width="900"]
 === Stopping radio : `radio stop`
 image::UG_commandheader_radiostop.png[width="500"]
 
-Maybe the music is getting distracting or you're just not in the mood for some tunes.
-`music stop` stops the current music track playing so that you can focus on the task at hand.+
+Maybe the radio broadcast is getting a little distracting or you are just not in the mood for some tunes.
+`radio stop` stops the radio player from playing so that you can focus on the task at hand.
 
 image::UG_header_format.png[width="400"]
-Format: `music stop`
-
-image::header_note.png[width="400"]
-This requires internet connection!
+Format: `radio stop`
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
-image:step1.png[width="70"] Type `music stop` into the command box, and press kbd:[Enter] to execute it.
+image:step1.png[width="70"] To stop the radio player from playing, type `radio stop` into the command box, and press kbd:[Enter] to execute it.
 
 image::UG_radiostop1.png[width="590"]
 
-image:step2.png[width="70"] The result box will display "Music Stopped". +
+image:step2.png[width="70"] Now, the radio player will stop playing the broadcast and you have the silence that you need. The result box will also
+display "Radio Stopped".
 
 image::UG_radiostop2.png[width="590"]
+
+{sp}+
+
+image::header_note.png[width="400"]
+
+* If the radio player is currently not playing and you try to stop the radio player, you may encounter "No Radio is currently playing" in the result box instead at your image:step2.png[width="70"]. No worries! It is not a problem at all! Just issue the `radio stop`
+command only, when the radio playing is currently playing.
+
+image::UG_radiostop2a.png[width="590"]
 
 {sp}+
 
