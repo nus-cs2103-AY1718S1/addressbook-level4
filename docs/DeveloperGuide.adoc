@@ -557,7 +557,8 @@ to the file.
 A UserProfile Window was added as a UI Component to display the User Profile information. Additionally, the User Profile
 can be modified from the textfields in the UI directly. The UserProfile is only saved when "OK" is clicked. Invalid values will be detected and changes will not be saved.
 The "Enter" key is added as an accelerator for the OK button and the "Escape" key is added as an accelerator for
-the cancel button.
+the cancel button. The UserProfile can be found under "File" --> "User Profile" and has an accelerator
+key "F2".
 
 image::UserProfileMenuItem.png[width="208" height="315"]
 
