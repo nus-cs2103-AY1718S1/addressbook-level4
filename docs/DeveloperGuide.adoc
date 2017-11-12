@@ -503,9 +503,9 @@ Figure 4.4.3: Sequence diagram for SortCommand executeUndoableCommand()
 === Enhanced find
 
 The old find feature is only capable of finding the target `Person` using his/her name. Furthermore,
-you have to type out the full name in order to be able to find the `Person`. +
+the user has to type out the full name in order to be able to find the `Person`. +
 
-The enhanced find feature allows you to find the `Person` you want using their name, phone, email, address or tag. Keywords need not be typed in full and partial keywords will still be able to find the `Person`
+The enhanced find feature allows users to find the `Person` you want using their name, phone, email, address or tag. Keywords need not be typed in full and partial keywords will still be able to find the `Person`
 (e.g find jos will return Josephine).
 
 This is implemented by further refining the `PersonHasKeywordsPredicate` that was originally used.
