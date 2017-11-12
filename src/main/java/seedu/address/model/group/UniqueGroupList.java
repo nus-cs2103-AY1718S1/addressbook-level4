@@ -34,7 +34,12 @@ public class UniqueGroupList implements Iterable<Group> {
      */
     public boolean contains(ReadOnlyGroup toCheck) {
         requireNonNull(toCheck);
-        return internalList.contains(toCheck);
+        for (Group group: internalList) {
+            if (group.getGroupName().equals(toCheck.getGroupName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
