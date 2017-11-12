@@ -339,6 +339,7 @@ public class ModuleInfoTest {
     }
 
     @Test
+    @Ignore
     public void createModuleInfo_fromJsonUrl_checkCorrectness() throws Exception {
         assertEquals("CS1101S", info.getModuleCode());
 
@@ -355,6 +356,7 @@ public class ModuleInfoTest {
     }
 
     @Test
+    @Ignore
     public void toString_checkCorrectness() throws Exception {
         String expected = "Module Code: CS1101S\n"
                 + "Module Title: Programming Methodology\n"
@@ -447,6 +449,15 @@ public class AddAvatarCommandTest {
         }
     }
 }
+```
+###### \java\seedu\address\logic\commands\person\EmailCommandTest.java
+``` java
+    @Test
+    public void execute_allPresent_checkCorrectness() throws Exception {
+        Command command = prepareCommand(INDEX_FIRST_PERSON);
+        CommandResult result = command.execute();
+        assertEquals(String.format(MESSAGE_SUCCESS, model.getFilteredPersonList().get(0)), result.feedbackToUser);
+    }
 ```
 ###### \java\seedu\address\logic\parser\ConfigCommandParserTest.java
 ``` java
@@ -1187,6 +1198,33 @@ public class TagColorManagerTest {
         Tag tag = new Tag(VALID_TAG_FRIEND);
         TagColorManager.setColor(tag);
         assertTrue(TagColorManager.getColor(tag).matches("#[A-Fa-f0-9]{6}"));
+    }
+}
+```
+###### \java\systemtests\AddAvatarCommandSystemTest.java
+``` java
+public class AddAvatarCommandSystemTest extends AddressBookSystemTest {
+    private static final String VALID_PATH = FileUtil.getPath("./src/test/resources/SampleAvatar.jpg");
+
+    @Test
+    public void addAvatar() throws Exception {
+        Index index = INDEX_FIRST_PERSON;
+        String command = AddAvatarCommand.COMMAND_WORD + " " + index.getOneBased() + " " + VALID_PATH;
+        assertCommandSuccess(command, index, VALID_PATH);
+    }
+
+    private void assertCommandSuccess(String command, Index toAdd, String path) throws Exception {
+        Model model = getModel();
+        ReadOnlyPerson personToAdd = model.getFilteredPersonList().get(toAdd.getZeroBased());
+        Avatar avatar = new Avatar(path);
+        String expectedResultMessage = String.format(MESSAGE_ADD_AVATAR_SUCCESS, personToAdd);
+        model.setPersonAvatar(personToAdd, avatar);
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, model);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchangedExceptSyncStatus();
     }
 }
 ```
