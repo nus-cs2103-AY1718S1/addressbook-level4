@@ -490,6 +490,7 @@ Edits the remark for the first person in the existing to Likes to drink milk.
 * `remark 1 r/` +
 Removes the remark for the first person.
 
+// tag::add2[]
 === Quick adding using improved `add` Command (v1.4)
 
 *Author*: Soh Hong Hwee
@@ -499,6 +500,7 @@ All other details that are not provided will be filled in by default values as s
 
 image::Default_for_empty_fields.png[width="400"]
 _Figure 3.15.1 : Default values for empty fields_
+// end::add2[]
 
 //tag::photo[]
 === Option Menu `Add photo` (v1.4)
