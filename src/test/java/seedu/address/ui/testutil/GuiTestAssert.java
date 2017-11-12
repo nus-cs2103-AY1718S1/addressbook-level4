@@ -5,9 +5,11 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.EventCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -26,6 +28,18 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
+    // @@author HouDenghao
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertEventCardEquals(EventCardHandle expectedCard, EventCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getName(), actualCard.getName());
+        assertEquals(expectedCard.getDescription(), actualCard.getDescription());
+        assertEquals(expectedCard.getTime(), actualCard.getTime());
+    }
+
+    // @@author
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
@@ -38,6 +52,17 @@ public class GuiTestAssert {
                 actualCard.getTags());
     }
 
+    // @@author HouDenghao
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedEvent}.
+     */
+    public static void assertCardDisplaysEvent(ReadOnlyEvent expectedEvent, EventCardHandle actualCard) {
+        assertEquals(expectedEvent.getEventName().fullEventName, actualCard.getName());
+        assertEquals(expectedEvent.getDescription().eventDesc, actualCard.getDescription());
+        assertEquals(expectedEvent.getEventTime().eventTime, actualCard.getTime());
+    }
+
+    // @@author
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.

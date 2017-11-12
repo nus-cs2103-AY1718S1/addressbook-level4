@@ -21,13 +21,19 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.event.Event;
 import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.PersonHaveParticipateException;
+import seedu.address.model.event.exceptions.PersonNotParticipateException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.HaveParticipateEventException;
+import seedu.address.model.person.exceptions.NotParticipateEventException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
@@ -229,5 +235,39 @@ public class CommandTestUtil {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
+    }
+
+
+    /**
+     * Let a specific person quit a specific event
+     */
+    public static void quitEvent(Model model, Person person, Event event) {
+        try {
+            model.quitEvent(person, event);
+        } catch (PersonNotParticipateException e) {
+            throw new AssertionError("Impossible", e);
+        } catch (NotParticipateEventException e) {
+            throw new AssertionError("Impossible", e);
+        }
+    }
+
+    /**
+     * Let some persons join certain events
+     */
+    public static void joinEvents(Model model) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 2; j++) {
+                Person person = (Person) model.getFilteredPersonList().get(i);
+                Event event = (Event) model.getFilteredEventList().get(j);
+                try {
+                    model.joinEvent(person, event);
+                } catch (PersonHaveParticipateException e) {
+                    throw new AssertionError("Impossible", e);
+                } catch (HaveParticipateEventException e) {
+                    throw new AssertionError("Impossible", e);
+                }
+            }
+        }
+
     }
 }
