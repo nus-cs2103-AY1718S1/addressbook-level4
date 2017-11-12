@@ -461,13 +461,13 @@ As seen in the diagram below, when `events` is typed into the command line input
 image::EventsCommandDiagram2.png[width="800"]
 
 ==== Design Considerations
-**Aspect:** Implementation of `EventsCommand`
-**Alternative 1 (current choice):** Extends to `Command`
-**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class.
-**Cons:** Users may want to undo `EventsCommand` as they may not have wanted to be in Events mode.
-**Alternative 2:** Extends to `UndoableCommand`
-**Pros:** Users can undo `EventsCommand` when they mistype the command.
-**Cons:** Developers need to learn the implementation of `UndoableCommand`. Unnecessary to extend to `UndoableCommand` since users can type `ListCommand` to go back to Persons mode.
+**Aspect:** Implementation of `EventsCommand` +
+**Alternative 1 (current choice):** Extends to `Command` +
+**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class. +
+**Cons:** Users may want to undo `EventsCommand` as they may not have wanted to be in Events mode. +
+**Alternative 2:** Extends to `UndoableCommand` +
+**Pros:** Users can undo `EventsCommand` when they mistype the command. +
+**Cons:** Developers need to learn the implementation of `UndoableCommand`. Unnecessary to extend to `UndoableCommand` since users can type `ListCommand` to go back to Persons mode. +
 // end::events[]
 
 // tag::addevent[]
@@ -1244,8 +1244,168 @@ If yes, then the function returns true else it returns false.
 // tag::favouriteunfavourite
 === Favourite/Unfavourite mechanism
 
+The favourite/unfavourite mechanism is facilitated by the `Favourite` field that resides in `Person`. These commands will inherit from `UndoableCommand`.
+
+As seen in the diagram below,`FavouriteCommand` and `UnfavouriteCommand` inherits `UndoableCommand`, which is an extra layer between abstract Command class and concrete commands that can be undone. When `FavouriteCommand` or `UnfavouriteCommand` is executed,
+the previous state of the address book before favouriting or unfavouriting a person is saved.
+
+image::FavouriteCommandDiagram1.png[width="800"]
+_Figure 5.12.1 Favourite Command Diagram 1_
+
+The execution of FavouriteCommand is processed in this way:
+
+. User will execute `list` to view the list of persons in The Myth's Book.
+
+. User will then execute `favourite 1`, with `1` being the `index` of the person that the user wants to favourite, provided by the executed `list`.
+
+. The `PersonList` in `AddressBook` will then favourite the person specified by the user's execution of `favourite 1`.
+
+. The `PersonCard` will be notified through `BindListeners` that the person specified is favourited, and will set the favourite icon beside the person's name.
+
+The execution of UnfavouriteCommand is processed similarly, but the person will be unfavourited, and the favourite icon will be removed instead.
+The execution of UnfavouriteCommand will also enable the display of `FavouriteList`.
+
+Code of `FavouriteCommand`:
+[source,java]
+----
+public class FavouriteCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... favourite logic ...
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        ReadOnlyPerson personToFavourite = lastShownList.get(targetIndex.getZeroBased());
+
+        model.favouritePerson(personToFavourite);
+    }
+}
+----
+
+Code of `UnfavouriteCommand`:
+[source,java]
+----
+public class UnfavouriteCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... unfavourite logic ...
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        ReadOnlyPerson personToUnfavourite = lastShownList.get(targetIndex.getZeroBased());
+
+        model.unfavouritePerson(personToUnfavourite);
+    }
+}
+----
+
+Favouriting/Unfavouriting of person in AddressBook.java:
+[source,java]
+----
+public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+    persons.favouritePerson(target);
+}
+
+public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+    persons.unfavouritePerson(target);
+}
+----
+
+Listener for change of favourite field in PersonCard.java:
+[source,java]
+----
+private void bindListeners(ReadOnlyPerson person) {
+    // ... listeners logic for other fields ...
+    person.favouriteProperty().addListener((observable, oldValue, newValue) -> {
+        initFavourite(person);
+    });
+}
+----
+
+Setting visibility of favourite icon beside name in PersonCard.java:
+[source,java]
+----
+private void initFavourite(ReadOnlyPerson person) {
+    if (person.isFavourite()) {
+        favouriteImage.setVisible(true);
+    } else {
+        favouriteImage.setVisible(false);
+    }
+}
+----
+
+The following sequence diagram shows how the favourite/unfavourite operation works:
+
+As seen in the diagram below, when `favourite 1` is typed into the command line input, a new `FavouriteCommand` is created.
+The same works for `UnfavouriteCommand` when `unfavourite 1` is typed into the command line input.
+
+image::FavouriteCommandDiagram2.png[width="800"]
+_Figure 5.12.2 Favourite Command Diagram 2_
+
 ==== Design Considerations
 
+**Aspect:** Implementation of `FavouriteCommand` and `UnfavouriteCommand` +
+**Alternative 1 (current choice):** Extending to `UndoableCommand` class. +
+**Pros:** Better for users to undo `FavouriteCommand` or `UnfavouriteCommand` if he/she favourites/unfavourites the wrong person. +
+**Cons:** Developers need to learn the implementation of `UndoableCommand`. +
+**Alternative 2:** Extending to `Command` class. +
+**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class. +
+**Cons:** `FavouriteCommand` cannot be undone and have to call `UnfavouriteCommand` or vice versa to undo mistyped command +
+
+=== Favourite List mechanism
+
+The favourite list mechanism is facilitated by `NameContainsFavouritePredicate`, a predicate class that checks if a person is favourited. It lists out all contacts that are favourited. This command will inherit from `Command`.
+
+As seen in the diagram below, `FavouriteListCommand` inherits from `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+image::FavouriteListCommandDiagram1.png[width="800"]
+_Figure 5.13.1 Favourite List Command Diagram 1_
+
+The execution of `FavouriteListCommand` is processed in this way:
+
+. User will execute `favourites` to display a list of favourited persons in The Myth's Book.
+
+. The execution of `favourites` updates the `PersonList` in `AddressBook` with `NameContainsFavouritePredicate`, which checks if a person is favourited.
+
+Code of `FavouriteListCommand`:
+[source,java]
+----
+public class FavouriteListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... favourite list logic ...
+        model.updateFilteredPersonList(predicate);
+    }
+}
+----
+
+Code of `NameContainsFavouritePredicate`:
+[source,java]
+----
+public class NameContainsFavouritePredicate implements Predicate<ReadOnlyPerson> {
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return person.getFavourite();
+    }
+}
+----
+
+The following sequence diagram shows how the favourite list operation works:
+
+As seen in Figure 5.13.1, when `favourites` is typed into the command line input, a new `FavouriteListCommand` is created.
+
+image::FavouriteListCommandDiagram2.png[width="800"]
+_Figure 5.13.1 Favourite List Command Diagram 2_
+
+==== Design Considerations
+
+**Aspect:** Implementation of `FavouriteListCommand` +
+**Alternative 1 (current choice):** Extends to `Command` +
+**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class. +
+**Cons:** Users may want to undo `FavouriteListCommand` as they may not have wanted to list the favourited persons. +
+**Alternative 2:** Extends to `UndoableCommand` +
+**Pros:** Users can undo `FavouriteListCommand` when they mistype the command. +
+**Cons:** Developers need to learn the implementation of `UndoableCommand`. Unnecessary to extend to `UndoableCommand` since users can type `ListCommand` to go back to the list of all persons. +
 // end::favouriteunfavourite
 
 //tag::birthday[]
