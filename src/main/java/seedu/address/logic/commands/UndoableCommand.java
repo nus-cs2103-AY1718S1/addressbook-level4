@@ -62,8 +62,7 @@ public abstract class UndoableCommand extends Command {
     }
 
     /**
-     * THis method will determine if is redoable
-     * @return
+     * This method will determine if is redoable
      */
     public boolean canRedo() {
         return previousListingUnit.equals(ListingUnit.getCurrentListingUnit())

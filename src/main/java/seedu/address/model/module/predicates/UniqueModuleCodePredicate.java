@@ -30,8 +30,8 @@ public class UniqueModuleCodePredicate implements Predicate<ReadOnlyLesson> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniqueModuleCodePredicate // instanceof handles nulls
-                && this.uniqueCodeSet.equals(((UniqueModuleCodePredicate) other).uniqueCodeSet)); // state check
+                || (other instanceof UniqueModuleCodePredicate); // instanceof handles nulls
     }
+
 
 }
