@@ -414,6 +414,7 @@ Emails the 1st and 2nd person in the address book.
 `email 1` +
 Emails the 1st person in the results of the `find` command.
 // end::email[]
+
 //tag::backup[]
 ==== Back up address book : `backup` [Since v1.5]
 
