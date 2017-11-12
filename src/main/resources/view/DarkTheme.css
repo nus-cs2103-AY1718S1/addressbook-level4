@@ -405,7 +405,9 @@
     -fx-font-size: 13pt;
     -fx-text-fill: #A6A6A6;
 }
+//@@author
 
+//@@author shitian007
 .auto-complete-popup .list-cell {
     -fx-background-color: transparent;
     -fx-font-size: 11pt;
@@ -416,7 +418,9 @@
     -fx-background-color: grey;
     -fx-background-radius: 2px;
 }
+//@@author
 
+//@@author sushinoya
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }

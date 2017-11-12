@@ -31,13 +31,19 @@ public class AddImageCommandParser implements Parser<AddImageCommand> {
             System.out.println(argMultimap.getValue(PREFIX_IMAGE_URL).get());
             url = validImageFormat(argMultimap.getValue(PREFIX_IMAGE_URL).get());
         } catch (InvalidImageFormatException e) {
-            throw new ParseException(String.format(MESSAGE_INVALID_IMAGE_FORMAT, AddImageCommand.MESSAGE_VALID_IMAGE_FORMATS));
+            throw new ParseException(String.format(MESSAGE_INVALID_IMAGE_FORMAT,
+                AddImageCommand.MESSAGE_VALID_IMAGE_FORMATS));
         } catch (Exception e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddImageCommand.MESSAGE_USAGE));
         }
         return new AddImageCommand(index, url);
     }
 
+    /**
+     * @param imageUrl actual image url
+     * @return image url if it is of the valid format
+     * @throws InvalidImageFormatException if image format is invalid
+     */
     public String validImageFormat(String imageUrl) throws InvalidImageFormatException {
         String validFormatRegex = "(.+(\\.(?i)(jpg|jpeg|png|bmp))$)";
         if (imageUrl.matches(validFormatRegex)) {
