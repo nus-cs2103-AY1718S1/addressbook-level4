@@ -49,16 +49,16 @@ public class AddLifeInsuranceCommandParser implements Parser<AddLifeInsuranceCom
         }
 
         try {
-            final InsuranceName insuranceName = ParserUtil.parseInsuranceName(argMultimap.getValue(PREFIX_NAME)).get();
-            final InsurancePerson owner = ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_OWNER)).get();
-            final InsurancePerson insured = ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_INSURED)).get();
-            final InsurancePerson beneficiary =
+            InsuranceName insuranceName = ParserUtil.parseInsuranceName(argMultimap.getValue(PREFIX_NAME)).get();
+            InsurancePerson owner = ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_OWNER)).get();
+            InsurancePerson insured = ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_INSURED)).get();
+            InsurancePerson beneficiary =
                     ParserUtil.parseInsurancePerson(argMultimap.getValue(PREFIX_BENEFICIARY)).get();
-            final Premium premium = ParserUtil.parsePremium(argMultimap.getValue(PREFIX_PREMIUM)).get();
-            final ContractFileName contractFileName =
+            Premium premium = ParserUtil.parsePremium(argMultimap.getValue(PREFIX_PREMIUM)).get();
+            ContractFileName contractFileName =
                     ParserUtil.parseContractFileName(argMultimap.getValue(PREFIX_CONTRACT_FILE_NAME)).get();
-            final LocalDate signingDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_SIGNING_DATE)).get();
-            final LocalDate expiryDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_EXPIRY_DATE)).get();
+            LocalDate signingDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_SIGNING_DATE)).get();
+            LocalDate expiryDate = ParserUtil.parseDate(argMultimap.getValue(PREFIX_EXPIRY_DATE)).get();
 
             ReadOnlyInsurance lifeInsurance = new LifeInsurance(insuranceName, owner, insured, beneficiary, premium,
                     contractFileName, signingDate, expiryDate);

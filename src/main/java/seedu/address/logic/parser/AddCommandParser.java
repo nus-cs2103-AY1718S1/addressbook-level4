@@ -49,8 +49,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                 new AddPersonOptionalFieldDescriptor();
 
         try {
-            final Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            final Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE))
                 .ifPresent(addPersonOptionalFieldDescriptor::setPhone);
@@ -64,13 +64,13 @@ public class AddCommandParser implements Parser<AddCommand> {
             ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER))
                     .ifPresent(addPersonOptionalFieldDescriptor::setGender);
 
-            final DateOfBirth dob = addPersonOptionalFieldDescriptor.getDateOfBirth();
-            final Gender gender = addPersonOptionalFieldDescriptor.getGender();
+            DateOfBirth dob = addPersonOptionalFieldDescriptor.getDateOfBirth();
+            Gender gender = addPersonOptionalFieldDescriptor.getGender();
             //@@author
             //@@author OscarWang114
-            final Phone phone = addPersonOptionalFieldDescriptor.getPhone();
-            final Email email = addPersonOptionalFieldDescriptor.getEmail();
-            final Address address = addPersonOptionalFieldDescriptor.getAddress();
+            Phone phone = addPersonOptionalFieldDescriptor.getPhone();
+            Email email = addPersonOptionalFieldDescriptor.getEmail();
+            Address address = addPersonOptionalFieldDescriptor.getAddress();
             ReadOnlyPerson person = new Person(name, phone, email, address, dob, gender, tagList);
 
             return new AddCommand(person);
