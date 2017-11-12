@@ -567,6 +567,10 @@ The import mechanism is essentially adding multiple contacts to the resident boo
 
 One consideration of this mechanism is that contacts with identical names will not be added as the current resident book is regarded as the most updated version and the import feature aims to only facilitate addition of new contacts.
 
+The following is the Sequence Diagram for Import Command.
+
+image::SDforImportFile.png[width="800"]
+
 The Import Command is implemented this way, where user will specify the filePath:
 [source,java]
 ----
@@ -603,7 +607,6 @@ image::ImportCommandActivityDiagram.png[width="300"]
 === Backup Command
 The backup command saves the current ResidentBook into backup.xml located in the project location. One consideration for this mechanism is that backup should only happen when necessary, as it will take up a lot of space.
 
-A future enhancement can allow user to specify backup location and file name.
 [source,java]
 ----
 @Override
@@ -625,6 +628,8 @@ public void backupImages() throws IOException {
         handleImagesBackupFiles(backupFolder, originalFolder);
     }
 ----
+
+A future enhancement can allow user to specify backup location and file name.
 
 // tag::sort[]
 === Sort Command
