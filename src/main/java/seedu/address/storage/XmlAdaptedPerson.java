@@ -39,8 +39,6 @@ public class XmlAdaptedPerson {
     private String remark;
     @XmlElement(required = true)
     private boolean isPinned;
-    @XmlElement(required = true)
-    private boolean isSelected;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -71,7 +69,6 @@ public class XmlAdaptedPerson {
         }
         isPrivate = source.isPrivate();
         isPinned = source.isPinned();
-        isSelected = source.isSelected();
     }
 
     /**
@@ -110,7 +107,7 @@ public class XmlAdaptedPerson {
         final Set<Tag> tags = new HashSet<>(personTags);
         final boolean isPrivate = this.isPrivate;
         final boolean isPinned = this.isPinned;
-        final boolean isSelected = this.isSelected;
+        final boolean isSelected = false;
         return new Person(name, phone, email, address, birthday, remark, tags, isPrivate, isPinned, isSelected);
     }
 
