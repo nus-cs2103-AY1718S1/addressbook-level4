@@ -414,7 +414,8 @@ image::video/redoInvalid.gif[width="790"]
 // tag::clear[]
 === Clearing all entries : `clear`
 
-The `clear` command will clear all data stored in ModU. +
+The `clear` command will clear all data stored in ModU and return to *module list mode*. +
+
 
 Command format in command box: `clear` +
 
