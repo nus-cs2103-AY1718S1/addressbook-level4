@@ -442,7 +442,7 @@ _Figure 4.4 : Sequence diagram for DeleteMultipleCommand_
 
 Delete multiple contacts extends from undoable commands, and it can be undone using the undo function. By keying in the command word `deleteMul` along with `indexes`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `DeleteMultipleCommandParser` class, as seen from figure 4.4 above.
 
-The deleteMultipleCommand is implemented this way:
+The DeleteMultipleCommand is implemented this way:
 ----
 public class DeleteMultipleCommand extends UndoableCommand {
     @Override
@@ -456,7 +456,7 @@ As our indexes are intended to take in multiple index values, we will use a `Str
 
 We will now create a `ArrayList<Index> arrayOfIndex = new ArrayList<Index>();` to store the indexes that we will need for the feature. We will store the indexes into the arraylist using a for loop. However, as the arguments in the `listOfIndex` arraylist is in a string format, we will need to convert them into an integer format before storing it into the `ArrayList<Index> arrayOfIndex`. This arrayList will be returned to the `DeleteMultipleCommand` class for use.
 
-In the `DeleteMultipleCommand` class, the commandResult method is used which compares the index with the `lastShownList` in the model, similar to the method used in the `deleteCommand`. However, as `DeleteMultipleCommand` is designed to take in multiple indexes, a for-loop is used to loop the commandResult method so as to check for every index within the arrayList. The names that are deleted will be stored inside a `String listOfDeletedContacts` which will be used to display the results on the UI.
+In the `DeleteMultipleCommand` class, the commandResult method is used which compares the index with the `lastShownList` in the model, similar to the method used in the `DeleteCommand`. However, as `DeleteMultipleCommand` is designed to take in multiple indexes, a for-loop is used to loop the commandResult method so as to check for every index within the arrayList. The names that are deleted will be stored inside a `String listOfDeletedContacts` which will be used to display the results on the UI.
 
 ==== Design Considerations
 
