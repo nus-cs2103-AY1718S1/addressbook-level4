@@ -90,7 +90,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addLifeInsurance(ReadOnlyInsurance insurance)
             throws DuplicateInsuranceException, DuplicateContractFileNameException {
-        addressBook.addInsurance(insurance);
+        addressBook.addLifeInsurance(insurance);
         updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
         indicateAddressBookChanged();
     }
