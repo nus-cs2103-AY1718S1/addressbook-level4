@@ -14,7 +14,15 @@ endif::[]
 
 By: `CS2103AUG2017-W09-B4`      Since: `Aug 2017`      Licence: `MIT`
 
-== Quick Start
+== Introduction
+
+=== About Bamboo
+Bamboo is a command-line interface (CLI) based address book application. It is a one-stop solution to help you manage your contacts in an efficient and convenient manner. Using Bamboo, you can organize contacts into groups, obtain your contacts' Google Calendar events and get connected to your contacts’ social media platforms.
+
+=== Purpose
+This document serves as the User Guide for Bamboo. It assumes that you have a basic understanding of how to use simple CLI applications. It describes how to get started with Bamboo and how to use Bamboo’s features by walking you through some examples.
+
+== Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -30,7 +38,7 @@ image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  6.	You can try the following command examples:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
@@ -40,7 +48,19 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
+In this increasingly connected world that we live in, it is difficult to manage contact information and stay connected to the people that you meet. To help you, Bamboo is designed to show your contacts, groups and contact information in a fuss-free and concise manner.
 
+image::layout.png[width="790"]
+
+Upon launching Bamboo, you will notice that there are three distinct panels - *Contacts*, *Groups* and a *Contact Detail* panel.
+
+* The *Contact* panel shows you all your contacts at a glance. Details such as the contact’s address, email and phone are omitted so you do not get bombarded with a slew of redundant information when you are looking for a person.
+
+* The *Groups* panel shows you all your groups at a glance. You can create groups to help organize and manage your contacts in a more logical and systematic manner. 
+
+* The *Contact Detail* panel shows you the details of your contact such as their phone, email and address. You will be able to view a person’s schedule and get connected with their social media accounts. 
+
+As Bamboo is primarily a CLI-based application, most of your interaction with Bamboo will be through command inputs. 
 ====
 *Command Format*
 
@@ -51,7 +71,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 === Viewing help : `help`
-
 Format: `help`
 
 === Adding a person: `add`
@@ -284,9 +303,9 @@ Deletes the 2nd group in the address book.
 // end::group[]
 
 // tag::calendar[]
-=== Adding a schedule to a person : `cadd` (Since V1.4)
+=== Adding a person's Google Calendar events : `cadd` (Since V1.4)
 
-Adds a person's Google Calendar events to schedules. +
+Adds a person's Google Calendar events to his/her schedule. +
 Format: `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID` +
 Alias: `ca`
 
@@ -301,6 +320,40 @@ Examples:
 
 * `cadd p/2 i/xderek105243x@gmail.com`
 // end::calendar[]
+
+=== Adding an event to a person's schedule : `eadd` (Since V1.5)
+Adds an event to a person's schedule. +
+Format: `eadd p/PERSON INDEX n/EVENT NAME s/EVENT START DATE e/EVENT END DATE [d/EVENT DETAILS]`
+Alias: `ea`
+
+****
+* Add an event to person's schedule list at specified `PERSON INDEX`
+* `EVENT START DATE` and `EVENT END DATE` must be in *YYYY-MM-DD HH:MM* format.
+* `EVENT START DATE` must come before `EVENT END DATE`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `eadd p/2 n/CS2103 Meeting s/2017-11-23 10:30 e/2017-11-23 11:45 d/Prepare for Demo`
+
+=== Removing event(s) from a person's schedule : `edelete` (Since V1.5)
+Removes event(s) from a person's schedule. +
+Format: `edelete p/PERSON INDEX e/EVENT INDEX [EVENT INDEX...]`
+Alias: `ed`
+
+****
+* Removes event(s) from a person's schedule list at specified `PERSON INDEX`
+* At least one `EVENT INDEX` must be specified
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `edelete p/1 e/1`
+* `ed p/2 e/4 5 6`
 
 // tag::profPicSystem[]
 === Setting the photo of a person: `ppset` (Since V1.4)
@@ -348,6 +401,7 @@ Alias: `s`
 * Adding the optional flag `r` will sort persons in descending order
 * Persons are sorted by name by default (if no `PREFIX` is specified)
 * Persons are sorted in ascending order by default (if no `r` flag is specified)
+* 'Favourite' persons are not subject to sorting and will remain at the top of list.
 ****
 
 Examples:
@@ -462,10 +516,16 @@ e.g. `fremove 2`
 e.g. `gcreate n/Bamboo`
 * *Add Person To Group* : `gadd g/GROUP INDEX p/PERSON INDEX` +
 e.g. `gadd g/1 p/2`
-* *Remove Person To Group* : `gremove g/GROUP INDEX p/PERSON INDEX` +
+* *Remove Person From Group* : `gremove g/GROUP INDEX p/PERSON INDEX` +
 e.g. `gremove g/1 p/2`
 * *Delete Group* : `gdelete INDEX` +
 e.g. `gdelete 2`
+* *Add a person's Google Calendar Events* : `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID` +
+e.g. `cadd p/2 i/nas939@example.com`
+* *Add an Event to a person's schedule* : `eadd p/PERSON INDEX n/EVENT NAME s/EVENT START DATE e/EVENT END DATE d/EVENT DETAILS` +
+e.g `eadd p/2 n/CS2103 Meeting s/2017-11-23 10:30 e/2017-11-23 11:45 d/Prepare for Demo`
+* *Remove Event(s) from a person's schedule* : `edelete p/PERSON INDEX e/EVENT INDEX [EVENT INDEX...]` +
+e.g `edelete p/1 e/4 5 6`
 * *List* : `list [f/]`
 * *Help* : `help`
 * *Select* : `select [g/] INDEX` +
