@@ -272,7 +272,7 @@ public class SyncCommand extends Command {
      * @param gPerson
      * @throws Exception
      */
-    private void linkContacts(ReadOnlyPerson aPerson, Person gPerson) throws Exception {
+    protected void linkContacts(ReadOnlyPerson aPerson, Person gPerson) throws Exception {
         seedu.address.model.person.Person updatedPerson =
                 new seedu.address.model.person.Person(aPerson);
         updatedPerson.setId(new Id(gPerson.getResourceName()));
@@ -289,7 +289,7 @@ public class SyncCommand extends Command {
      * @param person
      * @throws Exception
      */
-    private void addGoogleContact (ReadOnlyPerson person) throws Exception {
+    protected void addGoogleContact (ReadOnlyPerson person) throws Exception {
         Person contactToCreate = convertAPerson(person);
         Person createdContact = client.people().createContact(contactToCreate).execute();
 
@@ -307,7 +307,7 @@ public class SyncCommand extends Command {
      * @param person
      * @throws Exception
      */
-    private void addAContact (Person person) throws Exception {
+    protected void addAContact (Person person) throws Exception {
         String id = person.getResourceName();
         seedu.address.model.person.Person convertedAPerson = convertGooglePerson(person);
         model.addPerson(convertedAPerson);
@@ -319,7 +319,7 @@ public class SyncCommand extends Command {
      * @param person
      * @param updatedPerson
      */
-    private void checkNullFields(Person person, Person updatedPerson) {
+    protected void checkNullFields(Person person, Person updatedPerson) {
         if (updatedPerson.getPhoneNumbers() == null && person.getPhoneNumbers() != null) {
             updatedPerson.setPhoneNumbers(person.getPhoneNumbers());
         }
@@ -338,7 +338,7 @@ public class SyncCommand extends Command {
      * @throws IllegalValueException
      */
 
-    private seedu.address.model.person.Person convertGooglePerson (Person person)  throws IllegalValueException {
+    protected seedu.address.model.person.Person convertGooglePerson (Person person)  throws IllegalValueException {
         seedu.address.model.person.Person aPerson = null;
 
         Name name = (person.getNames() == null)
@@ -386,7 +386,7 @@ public class SyncCommand extends Command {
      * @throws IllegalValueException
      */
 
-    private seedu.address.model.person.Person convertGooglePerson (Person person, ReadOnlyPerson aOldPerson)
+    protected seedu.address.model.person.Person convertGooglePerson (Person person, ReadOnlyPerson aOldPerson)
             throws IllegalValueException {
         seedu.address.model.person.Person aPerson = null;
 
@@ -432,7 +432,7 @@ public class SyncCommand extends Command {
      * @param person
      * @return
      */
-    private Person convertAPerson (ReadOnlyPerson person) {
+    protected Person convertAPerson (ReadOnlyPerson person) {
         Person result = new Person();
         List<Name> name = new ArrayList<Name>();
         List<EmailAddress> email = new ArrayList<EmailAddress>();
@@ -466,7 +466,7 @@ public class SyncCommand extends Command {
      * @param person
      * @param updatedPerson
      */
-    private void updatePerson (ReadOnlyPerson person, seedu.address.model.person.Person updatedPerson) {
+    protected void updatePerson (ReadOnlyPerson person, seedu.address.model.person.Person updatedPerson) {
         try {
             model.updatePerson(person, updatedPerson);
         } catch (Exception e) {
@@ -480,7 +480,7 @@ public class SyncCommand extends Command {
      * @param person
      * @return
      */
-    private String retrieveFullGName (Person person) {
+    protected String retrieveFullGName (Person person) {
         Name name = person.getNames().get(0);
 
         String result;
@@ -516,7 +516,7 @@ public class SyncCommand extends Command {
      * @param person
      * @return a String containing the time where the Person entry was last updated
      */
-    private String getLastUpdated (Person person) {
+    protected String getLastUpdated (Person person) {
         Source meta = person.getMetadata().getSources().get(0);
         return meta.getUpdateTime();
     }
@@ -527,7 +527,7 @@ public class SyncCommand extends Command {
      * @return
      */
 
-    private HashMap<String, ReadOnlyPerson> constructHashId (List<ReadOnlyPerson> personList) {
+    protected HashMap<String, ReadOnlyPerson> constructHashId (List<ReadOnlyPerson> personList) {
         HashMap<String, ReadOnlyPerson> result = new HashMap<>();
 
         personList.forEach(e -> {
@@ -543,7 +543,7 @@ public class SyncCommand extends Command {
      * @return
      */
 
-    private HashMap<String, ReadOnlyPerson> constructHashName (List<ReadOnlyPerson> personList) {
+    protected HashMap<String, ReadOnlyPerson> constructHashName (List<ReadOnlyPerson> personList) {
         HashMap<String, ReadOnlyPerson> result = new HashMap<>();
 
         personList.forEach(e -> {
@@ -559,7 +559,7 @@ public class SyncCommand extends Command {
      * @return Hashmap
      */
 
-    private HashMap<String, Person> constructGoogleHashId () {
+    protected HashMap<String, Person> constructGoogleHashId () {
         HashMap<String, Person> result = new HashMap<>();
 
         connections.forEach(e -> {
@@ -574,7 +574,7 @@ public class SyncCommand extends Command {
      * @return Hashmap
      */
 
-    private HashMap<String, Person> constructGoogleHashName () {
+    protected HashMap<String, Person> constructGoogleHashName () {
         HashMap<String, Person> result = new HashMap<>();
 
         connections.forEach(e -> {
@@ -599,7 +599,7 @@ public class SyncCommand extends Command {
      *
      * @param object
      */
-    private void saveStatus(Serializable object) {
+    protected void saveStatus(Serializable object) {
         try {
             FileOutputStream saveFile = new FileOutputStream("data/syncedIDs.dat");
             ObjectOutputStream out = new ObjectOutputStream(saveFile);
@@ -615,7 +615,7 @@ public class SyncCommand extends Command {
      *
      * @return an Object which is casted to its original type (HashSet in this case)
      */
-    private Object loadStatus() {
+    protected Object loadStatus() {
         Object result = null;
         try {
             FileInputStream saveFile = new FileInputStream("data/syncedIDs.dat");
@@ -635,7 +635,7 @@ public class SyncCommand extends Command {
      * @param gPerson
      * @return
      */
-    private boolean equalPerson (ReadOnlyPerson abcPerson, Person gPerson) {
+    protected boolean equalPerson (ReadOnlyPerson abcPerson, Person gPerson) {
         Name name = (gPerson.getNames() == null)
                 ? null
                 : gPerson.getNames().get(0);
