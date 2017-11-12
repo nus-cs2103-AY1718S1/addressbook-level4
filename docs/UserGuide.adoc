@@ -258,9 +258,10 @@ Shows a list of all persons in DeathNote. +
 
   Shorthand: l
 
+//tag::opennew[]
+
 === Create new DeathNote : `new` / `n` kbd:[V2.0]
 
-//tag::new[]
 Opens a new instance of DeathNote.
 
   Format: new PATH
@@ -273,10 +274,8 @@ Opens a new instance of DeathNote.
 . Locate your desired DeathNote data file on the pop-up window. The file will be in an xml format.
 . Select the file and click Save
 
-//end::new[]
-
 === Open existing DeathNote : `open` / `o` kbd:[V2.0]
-//tag::open[]
+
 Opens another existing instance of DeathNote.
 
   Format: open PATH
@@ -288,7 +287,8 @@ Opens another existing instance of DeathNote.
 . Go to the top menu and click File > Open.
 . Locate your desired DeathNote data file on the pop-up window. The file will be in an xml format.
 . Select the file and click Open
-//end::open[]
+
+//end::opennew[]
 
 === Exit DeathNote : `exit`
 

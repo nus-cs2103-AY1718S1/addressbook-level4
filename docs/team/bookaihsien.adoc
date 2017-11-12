@@ -50,11 +50,7 @@ include::../DeveloperGuide.adoc[tag=add]
 
 #Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
-include::../UserGuide.adoc[tag=open]
-
-include::../UserGuide.adoc[tag=new]
-
-include::../UserGuide.adoc[tag=openGui]
+include::../UserGuide.adoc[tag=opennew]
 
 #End of Extract#
 
