@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 
+//@@author 500poundbear
 /**
  * A ui for the people count that is displayed at the header of the application.
  */

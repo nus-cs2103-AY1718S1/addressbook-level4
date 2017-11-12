@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.SocialMedia;
 
@@ -21,8 +19,6 @@ import seedu.address.model.person.SocialMedia;
  */
 public class Statistics {
 
-    private static final Integer NUMBER_OF_PERSONS_IN_TOP_LIST = 10;
-    private static final Integer NUMBER_OF_PERSONS_IN_BOTTOM_LIST = 10;
     private static final String ZONE_ID = "UTC";
 
     private ObservableList<ReadOnlyPerson> personList;
@@ -68,37 +64,6 @@ public class Statistics {
         });
 
         return countByMonth;
-    }
-
-    /**
-     * Fetches n people with the highest access count
-     *
-     * @return List of n most accesses
-     */
-    public List<ReadOnlyPerson> getAllTimeMostAccesses() {
-        ArrayList<ReadOnlyPerson> sortedByMostAccesses = new ArrayList<>(personList);
-        sortedByMostAccesses.sort(sortByGetAccessCount());
-
-        int startingIndex = Index.fromZeroBased(this.totalNumberOfPeople - NUMBER_OF_PERSONS_IN_TOP_LIST)
-                .getZeroBased();
-        int endingIndex = Index.fromOneBased(this.totalNumberOfPeople).getZeroBased();
-
-        return sortedByMostAccesses.subList(startingIndex, endingIndex);
-    }
-
-    /**
-     * Fetches n people with the lowest access count
-     *
-     * @return List of n least accesses
-     */
-    public List<ReadOnlyPerson> getAllTimeLeastAccesses() {
-        ArrayList<ReadOnlyPerson> sortedByMostAccesses = new ArrayList<>(personList);
-        sortedByMostAccesses.sort(sortByGetAccessCount());
-
-        int startingIndex = Index.fromZeroBased(0).getZeroBased();
-        int endingIndex = Index.fromOneBased(NUMBER_OF_PERSONS_IN_TOP_LIST).getZeroBased();
-
-        return sortedByMostAccesses.subList(startingIndex, endingIndex);
     }
 
     /**

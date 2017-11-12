@@ -5,9 +5,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+//@@author 500poundbear
 public class RemarkTest {
 
-    //@@author 500poundbear
     @Test
     public void equals() {
         Remark remark = new Remark("Hello");
