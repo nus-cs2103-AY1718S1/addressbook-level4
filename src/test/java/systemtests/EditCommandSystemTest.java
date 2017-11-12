@@ -74,6 +74,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void edit() throws Exception {
+        executeCommand("list");
         Model model = getModel();
 
         /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */

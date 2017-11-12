@@ -23,6 +23,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void findtag() {
+        executeCommand("list");
         /* Case: find 1 person in address book, command with leading spaces and trailing spaces
          * -> 1 person found
          */

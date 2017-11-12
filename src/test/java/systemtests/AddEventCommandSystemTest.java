@@ -33,9 +33,8 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void add() throws Exception {
-        /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
-         * -> added
-         */
+        Model model = getModel();
+        executeCommand("events");
         ReadOnlyEvent toAdd = EVENT_A;
         String command = " " + AddEventCommand.COMMAND_WORD + " " + EVENT_NAME_A_DESC + " "
                 + EVENT_DATE_A_DESC + " " + EVENT_ADDRESS_A_DESC + " ";
@@ -104,7 +103,6 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
         } catch (DuplicateEventException dee) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
-        executeCommand("events");
         executeCommand(command);
         assertEventDisplaysExpected("", expectedResultMessage);
         assertCommandBoxShowsDefaultStyle();
