@@ -34,6 +34,9 @@ import seedu.address.model.Model;
 public class OAuth extends Observable {
 
     private static final OAuth oauth = new OAuth();
+
+    private OAuth () { }
+
     private Model model;
 
     /**
@@ -66,10 +69,6 @@ public class OAuth extends Observable {
     private final JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
     private com.google.api.services.people.v1.PeopleService client;
-
-    protected void registerAsAnEventHandler(Object handler) {
-        EventsCenter.getInstance().registerHandler(handler);
-    }
 
     /** Authorizes the installed application to access user's protected data. */
     private Credential authorize() throws Exception {
@@ -123,14 +122,6 @@ public class OAuth extends Observable {
         return client;
 
 
-    }
-
-    public void setModel (Model newModel) {
-        model = newModel;
-    }
-
-    public Model getModel () {
-        return model;
     }
 
     public static OAuth getInstance () {
