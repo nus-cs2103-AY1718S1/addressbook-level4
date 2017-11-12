@@ -364,6 +364,8 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+---
+
 // tag::colortag[]
 === Persisting coloured tags
 
@@ -612,8 +614,9 @@ The function below is the code to create default values for empty fields.
 **Pros:** Allow user to add a person even without full details. +
 **Cons:** Nil.
 
----
 // end::add[]
+
+---
 
 // tag::birthday[]
 === Add person(s) Birthday
@@ -628,6 +631,8 @@ It is implemented to add birthday detail so that relevant to the user to identif
 
 //end::birthday[]
 
+---
+
 // tag::gmap[]
 === Google Map Mechanism
 
@@ -640,8 +645,6 @@ There are two ways the user can utilize the Google map feature, first by enterin
 The sequence diagram can be seen below:
 
 image::GmapSequenceDiagram.png[width="800"]
-
-
 
 The first way as you can see from the diagram, the user can input the command of `gmap` into `CommandBox` which will then have to go through command parser in the logic component before being raised in the events center. Doing so allows us to validate the requested index from user input before initializing a `GmapCommand` object.
 
@@ -690,6 +693,8 @@ Event object will then be handled by the UI Component's `BrowserPanel` and attem
 **Pros:** Allows much more flexibility and use directions, places and distance features. +
 **Cons:** Currently do not need all these extra features. Integrating external libraries induces unnecessary overhead and is hard for new developers to understand the code.
 // end::gmap[]
+
+---
 
 // tag::photo[]
 === Add photo to person(s)
