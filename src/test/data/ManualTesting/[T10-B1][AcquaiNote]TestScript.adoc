@@ -1,0 +1,33 @@
+= AcquaiNote - TestScript
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-T10-B1/main
+
+== Import data
+
+. Download the latest `AcquaiNote.jar` link:{repoURL}/releases[here].
+. Download the `SampleData.xml` link:{repoURL}/tree/master/src/test/data/ManualTesting[here].
+. Create a folder named `data` and put `SampleData.xml` inside.
+. Rename `SampleData.xml` to `acquainote.xml`.
+. Put `AcquaiNote.jar` and `data` folder at the same root directory.
+. Double click `AcquaiNote.jar` to start the application.
+. Adjust the window to your favorite size.
+
+== Test command: `Help`
+
+. Enter `help` to view User Guide (press F1 works also), you will see a popup help window.
+
+== Test command: `Add`
+
+. Enter `add n/Bob Ross p/91333462 e/ross@gmail.com a/US t/painter`
+
+

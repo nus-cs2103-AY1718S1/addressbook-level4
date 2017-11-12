@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Some Body</name>
+        <phone>98765432</phone>
+        <email>somebody@google.com</email>
+        <address>Some Street, 07-21</address>
+        <favourite>true</favourite>
+        <tagged>friends</tagged>
+        <xmlTodoItems>
+            <startTimeStr>01-11-2017 20:40</startTimeStr>
+            <endTimeStr></endTimeStr>
+            <task>Meeting</task>
+        </xmlTodoItems>
+        <xmlTodoItems>
+            <startTimeStr>01-01-2018 12:00</startTimeStr>
+            <endTimeStr></endTimeStr>
+            <task>Celebrate the New Year</task>
+        </xmlTodoItems>
+        <xmlTodoItems>
+            <startTimeStr>02-01-2018 14:00</startTimeStr>
+            <endTimeStr></endTimeStr>
+            <task>Meet him again</task>
+        </xmlTodoItems>
+        <xmlTodoItems>
+            <startTimeStr>03-01-2018 16:00</startTimeStr>
+            <endTimeStr></endTimeStr>
+            <task>Meet him for the third time</task>
+        </xmlTodoItems>
+    </persons>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <favourite>false</favourite>
+        <tagged>friends</tagged>
+        <xmlTodoItems>
+            <startTimeStr>01-12-2017 18:00</startTimeStr>
+            <endTimeStr></endTimeStr>
+            <task>Eating with Alex</task>
+        </xmlTodoItems>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <favourite>false</favourite>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bill Gates</name>
+        <phone>91333462</phone>
+        <email>Bill@outlook.com</email>
+        <address>US</address>
+        <favourite>false</favourite>
+        <xmlTodoItems>
+            <startTimeStr>02-01-2018 12:00</startTimeStr>
+            <endTimeStr></endTimeStr>
+            <task>Acquisition of Microsoft meeting</task>
+        </xmlTodoItems>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <favourite>false</favourite>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>Miss Zhang</name>
+        <phone>00000000</phone>
+        <email>zhang@nus.edu.sg</email>
+        <address>unknown</address>
+        <favourite>false</favourite>
+        <tagged>TA</tagged>
+        <xmlTodoItems>
+            <startTimeStr>18-11-2017 14:00</startTimeStr>
+            <endTimeStr></endTimeStr>
+            <task>Exam</task>
+        </xmlTodoItems>
+    </persons>
+    <persons>
+        <name>Darren Tan</name>
+        <phone>81112223</phone>
+        <email>darren@example.com</email>
+        <address>Melbourne</address>
+        <favourite>false</favourite>
+        <tagged>excolleague</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <favourite>false</favourite>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Hector Lim</name>
+        <phone>81637281</phone>
+        <email>hector@example.com</email>
+        <address>tampines</address>
+        <favourite>false</favourite>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <favourite>false</favourite>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>James Goh</name>
+        <phone>99221678</phone>
+        <email>james@example.com</email>
+        <address>Jurong</address>
+        <favourite>false</favourite>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Jessica Ng</name>
+        <phone>91822232</phone>
+        <email>jess@example.com</email>
+        <address>-</address>
+        <favourite>false</favourite>
+        <tagged>friend</tagged>
+        <tagged>colleague</tagged>
+    </persons>
+    <persons>
+        <name>Kimberly Chan</name>
+        <phone>-</phone>
+        <email>kim@example.com</email>
+        <address>-</address>
+        <favourite>false</favourite>
+        <tagged>boss</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <favourite>false</favourite>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Thomas Loh</name>
+        <phone>91827362</phone>
+        <email>thomas@example.com</email>
+        <address>Pasir Ris</address>
+        <favourite>false</favourite>
+        <tagged>professor</tagged>
+    </persons>
+    <persons>
+        <name>Tom Json</name>
+        <phone>66666666</phone>
+        <email>jsonstring@gmail.com</email>
+        <address>PGP</address>
+        <favourite>false</favourite>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Tom Robinsen</name>
+        <phone>66668888</phone>
+        <email>tom@outlook.com</email>
+        <address>Sichuan, China</address>
+        <favourite>false</favourite>
+        <tagged>boss</tagged>
+    </persons>
+    <persons>
+        <name>Wu Qihao</name>
+        <phone>12345678</phone>
+        <email>qihao@gmail.com</email>
+        <address>utown</address>
+        <favourite>false</favourite>
+        <tagged>teammates</tagged>
+    </persons>
+    <persons>
+        <name>Xiang Hailin</name>
+        <phone>93509250</phone>
+        <email>hailin@qq.com</email>
+        <address>PGP block5</address>
+        <favourite>false</favourite>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Aaron</name>
+        <phone>91606912</phone>
+        <email>aaron@outlook.com</email>
+        <address>Temasek Hall</address>
+        <favourite>false</favourite>
+        <tagged>teammates</tagged>
+    </persons>
+    <tags>boss</tags>
+    <tags>lecturer</tags>
+    <tags>neighbours</tags>
+    <tags>colleague</tags>
+    <tags>friends</tags>
+    <tags>teammates</tags>
+    <tags>professor</tags>
+    <tags>excolleague</tags>
+    <tags>colleagues</tags>
+    <tags>friend</tags>
+    <tags>classmates</tags>
+    <tags>family</tags>
+</addressbook>
