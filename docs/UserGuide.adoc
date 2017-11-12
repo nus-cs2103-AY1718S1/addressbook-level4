@@ -89,6 +89,8 @@ For the details of each command, you may refer to the link:#features[Features] s
 
 == Features
 
+To get a full understanding of the capabilities of your Rolodex, we recommend following this https://cs2103aug2017-w11-b2.github.io/TestScript[guide].
+
 ====
 *Command Format*
 
@@ -110,7 +112,7 @@ Press kbd:[Tab] after typing `add` to generate the required field(s). See link:#
 Alternatives: `add` can be replaced by `a` or `+` +
 Keyboard shortcut: kbd:[Ctrl+A]
 
-[TIP]
+[NOTE]
 A person can have any number of tags (including 0)
 
 Examples:
@@ -365,7 +367,11 @@ Keyboard Shortcut: kbd:[Ctrl+N]
 * The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
 ****
 
-[NOTE]
+After creating a new Rolodex, verify that you have correctly created the Rolodex at the correct directory by checking the status bar of your application:
+
+image::OpenNewStatusBar.png[width="700"]
+
+[WARNING]
 ====
 The `new` command will refresh your session and all existing _undoable_ commands will be cleared. It is recommended that you confirm you are satisfied with your changes before opening a new file.
 ====
@@ -398,12 +404,21 @@ Keyboard Shortcut: kbd:[Ctrl+O]
 * The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
 ****
 
-[NOTE]
+[TIP]
 ====
-Opening a file without a .rldx extension will not save your changes.
+When the application is opened, Rolodex will load the last accessed Rolodex directory.
 ====
 
-[NOTE]
+After opening the Rolodex, verify that you have correctly opened the Rolodex at the correct directory by checking the status bar of your application:
+
+image::OpenNewStatusBar.png[width="700"]
+
+[IMPORTANT]
+====
+Opening a file without a `.rldx` extension **will not save your changes**.
+====
+
+[WARNING]
 ====
 The `open` command will refresh your session and all existing _undoable_ commands will be cleared. It is recommended that you confirm you are satisfied with your changes before opening a new file.
 ====

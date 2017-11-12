@@ -165,6 +165,51 @@ public class InvalidExtensionException extends IOException {
 ``` java
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "d", "-"));
+    public static final String COMMAND_HOTKEY = "Ctrl+D";
+    public static final String COMMAND_HOTKEY_ALTERNATIVE = "Ctrl+Minus";
+    public static final String FORMAT = "delete INDEX";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes the person identified by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+
+    private final Index targetIndex;
+
+    public DeleteCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getLatestPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        try {
+            model.deletePerson(personToDelete);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+        }
+
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteCommand // instanceof handles nulls
+                && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+    }
+}
 ```
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
@@ -259,21 +304,22 @@ public class InvalidExtensionException extends IOException {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 ```
-###### \java\seedu\address\logic\commands\NewCommand.java
+###### \java\seedu\address\logic\commands\NewRolodexCommand.java
 ``` java
 /**
  * Creates a new Rolodex at a specified directory.
  */
-public class NewCommand extends Command {
+public class NewRolodexCommand extends Command {
 
     public static final String COMMAND_WORD = "new";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "n", ">", "touch"));
     public static final String COMMAND_HOTKEY = "Ctrl+N";
+    public static final String FORMAT = "new FILEPATH";
 
     public static final String MESSAGE_CREATING = "Creating new file: `%1$s`";
     public static final String MESSAGE_ALREADY_EXISTS = "`%1$s` already exists. "
-            + "Use the `" + OpenCommand.COMMAND_WORD + "` command for opening an existing file.";
+            + "Use the `" + OpenRolodexCommand.COMMAND_WORD + "` command for opening an existing file.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": "
             + "Creates a new Rolodex file at the specified destination and "
             + "reloads the application using the rolodex supplied at the given file path.\n"
@@ -282,7 +328,7 @@ public class NewCommand extends Command {
 
     private final String filePath;
 
-    public NewCommand(String filePath) {
+    public NewRolodexCommand(String filePath) {
         this.filePath = filePath;
     }
 
@@ -299,26 +345,27 @@ public class NewCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NewCommand // instanceof handles nulls
-                && this.filePath.equals(((NewCommand) other).filePath)); // state check
+                || (other instanceof NewRolodexCommand // instanceof handles nulls
+                && this.filePath.equals(((NewRolodexCommand) other).filePath)); // state check
     }
 }
 ```
-###### \java\seedu\address\logic\commands\OpenCommand.java
+###### \java\seedu\address\logic\commands\OpenRolodexCommand.java
 ``` java
 /**
  * Opens an existing Rolodex in a different directory.
  */
-public class OpenCommand extends Command {
+public class OpenRolodexCommand extends Command {
 
     public static final String COMMAND_WORD = "open";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "o", "cd", "ls", "<"));
     public static final String COMMAND_HOTKEY = "Ctrl+O";
+    public static final String FORMAT = "open FILEPATH";
 
     public static final String MESSAGE_OPENING = "Opening file: `%1$s`";
     public static final String MESSAGE_NOT_EXIST = "Unable to find `%1$s`. "
-            + "Use the `" + NewCommand.COMMAND_WORD + "` command for creating a new file.";
+            + "Use the `" + NewRolodexCommand.COMMAND_WORD + "` command for creating a new file.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": "
             + "Reloads the application using the rolodex supplied at the given file path.\n"
             + "Parameters: [FILEPATH]\n"
@@ -326,7 +373,7 @@ public class OpenCommand extends Command {
 
     private final String filePath;
 
-    public OpenCommand(String filePath) {
+    public OpenRolodexCommand(String filePath) {
         this.filePath = filePath;
     }
 
@@ -343,8 +390,8 @@ public class OpenCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof OpenCommand // instanceof handles nulls
-                && this.filePath.equals(((OpenCommand) other).filePath)); // state check
+                || (other instanceof OpenRolodexCommand // instanceof handles nulls
+                && this.filePath.equals(((OpenRolodexCommand) other).filePath)); // state check
     }
 }
 ```
@@ -390,7 +437,7 @@ public class Suggestion {
 
     public static final String COMMAND_WORD = "y";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
-            new HashSet<>(Arrays.asList(COMMAND_WORD, "yes", "ok", "yea", "yeah"));
+            new HashSet<>(Arrays.asList(COMMAND_WORD, "yes", "k", "ok", "yea", "yeah"));
 
     private static final int COMMAND_TYPO_TOLERANCE = 3;
 
@@ -435,11 +482,15 @@ public class Suggestion {
     public String getFormattedArgs(String closestCommand) {
         // Custom parser for AddCommand.
         if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // TODO: v1.5 try to match arguments with ALL person models, otherwise return null
+            return AddCommandParser.parseArguments(arguments);
 
         // Custom parser for EditCommand.
         } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            // TODO: v1.5 try to match arguments with SOME person models, otherwise return null
+            return EditCommandParser.parseArguments(commandWord, arguments);
+
+        // Custom parser for EmailCommand.
+        } else if (EmailCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            return EmailCommandParser.parseArguments(commandWord, arguments);
 
         // Custom parser for RemarkCommand.
         } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
@@ -450,19 +501,19 @@ public class Suggestion {
             return FindCommandParser.parseArguments(arguments);
 
         // Commands with directory-type arguments.
-        } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
-                || NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            if (tryParseFilePath(arguments)) {
+        } else if (OpenRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
+                || NewRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            if (isParsableFilePath(arguments)) {
                 return " " + parseFirstFilePath(arguments);
             }
 
         // Commands with simple index-type arguments.
         } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
                 || DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
-            if (tryParseInt(arguments)) {
-                return " " + Integer.toString(parseFirstInt(arguments));
-            } else if (tryParseInt(commandWord)) {
-                return " " + Integer.toString(parseFirstInt(commandWord));
+            if (isParsableIndex(arguments, getLastRolodexSize())) {
+                return " " + Integer.toString(parseFirstIndex(arguments, getLastRolodexSize()));
+            } else if (isParsableIndex(commandWord, getLastRolodexSize())) {
+                return " " + Integer.toString(parseFirstIndex(commandWord, getLastRolodexSize()));
             }
 
         // Commands with no arguments.
@@ -476,24 +527,6 @@ public class Suggestion {
             return "";
         }
         return null;
-    }
-
-    private String setToAmerican(String input) {
-        String output = input;
-        JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
-        try {
-            List<RuleMatch> matches = langTool.check(output);
-            while (!matches.isEmpty()) {
-                RuleMatch match = matches.iterator().next();
-                output = output.substring(0, match.getFromPos())
-                        + match.getSuggestedReplacements().iterator().next()
-                        + output.substring(match.getToPos());
-                matches = langTool.check(output);
-            }
-        } catch (IOException e) {
-            return null;
-        }
-        return output;
     }
 
     /**
@@ -552,8 +585,100 @@ public class Suggestion {
     }
 
     @Override
+    public UndoRedoStack getUndoRedoStack() {
+        return undoRedoStack;
+    }
+
+    @Override
+    public void clearUndoRedoStack() {
+        undoRedoStack.clear();
+    }
+
+    @Override
     public ObservableList<ReadOnlyPerson> getLatestPersonList() {
         return model.getLatestPersonList();
+    }
+```
+###### \java\seedu\address\logic\parser\AddCommandParser.java
+``` java
+    /**
+     * Returns a formatted argument string given unformatted {@code rawArgs}
+     * or a {@code null} {@code String} if not formattable.
+     * Uses a simple flow by checking the {@code Model}'s data in the following order:
+     * 1. {@code Phone} (mandatory)
+     * 2. {@code Email} (mandatory)
+     * 3. Existing {@code Tags} (optional)
+     * 4. {@code Tags} prefixes (optional)
+     * 5. {@code Remark} prefixes (optional)
+     * 6. {@code Address} (mandatory)
+     * 7. {@code Name} (remaining)
+     */
+    public static String parseArguments(String rawArgs) {
+        String remaining = rawArgs;
+
+        // Check for Mandatory Phone
+        String phone;
+        Optional<Pair<String, String>> mandatoryPhone = parseMandatoryPhone(remaining);
+        if (mandatoryPhone.isPresent()) {
+            phone = mandatoryPhone.get().getKey();
+            remaining = mandatoryPhone.get().getValue();
+        } else {
+            return null;
+        }
+
+        // Check for Mandatory Email
+        String email;
+        Optional<Pair<String, String>> mandatoryEmail = parseMandatoryEmail(remaining);
+        if (mandatoryEmail.isPresent()) {
+            email = mandatoryEmail.get().getKey();
+            remaining = mandatoryEmail.get().getValue();
+        } else {
+            return null;
+        }
+
+        // Check for possible existing Tags without prefixes
+        StringBuilder tags = new StringBuilder();
+        Optional<Pair<String, String>> optionalPossibleTags = parsePossibleTagWords(remaining);
+        if (optionalPossibleTags.isPresent()) {
+            tags.append(optionalPossibleTags.get().getKey());
+            remaining = optionalPossibleTags.get().getValue();
+        }
+
+        // Check for existing tag prefix using tokenizer
+        Optional<Pair<String, String>> optionalExistingTags = parseExistingTagPrefixes(remaining);
+        if (optionalExistingTags.isPresent()) {
+            tags.append(optionalExistingTags.get().getKey());
+            remaining = optionalExistingTags.get().getValue();
+        }
+
+        // Check for existing remark prefix using tokenizer
+        String remark = "";
+        Optional<Pair<String, String>> optionalExistingRemarks = parseExistingRemarkPrefixes(remaining);
+        if (optionalExistingRemarks.isPresent()) {
+            remark = optionalExistingRemarks.get().getKey();
+            remaining = optionalExistingRemarks.get().getValue();
+        }
+
+        // Check for Address till end of remainder string
+        String address;
+        Optional<Pair<String, String>> mandatoryAddress = parseMandatoryAddress(remaining);
+        if (mandatoryAddress.isPresent()) {
+            address = mandatoryAddress.get().getKey();
+            remaining = mandatoryAddress.get().getValue();
+        } else {
+            return null;
+        }
+
+        // Check for alphanumeric Name in remainder string
+        String name;
+        Optional<String> mandatoryName = parseMandatoryName(remaining);
+        if (mandatoryName.isPresent()) {
+            name = mandatoryName.get();
+        } else {
+            return null;
+        }
+
+        return buildParsedArguments(name, phone, email, remark, address, tags.toString());
     }
 ```
 ###### \java\seedu\address\logic\parser\CliSyntax.java
@@ -632,18 +757,139 @@ public class Suggestion {
         .addAll(ClearCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(DeleteCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(EditCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(EmailCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(ExitCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(FindCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(HelpCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(HistoryCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(ListCommand.COMMAND_WORD_ABBREVIATIONS)
-        .addAll(NewCommand.COMMAND_WORD_ABBREVIATIONS)
-        .addAll(OpenCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(NewRolodexCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(OpenRolodexCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(RedoCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(RemarkCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(SelectCommand.COMMAND_WORD_ABBREVIATIONS)
         .addAll(UndoCommand.COMMAND_WORD_ABBREVIATIONS)
         .build();
+```
+###### \java\seedu\address\logic\parser\EditCommandParser.java
+``` java
+    /**
+     * Returns a formatted argument string given unformatted {@code rawArgs}
+     * or a {@code null} {@code String} if not formattable.
+     * Uses a simple flow by checking the {@code Model}'s data in the following order:
+     * 1. Index of person (mandatory)
+     * 2. {@code Phone} (optional)
+     * 3. {@code Email} (optional)
+     * 4. Existing {@code Tags} (optional)
+     * 5. {@code Tags} prefixes (optional)
+     * 6. {@code Remark} prefixes (optional)
+     * 7. {@code Address} (optional)
+     * 8. {@code Name} (remaining)
+     */
+    public static String parseArguments(String commandWord, String rawArgs) {
+        String remaining = rawArgs;
+
+        // Check for Mandatory Index
+        String index = "";
+        Optional<Pair<String, String>> mandatoryIndexArgs = parseMandatoryIndex(remaining, getLastRolodexSize());
+        Optional<Pair<String, String>> mandatoryIndexCommand = parseMandatoryIndex(commandWord, getLastRolodexSize());
+        if (mandatoryIndexArgs.isPresent()) {
+            index = mandatoryIndexArgs.get().getKey();
+            remaining = mandatoryIndexArgs.get().getValue();
+        } else if (mandatoryIndexCommand.isPresent()) {
+            index = mandatoryIndexCommand.get().getKey();
+        } else {
+            return null;
+        }
+
+        // Check for Optional Phone
+        String phone = "";
+        Optional<Pair<String, String>> mandatoryPhone = parseMandatoryPhone(remaining);
+        if (mandatoryPhone.isPresent()) {
+            phone = mandatoryPhone.get().getKey();
+            remaining = mandatoryPhone.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_PHONE.toString(), "");
+        }
+
+        // Check for Optional Email
+        String email = "";
+        Optional<Pair<String, String>> mandatoryEmail = parseMandatoryEmail(remaining);
+        if (mandatoryEmail.isPresent()) {
+            email = mandatoryEmail.get().getKey();
+            remaining = mandatoryEmail.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_EMAIL.toString(), "");
+        }
+
+        // Check for possible existing Tags without prefixes
+        StringBuilder tags = new StringBuilder();
+        Optional<Pair<String, String>> optionalPossibleTags = parsePossibleTagWords(remaining);
+        if (optionalPossibleTags.isPresent()) {
+            tags.append(optionalPossibleTags.get().getKey());
+            remaining = optionalPossibleTags.get().getValue();
+        }
+
+        // Check for existing tag prefix using tokenizer
+        Optional<Pair<String, String>> optionalExistingTags = parseExistingTagPrefixes(remaining);
+        if (optionalExistingTags.isPresent()) {
+            tags.append(optionalExistingTags.get().getKey());
+            remaining = optionalExistingTags.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_TAG.toString(), "");
+        }
+
+        // Check for existing remark prefix using tokenizer
+        String remark = "";
+        Optional<Pair<String, String>> optionalExistingRemarks = parseExistingRemarkPrefixes(remaining);
+        if (optionalExistingRemarks.isPresent()) {
+            remark = optionalExistingRemarks.get().getKey();
+            remaining = optionalExistingRemarks.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_REMARK.toString(), "");
+        }
+
+        // Check for Optional Address till end of remainder string
+        String address = "";
+        Optional<Pair<String, String>> mandatoryAddress = parseMandatoryAddress(remaining);
+        if (mandatoryAddress.isPresent()) {
+            address = mandatoryAddress.get().getKey();
+            remaining = mandatoryAddress.get().getValue();
+        } else {
+            remaining = remaining.replaceAll(PREFIX_ADDRESS.toString(), "");
+        }
+
+        // Check for alphanumeric Name in remainder string
+        String name = "";
+        Optional<String> mandatoryName = parseMandatoryName(remaining);
+        if (mandatoryName.isPresent()) {
+            name = mandatoryName.get();
+        }
+
+        return buildParsedArguments(index, name, phone, email, remark, address, tags.toString());
+    }
+```
+###### \java\seedu\address\logic\parser\EmailCommandParser.java
+``` java
+    /**
+     * Returns a formatted argument string given unformatted
+     * {@code commandWord} and {@code rawArgs}
+     * or a {@code null} {@code String} if not formattable.
+     */
+    public static String parseArguments(String commandWord, String rawArgs) {
+        // Check if index (number) exists, removes Email prefix (if it exists) and re-adds it before returning.
+        if (isParsableIndex(rawArgs, getLastRolodexSize())) {
+            String indexString = Integer.toString(parseFirstIndex(rawArgs, getLastRolodexSize()));
+            String subject = parseRemoveFirstIndex(rawArgs, getLastRolodexSize())
+                    .trim().replace(PREFIX_SUBJECT.toString(), "");
+            return " " + indexString + " " + PREFIX_SUBJECT + subject;
+        } else if (isParsableIndex(commandWord, getLastRolodexSize())) {
+            String indexString = Integer.toString(parseFirstIndex(commandWord, getLastRolodexSize()));
+            String subject = rawArgs.trim().replace(PREFIX_SUBJECT.toString(), "");
+            return " " + indexString + " " + PREFIX_SUBJECT + subject;
+        }
+        return null;
+    }
 ```
 ###### \java\seedu\address\logic\parser\exceptions\ParseArgsException.java
 ``` java
@@ -683,8 +929,8 @@ public class SuggestibleParseException extends IllegalValueException {
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format.
-     * @throws ParseArgsException if the user input does not conform the expected format but can be suggested to.
+     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseArgsException if the user input does not conform the expected format, but is in a suggestible format
      */
     public FindCommand parse(String args) throws ParseException, ParseArgsException {
         String trimmedArgs = args.trim();
@@ -729,9 +975,9 @@ public class ListCommandParser implements Parser<ListCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the ListCommand
      * and returns a ListCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseArgsException if the user input does not conform the expected format
      */
-    public ListCommand parse(String args) throws ParseException {
+    public ListCommand parse(String args) throws ParseArgsException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             return new ListCommand(null);
@@ -744,7 +990,7 @@ public class ListCommandParser implements Parser<ListCommand> {
         setupArguments(keywords, dataKeywords, sortArgumentList, ListCommand.MESSAGE_USAGE);
 
         if (!dataKeywords.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+            throw new ParseArgsException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
 
         return new ListCommand(sortArgumentList);
@@ -752,65 +998,249 @@ public class ListCommandParser implements Parser<ListCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\NewCommandParser.java
+###### \java\seedu\address\logic\parser\ModelParserUtil.java
 ``` java
 /**
- * Parses input arguments and creates a new NewCommand object
+ * Utility methods for parsing unformatted model data for command execution.
  */
-public class NewCommandParser implements Parser<NewCommand> {
-    @Override
-    public NewCommand parse(String args) throws ParseException {
-        String trimmedAndFormattedArgs = args.trim().replace("\\", "/");
-        if (trimmedAndFormattedArgs.isEmpty()
-                || !isValidRolodexStorageFilepath(trimmedAndFormattedArgs)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NewCommand.MESSAGE_USAGE));
-        }
-        if (!isValidRolodexStorageExtension(trimmedAndFormattedArgs)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_EXTENSION_FORMAT, ROLODEX_FILE_EXTENSION));
-        }
+public class ModelParserUtil {
 
-        return new NewCommand(trimmedAndFormattedArgs);
+    /**
+     * Returns an optional index string after parsing a mandatory index.
+     */
+    public static Optional<Pair<String, String>> parseMandatoryIndex(String indexString, int size) {
+        if (isParsableIndex(indexString, size)) {
+            String index = Integer.toString(parseFirstIndex(indexString, size));
+            return Optional.of(new Pair<>(index, parseRemoveFirstIndex(indexString, size).trim()));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional pair of phone string and the remaining string after parsing a mandatory phone.
+     */
+    public static Optional<Pair<String, String>> parseMandatoryPhone(String remaining) {
+        if (isParsablePhone(remaining)) {
+            return Optional.of(new Pair<>(parseFirstPhone(remaining),
+                    parseRemoveFirstPhone(remaining).trim().replaceAll(PREFIX_PHONE.toString(), "")));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional pair of email string and the remaining string after parsing a mandatory email.
+     */
+    public static Optional<Pair<String, String>> parseMandatoryEmail(String remaining) {
+        if (isParsableEmail(remaining)) {
+            return Optional.of(new Pair<>(parseFirstEmail(remaining),
+                    parseRemoveFirstEmail(remaining).trim().replaceAll(PREFIX_EMAIL.toString(), "")));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional pair of a string that could contain tags and the remaining string after parsing the possible.
+     */
+    public static Optional<Pair<String, String>> parsePossibleTagWords(String remaining) {
+        StringBuilder tagBuilder = new StringBuilder();
+        String[] words = remaining.split(" ");
+        if (hasAnyExistingTags(words)) {
+            List<String> tagsAdded = new ArrayList<>();
+            Arrays.stream(words).forEach(word -> {
+                if (isKnownTag(word) && !tagsAdded.contains(word)) {
+                    tagBuilder.append(" " + PREFIX_TAG + word.trim());
+                    tagsAdded.add(word);
+                }
+            });
+            return Optional.of(new Pair<>(tagBuilder.toString(), parseRemoveTags(remaining, tagsAdded)));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional pair of a string that contains tag prefixes and
+     * the remaining string after parsing the remaining.
+     */
+    public static Optional<Pair<String, String>> parseExistingTagPrefixes(String remaining) {
+        StringBuilder tagBuilder = new StringBuilder();
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                remaining, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK, PREFIX_TAG);
+        if (arePrefixesPresent(argMultimap, PREFIX_TAG) && argMultimap.getValue(PREFIX_TAG).isPresent()) {
+            List<String> tagsAdded = new ArrayList<>();
+            argMultimap.getAllValues(PREFIX_TAG).stream().forEach(rawTag -> {
+                String parsedTag = rawTag.replaceAll(TAG_REPLACEMENT_REGEX, "");
+                tagBuilder.append(" " + PREFIX_TAG + parsedTag);
+                tagsAdded.add(PREFIX_TAG + rawTag);
+            });
+            return Optional.of(new Pair<>(tagBuilder.toString(), parseRemoveTags(remaining, tagsAdded)));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional pair of a string that contains remark prefixes and
+     * the remaining string after parsing the remaining.
+     */
+    public static Optional<Pair<String, String>> parseExistingRemarkPrefixes(String remaining) {
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                remaining, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK, PREFIX_TAG);
+        if (arePrefixesPresent(argMultimap, PREFIX_REMARK) && argMultimap.getValue(PREFIX_REMARK).isPresent()) {
+            String remark = argMultimap.getValue(PREFIX_REMARK).get();
+            return Optional.of(new Pair<>(remark,
+                    remaining.replace(PREFIX_REMARK.toString().concat(remark), "").trim()));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional pair of address string and the remaining string after parsing a mandatory address.
+     */
+    public static Optional<Pair<String, String>> parseMandatoryAddress(String remaining) {
+        if (isParsableAddressTillEnd(remaining)) {
+            return Optional.of(new Pair<>(parseAddressTillEnd(remaining),
+                    parseRemoveAddressTillEnd(remaining).trim().replaceAll(PREFIX_ADDRESS.toString(), "")));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns an optional name string after parsing a mandatory name.
+     */
+    public static Optional<String> parseMandatoryName(String remaining) {
+        if (isParsableName(remaining)) {
+            return Optional.of(parseRemainingName(remaining));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Returns a parsed argument string containing pre-parsed arguments.
+     */
+    public static String buildParsedArguments(String name, String phone, String email,
+                                              String remark, String address, String tags) {
+        return buildParsedArguments("", name, phone, email, remark, address, tags);
+    }
+
+    /**
+     * Returns a parsed argument string containing pre-parsed arguments or null if there are no supplied values.
+     */
+    public static String buildParsedArguments(String index, String name, String phone, String email,
+                                               String remark, String address, String tags) {
+        if (name.trim().isEmpty() && phone.trim().isEmpty() && email.trim().isEmpty()
+                && remark.trim().isEmpty() && address.trim().isEmpty() && tags.trim().isEmpty()) {
+            return null;
+        }
+        StringBuilder parsedArgs = new StringBuilder();
+        if (!index.trim().isEmpty()) {
+            parsedArgs.append(" ".concat(index));
+        }
+        if (!name.trim().isEmpty()) {
+            parsedArgs.append(" ".concat(PREFIX_NAME.toString()).concat(name));
+        }
+        if (!phone.trim().isEmpty()) {
+            parsedArgs.append(" ".concat(PREFIX_PHONE.toString()).concat(phone));
+        }
+        if (!email.trim().isEmpty()) {
+            parsedArgs.append(" ".concat(PREFIX_EMAIL.toString()).concat(email));
+        }
+        if (!remark.trim().isEmpty()) {
+            parsedArgs.append(" ".concat(PREFIX_REMARK.toString()).concat(remark));
+        }
+        if (!address.isEmpty()) {
+            parsedArgs.append(" ".concat(PREFIX_ADDRESS.toString()).concat(address));
+        }
+        if (!tags.trim().isEmpty()) {
+            parsedArgs.append(tags);
+        }
+        return parsedArgs.toString();
     }
 }
 ```
-###### \java\seedu\address\logic\parser\OpenCommandParser.java
+###### \java\seedu\address\logic\parser\NewRolodexCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new OpenCommand object
+ * Parses input arguments and creates a new NewRolodexCommand object
  */
-public class OpenCommandParser implements Parser<OpenCommand> {
+public class NewRolodexCommandParser implements Parser<NewRolodexCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the OpenCommand
-     * and returns a OpenCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the NewRolodexCommand
+     * and returns a NewRolodexCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseArgsException if the user input does not conform the expected format, but is in a suggestible format
      */
-    public OpenCommand parse(String args) throws ParseException {
+    @Override
+    public NewRolodexCommand parse(String args) throws ParseArgsException, ParseException {
         String trimmedAndFormattedArgs = replaceBackslashes(args.trim());
         if (trimmedAndFormattedArgs.isEmpty()
                 || !isValidRolodexStorageFilepath(trimmedAndFormattedArgs)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NewRolodexCommand.MESSAGE_USAGE));
+        }
+        if (!isValidRolodexStorageExtension(trimmedAndFormattedArgs)) {
+            throw new ParseArgsException(String.format(MESSAGE_INVALID_EXTENSION_FORMAT, ROLODEX_FILE_EXTENSION));
         }
 
-        return new OpenCommand(trimmedAndFormattedArgs);
+        return new NewRolodexCommand(trimmedAndFormattedArgs);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\OpenRolodexCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new OpenRolodexCommand object
+ */
+public class OpenRolodexCommandParser implements Parser<OpenRolodexCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the OpenRolodexCommand
+     * and returns a OpenRolodexCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseArgsException if the user input does not conform the expected format, but is in a suggestible format
+     */
+    public OpenRolodexCommand parse(String args) throws ParseArgsException, ParseException {
+        String trimmedAndFormattedArgs = replaceBackslashes(args.trim());
+        if (trimmedAndFormattedArgs.isEmpty()
+                || !isValidRolodexStorageFilepath(trimmedAndFormattedArgs)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenRolodexCommand.MESSAGE_USAGE));
+        }
+        if (!isValidRolodexStorageExtension(trimmedAndFormattedArgs)) {
+            throw new ParseArgsException(String.format(MESSAGE_INVALID_EXTENSION_FORMAT, ROLODEX_FILE_EXTENSION));
+        }
+
+        return new OpenRolodexCommand(trimmedAndFormattedArgs);
     }
 }
 ```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
+     * Attempts to parse a {@code String} to an {@code Integer}.
+     * Looks for numbers given a value and parses the first instance of the number.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean isParsableIndex(String value, int rolodexSize) {
+        try {
+            parseFirstIndex(value, rolodexSize);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
      * Returns the first integer found in a {@code String}.
      * @param value to be parsed.
      * @return {@code int} positive, non-zero value of the integer.
      * @throws NumberFormatException if no integer was found.
      */
-    public static int parseFirstInt(String value) throws NumberFormatException {
-        Pattern numbers = Pattern.compile("-?\\d+");
-        Matcher m = numbers.matcher(value);
-        if (m.find()) {
-            int firstInt = Integer.parseInt(m.group());
-            if (firstInt != 0) {
-                return Math.abs(firstInt);
+    public static int parseFirstIndex(String value, int rolodexSize) throws NumberFormatException {
+        Matcher m = Pattern.compile(INDEX_VALIDATION_REGEX).matcher(value);
+        while (m.find()) {
+            int firstIndex = Math.abs(Integer.parseInt(m.group()));
+            if (firstIndex > 0 && firstIndex <= rolodexSize) {
+                return firstIndex;
             }
         }
         throw new NumberFormatException();
@@ -821,16 +1251,56 @@ public class OpenCommandParser implements Parser<OpenCommand> {
      * @param value to be parsed.
      * @return a {@code String} without the first integer.
      */
-    public static String parseRemoveFirstInt(String value) {
-        String firstInt;
+    public static String parseRemoveFirstIndex(String value, int rolodexSize) {
+        String firstIndex;
         try {
-            firstInt = Integer.toString(parseFirstInt(value));
+            firstIndex = Integer.toString(parseFirstIndex(value, rolodexSize));
         } catch (NumberFormatException e) {
-            firstInt = "";
+            firstIndex = "";
         }
-        return value.substring(0, value.indexOf(firstInt)).trim()
+        int startPosition = value.indexOf(firstIndex);
+        if (startPosition > 0 && value.charAt(startPosition - 1) == '-') {
+            startPosition = startPosition - 1;
+            firstIndex = "-" + firstIndex;
+        }
+        return value.substring(0, startPosition).trim()
                 .concat(" ")
-                .concat(value.substring(value.indexOf(firstInt) + firstInt.length()).trim()).trim();
+                .concat(value.substring(startPosition + firstIndex.length()).trim()).trim();
+    }
+
+    /**
+     * Attempts to parse a {@code String} to an {@code Name}.
+     * Uses the {@code parseName} method directly and assert if the {@code String} is parsable.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean isParsableName(String value) {
+        try {
+            Optional possible = parseName(Optional.of(parseRemainingName(value)));
+            return possible.isPresent() && possible.get() instanceof Name;
+        } catch (IllegalValueException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns a parsed {@code String} name from
+     * the remaining {@code String} value.
+     */
+    public static String parseRemainingName(String value) throws IllegalArgumentException {
+        Matcher m = Pattern.compile(PREFIX_NAME.toString()).matcher(value);
+        String nonEmptyName;
+        if (m.find()) {
+            nonEmptyName = value.substring(value.indexOf(m.group()) + PREFIX_NAME.toString().length())
+                    .replaceAll(NAME_REPLACEMENT_REGEX, "").trim();
+        } else {
+            nonEmptyName = value.replaceAll(NAME_REPLACEMENT_REGEX, "").trim();
+        }
+        if (nonEmptyName.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return nonEmptyName;
     }
 
     /**
@@ -840,10 +1310,10 @@ public class OpenCommandParser implements Parser<OpenCommand> {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean tryParseFilePath(String value) {
+    public static boolean isParsableFilePath(String value) {
         try {
-            parseFirstFilePath(value);
-            return true;
+            String tryFilepath = parseFirstFilePath(value);
+            return isValidRolodexStorageFilepath(tryFilepath);
         } catch (IllegalArgumentException e) {
             return false;
         }
@@ -856,8 +1326,7 @@ public class OpenCommandParser implements Parser<OpenCommand> {
      * @throws IllegalArgumentException if no file path was found.
      */
     public static String parseFirstFilePath(String value) throws IllegalArgumentException {
-        Pattern filepath = Pattern.compile(FILEPATH_REGEX_NON_STRICT);
-        Matcher m = filepath.matcher(replaceBackslashes(value).trim());
+        Matcher m = Pattern.compile(FILEPATH_REGEX_NON_STRICT).matcher(replaceBackslashes(value).trim());
         if (m.find() && isValidRolodexStorageFilepath(m.group())) {
             return m.group().replaceAll(ROLODEX_FILE_EXTENSION, "").trim() + ROLODEX_FILE_EXTENSION;
         }
@@ -871,11 +1340,11 @@ public class OpenCommandParser implements Parser<OpenCommand> {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean tryParsePhone(String value) {
+    public static boolean isParsablePhone(String value) {
         try {
-            parseFirstPhone(value);
-            return true;
-        } catch (IllegalArgumentException e) {
+            Optional possible = parsePhone(Optional.of(parseFirstPhone(value)));
+            return possible.isPresent() && possible.get() instanceof Phone;
+        } catch (IllegalArgumentException | IllegalValueException e) {
             return false;
         }
     }
@@ -887,8 +1356,7 @@ public class OpenCommandParser implements Parser<OpenCommand> {
      * @throws IllegalArgumentException if no phone was found.
      */
     public static String parseFirstPhone(String value) throws IllegalArgumentException {
-        Pattern phone = Pattern.compile(PHONE_VALIDATION_REGEX);
-        Matcher m = phone.matcher(value);
+        Matcher m = Pattern.compile(PHONE_VALIDATION_REGEX).matcher(value);
         if (m.find()) {
             return m.group();
         }
@@ -907,7 +1375,7 @@ public class OpenCommandParser implements Parser<OpenCommand> {
         } catch (IllegalArgumentException e) {
             firstPhone = "";
         }
-        return value.substring(0, value.indexOf(firstPhone)).trim()
+        return value.substring(0, value.indexOf(firstPhone)).replace(PREFIX_PHONE.toString(), "").trim()
                 .concat(" ")
                 .concat(value.substring(value.indexOf(firstPhone) + firstPhone.length()).trim()).trim();
     }
@@ -919,11 +1387,11 @@ public class OpenCommandParser implements Parser<OpenCommand> {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean tryParseEmail(String value) {
+    public static boolean isParsableEmail(String value) {
         try {
-            parseFirstEmail(value);
-            return true;
-        } catch (IllegalArgumentException e) {
+            Optional possible = parseEmail(Optional.of(parseFirstEmail(value)));
+            return possible.isPresent() && possible.get() instanceof Email;
+        } catch (IllegalArgumentException | IllegalValueException e) {
             return false;
         }
     }
@@ -935,8 +1403,7 @@ public class OpenCommandParser implements Parser<OpenCommand> {
      * @throws IllegalArgumentException if no email was found.
      */
     public static String parseFirstEmail(String value) throws IllegalArgumentException {
-        Pattern email = Pattern.compile(EMAIL_VALIDATION_REGEX);
-        Matcher m = email.matcher(value);
+        Matcher m = Pattern.compile(EMAIL_VALIDATION_REGEX).matcher(value);
         if (m.find()) {
             return m.group();
         }
@@ -955,9 +1422,73 @@ public class OpenCommandParser implements Parser<OpenCommand> {
         } catch (IllegalArgumentException e) {
             firstEmail = "";
         }
-        return value.substring(0, value.indexOf(firstEmail)).trim()
+        return value.substring(0, value.indexOf(firstEmail)).replace(PREFIX_EMAIL.toString(), "").trim()
                 .concat(" ")
                 .concat(value.substring(value.indexOf(firstEmail) + firstEmail.length()).trim()).trim();
+    }
+
+    /**
+     * Returns a {@code String} after the tags have been removed.
+     * @param value to be parsed.
+     * @param tags that were added.
+     * @return a {@code String} without the tags.
+     */
+    public static String parseRemoveTags(String value, List<String> tags) {
+        String tagString = value;
+        for (String tag : tags) {
+            tagString = tagString.substring(0, tagString.indexOf(tag)).trim()
+                    .concat(" ")
+                    .concat(tagString.substring(tagString.indexOf(tag) + tag.length()).trim()).trim();
+        }
+        return tagString;
+    }
+
+    /**
+     * Attempts to parse a {@code String} to an address.
+     * Looks for a regex given a value and parses the address, until the end of the string.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean isParsableAddressTillEnd(String value) {
+        try {
+            Optional possible = parseAddress(Optional.of(parseAddressTillEnd(value)));
+            return possible.isPresent() && possible.get() instanceof Address;
+        } catch (IllegalArgumentException | IllegalValueException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the address found in a {@code String}, until the end of the String.
+     * @param value to be parsed.
+     * @return {@code String} value of the address.
+     * @throws IllegalArgumentException if no file path was found.
+     */
+    public static String parseAddressTillEnd(String value) throws IllegalArgumentException {
+        Matcher m = Pattern.compile(PREFIX_ADDRESS.toString()).matcher(value);
+        if (m.find()) {
+            return value.substring(value.indexOf(m.group()) + PREFIX_ADDRESS.toString().length()).trim();
+        }
+        m = Pattern.compile(ADDRESS_BLOCK_WORD_MATCHING_REGEX).matcher(value);
+        if (m.find()) {
+            return value.substring(value.indexOf(m.group())).trim();
+        }
+        m = Pattern.compile(ADDRESS_BLOCK_MATCHING_REGEX).matcher(value);
+        if (m.find()) {
+            return value.substring(value.indexOf(m.group())).trim();
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * Returns a {@code String} after the address has been removed.
+     * @param value to be parsed.
+     * @return a {@code String} without the address.
+     */
+    public static String parseRemoveAddressTillEnd(String value) {
+        String address = parseAddressTillEnd(value);
+        return value.substring(0, value.indexOf(address)).replace(PREFIX_ADDRESS.toString(), "").trim();
     }
 ```
 ###### \java\seedu\address\logic\parser\Postfix.java
@@ -1015,12 +1546,13 @@ public class Postfix {
      */
     public static String parseArguments(String commandWord, String rawArgs) {
         // Check if index (number) exists, removes Remark prefix (if it exists) and re-adds it before returning.
-        if (tryParseInt(rawArgs)) {
-            String indexString = Integer.toString(parseFirstInt(rawArgs));
-            String remark = parseRemoveFirstInt(rawArgs).trim().replace(PREFIX_REMARK.toString(), "");
+        if (isParsableIndex(rawArgs, getLastRolodexSize())) {
+            String indexString = Integer.toString(parseFirstIndex(rawArgs, getLastRolodexSize()));
+            String remark = parseRemoveFirstIndex(rawArgs, getLastRolodexSize())
+                    .trim().replace(PREFIX_REMARK.toString(), "");
             return " " + indexString + " " + PREFIX_REMARK + remark;
-        } else if (tryParseInt(commandWord)) {
-            String indexString = Integer.toString(parseFirstInt(commandWord));
+        } else if (isParsableIndex(commandWord, getLastRolodexSize())) {
+            String indexString = Integer.toString(parseFirstIndex(commandWord, getLastRolodexSize()));
             String remark = rawArgs.trim().replace(PREFIX_REMARK.toString(), "");
             return " " + indexString + " " + PREFIX_REMARK + remark;
         }
@@ -1029,7 +1561,7 @@ public class Postfix {
 ```
 ###### \java\seedu\address\logic\parser\RolodexParser.java
 ``` java
-    private Suggestion suggestion;
+    private Optional<Suggestion> suggestion = Optional.empty();
 
     /**
      * Parses user input into command for execution.
@@ -1046,17 +1578,19 @@ public class Postfix {
 
         String commandWord = matcher.group("commandWord").toLowerCase();
         String arguments = matcher.group("arguments");
-        if (suggestion != null && Suggestion.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            commandWord = suggestion.getClosestCommandWord();
-            arguments = suggestion.getFormattedArgs(commandWord);
+        if (suggestion.isPresent() && Suggestion.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+            commandWord = suggestion.get().getClosestCommandWord();
+            arguments = suggestion.get().getFormattedArgs(commandWord);
         }
-        suggestion = null;
+        suggestion = Optional.empty();
 
         try {
             if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
                 return new AddCommandParser().parse(arguments);
             } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
                 return new EditCommandParser().parse(arguments);
+            } else if (EmailCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new EmailCommandParser().parse(arguments);
             } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
                 return new SelectCommandParser().parse(arguments);
             } else if (DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
@@ -1077,10 +1611,10 @@ public class Postfix {
                 return new UndoCommand();
             } else if (RedoCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
                 return new RedoCommand();
-            } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-                return new OpenCommandParser().parse(arguments);
-            } else if (NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-                return new NewCommandParser().parse(arguments);
+            } else if (OpenRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new OpenRolodexCommandParser().parse(arguments);
+            } else if (NewRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new NewRolodexCommandParser().parse(arguments);
             } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
                 return new RemarkCommandParser().parse(arguments);
             }  else if (StarWarsCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
@@ -1101,16 +1635,16 @@ public class Postfix {
      * the user chooses.
      * @param commandWord to be parsed into Suggestion
      * @param arguments to be parsed into Suggestion
-     * @throws SuggestibleParseException if tbe command word and arguments are suggestible,
+     * @throws SuggestibleParseException if the command word and arguments are suggestible,
      * @throws ParseException otherwise.
      */
     private void handleSuggestion(String commandWord, String arguments)
             throws SuggestibleParseException, ParseException {
-        suggestion = new Suggestion(commandWord, arguments);
-        if (suggestion.isSuggestible()) {
-            throw new SuggestibleParseException(suggestion.getPromptMessage());
+        suggestion = Optional.of(new Suggestion(commandWord, arguments));
+        if (suggestion.get().isSuggestible()) {
+            throw new SuggestibleParseException(suggestion.get().getPromptMessage());
         }
-        suggestion = null;
+        suggestion = Optional.empty();
         throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
     }
 
@@ -1120,16 +1654,16 @@ public class Postfix {
      * the user chooses.
      * @param commandWord to be parsed into Suggestion
      * @param arguments to be parsed into Suggestion
-     * @throws SuggestibleParseException if tbe command word and arguments are suggestible,
+     * @throws SuggestibleParseException if the command word and arguments are suggestible,
      * @throws ParseException otherwise.
      */
     private void handleSuggestion(String commandWord, String arguments, ParseArgsException pae)
             throws SuggestibleParseException, ParseException {
-        suggestion = new Suggestion(commandWord, arguments);
-        if (suggestion.isSuggestible()) {
-            throw new SuggestibleParseException(suggestion.getPromptMessage());
+        suggestion = Optional.of(new Suggestion(commandWord, arguments));
+        if (suggestion.get().isSuggestible()) {
+            throw new SuggestibleParseException(suggestion.get().getPromptMessage());
         }
-        suggestion = null;
+        suggestion = Optional.empty();
         throw new ParseException(pae.getMessage(), pae);
     }
 ```
@@ -1203,19 +1737,28 @@ public class SortUtil {
                                       List<String> dataKeywordList,
                                       List<SortArgument> sortArgumentList,
                                       String errorMessage)
-            throws ParseException {
+            throws ParseArgsException {
         for (String keyword : keywords) {
             SortArgument sortArgument = new SortArgument(keyword);
             if (!POSSIBLE_SORT_ARGUMENTS.contains(sortArgument) && sortArgumentList.isEmpty()) {
                 dataKeywordList.add(keyword);
             } else if (!POSSIBLE_SORT_ARGUMENTS.contains(sortArgument) && !sortArgumentList.isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, errorMessage));
+                throw new ParseArgsException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, errorMessage));
             } else {
                 sortArgumentList.add(sortArgument);
             }
         }
     }
 }
+```
+###### \java\seedu\address\logic\UndoRedoStack.java
+``` java
+    public UndoRedoStack(UndoRedoStack toBeCopied) {
+        undoStack = new Stack<>();
+        redoStack = new Stack<>();
+        undoStack.addAll(toBeCopied.undoStack);
+        redoStack.addAll(toBeCopied.redoStack);
+    }
 ```
 ###### \java\seedu\address\MainApp.java
 ``` java
@@ -1296,6 +1839,8 @@ public class SortUtil {
         filteredPersons = new FilteredList<>(this.rolodex.getPersonList());
         sortedPersons = new SortedList<>(filteredPersons);
         updateSortComparator(null);
+        KNOWN_TAGS.addAll(this.rolodex.getTagList());
+        setLastRolodexSize(this.rolodex.getPersonList().size());
     }
 ```
 ###### \java\seedu\address\model\ModelManager.java
@@ -1305,20 +1850,46 @@ public class SortUtil {
         rolodex.addPerson(person);
         updateSortComparator(null);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        KNOWN_TAGS.addAll(person.getTags());
         indicateRolodexChanged();
     }
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
-    //=========== Latest Person List Accessors =============================================================
-
     /**
-     * Returns the index of the given person
+     * Returns true if a given String array as equivalent to any known tags in the Rolodex.
      */
-    public Index getIndex(ReadOnlyPerson target) {
-        return Index.fromZeroBased(sortedPersons.indexOf(target));
+    public static boolean hasAnyExistingTags(String[] tags) {
+        return !Collections.disjoint(Arrays.stream(tags).map(s -> {
+            try {
+                return new Tag(s.replaceAll(PREFIX_TAG.toString(), ""));
+            } catch (IllegalValueException e) {
+                return false;
+            }
+        }).collect(Collectors.toList()), KNOWN_TAGS);
     }
 
+    /**
+     * Returns true if a given String array as equivalent to any known tags in the Rolodex.
+     */
+    public static boolean isKnownTag(String tag) {
+        try {
+            return KNOWN_TAGS.contains(new Tag(tag));
+        } catch (IllegalValueException e) {
+            return false;
+        }
+    }
+
+    public static int getLastRolodexSize() {
+        return lastRolodexSize;
+    }
+
+    private static void setLastRolodexSize(int size) {
+        lastRolodexSize = size;
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
      * {@code rolodex}
@@ -1731,14 +2302,16 @@ public class RolodexStorageUtil {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
+            setErrorKeyboardIcon();
             logger.info("Invalid command, un-suggestible: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
         } catch (SuggestibleParseException e) {
             initHistory();
             // handle command failure
-            logger.info("Invalid command, suggestible: " + commandTextField.getText());
             commandTextField.setText("");
             setStyleToIndicateCommandFailure();
+            setErrorKeyboardIcon();
+            logger.info("Invalid command, suggestible: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
         }
     }
@@ -1770,10 +2343,11 @@ public class RolodexStorageUtil {
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
-        dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+        dialogStage.setMaximized(true);
         FxViewUtil.setStageIcon(dialogStage, ICON);
 
         String userGuideUrl = getClass().getResource(HELP_FILE_PATH).toString();
+        browser.getEngine().setUserAgent(browser.getEngine().getUserAgent().replace(USER_AGENT_MAC_REPLACEMENT, ""));
         browser.getEngine().load(userGuideUrl);
     }
 
