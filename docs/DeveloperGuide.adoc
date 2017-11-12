@@ -740,7 +740,7 @@ A command is added if all three conditions are satisfied:
 
 // tag::auto-completion[]
 === Auto-completion Mechanism
-Auto-completion mechanism is implemented in `CommandBox` class under UI component.
+Auto-completion mechanism is implemented in `CommandBox` class under `UI` component.
 
 Auto-completion is activated when kbd:[Tab] key is pressed. This is done by adding a case in the keypress handler in `CommandBox`.
 [source,java]
@@ -749,7 +749,11 @@ Auto-completion is activated when kbd:[Tab] key is pressed. This is done by addi
 private void handleKeyPress(KeyEvent keyEvent) {
     switch (keyEvent.getCode()) {
     case TAB:
-        autocomplete(); //checkes the input and performs actions accordingly
+        if (keyEvent.isShiftDown()) {
+            selectPreviousField();
+        } else {
+            autocomplete();
+        }
         break;
     //other cases
     }
@@ -762,11 +766,32 @@ At the same time, the placeholder for the first field that the user needs to key
 
 image::AutoCompletionAfterTab.png[width="450"]
 
-* If the input is already in the required format of the add command, the kbd:[Tab] is meant to navigate to the next input field (only `add` command require multiple fields).
-The current caret position is checked and used to determine the current field the user is at.
+* If the input is already in the required format of `add` or `remark` command, the kbd:[Tab] is meant to navigate to the next input field (only `add` and `remark` require more than one field).
+The  caret position is used to determine the current field the user is at.
 The anchor and caret positions are reset to the start and end of the next field so that the placeholder is selected (as shown below).
 
 image::AutoCompletionNextField.png[width="450"]
+
+The above implementation is represented in this code snippet:
+
+[source,java]
+----
+private void autocomplete() {
+    input = commandTextField.getText().trim().toLowerCase();
+    if (isAutoCompleteCommand(input)) {
+        //display the full command format
+
+    } else if (isAddCommandFormat(input)) {
+        //change text selection to the next field
+
+    } else if (isRemarkCommandFormat(input)) {
+        //change text selection to the next field
+    }
+}
+----
+
+When kbd:[Shift+Tab] is pressed, the user wants to navigate to the previous field.
+The caret position is used to determine the current field the user is at. The anchor and caret positions are reset to the start and end of the previous field input in order to update text selection.
 
 Below is an activity diagram for kbd:[Tab] keypress which activates auto-completion.
 
@@ -782,7 +807,6 @@ image::AutoCompleteActivityDiagram.png[width="800"]
 **Alternative 2:** Create additional TextField as user request for additional fields +
 **Pros:** Allows for different formatting for different fields (Commands can have a different colour from the fields) +
 **Cons:** Original structure will be disrupted. Command box will no longer be single line text input, which have consequences such as the user cannot backspace or select through the entire line.
-
 // end::auto-completion[]
 
 // tag::shortcut[]

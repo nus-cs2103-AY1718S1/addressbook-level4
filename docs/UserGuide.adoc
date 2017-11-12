@@ -105,7 +105,7 @@ Adds a person to Rolodex. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...` +
 [TIP]
 ====
-Press kbd:[Tab] after typing `add` to generate the required field(s). See link:#autocomplete[3.19. Auto-completion] for more details.
+Press kbd:[Tab] after typing `add` to generate the required field(s). See link:#autocomplete[3.2. Auto-completion] for more details.
 ====
 Alternatives: `add` can be replaced by `a` or `+` +
 Keyboard shortcut: kbd:[Ctrl++]
@@ -128,7 +128,11 @@ Add commands are _undoable_ with the `undo` command.
 === Auto-completion _(Since v1.2)_
 
 For commands that require additional field(s), auto-completion can be triggered by pressing kbd:[Tab] after keying in the command word.
-
+[NOTE]
+====
+Commands with auto-completion enabled: `add`, `delete`, `edit`, `email`, `find`, `new`, `open`, `select` and `remark`. +
+These are commands that required additonal field(s).
+====
 Example:
 
 * Type `add` in the command box +
@@ -138,16 +142,19 @@ Example:
 image::AutoCompletionAfterTab.png[width="500"]
 
 * Note that the placeholder for the name field has been auto-selected. Now you can directly type in the name.
+
+image::AutoCompleteTypeName.png[width="500"]
+
 * After you are done typing the name, press kbd:[Tab] again to go to the next field.
 
 image::AutoCompletionNextField.png[width="500"]
 
-* After you are done with the entire command, press kbd:[Enter] to execute the command.
+* After you are done with the entire command, press kbd:[Enter] to execute the command as usual.
 
-[NOTE]
+[TIP]
 ====
-Commands with auto-completion enabled: `add`, `delete`, `edit`, `find`, `select` and `remark`. +
-These are commands that required additonal field(s).
+In addition to using kbd:[Tab] to navigate to the next field, you can press kbd:[Shift+Tab] to navigate to the previous field.
+
 ====
 //end::autocomplete[]
 

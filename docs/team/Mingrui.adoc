@@ -91,8 +91,8 @@ Command line confirmation (the user types "yes" in the command box) is a more re
 
 === Other contributions
 
-* Updated the General Documentation (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/7[#7] https://github.com/CS2103AUG2017-W11-B2/main/pull/22[#22] https://github.com/CS2103AUG2017-W11-B2/main/pull/128[#128])
 * Added abbreviations for commands (Pull request https://github.com/CS2103AUG2017-W11-B2/main/pull/10[#10])
+* Updated the General Documentation (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/7[#7] https://github.com/CS2103AUG2017-W11-B2/main/pull/22[#22] https://github.com/CS2103AUG2017-W11-B2/main/pull/128[#128] https://github.com/CS2103AUG2017-W11-B2/main/pull/150[#150])
 * (Unused) Added confirmation dialog for delete, clear and exit commands (Pull request https://github.com/CS2103AUG2017-W11-B2/main/pull/114[#114])
 
 endif::[]
