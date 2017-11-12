@@ -157,7 +157,7 @@ The tag parameter (t/TAG) can be left empty if there are no tags for the person 
 The parameters for edit command can be in any order. Entering `n/NAME, p/PHONE’ or ‘p/PHONE, n/NAME` will work as well. +
 You cannot add the exact same person into the Circles.
 
-// tag:: find[]
+// tag::find[]
 === Locating persons by name: `find`
 
 Finding contact card by name is possible even with just their surnames.
