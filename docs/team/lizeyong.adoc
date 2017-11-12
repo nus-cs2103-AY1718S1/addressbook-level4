@@ -43,13 +43,13 @@ The use of wildcard symbols also allows the user to search for a group of contac
 
 ---
 
-==== Key Feature 3: Filters the most recent listing
+==== Key Feature 3: Filters the displayed list
 
 ===== Justification
 
 ---
-The `find` command filters the most recent listing of contacts. Contacts not shown in the most recent listing would *NOT* show up in the result of a `find` command. Therefore, successive `find` commands would make the list smaller and smaller. +
-By filtering the most recent listing, the user can narrow down the list to locate a specific contact without exact information or find a group of contacts sharing similar properties.
+The `find` command filters the displayed list of contacts. Contacts not shown in the most recent listing would *NOT* show up in the result of a `find` command. Therefore, successive `find` commands would make the list smaller and smaller. +
+By filtering the displayed list, the user can narrow down the list to locate a specific contact without exact information or find a group of contacts sharing multiple similar properties.
 
 ---
 
@@ -101,9 +101,10 @@ include::../UserGuide.adoc[tag=resize]
 
 ==== Justification
 
-The resize command allows the user to enlarge/shrink the size of the main window conveniently using CLI so that he/she can have a view more contacts or make space in the screen for other applications.
+---
+The resize command allows the user to enlarge/shrink the size of the main window conveniently using CLI so that he can view more contacts or make space in the screen for other applications.
 
-
+---
 
 === Enhancement Proposed: Add `filter` command
 
@@ -117,7 +118,7 @@ If a certain keyword is frequently used, it should show up first in the suggesti
 
 === Other contributions
 
-* Discovered a bug that causes the app to crush and provided a solution. (https://github.com/nus-cs2103-AY1718S1/forum/issues/137[Issue #137])
+* Discovered a bug that causes the app to crash and provided a solution. (https://github.com/nus-cs2103-AY1718S1/forum/issues/137[Issue #137])
 * Discovered bugs during acceptance testing. (Issues https://github.com/CS2103AUG2017-W14-B4/main/issues/116[#116], https://github.com/CS2103AUG2017-W14-B4/main/issues/117[#117], https://github.com/CS2103AUG2017-W14-B4/main/issues/118[#118])
 * Proposed wildcard symbol feature for reuse. (https://github.com/nus-cs2103-AY1718S1/forum/issues/132[Issue #132])
 
