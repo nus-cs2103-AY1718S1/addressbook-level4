@@ -502,7 +502,7 @@ public CommandResult execute() {
 The following sequence diagram shows an example that summarises how the `HelpCommand` is being called and executed.
 
 image::HelpCommandLogicComponent.png[width="800"]
-_Figure 4.2.1: Sequence diagram for the command `help add`_
+_Figure 4.2.1: Interactions Inside the Logic Component for the `help add` Command_
 
 _Figure 4.2.5_ below shows the enhanced help command in action.
 
@@ -517,7 +517,7 @@ _Figure 4.2.2: Enhanced `HelpCommand` execution_
 **Cons:** Users have to know at least the command identifier of the command they want execute. +
 **Alternative 2:** Only allowing `HelpCommand` to open help window  +
 **Pros:** It is simpler and more intuitive for new users. +
-**Cons:** Users have to go through the user guide every time they forget the format of a certain command.  +
+**Cons:** Users have to go through the user guide every time they forget the format of a certain command.
 // end::help[]
 
 //tag::scheduleSingle[]
@@ -528,7 +528,7 @@ The `ScheduleCommand` allows users to schedule and activity with one person in t
 image::ScheduleCommandLogicCommandClassDiagram.png[width="800"]
 _Figure 4.3.1: `ScheduleCommand` inherits from `UndoableCommand`
 
-The `ScheduleCommand` takes in 2 parameters: `ScheduleDate` and `Activity`. Therefore, the Model component of the application has been extended to include these two new classes. To make sure that users enter the correct DD-MM-YYYY format and valid date, `DateUtil` is created. `DateUtil` contains various methods to handle dates, including the methods shown below to check the validity of the input date.
+The `ScheduleCommand` takes in 2 parameters: `ScheduleDate` and `Activity`. Therefore, the Model component of the application has been extended to include these two new classes. `DateUtil` is created to make sure that users enter a valid data which follows DD-MM-YYYY format. The code snippet below shows how `DateUtil` checks the validity of an input date.
 
 [source, java]
 ----
@@ -550,9 +550,30 @@ private static boolean isActualDate (String date) {
 }
 ----
 
+The diagram in _Figure 4.3.2_ below shows the sequence of the schedule operation.
 
+image:ScheduleCommandLogic.png[width="800"]
+_Figure4.3.2: Interactions Inside the Logic Component for the `schedule d/15-12-2017 act/Meeting` Command_
 
 ==== Design Considerations
+
+**Aspect:** Valid date format +
+**Alternative 1 (current choice)**: DD-MM-YYYY is the only valid date format +
+**Pros:** It is now possible to arrange the dates based on which date comes first. +
+**Cons:** Users have lesser flexibility in inputting dates. +
+**Alternative 2:** Allowing users to key in dates in DD-MM format in addition to DD-MM-YYYY format  +
+**Pros:** This gives users a greater flexibility when keying in dates.  +
+**Cons:** This creates ambiguity when arranging the schedules based on dates.
+
+**Aspect:** Creation of master schedule list +
+**Alternative 1 (current choice)**: Creation of a master schedule list that stores all the unique activities scheduled +
+**Pros:** It is possible to display the unique activities scheduled. +
+**Cons:** Master schedule list has to be synchronised with all the schedules attached to persons every time a schedule is added. +
+**Alternative 2:** Absence of master schedule list  +
+**Pros:** It is easier to implement.  +
+**Cons:** Users can only search for an activity scheduled by searching the person they have scheduled the activity with.
+
+Both current choices above facilitate the creation of link:#viewing-of-user-s-agenda-since-v1-4[My Agenda] panel.
 //end::scheduleSingle[]
 
 //tag::scheduleMultiple[]
