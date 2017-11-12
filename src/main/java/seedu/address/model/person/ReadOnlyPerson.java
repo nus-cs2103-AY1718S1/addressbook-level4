@@ -44,6 +44,7 @@ public interface ReadOnlyPerson {
 
     //@@author Alim95
     ObjectProperty<Boolean> pinProperty();
+
     boolean isPinned();
 
     //@@author

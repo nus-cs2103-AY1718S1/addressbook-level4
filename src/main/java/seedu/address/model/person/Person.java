@@ -24,7 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Remark> remark;
-    private boolean isPrivate = false;
+    private boolean isPrivate;
     private ObjectProperty<Boolean> isPinned;
     private ObjectProperty<Boolean> isSelected;
 
@@ -75,16 +75,16 @@ public class Person implements ReadOnlyPerson {
         this.phone.set(requireNonNull(phone));
     }
 
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
     //@@author wynkheng
     public boolean setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
         return true;
     }
     //@@author
-
-    public boolean isPrivate() {
-        return isPrivate;
-    }
 
     //@@author Alim95
     @Override
