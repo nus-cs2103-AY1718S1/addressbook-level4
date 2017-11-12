@@ -39,7 +39,7 @@ Responsibilities: Data + Testing
 
 '''
 
-=== Beh Bee Yee
+=== Teh Bee Yee
 image::meiyi.jpg[width="150", align="left"]
 {empty}[https://github.com/meiyi1234[github]]
 
