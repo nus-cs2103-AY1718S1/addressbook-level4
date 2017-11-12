@@ -60,11 +60,12 @@ _Command:_ +
 _Result:_ +
 `Listed all persons`
 
-. Then move an image file (`.jpg` or `.png`) into the home folder where you use *BoNUS*
+. Then move an image file (`.jpg` or `.png`) into the home folder where you use *BoNUS*. Maybe you want to use the
+logo of Java from https://www.hostingireland.ie/images/java-logo.png[here] as a sample.
 
 . Add avatar to the third person in the listing (assume there are at least three contacts) +
 _Command:_ +
-`avatar 3 someImage.jpg`
+`avatar 3 java-logo.png`
 
 === Add/view/edit/delete events
 

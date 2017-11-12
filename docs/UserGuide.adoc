@@ -467,6 +467,8 @@ The name of the 2nd person in the address book will be searched on Facebook.
 
 === Adding avatar to a person : `(avr)avatar`
 
+_(Better checking for file type coming in v2.0)_
+
 Adds avatar to a person (identified by the index number used in the last listing). +
 Format: `(avr)avatar INDEX IMAGE_PATH`
 
@@ -489,6 +491,8 @@ Adds avatar to the 2nd person in the address book.
 ====
 * Do not move, rename or delete the image you use as an avatar; otherwise, it will not be shown in *BoNUS*.
 * You are suggested to move the image into the home folder where you use *BoNUS*.
+* Do not be _nasty_ about the input file. If you provide an invalid file that looks like an image but is not an actual image,
+the area reserved for avatar will simply become transparent.
 ====
 
 === Switching themes : `(t)theme`
