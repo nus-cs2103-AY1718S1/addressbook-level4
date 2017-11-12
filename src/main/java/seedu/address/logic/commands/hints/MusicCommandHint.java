@@ -10,7 +10,7 @@ import seedu.address.logic.parser.HintParser;
  */
 public class MusicCommandHint extends FixedArgumentsHint {
 
-    private static final String[] ACTION = new String[] {"play", "pause"};
+    private static final String[] ACTION = new String[] {"play", "stop"};
     private static final String[] GENRE = MusicCommand.GENRE_LIST;
 
     public MusicCommandHint(String userInput, String arguments) {
@@ -29,11 +29,11 @@ public class MusicCommandHint extends FixedArgumentsHint {
             //completing an arg?
             String autoCompletedArg = HintParser.autocompleteFromList(actionArgument, ACTION);
             if (autoCompletedArg == null || actionArgument.isEmpty()) {
-                String autoCorrectHint = (MusicCommand.isMusicPlaying()) ? "pause" : "play";
+                String autoCorrectHint = (MusicCommand.isMusicPlaying()) ? "stop" : "play";
                 offerHint(autoCorrectHint, "music " + autoCorrectHint);
                 return;
             } else {
-                String autoCorrectInput = "music " + ((!MusicCommand.isMusicPlaying()) ? "play" : "pause");
+                String autoCorrectInput = "music " + ((!MusicCommand.isMusicPlaying()) ? "play" : "stop");
                 handleCompletingArg(actionArgument, autoCompletedArg, autoCorrectInput);
                 return;
             }
@@ -59,7 +59,7 @@ public class MusicCommandHint extends FixedArgumentsHint {
                 offerHint("pop", "music play pop");
                 return;
             } else {
-                String autoCompletedInput = (MusicCommand.isMusicPlaying()) ? "music pause " : "music play "
+                String autoCompletedInput = (MusicCommand.isMusicPlaying()) ? "music stop " : "music play "
                         + autoCompletedArg;
                 handleCompletingArg(genreArgument, autoCompletedArg, autoCompletedInput);
                 return;
@@ -75,8 +75,6 @@ public class MusicCommandHint extends FixedArgumentsHint {
         switch (arg) {
         case "play":
             return " plays music";
-        case "pause":
-            return " pauses music";
         case "stop":
             return " stops music";
         case "pop":

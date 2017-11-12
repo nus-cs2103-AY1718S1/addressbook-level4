@@ -58,10 +58,10 @@ public class HintParserTest {
 
         if (!MusicCommand.isMusicPlaying()) {
             assertEquals(MusicCommand.COMMAND_WORD + " play", autocomplete(MusicCommand.COMMAND_WORD));
-            assertEquals(MusicCommand.COMMAND_WORD + " play", autocomplete(MusicCommand.COMMAND_WORD + " paus"));
+            assertEquals(MusicCommand.COMMAND_WORD + " play", autocomplete(MusicCommand.COMMAND_WORD + " sto"));
         } else {
-            assertEquals(MusicCommand.COMMAND_WORD + " pause", autocomplete(MusicCommand.COMMAND_WORD));
-            assertEquals(MusicCommand.COMMAND_WORD + " pause", autocomplete(MusicCommand.COMMAND_WORD + " paus"));
+            assertEquals(MusicCommand.COMMAND_WORD + " stop", autocomplete(MusicCommand.COMMAND_WORD));
+            assertEquals(MusicCommand.COMMAND_WORD + " stop", autocomplete(MusicCommand.COMMAND_WORD + " sto"));
         }
     }
     //@@author
