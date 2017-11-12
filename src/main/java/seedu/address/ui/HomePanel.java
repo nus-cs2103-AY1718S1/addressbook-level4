@@ -66,7 +66,7 @@ public class HomePanel extends UiPart<Region> {
         Random random = new Random();
         Image image = new Image(is);
         homePage.setImage(image);
-        homePage.setFitWidth(pref.getGuiSettings().getWindowWidth());
+        homePage.setFitWidth(1650);
         quotesLabel.setMinWidth(500);
         quotesLabel.setStyle("-fx-font: 30 system;");
         quotesLabel.setText(quotes[random.nextInt(quotes.length)]);
