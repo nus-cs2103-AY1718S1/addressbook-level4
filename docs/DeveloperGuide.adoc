@@ -57,22 +57,40 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 The following describes the steps you would take to get started developing the application on your computer:
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+1) Fork this repo, and clone the fork to your computer
+
+image::fork.png[width="1000"]
+
+2) Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
+
+3) Set up the correct JDK version for Gradle +
+   (a) Click `Configure` > `Project Defaults` > `Project Structure`
+
+image::configure.png[width="500"]
+
+(b) Click `New...` and find the directory of the JDK
+
+image::newSDK.png[width="500"]
+
+4) Click `Import Project`
+
+image::import.png[width="500"]
+
+5) Locate the `build.gradle` file and select it. Click `OK`
+
+6) Click `Open as Project`
+
+7) Click `OK` to accept the default settings
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
+image::terminal.png[width="500"]
+
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
-. link:#testing[Run the tests] to ensure they all pass.
+1) Run the `seedu.address.MainApp` and try a few commands
+
+2) link:#testing[Run the tests] to ensure they all pass.
 
 === Configurations to do before writing code
 
@@ -80,12 +98,18 @@ This will generate all resources required by the application and tests.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+1) Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
+
+image::preferences.png[width="200"]
+
+2) Select `Editor` > `Code Style` > `Java`
+
+3) Click on the `Imports` tab to set the order
 
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
 * For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+
+image::codeStyle.png[width="500"]
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
@@ -108,8 +132,9 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 
 Here are some tips to get you started on coding:
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+1) Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+
+2) Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
 
@@ -271,7 +296,7 @@ Some examples of common classes includes: `StringUtil` , `FileUtil`, `IllegalVal
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
-// tag::joshua[]
+// tag::email[]
 
 === Email Function
 (added in v1.2)
@@ -310,6 +335,9 @@ _Figure 4.1.1 : Sequence Diagram of the Email function_
 
 ---
 
+//end::email[]
+// tag::googlemaps[]
+
 === Displaying a contact's location on Google Maps
 (added in v1.2)
 
@@ -339,6 +367,9 @@ The browser will then render the new URL it has received. Below is the code snip
 The browser's user agent had to be set to ** "Mozilla/5.0 "
                                                           + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0" **because
 there were unicode issue's when load Google Maps on Mac computers.
+
+//end::googlemaps[]
+// tag::mapping[]
 
 === Mapping a command to a JavaFX Button
 (added in v1.2)
@@ -390,7 +421,110 @@ When the DeleteButton is pressed, it will be handled by the handleDeleteButtonPr
         logger.info("Result: " + commandResult.feedbackToUser);
     }
 ----
-// end::joshua[]
+
+//end::mapping[]
+// tag::form[]
+
+=== Edit form implementation and validation
+
+image::form.png[width="150"]
+_Figure 4.4.1 : Edit Person Form_
+
+This section describes how the edit form has been implemented.
+
+Similar to the deleteButton, the editButton has been mapped to the `edit` command. Refering to _Figure 4.4.1_, this +
+command will be called whenever the `Save` button is pressed. Fields that have changed in TextFields 1, 2, 3, 4 and 5 (`Name`, `Phone`, `Email`, `Address` and `Tags`) would be be saved for the currently selected user. Thus, we have to make sure that the user
+inputs the correct command parameters into the `edit` command so that there would be no input errors.
+
+Textfields for each of the 5 fields are implemented this way, in this example, here's how the name field gets saved:
+[source,java]
+----
+public class NameTextField extends UiPart<Region> {
+
+    public static final String ERROR_STYLE_CLASS = "error";
+    private static final String FXML = "NameTextField.fxml";
+    private final Logger logger = LogsCenter.getLogger(CommandBox.class);
+
+    @FXML
+    private TextField nameTextField;
+
+    public NameTextField() {
+        super(FXML);
+        registerAsAnEventHandler(this);
+    }
+    public String getNameTextField() {
+        return nameTextField.getText();
+    }
+
+    public void setNameTextField(String text) {
+        nameTextField.setText(text);
+    }
+    public TextField getObject() {
+        return nameTextField;
+    }
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setNameTextField(event.getNewSelection().person.getName().toString());
+    }
+}
+----
+
+As shown above, whenever a user selects a new contact, the details of that contact would be displayed on the textfield +
+through the use of this event listener:
+
+[source,java]
+----
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setNameTextField(event.getNewSelection().person.getName().toString());
+    }
+----
+
+The user can now modify the selected field, in this case, the name field. Once he is happy with the changes, he goes +
+on to click the save button.
+
+Shown below is a code snippet of where the save button gets instantiated. It takes in the textfields as parameters:
+
+[source,java]
+----
+//extracted from MainWindow.java
+// void fillInnerPats()
+// ...
+
+        editButton = new EditButton(logic, nameTextField, phoneTextField,
+                emailTextField, addressTextField, tagTextField);
+----
+
+Before the contact details are saved, `EditButton` does a check on whether the inputs are valid:
+
+[source,java]
+----
+    public static String checkInput(String name, String phone, String email, String address, String tag) {
+        if (name.matches(".*\\d+.*") || name.isEmpty()) {
+            return NAME_ERROR;
+        }
+        if (!phone.matches("[0-9]+")) {
+            return PHONE_ERROR;
+        }
+        if (!email.contains("@") || !email.contains(".")) {
+            return EMAIL_ERROR;
+        }
+        //check tag doesnt end with a special character
+        String[] tagSplit = tag.split(",");
+        for (int i = 0; i < tagSplit.length; i++) {
+            if (!tagSplit[i].matches("[a-zA-Z0-9]*")) {
+                return TAG_ERROR;
+            }
+        }
+        return VALIDATION_SUCCESS;
+    }
+----
+
+The contact would only be saved if this function returns a `VALIDATION_SUCCESS`, else it would output an input format error.
+
+// end::form[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -402,9 +536,9 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 4.4.1 : Class Diagram for Logic Command_
+_Figure 4.5.1 : Class Diagram for Logic Command_
 
-As you can see in _Figure 4.4.1_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see in _Figure 4.5.1_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -439,25 +573,25 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-As shown in _Figure 4.4.2_ below, the user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+As shown in _Figure 4.5.2_ below, the user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 4.4.2: Undoable Command example_
+_Figure 4.5.2: Undoable Command example_
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example in _Figure 4.4.3_, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example in _Figure 4.5.3_, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 4.4.3: Undoable Command example_
+_Figure 4.5.3: Undoable Command example_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack` as shown in _Figure 4.4.4_. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack` as shown in _Figure 4.5.4_. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 4.4.4: Undoable Command example_
+_Figure 4.5.4: Undoable Command example_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -466,7 +600,7 @@ The following link:#sequence-diagram[sequence diagram] shows how the undo operat
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-_Figure 4.4.5_ : Sequence Diagram of the Undo and Redo function._
+_Figure 4.5.5_ : Sequence Diagram of the Undo and Redo function._
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -476,17 +610,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 4.4.6: Undoable Command example_
+_Figure 4.5.6: Undoable Command example_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 4.4.7: Undoable Command example_
+_Figure 4.5.7: Undoable Command example_
 
 The following link:#activity-diagram[activity diagram]summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 4.4.8: Undoable Command Activity Diagram_
+_Figure 4.5.8: Undoable Command Activity Diagram_
 
 ==== Design Considerations
 
@@ -772,7 +906,7 @@ The diagrams shows the UI of the additional colour themes:
 image::whiteThemeUI.jpeg[width="800"]
 _Figure 4.9.1 : White Theme_
 
-image::greenThemeUI.jpeg[width="800"]
+image::Ui.png[width="800"]
 _Figure 4.9.2 : Green Theme_
 
 // end::colourtheme[]
@@ -1385,6 +1519,51 @@ The QrGenSmsCommand to retrieve QrCode with the following codes.
     }
 ----
 // end::qrsave[]
+
+// tag::sort[]
+=== Sort Command
+(Added in v1.2)
+
+The `sort` command is a feature we implemented to allow users to sort their contact details based on the name of the contacts. When we add in new contacts using the `add` feature, the contact
+will usually be added into the bottom of the address book.
+
+As the contacts in the addressbook gets larger and larger, it will be difficult to maintain the contacts as the contact details in the contact list panel will become messy and we will have to use the `find` feature constantly to look
+for the contact we want.
+
+The `sort` command starts off by taking in the `sort` command from the  `AddressBookParser` class and call a new `SortCommand` class.
+
+---
+  case SortCommand.COMMAND_WORD:
+  case SortCommand.COMMAND_ALIAS:
+     return new SortCommand();
+
+---
+
+The `SortCommand` class will then call the `sort()` method created in the `AddressBook` class to modify the array list that was used to maintain the contact details
+in the `UniquePersonList` class.
+
+The sorting algorithm lies in the `UniquePersonList` class where a self-defined comparator was implemented to sort the elements in the array list based on the name of the Person in the list.
+
+---
+    public void sort() {
+        internalList.sort((person1, person2) -> (
+                person1.getName().fullName
+                        .compareToIgnoreCase(person2.getName().fullName)));
+    }
+
+---
+
+==== Design Considerations
+
+**Aspect:** What attributes to be sorted by the user. +
+**Alternative 1 (current choice):** Currently, the sort command only allows sorting the name of the contact list. +
+**Pros:** The most logical way is to sort by the name as all other attributes is associated to the name of the person in the list +
+**Cons:** User may want to sort by other attributes to allow better managing and retrieving of contacts +
+**Alternative 2:** implement sort by various attributes +
+**Pros:** Allows user to sort by attributes to their preference.  +
+**Cons:** Does not make any sense when sorting by attributes such as Phone number or address. +
+
+// end::sort[]
 
 == Documentation
 

@@ -1,8 +1,8 @@
 # limshunyong
-###### \java\seedu\address\logic\commands\ExportCommand.java
+###### /java/seedu/address/logic/commands/ExportCommand.java
 ``` java
 /**
- * export contacts to external source (in .vcf format)
+ * Exports contact to external source (in .vcf format)
  */
 public class ExportCommand extends Command {
 
@@ -76,10 +76,10 @@ public class ExportCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ImportCommand.java
+###### /java/seedu/address/logic/commands/ImportCommand.java
 ``` java
 /**
- * import contacts from external source (in .vcf format)
+ * Imports contact from external source (in .vcf format)
  */
 public class ImportCommand extends UndoableCommand {
 
@@ -119,7 +119,7 @@ public class ImportCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SortCommand.java
+###### /java/seedu/address/logic/commands/SortCommand.java
 ``` java
 /**
  * Sorts the contacts in the address book based on name.
@@ -137,12 +137,18 @@ public class SortCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ImportCommandParser.java
+###### /java/seedu/address/logic/parser/ImportCommandParser.java
 ``` java
 /**
  * Parses input arguments as file and adds the contact into the address book
  */
 public class ImportCommandParser implements Parser<ImportCommand> {
+
+    public static final String DEFAULT_NAME = "Example name";
+    public static final String DEFAULT_ADD = "13 Computing Drive";
+    public static final String DEFAULT_PHONE = "11111111";
+    public static final String DEFAULT_EMAIL = "@example.com";
+    public static final String DEFAULT_TAG = "containsDummy";
 
     /**
      * Parses the given {@code String} of arguments in the context of the Import command
@@ -155,10 +161,12 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         BufferedReader br = null;
         FileReader fr = null;
 
+
         try {
             fr = new FileReader(filename);
             br = new BufferedReader(fr);
 
+            // Create Default values
             String currLine;
             String name = null;
             String email = null;
@@ -186,6 +194,23 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
                 if (currLine.contains("END")) {
                     try {
+                        if (email == null) {
+                            email = name.replaceAll("\\s+", "") + "@example.com";
+                            tagList.add(new Tag(DEFAULT_TAG + "email"));
+                        }
+                        if (name == null) {
+                            name = DEFAULT_NAME;
+                            tagList.add(new Tag(DEFAULT_TAG + "name"));
+                        }
+                        if (phone == null) {
+                            phone = DEFAULT_PHONE;
+                            tagList.add(new Tag(DEFAULT_TAG + "phone"));
+                        }
+                        if (address == null) {
+                            address = DEFAULT_ADD;
+                            tagList.add(new Tag(DEFAULT_TAG + "address"));
+                        }
+
                         Name n = new Name(name);
                         Phone pe = new Phone(phone);
                         Email e = new Email(email);
@@ -218,7 +243,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      *  Sorts the address book
@@ -228,7 +253,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Sorts the list
@@ -239,12 +264,12 @@ public class ImportCommandParser implements Parser<ImportCommand> {
                         .compareToIgnoreCase(person2.getName().fullName)));
     }
 ```
-###### \java\seedu\address\storage\AddressBookStorage.java
+###### /java/seedu/address/storage/AddressBookStorage.java
 ``` java
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 }
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-copy.xml");

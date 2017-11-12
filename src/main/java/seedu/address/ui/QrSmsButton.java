@@ -17,7 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author blaqkrow
 /**
- * The UI component that is responsible for deleting selected contacts in the PersonListPanel.
+ * The UI component that is for generating a QR code which opens up an SMS client on a smartphone.
  */
 public class QrSmsButton extends UiPart<Region> {
     public static final String MESSAGE_FAIL = "Please select someone";

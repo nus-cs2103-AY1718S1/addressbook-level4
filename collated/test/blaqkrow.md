@@ -1,5 +1,5 @@
 # blaqkrow
-###### \java\seedu\address\logic\LogicManagerTest.java
+###### /java/seedu/address/logic/LogicManagerTest.java
 ``` java
     @Test
     public void execute_deleteCommandExecutionError_throwsCommandException() {
@@ -13,7 +13,7 @@
         assertCommandException(emailCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 ```
-###### \java\systemtests\EmailCommandSystemTest.java
+###### /java/systemtests/EmailCommandSystemTest.java
 ``` java
 public class EmailCommandSystemTest extends AddressBookSystemTest {
 

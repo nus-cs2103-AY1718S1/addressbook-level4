@@ -17,7 +17,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 //@@author blaqkrow
 /**
- * The UI component that is responsible for deleting selected contacts in the PersonListPanel.
+ * The UI component that is responsible for clearing the log.
  */
 public class ClearLogButton extends UiPart<Region> {
 
@@ -41,7 +41,7 @@ public class ClearLogButton extends UiPart<Region> {
     @FXML
     private void handleClearLogButtonPressed() throws CommandException, ParseException, IOException {
         Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want clear the log?",
-                ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+                ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
         if (alert.getResult() == ButtonType.YES) {
             ClearLogCommand clearLogCommand = new ClearLogCommand();

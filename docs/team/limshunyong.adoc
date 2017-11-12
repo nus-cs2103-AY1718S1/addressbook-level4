@@ -120,5 +120,7 @@ include::../DeveloperGuide.adoc[tag=export]
 
 * Wrote additional tests (Pull requests https://github.com/CS2103AUG2017-W15-B3/main/pull/27[#27], https://github.com/CS2103AUG2017-W15-B3/main/pull/72[#72], https://github.com/CS2103AUG2017-W15-B3/main/pull/105[#105])
 
+* Contribute to Acceptance Testing for other teams by identifying bugs (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/issues/235[#235], https://github.com/CS2103AUG2017-T15-B4/main/issues/237[#237])
+
 
 

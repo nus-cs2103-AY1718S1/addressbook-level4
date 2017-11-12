@@ -14,13 +14,12 @@ import seedu.address.model.tag.Tag;
 
 //@@author blaqkrow
 /**
- * The UI component that is responsible for saving and displaying the currently selected contact's name.
+ * The UI component that is responsible for saving and displaying the currently selected contact's tags.
  */
 public class TagTextField extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "TagTextField.fxml";
-
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
 
     @FXML
@@ -39,9 +38,11 @@ public class TagTextField extends UiPart<Region> {
     public void setTagTextArea(String text) {
         tagTextArea.setText(text);
     }
+
     public void setTagSet(Set<Tag> t) {
         tagSet = t;
     }
+
     public Set<Tag> getTagSet() {
         return tagSet;
     }
