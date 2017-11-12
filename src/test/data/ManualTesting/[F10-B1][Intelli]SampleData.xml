@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- @@author Xenonym -->
-<addressbook>
+<intelli>
     <persons>
         <name>Alysha Zhen</name>
         <phone>90250442</phone>
@@ -285,4 +285,4 @@
         <confidenceEstimate>6.0</confidenceEstimate>
         <name></name>
     </relationships>
-</addressbook>
+</intelli>
