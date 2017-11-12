@@ -8,6 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class HelpCommandTest {
