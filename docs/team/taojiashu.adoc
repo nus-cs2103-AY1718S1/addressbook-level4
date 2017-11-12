@@ -57,12 +57,12 @@ include::../UserGuide.adoc[tag=showfavourite]
 
 This feature is added to complement `FavouriteCommand`.
 After being able to mark some persons in UniCity as favourite, users naturally want to keep track of all the favourite
-contacts after some time. Therefore, this functionality is introduced to UniCity.
+contacts, otherwise having favourite contacts is meaningless. Therefore, this feature is introduced to UniCity.
 
 ==== Implementation
 
-The command will go through the entire current contact list. If a person is a favourite contact, it will be updated to
-FilterPersonList of the model. This list will be displayed after all persons in the current list are checked.
+The command will go through the entire current contact list. If a person is a favourite contact, it will be added to
+FilteredPersonList in the model. This list will be displayed after all persons in the current list are checked.
 
 === Enhancement Added: Locate
 
@@ -80,23 +80,87 @@ include::../UserGuide.adoc[tag=locate]
 
 ==== Justification
 
-Sometimes, users have no idea where the address of some people are. Thus, it will be very help to integrate Google Maps to UniCity so that users can locate their contacts' home address easily.
+Sometimes, users have no idea where the address of some people are. Thus, it will be very helpful to integrate Google Maps to UniCity so that users can locate their contacts' home address easily.
 
 ==== Implementation
 
 Similar to `SelectCommand`, `LocateCommand` will raise an event to the event centre. The event will store the address of the selected person as its field.
 Then when loading the Google Maps search page, the address will be added to the Google Maps prefix.
 
-=== Enhancement Proposed: Add command `AddMemory`
+=== Enhancement Enhanced: Facebook
+
+==== External behaviour
+The following extract from UserGuide is co-written by my teammate Ying Zheng and me.
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=facebook]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This is built on my teammate Ying Zheng's version of `FacebookCommand`. https://github.com/CS2103AUG2017-W13-B1/main/pull/58[#58] +
+The motivation of my enhancement is that `FacebookCommand` can be more useful for users if they can search for the profile of any selected person in UniCity.
+
+==== Implementation
+
+The following extract from DevelopGuide is co-written by my teammate Ying Zheng and me.
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=facebook]
+
+#End of Extract#
+
+---
+
+=== Enhancement Enhanced: Exit
+
+==== External behaviour
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=exit]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+`Exit` is a very serious command. If a user types it by mistake, the programme will immediately shut down. Thus, a confirmation step is introduced to avoid this potentially disastrous situtaion.
+
+==== Implementation
+
+Once an `ExitCommand` is given by the user, UniCity will check if the last command in `CommandHistory` is an `ExitCommand`. If it is, it means the user has given another `ExitCommand` to confirm to exit. UniCity will exit in this case. If it is not, a message will pop up to ask the user to type `exit` again to confirm.
+
+=== Enhancement Proposed: Add command `addMemory`
+
+==== External behaviour
+===== Adding a `Memory` to a person : `addMemory`
+Adds a memory to a contact specified by the index number inputted. The memory can be in the form of a text, pictures or videos.
+
+Format: `addMemory INDEX m/Memory`
 
 ==== Justification
 
 This feature will definitely make our product stand out from other address book applications. With this feature, users will be able to add their unique memories with their contacts,
-so that they can look back at their memorable moments with certain persons if you want to. They would also be reminded who that person is if they ever forgot who that person is.
+so that they can look back at their memorable moments with certain persons if you want to. In this way, if they ever forgot who the person is in UniCity, they would be able to recall after looking at their memories.
+
+=== Code Contributed
+https://github.com/CS2103AUG2017-W13-B1/main/blob/master/collated/main/taojiashu.md[Functional Code] +
+https://github.com/CS2103AUG2017-W13-B1/main/blob/master/collated/test/taojiashu.md[Test Code]
 
 === Other contributions
 
-* Fixed a few bugs so that Travis can run properly (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/13[#13], https://github.com/CS2103AUG2017-W13-B1/main/pull/23[#23], https://github.com/CS2103AUG2017-W13-B1/main/pull/90[#90])
-
-=== Collated Code
-https://github.com/CS2103AUG2017-W13-B1/main/blob/master/collated/main/taojiashu.md[Click to see]
+* Fixed a few bugs so that Travis can run properly (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/13[#13], https://github.com/CS2103AUG2017-W13-B1/main/pull/23[#23], https://github.com/CS2103AUG2017-W13-B1/main/pull/90[#90], https://github.com/CS2103AUG2017-W13-B1/main/pull/119/commits/6b40f4718d944d98f016417e4b116ffbf6f71d31[#119])
+* UI enhancement on how `Favourite` is diaplayed (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/69[#69], https://github.com/CS2103AUG2017-W13-B1/main/pull/78[#78])

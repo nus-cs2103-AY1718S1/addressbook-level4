@@ -336,7 +336,7 @@ Selects the person identified by the index number used in the last person listin
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the Google search page of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -353,14 +353,21 @@ Selects the 1st person in the results of the `find` command.
 image::select-command-ui.png[width="790"]
 
 // tag::facebook[]
-==== Logging in to Facebook : `facebook`
+==== Searching Facebook for a person's profile : `facebook`
 
-Shows the log in page for Facebook. +
-Format: `facebook` or `fb`
+Searches Facebook for the profile of the person specified by index number. +
+Format: `facebook INDEX` or `fb INDEX`
 
 ****
-* Allows person to log in to his Facebook Account using the Graphical Interface available.
+* Loads the Facebook search page of the person at the specified `INDEX`. +
+* The index refers to the index number shown in the most recent person listing.
+* The index *must be a positive integer* and *within the length of the current listing*.
 ****
+
+Examples:
+
+* `facebook 1`
+Searches Facebook for the profile of the 1st person in the current listing.
 
 image::facebook-command-ui.png[width="790"]
 // end::facebook[]
@@ -381,7 +388,7 @@ Format: `locate INDEX`
 Examples:
 
 * `locate 1`
-Find the address of the 1st person in the latest listing on Google Maps.
+Finds the address of the 1st person in the latest listing on Google Maps.
 
 image::locate-command-ui.png[width="790"]
 // end::locate[]
@@ -510,10 +517,15 @@ Changes the window size to big.
 
 // end::windowsize[]
 
+// tag::exit[]
 ==== Exiting the program : `exit`
 
-Exits the program. +
+Prompts a confirmation step to exit to programme. +
+Exits the programme if two consecutive `exit` commands are given. +
 Format: `exit`
+
+image::exit-confirmation.png[width="790"]
+// end::exit[]
 
 ==== Saving the data
 
@@ -527,8 +539,6 @@ There is no need to save manually.
 === UniCity as an online application
 
 === Database to check for UniCity users
-
-=== Facebook command to search for contacts on Facebook
 
 === Automatic pop-up of help window for new users
 
@@ -568,27 +578,34 @@ It is safe to enter anything in UniCity.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *AddTag* : `addtag INDEX [MORE_INDEXES] [t/TAG]` +
+e.g. `addtag 1 4 t/friends`
+* *Birthday* : `birthday INDEX [b/BIRTHDAY]` +
+e.g. `birthday 2 b/24/05/96`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Facebook* : `facebook` +
+* *Exit* : `exit`
+* *Facebook* : `facebook INDEX` +
+e.g.`facebook 2`
+* *Favourite* : `favourite INDEX` +
+e.g.`favourite 2`
 * *Filter* : `filter KEYWORD [MORE_KEYWORDS]` +
 e.g. `filter friend hallmate`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Locate* : `locate INDEX` +
+e.g.`locate 2`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *ShowFavourite* : `showFavourite`
 * *Sort* : `sort`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Birthday* : `birthday INDEX [b/BIRTHDAY]` +
-e.g. `birthday 2 b/24/05/96`
-* *AddTag* : `addtag INDEX [MORE_INDEXES] [t/TAG]` +
-e.g. `addtag 1 4 t/friends`
 * *RemoveTag* : `removetag INDEX [MORE_INDEXES] [t/TAG]` +
 e.g. `removetag 3 7 t/lecturer`
