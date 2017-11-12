@@ -281,7 +281,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
     }
 
     @Test
-    public void findFuzzySearch() {
+    public void findByFuzzySearch() {
         /* Case: find multiple persons in address book by fuzzy search, command with leading spaces and trailing spaces
          * -> 3 persons found
          */
