@@ -1,14 +1,11 @@
 package seedu.address.ui;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.ui.testutil.GuiTestAssert.assertInfoDisplaysPerson;
-
-import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,35 +43,7 @@ public class InfoPanelTest extends GuiUnitTest {
 
     @Test
     public void display() throws Exception {
-        // default info panel
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getAddress());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getAddressField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDebt());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getTotalDebt());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDebtField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getTotalDebtField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getInterest());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getInterestField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPostalCode());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPostalCodeField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getCluster());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getClusterField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getName());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getEmail());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getEmailField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getHandphone());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getHandphoneField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getHomePhone());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getHomePhoneField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getOfficePhone());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getOfficePhoneField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateBorrow());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateBorrowField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDeadline());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDeadlineField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateRepaid());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateRepaidField());
-        assertEquals(new ArrayList<>(), infoPanelHandle.getTags());
+
         infoPanelHandle.rememberSelectedPersonDetails();
 
         // associated info of a person
