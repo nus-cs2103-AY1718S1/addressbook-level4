@@ -310,7 +310,9 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && recycleBin.equals(other.recycleBin)
+                && filteredRecycle.equals(other.filteredRecycle);
     }
 
     //@@author eldriclim

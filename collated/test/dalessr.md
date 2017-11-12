@@ -1,5 +1,5 @@
 # dalessr
-###### \java\guitests\guihandles\PersonDetailsPanelHandle.java
+###### /java/guitests/guihandles/PersonDetailsPanelHandle.java
 ``` java
 /**
  * A handler for the {@code PersonDetailsPanel} of the UI.
@@ -44,7 +44,52 @@ public class PersonDetailsPanelHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BirthdayAddCommandTest.java
+###### /java/guitests/PersonDetailsPanelTest.java
+``` java
+public class PersonDetailsPanelTest extends AddressBookGuiTest {
+
+    @Test
+    public void openTwitterTabView() {
+
+        OpenTwitterWebViewEvent event = new OpenTwitterWebViewEvent();
+        postNow(event);
+        assertTrue(true);
+    }
+
+    @Test
+    public void openFacebookTabView() {
+
+        OpenFaceBookWebViewEvent event = new OpenFaceBookWebViewEvent();
+        postNow(event);
+        assertTrue(true);
+    }
+
+    @Test
+    public void openGithubTabView() {
+
+        OpenGithubWebViewEvent event = new OpenGithubWebViewEvent();
+        postNow(event);
+        assertTrue(true);
+    }
+
+    @Test
+    public void openInstagramTabView() {
+
+        OpenInstagramWebViewEvent event = new OpenInstagramWebViewEvent();
+        postNow(event);
+        assertTrue(true);
+    }
+
+    @Test
+    public void openNusmodsTabView() {
+
+        OpenNusModsWebViewEvent event = new OpenNusModsWebViewEvent();
+        postNow(event);
+        assertTrue(true);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/BirthdayAddCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for BirthdayAddCommand.
@@ -145,7 +190,7 @@ public class BirthdayAddCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BirthdayRemoveCommandTest.java
+###### /java/seedu/address/logic/commands/BirthdayRemoveCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for BirthdayRemoveCommand.
@@ -252,7 +297,7 @@ public class BirthdayRemoveCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindCommandTest.java
+###### /java/seedu/address/logic/commands/FindCommandTest.java
 ``` java
     @Test
     public void execute_multipleNameKeywords_multiplePersonsFound() {
@@ -332,7 +377,7 @@ public class BirthdayRemoveCommandTest {
     }
 
 ```
-###### \java\seedu\address\logic\commands\MapRouteCommandTest.java
+###### /java/seedu/address/logic/commands/MapRouteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code MapRouteCommand}.
@@ -451,7 +496,7 @@ public class MapRouteCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\MapShowCommandTest.java
+###### /java/seedu/address/logic/commands/MapShowCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code MapShowCommand}.
@@ -569,7 +614,55 @@ public class MapShowCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\BirthdayAddCommandParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_find() throws Exception {
+        List<String> keywords = Arrays.asList("n/", "foo", "bar", "baz");
+        FindCommand command = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_birthdayAdd() throws Exception {
+        List<String> keywords = Arrays.asList("1", "01/01/2000");
+        BirthdayAddCommand command = (BirthdayAddCommand) parser.parseCommand(
+                BirthdayAddCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        Index firstIndex = new Index(0);
+        Birthday birthday = new Birthday("01/01/2000");
+        assertEquals(new BirthdayAddCommand(firstIndex, birthday), command);
+    }
+
+    @Test
+    public void parseCommand_birthdayRemove() throws Exception {
+        List<String> keywords = Arrays.asList("1");
+        BirthdayRemoveCommand command = (BirthdayRemoveCommand) parser.parseCommand(
+                BirthdayRemoveCommand.COMMAND_WORD + " " + keywords.get(0) + "");
+        Index firstIndex = new Index(0);
+        assertEquals(new BirthdayRemoveCommand(firstIndex), command);
+    }
+
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_map_show() throws Exception {
+        MapShowCommand command = (MapShowCommand) parser.parseCommand(
+                MapShowCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new MapShowCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_map_route() throws Exception {
+        String startLocation = "Clementi Street";
+        MapRouteCommand command = (MapRouteCommand) parser.parseCommand(
+                MapRouteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + PREFIX_ADDRESS + startLocation);
+        assertEquals(new MapRouteCommand(INDEX_FIRST_PERSON, startLocation), command);
+    }
+```
+###### /java/seedu/address/logic/parser/BirthdayAddCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code SelectCommandParserTest}.
@@ -609,7 +702,7 @@ public class BirthdayAddCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\BirthdayRemoveCommandParserTest.java
+###### /java/seedu/address/logic/parser/BirthdayRemoveCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code SelectCommandParserTest}.
@@ -643,7 +736,7 @@ public class BirthdayRemoveCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FindCommandParserTest.java
+###### /java/seedu/address/logic/parser/FindCommandParserTest.java
 ``` java
     @Test
     public void parse_emptyArg_throwsParseException() {
@@ -697,7 +790,7 @@ public class BirthdayRemoveCommandParserTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\MapRouteCommandParserTest.java
+###### /java/seedu/address/logic/parser/MapRouteCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code SelectCommandParserTest}.
@@ -726,7 +819,7 @@ public class MapRouteCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\MapShowCommandParserTest.java
+###### /java/seedu/address/logic/parser/MapShowCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code SelectCommandParserTest}.
@@ -747,10 +840,13 @@ public class MapShowCommandParserTest {
     }
 }
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
     @Test
     public void find() {
+
+        Index firstIndex = new Index(0);
+
         /* Case: find multiple persons by name in address book, command with leading spaces and trailing spaces
          * -> 2 persons found
          */
@@ -758,43 +854,43 @@ public class MapShowCommandParserTest {
         Model expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: repeat previous find command where person list is displaying the persons we are finding
          * -> 2 persons found
          */
         command = FindCommand.COMMAND_WORD + " n/ " + KEYWORD_MATCHING_MEIER;
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: find person by name where person list is not displaying the person we are finding -> 1 person found */
         command = FindCommand.COMMAND_WORD + " n/ " + " Carl";
         ModelHelper.setFilteredList(expectedModel, CARL);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: find multiple persons by name in address book, 2 keywords -> 2 persons found */
         command = FindCommand.COMMAND_WORD + " n/ " + " Benson Daniel";
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: find multiple persons by name in address book, 2 keywords in reversed order -> 2 persons found */
         command = FindCommand.COMMAND_WORD + " n/ " + " Daniel Benson";
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: find multiple persons by name in address book, 2 keywords with 1 repeat -> 2 persons found */
         command = FindCommand.COMMAND_WORD + " n/ " + " Daniel Benson Daniel";
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: find multiple persons by name in address book, 2 matching keywords and 1 non-matching keyword
          * -> 2 persons found
          */
         command = FindCommand.COMMAND_WORD + " n/ " + " Daniel Benson NonMatchingKeyWord";
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: undo previous find command -> rejected */
         command = UndoCommand.COMMAND_WORD;
@@ -830,41 +926,37 @@ public class MapShowCommandParserTest {
         command = FindCommand.COMMAND_WORD + " n/ " + " Meiers";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
 
         /* Case: find person by name not in address book -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " n/ " + " Mark";
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
 
         /* Case: find multiple persons by phone in address book, 2 keywords -> 2 persons found */
         command = FindCommand.COMMAND_WORD + " p/ " + " 98765432 87652533";
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: find person by phone in address book, keyword is substring of phone number -> 2 persons found */
         command = FindCommand.COMMAND_WORD + " p/ " + " 8765";
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: find person by phone in address book, phone number is substring of keyword -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " p/ " + " 853552555";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
 
         /* Case: find person by phone not in address book -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " p/ " + " 66666666";
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
 
         /* Case: find multiple persons by email in address book, 2 keywords -> 2 persons found */
         command = FindCommand.COMMAND_WORD + " e/ " + " johnd@example.com  cornelia@example.com";
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: find person by email in address book, keyword is same as email but of different case
          * ->2 person found
@@ -872,24 +964,22 @@ public class MapShowCommandParserTest {
         command = FindCommand.COMMAND_WORD + " e/ " + " JoHnD@EXAMPLE.com  corneLIA@example.COM";
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: find person by email in address book, email keyword is substring of the email -> 2 persons found */
         command = FindCommand.COMMAND_WORD + " e/ " + " rne";
         ModelHelper.setFilteredList(expectedModel, DANIEL, ELLE);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: find person by email in address book, email address is substring of keyword -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " e/ " + " sheinz@example.com";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
 
         /* Case: find person by email not in address book -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " e/ " + " nuscomputing@example.com";
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
 
         /* Case: find single person by address in address book, 5 keywords -> 1 person found */
         command = FindCommand.COMMAND_WORD + " a/ " + " 311, Clementi Ave 2, #02-25";
@@ -901,7 +991,7 @@ public class MapShowCommandParserTest {
         command = FindCommand.COMMAND_WORD + " a/ " + " street";
         ModelHelper.setFilteredList(expectedModel, CARL, DANIEL, GEORGE);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: find person by address in address book, keyword is same as address but of different case
          * -> 1 person found
@@ -909,18 +999,16 @@ public class MapShowCommandParserTest {
         command = FindCommand.COMMAND_WORD + " a/ " + " 10TH StrEEt";
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedCardChanged(firstIndex);
 
         /* Case: find person by address in address book, address name is substring of keyword -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " a/ " + " 110th street";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
 
         /* Case: find person by address not in address book -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " a/ " + " 311, Clementi Ave 2, #02-31";
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
 
         /* Case: find while a person is selected -> selected card deselected */
         showAllPersons();
@@ -929,7 +1017,6 @@ public class MapShowCommandParserTest {
         command = FindCommand.COMMAND_WORD + " n/ " + " Daniel";
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardDeselected();
 
         /* Case: find person in empty address book -> 0 persons found */
         executeCommand(ClearCommand.COMMAND_WORD);

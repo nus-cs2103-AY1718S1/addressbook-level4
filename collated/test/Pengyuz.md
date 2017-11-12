@@ -1,5 +1,5 @@
 # Pengyuz
-###### \java\seedu\address\logic\commands\BinclearCommandTest.java
+###### /java/seedu/address/logic/commands/BinclearCommandTest.java
 ``` java
 public class BinclearCommandTest {
 
@@ -25,7 +25,7 @@ public class BinclearCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BindeleteCommandTest.java
+###### /java/seedu/address/logic/commands/BindeleteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -182,7 +182,7 @@ public class BindeleteCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\BinrestoreCommandTest.java
+###### /java/seedu/address/logic/commands/BinrestoreCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -339,7 +339,7 @@ public class BinrestoreCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteCommandTest.java
+###### /java/seedu/address/logic/commands/DeleteCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -383,13 +383,17 @@ public class DeleteCommandTest {
 
         personsToDelete1.add(INDEX_FIRST_PERSON);
 
+        ArrayList<ReadOnlyPerson> deletelist = new ArrayList<>();
+
+        deletelist.add(personToDelete);
+
         DeleteCommand deleteCommand1 = prepareCommand(personsToDelete1);
 
         String expectedMessage1 = DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 
         ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
 
-        expectedModel1.deletePerson(personToDelete);
+        expectedModel1.deletePerson(deletelist);
 
         assertCommandSuccess(deleteCommand1, model, expectedMessage1, expectedModel1);
     }
@@ -423,6 +427,11 @@ public class DeleteCommandTest {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
         personsToDelete1.clear();
+
+        ArrayList<ReadOnlyPerson> deletelist = new ArrayList<>();
+
+        deletelist.add(personToDelete);
+
         String deleteName = personToDelete.getName().fullName;
 
         DeleteCommand deleteCommand1 = prepareCommand(deleteName);
@@ -431,7 +440,7 @@ public class DeleteCommandTest {
 
         ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
 
-        expectedModel1.deletePerson(personToDelete);
+        expectedModel1.deletePerson(deletelist);
 
         assertCommandSuccess(deleteCommand1, model, expectedMessage1, expectedModel1);
     }
@@ -452,14 +461,23 @@ public class DeleteCommandTest {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
         personsToDelete1.clear();
+
         personsToDelete1.add(INDEX_FIRST_PERSON);
+
+        ArrayList<ReadOnlyPerson> deletelist = new ArrayList<>();
+
+        deletelist.add(personToDelete);
+
         DeleteCommand deleteCommand = prepareCommand(personsToDelete1);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+
+        expectedModel.deletePerson(deletelist);
+
         showNoPerson(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -472,13 +490,19 @@ public class DeleteCommandTest {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
         personsToDelete1.clear();
+
+        ArrayList<ReadOnlyPerson> deletelist = new ArrayList<>();
+
+        deletelist.add(personToDelete);
+
         String deleteName = personToDelete.getName().fullName;
+
         DeleteCommand deleteCommand = prepareCommand(deleteName);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        expectedModel.deletePerson(deletelist);
         showNoPerson(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -573,7 +597,7 @@ public class DeleteCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\HelpCommandTest.java
+###### /java/seedu/address/logic/commands/HelpCommandTest.java
 ``` java
 
 public class HelpCommandTest {
@@ -632,7 +656,7 @@ public class HelpCommandTest {
         result = new HelpCommand("undo").execute();
         assertEquals(UndoCommand.MESSAGE_USAGE, result.feedbackToUser);
 
-        result = new HelpCommand("bin-clear").execute();
+        result = new HelpCommand("bin-fresh").execute();
         assertEquals(BinclearCommand.MESSAGE_USAGE, result.feedbackToUser);
 
         result = new HelpCommand("bin-delete").execute();
@@ -661,24 +685,14 @@ public class HelpCommandTest {
 
         result = new HelpCommand("scheduleremove").execute();
         assertEquals(ScheduleRemoveCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result =  new HelpCommand("theme").execute();
+        assertEquals(SwitchThemeCommand.MESSAGE_USAGE, result.feedbackToUser);
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
-public class AddressBookParserTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    private final AddressBookParser parser = new AddressBookParser();
-
-    @Test
-    public void parseCommand_add() throws Exception {
-        Person person = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
-        assertEquals(new AddCommand(person), command);
-    }
-
     @Test
     public void parseCommand_create() throws Exception {
         Person person = new PersonBuilder().build();
@@ -692,22 +706,9 @@ public class AddressBookParserTest {
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getPutCommand(person));
         assertEquals(new AddCommand(person), command);
     }
-
-    @Test
-    public void parseCommand_clear() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
-    }
-
-    @Test
-    public void parseCommand_delete() throws Exception {
-        ArrayList<Index> todelete = new ArrayList<>();
-        todelete.add(INDEX_FIRST_PERSON);
-        DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " I/" + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(todelete), command);
-    }
-
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
     @Test
     public void parseCommand_remove() throws Exception {
         ArrayList<Index> todelete = new ArrayList<>();
@@ -725,87 +726,9 @@ public class AddressBookParserTest {
                 DeleteCommand.COMMAND_WORD_3 + " I/" + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(todelete), command);
     }
-
-    @Test
-    public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
-        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
-    }
-
-    @Test
-    public void parseCommand_modify() throws Exception {
-        Person person = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
-        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD_3 + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
-    }
-
-    @Test
-    public void parseCommand_update() throws Exception {
-        Person person = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
-        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD_2 + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
-    }
-
-    @Test
-    public void parseCommandTagAdd() throws Exception {
-        Person person = new PersonBuilder().build();
-        ArrayList<Index> singlePersonIndexList = new ArrayList<>();
-        singlePersonIndexList.add(INDEX_FIRST_PERSON);
-        Set<Tag> tagSet = new HashSet<>();
-        tagSet.add(new Tag("friend"));
-
-        TagAddDescriptor descriptor = new TagAddDescriptor(person);
-        descriptor.setTags(tagSet);
-        TagAddCommand command = (TagAddCommand) parser.parseCommand(TagAddCommand.COMMAND_WORD + " "
-            + INDEX_FIRST_PERSON.getOneBased() + " friend");
-        assertEquals(new TagAddCommand(singlePersonIndexList, descriptor), command);
-    }
-
-    @Test
-    public void parseCommandLooseTagFind() throws Exception {
-        boolean looseFind = true;
-        TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate("friend", looseFind);
-        TagFindCommand command = (TagFindCommand) parser.parseCommand(TagFindCommand.COMMAND_WORD
-                + " friend");
-        assertEquals(new TagFindCommand(predicate), command);
-    }
-
-    @Test
-    public void parseCommandTagRemove() throws Exception {
-        Person person = new PersonBuilder().build();
-        ArrayList<Index> singlePersonIndexList = new ArrayList<>();
-        singlePersonIndexList.add(INDEX_FIRST_PERSON);
-        Set<Tag> tagSet = new HashSet<>();
-        tagSet.add(new Tag("friend"));
-
-        TagRemoveDescriptor descriptor = new TagRemoveDescriptor(person);
-        descriptor.setTags(tagSet);
-        TagRemoveCommand command = (TagRemoveCommand) parser.parseCommand(TagRemoveCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " friend");
-        assertEquals(new TagRemoveCommand(singlePersonIndexList, descriptor), command);
-    }
-
-    @Test
-    public void parseCommand_exit() throws Exception {
-        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
-        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
-    }
-
-    @Test
-    public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("n/", "foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
-    }
-
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
     @Test
     public void parseCommand_search() throws Exception {
         List<String> keywords = Arrays.asList("n/", "foo", "bar", "baz");
@@ -821,93 +744,9 @@ public class AddressBookParserTest {
                 FindCommand.COMMAND_WORD_3 + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
-
-    @Test
-    public void parseCommand_help() throws Exception {
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
-    }
-
-    @Test
-    public void parseCommand_second() throws Exception {
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD_2) instanceof HelpCommand);
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD_2 + " 3") instanceof HelpCommand);
-    }
-
-    @Test
-    public void parseCommand_history() throws Exception {
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD) instanceof HistoryCommand);
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD + " 3") instanceof HistoryCommand);
-
-        try {
-            parser.parseCommand("histories");
-            fail("The expected ParseException was not thrown.");
-        } catch (ParseException pe) {
-            assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
-        }
-    }
-
-    @Test
-    public void parseCommand_record() throws Exception {
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD_2) instanceof HistoryCommand);
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD_2 + " 3") instanceof HistoryCommand);
-
-        try {
-            parser.parseCommand("histories");
-            fail("The expected ParseException was not thrown.");
-        } catch (ParseException pe) {
-            assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
-        }
-    }
-
-    @Test
-    public void parseCommand_list() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
-    }
-
-    @Test
-    public void parseCommand_show() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD_2) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD_2 + " 3") instanceof ListCommand);
-    }
-
-    @Test
-    public void parseCommand_all() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD_3) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD_3 + " 3") instanceof ListCommand);
-    }
-
-    @Test
-    public void parseCommand_select() throws Exception {
-        SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
-    }
-
-    @Test
-    public void parseCommand_choose() throws Exception {
-        SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD_2 + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
-    }
-
-    @Test
-    public void parseCommand_map_show() throws Exception {
-        MapShowCommand command = (MapShowCommand) parser.parseCommand(
-                MapShowCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new MapShowCommand(INDEX_FIRST_PERSON), command);
-    }
-
-    @Test
-    public void parseCommand_map_route() throws Exception {
-        String startLocation = "Clementi Street";
-        MapRouteCommand command = (MapRouteCommand) parser.parseCommand(
-                MapRouteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " "
-                        + PREFIX_ADDRESS + startLocation);
-        assertEquals(new MapRouteCommand(INDEX_FIRST_PERSON, startLocation), command);
-    }
-
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
     @Test
     public void parseCommand_binclear() throws Exception {
         assertTrue(parser.parseCommand(BinclearCommand.COMMAND_WORD) instanceof BinclearCommand);
@@ -931,35 +770,8 @@ public class AddressBookParserTest {
                 BinrestoreCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new BinrestoreCommand(todelete), command);
     }
-
-    @Test
-    public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
-        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
-        assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
-    }
-
-    @Test
-    public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
-        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
-        assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
-    }
-
-    @Test
-    public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        parser.parseCommand("");
-    }
-
-    @Test
-    public void parseCommand_unknownCommand_throwsParseException() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
-        parser.parseCommand("unknownCommand");
-    }
-}
 ```
-###### \java\seedu\address\logic\parser\BindeleteCommandPaserTest.java
+###### /java/seedu/address/logic/parser/BindeleteCommandPaserTest.java
 ``` java
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -999,7 +811,7 @@ public class BindeleteCommandPaserTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\BinrestoreCommandPaserTest.java
+###### /java/seedu/address/logic/parser/BinrestoreCommandPaserTest.java
 ``` java
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -1040,7 +852,7 @@ public class BinrestoreCommandPaserTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\DeleteCommandParserTest.java
+###### /java/seedu/address/logic/parser/DeleteCommandParserTest.java
 ``` java
 
 /**
@@ -1103,7 +915,7 @@ public class DeleteCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\HelpCommandParserTest.java
+###### /java/seedu/address/logic/parser/HelpCommandParserTest.java
 ``` java
 
 public class HelpCommandParserTest {
@@ -1161,13 +973,37 @@ public class HelpCommandParserTest {
 
         assertParseSuccess(parser, TagRemoveCommand.COMMAND_WORD, new HelpCommand("tagremove"));
 
+        assertParseSuccess(parser, TagFindCommand.COMMAND_WORD, new HelpCommand("tagfind"));
+
+        assertParseSuccess(parser, BirthdayAddCommand.COMMAND_WORD, new HelpCommand("birthdayadd"));
+
+        assertParseSuccess(parser, BirthdayRemoveCommand.COMMAND_WORD, new HelpCommand("birthdayremove"));
+
+        assertParseSuccess(parser, MapShowCommand.COMMAND_WORD, new HelpCommand("mapshow"));
+
+        assertParseSuccess(parser, MapRouteCommand.COMMAND_WORD, new HelpCommand("maproute"));
+
+        assertParseSuccess(parser, ScheduleAddCommand.COMMAND_WORD, new HelpCommand("scheduleadd"));
+
+        assertParseSuccess(parser, ScheduleRemoveCommand.COMMAND_WORD, new HelpCommand("scheduleremove"));
+
+        assertParseSuccess(parser, BinclearCommand.COMMAND_WORD, new HelpCommand("bin-fresh"));
+
+        assertParseSuccess(parser, BindeleteCommand.COMMAND_WORD, new HelpCommand("bin-delete"));
+
+        assertParseSuccess(parser, BinrestoreCommand.COMMAND_WORD, new HelpCommand("bin-restore"));
+
+        assertParseSuccess(parser, SwitchThemeCommand.COMMAND_WORD, new HelpCommand("theme"));
+
+        assertParseSuccess(parser, ExportCommand.COMMAND_WORD, new HelpCommand("export"));
+
         assertParseSuccess(parser, UndoCommand.COMMAND_WORD, new HelpCommand("undo"));
 
     }
 
 }
 ```
-###### \java\seedu\address\testutil\TypicalRecycleBin.java
+###### /java/seedu/address/testutil/TypicalRecycleBin.java
 ``` java
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.

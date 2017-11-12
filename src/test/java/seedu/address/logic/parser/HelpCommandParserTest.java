@@ -103,7 +103,7 @@ public class HelpCommandParserTest {
 
         assertParseSuccess(parser, ScheduleRemoveCommand.COMMAND_WORD, new HelpCommand("scheduleremove"));
 
-        assertParseSuccess(parser, BinclearCommand.COMMAND_WORD, new HelpCommand("bin-clear"));
+        assertParseSuccess(parser, BinclearCommand.COMMAND_WORD, new HelpCommand("bin-fresh"));
 
         assertParseSuccess(parser, BindeleteCommand.COMMAND_WORD, new HelpCommand("bin-delete"));
 

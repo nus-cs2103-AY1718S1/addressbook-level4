@@ -1,5 +1,5 @@
 # Pengyuz
-###### \java\seedu\address\commons\events\model\RecyclebinChangeEvent.java
+###### /java/seedu/address/commons/events/model/RecyclebinChangeEvent.java
 ``` java
 /** Indicates the Recyclebin in the model has changed*/
 public class RecyclebinChangeEvent extends BaseEvent {
@@ -17,7 +17,7 @@ public class RecyclebinChangeEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BinclearCommand.java
+###### /java/seedu/address/logic/commands/BinclearCommand.java
 ``` java
 /**
  * Clears the recyclebin.
@@ -33,25 +33,24 @@ public class BinclearCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.resetRecyclebin(new AddressBook());
-        //EventsCenter.getInstance().post(new ClearPersonListEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BindeleteCommand.java
+###### /java/seedu/address/logic/commands/BindeleteCommand.java
 ``` java
 /**
- * Delete the person in bin forever
+ * Deletes a person identified using it's last displayed index or name from the recycle bin.
  */
 public class BindeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "bin-delete";
 
     public static final String MESSAGE_SUCCESS = "Forever deleted.";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + "Delete the person in bin forever.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ":Delete the person in bin.";
     private ArrayList<Index> targets;
-    private boolean allvalid = true;
-    private boolean exist  = false;
+    private boolean isValid = true;
+    private boolean isEmpty  = false;
 
     public BindeleteCommand(ArrayList<Index> targets) {
         this.targets = targets;
@@ -65,14 +64,14 @@ public class BindeleteCommand extends UndoableCommand {
 
         for (Index s: targets) {
             if (s.getZeroBased() >= lastshownlist.size()) {
-                allvalid = false;
+                isValid = false;
             } else {
                 personstodelete.add(lastshownlist.get(s.getZeroBased()));
-                exist = true;
+                isEmpty = true;
             }
         }
 
-        if (allvalid && exist) {
+        if (isValid && isEmpty) {
             try {
                 model.deleteBinPerson(personstodelete);
             } catch (PersonNotFoundException pnfe) {
@@ -92,20 +91,19 @@ public class BindeleteCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BinrestoreCommand.java
+###### /java/seedu/address/logic/commands/BinrestoreCommand.java
 ``` java
 /**
- * Restore the person in bin to address book;
+ * Restore a person identified using it's last displayed index or name from the recycle bin.
  */
 public class BinrestoreCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "bin-restore";
-
     public static final String MESSAGE_SUCCESS = "Resotred";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + "Restore the person in bin to address book";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ":Restore the person in bin to address book";
     private ArrayList<Index> targets;
-    private boolean allvalid = true;
-    private boolean exist  = false;
+    private boolean isVaild = true;
+    private boolean isEmpty = false;
 
     public BinrestoreCommand(ArrayList<Index> targets) {
         this.targets = targets;
@@ -119,16 +117,19 @@ public class BinrestoreCommand extends UndoableCommand {
 
         for (Index s: targets) {
             if (s.getZeroBased() >= lastshownlist.size()) {
-                allvalid = false;
+                isVaild = false;
             } else {
                 personstodelete.add(lastshownlist.get(s.getZeroBased()));
-                exist = true;
+                isEmpty = true;
             }
         }
 
-        if (allvalid && exist) {
+        if (isVaild && isEmpty) {
             try {
                 model.restorePerson(personstodelete);
+                model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+                Index lastIndex = new Index(model.getFilteredPersonList().size() - 1);
+                EventsCenter.getInstance().post(new JumpToListRequestEvent(lastIndex));
             } catch (PersonNotFoundException pnfe) {
                 assert false : "The target person cannot be missing";
             } catch (DuplicatePersonException d) {
@@ -148,7 +149,7 @@ public class BinrestoreCommand extends UndoableCommand {
 
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteCommand.java
+###### /java/seedu/address/logic/commands/DeleteCommand.java
 ``` java
 /**
  * Deletes a person identified using it's last displayed index or name from the address book.
@@ -166,9 +167,9 @@ public class DeleteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1" + COMMAND_WORD + "Alex Yeoh";
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the recycle bin";
-    private boolean allvalid = true;
-    private boolean exist = false;
-    private boolean duplicate = false;
+    private boolean isValid = true;
+    private boolean isEmpty = false;
+    private boolean isDuplicate = false;
 
     private ArrayList<Index> targetIndexs = new ArrayList<>();
     private String target = "";
@@ -188,35 +189,35 @@ public class DeleteCommand extends UndoableCommand {
         ArrayList<ReadOnlyPerson> personstodelete =  new ArrayList<ReadOnlyPerson>();
         if (target != "") {
             for (ReadOnlyPerson p: lastShownList) {
-                if (p.getName().fullName.equals(target) && exist == true) {
+                if (p.getName().fullName.equals(target) && isEmpty == true) {
                     personstodelete.add(p);
-                    duplicate = true;
+                    isDuplicate = true;
                 }
                 if (p.getName().fullName.equals(target)) {
                     personstodelete.add(p);
-                    exist = true;
+                    isEmpty = true;
                 }
 
             }
         } else {
             for (Index s: targetIndexs) {
                 if (s.getZeroBased() >= lastShownList.size()) {
-                    allvalid = false;
+                    isValid = false;
                 } else {
                     personstodelete.add(lastShownList.get(s.getZeroBased()));
-                    exist = true;
+                    isEmpty = true;
                 }
             }
         }
 
-        if (exist && duplicate) {
+        if (isEmpty && isDuplicate) {
             List<String> duplicatePerson = Arrays.asList(target);
             NameContainsKeywordsPredicate updatedpredicate = new NameContainsKeywordsPredicate(duplicatePerson);
             model.updateFilteredPersonList(updatedpredicate);
             return new CommandResult("Duplicate persons exist, please choose one to delete.");
         }
 
-        if (allvalid && exist) {
+        if (isValid && isEmpty) {
             try {
                 model.deletePerson(personstodelete);
             } catch (PersonNotFoundException pnfe) {
@@ -243,33 +244,50 @@ public class DeleteCommand extends UndoableCommand {
 }
 
 ```
-###### \java\seedu\address\logic\commands\ExportCommand.java
+###### /java/seedu/address/logic/commands/ExportCommand.java
 ``` java
 /**
- * export the person details in txt
+ * Export the person details in txt.
  */
 public class ExportCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
 
-    public static final String MESSAGE_SUCCESS = "new file created";
+    public static final String MESSAGE_SUCCESS = "New file created";
     public static final String MESSAGE_USAGE = COMMAND_WORD + "export the person details in txt file";
     private String filepath;
     public ExportCommand (String f) {
         this.filepath = f.trim();
     }
-    @Override
-    public CommandResult execute() throws CommandException {
+
+    /**
+     * Initiate the File with give file path.
+     */
+    private void init() throws CommandException {
         try {
             File file = new File(filepath);
             BufferedWriter output = new BufferedWriter(new FileWriter(file));
-            output.write("New backup addressbook storage is created at " + filepath + " "
-                    + LocalDateTime.now());
+            output.write("New backup addressbook storage is created at " + filepath + " "  + LocalDateTime.now());
             output.newLine();
             output.write("==================================================================================");
             output.newLine();
             output.newLine();
+            outputAttribute(output);
+            outputEvent(output);
+            output.write("End of file");
+            output.close();
+        } catch (Exception ioe) {
+            throw new CommandException("can't create a file in the path" + filepath);
+        }
+    }
 
+    /**
+     * Output the attribute of all the person in the address book.
+     * @param output
+     * @throws CommandException
+     */
+    private void outputAttribute(BufferedWriter output) throws CommandException {
+        try {
             for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
                 output.write("Person No." + (i + 1));
                 output.newLine();
@@ -299,6 +317,18 @@ public class ExportCommand extends Command {
                 output.newLine();
                 output.newLine();
             }
+        } catch (Exception o) {
+            throw new CommandException("can't create a file in the path" + filepath);
+        }
+    }
+
+    /**
+     * Output all the event in the event list of address book.
+     * @param output
+     * @throws CommandException
+     */
+    private void outputEvent(BufferedWriter output) throws CommandException {
+        try {
             for (int i = 0; i < model.getEventList().size(); i++) {
                 output.write("Event No." + (i + 1));
                 output.newLine();
@@ -313,8 +343,16 @@ public class ExportCommand extends Command {
                 output.newLine();
 
             }
-            output.write("End of file");
-            output.close();
+        } catch (Exception o) {
+            throw new CommandException("can't create a file in the path" + filepath);
+        }
+    }
+    @Override
+    public CommandResult execute() throws CommandException {
+        try {
+            init();
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+            EventsCenter.getInstance().post(new ClearPersonListEvent());
             return new CommandResult(MESSAGE_SUCCESS);
 
         } catch (Exception e) {
@@ -323,7 +361,7 @@ public class ExportCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\HelpCommand.java
+###### /java/seedu/address/logic/commands/HelpCommand.java
 ``` java
 /**
  * Format full help instructions for every command for display.
@@ -345,7 +383,9 @@ public class HelpCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        if ("bin-clear".equals(commandword)) {
+        if ("theme".equals(commandword)) {
+            return new CommandResult(SwitchThemeCommand.MESSAGE_USAGE);
+        } else if ("bin-fresh".equals(commandword)) {
             return new CommandResult(BinclearCommand.MESSAGE_USAGE);
         } else if ("bin-delete".equals(commandword)) {
             return new CommandResult(BindeleteCommand.MESSAGE_USAGE);
@@ -410,7 +450,7 @@ public class HelpCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\UndoableCommand.java
+###### /java/seedu/address/logic/commands/UndoableCommand.java
 ``` java
     /**
      * Stores the current state of {@code model#recyclebin}.
@@ -454,7 +494,7 @@ public class HelpCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\BindeleteCommandParser.java
+###### /java/seedu/address/logic/parser/BindeleteCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new BindeleteCommand object
@@ -481,7 +521,7 @@ public class BindeleteCommandParser implements Parser<BindeleteCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\BinrestoreCommandParser.java
+###### /java/seedu/address/logic/parser/BinrestoreCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new BinrestoreCommand object
@@ -509,7 +549,7 @@ public class BinrestoreCommandParser implements Parser<BinrestoreCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\DeleteCommandParser.java
+###### /java/seedu/address/logic/parser/DeleteCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteCommand object
@@ -564,7 +604,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses  {@code oneBasedIndex} into an {@code numbers} and return it.the commas will be deleted.
@@ -591,7 +631,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
 
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void resetRecyclebin(ReadOnlyAddressBook newData) {
@@ -599,20 +639,20 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         indicateRecycleBinChanged();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public ReadOnlyAddressBook getRecycleBin() {
         return recycleBin;
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     private void indicateRecycleBinChanged() {
         raise(new RecyclebinChangeEvent(recycleBin));
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public synchronized void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException,
@@ -622,15 +662,18 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             if (recycleBin.getPersonList().contains(s)) {
                 addressBook.removePerson(s);
             } else {
+
+                Person o = new Person(s.getName(), s.getBirthday(), s.getPhone(), s.getEmail(), s.getAddress(),
+                        new HashSet<>(), new HashSet<>(), s.getDateAdded());
                 addressBook.removePerson(s);
-                recycleBin.addPerson(s);
+                recycleBin.addPerson(o);
             }
         }
         indicateRecycleBinChanged();
         indicateAddressBookChanged();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public synchronized void deleteBinPerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
@@ -640,7 +683,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         indicateRecycleBinChanged();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public synchronized void restorePerson(ReadOnlyPerson person) throws DuplicatePersonException,
@@ -653,35 +696,37 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         indicateAddressBookChanged();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public synchronized void restorePerson(ArrayList<ReadOnlyPerson> targets) throws DuplicatePersonException,
             PersonNotFoundException {
-        boolean flag = true;
+        boolean isChanged = true;
         for (ReadOnlyPerson s : targets) {
             if (addressBook.getPersonList().contains(s)) {
                 recycleBin.removePerson(s);
             } else {
+                Person o = new Person(s.getName(), s.getBirthday(), s.getPhone(), s.getEmail(), s.getAddress(),
+                        new HashSet<>(), new HashSet<>(), s.getDateAdded());
                 recycleBin.removePerson(s);
-                addressBook.addPerson(s);
-                flag = false;
+                addressBook.addPerson(o);
+                isChanged = false;
             }
         }
-        if (!flag) {
+        if (!isChanged) {
             indicateAddressBookChanged();
         }
         indicateRecycleBinChanged();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public ObservableList<ReadOnlyPerson> getRecycleBinPersonList() {
         return FXCollections.unmodifiableObservableList(filteredRecycle);
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void updateFilteredBinList(Predicate<ReadOnlyPerson> predicate) {
@@ -689,7 +734,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         filteredRecycle.setPredicate(predicate);
     }
 ```
-###### \java\seedu\address\model\util\SampleRecycleUtil.java
+###### /java/seedu/address/model/util/SampleRecycleUtil.java
 ``` java
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
@@ -699,23 +744,23 @@ public class SampleRecycleUtil {
         try {
             return new Person[] {
                 new Person(new Name("Alex Yeohre"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                    new Address("Blk 30 Geylang Street 29, #06-40"), getTagSet("friends"),
+                    new Address("Blk 30 Geylang Street 29, #06-40"), new HashSet<>(),
                     new HashSet<>(), new DateAdded("01/01/2016 11:11:53")),
                 new Person(new Name("Bernice Yure"), new Phone("99272758"), new Email("berniceyu@example.com"),
                     new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                    getTagSet("colleagues", "friends"), new HashSet<>(),
+                    new HashSet<>(), new HashSet<>(),
                     new DateAdded("07/02/2016 12:00:01")),
                 new Person(new Name("Charlotte Oliveirore"), new Phone("93210283"), new Email("charlotte@example.com"),
-                    new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), getTagSet("neighbours"),
+                    new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), new HashSet<>(),
                     new HashSet<>(), new DateAdded("01/05/2016 12:00:01")),
                 new Person(new Name("David Lire"), new Phone("91031282"), new Email("lidavid@example.com"),
-                    new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), getTagSet("family"),
+                    new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), new HashSet<>(),
                     new HashSet<>(), new DateAdded("15/09/2017 12:00:01")),
                 new Person(new Name("Irfan Ibrahimre"), new Phone("92492021"), new Email("irfan@example.com"),
-                    new Address("Blk 47 Tampines Street 20, #17-35"), getTagSet("classmates"),
+                    new Address("Blk 47 Tampines Street 20, #17-35"), new HashSet<>(),
                     new HashSet<>(), new DateAdded("15/09/2017 12:01:01")),
                 new Person(new Name("Roy Balakrishnanre"), new Phone("92624417"), new Email("royb@example.com"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"), getTagSet("colleagues"),
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), new HashSet<>(),
                     new HashSet<>(), new DateAdded("20/09/2017 12:00:01"))
             };
         } catch (IllegalValueException e) {
@@ -750,7 +795,7 @@ public class SampleRecycleUtil {
 
 }
 ```
-###### \java\seedu\address\storage\RecycleBinStorage.java
+###### /java/seedu/address/storage/RecycleBinStorage.java
 ``` java
 /**
  * Represents a storage for {@link seedu.address.model.AddressBook}.
@@ -789,7 +834,7 @@ public interface RecycleBinStorage {
 
 }
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     // ================ RecycleBinStorage methods ==============================
 
@@ -832,7 +877,7 @@ public interface RecycleBinStorage {
         }
     }
 ```
-###### \java\seedu\address\storage\XmlRecycleBinStorage.java
+###### /java/seedu/address/storage/XmlRecycleBinStorage.java
 ``` java
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -896,4 +941,123 @@ public class XmlRecycleBinStorage implements RecycleBinStorage {
     }
 
 }
+```
+###### /java/seedu/address/ui/RecycleBinCard.java
+``` java
+/**
+ * An UI component that displays information of a person in the recycle bin.
+ */
+public class RecycleBinCard extends UiPart<Region> {
+
+    private static final String FXML = "RecycleBinCard.fxml";
+
+    public final ReadOnlyPerson person;
+
+    @FXML
+    private HBox cardPane;
+    @FXML
+    private Label name;
+    @FXML
+    private Label id;
+    @FXML
+    private Label phone;
+    @FXML
+    private Label email;
+    @FXML
+    private Label p;
+    @FXML
+    private Label e;
+
+
+    public RecycleBinCard(ReadOnlyPerson person, int displayedIndex) {
+        super(FXML);
+        this.person = person;
+        id.setText(displayedIndex + ". ");
+        p.setText("     p:");
+        e.setText("     e:");
+        bindListeners(person);
+    }
+
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(ReadOnlyPerson person) {
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof RecycleBinCard)) {
+            return false;
+        }
+
+        // state check
+        RecycleBinCard card = (RecycleBinCard) other;
+        return id.getText().equals(card.id.getText())
+                && person.equals(card.person);
+    }
+}
+```
+###### /java/seedu/address/ui/RecycleBinPanel.java
+``` java
+/**
+ * Panel containing the list of persons in bin.
+ */
+public class RecycleBinPanel extends UiPart<Region> {
+    private static final String FXML = "RecycleBinPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(RecycleBinPanel.class);
+
+    private TabPane tabPane;
+
+    @FXML
+    private ListView<RecycleBinCard> personListView;
+
+
+    public RecycleBinPanel(ObservableList<ReadOnlyPerson> personList, TabPane tab) {
+        super(FXML);
+        this.tabPane = tab;
+        setConnections(personList);
+        registerAsAnEventHandler(this);
+    }
+
+    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
+        ObservableList<RecycleBinCard> mappedList = EasyBind.map(
+                personList, (person) -> new RecycleBinCard(person, personList.indexOf(person) + 1));
+        personListView.setItems(mappedList);
+        personListView.setCellFactory(listView -> new PersonListViewCell());
+    }
+
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     */
+    class PersonListViewCell extends ListCell<RecycleBinCard> {
+
+        @Override
+        protected void updateItem(RecycleBinCard person, boolean empty) {
+            super.updateItem(person, empty);
+
+            if (empty || person == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(person.getRoot());
+            }
+        }
+    }
+}
+
+
+
 ```

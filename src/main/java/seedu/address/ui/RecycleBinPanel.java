@@ -13,12 +13,6 @@ import javafx.scene.layout.Region;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.ReadOnlyPerson;
-
-
-
-
-
-
 //@@author Pengyuz
 /**
  * Panel containing the list of persons in bin.
@@ -30,7 +24,7 @@ public class RecycleBinPanel extends UiPart<Region> {
     private TabPane tabPane;
 
     @FXML
-    private ListView<PersonCard> personListView;
+    private ListView<RecycleBinCard> personListView;
 
 
     public RecycleBinPanel(ObservableList<ReadOnlyPerson> personList, TabPane tab) {
@@ -41,8 +35,8 @@ public class RecycleBinPanel extends UiPart<Region> {
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
-        ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+        ObservableList<RecycleBinCard> mappedList = EasyBind.map(
+                personList, (person) -> new RecycleBinCard(person, personList.indexOf(person) + 1));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
     }
@@ -51,10 +45,10 @@ public class RecycleBinPanel extends UiPart<Region> {
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */
-    class PersonListViewCell extends ListCell<PersonCard> {
+    class PersonListViewCell extends ListCell<RecycleBinCard> {
 
         @Override
-        protected void updateItem(PersonCard person, boolean empty) {
+        protected void updateItem(RecycleBinCard person, boolean empty) {
             super.updateItem(person, empty);
 
             if (empty || person == null) {

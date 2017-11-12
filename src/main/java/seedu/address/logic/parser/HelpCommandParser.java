@@ -89,7 +89,7 @@ public class HelpCommandParser implements Parser<HelpCommand> {
         } else if (input.equals(ScheduleRemoveCommand.COMMAND_WORD)) {
             return new HelpCommand("scheduleremove");
         } else if (input.equals(BinclearCommand.COMMAND_WORD)) {
-            return new HelpCommand("bin-clear");
+            return new HelpCommand("bin-fresh");
         } else if (input.equals(BindeleteCommand.COMMAND_WORD)) {
             return new HelpCommand("bin-delete");
         } else if (input.equals(BinrestoreCommand.COMMAND_WORD)) {

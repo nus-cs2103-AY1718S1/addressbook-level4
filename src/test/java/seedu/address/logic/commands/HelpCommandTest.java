@@ -69,7 +69,7 @@ public class HelpCommandTest {
         result = new HelpCommand("undo").execute();
         assertEquals(UndoCommand.MESSAGE_USAGE, result.feedbackToUser);
 
-        result = new HelpCommand("bin-clear").execute();
+        result = new HelpCommand("bin-fresh").execute();
         assertEquals(BinclearCommand.MESSAGE_USAGE, result.feedbackToUser);
 
         result = new HelpCommand("bin-delete").execute();

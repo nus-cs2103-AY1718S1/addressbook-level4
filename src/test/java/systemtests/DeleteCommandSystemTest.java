@@ -124,11 +124,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         ArrayList<ReadOnlyPerson> target = new ArrayList<>();
         target.add(targetPerson);
         try {
-            if (model.getRecycleBin().getPersonList().contains(targetPerson)) {
-                model.deletePerson(targetPerson);
-            } else {
-                model.deletePerson(target);
-            }
+            System.out.println(model.getRecycleBin().getPersonList().size()+"from remove person");
+            model.deletePerson(target);
+            System.out.println(model.getRecycleBin().getPersonList().size()+"from remove person");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");
         } catch (DuplicatePersonException d) {
@@ -176,7 +174,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
+        System.out.println(getModel().getRecycleBin().getPersonList().size());
         executeCommand(command);
+        System.out.println(getModel().getRecycleBin().getPersonList().size());
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         if (expectedSelectedCardIndex != null) {

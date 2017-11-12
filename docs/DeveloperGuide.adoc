@@ -991,9 +991,8 @@ The way we deal with recycle bin storage is the same as we deal with addressbook
 
 *Bin commands*
 
-* `bin-list` : List all the people in the recycle bin in list.
 * `bin-delete` : Delete the people in the recycle bin by index as shown in the list.
-* `bin-clear` : Delete all the peopel in the recycle bin.
+* `bin-fresh` : Delete all the peopel in the recycle bin.
 * `bin-restore` : Restore the people in the recycle bin to address book by index.
 
 [NOTE]

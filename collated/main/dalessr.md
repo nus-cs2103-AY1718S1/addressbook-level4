@@ -1,5 +1,5 @@
 # dalessr
-###### \java\seedu\address\commons\events\ui\BrowserPanelFindRouteEvent.java
+###### /java/seedu/address/commons/events/ui/BrowserPanelFindRouteEvent.java
 ``` java
 /**
  * Represents a display of route from start location to end location in the Browser Panel
@@ -28,7 +28,7 @@ public class BrowserPanelFindRouteEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\BrowserPanelShowLocationEvent.java
+###### /java/seedu/address/commons/events/ui/BrowserPanelShowLocationEvent.java
 ``` java
 /**
  * Represents a display of location in the Browser Panel
@@ -51,7 +51,7 @@ public class BrowserPanelShowLocationEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\ClearPersonListEvent.java
+###### /java/seedu/address/commons/events/ui/ClearPersonListEvent.java
 ``` java
 /**
  * Indicates a request to clear the person list
@@ -64,122 +64,82 @@ public class ClearPersonListEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\OpenFaceBookWebViewEvent.java
+###### /java/seedu/address/commons/events/ui/OpenFaceBookWebViewEvent.java
 ``` java
 /**
  * Indicates a request for opening facebook webview
  */
 public class OpenFaceBookWebViewEvent extends BaseEvent {
 
-    private final PersonCard newSelection;
-
-    public OpenFaceBookWebViewEvent(PersonCard newSelection) {
-        this.newSelection = newSelection;
-    }
+    public OpenFaceBookWebViewEvent() {}
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
-    public PersonCard getNewSelection() {
-        return newSelection;
-    }
 }
 ```
-###### \java\seedu\address\commons\events\ui\OpenGithubWebViewEvent.java
+###### /java/seedu/address/commons/events/ui/OpenGithubWebViewEvent.java
 ``` java
 /**
  * Indicates a request for opening github webview
  */
 public class OpenGithubWebViewEvent extends BaseEvent {
 
-    private final PersonCard newSelection;
-
-    public OpenGithubWebViewEvent(PersonCard newSelection) {
-        this.newSelection = newSelection;
-    }
+    public OpenGithubWebViewEvent() {}
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
-    public PersonCard getNewSelection() {
-        return newSelection;
-    }
 }
 ```
-###### \java\seedu\address\commons\events\ui\OpenInstagramWebViewEvent.java
+###### /java/seedu/address/commons/events/ui/OpenInstagramWebViewEvent.java
 ``` java
 /**
  * Indicates a request for opening instagram webview
  */
 public class OpenInstagramWebViewEvent extends BaseEvent {
 
-    private final PersonCard newSelection;
-
-    public OpenInstagramWebViewEvent(PersonCard newSelection) {
-        this.newSelection = newSelection;
-    }
+    public OpenInstagramWebViewEvent() {}
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
-    public PersonCard getNewSelection() {
-        return newSelection;
-    }
 }
 ```
-###### \java\seedu\address\commons\events\ui\OpenNusModsWebViewEvent.java
+###### /java/seedu/address/commons/events/ui/OpenNusModsWebViewEvent.java
 ``` java
 /**
  * Indicates a request for opening nusmods webview
  */
 public class OpenNusModsWebViewEvent extends BaseEvent {
 
-    private final PersonCard newSelection;
-
-    public OpenNusModsWebViewEvent(PersonCard newSelection) {
-        this.newSelection = newSelection;
-    }
+    public OpenNusModsWebViewEvent() {}
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
-    public PersonCard getNewSelection() {
-        return newSelection;
-    }
 }
 ```
-###### \java\seedu\address\commons\events\ui\OpenTwitterWebViewEvent.java
+###### /java/seedu/address/commons/events/ui/OpenTwitterWebViewEvent.java
 ``` java
 /**
  * Indicates a request for opening twitter webview
  */
 public class OpenTwitterWebViewEvent extends BaseEvent {
 
-    private final PersonCard newSelection;
-
-    public OpenTwitterWebViewEvent(PersonCard newSelection) {
-        this.newSelection = newSelection;
-    }
+    public OpenTwitterWebViewEvent() {}
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
-    public PersonCard getNewSelection() {
-        return newSelection;
-    }
 }
 ```
-###### \java\seedu\address\logic\commands\BirthdayAddCommand.java
+###### /java/seedu/address/logic/commands/BirthdayAddCommand.java
 ``` java
 /**
  * Add a birthday to an existing person in the address book.
@@ -241,7 +201,7 @@ public class BirthdayAddCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BirthdayRemoveCommand.java
+###### /java/seedu/address/logic/commands/BirthdayRemoveCommand.java
 ``` java
 /**
  * Remove a birthday from an existing person in the address book.
@@ -298,7 +258,7 @@ public class BirthdayRemoveCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindCommand.java
+###### /java/seedu/address/logic/commands/FindCommand.java
 ``` java
     @Override
     public CommandResult execute() {
@@ -351,13 +311,15 @@ public class BirthdayRemoveCommand extends UndoableCommand {
 
         NameContainsKeywordsPredicate updatedPredicate = new NameContainsKeywordsPredicate(namesToSearch);
         model.updateFilteredPersonList(updatedPredicate);
+        Index defaultIndex = new Index(0);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
     /**
      * Get a list of names whose contact details contain all the address keywords provided by user.
      * @param addressKeywords a list of address keywords to search for
-     * @return a list of names found by searching the corresponding address keywords
+     * Returns a list of names found by searching the corresponding address keywords
      */
     private ArrayList<String> getNamesFromAddressKeywords(ArrayList<String> addressKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
@@ -385,7 +347,7 @@ public class BirthdayRemoveCommand extends UndoableCommand {
     /**
      * Get a list of names whose contact details contain at least one of the email keywords provided by user.
      * @param emailKeywords a list of email keywords to search for
-     * @return a list of names found by searching the corresponding email keywords
+     * Returns a list of names found by searching the corresponding email keywords
      */
     private ArrayList<String> getNamesFromEmailKeywords(ArrayList<String> emailKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
@@ -410,7 +372,7 @@ public class BirthdayRemoveCommand extends UndoableCommand {
     /**
      * Get a list of names whose contact details contain at least one of the phone keywords provided by user.
      * @param phoneKeywords a list of phone keywords to search for
-     * @return a list of names found by searching the corresponding phone keywords
+     * Returns a list of names found by searching the corresponding phone keywords
      */
     private ArrayList<String> getNamesFromPhoneKeywords(ArrayList<String> phoneKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
@@ -435,7 +397,7 @@ public class BirthdayRemoveCommand extends UndoableCommand {
     /**
      * Get a list of names whose contact details contain at least one of the name keywords provided by user.
      * @param nameKeywords a list of name keywords to search for
-     * @return a list of names found by searching the corresponding name keywords
+     * Returns a list of names found by searching the corresponding name keywords
      */
     private ArrayList<String> getNamesFromNameKeywords(ArrayList<String> nameKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
@@ -458,7 +420,7 @@ public class BirthdayRemoveCommand extends UndoableCommand {
     }
 
 ```
-###### \java\seedu\address\logic\commands\MapRouteCommand.java
+###### /java/seedu/address/logic/commands/MapRouteCommand.java
 ``` java
 /**
  * Shows the route from the entered location to the selected person's address on Google map.
@@ -474,7 +436,8 @@ public class MapRouteCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ADDRESS + "Blk 30 Clementi Street 29";
 
-    public static final String MESSAGE_FIND_ROUTE_SUCCESS = "Found Route to Person: %1$s";
+    public static final String MESSAGE_FIND_ROUTE_SUCCESS = "Found Route to Person: %1$s\n"
+            + "Please click on the browser tab below to view the map.";
 
     private final Index targetIndex;
     private final String startLocation;
@@ -507,7 +470,7 @@ public class MapRouteCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\MapShowCommand.java
+###### /java/seedu/address/logic/commands/MapShowCommand.java
 ``` java
 /**
  * Shows the location of a person on Google map identified using it's last displayed index from the address book.
@@ -521,7 +484,8 @@ public class MapShowCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Located Person: %1$s";
+    public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Located Person: %1$s\n"
+            + "Please click on the browser tab below to view the map.";
 
     private final Index targetIndex;
 
@@ -552,7 +516,7 @@ public class MapShowCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
     private static ArrayList<String> commandNames = new ArrayList<>();
 
@@ -569,6 +533,7 @@ public class MapShowCommand extends Command {
         commandNames.add(BirthdayAddCommand.COMMAND_WORD);
         commandNames.add(BirthdayRemoveCommand.COMMAND_WORD);
         commandNames.add(SelectCommand.COMMAND_WORD);
+        commandNames.add(SwitchThemeCommand.COMMAND_WORD);
         commandNames.add(MapShowCommand.COMMAND_WORD);
         commandNames.add(MapRouteCommand.COMMAND_WORD);
         commandNames.add(DeleteCommand.COMMAND_WORD);
@@ -586,7 +551,7 @@ public class MapShowCommand extends Command {
     }
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
     public static ArrayList<String> getCommandNames() {
         return commandNames;
@@ -594,7 +559,7 @@ public class MapShowCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\parser\BirthdayAddCommandParser.java
+###### /java/seedu/address/logic/parser/BirthdayAddCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new BirthdayAddCommand object
@@ -625,7 +590,7 @@ public class BirthdayAddCommandParser implements Parser<BirthdayAddCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\BirthdayRemoveCommandParser.java
+###### /java/seedu/address/logic/parser/BirthdayRemoveCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new BirthdayRemoveCommand object
@@ -650,7 +615,7 @@ public class BirthdayRemoveCommandParser implements Parser<BirthdayRemoveCommand
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FindCommandParser.java
+###### /java/seedu/address/logic/parser/FindCommandParser.java
 ``` java
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
@@ -695,8 +660,6 @@ public class BirthdayRemoveCommandParser implements Parser<BirthdayRemoveCommand
                 }
             }
             trimmedNames = trimmedArgs.substring(indexOfName + 2, attributeIndexArray[index + 1]).trim();
-            //Throw an error if there is no keyword provided for the specified type of attribute.
-            //Same below.
             if (trimmedNames.equals("")) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -794,7 +757,7 @@ public class BirthdayRemoveCommandParser implements Parser<BirthdayRemoveCommand
     }
 }
 ```
-###### \java\seedu\address\logic\parser\MapRouteCommandParser.java
+###### /java/seedu/address/logic/parser/MapRouteCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new MapRouteCommand object
@@ -825,7 +788,7 @@ public class MapRouteCommandParser implements Parser<MapRouteCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\MapShowCommandParser.java
+###### /java/seedu/address/logic/parser/MapShowCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new MapShowCommand object
@@ -847,7 +810,7 @@ public class MapShowCommandParser implements Parser<MapShowCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\person\Birthday.java
+###### /java/seedu/address/model/person/Birthday.java
 ``` java
 /**
  * Represents a Person's birthday in the address book.
@@ -912,108 +875,224 @@ public class Birthday {
 
 }
 ```
-###### \java\seedu\address\model\util\SampleDataUtil.java
+###### /java/seedu/address/model/util/SampleDataUtil.java
 ``` java
         try {
             Person[] persons =  new Person[] {
-                new Person(new Name("Alex Yeoh"), new Birthday("30/09/2000"), new Phone("87438807"),
-                        new Email("alexyeoh@example.com"), new Address("Blk 30 Geylang Street 29, #06-40"),
-                        getTagSet("friends", "classmates"), new HashSet<>(),
+                new Person(new Name("Alex Yeoh"),
+                        new Birthday("30/09/2000"),
+                        new Phone("87438807"),
+                        new Email("alexyeoh@example.com"),
+                        new Address("Blk 30 Geylang Street 29, #06-40"),
+                        getTagSet("friends", "classmates"),
+                        new HashSet<>(),
                         new DateAdded("01/01/2016 11:11:53")),
-                new Person(new Name("Bernice Yu"), new Birthday("27/02/1983"), new Phone("99272758"),
-                        new Email("berniceyu@example.com"), new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                        getTagSet("colleagues", "friends"), new HashSet<>(),
+
+                new Person(new Name("Bernice Yu"),
+                        new Birthday("27/02/1983"),
+                        new Phone("99272758"),
+                        new Email("berniceyu@example.com"),
+                        new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
+                        getTagSet("colleagues", "friends"),
+                        new HashSet<>(),
                         new DateAdded("07/02/2016 12:00:01")),
-                new Person(new Name("Charlotte Oliveiro"), new Birthday("03/12/1992"), new Phone("93210283"),
-                        new Email("charlotte@example.com"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                        getTagSet("neighbours"), new HashSet<>(),
+
+                new Person(new Name("Charlotte Oliveiro"),
+                        new Birthday("03/12/1992"),
+                        new Phone("93210283"),
+                        new Email("charlotte@example.com"),
+                        new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
+                        getTagSet("neighbours"),
+                        new HashSet<>(),
                         new DateAdded("01/05/2016 12:00:01")),
-                new Person(new Name("David Li"), new Birthday("30/05/1976"), new Phone("91031282"),
-                        new Email("lidavid@example.com"), new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                        getTagSet("family"), new HashSet<>(),
+
+                new Person(new Name("David Li"),
+                        new Birthday("30/05/1976"),
+                        new Phone("91031282"),
+                        new Email("lidavid@example.com"),
+                        new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
+                        getTagSet("family"),
+                        new HashSet<>(),
                         new DateAdded("15/09/2016 12:00:01")),
-                new Person(new Name("Irfan Ibrahim"), new Birthday("18/11/1960"), new Phone("92492021"),
-                        new Email("irfan@example.com"), new Address("Blk 47 Tampines Street 20, #17-35"),
-                        getTagSet("profs"), new HashSet<>(),
+
+                new Person(new Name("Irfan Ibrahim"),
+                        new Birthday("18/11/1960"),
+                        new Phone("92492021"),
+                        new Email("irfan@example.com"),
+                        new Address("Blk 47 Tampines Street 20, #17-35"),
+                        getTagSet("profs"),
+                        new HashSet<>(),
                         new DateAdded("15/09/2016 12:01:01")),
-                new Person(new Name("Roy Balakrishnan"), new Birthday("25/08/1996"), new Phone("92624417"),
-                        new Email("royb@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31"),
-                        getTagSet("colleagues"), new HashSet<>(),
+
+                new Person(new Name("Roy Balakrishnan"),
+                        new Birthday("25/08/1996"),
+                        new Phone("92624417"),
+                        new Email("royb@example.com"),
+                        new Address("Blk 45 Aljunied Street 85, #11-31"),
+                        getTagSet("colleagues"),
+                        new HashSet<>(),
                         new DateAdded("20/09/2016 12:00:01")),
 
-                new Person(new Name("Quintin Levell"), new Birthday("04/09/1997"), new Phone("66012135"),
-                        new Email("levellq@example.com"), new Address("Blk 39 Aljunied Street 18, #03-44"),
-                        getTagSet("friends", "cs2103"), new HashSet<>(),
+                new Person(new Name("Quintin Levell"),
+                        new Birthday("04/09/1997"),
+                        new Phone("66012135"),
+                        new Email("levellq@example.com"),
+                        new Address("Blk 39 Aljunied Street 18, #03-44"),
+                        getTagSet("friends", "cs2103"),
+                        new HashSet<>(),
                         new DateAdded("01/10/2016 11:11:53")),
-                new Person(new Name("Gino Trost"), new Birthday("27/05/1987"), new Phone("85154314"),
-                        new Email("trostg@example.com"), new Address("Blk 40 Boon Lay Street 87, #03-12"),
-                        getTagSet("colleagues", "friends"), new HashSet<>(),
+
+                new Person(new Name("Gino Trost"),
+                        new Birthday("27/05/1987"),
+                        new Phone("85154314"),
+                        new Email("trostg@example.com"),
+                        new Address("Blk 40 Boon Lay Street 87, #03-12"),
+                        getTagSet("colleagues", "friends"),
+                        new HashSet<>(),
                         new DateAdded("07/10/2016 12:00:01")),
-                new Person(new Name("Honey Digiacomo"), new Birthday("14/12/1994"), new Phone("98500414"),
-                        new Email("digiahoney@example.com"), new Address("Blk 166 Ang Mo Kio Vista, #03-28"),
-                        getTagSet("neighbours"), new HashSet<>(),
+
+                new Person(new Name("Honey Digiacomo"),
+                        new Birthday("14/12/1994"),
+                        new Phone("98500414"),
+                        new Email("digiahoney@example.com"),
+                        new Address("Blk 166 Ang Mo Kio Vista, #03-28"),
+                        getTagSet("neighbours"),
+                        new HashSet<>(),
                         new DateAdded("01/12/2016 12:00:01")),
-                new Person(new Name("Fred Greenland"), new Birthday("27/05/1982"), new Phone("62667227"),
-                        new Email("greenfd@example.com"), new Address("Blk 395 Woodlands Street 10, #15-18"),
-                        getTagSet("family"), new HashSet<>(),
+
+                new Person(new Name("Fred Greenland"),
+                        new Birthday("27/05/1982"),
+                        new Phone("62667227"),
+                        new Email("greenfd@example.com"),
+                        new Address("Blk 395 Woodlands Street 10, #15-18"),
+                        getTagSet("family"),
+                        new HashSet<>(),
                         new DateAdded("15/12/2016 12:00:01")),
-                new Person(new Name("Francina Schepers"), new Birthday("07/08/1997"), new Phone("62667887"),
-                        new Email("francina@example.com"), new Address("Blk 477 Jurong East Street 28, #01-33"),
-                        getTagSet("classmates", "cs2103"), new HashSet<>(),
+
+                new Person(new Name("Francina Schepers"),
+                        new Birthday("07/08/1997"),
+                        new Phone("62667887"),
+                        new Email("francina@example.com"),
+                        new Address("Blk 477 Jurong East Street 28, #01-33"),
+                        getTagSet("classmates", "cs2103"),
+                        new HashSet<>(),
                         new DateAdded("01/02/2017 12:01:01")),
-                new Person(new Name("Ima Mauffray"), new Birthday("17/10/1969"), new Phone("86159036"),
-                        new Email("imamau@example.com"), new Address("Blk 395 Lorong 6 Orchard Road, #04-36"),
-                        getTagSet("profs"), new HashSet<>(),
+
+                new Person(new Name("Ima Mauffray"),
+                        new Birthday("17/10/1969"),
+                        new Phone("86159036"),
+                        new Email("imamau@example.com"),
+                        new Address("Blk 395 Lorong 6 Orchard Road, #04-36"),
+                        getTagSet("profs"),
+                        new HashSet<>(),
                         new DateAdded("20/02/2017 12:00:01")),
 
-                new Person(new Name("Han Slankard"), new Birthday("18/10/1970"), new Phone("82034763"),
-                        new Email("hans@example.com"), new Address("Blk 322 Lorong 2 Paya Lebar, #15-21"),
-                        getTagSet("family"), new HashSet<>(),
+                new Person(new Name("Han Slankard"),
+                        new Birthday("18/10/1970"),
+                        new Phone("82034763"),
+                        new Email("hans@example.com"),
+                        new Address("Blk 322 Lorong 2 Paya Lebar, #15-21"),
+                        getTagSet("family"),
+                        new HashSet<>(),
                         new DateAdded("01/05/2017 11:11:53")),
-                new Person(new Name("Audry Sustaita"), new Birthday("25/10/1983"), new Phone("72394273"),
-                        new Email("audrys@example.com"), new Address("Blk 20 Jurong West Street 82, #10-02"),
-                        getTagSet("colleagues", "friends"), new HashSet<>(),
+
+                new Person(new Name("Audry Sustaita"),
+                        new Birthday("25/10/1983"),
+                        new Phone("72394273"),
+                        new Email("audrys@example.com"),
+                        new Address("Blk 20 Jurong West Street 82, #10-02"),
+                        getTagSet("colleagues", "friends"),
+                        new HashSet<>(),
                         new DateAdded("07/05/2017 12:00:01")),
-                new Person(new Name("Jade Dimas"), new Birthday("28/01/1976"), new Phone("99282463"),
-                        new Email("dimasj@example.com"), new Address("Blk 142 Geylang East Street 86, #18-33"),
-                        getTagSet("tutors"), new HashSet<>(),
+
+                new Person(new Name("Jade Dimas"),
+                        new Birthday("28/01/1976"),
+                        new Phone("99282463"),
+                        new Email("dimasj@example.com"),
+                        new Address("Blk 142 Geylang East Street 86, #18-33"),
+                        getTagSet("tutors"),
+                        new HashSet<>(),
                         new DateAdded("01/08/2017 12:00:01")),
-                new Person(new Name("Lory Prosper"), new Birthday("05/05/1978"), new Phone("65029401"),
-                        new Email("lory123@example.com"), new Address("Blk 145 Shunfu Point, #11-05"),
-                        getTagSet("family"), new HashSet<>(),
+
+                new Person(new Name("Lory Prosper"),
+                        new Birthday("05/05/1978"),
+                        new Phone("65029401"),
+                        new Email("lory123@example.com"),
+                        new Address("Blk 145 Shunfu Point, #11-05"),
+                        getTagSet("family"),
+                        new HashSet<>(),
                         new DateAdded("15/09/2017 12:00:01")),
-                new Person(new Name("Leone Tipps"), new Birthday("08/12/1989"), new Phone("82058265"),
-                        new Email("tippsl@example.com"), new Address("Blk 39 Ang Mo Kio Street 86, #07-22"),
-                        getTagSet("classmates"), new HashSet<>(),
+
+                new Person(new Name("Leone Tipps"),
+                        new Birthday("08/12/1989"),
+                        new Phone("82058265"),
+                        new Email("tippsl@example.com"),
+                        new Address("Blk 39 Ang Mo Kio Street 86, #07-22"),
+                        getTagSet("classmates"),
+                        new HashSet<>(),
                         new DateAdded("28/09/2017 12:01:01")),
-                new Person(new Name("Rusty Lucena"), new Birthday("12/06/1973"), new Phone("93376847"),
-                        new Email("lucenar@example.com"), new Address("Blk 345 Geylang East Street 27, #15-03"),
-                        getTagSet("tutors"), new HashSet<>(),
+
+                new Person(new Name("Rusty Lucena"),
+                        new Birthday("12/06/1973"),
+                        new Phone("93376847"),
+                        new Email("lucenar@example.com"),
+                        new Address("Blk 345 Geylang East Street 27, #15-03"),
+                        getTagSet("tutors"),
+                        new HashSet<>(),
                         new DateAdded("01/10/2017 12:00:01")),
 
-                new Person(new Name("Rhea Vallo"), new Birthday("18/09/1999"), new Phone("65028849"),
-                        new Email("vallor@example.com"), new Address("Blk 12 Lorong 14 Marine Parade, #05-25"),
-                        getTagSet("family"), new HashSet<>(),
+                new Person(new Name("Rhea Vallo"),
+                        new Birthday("18/09/1999"),
+                        new Phone("65028849"),
+                        new Email("vallor@example.com"),
+                        new Address("Blk 12 Lorong 14 Marine Parade, #05-25"),
+                        getTagSet("family"),
+                        new HashSet<>(),
                         new DateAdded("01/10/2017 11:11:53")),
-                new Person(new Name("Stanford Blakemore"), new Birthday("15/01/1983"), new Phone("52170156"),
-                        new Email("stanford@example.com"), new Address("Blk 397 Serangoon Gardens Street 24, #03-26"),
-                        getTagSet("colleagues", "friends"), new HashSet<>(),
+
+                new Person(new Name("Stanford Blakemore"),
+                        new Birthday("15/01/1983"),
+                        new Phone("52170156"),
+                        new Email("stanford@example.com"),
+                        new Address("Blk 397 Serangoon Gardens Street 24, #03-26"),
+                        getTagSet("colleagues", "friends"),
+                        new HashSet<>(),
                         new DateAdded("10/10/2017 12:00:01")),
-                new Person(new Name("Lori Bancroft"), new Birthday("21/03/1992"), new Phone("88305967"),
-                        new Email("lorib@example.com"), new Address("Blk 453 Jurong East Street 25, #10-13"),
-                        getTagSet("neighbours"), new HashSet<>(),
+
+                new Person(new Name("Lori Bancroft"),
+                        new Birthday("21/03/1992"),
+                        new Phone("88305967"),
+                        new Email("lorib@example.com"),
+                        new Address("Blk 453 Jurong East Street 25, #10-13"),
+                        getTagSet("neighbours"),
+                        new HashSet<>(),
                         new DateAdded("15/10/2017 12:00:01")),
-                new Person(new Name("Hollis Biles"), new Birthday("29/07/1988"), new Phone("92264773"),
-                        new Email("bilesh@example.com"), new Address("Blk 48 Lorong 10 Caldecott, #07-02"),
-                        getTagSet("family"), new HashSet<>(),
+
+                new Person(new Name("Hollis Biles"),
+                        new Birthday("29/07/1988"),
+                        new Phone("92264773"),
+                        new Email("bilesh@example.com"),
+                        new Address("Blk 48 Lorong 10 Caldecott, #07-02"),
+                        getTagSet("family"),
+                        new HashSet<>(),
                         new DateAdded("29/10/2017 12:00:01")),
-                new Person(new Name("Linn Mcewen"), new Birthday("10/10/1966"), new Phone("93045568"),
-                        new Email("mcewenlinn@example.com"), new Address("Blk 17 Boon Lay Street 29, #13-32"),
-                        getTagSet("profs"), new HashSet<>(),
+
+                new Person(new Name("Linn Mcewen"),
+                        new Birthday("10/10/1966"),
+                        new Phone("93045568"),
+                        new Email("mcewenlinn@example.com"),
+                        new Address("Blk 17 Boon Lay Street 29, #13-32"),
+                        getTagSet("profs"),
+                        new HashSet<>(),
                         new DateAdded("01/11/2017 12:01:01")),
-                new Person(new Name("Melvin Sigmund"), new Birthday("02/09/1995"), new Phone("66083995"),
-                        new Email("melvins@example.com"), new Address("Blk 29 Aljunied Street 76, #09-25"),
-                        getTagSet("colleagues"), new HashSet<>(),
+
+                new Person(new Name("Melvin Sigmund"),
+                        new Birthday("02/09/1995"),
+                        new Phone("66083995"),
+                        new Email("melvins@example.com"),
+                        new Address("Blk 29 Aljunied Street 76, #09-25"),
+                        getTagSet("colleagues"),
+                        new HashSet<>(),
                         new DateAdded("05/11/2017 12:00:01"))
             };
 
@@ -1199,7 +1278,7 @@ public class Birthday {
 
 }
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
     /**
      * Loads the google map page on the browser specifying the location of the person selected.
@@ -1225,7 +1304,7 @@ public class Birthday {
     }
 
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
     @Subscribe
     private void handleBrowserPanelShowLocationEvent(BrowserPanelShowLocationEvent event) {
@@ -1240,7 +1319,7 @@ public class Birthday {
     }
 }
 ```
-###### \java\seedu\address\ui\PersonDetailsPanel.java
+###### /java/seedu/address/ui/PersonDetailsPanel.java
 ``` java
 /**
  * The Contact Details Panel of the App.
@@ -1366,6 +1445,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
         emailLabel.setText("");
         addressLabel.setText("");
         addressLabelContinue.setText("");
+        eventsArea.setText("");
     }
 
     @Subscribe
@@ -1497,7 +1577,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     }
 }
 ```
-###### \resources\view\PersonDetailsPanel.fxml
+###### /resources/view/PersonDetailsPanel.fxml
 ``` fxml
 <StackPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
    <children>

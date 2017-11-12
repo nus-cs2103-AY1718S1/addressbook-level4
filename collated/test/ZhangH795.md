@@ -1,5 +1,39 @@
 # ZhangH795
-###### \java\seedu\address\logic\commands\TagAddCommandTest.java
+###### /java/guitests/ThemeGuiTest.java
+``` java
+public class ThemeGuiTest extends AddressBookGuiTest {
+    @Test
+    public void changeToDarkThemeTest() {
+        ArrayList<String> darkTheme = new ArrayList<>();
+        darkTheme.add("view/DarkTheme.css");
+        ChangeDarkThemeEvent darkThemeEvent = new ChangeDarkThemeEvent();
+
+        postNow(darkThemeEvent);
+        assertEquals(darkTheme, stage.getScene().getStylesheets());
+    }
+
+    @Test
+    public void changeToBrightThemeTest() {
+        ArrayList<String> brightTheme = new ArrayList<>();
+        brightTheme.add("view/BrightTheme.css");
+        ChangeBrightThemeEvent brightThemeEvent = new ChangeBrightThemeEvent();
+
+        postNow(brightThemeEvent);
+        assertEquals(brightTheme, stage.getScene().getStylesheets());
+    }
+
+    @Test
+    public void changeToDefaultThemeTest() {
+        ArrayList<String> defaultTheme = new ArrayList<>();
+        defaultTheme.add("view/Extensions.css");
+        ChangeDefaultThemeEvent defaultThemeEvent = new ChangeDefaultThemeEvent();
+
+        postNow(defaultThemeEvent);
+        assertEquals(defaultTheme, stage.getScene().getStylesheets());
+    }
+}
+```
+###### /java/seedu/address/logic/commands/TagAddCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -12,7 +46,7 @@ public class TagAddCommandTest {
     public void executeTagAddSinglePerson() throws Exception {
         showFirstPersonOnly(model);
 
-        Set<Tag> singleTagSet = new HashSet<Tag>();
+        Set<Tag> singleTagSet = new HashSet<>();
         singleTagSet.add(new Tag(VALID_TAG_HUSBAND));
 
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
@@ -25,17 +59,22 @@ public class TagAddCommandTest {
         Person editedPerson = new PersonBuilder(personInFilteredList).withATags(VALID_TAG_HUSBAND).build();
         TagAddCommand tagAddCommand = prepareCommand(singlePersonIndexList, tagAddDescriptor);
 
-        String expectedMessage = String.format(TagAddCommand.MESSAGE_ADD_TAG_SUCCESS, editedPerson);
-
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new AddressBook(),
                 new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        String tagChangedDisplayRaw = editedPerson.getTags().toString();
+        int tagListStringStartIndex = 1;
+        int tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
+        String tagChangedDisplay = editedPerson.getName() + " Tag List: "
+                + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
+        String expectedMessage = String.format(TagAddCommand.MESSAGE_ADD_TAG_SUCCESS, tagChangedDisplay);
 
         assertCommandSuccess(tagAddCommand, model, expectedMessage, expectedModel);
 
         tagAddCommand = prepareCommand(singlePersonIndexList,
                 new TagAddDescriptor(new PersonBuilder().withATags(VALID_TAG_HUSBAND).build()));
-        assertCommandFailure(tagAddCommand, model, String.format(tagAddCommand.MESSAGE_TAG_ALREADY_EXISTS,
+        assertCommandFailure(tagAddCommand, model, String.format(TagAddCommand.MESSAGE_TAG_ALREADY_EXISTS,
                 "[" + VALID_TAG_HUSBAND + "]"));
     }
 
@@ -148,7 +187,7 @@ public class TagAddCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\TagFindCommandTest.java
+###### /java/seedu/address/logic/commands/TagFindCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code TagFindCommand}.
@@ -235,7 +274,7 @@ public class TagFindCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TagRemoveCommandTest.java
+###### /java/seedu/address/logic/commands/TagRemoveCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -251,7 +290,7 @@ public class TagRemoveCommandTest {
         singlePersonIndexList.add(INDEX_FIRST_PERSON);
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Set<Tag> singleTagSet = new HashSet<Tag>();
+        Set<Tag> singleTagSet = new HashSet<>();
         Tag onlyTag = new Tag(VALID_TAG_HUSBAND);
         singleTagSet.add(onlyTag);
 
