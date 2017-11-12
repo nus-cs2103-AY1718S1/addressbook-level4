@@ -20,14 +20,39 @@ You can download the latest `MedNus.jar` link:https://github.com/CS2103AUG2017-T
 . Make sure you have the latest version of SampleData.xml +
 You can download the latest `SampleData.xml` link:https://github.com/CS2103AUG2017-T17-B2/main/releases[here].
 . Copy the jar file to the folder you want to use as the home folder for your Address Book.
-. Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
-. Add a person to the AddressBook (e.g. add n/Test). A file 'data' will be created.
-. Close the application and open the newly created 'data' file.
-. Delete addressbook.xml in the 'data' file.
-. Move the SampleData.xml file into the 'data' file.
-. Rename the SampleData.xml file to addressbook.xml
+. Create a folder called `data` at the same directory as `MedNus.jar`.
+. Copy and paste `SampleData.xml` into the `data` folder.
+. Rename the `SampleData.xml` file to `addressbook.xml`.
 . Double-click the jar file to start the app.
 . The new data set should be uploaded and you can now start the manual testing.
+
+== Keyboard Shortcuts
+MedNus provides you with a list of Keyboard Shortcuts so that you can navigate and edit +
+the command box easily and manual test more effectively and efficiently.
+
+[width="59%",cols="20%,<40%,<40%",options="header",]
+|=======================================================================
+|Key To Enter |Expected Result |Remarks
+
+|*Escape* |Clears entire command box text field |-
+
+|*Alt* |Shifts text cursor to the start of the previous word |-
+
+|*Control* |Shifts text cursor to the end of the next word |-
+
+|*Shift-Alt* |Shifts text cursor all the way to the left |-
+
+|*Shift-Control* |Shifts text cursor all the way to the right |-
+
+|*Shift-Delete* |Deletes a chunk of word/blank space |For Mac Users
+
+|*Shift-Backspace* |Deletes a chunk of word/blank space |For Windows Users
+
+|*Right* (Add Command)|Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
+
+|*Right* (Edit Command)|Edit Command Shortcut to autofill Prefixes |"Edit INDEX" or "e INDEX" must be present at the start of the line
+
+|=======================================================================
 
 == General Commands
 This section shows you the general commands which allow you to manipulate the filtered list display. +
@@ -36,9 +61,34 @@ This section shows you the general commands which allow you to manipulate the fi
 |=======================================================================
 |Command To Enter |Expected Output |Remarks
 
-|`copy 2` |`Amanda Lee's email address has been copied to your clipboard.` |Copies email address of person at index 2 of the currently displayed list to your clipboard
+|`help` |1. Result display panel posts message: `Opened help window`. +
+2. Help window pops up and shows user guide. |
+
+|`add n/Massimo Alioto` |1. Result display panel posts message: `New person added: Massimo Alioto Phone: - Email: - Address: - BloodType: - Remark:  Relationship:  Tags:` +
+ 2. New contact added to the end of Contacts panel. |
+
+|`add n/Sue Yoo  p/80000000 e/SY@gmail.com a/170 Bishan Street b/AB r/Allergic to Honey d/lunch, tomorrow 3pm to 4pm t/Fever` |1. Result display panel posts message:
+`New person added: Sue Yoo Phone: 80000000 Email: sy@gmail.com Address: 170 Bishan Street BloodType: AB Remark: Allergic to Honey Relationship:  Tags: [Fever]` +
+2. New contact added to the end of Contacts panel. |
+
+|`list reverse` |1. Result display panel posts message: `Displayed list reverse`. +
+2. Contacts list in contacts panel reversed. |
+
+|`list ascending` |1. Result display panel posts message: `Listed persons by name in ascending order`. +
+2. Contacts list in contacts panel sorted by name in ascending order. |
+
+|`list descending` |1. Result display panel posts message: `Listed persons by name in descending order` +
+2. Contacts list in contacts panel sorted by name in descending order. |
+
+|`list tag xraycentre and brokenfeet or fracture and xraycentre` |1. Result display panel posts message: `Listed all persons with specified tags` +
+ 2. Contacts list in contacts panel filters Zeypher Lee and Thomas Lee. |
+
+|`bloodtype a` |1. Result display panel posts message: `2 persons listed!` +
+ 2. Contacts list in contacts panel filters Irfan Ibrahim and Alex Yeoh. |
 
 |`duplicates` |`2 persons listed!` |Finds all persons who share names with at least 1 other person in MedNus
+
+|`copy 2` |`Amanda Lee's email address has been copied to your clipboard.` |Copies email address of person at index 2 of the currently displayed list to your clipboard
 
 |`batch Flu Fever` |`Deleted Persons with Tags: [[Flu], [Fever]]` |Removes all persons with tags `Flu` or `Fever` or both. Undo this by typing `undo` before proceeding to the next step
 
@@ -62,36 +112,5 @@ This section shows you commands related to appointments and calendar views. +
 |`command 2` |`some output` |Some remark
 
 |`command 3` |`some output` |Some remark
-
-|=======================================================================
-
-== Misc. Enhancements
-
-=== Keyboard Key Commands
-This section shows you the available keyboard key commands implemented so that you can easily +
-edit the command box. +
-No text input will be specified and you can enter any text input to test the following keyboard key functionality. +
-
-[width="59%",cols="20%,<40%,<40%",options="header",]
-|=======================================================================
-|Key To Enter |Expected Result |Remarks
-
-|*Escape* |Clears entire command box text field |-
-
-|*Alt* |Shifts text cursor to the start of the previous word |-
-
-|*Control* |Shifts text cursor to the end of the next word |-
-
-|*Shift-Alt* |Shifts text cursor all the way to the left |-
-
-|*Shift-Control* |Shifts text cursor all the way to the right |-
-
-|*Shift-Delete* |Deletes a chunk of word/blank space |For Mac Users
-
-|*Shift-Backspace* |Deletes a chunk of word/blank space |For Windows Users
-
-|*Right* (Add Command)|Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
-
-|*Right* (Edit Command)|Edit Command Shortcut to autofill Prefixes |"Edit INDEX" or "e INDEX" must be present at the start of the line
 
 |=======================================================================
