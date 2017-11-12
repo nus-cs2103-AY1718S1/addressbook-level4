@@ -9,6 +9,34 @@ TheYellowPage is a desktop address book application developed in the module CS21
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T10-B4/main/blob/master/collated/main/nguyenvanhoang7398.md] [https://github.com/CS2103AUG2017-T10-B4/main/blob/master/collated/test/nguyenvanhoang7398.md]
 
+=== Enhancement Added: Find contacts by tag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+`FindTagCommand` helps display a list of people having one of the specified tags for easy searching.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
 === Enhancement Added: Add multiple contacts
 
 ==== External behavior
@@ -84,7 +112,7 @@ Format: `searchPicture PICTURE_PATH`
 
 Example:
 
-* `searchPicture D:/myPicture.png +
+* `searchPicture D:/myPicture.png` +
 Return a list of contacts whose profile picture is most similar with the picture at D:/myPicture.png
 
 ---
@@ -95,5 +123,6 @@ Return a list of contacts whose profile picture is most similar with the picture
 
 === Other contributions
 
-* Add additional Profile Panel to Main Window to view contact details (Pull requests https://github.com/CS2103AUG2017-T10-B4/main/pull/85[#85])
-* Wrote additional tests to increase coverage (Pull requests https://github.com/CS2103AUG2017-T10-B4/main/pull/112[#112], https://github.com/CS2103AUG2017-T10-B4/main/pull/62[#62])
+* Adding additional Profile Panel (UI Component) to Main Window for viewing contact details (Pull requests https://github.com/CS2103AUG2017-T10-B4/main/pull/85[#85])
+* Writing additional tests to increase coverage (Pull requests https://github.com/CS2103AUG2017-T10-B4/main/pull/112[#112], https://github.com/CS2103AUG2017-T10-B4/main/pull/62[#62])
+* Helping teammates fix Travis CI errors (Pull requests https://github.com/CS2103AUG2017-T10-B4/main/pull/91[#91], https://github.com/CS2103AUG2017-T10-B4/main/pull/65[#65])
