@@ -489,6 +489,7 @@ Format: `addremark INDEX r/REMARK...` +
 image::addremarkc.png[width="850"]
 
 ****
+* Remarks cannot be added using the `add` command.
 * Add multiple remarks from multiple indexes as specified.
 * `INDEX` refers to the index number shown in the last person listing.
 ** Only one `INDEX` can be selected at a time
@@ -543,6 +544,10 @@ Examples:
 Adds a twitter link to a person existing in the address book based on their index +
 
 Format: `link PERSONINDEX l/WEBSITEURL` +
+
+****
+* Link cannot be added using the `add` command
+****
 
 [TIP]
 A person can have only one link, any changes will update the existing link to be the new link +
