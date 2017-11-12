@@ -96,8 +96,10 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
     }
 
     /**
-     *
-     *
+     * Parses {@code List<String> times} into a {@code Optional<EventTime[]>} containing the last two times in
+     * the list if the {@code times} is non-empty. All single times are counted as end times.
+     *  If {@code times} contain only one element which is an empty string, it will be parsed into a
+     * {@code Optional<EventTime[]>} containing empty times.
      */
     public Optional<EventTime[]> parseEventTimesForEdit(List<String> times) throws IllegalValueException {
         assert times != null;
