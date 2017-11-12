@@ -8,12 +8,14 @@ import seedu.address.ui.UiStyle;
 /**
  * change the theme of the address book
  */
-public class ThemeCommand extends UndoableCommand {
+public class ThemeCommand extends Command {
 
     public static final String COMMAND_WORD = "theme";
-    public static final String COMMAND_ALIAS = "t";
+    public static final String COMMAND_SHORT = "t";
     public static final String LIGHT_THEME = "light";
     public static final String DARK_THEME = "dark";
+    public static final String LIGHT_THEME2 = "holy";
+    public static final String DARK_THEME2 = "evil";
 
     public static final String MESSAGE_SUCCESS = "Theme has been changed!";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes to selected theme. "
@@ -26,8 +28,8 @@ public class ThemeCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() {
-        if (theme.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)) {
+    public CommandResult execute() {
+        if (theme.equalsIgnoreCase(ThemeCommand.LIGHT_THEME) || theme.equalsIgnoreCase(ThemeCommand.LIGHT_THEME2)) {
             UiStyle.getInstance().setToLightTheme();
         } else {
             UiStyle.getInstance().setToDarkTheme();
@@ -52,7 +54,7 @@ public class ThemeCommand extends UndoableCommand {
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case ThemeCommand.COMMAND_WORD:
-        case ThemeCommand.COMMAND_ALIAS:
+        case ThemeCommand.COMMAND_SHORT:
             return new ThemeCommandParser().parse(arguments);
 ```
 ###### \java\seedu\address\logic\parser\CliSyntax.java
@@ -88,7 +90,9 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
             String trimmedArgs = args.trim();
             if (trimmedArgs.isEmpty()
                     || (!trimmedArgs.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)
-                    && !trimmedArgs.equalsIgnoreCase(ThemeCommand.DARK_THEME))) {
+                    && !trimmedArgs.equalsIgnoreCase(ThemeCommand.LIGHT_THEME2)
+                    && !trimmedArgs.equalsIgnoreCase(ThemeCommand.DARK_THEME)
+                    && !trimmedArgs.equalsIgnoreCase(ThemeCommand.DARK_THEME2))) {
                 throw new IllegalValueException("");
             } else {
                 return new ThemeCommand(trimmedArgs);
@@ -102,7 +106,44 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons.sorted());
+    }
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    public void setWebsite(Website website) {
+        this.website.set(requireNonNull(website));
+    }
+
+    @Override
+    public ObjectProperty<Website> websiteProperty() {
+        return website;
+    }
+
+    @Override
+    public Website getWebsite() {
+        return website.get();
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture.set(requireNonNull(picture));
+    }
+
+    @Override
+    public ObjectProperty<Picture> pictureProperty() {
+        return picture;
+    }
+
+    @Override
+    public Picture getPicture() {
+        return picture.get();
+    }
 ```
 ###### \java\seedu\address\model\person\Picture.java
 ``` java
@@ -115,6 +156,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -154,8 +196,8 @@ public class Picture {
     public static final String DEFAULT_IRFAN =
             "default_irfan.png";
 
-    private static final int RESIZE_IMAGE_WIDTH = 64;
-    private static final int RESIZE_IMAGE_HEIGHT = 64;
+    private static final int RESIZE_IMAGE_WIDTH = 256;
+    private static final int RESIZE_IMAGE_HEIGHT = 256;
 
     private static final String PICTURE_SUFFIX = ".png";
     private static final String PICTURE_DELIMITER_SLASH = "/";
@@ -167,39 +209,53 @@ public class Picture {
     public Picture(String fileLocation) throws IllegalValueException {
         String trimmedFileLocation = fileLocation == null ? null : fileLocation.trim();
         if (!isValidPicture(trimmedFileLocation)) {
+            System.out.println(fileLocation);
             throw new IllegalValueException(MESSAGE_PROFILEPICTURE_CONSTRAINTS);
         }
 
         if (trimmedFileLocation != null) {
-            String[] split = trimmedFileLocation.split(PICTURE_DELIMITER_SLASH);
-            if (split.length < 2) {
-                split = trimmedFileLocation.split(PICTURE_DELIMITER_BACKSLASH);
-            }
-
-            // When we save the file, it is a single file name there is nothing to split.
-            // No need to copy it either
-
-            // last value before '/' is picture we want
-            String fileName = split[split.length - 1];
+            String[] split = splitFileLocation(trimmedFileLocation);
 
             // length will give 1 when it is the file we saved
             // in that case just put PICTURE_IMAGE_LOCATION to find it
             if (split.length != 1) {
-                File src = new File(fileLocation);
-                File dest = new File(PICTURE_SAVE_LOCATION + fileName);
+                // Rename and copied files to avoid clashing
+                String newFileName = UUID.randomUUID().toString() + PICTURE_SUFFIX;
+
+                File src = new File(trimmedFileLocation);
+                File dest = new File(PICTURE_SAVE_LOCATION + newFileName);
 
                 // If file is too big, resize it.
                 if (src.length() > PICTURE_MAX_SIZE) {
-                    resizeAndSaveImage(src, fileName);
+                    resizeAndSaveImage(src, newFileName);
                 } else {
                     copyImage(src, dest);
                 }
+                this.value = newFileName;
+            } else {
+                // Last value is file name
+                this.value = split[split.length - 1];
             }
-
-            this.value = fileName;
         } else {
             this.value = null;
         }
+    }
+
+    /**
+     * Splits the file depending on the delimiter used '/' or '\'
+     * @param trimmedFileLocation location of valid file
+     * @return split fileLocation
+     */
+    public static String[] splitFileLocation(String trimmedFileLocation) {
+        String [] split = trimmedFileLocation.split(PICTURE_DELIMITER_SLASH);
+
+        // If the fileLocation has been split but has length of 1,
+        // It is either using another delimiter or is the file itself.
+        if (split.length < 2) {
+            split = trimmedFileLocation.split(PICTURE_DELIMITER_BACKSLASH);
+        }
+
+        return split;
     }
 
     /**
@@ -210,6 +266,10 @@ public class Picture {
     public static boolean isValidPicture(String fileLocation) {
         if (fileLocation == null) {
             return true;
+        }
+
+        if ("".equals(fileLocation)) {
+            return false;
         }
 
         // For default people
@@ -236,9 +296,9 @@ public class Picture {
      * Copies the image and puts into data folder
      * @param src Source of file to save
      * @param dest Destination of the file to save
-     * @throws IllegalValueException
+     * @throws IllegalValueException when src or dest is an invalid file/location
      */
-    private void copyImage(File src, File dest) throws IllegalValueException {
+    public static void copyImage(File src, File dest) throws IllegalValueException {
         try {
             FileUtils.copyFile(src, dest);
         } catch (IOException e) {
@@ -252,7 +312,7 @@ public class Picture {
      * @param newFileName file name to save as
      * @throws IllegalValueException if there is an error loading the file
      */
-    private void resizeAndSaveImage(File file, String newFileName) throws IllegalValueException {
+    public static void resizeAndSaveImage(File file, String newFileName) throws IllegalValueException {
         try {
             BufferedImage resizedImage = resizeImage(ImageIO.read(file));
 
@@ -268,7 +328,7 @@ public class Picture {
      * @param originalImage The original image to be resized
      * @return BufferedImage image that is redrawn and resized
      */
-    private BufferedImage resizeImage(BufferedImage originalImage) {
+    public static BufferedImage resizeImage(BufferedImage originalImage) {
         int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
 
         BufferedImage resizedImage = new BufferedImage(RESIZE_IMAGE_WIDTH, RESIZE_IMAGE_HEIGHT, type);
@@ -327,6 +387,11 @@ public class Picture {
     }
 }
 ```
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
+``` java
+                      && other.getWebsite().equals(this.getWebsite())
+                      && other.getPicture().equals(this.getPicture())
+```
 ###### \java\seedu\address\model\person\Website.java
 ``` java
 package seedu.address.model.person;
@@ -370,30 +435,6 @@ public class Website {
         return value;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) { // short circuit if same object
-            return true;
-        } else if (!(other instanceof Website)) { // instanceof handle nulls
-            return false;
-        } else if (this.value == ((Website) other).value) {
-            return true;
-        } else if (this.value != null && this.value.equals(((Website) other).value)) { // state check
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
-    public boolean hasWebsite() {
-        return !(value == WEBSITE_NULL);
-    }
-}
 ```
 ###### \java\seedu\address\model\UserPrefs.java
 ``` java
@@ -674,6 +715,7 @@ public class UiStyle {
 }
 
 .list-view {
+    -fx-background-color: derive(#5fb3d8, 20%);
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
@@ -956,38 +998,6 @@ public class UiStyle {
 .tooltip-text {
     -fx-text-fill: white;
 }
-```
-###### \resources\view\PersonListCard.fxml
-``` fxml
-        <ImageView fx:id="picture" fitHeight="64" fitWidth="64">
-        </ImageView>
-```
-###### \resources\view\PersonListCard.fxml
-``` fxml
-        <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
-      </HBox>
-```
-###### \resources\view\PersonListCard.fxml
-``` fxml
-      <VBox alignment="CENTER_LEFT">
-        <padding>
-          <Insets left="23.0" />
-        </padding>
-        <FlowPane fx:id="tags" />
-        <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-        <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-        <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-        <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" />
-        <Label fx:id="remark" styleClass="cell_small_label" text="\$remark" />
-        <Label fx:id="website" styleClass="cell_small_label" text="\$website" />
-      </VBox>
-    </VBox>
-    <!--@author-->
-      <rowConstraints>
-         <RowConstraints />
-      </rowConstraints>
-  </GridPane>
-</HBox>
 ```
 ###### \resources\view\StatusBarFooter.fxml
 ``` fxml

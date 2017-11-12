@@ -132,7 +132,9 @@ TIPS: +
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/15/02/1992`
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 w/https:www.website.com/`
 * `add n/Zulu t/friend e/zulu@example.com a/Newgate Prison p/1234567 t/criminal`
+//tag::profilepictureadd[]
 * `add n/Dwayne Johnson pic/C:\Users\user\Desktop\TheRock.png`
+//end::profilepictureadd[]
 
 === Listing all persons : `list` / `l`
 
@@ -171,9 +173,10 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 * `edit 2 w/https://www.yahoo.com/ p/97883421` +
 Edits the website of the 2nd person to be https://www.yahoo.com/ and change the contact number to 97883421.
-* `edit 1 pic/C:\pictures\clown.png +
+//tag::profilepictureedit[]
+* `edit 1 pic/C:\pictures\clown.png` +
 Edits the picture of the 1st person to the picture specified in the path i.e. clown.png
-
+//end::profilepictureedit[]
 === Locating persons: `find` / `f`
 
 Finds persons who matches the given attributes. +

@@ -19,18 +19,32 @@
 <h2 id="project-deathnote"><a class="link" href="#project-deathnote">Project: DeathNote</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>DeathNote is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.</p>
+<p>DeathNote is a desktop address book application used for teaching Software Engineering principles. The user interacts
+with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.</p>
 </div>
 <div class="paragraph">
 <p><strong>Code contributed</strong>:</p>
 </div>
 <div class="sect2">
-<h3 id="enhancement-added-add-shorthand-to-commands"><a class="link" href="#enhancement-added-add-shorthand-to-commands">Enhancement Added: Add shorthand to commands</a></h3>
+<h3 id="enhancement-added-improve-flexibility-of-code-add-code-command"><a class="link" href="#enhancement-added-improve-flexibility-of-code-add-code-command">Enhancement Added: Improve flexibility of <code>add</code> command</a></h3>
 <div class="sect3">
 <h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
 <hr>
 <div class="paragraph">
 <p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc">from: User Guide</a></mark></p>
+</div>
+<div class="paragraph">
+<p>Adds a person to Death Note<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: `add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: `a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`</pre>
+</div>
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
@@ -40,7 +54,7 @@
 <div class="sect3">
 <h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
 <div class="paragraph">
-<p>This feature allows experienced user to use the AddressBook more efficiently. They can achieve the same task with less effort.</p>
+<p>This feature allows flexibility in the usage of Death Note.</p>
 </div>
 </div>
 <div class="sect3">
@@ -50,13 +64,55 @@
 <p><mark>Start of Extract [from: Developer Guide]</mark></p>
 </div>
 <div class="paragraph">
+<p>This is done by allowing the creation of <code>Phone</code>, <code>Email</code>, etc. objects with <code>null</code> parameter.</p>
+</div>
+<div class="paragraph">
+<p>Problems arise when these field classes can created with a <code>null</code> parameter. Necessary changes are mostly about additional
+checks of <code>null</code> in its respective class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public Phone(String phone) throws IllegalValueException {
+        String trimmedPhone = phone == null ? null : phone.trim();
+        if (!isValidPhone(trimmedPhone)) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+        this.value = trimmedPhone;
+    }</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public static boolean isValidPhone(String test) {
+        return test == null || test.matches(PHONE_VALIDATION_REGEX);
+    }</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public boolean equals(Object other) {
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Phone)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Phone) other).value) {
+            return true;
+        } else if (this.value != null &amp;&amp; this.value.equals(((Phone) other).value)) { // state check
+            return true;
+        }
+
+        return false;
+    }</pre>
+</div>
+</div>
+<div class="paragraph">
 <p><mark>End of Extract</mark></p>
 </div>
 <hr>
 </div>
 </div>
 <div class="sect2">
-<h3 id="enhancement-added-open-another-address-book"><a class="link" href="#enhancement-added-open-another-address-book">Enhancement Added: Open another address book</a></h3>
+<h3 id="enhancement-added-open-or-create-new-address-book"><a class="link" href="#enhancement-added-open-or-create-new-address-book">Enhancement Added: Open or create new address book</a></h3>
 <div class="sect3">
 <h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
 <hr>
@@ -64,10 +120,10 @@
 <p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc">from: User Guide</a></mark></p>
 </div>
 <div class="paragraph">
-<p>Opens another Death Note data file from within the application.</p>
+<p>Opens or creates another Death Note data file from within the application.</p>
 </div>
 <div class="paragraph">
-<p>On GUI:</p>
+<p><code>Open</code> On GUI:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -83,6 +139,22 @@
 </ol>
 </div>
 <div class="paragraph">
+<p><code>New</code> On GUI:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to the top menu and click File &gt; New.</p>
+</li>
+<li>
+<p>Locate your desired Death Note data file on the pop-up window. The file will be in an xml format.</p>
+</li>
+<li>
+<p>Select the file and click Save</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
 <p><mark>End of Extract</mark></p>
 </div>
 <hr>
@@ -90,12 +162,89 @@
 <div class="sect3">
 <h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
 <div class="paragraph">
-<p>This feature allows user to manage different version of address book. Suitable for use case when more than one user
+<p>This feature allows user to manage different version of address book. Suitable when more than one user
 are using the app on the same device.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/OpenAddressBookEvent.png" alt="OpenAddressBookEvent" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.2.1 : Open New Address Book Sequence Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>As you can see from the diagram, when the <code>Open</code> button is clicked in the Application, it raises an event and triggers <code>MainApp</code> to update new Application metadata and restart the UI.</p>
+</div>
+<div class="paragraph">
+<p>This loads the selected XML file which opens a new address book with contacts from selected XML file.</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-improve-code-find-code-command"><a class="link" href="#enhancement-added-improve-code-find-code-command">Enhancement Added: Improve <code>find</code> command</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc">from: User Guide</a></mark></p>
+</div>
+<div class="paragraph">
+<p>Finds persons who matches the given attributes.<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]... `</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...`</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Searches based on the input and prefix.</p>
+</li>
+<li>
+<p>The search is case insensitive for NAME. e.g <code>hans</code> will match <code>Hans</code></p>
+</li>
+<li>
+<p>The order of the keywords for NAME does not matter. e.g. <code>Hans Bo</code> will match <code>Bo Hans</code></p>
+</li>
+<li>
+<p>The other prefixes require the exact words</p>
+</li>
+<li>
+<p>Persons matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Hans Bo</code> will return <code>Hans Gruber</code>, <code>Bo Yang</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>This allows user to find a person faster and easier.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
 <hr>
 <div class="paragraph">
 <p><mark>Start of Extract [from: Developer Guide]</mark></p>
@@ -107,17 +256,12 @@ are using the app on the same device.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="enhancement-added-improve-code-find-code-command"><a class="link" href="#enhancement-added-improve-code-find-code-command">Enhancement Added: Improve <code>find</code> command</a></h3>
-
-</div>
-<div class="sect2">
-<h3 id="enhancement-added-improve-flexibility-of-code-add-code-command"><a class="link" href="#enhancement-added-improve-flexibility-of-code-add-code-command">Enhancement Added: Improve flexibility of <code>add</code> command</a></h3>
-
-</div>
-<div class="sect2">
 <h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
+<li>
+<p>Add shorthand to commands.</p>
+</li>
 <li>
 <p>Add Appveyor, Coveralls and Codeacy to the project for efficient integrations.</p>
 </li>
@@ -132,7 +276,7 @@ are using the app on the same device.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-08 01:35:10 +08:00
+Last updated 2017-11-08 20:10:12 +08:00
 </div>
 </div>
 </body>
