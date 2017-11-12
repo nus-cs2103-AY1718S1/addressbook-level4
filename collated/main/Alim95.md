@@ -46,19 +46,20 @@ public class TutorialMessages {
             + "is launched. To activate all commands, toggle to parent mode!\n"
             + "The only commands available in Child Mode are:\n"
             + "1. add\n"
-            + "2. find\n"
-            + "3. findpin\n"
-            + "4. list\n"
-            + "5. listpin\n"
-            + "6. remark\n"
-            + "7. sort\n"
-            + "8. history\n"
-            + "9. undo\n"
-            + "10. redo\n"
-            + "11. person\n"
-            + "12. task\n"
-            + "13. parent\n"
-            + "14. exit\n";
+            + "2. select\n"
+            + "3. find\n"
+            + "4. findpin\n"
+            + "5. list\n"
+            + "6. listpin\n"
+            + "7. remark\n"
+            + "8. sort\n"
+            + "9. history\n"
+            + "10. undo\n"
+            + "11. redo\n"
+            + "12. person\n"
+            + "13. task\n"
+            + "14. parent\n"
+            + "15. exit\n";
 
     /* Command usage messages */
     public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Activate Parent Mode "
@@ -92,6 +93,48 @@ public class TutorialMessages {
  * Indicates that an invalid command is entered.
  */
 public class InvalidResultDisplayEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
+###### \java\seedu\address\commons\events\ui\JumpToNewPersonRequestEvent.java
+``` java
+
+/**
+ * Indicates a request to jump to new person in person list
+ */
+public class JumpToNewPersonRequestEvent extends BaseEvent {
+
+    public final int targetIndex;
+
+    public JumpToNewPersonRequestEvent(Index targetIndex) {
+        this.targetIndex = targetIndex.getZeroBased();
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
+###### \java\seedu\address\commons\events\ui\JumpToNewTaskRequestEvent.java
+``` java
+
+/**
+ * Indicates a request to jump to new task in task list
+ */
+public class JumpToNewTaskRequestEvent extends BaseEvent {
+
+    public final int targetIndex;
+
+    public JumpToNewTaskRequestEvent(Index targetIndex) {
+        this.targetIndex = targetIndex.getZeroBased();
+    }
 
     @Override
     public String toString() {
@@ -294,6 +337,11 @@ public class ParentModeCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
+```
+###### \java\seedu\address\logic\commands\person\AddCommand.java
+``` java
+            EventsCenter.getInstance()
+                    .post(new JumpToNewPersonRequestEvent(Index.fromOneBased(model.getFilteredPersonList().size())));
 ```
 ###### \java\seedu\address\logic\commands\person\FindPinnedCommand.java
 ``` java
@@ -522,6 +570,11 @@ public class UnpinCommand extends Command {
                 && this.targetIndex.equals(((UnpinCommand) other).targetIndex)); // state check
     }
 }
+```
+###### \java\seedu\address\logic\commands\task\AddTaskCommand.java
+``` java
+            EventsCenter.getInstance()
+                    .post(new JumpToNewTaskRequestEvent(Index.fromOneBased(model.getFilteredTaskList().size())));
 ```
 ###### \java\seedu\address\logic\parser\person\FindPinnedCommandParser.java
 ``` java
@@ -771,7 +824,7 @@ public class PersonHasKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     public boolean test(ReadOnlyPerson person) {
         String[] nameParts = person.getName().fullName.split(" ");
         ArrayList<String> tagParts = getTags(person);
-        return isPersonMatch(person, nameParts, tagParts);
+        return !person.isPrivate() && isPersonMatch(person, nameParts, tagParts);
     }
 
     /**
@@ -839,8 +892,8 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 ###### \java\seedu\address\model\person\ReadOnlyPerson.java
 ``` java
     ObjectProperty<Boolean> pinProperty();
-
     boolean isPinned();
+
 ```
 ###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
@@ -1282,7 +1335,25 @@ public class AliasListPanel extends UiPart<Region> {
             pinImage.setImage(null);
         }
     }
-
+```
+###### \java\seedu\address\ui\PersonListPanel.java
+``` java
+    /**
+     * Scrolls to the {@code PersonCard} at the {@code index}.
+     */
+    private void scrollToNewPerson(int index) {
+        Platform.runLater(() -> {
+            personListView.scrollTo(index);
+        });
+    }
+```
+###### \java\seedu\address\ui\PersonListPanel.java
+``` java
+    @Subscribe
+    private void handleJumpToNewPersonRequestEvent(JumpToNewPersonRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollToNewPerson(event.targetIndex);
+    }
 ```
 ###### \java\seedu\address\ui\PersonListPanel.java
 ``` java
@@ -1532,15 +1603,6 @@ public class SortFindPanel extends UiPart<Region> {
     }
 
     /**
-     * Switches style to person view.
-     */
-    private void switchToPersonView() {
-        searchBox.setPromptText("Search Person...");
-        sortMenu.setVisible(true);
-        searchBox.setVisible(true);
-    }
-
-    /**
      * Switches style to alias view.
      */
     private void switchToAliasView() {
@@ -1552,6 +1614,7 @@ public class SortFindPanel extends UiPart<Region> {
      * Switches style to pinned person search.
      */
     private void switchToPinnedPersonSearchStyle() {
+        searchBox.setText("");
         searchBox.setPromptText("Search Pinned...");
     }
 
@@ -1559,6 +1622,7 @@ public class SortFindPanel extends UiPart<Region> {
      * Switches style to all person search.
      */
     private void switchToAllPersonSearchStyle() {
+        searchBox.setText("");
         searchBox.setPromptText("Search Person...");
     }
 
@@ -1566,8 +1630,19 @@ public class SortFindPanel extends UiPart<Region> {
      * Switches style to task view.
      */
     private void switchToTaskView() {
+        searchBox.setText("");
         searchBox.setPromptText("Search Task...");
         sortMenu.setVisible(false);
+        searchBox.setVisible(true);
+    }
+
+    /**
+     * Switches style to person view.
+     */
+    private void switchToPersonView() {
+        searchBox.setText("");
+        searchBox.setPromptText("Search Person...");
+        sortMenu.setVisible(true);
         searchBox.setVisible(true);
     }
 
@@ -1844,7 +1919,7 @@ public class TutorialPanel extends UiPart<Region> {
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints prefHeight="30.0" vgrow="ALWAYS" />
+          <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
             <Label style="-fx-text-fill: white;" text="  Representation" />
@@ -1876,7 +1951,7 @@ public class TutorialPanel extends UiPart<Region> {
                                           <Insets bottom="5.0" left="5.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="taskViewLabel" onMouseReleased="#handleTaskViewClicked" prefWidth="30.0" text="Task" GridPane.columnIndex="1">
+                                    <Label fx:id="taskViewLabel" onMouseReleased="#handleTaskViewClicked" text="Task" GridPane.columnIndex="1">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>

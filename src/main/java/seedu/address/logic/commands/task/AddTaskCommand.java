@@ -5,6 +5,9 @@ import static java.util.Objects.requireNonNull;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToNewTaskRequestEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UndoableCommand;
@@ -16,6 +19,7 @@ import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 //@@author deep4k
+
 /**
  * Adds the given user input as a task in the application
  */
@@ -92,6 +96,10 @@ public class AddTaskCommand extends UndoableCommand {
 
         try {
             model.addTask(toAdd);
+            //@@author Alim95
+            EventsCenter.getInstance()
+                    .post(new JumpToNewTaskRequestEvent(Index.fromOneBased(model.getFilteredTaskList().size())));
+            //@@author deep4k
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);

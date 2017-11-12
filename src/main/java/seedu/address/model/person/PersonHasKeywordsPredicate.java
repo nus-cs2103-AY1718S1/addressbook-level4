@@ -32,7 +32,7 @@ public class PersonHasKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     public boolean test(ReadOnlyPerson person) {
         String[] nameParts = person.getName().fullName.split(" ");
         ArrayList<String> tagParts = getTags(person);
-        return isPersonMatch(person, nameParts, tagParts);
+        return !person.isPrivate() && isPersonMatch(person, nameParts, tagParts);
     }
 
     /**

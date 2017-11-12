@@ -14,6 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -259,10 +260,17 @@ public class AddCommandTest {
      */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
+        final List<ReadOnlyPerson> filteredList = new ArrayList<>();
 
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             personsAdded.add(new Person(person));
+            filteredList.add(person);
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            return FXCollections.observableArrayList(filteredList);
         }
 
         @Override
