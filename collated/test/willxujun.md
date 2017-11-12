@@ -1,5 +1,5 @@
 # willxujun
-###### \java\seedu\address\logic\commands\SearchCommandTest.java
+###### /java/seedu/address/logic/commands/SearchCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
@@ -96,7 +96,8 @@ public class SearchCommandTest {
      */
     private SearchCommand prepareCommand(String userInput) {
         SearchCommand command =
-                new SearchCommand(new NamePhoneTagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new SearchCommand(new NamePhoneTagContainsKeywordsPredicate(
+                        Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -107,7 +108,8 @@ public class SearchCommandTest {
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(SearchCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    private void assertCommandSuccess(SearchCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
@@ -117,7 +119,7 @@ public class SearchCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParserTest.java
+###### /java/seedu/address/logic/parser/AddCommandParserTest.java
 ``` java
         //empty (unknown) email value
         expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -131,7 +133,7 @@ public class SearchCommandTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + UNKNOWN_ADDRESS_DESC, new AddCommand(expectedPerson));
 ```
-###### \java\seedu\address\logic\parser\SearchParserTest.java
+###### /java/seedu/address/logic/parser/SearchParserTest.java
 ``` java
 public class SearchParserTest {
 
@@ -157,7 +159,7 @@ public class SearchParserTest {
 
 }
 ```
-###### \java\systemtests\FindCommandSystemTest.java
+###### /java/systemtests/FindCommandSystemTest.java
 ``` java
         /* Case: find multiple persons in address book, 2 keywords -> 0 persons found because of new AND search*/
         command = FindCommand.COMMAND_WORD + " Benson Daniel";

@@ -75,11 +75,11 @@ public class StatusBarFooter extends UiPart<Region> {
     public static Clock getClock() {
         return clock;
     }
-
+    //@@author eeching
     private void setSaveWeather(String weather) {
         Platform.runLater(() -> this.weatherReport.setText(weather));
     }
-
+    //@@author
     private void setSyncStatus(String status) {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }

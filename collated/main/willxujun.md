@@ -1,5 +1,5 @@
 # willxujun
-###### \java\seedu\address\logic\commands\SearchCommand.java
+###### /java/seedu/address/logic/commands/SearchCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose name, phone or tag contains any of the argument keywords.
@@ -31,7 +31,7 @@ public class SearchCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\parser\SearchParser.java
+###### /java/seedu/address/logic/parser/SearchParser.java
 ``` java
 /**
  * Represents a parser that parses input from the search bar
@@ -41,7 +41,7 @@ public class SearchParser implements Parser<Command> {
     /**
      * returns a Command as parsed
      * @param args
-     * @return a SearchCommand of the search word args if search bar input is not empty, a ListCommand if empty search bar
+     * @return a SearchCommand of the search word args if search bar input is not empty, a ListCommand if empty
      * @throws ParseException that should never be thrown because there is no restriction on search keywords
      */
     public Command parse(String args) throws ParseException {
@@ -57,7 +57,7 @@ public class SearchParser implements Parser<Command> {
 
 }
 ```
-###### \java\seedu\address\model\person\NamePhoneTagContainsKeywordsPredicate.java
+###### /java/seedu/address/model/person/NamePhoneTagContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} or {@code Phone} or {@code Tags}
@@ -95,7 +95,7 @@ public class NamePhoneTagContainsKeywordsPredicate implements Predicate<ReadOnly
 
 }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     /**
      * Returns an immutable phone set, which throws {@code UnsupportedOperationException}
@@ -106,24 +106,13 @@ public class NamePhoneTagContainsKeywordsPredicate implements Predicate<ReadOnly
         return Collections.unmodifiableSet(uniquePhoneList.get().toSet());
     }
 ```
-###### \java\seedu\address\model\person\phone\UniquePhoneList.java
-``` java
-    /**
-     * Returns all phones in this list as a Set.
-     * This set is mutable and change-insulated against the internal list.
-     */
-    public Set<Phone> toSet() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return new HashSet<>(internalList);
-    }
-```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     public TextField getCommandTextField() {
         return commandTextField;
     }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
         SearchBox searchBox = new SearchBox(logic);
         searchBoxPlaceholder.getChildren().add(searchBox.getRoot());
@@ -131,6 +120,11 @@ public class NamePhoneTagContainsKeywordsPredicate implements Predicate<ReadOnly
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         commandBox.getCommandTextField().requestFocus();
+
+        setBackground(topContainer,
+                System.getProperty("user.dir") + "/docs/images/background.jpg",
+                "/images/background.jpg",
+                1280, 800);
 
         /*
         ChangeListener for caret focus.
@@ -160,7 +154,7 @@ public class NamePhoneTagContainsKeywordsPredicate implements Predicate<ReadOnly
                 }
         );
 ```
-###### \java\seedu\address\ui\SearchBox.java
+###### /java/seedu/address/ui/SearchBox.java
 ``` java
 /**
  * The UI component that is responsible for receiving user search command.
@@ -219,7 +213,7 @@ public class SearchBox extends UiPart<Region> {
 
 }
 ```
-###### \resources\view\SearchBox.fxml
+###### /resources/view/SearchBox.fxml
 ``` fxml
 <StackPane styleClass="anchor-pane" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <TextField fx:id="searchTextField" onKeyTyped="#handleKeyTyped" promptText="Search..." />

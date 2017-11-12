@@ -1,5 +1,19 @@
 # LuLechuan
-###### \java\seedu\address\logic\commands\CustomCommand.java
+###### /java/seedu/address/commons/events/ui/ShowWeatherRequestEvent.java
+``` java
+/**
+ * An event requesting to view the yahoo weather page.
+ */
+public class ShowWeatherRequestEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/CustomCommand.java
 ``` java
 /**
  * Adds or updates a custom field of a person identified using it's last displayed index from the address book.
@@ -71,9 +85,17 @@ public class CustomCommand extends UndoableCommand {
 
         return new CommandResult(String.format(MESSAGE_UPDATE_PERSON_CUSTOM_FIELD_SUCCESS, personUpdated));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CustomCommand // instanceof handles nulls
+                && this.targetIndex.equals(((CustomCommand) other).targetIndex)
+                && this.customField.equals(((CustomCommand) other).customField)); // state check
+    }
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteByNameCommand.java
+###### /java/seedu/address/logic/commands/DeleteByNameCommand.java
 ``` java
 /**
  * Deletes a person identified using the person's name from the address book.
@@ -131,7 +153,7 @@ public class DeleteByNameCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\UploadPhotoCommand.java
+###### /java/seedu/address/logic/commands/UploadPhotoCommand.java
 ``` java
 /**
  * Adds or updates the photo of a person identified using it's last displayed index from the address book.
@@ -199,9 +221,17 @@ public class UploadPhotoCommand extends UndoableCommand {
 
         return new CommandResult(String.format(MESSAGE_UPDATE_PERSON_PHOTO_SUCCESS, personUpdated));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UploadPhotoCommand // instanceof handles nulls
+                && this.targetIndex.equals(((UploadPhotoCommand) other).targetIndex)
+                && this.photo.equals(((UploadPhotoCommand) other).photo)); // state check
+    }
 }
 ```
-###### \java\seedu\address\logic\parser\CustomCommandParser.java
+###### /java/seedu/address/logic/parser/CustomCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new CustomCommand object
@@ -236,7 +266,7 @@ public class CustomCommandParser implements Parser<CustomCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\DeleteByNameCommandParser.java
+###### /java/seedu/address/logic/parser/DeleteByNameCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteByNameCommand object
@@ -260,7 +290,7 @@ public class DeleteByNameCommandParser implements Parser<DeleteByNameCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\UploadPhotoCommandParser.java
+###### /java/seedu/address/logic/parser/UploadPhotoCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new UploadPhotoCommand object
@@ -281,7 +311,8 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
             if (st.hasMoreTokens()) {
                 photoPath = st.nextToken();
             } else {
-                photoPath = "..\\addressbook4\\docs\\images\\default_photo.png";
+                photoPath = System.getProperty("user.dir")
+                        + "/docs/images/default_photo.png";
             }
 
             while (st.hasMoreTokens()) {
@@ -299,7 +330,7 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
 
 }
 ```
-###### \java\seedu\address\model\customField\CustomField.java
+###### /java/seedu/address/model/customField/CustomField.java
 ``` java
 /**
  * Represents a CustomField in the address book.
@@ -365,7 +396,7 @@ public class CustomField {
 
 }
 ```
-###### \java\seedu\address\model\customField\UniqueCustomFieldList.java
+###### /java/seedu/address/model/customField/UniqueCustomFieldList.java
 ``` java
 /**
  * A list of customField that enforces no nulls and uniqueness between its elements.
@@ -510,21 +541,9 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
         return internalList.hashCode();
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (CustomField customField : internalList) {
-            sb.append(customField.customFieldName);
-            sb.append(": ");
-            sb.append(customField.getCustomFieldValue());
-            sb.append("\r\n");
-        }
-        return sb.toString();
-    }
-
 }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     public void setPhoto(Photo photo) {
         this.photo.set(requireNonNull(photo));
@@ -540,7 +559,7 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
         return photo.get();
     }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     /**
      * Returns an immutable custom field set, which throws {@code UnsupportedOperationException}
@@ -572,7 +591,7 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
         customFields.set(new UniqueCustomFieldList(replacement));
     }
 ```
-###### \java\seedu\address\model\person\Photo.java
+###### /java/seedu/address/model/person/Photo.java
 ``` java
 /**
  * Represents a Person's photo in the address book.
@@ -585,7 +604,8 @@ public class Photo {
      *  Constructs a default photo.
      */
     public Photo() {
-        pathName = "..\\addressbook-level4\\docs\\images\\default_photo.png";
+        pathName = System.getProperty("user.dir")
+                + "/docs/images/default_photo.png";
     }
 
     /**
@@ -597,44 +617,8 @@ public class Photo {
         this.pathName = pathName;
     }
 
-    /**
-     * Returns true if a given string is empty, which means an unknown path
-     */
-    private static boolean isUnknownPath(String test) {
-        return test.equals("");
-    }
-
-    /**
-     *
-     * @return true if a given pathName has unknown value
-     */
-    public boolean isUnknownPathName() {
-        return pathName.equals("");
-    }
-
     public String getPathName() {
         return pathName;
-    }
-
-    /**
-     *  Displace the photo
-     */
-    public void showPhoto() {
-        JFrame frame = new JFrame("Icon Photo");
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File(pathName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        ImageIcon imgIcon = new ImageIcon(img);
-        JLabel lbl = new JLabel();
-        lbl.setIcon(imgIcon);
-        frame.getContentPane().add(lbl, BorderLayout.CENTER);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
     }
 
     @Override
@@ -656,7 +640,7 @@ public class Photo {
 
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedCustomField.java
+###### /java/seedu/address/storage/XmlAdaptedCustomField.java
 ``` java
 /**
  * JAXB-friendly adapted version of the Custom Field.
@@ -700,7 +684,7 @@ public class XmlAdaptedCustomField {
 
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedPhone.java
+###### /java/seedu/address/storage/XmlAdaptedPhone.java
 ``` java
 /**
  * JAXB-friendly adapted version of the Phone.
@@ -736,25 +720,42 @@ public class XmlAdaptedPhone {
 
 }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
      *  Sets a background image for a stack pane
      */
-    private void setBackground(StackPane pane, String pathname, int width, int height) {
+    private void setBackground(Pane pane, String pathname, String jarPath, int width, int height) {
         File file = new File(pathname);
         try {
-            BackgroundImage backgroundImage = new BackgroundImage(
-                    new Image(file.toURI().toURL().toString(), width, height, false, true),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
-            pane.setBackground(new Background(backgroundImage));
+            if (file.exists()) {
+                BackgroundImage backgroundImage = new BackgroundImage(
+                        new Image(file.toURI().toURL().toString(), width, height, false, true),
+                        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT);
+                pane.setBackground(new Background(backgroundImage));
+            } else {
+                Image photo = createJarImage(jarPath, width, height);
+                BackgroundImage backgroundImage = new BackgroundImage(
+                        photo, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT);
+                pane.setBackground(new Background(backgroundImage));
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     *  Create an image that can be used by the Jar file
+     */
+    public Image createJarImage(String jarPath, int width, int height) {
+        InputStream inputStream = this.getClass().getResourceAsStream(jarPath);
+        Image photo = new Image(inputStream, width, height, false, true);
+        return photo;
+    }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     /**
      *  Initialises icon photo
@@ -765,13 +766,41 @@ public class XmlAdaptedPhone {
         File photoImage = new File(pathName);
         Image photo = null;
         try {
-            photo = new Image(photoImage.toURI().toURL().toString(), 80, 80, false, false);
+            if (photoImage.exists()) {
+                photo = new Image(photoImage.toURI().toURL().toString(), 40, 40, false, true);
+            } else {
+                photo = createJarImage("/images/default_photo.png");
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         photoContainer.setImage(photo);
 
-        Circle clip = new Circle(60, 60, 50);
+        Circle clip = new Circle(30, 30, 25);
         photoContainer.setClip(clip);
+    }
+
+    /**
+     *  Create an image that can be used by the Jar file
+     */
+    public Image createJarImage(String jarPath) {
+        InputStream inputStream = this.getClass().getResourceAsStream(jarPath);
+        Image photo = new Image(inputStream, 40, 40, false, true);
+        return photo;
+    }
+```
+###### /java/seedu/address/ui/PersonInformationPanel.java
+``` java
+    public void initCustomField(ReadOnlyPerson person) {
+        customFieldNameList.getChildren().clear();
+        customFieldValueList.getChildren().clear();
+        person.getCustomFields().forEach(customField -> {
+            Label customFieldName = new Label(customField.customFieldName + ":");
+            setIndentation(customFieldName);
+            customFieldNameList.getChildren().add(customFieldName);
+            Label customFieldValue = new Label(customField.getCustomFieldValue());
+            setIndentation(customFieldValue);
+            customFieldValueList.getChildren().add(customFieldValue);
+        });
     }
 ```
