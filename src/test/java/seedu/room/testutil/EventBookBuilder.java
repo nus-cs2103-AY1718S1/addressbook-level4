@@ -6,7 +6,7 @@ import seedu.room.model.event.exceptions.DuplicateEventException;
 
 //@@author sushinoya
 /**
- * A utility class to help with building Eventbook objects.
+ * A utility class to help with building EventBook objects.
  * Example usage: <br>
  * {@code EventBook ab = new EventBookBuilder().withEvent(USPolymath).build();}
  */

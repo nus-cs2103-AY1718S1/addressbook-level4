@@ -32,8 +32,7 @@ public class TypicalEvents {
             .withDescription("Performance").withLocation("Dining Hall")
             .withDatetime("24/09/2017 1800 to 2100").build();
 
-    private TypicalEvents() {
-    } // prevents instantiation
+    private TypicalEvents() {} // Prevents instantiation
 
     /**
      * Returns an {@code EventBook} with all the typical events.

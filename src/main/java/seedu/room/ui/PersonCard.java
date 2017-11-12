@@ -30,10 +30,11 @@ public class PersonCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on ResidentBook level 4</a>
      */
 
-
     //tagColor matches a specific tag with a color
-    private static ArrayList<String> colors = new ArrayList<String>(
-            Arrays.asList("red", "blue", "orange", "brown", "green", "pink", "black", "grey"));
+    private static ArrayList<String> colors = new ArrayList<String>(Arrays.asList(
+            "#cc6600", "#cc0000", "#d11141", "#00b159", "#00aedb",
+            "#f37735", "#ffc425", "#a200ff", "#742323", "#757a25", "#237629",
+            "#2c2972", "#732474"));
     private static HashMap<String, String> tagColor = new HashMap<String, String>();
     private static Random random = new Random();
 

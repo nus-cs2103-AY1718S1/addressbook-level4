@@ -119,7 +119,6 @@ public class StorageManagerTest {
     }
 
     //@@author sushinoya
-
     /**
      * A Stub class to throw an exception when the save method is called
      */
