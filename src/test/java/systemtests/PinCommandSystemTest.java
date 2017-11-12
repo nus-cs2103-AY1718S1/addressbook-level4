@@ -21,8 +21,6 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.PinCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnpinCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -59,19 +57,8 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
         Index lastPersonIndex = getLastIndex(modelBeforePinningLast);
         assertCommandSuccess(lastPersonIndex);
 
-        /* Case: undo pinning the last person in the list -> last person unpinned */
-        command = UndoCommand.COMMAND_WORD;
-        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, modelBeforePinningLast, expectedResultMessage);
-
-        /* Case: redo pinning the last person in the list -> last person pinned again */
-        command = RedoCommand.COMMAND_WORD;
-        pinPerson(modelBeforePinningLast, lastPersonIndex);
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, modelBeforePinningLast, expectedResultMessage);
-
         /* Case: unpin the pinned person in the list */
-        pinnedPerson = unpinPerson(modelBeforePinningLast, INDEX_FIRST_PERSON);
+        pinnedPerson = unpinPerson(getModel(), INDEX_FIRST_PERSON);
         command = UnpinCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased();
         expectedResultMessage = String.format(MESSAGE_UNPIN_PERSON_SUCCESS, pinnedPerson);
         assertCommandSuccess(command, modelBeforePinningLast, expectedResultMessage);
