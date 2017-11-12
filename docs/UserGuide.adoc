@@ -912,9 +912,26 @@ image::UG_redo2.png[width="590"]
 
 image::divider.png[width="900"]
 
-== Saving the data
+== Miscellaneous Features
+image::UG_mainheader_miscfeatures.png[width="900"]
+//-
+{sp}
+
+=== Saving the Data
+image::UG_header_savingdata.png[width="500"]
 
 Unify knows that your contacts are important and automatically saves them to your hard disk. There is no need to save manually.
+
+=== Audible Feedback
+image::UG_header_audiblefeedback.png[width="500"]
+
+Unify knows that speed is essential to you, hence audible feedback is an another key component in giving you that extra confirmation
+that your actions have been executed.
+
+* Unify plays an audible typing sound whenever you are typing.
+* Unify also plays an audible confirmation feedback to your executed commands. Giving you the audible feedback that your command is executed successfully.
+* Unify has an inbuilt text-to-speech
+technology that is able to read your friend's name when you click on their details. Giving you that extra confirmation feedback you needed.
 
 == FAQ
 image::UG_mainheader_faq.png[width="900"]
@@ -951,3 +968,7 @@ image::UG_mainheader_commandsummary.png[width="900"]
 | *Unalias* | `unalias ALIAS` | `unalias unfriend`
 |===
 
+== Glossary
+image::UG_mainheader_glossary.png[width="900"]
+//-
+{sp}
