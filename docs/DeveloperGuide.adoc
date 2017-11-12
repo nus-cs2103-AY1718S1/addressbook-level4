@@ -453,7 +453,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 // tag::faveSystem[]
 === Favourite Contact System
 
-The commands related to the Favourite system rely on the `Favourite` attribute class which is a `model` component.
+The commands related to the Favourite system rely on the `Favourite` attribute class which is a `Person` component.
 
 ==== Add & Remove contact from Favourites (since V1.2)
 **Adding a Favourite:** This feature's functions are mainly contained in the command class `AddFavouriteCommand` with its
@@ -480,8 +480,9 @@ retreived from the parsed index has their `Favourite` attribute updated to false
 
 ==== Listing of only Favourite contacts (since V1.3)
 
-**List command option:** The **list** command can now list only contacts marked as favourites with "list /f".
-This feature works by updating the model's `filteredList` of `Person` objects with the predicate **isFavourite()** in `ListCommand`.
+**List command option:** The **list** command now has an option to list only contacts marked as favourites with
+"list /f". This feature works by updating the model's `filteredList` of `Person` objects with the predicate
+**isFavourite()** in `ListCommand`.
 
 ==== Other modifications to existing components to handle favourites (since V1.4)
 
@@ -493,6 +494,17 @@ reinserted at the top of the list among the other favourites in lexicographical 
 
 * If the **Favourite**'s value has been changed to false, the modified **Person** is moved from its position among the favourites
 and inserted into the position after the last favourite person in the internal model list.
+
+==== Design Considerations
+
+**Aspect:** Storage of `Favourite` status +
+**Alternative 1 (current choice):** Add a new attribute class to Person, `Favourite` +
+**Pros:** No need for additional overhead from maintaining a second list of Persons in model. +
+**Cons:** Have to manually arrange contacts when they are added/removed from favourite status as favourite
+ contacts must be at top of normal listings +
+**Alternative 2:** Create and maintain a list in `model` containing favourite contacts +
+**Pros:** No need to organise favourite contacts in original list, just present favourite list before normal contact list when executing `list` +
+**Cons:** Tedious to manage secondary list of Persons, additional overhead when searching favourite list for specific contact
 // end::faveSystem[]
 
 // tag::profPicSystem[]
@@ -512,12 +524,12 @@ and provided filepath, then passes the parsed index and filepath into an initial
 the set picture command in this class. +
 The current implementation takes in the parsed index and filepath and stores them. Then,
 
-** The given filepath is checked to see if there exists a .png image file with **Files.probeContentType(filepath)**
+** The given filepath is checked to see if there exists a .png or .jpg image file with **Files.probeContentType(filepath)**
 
-** The verified .png is then copied to the local folder **images** of the application and stored under the contact name of the
- provided index as **images\contactName.png**
+** The verified .png/.jpg is then copied to the local folder **images** of the application and stored under the contact name of the
+ provided index as **images\contactName.png** or **images\contactName.jpg** if the set file is a .jpg
 
-** The **Person** provided by the index has its `ProfPic` attribute's path var modified to **contactName.png** and
+** The **Person** provided by the index has its `ProfPic` attribute's path var modified to **contactName.png/.jpg** and
 the modified **Person** saved to the in-memory model list of **Persons**
 
 ==== Resetting profile picture (since V1.4)
