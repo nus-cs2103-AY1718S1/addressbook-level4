@@ -233,7 +233,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * why must comment TODO: change this
+     * Similar to methods for contacts except with EventCalendar.
      */
     @FXML
     private void handleSwitchToEvents() {

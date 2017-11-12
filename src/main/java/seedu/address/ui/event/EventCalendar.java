@@ -9,7 +9,6 @@ import javafx.scene.text.Text;
 import seedu.address.ui.UiPart;
 
 //@@author dennaloh
-
 /**
  * The panel on the right side of {@link EventListPanel}. Used to show a calendar.
  */

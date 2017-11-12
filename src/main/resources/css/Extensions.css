@@ -46,7 +46,9 @@
     -fx-text-fill: white;
     -fx-text-alignment: left;
 }
+/* @@author */
 
+/* @@author dennaloh */
 .calender-property-value {
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 30px;
