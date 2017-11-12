@@ -88,7 +88,7 @@ In this case, Cornelia wants her parcel to be delivered to 10th Street Singapore
 
 === More About Parcel List Card
 
-image::ParcelCard.png[width="890"]
+image::Ark_Parcel_Card_Numbered.png[width="890"]
 _Figure 4.2.1 : Labelled Parcel Card_
 
 1. *Parcel Index* - This is the index number of the parcel in the displayed list.
