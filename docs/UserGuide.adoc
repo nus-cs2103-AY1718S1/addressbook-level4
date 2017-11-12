@@ -521,7 +521,7 @@ Changes the window size to big.
 ==== Exiting the program : `exit`
 
 Prompts a confirmation step to exit to programme. +
-Exits the programme if two consecutive `exit` commands are given.
+Exits the programme if two consecutive `exit` commands are given. +
 Format: `exit`
 
 image::exit-confirmation.png[width="790"]
