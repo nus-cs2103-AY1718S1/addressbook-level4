@@ -53,12 +53,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private boolean predicateWithoutAndOr(ReadOnlyPerson person) {
         int foundTags = 0;
         for (String keyword : keywords) {
-            for (Tag tags : person.getTags()) {
-                if (tags.tagName.equalsIgnoreCase(keyword)) {
-                    foundTags += 1;
-                    break;
-                }
-            }
+            foundTags += checkPersonTags(keyword, person);
         }
         return (foundTags == keywords.size());
     }
@@ -90,12 +85,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private boolean evaluateListOfTags(List<String> listOfTags, ReadOnlyPerson person) {
         int foundTags = 0;
         for (String tag : listOfTags) {
-            for (Tag tags : person.getTags()) {
-                if (tags.tagName.equalsIgnoreCase(tag)) {
-                    foundTags += 1;
-                    break;
-                }
-            }
+            foundTags += checkPersonTags(tag, person);
         }
         return foundTags == listOfTags.size();
     }
@@ -139,5 +129,21 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
             myStack.push(keyword);
         }
         return myStack;
+    }
+
+    /**
+     * Checks if person contains the input tag.
+     *
+     * @param tag Tag to search for.
+     * @param person Person to search.
+     * @return 1 if person has tag. 0 if person does not have tag.
+     */
+    private int checkPersonTags (String tag, ReadOnlyPerson person) {
+        for (Tag tags: person.getTags()) {
+            if (tags.tagName.equalsIgnoreCase(tag)) {
+                return 1;
+            }
+        }
+        return 0;
     }
 }

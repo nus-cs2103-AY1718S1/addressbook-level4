@@ -58,8 +58,8 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
      * @return True if list starts with "AND" or "OR.
      */
     private boolean startsWithAndOr(List<String> evaluateList) {
-        boolean startWithAndOr = "and".equalsIgnoreCase(evaluateList.get(0))
-                || "or".equalsIgnoreCase(evaluateList.get(0));
+        String firstString = evaluateList.get(0);
+        boolean startWithAndOr = isAnd(firstString) || isOr(firstString);
         return startWithAndOr;
     }
 
@@ -70,8 +70,10 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
      * @return True if list ends with "AND" or "OR.
      */
     private boolean endsWithAndOr(List<String> evaluateList) {
-        boolean endWithAndOr = "and".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1))
-                || "or".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1));
+        String lastString = evaluateList.get(evaluateList.size() - 1);
+        boolean hasAnd = isAnd(lastString);
+        boolean hasOr = isOr(lastString);
+        boolean endWithAndOr = hasAnd || hasOr;
         return endWithAndOr;
     }
 
@@ -85,13 +87,45 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
         String previousString = "";
         boolean multipleAndOrCluster = false;
         for (String str : evaluateList) {
-            if (("and".equalsIgnoreCase(previousString) || "or".equalsIgnoreCase(previousString))
-                    && ("and".equalsIgnoreCase(str) || "or".equalsIgnoreCase(str))) {
+            if (areBothAndOr(previousString, str)) {
                 multipleAndOrCluster = true;
                 break;
             }
             previousString = str;
         }
         return multipleAndOrCluster;
+    }
+
+    /**
+     * Checks if both input strings are "and" or "or".
+     *
+     * @param before Word before.
+     * @param after  Word after.
+     * @return True if both contains either "and" or "or".
+     */
+    private boolean areBothAndOr(String before, String after) {
+        boolean isAndOrBefore = isAnd(before) || isOr(before);
+        boolean isAndOrAfter = isAnd(after) || isOr(after);
+        return isAndOrAfter && isAndOrBefore;
+    }
+
+    /**
+     * Checks if string is "and".
+     *
+     * @param string String to be evaluated.
+     * @return True if string is "and".
+     */
+    private boolean isAnd(String string) {
+        return "and".equalsIgnoreCase(string);
+    }
+
+    /**
+     * Checks if string is "or".
+     *
+     * @param string String to be evaluated.
+     * @return True if string is "or".
+     */
+    private boolean isOr(String string) {
+        return "or".equalsIgnoreCase(string);
     }
 }
