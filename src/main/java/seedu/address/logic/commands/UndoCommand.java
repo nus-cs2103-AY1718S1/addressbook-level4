@@ -17,18 +17,25 @@ public class UndoCommand extends Command {
     public static final String COMMAND_WORDVAR_3 = "undomult";
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
+    //@@author vivekscl
+    public static final String MESSAGE_SOME_COMMANDS_UNDONE = "There were only %1$s commands to undo. "
+            + "Cannot undo %2$s more commands!";
     public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
             + " OR "
             + COMMAND_WORDVAR_2
             + " OR "
             + COMMAND_WORDVAR_3
-            + ": Undo the number of commands identified by the given number. If no number is given, only previous"
-            + " command will be undone. \n"
-            + "Parameters: NUMBER (must be a positive integer) \n"
+            + ": Undo the number of commands identified by the given number. If "
+            + COMMAND_WORDVAR_1
+            + " OR "
+            + COMMAND_WORDVAR_2
+            + " is used, only the previous command will be undone. \n"
+            + "Parameters: NUMBER (must be a positive integer) if "
+            + COMMAND_WORDVAR_3
+            + " is used.\n"
             + "Example 1: " + COMMAND_WORDVAR_1 + " \n"
             + "Example 2: " + COMMAND_WORDVAR_3 + " 2";
 
-    //@@author vivekscl
     private final int numberOfCommands;
 
     public UndoCommand() {
@@ -42,14 +49,31 @@ public class UndoCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         requireAllNonNull(model, undoRedoStack);
-        for (int i = 1; i <= numberOfCommands; i++) {
-            if (!undoRedoStack.canUndo()) {
-                throw new CommandException(MESSAGE_FAILURE);
-            }
+
+        if (numberOfCommands == 1) {
+            undoHandler(MESSAGE_FAILURE);
             undoRedoStack.popUndo().undo();
+        } else if (numberOfCommands > 1) {
+            for (int i = 0; i < numberOfCommands; i++) {
+                int numberOfCommandsUndone = i;
+                int numberOfCommandsLeft = numberOfCommands - i;
+                undoHandler(String.format(MESSAGE_SOME_COMMANDS_UNDONE, numberOfCommandsUndone, numberOfCommandsLeft));
+                undoRedoStack.popUndo().undo();
+            }
+        } else {
+            assert false : "Number of commands must be at least 1";
         }
 
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    /**
+     * Handles the case where there is no command left to undo and outputs the corresponding message.
+     */
+    private void undoHandler(String message) throws CommandException {
+        if (!undoRedoStack.canUndo()) {
+            throw new CommandException(message);
+        }
     }
 
     @Override
