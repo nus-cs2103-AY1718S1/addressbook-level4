@@ -19,7 +19,7 @@ public class ScreenDimension {
         try {
             dimension = Toolkit.getDefaultToolkit().getScreenSize();
         } catch (Exception e) {
-            dimension = new Dimension();
+            dimension = new Dimension(1366, 768);
         }
         return dimension;
     }

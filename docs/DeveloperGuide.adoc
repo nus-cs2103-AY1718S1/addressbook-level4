@@ -1,4 +1,4 @@
-= ABC Business Contact - Developer Guide
+= ABC Business Contacts - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -369,7 +369,7 @@ image::BackupCommandSequenceDiagram.png[width="800"]
 _Figure 3.2.1 : Backup Command Sequence Diagram_
 
 [NOTE]
-`RestoreBackupCommand` shares a similar sequence diagram in terms of logic.
+`RestoreBackupCommand` shares a similar flow for its sequence diagram.
 
 The `BackupCommand` is executed when the command `backup` is entered. The data that is in `Model` or the active address book is first passed as a parameter to `BackupDataEvent`. The event will be handled by `StorageManager` and is saved into the default file path "data/addressbook-backup.xml".
 The following is the implementation of `BackupCommand`:
@@ -500,7 +500,7 @@ _Figure 3.3.1 : AddTag Command Sequence Diagram_
 // tag::filter[]
 === Filtering mechanism in find
 
-==== Mechanism
+==== Basic mechanism
 The list of persons displayed is filtered by a [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[Predicate]]
 when the method `updateFilteredPersonList(predicate)` from the `Model` interface is invoked.
 
@@ -522,18 +522,18 @@ public interface Model {
 ----
 
 
-When `updateFilteredPersonList(predicate)` is invoked, every `Person` in **ABC** is evaluated against the `predicate`. +
-A `Person` is added to the displayed list if `predicate.test(person)` is evaluated to be TRUE. +
-All `Person` instances that fulfill the conditions specified in `predicate` are filtered to be displayed.
+When `updateFilteredPersonList(predicate)` is invoked, every `Person` in **ABC** is evaluated against the `predicate`.
+A `Person` is added to the displayed list if `predicate.test(person)` is evaluated to be TRUE.
+Therefore, all `Person` instances that fulfill the conditions specified in `predicate` are displayed.
 
-==== Filtering on the existing list
-Note that all `Person` instances in the existing list satisfy a Predicate `currentPredicate`. Given a new Predicate `newPredicate`, filtering on the existing list is equivalent to selecting `Person` instances that satisfy both `currentPredicate` and `newPredicate`. From Figure 3.4.1, it can also be viewed as the intersection of two lists of `Person` objects, each satisfying one of the two predicates respectively.
+==== Filtering the displayed list
+Note that all `Person` instances in the displayed list satisfy a Predicate `currentPredicate`. Given a new Predicate `newPredicate`, filtering the displayed list of contacts is equivalent to selecting `Person` instances that satisfy both `currentPredicate` and `newPredicate`. From Figure 3.4.1, it can also be viewed as the intersection of two lists of `Person` objects, each satisfying one of the two predicates respectively.
 
 image::venn_diagram.png[height = 200, width = 250]
 _Figure 3.4.1 : Venn Diagram for Filtering_
 
-===== Implementation
-The actual implementation of filtering on the existing list involves three steps. +
+==== Implementation
+The actual implementation of filtering the displayed list involves three steps. +
 
 .  Invoke `getPersonListPredicate()` provided in the Model interface to get the `currentPredicate`.
 .  Use [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html#and-java.util.function.Predicate-[Predicate.and()]] to generated the logical AND of the two predicates.
@@ -542,10 +542,10 @@ The actual implementation of filtering on the existing list involves three steps
 For more detail, refer to the sequence diagram(Figure 3.4.2) below.
 
 image::FindCommandSequenceDiagram.png[]
-_Figure 3.4.2 : Sequence Diagram for Filter_
+_Figure 3.4.2 : Sequence Diagram for Find_
 
-===== Design consideration
-The design for filtering the existing list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]].
+==== Design consideration
+The design for filtering the displayed list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]].
 
 * By providing a new extension of `getPersonListPredicate()` in the `Model` interface, the new feature is enabled. +
 * By making use of the logical AND of two predicates, the list can be filtered without modification of the fundamental filtering mechanism. +
