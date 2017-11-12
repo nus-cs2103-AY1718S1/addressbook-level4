@@ -66,7 +66,7 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
-        initListObserver(model);
+        ListObserver.init(model);
 
         storage.backupAddressBook();
 
@@ -96,10 +96,6 @@ public class MainApp extends Application {
 
     private void initLogging(Config config) {
         LogsCenter.init(config);
-    }
-
-    private void initListObserver(Model model) {
-        ListObserver.init(model);
     }
 
     /**

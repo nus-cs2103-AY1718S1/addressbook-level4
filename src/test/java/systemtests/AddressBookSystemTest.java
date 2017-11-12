@@ -61,7 +61,7 @@ public abstract class AddressBookSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication();
         mainWindowHandle = setupHelper.setupMainWindowHandle();
-
+        ListObserver.init(getRealModel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -197,8 +197,7 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getInfoPanel().isSelectedPersonChanged());
-        assertTrue(getPersonListPanel().isSelectedPersonCardChanged(mainWindowHandle.getPersonListPanel()));
+        assertFalse(mainWindowHandle.getPersonListPanel().isSelectedPersonCardChanged());
     }
 
     /**
@@ -257,5 +256,12 @@ public abstract class AddressBookSystemTest {
      */
     protected Model getModel() {
         return testApp.getModel();
+    }
+
+    /**
+     * Returns the current model. Should only be used for initializing {@code ListObserver}.
+     */
+    protected Model getRealModel() {
+        return testApp.getRealModel();
     }
 }

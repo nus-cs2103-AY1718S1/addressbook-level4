@@ -32,6 +32,10 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + "   ";
         assertCommandSuccess(command, INDEX_FIRST_PERSON);
 
+        /* Case: select without index when a card is selected -> next card selected */
+        command = SelectCommand.COMMAND_WORD;
+        assertCommandSuccess(command, INDEX_SECOND_PERSON);
+
         /* Case: select the last card in the person list -> selected */
         Index personCount = Index.fromOneBased(getTypicalPersons().size());
         command = SelectCommand.COMMAND_WORD + " " + personCount.getOneBased();
