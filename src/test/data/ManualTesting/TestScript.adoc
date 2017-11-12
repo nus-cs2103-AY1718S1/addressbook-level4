@@ -1,0 +1,219 @@
+= Test Script
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Loading the sample data
+
+Create a folder `data` in the directory where from where the jar file is going to be run. Rename the `SampleData.xml`
+file to `addressbook.xml` and copy it to the newly created `data` folder. When you run the application, 20 contacts
+will be loaded
+
+== Outline
+The test cases are designed so that each category of tests is self contained, meaning that completing one of them
+does not influence the outcome of the other tests. If you perform individual tests from a category, it might be in
+conflict with the assumptions about the current state of the data.
+
+== Test cases
+
+=== Grouping
+
+==== add to a group successfully
+
+* command: `group 2 gn/CS2103`
+* expected behavior: the second person on the list is successfully added to the group `CS2103`
+
+==== add to a group that contains spaces successfully
+
+* command: `group 2 gn/University NUS`
+* expected behavior: the second person on the list is successfully added to the group `University NUS`
+
+==== try to add to a group to which the person already belongs
+
+* command: `group 2 gn/CS2103`
+* expected behavior: relevant error message is issued
+
+==== try to add to a group with empty string as a name
+
+* command: `group 2 gn/`
+* expected behavior: relevant error message is issued
+
+==== try to remove from a group to which the person does not belong
+
+* command: `ungroup 2 gn/CS2104`
+* expected behavior: relevant error message is issued
+
+==== try to remove from a group by specifying a name with wrong capitalization
+
+* command: `ungroup 2 gn/university`
+* expected behavior: relevant error message is issued
+
+==== try to remove from a group by specifying empty string as a name
+
+* command: `ungroup 2 gn/`
+* expected behavior: relevant error message is issued
+
+==== remove from a group successfully
+
+* command: `ungroup 2 gn/University NUS`
+* command: `ungroup 2 gn/CS2104`
+* expected behavior: the second person on the list is successfully from the groups `University NUS` and `CS2104`
+
+=== Property - always sorted
+
+==== add a person so that the app inserts the card in the right order
+
+* command: `add n/Zbigniew Zaniewicz p/45342342 e/zz@gmail.com a/Podniebna 24, 20-738 Lublin`
+* expected behavior: the person is inserted on the 20th position, properly
+
+==== filter the persons so that the selected persons are listed sorted
+
+* command: `filter hasMyPencil`
+* expected behavior: 4 sorted entries are displayed
+
+==== cleanup after test
+
+* command: `list`
+* command: `delete 20`
+
+=== Remove tag
+
+==== try to remove a tag by specifying a tag that does not exits
+
+* command: `removeTag t/askFor`
+* expected behavior: relevant error message is issued
+
+==== remove a tag successfully
+
+* command: `removeTag t/askForHackathon`
+* expected behavior: the tag is removed from all the contacts (person 2 and 11)
+
+==== cleanup after test
+
+* command: `undo`
+
+=== Profile Picture
+
+=== Autocomplete
+
+==== Testing all autocomplete functions
+
+* `ad` + TAB -> `add`
+* `ap` + TAB -> `appoint`
+* `c` + TAB -> `clear`
+* `d` + TAB -> `delete`
+* `ed` + TAB -> `edit`
+* `ex` + TAB -> `exit`
+* `fi` + TAB -> FAILS
+* `filtera` + TAB -> `filterall`
+* `fin` + TAB -> `find`
+* `he` + TAB -> `help`
+* `hi` + TAB -> `history`
+* `l` + TAB -> `list`
+* `red` + TAB -> `redo`
+* `rem` + TAB -> `removetag`
+* `s` + TAB -> `select`
+* `und` + TAB -> `undo`
+* `ung` + TAB -> `ungroup`
+
+=== Appointment
+
+==== Adding new appointment
+* Command: `appoint 1 ap/01/01/2020 00:05 15`
+* Expected result: New appointment added for person...
+
+==== Overriding appointment, even if clashing with the current one
+* Command: `appoint 1 ap/01/01/2020 00:00 15`
+* Expected result: New appointment added for person...
+
+==== Removing appointment
+* Command: `appoint 1 ap/`
+* Expected result: Appointment removed for person...
+* Command: `undo`
+* Expected result: Undo success!
+
+==== Adding invalid appointments
+* Command: `appoint 2 ap/01/13/2020 00:00 15`
+* Expected result: Date or time is invalid
+* Command: `appoint 2 ap/29/02/2019 00:00 15`
+* Expected result: Date or time is invalid
+* Command: `appoint 2 ap/01/01/2019 24:00 15`
+* Expected result: Date or time is invalid
+* Command: `appoint 2 ap/01/01/2019 00:00 random`
+* Expected result: Duration must be a positive integer in minutes
+* Command: `appoint 2 ap/01/01/2000 00:00 1`
+* Expected result: Date time cannot be in the past
+* Command: `appoint 2 ap/01/01/2020 00:05 1`
+* Expected result: Appointment clash with another in address book
+
+==== Testing appointment reminders
+* Note that contact pro will only reminds if the appointment has been added from a different session.
+* Steps to test:
+** Add an appointment that is a bit more than 1 hour than the current time. For example, if current time is
+17/11/2017 14:30, then add an appointment that starts around 17/11/2017 15:32: +
+`appoint 1 ap/17/11/2017 15:32`
+** Close the app.
+** Start a new session.
+** Appointment reminder will have a notifying message 60 minutes before the appointment starts, at around 14:32.
+
+==== try to add a picture specifying a wrong path
+
+* command: `pic 3 p/Garbage`
+* expected behavior: relevant error message is issued
+
+==== try to add a picture specifying a path that does not exits
+
+* command: `pic 3 p/C:\Users\Desktop\jarFolder`
+* expected behavior: relevant error message is issued
+
+==== add a picture successfully
+[NOTE]
+CORRECT_PATH means a correct path of a picture on your machine
+
+* command: `pic 3 p/CORRECT_PATH`
+* expected behavior: a picture that is found under CORRECT_PATH path is added to the 3rd person
+
+==== change a picture to the default one
+
+* command: `pic 3 p/default_pic.png`
+* expected behavior: a picture of the 3rd person is changed to the default one
+
+=== Filter
+
+==== Try to filter using a non-relevant keyword (does not pertain to any contact)
+
+* command: `filter zamboni`
+* expected behaviour: Empty list output
+
+==== Try to filter using a relevant keyword
+
+* command: `filter family`
+* expected behaviour: List of all contacts tagged/grouped as family
+
+==== Try to filter multiple contacts using multiple keywords
+
+* command: `filter family friends`
+* expected behaviour: List of all contacts tagged/grouped as friends or family
+
+=== FilterAll
+
+==== Try to filter using a non-relevant keyword (does not pertain to any contact)
+
+* command: `filterall zamboni`
+* expected behaviour: Empty list output
+
+==== Try to filter using a relevant keyword
+
+* command: `filterall family`
+* expected behaviour: List of all contacts tagged/grouped as family
+
+==== Try to filter specific contacts using multiple keywords
+
+* command: `filterall Alex friends`
+* expected behaviour: List of all contacts tagged/grouped as both friends and family
+
+==== Try to filter contacts using keywords that do not exist concurrently on a single contact
+
+* command: `filterall friends enemies`
+* expectred behaviour: Empty list output
+

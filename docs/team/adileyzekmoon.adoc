@@ -1,0 +1,89 @@
+= Adil Azmoon - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ContactPro
+ContactPro - It is a Java application intended for students in order to facilitate contacts management and integrate it with the study-related information.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T12-B1/main/blob/master/collated/main/adileyzekmoon.md[Functional code]] [https://github.com/CS2103AUG2017-T12-B1/main/blob/master/collated/test/adileyzekmoon.md[Test code]]
+
+=== Enhancement Added: Filter/FilterAll
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=filter]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The user will be able to search for specific contacts or a range of contacts easily. +
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=filter]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Social Media (Facebook)
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=facebook]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The user wants to visit his contacts' social media pages easily.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=facebook]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: LightTheme (Incomplete Theme Switcher)
+
+==== External behavior
+
+---
+Currently Contact Pro is default loaded using a LightTheme that contrasts the DarkTheme given. +
+It is supposed to be utilised in a theme switcher that is currently incomplete.
+
+---
+
+==== Justification
+
+A theme switcher with contrasting light and dark themes is convenient for users who do not want to strain their eyes +
+or prefer a certain theme over the other.
+
+
+
+=== Other contributions
+
+* Found bugs in W14-B4 project.
+[addE] no number of days or arrow https://github.com/CS2103AUG2017-W14-B4/main/issues/111
+

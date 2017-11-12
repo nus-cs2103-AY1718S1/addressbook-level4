@@ -1,0 +1,77 @@
+= Vu Duc Nam - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ContactPro
+ContactPro - It is a Java application intended for students in order to facilitate contacts management and integrate it with the study-related information.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T12-B1/main/blob/master/collated/main/namvd2709.md[Functional code]] [https://github.com/CS2103AUG2017-T12-B1/main/blob/master/collated/test/namvd2709.md[Test code]]
+
+=== New feature: Adding an appointment
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=appoint]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As a student, the target user of this application will have a lot of appointments for group work, dating, setting up +
+meetings and appointments with other students and professors. Hence the need to store appointment details.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=appoint]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Searching mechanism enhanced
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=searching]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Sometimes the user might not remember the full name of the person, or just for speed's sake, now searching can be done
+by typing the start of the name. Also, autocomplete commands will make using faster.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=searching]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Written all use cases (https://github.com/CS2103AUG2017-T12-B1/main/pull/5[PR])
+* Found bugs in F09-B3 project. +
+Add command not working, error message not showing. https://github.com/CS2103AUG2017-F09-B3/main/issues/99[Issues]
+* Suggests improvements to F09-B3 project. +
+More meaningful error message. https://github.com/CS2103AUG2017-F09-B3/main/issues/102[Issues]
+
+

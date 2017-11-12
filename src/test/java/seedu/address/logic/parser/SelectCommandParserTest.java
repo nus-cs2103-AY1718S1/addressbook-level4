@@ -9,10 +9,6 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.SelectCommand;
 
-/**
- * Test scope: similar to {@code DeleteCommandParserTest}.
- * @see DeleteCommandParserTest
- */
 public class SelectCommandParserTest {
 
     private SelectCommandParser parser = new SelectCommandParser();

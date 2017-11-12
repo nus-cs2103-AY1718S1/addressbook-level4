@@ -125,6 +125,23 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+    //@@author namvd2709
+    @Test
+    public void handleKeyPress_startingWithTab() {
+        assertInputHistory(KeyCode.TAB, "");
+
+        // successfully autocomplete
+        commandBoxHandle.setInput("s");
+        assertInputHistory(KeyCode.TAB, "select ");
+        assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
+
+        // fail autocomplete
+        commandBoxHandle.setInput("e");
+        assertInputHistory(KeyCode.TAB, "e");
+        assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
+    }
+    //@@author
+
     /**
      * Runs a command that fails, then verifies that <br>
      *      - the text remains <br>

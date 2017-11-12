@@ -41,4 +41,10 @@ public interface AddressBookStorage {
      */
     void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
 
+    //@@author arturs68
+    /**
+     * Saves the given {@link ReadOnlyAddressBook} to the fixed temporary location (standard location + "-backup.xml")
+     * @param addressBook cannot be null.
+     * @throws IOException if there was any problem writing to the file.
+     */
 }

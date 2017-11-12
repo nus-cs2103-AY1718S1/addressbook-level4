@@ -308,6 +308,8 @@
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
 }
 
 #commandTypeLabel {
@@ -344,7 +346,21 @@
     -fx-text-fill: white;
     -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;
-    -fx-border-radius: 2;
-    -fx-background-radius: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-size: 11;
+}
+
+#groups {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#groups .label {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
     -fx-font-size: 11;
 }

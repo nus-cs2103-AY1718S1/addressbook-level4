@@ -7,8 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.logic.AutocompleteManager;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -26,6 +28,7 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private AutocompleteManager autocompleteManager;
 
     @FXML
     private TextField commandTextField;
@@ -36,6 +39,7 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        autocompleteManager = logic.getAutocompleteManager();
     }
 
     /**
@@ -55,8 +59,27 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case TAB:
+            keyEvent.consume();
+            attemptAutocomplete();
+            break;
         default:
             // let JavaFx handle the keypress
+        }
+    }
+
+    /** Attempts to auto-complete */
+    private void attemptAutocomplete() {
+        String matcher = commandTextField.getText();
+        String command = autocompleteManager.attemptAutocomplete(matcher);
+        if (matcher.equals(command)) {
+            setStyleToIndicateCommandFailure();
+            logger.info("Autocomplete failed with input: " + matcher);
+        } else {
+            commandTextField.setText(command);
+            commandTextField.end();
+            commandTextField.insertText(commandTextField.getCaretPosition(), " ");
+            logger.info(String.format("Autocomplete successfully autocomplete input %s into %s", matcher, command));
         }
     }
 

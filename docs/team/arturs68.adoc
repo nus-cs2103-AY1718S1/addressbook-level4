@@ -1,0 +1,111 @@
+= Artur Szalata - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ContactPro
+ContactPro - It is a Java application intended for students in order to facilitate contacts management and integrate it with the study-related information.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T12-B1/main/blob/master/collated/main/arturs68.md[Functional code]] [https://github.com/CS2103AUG2017-T12-B1/main/blob/master/collated/test/arturs68.md[Test code]]
+
+=== Enhancement Added: Group/Ungroup
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=groupungroup]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The user has to manage many contacts most of which can be classified for efficient retrieval and processing. +
+
+Argument for using groups instead of tags for this purpose:
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=groupjustification]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=group]
+
+include::../DeveloperGuide.adoc[tag=addGroup]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Profile picture
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=profilepic]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The user wants to store the pictures together with the contacts, so that she recalls the people easier
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=profile]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Remove tag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=removetag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A tag might have temporal meaning and after its time elapses it might become obsolete at all places of occurrence
+
+
+=== Enhancement Added: Always sorted
+
+==== Justification
+
+Users expect to have the contacts listed in a sorted order, so that they can find the relevant entries on a long list.
+
+=== Other contributions
+
+* Written all non functional requirements (https://github.com/CS2103AUG2017-T12-B1/main/pull/4[PR])
+* Written backup implementation. Not completed due to the lack of time. (https://github.com/CS2103AUG2017-T12-B1/main/pull/3[PR])
+* Found bugs in W09-B1 project.
+Multiple User Guide discrepancies regarding https://github.com/CS2103AUG2017-W09-B1/main/issues/113[the add command (PR)]
+
