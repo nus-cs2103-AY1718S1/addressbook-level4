@@ -33,7 +33,7 @@ public class UntagCommandParser implements Parser<UntagCommand> {
         requireNonNull(args);
 
         String trimmedArgs = args.trim();
-        if (trimmedArgs.equals("-a")) {
+        if (trimmedArgs.equals("-all")) {
             return new UntagCommand(true, Collections.emptyList(), Collections.emptyList());
         }
         String[] splittedArgs = trimmedArgs.split("\\s+");
@@ -55,7 +55,7 @@ public class UntagCommandParser implements Parser<UntagCommand> {
         }
 
         List<Index> indexList = new ArrayList<>();
-        if (splittedArgs[0].equals("-a")) {
+        if (splittedArgs[0].equals("-all")) {
             return new UntagCommand(true, indexList, tagList);
         }
         Set<String> uniqueIndexes = new HashSet<>(Arrays.asList(splittedArgs[0].split(",")));

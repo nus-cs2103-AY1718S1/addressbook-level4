@@ -36,11 +36,11 @@ public class UntagCommand extends UndoableCommand {
             + "Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME\n"
             + "Example: " + COMMAND_WORD + " 1,2,3 friends/colleagues\n"
             + "- Untag all tags of all persons in the last person listing\n"
-            + "Parameters: -a\n"
-            + "Example: " + COMMAND_WORD + " -a\n"
+            + "Parameters: -all\n"
+            + "Example: " + COMMAND_WORD + " -all\n"
             + "- Untag one or more tags of all persons in the last person listing\n"
-            + "Parameters: -a + TAGNAME\n"
-            + "Example: " + COMMAND_WORD + " -a friends/colleagues";
+            + "Parameters: -all + TAGNAME\n"
+            + "Example: " + COMMAND_WORD + " -all friends/colleagues";
 
     public static final String MESSAGE_SUCCESS = "%d person(s) successfully untagged from %s:";
     public static final String MESSAGE_SUCCESS_ALL_TAGS = "%d person(s) sucessfully untagged:";
