@@ -586,17 +586,21 @@ image::MusicList.jpg[width="200"]
 ==== Design Considerations
 
 **Aspect:** Naming of music tracks +
+
 **Alternative 1 (current choice):** Name begins with the genre followed by track number +
 **Pros:** Easy to maintain, as it allows addition of music tracks by adding more mp3 files and a change of only one or two variables in the code. +
 **Cons:** Require to have the same exact number of music tracks for each genre +
+
 **Alternative 2:** Any file name  +
 **Pros:** Able to hold music track title name, which can be use to display to the user in the result box +
 **Cons:** Requires an array to keep track of the music tracks for each genre. More code manipulation required when adding more music tracks +
 
 **Aspect:** Which music file to play first +
+
 **Alternative 1 (current choice):** Play the music file that starts with 1 then increase from there +
 **Pros:** Easy to implement. Users are able to know what song is coming up next in the track list +
 **Cons:** Always start at the same music track first +
+
 **Alternative 2:** Play a random music file +
 **Pros:** Has a chance to be different the next time the user starts playing music. +
 **Cons:** User does not know which song is going to be played next.
@@ -745,9 +749,11 @@ image::header_warning.png[width="400"]
 ==== Design Considerations
 
 **Aspect:** What to use for subject header in email +
+
 **Alternative 1 (current choice):** Fixed subject header +
 **Pros:** Easy to implement. Prevent of abuse of subject header to send negative subject headers +
 **Cons:** Always the same subject header +
+
 **Alternative 2:** Let user input the subject header +
 **Pros:** Different subject header can be used for different purpose. +
 **Cons:** Can be abused and send negative subject header, leading to a bad reputation for Unify, as the recipients thinks that these offensive subject header is from Unify.
@@ -798,9 +804,11 @@ dependencies {
 ==== Design Considerations
 
 **Aspect:** When to use Text-To-Speech audio feedback +
+
 **Alternative 1 (current choice):** Successful and unsuccessful command execution excluding invalid commands +
 **Pros:** Giving audible feedback when users needed it the most, such as confirmation of successful command execution +
 **Cons:** Invalid commands have no audio feedback +
+
 **Alternative 2:** All commands, including invalid commands have audio feedback +
 **Pros:** Users able to have audible feedback for every action they take +
 **Cons:** Users may find it annoying as every action they take, the system will play an audio cue. +
