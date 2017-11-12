@@ -523,8 +523,9 @@ Format: `tag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...`
 * The indexes refer to the index numbers shown in the most recent listing.
 * The indexes *must be positive integers* `1, 2, 3, ...`
 * The tag names *must be alphanumeric*
-* You can choose to remove the specified tags from all persons in the last person listing by replacing `INDEX,[MORE_INDEXES],...` with `-a`.
+* You can choose to remove the specified tags from all persons in the last person listing by replacing `INDEX,[MORE_INDEXES],...` with `-all`.
 * All tags will be removed from the persons at the specified indexes if `TAG/[MORE_TAGS]/...` is left blank.
+* You will be notified of all existing tags inside person list if the tag names you provide cannot be found.
 ****
 
 Examples:
@@ -538,11 +539,11 @@ Removes the "friends" and "enemies" tags from the 1st, 2nd and 3rd persons in th
 Removes all tags from the 1st, 2nd and 3rd persons in the results of the `list` command.
 
 * `list` +
-`untag -a friends/enemies` +
+`untag -all friends/enemies` +
 Removes the "friends" and "enemies" tags from all persons in the results of the `list` command.
 
 * `list` +
-`untag -a` +
+`untag -all` +
 Removes all tags from all persons in the results of the `list` command.
 
 === Renaming a tag in contact list : `retag`
@@ -580,6 +581,7 @@ Format: `retrieve TAG`
 ****
 * Retrieves all persons having the specified `TAG` tag.
 * The tag name *must be alphanumeric*
+* You will be notified of all existing tags inside person list if the tag name you provide cannot be found
 ****
 
 Examples:
