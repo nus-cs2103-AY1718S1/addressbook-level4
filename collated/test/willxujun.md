@@ -159,7 +159,46 @@ public class SearchParserTest {
 
 }
 ```
-###### /java/systemtests/FindCommandSystemTest.java
+###### \java\seedu\address\testutil\PersonBuilder.java
+``` java
+    /**
+     * Set the {@code tags} to the person we are building
+     */
+    public PersonBuilder withTags(Set<Tag> tags) {
+        CollectionUtil.elementsAreUnique(tags);
+        this.person.setTags(tags);
+        return this;
+    }
+```
+###### \java\systemtests\EditCommandSystemTest.java
+``` java
+        /* Case: add a tag -> edited*/
+        index = INDEX_FIRST_PERSON;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
+        ReadOnlyPerson personToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
+        Set<Tag> originalTags = new HashSet<>(personToEdit.getTags());
+        originalTags.add(new Tag(VALID_TAG_FRIEND));
+        System.out.println(personToEdit.getAsText());
+        editedPerson = new PersonBuilder(personToEdit)
+                .withTags(originalTags).build();
+        assertCommandSuccess(command, index, editedPerson);
+
+        /* Case: delete a tag -> edited*/
+        index = INDEX_FIRST_PERSON;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + RM_TAG_DESC_FRIEND;
+        originalTags.remove(new Tag(VALID_TAG_FRIEND));
+        editedPerson = new PersonBuilder(personToEdit)
+                .withTags(originalTags).build();
+        assertCommandSuccess(command, index, editedPerson);
+
+        /* Case: add a tag then delete the same tag -> edited*/
+        index = INDEX_FIRST_PERSON;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND + RM_TAG_DESC_FRIEND;
+        editedPerson = new PersonBuilder(personToEdit)
+                .withTags(originalTags).build();
+        assertCommandSuccess(command, index, editedPerson);
+```
+###### \java\systemtests\FindCommandSystemTest.java
 ``` java
         /* Case: find multiple persons in address book, 2 keywords -> 0 persons found because of new AND search*/
         command = FindCommand.COMMAND_WORD + " Benson Daniel";

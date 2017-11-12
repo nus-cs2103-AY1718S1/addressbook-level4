@@ -1,5 +1,52 @@
 # willxujun
-###### /java/seedu/address/logic/commands/SearchCommand.java
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+        Set<Tag> updatedTags = new HashSet<>(personToEdit.getTags());
+        updateTags(updatedTags, editPersonDescriptor);
+```
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+
+    /**
+     * clears, adds and removes tags according to the descriptor
+     * @param updatedTags
+     * @param editPersonDescriptor
+     */
+    public static void updateTags(Set<Tag> updatedTags, EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(editPersonDescriptor);
+        editPersonDescriptor.getTagsToAdd().ifPresent(tagsToAdd -> {
+            if (tagsToAdd.isEmpty()) {
+                updatedTags.clear();
+            }
+        });
+        editPersonDescriptor.getTagsToRemove().ifPresent(tagsToRemove -> {
+            if (tagsToRemove.isEmpty()) {
+                updatedTags.clear();
+            }
+        });
+        editPersonDescriptor.getTagsToAdd().ifPresent(updatedTags::addAll);
+        editPersonDescriptor.getTagsToRemove().ifPresent(updatedTags::removeAll);
+    }
+```
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+        public void setTagsToAdd(Set<Tag> tagsToAdd) {
+            this.tagsToAdd = tagsToAdd;
+        }
+
+        public Optional<Set<Tag>> getTagsToAdd() {
+            return Optional.ofNullable(tagsToAdd);
+        }
+
+        public void setTagsToRemove(Set<Tag> tagsToRemove) {
+            this.tagsToRemove = tagsToRemove;
+        }
+
+        public Optional<Set<Tag>> getTagsToRemove() {
+            return Optional.ofNullable(tagsToRemove);
+        }
+```
+###### \java\seedu\address\logic\commands\SearchCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose name, phone or tag contains any of the argument keywords.
@@ -31,7 +78,17 @@ public class SearchCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/parser/SearchParser.java
+###### \java\seedu\address\logic\parser\CliSyntax.java
+``` java
+    public static final Prefix PREFIX_REMOVE_TAG = new Prefix("-t/");
+```
+###### \java\seedu\address\logic\parser\EditCommandParser.java
+``` java
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_ADD_TAG)).ifPresent(editPersonDescriptor::setTagsToAdd);
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_REMOVE_TAG))
+                    .ifPresent(editPersonDescriptor::setTagsToRemove);
+```
+###### \java\seedu\address\logic\parser\SearchParser.java
 ``` java
 /**
  * Represents a parser that parses input from the search bar
