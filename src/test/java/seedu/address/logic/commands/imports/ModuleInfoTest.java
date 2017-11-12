@@ -26,7 +26,6 @@ public class ModuleInfoTest {
     }
 
     @Test
-    @Ignore
     public void createModuleInfo_fromJsonUrl_checkCorrectness() throws Exception {
         assertEquals("CS1101S", info.getModuleCode());
 
@@ -42,7 +41,6 @@ public class ModuleInfoTest {
     }
 
     @Test
-    @Ignore
     public void toString_checkCorrectness() throws Exception {
         String expected = "Module Code: CS1101S\n"
                 + "Module Title: Programming Methodology\n"
