@@ -7,11 +7,11 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.StringJoiner;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -48,13 +48,13 @@ public class UntagCommand extends UndoableCommand {
             + "removed from person list.";
     public static final String MESSAGE_SUCCESS_ALL_TAGS_IN_LIST = "All tags in person list successfully removed.";
 
-    public static final String MESSAGE_TAG_NOT_FOUND = "Tag not found in person list.";
+    public static final String MESSAGE_TAG_NOT_FOUND = "%s tag(s) not found in person list.";
     public static final String MESSAGE_PERSONS_DO_NOT_HAVE_TAGS = "%d person(s) do not have any of the specified tags:";
     public static final String MESSAGE_EMPTY_INDEX_LIST = "Please provide one or more indexes! \n%1$s";
     public static final String MESSAGE_INVALID_INDEXES = "One or more person indexes provided are invalid.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private boolean toAllInFilteredList;
+    private boolean toAllPersonsInFilteredList;
     private List<Index> targetIndexes;
     private List<Tag> tags;
 
@@ -62,11 +62,11 @@ public class UntagCommand extends UndoableCommand {
      * @param targetIndexes of the persons in the filtered person list to untag
      * @param tags of the persons
      */
-    public UntagCommand(boolean toAllInFilteredList, List<Index> targetIndexes, List<Tag> tags) {
+    public UntagCommand(boolean toAllPersonsInFilteredList, List<Index> targetIndexes, List<Tag> tags) {
         requireNonNull(targetIndexes);
         requireNonNull(tags);
 
-        this.toAllInFilteredList = toAllInFilteredList;
+        this.toAllPersonsInFilteredList = toAllPersonsInFilteredList;
         this.targetIndexes = targetIndexes;
         this.tags = tags;
     }
@@ -76,21 +76,27 @@ public class UntagCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         List<ReadOnlyPerson> personsToUpdate = new ArrayList<>();
 
-        if (toAllInFilteredList) {
+        // If command applies to all persons in filtered list
+        if (toAllPersonsInFilteredList) {
             personsToUpdate.addAll(lastShownList);
-            removeTagsFromPersons(personsToUpdate, tags);
-            deleteUnusedTagsInTagList(new ArrayList<>(tags.isEmpty()
-                    ? new ArrayList<>(model.getAddressBook().getTagList()) : tags));
-            return (tags.isEmpty()) ? new CommandResult(MESSAGE_SUCCESS_ALL_TAGS_IN_LIST)
-                    : new CommandResult(String.format(MESSAGE_SUCCESS_MULTIPLE_TAGS_IN_LIST, joinList(tags)));
+            return new CommandResult(untagAllPersonsInFilteredList(personsToUpdate));
         }
 
+        // Checks for invalid indexes
         for (Index targetIndex : targetIndexes) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(MESSAGE_INVALID_INDEXES);
             }
         }
 
+
+        if (!tags.isEmpty() && Collections.disjoint(model.getAddressBook().getTagList(), tags)) {
+            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, joinTagList(tags)));
+        }
+
+        return new CommandResult(untagPersonsInFilteredList(lastShownList));
+
+        /*
         List<Name> toBeUntaggedPersonNames = new ArrayList<>();
         if (tags.isEmpty()) {
             for (Index targetIndex : targetIndexes) {
@@ -102,6 +108,10 @@ public class UntagCommand extends UndoableCommand {
             deleteUnusedTagsInTagList(new ArrayList<>(model.getAddressBook().getTagList()));
             return new CommandResult(String.format(MESSAGE_SUCCESS_ALL_TAGS, targetIndexes.size()) + " "
                     + joinList(toBeUntaggedPersonNames));
+        }
+
+        if (!tags.isEmpty() && Collections.disjoint(model.getAddressBook().getTagList(), tags)) {
+            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, joinList(tags)));
         }
 
         List<Name> alreadyUntaggedPersonNames = new ArrayList<>();
@@ -118,6 +128,7 @@ public class UntagCommand extends UndoableCommand {
         removeTagsFromPersons(personsToUpdate, tags);
         deleteUnusedTagsInTagList(tags);
 
+        // return command result
         if (alreadyUntaggedPersonNames.size() > 0) {
             return new CommandResult(String.format(MESSAGE_SUCCESS,
                     targetIndexes.size() - alreadyUntaggedPersonNames.size(), joinList(tags)) + " "
@@ -127,6 +138,7 @@ public class UntagCommand extends UndoableCommand {
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS,
                 targetIndexes.size(), joinList(tags)) + " " + joinList(toBeUntaggedPersonNames));
+        */
     }
 
     @Override
@@ -135,6 +147,52 @@ public class UntagCommand extends UndoableCommand {
                 || (other instanceof UntagCommand // instanceof handles nulls
                 && this.targetIndexes.equals(((UntagCommand) other).targetIndexes))
                 && this.tags.equals(((UntagCommand) other).tags); // state check
+    }
+
+    /**
+     * @param lastShownList of person filtered list
+     */
+    private String untagPersonsInFilteredList(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        List<ReadOnlyPerson> toBeUntaggedPerson = new ArrayList<>();
+        List<ReadOnlyPerson> alreadyUntaggedPerson = new ArrayList<>();
+        Set<Tag> tagsInPersons = new UniqueTagList().toSet();
+
+        for (Index targetIndex : targetIndexes) {
+            ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+            if (!tags.isEmpty() && Collections.disjoint(person.getTags(), tags)) {
+                alreadyUntaggedPerson.add(person);
+            } else {
+                toBeUntaggedPerson.add(person);
+            }
+            tagsInPersons.addAll(person.getTags());
+        }
+
+        List<Tag> tagsToRemove = new ArrayList<>(tagsInPersons);
+        removeTagsFromPersons(toBeUntaggedPerson, (tags.isEmpty()) ? tagsToRemove : tags);
+        deleteUnusedTagsInTagList(new ArrayList<>(model.getAddressBook().getTagList()));
+
+        if (tags.isEmpty()) {
+            return String.format(MESSAGE_SUCCESS_ALL_TAGS, targetIndexes.size()) + " "
+                    + joinPersonList(toBeUntaggedPerson);
+        }
+        return (alreadyUntaggedPerson.size() > 0)
+                ? String.format(MESSAGE_SUCCESS, targetIndexes.size() - alreadyUntaggedPerson.size(), joinTagList(tags))
+                + " " + joinPersonList(toBeUntaggedPerson) + "\n"
+                + String.format(MESSAGE_PERSONS_DO_NOT_HAVE_TAGS, alreadyUntaggedPerson.size()) + " "
+                + joinPersonList(alreadyUntaggedPerson)
+                : String.format(MESSAGE_SUCCESS, targetIndexes.size(), joinTagList(tags))
+                + " " + joinPersonList(toBeUntaggedPerson);
+    }
+
+    /**
+     * @param persons in filtered list
+     */
+    private String untagAllPersonsInFilteredList(List<ReadOnlyPerson> persons) throws CommandException {
+        removeTagsFromPersons(persons, tags);
+        deleteUnusedTagsInTagList(new ArrayList<>(tags.isEmpty()
+                ? new ArrayList<>(model.getAddressBook().getTagList()) : tags));
+        return (tags.isEmpty()) ? MESSAGE_SUCCESS_ALL_TAGS_IN_LIST
+                : String.format(MESSAGE_SUCCESS_MULTIPLE_TAGS_IN_LIST, joinTagList(tags));
     }
 
     /**
@@ -185,4 +243,27 @@ public class UntagCommand extends UndoableCommand {
         return joiner.toString();
     }
 
+    /**
+     * Join person list elements by commas
+     * @param personList to be joined
+     */
+    private String joinPersonList(List<ReadOnlyPerson> personList) {
+        StringJoiner joiner = new StringJoiner(", ");
+        for (ReadOnlyPerson person : personList) {
+            joiner.add(person.getName().toString());
+        }
+        return joiner.toString();
+    }
+
+    /**
+     * Join tag list elements by commas
+     * @param tagList to be joined
+     */
+    private String joinTagList(List<Tag> tagList) {
+        StringJoiner joiner = new StringJoiner(", ");
+        for (Tag tag : tagList) {
+            joiner.add(tag.toString());
+        }
+        return joiner.toString();
+    }
 }
