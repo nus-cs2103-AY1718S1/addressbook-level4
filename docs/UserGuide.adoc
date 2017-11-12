@@ -256,7 +256,7 @@ You can mark specified person(s) from the address book as favourite.
 
 Format: `t-add INDEX... favourite`
 
-image::tAddCommand.png[width="790"]
+image::tAddCommand.png[width="500"]
 
 ****
 * All person(s) tagged as `favourite` by you will be shown as a coral shaped circle in front of the tag list.
@@ -289,7 +289,7 @@ Format: `t-remove INDEX... TAG`
 * The [TAG] *must not have its first word as a number*.
 ****
 
-image::tRemoveCommand-noIndex.png[width="790"]
+image::tRemoveCommand-noIndex.png[width="500"]
 
 Examples:
 
@@ -307,7 +307,7 @@ You can remove specified person(s) in the address book from your `favourite` lis
 
 Format: `t-remove INDEX... favourite`
 
-image::tRemoveCommand.png[width="790"]
+image::tRemoveCommand.png[width="500"]
 
 ****
 * You can also use `fav`, and words containing `fav` interchangeably with `favourite`.
@@ -332,7 +332,7 @@ You can find all persons with the given tag.
 
 Format: `t-find TAG`
 
-image::tFindCommand.png[width="790"]
+image::tFindCommand.png[width="500"]
 
 ****
 * The results show a list of person(s) who has their `tagName` matching exactly; also those with `tagName` containing in `TAG` or the other way round.
@@ -585,7 +585,7 @@ You can restore person(s) from bin to address book.
 
 Format: `bin-restore INDEX INDEX ...`
 
-image::multiRestoreCommand.png[width="790"]
+image::multiRestoreCommand.png[width="600"]
 
 ****
 * Recovers the people at these given specified `INDEX`.
