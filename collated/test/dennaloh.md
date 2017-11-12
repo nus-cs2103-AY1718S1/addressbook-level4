@@ -87,9 +87,11 @@ public class FbCommandTest {
  * Contains integration tests (interaction with the Model) and unit tests for {@code EmailCommand}.
  */
 public class EmailCommandTest {
-
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+```
+###### \java\seedu\address\logic\commands\person\EmailCommandTest.java
+``` java
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showFirstPersonOnly(model);
@@ -109,16 +111,13 @@ public class EmailCommandTest {
         EmailCommand emailSecondCommand = new EmailCommand(INDEX_SECOND_PERSON);
 
         // same object -> returns true
-        assertTrue(emailFirstCommand.equals(emailFirstCommand));
-
+        assertEquals(emailFirstCommand, emailFirstCommand);
         // different types -> returns false
-        assertFalse(emailFirstCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(emailFirstCommand.equals(null));
-
+        assertNotEquals(emailFirstCommand, 1);
         // different person -> returns false
-        assertFalse(emailFirstCommand.equals(emailSecondCommand));
+        assertNotEquals(emailFirstCommand, emailSecondCommand);
+        // null -> returns false
+        assertNotEquals(emailFirstCommand, null);
     }
 
     /**

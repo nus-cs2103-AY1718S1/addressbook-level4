@@ -1074,7 +1074,6 @@ public class EventNameContainsKeywordsPredicateTest {
 ```
 ###### \java\seedu\address\model\reminder\ReminderTest.java
 ``` java
-
 public class ReminderTest {
     private static Event event;
     private static String message;
@@ -1104,6 +1103,7 @@ public class ReminderTest {
 
         reminder.setMessage("test");
         assertEquals("test", reminder.getMessage());
+        assertEquals("Message: test", reminder.getAsText());
     }
 
     @Test
