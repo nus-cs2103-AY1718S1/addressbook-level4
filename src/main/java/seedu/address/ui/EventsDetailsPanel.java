@@ -19,7 +19,6 @@ import seedu.address.commons.core.LogsCenter;
 
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.EventPanelUnselectEvent;
-import seedu.address.commons.events.ui.EventSelectionChangedEvent;
 
 import seedu.address.logic.Logic;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -134,11 +133,4 @@ public class EventsDetailsPanel extends UiPart<Region> {
     private void handleUnselectOfEventCardEvent(EventPanelUnselectEvent event) {
         unregisterAsAnEventHandler(this);
     }
-
-    @Subscribe
-    private void handleEventSelectionChangedEvent(EventSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadEventInfo(event.getNewSelection());
-    }
-
 }

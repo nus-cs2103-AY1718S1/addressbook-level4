@@ -282,7 +282,6 @@ public class MainWindow extends UiPart<Region> {
         getRoot().getStylesheets().add(VIEW_PATH + theme);
     }
 
-    //@@author itsdickson
     /**
      * Toggles the list panel based on the input panel.
      */
@@ -353,7 +352,6 @@ public class MainWindow extends UiPart<Region> {
         detailsPanel = new DetailsPanel();
         detailsPanelPlaceholder.getChildren().clear();
         detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
-
     }
     //@@author
 
@@ -364,7 +362,6 @@ public class MainWindow extends UiPart<Region> {
         eventsDetailsPanel = new EventsDetailsPanel();
         eventsDetailsPanelPlaceholder.getChildren().clear();
         eventsDetailsPanelPlaceholder.getChildren().add(eventsDetailsPanel.getRoot());
-
     }
     //@@author
 
