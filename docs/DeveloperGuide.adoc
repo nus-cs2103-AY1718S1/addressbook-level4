@@ -520,34 +520,32 @@ The List mechanism is facilitated by commands which use `Logic` interface to obt
 
 [source,java]
 ----
+@Override
 public CommandResult execute() {
-        model.changeListTo(COMMAND_WORD);
-        model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
-        return new CommandResult(MESSAGE_SUCCESS);
+    requireNonNull(model);
+    model.deselectPerson();
+    model.changeListTo(COMMAND_WORD);
+    model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
+    String currentList = ListObserver.getCurrentListName();
+    return new CommandResult(currentList + MESSAGE_SUCCESS);
 }
 ----
 
 Specifically for `blacklist` command, it calls the `getFiltererdBlacklistedPersons()` method residing in the `Logic` interface. `LogicManager` subsequently calls `Model` interface. `Model` uses `ModelManager` class to handle the command and thereafter calls `ReadOnlyAddressBook` interface to handle the request. `ReadOnlyAddressBook` uses `AddressBook` class to handle this request.
 
-In the `AddressBook` class, there is only one `persons` variable that stores all `ReadOnlyPerson` class objects. The blacklisted persons are obtained by running a check on all debtors residing in this variable. The check is executed using the `ReadOnlyPerson#getIsBlacklisted()` method, as shown below:
+In the `AddressBook` class, there is only one `persons` variable that stores all `ReadOnlyPerson` class objects. The blacklisted persons are obtained by running a check on all debtors residing in this variable. The check is executed using the `asObservableBlacklist()` method, as shown below:
+
 [source,java]
 ----
-public UniquePersonList getBlacklistedPersons() {
-    UniquePersonList blacklistedPersons = new UniquePersonList();
-    for (Person person : persons.getInternalList()) {
-        if (person.getIsBlacklisted()) {
-            try {
-                blacklistedPersons.add(person);
-            } catch (DuplicatePersonException e) {
-                assert false : "This is not possible as prior checks have been done";
-            }
-        }
-    }
-    return blacklistedPersons;
+public ObservableList<ReadOnlyPerson> asObservableBlacklist() {
+    return FXCollections.unmodifiableObservableList(mappedList.stream()
+            .filter(person -> person.isBlacklisted()).collect(toCollection(FXCollections::observableArrayList)));
 }
 ----
 
 Although this way of implementation seems inefficient, it supports robust synchronisation among the various other lists. For example, if a person is deleted from the masterlist, he will also be deleted from the blacklist. Likewise for various other commands that changes the `ReadOnlyPerson` object. Thus, it is efficient in this aspect. Moreover, this implementation sets the groundwork for future implementations of various other lists.
+
+One other important aspect to this implementation is that commands now have exclusive control over the list. If the user wishes to only work with blacklist, it is very much possible and all the current commands will only work on blacklisted persons. The persons not in this list will not be affected. For example, find command will only search among the blacklisted persons. This applies to all other commands. Nonetheless, if a person object is modified, the modification will be reflected across all other lists, given that the person exists in these various lists.
 
 ==== Design Considerations:
 
@@ -1005,7 +1003,7 @@ The command requires the index of the person the user wishes to update. However,
 
 The `RepaidCommand` is executed in `LogicManager`. It checks if the person selected has already repaid all his/her debt. If the person has done so, the command will then throw an `Exception` indicating that he/she has already repaid his/her debt.
 
-If the person has not completely repaid his/her debt, `LogicManager` will then call the `Model` `Interface` to execute a three-step process on that person, using a single method. `ModelManager` will firstly reset the person's debt to zero.
+If the person has not completely repaid his/her debt, `LogicManager` will then call the `Model` interface to execute a three-step process on that person, using a single method. `ModelManager` will firstly reset the person's debt to zero.
 
 [source, java]
 ----
@@ -1079,7 +1077,7 @@ public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson p) {
 `ModelManager` will then return the updated `ReadOnlyPerson` `Object` back to `LogicManager`.
 
 **Aspect:** Three-step process in one `Command`. +
-**Alternative 1 (current choice):** All three methods internally change the `Person` `Object`. Thus, each method will output the updated `ReadOnlyPerson` Object. The other methods will use obtain this and further update the `ReadOnlyPerson` `Object`
+**Alternative 1 (current choice):** All three methods internally change the `Person` `Object`. Thus, each method will output the updated `ReadOnlyPerson` Object. The other methods will use obtain this and further update the `ReadOnlyPerson` `Object` +
 **Pros:** Straightforward and simple to implement. +
 **Cons:** Some methods will fail to update the person as intended. If the person is blacklisted, he/she will not be added into the whitelist. +
 **Alternative 2:** Include three separate methods in model interface to execute the three-step process +
@@ -1211,6 +1209,7 @@ public ReadOnlyPerson removeProfilePic(ReadOnlyPerson person) {
 *Alternative 2:** Store images in Codii similar to how XML files are stored +
 **Pros:** Far lesser hassle in transferring application content to another workstation +
 **Cons:** The result of both implementations are very similar. However, this implementation is harder to execute. +
+// end::setpath/addpic/delpic[]
 
 === Logging
 
