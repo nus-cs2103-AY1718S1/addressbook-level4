@@ -1,5 +1,62 @@
 # DarrenCzen
-###### /java/seedu/address/logic/commands/AccessCommandTest.java
+###### \java\guitests\guihandles\EventsDetailsPanelHandle.java
+``` java
+/**
+ * A handle to the {@code EventsDetailsPanel} of the application.
+ */
+public class EventsDetailsPanelHandle extends NodeHandle<Node> {
+    public static final String EVENTS_DETAILS_PANEL_ID = "#eventsDetailsPanelPlaceholder";
+
+    private static final String NAME_FIELD_ID = "#name";
+    private static final String ADDRESS_FIELD_ID = "#address";
+    private static final String DATE_FIELD_ID = "#date";
+    private static final String ADDRESS_FIELD_FIELD_ID = "#addressField";
+    private static final String DATE_FIELD_FIELD_ID = "#dateField";
+
+    private final Label nameLabel;
+    private final Label addressLabel;
+    private final Label dateLabel;
+
+    private final Text addressText;
+    private final Text dateText;
+
+    private String latestName;
+    private String latestAddress;
+    private String latestDate;
+
+    public EventsDetailsPanelHandle(Node eventsDetailsPanelNode) {
+        super(eventsDetailsPanelNode);
+
+        this.nameLabel = getChildNode(NAME_FIELD_ID);
+        this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
+        this.dateLabel = getChildNode(DATE_FIELD_ID);
+
+        this.addressText = getChildNode(ADDRESS_FIELD_FIELD_ID);
+        this.dateText = getChildNode(DATE_FIELD_FIELD_ID);
+    }
+
+    public String getName() {
+        return nameLabel.getText();
+    }
+
+    public String getAddress() {
+        return addressLabel.getText();
+    }
+
+    public String getDate() {
+        return dateLabel.getText();
+    }
+
+    public String getAddressField() {
+        return addressText.getText();
+    }
+
+    public String getDateField () {
+        return dateText.getText();
+    }
+
+```
+###### \java\seedu\address\logic\commands\AccessCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code AccessCommand}.
@@ -156,7 +213,7 @@ public class AccessCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/LocationCommandTest.java
+###### \java\seedu\address\logic\commands\LocationCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code LocationCommand}.
@@ -311,7 +368,7 @@ public class LocationCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/SortCommandTest.java
+###### \java\seedu\address\logic\commands\SortCommandTest.java
 ``` java
 public class SortCommandTest {
 
@@ -402,7 +459,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AccessCommandParserTest.java
+###### \java\seedu\address\logic\parser\AccessCommandParserTest.java
 ``` java
 public class AccessCommandParserTest {
     private AccessCommandParser parser = new AccessCommandParser();
@@ -420,7 +477,7 @@ public class AccessCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
     @Test
     public void parse_compulsoryFieldMissing_failure() {
@@ -517,7 +574,7 @@ public class AccessCommandParserTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_access() throws Exception {
@@ -527,7 +584,7 @@ public class AccessCommandParserTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_location() throws Exception {
@@ -543,7 +600,7 @@ public class AccessCommandParserTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/LocationCommandParserTest.java
+###### \java\seedu\address\logic\parser\LocationCommandParserTest.java
 ``` java
 public class LocationCommandParserTest {
     private LocationCommandParser parser = new LocationCommandParser();
@@ -561,7 +618,7 @@ public class LocationCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtilTest.java
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
     @Test
     public void parseWebsite_null_throwsNullPointerException() throws Exception {
@@ -590,7 +647,7 @@ public class LocationCommandParserTest {
     }
 
 ```
-###### /java/seedu/address/model/person/AddressTest.java
+###### \java\seedu\address\model\person\AddressTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -600,9 +657,9 @@ public class LocationCommandParserTest {
         assertTrue(addressX.equals(addressY) && addressY.equals(addressX));
         assertTrue(addressX.hashCode() == addressY.hashCode());
     }
-}
+
 ```
-###### /java/seedu/address/model/person/BirthdayTest.java
+###### \java\seedu\address\model\person\BirthdayTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -612,12 +669,9 @@ public class LocationCommandParserTest {
         assertTrue(birthdayX.equals(birthdayY) && birthdayY.equals(birthdayX));
         assertTrue(birthdayX.hashCode() == birthdayY.hashCode());
     }
-}
-
-
 
 ```
-###### /java/seedu/address/model/person/EmailTest.java
+###### \java\seedu\address\model\person\EmailTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -627,9 +681,9 @@ public class LocationCommandParserTest {
         assertTrue(emailX.equals(emailY) && emailY.equals(emailX));
         assertTrue(emailX.hashCode() == emailY.hashCode());
     }
-}
+
 ```
-###### /java/seedu/address/model/person/HomeNumberTest.java
+###### \java\seedu\address\model\person\HomeNumberTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -639,9 +693,9 @@ public class LocationCommandParserTest {
         assertTrue(homeNumberX.equals(homeNumberY) && homeNumberY.equals(homeNumberX));
         assertTrue(homeNumberX.hashCode() == homeNumberY.hashCode());
     }
-}
+
 ```
-###### /java/seedu/address/model/person/NameTest.java
+###### \java\seedu\address\model\person\NameTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -662,7 +716,7 @@ public class LocationCommandParserTest {
         assertEquals(newName.toString(), expectedName.toString());
     }
 ```
-###### /java/seedu/address/model/person/PhoneTest.java
+###### \java\seedu\address\model\person\PhoneTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -674,7 +728,7 @@ public class LocationCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/SchEmailTest.java
+###### \java\seedu\address\model\person\SchEmailTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -684,9 +738,9 @@ public class LocationCommandParserTest {
         assertTrue(schEmailX.equals(schEmailY) && schEmailY.equals(schEmailX));
         assertTrue(schEmailX.hashCode() == schEmailY.hashCode());
     }
-}
+
 ```
-###### /java/seedu/address/model/person/WebsiteTest.java
+###### \java\seedu\address\model\person\WebsiteTest.java
 ``` java
 public class WebsiteTest {
 
@@ -729,7 +783,7 @@ public class WebsiteTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Website} of the {@code EditPersonDescriptor} that we are building.
@@ -744,7 +798,7 @@ public class WebsiteTest {
     }
 
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Website} of the {@code Person} that we are building.
@@ -759,12 +813,14 @@ public class WebsiteTest {
     }
 
 ```
-###### /java/seedu/address/ui/BrowserPanelTest.java
+###### \java\seedu\address\ui\BrowserPanelTest.java
 ``` java
 public class BrowserPanelTest extends GuiUnitTest {
     private static final String ALICE_WEBSITE = "https://twitter.com/alice";
+    private static final String ALICE_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
     private AccessWebsiteRequestEvent accessWebsiteEventStub;
+    private AccessLocationRequestEvent accessLocationEventStub;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
@@ -772,6 +828,7 @@ public class BrowserPanelTest extends GuiUnitTest {
     @Before
     public void setUp() {
         accessWebsiteEventStub = new AccessWebsiteRequestEvent(ALICE.getWebsite().toString());
+        accessLocationEventStub = new AccessLocationRequestEvent(ALICE.getAddress().toString());
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
@@ -791,6 +848,71 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+
+        // associated location of a person
+        postNow(accessLocationEventStub);
+        URL expectedPersonLocation = new URL(GOOGLE_SEARCH_URL_PREFIX + ALICE_ADDRESS.replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        // not equals as generated website for inputted address on google maps is different
+        assertNotEquals(expectedPersonLocation, browserPanelHandle.getLoadedUrl());
+    }
+}
+```
+###### \java\seedu\address\ui\EventsDetailsPanelTest.java
+``` java
+public class EventsDetailsPanelTest extends GuiUnitTest {
+    private static final String MESSAGE_EMPTY_STRING = "";
+
+    private EventPanelSelectionChangedEvent selectionChangedEventStub;
+
+    private EventsDetailsPanel eventsDetailsPanel;
+    private EventsDetailsPanelHandle eventsDetailsPanelHandle;
+
+    @Before
+    public void setUp() {
+        selectionChangedEventStub = new EventPanelSelectionChangedEvent(new EventCard(ZOUKOUT, 0));
+
+        guiRobot.interact(() -> eventsDetailsPanel = new EventsDetailsPanel());
+        uiPartRule.setUiPart(eventsDetailsPanel);
+
+        eventsDetailsPanelHandle = new EventsDetailsPanelHandle(eventsDetailsPanel.getRoot());
+    }
+
+    @Test
+    public void testDisplay() throws Exception {
+        //Assuming nothing has been clicked yet.
+        assertEquals(MESSAGE_EMPTY_STRING, eventsDetailsPanelHandle.getName());
+        assertEquals(MESSAGE_EMPTY_STRING, eventsDetailsPanelHandle.getDate());
+        assertEquals(MESSAGE_EMPTY_STRING, eventsDetailsPanelHandle.getDateField());
+        assertEquals(MESSAGE_EMPTY_STRING, eventsDetailsPanelHandle.getAddress());
+        assertEquals(MESSAGE_EMPTY_STRING, eventsDetailsPanelHandle.getAddressField());
+        eventsDetailsPanelHandle.rememberSelectedEventDetails();
+
+        //Selecting of ZoukOut EventCard.
+        postNow(selectionChangedEventStub);
+        assertTrue(eventsDetailsPanelHandle.isSelectedEventChanged());
+        eventsDetailsPanelHandle.rememberSelectedEventDetails();
+    }
+
+    @Test
+    public void testEquals() {
+        EventsDetailsPanel eventsDetailsPanelX = new EventsDetailsPanel();
+        EventsDetailsPanel eventsDetailsPanelY = new EventsDetailsPanel();
+
+        //Both panels are initially blank
+        assertTrue(eventsDetailsPanelX.equals(eventsDetailsPanelY));
+
+        //Panel X is loaded with event info while Panel Y is not
+        eventsDetailsPanelX.loadEventInfo(ZOUKOUT);
+        assertFalse(eventsDetailsPanelX.equals(eventsDetailsPanelY));
+
+        //Panel Y is loaded with same event info
+        eventsDetailsPanelY.loadEventInfo(ZOUKOUT);
+        assertTrue(eventsDetailsPanelX.equals(eventsDetailsPanelY));
+        assertTrue(eventsDetailsPanelX.equals(eventsDetailsPanelX));
+        assertFalse(eventsDetailsPanelX.equals(""));
     }
 }
 ```

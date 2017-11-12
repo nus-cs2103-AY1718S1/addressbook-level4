@@ -484,8 +484,8 @@ _Figure 5.2.2 EventsCommand Logic Sequence Diagram_
 Add event mechanism adds an event which stores in the The Myth's Book. The add event mechanism is facilitated by an `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
 different events with their information given by the user. This command inherits from `UndoableCommand`.
 
-From Figure 5.3.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the SortCommand
-can be undoable, where the previous state of the address book before sorting is saved.
+From Figure 5.3.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the AddEventCommand
+can be undoable, where the previous state of The Myth's Book before the event is saved.
 
 image::AddEventDiagram.PNG[width="800"]
 _Figure 5.3.1 AddEventCommand Logic Class Diagram_
@@ -1850,7 +1850,8 @@ View the full code at https://github.com/CS2103AUG2017-T15-B3/main/blob/master/s
 https://github.com/CS2103AUG2017-T15-B3/main/blob/master/src/main/java/seedu/address/ui/AnchorPaneNode.java[AnchorPaneNode]
 
 The updating of different months and population of event nodes are done by the two separate methods that will post events to
-`EventsCenter` to update the calendar based on the `UniqueEventList`.
+`EventsCenter` to update the calendar based on the `currentYearMonth`. The listener `handlePopulateMonthEvent` method
+will then populate the Calendar in `MainWindow` with `EventList`.
 
 ----
     public void previousMonth() {
@@ -1860,6 +1861,14 @@ The updating of different months and population of event nodes are done by the t
     public void nextMonth() {
         currentYearMonth = currentYearMonth.plusMonths(1);
         EventsCenter.getInstance().post(new PopulateMonthEvent(currentYearMonth));
+    }
+----
+
+----
+    @Subscribe
+    private void handlePopulateMonthEvent(PopulateMonthEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        calendar.populateCalendar(request.yearMonth, logic.getFilteredEventList());
     }
 ----
 
