@@ -21,10 +21,8 @@ public class WebCommand extends Command {
             + "Parameters: 'facebook' OR 'instagram' OR 'maps' OR 'search' OR 'linkedin' OR 'personal'\n"
             + "Example: " + COMMAND_WORD + " facebook";
 
-    //@@author hansiang93
     public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD
-            + " {[facebook|instagram|linkedin|maps|search|personal]}";
-    //@@author
+            + " {[facebook|instagram|maps|search|personal]}";
 
     public static final String MESSAGE_SUCCESS = "WebLink loading...";
 

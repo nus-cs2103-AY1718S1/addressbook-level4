@@ -191,6 +191,21 @@ Any new components added to the themes or stylesheets should utilise these base 
 
 // end::styling[]
 
+// tag::userInterface[]
+=== DetailedPersonCard and PersonCard
+
+image::detailedPersonCard.png[width="600"]
+_Figure 2.4.1 : Majority of contact information is to be shown in the DetailedPersonCard_
+
+image::personCard.png[width="400"]
+_Figure 2.4.2 : Condensed information to be shown in PersonCard_
+
+The main design principles used here is to focus on the Social Aspect of the User's contacts.
+
+In order to do so, the main bulk of the real estate given to the User has to be the Browser.
+
+// end::userInterface[]
+
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
@@ -420,6 +435,8 @@ Suppose that the user has just launched the application. The `BrowserPanel` not 
 
 Once the User selects a person from the `PersonListPanel`, which is a `PersonCard`, the `SelectedPerson` is updated through the use of an event trigger. The `BrowserPanel` then stores this `SelectedPerson` until it is updated through listening for the event trigger.
 
+Residing in BrowserPanel, the available social WebLinks are loaded and dynamically created. Supposed a person does not have any social links, only a simple google search and address search button will be displayed as a result.
+
 The User then clicks on a button within the `WebsiteButtonBar`. The buttons that exist within the `ButtonBar` is dynamically created through the list of websites that exists within the `Person` object `coming in v1.3`.
 
 
@@ -431,9 +448,8 @@ If a button is pressed before the selection of a `PersonCard`, the event trigger
 ==== Design Considerations
 
 **Aspect:** Implementation of URL loadings +
-**Alternative 1 (current choice):** Implement URL loadings within the `BrowserPanel` +
+**Alternative 1 (current choice):** Implement URL loadings within the `BrowserPanel` via event handlers +
 **Pros:** We will not have a seperation of classes, or the need to update any data values within any dynamically generated objects. `BrowserPanel` handles all URLs, URL parsings, and had the necessary information to process or execute these commands. +
-**Cons:** `BrowserPanel` has to be pre-loaded with website URLs, if not the `Websites` within the `Person` class has to be a full URL +
 **Alternative 2:** Create different `BrowserPanel` s for each new Website +
 **Pros:** Swaps each Panel using tabs and allows for various design elements to be made for each URL loaded +
 **Cons:** Increases the number of `Tabs` to be created with each person website, and increases the complexities at the UI level.

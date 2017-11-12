@@ -22,7 +22,7 @@ public class WebCommandParser implements Parser<WebCommand> {
         WEBSITES_MAP.put("maps", "mapsView");
         WEBSITES_MAP.put("search", "searchView");
         WEBSITES_MAP.put("instagram", "instagram");
-        WEBSITES_MAP.put("linkedin", "linkedin");
+        WEBSITES_MAP.put("twitter", "twitter");
         WEBSITES_MAP.put("personal", "others");
     }
 

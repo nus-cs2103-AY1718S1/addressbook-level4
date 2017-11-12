@@ -106,20 +106,14 @@ public class PersonCard extends UiPart<Region> {
             webLinks.getChildren().clear();
             initWebLinks(person);
         });
-        if (person.phoneProperty().isNotNull().get()) {
-            phoneicon.setVisible(true);
-        } else {
-            phoneicon.setVisible(false);
+        if (person.phoneProperty().get().toString().equals("-")) {
+            phoneicon.setStyle("-fx-opacity: " + 0.2);
         }
-        if (person.addressProperty().isNotNull().get()) {
-            addressicon.setVisible(true);
-        } else {
-            addressicon.setVisible(false);
+        if (person.addressProperty().get().toString().equals("-")) {
+            addressicon.setStyle("-fx-opacity: " + 0.2);
         }
-        if (person.emailProperty().isNotNull().get()) {
-            emailicon.setVisible(true);
-        } else {
-            emailicon.setVisible(false);
+        if (person.emailProperty().get().toString().equals("-")) {
+            emailicon.setStyle("-fx-opacity: " + 0.2);
         }
     }
 
