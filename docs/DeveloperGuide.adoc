@@ -502,11 +502,13 @@ public CommandResult execute() {
 The following sequence diagram shows an example that summarises how the `HelpCommand` is being called and executed.
 
 image::HelpCommandLogicComponent.png[width="800"]
+
 _Figure 4.2.1: Interactions Inside the Logic Component for the `help add` Command_
 
 _Figure 4.2.5_ below shows the enhanced help command in action.
 
 image::HelpEnhancementScreenShot.PNG[width="800"]
+
 _Figure 4.2.2: Enhanced `HelpCommand` execution_
 
 ==== Design Considerations
@@ -526,6 +528,7 @@ _Figure 4.2.2: Enhanced `HelpCommand` execution_
 The `ScheduleCommand` allows users to schedule and activity with one person in the contact list. It is one of the commands that extend `UndoableCommand`. This allows users to `undo` their scheduling. `UndoableCommand`, in turn, inherits from `Command` as shown in _Figure4.3.1_ below.
 
 image::ScheduleCommandLogicCommandClassDiagram.png[width="800"]
+
 _Figure 4.3.1: `ScheduleCommand` inherits from `UndoableCommand`
 
 The `ScheduleCommand` takes in 2 parameters: `ScheduleDate` and `Activity`. Therefore, the Model component of the application has been extended to include these two new classes. `DateUtil` is created to make sure that users enter a valid data which follows DD-MM-YYYY format. The code snippet below shows how `DateUtil` checks the validity of an input date.
@@ -553,6 +556,7 @@ private static boolean isActualDate (String date) {
 The diagram in _Figure 4.3.2_ below shows the sequence of the schedule operation.
 
 image:ScheduleCommandLogic.png[width="800"]
+
 _Figure4.3.2: Interactions Inside the Logic Component for the `schedule d/15-12-2017 act/Meeting` Command_
 
 ==== Design Considerations
