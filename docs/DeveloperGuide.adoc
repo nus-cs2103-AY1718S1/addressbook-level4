@@ -484,6 +484,15 @@ image::AppointmentSequenceDiagram.png[width="800"]
 **Pro:** Helps forgetful users. +
 **Cons:** Most people will not need this.
 
+
+---
+**Aspect:** Appointment removal +
+**Alternative 1 (current choice):** Appointments need to be manually removed after expiry. +
+**Pro:** User has full control and will not miss out any appointments in the past. +
+**Cons:** Appointment reminder still work until manually removed. +
+**Alternative 2:** Appointments automatically removed after expiry. +
+**Pro:** No more reminders for expired appointments. +
+**Cons:** Users might forget to attend appointment, so reminder even after expiry can help.
 // end::appoint[]
 
 // tag::findtag[]
