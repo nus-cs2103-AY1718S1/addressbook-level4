@@ -15,7 +15,7 @@ endif::[]
 By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == *Introduction*
-`The Classroom v1.4` is a program to maintain your contact list. You can use _**The Classroom**_
+`The Classroom v1.5` is a program to maintain your contact list. You can use _**The Classroom**_
  to add, delete, find, sort,  group contacts and even maintain a to-do list with your contacts.
 
 == *About*
