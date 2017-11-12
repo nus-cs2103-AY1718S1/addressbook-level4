@@ -719,11 +719,15 @@ code exists even though it might meet the criteria above. The team is working on
 
 `Status` is used to indicate the current stage of delivery that a parcel is at. It has 4 possible states:
 
-* `PENDING` - This means that the parcel has not been delivered and has not passed the date it is supposed to be
-delivered by. +
-* `DELIVERING` - This means that the parcel is currently working being delivered to its destination address.
-* `COMPLETED` - This indicates that the parcel has been successfully delivered to its destination.
-* `OVERDUE` - This state indicates that the parcel has not been delivered and has passed its due date.
+[width="100%",cols="20%,<80%",options="header",]
+|=======================================================================
+|Status | Description
+|PENDING | This means that the parcel has not been delivered and has not passed the date it is supposed to be
+delivered by.
+|DELIVERING | This means that the parcel is currently working being delivered to its destination address.
+|COMPLETED | This indicates that the parcel has been successfully delivered to its destination.
+|OVERDUE | This state indicates that the parcel has not been delivered and has passed its due date.
+|=======================================================================
 
 These states have different colours codes to allow users to differentiate the `Status` values more easily.
 
@@ -745,7 +749,40 @@ describe the same status of the parcel.
 === Delivery Date field
 
 `Delivery Date` is used to indicate the delivery date that the parcel must be delivered by.
-The dates are only accepted if they are valid. The parcel list is maintained in sorted order by comparing
+The dates are only accepted if they are in the valid format DD-MM-YYYY or understandable by Ark.
+
+Ark is able to recognise various forms of dates as shown in the table below but the dates in the Ark are formatted
+as DD-MM-YYYY. However, invalid inputs such as a phone number or symbols still will be rejected.
+
+Current date as of writing is 12 November 2017.
+
+[width="100%",cols="60%,<40%",options="header",]
+|=======================================================================
+|User input |Date parsed by Ark
+|01-01-2017 | 01-01-2017
+|01/01/2017 | 01-01-2017
+|01.01.2017 | 01-01-2017
+|01-01-17   | 01-01-2017
+|First day of 2017 | 01-01-2017
+|The day before yesterday | 10-11-2017
+|Yesterday | 11-11-2017
+|Today | 12-11-2017
+|Tomorrow | 13-11-2017
+|The day after tomorrow | 14-11-2017
+|Three days from now| 15-11-2017
+|Four days later| 16-11-2017
+|Seventeenth of November| 17-11-2017
+|This Friday| 17-11-2017
+|Next Friday| 24-11-2017
+|Christmas Eve| 24-12-2017
+|A week before Christmas Eve| 17-12-2017
+|A year from now| 12-11-2018
+|Friday of the second week of January| Query too complicated, date defaults to today
+|123456789| Invalid date error shown
+|!@#$%^&*()| Invalid date error shown
+|=======================================================================
+
+The parcel list is maintained in sorted order by comparing
 their delivery dates, with the earliest on top.
 
 //end::deliveryDate[]
@@ -755,11 +792,15 @@ their delivery dates, with the earliest on top.
 
 `Tag`s are used to indicate how the parcel should be handled. Tags can contain one or more of the following `Tag`s:
 
-* `FROZEN` - This means the parcel should be refrigerated as its contents are temperature sensitive.
-* `FLAMMABLE` - This means that the parcels' contents are highly flammable and should be kept away from heat.
-* `HEAVY` - This indicates that the parcel is heavy and may require additional manpower to deliver.
-* `FRAGILE` - This state indicates that the parcels' contents can be broken easily and
-requires additional care when handling.
+[width="100%",cols="20%,<80%",options="header",]
+|=======================================================================
+|Tag | Description
+|FROZEN | This means the parcel should be refrigerated as its contents are temperature sensitive.
+|FLAMMABLE | This means that the parcels' contents are highly flammable and should be kept away from heat.
+|HEAVY | This indicates that the parcel is heavy and may require additional manpower to deliver.
+|FRAGILE | This state indicates that the parcels' contents can be broken easily and requires additional care
+when handling.
+|=======================================================================
 
 ==== Design Considerations
 
@@ -778,7 +819,7 @@ use different tag names to refer to the same tag.
 //tag::sortedList[]
 
 === Maintain sorted mechanism
-image::AddParcelSdForLOgic.png[width="890"]
+image::AddParcelSdForLogic.png[width="890"]
 _Figure 4.13.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
 
 The list of parcels in Ark is maintained to be always in sorted order according to delivery dates,
