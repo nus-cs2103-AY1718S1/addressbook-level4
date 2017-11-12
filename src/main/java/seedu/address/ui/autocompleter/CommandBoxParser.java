@@ -40,7 +40,7 @@ public class CommandBoxParser {
         PREFIX_DELIVERY_DATE, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_STATUS, PREFIX_TAG};
 
     /**
-     * Parses {@code String} to see if it contains any instances of a {@code Command} and {@code Prefix}
+     * Parses {@code commandBoxText} to see if it contains any instances of a {@code Command} and {@code Prefix}
      *
      * @return {@code String} array containing the {@code Command} at index 0 and the remaining arguments at index 1
      */
@@ -61,7 +61,7 @@ public class CommandBoxParser {
     }
 
     /**
-     * Returns the ArrayList of prefixes that are missing from the {@code String argument}
+     * Returns the ArrayList of prefixes that are missing from the {@code argument}
      */
     public ArrayList<String> getMissingPrefixes(String argument) {
         requireNonNull(argument);
@@ -75,7 +75,7 @@ public class CommandBoxParser {
     }
 
     /**
-     * Returns true if the {@code Prefix} is not present in the {@code ArgumentMultiMap}
+     * Returns true if {@code prefix} is not present in the {@code argMap}
      * or if it is present but is still missing arguments
      */
     private boolean isMissing(ArgumentMultimap argMap, Prefix prefix) {

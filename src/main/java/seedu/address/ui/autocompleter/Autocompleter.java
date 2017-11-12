@@ -54,7 +54,7 @@ public class Autocompleter {
 
     /**
      * Returns a string that will replace the current text in the {@code CommandBox}
-     * depending on the current state of the autocompleter. A {@code NewResultAvailableEven}
+     * depending on the current state of the autocompleter. A {@code NewResultAvailableEvent}
      * will is also raised to update the text inside the {@code ResultDisplay}
      *
      * @return {@code String} that will replace text in teh {@code CommandBox}
@@ -145,7 +145,7 @@ public class Autocompleter {
     }
 
     /**
-     * Updates the {@code AutocompleteState} and {@code AutocompleteCommand} according their current values
+     * Updates the {@code state} and {@code currentCommand} according their current values
      * as well as the current text inside the {@code commandBoxText}
      *
      * @param commandBoxText the current text inside the {@code CommandBox}
@@ -192,7 +192,7 @@ public class Autocompleter {
     }
 
     /**
-     * Updates the {@code AutocompleteState} of the autocompleter for {@code Command} that requires prefixes
+     * Updates the {@code state} of the autocompleter for {@code Command} that requires prefixes
      *
      * @param commandBoxText the current text inside the {@code CommandBox}
      * @param arguments the {@code String} of arguments identified by the parser
@@ -259,7 +259,7 @@ public class Autocompleter {
     }
 
     /**
-     * Returns true if the {@code String} still requires the index argument to be filled in
+     * Returns true if the {@code arguments} still requires the index argument to be filled in
      *
      * @param arguments the current {@code String} of the arguments in the {@code CommandBox}
      */
@@ -269,7 +269,7 @@ public class Autocompleter {
     }
 
     /**
-     * Returns true if the index field in the {@code String} has been filled in
+     * Returns true if the index field in the {@code arguments} has been filled in
      *
      * @param arguments the current {@code String} of the arguments in the {@code CommandBox}
      */
@@ -287,14 +287,14 @@ public class Autocompleter {
     }
 
     /**
-     * Returns true if the {@code String} is numeric
+     * Returns true if the {@code index is numeric
      */
     private boolean isNumeric (String index) {
         return index.matches("[0-9]+");
     }
 
     /**
-     * Returns true if the last character of the {@code String} is a digit
+     * Returns true if the last character of the {@code text} is a digit
      */
     private boolean lastCharIsDigit(String text) {
         if (text.length() < 1) {
@@ -304,8 +304,8 @@ public class Autocompleter {
     }
 
     /**
-     * Updates the {@code AutocompleteState} of the autocompleter and the list of possible commands to put inside
-     * the {@code CommandBox}
+     * Updates the {@code state} of the autocompleter and the list of possible commands
+     * in {@code possibleAutocompleteResults}
      *
      * @param commandBoxText the current {@code String} inside the {@code CommandBox}
      */
@@ -329,7 +329,7 @@ public class Autocompleter {
     }
 
     /**
-     * Returns true if the last 2 characters of {@code String} is a space followed
+     * Returns true if the last 2 characters of {@code commandBoxText} is a space followed
      * by the first letter of a {@code Prefix}
      */
     private boolean lastCharIsStartOfPrefix(String commandBoxText) {
@@ -343,7 +343,7 @@ public class Autocompleter {
     }
 
     /**
-     * Checks if the last two characters of the {@code String} are prefixes
+     * Checks if the last two characters of the {@code commandBoxText} are prefixes
      */
     private boolean lastTwoCharactersArePrefix(String commandBoxText) {
         if (commandBoxText.length() < 2) {
@@ -355,7 +355,7 @@ public class Autocompleter {
     }
 
     /**
-     * Returns an {@code ArrayList} of possible commands to autocomplete
+     * Returns an {@code ArrayList} of possible commands that match {@code commandBoxText}
      */
     private ArrayList<String> getClosestCommands (String commandBoxText) {
         ArrayList<String> possibleResults = new ArrayList<>();
@@ -366,7 +366,7 @@ public class Autocompleter {
     }
 
     /**
-     * Checks if the text in the command box is a substring of a particular command word
+     * Checks if {@code commandBoxText} is a substring of {@code commandWord}
      */
     private boolean isPossibleMatch(String commandBoxText, String commandWord) {
         return (commandBoxText.length() <= commandWord.length()
@@ -374,7 +374,7 @@ public class Autocompleter {
     }
 
     /**
-     * Creates message to tell user that there are multiple results
+     * Creates message and raises a {@code NewResultAvailableEvent} to tell user that there are multiple results
      */
     private void displayMultipleResults(ArrayList<String> results) {
         String resultToDisplay = MULTIPLE_RESULT_MESSAGE + ":\n";
