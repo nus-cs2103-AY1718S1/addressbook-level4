@@ -744,6 +744,10 @@ If the list is found to be empty, an `EmptyListException` will be thrown from `U
 
 Adding a tag to multiple people is facilitated by `TagAddCommand`, which extends `UndoableCommand`, it supports undoing and redoing of commands that modifies the state of the address book.
 
+The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
+
+image::TagAddCommandSequenceDiagram.png[width="800"]
+
 TagAddCommand is implemented in this way:
 [source,java]
 ----
@@ -756,12 +760,21 @@ public class TagAddCommand extends UndoableCommand {
 ----
 
 For example, the user input might be `t-add 1 2 3 college friend`. +
-After the command word `t-add` is parsed at the `AddresBookParser`, the remaining user input(indices in the list, tag to add), in the example `t-add 1 2 3 college friend`, will be passed to and parsed by `TagAddCommandParser`.
+
+After the command word `t-add` is parsed at the `AddresBookParser`, the remaining user input(indices in the list, tag to add), in the example `1 2 3 college friend`, will be passed to and parsed by `TagAddCommandParser`.
+
 Different from the previous limitation on the choice of word for `tag`, which is `Alnum`, we allow multiple words `tagName` as well, such as `college friend`.
+
 The change of `tagName` format requires a new algorithm for parsing in the `TagAddCommandParser`.
-The key is to differentiate between indices and tagName. The parser algorithm would first split the input string into parts by space as delimiter. +
-It would then determine whether a part is a word or a number, the parser keeps track of the last recognized number. After processing the entire user input, the parser would treat all parts after the last recognized number as indices and those after it as `tagName`.
+The key is to differentiate between indices and `tagName`. The parser algorithm would first split the input string into parts by space as delimiter. +
+It would then determine whether each part is a word or a number, the parser keeps track of the last recognized number.
+After processing the entire user input, the parser would treat all parts before the last recognized number as indices and those after it as `tagName`.
 In this case, as `3` is the last part that is numeric, `1 2 3` is treated as indices and `college friend` is treated as `tagName`. +
+
+The command `t-add` is also used to add in `favourite` tag, for example `t-add 1 2 3 favourite`. +
+Person(s) with `favourite` tag will have a small coral circle next to the person's name. And person(s) with `favourite` tag would always be pinned to top of the person list. +
+We also allow other words containing `fav` as `favourite`, such as `favo`. +
+
 The `TagAddCommandParser` returns `TagAddCommand` after execution, which will be further processed by `logic` component.
 
 TagAddCommandParser is implemented in this way:
@@ -804,12 +817,26 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 **Alternative 2:** Ignore the invalid indices +
 **Pros:** It is efficient for the user +
 **Cons:** Difficult to implement.
+
+---
+
+**Aspect:** Whether to have another command to set person(s) as `favourite` +
+**Alternative 1 (current choice):** Setting `favourite` utilize the current `t-add` command +
+**Pros:** User does not need to remember extra commands and treating `favourite` as `tag` is intuitive. Other tag-related operations such as `t-remove` and `t-find` can also be used to manipulate `favourite` tag +
+**Cons:** Computational costly to determine whether person(s) are set as `favourite`, as the entire `tagList` needs to be iterated +
+**Alternative 2:** Have a separate set of commands for `favourite` +
+**Pros:** Have a clear separation of functions +
+**Cons:** Not user friendly.
 // end::tagadd[]
 
 // tag::tagremove[]
-=== Removing a tag to multiple people
+=== Removing a tag from multiple people
 
 You can remove a tag from multiple people. This is realized using `TagRemoveCommand`, which extends `UndoableCommand`, it supports undoing and redoing of commands that modifies the state of the address book.
+
+The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
+
+image::TagRemoveCommandSequenceDiagram.png[width="800"]
 
 TagRemoveCommand is implemented in this way:
 [source,java]
@@ -823,10 +850,16 @@ public class TagRemoveCommand extends UndoableCommand {
 ----
 
 For example, the user input might be `t-remove 1 2 3 college friend`. +
-After the command word `t-remove` is parsed at the `AddresBookParser`, the remaining user input(indices in the list, tag to remove), in the example `t-remove 1 2 3 college friend`, will be passed to and parsed by `TagRemoveCommandParser`.
+After the command word `t-remove` is parsed at the `AddresBookParser`, the remaining user input(indices in the list, tag to remove), in the example `1 2 3 college friend`, will be passed to and parsed by `TagRemoveCommandParser`.
+
 We also support multiple words as `tagName`, as long as the first word in `tagName` is not a number. +
-This is because the key is to differentiate between indices and `tagName` is by identifying the last recognized number. If a `tagName` has its first word as a number, that word would be treated as index. +
+This is because the key is to differentiate between indices and `tagName` is by identifying the last recognized number. If a `tagName` has its first word as a number, that word would be treated as index instead. +
 In this case, as `3` is the last part that is numeric, `1 2 3` is treated as indices and `college friend` is treated as `tagName`. +
+
+`tagName` keyed in by the user must be of the exact match with the actual `tagName` in order for that `tag` to be removed successfully except for `favourite` tag. +
+As `tagName` for `favourite` is not shown explicitly to the user other than a coral circle next to the person(s) name, and user can key in any words containing `fav` to indicate `favourite`, +
+It would unpractical to still look for exact match for `tagName`, thus, additional checks need to be done to determine whether the user wants to remove a `favourite` and whether the person(s) selected has `favourite` tag.
+
 The `TagRemoveCommandParser` returns `TagRemoveCommand` after execution, which will be further processed by `logic` component.
 
 TagRemoveCommandParser is implemented in this way:
@@ -857,7 +890,63 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
 **Alternative 2:** Ignore the invalid indices +
 **Pros:** It is efficient for the user +
 **Cons:** Difficult to implement and might be an issue for undo/redo operation.
+
+**Aspect:** Whether to accept user to key in only substring of `tagName` to remove that tag +
+**Alternative 1 (current choice):** Do not accept except for `favourite` tag +
+**Pros:** Prevent the user from removing extra `tags` +
+**Cons:** User have to type in multiple times to remove similar `tag`s such as `friend` and `college friend` +
+**Alternative 2:** Remove all `tag`s containing the given substring +
+**Pros:** Efficient for the user +
+**Cons:** The user might not want to remove all tags containing the substring.
 // end::tagremove[]
+
+// tag::tagfind[]
+=== Listing person(s) with the given tagName
+
+You can find out person(s) with the given `tagName`. This is realized using `TagFindCommand`.
+
+The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
+
+image::TagFindCommandSequenceDiagram.png[width="800"]
+
+`t-find` command shows all person(s) with tag containing or contained in the given `tagName`. TagFindCommandParser passes a TagMatchingKeywordPredicate to TagFindCommand to update filteredPersonList.
+//end::tagfind[]
+
+// tag::changetheme[]
+=== Changing to the theme of choice
+
+You can change to your theme of choice. There are 3 themes currently, `Twilight`, `Sunburst` and `Minimalism`. This command is not undoable.
+
+SwitchThemeCommand is implemented in this way:
+
+For example, the user input might be `theme Twilight`. +
+After the command word `theme` is parsed at the `AddresBookParser`, the remaining user input(theme of choice), in the example `Twilight`, will be passed to and parsed by `SwitchThemeCommandParser`.
+We also support other words other than the actual theme name for theme of choice, it might also be `dark` for `Twilight`; `bright` for `Sunburst` and `default` for `Minimalism`. +
+If you only key in `theme`, an error message suggesting the use of this command will be shown in the `result box`. +
+You can just key in the index of your theme of choice instead of the words. +
+
+image::SwitchThemeCommandErrorMessage.png[width="500"]
+
+If you key in an invalid index, an error message suggesting invalid index will be shown in the `result box`.
+
+image::SwitchThemeCommandInvalidIndex.png[width="300"]
+
+If you key in an unknown theme word, an error message suggesting unknown theme word will be shown in the `result box`.
+
+image::SwitchThemeCommandInvalidWord.png[width="300"]
+
+The `SwitchThemeParser` returns `SwitchThemeCommand` after execution, which will be further processed by `logic` component.
+
+==== Design Considerations
+
+**Aspect:** How to make the command more intuitive +
+**Alternative 1 (current choice):** Accept more aliases for theme of choice +
+**Pros:** The user does not need to type the full theme name +
+**Cons:** Difficult to implement +
+**Alternative 2:** Accept only the official theme names +
+**Pros:** Easy to implement +
+**Cons:** Not user friendly.
+// end::changetheme[]
 
 // tag::delete[]
 === Improvements on DeleteCommand

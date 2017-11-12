@@ -232,7 +232,7 @@ Deletes the 1st person in the results of the `find` command
 
 You can add a tag to specified person(s) in the address book current listing.
 
-Format: `t-add INDEX TAG`
+Format: `t-add INDEX... TAG`
 
 ****
 * The index refers to the index number shown in the most recent listing, you can key in multiple indices as well.
@@ -248,7 +248,7 @@ This command adds the tag friends to the 2nd and 3rd person in the address book
 // end::tagadd[]
 
 // tag::tagaddfav[]
-=== Setting a person(s) as "favourite" : `t-add` _[Since v1.3]_
+=== Setting person(s) as favourite : `t-add` _[Since v1.3]_
 
 You can mark specified person(s) from the address book as favourite.
 
@@ -318,7 +318,7 @@ This command removes the tag `fav` from all person(s) with the the tag `fav` in 
 // end::tagremovefav[]
 
 // tag::tagfind[]
-=== Find the person(s) with given tags: `t-find` _[Since v1.3]_
+=== Finding the person(s) with given tags: `t-find` _[Since v1.3]_
 
 You can find all persons with the given tag.
 
@@ -337,17 +337,17 @@ This command could also list all the people with tag `friend` if any
 // end::tagfind[]
 
 // tag::changetheme[]
-=== Change the theme according to user input `theme` _[Since v1.5]_
+=== Changing the theme according to user input `theme` _[Since v1.5]_
 
 You can change the current theme into your preferred one.
 
-Format: `theme THEME`
+Format: `theme [THEME] OR [INDEX]`
 
 ****
 * Currently there are 3 themes available, `Twilight`, `Sunburst`, `Minimalism`.
 * `Twilight` is dark in color; `Sunburst` is bright and lively; `Minimalism` is basic and is the default.
-* You can key in `Twilight` or `dark` or `1` to change into dark theme; `Sunburst` or `bright` or `2`to bright theme and `Minimalism` or `default` or `3` to default theme.
-* When you only key in `theme`, the result box would display "1.Twilight 2.Sunburst 3.Minimalism", you can simply key in the index after that to change into your preferred theme.
+* You can key in `Twilight` or `dark` or `1` to change into dark theme; `Sunburst` or `bright` or `2` to bright theme and `Minimalism` or `default` or `3` to default theme.
+* When you only key in `theme`, the result box would display `1.Twilight 2.Sunburst 3.Minimalism`, you can simply key in the index to change into the specific theme.
 * The result indicates that you have successfully changed into your theme of choice.
 ****
 
@@ -689,6 +689,14 @@ By using this command, you can open the shell version of the app. In this way, y
 Format: `shell`
 // end::shell[]
 
+// tag::sync[]
+=== Syncing with phone's contact list : `sync` _[Coming in v2.0]_
+
+You can synchronize contact list on your computer with the contact list in the `iConnect` on your phone.
+
+Format: `sync`
+// end::sync[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book.
@@ -729,12 +737,18 @@ e.g. `find n/James p/8765 e/jamesho@example.com a/clementi street`
 e.g. `sort n/ASC`
 * *Delete* : `delete I/INDEX INDEX...` +
 e.g. `delete I/3 4`
-* *TagAdd* : `t-add INDEX INDEX... [TAG]` +
+* *TagAdd* : `t-add INDEX... TAG` +
 e.g. `t-add 3 4 friends`
-* *TagRemove* : `t-remove INDEX INDEX... [TAG]` +
+* *TagAddFavourite* : `t-add INDEX... favourite` +
+e.g. `t-add 3 4 favourite`
+* *TagRemove* : `t-remove INDEX... TAG` +
 e.g. `t-remove 3 4 friends`
+* *TagRemoveFavourite* : `t-remove INDEX... favourite` +
+e.g. `t-remove 3 4 favourite`
 * *TagFind* : `t-find [TAG]` +
 e.g. `t-find friends`
+* *Theme* : `theme [THEME] OR [INDEX]` +
+e.g. `theme Twilight`
 * *MapShow* : `m-show INDEX` +
 e.g. `m-show 1`
 * *MapRoute* : `m-route INDEX a/ADDRESS` +

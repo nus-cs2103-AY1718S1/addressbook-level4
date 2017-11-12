@@ -31,8 +31,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagMatchingKeywordPredicate;
 //@@author ZhangH795
+
 /**
- * Edits the details of an existing person in the address book.
+ * Adds a tag to existing person(s) in the address book.
  */
 public class TagAddCommand extends UndoableCommand {
 
@@ -55,7 +56,7 @@ public class TagAddCommand extends UndoableCommand {
     private final TagAddDescriptor tagAddDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index            of the person in the filtered person list to edit
      * @param tagAddDescriptor details to edit the person with
      */
     public TagAddCommand(ArrayList<Index> index, TagAddDescriptor tagAddDescriptor) {
@@ -70,18 +71,22 @@ public class TagAddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         ObservableList<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         boolean looseFind = false;
+
         Tag tagToAdd = (Tag) tagAddDescriptor.getTags().toArray()[0];
-        String tagInString = tagToAdd.toString();
-        String tagInString1 = tagInString.substring(1, tagInString.lastIndexOf("]"));
+        String tagInStringRaw = tagToAdd.toString();
+        String tagInString = tagInStringRaw.substring(1, tagInStringRaw.lastIndexOf("]"));
+
         StringBuilder editedPersonDisplay = new StringBuilder();
         checkIndexInRange(lastShownList);
-        TagMatchingKeywordPredicate tagPredicate = new TagMatchingKeywordPredicate(tagInString1, looseFind);
+
+        TagMatchingKeywordPredicate tagPredicate = new TagMatchingKeywordPredicate(tagInString, looseFind);
         ObservableList<ReadOnlyPerson> selectedPersonList = createSelectedPersonList(lastShownList);
         FilteredList<ReadOnlyPerson> tagFilteredPersonList = new FilteredList<>(selectedPersonList);
         tagFilteredPersonList.setPredicate(tagPredicate);
         if (tagFilteredPersonList.size() > 0) {
-            throw new CommandException(String.format(MESSAGE_TAG_ALREADY_EXISTS, tagInString));
+            throw new CommandException(String.format(MESSAGE_TAG_ALREADY_EXISTS, tagInStringRaw));
         }
+
         for (int i = 0; i < index.size(); i++) {
             ReadOnlyPerson personToEdit = lastShownList.get(index.get(i).getZeroBased());
             Set<Tag> originalTagList = personToEdit.getTags();
@@ -98,16 +103,14 @@ public class TagAddCommand extends UndoableCommand {
                 throw new AssertionError("The target person cannot be missing");
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            editedPersonDisplay.append(createTagListDisplay(editedPerson));
 
-            int tagListStringStartIndex = 1;
-            int tagListStringEndIndex;
-            String tagChangedDisplayRaw = editedPerson.getTags().toString();
-            tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
-            String tagChangedDisplay = editedPerson.getName() + " Tag List: "
-                    + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
-
-            editedPersonDisplay.append(String.format(MESSAGE_ADD_TAG_SUCCESS, tagChangedDisplay));
-            EventsCenter.getInstance().post(new JumpToListRequestEvent(index.get(0)));
+            if (tagInString.toLowerCase().contains("fav")) {
+                Index firstIndex = new Index(0);
+                EventsCenter.getInstance().post(new JumpToListRequestEvent(firstIndex));
+            } else {
+                EventsCenter.getInstance().post(new JumpToListRequestEvent(index.get(0)));
+            }
 
             if (i != index.size() - 1) {
                 editedPersonDisplay.append("\n");
@@ -128,8 +131,21 @@ public class TagAddCommand extends UndoableCommand {
     }
 
     /**
+     * @param editedPerson edited person to show tag list
+     */
+    public String createTagListDisplay(Person editedPerson) {
+        int tagListStringStartIndex = 1;
+        int tagListStringEndIndex;
+        String tagChangedDisplayRaw = editedPerson.getTags().toString();
+        tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
+        String tagChangedDisplay = editedPerson.getName() + " Tag List: "
+                + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
+        return String.format(MESSAGE_ADD_TAG_SUCCESS, tagChangedDisplay);
+    }
+
+    /**
      * @param unmodifiable tag List
-     * @param tagToAdd tag to be added
+     * @param tagToAdd     tag to be added
      */
     public Set<Tag> createModifiableTagSet(Set<Tag> unmodifiable, Tag tagToAdd) {
         Set<Tag> modifiable = new HashSet<>();
@@ -205,7 +221,8 @@ public class TagAddCommand extends UndoableCommand {
         private Set<Event> events;
         private DateAdded dateAdded;
 
-        public TagAddDescriptor() {}
+        public TagAddDescriptor() {
+        }
 
         public TagAddDescriptor(TagAddDescriptor toCopy) {
             this.name = toCopy.name;
@@ -217,6 +234,7 @@ public class TagAddCommand extends UndoableCommand {
             this.events = toCopy.events;
             this.dateAdded = toCopy.dateAdded;
         }
+
         public TagAddDescriptor(ReadOnlyPerson toCopy) {
             this.name = toCopy.getName();
             this.birthday = toCopy.getBirthday();
