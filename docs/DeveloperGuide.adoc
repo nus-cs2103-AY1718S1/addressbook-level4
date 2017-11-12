@@ -559,6 +559,10 @@ When creating a temporary person, users should input temp/ followed by the numbe
  i.e. "temp/2", without the quotation marks. The use of this temp/ prefix is optional. When temp/ is not used, a normal
  person which does not expire is created.
 
+The following activity diagram shows the process of adding a temporary person.
+
+image::AddTempPersonAD.png[width="700"]
+
 [NOTE]
 Due to the nature of this implementation, testing becomes tricky. One way to test is to add a temporary person, then forward system time
 by the more than the number of days that this person will expire. The temporary person should not appear in the ResidentBook now. Remember to
@@ -594,6 +598,10 @@ public void deleteTemporary() {
         }
     }
 }
+
+The following activity diagram shows how temporary persons are deleted from the ResidentBook.
+
+image::DeleteTempPersonAD.png[width="700"]
 
 ==== Design Considerations
 
@@ -707,6 +715,10 @@ group of residents without going through the trouble of deleting them one by one
 
 Only one argument is supplied with this command, a String `tag`.
 
+The sequence of steps carried out by this command is shown in the activity diagram below.
+
+image::deleteByTagAD.png[width="800"]
+
 [NOTE]
 Deletebytag command and Removetag command may sound similar, but they serve totally different purpose.
 
@@ -716,6 +728,11 @@ The code belows shows it's execution. First we define an iterator to iterate thr
 The condition `if (p.getTags().contains(tag)` checks if each person has the `TAG` supplied.
 If it does, we remove the person from the list.
 
+The sequence diagram below shows the execution of the command.
+
+image::deleteByTagSD.png[width="800"]
+
+The `removeByTag(tag)` method is laid out below for better understanding.
 [source, java]
 public void removeByTag(Tag tag) throws CommandException {
     Iterator<Person> itr = this.iterator();
