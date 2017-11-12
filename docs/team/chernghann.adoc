@@ -44,8 +44,6 @@ Same idea applies to having an additional Home Number Field to be implemented fo
 
 include::../UserGuide.adoc[tag=addevent]
 
-include::../UserGuide.adoc[tag=calendar]
-
 #End of Extract#
 
 ---
@@ -56,7 +54,7 @@ As an address book targeted at University students in Singapore age between 18-2
 On average, an university students have to juggle between many commitments in school and out of school. Many of these young adults are actively involved in many events internally and externally.
 Thus, the add event feature allows the users to be able to store and keep track of what events that are coming up and be able to plan and organise their schedule.
 
-==== Implementation
+== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
@@ -86,7 +84,7 @@ A Calendar User Interface will enhance the user's experience in using and organi
 events added by the `AddEvent` Command. Also, a simple click on the calendar, the user will be able to get to add the events and be shown to them
 on the calendar with it being populating with a shade of colour.
 
-==== Implementation
+=== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
