@@ -214,16 +214,6 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
-    //@@author LeeYingZheng
-    /**
-     * Opens the Facebook window in BrowserPanel.
-     */
-    @FXML
-    public void handleFacebook() {
-        browserPanel.loadFacebookPage();
-    }
-    //@@author
-
     void show() {
         primaryStage.show();
     }
@@ -292,12 +282,5 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
-    }
-
-    //@@author LeeYingZheng
-    @Subscribe
-    private void handleShowFacebookEvent(ShowFacebookRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleFacebook();
     }
 }

@@ -81,7 +81,7 @@ public class AddressBookParser {
 
         } else if (commandWord.equalsIgnoreCase(FacebookCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(FacebookCommand.COMMAND_WORDVAR_2)) {
-            return new FacebookCommand();
+            return new FacebookCommandParser().parse(arguments);
 
         } else if (commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_2)) {
