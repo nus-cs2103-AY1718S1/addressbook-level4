@@ -832,18 +832,19 @@ in the wrong position. +
 
 Trouble arises with different tabs. Now the `add` and `edit` command changes the state of the parcels
 and they are to be selected upon execution. With tab switches, and active lists, it is crucial that
-we manipulate the various witches. + 
+we manipulate the various witches. +
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `maintainSorted` +
-**Alternative 1 (current choice):** Constant sort the list of parcels whenever there is a change that
+**Aspect: Implementation of `maintainSorted`** +
+
+* **Alternative 1 (current choice):** Constant sort the list of parcels whenever there is a change that
 potentially could disrupt the order of the list. +
-**Pros:** Intuitive and guarantees that list is sorted in the right order +
-**Cons:** Many commands have to be changed +
-**Alternative 2:** Insert the new / edited parcel to fit into the sorted list. +
-**Pros:** Use less computation as the list of parcels is already sorted. +
-**Cons:** More difficult to implement as we'll need to implement our own sorting algorithm as opposed to
+** **Pros:** Intuitive and guarantees that list is sorted in the right order +
+** **Cons:** Many commands have to be changed +
+* **Alternative 2:** Insert the new / edited parcel to fit into the sorted list. +
+** **Pros:** Use less computation as the list of parcels is already sorted. +
+** **Cons:** More difficult to implement as we'll need to implement our own sorting algorithm as opposed to
 just using the built in sorting methods. +
 
 //end::sortedList[]
@@ -872,14 +873,15 @@ To exit `listen` mode, type `/cancel`.
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `ArkBot` +
-**Alternative 1 (current choice):** Parse the arguments from the user into various commands as needed. If there any
+**Aspect: Implementation of `ArkBot`** +
+
+* **Alternative 1 (current choice):** Parse the arguments from the user into various commands as needed. If there any
 errors that surface, reply user with default error message. +
-**Pros:** Functions of commands on Ark remain the same, reusing current implementation +
-**Cons:** Error catching is difficult, it is difficult to test and slower as information is handle by many parties. +
-**Alternative 2:** Program each command from the Bot to directly interface with Model and Logic Managers on Ark +
-**Pros:** Quicker and more director way of communication. Less reliant on Ark commands. +
-**Cons:** More difficult to implement as we'll need to implement our own version of all the command on Ark. +
+** **Pros:** Functions of commands on Ark remain the same, reusing current implementation +
+** **Cons:** Error catching is difficult, it is difficult to test and slower as information is handle by many parties. +
+* **Alternative 2:** Program each command from the Bot to directly interface with Model and Logic Managers on Ark +
+** **Pros:** Quicker and more director way of communication. Less reliant on Ark commands. +
+** **Cons:** More difficult to implement as we'll need to implement our own version of all the command on Ark. +
 
 //end::ArkBot[]
 
