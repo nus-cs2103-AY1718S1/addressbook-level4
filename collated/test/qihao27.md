@@ -119,10 +119,27 @@ public class TodoCountHandle extends NodeHandle<Node> {
 ``` java
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.HOON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -130,24 +147,13 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteByNameCommand}.
  */
 public class DeleteByNameCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -179,13 +185,42 @@ public class DeleteByNameCommandTest {
     }
 
     @Test
-    public void execute_findByName_multiplePersonsFound() throws ParseException, CommandException {
-        String expectedMessage = "Multiple contacts with specified name found!\n"
-            + "Please add more details for distinction or use the following command:\n"
-            + DeleteCommand.MESSAGE_USAGE;
-        DeleteByNameCommand command = prepareCommand("Kurz Elle Kunz");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA),
-            Arrays.asList());
+    public void execute_validInput_success() throws Exception {
+        DeleteByNameCommand deleteByNameCommand = prepareCommand("carl");
+        String expectedMessage = String.format(DeleteByNameCommand.MESSAGE_DELETE_PERSON_SUCCESS, CARL);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(CARL);
+
+        assertCommandSuccess(deleteByNameCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_multiplePersonsFound_throwCommandException() throws Exception {
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(DeleteByNameCommand.MESSAGE_MULTIPLE_PERSON_FOUND);
+
+        DeleteByNameCommand command = prepareCommand("Meier");
+        CommandResult commandResult = command.execute();
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        assertCommandSuccess(command, model, DeleteByNameCommand.MESSAGE_MULTIPLE_PERSON_FOUND, expectedModel);
+        assertCommandExecuteSuccess(commandResult, DeleteByNameCommand.MESSAGE_MULTIPLE_PERSON_FOUND,
+            Arrays.asList(DANIEL, BENSON, HOON), Arrays.asList(DANIEL, BENSON, HOON));
+    }
+
+    @Test
+    public void execute_nameNotFound_throwCommandException() throws Exception {
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(DeleteByNameCommand.MESSAGE_PERSON_NAME_ABSENT);
+
+        DeleteByNameCommand command = prepareCommand("John");
+        CommandResult commandResult = command.execute();
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        assertCommandSuccess(command, model, DeleteByNameCommand.MESSAGE_PERSON_NAME_ABSENT, expectedModel);
+        assertCommandExecuteSuccess(commandResult, DeleteByNameCommand.MESSAGE_PERSON_NAME_ABSENT,
+            Arrays.asList(DANIEL, BENSON, HOON), Arrays.asList());
     }
 
     /**
@@ -193,7 +228,8 @@ public class DeleteByNameCommandTest {
      */
     private DeleteByNameCommand prepareCommand(String userInput) {
         DeleteByNameCommand deleteByNameCommand =
-                new DeleteByNameCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new DeleteByNameCommand(
+                new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         deleteByNameCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteByNameCommand;
     }
@@ -205,14 +241,12 @@ public class DeleteByNameCommandTest {
      * - the {@code AddressBook} in model remains the same
      * if the size of {@code ActualList<ReadOnlyPerson>} is more than 1
      */
-    private void assertCommandSuccess(DeleteByNameCommand command, String expectedMessage,
-                                      List<ReadOnlyPerson> expectedList,
-                                      List<ReadOnlyPerson> actualList) throws CommandException {
-        CommandResult commandResult = command.execute();
-
+    private void assertCommandExecuteSuccess(CommandResult commandResult, String expectedMessage,
+                                      List<ReadOnlyPerson> oldList,
+                                      List<ReadOnlyPerson> newList) throws CommandException {
         assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList, model.getFilteredPersonList());
-        if (actualList.size() > 1) {
+        assertEquals(oldList, model.getFilteredPersonList());
+        if (newList.size() > 1) {
             AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
             assertEquals(expectedAddressBook, model.getAddressBook());
         }
@@ -279,10 +313,13 @@ import static seedu.address.testutil.TypicalOptions.OPTION_PHONE;
 import static seedu.address.testutil.TypicalOptions.OPTION_TAG;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -292,6 +329,9 @@ import seedu.address.model.person.exceptions.NoPersonFoundException;
  * Contains integration tests (interaction with the Model) and unit tests for SortCommand.
  */
 public class SortCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -340,6 +380,17 @@ public class SortCommandTest {
         assertCommandSuccess(sortByName, model, SortCommand.MESSAGE_SUCCESS_BY_TAG, expectedModel);
     }
 
+    @Test
+    public void execute_emptyList_throwCommandException() throws CommandException {
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(SortCommand.NO_PERSON_FOUND);
+
+        model.resetData((new ModelManager()).getAddressBook());
+
+        SortCommand sortEmptyList = prepareCommand(OPTION_TAG);
+        sortEmptyList.executeUndoableCommand();
+    }
+
     /**
      * Returns a {@code SortCommand} with the parameter {@code option}.
      */
@@ -359,7 +410,6 @@ public class SortCommandTest {
             DeleteByNameCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new DeleteByNameCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
-
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -589,19 +639,6 @@ public class TypicalFilePath {
     public static final String FILE_PATH_CREATE_NEW_FOLDER = "C:\\shalkalaka\\AcquaiNote.xml";
 }
 ```
-###### \java\seedu\address\testutil\TypicalNames.java
-``` java
-package seedu.address.testutil;
-
-/**
- * A utility class containing a list of {@code String} objects to be used in tests.
- */
-public class TypicalNames {
-    public static final String NAME_FIRST_PERSON = "Alice Pauline";
-    public static final String NAME_SECOND_PERSON = "Benson Meier";
-    public static final String NAME_THIRD_PERSON = "Carl Kurz";
-}
-```
 ###### \java\seedu\address\testutil\TypicalOptions.java
 ``` java
 package seedu.address.testutil;
@@ -626,30 +663,6 @@ public class TypicalOptions {
         .withTodoItem(getTodoItemOne())
         .withFavourite()
         .build();
-
-    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
-
-    private TypicalPersons() {} // prevents instantiation
-
-    /**
-     * Returns an {@code AddressBook} with all the typical persons.
-     */
-    public static AddressBook getTypicalAddressBook() {
-        AddressBook ab = new AddressBook();
-        for (ReadOnlyPerson person : getTypicalPersons()) {
-            try {
-                ab.addPerson(person);
-            } catch (DuplicatePersonException e) {
-                assert false : "not possible";
-            }
-        }
-        return ab;
-    }
-
-    public static List<ReadOnlyPerson> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, BILL, CAT, DARWIN));
-    }
-
 ```
 ###### \java\seedu\address\ui\PersonCardTest.java
 ``` java

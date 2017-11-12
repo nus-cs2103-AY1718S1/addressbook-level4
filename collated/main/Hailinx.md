@@ -516,6 +516,7 @@ public class TodoCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_DUPLICATE_TODOITEM = "This todo item already exists in the address book.";
     public static final String MESSAGE_ERROR_PREFIX = "Undefined prefix";
+    public static final String MESSAGE_INVALID_TODOITEM_INDEX = "The todo item index provided is invalid";
 
     private String optionPrefix;
     private Index personIndex;
@@ -587,6 +588,9 @@ public class TodoCommand extends UndoableCommand {
     private void executeTodoDeleteOne() throws CommandException,
             PersonNotFoundException, DuplicatePersonException {
         ReadOnlyPerson person = getReadOnlyPersonFromIndex();
+        if (itemIndex.getZeroBased() >= person.getTodoItems().size()) {
+            throw new CommandException(MESSAGE_INVALID_TODOITEM_INDEX);
+        }
         todoItem = person.getTodoItems().get(itemIndex.getZeroBased());
         model.deleteTodoItem(person, todoItem);
     }
@@ -700,30 +704,6 @@ public class UnlockCommand extends Command {
     }
 
 }
-```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
-``` java
-        Security security = SecurityManager.getInstance();
-        if (security.isSecured() && !security.isPermittedCommand(commandWord)) {
-            throw new ParseException(MESSAGE_IS_ENCRYPTD);
-        }
-```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
-``` java
-        case TodoCommand.COMMAND_WORD:
-            return new TodoCommandParser().parse(arguments);
-
-        case LockCommand.COMMAND_WORD:
-            return new LockCommandParser().parse(arguments);
-
-        case UnlockCommand.COMMAND_WORD:
-            return new UnlockCommandParser().parse(arguments);
-```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
-``` java
-        case SwitchCommand.COMMAND_WORD:
-        case SwitchCommand.COMMAND_ALIAS:
-            return new SwitchCommand(arguments);
 ```
 ###### \java\seedu\address\logic\parser\CliSyntax.java
 ``` java
@@ -1401,7 +1381,7 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
 ``` java
     private void setUpSecurityManager(Storage storage) {
         Security securityManager = SecurityManager.getInstance(storage);
-        securityManager.configSecurity(UnlockCommand.COMMAND_WORD);
+        securityManager.configSecurity(UnlockCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD);
     }
 ```
 ###### \java\seedu\address\MainApp.java
@@ -1411,7 +1391,7 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
      */
     private void restart() {
         logger.info("============================ [ Restarting Address Book ] =============================");
-
+        ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);
             init();
@@ -2355,6 +2335,7 @@ public class BrowserSearchMode {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchPlaceholderDisplay(event.mode);
     }
+}
 ```
 ###### \java\seedu\address\ui\PersonListPanel.java
 ``` java
