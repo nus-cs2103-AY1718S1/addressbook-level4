@@ -4,7 +4,6 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import org.junit.Before;
 
-
 import guitests.guihandles.BrowserPanelHandle;
 
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
