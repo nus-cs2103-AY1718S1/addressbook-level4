@@ -1,6 +1,7 @@
 = cherBook v1.5 - User Guide
 :toc:
-:toc-title:
+:toclevels: 4
+:toc-title: Table of contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
