@@ -1,9 +1,5 @@
 package seedu.address.logic.parser;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -40,74 +36,14 @@ import seedu.address.logic.commands.hints.ShareCommandHint;
 import seedu.address.logic.commands.hints.UnaliasCommandHint;
 import seedu.address.logic.commands.hints.UndoCommandHint;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.UserPrefs;
 
+//@@author nicholaschuayunzhi
 /**
  * Class that is responsible for generating hints based on user input
  * Contains one public method generateHint which returns an appropriate hint based on input
  */
 public class HintParser {
 
-    //@@author goweiwen
-    private static final ArrayList<String> COMMAND_LIST = new ArrayList<>(Arrays.asList(
-        "add", "alias", "clear", "delete", "edit", "exit", "find", "help", "history", "list",
-        "music", "redo", "remark", "select", "unalias", "undo", "radio", "share"
-    ));
-
-    /**
-     * Parses {@code String input} and returns an appropriate autocompletion
-     */
-    public static String autocomplete(String input) {
-        String[] command;
-
-        try {
-            command = ParserUtil.parseCommandAndArguments(input);
-        } catch (ParseException e) {
-            return "";
-        }
-
-        String userInput = input;
-        String commandWord = command[0];
-        String arguments = command[1];
-
-        Hint hint = generateParsedHint(userInput, arguments, commandWord);
-        String autoCompletedHint;
-        if (hint == null) {
-            autoCompletedHint = autocompleteCommand(commandWord);
-        } else {
-            autoCompletedHint = hint.autocomplete();
-        }
-        return autoCompletedHint != null ? autoCompletedHint : input;
-    }
-
-    /**
-     * Parses {@code String command} and returns the closest matching command word, or null if nothing
-     * matches.
-     */
-    public static String autocompleteCommand(String command) {
-        List<String> commands = new ArrayList<>();
-        // We add from COMMAND_LIST first because we want to autocomplete them first.
-        commands.addAll(COMMAND_LIST);
-        commands.addAll(UserPrefs.getInstance().getAliases().getAllAliases());
-        String[] list = commands.toArray(new String[commands.size()]);
-        return autocompleteFromList(command, list);
-    }
-
-    /**
-     * Parses {@code String input} and returns the closest matching string in {@code String[] strings},
-     * or null if nothing matches.
-     */
-    public static String autocompleteFromList(String input, String[] strings) {
-
-        for (String string : strings) {
-            if (string.startsWith(input)) {
-                return string;
-            }
-        }
-        return null;
-    }
-
-    //@@author nicholaschuayunzhi
     /**
      * Parses {@code String input} and returns an appropriate hint
      */
@@ -180,7 +116,7 @@ public class HintParser {
     /**
      * returns a parsedHint if generated hint is non null, else return null
      */
-    private static Hint generateParsedHint(String userInput, String arguments, String commandWord) {
+    public static Hint generateParsedHint(String userInput, String arguments, String commandWord) {
         Hint generatedHint = generateHint(userInput, arguments, commandWord);
         if (generatedHint != null) {
             generatedHint.parse();

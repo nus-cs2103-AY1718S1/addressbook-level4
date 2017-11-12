@@ -1,8 +1,7 @@
 package seedu.address.logic.commands.hints;
 
-import static seedu.address.logic.parser.HintParser.autocompleteCommand;
-
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.Autocomplete;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -42,7 +41,7 @@ public class CommandHint extends Hint {
 
     @Override
     public void parse() {
-        String autocompleted = autocompleteCommand(commandWord);
+        String autocompleted = Autocomplete.autocompleteCommand(commandWord);
 
         if (autocompleted == null) {
             description = " type help for user guide";

@@ -1,7 +1,7 @@
 package seedu.address.logic.commands.hints;
 
+import seedu.address.logic.Autocomplete;
 import seedu.address.logic.commands.MusicCommand;
-import seedu.address.logic.parser.HintParser;
 
 /**
  * Generates hint and tab auto complete for Music command
@@ -27,7 +27,7 @@ public class MusicCommandHint extends FixedArgumentsHint {
         String actionArgument = args[0];
         if (!isValidFixedArg(actionArgument, ACTION)) {
             //completing an arg?
-            String autoCompletedArg = HintParser.autocompleteFromList(actionArgument, ACTION);
+            String autoCompletedArg = Autocomplete.autocompleteFromList(actionArgument, ACTION);
             if (autoCompletedArg == null || actionArgument.isEmpty()) {
                 String autoCorrectHint = (MusicCommand.isMusicPlaying()) ? "stop" : "play";
                 offerHint(autoCorrectHint, "music " + autoCorrectHint);
@@ -54,7 +54,7 @@ public class MusicCommandHint extends FixedArgumentsHint {
 
         if (!isValidFixedArg(genreArgument, GENRE) && actionArgument.equals("play")) {
             //completing an arg?
-            String autoCompletedArg = HintParser.autocompleteFromList(genreArgument, GENRE);
+            String autoCompletedArg = Autocomplete.autocompleteFromList(genreArgument, GENRE);
             if (autoCompletedArg == null || genreArgument.isEmpty()) {
                 offerHint("pop", "music play pop");
                 return;

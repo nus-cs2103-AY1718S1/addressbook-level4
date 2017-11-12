@@ -1,7 +1,7 @@
 package seedu.address.logic.commands.hints;
 
+import seedu.address.logic.Autocomplete;
 import seedu.address.logic.commands.RadioCommand;
-import seedu.address.logic.parser.HintParser;
 
 /**
  * Generates hint and tab auto complete for Radio command
@@ -26,7 +26,7 @@ public class RadioCommandHint extends FixedArgumentsHint {
         String actionArgument = args[0];
         if (!isValidFixedArg(actionArgument, ACTION)) {
             //completing an arg?
-            String autoCompletedArg = HintParser.autocompleteFromList(actionArgument, ACTION);
+            String autoCompletedArg = Autocomplete.autocompleteFromList(actionArgument, ACTION);
             if (autoCompletedArg == null || actionArgument.isEmpty()) {
                 String autoCorrectHint = (RadioCommand.isRadioPlaying()) ? "stop" : "play";
                 offerHint((RadioCommand.isRadioPlaying()) ? "stop" : "play", "radio " + autoCorrectHint);
@@ -53,7 +53,7 @@ public class RadioCommandHint extends FixedArgumentsHint {
 
         if (!isValidFixedArg(genreArgument, GENRE) && actionArgument.equals("play")) {
             //completing an arg?
-            String autoCompletedArg = HintParser.autocompleteFromList(genreArgument, GENRE);
+            String autoCompletedArg = Autocomplete.autocompleteFromList(genreArgument, GENRE);
             if (autoCompletedArg == null || genreArgument.isEmpty()) {
                 offerHint("pop", "radio play pop");
                 return;

@@ -16,11 +16,11 @@ import seedu.address.commons.events.ui.CommandInputChangedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.util.TextUtil;
 import seedu.address.logic.Audio;
+import seedu.address.logic.Autocomplete;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.HintParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -189,7 +189,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void autocomplete() {
         String input = commandTextField.getText();
-        String autocompletion = HintParser.autocomplete(input);
+        String autocompletion = Autocomplete.autocomplete(input);
         commandTextField.textProperty().set(autocompletion);
         commandTextField.positionCaret(autocompletion.length());
     }
