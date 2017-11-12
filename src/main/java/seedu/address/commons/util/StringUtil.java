@@ -64,18 +64,29 @@ public class StringUtil {
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
-        if (preppedWord.length() >= 2) {
-            for (String wordInSentence : wordsInPreppedSentence) {
-                if ((wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()))
-                        && (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()))) {
-                    return true;
-                }
+        if ((preppedWord.length() >= 2) && isWordInName(preppedWord, wordsInPreppedSentence)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if keyword is in the starting part of the name ignoring cases.
+     * @param preppedWord
+     * @param wordsInPreppedSentence
+     * @return
+     */
+    private static boolean isWordInName(String preppedWord, String[] wordsInPreppedSentence) {
+        for (String wordInSentence : wordsInPreppedSentence) {
+            if ((wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()))
+                    && (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()))) {
+                return true;
             }
         }
         return false;
     }
 
-
+    //@@author
     /**
      * Returns a detailed message of the t, including the stack trace.
      */

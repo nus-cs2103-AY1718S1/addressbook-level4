@@ -182,6 +182,27 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
 }
 
 ```
+###### /java/guitests/guihandles/EventsDetailsPanelHandle.java
+``` java
+    /**
+     * Remember the details of the event that was last selected
+     */
+    public void rememberSelectedEventDetails() {
+        latestAddress = getAddress();
+        latestName = getName();
+        latestDate = getDate();
+    }
+
+    /**
+     * Returns true if the selected {@code Event} is different from the value remembered by the most recent
+     * {@code rememberSelectedEventDetails()} call.
+     */
+    public boolean isSelectedEventChanged() {
+        return !getName().equals(latestName)
+                || !getAddress().equals(latestAddress)
+                || !getDate().equals(latestDate);
+    }
+```
 ###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
 
@@ -207,6 +228,66 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
             fail("This method should not be called.");
         }
     }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+
+    @Test
+    public void parseCommand_favourite() throws Exception {
+        FavouriteCommand command = (FavouriteCommand) parser.parseCommand(
+                FavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_unfavourite() throws Exception {
+        UnfavouriteCommand command = (UnfavouriteCommand) parser.parseCommand(
+                UnfavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new UnfavouriteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_favouriteList() throws Exception {
+        assertTrue(parser.parseCommand(FavouriteListCommand.COMMAND_WORD) instanceof FavouriteListCommand);
+    }
+
+    @Test
+    public void parseCommand_birthdays() throws Exception {
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_themesList() throws Exception {
+        assertTrue(parser.parseCommand(ThemeListCommand.COMMAND_WORD) instanceof ThemeListCommand);
+        assertTrue(parser.parseCommand(ThemeListCommand.COMMAND_WORD + " 3") instanceof ThemeListCommand);
+    }
+
+    @Test
+    public void parseCommand_switch() throws Exception {
+        SwitchThemeCommand command = (SwitchThemeCommand) parser.parseCommand(
+                SwitchThemeCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new SwitchThemeCommand(INDEX_FIRST_PERSON), command);
+    }
+
+```
+###### /java/seedu/address/logic/parser/DeleteEventCommandParserTest.java
+``` java
+
+public class DeleteEventCommandParserTest {
+    private DeleteEventCommandParser parser = new DeleteEventCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDeleteEventCommand() {
+        assertParseSuccess(parser, "1", new DeleteEventCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteEventCommand.MESSAGE_USAGE));
+    }
+}
+
 ```
 ###### /java/seedu/address/logic/parser/ParserUtilTest.java
 ``` java

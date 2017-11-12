@@ -23,6 +23,7 @@ public class ChangeThemeRequestEvent extends BaseEvent {
 }
 ```
 ###### \java\seedu\address\commons\events\ui\EventPanelSelectionChangedEvent.java
+
 ``` java
 
 import seedu.address.commons.events.BaseEvent;
@@ -49,7 +50,9 @@ public class EventPanelSelectionChangedEvent extends BaseEvent {
     }
 }
 ```
+
 ###### \java\seedu\address\commons\events\ui\ShowThemeRequestEvent.java
+
 ``` java
 
 import seedu.address.commons.events.BaseEvent;
@@ -65,6 +68,7 @@ public class ShowThemeRequestEvent extends BaseEvent {
     }
 }
 ```
+
 ###### \java\seedu\address\logic\commands\DeleteEventCommand.java
 ``` java
 
@@ -127,6 +131,7 @@ public class DeleteEventCommand extends UndoableCommand {
 }
 ```
 ###### \java\seedu\address\logic\commands\EventsCommand.java
+
 ``` java
 /**
  * Lists all events in the address book to the user.
@@ -150,6 +155,7 @@ public class EventsCommand extends Command {
 }
 ```
 ###### \java\seedu\address\logic\commands\FavouriteCommand.java
+
 ``` java
 
 import java.util.List;
@@ -438,6 +444,7 @@ public class UnfavouriteCommand extends UndoableCommand {
     /** Returns an unmodifiable view of the filtered list of events */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 ```
+
 ###### \java\seedu\address\logic\Logic.java
 ``` java
     void setCurrentTheme(String theme);
@@ -938,7 +945,9 @@ public class EventCard extends UiPart<Region> {
     }
 }
 ```
+
 ###### \java\seedu\address\ui\EventListPanel.java
+
 ``` java
 
 import java.util.logging.Logger;
@@ -1009,6 +1018,7 @@ public class EventListPanel extends UiPart<Region> {
 }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
+
 ``` java
     /**
      * Sets the default theme based on user preferences.
@@ -1073,6 +1083,7 @@ public class EventListPanel extends UiPart<Region> {
     }
 ```
 ###### \java\seedu\address\ui\PersonCard.java
+
 ``` java
     /**
      * Initialises the tags with a randomised color.
@@ -1115,6 +1126,7 @@ public class EventListPanel extends UiPart<Region> {
     }
 ```
 ###### \java\seedu\address\ui\ResultDisplay.java
+
 ``` java
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
@@ -2001,6 +2013,7 @@ public class ThemesWindow extends UiPart<Region> {
 }
 ```
 ###### \resources\view\EventListCard.fxml
+
 ``` fxml
 
 <?import javafx.geometry.Insets?>
