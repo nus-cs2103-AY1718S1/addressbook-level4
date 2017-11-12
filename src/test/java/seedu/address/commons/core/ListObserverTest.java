@@ -9,7 +9,6 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
