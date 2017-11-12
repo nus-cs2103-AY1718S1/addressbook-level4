@@ -893,12 +893,13 @@ public void disjoin(Person personToRemove, Event eventToRemove) {
 
 [discrete]
 ==== Storage level
-In storage, we cannot use the `referencing model` which is used in the `Model` component. This is because that, persons and events reference each other, it is easy to have an *Infinity loop of reference*, as shown in the diagram _(Figure 3.9.2)_ below:
+In storage, we cannot use the `referencing model` which is used in the `Model` component. This is because that it is easy to have an *Infinity loop of reference*. As shown in the diagram _(Figure 3.9.2)_ below,
+an event A references a person X, and X references another event B, and B continues to reference another person Y....As a result, the referencing list will be incredibly long:
 
 image::DG_infinity loop.png[width = "800"]
 _Figure 4.9.2: infinity loop_
 
-To solve it, we create two storage entities: `XmlAdaptedEventNoParticipant` and `XmlAdaptedPersonNoParticipation`. Both of them do not have participant or participation information.
+To solve the *infinity loop reference*, we create two storage entities: `XmlAdaptedEventNoParticipant` and `XmlAdaptedPersonNoParticipation` for referencing purposes. Both of them do not have participant or participation information.
 Hence, we can avoid the infinity referencing problem. +
 The updated storage is shown in the diagram _(Figure 4.9.3)_ below:
 
