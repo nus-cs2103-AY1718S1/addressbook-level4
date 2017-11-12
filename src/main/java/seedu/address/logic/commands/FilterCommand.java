@@ -9,7 +9,7 @@ import seedu.address.model.person.PersonContainsTagPredicate;
 
 //@@author jelneo
 /**
- * Filters contacts by tags in master list.
+ * Filters contacts by tags in masterlist.
  */
 public class FilterCommand extends Command {
     public static final String COMMAND_WORD = "filter";
