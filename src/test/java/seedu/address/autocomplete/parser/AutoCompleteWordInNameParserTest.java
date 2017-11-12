@@ -72,6 +72,7 @@ public class AutoCompleteWordInNameParserTest {
         parser = null;
     }
 
+    //@@author
     /**
      * A Model stub that allows calling of certain methods used in the test,
      * including some required accessors and addPerson
