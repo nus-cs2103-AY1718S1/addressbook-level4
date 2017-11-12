@@ -714,7 +714,7 @@ public void start(Stage primaryStage) {
 }
 ----
 
-_Figure 4.5.1_ below shows the UI display of the `WelcomeScreen`.
+_Figure 4.5.1_ below shows the UI display of the `WelcomeScreen`. The welcome screen displays the ConTag logo and 1 out of the default 15 productivity quotes at random.
 
 image::WelcomeScreen.png[width="400"]
 
@@ -724,7 +724,23 @@ When the `Continue` button is pressed, `WelcomeScreen` will pass the `MainWindow
 
 ==== Design Considerations
 
+**Aspect:** Nature of `WelcomeScreen` +
+**Alternative 1 (current choice)**: Users' action is required to close the welcome screen. +
+**Pros:** Users will have enough time to read the text on the welcome screen. +
+**Cons:** A button is required to handle the passing of scenes into the `primaryStage`. +
+**Alternative 2:** Welcome screen closes by itself after a fixed period of time.  +
+**Pros:** It does not require additional button; and hence is more straightforward to implement.  +
+**Cons:** Welcome screen can only display logo and minimum text as it is not guaranteed that users can read the text within the period the welcome screen is displayed.
 
+---
+
+**Aspect:** Enable and disable welcome screen +
+**Alternative 1 (current choice)**: Users have the choice to enable or disable welcome screen. +
+**Pros:** Users who want the welcome screen to be displayed can save time by skipping the welcome screen.
+**Cons:** A new command must be created to cater to this purpose. +
+**Alternative 2:** Welcome screen is always displayed when the application is run.  +
+**Pros:** This does not require additional command to be implemented.  +
+**Cons:** Users who think that welcome screen is unnecessary cannot skip the welcome screen.
 //end::welcomeWindow[]
 
 //tag::locate[]
