@@ -1460,7 +1460,7 @@ is known to be large.
 **Pros:** Easier logic to understand for new developers. +
 **Cons:** Maintaining dictionary would be taxing on the development team and may get outdated as data keeps getting outdated. +
 **Cons:** Memory performance decreases drastically as memory has to be used to load dictionary into memory for field analysis. +
-**Cons:** Storage performance decreases drastically as space has to be used to store dictionary.
+**Cons:** Storage performance decreases drastically as space has to be used to store dictionary. +
 **Alternative 3:** No suggestions for add/edit +
 **Pros:** Clean codebase. +
 **Cons:** Steep learning curve for new users to learn application functions.
