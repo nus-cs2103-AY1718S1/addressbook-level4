@@ -524,72 +524,140 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 // end::search[]
 
 //tag::additionalPhoneList[]
-
 === Multiple phone numbers supported
 (launched in V1.3)
 
-====Description
+==== Motivation
 
-Since our target audience are the NUS students, which include a large proportion of international students, our Contact Book will support the users to add multiple phone numbers.
+NUS includes a large proportion of international students, who may need to save more than one numbers
+so that they can contact their friends locally as well as overseas. To cater to this need, our Contact
+Book will support the users to add multiple phone numbers for each person in the Contact Book.
 
 ==== Model
 
-UniquePhoneList Classes are created for each person to store the person's multiple phone numbers.
+`UniquePhoneList` Classes are created for each person to store the person's additional phone numbers.
 A person has a primary phone number and a list of additional numbers.
 Primary phone number and additional numbers are stored separately.
-Primary number is saved directly as an object in Person while additional numbers are save in a list.
-UniquePhoneList is a list of Phone object. It can be empty if the person does not have additional numbers.
+Primary number is saved directly as an attribute in Person while additional numbers are save in the `UniquePhoneList`.
+`UniquePhoneList` is a list of `Phone` object. It can be empty if the person does not have additional numbers.
 Primary phone number must not be null.
 
+
+image::UniquePhoneList_classDiagram1.jpg[width="800"]
+
+image::UniquePhoneList_classDiagram2.jpg[width="800"]
+
 ==== Logic
-PhoneCommand is created to add/remove additional phone numbers. It can also be used to show all numbers of a person.
+`PhoneCommand` is created to add/remove additional phone numbers.
 
-PhoneCommand is called by using command word "updatePhone", then the command word is followed by 3 parameters: Index, String, String(optional).
-The 3 parameters represents the index of the person in the Contact Book, action to be taken (add/remove/showAllPhones) and a value respectively.
+We support two different formats for a user to call `PhoneCommand`. They can choose to use whichever format that is more convenient for them.
 
-For add, we will add the phone to the uniquePhoneList and check for duplicate. Example call of add is illustrated as below.
-image::add.png[width="200"]
+**Format 1: using index of the person** +
+The command will be `updatePhone INDEX [ACTION] [PHONE_NUMBER]`. The `INDEX` here will be the index of the person in the Contact Book.
+`[ACTION]` will be either `add` or `remove`.
+* Example: `updatePhone 1 add 83060774`. As such, the additional phone number will be added to the UniquePhoneList of the first person
+in the Contact Book if it does not cause duplicate phone numbers.
 
+**Format 2: using name of the person** +
+The command will be `updatePhone byName [ACTION] [PHONE_NUMBER] [NAME]`. The `INDEX` here will be the index of the person in the Contact Book.
+`[ACTION]` will be either `add` or `remove`. [NAME] has to be the full name which is saved to the Contact Book before.
+* Example: `updatePhone byName add 83060774 Alex Yeo`. As such, the additional phone number will be added to the UniquePhoneList of Alex Yeo if it does not cause duplicate phone numbers.
 
-For remove, we will loop through the uniquePhoneList and remove this phone and check for NoPhoneFoundException. The illustration is below.
-image::remove.png[width="200']
+We first use `PhoneCommandParser` to parse the input String command and we use two overloaded constructors to construct a `PhoneCommand` object for each format.
 
-For showAllPhones, if there is no additional numbers, only the primary number will be displayed. Illustration is below.
-image::showAllPhonesWithNoAdditionalPhones.png[width="200']
+For `add`, we will add the phone to the uniquePhoneList and check for duplicate.
 
-If there are numbers in the uniquePhoneList, the all numbers will be displayed with an index in front of it. Illustration is below.
-image::showAllPhones.png[width="200']
+For `remove`, we will loop through the uniquePhoneList and remove this phone and check for NoPhoneFoundException.
+
+**Sequence Diagram**
+
+image::PhoneCommandSequenceDiagram.jpg[width="800"]
 
 ==== Storage
-New XML element for UniquePhoneList and new XmlAdaptedPhone class with XML value Phone are created to allow the storage for unique phone list and optional phones.
+
+New XML element for UniquePhoneList and new XmlAdaptedPhone class with XML value Phone are created to allow the storage for `UniquePhoneList` and optional phones.
+
 ==== Ui
-A new label will be displaced for each person for each instance of the same fields.
+All the additional phone numbers in the UniquePhoneList will be displayed on the PersonalInformationPanel.
 
-=== Yahoo Weather Display Mechanism
-The Yahoo weather information display is aided by the external library "yahoo-weather-java-api:2.0.2". This library queries data from Yahoo Weather API, and the application display the information returned by calling the library functions with
-a simple string parser method to format the data return. The formatted data is displayed on the `StatusFooterBar`. +
+image::afterAdd.jpg[width="800"]
+After each command, the result will be show in the `ResultDisplay` box. +
 
-The query of weather information is closely related to the location. The location is specified by WOEID, so in this application we take the link:#WOEID[WOEID] of Singapore by default. +
+* If `add` is successful, the following message will be on the `ResultDisplay` box.
 
-[source,java]
-----
-private final String woeid = "1062617";
-----
+image::addSuccess.jpg[width="800"]
 
-The API method is called, and data returned as follows:
+* If `add` fails due to duplicate number, the following error message will be shown to users.
 
-[source,java]
-----
-YahooWeatherService service = new YahooWeatherService();
-Channel channel = service.getForecast(woeid, DegreeUnit.CELSIUS);
+image::addFailed.jpg[width="800"]
 
-return conditionStringParser(channel.getItem().getCondition().toString());
-----
+* If `remove` is successful, the following message will be on the `ResultDisplay` box.
 
-==== Prerequisites/Dependencies
+image::removeSuccess.jpg[width="800"]
 
-* This feature has a strong dependency on Yahoo Weather Server. Some exceptions or assertions should be implemented to prevent the failure of the application
-due to the failure of Yahoo Weather Server. +
+* If `remove` fails due to number cannot be found, the following error message will be shown to users.
+
+image::removeFailed.jpg[width="800"]
+
+==== Design Consideration
+
+---
+**Aspect:** how to store and update the additional phone numbers +
+**Alternative 1 (current choice):** create a `UniquePhoneList` class as a person's attribute to store his/her additional phone numbers +
+**Pros:**  By using `ObservableList<Phone>` as an attribute, we can use the existing methods of the `ObservableList` to manipulate and maintain
+the list. As such, we can manage the additional phone numbers in a more systematic and easier way. By using the existing methods, we also
+reduce the duplication of code, hence the program can be more succinct. +
+**Cons:** More works involved to code for the extra method. Using ObservableList increase coupling, which can lead to more problems if not properly managed. +
+**Alternative 2:** keep all additional phone numbers as attributes of the person directly.
+**Pros:** No extra effort in coding. No issue raised from coupling. +
+**Cons:** Very messy when person have too many attributes. Potentially hard to maintain when too many additional phone numbers are added, leading to scalability issue.
+
+---
+**Aspect:** parsing PhoneCommand +
+**Alternative 1 (current choice):** User can identify the target person by either `INDEX` or `NAME` +
+**Pros:**  Increased flexibility and convenience for users. He/she does not have to search through the list to get the `INDEX` of the target person to update the phone number as long as he/she can remember the name. +
+**Cons:** Extra work on writing code to support both formats in `PhoneCommandParser` and `PhoneCommand`. Overloading is used, which may be new to the new programmers. +
+**Alternative 2:** only support `INDEX`. +
+**Pros:** Easier to code. +
+**Cons:** Less convenient for the users.
+
+
+
+=== Weather Forecast Display Mechanism
+
+==== Motivation
+According to NUS Housing website, more than 50% of the NUS students do not live on campus. Hence, showing weather report on the statusBarFooter will come in handy
+since they can instantly get the weather report of the day while checking the Contact Book.
+
+==== UI
+Once open the Contact book, the weather forecast will be shown on the statusBarFooter.
+
+* If there is internet connection to the device, then the weather forecast of the current day will be shown in the format of
+`WEATHER TEMPERATURE DATE LOCATION`. A example is attached below.
+
+image::weatherReport.jpg[width="600"]
+
+* If there is currently no internet connection, then we will show a default message shown as below.
+
+image::weatherNoInternet.jpg[width="500"]
+
+==== Design Consideration and implementation
+
+---
+**Aspect:** retrieving weather forecast +
+**Current choice:** We use an external library "yahoo-weather-java-api:2.0.2" to query data from Yahoo Weather API and retrieve the weather information using the `channel` created by the external library.
+Then we parse the weather report, retaining only the relevant information to make the weather report succinct and then display the information on the `StatusFooterBar`. +
+**Pros:** Able to extract the weather report directly from Yahoo using this externally library. Less code to write. +
+**Cons:** This feature is highly dependent on the Yahoo Weather server. Increased coupling. This show weather report will not work if the Yahoo Weather Server is down or there
+is simply no internet connection.
+---
+**Aspect:** UI +
+**Alternative 1 (current choice):** Display the weather information on the statusBarFooter. +
+**Pros:** Users can see the weather report instantly when they open the Contact Book, without having to go through the trouble to use command to search or click open a new window. +
+**Cons:** Unable to show a detailed weather report due to the limited space on the statusBarFooter.+
+**Alternative 2:** Display on a new window when search for command word/click open the window. +
+**Pros:** More detailed report available. +
+**Cons:** Inconvenient and slow.
 
 == Documentation
 We use asciidoc for writing documentation.
