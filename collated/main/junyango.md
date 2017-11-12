@@ -363,7 +363,7 @@ public class ListEventCommand extends Command {
 /**
  * Switch Theme command to toggle between both themes (light and dark)
  */
-public class SwitchThemeCommand extends UndoableCommand {
+public class SwitchThemeCommand extends Command {
 
     public static final String COMMAND_WORD = "theme";
     public static final String COMMAND_ALIAS = "t";
@@ -374,7 +374,7 @@ public class SwitchThemeCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "Theme switched!";
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult execute() {
         raise(new SwitchThemeEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
@@ -421,6 +421,11 @@ public class AddEventParser implements Parser<AddEventCommand> {
         // TODO: Keep this checking for now. These pre-loaded properties are compulsory.
         if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_DATE_TIME)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
+        }
+
+        /* Have to explicitly check DateTime because of natural language parsing. */
+        if (!DateTime.isValidTime(argMultimap.getValue(PREFIX_DATE_TIME).get())) {
+            throw new ParseException(PropertyManager.getPropertyConstraintMessage("dt"));
         }
 
         try {
