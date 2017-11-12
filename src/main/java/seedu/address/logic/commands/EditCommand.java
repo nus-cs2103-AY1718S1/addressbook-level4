@@ -108,8 +108,7 @@ public class EditCommand extends UndoableCommand {
                 .orElse(personToEdit.getPhoneList());
         //@@author willxujun
         Set<Tag> updatedTags = new HashSet<>(personToEdit.getTags());
-        editPersonDescriptor.getTagsToAdd().ifPresent(updatedTags::addAll);
-        editPersonDescriptor.getTagsToRemove().ifPresent(updatedTags::removeAll);
+        updateTags(updatedTags, editPersonDescriptor);
         //@@author
         Set<CustomField> updatedCustomFields =
                 editPersonDescriptor.getCustomFields().orElse(personToEdit.getCustomFields());
@@ -117,6 +116,30 @@ public class EditCommand extends UndoableCommand {
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                 updatedPhoto, updatedPhoneList, updatedTags, updatedCustomFields);
     }
+
+    //@@author willxujun
+
+    /**
+     * clears, adds and removes tags according to the descriptor
+     * @param updatedTags
+     * @param editPersonDescriptor
+     */
+    public static void updateTags(Set<Tag> updatedTags, EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(editPersonDescriptor);
+        editPersonDescriptor.getTagsToAdd().ifPresent(tagsToAdd -> {
+            if (tagsToAdd.isEmpty()) {
+                updatedTags.clear();
+            }
+        });
+        editPersonDescriptor.getTagsToRemove().ifPresent(tagsToRemove -> {
+            if (tagsToRemove.isEmpty()) {
+                updatedTags.clear();
+            }
+        });
+        editPersonDescriptor.getTagsToAdd().ifPresent(updatedTags::addAll);
+        editPersonDescriptor.getTagsToRemove().ifPresent(updatedTags::removeAll);
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -147,7 +170,6 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Photo photo;
         private UniquePhoneList uniquePhoneList;
-        //private Set<Tag> tags;
         private Set<Tag> tagsToAdd;
         private Set<Tag> tagsToRemove;
         private Set<CustomField> customFields;
@@ -222,23 +244,22 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(uniquePhoneList);
         }
 
-        /*
-        public void setTags(Set<Tag> tags) {
-            this.tags = tags;
-        }
-
-        public Optional<Set<Tag>> getTags() {
-            return Optional.ofNullable(tags);
-        }
-        */
         //@@author willxujun
-        public void setTagsToAdd(Set<Tag> tagsToAdd) { this.tagsToAdd = tagsToAdd; }
+        public void setTagsToAdd(Set<Tag> tagsToAdd) {
+            this.tagsToAdd = tagsToAdd;
+        }
 
-        public Optional<Set<Tag>> getTagsToAdd() { return Optional.ofNullable(tagsToAdd); }
+        public Optional<Set<Tag>> getTagsToAdd() {
+            return Optional.ofNullable(tagsToAdd);
+        }
 
-        public void setTagsToRemove(Set<Tag> tagsToRemove) { this.tagsToRemove = tagsToRemove; }
+        public void setTagsToRemove(Set<Tag> tagsToRemove) {
+            this.tagsToRemove = tagsToRemove;
+        }
 
-        public Optional<Set<Tag>> getTagsToRemove() { return Optional.ofNullable(tagsToRemove); }
+        public Optional<Set<Tag>> getTagsToRemove() {
+            return Optional.ofNullable(tagsToRemove);
+        }
         //@@author
 
         public void setCustomFields(Set<CustomField> customFields) {

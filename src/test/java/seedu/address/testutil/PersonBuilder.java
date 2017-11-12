@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -66,10 +67,21 @@ public class PersonBuilder {
         try {
             this.person.setTags(SampleDataUtil.getTagSet(tags));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tags are expected to be unique.");
+            throw new IllegalArgumentException("tag name violation.");
         }
         return this;
     }
+
+    //@@author willxujun
+    /**
+     * Set the {@code tags} to the person we are building
+     */
+    public PersonBuilder withTags(Set<Tag> tags) {
+        CollectionUtil.elementsAreUnique(tags);
+        this.person.setTags(tags);
+        return this;
+    }
+    //@@author
 
     /**
      * Sets the {@code Address} of the {@code Person} that we are building.
