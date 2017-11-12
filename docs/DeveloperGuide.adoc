@@ -1040,7 +1040,7 @@ Any other prefix as input will be considered as invalid input.In absence of vali
 ----
 _Figure 4.4.2: Code section 2 in FindCommandParser.java_
 
-A successful match of the prefix in `FindCommandParser` will create a `FindCommand` object with `containsKeyWordPredicate` that resides in `Model` to be passed as parameter.Command execution in `LogicManager` will then call `updateFilteredPersonList` method in `ModelManager`.Addressbook will then search for contact based on the predicate paramater passed in `PredicateUtil1 as shown in _Figure 4.4.3_.
+A successful match of the prefix in `FindCommandParser` will create a `FindCommand` object with `containsKeyWordPredicate` that resides in `Model` to be passed as parameter.Command execution in `LogicManager` will then call `updateFilteredPersonList` method in `ModelManager`.Addressbook will then search for contact based on the predicate paramater passed in `PredicateUtil` as shown in _Figure 4.4.3_.
 .
 [source,java]
 ----
