@@ -99,6 +99,12 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HOTPOT = " " + PREFIX_TAG + VALID_TAG_HOTPOT;
     public static final String TAG_DESC_DEMO = " " + PREFIX_TAG + VALID_TAG_DEMO;
 
+    //public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "Hotpot&"; // '&' not allowed in names
+    public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION + " "; // ' ' blank space not allowed
+    public static final String INVALID_START_DESC = " " + PREFIX_START_DATE_TIME + "19981209"; // not the correct style
+    public static final String INVALID_END_DESC = " " + PREFIX_END_DATE_TIME; // empty string not allowed
+    //public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+
 
     static {
         DESC_DEMO = new EditTaskDescriptorBuilder().withName(VALID_NAME_DEMO)
