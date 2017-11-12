@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.StorageUtil.getNullStorage;
+import static seedu.address.testutil.StorageUtil.getDummyStorage;
 
 import java.util.Arrays;
 
@@ -82,7 +82,7 @@ public class AddCommandTest {
      */
     private AddCommand getAddCommandForPerson(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
+        command.setData(model, getDummyStorage(), new CommandHistory(), new UndoRedoStack());
         return command;
     }
 }

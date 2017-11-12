@@ -4,7 +4,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 //@@author marvinchin
 /**
- * Represents information about a social media account in the address book.
+ * Represents information about a {@code Person}'s social media account.
+ * Guarantees immutability.
  */
 public class SocialInfo {
 
@@ -23,21 +24,21 @@ public class SocialInfo {
     }
 
     /**
-     * Returns the username for the represented account
+     * Returns the username for the represented account.
      */
     public String getUsername() {
         return this.username;
     }
 
     /**
-     * Returns the type (usually platform) of this social media information
+     * Returns the platform of this social media information.
      */
     public String getSocialType() {
         return this.socialType;
     }
 
     /**
-     * Returns the link to the social media feed for the represented account
+     * Returns the link to the social media feed for the represented account.
      */
     public String getSocialUrl() {
         return this.socialUrl;

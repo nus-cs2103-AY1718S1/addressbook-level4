@@ -10,6 +10,9 @@ import java.util.Set;
 import org.junit.Test;
 
 //@@author marvinchin
+/**
+ * Contains unit tests for {@code OptionBearingArgument}.
+ */
 public class OptionBearingArgumentTest {
 
     @Test

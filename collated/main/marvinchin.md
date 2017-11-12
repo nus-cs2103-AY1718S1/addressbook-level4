@@ -115,13 +115,13 @@ public class ExportCommandParser implements Parser {
  */
 public class SocialInfoMapping {
 
+    public static final String FACEBOOK_IDENTIFIER = "facebook";
+    public static final String INSTAGRAM_IDENTIFIER = "instagram";
+    public static final String FACEBOOK_IDENTIFIER_ALIAS = "fb";
+    public static final String INSTAGRAM_IDENTIFIER_ALIAS = "ig";
+
     private static final int SOCIAL_TYPE_INDEX = 0;
     private static final int SOCIAL_USERNAME_INDEX = 1;
-
-    private static final String FACEBOOK_IDENTIFIER = "facebook";
-    private static final String FACEBOOK_IDENTIFIER_ALIAS = "fb";
-    private static final String INSTAGRAM_IDENTIFIER = "instagram";
-    private static final String INSTAGRAM_IDENTIFIER_ALIAS = "ig";
 
     private static final String INVALID_SYNTAX_EXCEPTION_MESSAGE = "Invalid syntax for social info";
     private static final String UNRECOGNIZED_SOCIAL_TYPE_MESSAGE = "Unrecognized social type.\n"
@@ -151,6 +151,9 @@ public class SocialInfoMapping {
 
     }
 
+```
+###### /java/seedu/address/logic/parser/SocialInfoMapping.java
+``` java
     private static boolean isFacebookInfo(String[] splitRawSocialInfo) {
         String trimmedSocialType = splitRawSocialInfo[SOCIAL_TYPE_INDEX].trim();
         return trimmedSocialType.equals(FACEBOOK_IDENTIFIER) || trimmedSocialType.equals(FACEBOOK_IDENTIFIER_ALIAS);
@@ -294,14 +297,20 @@ public class SortCommandParser implements Parser<SortCommand> {
         OptionBearingArgument opArgs = new OptionBearingArgument(args);
         Set<String> options = opArgs.getOptions();
 
-        if (!opArgs.getFilteredArgs().isEmpty()) {
+        if (!opArgs.getFilteredArgs().isEmpty() || options.size() > 1) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
         if (options.contains(SortByNameCommand.COMMAND_OPTION)) {
             return new SortByNameCommand();
-        } else {
+        } else if (options.contains(SortByRecentCommand.COMMAND_OPTION)) {
+            return new SortByRecentCommand();
+        } else if (options.size() == 0) {
+            // no options, so return sort by default command
             return new SortByDefaultCommand();
+        } else {
+            // invalid option, throw exception
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
     }
 }
@@ -566,6 +575,28 @@ public class FindByTagsCommand extends FindCommand {
             this.socialInfos = socialInfos;
         }
 ```
+###### /java/seedu/address/logic/commands/SortByRecentCommand.java
+``` java
+
+/**
+ * Sorts the displayed person list by the last time they were added, updated, or selected.
+ */
+public class SortByRecentCommand extends SortCommand {
+
+    public static final String COMMAND_OPTION = "recent";
+
+    @Override
+    public Comparator<ReadOnlyPerson> getComparator() {
+        return new PersonRecentComparator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || other instanceof SortByRecentCommand; // instanceof handles nulls
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/ImportCommand.java
 ``` java
 /**
@@ -729,6 +760,7 @@ public class PersonNameComparator implements Comparator<ReadOnlyPerson> {
 ```
 ###### /java/seedu/address/model/person/PersonComparatorUtil.java
 ``` java
+
 /**
  * Utility class with useful methods for writing person comparators
  */
@@ -785,18 +817,57 @@ public class PersonComparatorUtil {
         String otherPersonEmail = otherPerson.getEmail().toString();
         return thisPersonEmail.compareToIgnoreCase(otherPersonEmail);
     }
+
+    /**
+     * Compares two persons based on their last access date, with the most recently accessed person coming first
+     */
+    public static int compareLastAccessDate(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
+        LastAccessDate thisPersonLastAccessDate = thisPerson.getLastAccessDate();
+        LastAccessDate otherPersonLastAccessDate = otherPerson.getLastAccessDate();
+        int dateCompare = thisPersonLastAccessDate.compareTo(otherPersonLastAccessDate);
+        // Date comparison puts earlier dates first, so we need to reverse it
+        return -dateCompare;
+    }
 }
 ```
 ###### /java/seedu/address/model/person/PersonDefaultComparator.java
 ``` java
 /**
  * Default comparator for persons. Sorts first by favorites, then by name in alphabetical order,
- * then by phone in numeric order, then by address in alphabetical order, then by email in alphabetical order
+ * then by phone in numeric order, then by address in alphabetical order, then by email in alphabetical order,
+ * then by last access date
  */
 public class PersonDefaultComparator implements Comparator<ReadOnlyPerson> {
     @Override
     public int compare(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
         if (!thisPerson.getFavorite().equals(otherPerson.getFavorite())) {
+            return compareFavorite(thisPerson, otherPerson);
+        } else if (!thisPerson.getName().equals(otherPerson.getName())) {
+            return compareName(thisPerson, otherPerson);
+        } else if (!thisPerson.getPhone().equals(otherPerson.getPhone())) {
+            return comparePhone(thisPerson, otherPerson);
+        } else if (!thisPerson.getAddress().equals(otherPerson.getAddress())) {
+            return compareAddress(thisPerson, otherPerson);
+        } else {
+            return compareEmail(thisPerson, otherPerson);
+        }
+    }
+}
+```
+###### /java/seedu/address/model/person/PersonRecentComparator.java
+``` java
+
+/**
+ * Compares persons by their last access date. Sorts first by last access date, then by favorite,
+ * then by name in lexicographic order, then by phone in numeric order, then by address in lexicographic order,
+ * then by email in lexicographic order
+ */
+public class PersonRecentComparator implements Comparator<ReadOnlyPerson> {
+    @Override
+    public int compare(ReadOnlyPerson thisPerson, ReadOnlyPerson otherPerson) {
+        if (!thisPerson.getLastAccessDate().equals(otherPerson.getLastAccessDate())) {
+            return compareLastAccessDate(thisPerson, otherPerson);
+        } else if (!thisPerson.getFavorite().equals(otherPerson.getFavorite())) {
             return compareFavorite(thisPerson, otherPerson);
         } else if (!thisPerson.getName().equals(otherPerson.getName())) {
             return compareName(thisPerson, otherPerson);
@@ -825,6 +896,82 @@ public class PersonDefaultComparator implements Comparator<ReadOnlyPerson> {
     public void setSocialInfos(Set<SocialInfo> replacement) {
         socialInfos.set(new UniqueSocialInfoList(replacement));
     }
+
+    @Override
+    public ObjectProperty<LastAccessDate> lastAccessDateProperty() {
+        return lastAccessDate;
+    }
+
+    @Override
+    public LastAccessDate getLastAccessDate() {
+        return lastAccessDate.get();
+    }
+
+    public void setLastAccessDate(LastAccessDate replacement) {
+        lastAccessDate.set(replacement);
+    }
+
+    public void setLastAccessDateToNow() {
+        setLastAccessDate(new LastAccessDate());
+    }
+```
+###### /java/seedu/address/model/person/LastAccessDate.java
+``` java
+/**
+ * Represents the last time a person is accessed.
+ * Guarantees immutability.
+ */
+public class LastAccessDate implements Comparable<LastAccessDate> {
+    private Date lastAccessDate;
+
+    /**
+     * Constructs a new LastAccessDate with the date set to the current date.
+     */
+    public LastAccessDate() {
+        lastAccessDate = new Date();
+    }
+
+    /**
+     * Constructs a new LastAccessDate with the date equivalent to the date.
+     */
+    public LastAccessDate(Date date) {
+        requireNonNull(date);
+        // save a copy instead of using input date directly to avoid reference to external objects that can be mutated
+        lastAccessDate = copyDate(date);
+    }
+
+    public Date getDate() {
+        // returns a copy of the date so that the internal date cannot be mutated by external methods
+        return copyDate(lastAccessDate);
+    }
+
+    @Override
+    public String toString() {
+        return lastAccessDate.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof LastAccessDate // instanceof handles nulls
+                && this.lastAccessDate.equals(((LastAccessDate) other).lastAccessDate));
+    }
+
+    /**
+     * Utility method to create a copy of the input date
+     */
+    private Date copyDate(Date originalDate) {
+        // clone using constructor instead of clone method due to vulnerabilities in the clone method
+        // see https://stackoverflow.com/questions/7082553/java-util-date-clone-or-copy-to-not-expose-internal-reference
+        Date copiedDate = new Date(originalDate.getTime());
+        return copiedDate;
+    }
+
+    @Override
+    public int compareTo(LastAccessDate other) {
+        return this.lastAccessDate.compareTo(other.lastAccessDate);
+    }
+}
 ```
 ###### /java/seedu/address/model/person/TagsContainKeywordsPredicate.java
 ``` java
@@ -1070,6 +1217,61 @@ public class SocialInfo {
     }
 }
 ```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+
+    /**
+     * Indicates that a person in the address book has been accessed
+     */
+    public void indicatePersonAccessed(ReadOnlyPerson target) throws PersonNotFoundException {
+        Person updatedPerson = new Person(target);
+        updatedPerson.setLastAccessDateToNow();
+        try {
+            persons.setPerson(target, updatedPerson);
+        } catch (DuplicatePersonException dpe) {
+            assert false : "Person should be unique";
+        }
+    }
+
+    //// tag-level operations
+
+    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
+        tags.add(t);
+    }
+
+    //// util methods
+
+    @Override
+    public String toString() {
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        // TODO: refine later
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getPersonList() {
+        return persons.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Tag> getTagList() {
+        return tags.asObservableList();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddressBook // instanceof handles nulls
+                && this.persons.equals(((AddressBook) other).persons)
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+    }
+
+    @Override
+    public int hashCode() {
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(persons, tags);
+    }
+}
+```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
     /**
@@ -1082,10 +1284,12 @@ public class SocialInfo {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        sortedPersons = new SortedList<>(this.addressBook.getPersonList());
+        filteredPersons = new FilteredList<>(sortedPersons);
         // To avoid having to re-sort upon every change in filter, we first sort the list before applying the filter
         // This was we only need to re-sort when there is a change in the backing person list
-        sortedPersons = new SortedList<>(this.addressBook.getPersonList(), new PersonDefaultComparator());
-        filteredPersons = new FilteredList<>(sortedPersons);
+        sortPersons(new PersonDefaultComparator());
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 ```
 ###### /java/seedu/address/model/ModelManager.java
@@ -1103,17 +1307,56 @@ public class SocialInfo {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+
 ```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
+    public void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        indicatePersonAccessed(target);
+        //TODO(Marvin): Since IO operations are expensive, consider if we can defer this operation instead of saving
+        // on every access (which includes select)
+        indicateAddressBookChanged();
+    }
+
+    private void indicatePersonAccessed(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.indicatePersonAccessed(target);
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public Model makeCopy() {
+        // initialize new UserPrefs for now as address book doesn't make use of it
+        ModelManager copy = new ModelManager(this.getAddressBook(), new UserPrefs());
+        copy.sortPersons(lastSortComparator);
+        copy.updateFilteredPersonList(lastFilterPredicate);
+
+        return copy;
+    }
+
+    @Override
     public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
         sortedPersons.setComparator(comparator);
+        lastSortComparator = comparator;
     }
 ```
 ###### /java/seedu/address/model/Model.java
 ``` java
     /** Sorts the persons in the address book based on the input {@code comparator} */
     void sortPersons(Comparator<ReadOnlyPerson> comparator);
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /** Selects the given person. Should update the last accessed time of the person. */
+    void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /**
+     * Returns a defensive copy of the {@code model}.
+     */
+    Model makeCopy();
+}
 ```

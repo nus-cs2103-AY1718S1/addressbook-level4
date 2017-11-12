@@ -11,7 +11,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author marvinchin
 /**
- * Deletes persons from the list identified by their indexes in the last displayed list in the address book.
+ * Deletes {@code Person}s from the address book identified by their indexes in the last displayed person list.
  */
 public class DeleteByIndexCommand extends DeleteCommand {
     private Collection<Index> targetIndexes;
@@ -21,7 +21,8 @@ public class DeleteByIndexCommand extends DeleteCommand {
     }
 
     /**
-     * Returns the list of persons in the last shown list referenced by the collection of indexes provided.
+     * Returns the list of {@code Person}s in the last shown list referenced by indexes provided.
+     * @throws CommandException if any of the input indexes are invalid.
      */
     private Collection<ReadOnlyPerson> mapPersonsToIndexes(Collection<Index> indexes) throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -38,7 +39,7 @@ public class DeleteByIndexCommand extends DeleteCommand {
     }
 
     @Override
-    public Collection<ReadOnlyPerson> getPersonsToDelete() throws CommandException {
+    protected Collection<ReadOnlyPerson> getPersonsToDelete() throws CommandException {
         return mapPersonsToIndexes(targetIndexes);
     }
 

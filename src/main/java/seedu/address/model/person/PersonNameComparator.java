@@ -10,8 +10,13 @@ import java.util.Comparator;
 
 //@@author marvinchin
 /**
- * Default comparator for persons. Sorts first by name in alphabetical order, then by favorite
- * then by phone in numeric order, then by address in alphabetical order, then by email in alphabetical order
+ * Comparator for {@Person}s when sorting by {@code Name}.
+ * Sorts in the order:
+ * 1. {@code Name} in lexicographic order
+ * 2. {@code Favorite} status
+ * 3. {@code Phone} in numeric order
+ * 4. {@code Address} in lexicographic order
+ * 5. {@code Email} in lexicographic order
  */
 public class PersonNameComparator implements Comparator<ReadOnlyPerson> {
     @Override

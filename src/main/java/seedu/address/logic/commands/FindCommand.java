@@ -4,10 +4,11 @@ import java.util.function.Predicate;
 
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author marvinchin
 /**
- * Finds and lists all persons in address book who meet the specified criteria.
+ * Finds and lists all {@code Person}s in address book who meet the specified criteria.
  */
-public class FindCommand extends Command {
+public abstract class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
@@ -24,22 +25,15 @@ public class FindCommand extends Command {
             + COMMAND_WORD + " bob alice\n"
             + COMMAND_WORD + " -" + FindByTagsCommand.COMMAND_OPTION + " friends colleagues";
 
-    private final Predicate<ReadOnlyPerson> predicate;
-
-    public FindCommand(Predicate<ReadOnlyPerson> predicate) {
-        this.predicate = predicate;
-    }
-
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
+        model.updateFilteredPersonList(getPredicate());
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof FindCommand // instanceof handles nulls
-                && this.predicate.equals(((FindCommand) other).predicate)); // state check
-    }
+
+    /**
+     * Returns the predicate used to determine which {@code Person}s should be shown.
+     */
+    protected abstract Predicate<ReadOnlyPerson> getPredicate();
 }

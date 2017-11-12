@@ -18,8 +18,18 @@ public class Address {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    public static final String BLANK_ADDRESS = " ";
 
     public final String value;
+
+    //@@author alexfoodw
+    /**
+     * Constructs a blank address field
+     */
+    public Address() {
+        this.value = BLANK_ADDRESS;
+    }
+    //@@author
 
     /**
      * Validates given address.
@@ -38,6 +48,12 @@ public class Address {
      * Returns true if a given string is a valid person email.
      */
     public static boolean isValidAddress(String test) {
+        //@@author alexfoodw
+        // allow blank address
+        if ((" ").equals(test)) {
+            return true;
+        }
+        //@@author
         return test.matches(ADDRESS_VALIDATION_REGEX);
     }
 

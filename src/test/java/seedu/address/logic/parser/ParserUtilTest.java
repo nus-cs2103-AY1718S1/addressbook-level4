@@ -26,14 +26,14 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.social.SocialInfo;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
-    private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_SOCIAL_INFO = "someinvalidsocialmedia123 helloworld";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -41,6 +41,8 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_SOCIAL_INFO_1 = SocialInfoMapping.FACEBOOK_IDENTIFIER + " helloworld";
+    private static final String VALID_SOCIAL_INFO_2 = SocialInfoMapping.INSTAGRAM_IDENTIFIER + " goodbye";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -95,12 +97,6 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseName_invalidValue_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseName(Optional.of(INVALID_NAME));
-    }
-
-    @Test
     public void parseName_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseName(Optional.empty()).isPresent());
     }
@@ -142,12 +138,6 @@ public class ParserUtilTest {
     public void parseAddress_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         ParserUtil.parseAddress(null);
-    }
-
-    @Test
-    public void parseAddress_invalidValue_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseAddress(Optional.of(INVALID_ADDRESS));
     }
 
     @Test
@@ -211,5 +201,44 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseWhitespaceSeparatedStrings_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseWhitespaceSeparatedStrings(null);
+    }
+
+    @Test
+    public void parseWhitespaceSeparatedStrings_validArgs_returnsWhitespaceSeparatedStrings() {
+        String input = "hello  \t\n world goodbye";
+        List<String> actualStrings = ParserUtil.parseWhitespaceSeparatedStrings(input);
+        List<String> expectedStrings = Arrays.asList("hello", "world", "goodbye");
+
+        assertEquals(expectedStrings, actualStrings);
+    }
+
+    @Test
+    public void parseSocialInfos_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseSocialInfos(null);
+    }
+
+    @Test
+    public void parseSocialInfos_validSocialInfos_returnsSocialInfoSet() throws Exception {
+        List<String> rawSocialInfos = Arrays.asList(VALID_SOCIAL_INFO_1, VALID_SOCIAL_INFO_2);
+        SocialInfo socialInfoOne = SocialInfoMapping.parseSocialInfo(VALID_SOCIAL_INFO_1);
+        SocialInfo socialInfoTwo = SocialInfoMapping.parseSocialInfo(VALID_SOCIAL_INFO_2);
+        HashSet<SocialInfo> expectedSocialInfos = new HashSet<>(Arrays.asList(socialInfoOne, socialInfoTwo));
+        Set<SocialInfo> actualSocialInfos = ParserUtil.parseSocialInfos(rawSocialInfos);
+
+        assertEquals(expectedSocialInfos, actualSocialInfos);
+    }
+
+    @Test
+    public void parseSocialInfos_invalidSocialInfos_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        List<String> rawSocialInfos = Arrays.asList(VALID_SOCIAL_INFO_1, INVALID_SOCIAL_INFO);
+        ParserUtil.parseSocialInfos(rawSocialInfos);
     }
 }

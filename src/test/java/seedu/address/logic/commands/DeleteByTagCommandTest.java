@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.StorageUtil.getNullStorage;
+import static seedu.address.testutil.StorageUtil.getDummyStorage;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -25,7 +25,7 @@ import seedu.address.model.person.TagsContainKeywordsPredicate;
 
 //@@author marvinchin
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteByTagCommand}.
  */
 public class DeleteByTagCommandTest {
 
@@ -42,9 +42,9 @@ public class DeleteByTagCommandTest {
             deletedPersons.append("\n" + person.toString());
         }
 
-        DeleteCommand deleteCommand = prepareCommand(tagsToDelete);
+        DeleteByTagCommand deleteCommand = prepareCommand(tagsToDelete);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, deletedPersons);
+        String expectedMessage = String.format(DeleteByTagCommand.MESSAGE_DELETE_PERSON_SUCCESS, deletedPersons);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         for (ReadOnlyPerson person : personsToDelete) {
@@ -70,9 +70,9 @@ public class DeleteByTagCommandTest {
             deletedPersons.append("\n" + person.toString());
         }
 
-        DeleteCommand deleteCommand = prepareCommand(tagsToDelete);
+        DeleteByTagCommand deleteCommand = prepareCommand(tagsToDelete);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, deletedPersons);
+        String expectedMessage = String.format(DeleteByTagCommand.MESSAGE_DELETE_PERSON_SUCCESS, deletedPersons);
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         for (ReadOnlyPerson person : personsToDelete) {
             expectedModel.deletePerson(person);
@@ -85,14 +85,14 @@ public class DeleteByTagCommandTest {
     public void equals() {
         Set<String> firstDeleteTagSet = new HashSet<>(Arrays.asList("friends"));
         Set<String> secondDeleteTagSet = new HashSet<>(Arrays.asList("family"));
-        DeleteCommand deleteFirstCommand = new DeleteByTagCommand(firstDeleteTagSet);
-        DeleteCommand deleteSecondCommand = new DeleteByTagCommand(secondDeleteTagSet);
+        DeleteByTagCommand deleteFirstCommand = new DeleteByTagCommand(firstDeleteTagSet);
+        DeleteByTagCommand deleteSecondCommand = new DeleteByTagCommand(secondDeleteTagSet);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteByTagCommand(firstDeleteTagSet);
+        DeleteByTagCommand deleteFirstCommandCopy = new DeleteByTagCommand(firstDeleteTagSet);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
@@ -106,12 +106,12 @@ public class DeleteByTagCommandTest {
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Returns a {@code DeleteByTagCommand} with the parameter {@code index}.
      */
-    private DeleteCommand prepareCommand(List<String> tags) {
+    private DeleteByTagCommand prepareCommand(List<String> tags) {
         HashSet<String> tagSet = new HashSet<>(tags);
-        DeleteCommand deleteCommand = new DeleteByTagCommand(tagSet);
-        deleteCommand.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
+        DeleteByTagCommand deleteCommand = new DeleteByTagCommand(tagSet);
+        deleteCommand.setData(model, getDummyStorage(), new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
     }
 }

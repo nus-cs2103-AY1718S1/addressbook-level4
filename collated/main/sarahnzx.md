@@ -1,46 +1,87 @@
 # sarahnzx
-###### /java/seedu/address/logic/commands/DeleteCommand.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s): %1$s";
-
-    private List<Index> targetIndexList = new ArrayList<>();
-
-    public DeleteCommand(List<Index> targetIndexList) {
-        this.targetIndexList = targetIndexList;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        StringBuilder people = new StringBuilder();
-
-        for (Index i : this.targetIndexList) {
-            if (i.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ReadOnlyPerson person = event.getNewSelection().person;
+        String requestedSocialType = event.getSocialType();
+        Person p = new Person(person);
+        Iterator<SocialInfo> iterator = p.getSocialInfos().iterator();
+        if (iterator.hasNext()) {
+            // if there is SocialInfo stored
+            SocialInfo social = iterator.next();
+            String socialType = social.getSocialType();
+            while (!socialType.equals(requestedSocialType) && iterator.hasNext() && requestedSocialType != null) {
+                // if no social type is specified, the default social type shown will be Instagram
+                social = iterator.next();
             }
 
-            ReadOnlyPerson personToDelete = lastShownList.get(i.getZeroBased());
-
-            try {
-                model.deletePerson(personToDelete);
-            } catch (PersonNotFoundException pnfe) {
-                assert false : "The target person cannot be missing";
-            }
-
-            people.append("\n");
-            people.append(personToDelete);
+            String url = social.getSocialUrl();
+            loadPage(url);
+        } else {
+            loadPersonPage(event.getNewSelection().person);
         }
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, people));
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.targetIndexList.equals(((DeleteCommand) other).targetIndexList)); // state check
+```
+###### /java/seedu/address/ui/PersonListPanel.java
+``` java
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        this.socialType = event.getSocialType();
+        scrollTo(event.targetIndex);
+        PersonCard currentSelected = personListView.getSelectionModel().getSelectedItem();
+        raise(new PersonPanelSelectionChangedEvent(currentSelected, socialType));
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     */
+    class PersonListViewCell extends ListCell<PersonCard> {
+
+        @Override
+        protected void updateItem(PersonCard person, boolean empty) {
+            super.updateItem(person, empty);
+
+            if (empty || person == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(person.getRoot());
+            }
+        }
+    }
+
+}
+```
+###### /java/seedu/address/commons/events/ui/PersonPanelSelectionChangedEvent.java
+``` java
+    public PersonPanelSelectionChangedEvent(PersonCard newSelection, String socialType) {
+        this.newSelection = newSelection;
+        this.socialType = socialType;
+    }
+```
+###### /java/seedu/address/commons/events/ui/PersonPanelSelectionChangedEvent.java
+``` java
+    public String getSocialType() {
+        return socialType;
     }
 }
+```
+###### /java/seedu/address/commons/events/ui/JumpToListRequestEvent.java
+``` java
+    public JumpToListRequestEvent(Index targetIndex, String socialType) {
+        this.targetIndex = targetIndex.getZeroBased();
+        this.socialType = socialType;
+    }
+```
+###### /java/seedu/address/commons/events/ui/JumpToListRequestEvent.java
+``` java
+    public String getSocialType() {
+        return this.socialType;
+    }
 ```
 ###### /java/seedu/address/logic/parser/ArgumentMultimap.java
 ``` java
@@ -63,6 +104,96 @@
         return str.isEmpty() ? Optional.empty() : Optional.of(str);
     }
 ```
+###### /java/seedu/address/logic/parser/SocialInfoMapping.java
+``` java
+    public static String getSocialType(String socialType) throws IllegalValueException {
+        if (socialType.equals(FACEBOOK_IDENTIFIER) || socialType.equals(FACEBOOK_IDENTIFIER_ALIAS)) {
+            return FACEBOOK_IDENTIFIER;
+        } else if (socialType.equals(INSTAGRAM_IDENTIFIER) || socialType.equals(INSTAGRAM_IDENTIFIER_ALIAS)) {
+            return INSTAGRAM_IDENTIFIER;
+        } else {
+            throw new IllegalValueException(UNRECOGNIZED_SOCIAL_TYPE_MESSAGE);
+        }
+    }
+
+```
+###### /java/seedu/address/logic/parser/SelectCommandParser.java
+``` java
+    /**
+     * Parses the given {@code String} of arguments in the context of the SelectCommand
+     * and returns an SelectCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public SelectCommand parse(String args) throws ParseException {
+        try {
+            String trimmedArgs = args.trim();
+            String[] tokens = trimmedArgs.split(" ");
+            String indexStr = tokens[0];
+            String socialType = null;
+            if (tokens.length > 1) {
+                // if there is more than one argument
+                socialType = ParserUtil.parseSelect(tokens[1]).get();
+            }
+            Index index = ParserUtil.parseIndex(indexStr);
+            return new SelectCommand(index, socialType);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Checks if the specified social type is valid.
+     */
+    public static Optional<String> parseSelect(String arg) throws IllegalValueException {
+        requireNonNull(arg);
+        if (!(arg.equals(FACEBOOK_IDENTIFIER) || arg.equals(INSTAGRAM_IDENTIFIER)
+                || arg.equals(FACEBOOK_IDENTIFIER_ALIAS) || arg.equals(INSTAGRAM_IDENTIFIER_ALIAS))) {
+            throw new IllegalValueException(MESSAGE_INVALID_SOCIAL_TYPE);
+        }
+        return Optional.of(getSocialType(arg));
+    }
+```
+###### /java/seedu/address/logic/commands/DeleteCommand.java
+``` java
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s): %1$s";
+
+    private List<Index> targetIndexList = new ArrayList<>();
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        Collection<ReadOnlyPerson> personsToDelete = getPersonsToDelete();
+        StringBuilder deletedPersons = new StringBuilder();
+
+        for (ReadOnlyPerson personToDelete : personsToDelete) {
+            try {
+                model.deletePerson(personToDelete);
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "The target person cannot be missing";
+            }
+
+            deletedPersons.append("\n");
+            deletedPersons.append(personToDelete);
+        }
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPersons));
+    }
+
+```
+###### /java/seedu/address/logic/commands/SelectCommand.java
+``` java
+    public SelectCommand(Index targetIndex, String socialType) {
+        this.targetIndex = targetIndex;
+        this.socialType = socialType;
+    }
+```
+###### /java/seedu/address/model/person/Phone.java
+``` java
+    public final List<String> phonelist;
+
+```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
@@ -75,44 +206,5 @@
             newPerson.setTags(newTags);
             addressBook.updatePerson(oldPerson, newPerson);
         }
-    }
-```
-###### /java/seedu/address/model/person/Phone.java
-``` java
-    public final List<String> phonelist;
-
-    /**
-     * Validates given phone number.
-     *
-     * @throws IllegalValueException if given phone string is invalid.
-     */
-    public Phone(String phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String[] numbers = phone.split("\n");
-
-        List<String> phones = new ArrayList<>();
-        boolean invalid = false;
-        String phoneStr = "";
-
-        for (int i = 0; i < numbers.length; i++) {
-            String trimmedPhone = numbers[i].trim();
-            if (isValidPhone(trimmedPhone)) {
-                phones.add(numbers[i]);
-                phoneStr += numbers[i] + "\n";
-            } else {
-                invalid = true;
-            }
-        }
-
-        if (phones.isEmpty() && invalid) {
-            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
-        }
-
-        if (!phoneStr.isEmpty()) {
-            phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
-        }
-
-        this.phonelist = phones;
-        this.value = phoneStr;
     }
 ```

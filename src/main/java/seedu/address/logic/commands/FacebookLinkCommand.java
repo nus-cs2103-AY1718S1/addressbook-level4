@@ -6,6 +6,7 @@ import java.net.URL;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 
+import javafx.scene.web.WebEngine;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -16,7 +17,7 @@ import seedu.address.ui.BrowserPanel;
  * Shares a link to a personal Facebook account.
  */
 public class FacebookLinkCommand extends Command {
-    public static final String COMMAND_WORD = "facebook link";
+    public static final String COMMAND_WORD = "facebooklink";
     public static final String COMMAND_ALIAS = "fblink";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -30,6 +31,7 @@ public class FacebookLinkCommand extends Command {
 
     private static String user;
     private static String link;
+    private static WebEngine webEngine;
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
@@ -60,14 +62,15 @@ public class FacebookLinkCommand extends Command {
 
         EventsCenter.getInstance().post(new NewResultAvailableEvent(
                 MESSAGE_FACEBOOK_LINK_SUCCESS + " (to " + user + "'s page.)", false));
-        BrowserPanel.setLink(false);
+        webEngine = FacebookConnectCommand.getWebEngine();
+        webEngine.load(FacebookConnectCommand.getAuthenticatedUserPage());
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         if (!FacebookConnectCommand.isAuthenticated()) {
+            BrowserPanel.setProcessType(COMMAND_WORD);
             FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
-            BrowserPanel.setLink(true);
             newFacebookConnect.execute();
             return new CommandResult(MESSAGE_FACEBOOK_LINK_INITIATED);
         } else {

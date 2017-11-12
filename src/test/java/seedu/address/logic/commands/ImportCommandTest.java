@@ -28,6 +28,9 @@ import seedu.address.testutil.modelstubs.ModelStub;
 import seedu.address.testutil.modelstubs.ModelStubAcceptingPersonAdded;
 
 //@@author marvinchin
+/**
+ * Contains integration and unit tests for {@code ImportCommand}.
+ */
 public class ImportCommandTest {
     private static final String TEST_DATA_FOLDER = Paths.get("src/test/data/ImportCommandTest")
             .toAbsolutePath().toString() + File.separator;
@@ -35,7 +38,6 @@ public class ImportCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    // we can use null as a file path as we will not be using the instance file path
     private AddressBookStorage addressBookStorage = new XmlAddressBookStorage(null);
     private Storage storage = new StorageManager(addressBookStorage, null);
 

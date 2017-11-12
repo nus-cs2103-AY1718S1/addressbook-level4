@@ -26,7 +26,6 @@ public class XmlAdaptedSocialInfo {
 
     /**
      * Converts a given SocialInfo into this class for JAXB use.
-     *
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedSocialInfo(SocialInfo source) {
@@ -36,9 +35,8 @@ public class XmlAdaptedSocialInfo {
     }
 
     /**
-     * Converts this jaxb-friendly adapted social info object into the model's SocialInfo object.
-     *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * Converts this JAXB-friendly adapted social info object into the model's {@code SocialInfo} object.
+     * @throws IllegalValueException if there were any data constraints violated in the adapted {@code SocialInfo}
      */
     public SocialInfo toModelType() throws IllegalValueException {
         return new SocialInfo(socialType, username, socialUrl);

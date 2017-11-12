@@ -8,6 +8,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Selects a person identified using it's last displayed index from the address book.
@@ -39,6 +40,7 @@ public class SelectCommand extends Command {
     }
     //@@author
 
+    //@@author marvinchin
     @Override
     public CommandResult execute() throws CommandException {
 
@@ -48,10 +50,20 @@ public class SelectCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex, socialType));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+        ReadOnlyPerson selectedPerson = lastShownList.get(targetIndex.getZeroBased());
+        try {
+            model.selectPerson(selectedPerson);
+            // index of person might have shifted because of the select operation
+            // so we need to find the new index
+            Index newIndex = model.getPersonIndex(selectedPerson);
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(newIndex, socialType));
+        } catch (PersonNotFoundException e) {
+            assert false : "The selected person should be in the last shown list";
+        }
 
+        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

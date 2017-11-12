@@ -3,7 +3,7 @@ package seedu.address.logic;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.StorageUtil.getNullStorage;
+import static seedu.address.testutil.StorageUtil.getDummyStorage;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class LogicManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager();
-    private Storage storage = getNullStorage();
+    private Storage storage = getDummyStorage();
     private Logic logic = new LogicManager(model, storage);
 
     @Test

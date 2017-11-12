@@ -12,83 +12,86 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 //@@author marvinchin
+/**
+ * Contains unit tests for {@code UniqueSocialInfoList}.
+ */
 public class UniqueSocialInfoListTest {
-    private static SocialInfo aliceFacebook = new SocialInfo("facebook", "alice", "facebook.com/alice");
-    private static SocialInfo aliceTwitter = new SocialInfo("twitter", "alice", "instagram.com/alice");
-    private static SocialInfo bobFacebook = new SocialInfo("facebook", "bob", "facebook.com/bob");
-    private static SocialInfo bobTwitter = new SocialInfo("twitter", "bob", "instagram.com/bob");
+    private static final SocialInfo ALICE_FACEBOOK = new SocialInfo("facebook", "alice", "facebook.com/alice");
+    private static final SocialInfo ALICE_TWITTER = new SocialInfo("twitter", "alice", "instagram.com/alice");
+    private static final SocialInfo BOB_FACEBOOK = new SocialInfo("facebook", "bob", "facebook.com/bob");
+    private static final SocialInfo BOB_TWITTER = new SocialInfo("twitter", "bob", "instagram.com/bob");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void uniqueSocialInfoList_toSet_success() {
-        UniqueSocialInfoList uniqueSocialInfoList = prepareUniqueSocialInfoList(aliceFacebook, aliceTwitter);
-        HashSet<SocialInfo> expectedSet = new HashSet<>(Arrays.asList(aliceFacebook, aliceTwitter));
+        UniqueSocialInfoList uniqueSocialInfoList = prepareUniqueSocialInfoList(ALICE_FACEBOOK, ALICE_TWITTER);
+        HashSet<SocialInfo> expectedSet = new HashSet<>(Arrays.asList(ALICE_FACEBOOK, ALICE_TWITTER));
         assertEquals(expectedSet, uniqueSocialInfoList.toSet());
     }
 
     @Test
     public void uniqueSocialInfoList_addUnique_success() throws UniqueSocialInfoList.DuplicateSocialTypeException {
-        UniqueSocialInfoList uniqueSocialInfoList = prepareUniqueSocialInfoList(aliceFacebook);
-        uniqueSocialInfoList.add(aliceTwitter);
-        HashSet<SocialInfo> expectedSet = new HashSet<>(Arrays.asList(aliceFacebook, aliceTwitter));
+        UniqueSocialInfoList uniqueSocialInfoList = prepareUniqueSocialInfoList(ALICE_FACEBOOK);
+        uniqueSocialInfoList.add(ALICE_TWITTER);
+        HashSet<SocialInfo> expectedSet = new HashSet<>(Arrays.asList(ALICE_FACEBOOK, ALICE_TWITTER));
         assertEquals(expectedSet, uniqueSocialInfoList.toSet());
     }
 
     @Test
     public void uniqueSocialInfoList_addDuplicateSocialType_throwsDuplicateSocialTypeException()
             throws UniqueSocialInfoList.DuplicateSocialTypeException {
-        UniqueSocialInfoList uniqueSocialInfoList = prepareUniqueSocialInfoList(aliceFacebook);
+        UniqueSocialInfoList uniqueSocialInfoList = prepareUniqueSocialInfoList(ALICE_FACEBOOK);
         thrown.expect(UniqueSocialInfoList.DuplicateSocialTypeException.class);
-        uniqueSocialInfoList.add(bobFacebook);
+        uniqueSocialInfoList.add(BOB_FACEBOOK);
     }
 
     @Test
     public void uniqueSocialInfoList_setSocialInfos_success() {
         // Should work for an empty list
         UniqueSocialInfoList uniqueSocialInfoList = new UniqueSocialInfoList();
-        HashSet<SocialInfo> toSet = new HashSet<>(Arrays.asList(bobFacebook, bobTwitter));
+        HashSet<SocialInfo> toSet = new HashSet<>(Arrays.asList(BOB_FACEBOOK, BOB_TWITTER));
         uniqueSocialInfoList.setSocialInfos(toSet);
         assertEquals(toSet, uniqueSocialInfoList.toSet());
         // Should work for list with existing social infos
-        HashSet<SocialInfo> nextToSet = new HashSet<>(Arrays.asList(aliceFacebook, aliceTwitter));
+        HashSet<SocialInfo> nextToSet = new HashSet<>(Arrays.asList(ALICE_FACEBOOK, ALICE_TWITTER));
         uniqueSocialInfoList.setSocialInfos(nextToSet);
         assertEquals(nextToSet, uniqueSocialInfoList.toSet());
     }
 
     @Test
     public void uniqueSocialInfoList_equals_success() throws UniqueSocialInfoList.DuplicateSocialTypeException {
-        UniqueSocialInfoList aliceList = prepareUniqueSocialInfoList(aliceFacebook, aliceTwitter);
-        UniqueSocialInfoList bobList = prepareUniqueSocialInfoList(bobFacebook, bobTwitter);
+        UniqueSocialInfoList aliceList = prepareUniqueSocialInfoList(ALICE_FACEBOOK, ALICE_TWITTER);
+        UniqueSocialInfoList bobList = prepareUniqueSocialInfoList(BOB_FACEBOOK, BOB_TWITTER);
         assertFalse(aliceList.equals(bobList));
-        UniqueSocialInfoList aliceListCopy = prepareUniqueSocialInfoList(aliceFacebook, aliceTwitter);
+        UniqueSocialInfoList aliceListCopy = prepareUniqueSocialInfoList(ALICE_FACEBOOK, ALICE_TWITTER);
         assertTrue(aliceList.equals(aliceListCopy));
 
         UniqueSocialInfoList aliceListOrdered = new UniqueSocialInfoList();
-        aliceListOrdered.add(aliceFacebook);
-        aliceListOrdered.add(aliceTwitter);
+        aliceListOrdered.add(ALICE_FACEBOOK);
+        aliceListOrdered.add(ALICE_TWITTER);
         UniqueSocialInfoList aliceListReversed = new UniqueSocialInfoList();
-        aliceListReversed.add(aliceTwitter);
-        aliceListReversed.add(aliceFacebook);
+        aliceListReversed.add(ALICE_TWITTER);
+        aliceListReversed.add(ALICE_FACEBOOK);
         assertFalse(aliceListOrdered.equals(aliceListReversed));
     }
 
     @Test
     public void uniqueSocialInfoList_equalsOrderInsensitive_success()
             throws UniqueSocialInfoList.DuplicateSocialTypeException {
-        UniqueSocialInfoList aliceList = prepareUniqueSocialInfoList(aliceFacebook, aliceTwitter);
-        UniqueSocialInfoList bobList = prepareUniqueSocialInfoList(bobFacebook, bobTwitter);
+        UniqueSocialInfoList aliceList = prepareUniqueSocialInfoList(ALICE_FACEBOOK, ALICE_TWITTER);
+        UniqueSocialInfoList bobList = prepareUniqueSocialInfoList(BOB_FACEBOOK, BOB_TWITTER);
         assertFalse(aliceList.equalsOrderInsensitive(bobList));
-        UniqueSocialInfoList aliceListCopy = prepareUniqueSocialInfoList(aliceFacebook, aliceTwitter);
+        UniqueSocialInfoList aliceListCopy = prepareUniqueSocialInfoList(ALICE_FACEBOOK, ALICE_TWITTER);
         assertTrue(aliceList.equalsOrderInsensitive(aliceListCopy));
 
         UniqueSocialInfoList aliceListOrdered = new UniqueSocialInfoList();
-        aliceListOrdered.add(aliceFacebook);
-        aliceListOrdered.add(aliceTwitter);
+        aliceListOrdered.add(ALICE_FACEBOOK);
+        aliceListOrdered.add(ALICE_TWITTER);
         UniqueSocialInfoList aliceListReversed = new UniqueSocialInfoList();
-        aliceListReversed.add(aliceTwitter);
-        aliceListReversed.add(aliceFacebook);
+        aliceListReversed.add(ALICE_TWITTER);
+        aliceListReversed.add(ALICE_FACEBOOK);
         assertTrue(aliceListOrdered.equalsOrderInsensitive(aliceListReversed));
     }
 

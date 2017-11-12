@@ -10,7 +10,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Represents a command that deletes persons from the addressbook identified by some input parameter
+ * Represents a command that deletes {@Person}s from the address book.
  */
 public abstract class DeleteCommand extends UndoableCommand {
 
@@ -56,10 +56,9 @@ public abstract class DeleteCommand extends UndoableCommand {
 
     //@@author marvinchin
     /**
-     * Returns the collection of persons to be deleted.
-     * To be implemented by the classes inheriting this class.
+     * Returns the collection of {@code Person}s to be deleted.
      */
-    public abstract Collection<ReadOnlyPerson> getPersonsToDelete() throws CommandException;
+    protected abstract Collection<ReadOnlyPerson> getPersonsToDelete() throws CommandException;
     //@@author
 
     @Override

@@ -15,6 +15,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonDefaultComparator;
@@ -34,9 +35,12 @@ public class ModelManager extends ComponentManager implements Model {
     private final SortedList<ReadOnlyPerson> sortedPersons;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
+    private Predicate<ReadOnlyPerson> lastFilterPredicate;
+    private Comparator<ReadOnlyPerson> lastSortComparator;
+
     //@@author marvinchin
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a {@code ModelManager} with the given {@code addressBook} and {@code userPrefs}.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
         super();
@@ -45,10 +49,12 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        sortedPersons = new SortedList<>(this.addressBook.getPersonList());
+        filteredPersons = new FilteredList<>(sortedPersons);
         // To avoid having to re-sort upon every change in filter, we first sort the list before applying the filter
         // This was we only need to re-sort when there is a change in the backing person list
-        sortedPersons = new SortedList<>(this.addressBook.getPersonList(), new PersonDefaultComparator());
-        filteredPersons = new FilteredList<>(sortedPersons);
+        sortPersons(new PersonDefaultComparator());
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
     //@@author
 
@@ -96,10 +102,10 @@ public class ModelManager extends ComponentManager implements Model {
                 continue;
             }
         }
+
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-    //@@author
 
     //@@author sarahnzx
     @Override
@@ -119,7 +125,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
-
+        indicatePersonAccessed(target);
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
@@ -132,6 +138,35 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.toggleFavoritePerson(target, type);
         indicateAddressBookChanged();
     }
+
+    //@@author marvinchin
+    @Override
+    public Index getPersonIndex(ReadOnlyPerson target) throws PersonNotFoundException {
+        int zeroBasedIndex = filteredPersons.indexOf(target);
+        if (zeroBasedIndex == -1) {
+            throw new PersonNotFoundException();
+        }
+        return Index.fromZeroBased(zeroBasedIndex);
+    }
+
+    @Override
+    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
+        sortedPersons.setComparator(comparator);
+        lastSortComparator = comparator;
+    }
+
+    @Override
+    public void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        indicatePersonAccessed(target);
+        // TODO(Marvin): Since IO operations are expensive, consider if we can defer this operation instead of saving
+        // on every access (which includes select)
+        indicateAddressBookChanged();
+    }
+
+    private void indicatePersonAccessed(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.indicatePersonAccessed(target);
+    }
+
     //@@author
 
     //=========== Filtered Person List Accessors =============================================================
@@ -149,13 +184,20 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+        lastFilterPredicate = predicate;
     }
 
     //@@author marvinchin
     @Override
-    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
-        sortedPersons.setComparator(comparator);
+    public Model makeCopy() {
+        // initialize new UserPrefs for now as address book doesn't make use of it
+        ModelManager copy = new ModelManager(this.getAddressBook(), new UserPrefs());
+        copy.sortPersons(lastSortComparator);
+        copy.updateFilteredPersonList(lastFilterPredicate);
+
+        return copy;
     }
+
     //@@author
 
     @Override

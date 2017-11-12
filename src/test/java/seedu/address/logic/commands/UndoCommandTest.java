@@ -4,7 +4,7 @@ import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.address.testutil.StorageUtil.getNullStorage;
+import static seedu.address.testutil.StorageUtil.getDummyStorage;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -24,7 +24,7 @@ import seedu.address.storage.Storage;
 public class UndoCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
-    private static final Storage NULL_STORAGE = getNullStorage();
+    private static final Storage NULL_STORAGE = getDummyStorage();
 
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private final DeleteCommand deleteCommandOne = new DeleteByIndexCommand(Arrays.asList(INDEX_FIRST_PERSON));

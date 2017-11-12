@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.StorageUtil.getNullStorage;
+import static seedu.address.testutil.StorageUtil.getDummyStorage;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public class CommandBoxTest extends GuiUnitTest {
     @Before
     public void setUp() {
         Model model = new ModelManager();
-        Storage storage = getNullStorage();
+        Storage storage = getDummyStorage();
         Logic logic = new LogicManager(model, storage);
 
         CommandBox commandBox = new CommandBox(logic);

@@ -1,5 +1,180 @@
 # alexfoodw
-###### /main/java/seedu/address/commons/events/ui/BrowserUrlChangeEvent.java
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    private static String processType;
+    private static String trimmedArgs;
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    private Logic logic;
+    private Label location;
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    /**
+     * Sets the current logic manager
+     * @param logic
+     */
+    public void setLogic(Logic logic) {
+        this.logic = logic;
+    }
+
+    /**
+     * Identifies which facebook command process is being executed
+     * @param type
+     */
+    public static void setProcessType(String type) {
+        processType = type;
+    }
+
+    /**
+     * Set arguments for the required facebook command
+     * @param trimmedArgs
+     */
+    public static void setTrimmedArgs(String trimmedArgs) {
+        BrowserPanel.trimmedArgs = trimmedArgs;
+    }
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    //method to convert Document to String
+    public String getStringFromDocument(Document doc) {
+        try {
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.transform(domSource, result);
+            return writer.toString();
+        } catch (TransformerException ex) {
+            new CommandException("Transform Doc to String Error.");
+            return null;
+        }
+    }
+    private void setEventHandlerForBrowserUrlLoadEvent() {
+        browser.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+            // Case: handle facebook related page loads
+            if (Worker.State.SUCCEEDED.equals(newValue) && browser.getEngine().getLocation().contains("facebook")) {
+                String currentContent = getStringFromDocument(browser.getEngine().getDocument());
+                // handle invalid friend to be added
+                if (currentContent.contains("Sorry, this content isn't available right now")
+                        || currentContent.contains("This page isn't available")
+                        || currentContent.contains("Sorry, this content isn't available at the moment")
+                        || currentContent.contains("may have been expired")) {
+                    FacebookAddAllFriendsCommand.setupNextFriend();
+                }
+            }
+        });
+    }
+
+    private void setEventHandlerForBrowserUrlChangeEvent() {
+        location.textProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    // listens for post-accesstoken generation next step
+                    if (newValue.contains("access_token")) {
+                        switch (processType) {
+
+                        case FacebookConnectCommand.COMMAND_WORD:
+                        case FacebookConnectCommand.COMMAND_ALIAS:
+                            logger.fine("browser url changed to : '" + newValue + "'");
+                            raise(new BrowserUrlChangeEvent(FacebookConnectCommand.COMMAND_ALIAS));
+                            break;
+
+                        case FacebookPostCommand.COMMAND_WORD:
+                        case FacebookPostCommand.COMMAND_ALIAS:
+                            logger.fine("browser url changed to : '" + newValue + "'");
+                            raise(new BrowserUrlChangeEvent(FacebookPostCommand.COMMAND_ALIAS));
+                            break;
+
+                        case FacebookLinkCommand.COMMAND_WORD:
+                        case FacebookLinkCommand.COMMAND_ALIAS:
+                            logger.fine("browser url changed to : '" + newValue + "'");
+                            raise(new BrowserUrlChangeEvent(FacebookLinkCommand.COMMAND_ALIAS));
+                            break;
+
+                        case FacebookAddCommand.COMMAND_WORD:
+                        case FacebookAddCommand.COMMAND_ALIAS:
+                            logger.fine("browser url changed to : '" + newValue + "'");
+                            raise(new BrowserUrlChangeEvent(FacebookAddCommand.COMMAND_ALIAS));
+                            break;
+
+                        case FacebookAddAllFriendsCommand.COMMAND_WORD:
+                        case FacebookAddAllFriendsCommand.COMMAND_ALIAS:
+                            logger.fine("browser url changed to : '" + newValue + "'");
+                            raise(new BrowserUrlChangeEvent(FacebookAddAllFriendsCommand.COMMAND_ALIAS));
+                            break;
+
+                        default:
+                            break;
+                        }
+                    } else if (newValue.contains("photo.php?fbid")) {
+                        logger.fine("browser url changed to : '" + newValue + "'");
+                        raise(new BrowserUrlChangeEvent(FacebookAddAllFriendsCommand.COMMAND_ALIAS));
+                    }
+                });
+        // reset after execution
+        processType = null;
+    }
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    @Subscribe
+    private void handleBrowserUrlChangeEvent(BrowserUrlChangeEvent event) throws CommandException {
+        switch (event.getProcessType()) {
+
+        case FacebookConnectCommand.COMMAND_WORD:
+        case FacebookConnectCommand.COMMAND_ALIAS:
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
+            break;
+
+        case FacebookPostCommand.COMMAND_WORD:
+        case FacebookPostCommand.COMMAND_ALIAS:
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
+            FacebookPostCommand.completePost();
+            break;
+
+        case FacebookLinkCommand.COMMAND_WORD:
+        case FacebookLinkCommand.COMMAND_ALIAS:
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
+            FacebookLinkCommand.completeLink();
+            break;
+
+        case FacebookAddCommand.COMMAND_WORD:
+        case FacebookAddCommand.COMMAND_ALIAS:
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
+            FacebookAddCommand facebookAddCommand = new FacebookAddCommand(trimmedArgs);
+            logic.completeFacebookAddCommand(facebookAddCommand, processType);
+            break;
+
+        case FacebookAddAllFriendsCommand.COMMAND_WORD:
+        case FacebookAddAllFriendsCommand.COMMAND_ALIAS:
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+            if (!FacebookConnectCommand.isAuthenticated()) {
+                FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
+                FacebookAddAllFriendsCommand.addFirstFriend();
+            } else {
+                FacebookAddAllFriendsCommand.setUserId(browser.getEngine().getLocation());
+                FacebookAddCommand facebookAddCommandForAddAll = new FacebookAddCommand(true);
+                logic.completeFacebookAddCommand(facebookAddCommandForAddAll, processType);
+
+                // go on to add next friend
+                FacebookAddAllFriendsCommand.incrementTotalFriendsAdded();
+                FacebookAddAllFriendsCommand.setupNextFriend();
+            }
+            break;
+
+        default:
+            throw new CommandException("URL change error.");
+        }
+    }
+```
+###### /java/seedu/address/commons/events/ui/BrowserUrlChangeEvent.java
 ``` java
 /**
  * Indicates a change in browser page
@@ -21,162 +196,461 @@ public class BrowserUrlChangeEvent extends BaseEvent {
     }
 }
 ```
-###### /main/java/seedu/address/logic/commands/AddFacebookContactCommand.java
+###### /java/seedu/address/logic/parser/FacebookAddCommandParser.java
 ``` java
 /**
- * Adds a facebook contact to the address book.
+ * Parses the given {@code String} of arguments in the context of the FacebookAddCommand
+ * and returns an FacebookAddCommand object for execution.
+ * @throws ParseException if the user input does not conform the expected format
  */
-public class AddFacebookContactCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "addfacebookcontact";
-    public static final String COMMAND_ALIAS = "afbc";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a facebook friend to the address book.\n"
-            + "Alias: " + COMMAND_ALIAS + "\n"
-            + "Parameters: FACEBOOK_CONTACT_NAME\n"
-            + "Example: " + COMMAND_WORD + "alice fong";
-
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    private final Person toAdd;
+public class FacebookAddCommandParser implements Parser<FacebookAddCommand> {
 
     /**
-     * Creates an AddFacebookContactCommand to add the specified Facebook contact
-     * @param person
+     * Parses the given {@code String} of arguments in the context of the FacebookAddCommand
+     * and returns an FacebookAddCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
      */
-    public AddFacebookContactCommand(Person person) {
-        toAdd = new Person(person);
+    public FacebookAddCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FacebookAddCommand.MESSAGE_USAGE));
+        }
+
+        return new FacebookAddCommand(trimmedArgs);
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/AddressBookParser.java
+``` java
+        case FacebookAddCommand.COMMAND_WORD:
+        case FacebookAddCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookAddCommandParser().parse(arguments);
+
+        case FacebookAddAllFriendsCommand.COMMAND_WORD:
+        case FacebookAddAllFriendsCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookAddAllFriendsCommand();
+
+        case FacebookConnectCommand.COMMAND_WORD:
+        case FacebookConnectCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookConnectCommand();
+
+        case FacebookPostCommand.COMMAND_WORD:
+        case FacebookPostCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookPostCommandParser().parse(arguments);
+
+        case FacebookLinkCommand.COMMAND_WORD:
+        case FacebookLinkCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookLinkCommandParser().parse(arguments);
+```
+###### /java/seedu/address/logic/parser/FacebookPostCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new FacebookPostCommand object
+ */
+public class FacebookPostCommandParser implements Parser<FacebookPostCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FacebookAddCommand
+     * and returns an FacebookAddCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    @Override
+    public FacebookPostCommand parse(String userInput) throws ParseException {
+        String trimmedArgs = userInput.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FacebookPostCommand.MESSAGE_USAGE));
+        }
+
+        return new FacebookPostCommand(trimmedArgs);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/FacebookLinkCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new FacebookPostCommand object
+ */
+public class FacebookLinkCommandParser implements Parser<FacebookLinkCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FacebookLinkCommand
+     * and returns an FacebookLinkCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    @Override
+    public FacebookLinkCommand parse(String userInput) throws ParseException {
+        String trimmedArgs = userInput.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FacebookLinkCommand.MESSAGE_USAGE));
+        }
+
+        return new FacebookLinkCommand(trimmedArgs);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/FacebookAddAllFriendsCommand.java
+``` java
+/**
+ * Adds all available friends from a personal Facebook account.
+ * Current Maximum friends is set at 30.
+ */
+
+public class FacebookAddAllFriendsCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "facebookaddallfriends";
+    public static final String COMMAND_ALIAS = "fbaddall";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": adds all available friends from a Facebook account. (maximum friends that can be added is "
+            + "currently capped at 30.)\n"
+            + "Alias: " + COMMAND_ALIAS + "\n";
+    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_ERROR = "Error with Facebook Tagable Friends API call."
+            + "User may not be registered as 'Test User'";
+    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_PAGING_ERROR = "Error with getting next page";
+    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS = " valid friends added from Facebook!";
+    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED = "User not authenticated, "
+            + "log in to proceed.";
+    public static final String EXTRACT_USER_ID_REGEX = "set=a.(.*?)\\&type";
+
+    private static Facebook facebookInstance;
+    private static String currentUserId;
+    private static String currentUserName;
+    private static ResponseList<TaggableFriend> currentList;
+    private static Paging<TaggableFriend> currentPaging;
+    private static String currentPhotoID;
+    private static int maxFriends = 30;
+    private static int totalFriendsAdded = 0;
+    private static int friendIndex = 0;
+
+    /**
+     * Returns the current Facebook ID of the user being added
+     * @return currentUserId
+     */
+    public static String getCurrentUserId() {
+        return currentUserId;
+    }
+
+    /**
+     * Returns the current Facebook Username of the user being added
+     * @return currentUserName
+     */
+    public static String getCurrentUserName() {
+        return currentUserName;
+    }
+
+    /**
+     * Increments the counter of total friends added so far
+     */
+    public static void incrementTotalFriendsAdded() {
+        totalFriendsAdded++;
+    }
+
+    /**
+     * Adds all facebook contacts to addressbook
+     * @throws CommandException
+     */
+    public static void addFirstFriend() throws CommandException {
+        facebookInstance = FacebookConnectCommand.getFacebookInstance();
+        try {
+            currentList = facebookInstance.getTaggableFriends();
+            currentPaging = currentList.getPaging();
+            addNextFriend();
+        } catch (FacebookException e) {
+            throw new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_ERROR);
+        }
+
+    }
+
+    /**
+     * Proceeds to add the next available friend from facebook contacts to addressbook
+     * @throws CommandException
+     */
+    public static void addNextFriend() throws CommandException {
+        if (friendIndex >= currentList.size()) {
+            // go to next list
+            try {
+                currentList = facebookInstance.fetchNext(currentPaging);
+            } catch (FacebookException e) {
+                throw new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_PAGING_ERROR);
+            }
+            if (currentList == null) {
+                finishFacebookAddAllFriends();
+                return;
+            }
+            friendIndex = 0;
+            currentPaging = currentList.getPaging();
+        }
+        TaggableFriend friend = currentList.get(friendIndex);
+        currentUserName = friend.getName();
+        // extract photo ID
+        String photoUrl = friend.getPicture().getURL().toString();
+        Pattern p = Pattern.compile("_(.*?)\\_");
+        Matcher m = p.matcher(photoUrl);
+        m.matches();
+        m.find();
+        currentPhotoID = m.group(1);
+
+        // initialise getting user ID
+        WebEngine webEngine = FacebookConnectCommand.getWebEngine();
+        webEngine.load(FacebookConnectCommand.FACEBOOK_DOMAIN + currentPhotoID);
+    }
+
+    /**
+     * Sets up the counter and adds the next Facebook Contact
+     */
+    public static void setupNextFriend() {
+        if (totalFriendsAdded >= maxFriends) {
+            finishFacebookAddAllFriends();
+            return;
+        }
+        friendIndex++;
+        try {
+            addNextFriend();
+        } catch (CommandException e) {
+            new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_ERROR);
+        }
+    }
+
+    /**
+     * Extracts the user id for the required URL
+     */
+    public static void setUserId(String url) {
+        // extract photo ID
+        Pattern p = Pattern.compile(EXTRACT_USER_ID_REGEX);
+        Matcher m = p.matcher(url);
+        m.matches();
+        m.find();
+        String groupId = m.group(1);
+        String[] parts = groupId.split("\\.");
+        currentUserId = parts[2];
+    }
+
+    /**
+     * Completes and exits the command
+     */
+    private static void finishFacebookAddAllFriends() {
+        FacebookConnectCommand.loadUserPage();
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(totalFriendsAdded
+                + MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS + " (From "
+                + FacebookConnectCommand.getAuthenticatedUsername() + "'s account)", false));
+        friendIndex = 0;
+        totalFriendsAdded = 0;
     }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
-        try {
-            model.addPerson(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (!FacebookConnectCommand.isAuthenticated()) {
+            BrowserPanel.setProcessType(COMMAND_WORD);
+            FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
+            newFacebookConnect.execute();
+            return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);
+        } else {
+            BrowserPanel.setProcessType(COMMAND_WORD);
+            addFirstFriend();
+            return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);
         }
     }
-
 }
 ```
-###### /main/java/seedu/address/logic/commands/FacebookConnectCommand.java
+###### /java/seedu/address/logic/commands/FacebookPostCommand.java
 ``` java
 /**
- * Connects the addressbook to a personal Facebook account.
+ * Posts a message to a personal Facebook account.
  */
-public class FacebookConnectCommand extends Command {
-    public static final String COMMAND_WORD = "facebook connect";
-    public static final String COMMAND_ALIAS = "fbconnect";
-    public static final String MESSAGE_SUCCESS = "Connected to your Facebook Account!";
-    public static final String MESSAGE_STARTED_PROCESS = "Authentication has been initiated. "
-            + "Please log into your Facebook account.";
+public class FacebookPostCommand extends Command {
+    public static final String COMMAND_WORD = "facebookpost";
+    public static final String COMMAND_ALIAS = "fbpost";
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": post a message to Facebook account\n"
+            + "Alias: " + COMMAND_ALIAS + "\n"
+            + "Parameters: MESSAGE\n"
+            + "Example: " + COMMAND_WORD + " hello world!";
 
-    private static final String FACEBOOK_DOMAIN = "https://www.facebook.com/";
-    private static final String FACEBOOK_APP_ID = "131555220900267";
-    private static final String FACEBOOK_PERMISSIONS = "user_about_me,email,publish_actions,user_birthday,"
-            + "user_education_history,user_friends,user_games_activity,user_hometown,user_likes,"
-            + "user_location,user_photos,user_posts,user_relationship_details,user_relationships,"
-            + "user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,"
-            + "ads_management,ads_read,business_management,manage_pages,pages_manage_cta,publish_pages,"
-            + "user_actions.books,user_actions.fitness,pages_messaging,read_custom_friendlists,"
-            + "pages_messaging_phone_number,pages_messaging_subscriptions,pages_show_list,user_actions.music,"
-            + "user_actions.news,read_page_mailboxes,rsvp_event,user_events,user_managed_groups,"
-            + "pages_manage_instant_articles,user_actions.video,instagram_basic,instagram_manage_comments,"
-            + "instagram_manage_insights,read_audience_network_insights,read_insights";
-    private static final String FACEBOOK_AUTH_URL =
-            "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
-                    + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope=" + FACEBOOK_PERMISSIONS;
+    public static final String MESSAGE_FACEBOOK_POST_SUCCESS = "Posted to Facebook!";
+    public static final String MESSAGE_FACEBOOK_POST_INITIATED = "User not authenticated, log in to proceed.";
+    public static final String MESSAGE_FACEBOOK_POST_ERROR = "Error posting to Facebook";
 
-    private static boolean authenticated = false;
-    private static String welcomeUser;
-    private static Facebook facebookInstance;
+    private static String toPost;
     private static WebEngine webEngine;
-    private static String accessToken;
 
     /**
-     * Returns the existing WebEngine
+     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
-    public static WebEngine getWebEngine() {
-        return webEngine;
+    public FacebookPostCommand(String message) {
+        toPost = message;
     }
 
     /**
-     * Sets a WebEngine
+     * Completes the post command
+     * @throws CommandException
      */
-    public static void setWebEngine(WebEngine webEngine) {
-        FacebookConnectCommand.webEngine = webEngine;
-    }
-
-    /**
-     * Returns the authenticated Facebook instance
-     */
-    public static Facebook getFacebookInstance() {
-        return facebookInstance;
-    }
-
-    /**
-     * Sets the authenticated Facebook instance
-     */
-    public static void setFacebookInstance(Facebook facebookInstance) {
-        FacebookConnectCommand.facebookInstance = facebookInstance;
-    }
-
-    /**
-     * Checks if there is an authenticated Facebook instance
-     */
-    public static boolean isAuthenticated() {
-        return authenticated;
-    }
-
-    /**
-     * Completes the authentication process
-     */
-    public static void completeAuth(String url) throws CommandException {
-        Pattern p = Pattern.compile("access_token=(.*?)\\&");
-        Matcher m = p.matcher(url);
-        m.matches();
-        m.find();
-        accessToken = m.group(1);
-
-        facebookInstance = new FacebookFactory().getInstance();
-        facebookInstance.setOAuthPermissions(FACEBOOK_PERMISSIONS);
-        facebookInstance.setOAuthAccessToken(new AccessToken(accessToken, null));
+    public static void completePost() throws CommandException {
+        Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();
         try {
-            welcomeUser = facebookInstance.getName();
+            facebookInstance.postStatusMessage(toPost);
         } catch (FacebookException e) {
-            throw new CommandException("Error in Facebook Authorisation");
+            // exception not handled because Facebook API still throws an exception even if success,
+            // so exception is ignored for now
+            e.printStackTrace();
         }
 
-        if (accessToken != null) {
-            authenticated = true;
-            EventsCenter.getInstance().post(new NewResultAvailableEvent(
-                    MESSAGE_SUCCESS + " User name: " + welcomeUser, false));
-        } else {
-            throw new CommandException("Error in Facebook Authorisation");
-        }
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_FACEBOOK_POST_SUCCESS
+                + " (to " + FacebookConnectCommand.getAuthenticatedUsername() + "'s page.)", false));
+        webEngine = FacebookConnectCommand.getWebEngine();
+        webEngine.load(FacebookConnectCommand.getAuthenticatedUserPage());
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        webEngine.load(FACEBOOK_AUTH_URL);
-
-        if (webEngine.getLocation().equals(FACEBOOK_AUTH_URL)) {
-            return new CommandResult(MESSAGE_STARTED_PROCESS);
+        if (!FacebookConnectCommand.isAuthenticated()) {
+            BrowserPanel.setProcessType(COMMAND_WORD);
+            FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
+            newFacebookConnect.execute();
+            return new CommandResult(MESSAGE_FACEBOOK_POST_INITIATED);
         } else {
-            throw new CommandException("Error in Facebook Authorisation");
+            completePost();
+            return new CommandResult(MESSAGE_FACEBOOK_POST_SUCCESS + " (to "
+                    + FacebookConnectCommand.getAuthenticatedUsername() + "'s page.)");
         }
     }
 }
 ```
-###### /main/java/seedu/address/logic/commands/FacebookLinkCommand.java
+###### /java/seedu/address/logic/commands/FacebookAddCommand.java
+``` java
+/**
+ * Adds a facebook contact to the address book.
+ */
+public class FacebookAddCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "facebookadd";
+    public static final String COMMAND_ALIAS = "fbadd";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a facebook user to the address book.\n"
+            + "Alias: " + COMMAND_ALIAS + "\n"
+            + "Parameters: FACEBOOK_USER_NAME\n"
+            + "Example: " + COMMAND_WORD + "alice fong";
+
+    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_FACEBOOK_ADD_SUCCESS = " has been imported from Facebook!";
+    public static final String MESSAGE_FACEBOOK_ADD_INITIATED = "User not authenticated, log in to proceed.";
+    public static final String MESSAGE_FACEBOOK_ADD_ERROR = "Error with Facebook API call.";
+    public static final String MESSAGE_FACEBOOK_ADD_PERSON_ERROR = "Error with creating Person Object";
+
+    private String userName;
+    private String toAddName;
+    private String toAddId;
+    private Person toAdd;
+    private boolean isAddAll;
+
+    /**
+     * Creates an FacebookAddCommand to add the specified Facebook contact
+     * @param trimmedArgs
+     */
+    public FacebookAddCommand(String trimmedArgs) {
+        userName = trimmedArgs;
+    }
+
+    /**
+     * Creates an alternative FacebookAddCommand to add the specified Facebook contact initiated by facebook
+     * add all friends command.
+     */
+    public FacebookAddCommand(boolean isAddAll) {
+        this.isAddAll = isAddAll;
+        toAddName = FacebookAddAllFriendsCommand.getCurrentUserName();
+        toAddId = FacebookAddAllFriendsCommand.getCurrentUserId();
+    }
+
+    /**
+     * Completes the Facebook Add command
+     * @throws CommandException
+     */
+    public void completeAdd() throws CommandException {
+        // if add is not called from the FacebookAddAllFriends Command
+        if (!isAddAll) {
+            Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();
+            ResponseList<User> friendList = null;
+
+            // fetch data from Facebook
+            try {
+                friendList = facebookInstance.searchUsers(userName);
+            } catch (FacebookException e) {
+                throw new CommandException(MESSAGE_FACEBOOK_ADD_ERROR);
+            }
+            User user = friendList.get(0);
+            toAddName = user.getName();
+            toAddId = user.getId();
+        }
+
+        // Assign data to Person object
+        try {
+            Set<SocialInfo> socialInfos = new HashSet<>();
+            SocialInfo facebookInfo = null;
+            facebookInfo = SocialInfoMapping.parseSocialInfo("facebook " + toAddId);
+            socialInfos.add(facebookInfo);
+
+            Set<Tag> tags = new HashSet<>();
+            tags.add(new Tag("facebookFriend"));
+
+            toAdd = new Person(new Name(toAddName), new Phone(), new Email(), new Address(),
+                    new Favorite(false), new DisplayPhoto(null), tags, socialInfos);
+        } catch (IllegalValueException e) {
+            throw new CommandException(MESSAGE_FACEBOOK_ADD_PERSON_ERROR);
+        }
+
+        addContactToAddressBook();
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                toAddName + MESSAGE_FACEBOOK_ADD_SUCCESS, false));
+    }
+
+    /**
+     * Adds the facebook contact to addressbook
+     * @throws CommandException
+     */
+    private void addContactToAddressBook() throws CommandException {
+        // add to model and return
+        try {
+            requireNonNull(model);
+            System.out.println(toAdd);
+            model.addPerson(toAdd);
+        } catch (DuplicatePersonException e) {
+            new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+    }
+
+    @Override
+    protected CommandResult executeUndoableCommand() throws CommandException {
+        if (!FacebookConnectCommand.isAuthenticated()) {
+            BrowserPanel.setProcessType(COMMAND_WORD);
+            BrowserPanel.setTrimmedArgs(userName);
+
+            FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
+            newFacebookConnect.execute();
+
+            return new CommandResult(MESSAGE_FACEBOOK_ADD_INITIATED);
+        } else {
+            completeAdd();
+            return new CommandResult(toAddName + MESSAGE_FACEBOOK_ADD_SUCCESS);
+        }
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/FacebookLinkCommand.java
 ``` java
 /**
  * Shares a link to a personal Facebook account.
  */
 public class FacebookLinkCommand extends Command {
-    public static final String COMMAND_WORD = "facebook link";
+    public static final String COMMAND_WORD = "facebooklink";
     public static final String COMMAND_ALIAS = "fblink";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -190,6 +664,7 @@ public class FacebookLinkCommand extends Command {
 
     private static String user;
     private static String link;
+    private static WebEngine webEngine;
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
@@ -220,14 +695,15 @@ public class FacebookLinkCommand extends Command {
 
         EventsCenter.getInstance().post(new NewResultAvailableEvent(
                 MESSAGE_FACEBOOK_LINK_SUCCESS + " (to " + user + "'s page.)", false));
-        BrowserPanel.setLink(false);
+        webEngine = FacebookConnectCommand.getWebEngine();
+        webEngine.load(FacebookConnectCommand.getAuthenticatedUserPage());
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         if (!FacebookConnectCommand.isAuthenticated()) {
+            BrowserPanel.setProcessType(COMMAND_WORD);
             FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
-            BrowserPanel.setLink(true);
             newFacebookConnect.execute();
             return new CommandResult(MESSAGE_FACEBOOK_LINK_INITIATED);
         } else {
@@ -237,251 +713,239 @@ public class FacebookLinkCommand extends Command {
     }
 }
 ```
-###### /main/java/seedu/address/logic/commands/FacebookPostCommand.java
+###### /java/seedu/address/logic/commands/FacebookConnectCommand.java
 ``` java
 /**
- * Posts a message to a personal Facebook account.
+ * Connects the addressbook to a personal Facebook account.
  */
-public class FacebookPostCommand extends Command {
-    public static final String COMMAND_WORD = "facebook post";
-    public static final String COMMAND_ALIAS = "fbpost";
+public class FacebookConnectCommand extends Command {
+    public static final String COMMAND_WORD = "facebookconnect";
+    public static final String COMMAND_ALIAS = "fbconnect";
+    public static final String MESSAGE_SUCCESS = "Connected to your Facebook Account!";
+    public static final String MESSAGE_STARTED_PROCESS = "Authentication has been initiated. "
+            + "Please log into your Facebook account.";
+    public static final String FACEBOOK_DOMAIN = "https://www.facebook.com/";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": post a message to Facebook account\n"
-            + "Alias: " + COMMAND_ALIAS + "\n"
-            + "Parameters: MESSAGE\n"
-            + "Example: " + COMMAND_WORD + " hello world!";
+    private static final String FACEBOOK_APP_ID = "131555220900267";
+    private static final String FACEBOOK_PERMISSIONS = "user_about_me,email,publish_actions,user_birthday,"
+            + "user_education_history,user_friends,user_games_activity,user_hometown,user_likes,"
+            + "user_location,user_photos,user_posts,user_relationship_details,user_relationships,"
+            + "user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,"
+            + "ads_management,ads_read,business_management,manage_pages,pages_manage_cta,publish_pages,"
+            + "user_actions.books,user_actions.fitness,pages_messaging,read_custom_friendlists,"
+            + "pages_messaging_phone_number,pages_messaging_subscriptions,pages_show_list,user_actions.music,"
+            + "user_actions.news,read_page_mailboxes,rsvp_event,user_events,user_managed_groups,"
+            + "pages_manage_instant_articles,user_actions.video,instagram_basic,instagram_manage_comments,"
+            + "instagram_manage_insights,read_audience_network_insights,read_insights";
+    private static final String FACEBOOK_AUTH_URL =
+            "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
+                    + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope=" + FACEBOOK_PERMISSIONS;
 
-    public static final String MESSAGE_FACEBOOK_POST_SUCCESS = "Posted to Facebook!";
-    public static final String MESSAGE_FACEBOOK_POST_INITIATED = "User not authenticated, log in to proceed.";
-    public static final String MESSAGE_FACEBOOK_POST_ERROR = "Error posting to Facebook";
+    private static boolean authenticated = false;
+    private static String authenticatedUsername;
+    private static String authenticatedUserId;
+    private static String authenticatedUserPage;
+    private static Facebook facebookInstance;
+    private static WebEngine webEngine;
+    private static String accessToken;
 
-    private static String user;
-    private static String toPost;
 
     /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     * Returns the existing WebEngine
      */
-    public FacebookPostCommand(String message) {
-        toPost = message;
+    public static WebEngine getWebEngine() {
+        return webEngine;
     }
 
     /**
-     * Completes the post command
-     * @throws CommandException
+     * Sets a WebEngine
      */
-    public static void completePost() throws CommandException {
-        Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();
-        user = null;
+    public static void setWebEngine(WebEngine webEngine) {
+        FacebookConnectCommand.webEngine = webEngine;
+    }
+
+    /**
+     * Returns the authenticated Facebook instance
+     */
+    public static Facebook getFacebookInstance() {
+        return facebookInstance;
+    }
+
+    /**
+     * Returns name of the authenticated user
+     */
+    public static String getAuthenticatedUsername() {
+        return authenticatedUsername;
+    }
+
+    /**
+     * Returns page of the authenticated user
+     */
+    public static String getAuthenticatedUserPage() {
+        return authenticatedUserPage;
+    }
+
+    /**
+     * Checks if there is an authenticated Facebook instance
+     */
+    public static boolean isAuthenticated() {
+        return authenticated;
+    }
+
+
+    /**
+     * Loads user page
+     */
+    public static void loadUserPage() {
+        webEngine.load(authenticatedUserPage);
+    }
+
+    /**
+     * Completes the authentication process
+     */
+    public static void completeAuth(String url) throws CommandException {
+        Pattern p = Pattern.compile("access_token=(.*?)\\&");
+        Matcher m = p.matcher(url);
+        m.matches();
+        m.find();
+        accessToken = m.group(1);
+
+        facebookInstance = new FacebookFactory().getInstance();
+        facebookInstance.setOAuthPermissions(FACEBOOK_PERMISSIONS);
+        facebookInstance.setOAuthAccessToken(new AccessToken(accessToken, null));
         try {
-            user = facebookInstance.getName();
-            facebookInstance.postStatusMessage(toPost);
+            authenticatedUsername = facebookInstance.getName();
+            authenticatedUserId = facebookInstance.getMe().getId();
         } catch (FacebookException e) {
-            // exception not handled because Facebook API still throws an exception even if success,
-            // so exception is ignored for now
-            e.printStackTrace();
+            throw new CommandException("Error in Facebook Authorisation");
         }
 
-        EventsCenter.getInstance().post(new NewResultAvailableEvent(
-                MESSAGE_FACEBOOK_POST_SUCCESS + " (to " + user + "'s page.)", false));
-        BrowserPanel.setPost(false);
+        if (accessToken != null) {
+            authenticated = true;
+            authenticatedUserPage = "https://www.facebook.com/" + authenticatedUserId;
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                    MESSAGE_SUCCESS + " User name: " + authenticatedUsername, false));
+        } else {
+            throw new CommandException("Error in Facebook Authorisation");
+        }
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (!FacebookConnectCommand.isAuthenticated()) {
-            FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
-            BrowserPanel.setPost(true);
-            newFacebookConnect.execute();
-            return new CommandResult(MESSAGE_FACEBOOK_POST_INITIATED);
+        webEngine.load(FACEBOOK_AUTH_URL);
+
+        if (webEngine.getLocation().equals(FACEBOOK_AUTH_URL)) {
+            return new CommandResult(MESSAGE_STARTED_PROCESS);
         } else {
-            completePost();
-            return new CommandResult(MESSAGE_FACEBOOK_POST_SUCCESS + " (to " + user + "'s page.)");
+            throw new CommandException("Error in Facebook Authorisation");
         }
     }
 }
 ```
-###### /main/java/seedu/address/logic/parser/AddFacebookContactParser.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
-/**
- * Parses the given {@code String} of arguments in the context of the AddFacebookContactCommand
- * and returns an AddFacebookContactCommand object for execution.
- * @throws ParseException if the user input does not conform the expected format
- */
-public class AddFacebookContactParser implements Parser<AddFacebookContactCommand> {
-
     /**
-     * Parses the given {@code String} of arguments in the context of the AddFacebookContactCommand
-     * and returns an AddFacebookContactCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Completes the final step of FacebookAddCommand
+     * Stores the current model and adds the contact to the model.
      */
-    public AddFacebookContactCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddFacebookContactCommand.MESSAGE_USAGE));
-        }
-
-        try {
-            Facebook facebook = new FacebookFactory().getInstance();
-            ResponseList<User> contactsList = facebook.searchUsers(trimmedArgs);
-            User user = contactsList.get(0);
-
-            Email email;
-            // create new person object
-            if (user.getEmail() != null) {
-                email = new Email(user.getEmail());
-            } else {
-                // Placeholder for users without username
-                email = new Email("placeholder@example.com");
-            }
-
-            Set<Tag> tags = new HashSet<>();
-            tags.add(new Tag("facebookcontact"));
-
-            Favorite favorite = new Favorite(false);
-
-            Set<SocialInfo> socialInfos = new HashSet<>();
-            // TODO(Marvin): Make social media identifiers public
-            SocialInfo facebookInfo = SocialInfoMapping.parseSocialInfo("facebook " + user.getUsername());
-            socialInfos.add(facebookInfo);
-
-
-            Person newPerson = new Person(
-                    new Name(user.getName()),
-                    new Phone("000"), // Placeholder phone number
-                    email,
-                    new Address("Placeholder Address"), // Placeholder address
-                    favorite,
-                    tags,
-                    socialInfos);
-
-            return new AddFacebookContactCommand(newPerson);
-        } catch (FacebookException e) {
-            // TODO(Alex): Properly handle exceptions here
-            e.printStackTrace();
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
-        }
-
-        throw new ParseException(
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddFacebookContactCommand.MESSAGE_USAGE));
+    public void completeFacebookAddCommand(FacebookAddCommand command, String commandText) throws CommandException {
+        command.setData(model, storage, history, undoRedoStack);
+        command.completeAdd();
+        undoRedoStack.push(command);
+        history.add(commandText);
     }
-
-}
 ```
-###### /main/java/seedu/address/logic/parser/FacebookLinkCommandParser.java
+###### /java/seedu/address/MainApp.java
 ``` java
-/**
- * Parses input arguments and creates a new FacebookPostCommand object
- */
-public class FacebookLinkCommandParser implements Parser<FacebookLinkCommand> {
-
     /**
-     * Parses the given {@code String} of arguments in the context of the FacebookLinkCommand
-     * and returns an FacebookLinkCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Returns the current logic Manager
      */
-    @Override
-    public FacebookLinkCommand parse(String userInput) throws ParseException {
-        String trimmedArgs = userInput.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FacebookLinkCommand.MESSAGE_USAGE));
-        }
-
-        return new FacebookLinkCommand(trimmedArgs);
+    public Logic getLogic() {
+        return logic;
     }
-}
 ```
-###### /main/java/seedu/address/logic/parser/FacebookPostCommandParser.java
+###### /java/seedu/address/model/person/Phone.java
 ``` java
-/**
- * Parses input arguments and creates a new FacebookPostCommand object
- */
-public class FacebookPostCommandParser implements Parser<FacebookPostCommand> {
-
     /**
-     * Parses the given {@code String} of arguments in the context of the AddFacebookContactCommand
-     * and returns an AddFacebookContactCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Constructs a blank phone field
      */
-    @Override
-    public FacebookPostCommand parse(String userInput) throws ParseException {
-        String trimmedArgs = userInput.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FacebookPostCommand.MESSAGE_USAGE));
-        }
-
-        return new FacebookPostCommand(trimmedArgs);
+    public Phone() {
+        this.value = " ";
+        this.phonelist = null;
     }
-}
 ```
-###### /main/java/seedu/address/ui/BrowserPanel.java
+###### /java/seedu/address/model/person/Phone.java
+``` java
+        // allow blank phone number
+        if (test.isEmpty()) {
+            return true;
+        }
+```
+###### /java/seedu/address/model/person/Email.java
 ``` java
     /**
-     * Identifies if in the midst of posting process
-     * @param bool
+     * Constructs a blank email field
      */
-    public static void setPost(boolean bool) {
-        isPost = bool;
+    public Email() {
+        this.value = " ";
+    }
+```
+###### /java/seedu/address/model/person/Email.java
+``` java
+        // allow blank email
+        if (test.isEmpty()) {
+            return true;
+        }
+```
+###### /java/seedu/address/model/person/Address.java
+``` java
+    /**
+     * Constructs a blank address field
+     */
+    public Address() {
+        this.value = BLANK_ADDRESS;
+    }
+```
+###### /java/seedu/address/model/person/Address.java
+``` java
+        // allow blank address
+        if ((" ").equals(test)) {
+            return true;
+        }
+```
+###### /java/seedu/address/model/person/Name.java
+``` java
+    public static final String MESSAGE_NAME_CONSTRAINTS = "Person names should not be blank";
+
+    public final String fullName;
+
+    /**
+     * Validates given name.
+     *
+     * @throws IllegalValueException if given name string is invalid.
+     */
+    public Name(String name) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!isValidName(trimmedName)) {
+            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+        }
+        this.fullName = trimmedName;
     }
 
     /**
-     * Identifies if in the midst of linking process
-     * @param bool
+     * Returns true if a given string is a valid person name.
      */
-    public static void setLink(boolean bool) {
-        isLink = bool;
+    public static boolean isValidName(String test) {
+        return !("").equals(test);
     }
 ```
-###### /main/java/seedu/address/ui/BrowserPanel.java
+###### /java/seedu/address/model/tag/Tag.java
 ``` java
-    private void setEventHandlerForBrowserUrlChangeEvent() {
-        location.textProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue.contains("access_token")) {
-                        if (isPost) {
-                            logger.fine("browser url changed to : '" + newValue + "'");
-                            raise(new BrowserUrlChangeEvent(FacebookPostCommand.COMMAND_ALIAS));
-                        } else if (isLink) {
-                            logger.fine("browser url changed to : '" + newValue + "'");
-                            raise(new BrowserUrlChangeEvent(FacebookLinkCommand.COMMAND_ALIAS));
-                        } else {
-                            logger.fine("browser url changed to : '" + newValue + "'");
-                            raise(new BrowserUrlChangeEvent(FacebookConnectCommand.COMMAND_ALIAS));
-                        }
-                    }
-                });
-        isPost = false;
-    }
-```
-###### /main/java/seedu/address/ui/BrowserPanel.java
-``` java
-    @Subscribe
-    private void handleBrowserUrlChangeEvent(BrowserUrlChangeEvent event) throws CommandException {
-        switch (event.getProcessType()) {
-
-        case FacebookConnectCommand.COMMAND_ALIAS:
-            logger.info(LogsCenter.getEventHandlingLogMessage(event));
-            FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
-            break;
-
-        case FacebookPostCommand.COMMAND_ALIAS:
-            logger.info(LogsCenter.getEventHandlingLogMessage(event));
-            FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
-            FacebookPostCommand.completePost();
-            break;
-
-        case FacebookLinkCommand.COMMAND_ALIAS:
-            logger.info(LogsCenter.getEventHandlingLogMessage(event));
-            FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
-            FacebookLinkCommand.completeLink();
-            break;
-
-        default:
-            throw new CommandException("Url change error.");
-        }
+    /**
+     * Constructs a null tag field
+     */
+    public Tag() {
+        this.tagName = null;
     }
 ```

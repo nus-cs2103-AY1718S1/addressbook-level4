@@ -26,13 +26,15 @@ import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlAddressBookStorage;
 
 //@@author marvinchin
+/**
+ * Contains integration and unit tests for {@code ExportCommand}.
+ */
 public class ExportCommandTest {
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     private AddressBook addressBook = getTypicalAddressBook();
     private Model model = new ModelManager(addressBook, new UserPrefs());
-    // we can use null as a file path as we will not be using the instance file path
     private AddressBookStorage addressBookStorage = new XmlAddressBookStorage(null);
     private Storage storage = new StorageManager(addressBookStorage, null);
 

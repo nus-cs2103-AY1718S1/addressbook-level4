@@ -24,6 +24,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FavoriteCommand;
+import seedu.address.logic.commands.FindByNameCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -138,7 +139,7 @@ public class AddressBookParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindByNameCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
@@ -146,7 +147,7 @@ public class AddressBookParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindByNameCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
@@ -248,7 +249,7 @@ public class AddressBookParserTest {
                 UnFavoriteCommand.COMMAND_WORD + " "
                         + INDEX_FIRST_PERSON.getOneBased() + " "
                         + INDEX_SECOND_PERSON.getOneBased());
-        assertEquals(new UnFavoriteCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON)), command);
+        assertEquals(new UnFavoriteCommand(Arrays.asList(INDEX_SECOND_PERSON, INDEX_FIRST_PERSON)), command);
     }
     //@@author
 

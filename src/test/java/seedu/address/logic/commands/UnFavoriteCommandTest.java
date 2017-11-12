@@ -5,13 +5,16 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.StorageUtil.getNullStorage;
+import static seedu.address.testutil.StorageUtil.getDummyStorage;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -19,6 +22,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -36,11 +40,37 @@ public class UnFavoriteCommandTest {
         ReadOnlyPerson personToUnFavorite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UnFavoriteCommand unFavoriteCommand = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON));
 
-        String expectedMessage = String.format(
-                UnFavoriteCommand.MESSAGE_UNFAVORITE_PERSON_SUCCESS, "\n" + personToUnFavorite.getName().toString());
+        String expectedMessage = UnFavoriteCommand.MESSAGE_UNFAVORITE_PERSON_SUCCESS
+                + "\n\t- " + personToUnFavorite.getName().toString();
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.toggleFavoritePerson(personToUnFavorite, UnFavoriteCommand.COMMAND_WORD);
+
+        assertCommandSuccess(unFavoriteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validMultiIndexesUnfilteredList_success() throws Exception {
+        ReadOnlyPerson personAlice = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        ReadOnlyPerson personDaniel = model.getFilteredPersonList().get(INDEX_FOURTH_PERSON.getZeroBased());
+
+        Set<ReadOnlyPerson> targetPersonList = new LinkedHashSet<>();
+        targetPersonList.add(personAlice);
+        targetPersonList.add(personDaniel);
+
+        UnFavoriteCommand unFavoriteCommand = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_FOURTH_PERSON));
+
+        // In TypicalPersons, Alice is already a favorite contact while Daniel is not
+        String expectedMessage = UnFavoriteCommand.MESSAGE_UNFAVORITE_PERSON_SUCCESS
+                + "\n\t- " + personAlice.getName().toString()
+                + "\n" + UnFavoriteCommand.MESSAGE_UNFAVORITE_PERSON_FAILURE
+                + "\n\t- " + personDaniel.getName().toString();
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+
+        for (ReadOnlyPerson personToUnFavorite : targetPersonList) {
+            expectedModel.toggleFavoritePerson(personToUnFavorite, UnFavoriteCommand.COMMAND_WORD);
+        }
 
         assertCommandSuccess(unFavoriteCommand, model, expectedMessage, expectedModel);
     }
@@ -58,10 +88,10 @@ public class UnFavoriteCommandTest {
         ReadOnlyPerson personToUnFavorite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UnFavoriteCommand unFavoriteCommand = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON));
 
-        String expectedMessage = String.format(
-                UnFavoriteCommand.MESSAGE_UNFAVORITE_PERSON_SUCCESS, "\n" + personToUnFavorite.getName().toString());
+        String expectedMessage = UnFavoriteCommand.MESSAGE_UNFAVORITE_PERSON_SUCCESS
+                + "\n\t- " + personToUnFavorite.getName().toString();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.toggleFavoritePerson(personToUnFavorite, UnFavoriteCommand.COMMAND_WORD);
 
         assertCommandSuccess(unFavoriteCommand, model, expectedMessage, expectedModel);
@@ -107,7 +137,7 @@ public class UnFavoriteCommandTest {
      */
     private UnFavoriteCommand prepareCommand(List<Index> indexList) {
         UnFavoriteCommand unFavoriteCommand = new UnFavoriteCommand(indexList);
-        unFavoriteCommand.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
+        unFavoriteCommand.setData(model, getDummyStorage(), new CommandHistory(), new UndoRedoStack());
         return unFavoriteCommand;
     }
 }

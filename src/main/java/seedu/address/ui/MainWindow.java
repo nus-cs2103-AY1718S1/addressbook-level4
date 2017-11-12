@@ -156,6 +156,7 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel(scene);
+        browserPanel.setLogic(logic);
         UiTheme.getInstance().setBrowserPanel(browserPanel);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 

@@ -12,14 +12,22 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
 public class Phone {
-
-
     public static final String MESSAGE_PHONE_CONSTRAINTS =
             "Phone numbers can only contain numbers, and should be at least 3 digits long";
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
     public final String value;
     //@@author sarahnzx
     public final List<String> phonelist;
+
+    //@@author alexfoodw
+    /**
+     * Constructs a blank phone field
+     */
+    public Phone() {
+        this.value = " ";
+        this.phonelist = null;
+    }
+    //@@author
 
     /**
      * Validates given phone number.
@@ -61,6 +69,12 @@ public class Phone {
      * Returns true if a given string is a valid person phone number.
      */
     public static boolean isValidPhone(String test) {
+        //@@author alexfoodw
+        // allow blank phone number
+        if (test.isEmpty()) {
+            return true;
+        }
+        //@@author
         return test.matches(PHONE_VALIDATION_REGEX);
     }
 

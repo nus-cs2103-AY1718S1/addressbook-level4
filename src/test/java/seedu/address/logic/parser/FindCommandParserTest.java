@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -14,19 +13,34 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.TagsContainKeywordsPredicate;
 
+/**
+ * Containts unit tests for the FindCommand
+ */
 public class FindCommandParserTest {
 
     private FindCommandParser parser = new FindCommandParser();
 
     //@@author marvinchin
     @Test
-    public void parse_emptyTagArgs_throwsParseException() {
-        assertParseFailure(parser, "-tag     ",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+    public void parse_moreThanOneOption_throwsParseException() {
+        String input = "-tag -fav";
+        assertParseFailure(parser, input, FindCommandParser.INVALID_FIND_COMMAND_FORMAT_MESSAGE);
     }
 
     @Test
-    public void parse_validTagArgs_returnsFindCommand() {
+    public void parse_invalidOption_throwsParseException() {
+        String input = "-someinvalidoption123";
+        assertParseFailure(parser, input, FindCommandParser.INVALID_FIND_COMMAND_FORMAT_MESSAGE);
+    }
+
+    @Test
+    public void parse_tagOptionNoArgs_throwsParseException() {
+        String input = "-tag     ";
+        assertParseFailure(parser, input, FindCommandParser.INVALID_FIND_COMMAND_FORMAT_MESSAGE);
+    }
+
+    @Test
+    public void parse_tagOptionValidArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommand =
                 new FindByTagsCommand(new TagsContainKeywordsPredicate(Arrays.asList("colleagues", "friends")));
@@ -39,7 +53,8 @@ public class FindCommandParserTest {
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        String input = "    ";
+        assertParseFailure(parser, input, FindCommandParser.INVALID_FIND_COMMAND_FORMAT_MESSAGE);
     }
 
     @Test
