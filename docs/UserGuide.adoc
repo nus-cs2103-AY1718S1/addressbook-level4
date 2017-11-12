@@ -393,12 +393,6 @@ Selects the first person in the last person listing.
 Selects the person identified by the index number used in the listing of nearby contacts of currently selected person, +
 Format: `nearby [INDEX]`
 
-[NOTE]
-If you do not see a secondary person list panel labelled "All contacts in this area" at the bottom of the information
-of the currently selected contact, you might need to change your resolution settings to view it. +
-On Windows, go to Settings -> Display -> Set "Change the size of text, apps and other items" to 125%, then restart the
-app.
-
 ****
 * A person must be selected before this command is called.
 * Selects the person and loads the full information of the person at the specified `INDEX`.
