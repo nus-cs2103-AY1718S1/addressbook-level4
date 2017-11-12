@@ -1,0 +1,18 @@
+= Test Script for Manual Testing
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+== Loading the SampleData.xml file: `import`
+
+1. Take note of the directory location of SampleData.xml
+2. input `import` followed by [directory]\[Sample data file name] +
+e.g. `import C:\users\user\Desktop\SampleData.xml`
+3. The sample data will overwrite the existing contacts list.
+
+== Adding a contact (Optional Fields)
+
+input `add n/Test User`
