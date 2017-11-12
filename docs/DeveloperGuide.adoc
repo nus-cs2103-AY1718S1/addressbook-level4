@@ -603,8 +603,27 @@ Future enhancements may include a selection option from the UI and allowing the 
 The backup command saves the current ResidentBook into backup.xml located in the project location. One consideration for this mechanism is that backup should only happen when necessary, as it will take up a lot of space.
 
 A future enhancement can allow user to specify backup location and file name.
+[source,java]
+----
+@Override
+    public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
+        saveResidentBook(residentBook, getDirAbsolutePath() + "/backup.xml");
+        backupImages();
+    }
+----
 
+Apart from the Resident details, Backup command also includes saving the images uploaded by user previously. It ensures that the backupFolder exists before copying the image files.
 
+[source,java]
+----
+public void backupImages() throws IOException {
+        String backupFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME + "_backup";
+        String originalFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME;
+
+        handleImageBackupFolder(backupFolder, originalFolder);
+        handleImagesBackupFiles(backupFolder, originalFolder);
+    }
+----
 
 // tag::sort[]
 === Sort Command
