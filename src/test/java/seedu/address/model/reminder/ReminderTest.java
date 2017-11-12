@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static seedu.address.testutil.TypicalEvents.EVENT1;
 
+import java.util.Objects;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,7 +32,6 @@ public class ReminderTest {
 
         assertEquals(event, reminder.getEvent());
         assertEquals(message, reminder.getMessage());
-
     }
 
     @Test
@@ -40,7 +41,6 @@ public class ReminderTest {
 
         reminder.setMessage("test");
         assertEquals("test", reminder.getMessage());
-        assertEquals("Message: test", reminder.getAsText());
     }
 
     @Test
@@ -51,4 +51,35 @@ public class ReminderTest {
         assertEquals(reminder1, reminder2);
     }
 
+    //@@author yunpengn
+    @Test
+    public void createViaName__alternativeConstructor_checkCorrectness() {
+        Reminder reminder = new Reminder("some name here", message);
+        assertEquals("some name here", reminder.getName());
+    }
+
+    @Test
+    public void copyReminder_alternativeConstructor_checkCorrectness() {
+        Reminder reminder1 = new Reminder(event, message);
+        Reminder reminder2 = new Reminder(reminder1);
+
+        assertEquals(reminder1, reminder2);
+    }
+
+    @Test
+    public void toString_checkCorrectness() {
+        Reminder reminder = new Reminder(event, message);
+        assertNotNull(reminder);
+
+        assertEquals("Message: You have an event", reminder.getAsText());
+        assertEquals("Message: You have an event", reminder.toString());
+    }
+
+    @Test
+    public void hashCode_checkCorrectness() {
+        Reminder reminder = new Reminder(event, message);
+        assertNotNull(reminder);
+
+        assertEquals(Objects.hash(reminder.eventProperty(), reminder.messageProperty()), reminder.hashCode());
+    }
 }

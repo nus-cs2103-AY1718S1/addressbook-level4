@@ -325,6 +325,30 @@ public class ImportNusmodsCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\imports\ImportScriptCommandTest.java
+``` java
+public class ImportScriptCommandTest {
+    @Test
+    public void createCommand_allPresent_checkCorrectness() throws Exception {
+        ImportCommand command = new ImportScriptCommand("some script file");
+        assertNotNull(command);
+    }
+
+    @Test
+    public void execute_allPresent_checkCorrectness() throws Exception {
+        ImportCommand command = new ImportScriptCommand("some script file");
+        command.setData(new ImportScriptModelStub(), new CommandHistory(), new UndoRedoStack());
+        assertEquals("The script has been imported.", command.execute().feedbackToUser);
+    }
+
+    private class ImportScriptModelStub extends ModelStub {
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\imports\ModuleInfoTest.java
 ``` java
 public class ModuleInfoTest {
@@ -1170,6 +1194,40 @@ public class ReminderNotFoundExceptionTest {
     }
 }
 ```
+###### \java\seedu\address\model\reminder\ReminderTest.java
+``` java
+    @Test
+    public void createViaName__alternativeConstructor_checkCorrectness() {
+        Reminder reminder = new Reminder("some name here", message);
+        assertEquals("some name here", reminder.getName());
+    }
+
+    @Test
+    public void copyReminder_alternativeConstructor_checkCorrectness() {
+        Reminder reminder1 = new Reminder(event, message);
+        Reminder reminder2 = new Reminder(reminder1);
+
+        assertEquals(reminder1, reminder2);
+    }
+
+    @Test
+    public void toString_checkCorrectness() {
+        Reminder reminder = new Reminder(event, message);
+        assertNotNull(reminder);
+
+        assertEquals("Message: You have an event", reminder.getAsText());
+        assertEquals("Message: You have an event", reminder.toString());
+    }
+
+    @Test
+    public void hashCode_checkCorrectness() {
+        Reminder reminder = new Reminder(event, message);
+        assertNotNull(reminder);
+
+        assertEquals(Objects.hash(reminder.eventProperty(), reminder.messageProperty()), reminder.hashCode());
+    }
+}
+```
 ###### \java\seedu\address\model\tag\TagColorManagerTest.java
 ``` java
 public class TagColorManagerTest {
@@ -1213,6 +1271,16 @@ public class AddAvatarCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, index, VALID_PATH);
     }
 
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * Also verifies that the selected card and status bar remain unchanged, and the command box has the error style.
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
     private void assertCommandSuccess(String command, Index toAdd, String path) throws Exception {
         Model model = getModel();
         ReadOnlyPerson personToAdd = model.getFilteredPersonList().get(toAdd.getZeroBased());

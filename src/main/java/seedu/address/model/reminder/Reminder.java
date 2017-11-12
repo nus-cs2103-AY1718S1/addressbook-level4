@@ -31,7 +31,6 @@ public class Reminder implements ReadOnlyReminder {
         requireAllNonNull(name, message);
         this.name = new SimpleObjectProperty<>(name);
         this.message = new SimpleObjectProperty<>(message);
-
     }
 
     /**

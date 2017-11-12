@@ -1093,7 +1093,6 @@ public class ReminderTest {
 
         assertEquals(event, reminder.getEvent());
         assertEquals(message, reminder.getMessage());
-
     }
 
     @Test
@@ -1103,7 +1102,6 @@ public class ReminderTest {
 
         reminder.setMessage("test");
         assertEquals("test", reminder.getMessage());
-        assertEquals("Message: test", reminder.getAsText());
     }
 
     @Test
@@ -1114,7 +1112,6 @@ public class ReminderTest {
         assertEquals(reminder1, reminder2);
     }
 
-}
 ```
 ###### \java\seedu\address\testutil\EditEventDescriptorBuilder.java
 ``` java
