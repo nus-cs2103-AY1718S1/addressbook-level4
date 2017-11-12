@@ -1,4 +1,4 @@
-//@@author Qi Kongjia
+//@@author KongjiaQi
 package seedu.address.logic.commands;
 
 import java.util.List;

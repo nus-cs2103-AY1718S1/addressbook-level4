@@ -53,6 +53,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
     }
 
+    //@@author KongjiaQi
     /**
      * Parses a {@code Optional<String> stringOptional} into an optional of the same type
      * @param stringOptional , the optional passed in
@@ -62,7 +63,6 @@ public class ParserUtil {
     public static Optional<String> parseString(Optional<String> stringOptional) throws IllegalValueException {
         requireNonNull(stringOptional);
         return stringOptional.isPresent() ? Optional.of(stringOptional.get()) : Optional.empty();
-        //return Optional.of(stringOptional.get());
     }
 
     /**

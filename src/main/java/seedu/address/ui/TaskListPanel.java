@@ -87,7 +87,7 @@ public class TaskListPanel extends UiPart<Region> {
         setConnections(uiList);
     }
 
-    //@@author Qi Kongjia
+    //@@author KongjiaQi
     /**
      * Some comment
      */

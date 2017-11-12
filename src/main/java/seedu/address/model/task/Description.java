@@ -1,4 +1,4 @@
-//@@author Qi Kongjia
+//@@author KongjiaQi
 package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;

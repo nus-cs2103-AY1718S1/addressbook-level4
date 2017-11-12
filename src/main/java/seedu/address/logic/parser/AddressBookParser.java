@@ -76,6 +76,7 @@ public class AddressBookParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
+         //@@author KongjiaQi
         case EditTaskCommand.COMMAND_WORD:
         case EditTaskCommand.COMMAND_ALIAS:
             return new EditTaskCommandParser().parse(arguments);
@@ -105,6 +106,8 @@ public class AddressBookParser {
         case LinkedPersonsCommand.COMMAND_WORD:
         case LinkedPersonsCommand.COMMAND_ALIAS:
             return new LinkedPersonsCommandParser().parse(arguments);
+
+        //@@author KongjiaQi
         case MarkTaskCommand.COMMAND_WORD:
         case MarkTaskCommand.COMMAND_ALIAS:
             return new MarkTaskCommandParser().parse(arguments);
@@ -132,6 +135,7 @@ public class AddressBookParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
+        //@@author KongjiaQi
         case ListTaskCommand.COMMAND_WORD:
         case ListTaskCommand.COMMAND_ALIAS:
             return new ListTaskCommand();

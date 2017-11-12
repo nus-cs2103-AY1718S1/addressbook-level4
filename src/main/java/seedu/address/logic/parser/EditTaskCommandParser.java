@@ -1,4 +1,5 @@
-//@@author Qi Kongjia
+//@@author KongjiaQi
+
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;

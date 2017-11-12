@@ -128,7 +128,7 @@ public class TaskCard extends UiPart<Region> {
         });
     }
 
-    //@@author Qi Kongjia
+    //@@author KongjiaQi
     /**
      * Initialize mark for task card
      * @param task

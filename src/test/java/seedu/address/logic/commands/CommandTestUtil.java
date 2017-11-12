@@ -99,6 +99,7 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HOTPOT = " " + PREFIX_TAG + VALID_TAG_HOTPOT;
     public static final String TAG_DESC_DEMO = " " + PREFIX_TAG + VALID_TAG_DEMO;
 
+    //@@author KongjiaQi
     //public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "Hotpot&"; // '&' not allowed in names
     public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION + " "; // ' ' blank space not allowed
     public static final String INVALID_START_DESC = " " + PREFIX_START_DATE_TIME + "19981209"; // not the correct style
@@ -131,21 +132,6 @@ public class CommandTestUtil {
         }
     }
 
-    /**
-     * Executes the given {@code command}, confirms that <br>
-     * - the result message matches {@code expectedMessage} <br>
-     * - the {@code actualModel} matches {@code expectedModel}
-     */
-    /*public static void assertTaskCommandSuccess(Command command, Model actualModel, String expectedMessage,
-                                            Model expectedModel) {
-        try {
-            CommandResult result = command.execute();
-            assertEquals(expectedMessage, result.feedbackToUser);
-            assertEquals(expectedModel, actualModel);
-        } catch (CommandException ce) {
-            throw new AssertionError("Execution of command should not fail.", ce);
-        }
-    }*/
 
     /**
      * Executes the given {@code command}, confirms that <br>
@@ -169,6 +155,7 @@ public class CommandTestUtil {
         }
     }
 
+    //@@author KongjiaQi
     /**
      * Executes the given {@code taskCommand}, confirms that <br>
      * - a {@code CommandException} is thrown <br>

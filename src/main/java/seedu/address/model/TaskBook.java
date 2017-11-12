@@ -94,6 +94,7 @@ public class TaskBook implements ReadOnlyTaskBook {
         tasks.add(newTask);
     }
 
+    //@@author KongjiaQi
     /**
      * Marks an existing task to be completed.
      * @throws TaskNotFoundException if the task could not be found in the list..
@@ -102,6 +103,7 @@ public class TaskBook implements ReadOnlyTaskBook {
         tasks.setComplete(p);
     }
 
+    //@@author Shaocong Dong
     /**
      * Replaces the given task {@code target} in the list with {@code editedReadOnlyTask}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyTask}.
