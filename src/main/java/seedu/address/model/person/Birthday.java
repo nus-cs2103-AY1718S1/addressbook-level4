@@ -57,7 +57,7 @@ public class Birthday {
      * Check validity of input values
      */
 
-    public static void isValidBirthdayValue (String birthdayString) throws IllegalValueException {
+    public static void isValidBirthdayValue(String birthdayString) throws IllegalValueException {
 
         if (birthdayString.equals(NO_BIRTHDAY_DEFAULT)) {
             return;

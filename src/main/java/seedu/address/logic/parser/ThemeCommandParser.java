@@ -7,8 +7,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author Choony93
+
 /**
- * Parses input arguments and creates a new GmaptCommand object
+ * Parses input arguments and creates a new ThemeCommand object
  */
 public class ThemeCommandParser implements Parser<ThemeCommand> {
 
@@ -19,7 +21,6 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ThemeCommand parse(String args) throws ParseException {
-        //@@author Choony93
         String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {
@@ -36,8 +37,7 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
             }
         }
-
         return new ThemeCommand(trimmedArgs);
-        //@@author
     }
 }
+//@@author

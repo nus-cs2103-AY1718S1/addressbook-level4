@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 
+//@@author Choony93
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} contains all of the keywords given.
  */
@@ -29,3 +30,4 @@ public class NameConsistsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
     }
 
 }
+//@@author
