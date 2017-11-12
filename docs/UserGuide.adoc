@@ -391,6 +391,9 @@ This command changed to current theme to Twilight
 
 You might find it not very convenient to only show the contact's location as text. Therefore, iConnect allows you to see the location! By using this command, without typing in the person's address, you can easily find the location of your friend in Google Map, which will show in the centre browser.
 
+image::mShowCommand.png[width="790"]
+_Figure 3.14.1 : Finding the location of a contact_
+
 Format: `m-show INDEX`
 
 ****
@@ -408,6 +411,9 @@ Shows the address of person with index 1 on the google map
 === Finding the route from user's current location to the person selected: `m-route` _[Since v1.3]_
 
 Not only can iConnect show the location, it can also show you how to go there! Simply by adding your current location, it will show you the shortest path from your current address to your friend's home in the Google map.
+
+image::mRouteCommand.png[width="790"]
+_Figure 3.15.1 : Finding the route from current location to the address of a contact_
 
 Format: `m-route INDEX a/ADDRESS`
 
