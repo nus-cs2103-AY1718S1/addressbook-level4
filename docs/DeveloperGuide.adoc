@@ -1,4 +1,4 @@
-﻿= AddressBook Level 4 - Developer Guide
+﻿= NUS Contact - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `PersonInformationPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -194,7 +194,7 @@ _Figure 2.4.1 : Structure of the Model Component_
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
+* stores the Contact Book data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -208,7 +208,7 @@ _Figure 2.5.1 : Structure of the Storage Component_
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Contact Book data in xml format and read it back.
 
 === Common classes
 
@@ -251,7 +251,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the Contact Book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -286,7 +286,7 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the Contact Book. The current state of the Contact Book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
@@ -299,7 +299,7 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the Contact Book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -310,7 +310,7 @@ The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the Contact Book to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -340,7 +340,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 ---
 
 **Aspect:** How undo & redo executes +
-**Alternative 1 (current choice):** Saves the entire address book. +
+**Alternative 1 (current choice):** Saves the entire Contact Book. +
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
 **Alternative 2:** Individual command knows how to undo/redo by itself. +
@@ -350,12 +350,12 @@ image::UndoRedoActivityDiagram.png[width="200"]
 ---
 
 **Aspect:** Type of commands that can be undone/redone +
-**Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
+**Alternative 1 (current choice):** Only include commands that modifies the Contact Book (`add`, `clear`, `edit`). +
 **Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
 **Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
 **Alternative 2:** Include all commands. +
 **Pros:** Might be more intuitive for the user. +
-**Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
+**Cons:** User have no way of skipping such commands if he or she just want to reset the state of the Contact Book and not the view. +
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 ---
@@ -402,14 +402,14 @@ For example, nickname is a custom field name whereas Ahchuang is a custom field 
 A Command - CustomCommand - is used to manipulate the custom fields of a person. The CustomCommand is an undoable command.
 
 When a new CustomCommand is created, it will be constructed with 3 parameters: Index, String, String.
-The 3 parameters represents the index of the person in the AddressBook, a custom field name and a custom field value respectively.
+The 3 parameters represents the index of the person in the Contact Book, a custom field name and a custom field value respectively.
 
 If the input custom field name of the person is not existed yet, the custom field with name and value as inputs will be created and added into the person's UniqueCustomFieldList.
-For example, command `custom 1 Nickname Ahchuang` will add a nickname custom field with value "Ahchuang" for the first person in the AddressBook if nickname field previously does not exist.
+For example, command `custom 1 Nickname Ahchuang` will add a nickname custom field with value "Ahchuang" for the first person in the Contact Book if nickname field previously does not exist.
 Else if the input custom field name of the person has already existed and the input custom field value is not empty, the custom field value of that custom field for the person will be replaced with the input value.
 For example, command `custom 1 Nickname Jon` will change the nickname custom field of the first person from his previous nickname to "Jon".
 Else if the input custom field value is empty, the custom field of the person will be cleared.
-For example, command `custom 1 Nickname` will clear the nickname custom field of the first person in the AddressBook.
+For example, command `custom 1 Nickname` will clear the nickname custom field of the first person in the Contact Book.
 
 ==== Storage
 New XmlAdaptedCustomField class is created and new XmlElement customised is defined in XmlAdaptedPerson class to allow storage of
@@ -434,17 +434,17 @@ The icon photo of each person is identified using a String value which represent
 A Command - UploadPhotoCommand - is used to manipulate the icon photo of a person. The UploadPhotoCommand is an undoable command.
 
 When a new Photo is created, it will be constructed with 2 parameters: Index, String.
-The 2 parameters represents the index of the person in the AddressBook, the path of the photo image indented to upload.
+The 2 parameters represents the index of the person in the Contact Book, the path of the photo image indented to upload.
 
 If the icon photo of the person is previously the default photo, a photo with input path will be created and added into the person's Photo attribute.
-For example, command `upload 1 D:\Git Projects\wolf.jpg` will add a photo image with path "D:\Git Projects\wolf.jpg" for the first person in the AddressBook if photo icon previously is the default.
+For example, command `upload 1 D:\Git Projects\wolf.jpg` will add a photo image with path "D:\Git Projects\wolf.jpg" for the first person in the Contact Book if photo icon previously is the default.
 Else if the icon photo of the person has already existed and is not the defaulted, the icon photo of the person will be replaced with the input value.
 For example, command `upload 1 D:\Git Projects\wolf.jpg` will update the icon photo of the person to the photo with path "D:\Git Projects\wolf.jpg".
 Else if the input photo path is empty, the icon photo of the person will be reset to the default photo.
-For example, command `upload 1` will reset the icon photo of the first person to the default photo in the AddressBook.
+For example, command `upload 1` will reset the icon photo of the first person to the default photo in the Contact Book.
 
 ==== Storage
-New XML value Photo is created in XmlAdaptedPerson class to allow the storing of icon photo address for each person.
+New XML value Photo is created in XmlAdaptedPerson class to allow the storing of icon photo path for each person.
 
 ==== Ui
 Image of the icon photo will be displayed after uploaded.
@@ -528,36 +528,24 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 === Multiple phone numbers supported
 (launched in V1.3)
 
- ====Description
+====Description
 
-Since our target audience are the NUS students, which include a large proportion of international students, our addressBook will support the users to add multiple phone numbers.
-=======
+Since our target audience are the NUS students, which include a large proportion of international students, our Contact Book will support the users to add multiple phone numbers.
 
-
- ====Description
-
-Since our target audience are the NUS students, which include a large propotion of international students, our addressBook will support the users to add multiple phone numbers, emails addresses and home addresses.
 ==== Model
 
 UniquePhoneList Classes are created for each person to store the person's multiple phone numbers.
-
 A person has a primary phone number and a list of additional numbers.
-
-
 Primary phone number and additional numbers are stored separately.
-
 Primary number is saved directly as an object in Person while additional numbers are save in a list.
-
 UniquePhoneList is a list of Phone object. It can be empty if the person does not have additional numbers.
-
 Primary phone number must not be null.
-
 
 ==== Logic
 PhoneCommand is created to add/remove additional phone numbers. It can also be used to show all numbers of a person.
 
 PhoneCommand is called by using command word "updatePhone", then the command word is followed by 3 parameters: Index, String, String(optional).
-The 3 parameters represents the index of the person in the AddressBook, action to be taken (add/remove/showAllPhones) and a value respectively.
+The 3 parameters represents the index of the person in the Contact Book, action to be taken (add/remove/showAllPhones) and a value respectively.
 
 For add, we will add the phone to the uniquePhoneList and check for duplicate. Example call of add is illustrated as below.
 image::add.png[width="200"]
@@ -576,13 +564,6 @@ image::showAllPhones.png[width="200']
 New XML element for UniquePhoneList and new XmlAdaptedPhone class with XML value Phone are created to allow the storage for unique phone list and optional phones.
 ==== Ui
 A new label will be displaced for each person for each instance of the same fields.
-
-== Documentation
-We use asciidoc for writing documentation.
-
-//end::additionalPhoneList[]
-
-//tag::weatherWindow[]
 
 === Yahoo Weather Display Mechanism
 The Yahoo weather information display is aided by the external library "yahoo-weather-java-api:2.0.2". This library queries data from Yahoo Weather API, and the application display the information returned by calling the library functions with
@@ -610,7 +591,8 @@ return conditionStringParser(channel.getItem().getCondition().toString());
 * This feature has a strong dependency on Yahoo Weather Server. Some exceptions or assertions should be implemented to prevent the failure of the application
 due to the failure of Yahoo Weather Server. +
 
-//end::weatherWindow[]
+== Documentation
+We use asciidoc for writing documentation.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
@@ -705,7 +687,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Contact Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -980,7 +962,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add tags to fields |to differentiate characteristics of fields e.g. phone for work, address for business, etc
 
-|`* * *` |user |back up the addressbook (save as...) |know where to look when addressbook is accidentally deleted
+|`* * *` |user |back up the Contact Book (save as...) |know where to look when Contact Book is accidentally deleted
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
@@ -996,7 +978,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |add picture as a field |see my contacts' faces
 
-|`*` |user |share my addressbook with others |others can have my list of contacts
+|`*` |user |share my Contact Book with others |others can have my list of contacts
 
 |`*` |user |search with ambiguous criteria |allow for more margin of error with searches
 
@@ -1009,7 +991,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Contact Book` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -1017,9 +999,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Contact Book shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  Contact Book deletes the person
 +
 Use case ends.
 
@@ -1033,7 +1015,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact Book shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1043,9 +1025,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to add a person
-2.  AddressBook shows an example of add person message
+2.  Contact Book shows an example of add person message
 3.  User follows the format and provide all the required fields
-4.  AddressBook adds the person
+4.  Contact Book adds the person
 +
 Use case ends.
 
@@ -1055,14 +1037,14 @@ Use case ends.
 * 3a. User uses the wrong format.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact Book shows an error message.
 +
 Use case resumes at step 2.
 
 * 3b. User didn't fill in all the required fields
 +
 [none]
-** 3b1. AddressBook shows an error message.
+** 3b1. Contact Book shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1073,7 +1055,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User type in the name of the desired person in the search bar
-2.  AddressBook displays the list of matched persons in the panel
+2.  Contact Book displays the list of matched persons in the panel
 +
 Use case ends.
 
@@ -1081,10 +1063,10 @@ Use case ends.
 
 [none]
 
-* 3b. Name given by the user is not in the AddressBook
+* 3b. Name given by the user is not in the Contact Book
 +
 [none]
-** 3b1. AddressBook displays nothing.
+** 3b1. Contact Book displays nothing.
 +
 Use case resumes at step 1.
 
@@ -1094,9 +1076,9 @@ Use case resumes at step 1.
 *MSS*
 
 1.  User requests to change language
-2.  AddressBook shows a list of language supported
+2.  Contact Book shows a list of language supported
 3.  User requests to change to a specific language in the list
-4.  AddressBook changes to the chosen language
+4.  Contact Book changes to the chosen language
 +
 Use case ends.
 
@@ -1106,7 +1088,7 @@ Use case ends.
 * 3a. Language chosen is not in the list
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact Book shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1125,7 +1107,7 @@ Use case resumes at step 2.
 .  The default background colour of the GUI should not be too garish or too shiny.However, the users can change the background.
 .  Should not be easily hacked, e.g. data corruption, data access by other.
 .  Should be able to change the font type and size easily.
-.  Changes of the address book should be saved in a log file.
+.  Changes of the Contact Book should be saved in a log file.
 .  UI should be aesthetically pleasing
 .  add, delete, edit and find operation should take no longer than O(log n)
 
@@ -1133,7 +1115,7 @@ Use case resumes at step 2.
 == Glossary
 
 .  Search bar: the upper right-hand-side bar which allows convenient searching
-.  Address Book: The specific book that the user is using the application on.
+.  Contact Book: The specific book that the user is using the application on.
 .  Format: The way in which command is entered.
 .  History: Commands entered previously.
 .  Person Information Panel: The panel which a person's information will be displayed when any person card is clicked.

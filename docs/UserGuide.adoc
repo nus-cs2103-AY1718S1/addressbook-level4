@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= NUS Contact - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -23,7 +23,7 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for your Contact Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -33,7 +33,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Contact Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -59,7 +59,7 @@ Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
+Adds a person to the Contact Book +
 Format: `add n/NAME p/PHONE_NUMBER e/[EMAIL] a/[ADDRESS] [t/TAG]...`
 
 
@@ -72,23 +72,25 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/ a/`
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the Contact Book. +
 Format: `list`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Edits an existing person in the Contact Book. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG_TO_ADD] [-t/TAG_TO_REMOVE]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values. If no input value is specified, the corresponding field will be removed (except name and phone which are compulsory fields).
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the person will be cumulatively added or removed.
+* If TAG_TO_ADD has a duplicate or TAG_TO_REMOVE is absent in the edited person, the specified change will be ignored
+* You can remove all the person's tags by typing `t/` or `-t/` without specifying any tags after it.
 ****
 
 Examples:
@@ -97,12 +99,14 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 2 t/best -t/worst` +
+Removes tag `worst` and adds tag `best` to the second person
 
 // tag::search[]
 === Locating persons: The search box
 
 Finds persons whose names, phones or tags contain any of the given keywords. +
-Format: just type in the search box the name, the phone number, or the tag you want to search for, and the results will be automatically displayed in the left panel. `since v1.2`
+Format: just type in the search box the name, the phone number, or the tag you want to search for, and the results will be dynamically displayed in the person list panel. `since v1.2`
 
 ****
 *For names*
@@ -115,13 +119,13 @@ Format: just type in the search box the name, the phone number, or the tag you w
 
 *For phones*
 
-*Prefix will br matched e.g `8269` will match `82699402`
-*If a person has multiple phones, he/she will be displayed as long as one of them matches the search word
+* Prefix will br matched e.g `8269` will match `82699402`
+* If a person has multiple phones, he/she will be displayed as long as one of them matches the search word
 
 *For tags*
 
-*Exact match
-*All persons with the specified tag will be displayed
+* Exact match
+* All persons with the specified tag will be displayed
 ****
 
 Examples:
@@ -138,7 +142,7 @@ Displays all persons tagged as `friends`
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from the Contact Book. +
 Format: `delete INDEX`
 
 ****
@@ -151,7 +155,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the Contact Book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -159,7 +163,7 @@ Deletes the 1st person in the results of the `find` command.
 // tag::deleteByName[]
 === Deleting a person by his/her full name: `deleteByName`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from the Contact Book. +
 Format: `delete String(the person's full name)`
 
 ****
@@ -171,7 +175,7 @@ Examples:
 
 * `list` +
 `deleteByName John Doe` +
-Deletes person named John Doe in the address book.
+Deletes person named John Doe in the Contact Book.
 // end:: deleteByName[]
 
 === Selecting a person : `select`
@@ -188,7 +192,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the Contact Book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
@@ -196,13 +200,13 @@ Selects the 1st person in the results of the `find` command.
 // tag::customField[]
 === Adding/Updating a person's custom field : `custom`
 
-Adds or updates an existing person's custom fields in the address book. +
+Adds or updates an existing person's custom fields in the Contact Book. +
 Format: `custom INDEX [Custom Field Name] [Custom Field Value]`
 
 ****
-* Add or update a custom field of the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Add or update a custom field of the person at the specified `INDEX`. The index refers to the index shown in the most recent listing.
 * If the custom field name of the person previously does not exist, the input custom field name and value will be added.
-* Existing value will be updated to the input value.
+* If the custom field name of the person previously exists, existing value will be updated to the input value.
 ****
 
 Examples:
@@ -216,13 +220,14 @@ Remove the Nickname custom field of the 1st person.
 // tag::photo[]
 === Adding/Updating a person's icon photo : `upload`
 
-Adds or updates an existing person's icon photo in the address book. +
+Adds or updates an existing person's icon photo in the Contact Book. +
 Format: `upload INDEX [Photo Path]`
 
 ****
 * Add or update the icon photo of the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * If the icon photo of the person previously does not exist, the default icon photo will be changed to the photo uploaded.
-* Existing value will be updated to the input value.
+* If the icon photo of the person previously exists, existing value will be updated to the input value.
+* If the input line does not contain any pathname, the icon photo of the person will become the default icon photo.
 ****
 
 Examples:
@@ -231,6 +236,39 @@ Examples:
 Updates the icon photo of the 1st person to be wolf.jpg located in D:\Git Projects.
 * `custom 1`
 Remove the icon photo of the 1st person, the default photo will be shown instead.
+// end::photo[]
+
+// tag::additionalPhone[]
+=== Several phone command: `updatePhone`
+
+Adds or removes an additional number number in the Contact Book. +We support two different formats.
+Format 1: `updatePhone INDEX [ACTION] [VALUE]`
+
+****
+* This format allow the user to add or remove an additional phone of the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Format 2: `updatePhone byName [ACTION] [VALUE] [NAME] `
+
+****
+* This format allow the user to identify the target person by his/her name. The `NAME` used here must be full name saved in the Contact Book.
+****
+
+****
+* Phone added must not cause any duplicates and phone removed should exist in the uniquePhoneList first.
+* Phone numbers will be added/removed/showed.
+****
+
+Examples:
+
+* `updatePhone 1 add 22222222` +
+add additional number of 22222222 to the first person in the list if it does not exist.
+* `updatePhone 1 remove 22222222` +
+remove the additional number 22222222 if it exist in the uniquePhoneList.
+* `updatePhone byName add 2333333 Alex Yeo`
+add additional number of 2333333 to Alex Yeo's uniquePhoneList if it does not exist.
+* `updatePhone byName remove 2333333 Alex Yeo`
+remove the additional number 2333333 from Alex Yeo's uniquePhoneList if it exists.
 // end::photo[]
 
 === Listing entered commands : `history`
@@ -246,12 +284,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the Contact Book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the Contact Book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -295,7 +333,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the Contact Book. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -305,33 +343,22 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Contact Book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-=== Several phone command: `updatePhone`
-
-Adds or removes an additional number number in the addressBook. In addition, it can show all phones in the addressBook +
-Format: `updatePhone INDEX [ACTION] [VALUE](optional)`
-
-****
-* Add or remove an additional phone of the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* Phone added must not cause any duplicates and phone removed should exist in the uniquePhoneList first.
-* Phone numbers will be added/removed/showed.
-****
-
-Examples:
-
-* `updatePhone 1 add 22222222` +
-add additional number of 22222222 to the first person in the list if it does not exist.
-* `updatePhone 1 remove 22222222` +
-remove the additional number 22222222 if it exist in the uniquePhoneList.
-* `updatePhone 1 showAllPhones`
-adressBook will print all the numbers person 1 has
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+*Q*: What if there are too much information (e.g. there are too many custom fields or additional phones), how would I view all of them on the User Interface? +
+*A*: You can scroll down the person information panel to view all information.
+
+*Q*: What should I do if the personal information panel does not update the additional phone numbers (or custom fields) after I add or remove additional phone numbers (or custom fields)? +
+*A*: You need to refresh by selecting the person.
+
+*Q*: How do I move from the command box to the search box and come back? +
+*A*: You can move alternatively by pressing the `Tab` on keyboard.
 
 == Command Summary
 
@@ -340,10 +367,18 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete By Name*: `deleteByName NAME`
+e.g. `deleteByName John Doe`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *(DEPRECATED FORMAT)* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+* *Update Custom Field*: `custom INDEX CUSTOM_FIELD_NAME CUSTOM_FIELD_VALUE`
+e.g. `custom 1 NickName Ah_Lex`
+* *Upload Phone*: `upload INDEX PATH_NAME`
+e.g. `upload 1 D:/Git projects/wolf.jpg`
+* *Update Additional Phones (FORMAT 1)*: `updatePhone INDEX ACTION PHONE_NUMBER`
+e.g. `updatePhone 1 add 666666`
+* *Update Additional Phones (FORMAT 2)*: `updatePhone NAME ACTION PHONE_NUMBER`
+e.g. `updatePhone John Doe add 666666`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
