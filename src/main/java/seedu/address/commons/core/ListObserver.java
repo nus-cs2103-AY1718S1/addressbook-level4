@@ -1,4 +1,4 @@
-package seedu.address.logic;
+package seedu.address.commons.core;
 
 import java.util.function.Predicate;
 
@@ -22,17 +22,17 @@ public class ListObserver {
     public static final String WHITELIST_NAME_DISPLAY_FORMAT = "WHITELIST:\n";
     public static final String OVERDUELIST_NAME_DISPLAY_FORMAT = "OVERDUELIST:\n";
 
-    private Model model;
+    private static Model model;
 
-    public ListObserver(Model model) {
-        this.model = model;
+    public static void init(Model newModel) {
+        model = newModel;
     }
 
     /**
      * Monitors current displayed list on person list panel.
      * @return updated version of the current displayed list.
      */
-    public ObservableList<ReadOnlyPerson> getCurrentFilteredList() {
+    public static ObservableList<ReadOnlyPerson> getCurrentFilteredList() {
         String currentList = model.getCurrentListName();
 
         switch (currentList) {
@@ -56,7 +56,7 @@ public class ListObserver {
      * Updates the current displayed list with {@param predicate}
      * @return updated version of the current displayed list.
      */
-    public int updateCurrentFilteredList(Predicate<ReadOnlyPerson> predicate) {
+    public static int updateCurrentFilteredList(Predicate<ReadOnlyPerson> predicate) {
         String currentList = model.getCurrentListName();
 
         switch (currentList) {
@@ -82,7 +82,7 @@ public class ListObserver {
      * Monitors current displayed list on person list panel.
      * @return name of current displayed list.
      */
-    public String getCurrentListName() {
+    public static String getCurrentListName() {
         String currentList = model.getCurrentListName();
 
         switch (currentList) {
@@ -105,7 +105,11 @@ public class ListObserver {
      * Monitors current displayed list on person list panel.
      * @return {@code Index} of current selected person.
      */
-    public Index getIndexofSelectedPersonInCurrentList() {
+    public static Index getIndexOfSelectedPersonInCurrentList() {
+        if (model.getSelectedPerson() == null) {
+            return null;
+        }
+
         Index index;
         switch (model.getCurrentListName()) {
 
@@ -128,7 +132,7 @@ public class ListObserver {
     /**
      * @return {@code Index} of person in current displayed list.
      */
-    public Index getIndexofPersonInCurrentList(ReadOnlyPerson person) {
+    public static Index getIndexOfPersonInCurrentList(ReadOnlyPerson person) {
         Index index;
 
         switch (model.getCurrentListName()) {
@@ -168,5 +172,12 @@ public class ListObserver {
         }
 
         return index;
+    }
+
+    /**
+     * Returns the currently selected person.
+     */
+    public static ReadOnlyPerson getSelectedPerson() {
+        return model.getSelectedPerson();
     }
 }

@@ -6,11 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
-public class HistoryCommandTest {
+public class HistoryCommandTest extends CommandTest {
     private HistoryCommand historyCommand;
     private CommandHistory history;
 

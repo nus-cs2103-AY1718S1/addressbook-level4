@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
@@ -79,17 +80,16 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_INVALID_TOTAL_DEBT = "Total debt cannot be less than current debt";
 
-
-    private final Index targetIndex;
+    private final ReadOnlyPerson personToEdit;
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditCommand(EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(EditPersonDescriptor editPersonDescriptor) throws CommandException {
         requireNonNull(editPersonDescriptor);
 
-        this.targetIndex = null;
+        personToEdit = selectPersonForCommand();
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
@@ -97,17 +97,16 @@ public class EditCommand extends UndoableCommand {
      * @param targetIndex of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditCommand(Index targetIndex, EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(Index targetIndex, EditPersonDescriptor editPersonDescriptor) throws CommandException {
         requireNonNull(targetIndex);
         requireNonNull(editPersonDescriptor);
 
-        this.targetIndex = targetIndex;
+        personToEdit = selectPersonForCommand(targetIndex);
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        ReadOnlyPerson personToEdit = selectPerson(targetIndex);
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         try {
@@ -119,9 +118,10 @@ public class EditCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
 
-        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        reselectPerson(editedPerson);
 
-        String currentList = listObserver.getCurrentListName();
+        String currentList = ListObserver.getCurrentListName();
 
         return new CommandResult(currentList + String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson.getName()));
     }
@@ -158,7 +158,7 @@ public class EditCommand extends UndoableCommand {
      */
     private static Person createEditedPerson(ReadOnlyPerson personToEdit,
                                              EditPersonDescriptor editPersonDescriptor) throws CommandException {
-        assert personToEdit != null;
+        requireNonNull(personToEdit);
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Handphone updatedHandphone = editPersonDescriptor.getHandphone().orElse(personToEdit.getHandphone());
@@ -199,9 +199,8 @@ public class EditCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof EditCommand // instanceof handles nulls
-                && ((this.targetIndex == null && ((EditCommand) other).targetIndex == null) // both targetIndex null
-                || (this.editPersonDescriptor.equals(((EditCommand) other).editPersonDescriptor)
-                && this.targetIndex.equals(((EditCommand) other).targetIndex)))); // state check
+                && (this.personToEdit.equals(((EditCommand) other).personToEdit)) // state check
+                && (this.editPersonDescriptor.equals(((EditCommand) other).editPersonDescriptor)));
     }
 
     /**

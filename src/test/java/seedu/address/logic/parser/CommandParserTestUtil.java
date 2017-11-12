@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -21,6 +22,8 @@ public class CommandParserTestUtil {
             assertEquals(expectedCommand, command);
         } catch (ParseException pe) {
             throw new IllegalArgumentException("Invalid userInput.", pe);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException(ce.getMessage(), ce);
         }
     }
 
@@ -32,8 +35,8 @@ public class CommandParserTestUtil {
         try {
             parser.parse(userInput);
             fail("The expected ParseException was not thrown.");
-        } catch (ParseException pe) {
-            assertEquals(expectedMessage, pe.getMessage());
+        } catch (ParseException | CommandException e) {
+            assertEquals(expectedMessage, e.getMessage());
         }
     }
 }

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.PersonContainsTagPredicate;
 
@@ -29,11 +30,11 @@ public class FilterCommand extends Command {
         requireNonNull(model);
 
         model.deselectPerson();
-        listObserver.updateCurrentFilteredList(new PersonContainsTagPredicate(tags));
+        ListObserver.updateCurrentFilteredList(new PersonContainsTagPredicate(tags));
 
         String allTagKeywords = tags.toString();
         return new CommandResult(String.format(MESSAGE_FILTER_ACKNOWLEDGEMENT, allTagKeywords,
-                getMessageForPersonListShownSummary(listObserver.getCurrentFilteredList().size())));
+                getMessageForPersonListShownSummary(ListObserver.getCurrentFilteredList().size())));
     }
 
     @Override

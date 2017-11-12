@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
@@ -28,8 +29,8 @@ public class FindCommand extends Command {
     public CommandResult execute() {
         requireNonNull(model);
         model.deselectPerson();
-        int listSize = listObserver.updateCurrentFilteredList(predicate);
-        String currentList = listObserver.getCurrentListName();
+        int listSize = ListObserver.updateCurrentFilteredList(predicate);
+        String currentList = ListObserver.getCurrentListName();
         return new CommandResult(currentList
                 + getMessageForPersonListShownSummary(listSize));
     }

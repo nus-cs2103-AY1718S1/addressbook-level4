@@ -6,8 +6,10 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -23,30 +25,34 @@ import seedu.address.model.person.Person;
 public class ListObserverTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private ListObserver listObserver = new ListObserver(model);
+
+    @Before
+    public void setUp() {
+        ListObserver.init(model);
+    }
 
     @Test
     public void checkCurrentFilteredList() {
         model.setCurrentListName("list");
-        assertEquals(listObserver.getCurrentFilteredList(), model.getFilteredPersonList());
+        assertEquals(ListObserver.getCurrentFilteredList(), model.getFilteredPersonList());
         model.setCurrentListName("blacklist");
-        assertEquals(listObserver.getCurrentFilteredList(), model.getFilteredBlacklistedPersonList());
+        assertEquals(ListObserver.getCurrentFilteredList(), model.getFilteredBlacklistedPersonList());
         model.setCurrentListName("whitelist");
-        assertEquals(listObserver.getCurrentFilteredList(), model.getFilteredWhitelistedPersonList());
+        assertEquals(ListObserver.getCurrentFilteredList(), model.getFilteredWhitelistedPersonList());
         model.setCurrentListName("overduelist");
-        assertEquals(listObserver.getCurrentFilteredList(), model.getFilteredOverduePersonList());
+        assertEquals(ListObserver.getCurrentFilteredList(), model.getFilteredOverduePersonList());
     }
 
     @Test
     public void checkCurrentListName() {
         model.setCurrentListName("list");
-        assertEquals(listObserver.getCurrentListName(), "MASTERLIST:\n");
+        assertEquals(ListObserver.getCurrentListName(), "MASTERLIST:\n");
         model.setCurrentListName("blacklist");
-        assertEquals(listObserver.getCurrentListName(), "BLACKLIST:\n");
+        assertEquals(ListObserver.getCurrentListName(), "BLACKLIST:\n");
         model.setCurrentListName("whitelist");
-        assertEquals(listObserver.getCurrentListName(), "WHITELIST:\n");
+        assertEquals(ListObserver.getCurrentListName(), "WHITELIST:\n");
         model.setCurrentListName("overduelist");
-        assertEquals(listObserver.getCurrentListName(), "OVERDUELIST:\n");
+        assertEquals(ListObserver.getCurrentListName(), "OVERDUELIST:\n");
     }
 
     @Test
@@ -55,9 +61,9 @@ public class ListObserverTest {
         String nameToFind = personToFind.getName().fullName;
         String[] keywords = nameToFind.split("\\s+");
         NameContainsKeywordsPredicate findPredicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
-        assertEquals(listObserver.updateCurrentFilteredList(findPredicate), 1);
+        assertEquals(ListObserver.updateCurrentFilteredList(findPredicate), 1);
 
-        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS); // reset predicate
+        ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS); // reset predicate
 
         model.setCurrentListName("blacklist");
         // typical addressbook has blacklisted person
@@ -65,9 +71,9 @@ public class ListObserverTest {
         nameToFind = personToFind.getName().fullName;
         keywords = nameToFind.split("\\s+");
         findPredicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
-        assertEquals(listObserver.updateCurrentFilteredList(findPredicate), 1);
+        assertEquals(ListObserver.updateCurrentFilteredList(findPredicate), 1);
 
-        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS); // reset predicate
+        ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS); // reset predicate
 
         model.setCurrentListName("whitelist");
         // typical addressbook has whitelisted person
@@ -75,9 +81,9 @@ public class ListObserverTest {
         nameToFind = personToFind.getName().fullName;
         keywords = nameToFind.split("\\s+");
         findPredicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
-        assertEquals(listObserver.updateCurrentFilteredList(findPredicate), 1);
+        assertEquals(ListObserver.updateCurrentFilteredList(findPredicate), 1);
 
-        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS); // reset predicate
+        ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS); // reset predicate
 
         model.setCurrentListName("overduelist");
         // typical addressbook has overdue debt person
@@ -85,7 +91,7 @@ public class ListObserverTest {
         nameToFind = personToFind.getName().fullName;
         keywords = nameToFind.split("\\s+");
         findPredicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
-        assertEquals(listObserver.updateCurrentFilteredList(findPredicate), 1);
+        assertEquals(ListObserver.updateCurrentFilteredList(findPredicate), 1);
     }
 
     /**
@@ -95,22 +101,22 @@ public class ListObserverTest {
     public void checkIndexOfCurrentPersonInList() {
         model.setCurrentListName("list");
         Person personToCheck = (Person) model.getFilteredPersonList().get(0);
-        Index indexOfPerson = listObserver.getIndexofPersonInCurrentList(personToCheck);
+        Index indexOfPerson = ListObserver.getIndexOfPersonInCurrentList(personToCheck);
         assertEquals(0, indexOfPerson.getZeroBased());
 
         model.setCurrentListName("blacklist");
         personToCheck = (Person) model.getFilteredBlacklistedPersonList().get(0);
-        indexOfPerson = listObserver.getIndexofPersonInCurrentList(personToCheck);
+        indexOfPerson = ListObserver.getIndexOfPersonInCurrentList(personToCheck);
         assertEquals(0, indexOfPerson.getZeroBased());
 
         model.setCurrentListName("whitelist");
         personToCheck = (Person) model.getFilteredWhitelistedPersonList().get(0);
-        indexOfPerson = listObserver.getIndexofPersonInCurrentList(personToCheck);
+        indexOfPerson = ListObserver.getIndexOfPersonInCurrentList(personToCheck);
         assertEquals(0, indexOfPerson.getZeroBased());
 
         model.setCurrentListName("overduelist");
         personToCheck = (Person) model.getFilteredOverduePersonList().get(0);
-        indexOfPerson = listObserver.getIndexofPersonInCurrentList(personToCheck);
+        indexOfPerson = ListObserver.getIndexOfPersonInCurrentList(personToCheck);
         assertEquals(0, indexOfPerson.getZeroBased());
     }
 }
