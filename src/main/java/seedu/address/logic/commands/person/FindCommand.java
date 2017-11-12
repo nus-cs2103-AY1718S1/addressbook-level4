@@ -26,6 +26,7 @@ public class FindCommand extends Command {
         this.predicate = predicate;
     }
 
+    //@@author aziziazfar
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
@@ -33,6 +34,7 @@ public class FindCommand extends Command {
         EventsCenter.getInstance().post(new ToggleListAllStyleEvent());
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

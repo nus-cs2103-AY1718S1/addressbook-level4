@@ -71,6 +71,7 @@ public class XmlAdaptedPerson {
         isPinned = source.isPinned();
     }
 
+    //@@author aziziazfar
     /**
      * Converts this jaxb-friendly adapted person object into the model's Person object.
      *

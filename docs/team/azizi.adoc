@@ -79,6 +79,8 @@ include::../DeveloperGuide.adoc[tag=add]
 === Other contributions
 
 * Added colors for persons' tags (Pull request https://github.com/CS2103AUG2017-T15-B4/main/pull/184[#184])
+* Added label in UI to display size of list displayed (Pull request https://github.com/CS2103AUG2017-T15-B4/main/pull/263[#263],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/253[#253])
 
 == Project: External
 
