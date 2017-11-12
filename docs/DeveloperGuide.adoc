@@ -665,13 +665,13 @@ The link command allows users to add twitter links to a person, so as to make us
 By having a link field under each person, we are able to load a twitter link when the person is selected.
 
 image::person.png[width="400"]
-_Figure 3.9.1 : Attributes of Person class_
+_Figure 3.9.1a : Attributes of Person class_
 
 Since only one twitter link is allowed for each person, we have designed the link command to replace any old twitter links
 with the current twitter link used in the link command so that it is easy to use for the user.
 
 image::LinkActivityDiagram.png[width="600"]
-_Figure 3.9.1a : Activity Diagram showing how link command is used_
+_Figure 3.9.1b : Activity Diagram showing how link command is used_
 
 [NOTE]
 Only twitter link are allowed to be added.
