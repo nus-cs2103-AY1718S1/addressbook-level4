@@ -70,7 +70,7 @@ public class TaskCard extends UiPart<Region> {
         description.textProperty().bind(Bindings.convert(task.descriptionProperty()));
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
         if (task.getStartTime().isPresent() && task.getEndTime().isPresent()) {
-            StringBinding binding = Bindings.createStringBinding( () -> MessageFormat.format("{0} - {1}",
+            StringBinding binding = Bindings.createStringBinding(() -> MessageFormat.format("{0} - {1}",
                 task.getStartTime(), task.getEndTime(), task.startTimeProperty()), task.endTimeProperty());
             time.textProperty().bind(binding);
         } else if (task.getStartTime().isPresent()) {
