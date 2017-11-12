@@ -13,49 +13,49 @@
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="0" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="daySun" styleClass="calender-propertyS-value" text="S" wrapText="true">
+        <Label fx:id="daySun" styleClass="calender-property1-value" text="S" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="1" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="dayM" styleClass="calender-propertyM-value" text="M" wrapText="true">
+        <Label fx:id="dayM" styleClass="calender-property2-value" text="M" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="2" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="dayT" styleClass="calender-propertyT-value" text="T" wrapText="true">
+        <Label fx:id="dayT" styleClass="calender-property3-value" text="T" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="3" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="dayW" styleClass="calender-propertyW-value" text="W" wrapText="true">
+        <Label fx:id="dayW" styleClass="calender-property4-value" text="W" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="4" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="dayTh" styleClass="calender-propertyS-value" text="T" wrapText="true">
+        <Label fx:id="dayTh" styleClass="calender-property1-value" text="T" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="5" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="dayF" styleClass="calender-propertyM-value" text="F" wrapText="true">
+        <Label fx:id="dayF" styleClass="calender-property2-value" text="F" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="6" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="daySat" styleClass="calender-propertyT-value" text="S" wrapText="true">
+        <Label fx:id="daySat" styleClass="calender-property3-value" text="S" wrapText="true">
         </Label>
     </VBox>
 
