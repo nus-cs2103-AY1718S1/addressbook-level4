@@ -29,7 +29,7 @@ public class FindCommand extends Command {
         model.updateFilteredPersonList(predicate);
         //@@author hanselblack
         //Text to Speech
-        new TextToSpeech("Heres what I have found").speak();;
+        new TextToSpeech("Heres what I have found").speak();
         //@@author
         //@@author nicholaschuayunzhi
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
