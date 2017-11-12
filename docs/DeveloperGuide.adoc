@@ -1366,6 +1366,18 @@ code below, in Figure 4.13.2.
 ----
 _Figure 4.13.2: From BackupCommand.java; Determines whether backup was successful._
 
+As shown in Figure 4.13.3 below, a valid file path given will be accepted and the user will be notified of a successful
+backup.
+
+image::backup demo 1.PNG[width="400"]
+_Figure 4.13.3 : Country name updated once a matching country code is added to phone number._
+
+Similarly, if a path *does not exist, is read-only, or the addressbook.xml file already exists in the directory*,
+the message shown in Figure 4.13.4 will be displayed instead.
+
+image::backup demo 2.PNG[width="400"]
+_Figure 4.13.4 : Copy from multiple contacts_
+
 ==== Design considerations for `Backup`
 
 The Backup function makes it easier for the user to secure their valuable information, with no room for error.
@@ -1390,9 +1402,8 @@ less responsive and possibly less user oriented.
 . CloudRail did not officially support our application's use of Gradle, and integration may not be completely stable
 across all devices.
 
-As such, this idea was postponed. If these challenges are addressed, it remains a highly viable and useful feature.
-
-
+As such, this idea was postponed. If these challenges are addressed, it remains a highly viable and useful alternative
+that can also be used in conjunction with the current implementation.
 
 ---
 //end::backup[]
