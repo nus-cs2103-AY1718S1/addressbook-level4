@@ -5,6 +5,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Purpose
 
+This Project Portfolio Page introduces the software, The Myth's Book, and subsequently displays the contributions that Chan Kin Hung Dickson
+done for The Myth's Book. The contributions include enhancements added, enhancements proposed, and other additional contributions.
+
 == Project: The Myth's Book
 The Myth's Book is an address book dedicated for university students to store useful information such
 as websites, phone numbers and emails of the people around them for personal usage. The application helps students
@@ -16,9 +19,16 @@ The Myth's Book is a `Command Line Input` based software which helps caters to s
 in typing out command line inputs to manipulate with information of their contacts in the address book.
 The Myth's Book is a software application that is coded in `Java` programming language.
 
+The figure below is the start page of The Myth's Book.
+
+image::Ui.png[width="800"]
+_Figure 1.1 The Myth's Book UI_
+
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/itsdickson.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/test/itsdickson.md[Test code]]
 
 === Enhancement Added: Favourite/Unfavourite
+
+This section includes the behaviour, justification and implementation of `FavouriteCommand`, `Unfavouritecommand` and `FavouriteListCommand`.
 
 (Pull Requests https://github.com/CS2103AUG2017-T15-B3/main/pull/67[#67], https://github.com/CS2103AUG2017-T15-B3/main/pull/82[#82])
 
@@ -49,6 +59,8 @@ include::../DeveloperGuide.adoc[tag=favouriteunfavourite]
 ---
 
 === Enhancement Added: Switch/Themes
+
+This section includes the behaviour, justification and implementation of `SwitchThemeCommand` and `ThemeListCommand`. It also includes the behaviour and justification of `Bright Theme`.
 
 (Pull Requests https://github.com/CS2103AUG2017-T15-B3/main/pull/50[#50], https://github.com/CS2103AUG2017-T15-B3/main/pull/63[#63], https://github.com/CS2103AUG2017-T15-B3/main/pull/78[#78])
 
@@ -82,6 +94,8 @@ include::../DeveloperGuide.adoc[tag=switch]
 
 === Enhancement Added: Events List
 
+This section includes the behaviour, justification and implementation of `EventsCommand`.
+
 (Pull Request https://github.com/CS2103AUG2017-T15-B3/main/pull/135[#135])
 
 ==== External behavior
@@ -112,6 +126,8 @@ include::../DeveloperGuide.adoc[tag=events]
 
 === Enhancement Added: Delete Event
 
+This section includes the behaviour, justification and implementation of `DeleteEventCommand`.
+
 (Pull Request https://github.com/CS2103AUG2017-T15-B3/main/pull/107[#107])
 
 ==== External behavior
@@ -141,6 +157,8 @@ include::../DeveloperGuide.adoc[tag=deleteevent]
 ---
 
 === Enhancement Added: Find Tag
+
+This section includes the behaviour, justification and implementation of `FindTagCommand`.
 
 (Pull Requests https://github.com/CS2103AUG2017-T15-B3/main/pull/86[#86], https://github.com/CS2103AUG2017-T15-B3/main/pull/103[#103])
 
