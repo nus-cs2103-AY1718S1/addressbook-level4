@@ -35,9 +35,10 @@ public class AddImageCommand extends UndoableCommand {
             + "by the index number used in the last person listing. "
             + "Existing Image will be replaced by the new image.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[ Image Url ]\n"
+            + "url/[ Image Url ]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "/Users/username/Downloads/person-placeholder.jpg";
+            + "url//Users/username/Downloads/person-placeholder.jpg";
+    public static final String MESSAGE_VALID_IMAGE_FORMATS = "Allowed formats: JPG/JPEG/PNG/BMP";
 
     public static final String MESSAGE_ADD_IMAGE_SUCCESS = "Successfully changed image for Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the resident book.";
@@ -135,13 +136,11 @@ public class AddImageCommand extends UndoableCommand {
     public boolean equals(Object other) {
         // short circuit if same object
         if (other == this) {
-            System.out.println("this");
             return true;
         }
 
         // instanceof handles nulls
         if (!(other instanceof AddImageCommand)) {
-            System.out.println("that");
             return false;
         }
 

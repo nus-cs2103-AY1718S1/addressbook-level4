@@ -34,7 +34,7 @@ public class DeleteImageCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 3 ";
 
-    public static final String MESSAGE_RESET_IMAGE_SUCCESS = "Successfully reset image for Person: %1$s";
+    public static final String MESSAGE_RESET_IMAGE_SUCCESS = "Successfully deleted image for Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the resident book.";
 
     private final Index index;
