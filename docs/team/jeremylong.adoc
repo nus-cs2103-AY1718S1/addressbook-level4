@@ -162,3 +162,4 @@ CSS parts)
 (In collaboration with http://github.com/ErnestOYH[Ernest]) +
 *** https://github.com/CS2103AUG2017-T17-B2/main/pull/125/files[Illustrations] +
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/61[Test Coverage]
+
