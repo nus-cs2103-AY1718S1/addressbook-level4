@@ -118,45 +118,71 @@ public class AutoCompletePossibilitiesManager {
         int numberOfWordsInStub = stub.split(" ").length;
 
         if (numberOfWordsInStub == 1) {
-            logger.info("Parsing [Commands]");
-            return commandParser;
+            return chooseParserForSingleWordStub(stub);
         } else {
-
-            switch (AutoCompleteUtils.getCommandWordInStub(stub)) {
-
-            case AddCommand.COMMAND_WORD:
-            case EditCommand.COMMAND_WORD:
-            case RemarkCommand.COMMAND_WORD:
-                logger.info("Parsing [Model attributes by Prefix]");
-                return chooseParserFromPrefix(stub);
-            case ChangeThemeCommand.COMMAND_WORD:
-                logger.info("Parsing [Themes]");
-                return themeParser;
-            case FindCommand.COMMAND_WORD:
-                logger.info("Parsing [Words in Name in Model]");
-                return wordInNameParser;
-            case FindTagCommand.COMMAND_WORD:
-            case RemoveTagCommand.COMMAND_WORD:
-                logger.info("Parsing [Tags in Model]");
-                return tagParser;
-            case SortCommand.COMMAND_WORD:
-                if (numberOfWordsInStub == 2) {
-                    logger.info("Parsing [Sort Fields]");
-                    return sortFieldParser;
-                } else if (numberOfWordsInStub == 3) {
-                    logger.info("Parsing [Sort Orders]");
-                    return sortOrderParser;
-                } else {
-                    logger.info("Parsing back user input as-is");
-                    return identity;
-                }
-            default:
-                logger.info("Parsing back user input as-is");
-                return identity;
-            }
-
+            return chooseParserForMultipleWordStub(stub);
         }
 
+    }
+
+    /**
+     * Chooses the parser for single-word stubs.
+     * @param stub incomplete user input.
+     * @return parser chosen for the {@code stub}.
+     */
+    private AutoCompleteParser chooseParserForSingleWordStub(String stub) {
+        logger.info("Parsing [Commands]");
+        return commandParser;
+    }
+
+    /**
+     * Chooses the parser for multiple-word stubs.
+     * @param stub incomplete user input.
+     * @return parser chosen for the {@code stub}.
+     */
+    private AutoCompleteParser chooseParserForMultipleWordStub(String stub) {
+        switch (AutoCompleteUtils.getCommandWordInStub(stub)) {
+
+        case AddCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_WORD:
+        case RemarkCommand.COMMAND_WORD:
+            logger.info("Parsing [Model attributes by Prefix]");
+            return chooseParserFromPrefix(stub);
+        case ChangeThemeCommand.COMMAND_WORD:
+            logger.info("Parsing [Themes]");
+            return themeParser;
+        case FindCommand.COMMAND_WORD:
+            logger.info("Parsing [Words in Name in Model]");
+            return wordInNameParser;
+        case FindTagCommand.COMMAND_WORD:
+        case RemoveTagCommand.COMMAND_WORD:
+            logger.info("Parsing [Tags in Model]");
+            return tagParser;
+        case SortCommand.COMMAND_WORD:
+            return chooseSortParserByNumberOfWordsInStub(stub);
+        default:
+            logger.info("Parsing back user input as-is");
+            return identity;
+        }
+    }
+
+    /**
+     * Chooses the parser for an incomplete sort command.
+     * @param stub incomplete user input, starting with sort command.
+     * @return sort parser ({@Code AutoCompleteSetStringParser}) chosen for the {@code stub}.
+     */
+    private AutoCompleteParser chooseSortParserByNumberOfWordsInStub(String stub) {
+        int numberOfWordsInStub = stub.split(" ").length;
+        if (numberOfWordsInStub == 2) {
+            logger.info("Parsing [Sort Fields]");
+            return sortFieldParser;
+        } else if (numberOfWordsInStub == 3) {
+            logger.info("Parsing [Sort Orders]");
+            return sortOrderParser;
+        } else {
+            logger.info("Parsing back user input as-is");
+            return identity;
+        }
     }
 
     /**
