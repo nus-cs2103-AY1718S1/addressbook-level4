@@ -972,3 +972,9 @@ image::UG_mainheader_commandsummary.png[width="900"]
 image::UG_mainheader_glossary.png[width="900"]
 //-
 {sp}
+
+[cols="2*^"]
+|===
+| *TERMS* | *EXPLAINATION*
+| *Command Line Interface (CLI)* |  Is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines).
+| *Text-To-Speech (TTS)* |  A system that converts normal language text into speech; other systems render symbolic linguistic representations like phonetic transcriptions into speech. Or a speech synthesiser
