@@ -120,6 +120,11 @@ Here’s how you can use them:
 View cherBook's User Guide in the help window. +
 Format: `help`
 
+Example:
+
+image::HelpImage.png[width="800"]
+_Figure 4.2 : There are two ways you can use 'help'_
+
 === Adding a person: `add` `Since v1.0`
 
 [NOTE]
@@ -146,12 +151,16 @@ Examples:
 * `a n/Jane Doe pp/97979791 e/janed@example.com a/Jane street, block 456, #01-01 f/6C g/98`
 * `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/97272231 pp/97979997 f/12A2 g/66 t/criminal`
 
-
 === Listing all persons : `list` `Since v1.0`
 
 Shows you a list of all persons in cherBook. +
 Format: `list` +
 Shorthand: `l`
+
+Example:
+
+image::ListImage.png[width="800"]
+_Figure 4.5 : Lists all contacts in your cherBook_
 
 === Editing a person : `edit` `Since v1.0`
 
@@ -182,6 +191,12 @@ Edits the student and parent phone number, and email address of the 1st person t
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+
+Example:
+
+image::EditImage.png[width="800"]
+_Figure 4.6 : Edits a contact in your cherBook_
+
 === Locating persons by name: `find` `Since v1.0`
 
 Finds persons whose names contain any of the given keywords. +
@@ -207,6 +222,7 @@ Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+
 === Deleting a person : `delete` `Since v1.0`
 
 Removes an existing person from cherBook. +
@@ -230,6 +246,11 @@ Deletes the 1st person in the results of the `find` command.
 * `list` (`list` command) +
 `d 3` (`delete 3` command) +
 Deletes the 3rd person in cherBook.
+
+Example:
+
+image::DeleteImage.png[width="800"]
+_Figure 4.9 : Deletes the contact in your cherBook with the specified index_
 
 === Selecting a person : `select` `Since v1.0`
 
@@ -397,6 +418,11 @@ Overwrites/adds the 1st person in the results of `find` command.
 `remark 2 rm/` +
 removes `remark` from the 2nd person in the address book.
 
+Example:
+
+image::RemarkImage.png[width="800"]
+_Figure 4.12 : Add a remark to your contacts in cherBook_
+
 // end::remark[]
 
 // tag::sort[]
@@ -426,8 +452,8 @@ Sorts the list in alphabetical order.
 === Scheduling a person : `schedule` `Since v1.4`
 
 Schedules the person identified by the index number used in the last person listing. +
-Format: `schedule INDEX s/[DATE]` +
-Shorthand: `sch INDEX s/[DATE]`
+Format: `addschedule INDEX s/[DATE]` +
+Shorthand: `addsch INDEX s/[DATE]`
 
 ****
 * Schedules the person at the specified `INDEX` and adds them to the schedule list in cherBook.
@@ -438,11 +464,16 @@ Shorthand: `sch INDEX s/[DATE]`
 Examples:
 
 * `list` +
-`schedule 2 s/tomorrow 7pm` +
+`addschedule 2 s/tomorrow 7pm` +
 Schedules the 2nd person in cherBook for tomorrow at 7pm and adds the schedule to the schedule list.
 * `find Betsy` +
-`sch 1 s/25 december 2017 3pm` +
+`addsch 1 s/25 december 2017 3pm` +
 Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
+
+Example:
+
+image::AddScheduleImage.png[width="800"]
+_Figure 4.13 : Adds a schedule to your cherBook_
 // end::schedule[]
 
 // tag::viewschedule[]
@@ -464,13 +495,18 @@ Displays all your schedules in the command box.
 * `find Betsy` +
 `viewsch` +
 Displays all your schedules in the command box.
+
+Example:
+
+image::ViewScheduleImage.png[width="800"]
+_Figure 4.14 : Views all your schedules in cherBook_
 // end::viewschedule[]
 
 === Deleting a schedule : `deleteschedule` `Since v1.5`
 
 Deletes the specified schedule from cherBook. +
 Format: `deleteschedule INDEX` +
-Shorthand: `dsch INDEX`
+Shorthand: `deletesch INDEX`
 
 ****
 * Deletes the schedule at the specified `INDEX`.
@@ -484,9 +520,8 @@ Examples:
 `deleteschedule 2` +
 Deletes the 2nd schedule in the results of the `viewschedule` command which returns a list of schedules.
 * `viewsch` +
-`dsch 1` +
+`deletesch 1` +
 Deletes the 1st schedule in the results of the `viewsch` command which returns a list of schedules.
-
 
 // tag::tab[]
 === Switching between graphs: `tab` `Since v1.5`
@@ -509,6 +544,7 @@ Remains at tab 2 if tab 2 is selected else switches to tab 2.
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
 
 // tag::studentdetailspanel[]
 === Student Details Panel `Since v1.3`
@@ -551,6 +587,11 @@ There are two tabs for you to choose from, line or bar and can be switch by usin
 The details changes when another student from a different class is selected.
 You can use these graph to better understand the trends of `grades` in a glance to easily see who are the weaker or stronger students.
 // end::graphpanel[]
+
+Example:
+
+image::ExitImage.png[width="800"]
+_Figure 4.19 : Exits your cherBook_
 
 // tag::randomisedUniqueTagColors[]
 === Randomised Unique Tag Colors: `Since v1.4`
@@ -602,9 +643,9 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | select | `s` + | `s INDEX` +
 | sort | `st` | `st` +
 | remark | `rm` + | `rm Index [rm/REMARK]` +
-| schedule | `sch` + | `sch 1 s/[DATE]` +
+| addschedule | `addsch` + | `addsch 1 s/[DATE]` +
 | viewschedule | `viewsch` + | `viewsch` +
-| deleteschedule | `dsch`  | `dsch 1` +
+| deleteschedule | `deletesch`  | `deletesch 1` +
 | history | `h` + | `h` +
 | undo | `u` + | `u` +
 | redo | `r` + | `r` +
