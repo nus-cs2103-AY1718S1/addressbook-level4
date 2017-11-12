@@ -25,6 +25,12 @@ import seedu.address.model.tag.Tag;
  */
 public class ImportCommandParser implements Parser<ImportCommand> {
 
+    public static final String DEFAULT_NAME = "Example name";
+    public static final String DEFAULT_ADD = "13 Computing Drive";
+    public static final String DEFAULT_PHONE = "11111111";
+    public static final String DEFAULT_EMAIL = "@example.com";
+    public static final String DEFAULT_TAG = "containsDummy";
+
     /**
      * Parses the given {@code String} of arguments in the context of the Import command
      * and returns an AddCommand object for execution.
@@ -36,10 +42,12 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         BufferedReader br = null;
         FileReader fr = null;
 
+
         try {
             fr = new FileReader(filename);
             br = new BufferedReader(fr);
 
+            // Create Default values
             String currLine;
             String name = null;
             String email = null;
@@ -67,6 +75,23 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
                 if (currLine.contains("END")) {
                     try {
+                        if (email == null) {
+                            email = name.replaceAll("\\s+", "") + "@example.com";
+                            tagList.add(new Tag(DEFAULT_TAG + "email"));
+                        }
+                        if (name == null) {
+                            name = DEFAULT_NAME;
+                            tagList.add(new Tag(DEFAULT_TAG + "name"));
+                        }
+                        if (phone == null) {
+                            phone = DEFAULT_PHONE;
+                            tagList.add(new Tag(DEFAULT_TAG + "phone"));
+                        }
+                        if (address == null) {
+                            address = DEFAULT_ADD;
+                            tagList.add(new Tag(DEFAULT_TAG + "address"));
+                        }
+
                         Name n = new Name(name);
                         Phone pe = new Phone(phone);
                         Email e = new Email(email);

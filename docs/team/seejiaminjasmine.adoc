@@ -14,7 +14,7 @@ It is written in Java, and has about 6 kLoC. +
 This Project Portfolio showcases the contributions that I have done for this project and my proposed additional features.
 
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/main/JasmineSee.md] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/test/JasmineSee.md]
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/main/JasmineSee.md[Functional Code]] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/test/JasmineSee.md[Test Code]]
 
 
 === Enhancement Added: Filter by tag
@@ -99,8 +99,7 @@ include::../UserGuide.adoc[tag=colourtheme]
 This feature was added to allow users to personalize the application by changing to the colour theme of their preference.
 Some users may want to feel more familiar with the application or they may want a design change once in a while. This feature can help cater to these users. +
 The theme can be changed by typing the command on the command line interface or by clicking on the `File` drop down menu and selecting the theme.  +
-The purpose of including a `File` dropdown menu is because it is user-friendly and easier for users to change the colour theme as the  +
-colour themes are all listed in the menu and they can directly change the colour theme by simply clicking instead of +
+The purpose of including a `File` dropdown menu is because it is user-friendly and easier for users to change the colour theme as the  colour themes are all listed in the menu and they can directly change the colour theme by simply clicking instead of +
 having to type in the command line and searching for what available colour themes there are.
 
 ==== Implementation
@@ -162,7 +161,7 @@ include::../UserGuide.adoc[tag=deletephoto]
 ==== Justification
 
 In cases where photos are outdated or uploaded to the wrong contact, users can also delete the photo of a contact. +
-The feature allows users to delete the photo of a specific contact by typing `dphoto INDEX`. The command is similar +
+The feature allows users to delete the photo of a specific contact by typing `dphoto INDEX`. The command is similar
 to the upload photo command so that it will be easier for the users to remember.
 
 ==== Implementation
@@ -209,11 +208,12 @@ include::../DeveloperGuide.adoc[tag=deletesallphotos]
 === Enhancement Proposed: Filters contact by tags with a click of a button `Coming in v2.0`
 This feature is an GUI enhancement to the filter by tags feature where user can input in the tag name on a text-field
 and click on the `Filter` button instead of using the command line. This can allow the user a more direct approach to filtering the
-contacts by tag(s) instead of remembering the command to type in the command line. Other filtering methods can also be implemented such
+contacts by tag(s) instead of remembering the command to type in the command line. +
+Other filtering methods can also be implemented such
 as filter contacts by location to let user easily find contacts within an area. It can be implemented on both the command line or GUI.
 
 === Enhancement Proposed: Removing tags by clicking on a tag `Coming in v2.0`
-This is an enhancement to the remove tag feature to allow users to remove the tag that they click on at the `PersonCard` instead of using the command line.
+This is an enhancement to the remove tag feature to allow users to remove the tag that they click on at the `PersonCard` instead of using the command line. +
 Upon clicking on the tag, a drop down menu will come out to allow the user to choose to delete this tag only or delete this tag from all contacts.
 This allows user to remove tags just by using the GUI and gives them flexibility in deleting a tag from a specific contact or from all contacts.
 

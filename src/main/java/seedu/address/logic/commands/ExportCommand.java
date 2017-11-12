@@ -8,7 +8,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author limshunyong
 /**
- * export contacts to external source (in .vcf format)
+ * Exports contact to external source (in .vcf format)
  */
 public class ExportCommand extends Command {
 

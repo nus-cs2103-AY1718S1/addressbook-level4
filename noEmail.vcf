@@ -1,0 +1,7 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Brendan;Richard;;;
+FN:Brendan Richard
+TEL;TYPE=CELL:91234566
+ADR:;;Some Address;;;;
+END:VCARD

@@ -16,7 +16,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 //@@author JasmineSee
 
 /**
- * Delete photo of specified person.
+ * Deletes photo of specified person.
  */
 public class DeletePhotoCommand extends Command {
     public static final String COMMAND_WORD = "dphoto";

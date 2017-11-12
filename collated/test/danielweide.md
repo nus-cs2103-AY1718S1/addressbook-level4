@@ -1,5 +1,5 @@
 # danielweide
-###### \java\seedu\address\logic\commands\ClearLogCommandTest.java
+###### /java/seedu/address/logic/commands/ClearLogCommandTest.java
 ``` java
 /**
  * Test for ClearLogCommand by deleting ConnectUsLog.txt file
@@ -16,7 +16,7 @@ public class ClearLogCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\LoggingCommandTest.java
+###### /java/seedu/address/logic/commands/LoggingCommandTest.java
 ``` java
 public class LoggingCommandTest {
     /**
@@ -71,7 +71,7 @@ public class LoggingCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\QrCallCommandTest.java
+###### /java/seedu/address/logic/commands/QrCallCommandTest.java
 ``` java
 /**
  * Test For QrCallCommand for Equal Cases
@@ -101,7 +101,7 @@ public class QrCallCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\QrGenCallCommandTest.java
+###### /java/seedu/address/logic/commands/QrGenCallCommandTest.java
 ``` java
 /**
  * Test For QrCallCommand for Equal Cases
@@ -138,7 +138,7 @@ public class QrGenCallCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\QrGenSaveContactCommandTest.java
+###### /java/seedu/address/logic/commands/QrGenSaveContactCommandTest.java
 ``` java
 /**
  * Test For QrCallCommand for Equal Cases
@@ -183,7 +183,7 @@ public class QrGenSaveContactCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\QrGenSmsCommandTest.java
+###### /java/seedu/address/logic/commands/QrGenSmsCommandTest.java
 ``` java
 /**
  * Test For QrCallCommand for Equal Cases
@@ -224,7 +224,7 @@ public class QrGenSmsCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\QrSaveContactCommandTest.java
+###### /java/seedu/address/logic/commands/QrSaveContactCommandTest.java
 ``` java
 /**
  * Test For QrSaveContactCommand for Equal Cases
@@ -254,7 +254,7 @@ public class QrSaveContactCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\QrSmsCommandTest.java
+###### /java/seedu/address/logic/commands/QrSmsCommandTest.java
 ``` java
 /**
  * Test For QrSmsCommand for Equal Cases
@@ -284,7 +284,7 @@ public class QrSmsCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\QrCallCommandParserTest.java
+###### /java/seedu/address/logic/parser/QrCallCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code SelectCommandParserTest}.
@@ -305,7 +305,7 @@ public class QrCallCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\QrSaveContactCommandParserTest.java
+###### /java/seedu/address/logic/parser/QrSaveContactCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code QrSmsCommandParserTest}.
@@ -327,7 +327,7 @@ public class QrSaveContactCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\QrSmsCommandParserTest.java
+###### /java/seedu/address/logic/parser/QrSmsCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code QrCallCommandParserTest}.
