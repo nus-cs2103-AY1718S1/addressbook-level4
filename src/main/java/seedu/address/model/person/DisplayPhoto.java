@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.ModelManager;
 
 //@@author keithsoc
 /**
@@ -22,7 +21,7 @@ public class DisplayPhoto {
     // Display photos for sample persons in SampleDataUtil
     public static final String SAMPLE_PHOTO_ALEX = "/images/sample_dp_one.png";
 
-    private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static final Logger logger = LogsCenter.getLogger(DisplayPhoto.class);
     private static final String MESSAGE_PHOTO_CONSTRAINTS = "Display photo: "
             + "specified file does not exist or it exceeded maximum size of 1MB.";
     private static final String MESSAGE_PHOTO_COPY_ERROR = "Error copying photo to application's data directory";
