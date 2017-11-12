@@ -225,13 +225,15 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find email in address book, email is not exist -> 0 person found */
-        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_EMAIL + "@outlook.com";
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL
+                + " " + PREFIX_EMAIL + "@outlook.com";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find address -> 1 person found  */
-        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_ADDRESS + "wall street";
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL
+                + " " + PREFIX_ADDRESS + "wall street";
         ModelHelper.setFilteredList(expectedModel, CARL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
@@ -243,7 +245,8 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find address in address book, address is not exist -> 0 person found */
-        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_ADDRESS + "Singapore";
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL
+                + " " + PREFIX_ADDRESS + "Singapore";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
