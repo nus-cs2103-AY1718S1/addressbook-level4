@@ -54,22 +54,6 @@ public class EventListPanel extends UiPart<Region> {
     }
 
     /**
-     * Scrolls to the {@code EventCard} at the {@code index} and selects it.
-     */
-    private void scrollTo(int index) {
-        Platform.runLater(() -> {
-            eventListView.scrollTo(index);
-            eventListView.getSelectionModel().clearAndSelect(index);
-        });
-    }
-
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
-    }
-
-    /**
      * Custom {@code ListCell} that displays the graphics of a {@code EventCard}.
      */
     class EventListViewCell extends ListCell<EventCard> {

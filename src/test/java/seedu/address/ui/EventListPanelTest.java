@@ -46,14 +46,4 @@ public class EventListPanelTest extends GuiUnitTest {
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
         }
     }
-
-    @Test
-    public void handleJumpToListRequestEvent() {
-        postNow(JUMP_TO_SECOND_EVENT);
-        guiRobot.pauseForHuman();
-
-        EventCardHandle expectedCard = eventListPanelHandle.getEventCardHandle(INDEX_SECOND_PERSON.getZeroBased());
-        EventCardHandle selectedCard = eventListPanelHandle.getHandleToSelectedCard();
-        assertCardEventsEquals(expectedCard, selectedCard);
-    }
 }
