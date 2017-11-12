@@ -102,7 +102,7 @@ public class LessonListCard extends UiPart<Region> {
 
     //@@author junming403
     /**
-     * Change the card state to hide irrelevant information and only show address
+     * Change the card state to hide irrelevant information and only show Module Code
      */
     private void switchToModuleCard() {
         code.setVisible(true);
@@ -114,7 +114,7 @@ public class LessonListCard extends UiPart<Region> {
     }
 
     /**
-     * Change the card state to hide irrelevant information and only show phone
+     * Change the card state to hide irrelevant information and only show Location
      */
     private void switchToLocationCard() {
         code.setVisible(false);
