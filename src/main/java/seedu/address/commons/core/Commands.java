@@ -107,10 +107,7 @@ public class Commands {
 
         for (int i = 0; i < ALL_COMMAND_WORDS.length; i++) {
             ALL_COMMANDS_AND_SHORT_MESSAGES.put(ALL_COMMAND_WORDS[i], ALL_SHORT_MESSAGE_USAGES[i]);
-        }
-
-        for (int j = 0; j < ALL_COMMAND_ALIASES.length; j++) {
-            ALL_COMMANDS_AND_SHORT_MESSAGES.put(ALL_COMMAND_ALIASES[j], ALL_SHORT_MESSAGE_USAGES[j]);
+            ALL_COMMANDS_AND_SHORT_MESSAGES.put(ALL_COMMAND_ALIASES[i], ALL_SHORT_MESSAGE_USAGES[i]);
         }
     }
 
