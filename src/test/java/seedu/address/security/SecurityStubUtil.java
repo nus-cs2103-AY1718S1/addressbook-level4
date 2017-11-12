@@ -10,7 +10,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.exceptions.EncryptOrDecryptException;
 
 /**
- * Provides Security Stubs for testing.
+ * Provides three Security Stubs for testing.
  */
 public class SecurityStubUtil {
 
