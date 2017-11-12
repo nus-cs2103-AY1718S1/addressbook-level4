@@ -20,57 +20,15 @@ You can download the latest `MedNus.jar` link:https://github.com/CS2103AUG2017-T
 . Make sure you have the latest version of SampleData.xml +
 You can download the latest `SampleData.xml` link:https://github.com/CS2103AUG2017-T17-B2/main/releases[here].
 . Copy the jar file to the folder you want to use as the home folder for your Address Book.
-. Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
-. Add a person to the AddressBook (e.g. add n/Test). A file 'data' will be created.
-. Close the application and open the newly created 'data' file.
-. Delete addressbook.xml in the 'data' file.
-. Move the SampleData.xml file into the 'data' file.
-. Rename the SampleData.xml file to addressbook.xml
+. Create a folder called `data` at the same directory as `MedNus.jar`.
+. Copy and paste `SampleData.xml` into the `data` folder.
+. Rename the `SampleData.xml` file to `addressbook.xml`.
 . Double-click the jar file to start the app.
 . The new data set should be uploaded and you can now start the manual testing.
 
-== General Commands
-This section shows you the general commands which allow you to manipulate the filtered list display. +
-
-[cols=3,width="100%",options="header"]
-|=======================================================================
-|Command To Enter |Expected Output |Remarks
-
-|`copy 2` |`Amanda Lee's email address has been copied to your clipboard.` |Copies email address of person at index 2 of the currently displayed list to your clipboard
-
-|`duplicates` |`2 persons listed!` |Finds all persons who share names with at least 1 other person in MedNus
-
-|`batch Flu Fever` |`Deleted Persons with Tags: [[Flu], [Fever]]` |Removes all persons with tags `Flu` or `Fever` or both. Undo this by typing `undo` before proceeding to the next step
-
-|`command 4` |`some output` |Some remark
-
-|`command 5` |`some output` |Some remark
-
-|`command 6` |`some output` |Some remark
-
-|=======================================================================
-
-== Calendar Related Functionality
-This section shows you commands related to appointments and calendar views. +
-
-[cols=3,width="100%",options="header"]
-|=======================================================================
-|Command To Enter |Expected Output |Remarks
-
-|`appt` |`Rearranged contacts to show upcoming appointments.` |Contacts are sorted according to appointments
-
-|`appt 1 d/Dinner, tonight 7pm` |`some output` |Some remark
-
-|`command 3` |`some output` |Some remark
-
-|=======================================================================
-
-== Misc. Enhancements
-
-=== Keyboard Key Commands
-This section shows you the available keyboard key commands implemented so that you can easily +
-edit the command box. +
-No text input will be specified and you can enter any text input to test the following keyboard key functionality. +
+== Keyboard Shortcuts
+MedNus provides you with a list of Keyboard Shortcuts so that you can navigate and edit +
+the command box easily and manual test more effectively and efficiently.
 
 [width="59%",cols="20%,<40%,<40%",options="header",]
 |=======================================================================
@@ -95,3 +53,112 @@ No text input will be specified and you can enter any text input to test the fol
 |*Right* (Edit Command)|Edit Command Shortcut to autofill Prefixes |"Edit INDEX" or "e INDEX" must be present at the start of the line
 
 |=======================================================================
+
+== General Commands
+This section shows you the general commands which allow you to manipulate the filtered list display. +
+
+The following features of MedNus are tested in this section.
+
+* Help Command
+* Add Command
+* List Package
+* Bloodtype Command
+* Duplicates Command
+* Batch Command
+* Copy Command
+* Edit Command
+* Find Command
+* Delete Command
+* History Command
+* Undo Command
+* Redo Command
+* Clear Command
+* TagColor Command
+* Remark Command
+* Relation Command
+
+[cols=3,width="100%",options="header"]
+|=======================================================================
+|Command To Enter |Result display panel message |Other Observations
+
+|`help` |`Opened help window` |Help window pops up and shows user guide.
+
+|`add n/Massimo Alioto` |`New person added: Massimo Alioto Phone: - Email: - Address: - BloodType: - Remark:  Relationship:  Tags:` |New contact added to the end of Contacts panel.
+
+|`history` |`Entered commands (from most recent to earliest): +
+             add n/Massimo Alioto +
+             help` |
+
+|`add n/Sue Yoo  p/80000000 e/SY@gmail.com a/170 Bishan Street b/AB r/Allergic to Honey d/lunch, tomorrow 3pm to 4pm t/Fever` |`New person added: Sue Yoo Phone: 80000000 Email: sy@gmail.com Address: 170 Bishan Street BloodType: AB Remark: Allergic to Honey Relationship:  Tags: [Fever]` |New contact added to the end of Contacts panel.
+
+|`list reverse` |`Displayed list reverse` |Contacts list in contacts panel reversed.
+
+|`list ascending` |`Listed persons by name in ascending order`. |Contacts list in contacts panel sorted by name in ascending order.
+
+|`list descending` |`Listed persons by name in descending order` |Contacts list in contacts panel sorted by name in descending order.
+
+|`list tag xraycentre and brokenfeet or fracture and xraycentre` |`Listed all persons with specified tags` |Contacts list in contacts panel filters Zeypher Lee and Thomas Lee.
+
+|`bloodtype a` |`2 persons listed!` |Contacts list in contacts panel filters Irfan Ibrahim and Alex Yeoh.
+
+|`list` |`Listed all persons` |All contacts listed in contacts panel.
+
+|`duplicates` |`2 persons listed!` |Finds all persons who share names with at least 1 other person in MedNus
+
+|`copy 2` |`Chen Ai Li's email address has been copied to your clipboard.` |Copies email address of person at index 2 of the currently displayed list to your clipboard
+
+|`batch Flu Fever` |`Deleted Persons with Tags: [[Flu], [Fever]]` |Removes all persons with tags `Flu` or `Fever` or both.
+
+|`undo` |`Undo success!` |All previously deleted contacts are added back.
+
+|`edit 1 p/81000000 e/ZLee@gmail.com r/Feverish 3 days after accident ` |`Edited Person: Zeypher Lee Phone: 81000000 Email: zlee@gmail.com Address: 121 Thomson Road BloodType: B Remark: Feverish 3 days after accident Relationship:  Tags: [XRayCentre][BrokenFeet]` |Zeypher Lee's information edited and reflected on contacts panel.
+
+|`find peter` |`2 persons listed!` |Peter Thomas Lee and Peter Griffin listed on contacts panel
+
+|`delete 1` |`Deleted Person: Peter Thomas Lee Phone: 83382131 Email: ptl@gmail.com Address: 193 Serangoon Street BloodType: B Remark:  Relationship:  Tags: [BrokenNeck][XRayCentre]` |Peter Thomas Lee deleted from contacts list.
+
+|`list` |`Listed all persons` |All contacts listed in contacts panel.
+
+|`clear` |`Address book has been cleared!` |Deletes all contacts
+
+|`undo` |`Undo success!` |Restores all contacts
+
+|`redo`|`Redo success!` |Deletes all contacts
+
+|`undo` |`Undo success!` |Restores all contacts
+
+|`tagcolor off` |`tag color set to off` |All Tags' color in contacts panel disabled
+
+|`tagcolor random` |`tag color set to random` |All Tags' color in contacts panel set to random
+
+|`tagcolor XRayCentre blue` |`XRayCentre tag color set to blue` |All tags named `XRayCentre` are changed to blue in color
+
+|`remark 1 r/` |`Remark successfully deleted` |Removes the remark of Zeypher Lee
+
+|`remark 1 r/Waiting for XRay result` |`Remark successfully added` |Added a remark to Zeypher Lee
+
+|`relation 1 rel/Son of Thomas Lee`|`Added relationship to Person: Zeypher Lee Phone: 81000000 Email: zlee@gmail.com Address: 121 Thomson Road BloodType: B Remark: Waiting for XRay result Relationship: Son of Thomas Lee Tags: [XRayCentre][BrokenFeet]` |Added a relationship field to Zeypher Lee
+
+|`relation 1 rel/`|`Removed relationship from Person: Zeypher Lee Phone: 81000000 Email: zlee@gmail.com Address: 121 Thomson Road BloodType: B Remark: Waiting for XRay result Relationship:  Tags: [XRayCentre][BrokenFeet]` |Removed existing relationship field from Zeypher Lee
+
+|=======================================================================
+
+== Calendar Related Functionality
+This section shows you commands related to appointments and calendar views. +
+
+[cols=3,width="100%",options="header"]
+|=======================================================================
+|Command To Enter |Expected Output |Remarks
+
+|`appt` |`Rearranged contacts to show upcoming appointments.` |Contacts are sorted according to appointments
+
+|`appt 1 d/Dinner, tonight 7pm` |`some output` |Some remark
+
+|`command 3` |`some output` |Some remark
+
+|=======================================================================
+
+== Exiting MedNus
+
+> Command To Enter: `exit` +
+Result: MedNus Closes and quit.
