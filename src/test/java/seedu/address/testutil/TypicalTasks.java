@@ -16,18 +16,18 @@ public class TypicalTasks {
 
     public static final ReadOnlyTask PICNIC = new TaskBuilder().withName("picnic")
             .withDescription("Have a good time with my best friends")
-            .withStart("20-05-2018 12:00pm")
-            .withEnd("20-05-2018 13:00pm").withTags("Friends", "Fun").build();
+            .withStart("20-05-2018 11:00pm")
+            .withEnd("20-05-2018 12:00pm").withTags("Friends", "Fun").build();
 
     public static final ReadOnlyTask MEETING = new TaskBuilder().withName("meeting")
             .withDescription("Have a CS2101 group meeting for oral presentation 2")
-            .withStart("20-05-2017 12:00pm")
-            .withEnd("20-05-2017 13:00pm").withTags("Study").build();
+            .withStart("20-05-2017 11:00pm")
+            .withEnd("20-05-2017 12:00pm").withTags("Study").build();
 
     public static final ReadOnlyTask EXAM = new TaskBuilder().withName("CS2103 exam")
             .withDescription("Have a final exam for CS2103T")
-            .withStart("20-05-2017 15:00pm")
-            .withEnd("20-05-2017 16:00pm").withTags("Study").build();
+            .withStart("20-05-2016 11:00pm")
+            .withEnd("20-05-2016 12:00pm").withTags("Study").build();
 
     private TypicalTasks() {} // prevents instantiation
 

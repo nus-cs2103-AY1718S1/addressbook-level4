@@ -18,8 +18,8 @@ public class TaskBuilder {
 
     public static final String DEFAULT_NAME = "picnic";
     public static final String DEFAULT_DESCRIPTION = "have fun at Botanic Garden";
-    public static final String DEFAULT_START_DATE_TIME = "26/11/2017 12:00pm";
-    public static final String DEFAULT_END_DATE_TIME = "26/11/2017 15:00pm";
+    public static final String DEFAULT_START_DATE_TIME = "26-11-2017 08:00am";
+    public static final String DEFAULT_END_DATE_TIME = "26-11-2017 11:00am";
     public static final int DEFAULT_PRIORITY = 3;
     public static final String DEFAULT_TAGS = "friends";
 

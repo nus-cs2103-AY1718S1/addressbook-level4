@@ -81,10 +81,10 @@ public class CommandTestUtil {
     public static final String VALID_NAME_DEMO = "Project demo";
     public static final String VALID_DESCRIPTION_HOTPOT = "have a hotpot dinner with few friends in Chinatown";
     public static final String VALID_DESCRIPTION_DEMO = "demo our 2103 project to Stark Industry";
-    public static final String VALID_START_HOTPOT = "6-12-2017 12:00pm";
-    public static final String VALID_START_DEMO = "11-11-2017 9:00pm";
-    public static final String VALID_END_HOTPOT = "6-12-2017 12:00pm";
-    public static final String VALID_END_DEMO = "11-11-2017 11:00pm";
+    public static final String VALID_START_HOTPOT = "06-12-2017 10:00am";
+    public static final String VALID_START_DEMO = "11-11-2017 09:00am";
+    public static final String VALID_END_HOTPOT = "06-12-2017 12:00am";
+    public static final String VALID_END_DEMO = "11-11-2017 11:00am";
     public static final String VALID_TAG_HOTPOT = " social";
     public static final String VALID_TAG_DEMO = " important";
 

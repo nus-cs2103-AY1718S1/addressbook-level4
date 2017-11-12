@@ -78,7 +78,7 @@ public class EditTaskDescriptorBuilder {
                 descriptor.setStart(new DateTime(start));
             }
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("start time is expected to be unique.");
+            throw new IllegalArgumentException(ive.getMessage());
         }
         return this;
     }
@@ -93,7 +93,7 @@ public class EditTaskDescriptorBuilder {
                 descriptor.setEnd(new DateTime(end));
             }
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("end time is expected to be unique.");
+            throw new IllegalArgumentException(ive.getMessage());
         }
         return this;
     }
