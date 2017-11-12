@@ -14,21 +14,21 @@ public class CommandHintTest {
         parseAndAssertHint(
                 commandHint,
                 "dd ",
-                " - adds a person",
+                "adds a person",
                 "add ");
 
         commandHint = new CommandHint("ad", "ad");
         parseAndAssertHint(
                 commandHint,
                 "d ",
-                " - adds a person",
+                "adds a person",
                 "add ");
 
         commandHint = new CommandHint("find", "find");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - finds a person",
+                "finds a person",
                 "find ");
 
         commandHint = new CommandHint("j", "j");
@@ -42,91 +42,91 @@ public class CommandHintTest {
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - edits a person",
+                "edits a person",
                 "edit ");
 
         commandHint = new CommandHint("select", "select");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - selects a person",
+                "selects a person",
                 "select ");
 
         commandHint = new CommandHint("share", "share");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - shares a contact via email",
+                "shares a contact via email",
                 "share ");
 
         commandHint = new CommandHint("clear", "clear");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - clears all contacts",
+                "clears all contacts",
                 "clear ");
 
         commandHint = new CommandHint("history", "history");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - shows command history",
+                "shows command history",
                 "history ");
 
         commandHint = new CommandHint("exit", "exit");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - exits the application",
+                "exits the application",
                 "exit ");
 
         commandHint = new CommandHint("undo", "undo");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - undo previous command",
+                "undo previous command",
                 "undo ");
 
         commandHint = new CommandHint("redo", "redo");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - redo command",
+                "redo command",
                 "redo ");
 
         commandHint = new CommandHint("help", "help");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - shows user guide",
+                "shows user guide",
                 "help ");
 
         commandHint = new CommandHint("music", "music");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - plays music",
+                "plays music",
                 "music ");
 
         commandHint = new CommandHint("radio", "radio");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - plays the radio",
+                "plays the radio",
                 "radio ");
 
         commandHint = new CommandHint("alias", "alias");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - sets or show alias",
+                "sets or show alias",
                 "alias ");
 
         commandHint = new CommandHint("unalias", "unalias");
         parseAndAssertHint(
                 commandHint,
                 " ",
-                " - removes alias",
+                "removes alias",
                 "unalias ");
 
         commandHint = new CommandHint("unknown", "unknown");

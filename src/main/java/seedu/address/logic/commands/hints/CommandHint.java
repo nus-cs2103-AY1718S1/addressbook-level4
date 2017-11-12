@@ -20,6 +20,8 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ShareCommand;
 import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.Aliases;
+import seedu.address.model.UserPrefs;
 
 /**
  * Generates hint and autocompletion for command words
@@ -47,11 +49,17 @@ public class CommandHint extends Hint {
             argumentHint = "";
         } else {
             argumentHint = StringUtil.difference(commandWord, autocompleted) + " ";
-            description = " - " + getDescription(autocompleted);
+            description = getDescription(autocompleted);
         }
     }
 
     private static String getDescription(String commandWord) {
+
+        Aliases aliases = UserPrefs.getInstance().getAliases();
+        String aliasedCommand = aliases.getCommand(commandWord);
+
+        commandWord = aliasedCommand != null ? aliasedCommand : commandWord;
+
         switch (commandWord) {
         case AddCommand.COMMAND_WORD:
             return "adds a person";
