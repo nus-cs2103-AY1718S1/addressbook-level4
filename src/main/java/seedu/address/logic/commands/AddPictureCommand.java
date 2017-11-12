@@ -21,7 +21,7 @@ public class AddPictureCommand extends UndoableCommand {
             + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "Example: " + COMMAND_WORD + " 1";
     public static final String MESSAGE_ADDPIC_SUCCESS = "%1$s profile picture has been updated!";
-    public static final String MESSAGE_ADDPIC_FAILURE = "Unable to update %1$s profile picture!";
+    public static final String MESSAGE_ADDPIC_FAILURE = "Unable to update profile picture!";
 
     private final ReadOnlyPerson personToUpdate;
 
@@ -35,10 +35,8 @@ public class AddPictureCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        String messageToDisplay = MESSAGE_ADDPIC_SUCCESS;
-
         if (!model.addProfilePicture(personToUpdate)) {
-            messageToDisplay = MESSAGE_ADDPIC_FAILURE;
+            throw new CommandException(MESSAGE_ADDPIC_FAILURE);
         }
 
         ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
@@ -46,7 +44,7 @@ public class AddPictureCommand extends UndoableCommand {
 
         String currentList = ListObserver.getCurrentListName();
 
-        return new CommandResult(currentList + String.format(messageToDisplay, personToUpdate.getName()));
+        return new CommandResult(currentList + String.format(MESSAGE_ADDPIC_SUCCESS, personToUpdate.getName()));
     }
 
     @Override

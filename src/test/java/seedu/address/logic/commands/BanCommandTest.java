@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -28,26 +29,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BanCommandTest extends CommandTest {
 
     @Test
-    public void execute_banPersonTwice_success() {
-        try {
-            ReadOnlyPerson personToBan = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
-            String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
-                    + String.format(BanCommand.MESSAGE_BAN_BLACKLISTED_PERSON_FAILURE, personToBan.getName());
-
-            ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-            expectedModel.addBlacklistedPerson(personToBan);
-
-            prepareCommand(INDEX_FIRST_PERSON).execute();
-            BanCommand banCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-            assertCommandSuccess(banCommand, model, expectedMessage, expectedModel);
-        } catch (CommandException ce) {
-            ce.printStackTrace();
-        }
-    }
-
-    @Test
     public void execute_validIndexUnfilteredList_success() {
         try {
             ReadOnlyPerson personToBan = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -62,6 +43,23 @@ public class BanCommandTest extends CommandTest {
             assertCommandSuccess(banCommand, model, expectedMessage, expectedModel);
             assertTrue(personToBan.getAsText().equals(model.getFilteredPersonList()
                     .get(INDEX_FIRST_PERSON.getZeroBased()).getAsText()));
+        } catch (CommandException ce) {
+            ce.printStackTrace();
+        }
+    }
+
+    @Test
+    public void execute_banPersonTwice_failure() {
+        try {
+            ReadOnlyPerson personToBan = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+            String expectedMessage = String.format(BanCommand.MESSAGE_BAN_BLACKLISTED_PERSON_FAILURE,
+                    personToBan.getName());
+
+            prepareCommand(INDEX_FIRST_PERSON).execute();
+            BanCommand banCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+            assertCommandFailure(banCommand, model, expectedMessage);
         } catch (CommandException ce) {
             ce.printStackTrace();
         }

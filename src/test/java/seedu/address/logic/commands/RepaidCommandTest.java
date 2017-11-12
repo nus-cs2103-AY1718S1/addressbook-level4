@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -28,22 +29,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class RepaidCommandTest extends CommandTest {
 
     @Test
-    public void execute_repaidPersonTwice_success() throws Exception {
-        ReadOnlyPerson repaidPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
-        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
-                + String.format(RepaidCommand.MESSAGE_REPAID_PERSON_FAILURE, repaidPerson.getName());;
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addWhitelistedPerson(repaidPerson);
-
-        prepareCommand(INDEX_FIRST_PERSON).execute();
-        RepaidCommand repaidCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-        assertCommandSuccess(repaidCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ReadOnlyPerson repaidPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         RepaidCommand repaidCommand = prepareCommand(INDEX_FIRST_PERSON);
@@ -55,6 +40,18 @@ public class RepaidCommandTest extends CommandTest {
         expectedModel.addWhitelistedPerson(repaidPerson);
 
         assertCommandSuccess(repaidCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_repaidPersonTwice_failure() throws Exception {
+        ReadOnlyPerson repaidPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        String expectedMessage = String.format(RepaidCommand.MESSAGE_REPAID_PERSON_FAILURE, repaidPerson.getName());
+
+        prepareCommand(INDEX_FIRST_PERSON).execute();
+        RepaidCommand repaidCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        assertCommandFailure(repaidCommand, model, expectedMessage);
     }
 
     @Test
