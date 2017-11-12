@@ -978,6 +978,7 @@ The changelog contains features and improvements added in different major update
 * Colour coded meetings based on time left until meeting
 * Specify path for backup copies
 * Autocompletion ranks suggestions based on usage
+* A more powerful `find` command
 * Filter meetings by month or year
 
 == FAQ
