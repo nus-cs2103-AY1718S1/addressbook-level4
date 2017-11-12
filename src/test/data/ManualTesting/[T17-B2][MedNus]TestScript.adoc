@@ -30,10 +30,40 @@ You can download the latest `SampleData.xml` link:https://github.com/CS2103AUG20
 . The new data set should be uploaded and you can now start the manual testing.
 
 == General Commands
+This section shows you the general commands which allow you to manipulate the filtered list display. +
 
+[cols=3,width="100%",options="header"]
+|=======================================================================
+|Command To Enter |Expected Output |Remarks
+
+|`copy 2` |`Amanda Lee's email address has been copied to your clipboard.` |Copies email address of person at index 2 of the currently displayed list to your clipboard
+
+|`duplicates` |`2 persons listed!` |Finds all persons who share names with at least 1 other person in MedNus
+
+|`batch Flu Fever` |`Deleted Persons with Tags: [[Flu], [Fever]]` |Removes all persons with tags `Flu` or `Fever` or both. Undo this by typing `undo` before proceeding to the next step
+
+|`command 4` |`some output` |Some remark
+
+|`command 5` |`some output` |Some remark
+
+|`command 6` |`some output` |Some remark
+
+|=======================================================================
 
 == Calendar Related Functionality
+This section shows you commands related to appointments and calendar views. +
 
+[cols=3,width="100%",options="header"]
+|=======================================================================
+|Command To Enter |Expected Output |Remarks
+
+|`command 1` |`some output` |Some remark
+
+|`command 2` |`some output` |Some remark
+
+|`command 3` |`some output` |Some remark
+
+|=======================================================================
 
 == Misc. Enhancements
 
