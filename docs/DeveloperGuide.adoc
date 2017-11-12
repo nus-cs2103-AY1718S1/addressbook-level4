@@ -718,6 +718,26 @@ The automatic opening of email on the user's desktop is facilitated mainly by th
 to launch the default mail application registered inside the user's native desktop to handle the email `URI`.
 // end::emailMech[]
 
+// tag::calendarMech[]
+=== Calendar
+
+An in-built calendar is added to the panel beside the list of events. This calendar shows a monthly view of the
+current month.
+
+This is useful for users to be able to compare their list of events in the calendar. It can help users to check what
+day of the week their event is happening on. This is especially useful for NUS students as there is a fixed daily
+schedule and it would be easy to check what day it falls on to ensure their availability for the event. Other usages
+include having to see what dates lie on a particular day for students to plan weekly events. All in all, it provides a
+convenient way for students to have access to a calendar without having to open any external applications.
+
+==== Design Considerations
+
+*Aspect:*
+
+image::EventCalendarClassDiagram.png[width="300"]
+_Figure 4.9 : Reminders via different colour schemes to indicate urgency_
+// end::calendarMech[]
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).

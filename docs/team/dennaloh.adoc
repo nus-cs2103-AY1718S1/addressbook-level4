@@ -8,7 +8,7 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancements Added: Sorting Contacts by Name, Finding Contacts by Tag, Email Command
+=== Enhancements Added: Sorting Contacts by Name, Finding Contacts by Tag, Email Command, In-built Calendar
 
 ==== External behavior
 
@@ -53,17 +53,27 @@ Users can easily search for their contacts on Facebook. As most people use socia
 their friends' or family's lives, they often want to add them of platforms such as Facebook. This feature offers a
 convenient way for users to search for any of their contacts on Facebook to add them.
 
+*Calendar*
+This allows users to be able to easily check their events with a monthly view to see what day of the week it is and be
+able to clearly see in how many weeks time is the event happening. Also, users can use it to look at the calendar
+conveniently without having to open any external applications. A calendar is often used when doing scheduling or
+planning and is thus useful when placed with the events.
+
 ==== Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=emailMech]
 
-#End of Extract#
+include::../DeveloperGuide.adoc[tag=calendarMech]
 
 ---
 
-=== Enhancement Proposed: Add Subject and more emails via command line
+=== Enhancement Proposed: Add Subject and more emails via command line, More Interactive Calendar
 
+*Email*
 This will make it more convenient to email multiple people at once.
+
+*Calendar*
+Future plans include highlighting today's date, having weekly or even yearly views, being able to view any month
+instead of just the current month. Future enhancements also include integrating the list of events into the calendar.
