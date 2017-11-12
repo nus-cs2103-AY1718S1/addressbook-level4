@@ -9,7 +9,7 @@ import seedu.address.model.AddressBook;
  */
 public class BinclearCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "bin-fresh";
+    public static final String COMMAND_WORD = "bin-clear";
     public static final String MESSAGE_SUCCESS = "Recyclebin has been cleared!";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Clear all the person in the recyclebin.";
 
@@ -18,7 +18,6 @@ public class BinclearCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.resetRecyclebin(new AddressBook());
-        //EventsCenter.getInstance().post(new ClearPersonListEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

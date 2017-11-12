@@ -21,6 +21,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeBrightThemeEvent;
 import seedu.address.commons.events.ui.ChangeDarkThemeEvent;
+import seedu.address.commons.events.ui.ChangeDefaultThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -45,6 +46,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private RecycleBinPanel recycleBinPanel;
     private PersonDetailsPanel personDetailsPanel;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
@@ -54,6 +56,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane contactDetailsPlaceholder;
+
+    @FXML
+    private StackPane recycleBinListPlaceHolder;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -157,6 +162,9 @@ public class MainWindow extends UiPart<Region> {
 
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        recycleBinPanel = new RecycleBinPanel(logic.getRecycleBinList(), infoDisplayPlaceholder);
+        recycleBinListPlaceHolder.getChildren().add(recycleBinPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -304,7 +312,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleDefaultThemeEvent(ChangeBrightThemeEvent event) {
+    private void handleDefaultThemeEvent(ChangeDefaultThemeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         changeToDefaultTheme();
     }

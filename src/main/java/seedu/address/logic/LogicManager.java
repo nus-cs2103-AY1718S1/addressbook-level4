@@ -52,6 +52,11 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public ObservableList<ReadOnlyPerson> getRecycleBinList() {
+        return model.getRecycleBinPersonList();
+    }
+
+    @Override
     public ObservableList<Event> getEventList() {
         return model.getEventList();
     }

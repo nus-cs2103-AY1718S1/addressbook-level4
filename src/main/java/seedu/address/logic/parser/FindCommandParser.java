@@ -63,8 +63,6 @@ public class FindCommandParser implements Parser<FindCommand> {
                 }
             }
             trimmedNames = trimmedArgs.substring(indexOfName + 2, attributeIndexArray[index + 1]).trim();
-            //Throw an error if there is no keyword provided for the specified type of attribute.
-            //Same below.
             if (trimmedNames.equals("")) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));

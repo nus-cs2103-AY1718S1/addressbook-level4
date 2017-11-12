@@ -21,7 +21,7 @@ include::../UserGuide.adoc[tag=tagremove]
 
 include::../UserGuide.adoc[tag=tagaddfav]
 
-include::../UserGuide.adoc[tag=tagemovefav]
+include::../UserGuide.adoc[tag=tagremovefav]
 
 #End of Extract#
 
@@ -36,9 +36,9 @@ include::../UserGuide.adoc[tag=tagemovefav]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=tadd]
+include::../DeveloperGuide.adoc[tag=tagadd]
 
-include::../DeveloperGuide.adoc[tag=tremove]
+include::../DeveloperGuide.adoc[tag=tagremove]
 
 #End of Extract#
 

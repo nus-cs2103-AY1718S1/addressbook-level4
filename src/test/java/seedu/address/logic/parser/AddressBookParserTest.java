@@ -24,6 +24,8 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BinclearCommand;
 import seedu.address.logic.commands.BindeleteCommand;
 import seedu.address.logic.commands.BinrestoreCommand;
+import seedu.address.logic.commands.BirthdayAddCommand;
+import seedu.address.logic.commands.BirthdayRemoveCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -37,6 +39,7 @@ import seedu.address.logic.commands.MapRouteCommand;
 import seedu.address.logic.commands.MapShowCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SwitchThemeCommand;
 import seedu.address.logic.commands.TagAddCommand;
 import seedu.address.logic.commands.TagAddCommand.TagAddDescriptor;
 import seedu.address.logic.commands.TagFindCommand;
@@ -44,6 +47,7 @@ import seedu.address.logic.commands.TagRemoveCommand;
 import seedu.address.logic.commands.TagRemoveCommand.TagRemoveDescriptor;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -51,7 +55,7 @@ import seedu.address.model.tag.TagMatchingKeywordPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
-//@@author Pengyuz
+
 public class AddressBookParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -64,7 +68,7 @@ public class AddressBookParserTest {
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
     }
-
+    //@@author Pengyuz
     @Test
     public void parseCommand_create() throws Exception {
         Person person = new PersonBuilder().build();
@@ -78,7 +82,7 @@ public class AddressBookParserTest {
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getPutCommand(person));
         assertEquals(new AddCommand(person), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
@@ -93,7 +97,7 @@ public class AddressBookParserTest {
                 DeleteCommand.COMMAND_WORD + " I/" + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(todelete), command);
     }
-
+    //@@author Pengyuz
     @Test
     public void parseCommand_remove() throws Exception {
         ArrayList<Index> todelete = new ArrayList<>();
@@ -111,7 +115,7 @@ public class AddressBookParserTest {
                 DeleteCommand.COMMAND_WORD_3 + " I/" + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(todelete), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
@@ -140,7 +144,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommandTagAdd() throws Exception {
+    public void parseCommand_tagAdd() throws Exception {
         Person person = new PersonBuilder().build();
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(INDEX_FIRST_PERSON);
@@ -155,7 +159,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommandLooseTagFind() throws Exception {
+    public void parseCommand_looseTagFind() throws Exception {
         boolean looseFind = true;
         TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate("friend", looseFind);
         TagFindCommand command = (TagFindCommand) parser.parseCommand(TagFindCommand.COMMAND_WORD
@@ -164,7 +168,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommandTagRemove() throws Exception {
+    public void parseCommand_tagRemove() throws Exception {
         Person person = new PersonBuilder().build();
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(INDEX_FIRST_PERSON);
@@ -179,11 +183,23 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_theme() throws Exception {
+        String themeChoice1 = "1";
+        String themeChoice2 = "Twilight";
+        SwitchThemeCommand command1 = new SwitchThemeCommand(themeChoice1);
+        assertEquals(new SwitchThemeCommand(themeChoice1), command1);
+
+        SwitchThemeCommand command2 = new SwitchThemeCommand(themeChoice2);
+        assertEquals(new SwitchThemeCommand(themeChoice2), command2);
+    }
+
+    @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
+    //@@author dalessr
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("n/", "foo", "bar", "baz");
@@ -192,6 +208,26 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
+    @Test
+    public void parseCommand_birthdayAdd() throws Exception {
+        List<String> keywords = Arrays.asList("1", "01/01/2000");
+        BirthdayAddCommand command = (BirthdayAddCommand) parser.parseCommand(
+                BirthdayAddCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        Index firstIndex = new Index(0);
+        Birthday birthday = new Birthday("01/01/2000");
+        assertEquals(new BirthdayAddCommand(firstIndex, birthday), command);
+    }
+
+    @Test
+    public void parseCommand_birthdayRemove() throws Exception {
+        List<String> keywords = Arrays.asList("1");
+        BirthdayRemoveCommand command = (BirthdayRemoveCommand) parser.parseCommand(
+                BirthdayRemoveCommand.COMMAND_WORD + " " + keywords.get(0) + "");
+        Index firstIndex = new Index(0);
+        assertEquals(new BirthdayRemoveCommand(firstIndex), command);
+    }
+
+    //@@author Pengyuz
     @Test
     public void parseCommand_search() throws Exception {
         List<String> keywords = Arrays.asList("n/", "foo", "bar", "baz");
@@ -207,7 +243,7 @@ public class AddressBookParserTest {
                 FindCommand.COMMAND_WORD_3 + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
@@ -278,6 +314,7 @@ public class AddressBookParserTest {
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author dalessr
     @Test
     public void parseCommand_map_show() throws Exception {
         MapShowCommand command = (MapShowCommand) parser.parseCommand(
@@ -293,7 +330,7 @@ public class AddressBookParserTest {
                         + PREFIX_ADDRESS + startLocation);
         assertEquals(new MapRouteCommand(INDEX_FIRST_PERSON, startLocation), command);
     }
-
+    //@@author Pengyuz
     @Test
     public void parseCommand_binclear() throws Exception {
         assertTrue(parser.parseCommand(BinclearCommand.COMMAND_WORD) instanceof BinclearCommand);
@@ -317,7 +354,7 @@ public class AddressBookParserTest {
                 BinrestoreCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new BinrestoreCommand(todelete), command);
     }
-
+    //@@author
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
