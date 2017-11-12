@@ -506,10 +506,13 @@ To make use of the autocomplete feature for commands, simply type in the first f
 to use:
 
 image::autocompleteWithStartOfAddCommand.PNG[width="400"]
+_Figure 5.21.1 : Fill in the first few letters of the command you want to use. In this case, we want to use the `Add`
+ command, so we enter `a` into the text field_
 
 now press the kbd:[Tab] key: +
 
 image::autocompleteWithFullAddCommand.PNG[width="400"]
+_Figure 5.21.2 : After kbd:[Tab] is pressed Ark will fill in the command for you_
 
 Ark will then fill in the rest for you if there is a match.
 
@@ -517,24 +520,34 @@ If there is more than one possibility for the autocompletion, Ark will display t
 below.
 
 image::autocompleteWithEditCommandCycle.PNG[width="400"]
-_Figure 5.21.1 : If there are multiple autocomplete options, the options will be displayed in the result window_
+_Figure 5.21.3 : If there are multiple autocomplete options, the options will be displayed in the result window_
 
 In this case, you can press tab to cycle through the different options available.
 
 image::autocompleteWithExitCommandCycle.PNG[width="400"]
+_Figure 5.21.4 : Pressing kbd:[Tab] again will cycle to the next matching command_
 
 *Autocomplete for prefixes and indexes* +
 For commands that require prefixes, you can press kbd:[Tab] after filling in the command word.Ark will bring you to the
 next missing prefix for you to fill in. After this, you can then press tab to cycle through the list of prefixes.
 
 image::autocompleteWithFullAddCommandAndOnePrefix.PNG[width="400"]
+_Figure 5.21.4 : After filling in the command into the text field, pressing kbd:[Tab] will bring you
+ to the first missing prefix_
+
 image::autocompleteWithFullAddCommandAndOnePrefixCycle.PNG[width="400"]
+_Figure 5.21.5 : Pressing kbd:[Tab] will cycle to the next missing prefix_
+
 
 For commands that require indexes, you can press kbd:[Tab] after filling in the command word. Ark will then
 allow you to cycle through the indexes available by pressing kbd:[Tab]
 
 image::autocompleteWithStartOfSelectCommand.PNG[width="400"]
+_Figure 5.21.6 : After filling in the command into the text field, pressing kbd:[Tab] will bring you
+ to the first available index_
+
 image::autocompleteWithStartOfSelectCommandCycle.PNG[width="400"]
+_Figure 5.21.7 : Pressing kbd:[Tab] will cycle to the next available index_
 Examples:
 
 * `a` + kbd:[Tab] (auto-completes with `add` in the command line input)
