@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
     <persons>
-        <name>Dummy Contact</name>
-        <handphone>91111111</handphone>
-        <homePhone>61111111</homePhone>
-        <officePhone>60006002</officePhone>
-        <email>dummy@example.com</email>
-        <address>Dummy Avenue</address>
-        <postalCode>554403</postalCode>
-        <debt>200</debt>
-        <totalDebt>200</totalDebt>
-        <interest>1</interest>
-        <dateBorrow>Sun, 12 Nov, Year 2017</dateBorrow>
-        <deadline>02-02-2020</deadline>
-        <dateRepaid>NOT REPAID</dateRepaid>
-        <lastAccruedDate>Sun, 12 Nov, Year 2017</lastAccruedDate>
-        <isBlacklisted>false</isBlacklisted>
-        <isWhitelisted>false</isWhitelisted>
-        <hasOverdueDebt>false</hasOverdueDebt>
-        <hasDisplayPicture>false</hasDisplayPicture>
-        <tagged>unfriendly</tagged>
-        <tagged>tricky</tagged>
-    </persons>
-    <persons>
         <name>Bernice Yu</name>
         <handphone>99272758</handphone>
         <homePhone>62772222</homePhone>
@@ -30,8 +8,8 @@
         <email>berniceyu@example.com</email>
         <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
         <postalCode>554403</postalCode>
-        <debt>120.00</debt>
-        <totalDebt>600.00</totalDebt>
+        <debt>20.00</debt>
+        <totalDebt>500.00</totalDebt>
         <interest>1</interest>
         <dateBorrow>Sun, 12 Nov, Year 2017</dateBorrow>
         <deadline>02-02-2020</deadline>
