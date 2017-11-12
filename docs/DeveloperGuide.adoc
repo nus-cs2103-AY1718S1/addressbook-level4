@@ -591,7 +591,46 @@ Both current choices above facilitate the creation of link:#viewing-of-user-s-ag
 //tag::scheduleMultiple[]
 === Scheduling an Activity with Multiple Persons [Since v1.4]
 
+This enhancement builds upon the schedule feature developed in v1.3, which allows users to schedule an activity with one person. The code snippet from `ScheduleCommand` below shows how scheduling an activity with multiple persons is achieved.
 
+[source, java]
+----
+@Override
+public CommandResult executeUndoableCommand() throws CommandException {
+
+    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+    for (Index index: indices) {
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
+        Schedule schedule = new Schedule(date, activity, schedulePerson.getName());
+
+        Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
+
+        if (!schedulePerson.getSchedules().contains(schedule)) {
+            schedules.add(schedule);
+        }
+
+        Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(),
+                schedulePerson.getCountry(), schedulePerson.getEmails(), schedulePerson.getAddress(), schedules,
+                schedulePerson.getTags());
+        try {
+            model.updatePerson(schedulePerson, scheduleAddedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+    }
+    model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+
+    return new CommandResult(String.format(MESSAGE_SCHEDULE_SUCCESS, indices.size()));
+}
+----
 
 ==== Design Considerations
 //end::scheduleMultiple[]

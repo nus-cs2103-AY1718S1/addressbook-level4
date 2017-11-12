@@ -68,7 +68,7 @@ public class ScheduleCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_SCHEDULE_SUCCESS, indices.size()));
     }
 
-    //@@author 17navasaw
+    //@@author CT15
     /**
      * Updates address book model with new schedule set for each person.
      * @param model Model of address book.
@@ -109,6 +109,7 @@ public class ScheduleCommand extends UndoableCommand {
         }
     }
 
+    //@@author 17navasaw
     /**
      * Returns a set of person names involved in the scheduling of the activity.
      * @param model Model of address book.
