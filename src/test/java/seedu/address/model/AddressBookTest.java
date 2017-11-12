@@ -71,12 +71,13 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author chernghann
     @Test
     public void getEventList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getEventList().remove(0);
     }
-
+    //@@author
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */

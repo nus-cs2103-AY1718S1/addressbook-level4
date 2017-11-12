@@ -147,7 +147,7 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
-        case ThemeListCommand.COMMAND_WORD: case ThemeListCommand.COMMAND_ALIAS:
+        case ThemeListCommand.COMMAND_WORD:
             return new ThemeListCommand();
 
         case SwitchThemeCommand.COMMAND_WORD: case SwitchThemeCommand.COMMAND_ALIAS:
@@ -159,7 +159,7 @@ public class AddressBookParser {
             } else {
                 throw new ParseException(MESSAGE_INVALID_EVENT_PLATFORM);
             }
-        case DeleteEventCommand.COMMAND_WORD:
+        case DeleteEventCommand.COMMAND_WORD: case DeleteEventCommand.COMMAND_ALIAS:
             if (!personListActivated) {
                 return new DeleteEventCommandParser().parse(arguments);
             } else {
@@ -181,7 +181,7 @@ public class AddressBookParser {
             } else {
                 throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
             }
-        case FavouriteListCommand.COMMAND_WORD: case FavouriteListCommand.COMMAND_ALIAS:
+        case FavouriteListCommand.COMMAND_WORD:
             if (personListActivated) {
                 return new FavouriteListCommand();
             } else {

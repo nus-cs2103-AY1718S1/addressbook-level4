@@ -1,8 +1,8 @@
 # DarrenCzen
-###### /java/seedu/address/commons/events/ui/AccessLocationRequestEvent.java
+###### \java\seedu\address\commons\events\ui\AccessLocationRequestEvent.java
 ``` java
 /**
- * An event requesting to view the location of a person.
+ * Indicates a request to load the location of a person on Google Maps Search in the Browser.
  */
 public class AccessLocationRequestEvent extends BaseEvent {
     public final String location;
@@ -17,10 +17,10 @@ public class AccessLocationRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/AccessWebsiteRequestEvent.java
+###### \java\seedu\address\commons\events\ui\AccessWebsiteRequestEvent.java
 ``` java
 /**
- * An event requesting to view the website of a person.
+ * Indicates a request to load the website of a person in the Browser.
  */
 public class AccessWebsiteRequestEvent extends BaseEvent {
 
@@ -36,7 +36,41 @@ public class AccessWebsiteRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AccessCommand.java
+###### \java\seedu\address\commons\events\ui\EventPanelUnselectEvent.java
+``` java
+/**
+ * Indicates a request to unselect an event card in the case of a delete or switching of platforms
+ */
+public class EventPanelUnselectEvent extends BaseEvent {
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\TogglePanelEvent.java
+``` java
+
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Indicates a request to toggle the list panel
+ */
+public class TogglePanelEvent extends BaseEvent {
+
+    public final String selectedPanel;
+
+    public TogglePanelEvent(String selectedPanel) {
+        this.selectedPanel = selectedPanel;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\logic\commands\AccessCommand.java
 ``` java
 /**
  * Accesses a person's website in the address book.
@@ -85,7 +119,7 @@ public class AccessCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditCommand.java
+###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
         public void setWebsite(Website website) {
             this.website = website;
@@ -96,7 +130,7 @@ public class AccessCommand extends Command {
         }
 
 ```
-###### /java/seedu/address/logic/commands/LocationCommand.java
+###### \java\seedu\address\logic\commands\LocationCommand.java
 ``` java
 /**
  * Accesses a person's location in the address book.
@@ -145,7 +179,7 @@ public class LocationCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
  * Sorts all persons in the address book alphabetically for the user.
@@ -164,7 +198,7 @@ public class SortCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AccessCommandParser.java
+###### \java\seedu\address\logic\parser\AccessCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AccessCommand object
@@ -187,7 +221,7 @@ public class AccessCommandParser implements Parser<AccessCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddCommandParser.java
+###### \java\seedu\address\logic\parser\AddCommandParser.java
 ``` java
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -247,7 +281,171 @@ public class AccessCommandParser implements Parser<AccessCommand> {
     }
 
 ```
-###### /java/seedu/address/logic/parser/LocationCommandParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
+``` java
+/**
+ * Parses user input.
+ */
+public class AddressBookParser {
+
+    /**
+     * Used for initial separation of command word and args.
+     */
+    private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    /**
+     * Used to control lock mechanism for different commands between person and events platforms.
+     */
+    private static Boolean personListActivated = true;
+
+    /**
+     * Parses user input into command for execution.
+     *
+     * @param userInput full user input string
+     * @return the command based on the user input
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public Command parseCommand(String userInput) throws ParseException {
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        final String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
+        switch (commandWord) {
+        case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new AddCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case AccessCommand.COMMAND_WORD:
+            if (personListActivated) {
+                return new AccessCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new EditCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case SelectCommand.COMMAND_WORD: case SelectCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new SelectCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case DeleteCommand.COMMAND_WORD: case DeleteCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new DeleteCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case ClearCommand.COMMAND_WORD: case ClearCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new ClearCommand();
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case FindCommand.COMMAND_WORD: case FindCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new FindCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case FindTagCommand.COMMAND_WORD: case FindTagCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new FindTagCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case LocationCommand.COMMAND_WORD:
+            if (personListActivated) {
+                return new LocationCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case SortCommand.COMMAND_WORD:
+            if (personListActivated) {
+                return new SortCommand();
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
+            personListActivated = true;
+            return new ListCommand();
+
+        case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
+            return new HistoryCommand();
+
+        case ExitCommand.COMMAND_WORD: case ExitCommand.COMMAND_ALIAS:
+            return new ExitCommand();
+
+        case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
+            return new HelpCommand();
+
+        case UndoCommand.COMMAND_WORD: case UndoCommand.COMMAND_ALIAS:
+            return new UndoCommand();
+
+        case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
+            return new RedoCommand();
+
+        case ThemeListCommand.COMMAND_WORD: case ThemeListCommand.COMMAND_ALIAS:
+            return new ThemeListCommand();
+
+        case SwitchThemeCommand.COMMAND_WORD: case SwitchThemeCommand.COMMAND_ALIAS:
+            return new SwitchThemeCommandParser().parse(arguments);
+
+        case AddEventCommand.COMMAND_WORD: case AddEventCommand.COMMAND_ALIAS:
+            if (!personListActivated) {
+                return new AddEventCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_EVENT_PLATFORM);
+            }
+        case DeleteEventCommand.COMMAND_WORD:
+            if (!personListActivated) {
+                return new DeleteEventCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_EVENT_PLATFORM);
+            }
+        case EventsCommand.COMMAND_WORD:
+            personListActivated = false;
+            return new EventsCommand();
+
+        case FavouriteCommand.COMMAND_WORD: case FavouriteCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new FavouriteCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case UnfavouriteCommand.COMMAND_WORD: case UnfavouriteCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new UnfavouriteCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case FavouriteListCommand.COMMAND_WORD: case FavouriteListCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new FavouriteListCommand();
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        case BirthdaysCommand.COMMAND_WORD: case BirthdaysCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new BirthdaysCommand();
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+        default:
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\LocationCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AccessCommand object
@@ -271,7 +469,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /** Ensures that every person in the AddressBook
      *  is sorted in an alphabetical order.
@@ -281,7 +479,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public synchronized void sort() {
@@ -291,7 +489,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/Address.java
+###### \java\seedu\address\model\person\Address.java
 ``` java
     /**
      * Validates given address.
@@ -318,35 +516,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/Birthday.java
-``` java
-    /**
-     * Validates given address.
-     *
-     * @throws IllegalValueException if given address string is invalid.
-     */
-    public Birthday(String birthday) throws IllegalValueException {
-        if (birthday == null) {
-            this.value = BIRTHDAY_TEMPORARY;
-        } else {
-            String trimmedBirthday = birthday.trim();
-            if (!isValidBirthday(trimmedBirthday)) {
-                throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
-            }
-            this.value = trimmedBirthday;
-        }
-    }
-
-
-    /**
-     * Returns true if a given string is a valid person birthday.
-     */
-    public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX)
-                || test.matches(BIRTHDAY_TEMPORARY);
-    }
-```
-###### /java/seedu/address/model/person/HomeNumber.java
+###### \java\seedu\address\model\person\HomeNumber.java
 ``` java
     /**
      * Validates given home number.
@@ -374,9 +544,11 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/Name.java
+###### \java\seedu\address\model\person\Name.java
 ``` java
     /**
+     * This method was adapted from user, scottb, on StackOverFlow.
+     * Code Implementation: https://stackoverflow.com/a/15738441
      * This method converts a name to become capitalized fully.
      * e.g. from "dArrEn cHiN" to "Darren Chin"
      */
@@ -395,13 +567,14 @@ public class LocationCommandParser implements Parser<LocationCommand> {
         return newString.toString();
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
+
     public void setWebsite(Website website) {
         this.website.set(requireNonNull(website));
     }
 ```
-###### /java/seedu/address/model/person/SchEmail.java
+###### \java\seedu\address\model\person\SchEmail.java
 ``` java
     /**
      * Validates given email.
@@ -429,7 +602,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
      * Sorts every person in the list alphabetically.
@@ -440,7 +613,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/Website.java
+###### \java\seedu\address\model\person\Website.java
 ``` java
 /**
  * Represents a Person's website information in the address book.
@@ -504,7 +677,7 @@ public class Website {
 
 }
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     /**
      * Access website through browser panel based on person's link
@@ -520,7 +693,7 @@ public class Website {
     }
 
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     @Subscribe
     private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
@@ -533,5 +706,169 @@ public class Website {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonLocation(event.location);
     }
+
+```
+###### \java\seedu\address\ui\EventsDetailsPanel.java
+``` java
+/**
+ * The Details Panel of the App that displays full information of a {@code Event}.
+ */
+public class EventsDetailsPanel extends UiPart<Region> {
+
+    private static final String FXML = "EventsDetailsPanel.fxml";
+    private static final String PREFIX_ADDRESS_FIELD = "Address: ";
+    private static final String PREFIX_DATE_FIELD = "Date: ";
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private Logic logic;
+
+
+    @FXML
+    private Pane pane;
+    @FXML
+    private Label name;
+    @FXML
+    private Text addressField;
+    @FXML
+    private Label address;
+    @FXML
+    private Text dateField;
+    @FXML
+    private Label date;
+
+    public EventsDetailsPanel() {
+        super(FXML);
+        this.logic = logic;
+        loadBlankPage();
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Loads the full info of the Event
+     * @param event the selected event to display the full info of.
+     */
+    public void loadEventInfo(ReadOnlyEvent event) {
+        addressField.setText(PREFIX_ADDRESS_FIELD);
+        dateField.setText(PREFIX_DATE_FIELD);
+        bindListeners(event);
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Event} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(ReadOnlyEvent event) {
+        name.textProperty().bind(Bindings.convert(event.nameProperty()));
+        address.textProperty().bind(Bindings.convert(event.addressProperty()));
+        date.textProperty().bind(Bindings.convert(event.dateProperty()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EventsDetailsPanel)) {
+            return false;
+        }
+
+        EventsDetailsPanel eventsDetailsPanel = (EventsDetailsPanel) other;
+        return name.getText().equals(eventsDetailsPanel.name.getText())
+                && address.getText().equals(eventsDetailsPanel.address.getText())
+                && date.getText().equals(eventsDetailsPanel.date.getText());
+    }
+
+    /**
+     * Sets all info fields to not display anything when the app is just started.
+     */
+    public void loadBlankPage() {
+        Label label;
+        Text text;
+        for (Node node: pane.getChildren()) {
+            if (node instanceof Label) {
+                label = (Label) node;
+                label.setText("");
+            } else if (node instanceof Text) {
+                text = (Text) node;
+                text.setText("");
+            } else if (node instanceof TextFlow) {
+                for (Node subNode: ((TextFlow) node).getChildren()) {
+                    if (subNode instanceof Text) {
+                        text = (Text) subNode;
+                        text.setText("");
+                    }
+                    if (subNode instanceof Label) {
+                        label = (Label) subNode;
+                        label.setText("");
+                    }
+                }
+            }
+        }
+    }
+
+    @Subscribe
+    private void handleEventPanelSelectionChangedEvent(EventPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadEventInfo(event.getNewSelection().event);
+    }
+
+    @Subscribe
+    private void handleUnselectOfEventCardEvent(EventPanelUnselectEvent event) {
+        unregisterAsAnEventHandler(this);
+    }
 }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    private void handleToggleEvent(TogglePanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleToggle(event.selectedPanel);
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    private void handleUnselectOfEventCardEvent(EventPanelUnselectEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        eventsDetailsPanel = new EventsDetailsPanel();
+        eventsDetailsPanelPlaceholder.getChildren().clear();
+        eventsDetailsPanelPlaceholder.getChildren().add(eventsDetailsPanel.getRoot());
+
+    }
+```
+###### \resources\view\EventsDetailsPanel.fxml
+``` fxml
+
+<StackPane fx:id="eventsDetailsPanel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox fx:id="pane" prefHeight="600.0" prefWidth="800.0">
+        <children>
+            <Label fx:id="name" alignment="TOP_LEFT" prefHeight="50.0" prefWidth="360.0" styleClass="window_big_label" text="\$name" wrapText="true">
+            <VBox.margin>
+               <Insets left="10.0" top="10.0" />
+            </VBox.margin></Label>
+            <TextFlow prefHeight="50.0" prefWidth="400.0">
+                <children>
+                    <Text fx:id="dateField" fill="gray" styleClass="window_small_label" text="Date:" />
+                    <Label fx:id="date" styleClass="window_small_label" text="\$date" />
+                </children>
+            <padding>
+               <Insets left="10.0" />
+            </padding>
+            </TextFlow>
+            <TextFlow prefHeight="50.0" prefWidth="400.0">
+                <children>
+                    <Text fx:id="addressField" fill="gray" styleClass="window_small_label" text="Address: " />
+                    <Label fx:id="address" alignment="TOP_LEFT" maxHeight="800.0" styleClass="window_small_label" text="\$address" wrapText="true" />
+                </children>
+            <padding>
+               <Insets left="10.0" />
+            </padding>
+            </TextFlow>
+        </children>
+    </VBox>
+</StackPane>
 ```

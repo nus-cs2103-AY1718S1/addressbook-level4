@@ -35,7 +35,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
-    private  ReadOnlyPerson person;
+    private ReadOnlyPerson person;
     private int flag;
 
     /**

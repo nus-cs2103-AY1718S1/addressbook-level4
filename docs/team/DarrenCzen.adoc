@@ -6,8 +6,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Purpose
 
 This project portfolio displays the contributions and enhancements made to the software, The Myth's Book,
-along with its justifications. The portfolio will first introduce The Myth's Book and subsequently talk
-about the enhancements and contributions made by Darren Chin.
+along with its justifications made by Darren Chin. The portfolio will first introduce The Myth's Book and subsequently talk
+about the enhancements and other contributions.
 
 == Project: The Myth's Book
 The Myth's Book is an address book dedicated for university students to store useful information such
@@ -262,9 +262,15 @@ include::../DeveloperGuide.adoc[tag=modeswitch]
 
 ---
 
-=== Enhancement: Convert inputted names to become capitalized fully(Upper CamelCase)
+=== Enhancement Added: Convert inputted names to become capitalized fully(Upper CamelCase)
 
-Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/123/commits/cf57e5e78374ec3ee69125e8342ed27c9efa06da[#123]
+This section includes the behaviour and justification of fully capitalizing inputted names for each contact and explains how it is implemented.
+
+Suggestion from joppeel who did acceptance testing for The Myth's Book: https://github.com/CS2103AUG2017-T15-B3/main/issues/108[Suggestion]
+
+Idea adapted from user, scottb, on StackOverFlow: https://stackoverflow.com/users/2015912/scottb[Profile of scottb] https://stackoverflow.com/a/15738441[Code Implementation]
+
+My Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/123/commits/cf57e5e78374ec3ee69125e8342ed27c9efa06da[#123]
 
 ==== External behavior
 
@@ -330,6 +336,31 @@ public static String toCapitalized(String s) {
 
 ---
 
+=== Enhancement Proposed: Importing and Exporting of contacts
+==== External behavior & Justification
+
+---
+
+This enhancement proposal allows users to be able to export contacts so that the information of their
+own contacts can be conveniently imported and integrated into the same software, The Myth's Book, on another computer.
+This also helps to allows users to be able to save their contacts in a portable state that is
+able to load itself in the case of software corruption where user can just simply reinstall software
+and load the saved state of their contact list.
+
+---
+
+=== Enhancement Proposed: Phone messaging of contacts through software
+==== External behavior & Justification
+
+---
+
+This enhancement proposal will enable users to be able to send phone messages to a contact
+via The Myth's Book. By proposing such an enhancement, it will make the storing of phone
+information for contacts more useful as users would be able to send messages conveniently
+in The Myth's Book without having to access their phones.
+
+---
+
 === Other contributions
 
 ==== Additional Contributions to software application
@@ -340,6 +371,8 @@ You can click and view the attached pull request links to see some of the additi
 * Helped teammate to create an Events Details Panel for `Event` component of The Myth's Book (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/142[#142])
 * Wrote additional tests to test hashcode of person's attributes to increase test coverage (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96])
 * Implemented Aliases for basic commands (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/34[#34])
+* Increased test coverage of software by 1.5% (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/153[#153])
+
 
 ==== Contributions to software's documentation
 
@@ -347,17 +380,15 @@ These are the contributions that I have made to the documentation of The Myth's 
 As some of the documentation might be too long, parts of the documentation has been cropped into images for
 better user readability. You can click and view the attached pull request links to see more of the documentation written by me.
 
-* Wrote introduction and about of The Myth's Book for User Guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/91[#91])
+* Wrote introduction and about of The Myth's Book for User Guide & Developer Guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/91[#91])
 
-** Image of Introduction & About of User Guide
+Image of Introduction & About of User Guide
 
-image::UserGuideIntro.PNG[width="600"]
+image::UserGuideIntro.PNG[width="550"]
 
-* Wrote introduction and about of The Myth's Book for Developer Guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/91[#91])
+Image of Introduction & About of Developer Guide
 
-** Image of Introduction & About of Developer Guide
-
-image::DevGuideIntro.PNG[width="600"]
+image::DevGuideIntro.PNG[width="550"]
 
 * Added most of the user stories in software's developer guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/35[#35], https://github.com/CS2103AUG2017-T15-B3/main/pull/53[#53])
 
@@ -370,14 +401,14 @@ image::UserStoryDG.PNG[width="600"]
 
 ** Image of some prefaces written in User Guide
 
-image::PrefaceUG.PNG[width="600"]
+image::PrefaceUG.png[width="600"]
 
 
 * Added prefix table for Add Command in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
 
 ** Image of prefix table for Add Command written in User Guide
 
-image::UGPrefix.PNG[width="600"]
+image::UGPrefix.PNG[width="500"]
 
 ==== Contribution to Acceptance Testing: HitMeUp (CS2103AUG2017-W14-B3)
 

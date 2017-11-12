@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 
 //@@author archthegit
 /**
- * event to unselect a person card in the case of a delete
+ * Represents an unselection in the Person List Panel
  */
 public class PersonPanelUnselectEvent extends BaseEvent {
 

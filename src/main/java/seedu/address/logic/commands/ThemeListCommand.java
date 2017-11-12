@@ -10,8 +10,7 @@ import seedu.address.commons.events.ui.ShowThemeRequestEvent;
  */
 public class ThemeListCommand extends Command {
 
-    public static final String COMMAND_WORD = "themeslist";
-    public static final String COMMAND_ALIAS = "tl";
+    public static final String COMMAND_WORD = "themes";
 
     public static final String MESSAGE_SUCCESS = "Listed all themes";
 
