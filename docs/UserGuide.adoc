@@ -20,8 +20,8 @@ By: `MedNus`      Since: `OCT 2017`      Licence: `MIT`
 MedNus is a custom address book made for medical professionals. +
  +
 You can find many different features available in MedNus that are useful for medical professionals such as +
-recording appointments, listing your patients based on blood type and even saving a canvas drawing of your +
-patient's injury. +
+recording appointments, listing your patients based on blood type and provides you with various keyboard and +
+command shortcuts so that you can work efficiently and effectively. +
  +
 With MedNus's unique UI theme, keyboard shortcuts and productivity features, you can do your job effectively +
 and productively. +
@@ -43,7 +43,7 @@ You are required to know how to use Java to run a Graphical User Interface (GUI)
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  You can download the latest `MedNus.jar` link:{repoURL}/releases[here].
+.  You can download the latest `MedNus.jar` link:https://github.com/CS2103AUG2017-T17-B2/main/releases[here].
 .  You should create a new folder to store the jar file.
 .  Copy the jar file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
@@ -351,50 +351,46 @@ Color name input can be in english or hexadecimal form.
 // tag::appointment[]
 === Set appointment: `appointment`
 
-You can add, sort and remove appointments from a specific contact at a given index. +
+You can add and sort appointments from a specific contact at a given index. +
 
 Appointment can be set using natural language. +
-You can refer to the following http://natty.joestelmach.com/doc.jsp[link] for the supported formats. +
+You can add multiple appointments to the same contact. +
+If no end time of appointment is specified, default appointment time is 1 hour. +
 
-You can add multiple appointments to the same contact.
+*Format:* `appointment 1 d/Dinner, tonight 7pm to 10pm` +
+*Shorthand Format:* `appt 1 d/Checkup, tomorrow 10am to 12pm`
 
-[NOTE]
-If no end time is specified, default appointment time is 1 hour. +
-However, please include at least the hour and a day that can be specified. +
 
 [WARNING]
+Please do not input invalid dates/time. +
+You can refer to the following http://natty.joestelmach.com/doc.jsp[link] for the supported formats. +
 You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
 
-[width="59%",cols="<23%,<25%,<30%",options="header",]
-|=======================================================================
-|Purpose |Format |Example
 
-|Add an appointment to the contact |`appointment INDEX d/Description, TIME` |`appointment 1 d/Lunch, tomorrow 5pm to 7pm`
-
-|Shorthand for adding appointment  |`appt INDEX d/Description, TIME` |`appt 1 d/Lunch, tomorrow 5pm to 7pm`
-
-|Remove an appointment from the contact |`cancel Description with person`| `cancel lunch with James`
-
-|Sort contacts by appointment dates |`appointment` |`appointment`
-
-|Shorthand for appointment sorting |`appt` |`appt`
-
-|=======================================================================
 
 *Example:*
-
-Adding appointment +
 
 image::aptexample.png[width="800"]
     Figure 12: Appointment Command Usage Diagram for Adding
 
-Canceling appointments +
+=== Cancel Appointment: `cancel`
+
+You can cancel an appointment with contact. Refer to the agenda in the daily view to cancel appointments.
+If more than one appointment has the same description and contact, the earliest appointment will be deleted.
+
+*Format:* `cancel Dinner with Alice Lee` +
+
+
+
+[NOTE]
+If the appointment does not show on the daily view, it may be too far ahead. +
+As of v1.5, you must wait until a least
+a month before the appointment before the appointment will show up on the daily view.
+
+*Example:*
 
 image::aptexamplecancel.png[width="800"]
     Figure 13: Appointment Command Usage Diagram for Cancelling
-
-[NOTE]
-If the appointment does not show on the daily view, it may be too far ahead
 
 // end::appointment[]
 
@@ -454,6 +450,8 @@ Removing a Remark: You can remove a remark by typing 'r/' without specifying any
 
 *Examples:*
 
+You can refer to Figure 18 below for an example on using the `remark` command. +
+
 image::remarkexample.png[width="800"]
     Figure 18: Remark Command Usage Diagram
 
@@ -496,6 +494,7 @@ image::copyexample.png[width="800"]
 
 // end::copy[]
 
+// tag::relationship[]
 === Adding a person's relationships: `relation` [Since v1.5]
 
 You can add relationships to a person's details +
@@ -515,6 +514,8 @@ Existing relationships of the person will be removed
 [NOTE]
 The index refers to the index number shown in the last person listing +
 The index *must be a positive integer* `1, 2, 3, ...`
+
+// end::relationship[]
 
 === KeyBoard Shortcuts [Since v1.2]
 
@@ -635,11 +636,14 @@ You do not need to save data manually.
 
 |*Deleting a Remark* |Removes a remark from a contact |`remark INDEX r/` |`remark 1 r/`
 
-|*Adding an appointment*| Adds an appointment to a contact |`appointment INDEX d/TIME to TIME`
-| `appointment 1 d/Tonight 7pm to 8pm`
+|*Adding an appointment*| Adds an appointment to a contact |`appointment INDEX d/DESCRIPTION, TIME`
+| `appointment 1 d/Dinner, Tonight 7pm to 8pm`
 
-|*Adding an appointment Shorthand*| Adds an appointment to a contact | `appt INDEX d/TIME to TIME`
-| `appt 1 d/Tonight 7pm to 10pm`
+|*Adding an appointment Shorthand*| Adds an appointment to a contact | `appt INDEX d/DESCRIPTION, TIME`
+| `appt 1 d/Dinner, Tonight 7pm to 10pm`
+
+|*Cancel an appointment*| Cancels an appointment with a contact. Refer to agenda in daily view |
+ `cancel DESCRIPTION with NAME` | `cancel lunch with alice yeo`
 
 |*Setting all tag color to random*| Sets all tags to random color | `tagcolor random` | `tagcolor random`
 
@@ -674,6 +678,9 @@ You do not need to save data manually.
 
 |*Shift-Backspace* |Deletes a chunk of word/blank space |For Windows Users
 
-|*Right* |Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
+|*Right* (Add Command)|Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
+
+|*Right* (Edit Command)|Edit Command Shortcut to autofill Prefixes |"Edit INDEX" or "e INDEX" must be present at the start of the line
+
 |=======================================================================
 // end::shortcut[]

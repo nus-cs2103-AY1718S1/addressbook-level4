@@ -42,7 +42,10 @@ public class RemarkCommand extends UndoableCommand {
     private final Remark remark;
 
     /**
-     * Creates a RemarkCommand to add the remark
+     * Returns nothing. Setter class to set index and remark of contact.
+     *
+     * @param inputIndex Index on filtered list to add the remark to.
+     * @param inputRemark Remark to give to the contact.
      */
     public RemarkCommand(Index inputIndex, Remark inputRemark) {
         requireNonNull(inputIndex);
@@ -52,6 +55,14 @@ public class RemarkCommand extends UndoableCommand {
         this.remark = inputRemark;
     }
 
+    /**
+     * Returns success message and adds a remark to a contact.
+     *
+     * @return Success Message.
+     * @throws CommandException If index is invalid.
+     * @throws CommandException If there is a duplicate person when updating data.
+     * @throws AssertionError If person is missing from data.
+     */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -77,9 +88,10 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-     * Checks if
-     * (a) Object is the same object
-     * (b) Object is an instance of the object and that personIndex and remarkString are the same
+     * Checks if 'other' is the same object or an instance of this object.
+     *
+     * @param other Another object for evaluation.
+     * @return True if 'other' is the same object or an instance of this object.
      */
     @Override
     public boolean equals(Object other) {
@@ -90,14 +102,16 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-     * Outputs success message based on whether a remark is added or removed
+     * Returns the appropriate success message depending on whether a remark is added or removed.
+     *
+     * @param editedPerson ReadOnlyPerson that is edited.
+     * @return Remove Remark message if a remark is removed or success remark message if remark is added.
      */
     private String outputCorrectTypeOfSuccessMessage(ReadOnlyPerson editedPerson) {
         if (editedPerson.getRemark().toString().isEmpty()) {
             return String.format(MESSAGE_REMOVE_REMARK_SUCCESS, editedPerson);
-        } else {
-            return String.format(MESSAGE_REMARK_PERSON_SUCCESS, editedPerson);
         }
+        return String.format(MESSAGE_REMARK_PERSON_SUCCESS, editedPerson);
     }
 
 }

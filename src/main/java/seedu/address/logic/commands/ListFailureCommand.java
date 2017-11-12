@@ -24,7 +24,11 @@ public class ListFailureCommand extends Command {
             + COMMAND_WORD + " rev \n"
             + COMMAND_WORD + " reverse \n";
 
-
+    /**
+     * Returns a failure message to indicate invalid command available in list package.
+     *
+     * @return Failure Message.
+     */
     @Override
     public CommandResult execute() {
         return new CommandResult(MESSAGE_FAILURE);

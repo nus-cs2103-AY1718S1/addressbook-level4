@@ -18,6 +18,11 @@ public class ListReverseCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Displayed list reversed";
 
+    /**
+     * Returns success message and reverses list.
+     *
+     * @return Success Message.
+     */
     @Override
     public CommandResult execute() {
         model.listNameReversed();

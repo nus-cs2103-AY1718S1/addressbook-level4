@@ -39,11 +39,6 @@ public class AddAppointmentCommandTest {
             command = setCommand(index1, setAppointment(arg));
             result = command.execute();
             assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS);
-
-            //sort appointment
-            command = setCommandForSort();
-            result = command.execute();
-            assertEquals(result.feedbackToUser, AddAppointmentCommand.SORT_APPOINTMENT_FEEDBACK);
         } catch (seedu.address.logic.parser.exceptions.ParseException ive) {
             fail();
         }
@@ -51,9 +46,10 @@ public class AddAppointmentCommandTest {
     }
 
     @Test
-    public void outOfBoundsIndex() throws CommandException {
+    public void outOfBoundsIndex() throws CommandException, seedu.address.logic.parser.exceptions.ParseException {
         thrown.expect(CommandException.class);
-        setCommand(Index.fromOneBased(100), null).execute();
+        setCommand(Index.fromOneBased(100),
+                AddAppointmentParser.getAppointmentFromString("lunch,tomorrow 5pm")).execute();
     }
 
     /**
@@ -65,12 +61,7 @@ public class AddAppointmentCommandTest {
         command.setData(model);
         return command;
     }
-    private Command setCommandForSort() {
-        AddAppointmentCommand command = new AddAppointmentCommand();
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        command.setData(model);
-        return command;
-    }
+
     private Appointment setAppointment(String str) throws seedu.address.logic.parser.exceptions.ParseException {
         return AddAppointmentParser.getAppointmentFromString(str);
     }
@@ -270,18 +261,6 @@ public class AddAppointmentParserTest {
     }
 
     @Test
-    public void parseEmptyExpression() {
-
-        //No name and no date will just call the parser to return a command with no attributes initialized
-        try {
-            AddAppointmentCommand command = parser.parse("appointment");
-            assertTrue(command.getIndex() == null);
-        } catch (ParseException e) {
-            fail(e.getMessage());
-        }
-    }
-
-    @Test
     public void parseAppointmentsWithDuration() {
 
         try {
@@ -463,25 +442,6 @@ public class AppointmentTest {
         } catch (seedu.address.logic.parser.exceptions.ParseException e) {
             fail();
         }
-    }
-
-    @Test
-    public void testSortedAppointment() throws DuplicatePersonException {
-
-
-        assertTrue(TypicalPersons.BENSON.getAppointments().get(0).getDate()
-                .before(TypicalPersons.ALICE.getAppointments().get(0).getDate()));
-
-        UniquePersonList list = new UniquePersonList();
-        list.add(TypicalPersons.ALICE);
-        list.add(TypicalPersons.BENSON);
-
-        ObservableList<ReadOnlyPerson> sortedList = list.asObservableListSortedByAppointment();
-
-        //Order should be BENSON then ALICE
-        assertEquals(sortedList.get(0).getName(), TypicalPersons.BENSON.getName());
-        assertEquals(sortedList.get(1).getName(), TypicalPersons.ALICE.getName());
-
     }
 ```
 ###### \java\seedu\address\model\UniqueTagListTest.java

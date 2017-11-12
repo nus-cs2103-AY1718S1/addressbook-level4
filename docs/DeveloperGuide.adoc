@@ -263,13 +263,24 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 ---
 
-**Aspect:** How undo & redo executes +
+**Aspect:** How undo executes +
 **Alternative 1 (current choice):** Saves the entire MedNus. +
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
-**Alternative 2:** Individual command knows how to undo/redo by itself. +
+**Alternative 2:** Individual command knows how to undo by itself. +
 **Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
+
+---
+
+**Aspect:** How redo executes +
+**Alternative 1 (current choice):** Saves the undoable command and executes it again. +
+**Pros:** Will use memory (e.g. for `delete`, just save the command and executes it again). +
+**Cons:** If the list view changes, the undo command may not be applicable anymore.
+See section 4.1.2 for more details. +
+**Alternative 2:** Saves the entire MedNus. +
+**Pros:** Easier to implement. +
+**Cons:** May have memory issues.
 
 ---
 
@@ -292,6 +303,28 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+
+==== Redo Limitation
+
+As of v1.5, there is a limitation with the redo function. If the list changes before the command is redone, the saved undo
+command may not be applicable to the new list. +
+
+*Commands to replicate limitation*
+
+Inputs:
+
+1. `list` (List all)
+2. `find david` (Assume this command is valid and only 1 such person exist in the list)
+3. `delete 1` (Deletes david)
+4. `undo` (Undo deletion)
+5. `list` (List all)
+6. `redo` (Redo deletion of david)
+
+Expected output:  David is deleted from the list. +
+Actual output: Alex is delete from the list. As Alex is index 1 in the list, he is deleted instead. +
+
+Due to this limitation, users are warned in the user guide to redo commands before changing view.
 
 === Logging
 
@@ -425,6 +458,7 @@ In the UI component, the tag is set by using the css attribute of the tag label.
 
              tagLabel.setStyle("-fx-background-color: " + tag.getTagColor());
 
+To illustrate how tag colors are set, below is a sequence diagram for how the random tag color command is executed.
 
 image::SDforTagColor.png[width="800"]
     Figure 19: Sequence diagram for `random tag color` Model Component
@@ -471,21 +505,19 @@ Scenarios include - +
 // tag::listImplementation[]
 *How it is implemented* +
 
+Figure 20 as follows shows the activity diagram for the list package. +
+Implementation passes through two main segements: Logic and Model. +
 
 image::ListPackageActivityDiagram.png[width="800"]
     Figure 20: List Package Activity Diagram
 
-The diagram above shows the activity diagram for the list package. +
-Implementation passes through two main segments: Logic and Model. +
- +
+An explanation will be provided using ListByTag Command as an example. +
+The sequence diagram of the ListByTag Command can be seen in Figure 21 as follows. +
 
 image::ListByTagSD.png[width="800"]
     Figure 21: ListByTag Command Sequence Diagram
 
-An explanation will be provided using ListByTag Command as an example. +
-The sequence diagram of the ListByTag Command can be seen in the figure above. +
 The explanation for the above diagram is as follows: +
-
 
 1. Logic
 
@@ -639,10 +671,11 @@ user field for the additonal information.
 *How it is implemented* +
 Implementation passes through two main segments: Logic and Model. +
 
+The sequence diagram of the Remark Command can be seen in Figure 22 below. +
+
 image::RemarkSD.png[width="800"]
     Figure 22: Remark Command Sequence Diagram
 
-The sequence diagram of the Remark Command can be seen in the figure above. +
 The explanation for the above diagram is as follows: +
 
 1. Logic
@@ -683,6 +716,7 @@ unlikely to have and will ensue only once all existing must-have and good-to-hav
 
 // end::remarkimple[]
 
+// tag::listbloodtype[]
 === *Enhancement: ListByBloodtypeCommand* +
 
 Since MedNus has Bloodtype implemented, we decided that being able to list people according to blood types +
@@ -718,6 +752,8 @@ The second constructor takes in a String from the user.
 *Reasons for how it is implemented*
 
 The reason for the use of ListByBloodtypeCommandParser is to filter out extra spaces that the user may have typed in.
+
+// end::listbloodtype[]
 
 // tag::batch[]
 === *Enhancement: Batch delete all persons who share a particular tag* +

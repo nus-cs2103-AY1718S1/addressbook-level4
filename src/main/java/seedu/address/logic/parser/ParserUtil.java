@@ -86,6 +86,9 @@ public class ParserUtil {
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
+     *
+     * @param remark String to be evaluated for remark prefix.
+     * @return Remark command if remark prefix is present else returns Optional.empty().
      */
     public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
         requireNonNull(remark);
@@ -102,7 +105,6 @@ public class ParserUtil {
         requireNonNull(bloodType);
         return bloodType.isPresent() ? Optional.of(new Bloodtype(bloodType.get())) : Optional.empty();
     }
-    //@@author
 
     /**
      * Parses a {@code Optional<String> relation} into an {@code Optional<Relationship>} if {@code relation} is present.
@@ -112,6 +114,7 @@ public class ParserUtil {
         requireNonNull(relation);
         return relation.isPresent() ? Optional.of(new Relationship(relation.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

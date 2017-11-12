@@ -102,25 +102,6 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
-    //@@author Eric
-    /**
-     * @return the backing list that is sorted by appointment dates
-     */
-    public ObservableList<ReadOnlyPerson> asObservableListSortedByAppointment() {
-
-        internalList.sort((o1, o2) -> {
-            if (!o1.getAppointments().isEmpty() && !o2.getAppointments().isEmpty()
-                    && o2.getAppointments().get(0).getDate()
-                    .before(o1.getAppointments().get(0).getDate())) {
-                return 1;
-            } else {
-                return -1;
-            }
-        });
-
-        return FXCollections.unmodifiableObservableList(mappedList);
-    }
-
     //@@author Jeremy
     /**
      * @return the list as an unmodifiable list and sorted by name in ascending order

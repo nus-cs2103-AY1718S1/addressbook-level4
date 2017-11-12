@@ -11,9 +11,6 @@ public class Remark {
 
     public final String value;
 
-    /**
-     * Validates given remark.
-     */
     public Remark(String remark) {
         requireNonNull(remark);
         this.value = remark;
@@ -35,6 +32,5 @@ public class Remark {
     public int hashCode() {
         return value.hashCode();
     }
-
 
 }

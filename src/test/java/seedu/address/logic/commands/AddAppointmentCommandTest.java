@@ -59,11 +59,6 @@ public class AddAppointmentCommandTest {
             command = setCommand(index1, setAppointment(arg));
             result = command.execute();
             assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS);
-
-            //sort appointment
-            command = setCommandForSort();
-            result = command.execute();
-            assertEquals(result.feedbackToUser, AddAppointmentCommand.SORT_APPOINTMENT_FEEDBACK);
         } catch (seedu.address.logic.parser.exceptions.ParseException ive) {
             fail();
         }
@@ -71,9 +66,10 @@ public class AddAppointmentCommandTest {
     }
 
     @Test
-    public void outOfBoundsIndex() throws CommandException {
+    public void outOfBoundsIndex() throws CommandException, seedu.address.logic.parser.exceptions.ParseException {
         thrown.expect(CommandException.class);
-        setCommand(Index.fromOneBased(100), null).execute();
+        setCommand(Index.fromOneBased(100),
+                AddAppointmentParser.getAppointmentFromString("lunch,tomorrow 5pm")).execute();
     }
 
     /**
@@ -85,12 +81,7 @@ public class AddAppointmentCommandTest {
         command.setData(model);
         return command;
     }
-    private Command setCommandForSort() {
-        AddAppointmentCommand command = new AddAppointmentCommand();
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        command.setData(model);
-        return command;
-    }
+
     private Appointment setAppointment(String str) throws seedu.address.logic.parser.exceptions.ParseException {
         return AddAppointmentParser.getAppointmentFromString(str);
     }

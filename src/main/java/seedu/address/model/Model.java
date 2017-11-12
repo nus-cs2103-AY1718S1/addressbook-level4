@@ -74,11 +74,6 @@ public interface Model {
     void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException;
 
     /**
-     * Returns a list of ReadOnlyPerson that is ordered chronologically in terms of appointment time
-     */
-    ObservableList<ReadOnlyPerson> listAppointment();
-
-    /**
      * Returns a list of ReadOnlyPerson that is ordered in terms of name in ascending order
      */
     ObservableList<ReadOnlyPerson> listNameAscending();

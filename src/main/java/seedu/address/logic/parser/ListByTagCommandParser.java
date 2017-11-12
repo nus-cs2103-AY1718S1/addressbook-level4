@@ -28,23 +28,23 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
         String[] tagKeyWords = trimmedArgs.split("\\s+");
         List<String> evaluateList = Arrays.asList(tagKeyWords);
 
-        if (trimmedArgs.isEmpty() || invalidListTagArgs(evaluateList)) {
+        if (trimmedArgs.isEmpty() || isInvalidArgs(evaluateList)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ListByTagCommand.MESSAGE_USAGE));
         }
-
-
         return new ListByTagCommand(new TagContainsKeywordsPredicate(evaluateList));
-
     }
 
     /**
-     * Returns true if tag list argument is invalid.
-     * Tag list is invalid if
-     * 1. List starts or ends with "AND" or "OR"
-     * 2. "AND" or "OR" are clustered together
+     * Checks if tag list argument is invalid.
+     * Tag list is invalid if:
+     * 1. List starts or ends with "AND" or "OR".
+     * 2. "AND" or "OR" are clustered together.
+     *
+     * @param evaluateList list of input text to be evaluated.
+     * @return True if list argument is invalid.
      */
-    private boolean invalidListTagArgs(List<String> evaluateList) {
+    private boolean isInvalidArgs(List<String> evaluateList) {
         boolean multipleAndOrCluster = hasManyAndOrClustered(evaluateList);
         boolean startWithAndOr = startsWithAndOr(evaluateList);
         boolean endWithAndOr = endsWithAndOr(evaluateList);
@@ -52,37 +52,80 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
     }
 
     /**
-     * Returns true if list starts with "AND" or "OR"
+     * Checks if list starts with "AND" or "OR".
+     *
+     * @param evaluateList list of input text to be evaluated.
+     * @return True if list starts with "AND" or "OR.
      */
     private boolean startsWithAndOr(List<String> evaluateList) {
-        boolean startWithAndOr = "and".equalsIgnoreCase(evaluateList.get(0))
-                || "or".equalsIgnoreCase(evaluateList.get(0));
+        String firstString = evaluateList.get(0);
+        boolean startWithAndOr = isAnd(firstString) || isOr(firstString);
         return startWithAndOr;
     }
 
     /**
-     * Returns true if list ends with "AND" or "OR"
+     * Checks if list ends with "AND" or "OR".
+     *
+     * @param evaluateList list of input text to be evaluated.
+     * @return True if list ends with "AND" or "OR.
      */
     private boolean endsWithAndOr(List<String> evaluateList) {
-        boolean endWithAndOr = "and".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1))
-                || "or".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1));
+        String lastString = evaluateList.get(evaluateList.size() - 1);
+        boolean hasAnd = isAnd(lastString);
+        boolean hasOr = isOr(lastString);
+        boolean endWithAndOr = hasAnd || hasOr;
         return endWithAndOr;
     }
 
     /**
-     * Returns true if "AND" or "OR" strings are clustered together
+     * Checks if "AND" or "OR" strings are clustered together.
+     *
+     * @param evaluateList list of input text to be evaluated.
+     * @return True if "AND" or "OR" strings are clustered together.
      */
     private boolean hasManyAndOrClustered(List<String> evaluateList) {
         String previousString = "";
         boolean multipleAndOrCluster = false;
         for (String str : evaluateList) {
-            if (("and".equalsIgnoreCase(previousString) || "or".equalsIgnoreCase(previousString))
-                    && ("and".equalsIgnoreCase(str) || "or".equalsIgnoreCase(str))) {
+            if (areBothAndOr(previousString, str)) {
                 multipleAndOrCluster = true;
                 break;
             }
             previousString = str;
         }
         return multipleAndOrCluster;
+    }
+
+    /**
+     * Checks if both input strings are "and" or "or".
+     *
+     * @param before Word before.
+     * @param after  Word after.
+     * @return True if both contains either "and" or "or".
+     */
+    private boolean areBothAndOr(String before, String after) {
+        boolean isAndOrBefore = isAnd(before) || isOr(before);
+        boolean isAndOrAfter = isAnd(after) || isOr(after);
+        return isAndOrAfter && isAndOrBefore;
+    }
+
+    /**
+     * Checks if string is "and".
+     *
+     * @param string String to be evaluated.
+     * @return True if string is "and".
+     */
+    private boolean isAnd(String string) {
+        return "and".equalsIgnoreCase(string);
+    }
+
+    /**
+     * Checks if string is "or".
+     *
+     * @param string String to be evaluated.
+     * @return True if string is "or".
+     */
+    private boolean isOr(String string) {
+        return "or".equalsIgnoreCase(string);
     }
 }

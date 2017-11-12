@@ -185,17 +185,17 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @param tag all persons containing this tag will be deleted
      */
     public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
-        ArrayList<Person> toRemove = new ArrayList<>();
+        ArrayList<Person> personsToRemove = new ArrayList<>();
         for (Person person : persons) {
             if (person.hasTag(tag)) {
-                toRemove.add(person);
+                personsToRemove.add(person);
             }
         }
 
-        if (toRemove.isEmpty()) {
+        if (personsToRemove.isEmpty()) {
             throw new PersonNotFoundException();
         }
-        for (Person person : toRemove) {
+        for (Person person : personsToRemove) {
             removePerson(person);
             removeUnusedTags(person.getTags());
         }
@@ -243,19 +243,31 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
-    public ObservableList<ReadOnlyPerson> getPersonListSortByAppointment() {
-        return persons.asObservableListSortedByAppointment();
-    }
-
     //@@author Jeremy
+
+    /**
+     * Filters person list by name in ascending order.
+     *
+     * @return Filtered UniquePersonList.
+     */
     public ObservableList<ReadOnlyPerson> getPersonListSortByNameAscending() {
         return persons.asObservableListSortedByNameAsc();
     }
 
+    /**
+     * Filters person list by name in descending order.
+     *
+     * @return Filtered UniquePersonList.
+     */
     public ObservableList<ReadOnlyPerson> getPersonListSortByNameDescending() {
         return persons.asObservableListSortedByNameDsc();
     }
 
+    /**
+     * Filters person list in reverse order.
+     *
+     * @return Filtered UniquePersonList.
+     */
     public ObservableList<ReadOnlyPerson> getPersonListReversed() {
         return persons.asObservableListReversed();
     }

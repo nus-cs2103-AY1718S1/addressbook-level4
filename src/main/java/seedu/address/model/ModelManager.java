@@ -143,20 +143,12 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    /**
-     * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull appointment date,
-     * in chronological order
-     */
-    @Override
-    public ObservableList<ReadOnlyPerson> listAppointment() {
-        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByAppointment();
-        return FXCollections.unmodifiableObservableList(list);
-    }
-
     //@@author Jeremy
     /**
+     * Returns an unmodifiable filtered ReadOnlyPerson list, filtered by name in ascending order.
+     *
      * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
-     * in increasing chronological order
+     * in increasing chronological order.
      */
     @Override
     public ObservableList<ReadOnlyPerson> listNameAscending() {
@@ -165,8 +157,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
+     * Returns an unmodifiable filtered ReadOnlyPerson list, filtered by name in descending order.
+     *
      * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
-     * in decreasing chronological order
+     * in decreasing chronological order.
      */
     @Override
     public ObservableList<ReadOnlyPerson> listNameDescending() {
@@ -175,7 +169,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * @return an unmodifiable view of the list of ReadOnlyPerson that is reversed
+     * Returns an unmodifiable filtered  and reversed ReadOnlyPerson list.
+     *
+     * @return an unmodifiable view of the list of ReadOnlyPerson that is reversed.
      */
     @Override
     public ObservableList<ReadOnlyPerson> listNameReversed() {
@@ -199,8 +195,7 @@ public class ModelManager extends ComponentManager implements Model {
 
             if (examinedNames.contains(currentName)) {
                 duplicateNames.add(currentName);
-            }
-            else {
+            } else {
                 examinedNames.add(currentName);
             }
         }

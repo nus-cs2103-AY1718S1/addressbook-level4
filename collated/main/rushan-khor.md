@@ -16,7 +16,8 @@ public class BatchCommandParser implements Parser<BatchCommand> {
         Scanner tagNameScanner = new Scanner(args);
 
         while (tagNameScanner.hasNext()) {
-            tagNames.add(tagNameScanner.next());
+            String nextTagName = tagNameScanner.next();
+            tagNames.add(nextTagName);
         }
 
         try {
@@ -50,7 +51,6 @@ public class CopyCommandParser implements Parser<CopyCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, CopyCommand.MESSAGE_USAGE));
         }
     }
-
 }
 ```
 ###### /java/seedu/address/logic/commands/CopyCommand.java
@@ -121,7 +121,8 @@ public class BatchCommand extends UndoableCommand {
             + "Example 2: " + COMMAND_WORD + " colleagues";
 
     public static final String MESSAGE_BATCH_DELETE_SUCCESS = "Deleted Persons with Tags: %1$s";
-
+    public static final String MESSAGE_BATCH_DELETE_TAG_NOT_FOUND =
+            "One of the tags is not in use. Remove it and try again.";
     private final Set<Tag> tagsToDelete;
 
     public BatchCommand(Set<Tag> tagsToDelete) {
@@ -134,7 +135,7 @@ public class BatchCommand extends UndoableCommand {
         try {
             model.deletePersonsByTags(tagsToDelete);
         } catch (PersonNotFoundException e) {
-            throw new CommandException("One of the tags is not in use. Remove it and try again.");
+            throw new CommandException(MESSAGE_BATCH_DELETE_TAG_NOT_FOUND);
         }
 
         return new CommandResult(String.format(MESSAGE_BATCH_DELETE_SUCCESS, tagsToDelete));
@@ -151,7 +152,7 @@ public class BatchCommand extends UndoableCommand {
 ###### /java/seedu/address/logic/commands/DuplicatesCommand.java
 ``` java
 /**
- * Finds and lists persons in address book with possible duplicate entries (by name).
+ * Finds and lists persons in this {@code AddressBook} with possible duplicate entries (by name).
  * Keyword matching is case insensitive.
  */
 public class DuplicatesCommand extends Command {
@@ -167,7 +168,17 @@ public class DuplicatesCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateDuplicatePersonList();
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        String commandResultMessage = makeCommandResultMessage();
+        return new CommandResult(commandResultMessage);
+    }
+
+    /**
+     * Makes the command result message for this command.
+     * @return String The command result message.
+     */
+    public String makeCommandResultMessage() {
+        int filteredPersonListSize = model.getFilteredPersonList().size();
+        return getMessageForPersonListShownSummary(filteredPersonListSize);
     }
 
     @Override
@@ -211,17 +222,17 @@ public class HasPotentialDuplicatesPredicate implements Predicate<ReadOnlyPerson
      * @param tag all persons containing this tag will be deleted
      */
     public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
-        ArrayList<Person> toRemove = new ArrayList<>();
+        ArrayList<Person> personsToRemove = new ArrayList<>();
         for (Person person : persons) {
             if (person.hasTag(tag)) {
-                toRemove.add(person);
+                personsToRemove.add(person);
             }
         }
 
-        if (toRemove.isEmpty()) {
+        if (personsToRemove.isEmpty()) {
             throw new PersonNotFoundException();
         }
-        for (Person person : toRemove) {
+        for (Person person : personsToRemove) {
             removePerson(person);
             removeUnusedTags(person.getTags());
         }
@@ -299,8 +310,7 @@ public class HasPotentialDuplicatesPredicate implements Predicate<ReadOnlyPerson
 
             if (examinedNames.contains(currentName)) {
                 duplicateNames.add(currentName);
-            }
-            else {
+            } else {
                 examinedNames.add(currentName);
             }
         }

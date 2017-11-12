@@ -6,14 +6,34 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Project: MedNus
 MedNus is a desktop address book application used by Medical Professionals. +
+
+MedNus aims to eliminate the existing inefficient and space consuming filing system and aid medical professionals +
+in working efficiently and effectively.
+
+MedNus contains all the functionality doctors need - appointment setting, recording of +
+patient's information, storing personal data and many more. +
+
 The user interacts with it using a CLI, and it has a GUI created with JavaFX. +
-It is written in Java, and has about 6 kLoC.
+It is written in Java, and has about 20 kLoC.
 
 *Code contributed*: +
 link:{collatedDir}/main/Jeremy.md[Functional code] +
 link:{collatedDir}/test/Jeremy.md[Test code] +
 
-=== Enhancement Added: List
+== Purpose
+This portfolio page serves as a documentation of all my contributions to the project. +
+It contains the following information:
+
+* The features which I have implemented, stating it's
+. External behavior
+. Justification for implementation and
+. Details of Implementation
+* Proposed enhancements for v2.0
+* Other Contributions
+
+<<<
+
+=== Enhancement Added: List Package
 
 ==== External behavior
 
@@ -47,6 +67,8 @@ include::../DeveloperGuide.adoc[tag=listImplementation]
 #End of Extract#
 
 ---
+
+<<<
 
 === Enhancement Added: KeyBoard ShortCuts
 
@@ -118,11 +140,20 @@ include::../DeveloperGuide.adoc[tag=remarkimple]
 
 ---
 
+<<<
+
+=== Enhancement Proposed (for Version 2.0)
+* Classification of existing contacts - Seperate contacts into two tabs: existing patients and recovered patients
+* Contact sharing - Share contacts with other medical professionals using MedNus
+* Synchronize MedNus with other applications such as mobile contacts and Facebook
+* Additional tab to display detailed information of patient instead of displaying information on filtered list screen
+* Real time tracking of patient's health condition by syncing to applications such as Healthy 365
+
 === Other contributions
 
-** https://github.com/CS2103AUG2017-T17-B2/main/pull/50/files[MedNus UI modifications] +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/50/files[MedNus UI theme] +
 (Special Thanks to https://github.com/rushan-khor[rushan] for creating the first UI +
-https://github.com/CS2103AUG2017-T17-B2/main/pull/49/files[modification] and
+https://github.com/CS2103AUG2017-T17-B2/main/pull/49/files[template] and
 code comments to identify the respective +
 CSS parts)
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/112[Add Command - Only name input is compulsory]
@@ -131,3 +162,4 @@ CSS parts)
 (In collaboration with http://github.com/ErnestOYH[Ernest]) +
 *** https://github.com/CS2103AUG2017-T17-B2/main/pull/125/files[Illustrations] +
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/61[Test Coverage]
+

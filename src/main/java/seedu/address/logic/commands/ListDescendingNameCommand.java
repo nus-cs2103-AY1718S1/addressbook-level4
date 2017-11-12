@@ -18,6 +18,11 @@ public class ListDescendingNameCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed persons by name in descending order";
 
+    /**
+     * Returns a success message and filters display list by name in descending order.
+     *
+     * @return Success message.
+     */
     @Override
     public CommandResult execute() {
         model.listNameDescending();

@@ -76,7 +76,7 @@ include::../UserGuide.adoc[tag=dups]
 
 ==== Justification
 
-Duplicate contacts can accumulate over time. The `duplicates` command compiles a list of potential duplicate contacts for the user to review.
+Duplicate contacts can accumulate over time. The `Duplicates` command compiles a list of potential duplicate contacts for the user to review.
 
 ---
 
@@ -124,7 +124,7 @@ include::../DeveloperGuide.adoc[tag=copy]
 
 * Skype username field and ability to pull contacts from Skype
 ** This is useful for telemedicine / telehealth which is essentially remote doctor consulting facilitated by video-calls
-** This would further solidify MedNus's relevance as a forward-looking product for medical professionals
+** This would further solidify MedNus's position as a relevant product for medical professionals of today
 * Command that maps (patient contacts) with (doctor contacts specialising in their illness) and drafts referral letters for them
 ** This is useful for private doctors in particular, for whom networks of referrals are poorly documented, yet crucial to their business
 

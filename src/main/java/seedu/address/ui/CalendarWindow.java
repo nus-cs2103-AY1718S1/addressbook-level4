@@ -109,25 +109,33 @@ public class CalendarWindow extends UiPart<Region> {
      * Creates a new a calendar with the update information
      */
     private void updateCalendar() {
-        calendarView.setToday(LocalDate.now());
-        calendarView.setTime(LocalTime.now());
-        calendarView.getCalendarSources().clear();
+        setTime();
         CalendarSource calendarSource = new CalendarSource("Appointments");
         int styleNum = 0;
         for (ReadOnlyPerson person : personList) {
-            Calendar calendar = new Calendar(person.getName().toString());
-            calendar.setStyle(Calendar.Style.getStyle(styleNum));
-            styleNum++;
-            styleNum = styleNum % 5;
-            calendar.setLookAheadDuration(Duration.ofDays(365));
+            Calendar calendar = getCalendar(styleNum, person);
             calendarSource.getCalendars().add(calendar);
             ArrayList<Entry> entries = getEntries(person);
-
+            styleNum++;
+            styleNum = styleNum % 5;
             for (Entry entry : entries) {
                 calendar.addEntry(entry);
             }
         }
         calendarView.getCalendarSources().add(calendarSource);
+    }
+
+    private Calendar getCalendar(int styleNum, ReadOnlyPerson person) {
+        Calendar calendar = new Calendar(person.getName().toString());
+        calendar.setStyle(Calendar.Style.getStyle(styleNum));
+        calendar.setLookAheadDuration(Duration.ofDays(365));
+        return calendar;
+    }
+
+    private void setTime() {
+        calendarView.setToday(LocalDate.now());
+        calendarView.setTime(LocalTime.now());
+        calendarView.getCalendarSources().clear();
     }
 
     private ArrayList<Entry> getEntries(ReadOnlyPerson person) {

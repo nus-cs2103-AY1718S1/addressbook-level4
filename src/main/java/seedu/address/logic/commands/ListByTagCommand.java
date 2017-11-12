@@ -24,12 +24,23 @@ public class ListByTagCommand extends Command {
         this.predicate = predicate;
     }
 
+    /**
+     * Returns a success message and updates the filtered person list.
+     *
+     * @return new CommandResult(MESSAGE_SUCCESS).
+     */
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+    /**
+     * Checks if 'other' is the same object or an instance of this object.
+     *
+     * @param other Another object type for comparison.
+     * @return True if 'other' is the same object or an instance of this object.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

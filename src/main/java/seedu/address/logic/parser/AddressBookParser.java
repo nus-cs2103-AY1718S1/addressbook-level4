@@ -155,9 +155,9 @@ public class AddressBookParser {
     /**
      * Returns the correct list feature based on word after list
      *
-     * @param arguments full user input arguments
-     * @return the command based on arguments provided
-     * @throws ParseException if the user input does not conform the expected format
+     * @param arguments full user input arguments.
+     * @return the command based on arguments provided.
+     * @throws ParseException If the user input does not conform the expected format.
      */
     private Command listEvaluator(String arguments) throws ParseException {
         String[] argSplit = arguments.trim().split(" ");

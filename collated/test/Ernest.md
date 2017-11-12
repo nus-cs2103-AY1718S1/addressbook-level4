@@ -227,6 +227,14 @@ public class RelationshipCommandTest {
                         + keyword.stream().collect(Collectors.joining(" ")));
         assertEquals(new ListByBloodtypeCommand(new BloodtypeContainsKeywordPredicate(keyword)), command);
     }
+
+    @Test
+    public void parseCommandRelationship() throws Exception {
+        final Relationship relation = new Relationship("Some relation.");
+        RelationshipCommand command = (RelationshipCommand) parser.parseCommand(RelationshipCommand.COMMAND_WORD
+                + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_RELATIONSHIP + " " + relation.value);
+        assertEquals(new RelationshipCommand(INDEX_FIRST_PERSON, relation), command);
+    }
 ```
 ###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
@@ -253,6 +261,25 @@ public class RelationshipCommandTest {
         Optional<Bloodtype> actualBloodType = ParserUtil.parseBloodType(Optional.of(VALID_BLOODTYPE));
 
         assertEquals(expectedBloodType, actualBloodType.get());
+    }
+
+    @Test
+    public void parseRelationshipNullThrowsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseRelationship(null);
+    }
+
+    @Test
+    public void parseRelationshipOptionalEmptyReturnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseRelationship(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseRelationshipValidValueReturnsRelationship() throws Exception {
+        Relationship expectedRelationship = new Relationship(VALID_RELATIONSHIP);
+        Optional<Relationship> actualRelationship = ParserUtil.parseRelationship(Optional.of(VALID_RELATIONSHIP));
+
+        assertEquals(expectedRelationship, actualRelationship.get());
     }
 ```
 ###### \java\seedu\address\logic\parser\RelationshipCommandParserTest.java
@@ -432,6 +459,14 @@ public class RelationshipTest {
 ```
 ###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
+    /**
+     * Sets the {@code Relationship} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRelationship(String relation) {
+        this.person.setRelationship(new Relationship(relation));
+        return this;
+    }
+
     /**
      * Sets the {@code Bloodtype} of the {@code Person} that we are building.
      */

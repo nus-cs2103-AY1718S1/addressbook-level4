@@ -1,17 +1,12 @@
 package seedu.address.model;
 
-import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.ObservableList;
-
 import seedu.address.logic.parser.AddAppointmentParser;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -54,25 +49,6 @@ public class UniquePersonListTest {
         } catch (seedu.address.logic.parser.exceptions.ParseException e) {
             fail();
         }
-    }
-
-    @Test
-    public void testSortedAppointment() throws DuplicatePersonException {
-
-
-        assertTrue(TypicalPersons.BENSON.getAppointments().get(0).getDate()
-                .before(TypicalPersons.ALICE.getAppointments().get(0).getDate()));
-
-        UniquePersonList list = new UniquePersonList();
-        list.add(TypicalPersons.ALICE);
-        list.add(TypicalPersons.BENSON);
-
-        ObservableList<ReadOnlyPerson> sortedList = list.asObservableListSortedByAppointment();
-
-        //Order should be BENSON then ALICE
-        assertEquals(sortedList.get(0).getName(), TypicalPersons.BENSON.getName());
-        assertEquals(sortedList.get(1).getName(), TypicalPersons.ALICE.getName());
-
     }
     //@@author
 }

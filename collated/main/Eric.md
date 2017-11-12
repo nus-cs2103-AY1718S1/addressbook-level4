@@ -46,14 +46,6 @@ public class AddAppointmentCommand extends UndoableCommand {
     private final Index index;
     private final Appointment appointment;
 
-
-    //For sorting
-    public AddAppointmentCommand() {
-        this.index = null;
-        this.appointment = null;
-    }
-
-    //For setting appointments
     public AddAppointmentCommand(Index index, Appointment appointment) {
         this.index = index;
         this.appointment = appointment;
@@ -61,14 +53,11 @@ public class AddAppointmentCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        if (appointment == null && index == null) {
-            model.listAppointment();
-            return new CommandResult(SORT_APPOINTMENT_FEEDBACK);
-        }
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         requireNonNull(index);
+        requireNonNull(appointment);
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -91,7 +80,7 @@ public class AddAppointmentCommand extends UndoableCommand {
     }
 
     /**
-     * @return is appointment date set to after current time
+     * Checks if appointment date set to after current time
      */
     private boolean isDateValid() {
         requireNonNull(appointment);
@@ -329,10 +318,6 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
 
         String[] args = userInput.split(" ");
 
-        if (args.length == 1) {
-            return new AddAppointmentCommand();
-        }
-
         ArgumentMultimap argumentMultimap =
                 ArgumentTokenizer.tokenize(userInput, PREFIX_DATE);
 
@@ -346,7 +331,9 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
             Appointment appointment = getAppointmentFromString(argumentMultimap.getValue(PREFIX_DATE).get());
             return new AddAppointmentCommand(index, appointment);
         } catch (NumberFormatException e) {
-            throw new ParseException(e.getMessage(), e);
+            throw new ParseException("Please input an index for appointment.\n"
+                    + String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddAppointmentCommand.MESSAGE_USAGE));
         }
     }
 
@@ -536,16 +523,6 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
         indicateAddressBookChanged();
     }
 
-    /**
-     * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull appointment date,
-     * in chronological order
-     */
-    @Override
-    public ObservableList<ReadOnlyPerson> listAppointment() {
-        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByAppointment();
-        return FXCollections.unmodifiableObservableList(list);
-    }
-
 ```
 ###### \java\seedu\address\model\person\Appointment.java
 ``` java
@@ -653,7 +630,7 @@ public class AppointmentList {
     }
 
     /**
-     * sorts all the appointments in the list before adding it to the internal list
+     * Sorts all the appointments in the list before adding it to the internal list
      */
     private void sortAppointmentsInChronologicalOrder(List<Appointment> appointment) {
         requireNonNull(appointment);
@@ -726,27 +703,6 @@ public class AppointmentNotFoundException extends Exception {
     public void setAppointment(List<Appointment> appointments) {
         this.appointments.set(new AppointmentList(appointments));
     }
-```
-###### \java\seedu\address\model\person\UniquePersonList.java
-``` java
-    /**
-     * @return the backing list that is sorted by appointment dates
-     */
-    public ObservableList<ReadOnlyPerson> asObservableListSortedByAppointment() {
-
-        internalList.sort((o1, o2) -> {
-            if (!o1.getAppointments().isEmpty() && !o2.getAppointments().isEmpty()
-                    && o2.getAppointments().get(0).getDate()
-                    .before(o1.getAppointments().get(0).getDate())) {
-                return 1;
-            } else {
-                return -1;
-            }
-        });
-
-        return FXCollections.unmodifiableObservableList(mappedList);
-    }
-
 ```
 ###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
@@ -1029,24 +985,33 @@ public class CalendarWindow extends UiPart<Region> {
      * Creates a new a calendar with the update information
      */
     private void updateCalendar() {
-        calendarView.setToday(LocalDate.now());
-        calendarView.setTime(LocalTime.now());
-        calendarView.getCalendarSources().clear();
+        setTime();
         CalendarSource calendarSource = new CalendarSource("Appointments");
         int styleNum = 0;
         for (ReadOnlyPerson person : personList) {
-            Calendar calendar = new Calendar(person.getName().toString());
-            calendar.setStyle(Calendar.Style.getStyle(styleNum));
-            styleNum++;
-            styleNum = styleNum % 5;
+            Calendar calendar = getCalendar(styleNum, person);
             calendarSource.getCalendars().add(calendar);
             ArrayList<Entry> entries = getEntries(person);
-
+            styleNum++;
+            styleNum = styleNum % 5;
             for (Entry entry : entries) {
                 calendar.addEntry(entry);
             }
         }
         calendarView.getCalendarSources().add(calendarSource);
+    }
+
+    private Calendar getCalendar(int styleNum, ReadOnlyPerson person) {
+        Calendar calendar = new Calendar(person.getName().toString());
+        calendar.setStyle(Calendar.Style.getStyle(styleNum));
+        calendar.setLookAheadDuration(Duration.ofDays(365));
+        return calendar;
+    }
+
+    private void setTime() {
+        calendarView.setToday(LocalDate.now());
+        calendarView.setTime(LocalTime.now());
+        calendarView.getCalendarSources().clear();
     }
 
     private ArrayList<Entry> getEntries(ReadOnlyPerson person) {
