@@ -112,9 +112,11 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        //@@author Pujitha97
         DateOfBirth updatedDateOfBirth = editPersonDescriptor.getDateOfBirth().orElse(personToEdit.getDateOfBirth());
         Gender updatedGender = editPersonDescriptor.getGender().orElse(personToEdit.getGender());
-
+        //@@author
+        //@@author Juxarius
         Set<Tag> updatedTags = personToEdit.getTags();
 
         if (editPersonDescriptor.getTagsToDel().isPresent()) {

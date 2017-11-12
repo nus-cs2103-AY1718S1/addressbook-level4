@@ -32,8 +32,8 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
-    @XmlElement(required = true)
     //@@author Pujitha97
+    @XmlElement(required = true)
     private String dob;
     @XmlElement(required = true)
     private String gender;

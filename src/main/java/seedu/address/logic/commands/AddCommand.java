@@ -35,8 +35,11 @@ public class AddCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            //@@author Pujitha97
             + "[" + PREFIX_DOB + "DATE OF BIRTH] "
             + "[" + PREFIX_GENDER + "GENDER] "
+            //@@author
+            //@@author OscarWang114
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "

@@ -126,8 +126,10 @@ public class ProfilePanel extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        //@@author Pujitha97
         dob.textProperty().bind(Bindings.convert(person.dobProperty()));
         gender.textProperty().bind(Bindings.convert(person.genderProperty()));
+        //@@author
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
     }
 
