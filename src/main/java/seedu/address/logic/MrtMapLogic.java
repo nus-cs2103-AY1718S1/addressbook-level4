@@ -602,6 +602,52 @@ public class MrtMapLogic {
         return minDurations;
     }
 
+
+    private int[] getMinTotalTime(int[] sourceIndexes) {
+        int[] minTotalTimeList = new int[mrtStations.size()];
+        for(int i = 0; i < sourceIndexes.length; i++) {
+            int[] tempTimeList = getMinTime(sourceIndexes[i]);
+            for(int j = 0; j < tempTimeList.length; j++) {
+                minTotalTimeList[j] += tempTimeList[j];
+            }
+        }
+        return minTotalTimeList;
+    }
+
+    private int[] getMinTotalTime(String[] mrtStationNames){
+        int[] minTotalTimeList = new int[mrtStations.size()];
+        for(int i = 0; i < mrtStationNames.length; i++) {
+            int mrtStationIndex = stationCodeToIndex.get(mrtStationNames);
+            int[] tempTimeList = getMinTime(mrtStationIndex);
+            for(int j = 0; j < tempTimeList.length; j++) {
+                minTotalTimeList[j] += tempTimeList[j];
+            }
+        }
+        return minTotalTimeList;
+    }
+
+    private String[] getSortedMrtList(String[] mrtStationNames){
+        return getSortedMrtList(getMinTotalTime(mrtStationNames));
+    }
+
+    private String[] getSortedMrtList(int[] minMrtTimes) {
+        String[] minMrtTimeList = new String[minMrtTimes.length];
+
+        PriorityQueue<IntPair> minHeap = new PriorityQueue<IntPair>(1, new IntPair(0, 0));
+        for(int i = 0; i < minMrtTimes.length; i++) {
+            minHeap.add(new IntPair(i, minMrtTimes[i]));
+        }
+        int count = 0;
+        while(minHeap.size() != 0) {
+            IntPair intPair = minHeap.poll();
+            int stationIndex = intPair.mrtIndex;
+            MrtStation mrt = mrtStations.get(stationIndex);
+            minMrtTimeList[count] = mrt.getName();
+            count++;
+        }
+        return minMrtTimeList;
+    }
+
     private boolean isSameLine(int mrtIndexOne, int mrtIndexTwo) {
         if(mrtIndexOne == -1 || mrtIndexTwo == -1) {
             return true;
