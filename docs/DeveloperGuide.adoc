@@ -565,7 +565,7 @@ The activity scheduled will be displayed together with the other components of a
 
 image::ScheduleCommandSingleScreenShot.png[width="400"]
 
-_Figure 4.3.3: UI display of a successful `ScheduleCommand` execution
+_Figure 4.3.3: UI display of a successful `ScheduleCommand` execution_
 
 ==== Design Considerations
 
@@ -601,7 +601,7 @@ Since v1.4, schedules in both the `AgendaPanel` and the `PersonCard` are arrange
 
 This enhancement builds upon the schedule feature developed in v1.3, which allows users to schedule an activity with one person. Users can now input multiple indices to schedule an activity with multiple persons at the same time.
 
-The implementation of `Comparable` interface for `Schedule` allows the activities scheduled with a person to be displayed from the smallest date value. The code extract in _Figure 4.4.1_ below shows how the `compareTo()` function is being defined in the `Schedule`.
+The implementation of `Comparable` interface for `Schedule` allows the activities scheduled with a person to be displayed from the smallest date value. The code extract below shows how the `compareTo()` function is being defined in the `Schedule`.
 
 [source, java]
 ----
@@ -631,11 +631,11 @@ public class Schedule implements Comparable<Schedule> {
 }
 ----
 
-The outcome of schedule multiple command execution is shown in _Figure 4.4.2_ below.
+The outcome of schedule multiple command execution is shown in _Figure 4.4.1_ below.
 
-image::ScheduleCommandMultipleScreenShot.png[width="800"]
+image::ScheduleCommandMultipleScreenShot.png[width="400"]
 
-_Figure 4.4.2: UI display of an enhanced successful `ScheduleCommand` execution
+_Figure 4.4.1: UI display of an enhanced successful `ScheduleCommand` execution_
 
 ==== Design Considerations
 
