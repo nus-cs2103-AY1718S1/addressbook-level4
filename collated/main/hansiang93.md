@@ -340,7 +340,6 @@ public class BrowserPanel extends UiPart<Region> {
                 new ChangeListener<Worker.State>() {
                     @Override
                     public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
-
                         if (newState == Worker.State.SUCCEEDED) {
                             logger.info("Loaded this page: " + browser.getEngine().getLocation());
                         }
@@ -350,14 +349,21 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
 
+    /**
+     * Loads the selected Person's Google search by name page.
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
         logger.info("Loading Google search of " + person.getName());
     }
 
+    /**
+     * Loads the selected Person's address search via Google Maps search.
+     */
     private void loadPersonAddress(ReadOnlyPerson person) {
         loadPage(MAPS_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
+        logger.info("Loading Address search of " + person.getName());
     }
 
     /**
@@ -367,10 +373,10 @@ public class BrowserPanel extends UiPart<Region> {
         selectedPerson.getWebLinks().forEach(webLink -> {
             if (webLink.toStringWebLinkTag().equals("others")) {
                 loadPage(webLink.toStringWebLink());
+                logger.info("Loading Personal Page of " + selectedPerson.getName());
                 return;
             }
         });
-        logger.info("Loading Personal Page of " + selectedPerson.getName());
     }
 
     /**
@@ -380,10 +386,10 @@ public class BrowserPanel extends UiPart<Region> {
         selectedPerson.getWebLinks().forEach(webLink -> {
             if (websiteRequested.toLowerCase() == webLink.toStringWebLinkTag().trim().toLowerCase()) {
                 loadPage(webLink.toStringWebLink());
+                logger.info("Loading " + websiteRequested + " page of " + selectedPerson.getName());
                 return;
             }
         });
-        logger.info("Loading " + websiteRequested + "Page of " + selectedPerson.getName());
     }
 
     public void loadPage(String url) {
@@ -396,6 +402,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
+        logger.info("Loading Landing Page...");
     }
 
     /**
@@ -680,7 +687,9 @@ public class WebsiteButtonBar extends UiPart<Region> {
             buttonList.add(newbutton);
         });
         buttonList.add(searchButton);
-        buttonList.add(mapsButton);
+        if (!selectedPerson.addressProperty().get().toString().equals("-")) {
+            buttonList.add(mapsButton);
+        }
         buttonBar.getButtons().setAll(buttonList);
     }
 }
@@ -717,7 +726,7 @@ body {
     height: 10px;
     width: 10px;
     border-radius: 50%;
-    border: 1px solid #000;
+    border: 1px 1px 1px 1px;
     position: relative;
     top: 6px;
     left: 6px;
@@ -743,7 +752,7 @@ body {
     box-sizing: border-box;
     height: 25px;
     background-color: #bbb;
-    margin: 0 auto;
+    margin: 0 0 0 0;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
 }
@@ -752,7 +761,7 @@ body {
     background-color: #151515;
     box-sizing: border-box;
     width: 1000px;
-    margin: 0 auto;
+    margin: 0 0 0 0;
     padding: 45px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -1197,11 +1206,6 @@ span {
 
 .button:focused {
     -fx-border-color: -fx-base-text-fill-color, -fx-base-text-fill-color;
-    -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
-    -fx-border-radius: 0, 0;
-    -fx-border-insets: 1 1 1 1, 0;
-}
 
 .button:disabled, .button:default:disabled {
     -fx-opacity: 0.4;

@@ -375,6 +375,7 @@ public class UpdateUserCommand extends Command {
     public static final String ARG_TAG = "tag";
     public static final String ARG_WEB_LINK = "weblink";
 ```
+
 ###### /java/seedu/address/logic/parser/CliSyntax.java
 ``` java
 }
@@ -1232,6 +1233,10 @@ public class XmlUserProfileStorage implements UserProfileStorage {
         setAccelerator(userProfileMenuItem, KeyCombination.valueOf("F2"));
 ```
 ###### /java/seedu/address/ui/MainWindow.java
+``` java
+        setAccelerator(userProfileMenuItem, KeyCombination.valueOf("F2"));
+```
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     /**
      * Displays the user profile to the user

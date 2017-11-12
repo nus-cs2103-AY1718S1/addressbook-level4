@@ -53,7 +53,6 @@ public class BrowserPanel extends UiPart<Region> {
                 new ChangeListener<Worker.State>() {
                     @Override
                     public void changed(ObservableValue ov, Worker.State oldState, Worker.State newState) {
-
                         if (newState == Worker.State.SUCCEEDED) {
                             logger.info("Loaded this page: " + browser.getEngine().getLocation());
                         }
@@ -63,14 +62,21 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
 
+    /**
+     * Loads the selected Person's Google search by name page.
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
         logger.info("Loading Google search of " + person.getName());
     }
 
+    /**
+     * Loads the selected Person's address search via Google Maps search.
+     */
     private void loadPersonAddress(ReadOnlyPerson person) {
         loadPage(MAPS_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
+        logger.info("Loading Address search of " + person.getName());
     }
 
     /**
@@ -80,10 +86,10 @@ public class BrowserPanel extends UiPart<Region> {
         selectedPerson.getWebLinks().forEach(webLink -> {
             if (webLink.toStringWebLinkTag().equals("others")) {
                 loadPage(webLink.toStringWebLink());
+                logger.info("Loading Personal Page of " + selectedPerson.getName());
                 return;
             }
         });
-        logger.info("Loading Personal Page of " + selectedPerson.getName());
     }
 
     /**
@@ -93,10 +99,10 @@ public class BrowserPanel extends UiPart<Region> {
         selectedPerson.getWebLinks().forEach(webLink -> {
             if (websiteRequested.toLowerCase() == webLink.toStringWebLinkTag().trim().toLowerCase()) {
                 loadPage(webLink.toStringWebLink());
+                logger.info("Loading " + websiteRequested + " page of " + selectedPerson.getName());
                 return;
             }
         });
-        logger.info("Loading " + websiteRequested + "Page of " + selectedPerson.getName());
     }
 
     public void loadPage(String url) {
@@ -109,6 +115,7 @@ public class BrowserPanel extends UiPart<Region> {
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
+        logger.info("Loading Landing Page...");
     }
 
     /**

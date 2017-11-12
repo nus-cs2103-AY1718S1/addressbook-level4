@@ -3,7 +3,7 @@
     -fx-base-background-color-0: #EFF1F3;
     -fx-base-background-color-1: #DBD3D8;
     -fx-button-pressed-color: #7a7a7a;
-    -fx-button-hovor-color: #3a3a3a;
+    -fx-button-hovor-color: #999999;
     -fx-base-text-fill-color: #14141f;
     -fx-base-text-fill-color-alt: white;
     -fx-base-text-fill-color-labels: white;
@@ -247,10 +247,6 @@
 
 .button:focused {
     -fx-border-color: -fx-base-text-fill-color, -fx-base-text-fill-color;
-    -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
-    -fx-border-radius: 0, 0;
-    -fx-border-insets: 1 1 1 1, 0;
 }
 
 .button:disabled, .button:default:disabled {

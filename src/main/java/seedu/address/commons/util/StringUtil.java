@@ -65,10 +65,7 @@ public class StringUtil {
 
         String preppedSentence = sentence;
 
-        if (preppedSentence.equalsIgnoreCase(preppedWord)) {
-            return true;
-        }
-        return false;
+        return preppedSentence.equalsIgnoreCase(preppedWord);
     }
 
     /**

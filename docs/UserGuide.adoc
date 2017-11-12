@@ -22,7 +22,7 @@ By: `Team F11-B2`      Since: `Aug 2017`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `SocialBook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -33,7 +33,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 w/https://facebook.com/johndoe` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -56,7 +56,7 @@ This is applicable to email and weblinks as well.
 Format: `help`
 
 // tag::add[]
-=== Adding a person: `add` or `a`
+=== Adding a person: `add`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL... a/ADDRESS [t/TAG] [w/WebLink]...`
@@ -72,7 +72,7 @@ Examples:
 * `add n/LeBron James e/kingjames@nba.com
 // end::add[]
 
-=== Listing all persons : `list` or `l`
+=== Listing all persons : `list`
 
 Shows a list of all persons in the address book, in the last sorted order. +
 Format: `list`
@@ -119,7 +119,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 For more about editing tags, read `Edit Individual Tag` below.
 
 // tag::editIndividualTag[]
-=== Edit individual Tag
+==== Edit individual Tag
 
 Use `+t/` or `-t/` in edit command to add or remove tag to specific person with corresponding index.
 
@@ -136,7 +136,7 @@ Format: `tagDelete [tag name]`
 
 ****
 * the matching of tag is case sensitive.
-* Tags that matches the tag inputted by the user wll be deleted.
+* Tags that matches the tag inputted by the user will be deleted.
 * only the tag set attached to each person will be searched.
 ****
 
@@ -413,6 +413,25 @@ Note: If you experience issues with opening up the User Profile Window, delete t
 ,then try again. A new User Profile will be created.
 // end::userProfileUI[]
 
+// tag::futureUpdates[]
+=== Dedicated Twitter/Facebook/Instagram Updates `Coming V2.0`
+
+The dedicated social media status updates would be added in `V2.0` as part of SocialBook's focus on the User's need to be informed of any latest updates.
+
+As it is currently tough to keep track of each and every update on all the possible social media platforms, only the very latest few updates would be included from all the social media links in this window.
+
+This window will take up a small amount of space on the right of the current browser window in SocialBook, and display the updates in a chronological order.
+
+=== Automatic update of contact information `Coming V2.0`
+
+The User will be able to expect SocialBook to update the Contact information as they are updated on various Social Media platforms, mainly Facebook.
+
+Each time the User loads the information of the current contact, the User will be prompted of updates available to the User's contact should they be different on the Social Media Platform.
+
+The User will then be given the option to update the fields available.
+
+// end::futureUpdates[]
+
 === Saving the data
 
 Address book data and user profile data are saved in the hard disk automatically after any command that changes the data. +
@@ -444,7 +463,7 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Update User* : `update`
 * *Redo* : `redo`
-* *Web* : `web`
+* *Web* : `web facebook`
 
 // tag::commandaliases[]
 === Alternative Command Aliases

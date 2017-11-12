@@ -191,14 +191,28 @@ Any new components added to the themes or stylesheets should utilise these base 
 
 // end::styling[]
 
+// tag::defaultPage[]
+=== Default.html
+
+image::defaultPage.png[width="600"]
+_Figure 2.4.1 : Default Landing page of the SocialBook App_
+
+The first page that the User sees is the landing page of the application. This landing page resides in the `default.html` file and the corresponding default theme along with it `DarkTheme.css`.
+
+This landing page is to present the first time users with some form of feedback when they are first introduced to the application.
+
+Additional Ui help such as arrows and pointers that can be implemented in the HTML with simple CSS stylings will be coming in `V2.0`.
+
+// end::defaultPage[]
+
 // tag::userInterface[]
 === DetailedPersonCard and PersonCard
 
 image::detailedPersonCard.png[width="600"]
-_Figure 2.4.1 : Majority of contact information is to be shown in the DetailedPersonCard_
+_Figure 2.5.1 : Majority of contact information is to be shown in the DetailedPersonCard_
 
 image::personCard.png[width="400"]
-_Figure 2.4.2 : Condensed information to be shown in PersonCard_
+_Figure 2.5.2 : Condensed information to be shown in PersonCard_
 
 The main design principles used here is to focus on the Social Aspect of the User's contacts.
 
@@ -431,7 +445,7 @@ image::UiClassDiagram.png[width="800"]
 As you can see from the diagram, `WebsiteButtonBar` resides within the `MainWindow`, despite not having any interactions with the BrowserPanel directly.
 
 
-Suppose that the user has just launched the application. The `BrowserPanel` not be loaded.
+Suppose that the user has just launched the application. The `BrowserPanel` will not be loaded.
 
 Once the User selects a person from the `PersonListPanel`, which is a `PersonCard`, the `SelectedPerson` is updated through the use of an event trigger. The `BrowserPanel` then stores this `SelectedPerson` until it is updated through listening for the event trigger.
 

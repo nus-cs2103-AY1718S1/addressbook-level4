@@ -220,7 +220,7 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
     -fx-base-background-color-0: #EFF1F3;
     -fx-base-background-color-1: #DBD3D8;
     -fx-button-pressed-color: #7a7a7a;
-    -fx-button-hovor-color: #3a3a3a;
+    -fx-button-hovor-color: #999999;
     -fx-base-text-fill-color: #14141f;
     -fx-base-text-fill-color-alt: white;
     -fx-base-text-fill-color-labels: white;
