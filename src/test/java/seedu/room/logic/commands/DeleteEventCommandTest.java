@@ -46,7 +46,7 @@ public class DeleteEventCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
         DeleteEventCommand deleteEventCommand = prepareCommand(outOfBoundIndex);
 
         assertCommandFailure(deleteEventCommand, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
@@ -101,7 +101,7 @@ public class DeleteEventCommandTest {
         // null -> returns false
         assertFalse(deleteFirstEventCommand.equals(null));
 
-        // different person -> returns false
+        // different event -> returns false
         assertFalse(deleteFirstEventCommand.equals(deleteSecondEventCommand));
     }
 
