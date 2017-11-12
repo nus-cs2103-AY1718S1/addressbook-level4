@@ -150,7 +150,7 @@ Adding a new contact? Unify's `add` command takes a person's information and rec
 
 image::UG_header_format.png[width="400"]
 {sp}+
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [i/AVATAR_FILE_PATH] [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS r/REMARK [i/AVATAR_FILE_PATH] [t/TAG]...`
 
 [TIP]
 Still unsure of what fields are required? Not to worry! Unify's in-line hints will prompt you on the fields required.
@@ -283,7 +283,7 @@ Unify's `edit` command lets you edit an existing contact's details in the addres
 
 image::UG_header_format.png[width="400"]
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...` +
 
 image::UG_header_alias.png[width="400"]
 {sp}+
@@ -651,37 +651,79 @@ image::divider.png[width="900"]
 === Sharing contact's details by email : `share`
 image::UG_commandheader_share.png[width="500"]
 
-Want to share a contact to your colleagues via e-mail?
-Unify's `email` command lets you email the selected contact's details to your personal email! +
+Want to share a contact to your colleagues or friends via e-mail?
+Unify's `share` command lets you email the selected contact's details to your designated email! +
 
 image::UG_header_format.png[width="400"]
-Format: `email INDEX EMAIL_ADDRESS`+
+Format:
+
+* `share INDEX s/EMAIL`
+* `share INDEX s/INDEX`
+* `share INDEX s/EMAIL INDEX` is same as `share INDEX s/INDEX EMAIL`
+
+You can share the selected contact's details to as many email addresses as you wish.
+
+* For example, to share to three 3 email addresses,
+use the format `share INDEX s/INDEX INDEX INDEX` or `INDEX s/EMAIL INDEX EMAIL`.
+* The `INDEX` after the "s/" can also be replaced with an `EMAIL` and it is interchangeable.
+
 
 image::UG_header_examples.png[width="400"]
 
 * `list` +
-`share 2 s/cs2103@gmail.com` +
-Sends an email to cs2103@gmail.com with the 2nd person's details in the address book.
+`share 1 s/cs2103@gmail.com` +
+Sends the 1st contact's details in the address book as an email to cs2103@gmail.com.
+
+* `list` +
+`share 1 s/2` +
+Sends the 1st contact's details in the address book as an email to the 2nd contact's email in the address book.
+
+* `list` +
+`share 1 s/cs2103@gmail.com 2` +
+Sends the 1st contact's details in the address book as an email to both cs2103@gmail.com and the 2nd contact's email in the address book.
+
+image::header_note.png[width="400"]
+
+* The format of the `share` between email and index
+* If you are unable to find the email that has been sent out to your inbox, try searching for it under the "junk" folder.
+
+image::header_warning.png[width="400"]
+* Ensure that you have input a valid email address to send to, otherwise the result box will display "Email address is no valid!"
+ and the email will not be sent.
+
+image::UG_sharewarning.png[width="590"]
+
+{sp}+
+
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
-image:step1.png[width="70"] Type `list` into the command box, and press kbd:[Enter] to execute it.
+image:step1.png[width="70"] First, find your contacts that you wish to share details about. Type `list` into the command box, and press kbd:[Enter] to execute it.
 
 image::UG_list1.png[width="590"]
 
-image:step2.png[width="70"] The result box will display "Listed all persons" +
+image:step2.png[width="70"] The result box will display "Listed all persons".
 
-image:step3.png[width="70"] The contact list will be displayed with every contacts found in the address book. You can scroll down to view more contacts in the list.
+image:step3.png[width="70"] The contact list will display every contacts found in the address book. You can scroll down to view more contacts in the list.
 
 image::UG_list2.png[width="590"]
 
-image:step4.png[width="70"] Type `email` into the command box first, then follow the index of the contact list and your recipient's email address, after which press kbd:[Enter] to execute it.
+image:step4.png[width="70"] To start sharing the contact through email, type `share` into the command box first, then follows by the index of the contact list and your recipient's email address or their index in the contact list, after which press kbd:[Enter] to execute it.
 
 image::UG_share1.png[width="590"]
 
-image:step5.png[width="70"] The result box will display "Email Sent!". +
+image:step5.png[width="70"] You are done! The contact details have been sent out as an email to your recipients. The result box will also display "Email Sent!".
 
 image::UG_share2.png[width="590"]
+
+{sp}+
+
+image::header_warning.png[width="400"]
+
+* It requires internet connection to share a contact details by email.
+* Otherwise, your  image:step5.png[width="70"] will have the result box displaying "Not Connected to the Internet".
+
+image::UG_share2a.png[width="590"]
 
 {sp}+
 
@@ -719,7 +761,7 @@ image::UG_musicplay2.png[width="590"]
 
 image::header_note.png[width="400"]
 
-* You can repeat step 1 again with a different `[GENRE]` as the input to play other  music `[GENRE]` songs.
+* You can repeat image:step1.png[width="70"] again with a different `[GENRE]` as the input to play other  music `[GENRE]` songs.
 * For example, input `music play classic` at step 1 to play classical songs instead.
 
 {sp}+
@@ -749,7 +791,7 @@ image::UG_musicstop2.png[width="590"]
 
 image::header_note.png[width="400"]
 
-* If there is no music currently playing and you try to stop the music player, you may encounter "No music is currently playing" in the result box instead at your image:step2.png[width="70"]. No worries! It is not a problem at all! Just issue the `music stop`
+* If there is no music currently playing and you try to stop the music player, you may encounter "No music is currently playing" in the result box at your image:step2.png[width="70"]. No worries! It is not a problem at all! Just issue the `music stop`
 command only, when there is music currently playing.
 
 image::UG_musicstop2a.png[width="590"]
@@ -772,6 +814,7 @@ Format: `radio play [GENRE]`
 image::header_note.png[width="400"]
 
 * The genre can only be "pop", "chinese", "classic" or "news" `radio play` alone will play pop radio station as default.
+* If your radio player suddenly stops playing, ensure that you are still connected to the internet, as it requires internet connection in order to work.
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
@@ -779,7 +822,7 @@ image:step1.png[width="70"] To play some radio broadcast, type `radio play` into
 
 image::UG_radioplay1.png[width="590"]
 
-image:step2.png[width="70"] If your [GENRE] is "pop", the result box will display "POP Radio Playing".
+image:step2.png[width="70"] If your `[GENRE]` is "pop", the result box will display "POP Radio Playing".
 
 image::UG_radioplay2.png[width="590"]
 
@@ -791,6 +834,13 @@ image::header_warning.png[width="400"]
 * Otherwise, your  image:step2.png[width="70"] will have the result box displaying "Not Connected to the Internet".
 
 image::UG_nointernet.png[width="590"]
+
+{sp}+
+
+image::header_note.png[width="400"]
+
+* You can repeat image:step1.png[width="70"] again with a different `[GENRE]` as the input to play other  radio `[GENRE]` stations.
+* For example, input `radio play classic` at step 1 to listen to the classical radio station.
 
 {sp}+
 
@@ -820,7 +870,7 @@ image::UG_radiostop2.png[width="590"]
 
 image::header_note.png[width="400"]
 
-* If the radio player is currently not playing and you try to stop the radio player, you may encounter "No Radio is currently playing" in the result box instead at your image:step2.png[width="70"]. No worries! It is not a problem at all! Just issue the `radio stop`
+* If the radio player is currently not playing and you try to stop the radio player, you may encounter "No Radio is currently playing" in the result box at your image:step2.png[width="70"]. No worries! It is not a problem at all! Just issue the `radio stop`
 command only, when the radio playing is currently playing.
 
 image::UG_radiostop2a.png[width="590"]
@@ -963,8 +1013,13 @@ image::UG_mainheader_commandsummary.png[width="900"]
 | *Edit* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`| `edit 2 n/James Lee r/Loves Cake`
 | *Find* | `find PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS]...` | `find James Jake`
 | *List* | `list`| `list`
-| *Hel* | `help`| `help`
+| *Help* | `help`| `help`
 | *Select* | `select INDEX`| `select 2`
+| *Share* | `share INDEX s/EMAIL` +
+ or `share INDEX s/INDEX` +
+ or `share INDEX s/EMAIL INDEX` | `share 1 s/cs2103@gmail.com 2` +
+ or `share 1 s/2` +
+ or `share 1 s/cs2103@gmail.com 2`
 | *History* | `history`| `history`
 .2+| *Music*| `music play [GENRE]`
 | `music play pop` | `music stop` | `music stop`
