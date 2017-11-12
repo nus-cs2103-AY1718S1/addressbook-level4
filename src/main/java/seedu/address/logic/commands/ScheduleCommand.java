@@ -132,7 +132,7 @@ public class ScheduleCommand extends UndoableCommand {
         return schedulePersonNames;
     }
 
-    //@@ CT15
+    //@@author CT15
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
