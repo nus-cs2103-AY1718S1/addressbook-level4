@@ -6,6 +6,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -74,71 +75,24 @@ public class UntagCommand extends UndoableCommand {
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        List<ReadOnlyPerson> personsToUpdate = new ArrayList<>();
 
-        // If command applies to all persons in filtered list
         if (toAllPersonsInFilteredList) {
+            List<ReadOnlyPerson> personsToUpdate = new ArrayList<>();
             personsToUpdate.addAll(lastShownList);
             return new CommandResult(untagAllPersonsInFilteredList(personsToUpdate));
         }
 
-        // Checks for invalid indexes
         for (Index targetIndex : targetIndexes) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(MESSAGE_INVALID_INDEXES);
             }
         }
 
-
         if (!tags.isEmpty() && Collections.disjoint(model.getAddressBook().getTagList(), tags)) {
             throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, joinTagList(tags)));
         }
 
-        return new CommandResult(untagPersonsInFilteredList(lastShownList));
-
-        /*
-        List<Name> toBeUntaggedPersonNames = new ArrayList<>();
-        if (tags.isEmpty()) {
-            for (Index targetIndex : targetIndexes) {
-                ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
-                personsToUpdate.add(person);
-                toBeUntaggedPersonNames.add(person.getName());
-            }
-            removeTagsFromPersons(personsToUpdate, tags);
-            deleteUnusedTagsInTagList(new ArrayList<>(model.getAddressBook().getTagList()));
-            return new CommandResult(String.format(MESSAGE_SUCCESS_ALL_TAGS, targetIndexes.size()) + " "
-                    + joinList(toBeUntaggedPersonNames));
-        }
-
-        if (!tags.isEmpty() && Collections.disjoint(model.getAddressBook().getTagList(), tags)) {
-            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, joinList(tags)));
-        }
-
-        List<Name> alreadyUntaggedPersonNames = new ArrayList<>();
-        for (Index targetIndex : targetIndexes) {
-            ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
-            if (Collections.disjoint(person.getTags(), tags)) {
-                alreadyUntaggedPersonNames.add(person.getName());
-                continue;
-            }
-            personsToUpdate.add(person);
-            toBeUntaggedPersonNames.add(person.getName());
-        }
-
-        removeTagsFromPersons(personsToUpdate, tags);
-        deleteUnusedTagsInTagList(tags);
-
-        // return command result
-        if (alreadyUntaggedPersonNames.size() > 0) {
-            return new CommandResult(String.format(MESSAGE_SUCCESS,
-                    targetIndexes.size() - alreadyUntaggedPersonNames.size(), joinList(tags)) + " "
-                    + joinList(toBeUntaggedPersonNames) + "\n"
-                    + String.format(MESSAGE_PERSONS_DO_NOT_HAVE_TAGS, alreadyUntaggedPersonNames.size()) + " "
-                    + joinList(alreadyUntaggedPersonNames));
-        }
-        return new CommandResult(String.format(MESSAGE_SUCCESS,
-                targetIndexes.size(), joinList(tags)) + " " + joinList(toBeUntaggedPersonNames));
-        */
+        return new CommandResult(untagSpecifiedPersonsInFilteredList(lastShownList));
     }
 
     @Override
@@ -152,10 +106,10 @@ public class UntagCommand extends UndoableCommand {
     /**
      * @param lastShownList of person filtered list
      */
-    private String untagPersonsInFilteredList(List<ReadOnlyPerson> lastShownList) throws CommandException {
+    private String untagSpecifiedPersonsInFilteredList(List<ReadOnlyPerson> lastShownList) throws CommandException {
         List<ReadOnlyPerson> toBeUntaggedPerson = new ArrayList<>();
         List<ReadOnlyPerson> alreadyUntaggedPerson = new ArrayList<>();
-        Set<Tag> tagsInPersons = new UniqueTagList().toSet();
+        Set<Tag> uniqueTags = new HashSet<>();
 
         for (Index targetIndex : targetIndexes) {
             ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
@@ -164,12 +118,12 @@ public class UntagCommand extends UndoableCommand {
             } else {
                 toBeUntaggedPerson.add(person);
             }
-            tagsInPersons.addAll(person.getTags());
+            uniqueTags.addAll(person.getTags());
         }
 
-        List<Tag> tagsToRemove = new ArrayList<>(tagsInPersons);
+        List<Tag> tagsToRemove = new ArrayList<>(uniqueTags);
         removeTagsFromPersons(toBeUntaggedPerson, (tags.isEmpty()) ? tagsToRemove : tags);
-        deleteUnusedTagsInTagList(new ArrayList<>(model.getAddressBook().getTagList()));
+        deleteUnusedTagsInTagList(tagsToRemove);
 
         if (tags.isEmpty()) {
             return String.format(MESSAGE_SUCCESS_ALL_TAGS, targetIndexes.size()) + " "
@@ -229,18 +183,6 @@ public class UntagCommand extends UndoableCommand {
         for (Tag tag : tags) {
             model.deleteUnusedTag(tag);
         }
-    }
-
-    /**
-     * Join all list elements by commas
-     * @param list to be joined
-     */
-    private String joinList(List list) {
-        StringJoiner joiner = new StringJoiner(", ");
-        for (Object obj : list) {
-            joiner.add(obj.toString());
-        }
-        return joiner.toString();
     }
 
     /**
