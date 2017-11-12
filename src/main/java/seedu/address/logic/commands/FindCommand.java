@@ -116,10 +116,10 @@ public class FindCommand extends Command {
             if (!(other instanceof Person)) {
                 return false;
             }
-            if (this.name != null && !match(this.name, ((Person) other).getName())) {
+            if (this.name != null && !matchName(this.name, ((Person) other).getName())) {
                 return false;
             }
-            if (this.phone != null && !match(this.phone, ((Person) other).getPhone())) {
+            if (this.phone != null && !matchPhone(this.phone, ((Person) other).getPhone())) {
                 return false;
             }
             if (this.email != null && !this.email.equals(((Person) other).getEmail())) {
@@ -134,7 +134,7 @@ public class FindCommand extends Command {
             if (this.birthday != null && !this.birthday.equals(((Person) other).getBirthday())) {
                 return false;
             }
-            if (this.tags != null && !match(this.tags, ((Person) other).getTags())) {
+            if (this.tags != null && !matchTag(this.tags, ((Person) other).getTags())) {
                 return false;
             }
 
@@ -142,63 +142,54 @@ public class FindCommand extends Command {
         }
 
         /**
-         * @param predicate
-         * @param test
-         * @return true if test contains predicate
-         */
-        private boolean match(Name predicate, Name test) {
-            if (predicate == test) {
-                return true;
-            }
-            if (predicate == null || test == null) {
-                return false;
-            }
-
-            String[] splitPredicate = predicate.toString().toUpperCase().split("\\s+");
-
-            for (String keyword : splitPredicate) {
-                if (keyword.equals("")) {
-                    continue;
-                }
-                if (test.toString().toUpperCase().contains(keyword)) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /**
+         * Returns true only if the person's name {@code personName} have all the words in {@code finderName}.
          *
-         * @param predicate
-         * @param test
-         * @return true if predicate is a substring of test
+         * @param finderName Name specified by the user to be found
+         * @param personName Name of a person in DeathNote to be matched
+         * @return a boolean value to check whether {@code personName} specify the requirement
          */
-        private boolean match(Phone predicate, Phone test) {
-            if (predicate == test) {
+        private boolean matchName(Name finderName, Name personName) {
+            if (finderName == personName) {
                 return true;
             }
-            if (predicate == null || test == null) {
-                return false;
+
+            String personNameStr = personName.toString().toUpperCase();
+
+            for (String word : finderName.toString().toUpperCase().split("\\s+")) {
+                if (word.equals("")) { continue; }
+                if (!personNameStr.contains(word)) {
+                    return false;
+                }
             }
 
-            return test.toString().contains(predicate.toString());
+            return true;
         }
 
         /**
-         * @param predicate
-         * @param test
-         * @return true if test contains a tag that is among the predicate
+         * Returns true only if the person's phone {@code personPhone} is a substring of {@code finderPhone}.
+         *
+         * @param finderPhone Phone specified by the user to be found
+         * @param personPhone Phone of a person in DeathNote to be matched
+         * @return a boolean value to check whether {@code personPhone} specify the requirement
          */
-        private boolean match(Set<Tag> predicate, Set<Tag> test) {
-            for (Tag predicateTag : predicate) {
-                for (Tag testTag : test) {
-                    if (predicateTag.equals(testTag)) {
-                        return true;
-                    }
+        private boolean matchPhone(Phone finderPhone, Phone personPhone) {
+            return personPhone.toString().contains(finderPhone.toString());
+        }
+
+        /**
+         * Returns true only if the person's tag {@code personTags} have all the tags specified in {@code finderTags}.
+         *
+         * @param finderTags Tags specified by the user to be found
+         * @param personTags Tags of a person in DeathNote to be matched
+         * @return a boolean value to check whether {@code personTags} specify the requirement
+         */
+        private boolean matchTag(Set<Tag> finderTags, Set<Tag> personTags) {
+            for (Tag finderTag : finderTags) {
+                if (!personTags.contains(finderTag)) {
+                    return false;
                 }
             }
-            return false;
+            return true;
         }
 
         public void setName(Name name) {

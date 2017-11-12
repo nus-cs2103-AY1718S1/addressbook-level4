@@ -10,7 +10,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Project: DeathNote
 
-DeathNote is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+DeathNote is a Command-line Interface (CLI) desktop address book application which is able to manage contacts easily.
+The user interacts with the application using a CLI, using commands to manage contacts; adding, deleting or editing contacts.
+
+The aim of DeathNote, besides managing contacts, is to be able to bring entertainment to the user.
+DeathNote has a small twist on being an address book application as it has aliases for its commands
+and the amount of entertainment can only be determined by the user's creativity.
+
+It has a GUI created with JavaFX. It is written in Java, and has about 6k Lines of Code (LoC).
 
 *Code contributed*: [https://github.com/Jemereny/addressbook-level4/blob/master/collated/main/Jemereny.md[Functional code]] [https://github.com/Jemereny/addressbook-level4/blob/master/collated/test/Jemereny.md[Test code]]
 
@@ -22,7 +29,13 @@ DeathNote is a desktop address book application used for teaching Software Engin
 
 Profile picture shows the face of contact.
 
-image::../images/personCard.png[]
+image::personCard.png[]
+
+Profile picture can be added using `add` command while adding a contact or `edit` command if the contact already exists.
+
+include::../UserGuide.adoc[tag=profilepictureadd]
+
+include::../UserGuide.adoc[tag=profilepictureedit]
 
 === Justification
 
@@ -101,7 +114,16 @@ include::../DeveloperGuide.adoc[tag=website]
 
 Tags are shown in different colors
 
-image::../images/tagcolor.png[]
+image::tagcolor.png[]
+
+Tags can be added using `add` command while adding a contact or `edit` command if the contact already exists.
+
+* `add n/Dwayne Johnson t/friend` +
+Adds Dwayne Johnson as a contact and adds a "friend" tag to the contact
+* `edit 1 t/colleague` +
+Edits the tag of the 1st person to be "colleague"
+* `edit 1 t/` +
+Removes all tag from the 1st person
 
 === Justification
 
@@ -124,7 +146,9 @@ include::../DeveloperGuide.adoc[tag=tagcolor]
 
 ---
 
-List is sorted by name alphabetically
+List is sorted by name alphabetically automatically.
+
+image::personList.png[]
 
 === Justification
 
@@ -145,4 +169,4 @@ include::../Developerguide.adoc[tag=sortlist]
 
 . Added travis to group repo
 . Increased test coverage from 87% to 88% (Pull request: https://github.com/CS2103AUG2017-W10-B3/main/pull/83[#86])
-. Reported bug on (Pull request: https://github.com/CS2103AUG2017-T15-B4/main/issues/234[T15-B4 #234])
+. Reported bug on (Pull requests: https://github.com/CS2103AUG2017-T15-B4/main/issues/234[T15-B4 #234], https://github.com/CS2103AUG2017-T15-B4/main/issues/236[T15-B4 #236])
