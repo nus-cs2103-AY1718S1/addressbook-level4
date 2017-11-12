@@ -89,24 +89,24 @@ New person "John Doe" will be added to the end of the person list. The person wi
 ==== Editing an existing person in address book:
 
 `edit 1 p/91234567` +
-Edits the phone number of the first person to be "91234567". First person will be selected and his contact details will be displayed in the centre panel.
+Edits the phone number of the first person to be "91234567". That person will be selected and his contact details will be displayed in the centre panel.
 
 `edit 2 n/Eli` +
-Edits name of the second person to be "Eli". Second person will be selected and his contact details will be displayed in the centre panel.
+Edits name of the second person to be "Eli". That person will be selected and his contact details will be displayed in the centre panel.
 
 ==== Deleting multiple person(s) from address book:
 
 `delete I/1 2 4` +
-Moves the first, second and fourth person from address book to recycle bin with their tags and events removed. First person in the updated person list will be selected.
+Deletes the first, second and fourth person from address book and move them to the recycle bin. First person in the updated person list will be selected.
 
 ==== Adding/updating birthday to a person:
 
 `b-add 1 18/10/1993` +
-Edits the birthday of the first person in the current person listing to 18/10/1993. First person in the updated person list will be selected.
+Edits the birthday of the first person in the current person listing to "18/10/1993". That person will be selected.
 
 `find n/John` +
 `b-add 1 12/04/1998` +
-Adds the birthday of the first person in the current person listing to 12/04/1998. First person in the updated person list will be selected.
+Adds the birthday of the first person in the current person listing to "12/04/1998". First person in the updated person list will be selected.
 
 ==== Removing the birthday from a person:
 
@@ -129,9 +129,9 @@ Restores the address book to the state before the previous _undoable_ command wa
 ==== Redoing the previously undone command:
 
 `redo` +
-Reverses the most recent "undo" command.
+Reverses the most recent "undo" command. +
 `undo` +
-Restores the address book data to the state before the previous _undoable_ command was executed for further testing.
+Restores the address book data to the state before the previous _undoable_ command is executed for further testing.
 
 ==== Viewing the command usage:
 
@@ -151,27 +151,27 @@ Lists all the commands entered in reverse chronological order.
 ==== Adding an Event to Schedule:
 
 `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/2h` +
-A two-hour long event called ‘iConnect Conference’ on 4th of December 2017 at 8:45AM will be added to the specified person at index 1, 2 and 3 into the calendar. The first person on the list will be selected.
+A two-hour event "iConnect Conference" on 4th December 2017 at 8:45AM will be added to the specified persons at index 1, 2 and 3 into the calendar. The first person in the updated person list will be selected.
 
 `s-add n/Email Reminder t/2017-12-04 14:30` +
-An event called ‘Email Reminder’ on 4th of December 2017 at 2:30PM with default zero duration will be added into the calendar and the event detail will be shown in the event list in chronological order.
+An event "Email Reminder" on 4th December 2017 at 2:30PM with default zero duration will be added into the calendar and the event detail will be updated and shown in the event list in chronological order.
 
 ==== Removing an Event from Schedule:
 
 `s-remove I/1 2` +
-Removes the first and second event in the event list. The result will be shown in the result box.
+Removes the first and second event in the event list. The result will be shown in the result box, and the event list will be updated.
 
 === Map
 
 ==== Finding the location of a person using Google Map:
 
-`m-show 1` +
-The home address of the first person in the current person listing will be shown in the centre browser panel.
+`m-show 2` +
+The home address of the second person in the current person listing will be shown in the centre browser panel.
 
 ==== Finding the route from user's current location to the person selected:
 
-`m-route 1 a/nus` +
-The route from "nus" to the home address of the first person in the current person listing will be shown in the centre browser panel.
+`m-route 3 a/nus` +
+The route from "nus" to the home address of the third person in the current person listing will be shown in the centre browser panel.
 
 === Tag
 
@@ -183,12 +183,12 @@ A tag "CS2103" will be added to the second and third person in the current perso
 ==== Setting person(s) as favourite:
 
 `t-add 2 3 favourite` +
-A tag "favourite" will be added to the second and third person in the current person listing. A coral circle will be shown besides the selected person names and edited tag list will be shown in the result box. Those two persons will come first in the person list. First person will be selected in the current person listing.
+A tag "favourite" will be added to the second and third person in the current person listing. A coral circle will be shown beside the selected person names and edited tag list will be shown in the result box. Those two persons will come first in the person list. First person will be selected in the current person listing.
 
 ==== Listing all person(s) with given tag:
 
 `t-find CS2103` +
-Four person will be listed in the person list panel.
+Four persons will be listed in the person list panel. The first person will be selected.
 
 ==== Removing a tag to person(s):
 
@@ -198,14 +198,14 @@ Tag "CS2103" will be removed from the first and second person in the current per
 ==== Removing person(s) from list of favourites:
 
 `t-remove favourite` +
-All person(s) with tag "favourite" will be removed. No coral circle will be shown besides any person names and edited tag list will be shown in the result box. First person will be selected in the current person listing.
+All person(s) with tag "favourite" will be removed. No coral circle will be shown besides any person names and edited tag list will be shown in the result box. The person list will be updated, and the first person will be selected in the current person listing.
 
 === Storage
 
 ==== Restore person(s) from recycle bin:
 
 `bin-restore 1 2` +
-The first and second person in the recycle bin will be restored. The last person restored from recycle bin will be selected.
+The first and second person in the recycle bin will be restored. All the detailed information will be back, except for their tags and relevant events. The last person restored from recycle bin will be selected.
 
 ==== Delete person(s) from the recycle bin:
 
@@ -219,12 +219,15 @@ All the person in the recycle bin will be deleted, and the recycle list panel wi
 
 ==== Making a backup address book:
 
-`export C:/Users/contact_2017sem1.txt` +
-The backup file will be exported and stored under the folder "C:/Users/", with the name "contact_2017sem1.txt".
+`export C:/Users/sunsh/Desktop/contact_2017sem1.txt` +
+The backup file will be exported and stored under the folder "C:/Users/sunsh/Desktop/", with the name "contact_2017sem1.txt".
+
+[NOTE]
+Please use a valid path for your own computer. Take note of the slashes.
 
 === Exit
 
 ==== Exiting the program:
 
 `exit` +
-Exits the program.
+Exits the program and finish the manual testing.
