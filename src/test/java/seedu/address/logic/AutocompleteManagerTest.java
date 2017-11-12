@@ -1,0 +1,41 @@
+//@@author namvd2709
+package seedu.address.logic;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
+
+public class AutocompleteManagerTest {
+    @Test
+    public void attemptAutocomplete() {
+        AutocompleteManager manager = new AutocompleteManager();
+
+        // test commands which can be matched by 1 character
+        assertEquals(manager.attemptAutocomplete("f"), FindCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("u"), UndoCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("r"), RedoCommand.COMMAND_WORD);
+
+        // test commands which can be matched by 1 character but 2 is supplied
+        assertEquals(manager.attemptAutocomplete("de"), DeleteCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("s"), SelectCommand.COMMAND_WORD);
+
+        // test commands which can be matched by 2 characters
+        assertEquals(manager.attemptAutocomplete("ed"), EditCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("ex"), ExitCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("he"), HelpCommand.COMMAND_WORD);
+        assertEquals(manager.attemptAutocomplete("hi"), HistoryCommand.COMMAND_WORD);
+
+        // test commands which can't be matched by 1 character but 1 is supplied
+        assertEquals(manager.attemptAutocomplete("e"), "e");
+    }
+}
