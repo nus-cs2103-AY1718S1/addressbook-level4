@@ -588,6 +588,7 @@ image::Tab2Image.png[width="800"]
 _Figure 5.17 : Displays the graph in your cherBook with the second tab index_
 // end::tab[]
 
+// tag::home[]
 === Switching to home screen: `home` `Since v1.5`
 
 Switch all panels on the right to the home page. +
@@ -601,6 +602,7 @@ Examples:
 
 image::HomeImage.png[width="800"]
 _Figure 5.18 : Returns to the home page of cherBook_
+//end::home[]
 
 === Exiting the program : `exit` `Since v1.0`
 
