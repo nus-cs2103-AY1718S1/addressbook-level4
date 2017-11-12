@@ -4,9 +4,14 @@
 /**
  * Contains integration tests (interaction with the Model) and unit tests for AppointCommand.
  */
-public class AppointCommandTest {
+public class AppointCommandTest extends GuiUnitTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
 
     @Test
     public void execute() throws Exception {
@@ -49,9 +54,13 @@ public class AppointCommandTest {
 /**
  * Contains integration tests (interaction with the Model) and unit tests for CommentCommand.
  */
-public class CommentCommandTest {
+public class CommentCommandTest extends GuiUnitTest {
+    private Model model;
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
 
     @Test
     public void execute_addComment_success() throws Exception {
@@ -144,7 +153,7 @@ public class CommentCommandTest {
 ```
 ###### \java\seedu\address\logic\parser\AppointCommandParserTest.java
 ``` java
-public class AppointCommandParserTest {
+public class AppointCommandParserTest extends GuiUnitTest {
     private AppointCommandParser parser = new AppointCommandParser();
 
     @Test
@@ -174,7 +183,7 @@ public class AppointCommandParserTest {
 ```
 ###### \java\seedu\address\logic\parser\CommentCommandParserTest.java
 ``` java
-public class CommentCommandParserTest {
+public class CommentCommandParserTest extends GuiUnitTest {
     private CommentCommandParser parser = new CommentCommandParser();
 
     @Test
@@ -208,7 +217,7 @@ public class AppointTest {
 
     @Test
     public void equals() {
-        Appoint appoint = new Appoint("Hello");
+        Appoint appoint = new Appoint("20/12/2018 13:30");
 
         // same object -> returns true
         assertTrue(appoint.equals(appoint));
@@ -224,7 +233,7 @@ public class AppointTest {
         assertFalse(appoint.equals(null));
 
         // different person -> returns false
-        Appoint differentAppoint = new Appoint("Bye");
+        Appoint differentAppoint = new Appoint("20/11/2018 13:30");
         assertFalse(appoint.equals(differentAppoint));
     }
 }
