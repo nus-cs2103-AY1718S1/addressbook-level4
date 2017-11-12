@@ -7,21 +7,25 @@
         switch (ListingUnit.getCurrentListingUnit()) {
         case LOCATION:
             this.predicate = new LocationContainsKeywordsPredicate(keywords);
-            ListingUnit.setCurrentPredicate(this.predicate);
+            ListingUnit.setCurrentPredicate(new LocationContainsKeywordsPredicate(keywords));
             break;
         case LESSON:
             if (model.getCurrentViewingAttribute().equals("marked")) {
                 this.predicate = new MarkedLessonContainsKeywordsPredicate(keywords);
-                ListingUnit.setCurrentPredicate(this.predicate);
+                ListingUnit.setCurrentPredicate(new MarkedLessonContainsKeywordsPredicate(keywords));
+                EventsCenter.getInstance().post(new ViewedLessonEvent());
                 break;
             }
             this.predicate = new LessonContainsKeywordsPredicate(keywords, model.getCurrentViewingLesson(),
                     model.getCurrentViewingAttribute());
-            ListingUnit.setCurrentPredicate(this.predicate);
+            ListingUnit.setCurrentPredicate(
+                    new LessonContainsKeywordsPredicate(keywords, model.getCurrentViewingLesson(),
+                    model.getCurrentViewingAttribute()));
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
             break;
         default:
             this.predicate = new ModuleContainsKeywordsPredicate(keywords);
-            ListingUnit.setCurrentPredicate(this.predicate);
+            ListingUnit.setCurrentPredicate(new ModuleContainsKeywordsPredicate(keywords));
             break;
         }
         model.updateFilteredLessonList(predicate);
@@ -132,11 +136,9 @@ public class SortCommand extends Command {
         for (int i = 0; i < bookedList.size(); i++) {
             if (bookedList.get(i).equals(target)) {
                 throw new DuplicateBookedSlotException();
-            } else if (i == (bookedList.size() - 1)) {
-                bookedList.add(target);
-                break;
             }
         }
+        bookedList.add(target);
     }
 
     @Override
@@ -254,12 +256,24 @@ public class DuplicateBookedSlotException extends DuplicateDataException {
 }
 
 ```
+###### /java/seedu/address/model/module/predicates/ContainsKeywordsPredicate.java
+``` java
+
+/**
+ * tests if the given lesson contains the keyword.
+ */
+public interface ContainsKeywordsPredicate extends Predicate<ReadOnlyLesson> {
+
+    public List<String> getKeywords();
+
+}
+```
 ###### /java/seedu/address/model/module/predicates/LessonContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
  */
-public class LessonContainsKeywordsPredicate implements Predicate<ReadOnlyLesson> {
+public class LessonContainsKeywordsPredicate implements ContainsKeywordsPredicate {
     private final List<String> keywords;
     private ArrayList<ReadOnlyLesson> duplicateLessons = new ArrayList<>();
     private ReadOnlyLesson lesson;
@@ -333,6 +347,18 @@ public class LessonContainsKeywordsPredicate implements Predicate<ReadOnlyLesson
                 && this.keywords.equals(((LessonContainsKeywordsPredicate) other).keywords)); // state check
     }
 
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    public ReadOnlyLesson getTargetLesson() {
+        return lesson;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
 }
 ```
 ###### /java/seedu/address/model/module/predicates/LocationContainsKeywordsPredicate.java
@@ -340,7 +366,7 @@ public class LessonContainsKeywordsPredicate implements Predicate<ReadOnlyLesson
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
  */
-public class LocationContainsKeywordsPredicate implements Predicate<ReadOnlyLesson> {
+public class LocationContainsKeywordsPredicate implements ContainsKeywordsPredicate {
     private final List<String> keywords;
     private ArrayList<String> duplicateLocation = new ArrayList<String>();
 
@@ -375,6 +401,9 @@ public class LocationContainsKeywordsPredicate implements Predicate<ReadOnlyLess
                 || (other instanceof LocationContainsKeywordsPredicate // instanceof handles nulls
                 && this.keywords.equals(((LocationContainsKeywordsPredicate) other).keywords)); // state check
     }
+    public List<String> getKeywords() {
+        return keywords;
+    }
 
 }
 ```
@@ -384,7 +413,7 @@ public class LocationContainsKeywordsPredicate implements Predicate<ReadOnlyLess
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
  */
 
-public class MarkedLessonContainsKeywordsPredicate implements Predicate<ReadOnlyLesson> {
+public class MarkedLessonContainsKeywordsPredicate implements ContainsKeywordsPredicate {
     private final List<String> keywords;
     private ArrayList<ReadOnlyLesson> duplicateLessons = new ArrayList<>();
 
@@ -428,6 +457,11 @@ public class MarkedLessonContainsKeywordsPredicate implements Predicate<ReadOnly
                 && this.keywords.equals(((MarkedLessonContainsKeywordsPredicate) other).keywords)); // state check
     }
 
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+
 }
 ```
 ###### /java/seedu/address/model/module/predicates/ModuleContainsKeywordsPredicate.java
@@ -435,7 +469,7 @@ public class MarkedLessonContainsKeywordsPredicate implements Predicate<ReadOnly
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
  */
-public class ModuleContainsKeywordsPredicate implements Predicate<ReadOnlyLesson> {
+public class ModuleContainsKeywordsPredicate implements ContainsKeywordsPredicate {
 
     private final List<String> keywords;
     private ArrayList<String> duplicateCodes = new ArrayList<String>();
@@ -466,6 +500,10 @@ public class ModuleContainsKeywordsPredicate implements Predicate<ReadOnlyLesson
         return other == this // short circuit if same object
                 || (other instanceof ModuleContainsKeywordsPredicate // instanceof handles nulls
                 && this.keywords.equals(((ModuleContainsKeywordsPredicate) other).keywords)); // state check
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
     }
 
 }

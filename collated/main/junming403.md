@@ -113,7 +113,7 @@ public class AddCommand extends UndoableCommand {
 public class ClearCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
+    public static final String MESSAGE_SUCCESS = "ModU has been cleared!";
 
 
     @Override
@@ -211,7 +211,7 @@ public class DeleteCommand extends UndoableCommand {
                 i--;
             }
         }
-        model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+        model.updateLocationList();
     }
 
     /**
@@ -251,7 +251,7 @@ public class DeleteCommand extends UndoableCommand {
                 i--;
             }
         }
-        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+        model.updateModuleList();
     }
 
     /**
@@ -435,7 +435,7 @@ public class EditCommand extends UndoableCommand {
         } catch (DuplicateBookedSlotException s) {
             throw new CommandException(MESSAGE_DUPLICATE_BOOKEDSLOT);
         } catch (IllegalValueException ive) {
-            model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+            model.updateLocationList();
             throw new CommandException(ive.getMessage());
         } catch (LessonNotFoundException pnfe) {
             throw new AssertionError("The target lesson cannot be missing");
@@ -463,7 +463,7 @@ public class EditCommand extends UndoableCommand {
                 model.updateLesson(p, curEditedLesson);
             }
         }
-        model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+        model.updateLocationList();
     }
 
 
@@ -476,7 +476,7 @@ public class EditCommand extends UndoableCommand {
             updateModuleCode(codeToEdit, editedCode);
             return new CommandResult(String.format(MESSAGE_EDIT_MODULE_SUCCESS, editedCode));
         } catch (IllegalValueException ive) {
-            model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+            model.updateModuleList();
             throw new CommandException(ive.getMessage());
         } catch (LessonNotFoundException pnfe) {
             throw new AssertionError("The target lesson cannot be missing");
@@ -502,8 +502,9 @@ public class EditCommand extends UndoableCommand {
             }
         }
 
-        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+        model.updateModuleList();
     }
+
 
     /**
      * Creates and returns a {@code Lesson} with the details of {@code lessonToEdit}
@@ -1077,9 +1078,7 @@ public class UnmarkCommand extends UndoableCommand {
         if (ListingUnit.getCurrentListingUnit().equals(LESSON)) {
             try {
                 model.unBookmarkLesson(lessonToCollect);
-                if (ListingUnit.getCurrentPredicate() instanceof MarkedListPredicate) {
-                    model.updateFilteredLessonList(new MarkedListPredicate());
-                }
+                updateLessonList();
                 EventsCenter.getInstance().post(new RefreshPanelEvent());
                 EventsCenter.getInstance().post(new ViewedLessonEvent());
                 return new CommandResult(String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToCollect));
@@ -1091,6 +1090,20 @@ public class UnmarkCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);
         }
     }
+
+    /**
+     * Update lesson list according to current predicate.
+     */
+    private void updateLessonList() {
+        Predicate predicate = ListingUnit.getCurrentPredicate();
+        if (ListingUnit.getCurrentPredicate() instanceof MarkedListPredicate) {
+            model.updateFilteredLessonList(new MarkedListPredicate());
+        } else if (ListingUnit.getCurrentPredicate() instanceof MarkedLessonContainsKeywordsPredicate) {
+            List<String> keywords = ((MarkedLessonContainsKeywordsPredicate) predicate).getKeywords();
+            model.updateFilteredLessonList(new MarkedLessonContainsKeywordsPredicate(keywords));
+        }
+    }
+
 
 
     @Override
@@ -1115,9 +1128,9 @@ public class ViewCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VIEW_LESSON_SUCCESS = "Viewing lesson: %1$s";
     public static final String MESSAGE_VIEW_LOCATION_SUCCESS = "lessons(s) founded with location %1$s";
     public static final String MESSAGE_VIEW_MODULE_SUCCESS = "lessons(s) founded with module code %1$s";
+    public static final String MESSAGE_VIEW_LESSON_FAILURE = "You can only view module or location.";
     public static final String VIEWING_ATTRIBUTE_MODULE = "module";
     public static final String VIEWING_ATTRIBUTE_DEFAULT = "default";
     public static final String VIEWING_ATTRIBUTE_LOCATION = "location";
@@ -1152,7 +1165,7 @@ public class ViewCommand extends Command {
      * Update the filterList that only returns lesson with the same location or module name
      * base in the current listing unit
      */
-    private String updateFilterList(ReadOnlyLesson toView) {
+    private String updateFilterList(ReadOnlyLesson toView) throws CommandException {
 
         Predicate predicate;
         String result;
@@ -1170,9 +1183,7 @@ public class ViewCommand extends Command {
             break;
 
         default:
-            predicate = new ShowSpecifiedLessonPredicate(toView);
-            result = String.format(MESSAGE_VIEW_LESSON_SUCCESS, toView);
-            break;
+            throw new CommandException(MESSAGE_VIEW_LESSON_FAILURE);
         }
 
         ListingUnit.setCurrentPredicate(predicate);
@@ -1938,27 +1949,28 @@ public enum ListingUnit {
     }
 
     @Override
-    public void handleListingUnit() {
-        ListingUnit unit = ListingUnit.getCurrentListingUnit();
-
-        if (unit.equals(LOCATION)) {
-            UniqueLocationPredicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
-            updateFilteredLessonList(predicate);
-        } else if (unit.equals(MODULE)) {
-            UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
-            updateFilteredLessonList(predicate);
+    public void updateLocationList() {
+        if (ListingUnit.getCurrentPredicate() instanceof LocationContainsKeywordsPredicate) {
+            updateFilteredLessonList(
+                    new LocationContainsKeywordsPredicate(((LocationContainsKeywordsPredicate)
+                            ListingUnit.getCurrentPredicate()).getKeywords()));
         } else {
-            updateFilteredLessonList(ListingUnit.getCurrentPredicate());
-
-            if (getFilteredLessonList().isEmpty()) {
-                UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
-                updateFilteredLessonList(predicate);
-                ListingUnit.setCurrentPredicate(predicate);
-                ListingUnit.setCurrentListingUnit(MODULE);
-                EventsCenter.getInstance().post(new RefreshPanelEvent());
-            }
+            updateFilteredLessonList(new UniqueLocationPredicate(getUniqueLocationSet()));
         }
     }
+
+
+    @Override
+    public void updateModuleList() {
+        if (ListingUnit.getCurrentPredicate() instanceof ModuleContainsKeywordsPredicate) {
+            updateFilteredLessonList(
+                    new ModuleContainsKeywordsPredicate(((ModuleContainsKeywordsPredicate)
+                            ListingUnit.getCurrentPredicate()).getKeywords()));
+        } else {
+            updateFilteredLessonList(new UniqueModuleCodePredicate(getUniqueCodeSet()));
+        }
+    }
+
 ```
 ###### /java/seedu/address/model/module/exceptions/DuplicateLessonException.java
 ``` java

@@ -158,20 +158,6 @@ public interface Model {
 ```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
-/**
- * Represents the in-memory model of the address book data.
- * All changes to any model should be synchronized.
- */
-public class ModelManager extends ComponentManager implements Model {
-    private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-
-    private final AddressBook addressBook;
-    private final FilteredList<ReadOnlyLesson> filteredLessons;
-    private final FilteredList<Remark> filteredRemarks;
-    private final ArrayList<BookedSlot> bookedList;
-    private ReadOnlyLesson currentViewingLesson;
-    private String currentViewingAttribute;
-
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -192,11 +178,74 @@ public class ModelManager extends ComponentManager implements Model {
         initializeBookedSlot();
         currentViewingAttribute = "default";
     }
-
-    public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void resetData(ReadOnlyAddressBook newData) {
+        addressBook.resetData(newData);
+        indicateAddressBookChanged();
     }
 
+    @Override
+    public ReadOnlyAddressBook getAddressBook() {
+        return addressBook;
+    }
+
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    private void indicateAddressBookChanged() {
+        raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    @Override
+    public synchronized void deleteLesson(ReadOnlyLesson target) throws LessonNotFoundException {
+        addressBook.removeLesson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteLessonSet(List<ReadOnlyLesson> lessonList) throws LessonNotFoundException {
+
+        for (ReadOnlyLesson lesson : lessonList) {
+            addressBook.removeLesson(lesson);
+        }
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
+        addressBook.addLesson(lesson);
+        indicateAddressBookChanged();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
+            throws DuplicateLessonException, LessonNotFoundException {
+        requireAllNonNull(target, editedLesson);
+        addressBook.updateLesson(target, editedLesson);
+        indicateAddressBookChanged();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyModule} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyLesson> getFilteredLessonList() {
+        return FXCollections.unmodifiableObservableList(filteredLessons);
+    }
+
+    @Override
+    public void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate) {
+        requireNonNull(predicate);
+        filteredLessons.setPredicate(predicate);
+    }
 ```
 ###### /java/seedu/address/model/module/ClassType.java
 ``` java
@@ -1053,8 +1102,11 @@ public class XmlAdaptedLesson {
  */
 public class CombinePanel extends UiPart<Region> {
 
+
     public static final String DEFAULT_PAGE = "default.html";
     public static final String NUS_MAP_SEARCH_URL_PREFIX = "http://map.nus.edu.sg/#page=search&type=by&qword=";
+
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20100101 Firefox/7.0.1";
 
     private static final String FXML = "CombinePanel.fxml";
     private static final String LESSON_NODE_ID = "lessonNode";
@@ -1067,6 +1119,7 @@ public class CombinePanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
     private GridData[][] gridData;
+    private int[][]  gridDataCheckTable;
     private String[][]noteData;
     private ReadOnlyLesson selectedModule;
 
@@ -1089,6 +1142,7 @@ public class CombinePanel extends UiPart<Region> {
         super(FXML);
         this.logic = logic;
         gridData = new GridData[ROW][COL];
+        gridDataCheckTable = new int[ROW][COL];
         initGridData();
         generateTimeTableGrid();
         // To prevent triggering events for typing inside the loaded Web page.
@@ -1115,7 +1169,7 @@ public class CombinePanel extends UiPart<Region> {
             noteBox.setVisible(false);
         } else if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION)) {
             timeBox.setVisible(false);
-            browser.setVisible(true);
+            browser.setVisible(false);
             noteBox.setVisible(false);
         } else {
             timeBox.setVisible(false);
@@ -1132,6 +1186,7 @@ public class CombinePanel extends UiPart<Region> {
         for (int i = 0; i < ROW; i++) {
             for (int j = 0; j < COL; j++) {
                 gridData[i][j] = new GridData();
+                gridDataCheckTable[i][j] = 0;
             }
         }
     }
@@ -1165,7 +1220,7 @@ public class CombinePanel extends UiPart<Region> {
 
     public void generateWeekDay() {
         for (int i = 1; i < ROW; i++) {
-            String dayOfWeek = DayOfWeek.of(i).toString();
+            String dayOfWeek = DayOfWeek.of(i).toString().substring(0, 3);
             Label label = new Label(dayOfWeek);
             label.setId(HEADER);
             timetableGrid.setValignment(label, VPos.CENTER);
@@ -1193,15 +1248,37 @@ public class CombinePanel extends UiPart<Region> {
             int weekDayRow = getWeekDay(timeText.substring(0, 3));
             int startHourCol = getTime(timeText.substring(4, 6));
             int endHourSpan = getTime(timeText.substring(9, 11)) - startHourCol;
+            boolean isAvailable = false;
+            if (!isOccupy(weekDayRow, startHourCol, endHourSpan)) {
+                isAvailable = true;
+            }
 
-            if (gridData[weekDayRow][startHourCol].getCount() == 0) {
+            if (isAvailable && gridData[weekDayRow][startHourCol].getCount() == 0) {
                 gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, 1);
             } else {
                 int count = gridData[weekDayRow][startHourCol].getCount();
-                gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, ++count);
+                gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol,
+                        endHourSpan, count + 2);
+            }
+
+            for (int j = 0; j < endHourSpan; j++) {
+                gridDataCheckTable[weekDayRow][startHourCol + j] = 1;
             }
         }
     }
+
+    /**
+     * Check for timetable grid.
+     */
+    public boolean isOccupy(int row, int col, int span) {
+        for (int i = 0; i < span; i++) {
+            if (gridDataCheckTable[row][col + i] == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Generate timetable grid.
@@ -1269,8 +1346,15 @@ public class CombinePanel extends UiPart<Region> {
         loadPage(NUS_MAP_SEARCH_URL_PREFIX + lesson.getLocation().toString());
     }
 
+
+    /**
+     * Load page for given url
+     * @param url
+     */
     public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
+        WebEngine engine = browser.getEngine();
+        engine.setUserAgent(USER_AGENT);
+        Platform.runLater(() -> engine.load(url));
     }
 
     /**
@@ -1456,7 +1540,7 @@ public class CombinePanel extends UiPart<Region> {
     }
 
 
-    private ArrayList<Integer> getTagIndexList(String allTextInput) {
+    public ArrayList<Integer> getTagIndexList(String allTextInput) {
         ArrayList<Integer> tagList = new ArrayList<>();
         int index = 0;
         while (index < allTextInput.length()) {
@@ -1636,7 +1720,7 @@ public class CombinePanel extends UiPart<Region> {
      * @param str the text used to compute the width
      * @return
      */
-    private double computeMargin(int index, String str) {
+    public double computeMargin(int index, String str) {
         Text text = new Text(str);
         text.getStyleClass().clear();
         switch (index) {
@@ -1699,6 +1783,47 @@ public class CombinePanel extends UiPart<Region> {
         return keywordColorMap;
     }
 
+}
+```
+###### /java/seedu/address/ui/HelpWindow.java
+``` java
+    public HelpWindow() {
+        super(FXML);
+        Scene scene = new Scene(getRoot());
+        //Null passed as the parent stage to make it non-modal.
+        dialogStage = createDialogStage(TITLE, null, scene);
+        dialogStage.setResizable(true);
+        FxViewUtil.setStageIcon(dialogStage, ICON);
+
+        WebEngine engine = browser.getEngine();
+        engine.setUserAgent(USER_AGENT);
+        String userGuideUrl = getClass().getResource(USERGUIDE_FILE_PATH).toString();
+        engine.load(userGuideUrl);
+    }
+    //@author
+
+    /**
+     * Shows the help window.
+     * @throws IllegalStateException
+     * <ul>
+     *     <li>
+     *         if this method is called on a thread other than the JavaFX Application Thread.
+     *     </li>
+     *     <li>
+     *         if this method is called during animation or layout processing.
+     *     </li>
+     *     <li>
+     *         if this method is called on the primary stage.
+     *     </li>
+     *     <li>
+     *         if {@code dialogStage} is already showing.
+     *     </li>
+     * </ul>
+     */
+    public void show() {
+        logger.fine("Showing help page about the application.");
+        dialogStage.showAndWait();
+    }
 }
 ```
 ###### /resources/view/CombinePanel.fxml
@@ -1878,7 +2003,7 @@ public class CombinePanel extends UiPart<Region> {
 
 #lessonNode {
     -fx-font-family: monospace;
-    -fx-font-size: x-large;
+    -fx-font-size: large;
     -fx-font-weight: bolder;
     -fx-control-inner-background: #6B4A40;
     -fx-text-fill: derive(#d4cbb3, 50%);

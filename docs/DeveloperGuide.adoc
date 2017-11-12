@@ -42,7 +42,7 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 === Setting up the project in your computer
 
 . Fork this repo, and clone the fork to your computer
-. 2.	Launch IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog).
+. Launch IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog).
 . Set up the correct JDK version for link:#gradle[Gradle].
 .. Click `Configure` > `Project Defaults` > `Project Structure`.
 .. Click `New...` and find the directory of the JDK.
@@ -50,7 +50,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Locate the `build.gradle` file and select it. Click `OK`.
 . Click `Open as Project`.
 . Click `OK` to accept the default settings.
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`).
+It should finish with the `BUILD SUCCESSFUL` message.
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
@@ -147,7 +148,7 @@ Note how the event is propagated through the **EventsCenter** to the Storage and
 
 The sections below give more details of each component.
 
-=== link:#ui[UI] component
+=== link:#ui[UI component]
 
 image::UiClassDiagram.png[width="800"]
 _Figure 5 : Class Diagram of the UI Component_
@@ -158,7 +159,7 @@ As shown in the _link:#class-diagram[Class diagram] above (Figure 5)_, the link:
 
 The link:#ui[UI] component uses link:#javaFX[JavaFx] link:#ui[UI] framework. The layout of these link:#ui[UI] parts are defined in matching `.fxml` files that are in the `src/main/resources/view folder`. For example, the layout of the **MainWindow** is specified in `MainWindow.java`.
 
-The `link:#ui[UI]` component,
+The link:#ui[UI] component,
 
 * executes user commands using the Logic component.
 * binds itself to some data in the Model so that the link:#ui[UI] component can auto-update when the data in the Model component changes.
@@ -182,7 +183,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  The command execution can affect the Model component (e.g. adding a lesson) and/or raise events.
 .  The result of the command execution is encapsulated as a **CommandResult** object which is passed back to the link:#ui[UI] component.
 
-Given below is the _link:#sequence-diagram[Sequence diagram] (Figure 8)_ for interactions within the Logic component for the execution of  `("delete 1")` link:#api[API] call.
+Given below is the _link:#sequence-diagram[Sequence diagram] (Figure 8)_ for interactions within the Logic component for the execution of  `"delete 1"` link:#api[API] call.
 
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 8: Sequence Diagram for the delete 1 Command_
@@ -270,7 +271,9 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The **UndoRedoStack** will be empty at the beginning.
 
-The user executes a new UndoableCommand, delete 5, to delete all lessons associated with the module in index 5. The current state of ModU is saved before executing the command. The command will then be pushed onto the undoStack (the current state is saved together with the command) (Figure 12).
+The user executes a new UndoableCommand, delete 5, to delete all lessons associated with the module in index 5.
+The current state of ModU is saved before executing the command.
+The command will then be pushed onto the undoStack (the current state is saved together with the command) (Figure 12).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 _Figure 12: undoStack Diagram 1_
@@ -318,7 +321,7 @@ Suppose now user wants to view all lessons of module code CS2103, thus user type
 image::UndoRedoNewCommand4StackDiagram.png[width="800"]
 _Figure 18: RedoStack Diagram 6_
 
-The following _Activity Diagram (Figure 19)_ summarizes what happens inside the **UndoRedoStack** when a user executes a new command:
+The following _link:#activity-diagram[Activity Diagram] (Figure 19)_ summarizes what happens inside the **UndoRedoStack** when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
 _Figure 19: Activity Diagram_
@@ -412,10 +415,10 @@ The following _link:#sequence-diagram[Sequence diagram] (Figure 20)_ shows how t
 image::ListCommandSequenceDiagram.jpg[width="900"]
 _Figure 20: Sequence Diagram for ListCommand_
 
-The following _Activity Diagram (Figure 21)_ summarizes what happens when a user executes list command.
+The following _link:#activity-diagram[Activity Diagram] (Figure 21)_ summarizes what happens when a user executes list command.
 
 image::ListCommandActivityDiagram.png[width="900"]
-_Figure 10: Activity Diagram for ListCommand_
+_Figure 21: Activity Diagram for ListCommand_
 
 **FixedCodePredicate** and **FixedLocationPredicate** are used to facilitate the implementation of **ViewCommand**. According to the current listing type, which we can obtain from **ListingUnit**, we can create either a **FixedCodePredicate** or a **FixedLocationPredicate** to filter the lesson list and set **currentListingUnit** to be **LESSON**.
 
@@ -424,7 +427,7 @@ The following _link:#sequence-diagram[Sequence diagram] (Figure 22)_ shows how t
 image::ViewCommandSequenceDiagram.jpg[width="900"]
 _Figure 22 Sequence Diagram for ViewCommand_
 
-The following _Activity Diagram (Figure 23)_ summarizes what happens when a user executes **ViewCommand**.
+The following _link:#activity-diagram[Activity Diagram] (Figure 23)_ summarizes what happens when a user executes **ViewCommand**.
 
 image::ViewCommandActivityDiagram.png[width="900"]
 _Figure 23: Activity Diagram for view_
@@ -491,7 +494,7 @@ The following _link:#sequence-diagram[Sequence diagram] (Figure 25)_ shows how t
 image::FindCommandSeqDiagram.png[width="900"]
 _Figure 25:  Sequence Diagram for FindCommand_
 
-The following _Activity Diagram (Figure 26)_ summarizes what happens when a user executes find command.
+The following _link:#activity-diagram[Activity Diagram] (Figure 26)_ summarizes what happens when a user executes find command.
 
 image::FindCommandActivityDiagram.png[width="900"]
 _Figure 26: Activity Diagram for FindCommand_
@@ -521,7 +524,7 @@ The following _link:#sequence-diagram[Sequence diagram] (Figure 27)_ shows how t
 image::RemarkCommandSequenceDiagram.jpg[width="900"]
 _Figure 27: Sequence Diagram for RemarkCommand_
 
-The following _Activity Diagram (Figure 28)_ summarizes what happens when a user executes remark command.
+The following _link:#activity-diagram[Activity Diagram] (Figure 28)_ summarizes what happens when a user executes remark command.
 
 image::RemarkCommandActivityDiagram.png[width="900"]
 _Figure 28: Activity Diagram for RemarkCommand_
@@ -548,7 +551,7 @@ The following _link:#sequence-diagram[Sequence diagram] (Figure 29)_ shows how t
 image::SortCommandSeqDiagram.png[width="900"]
 _Figure 29: Sequence Diagram for SortCommand_
 
-The following _Activity Diagram (Figure 30)_ summarizes what happens when a user executes sort command.
+The following _link:#activity-diagram[Activity Diagram] (Figure 30)_ summarizes what happens when a user executes sort command.
 
 image::sortCommandactivitydiagram.png[width="900"]
 _Figure 30: Activity Diagram for SortCommand_
@@ -588,7 +591,7 @@ The following _link:#sequence-diagram[Sequence diagram] (Figure 31)_ shows how t
 image::ColorKeywordCommandSeqDiagram.png[width="900"]
 _Figure 31: Sequence Diagram for ColorKeywordCommand_
 
-The following _Activity Diagram (Figure 32)_ summarizes what happens when a user executes color keyword command.
+The following _link:#activity-diagram[Activity Diagram] (Figure 32)_ summarizes what happens when a user executes color keyword command.
 
 image::ColorKeywordActivityDiagram.png[width="900"]
 _Figure 32: Activity Diagram for ColorKeywordCommand_
@@ -618,7 +621,7 @@ The following _link:#sequence-diagram[Sequence diagram] (Figure 34)_ shows how t
 image::CustomiseCommandSeqDiagram.png[width="900"]
 _Figure 34: Sequence Diagram for CustomiseCommand_
 
-The following _Activity Diagram (Figure 35)_ summarizes what happens when a user executes customise command.
+The following _link:#activity-diagram[Activity Diagram] (Figure 35)_ summarizes what happens when a user executes customise command.
 
 image::CustomiseCommandActivityDiagram.png[width="900"]
 _Figure 35: Activity Diagram for CustomiseCommand_
@@ -648,7 +651,7 @@ The following _link:#sequence-diagram[Sequence diagram] (Figure 36)_ shows how t
 image::SwitchThemeSequenceDiagram.png[width="900"]
 _Figure 36: Sequence Diagram for ThemeCommand_
 
-The following _Activity Diagram (Figure 37)_ summarize what happens when a user executes theme command.
+The following _link:#activity-diagram[Activity Diagram] (Figure 37)_ summarize what happens when a user executes theme command.
 
 image::SwitchThemeActivityDiagram.png[width="900"]
 _Figure 37: Activity Diagram for ThemeCommand_
