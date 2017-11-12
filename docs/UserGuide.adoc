@@ -316,6 +316,8 @@ deletes the contacts with the 2nd, 4th, 7th and 8th indexes in the address book.
 
 ****
 
+// end::deleteMultipleCommand[]
+
 
 // tag::changePicture[]
 === Change Profile Picture : `changePicture`
@@ -330,9 +332,7 @@ Format: `changePicture INDEX PICTURE_PATH`
 * The specified picture must be in either .png or . jpg format.
 ****
 
-Example:
-=======
-// end::deleteMultipleCommand[]
+// end::changePicture[]
 
 // tag::remark[]
 === Add remark to a person
