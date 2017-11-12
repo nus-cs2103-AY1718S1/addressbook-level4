@@ -33,7 +33,6 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
@@ -54,18 +53,18 @@ public class CommandBox extends UiPart<Region> {
      * <p>
      * UP:
      * As up and down buttons will alter the position of the caret,
-     * consuming it causes the caret's position to remain unchanged
+     * consuming it causes the caret's position to remain unchanged.
      * <p>
      * RIGHT:
      * 1. Check if user's Caret is at the end of the text input.
-     * If caret is not at the end of text, do nothing
-     * If caret is at the end, deploy shortcut that makes user life easy for add command
-     * 2. If only add is present, concat prefix name string
-     * Checks if necessary prefixes are present
-     * Checks based on priority : n/ p/ e/ a/ b/ t/ prefixes
+     * If caret is not at the end of text, do nothing.
+     * If caret is at the end, deploy shortcut that makes user life easy for add command.
+     * 2. If only add is present, concat prefix name string.
+     * Checks if necessary prefixes are present.
+     * Checks based on priority : n/ p/ e/ a/ b/ t/ prefixes.
      * <p>
      * DEFAULT:
-     * Lets JavaFx handle the Key Press
+     * Lets JavaFx handle the Key Press.
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
@@ -78,7 +77,9 @@ public class CommandBox extends UiPart<Region> {
 
     //@@author Jeremy
     /**
-     * Handles KeyPress Commands that are not keyed with Shift button held down
+     * Handles KeyPress Commands that are not keyed with Shift button held down.
+     *
+     * @param keyEvent Key event pressed by user.
      */
     private void handleStandardPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
@@ -106,17 +107,17 @@ public class CommandBox extends UiPart<Region> {
             boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
             if (isCaretWithin) {
                 break;
-            } else {
-                addsNextPrefix();
-                break;
             }
+            addsNextPrefix();
+            break;
         default:
         }
     }
 
-
     /**
-     * Handles KeyPress Commands that are keyed with Shift button held down
+     * Handles KeyPress Commands that are keyed with Shift button held down.
+     *
+     * @param keyEvent Key event pressed by user with shift pressed.
      */
     private void handleShiftPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
@@ -137,16 +138,15 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
-
     /**
      * Deletes the word or a chunk of blank spaces on the left.
      * Does not matter if caret is at end of text or between lines. Method will automatically
      * detect and execute.
-     * 1. If Caret is at far left, break;
-     * 2. If Caret is at far right, check if left side is blank or word and execute appropriately
-     * 3. If " " is present on the left of Caret, delete all blank spaces before
-     * 4. If Caret is between word, execute normal delete method
-     * 5. If Character is on the left and " " is on the right, delete chunk on left
+     * 1. If Caret is at far left, break.
+     * 2. If Caret is at far right, check if left side is blank or word and execute appropriately.
+     * 3. If " " is present on the left of Caret, delete all blank spaces before.
+     * 4. If Caret is between word, execute normal delete method.
+     * 5. If Character is on the left and " " is on the right, delete chunk on left.
      */
     private void deleteByChunk() {
         int originalCaretPosition = commandTextField.getCaretPosition();
@@ -167,21 +167,24 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(newCaretPosition);
     }
 
-
     /**
-     * Deletes chunk in the situation where caret is at the far right
+     * Deletes chunk in the situation where caret is at the far right.
+     *
+     * @param newCaretPosition Passes in the existing caret position.
+     * @return newCaretPosition shifted left by chunk.
      */
     private int farRightDeleteChunk(int newCaretPosition) {
         if (isEmptyBefore(newCaretPosition)) {
             return shiftLeftIgnoringSpaces(newCaretPosition);
-        } else {
-            return shiftLeftIgnoringWords(newCaretPosition);
         }
+        return shiftLeftIgnoringWords(newCaretPosition);
     }
 
-
     /**
-     * Forms a new word with all string elements between the two parameters removed
+     * Sets a new word with all string elements between the two parameters removed.
+     *
+     * @param newCaretPosition Left boundary of the word.
+     * @param originalCaretPosition Right boundary of the word.
      */
     private void setNewWord(int newCaretPosition, int originalCaretPosition) {
         String before = commandTextField.getText().substring(0, newCaretPosition);
@@ -195,9 +198,11 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.setText(answer);
     }
 
-
     /**
-     * Checks if caret is at either ends
+     * Checks if caret is at either ends.
+     *
+     * @param originalCaretPosition Caret to evaluate.
+     * @return True if caret is either at far left or far right.
      */
     private boolean atEitherEnds(int originalCaretPosition) {
         boolean atFarLeft = (originalCaretPosition == 0);
@@ -254,20 +259,22 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(newCaretPosition);
     }
 
-
     /**
-     * Shifts the caret left, ignoring all empty spaces
+     * Shifts the caret left, ignoring all empty spaces.
      * <p>
      * Note: Will not implement exception throwing here as shiftCaretLeftByWord is set up in such a way
      * that pre-conditions as follows are met. Do not want to write code which will affect test coverage
-     * which is impossible to resolve
+     * which is impossible to resolve.
      * <p>
      * Pre-Condition 1: Current caret position must have an empty space string on the left.
-     * It must never be called if there is a possibility of the string before
-     * it being not an empty space
+     * It must never be called if there is a possibility of the string before.
+     * it being not an empty space.
      * <p>
      * Pre-Condition 2: newCaretPosition should never be in the situation where there is a possibility
-     * of it being 0
+     * of it being 0.
+     *
+     * @param newCaretPosition Current caret position.
+     * @return New caret position.
      */
     private int shiftLeftIgnoringSpaces(int newCaretPosition) {
         int caretHolder = newCaretPosition;
@@ -280,20 +287,23 @@ public class CommandBox extends UiPart<Region> {
         return caretHolder;
     }
 
-
     /**
-     * Shifts the caret right, ignoring all empty spaces
+     * Shifts the caret right, ignoring all empty space.
      * <p>
      * Note: Will not implement exception throwing here as shiftCaretRightByWord is set up in such a way
      * that pre-conditions as follows are met. Do not want to write code which will affect test coverage
-     * which is impossible to resolve
+     * which is impossible to resolve.
      * <p>
      * Pre-Condition 1: Current caret position must have an empty space string on the right.
      * It must never be called if there is a possibility of the string after
-     * it being not an empty space
+     * it being not an empty space.
      * <p>
      * Pre-Condition 2: newCaretPosition should never be in the situation where there is a possibility
-     * of it being at most right position
+     * of it being at most right position.
+     *
+     * @param newCaretPosition Current caret position.
+     * @param maxAchievablePosition Right most bound of word.
+     * @return New caret position.
      */
     private int shiftRightIgnoringSpaces(int newCaretPosition, int maxAchievablePosition) {
         int caretHolder = newCaretPosition;
@@ -306,20 +316,22 @@ public class CommandBox extends UiPart<Region> {
         return caretHolder;
     }
 
-
     /**
-     * Shifts the caret left, ignoring all char
+     * Shifts the caret left, ignoring all char.
      * <p>
      * Note: Will not implement exception throwing here as shiftCaretLeftByWord is set up in such a way
      * that pre-conditions as follows are met. Do not want to write code which will affect test coverage
-     * which is impossible to resolve
+     * which is impossible to resolve.
      * <p>
      * Pre-Condition 1: Current caret position must have an empty space string on the left.
      * It must never be called if there is a possibility of the string before
-     * it being not an empty space
+     * it being not an empty space.
      * <p>
      * Pre-Condition 2: newCaretPosition should never be in the situation where there is a possibility
-     * of it being 0
+     * of it being 0.
+     *
+     * @param newCaretPosition Current caret position.
+     * @return New caret position.
      */
     private int shiftLeftIgnoringWords(int newCaretPosition) {
         int caretHolder = newCaretPosition;
@@ -332,20 +344,23 @@ public class CommandBox extends UiPart<Region> {
         return caretHolder;
     }
 
-
     /**
-     * Shifts the caret right, ignoring all char
+     * Shifts the caret right, ignoring all char.
      * <p>
      * Note: Will not implement exception throwing here as shiftCaretRightByWord is set up in such a way
      * that pre-conditions as follows are met. Do not want to write code which will affect test coverage
-     * which is impossible to resolve
+     * which is impossible to resolve.
      * <p>
      * Pre-Condition 1: Current caret position must have an empty space string on the right.
      * It must never be called if there is a possibility of the string before
-     * it being not an empty space
+     * it being not an empty space.
      * <p>
      * Pre-Condition 2: newCaretPosition should never be in the situation where there is a possibility
-     * of it being at most right position
+     * of it being at most right position.
+     *
+     * @param newCaretPosition Current caret position.
+     * @param maxAchievablePosition Right most caret position.
+     * @return New caret position.
      */
     private int shiftRightIgnoringWords(int newCaretPosition, int maxAchievablePosition) {
         int caretHolder = newCaretPosition;
@@ -359,7 +374,10 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Returns true if string element before currentCaretPosition index is empty
+     * Checks if string element before currentCaretPosition index is empty.
+     *
+     * @param currentCaretPosition Current caret position.
+     * @return True if string element before currentCaretPosition index is empty.
      */
     private boolean isEmptyBefore(int currentCaretPosition) {
         Character charBefore = commandTextField.getText().charAt(currentCaretPosition - 1);
@@ -368,7 +386,10 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Returns true if string element after currentCaretPosition index is empty
+     * Checks if string element after currentCaretPosition index is empty.
+     *
+     * @param currentCaretPosition Current caret position.
+     * @return True if string element after currentCaretPosition index is empty.
      */
     private boolean isEmptyAfter(int currentCaretPosition) {
         Character charAfter = commandTextField.getText().charAt(currentCaretPosition);
@@ -405,8 +426,10 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Fundamental Check: Checks if add poll KeyWord is in the input text
-     * Additional Checks: Checks if prefix is in the input text
+     * Checks if add or edit KeyWord is in the input text. Also checks if prefix is in the input text.
+     *
+     * @param element String to be evaluated.
+     * @return True if contains add or edit keyword and relevant prefixes.
      */
     private boolean containsPrefix(String element) {
         switch (element) {
@@ -426,14 +449,14 @@ public class CommandBox extends UiPart<Region> {
             return (!containsDate() && (addPollSuccessful() || editPollSuccessful()));
         default:
             return (containsAllCompulsoryPrefix() && (addPollSuccessful() || editPollSuccessful()));
-
         }
     }
 
     /**
-     * Polls the input statement to check if sentence starts with " add " or " a "
-     * <p>
-     * Additional Note: Polling method accounts for blank spaces in front
+     * Checks if sentence starts with " add " or " a ".
+     * Accounts for blank space in front.
+     *
+     * @return True if if sentence starts with " add " or " a ".
      */
     private boolean addPollSuccessful() {
         String stringToEvaluate = commandTextField.getText().trim();
@@ -453,29 +476,30 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Polls the input statement to check if
-     * 1. sentence starts with " edit " or " e " and
-     * 2. is followed by a valid INDEX
-     * <p>
-     * Additional Note: Polling method accounts for blank spaces in front
+     * Checks if sentence starts with " edit " or " e " and is followed by a valid INDEX.
+     * Accounts for blank spaces in front.
+     *
+     * @return True if sentence starts with " edit " or " e " and is followed by a valid INDEX.
      */
     private boolean editPollSuccessful() {
         String stringToEvaluate = commandTextField.getText().trim();
         if (stringToEvaluate.length() < 3 || !stringToEvaluate.contains(" ")) {
             return false;
-        } else {
-            String[] splittedString = stringToEvaluate.split(" ");
-            boolean containsEditWord = splittedString[0].equalsIgnoreCase("edit");
-            boolean containsEditShorthand = splittedString[0].equalsIgnoreCase("e");
-            boolean containsEditCommand = containsEditShorthand || containsEditWord;
-            String regex = "[0-9]+";
-            boolean containsOnlyNumbers = splittedString[1].matches(regex);
-            return containsEditCommand && containsOnlyNumbers;
         }
+        String[] splittedString = stringToEvaluate.split(" ");
+        boolean containsEditWord = splittedString[0].equalsIgnoreCase("edit");
+        boolean containsEditShorthand = splittedString[0].equalsIgnoreCase("e");
+        boolean containsEditCommand = containsEditShorthand || containsEditWord;
+        String regex = "[0-9]+";
+        boolean containsOnlyNumbers = splittedString[1].matches(regex);
+        return containsEditCommand && containsOnlyNumbers;
     }
 
     /**
-     * Checks if the first two elements of the string are "a "
+     * Checks if the first two elements of the string are "a ".
+     *
+     * @param stringToEvaluate String to check.
+     * @return True if the first two elements of the string are "a ".
      */
     private boolean containsAInFirstTwoChar(String stringToEvaluate) {
         return (Character.toString(stringToEvaluate.charAt(0)).equalsIgnoreCase(AddCommand.COMMAND_ALIAS)
@@ -483,7 +507,10 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Checks if the first four elements of the string are "add "
+     * Checks if the first four elements of the string are "add ".
+     *
+     * @param stringToEvaluate String to check.
+     * @return True if the first four elements of the string are "add ".
      */
     private boolean containsAddInFirstFourChar(String stringToEvaluate) {
         return (stringToEvaluate.substring(0, 3).equalsIgnoreCase(AddCommand.COMMAND_WORD)
@@ -491,7 +518,9 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Checks if the commandTextField all prefixes excluding tag
+     * Checks if the commandTextField all prefixes excluding tag.
+     *
+     * @return True if all prefixes are present.
      */
     private boolean containsAllCompulsoryPrefix() {
         return containsAddress() && containsEmail() && containsBloodtype()
@@ -500,14 +529,17 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Adds prefix string to existing text input
+     * Adds prefix string to existing text input.
+     *
+     * @param prefix Prefix to add.
+     * @return Text input concatenated with prefix.
      */
     private String concatPrefix(Prefix prefix) {
         return commandTextField.getText().concat(" ").concat(prefix.getPrefix());
     }
 
     /**
-     * Checks if existing input has Bloodtype Prefix String
+     * @return True if existing input has Bloodtype Prefix String.
      */
     private boolean containsBloodtype() {
         String currentInput = commandTextField.getText();
@@ -515,7 +547,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Checks if existing input has Remark Prefix String
+     * @return True if existing input has Remark Prefix String.
      */
     private boolean containsRemark() {
         String currentInput = commandTextField.getText();
@@ -523,7 +555,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Checks if existing input has Remark Prefix String
+     * @return True if existing input has Date Prefix String.
      */
     private boolean containsDate() {
         String currentInput = commandTextField.getText();
@@ -531,7 +563,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Checks if existing input has Address Prefix String
+     * @return True if existing input has Address Prefix String.
      */
     private boolean containsAddress() {
         String currentInput = commandTextField.getText();
@@ -539,7 +571,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Checks if existing input has Email Prefix String
+     * @return True if existing input has Email Prefix String.
      */
     private boolean containsEmail() {
         String currentInput = commandTextField.getText();
@@ -547,7 +579,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Checks if existing input has Phone Prefix String
+     * @return True if existing input has Phone Prefix String.
      */
     private boolean containsPhone() {
         String currentInput = commandTextField.getText();
@@ -555,7 +587,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Checks if existing input has Name Prefix String
+     * @return True if existing input has Name Prefix String.
      */
     private boolean containsName() {
         String currentInput = commandTextField.getText();
@@ -572,7 +604,6 @@ public class CommandBox extends UiPart<Region> {
         if (!historySnapshot.hasPrevious()) {
             return;
         }
-
         replaceText(historySnapshot.previous());
     }
 
@@ -585,7 +616,6 @@ public class CommandBox extends UiPart<Region> {
         if (!historySnapshot.hasNext()) {
             return;
         }
-
         replaceText(historySnapshot.next());
     }
 
@@ -643,7 +673,6 @@ public class CommandBox extends UiPart<Region> {
      */
     private void setStyleToIndicateCommandFailure() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
-
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
             return;
         }
@@ -653,7 +682,7 @@ public class CommandBox extends UiPart<Region> {
 
     //@@author Jeremy
     /**
-     * Gets the text field for testing purposes
+     * @return the text field for testing purposes
      */
     public TextField getCommandTextField() {
         return commandTextField;

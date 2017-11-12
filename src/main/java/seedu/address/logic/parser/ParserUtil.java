@@ -86,6 +86,9 @@ public class ParserUtil {
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
+     *
+     * @param remark String to be evaluated for remark prefix.
+     * @return Remark command if remark prefix is present else returns Optional.empty().
      */
     public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
         requireNonNull(remark);

@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 //@@author Jeremy
 /**
- * Finds and lists all persons in address book in ascending order by name
+ * Finds and lists all persons in address book in ascending order by name.
  */
 public class ListAscendingNameCommand extends Command {
 
@@ -18,6 +18,11 @@ public class ListAscendingNameCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed persons by name in ascending order";
 
+    /**
+     * Returns a success message and filters the list by name in ascending order.
+     *
+     * @return CommandResult(MESSAGE_SUCCESS).
+     */
     @Override
     public CommandResult execute() {
         model.listNameAscending();
