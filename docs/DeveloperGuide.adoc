@@ -414,7 +414,7 @@ The attributes of Meeting class include `NameMeeting`, `DateTime`, `Place`, `Per
 === Add Meeting
 
 The add meeting command inherits from UndoableCommand which allows user to add meeting with the following parameters: 'INDEX' of person in the last person listing,
-'Name' of Meeting, 'Date and Time' of Meeting, and lastly, 'Location' of Meeting.
+'Name' of Meeting, 'Date and Time' of Meeting, 'Location' of Meeting, and lastly, 'Importance' of Meeting.
 
 Implementation:
 
@@ -423,7 +423,7 @@ corresponding parameters. For example,
 
 [source,java]
 ----
-addmeeting 7 n/Shopping d/31-10-2017 16:00 l/Hillion Mall
+addmeeting 7 n/Shopping d/31-10-2017 16:00 l/Hillion Mall t/1
 ----
 
 Creates an object with the following parameters
@@ -434,9 +434,10 @@ DateTime: 31-10-2017 16:00
 PersonName: Alex Yeo
 PhoneNum: 87438807
 Location: Hillion Mall
+MeetingTag: 1
 ----
 
-Furthermore, the `INDEX` of person provided would allow the newly-created `Meeting` object to get the `Name` as well as `Phone`
+Furthermore, the `INDEX` of person provided would allow the newly-created `Meeting` object to get the name as well as phone number
 of the corresponding contact as shown in the example above.
 
 The following sequence diagram below shows how AddMeeting operation works:
@@ -595,6 +596,30 @@ the same as one of the preexisting Meetings in the addressbook.
 **Alternative 1 :** Comparing the different parameters individually without the creation
  of a new instance of a `Meeting` +
 **Pros:** More direct and faster way of editing the different parameters of the `Meeting` object +
+
+// tag::selectmeeting[]
+
+=== Select Meeting
+
+The select meeting command inherits from Command which allows user to select a meeting with the following parameters:
+'INDEX' of meeting in the last meeting listing.
+
+Implementation:
+
+When the `selectmeeting` is called with the appropriate parameters given, the Events center would create and post an instance of this as a new request event.
+This request event is then handled by the Browser Panel which loads the designated meeting page, Google Maps, with the meeting location loaded into the
+destination.
+
+==== Design Considerations
+
+**Aspect:** Purpose and use for selecting a meeting +
+**Alternative 1 (current implementation):** Google Maps is loaded in the browser panel +
+**Pros:** Allows developer to make use of the already established maps. +
+**Cons:** Requires user to input valid addresses instead of user-based inputs like "Alex's Home". +
+**Alternative 2 (future option):** Allows user to choose what to load at the browser panel such as connecting to social media platforms to interact with meeting partners +
+**Pros:** Improve flexibility and choices to suit different needs of users.
+
+// end::selectmeeting[]
 
 // tag::meetingCard[]
 === Meeting Card

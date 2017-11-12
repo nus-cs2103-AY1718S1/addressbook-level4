@@ -17,7 +17,7 @@ By: `CS2103AUG2017-T09-B2`      Since: `AUG 2017`      Licence: `MIT`
 image::Quote.png[width="800"]
 
 == Introduction/Product overview
-The __ScheduBook __V1.4 is an application that helps students like you create and store a list of contacts and also helps you schedule your meetings so that you can better manage your time with your friends, peers or even your professors or teachers. You can use __Schedubook __to remind you of a certain meeting you have on a day and __Schedubook __will remind you, further providing you information about the location you planned to meet.
+The __ScheduBook __V1.5 is an application that helps students like you create and store a list of contacts and also helps you schedule your meetings so that you can better manage your time with your friends, peers or even your professors or teachers. You can use __Schedubook __to remind you of a certain meeting you have on a day and __Schedubook __will remind you, further providing you information about the location you planned to meet.
 
 == About
 
@@ -224,7 +224,7 @@ Selects the person identified by the index number used in the last person listin
 Format: `(s)select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person at the specified `INDEX` and opens a window which shows the details of the person.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -250,8 +250,6 @@ Format: `(am)addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION] [t/IMPORTANCE]
 
 [NOTE]
 Input format for Date and Time is "DD-MM-YYYY HH:MM"
-
-// end::addmeeting[]
 
 [NOTE]
 Input format for `IMPORTANCE` is 0-2.
@@ -280,8 +278,10 @@ _Figure 6B: Clash Meeting Error_
 
 Examples:
 
-* `addmeeting 1 n/Study d/31-10-2017 21:00 l/School of Computing, NUS`
-* `addmeeting 2 n/Project meeting d/27-12-2017 08:30 l/iCube Auditorium, NUS`
+* `addmeeting 1 n/Study d/31-10-2017 21:00 l/School of Computing, NUS t/1`
+* `addmeeting 2 n/Project meeting d/27-12-2017 08:30 l/iCube Auditorium, NUS t/2`
+
+// end::addmeeting[]
 
 === Deleting a meeting: `deletemeeting`
 deletemeeting by index of meeting in the Meeting
@@ -544,8 +544,8 @@ There is no need to save manually.
 
 |Add Meeting
 |am
-|INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION]
-|addmeeting 5 n/Shopping d/22-11-2017 l/Vivo City
+|INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION] [t/IMPORTANCE]
+|addmeeting 5 n/Shopping d/22-11-2017 l/Vivo City t/1
 
 |Delete Meeting
 |dm
@@ -561,6 +561,11 @@ There is no need to save manually.
 |fm
 |KEYWORD [MORE_KEYWORDS]
 |findmeeting Shopping Study Jake
+
+|Find Exact Meeting
+|fem
+|[KEYWORDS]
+|findmeeting Alex Yeoh
 
 |List Meeting
 |lm
