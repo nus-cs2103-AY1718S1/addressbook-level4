@@ -143,16 +143,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    /**
-     * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull appointment date,
-     * in chronological order
-     */
-    @Override
-    public ObservableList<ReadOnlyPerson> listAppointment() {
-        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByAppointment();
-        return FXCollections.unmodifiableObservableList(list);
-    }
-
     //@@author Jeremy
     /**
      * Returns an unmodifiable filtered ReadOnlyPerson list, filtered by name in ascending order.

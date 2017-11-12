@@ -31,10 +31,6 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
 
         String[] args = userInput.split(" ");
 
-        if (args.length == 1) {
-            return new AddAppointmentCommand();
-        }
-
         ArgumentMultimap argumentMultimap =
                 ArgumentTokenizer.tokenize(userInput, PREFIX_DATE);
 

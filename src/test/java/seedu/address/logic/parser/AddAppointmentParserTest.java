@@ -1,8 +1,6 @@
 package seedu.address.logic.parser;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,18 +43,6 @@ public class AddAppointmentParserTest {
         Appointment appointment = AddAppointmentParser.getAppointmentFromString("Lunch, tomorrow 5pm");
         assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), appointment), command);
 
-    }
-
-    @Test
-    public void parseEmptyExpression() {
-
-        //No name and no date will just call the parser to return a command with no attributes initialized
-        try {
-            AddAppointmentCommand command = parser.parse("appointment");
-            assertTrue(command.getIndex() == null);
-        } catch (ParseException e) {
-            fail(e.getMessage());
-        }
     }
 
     @Test

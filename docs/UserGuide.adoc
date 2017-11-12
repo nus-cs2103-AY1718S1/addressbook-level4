@@ -357,27 +357,16 @@ Appointment can be set using natural language. +
 You can add multiple appointments to the same contact. +
 If no end time of appointment is specified, default appointment time is 1 hour. +
 
+*Format:* `appointment 1 d/Dinner, tonight 7pm to 10pm` +
+*Shorthand Format:* `appt 1 d/Checkup, tomorrow 10am to 12pm`
+
 
 [WARNING]
 Please do not input invalid dates/time. +
 You can refer to the following http://natty.joestelmach.com/doc.jsp[link] for the supported formats. +
 You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
 
-[width="59%",cols="<23%,<25%,<30%",options="header",]
-|=======================================================================
-|Purpose |Format |Example
 
-|Add an appointment to the contact |`appointment INDEX d/Description, TIME` |`appointment 1 d/Lunch, tomorrow 5pm to 7pm`
-
-|Shorthand for adding appointment  |`appt INDEX d/Description, TIME` |`appt 1 d/Lunch, tomorrow 5pm to 7pm`
-
-|Remove an appointment from the contact |`cancel Description with person`| `cancel lunch with James`
-
-|Sort contacts by appointment dates |`appointment` |`appointment`
-
-|Shorthand for appointment sorting |`appt` |`appt`
-
-|=======================================================================
 
 *Example:*
 
@@ -386,27 +375,17 @@ image::aptexample.png[width="800"]
 
 === Cancel Appointment: `cancel`
 
-You can cancel an appointment with contact. Refer to the daily view to cancel appointments.
+You can cancel an appointment with contact. Refer to the agenda in the daily view to cancel appointments.
+If more than one appointment has the same description and contact, the earliest appointment will be deleted.
 
-If more than one appointment has the same description and contact, the earlier appointment will be deleted.
+*Format:* `cancel Dinner with Alice Lee` +
+
+
 
 [NOTE]
 If the appointment does not show on the daily view, it may be too far ahead. +
 As of v1.5, you must wait until a least
 a month before the appointment before the appointment will show up on the daily view.
-This issue will be fixed by v2.0.
-
-
-
-[width="59%",cols="<23%,<25%,<30%",options="header",]
-|=======================================================================
-|Purpose |Format |Example
-
-|Remove an appointment from the contact |`cancel Description with person`| `cancel lunch with James`
-
-|=======================================================================
-
-
 
 *Example:*
 
@@ -657,11 +636,14 @@ You do not need to save data manually.
 
 |*Deleting a Remark* |Removes a remark from a contact |`remark INDEX r/` |`remark 1 r/`
 
-|*Adding an appointment*| Adds an appointment to a contact |`appointment INDEX d/TIME to TIME`
-| `appointment 1 d/Tonight 7pm to 8pm`
+|*Adding an appointment*| Adds an appointment to a contact |`appointment INDEX d/DESCRIPTION, TIME`
+| `appointment 1 d/Dinner, Tonight 7pm to 8pm`
 
-|*Adding an appointment Shorthand*| Adds an appointment to a contact | `appt INDEX d/TIME to TIME`
-| `appt 1 d/Tonight 7pm to 10pm`
+|*Adding an appointment Shorthand*| Adds an appointment to a contact | `appt INDEX d/DESCRIPTION, TIME`
+| `appt 1 d/Dinner, Tonight 7pm to 10pm`
+
+|*Cancel an appointment*| Cancels an appointment with a contact. Refer to agenda in daily view |
+ `cancel DESCRIPTION with NAME` | `cancel lunch with alice yeo`
 
 |*Setting all tag color to random*| Sets all tags to random color | `tagcolor random` | `tagcolor random`
 
