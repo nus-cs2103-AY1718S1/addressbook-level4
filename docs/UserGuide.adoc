@@ -71,7 +71,7 @@ This app will not work with earlier versions of Java 8 and below.
 .  Copy the file to your home folder of choice.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::ContagDemo.png[width="790"]
+image::ContagDemo.PNG[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -572,13 +572,13 @@ To *transfer data* to another Computer, install the app in the other computer an
 
 |link:#clearing-all-entries-code-clear-code[Clear] | `c`| `clear` |
 
-|link:#getting-email-addresses-code-copy-code-since-v1-3[Copy] |`cp` |`copy INDEX [UNIQUE INDEX]...`|
+|link:#getting-email-addresses-code-copy-code-since-v1-3[Copy] |`cp` |`copy INDEX [UNIQUE INDEX]...`| `copy 1 2`
 
-|link:#deleting-person-s-code-delete-code-last-updated-in-v1-1[Delete] |`d`|`delete INDEX [UNIQUE INDEX]...`|
+|link:#deleting-person-s-code-delete-code-last-updated-in-v1-1[Delete] |`d`|`delete INDEX [UNIQUE INDEX]...`| `delete 3`
 
 |link:#editing-a-person-code-edit-code[Edit] | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
 
-|link:#emailing-persons-code-email-code-since-v1-5[Email] |`em` |`delete INDEX [UNIQUE INDEX]...`| `email 2`
+|link:#emailing-persons-code-email-code-since-v1-5[Email] |`m` |`delete INDEX [UNIQUE INDEX]...`| `email 2`
 
 |link:#exiting-the-program-code-exit-code[Exit] |  | `exit` |
 
