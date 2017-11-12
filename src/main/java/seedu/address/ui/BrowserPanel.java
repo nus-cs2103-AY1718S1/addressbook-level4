@@ -30,9 +30,10 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String LINKEDIN_SEARCH_PARAM_FIRST_NAME = "&firstName=";
     public static final String LINKEDIN_SEARCH_PARAM_LAST_NAME = "&lastName=";
     public static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
+    //@@author martyn-wong
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
+    private static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
     //@@author
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -170,12 +171,15 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if (event.getBrowserSelection().equals("linkedin")) {
             loadLinkedIn();
+
         } else if (event.getBrowserSelection().equals("google")) {
-            hasLinkedinBeenChosen = false;
-            hasMapsBeenChosen = false;
+            setLinkedinChosenFalse();
+            setMapsChosenFalse();
             loadPersonPage(personSelected);
+
         } else if (event.getBrowserSelection().equals("maps")) {
             loadPersonMap(personSelected);
+
         }
     }
 

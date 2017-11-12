@@ -112,17 +112,6 @@ public class StorageManagerTest {
             e.printStackTrace();
         }
     }
-
-    @Test
-    public void loadImageResource_nonExistent_throwsIoException() {
-        try {
-            storageManager.loadResourceImage("notValidImage.png");
-            fail();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * A Stub class to throw an exception when the save method is called
      */

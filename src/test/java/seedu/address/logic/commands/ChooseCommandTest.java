@@ -8,6 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Selection;
 import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.testutil.EventsCollectorRule;
@@ -21,11 +22,14 @@ public class ChooseCommandTest {
     public void execute_validArgs_success() {
         assertExecutionSuccess("linkedin");
         assertExecutionSuccess("meeting");
+        assertExecutionSuccess("google");
+        assertExecutionSuccess("maps");
     }
 
     @Test
     public void execute_invalidArgs_failure() {
-        assertExecutionFailure("gibberish", Messages.MESSAGE_INVALID_BROWSER_INDEX);
+        Selection.setPersonSelected();
+        assertExecutionFailure("badargs", Messages.MESSAGE_INVALID_BROWSER_INDEX);
     }
 
     /**

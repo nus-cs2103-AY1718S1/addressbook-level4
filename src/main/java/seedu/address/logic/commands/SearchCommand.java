@@ -1,8 +1,11 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.FindCommand.NO_RESULTS;
+
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 
-//@author martyn-wong
+//@@author martyn-wong
 /**
  * Searches the address book for any parameters that match the given keyword.
  */
@@ -25,8 +28,15 @@ public class SearchCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         model.updateFilteredPersonList(predicate);
+
+        int searchResultsCount = model.getFilteredPersonList().size();
+
+        if (searchResultsCount != NO_RESULTS) {
+            model.recordSearchHistory();
+        }
+
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
@@ -37,3 +47,4 @@ public class SearchCommand extends Command {
                 && this.predicate.equals(((SearchCommand) other).predicate)); // state check
     }
 }
+//@@author

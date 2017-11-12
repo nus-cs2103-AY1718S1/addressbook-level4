@@ -8,7 +8,7 @@ import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.PersonContainsKeywordsPredicate;
 
-//@author martyn-wong
+//@@author martyn-wong
 /**
  * Parses input arguments and creates a new SearchCommand object
  */
@@ -32,3 +32,4 @@ public class SearchCommandParser implements Parser<SearchCommand> {
     }
 
 }
+//@@author

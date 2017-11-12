@@ -703,7 +703,7 @@ Otherwise, users will be notified that specified tags are not used in address bo
 
 === Command: `Search`
 
-`Search` lets users search for contacts in the address book by keywords in parameters of their details. +
+`Search` lets users search for contacts in the address book by keywords in their contact details such name, address and telephone number +
 The feature is more powerful and useful than find which only searches by name.
 
 ==== Implementation

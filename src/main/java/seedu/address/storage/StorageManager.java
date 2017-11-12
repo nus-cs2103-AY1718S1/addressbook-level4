@@ -217,20 +217,6 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
-    /**
-     * Returns a image in the resources folder
-     * @param imageFilename of the image file to be opened
-     * @throws IOException if the image with given filename is not found
-     */
-    public static FileInputStream loadResourceImage(String imageFilename) throws IOException {
-        try {
-            return new FileInputStream(IMAGE_RESOURCE_DIR + imageFilename);
-        } catch (FileNotFoundException e) {
-            logger.warning(String.format("Image resource %1$s not found.", imageFilename));
-            throw new IOException();
-        }
-    }
-
     // Gravatar
     @Override
     public void downloadProfilePhoto(ReadOnlyPerson person, String def) {

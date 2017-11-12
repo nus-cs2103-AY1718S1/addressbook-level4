@@ -112,6 +112,11 @@
     -fx-padding: 0 0 0 0;
 }
 
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #383838;
+}
+
 .list-cell:filled:even {
     -fx-background-color: #3c3e3f;
 }

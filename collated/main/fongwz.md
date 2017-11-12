@@ -1,5 +1,5 @@
 # fongwz
-###### /java/seedu/address/commons/events/ui/BrowserPanelSelectionChangedEvent.java
+###### \java\seedu\address\commons\events\ui\BrowserPanelSelectionChangedEvent.java
 ``` java
 /**
  * Represents a selection change in the Browser List Panel
@@ -22,7 +22,7 @@ public class BrowserPanelSelectionChangedEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/ChangeThemeEvent.java
+###### \java\seedu\address\commons\events\ui\ChangeThemeEvent.java
 ``` java
 /**
  * Indicates a request to jump to the list of browser panels
@@ -41,7 +41,7 @@ public class ChangeThemeEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/JumpToBrowserListRequestEvent.java
+###### \java\seedu\address\commons\events\ui\JumpToBrowserListRequestEvent.java
 ``` java
 /**
  * Indicates a request to jump to the list of browser panels
@@ -60,7 +60,7 @@ public class JumpToBrowserListRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/ShowBrowserEvent.java
+###### \java\seedu\address\commons\events\ui\ShowBrowserEvent.java
 ``` java
 /**
  * Indicates a request show the browser panel
@@ -76,7 +76,7 @@ public class ShowBrowserEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/ShowMeetingEvent.java
+###### \java\seedu\address\commons\events\ui\ShowMeetingEvent.java
 ``` java
 /**
  * Indicates a request show the meeting panel
@@ -92,7 +92,7 @@ public class ShowMeetingEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/FirstPreloader.java
+###### \java\seedu\address\FirstPreloader.java
 ``` java
 /**
  * Preloader class
@@ -146,7 +146,7 @@ public class FirstPreloader extends Preloader {
     }
 }
 ```
-###### /java/seedu/address/Launcher.java
+###### \java\seedu\address\Launcher.java
 ``` java
 /**
  * Launches the splash screen before mainapp is started
@@ -157,7 +157,7 @@ public class Launcher {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ChooseCommand.java
+###### \java\seedu\address\logic\commands\ChooseCommand.java
 ``` java
 /**
  * Chooses the display screen mode
@@ -199,7 +199,7 @@ public class ChooseCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/Logic.java
+###### \java\seedu\address\logic\Logic.java
 ``` java
     /** Returns an unmodifiable view of the list of commands */
     ObservableList<String> getCommandList();
@@ -210,7 +210,7 @@ public class ChooseCommand extends Command {
     /** Returns the list of meetings */
     ObservableList<ReadOnlyMeeting> getMeetingList();
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
     @Override
     public ObservableList<String> getCommandList() {
@@ -289,7 +289,7 @@ public class ChooseCommand extends Command {
         }
     }
 ```
-###### /java/seedu/address/logic/parser/ChooseCommandParser.java
+###### \java\seedu\address\logic\parser\ChooseCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a ChooseCommand Object
@@ -312,7 +312,7 @@ public class ChooseCommandParser implements Parser<ChooseCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses {@code args} into a trimmed argument and returns it.
@@ -330,7 +330,7 @@ public class ChooseCommandParser implements Parser<ChooseCommand> {
         return parsedArgs;
     }
 ```
-###### /java/seedu/address/ui/BrowserSelectorCard.java
+###### \java\seedu\address\ui\BrowserSelectorCard.java
 ``` java
 /**
  * A UI component that displays information on the browser display type
@@ -374,7 +374,7 @@ public class BrowserSelectorCard extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     public CommandBox(Logic logic, StackPane commandBoxHelp, SplitPane settingsPane) {
         super(FXML);
@@ -407,7 +407,7 @@ public class BrowserSelectorCard extends UiPart<Region> {
         historySnapshot = logic.getHistorySnapshot();
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
      * Shows the command helper
@@ -466,7 +466,7 @@ public class BrowserSelectorCard extends UiPart<Region> {
         timelineRight.play();
     }
 ```
-###### /java/seedu/address/ui/CommandBoxHelper.java
+###### \java\seedu\address\ui\CommandBoxHelper.java
 ``` java
 /**
  * The UI component that is responsible for listing out possible commands based on user input in CLI
@@ -634,7 +634,7 @@ public class CommandBoxHelper extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/HelperCard.java
+###### \java\seedu\address\ui\HelperCard.java
 ``` java
 /**
  * A ui component that displays commands in the command helper box
@@ -663,13 +663,13 @@ public class HelperCard extends UiPart<Region> {
 
 }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
         SettingsSelector settingsSelector = new SettingsSelector();
         settingsSelector.selectTheme(style);
         settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
         //Setting initial position of settings panel
         settingsPane.setTranslateX(160);
@@ -677,7 +677,7 @@ public class HelperCard extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder, settingsPane);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
     private void handleShowBrowserEvent(ShowBrowserEvent event) {
@@ -721,7 +721,7 @@ public class HelperCard extends UiPart<Region> {
     }
 
 ```
-###### /java/seedu/address/ui/MeetingPanel.java
+###### \java\seedu\address\ui\MeetingPanel.java
 ``` java
 /**
  *  UI component containing a listview to show list of meetings
@@ -767,7 +767,7 @@ public class MeetingPanel extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/MeetingPanelCard.java
+###### \java\seedu\address\ui\MeetingPanelCard.java
 ``` java
 /**
  *  UI component that displays information about upcoming meetings
@@ -801,7 +801,7 @@ public class MeetingPanelCard extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/SettingsSelector.java
+###### \java\seedu\address\ui\SettingsSelector.java
 ``` java
 /**
  * Panel containing the list of settings
@@ -810,6 +810,9 @@ public class SettingsSelector extends UiPart<Region> {
 
     private static final String FXML = "SettingsSelector.fxml";
     private final Logger logger = LogsCenter.getLogger(SettingsSelector.class);
+
+    private ObservableList<BrowserSelectorCard> browserItems;
+    private ObservableList<ThemeSelectorCard> themeItems;
 
     @FXML
     private ListView<BrowserSelectorCard> browserSelectorList;
@@ -835,21 +838,21 @@ public class SettingsSelector extends UiPart<Region> {
 
     private void setConnections() {
         //Setting connections for browser list
-        ObservableList<String> browserItems = FXCollections.observableArrayList(
+        ObservableList<String> browserStringItems = FXCollections.observableArrayList(
                 "linkedin", "google", "meeting", "maps"
         );
-        ObservableList<BrowserSelectorCard> mappedBrowserList = EasyBind.map(
-                browserItems, (item) -> new BrowserSelectorCard(item));
-        browserSelectorList.setItems(mappedBrowserList);
+        browserItems = EasyBind.map(
+                browserStringItems, (item) -> new BrowserSelectorCard(item));
+        browserSelectorList.setItems(browserItems);
         browserSelectorList.setCellFactory(listView -> new BrowserListViewCell());
 
         //Setting connections for theme list
-        ObservableList<String> themeItems = FXCollections.observableArrayList(
+        ObservableList<String> themeStringItems = FXCollections.observableArrayList(
                 "blue", "dark", "light"
         );
-        ObservableList<ThemeSelectorCard> mappedThemeList = EasyBind.map(
-                themeItems, (item) -> new ThemeSelectorCard(item));
-        themeSelectorList.setItems(mappedThemeList);
+        themeItems = EasyBind.map(
+                themeStringItems, (item) -> new ThemeSelectorCard(item));
+        themeSelectorList.setItems(themeItems);
         themeSelectorList.setCellFactory(listView -> new SettingsSelector.ThemeListViewCell());
 
         setEventHandlerSelectionChange();
@@ -940,9 +943,23 @@ public class SettingsSelector extends UiPart<Region> {
             }
         }
     }
+
+    /**
+     * Returns the browser List View for test cases
+     */
+    public ListView<BrowserSelectorCard> getBrowserSelectorList() {
+        return browserSelectorList;
+    }
+
+    /**
+     * Returns the observable list of browser items for test cases
+     */
+    public ObservableList<BrowserSelectorCard> getBrowserItems() {
+        return browserItems;
+    }
 }
 ```
-###### /java/seedu/address/ui/SplashScreen.java
+###### \java\seedu\address\ui\SplashScreen.java
 ``` java
 /**
  * UI component to load splash screen and animate it
@@ -987,7 +1004,7 @@ public class SplashScreen extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/ThemeSelectorCard.java
+###### \java\seedu\address\ui\ThemeSelectorCard.java
 ``` java
 /**
  * A UI component that displays information on which theme is currently selected
@@ -1021,7 +1038,424 @@ public class ThemeSelectorCard extends UiPart<Region> {
     }
 }
 ```
-###### /resources/view/BrowserSelectorCard.fxml
+###### \resources\view\BlueTheme.css
+``` css
+.background {
+    -fx-background-color: derive(#0D47A1, 20%);
+    background-color: #283593; /* Used in the default.html file */
+}
+
+.label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #555555;
+    -fx-opacity: 0.9;
+}
+
+.label-bright {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.label-bright-underline {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #ffe4e1;
+    -fx-opacity: 1;
+    -fx-underline: true;
+    -fx-alignment: center;
+}
+
+.label-header {
+    -fx-font-size: 32pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.text-field {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.tab-pane {
+    -fx-padding: 0 0 0 1;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}
+
+.table-view {
+    -fx-base: #0D47A1;
+    -fx-control-inner-background: #0D47A1;
+    -fx-background-color: #0D47A1;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color:
+        transparent
+        transparent
+        derive(-fx-base, 80%)
+        transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
+.split-pane:horizontal .split-pane-divider {
+    -fx-background-color: derive(#a4a5ab, 20%);
+    -fx-border-color: transparent #53587a transparent #53587a;
+    -fx-border-width: 1;
+}
+
+.split-pane {
+    -fx-border-radius: 1;
+    -fx-border-width: 1;
+    -fx-background-color: derive(#4b86b4, 60%);
+}
+
+.split-pane:vertical .split-pane-divider {
+    -fx-background-color: #a4a5ab;
+    -fx-border-width: 2;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: #e8fffc
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #718ea8;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #2c537a;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #3949AB;
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 1;
+}
+
+.list-cell .label {
+    -fx-text-fill: white;
+}
+
+.cell_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 16px;
+    -fx-text-fill: #010504;
+}
+
+.cell_small_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #010504;
+}
+
+/*Command box inner*/
+.anchor-pane {
+     -fx-background-color: derive(#FFFFFF, 20%);
+}
+
+/*Result display outer and command box outer */
+.pane-with-border {
+     -fx-background-color: #5092a8;
+     -fx-border-color: derive(#0D47A1, 10%);
+     -fx-border-top-width: 1px;
+}
+
+.status-bar {
+    -fx-background-color: derive(#FFFFFF, 20%);
+    -fx-text-fill: black;
+}
+
+.result-display {
+    -fx-background-color: #427873;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+}
+
+.result-display .label {
+    -fx-text-fill: black !important;
+    -fx-background-color: #427873;
+}
+
+.status-bar .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+}
+
+.status-bar-with-border {
+    -fx-background-color: derive(#0D47A1, 30%);
+    -fx-border-color: derive(#0D47A1, 25%);
+    -fx-border-width: 1px;
+}
+
+.status-bar-with-border .label {
+    -fx-text-fill: white;
+}
+
+.grid-pane {
+    -fx-background-color: derive(#0D47A1, 30%);
+    -fx-border-color: derive(#0D47A1, 30%);
+    -fx-border-width: 1px;
+}
+
+.grid-pane .anchor-pane {
+    -fx-background-color: derive(#0D47A1, 30%);
+}
+
+.context-menu {
+    -fx-background-color: derive(#0D47A1, 50%);
+}
+
+.context-menu .label {
+    -fx-text-fill: white;
+}
+
+/* Menu bar at top */
+.menu-bar {
+    /*-fx-background-color: derive(#1f3f5e, 20%);*/
+    -fx-background-color: linear-gradient(to right, #2c537a ,#a2d9e1);
+}
+
+.menu-bar .label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+}
+
+.menu .left-container {
+    -fx-background-color: black;
+}
+
+/*
+ * Metro style Push Button
+ * Author: Pedro Duque Vieira
+ * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
+
+.button {
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #e2e2e2;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-background-color: #0D47A1;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.button:hover {
+    -fx-background-color: #3a3a3a;
+}
+
+.button:pressed, .button:default:hover:pressed {
+  -fx-background-color: white;
+  -fx-text-fill: #0D47A1;
+}
+
+.button:focused {
+    -fx-border-color: white, white;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid, segments(1, 1);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.button:disabled, .button:default:disabled {
+    -fx-opacity: 0.4;
+    -fx-background-color: #0D47A1;
+    -fx-text-fill: white;
+}
+
+.button:default {
+    -fx-background-color: -fx-focus-color;
+    -fx-text-fill: #ffffff;
+}
+
+.button:default:hover {
+    -fx-background-color: derive(-fx-focus-color, 30%);
+}
+
+.dialog-pane {
+    -fx-background-color: #0D47A1;
+}
+
+.dialog-pane > *.button-bar > *.container {
+    -fx-background-color: #0D47A1;
+}
+
+.dialog-pane > *.label.content {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.dialog-pane:header *.header-panel {
+    -fx-background-color: derive(#0D47A1, 25%);
+}
+
+.dialog-pane:header *.header-panel *.label {
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-fill: white;
+    -fx-text-fill: white;
+}
+*/
+.scroll-bar {
+    -fx-background-color: #38647a;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: derive(#38647a, 50%);
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
+}
+
+#cardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#commandTypeLabel {
+    -fx-font-size: 11px;
+    -fx-text-fill: #F70D1A;
+}
+
+#commandTextField {
+    -fx-background-color: transparent #283593 transparent #283593;
+    -fx-background-insets: 0;
+    -fx-border-color: #283593 #283593 #ffffff #283593;
+    -fx-border-insets: 0;
+    -fx-border-width: 1;
+    -fx-font-family: "Arial";
+    -fx-font-size: 13pt;
+    -fx-text-fill: black;
+}
+
+#filterField, #personListPanel, #personWebpage {
+    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+}
+/*
+#resultDisplay .content {
+    -fx-background-color: transparent, #283593, transparent, #283593;
+    -fx-background-radius: 0;
+}
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+} */
+
+#browserSelectorList .list-cell:even {
+    -fx-padding: 8,0,0,8;
+    -fx-background-color: #718ea8;
+}
+
+#browserSelectorList .list-cell:odd {
+    -fx-padding: 8,0,0,8;
+    -fx-background-color: #2c537a;
+}
+
+.list-cell:filled:selected #browserCardPane {
+    -fx-border-color: palegreen;
+    -fx-border-width: 2;
+    -fx-border-radius: 7 7 7 7;
+}
+
+#themeSelectorList .list-cell:even {
+    -fx-padding: 8,0,0,8;
+    -fx-background-color: #718ea8;
+}
+
+#themeSelectorList .list-cell:odd {
+    -fx-padding: 8,0,0,8;
+    -fx-background-color: #2c537a;
+}
+
+.list-cell:filled:selected #themeCardPane {
+    -fx-border-color: palegreen;
+    -fx-border-width: 2;
+    -fx-border-radius: 7 7 7 7;
+}
+
+#browserPlaceholder {
+    -fx-background-color: derive(#718ea8,50%);
+}
+
+#browserStack {
+    -fx-background-color: #a4a5ab;
+}
+
+#browser {
+    -fx-background-color: derive(#718ea8,50%);
+}
+```
+###### \resources\view\BrowserSelectorCard.fxml
 ``` fxml
 
 <?import javafx.scene.control.Label?>
@@ -1049,7 +1483,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
    </children>
 </HBox>
 ```
-###### /resources/view/CommandBoxHelper.fxml
+###### \resources\view\CommandBoxHelper.fxml
 ``` fxml
 
 <?import javafx.scene.control.ListView?>
@@ -1061,7 +1495,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
    </children>
 </VBox>
 ```
-###### /resources/view/HelperCard.fxml
+###### \resources\view\HelperCard.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -1089,7 +1523,35 @@ public class ThemeSelectorCard extends UiPart<Region> {
     </GridPane>
 </HBox>
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\view\LightTheme.css
+``` css
+.background {
+    -fx-background-color: derive(#F57F17, 20%);
+    background-color: #F57F17; /* Used in the default.html file */
+}
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #f4f4f4;
+}
+```
+###### \resources\view\MainWindow.fxml
 ``` fxml
     <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
@@ -1097,7 +1559,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
         </padding>
     </StackPane>
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\view\MainWindow.fxml
 ``` fxml
           <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
         <VBox fx:id="personList" minWidth="340.0" prefWidth="340.0" SplitPane.resizableWithParent="false">
@@ -1129,7 +1591,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
       </StackPane>
     </SplitPane>
 ```
-###### /resources/view/MeetingPanel.fxml
+###### \resources\view\MeetingPanel.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -1234,7 +1696,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
    </children>
 </StackPane>
 ```
-###### /resources/view/MeetingPanelCard.fxml
+###### \resources\view\MeetingPanelCard.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -1283,7 +1745,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
    </children>
 </HBox>
 ```
-###### /resources/view/SettingsSelector.fxml
+###### \resources\view\SettingsSelector.fxml
 ``` fxml
 
 <?import javafx.scene.control.Label?>
@@ -1316,7 +1778,7 @@ public class ThemeSelectorCard extends UiPart<Region> {
    </children>
 </VBox>
 ```
-###### /resources/view/ThemeSelectorCard.fxml
+###### \resources\view\ThemeSelectorCard.fxml
 ``` fxml
 
 <?import javafx.scene.control.Label?>

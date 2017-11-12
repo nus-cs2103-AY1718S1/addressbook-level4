@@ -16,6 +16,6 @@ public class ProfilePhotoChangedEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return String.format("The profile photo of $1%s has been updated.", person.getName().fullName);
+        return String.format("The profile photo of %1$s has been updated.", person.getName().fullName);
     }
 }

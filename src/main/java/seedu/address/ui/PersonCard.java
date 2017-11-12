@@ -107,16 +107,11 @@ public class PersonCard extends UiPart<Region> {
             FileInputStream imageFile = StorageManager.loadCacheFile(String.format(PROFILE_PHOTO_FILENAME_FORMAT,
                     person.getInternalId().value));
             image = new Image(imageFile);
+            imageFile.close();
             gravatar.setImage(image);
         } catch (IOException e) {
-            try {
-                FileInputStream defImageFile = StorageManager.loadResourceImage(DEFAULT_PROFILE_PHOTO_FILENAME);
-                image =  new Image(defImageFile);
-                gravatar.setImage(image);
-            } catch (IOException e1) {
-                // Shouldn't happen unless the default profile photo is missing
-                LogsCenter.getLogger("").warning("Missing default profile photo.");
-            }
+            // Likely download failed, use default
+            LogsCenter.getLogger("").fine("Unable to read profile image file, using default profile photo.");
         }
     }
 

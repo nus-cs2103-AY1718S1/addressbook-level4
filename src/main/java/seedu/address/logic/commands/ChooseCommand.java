@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Selection;
 import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
 import seedu.address.commons.events.ui.ShowBrowserEvent;
 import seedu.address.commons.events.ui.ShowMeetingEvent;
@@ -34,17 +35,24 @@ public class ChooseCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
+        if (Selection.getSelectionStatus() == false) {
+            throw new CommandException(Messages.MESSAGE_PERSON_NOT_SELECTED);
+        }
+
         if (targetDisplay.equals("meeting")) {
             EventsCenter.getInstance().post(new ShowMeetingEvent());
             EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
 
+
         } else if (targetDisplay.equals("linkedin") || targetDisplay.equals("google") || targetDisplay.equals("maps")) {
             EventsCenter.getInstance().post(new ShowBrowserEvent());
             EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
+
         } else {
             throw new CommandException(Messages.MESSAGE_INVALID_BROWSER_INDEX);
         }
 
         return new CommandResult(MESSAGE_SUCCESS + targetDisplay);
     }
+
 }

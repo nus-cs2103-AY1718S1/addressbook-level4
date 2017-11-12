@@ -157,6 +157,18 @@ Returns `john` and `John Doe`
 * `search Serangoon` +
 Returns `Bernice` and `David`, who stay in Serangoon
 
++
+image::search-command-before.png[width="790"]
++
+Before: User displaying contacts using the list command
+
++
+image::search-command-after.png[width="790"]
++
+After: Search command using the 'Serangoon' keyword
+
+From this example, it can be understood that by searching Serangoon, we can see that it has listed all the people living in Serangoon, namely 'Bernice' and 'David'
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -363,6 +375,10 @@ Format: 'map [INDEX]'
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
+image::google-map-example.png[width="790"]
+
+Example of a MapCommand search of Alex Yeoh, index 1 of the list.
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -381,45 +397,45 @@ There is no need to save manually.
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` +
 Can also use shortcut 'a'
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
-e.g. `delete 3`
+e.g. `delete 3` +
 Can also use shortcut 'd'
 * *Delete Tag* : `deleteTag TAG1 TAG2 ...` +
-e.g. `delete friends`
+e.g. `delete friends` +
 Can also use shortcut 'dt'
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
+e.g. `edit 2 n/James Lee e/jameslee@example.com` +
 Can also use shortcut 'e'
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+e.g. `find James Jake` +
 Can also use shortcut 'f'
-* *List By Most Searched* : `ListByMostSearched`
+* *List By Most Searched* : `ListByMostSearched` +
 Can also use shortcut 'lms'
-* *List* : `list`
+* *List* : `list` +
 Can also use shortcut 'l'
 * *Map* : `map INDEX' +
-e.g.'map 3'
+e.g.'map 3' +
 Can also use shortcut 'm'
 * *Help* : `help`
-* *Search* : `search KEYWORD [KEYWORD]`
+* *Search* : `search KEYWORD [KEYWORD]` +
 Can also use shortcut 'se'
 * *Select* : `select INDEX` +
-e.g.`select 2`
+e.g.`select 2` +
 Can also use shortcut 's'
-* *History* : `history`
+* *History* : `history` +
 Can also use shortcut 'h'
-* *Add Meeting* : `addMeeting`
+* *Add Meeting* : `addMeeting` +
 Can also use shortcut `am`
-* *Next Meeting* : `nextMeeting`
+* *Next Meeting* : `nextMeeting` +
 Can also use shortcut `nm`
-* *Undo* : `undo`
+* *Undo* : `undo` +
 Can also use shortcut 'u'
-* *Redo* : `redo`
+* *Redo* : `redo` +
 Can also use shortcut 'r'
-* *Preference* : `pref KEY [NEW_VALUE]`
+* *Preference* : `pref KEY [NEW_VALUE]` +
 Can also use shortcut 'p'
 * *Display Mode* : `choose [NEW_VALUE]`
 

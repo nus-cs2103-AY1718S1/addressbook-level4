@@ -30,7 +30,7 @@ public class SampleDataUtil {
         try {
             return new Person[] {
                 new Person(new InternalId(1), new Name("Alex Yeoh"), new Phone("87438807"),
-                    new Email("alexyeoh@example.com"), new Address("Blk 30 Geylang Street 29, #06-40"),
+                    new Email("aa@yahoo.com"), new Address("Blk 30 Geylang Street 29, #06-40"),
                     getTagSet("friends"), new SearchData("0")),
                 new Person(new InternalId(2), new Name("Bernice Yu"), new Phone("99272758"),
                     new Email("berniceyu@example.com"), new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),

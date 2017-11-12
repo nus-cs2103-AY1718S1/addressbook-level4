@@ -50,6 +50,7 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author martyn-wong
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -57,6 +58,7 @@ public interface Model {
     default void updateFilteredPersonList() {
         updateFilteredPersonList();
     }
+    //@@author
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
