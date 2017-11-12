@@ -19,7 +19,8 @@ By: `CS2103AUG2017-W13-B4`      Since: `Oct 2017`      Licence: `MIT`
 // tag::intro[]
 ModU is a software designed to assist teachers and lecturers to plan their weekly teaching schedule.
 
-There are many ways to improve and extend the functionality of this software and this guide provides essential information to help you get started. This developer guide contains information of the architecture design of this software, implementation of the existing commands that are accessible for the users and other useful information.
+There are many ways to improve and extend the functionality of this software and this guide provides essential information to help you get started.
+This developer guide contains information of the architecture design of this software, implementation of the existing commands that are accessible for the users and other useful information
 // end::intro[]
 
 == Setting up
@@ -430,7 +431,7 @@ _Figure 22 Sequence Diagram for ViewCommand_
 The following _link:#activity-diagram[Activity Diagram] (Figure 23)_ summarizes what happens when a user executes **ViewCommand**.
 
 image::ViewCommandActivityDiagram.png[width="900"]
-_Figure 23: Activity Diagram for view_
+_Figure 23: Activity Diagram for viewCommand_
 
 ==== Design Considerations
 
@@ -664,7 +665,7 @@ _Figure 37: Activity Diagram for ThemeCommand_
 **Cons**: Hard for new developers to understand the event center mechanism. +
 **Alternative 2**:Use a variable in model manager to keep record of **currentThemeUnit** +
 **Pros**: There is no need for an extra enumeration class and it is also easier for new developers to design. +
-**Cons**: In order to get the variable in other components, it must be declared static. However, we cannot define static abstract method in interface. It also does not follow Java’s standard coding style.
+**Cons**: In order to access the variable in other components, it must be declared static. However, we cannot define static abstract method in interface. It also does not follow Java’s standard coding style.
 
 // end::theme[]
 
