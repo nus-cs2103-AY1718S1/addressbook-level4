@@ -10,7 +10,7 @@ public class ChangePasswordCommand extends Command {
     public static final String COMMAND_WORD = "changepw";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes user's password.\n"
-            + "format:" + " " + COMMAND_WORD + " " + "username" + " " + "old password" + " " + "new password";
+            + "Example:" + " " + COMMAND_WORD + " " + "username" + " " + "old password" + " " + "new password";
 
     public static final String MESSAGE_CHANGE_SUCCESS = "Password changed successfully!";
     public static final String MESSAGE_WRONG_CREDENTIALS = "Invalid Credentials!";

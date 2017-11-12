@@ -10,7 +10,7 @@ public class CreateDefaultAccountCommand extends Command {
     public static final String COMMAND_WORD = "createDefaultAcc";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Create a default account where username and "
-            + "password is admin.\n" + "format:" + " " + COMMAND_WORD;
+            + "password is admin.\n" + "Example:" + " " + COMMAND_WORD;
 
     public static final String MESSAGE_CREATE_SUCCESS = "Default account created successfully!";
     public static final String MESSAGE_ACCOUNT_EXISTS = "Account already exists!";

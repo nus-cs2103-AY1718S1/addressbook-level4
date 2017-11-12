@@ -10,7 +10,7 @@ public class ChangeUsernameCommand extends Command {
     public static final String COMMAND_WORD = "changeuser";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes a user's username.\n"
-        + "format:" + " " + COMMAND_WORD + " " + "old username" + " " + "new username" + " " + "password";
+        + "Example:" + " " + COMMAND_WORD + " " + "old username" + " " + "new username" + " " + "password";
 
     public static final String MESSAGE_CHANGE_SUCCESS = "Username changed successfully!";
     public static final String MESSAGE_WRONG_CREDENTIALS = "Invalid Credentials!";
