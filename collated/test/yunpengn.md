@@ -29,21 +29,33 @@ public class SwitchToEventsListEventTest {
     }
 }
 ```
+###### \java\seedu\address\commons\exceptions\InvalidFileExtensionExceptionTest.java
+``` java
+public class InvalidFileExtensionExceptionTest {
+    @Test
+    public void createException_getMessage_checkCorrectness() throws Exception {
+        Exception exception = new InvalidFileExtensionException(Avatar.INVALID_PATH_MESSAGE);
+        assertEquals(Avatar.INVALID_PATH_MESSAGE, exception.getMessage());
+    }
+
+    @Test
+    public void createException_emptyMessage_checkCorrectness() throws Exception {
+        Exception exception = new InvalidFileExtensionException();
+        assertEquals(null, exception.getMessage());
+    }
+}
+```
 ###### \java\seedu\address\commons\exceptions\InvalidFilePathExceptionTest.java
 ``` java
 public class InvalidFilePathExceptionTest {
-    private ExpectedException thrown = ExpectedException.none();
-
     @Test
     public void createException_getMessage_checkCorrectness() throws Exception {
-        thrown.expect(ReminderNotFoundException.class);
         Exception exception = new InvalidFilePathException(Avatar.INVALID_PATH_MESSAGE);
         assertEquals(Avatar.INVALID_PATH_MESSAGE, exception.getMessage());
     }
 
     @Test
     public void createException_emptyMessage_checkCorrectness() throws Exception {
-        thrown.expect(ReminderNotFoundException.class);
         Exception exception = new InvalidFilePathException();
         assertEquals(null, exception.getMessage());
     }
@@ -1184,11 +1196,8 @@ public class UniquePropertyMapTest {
 ###### \java\seedu\address\model\reminder\exceptions\ReminderNotFoundExceptionTest.java
 ``` java
 public class ReminderNotFoundExceptionTest {
-    private ExpectedException thrown = ExpectedException.none();
-
     @Test
     public void createException_toString_checkCorrectness() throws Exception {
-        thrown.expect(ReminderNotFoundException.class);
         Exception exception = new ReminderNotFoundException("Some message here");
         assertEquals("Some message here", exception.toString());
     }
@@ -1225,6 +1234,56 @@ public class ReminderNotFoundExceptionTest {
         assertNotNull(reminder);
 
         assertEquals(Objects.hash(reminder.eventProperty(), reminder.messageProperty()), reminder.hashCode());
+    }
+}
+```
+###### \java\seedu\address\model\reminder\UniqueReminderListTest.java
+``` java
+public class UniqueReminderListTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private static final Reminder reminder = new Reminder(EVENT1, "Some message");
+
+    @Test
+    public void create_viaList_checkCorrectness() throws Exception {
+        List<ReadOnlyReminder> list = new ArrayList<>();
+        list.add(reminder);
+        UniqueReminderList uniqueList = new UniqueReminderList(list);
+        assertEquals(list.size(), uniqueList.toList().size());
+    }
+
+    @Test
+    public void add_checkSize_checkCorrectness() throws Exception {
+        UniqueReminderList list = new UniqueReminderList();
+        list.add(reminder);
+        assertEquals(1, list.toList().size());
+    }
+
+    @Test
+    public void add_hasDuplicate_checkCorrectness() throws Exception {
+        thrown.expect(DuplicateReminderException.class);
+
+        UniqueReminderList list = new UniqueReminderList();
+        list.add(reminder);
+        list.add(reminder);
+    }
+
+    @Test
+    public void toList_checkSize_checkCorrectness() {
+        UniqueReminderList list = new UniqueReminderList();
+        assertEquals(0, list.toList().size());
+    }
+
+    @Test
+    public void equals_checkCorrectness() {
+        UniqueReminderList list1 = new UniqueReminderList();
+        UniqueReminderList list2 = new UniqueReminderList();
+
+        assertEquals(list1, list1);
+        assertEquals(list1, list2);
+        assertNotEquals(list1, null);
+        assertNotEquals(list1, 1);
     }
 }
 ```
