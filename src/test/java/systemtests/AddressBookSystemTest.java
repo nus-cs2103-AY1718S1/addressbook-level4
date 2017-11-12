@@ -155,7 +155,7 @@ public abstract class AddressBookSystemTest {
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
         //getBrowserPanel().rememberUrl();
-        statusBarFooterHandle.rememberSaveLocation();
+        //statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
     }
@@ -219,7 +219,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertStatusBarUnchanged() {
         StatusBarFooterHandle handle = getStatusBarFooter();
-        assertFalse(handle.isSaveLocationChanged());
+        //assertFalse(handle.isSaveLocationChanged());
         assertFalse(handle.isSyncStatusChanged());
     }
 
@@ -232,7 +232,7 @@ public abstract class AddressBookSystemTest {
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
-        assertFalse(handle.isSaveLocationChanged());
+        //assertFalse(handle.isSaveLocationChanged());
     }
 
     /**
@@ -243,10 +243,6 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            //assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel()
-            // .getLoadedUrl());
-            //assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
-            //assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }
