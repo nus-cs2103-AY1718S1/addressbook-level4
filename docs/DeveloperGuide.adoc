@@ -491,7 +491,7 @@ The NameComparator compares two names and ignore their case.
 // end::sort[]
 
 // tag::add[]
-=== Quicker add command
+=== Quick add
 
 Only name and phone number are the required fields. +
 
