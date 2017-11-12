@@ -874,68 +874,7 @@ public class EventNameContainsKeywordsPredicate implements Predicate<ReadOnlyEve
 
 }
 ```
-###### \java\seedu\address\storage\JsonUserPrefsStorage.java
-``` java
-
-
-/**
- * A class to access UserPrefs stored in the hard disk as a json file
- */
-public class JsonUserPrefsStorage implements UserPrefsStorage {
-
-    private String filePath;
-    private String addressBookTheme;
-
-    public JsonUserPrefsStorage(String filePath, String theme) {
-        this.filePath = filePath;
-        this.addressBookTheme = theme;
-    }
-
-    public JsonUserPrefsStorage(String filePath) {
-        this.filePath = filePath;
-    }
-
-    @Override
-    public String getAddressBookTheme() {
-        return addressBookTheme;
-    }
-
-    @Override
-    public String getUserPrefsFilePath() {
-        return filePath;
-    }
-
-    @Override
-    public Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException {
-        return readUserPrefs(filePath);
-    }
-
-    /**
-     * Similar to {@link #readUserPrefs()}
-     * @param prefsFilePath location of the data. Cannot be null.
-     * @throws DataConversionException if the file format is not as expected.
-     */
-    public Optional<UserPrefs> readUserPrefs(String prefsFilePath) throws DataConversionException {
-        return JsonUtil.readJsonFile(prefsFilePath, UserPrefs.class);
-    }
-
-    @Override
-    public void saveUserPrefs(UserPrefs userPrefs) throws IOException {
-        JsonUtil.saveJsonFile(userPrefs, filePath);
-    }
-
-}
-```
-###### \java\seedu\address\storage\UserPrefsStorage.java
-``` java
-
-    /**
-     * Returns address book theme
-     */
-    String getAddressBookTheme();
-
-```
-###### \java\seedu\address\storage\XmlAdaptedEvent.java
+###### \java\seedu\address\storage\elements\XmlAdaptedEvent.java
 ``` java
 
 
@@ -1001,7 +940,7 @@ public class XmlAdaptedEvent {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedReminder.java
+###### \java\seedu\address\storage\elements\XmlAdaptedReminder.java
 ``` java
 /**
  * JAXB-friendly version of the Reminder.
@@ -1031,7 +970,7 @@ public class XmlAdaptedReminder {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\elements\XmlSerializableAddressBook.java
 ``` java
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
@@ -1061,6 +1000,62 @@ public class XmlAdaptedReminder {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+```
+###### \java\seedu\address\storage\JsonUserPrefsStorage.java
+``` java
+/**
+ * A class to access UserPrefs stored in the hard disk as a json file
+ */
+public class JsonUserPrefsStorage implements UserPrefsStorage {
+    private String filePath;
+    private String addressBookTheme;
+
+    public JsonUserPrefsStorage(String filePath, String theme) {
+        this.filePath = filePath;
+        this.addressBookTheme = theme;
+    }
+
+    public JsonUserPrefsStorage(String filePath) {
+        this.filePath = filePath;
+    }
+
+    @Override
+    public String getAddressBookTheme() {
+        return addressBookTheme;
+    }
+
+    @Override
+    public String getUserPrefsFilePath() {
+        return filePath;
+    }
+
+    @Override
+    public Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException {
+        return readUserPrefs(filePath);
+    }
+
+    /**
+     * Similar to {@link #readUserPrefs()}
+     * @param prefsFilePath location of the data. Cannot be null.
+     * @throws DataConversionException if the file format is not as expected.
+     */
+    public Optional<UserPrefs> readUserPrefs(String prefsFilePath) throws DataConversionException {
+        return JsonUtil.readJsonFile(prefsFilePath, UserPrefs.class);
+    }
+
+    @Override
+    public void saveUserPrefs(UserPrefs userPrefs) throws IOException {
+        JsonUtil.saveJsonFile(userPrefs, filePath);
+    }
+
+}
+```
+###### \java\seedu\address\storage\UserPrefsStorage.java
+``` java
+    /**
+     * Returns address book theme
+     */
+    String getAddressBookTheme();
 ```
 ###### \java\seedu\address\ui\event\EventCard.java
 ``` java
@@ -1225,7 +1220,6 @@ public class EventListPanel extends UiPart<Region> {
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
-
     /**
      * Initializes theme upon start up according to preferences.json file (last saved)
      */
@@ -1261,7 +1255,6 @@ public class EventListPanel extends UiPart<Region> {
         }
 
     }
-
 ```
 ###### \resources\view\event\EventListCard.fxml
 ``` fxml

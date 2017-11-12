@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+//@@author yunpengn
 public class ImportCommandTest {
     @Test
     public void configTypes_checkCount() {

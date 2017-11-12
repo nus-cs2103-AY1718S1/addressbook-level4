@@ -668,7 +668,7 @@ public class SwitchThemeTest {
         assertTrue(parser.parseCommand(ListEventCommand.COMMAND_WORD + " 3") instanceof ListEventCommand);
     }
 ```
-###### \java\seedu\address\logic\parser\event\DeleteEventParserTest.java
+###### \java\seedu\address\logic\parser\event\DeleteEventCommandParserTest.java
 ``` java
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -677,7 +677,7 @@ public class SwitchThemeTest {
  * The path variation for those two cases occur inside the ParserUtil, and
  * therefore should be covered by the ParserUtilTest.
  */
-public class DeleteEventParserTest {
+public class DeleteEventCommandParserTest {
 
     private DeleteEventParser parser = new DeleteEventParser();
 

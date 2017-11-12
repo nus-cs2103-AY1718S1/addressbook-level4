@@ -271,7 +271,6 @@ public class MainWindow extends UiPart<Region> {
     }
 
     //@@author junyango
-
     /**
      * Initializes theme upon start up according to preferences.json file (last saved)
      */
@@ -307,7 +306,6 @@ public class MainWindow extends UiPart<Region> {
         }
 
     }
-
     //@@author
 
     /**

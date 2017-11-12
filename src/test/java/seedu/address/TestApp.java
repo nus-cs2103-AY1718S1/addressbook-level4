@@ -18,7 +18,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.UserPrefsStorage;
-import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.storage.elements.XmlSerializableAddressBook;
 import seedu.address.testutil.TestUtil;
 import systemtests.util.ModelHelper;
 

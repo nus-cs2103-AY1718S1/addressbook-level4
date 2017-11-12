@@ -106,6 +106,7 @@ public class FileUtil {
         return pathWithForwardSlash.replace("/", File.separator);
     }
 
+    //@@author yunpengn
     /**
      * Checks whether the given file is an image (according to its MIME type).
      */
@@ -113,6 +114,7 @@ public class FileUtil {
         String type = TYPE_MAP.getContentType(file);
         return type.split("/")[0].equals("image");
     }
+    //@@author
 
     //@@author low5545
     /**

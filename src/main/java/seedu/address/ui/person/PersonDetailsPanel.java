@@ -16,6 +16,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.PropertyLabel;
 import seedu.address.ui.UiPart;
 
+//@@author yunpengn
 /**
  * The panel on the right side of {@link PersonListPanel}. Used to show the details (including photo and all
  * properties) of a specific person (selected on the {@link PersonListPanel}).

@@ -19,6 +19,16 @@ public class TagColorChangedEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\util\FileUtil.java
+``` java
+    /**
+     * Checks whether the given file is an image (according to its MIME type).
+     */
+    public static boolean isImage(File file) {
+        String type = TYPE_MAP.getContentType(file);
+        return type.split("/")[0].equals("image");
+    }
+```
 ###### \java\seedu\address\commons\util\JsonUtil.java
 ``` java
     /**
@@ -29,6 +39,66 @@ public class TagColorChangedEvent extends BaseEvent {
     public static <T> T fromJsonUrl(URL url, Class<T> instanceClass) throws IOException {
         return objectMapper.readValue(url, instanceClass);
     }
+```
+###### \java\seedu\address\commons\util\UrlUtil.java
+``` java
+/**
+ * Helps with parsing a given URL and obtain GET parameters from it.
+ */
+public class UrlUtil {
+    public static URL parseUrlString(String url) throws MalformedURLException {
+        return new URL(url);
+    }
+
+    /**
+     * Fetches all GET parameters from a given {@link URL} object. It is assumed that there is no GET parameter with
+     * the same key in the {@code url}. If there is, only the last one (among those parameters with the same name)
+     * will be included in the returned {@link Map}. See also {@link #fetchUrlParameterKeys(URL)}.
+     *
+     * @param url is a given {@link URL} object.
+     *
+     * @return a {@link Map} containing all key-value pairs of GET parameters in the given {@code url}.
+     */
+    public static Map<String, String> fetchUrlParameters(URL url) throws UnsupportedEncodingException {
+        String query = urlDecode(url.getQuery());
+
+        if (Strings.isNullOrEmpty(query)) {
+            return Collections.emptyMap();
+        }
+
+        Map<String, String> pairs = new HashMap<>();
+        for (String pair: query.split("&")) {
+            int index = pair.indexOf("=");
+            pairs.put(pair.substring(0, index), pair.substring(index + 1));
+        }
+
+        return pairs;
+    }
+
+    /**
+     * Fetches the keys all GET parameters from a given {@link URL} object. It is assumed that there is no GET parameter
+     * with the same key in the {@code url}. If there is, only the last one (among those parameters with the same name)
+     * will be included in the returned {@link Set}. See also {@link #fetchUrlParameters(URL)}.
+     *
+     * @param url is a given {@link URL} object.
+     *
+     * @return a {@link Set} containing all keys of GET parameters in the given {@code url}.
+     */
+    public static Set<String> fetchUrlParameterKeys(URL url) throws UnsupportedEncodingException {
+        String query = urlDecode(url.getQuery());
+
+        if (Strings.isNullOrEmpty(query)) {
+            return Collections.emptySet();
+        }
+
+        String[] pairs = query.split("&");
+        return Arrays.stream(pairs).map(pair -> pair.substring(0, pair.indexOf("="))).collect(Collectors.toSet());
+    }
+
+    public static String urlDecode(String url) throws UnsupportedEncodingException {
+        return URLDecoder.decode(url, "utf-8");
+    }
+}
 ```
 ###### \java\seedu\address\logic\commands\configs\AddPropertyCommand.java
 ``` java
@@ -1833,7 +1903,7 @@ public class SampleDataUtil {
 
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
+###### \java\seedu\address\storage\elements\XmlAdaptedPerson.java
 ``` java
 /**
  * JAXB-friendly version of the Person.
@@ -1855,7 +1925,7 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson() {}
 
 ```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
+###### \java\seedu\address\storage\elements\XmlAdaptedPerson.java
 ``` java
     /**
      * Converts a given Person into this class for JAXB use.
@@ -1906,7 +1976,7 @@ public class XmlAdaptedPerson {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedProperty.java
+###### \java\seedu\address\storage\elements\XmlAdaptedProperty.java
 ``` java
 /**
  * JAXB-friendly adapted version of the {@link Property}, stored within each person.
@@ -1945,7 +2015,7 @@ public class XmlAdaptedProperty {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedPropertyInfo.java
+###### \java\seedu\address\storage\elements\XmlAdaptedPropertyInfo.java
 ``` java
 /**
  * JAXB-friendly adapted version of the {@link Property}, stores the general information of each property.
@@ -1978,7 +2048,7 @@ public class XmlAdaptedPropertyInfo {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedPropertyManager.java
+###### \java\seedu\address\storage\elements\XmlAdaptedPropertyManager.java
 ``` java
 /**
  * JAXB-friendly adapted version of the {@link PropertyManager}.
@@ -2013,7 +2083,7 @@ public class XmlAdaptedPropertyManager {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\elements\XmlSerializableAddressBook.java
 ``` java
     /**
      * Initialize the {@link PropertyManager} by clearing all existing properties and load information about new
@@ -2115,6 +2185,65 @@ public class XmlAdaptedPropertyManager {
     }
 }
 ```
+###### \java\seedu\address\ui\person\PersonDetailsPanel.java
+``` java
+/**
+ * The panel on the right side of {@link PersonListPanel}. Used to show the details (including photo and all
+ * properties) of a specific person (selected on the {@link PersonListPanel}).
+ */
+public class PersonDetailsPanel extends UiPart<Region> {
+    private static final String FXML = "person/PersonDetailsPanel.fxml";
+
+    private ReadOnlyPerson person;
+
+    @FXML
+    private Label name;
+    @FXML
+    private ImageView avatar;
+    @FXML
+    private ListView<Label> propertyListKeys;
+    @FXML
+    private ListView<Label> propertyListValues;
+
+    public PersonDetailsPanel(ReadOnlyPerson person) {
+        super(FXML);
+        this.person = person;
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        person.avatarProperty().addListener((observable, oldValue, newValue) -> setAvatar());
+        setAvatar();
+        person.properties().addListener((observable, oldValue, newValue) -> bindProperties());
+        bindProperties();
+    }
+
+    /**
+     * Binds all properties of this person to a {@link ListView} of key-value pairs.
+     */
+    private void bindProperties() {
+        List<Label> keys = new ArrayList<>();
+        List<Label> values = new ArrayList<>();
+
+        person.getSortedProperties().forEach(property -> {
+            Label newPropertyKey = new PropertyLabel(property.getFullName() + ":", "details-property-key");
+            Label newPropertyValue = new PropertyLabel(property.getValue(), "details-property-value");
+
+            keys.add(newPropertyKey);
+            values.add(newPropertyValue);
+        });
+
+        propertyListKeys.setItems(FXCollections.observableList(keys));
+        propertyListValues.setItems(FXCollections.observableList(values));
+    }
+
+    /**
+     * Displays the avatar of the person if the {@code avatar} has been set before.
+     */
+    private void setAvatar() {
+        if (person.getAvatar() != null) {
+            Platform.runLater(() -> avatar.setImage(new Image(person.getAvatar().getPath(), 200, 200, false, true)));
+        }
+    }
+}
+```
 ###### \java\seedu\address\ui\PropertyLabel.java
 ``` java
 /**
@@ -2125,6 +2254,34 @@ public class PropertyLabel extends Label {
         super(text);
         this.getStyleClass().add(style);
     }
+}
+```
+###### \resources\css\Extensions.css
+``` css
+.sidebar-button {
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+
+.details-name-huge-label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 40px;
+    -fx-text-fill: #fffde7;
+}
+
+.details-property-key {
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
+}
+
+.details-property-value {
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
 }
 ```
 ###### \resources\view\MainWindow.fxml
