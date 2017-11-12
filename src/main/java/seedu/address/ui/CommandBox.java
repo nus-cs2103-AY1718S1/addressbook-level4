@@ -131,9 +131,8 @@ public class CommandBox extends UiPart<Region> {
         configPrefixList();
         keywordLabel.getStyleClass().add("keyword-label-default");
         keywordColorMap = getCommandKeywordColorMap();
-        String[] commands = {"help", "add", "list", "edit", "find",
-            "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view", "theme", "mark",
-                "unmark", "remark", "color"};
+        String[] commands = {"help", "add", "list", "edit", "find", "delete", "select", "history", "undo", "redo",
+            "clear", "exit", "customise", "view", "theme", "mark", "unmark", "remark", "color"};
         TextFields.bindAutoCompletion(commandTextField, commands); // controlsfx
         tick.setFitHeight(30);
         tick.setFitWidth(30);
