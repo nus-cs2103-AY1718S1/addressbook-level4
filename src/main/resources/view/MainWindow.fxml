@@ -494,7 +494,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/22/08/1993 t/friends t/owesMoney" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="add n/John Doe [p/98765432] [e/johnd@example.com] [a/311, Clementi Ave 2, #02-25] [b/22/08/1993] [t/friends] [t/owesMoney]" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="20.0" />
                      </font>
