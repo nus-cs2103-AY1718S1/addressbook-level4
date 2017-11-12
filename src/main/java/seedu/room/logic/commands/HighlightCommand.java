@@ -29,7 +29,8 @@ public class HighlightCommand extends UndoableCommand {
     private final String highlightTag;
 
     /**
-     * Creates an HighlightCommand to add the specified {@code ReadOnlyPerson}
+     * Creates a HighlightCommand to highlight the specified list of residents {@code Person}
+     * @param highlightTag specified to determine which residents are highlighted
      */
     public HighlightCommand(String highlightTag) {
         this.highlightTag = highlightTag;

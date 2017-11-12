@@ -40,7 +40,7 @@ public class DeleteImageCommand extends UndoableCommand {
     private final Index index;
 
     /**
-     * @param index of the resident in the list whose image is to be deleted
+     * @param index of the resident {@code Person} in the list whose image is to be deleted
      */
     public DeleteImageCommand(Index index) {
         requireNonNull(index);
@@ -71,8 +71,8 @@ public class DeleteImageCommand extends UndoableCommand {
     }
 
     /**
-     * @param resident whose image is to be reset
-     * @return Person object with picture url reset
+     * @param resident whose image url within {@code Picture} is to be reset
+     * @return {@code Person} with {@code Picture} reset
      */
     public Person resetPersonImage(ReadOnlyPerson resident) {
         Name name = resident.getName();

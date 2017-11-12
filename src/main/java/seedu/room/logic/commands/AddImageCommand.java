@@ -25,7 +25,7 @@ import seedu.room.model.tag.Tag;
 
 //@@author shitian007
 /**
- * Allows the addition of an image to a resident currently in the resident book
+ * Command handling the addition of an image to a resident currently in the resident book
  */
 public class AddImageCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addImage";
@@ -47,8 +47,7 @@ public class AddImageCommand extends UndoableCommand {
     private final String newImageUrl;
 
     /**
-     *
-     * @param index of the person in the list whose image is to be updated
+     * @param index of the resident {@code Person} in the current displayed list whose image is to be updated
      * @param newImageUrl url to the new replacing image
      */
     public AddImageCommand(Index index, String newImageUrl) {
@@ -87,8 +86,9 @@ public class AddImageCommand extends UndoableCommand {
     }
 
     /**
-     * @param resident to edit
-     * @return Resident with updated Picture url
+     * Updates the image url for the specified resident
+     * @param resident to whose {@code Picture} is to be edited
+     * @return {@code Person} with updated {@code Picture}
      */
     public Person editResidentImage(ReadOnlyPerson resident) {
         Name name = resident.getName();
