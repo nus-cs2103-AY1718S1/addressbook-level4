@@ -669,6 +669,14 @@ By using this command, you can open the shell version of the app. In this way, y
 Format: `shell`
 // end::shell[]
 
+// tag::sync[]
+=== Syncing with phone's contact list : `sync` _[Coming in v2.0]_
+
+You can synchronize contact list on your computer with the contact list in the `iConnect` on your phone.
+
+Format: `sync`
+// end::sync[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book.

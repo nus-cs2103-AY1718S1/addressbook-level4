@@ -8,7 +8,7 @@ iConnect is an one-stop student networking application. We aim to provide soluti
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: TagAdd/TagRemove
+=== Enhancement Added: TagAdd/TagRemove/TagFind/Theme
 
 ==== External behavior
 
@@ -22,6 +22,8 @@ include::../UserGuide.adoc[tag=tagremove]
 include::../UserGuide.adoc[tag=tagaddfav]
 
 include::../UserGuide.adoc[tag=tagremovefav]
+
+include::../UserGuide.adoc[tag=changetheme]
 
 #End of Extract#
 
@@ -40,6 +42,8 @@ include::../DeveloperGuide.adoc[tag=tagadd]
 
 include::../DeveloperGuide.adoc[tag=tagremove]
 
+include::../DeveloperGuide.adoc[tag=changetheme]
+
 #End of Extract#
 
 ---
@@ -52,7 +56,3 @@ include::../DeveloperGuide.adoc[tag=tagremove]
 
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}

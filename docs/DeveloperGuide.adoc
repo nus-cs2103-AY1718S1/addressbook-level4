@@ -925,15 +925,15 @@ We also support other words other than the actual theme name for theme of choice
 If you only key in `theme`, an error message suggesting the use of this command will be shown in the `result box`. +
 You can just key in the index of your theme of choice instead of the words. +
 
-image::SwitchThemeCommandErrorMessage.png[width="800"]
+image::SwitchThemeCommandErrorMessage.png[width="500"]
 
 If you key in an invalid index, an error message suggesting invalid index will be shown in the `result box`.
 
-image::SwitchThemeCommandInvalidIndex.png[width="800"]
+image::SwitchThemeCommandInvalidIndex.png[width="300"]
 
 If you key in an unknown theme word, an error message suggesting unknown theme word will be shown in the `result box`.
 
-image::SwitchThemeCommandInvalidWord.png[width="800"]
+image::SwitchThemeCommandInvalidWord.png[width="300"]
 
 The `SwitchThemeParser` returns `SwitchThemeCommand` after execution, which will be further processed by `logic` component.
 
