@@ -1,21 +1,65 @@
 package seedu.address.ui.event;
 
+import java.util.Calendar;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import seedu.address.ui.UiPart;
 
-import java.util.Calendar;
-
 //@@author dennaloh
+
+/**
+ * The panel on the right side of {@link EventListPanel}. Used to show a calendar.
+ */
 public class EventCalendar extends UiPart<Region> {
     private static final String FXML = "event/EventCalendar.fxml";
 
     @FXML
-    private Text date1, date2, date3, date4, date5, date6, date7, date8, date9, date10, date11, date12, date13, date14,
-            date15, date16, date17, date18, date19, date20, date21, date22, date23, date24, date25, date26, date27, date28,
-            date29, date30, date31, date32, date33, date34, date35, date36, date37, date38, date39, date40, date41, date42;
+    private Text date1;
+    private Text date2;
+    private Text date3;
+    private Text date4;
+    private Text date5;
+    private Text date6;
+    private Text date7;
+    private Text date8;
+    private Text date9;
+    private Text date10;
+    private Text date11;
+    private Text date12;
+    private Text date13;
+    private Text date14;
+    private Text date15;
+    private Text date16;
+    private Text date17;
+    private Text date18;
+    private Text date19;
+    private Text date20;
+    private Text date21;
+    private Text date22;
+    private Text date23;
+    private Text date24;
+    private Text date25;
+    private Text date26;
+    private Text date27;
+    private Text date28;
+    private Text date29;
+    private Text date30;
+    private Text date31;
+    private Text date32;
+    private Text date33;
+    private Text date34;
+    private Text date35;
+    private Text date36;
+    private Text date37;
+    private Text date38;
+    private Text date39;
+    private Text date40;
+    private Text date41;
+    private Text date42;
+
     @FXML
     private Label monthName;
 
@@ -33,52 +77,55 @@ public class EventCalendar extends UiPart<Region> {
         monthName.setText(monthDateBuilder.getNameOfMonth());
     }
 
-    public void setDates(String[] _monthDateArray) {
-        dateArray[0].setText(_monthDateArray[0]);
-        dateArray[1].setText(_monthDateArray[1]);
-        dateArray[2].setText(_monthDateArray[2]);
-        dateArray[3].setText(_monthDateArray[3]);
-        dateArray[4].setText(_monthDateArray[4]);
-        dateArray[5].setText(_monthDateArray[5]);
-        dateArray[6].setText(_monthDateArray[6]);
-        dateArray[7].setText(_monthDateArray[7]);
-        dateArray[8].setText(_monthDateArray[8]);
-        dateArray[9].setText(_monthDateArray[9]);
-        dateArray[10].setText(_monthDateArray[10]);
-        dateArray[11].setText(_monthDateArray[11]);
-        dateArray[12].setText(_monthDateArray[12]);
-        dateArray[13].setText(_monthDateArray[13]);
-        dateArray[14].setText(_monthDateArray[14]);
-        dateArray[15].setText(_monthDateArray[15]);
-        dateArray[16].setText(_monthDateArray[16]);
-        dateArray[17].setText(_monthDateArray[17]);
-        dateArray[18].setText(_monthDateArray[18]);
-        dateArray[19].setText(_monthDateArray[19]);
-        dateArray[20].setText(_monthDateArray[20]);
-        dateArray[21].setText(_monthDateArray[21]);
-        dateArray[22].setText(_monthDateArray[22]);
-        dateArray[23].setText(_monthDateArray[23]);
-        dateArray[24].setText(_monthDateArray[24]);
-        dateArray[25].setText(_monthDateArray[25]);
-        dateArray[26].setText(_monthDateArray[26]);
-        dateArray[27].setText(_monthDateArray[27]);
-        dateArray[28].setText(_monthDateArray[28]);
-        dateArray[29].setText(_monthDateArray[29]);
-        dateArray[30].setText(_monthDateArray[30]);
-        dateArray[31].setText(_monthDateArray[31]);
-        dateArray[32].setText(_monthDateArray[32]);
-        dateArray[33].setText(_monthDateArray[33]);
-        dateArray[34].setText(_monthDateArray[34]);
-        dateArray[35].setText(_monthDateArray[35]);
-        dateArray[36].setText(_monthDateArray[36]);
-        dateArray[37].setText(_monthDateArray[37]);
-        dateArray[38].setText(_monthDateArray[38]);
-        dateArray[39].setText(_monthDateArray[39]);
-        dateArray[40].setText(_monthDateArray[40]);
-        dateArray[41].setText(_monthDateArray[41]);
+    public void setDates(String[] monthDateArray) {
+        dateArray[0].setText(monthDateArray[0]);
+        dateArray[1].setText(monthDateArray[1]);
+        dateArray[2].setText(monthDateArray[2]);
+        dateArray[3].setText(monthDateArray[3]);
+        dateArray[4].setText(monthDateArray[4]);
+        dateArray[5].setText(monthDateArray[5]);
+        dateArray[6].setText(monthDateArray[6]);
+        dateArray[7].setText(monthDateArray[7]);
+        dateArray[8].setText(monthDateArray[8]);
+        dateArray[9].setText(monthDateArray[9]);
+        dateArray[10].setText(monthDateArray[10]);
+        dateArray[11].setText(monthDateArray[11]);
+        dateArray[12].setText(monthDateArray[12]);
+        dateArray[13].setText(monthDateArray[13]);
+        dateArray[14].setText(monthDateArray[14]);
+        dateArray[15].setText(monthDateArray[15]);
+        dateArray[16].setText(monthDateArray[16]);
+        dateArray[17].setText(monthDateArray[17]);
+        dateArray[18].setText(monthDateArray[18]);
+        dateArray[19].setText(monthDateArray[19]);
+        dateArray[20].setText(monthDateArray[20]);
+        dateArray[21].setText(monthDateArray[21]);
+        dateArray[22].setText(monthDateArray[22]);
+        dateArray[23].setText(monthDateArray[23]);
+        dateArray[24].setText(monthDateArray[24]);
+        dateArray[25].setText(monthDateArray[25]);
+        dateArray[26].setText(monthDateArray[26]);
+        dateArray[27].setText(monthDateArray[27]);
+        dateArray[28].setText(monthDateArray[28]);
+        dateArray[29].setText(monthDateArray[29]);
+        dateArray[30].setText(monthDateArray[30]);
+        dateArray[31].setText(monthDateArray[31]);
+        dateArray[32].setText(monthDateArray[32]);
+        dateArray[33].setText(monthDateArray[33]);
+        dateArray[34].setText(monthDateArray[34]);
+        dateArray[35].setText(monthDateArray[35]);
+        dateArray[36].setText(monthDateArray[36]);
+        dateArray[37].setText(monthDateArray[37]);
+        dateArray[38].setText(monthDateArray[38]);
+        dateArray[39].setText(monthDateArray[39]);
+        dateArray[40].setText(monthDateArray[40]);
+        dateArray[41].setText(monthDateArray[41]);
 
     }
 
+    /**
+     * comment TODO: change this
+     */
     public void inits() {
         dateArray = new Text[42];
         dateArray[0] = date1;
@@ -123,17 +170,18 @@ public class EventCalendar extends UiPart<Region> {
         dateArray[39] = date40;
         dateArray[40] = date41;
         dateArray[41] = date42;
-
-
     }
 }
 
-
+/**
+ * Create dates in month TODO: change this
+ */
 class MonthDateBuilder {
     private Integer[] monthYearArray;
     private String[] monthDateArray;
     private Calendar calendar;
-    private Integer firstDayOfMonth, maxDayOfMonth;
+    private Integer firstDayOfMonth;
+    private Integer maxDayOfMonth;
     private String nameOfMonth;
 
     public MonthDateBuilder() {
@@ -142,8 +190,8 @@ class MonthDateBuilder {
         maxDayOfMonth = 5; //random inits, can delete for testing purposes
 
 
-        monthDateArray = new String[42];// FOR STORING THE VALUES FOR THE DATE YOU SEE
-        monthYearArray = new Integer[2];// FOR USE IN CALENDAR IF YOU WANT TO IN THE FUTURE USE CUSTOM MONTHS MONTH/YEAR
+        monthDateArray = new String[42]; // FOR STORING THE VALUES FOR THE DATE YOU SEE
+        monthYearArray = new Integer[2]; // FOR USE IN CALENDAR IF YOU WANT TO IN THE FUTURE USE CUSTOM MONTHS MONTH/YR
         monthYearArray[0] = calendar.get(Calendar.MONTH); //RETURNS YOU CURRENT MONTH
         monthYearArray[1] = calendar.get(Calendar.YEAR); //RETURNS YOU CURRENT YEAR
         setNameOfMonth();
@@ -164,30 +212,30 @@ class MonthDateBuilder {
         dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
         switch (dayOfWeek) {
-            default:
-                firstDayOfMonth = 0;
-                break;
-            case Calendar.SUNDAY:
-                firstDayOfMonth = 0;
-                break;
-            case Calendar.MONDAY:
-                firstDayOfMonth = 1;
-                break;
-            case Calendar.TUESDAY:
-                firstDayOfMonth = 2;
-                break;
-            case Calendar.WEDNESDAY:
-                firstDayOfMonth = 3;
-                break;
-            case Calendar.THURSDAY:
-                firstDayOfMonth = 4;
-                break;
-            case Calendar.FRIDAY:
-                firstDayOfMonth = 5;
-                break;
-            case Calendar.SATURDAY:
-                firstDayOfMonth = 6;
-                break;
+        default:
+            firstDayOfMonth = 0;
+            break;
+        case Calendar.SUNDAY:
+            firstDayOfMonth = 0;
+            break;
+        case Calendar.MONDAY:
+            firstDayOfMonth = 1;
+            break;
+        case Calendar.TUESDAY:
+            firstDayOfMonth = 2;
+            break;
+        case Calendar.WEDNESDAY:
+            firstDayOfMonth = 3;
+            break;
+        case Calendar.THURSDAY:
+            firstDayOfMonth = 4;
+            break;
+        case Calendar.FRIDAY:
+            firstDayOfMonth = 5;
+            break;
+        case Calendar.SATURDAY:
+            firstDayOfMonth = 6;
+            break;
         }
 
 
@@ -218,37 +266,39 @@ class MonthDateBuilder {
         return monthDateArray;
     }
 
-    public void setNameOfMonth(){
-        switch(monthYearArray[0]){
-            case Calendar.JANUARY: nameOfMonth = "January";
+    public void setNameOfMonth() {
+        switch(monthYearArray[0]) {
+        case Calendar.JANUARY: nameOfMonth = "January";
                 break;
-            case Calendar.FEBRUARY: nameOfMonth = "February";
+        case Calendar.FEBRUARY: nameOfMonth = "February";
                 break;
-            case Calendar.MARCH: nameOfMonth = "March";
+        case Calendar.MARCH: nameOfMonth = "March";
                 break;
-            case Calendar.APRIL: nameOfMonth = "April";
+        case Calendar.APRIL: nameOfMonth = "April";
                 break;
-            case Calendar.MAY: nameOfMonth = "May";
+        case Calendar.MAY: nameOfMonth = "May";
                 break;
-            case Calendar.JUNE: nameOfMonth = "June";
+        case Calendar.JUNE: nameOfMonth = "June";
                 break;
-            case Calendar.JULY: nameOfMonth = "July";
+        case Calendar.JULY: nameOfMonth = "July";
                 break;
-            case Calendar.AUGUST: nameOfMonth = "August";
+        case Calendar.AUGUST: nameOfMonth = "August";
                 break;
-            case Calendar.SEPTEMBER: nameOfMonth = "September";
+        case Calendar.SEPTEMBER: nameOfMonth = "September";
                 break;
-            case Calendar.OCTOBER: nameOfMonth = "October";
+        case Calendar.OCTOBER: nameOfMonth = "October";
                 break;
-            case Calendar.NOVEMBER: nameOfMonth = "November";
+        case Calendar.NOVEMBER: nameOfMonth = "November";
                 break;
-            case Calendar.DECEMBER: nameOfMonth = "December";
+        case Calendar.DECEMBER: nameOfMonth = "December";
                 break;
-
+        default:
+            nameOfMonth = null;
         }
     }
 
-    public String getNameOfMonth(){return nameOfMonth;}
-
+    public String getNameOfMonth() {
+        return nameOfMonth;
+    }
 
 }

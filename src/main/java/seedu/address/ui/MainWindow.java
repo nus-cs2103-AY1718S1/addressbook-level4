@@ -232,6 +232,9 @@ public class MainWindow extends UiPart<Region> {
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 
+    /**
+     * why must comment TODO: change this
+     */
     @FXML
     private void handleSwitchToEvents() {
         dataDetailsPanelPlaceholder.getChildren().clear();
