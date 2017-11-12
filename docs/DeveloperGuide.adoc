@@ -484,7 +484,7 @@ and inserted into the position after the last favourite person in the internal m
 
 // tag::profPicSystem[]
 === Profile Picture Feature
-A user's profile picture is retrieved by and displayed in the UI class `BrowserPanel` with **setContactImage(Person)**
+A user's profile picture is retrieved by and displayed in the UI class `MainContactPanel` with **setContactImage(Person)**
 a contact's  path stored in a contact's `ProfPic` person attribute and can be modified with the use of 2 commands
 explain below.
 

@@ -20,6 +20,8 @@ import seedu.address.model.person.ProfPic;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.schedule.ReadOnlySchedule;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.socialmedia.ReadOnlySocialMedia;
+import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -40,12 +42,15 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String profPic;
 
+
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement
     private List<XmlAdaptedGroup> grouped = new ArrayList<>();
     @XmlElement
     private List<XmlAdaptedSchedule> schedule = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedSocialMedia> socialMedia = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -80,6 +85,11 @@ public class XmlAdaptedPerson {
         for (ReadOnlySchedule event: source.getSchedule()) {
             schedule.add(new XmlAdaptedSchedule(event));
         }
+
+        socialMedia = new ArrayList<>();
+        for (ReadOnlySocialMedia sm: source.getSocialMedia()) {
+            socialMedia.add(new XmlAdaptedSocialMedia(sm));
+        }
     }
 
     /**
@@ -103,6 +113,11 @@ public class XmlAdaptedPerson {
             personSchedule.add(event.toModelType());
         }
 
+        final List<SocialMedia> personSocialMedia = new ArrayList<>();
+        for (XmlAdaptedSocialMedia socialMediaUrl: socialMedia) {
+            personSocialMedia.add(socialMediaUrl.toModelType());
+        }
+
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
@@ -112,7 +127,8 @@ public class XmlAdaptedPerson {
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<Group> groups = new HashSet<>(personGroups);
         final Set<Schedule> schedules = new HashSet<>(personSchedule);
-        return new Person(name, phone, email, address, favourite, profPic, tags, groups, schedules);
+        final Set<SocialMedia> socialMediaUrls = new HashSet<>(personSocialMedia);
+        return new Person(name, phone, email, address, favourite, profPic, tags, groups, schedules, socialMediaUrls);
 
     }
 }
