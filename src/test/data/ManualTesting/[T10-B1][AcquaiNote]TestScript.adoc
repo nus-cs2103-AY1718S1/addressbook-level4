@@ -29,5 +29,3 @@ endif::[]
 == Test command: `Add`
 
 . Enter `add n/Bob Ross p/91333462 e/ross@gmail.com a/US t/painter`
-
-
