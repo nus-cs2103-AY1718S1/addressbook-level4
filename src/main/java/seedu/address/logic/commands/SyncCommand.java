@@ -48,7 +48,8 @@ public class SyncCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Synchronised";
     public static final String MESSAGE_FAILURE = "Please login first";
-    public static final String MESSAGE_FAILURE_INTERNET = "Unable to connect to the Internet. Please check your internet and firewall settings";
+    public static final String MESSAGE_FAILURE_INTERNET =
+            "Unable to connect to the Internet. Please check your internet and firewall settings";
 
     private static PeopleService client;
 
