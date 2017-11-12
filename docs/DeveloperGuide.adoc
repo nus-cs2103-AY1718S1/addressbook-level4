@@ -463,6 +463,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 (default: `config.json`).
 
 //tag::browser[]
+
 === Google Maps Search Browser
 
 The google maps search browser enhancement resides within the `BrowserPanel`.
@@ -480,7 +481,62 @@ to the back of Google Map's search URL prefix to get a URL for the browser to lo
 ** **Pros:** Makes it easier for implementing additional features that utilizes the Maps API which would be required +
  in future versions of the Ark application. +
 ** **Cons:** More difficult to implement and integrate into a command line interface.
+
 //end::browser[]
+
+//tag::tabCommand[]
+
+=== Tab change mechanism
+
+The `tab` command is facilitated by the `TabCommand` class within `logic` and is an extension of the abstract class
+`Commands`. `TabCommandParser` first checks for valid arguments before returning a new `TabCommand` and it executes.
+A `JumpToTabRequestEvent` event is raised upon execution to be handled by the `ParcelListPanel` to display the
+switch the selected tab on the UI.
+
+==== Design Considerations
+
+**Aspect: Implementation of tab command** +
+
+* **Alternative 1:** Changing the `select` command to be able to select tabs and parcels +
+** **Pros:** Easier for users to understand what the command does by its name alone since
+`select tab 2` or `select index 2` is descriptive of the commands actions+
+** **Cons:** Harder to implement since it would require a large change of `SelectCommand` class
+and its related files to take in a third argument, and user would have to type additional word every select  +
+* **Alternative 2 (current choice):** Creating a new command called `tab` +
+** **Pros:** Easier to implement and less words for the user to input +
+** **Cons:** Just the word "tab" alone is not very descriptive of the commands function.
+
+//end::tabCommand[]
+
+//tag::overduePopup[]
+
+=== Overdue parcels popup window
+
+The overdue parcels popup window is facilitated by the `PopupOverdueParcelsWindow` which extends `UiPart<Region>`
+within `ui`. It creates a new `dialogStage` which is set to always `show` on top of `MainWindow`.
+
+A new `PopupOverdueParcelsWindow` is created and set to show in `UiManager` on `start` and takes in an
+`ObservableList<ReadOnlyParcel>` from `logic` as an argument. This popup window only shows if the method
+`hasOverdueParcels` in `UiManager` returns true to signify the presence of parcels with `OVERDUE` status in the
+uncompleted parcels list. Another method `getNumOverdueParcels` is then used to get the integer number of
+overdue parcels to display in the popup window.
+
+`Javafx` 's animation API for `PauseTransition` is then used to `hide` the window after seven seconds.
+
+==== Design Considerations
+
+**Aspect:  When the popup window shows** +
+
+* **Alternative 1 (current choice):** Only at every startup of the Ark application +
+** **Pros:** Only needs to check the condition to show the popup once and is easy to implement a single check in `UiManager`. +
+** **Cons:** Only notifies users once an on startup of Ark only so users would not get any more notifications if they
+keep their application open constantly +
+* **Alternative 2:** Check uncompleted parcel list after every command and show popup if overdue parcels are found +
+** **Pros:** Users will be immediately notified of overdue parcels whenever parcel list is changed +
+** **Cons:** May not be necessary since the user themselves would be the ones to `add` or `edit` the parcel
+causing the `OVERDUE` status, hence they would already know of the existence of these overdue parcels.
+
+//end::overduePopup[]
 
 //tag::deleteTag[]
 
@@ -503,7 +559,7 @@ updated list of tags.
 correctly iterate through all the lists of tags. +
 ** **Cons:** Might be computationally expensive for large number of parcels as Ark will need to iterate through every
 Tag to delete them. +
-* **Alternative 2:** Maintain a list of tags and where the tags are located+
+* **Alternative 2:** Maintain a list of tags and where the tags are located +
 ** **Pros:** Computationally quicker to just find the tag and remove the tag from every parcel in the list of tags +
 ** **Cons:** More difficult to implement as we have to store an additional list of tags which is linked to each parcel
 and has to be updated whenever we edit other parcel details as well.

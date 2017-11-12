@@ -23,8 +23,10 @@ include::../UserGuide.adoc[tag=browser]
 
 ==== Justification
 
-Since Ark is meant to assist in deliveries, it is necessary for Ark to have a Google Maps browser to show to users
-the exact location of parcel delivery addresses.
+Since Ark is meant to assist in deliveries, it is necessary for Ark to have a Google Maps browser implemented
+within the application to show to users the exact location of parcel delivery addresses.
+This would enable our users to continue using Ark without the need to keep switching between our application
+and a web browser, thus saving users time and hassle.
 
 ==== Implementation
 
@@ -44,7 +46,7 @@ include::../DeveloperGuide.adoc[tag=browser]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=tabs]
+include::../UserGuide.adoc[tag=tabCommand]
 
 #End of Extract#
 
@@ -52,23 +54,58 @@ include::../UserGuide.adoc[tag=tabs]
 
 ==== Justification
 
-To improve usability for users of Ark to be able to quickly search between the different parcel statuses.
-A Tab function would enable users of Ark to easily switch between different parcel lists of differing parcel statuses.
+Since Ark has 4 different statuses for parcels, it is essential that our users are able to quickly
+navigate between the different statuses. Hence we have implemented different parcelLists for undelivered and delivered
+parcels. These lists are viewed in separate tabs in the parcelListPanel.
+To improve usability for users of Ark to be able to quickly search between the different parcel statuses
+without the need for a mouse, a `tab` command is required.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=tabs]
+include::../DeveloperGuide.adoc[tag=tabCommand]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Added: Overdue Parcels Popup Window
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=overduePopup]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since our application is meant to be used as a parcel manager, it is important that our users
+know when they have overdue parcels. Since these parcels are either late for delivery or possibly
+missing, it is important to notify the users of these overdue parcels. A popup window right at the
+startup of the Ark application is the best way to notify users since it would be the first thing
+users see whenever they startup Ark.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=overduePopup]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+
 
 === Other contributions
 
@@ -77,7 +114,3 @@ include::../DeveloperGuide.adoc[tag=tabs]
 
 * Changed the UI layout of ParcelList and ParcelCard
 (Pull requests https://github.com/CS2103AUG2017-T16-B1/main/pull/100[#100])
-
-== Project: Modulus
-
-{Optionally (not graded), you may include other projects in your portfolio.}

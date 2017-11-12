@@ -3,8 +3,6 @@ package seedu.address.model;
 import java.util.List;
 import java.util.function.Predicate;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToTabRequestEvent;
@@ -31,13 +29,12 @@ public interface Model {
     /**
      * Sets the active list in the model.
      *
-     * @param event the {@link JumpToTabRequestEvent} contains the index of the selected Tab. The select tab will
+     * @param event the {@link JumpToTabRequestEvent} contains the index of the selected Tab. The selected tab will
      *              provide information on the active list to select. If the value of
-     *              {@link JumpToTabRequestEvent#targetIndex} is zero, then the uncompleted parcel list is set as the
-     *              new active list. Otherwise, the completed parcel list is set as the active list
-     *              {@link ModelManager#activeParcels}
+     *              {@link JumpToTabRequestEvent#targetIndex} is zero, then {@link ModelManager#completedParcels}
+     *              is set as the new active list. Otherwise, the {@link ModelManager#uncompletedParcels} is set as
+     *              the active list {@link ModelManager#activeParcels}
      */
-    @Subscribe
     void setActiveList(JumpToTabRequestEvent event);
     //@@author
 
