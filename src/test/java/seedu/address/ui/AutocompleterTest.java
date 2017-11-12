@@ -209,6 +209,14 @@ public class AutocompleterTest extends GuiUnitTest {
 
     }
 
+    @Test
+    public void autocomplete_forMultipleTag() throws Exception {
+        assertAutocompleteSuccess("add #/RR123456789SG n/John a/123 Computing S123456 d/today"
+                        + " e/john@example.com p/12345678 s/PENDING t/FROZEN", "add #/RR123456789SG"
+                        + " n/John a/123 Computing S123456 d/today e/john@example.com p/12345678 s/PENDING t/FROZEN t/",
+                EMPTY_STRING, "ADD", "COMMAND_NEXT_PREFIX");
+    }
+
     /**
      * Simulates an autocomplete with {@code commandBoxText} and verifies that the resulting string matches
      * {@code expectedResult} also verifies that the logged details match {@code expectedCommand}
