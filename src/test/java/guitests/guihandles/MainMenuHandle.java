@@ -22,6 +22,15 @@ public class MainMenuHandle extends NodeHandle<Node> {
         clickOnMenuItemsSequentially("Help", "F1");
     }
 
+    //@@author chilipadiboy
+    /**
+     * Opens the {@code BirthdayAlarmWindow} using the menu bar in {@code MainWindow}.
+     */
+
+    public void openBirthdayAlarmWindowUsingMenu() {
+        clickOnMenuItemsSequentially("Reminders", "Birthdays");
+    }
+
     /**
      * Opens the {@code HelpWindow} by pressing the shortcut key associated
      * with the menu bar in {@code MainWindow}.

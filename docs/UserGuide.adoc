@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= DeathNote v2.0 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,11 +10,17 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W10-B3/DeathNote
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-W10-B3`      Since: `Jun 2016`      Licence: `MIT`
 
-== Quick Start
+This user guide contains all the essential information required to make full use of DeathNote. It also includes the
+description of the application's system function, abilities and step-by-step procedures to be able to use DeathNote
+effectively.
+
+== Getting Started
+
+=== Installation
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -22,158 +28,316 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest link:{repoURL}/releases[`DeathNote.jar`] application.
+.  Place the application to the folder of your choice. This will be your home folder for DeathNote.
+.  Double-click the file to start the application. You should see the graphical user interface (GUI) appear in a few seconds.
 +
-image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+image::Ui.png[width="800"]
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+=== 30-Second Tutorial
 
-.  Refer to the link:#features[Features] section below for details of each command.
+Let's get started. Here is a quick demonstration showing how to perform basic contact management with DeathNote.
 
-== Features
+image::usage.gif[width="768"]
 
-====
-*Command Format*
+Here is an explanation of what is happening. First, add 3 persons namely Alice, Bob and Carol.
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+....
+> add n/Alice
+New person added: Alice Remarks:
 
-=== Viewing help : `help`
+> add n/Bob
+New person added: Bob Remarks:
 
-Format: `help`
+> add n/Carol
+New person added: Carol Remarks:
+....
 
-=== Adding a person: `add`
+Intuitive. Now you want to find the information about Bob.
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+....
+> find n/Bob
+1 persons listed!
+....
 
-[TIP]
-A person can have any number of tags (including 0)
+To view everyone in your DeathNote:
 
-Examples:
+....
+> list
+Listed all persons
+....
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+To remove the third person shown on the list from your DeathNote:
 
-=== Listing all persons : `list`
+....
+> delete 3
+....
 
-Shows a list of all persons in the address book. +
-Format: `list`
+=== Command Line Syntax
 
-=== Editing a person : `edit`
+* Words in `UPPER_CASE` are parameters to be replaced by the user. `add n/NAME` can be written as `add n/John Doe`.
+* Items in square brackets are optional. `n/NAME [p/PHONE]` can be written as both `n/John Doe p/93456635` and as `n/John Doe`.
+* Items with `…`​ after them can be used multiple (including zero) times. `[t/TAG]...` can be written as ``, `t/friend`, `t/friend t/family`.
+* Parameters can be in any order. If the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+=== Getting Help
 
-****
+There are several forms of help available.
+
+*User Guide*
+
+In DeathNote command box, type `help` to see a pop-up window containing this user guide.
+
+*GitHub Issue*
+
+You can file a GitHub https://github.com/CS2103AUG2017-W10-B3/main/issues[issue] describing you request/problem and
+the developers will look into it.
+
+*Email*
+
+Contact us directly by emailing to `kaihsien.boo[at]u.nus.edu`.
+
+== Common Usage
+
+This section covers commonly used commands.
+
+//tag::add[]
+
+=== Add a person: `add` / `a` / `curse` kbd:[V2.0]
+
+Adds a person to DeathNote +
+
+  Format: add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
+
+  Shorthand: a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
+
+  Evil Format: curse n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
+
+* Only `NAME` field is compulsory +
+//end::add[]
+* Birthday must be in DD/MM/YYYY format +
+* Website must start with `https`` +
+* Picture must be in PNG format +
+* Person can have any number of `TAG` s.
+
+[big green]#Examples#:
+
+* `add n/Abel`
+* `add n/Boby p/97741234 e/boby@example.com b/15/02/1992 w/https:www.website.com/`
+* `add n/Carol pic/C:\Users\user\Desktop\Carol.png t/actor t/neighbor`
+//tag::profilepictureadd[]
+* `add n/Dwayne Johnson pic/C:\Users\user\Desktop\TheRock.png`
+//end::profilepictureadd[]
+
+=== Add a remark : `remark` kbd:[V2.0]
+//tag::remark[]
+Adds or edits remarks to the person identified by the INDEX
+
+  Format: remark INDEX r/[REMARK]
+
+//end::remark[]
+
+[big green]#Examples#:
+
+* `remark 1 r/Likes to drink coffee` +
+Edits the remark for the first person to Likes to drink coffee.
+
+* `remark 2 r/` +
+Removes the remark for the second person.
+
+=== Edit a person : `edit` / `e` / `mutate` kbd:[V2.0]
+
+Edits an existing person in DeathNote. +
+
+  Format: edit INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
+
+  Shorthand: e INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
+
+  Evil Format: mutate INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
+
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
 
-Examples:
+[big green]#Examples#:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 2 w/https://www.yahoo.com/ p/97883421` +
+Edits the website of the 2nd person to be https://www.yahoo.com/ and change the contact number to 97883421.
+//tag::profilepictureedit[]
+* `edit 1 pic/C:\pictures\clown.png` +
+Edits the picture of the 1st person to the picture specified in the path i.e. clown.png
+//end::profilepictureedit[]
 
-=== Locating persons by name: `find`
+=== Delete a person : `delete` / `d` / `destroy`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Deletes the specified person from DeathNote.
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+  Format: delete INDEX
 
-Examples:
+  Shorthand: d INDEX
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+  Evil Format: destroy INDEX
 
-=== Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
-
-****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-****
 
-Examples:
+
+[big green]#Examples#:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the displayed list.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+//tag::find[]
+
+=== Find a person: `find` / `f` / `summon` kbd:[V2.0]
+
+Finds persons who matches the given attributes. +
+
+  Format: find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...
+
+  Shorthand: f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...
+
+  Evil Format: summon [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...
+
+* Searches based on the input and prefix.
+* The search is case insensitive for NAME. e.g `hans` will match `Hans`
+* The order of the keywords for NAME does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The other prefixes require the exact words
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+//end::find[]
+
+[big green]#Examples#:
+
+* `find n/John` +
+Returns `john` and `John Doe`
+* `find n/Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+* `find n/John p/96654253`
+Returns a contact named "John" with phone number "96654253".
+
+=== Select a person : `select` / `s`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+  Format: select INDEX
+
+  Shorthand: s INDEX
+
+* Selects the person and loads the website of the person at the specified `INDEX` if the person has a website.
+* Selects the person and goole search the person at the specified `INDEX` if the person does not have a website.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
-****
 
-Examples:
+
+[big green]#Examples#:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the displayed list.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+=== List all persons : `list` / `l`
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Shows a list of all persons in DeathNote. +
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+  Format: list
+
+  Shorthand: l
+
+//tag::opennew[]
+
+=== Create new DeathNote : `new` / `n` kbd:[V2.0]
+
+Opens a new instance of DeathNote.
+
+  Format: new PATH
+
+  Shorthand: n PATH
+
+`New` On GUI:
+
+. Go to the top menu and click File > New.
+. Locate your desired DeathNote data file on the pop-up window. The file will be in an xml format.
+. Select the file and click Save
+
+=== Open existing DeathNote : `open` / `o` kbd:[V2.0]
+
+Opens another existing instance of DeathNote.
+
+  Format: open PATH
+
+  Shorthand: o PATH
+
+`Open` On GUI:
+
+. Go to the top menu and click File > Open.
+. Locate your desired DeathNote data file on the pop-up window. The file will be in an xml format.
+. Select the file and click Open
+
+//end::opennew[]
+
+=== Exit DeathNote : `exit`
+
+Exits DeathNote. +
+
+  Format: exit
+
+== Advanced Topics
+
+This section contains more sophisticated usage of DeathNote.
+
+//tag::brem[]
+=== View birthday reminder : `reminders` / `rem` kbd:[V2.0]
+
+Opens the birthday Reminders Window. The same can be done by clicking Reminders --> Birthdays
+
+image::../images/birthdayalarmwindow.JPG[]
+
+  Format: reminders
+
+  Shorthand: rem
+
+//end::brem[]
+
+=== Clear all entries : `clear` / `c` / `purge`
+
+Clears all entries from DeathNote.
+
+  Format: clear
+
+  Shorthand: c
+
+  Evil Format: purge
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undo previous command : `undo` / `u`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Restores the DeathNote to the state before the previous _undoable_ command was executed. +
+
+  Format: undo
+
+  Shorthand: u
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the DeathNote's content (`add`, `delete`, `edit` and `clear`).
 ====
 
-Examples:
+[big green]#Examples#:
 
 * `delete 1` +
 `list` +
@@ -189,12 +353,15 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redo the previously undone command : `redo` / `r`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
 
-Examples:
+  Format: redo
+
+  Shorthand: r
+
+[big green]#Examples#:
 
 * `delete 1` +
 `undo` (reverses the `delete 1` command) +
@@ -212,41 +379,105 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== List entered commands : `history` / `h`
 
-Clears all entries from the address book. +
-Format: `clear`
+Lists all the commands that you have entered in reverse chronological order. +
 
-=== Exiting the program : `exit`
+  Format: history
 
-Exits the program. +
-Format: `exit`
+  Shorthand: h
 
-=== Saving the data
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+//tag::theme[]
+=== Change theme : `theme` kbd:[V2.0]
+Changes the theme of DeathNote. +
+
+  Format: theme
+
+[big green]#Examples#:
+
+* `theme` light
+* `theme` dark
+
+Current available themes:
+
+* light
+
+image::lightTheme.png[width="200"]
+
+* dark
+
+image::darkTheme.png[width="200"]
+
+//end::theme[]
+
+=== Sorting Behavior kbd:[V2.0]
+
+Listed persons are sorted automatically in alphabetical order. No command is required.
+
+=== Saving Mechanism
+
+The data used in DeathNote is saved in the hard disk automatically after executing
+command that changes the data. There is no need to save manually.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-== Command Summary
+== Cheat Sheet
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+=== Command Summary
+
+[width="100%",cols="12%,88%",options="header",]
+|=======================================================================
+|Command |Syntax
+|`add`      |`add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [pic/PATH] [w/WEBSITE] [t/TAG]...`
+|`remark`   |`remark INDEX r/REMARK`
+|`edit`     |`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [pic/PATH] [w/WEBSITE] [t/TAG]...`
+|`delete`   |`delete INDEX`
+|`find`     |`find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...`
+|`select`   |`select INDEX`
+|`list`     |`list`
+|`new`      |`new PATH`
+|`open`     |`open PATH`
+|`exit`     |`exit`
+|`reminders`|`reminders`
+|`clear`    |`clear`
+|`undo`     |`undo`
+|`redo`     |`redo`
+|`history`  |`history`
+|`theme`    |`theme light` `theme dark`
+|=======================================================================
+
+=== Available Parameters
+Here is the list of all available parameters:
+
+*Name*: n/<alphanumeric characters and spaces> +
+
+*Phone Number*: p/<at least 3 digits long> +
+
+*Email*: e/<2 alphanumeric/period strings separated by '@'> +
+
+*Address*:  a/<Address of person (can be any value)> +
+
+*Birthday*: b/<DD/MM/YYYY> +
+
+*Profile Picture*: pic/<VALID FILE PATH> +
+
+*Remark*^1^: r/<Can be any value or blank> +
+
+*Website*: w/<Website beginning with http:// or https:// that ends with a proper domain> +
+
+*Tags*^2^: t/<Tag names should be alphanumeric> +
+
+^1^Only available in the remark command +
+^2^Can have multiple tags
+
+== Glossary
+
+* GUI: Graphical User Interface.

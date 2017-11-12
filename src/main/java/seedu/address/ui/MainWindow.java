@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -14,11 +15,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowBirthdayAlarmRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchAddressBookRequestEvent;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -35,6 +40,8 @@ public class MainWindow extends UiPart<Region> {
     private static final int MIN_WIDTH = 450;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private MainApp mainApp;
 
     private Stage primaryStage;
     private Logic logic;
@@ -78,6 +85,10 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        //@@author Jemereny
+        UiStyle.getInstance().setScene(scene);
+        //@@author
+
         primaryStage.setScene(scene);
 
         setAccelerators();
@@ -94,6 +105,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -135,7 +147,8 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+            logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -152,6 +165,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -180,7 +194,7 @@ public class MainWindow extends UiPart<Region> {
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+            (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
     /**
@@ -195,6 +209,36 @@ public class MainWindow extends UiPart<Region> {
     void show() {
         primaryStage.show();
     }
+
+    //@@author chrisboo
+    /**
+     * Opens a FileChooser to let the user select an address book to save.
+     */
+    @FXML
+    private void handleNew() {
+        File file = FileUtil.getFileFromChooser(true);
+
+        raise(new SwitchAddressBookRequestEvent(file, true));
+    }
+
+    /**
+     * Opens a FileChooser to let the user select an address book to load.
+     */
+    @FXML
+    private void handleOpen() {
+        File file = FileUtil.getFileFromChooser(false);
+
+        raise(new SwitchAddressBookRequestEvent(file, false));
+    }
+    //@@author
+
+    //@@author chilipadiboy
+    @FXML
+    private void handlebirthdayalarms() {
+        BirthdayAlarmWindow birthdayAlarmWindow = new BirthdayAlarmWindow(logic.getFilteredPersonList());
+        birthdayAlarmWindow.show();
+    }
+    //@@author
 
     /**
      * Closes the application.
@@ -216,5 +260,12 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author chilipadiboy
+    @Subscribe
+    private void handleShowBirthdayAlarmEvent (ShowBirthdayAlarmRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handlebirthdayalarms();
     }
 }

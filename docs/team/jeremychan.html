@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Chan Liang Fei Jeremy - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Chan Liang Fei Jeremy - Project Portfolio</h1>
+<div id="toc" class="toc">
+<div id="toctitle"></div>
+<ul class="sectlevel1">
+<li><a href="#project-deathnote">1. Project: DeathNote</a></li>
+<li><a href="#enhancement-added-profile-picture">2. Enhancement Added: Profile Picture</a>
+<ul class="sectlevel2">
+<li><a href="#external-behavior">2.1. External behavior</a></li>
+<li><a href="#justification">2.2. Justification</a></li>
+<li><a href="#implementation">2.3. Implementation</a></li>
+<li><a href="#profile-picture">2.4. Profile Picture</a></li>
+</ul>
+</li>
+<li><a href="#enhancement-added-themes">3. Enhancement Added: Themes</a>
+<ul class="sectlevel2">
+<li><a href="#external-behavior-2">3.1. External behavior</a></li>
+<li><a href="#change-theme-code-theme-code-kbd-v2-0-kbd">3.2. Change theme : <code>theme</code> <kbd>V2.0</kbd></a></li>
+<li><a href="#justification-2">3.3. Justification</a></li>
+<li><a href="#implementation-2">3.4. Implementation</a></li>
+<li><a href="#theme-mechanism">3.5. Theme mechanism</a></li>
+</ul>
+</li>
+<li><a href="#enhancement-added-website">4. Enhancement Added: Website</a>
+<ul class="sectlevel2">
+<li><a href="#external-behavior-3">4.1. External behavior</a></li>
+<li><a href="#justification-3">4.2. Justification</a></li>
+<li><a href="#implementation-3">4.3. Implementation</a></li>
+<li><a href="#website">4.4. Website</a></li>
+</ul>
+</li>
+<li><a href="#enhancement-added-colors-for-tags">5. Enhancement Added: Colors for tags</a>
+<ul class="sectlevel2">
+<li><a href="#external-behavior-4">5.1. External behavior</a></li>
+<li><a href="#justification-4">5.2. Justification</a></li>
+<li><a href="#implementation-4">5.3. Implementation</a></li>
+<li><a href="#tag-colors">5.4. Tag colors</a></li>
+</ul>
+</li>
+<li><a href="#enhancement-added-shown-list-to-be-sorted">6. Enhancement Added: Shown list to be sorted</a>
+<ul class="sectlevel2">
+<li><a href="#external-behavior-5">6.1. External behavior</a></li>
+<li><a href="#justification-5">6.2. Justification</a></li>
+<li><a href="#implementation-5">6.3. Implementation</a></li>
+<li><a href="#sorted-list">6.4. Sorted list</a></li>
+</ul>
+</li>
+<li><a href="#other-contributions">7. Other contributions</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-deathnote"><a class="link" href="#project-deathnote">1. Project: DeathNote</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>DeathNote is a Command-line Interface (CLI) desktop address book application which is able to manage contacts easily.
+The user interacts with the application using a CLI, using commands to manage contacts; adding, deleting or editing contacts.</p>
+</div>
+<div class="paragraph">
+<p>The aim of DeathNote, besides managing contacts, is to be able to bring entertainment to the user.
+DeathNote has a small twist on being an address book application as it has aliases for its commands
+and the amount of entertainment can only be determined by the user&#8217;s creativity.</p>
+</div>
+<div class="paragraph">
+<p>It has a GUI created with JavaFX. It is written in Java, and has about 6k Lines of Code (LoC).</p>
+</div>
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/Jemereny/addressbook-level4/blob/master/collated/main/Jemereny.md">Functional code</a>] [<a href="https://github.com/Jemereny/addressbook-level4/blob/master/collated/test/Jemereny.md">Test code</a>]</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="enhancement-added-profile-picture"><a class="link" href="#enhancement-added-profile-picture">2. Enhancement Added: Profile Picture</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="external-behavior"><a class="link" href="#external-behavior">2.1. External behavior</a></h3>
+<hr>
+<div class="paragraph">
+<p>Profile picture shows the face of contact.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/personCard.png" alt="personCard">
+</div>
+</div>
+<div class="paragraph">
+<p>Profile picture can be added using <code>add</code> command while adding a contact or <code>edit</code> command if the contact already exists.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>add n/Dwayne Johnson pic/C:\Users\user\Desktop\TheRock.png</code></p>
+</li>
+<li>
+<p><code>edit 1 pic/C:\pictures\clown.png</code><br>
+Edits the picture of the 1st person to the picture specified in the path i.e. clown.png</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="justification"><a class="link" href="#justification">2.2. Justification</a></h3>
+<hr>
+<div class="paragraph">
+<p>Adding picture to a contact reminds you who and how your contact looks.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="implementation"><a class="link" href="#implementation">2.3. Implementation</a></h3>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc">from: Developer Guide</a> written by Jeremy Chan</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="profile-picture"><a class="link" href="#profile-picture">2.4. Profile Picture</a></h3>
+<div class="paragraph">
+<p>The picture variable in <code>Person</code> is a normal variable in <code>Person</code> which only stores strings with ".png" suffix.<br>
+The data that we save in our xml file will be "pictureName.png" plus the picture of the person in our data folder in
+.png format.<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/PersonClassDiagram.png" alt="PersonClassDiagram" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.6.1 : Person Class Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>The <code>Picture</code> class checks for existence of the file using <code>File</code> class.<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">boolean</span> isValidPicture(<span class="predefined-type">String</span> fileLocation) {
+...
+    File file = <span class="keyword">new</span> <span class="predefined-type">File</span>(fileLocation);
+    <span class="keyword">if</span> (file.exists() &amp;&amp; (fileLocation.endsWith(PICTURE_SUFFIX))) {
+        <span class="keyword">return</span> <span class="predefined-constant">true</span>;
+    } <span class="keyword">else</span> {
+        file = <span class="keyword">new</span> <span class="predefined-type">File</span>(PICTURE_SAVE_LOCATION + fileLocation);
+        <span class="keyword">if</span> (file.exists()) {
+            <span class="keyword">return</span> <span class="predefined-constant">true</span>;
+        }
+        <span class="keyword">return</span> <span class="predefined-constant">false</span>;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the existence of the file is checked, we check the size of the file so that we do not save very large files
+as we do not want our data file to be too large.<br>
+We resize the files if they are too large by shrinking it into a shorter width and height.<br>
+We also rename the file with a unique ID so that picture names will not collide and be overwritten.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Picture(<span class="predefined-type">String</span> fileLocation) {
+...
+    String newFileName = <span class="predefined-type">UUID</span>.randomUUID().toString() + PICTURE_SUFFIX;
+
+    <span class="predefined-type">File</span> src = <span class="keyword">new</span> <span class="predefined-type">File</span>(trimmedFileLocation);
+    <span class="predefined-type">File</span> dest = <span class="keyword">new</span> <span class="predefined-type">File</span>(PICTURE_SAVE_LOCATION + newFileName);
+
+    <span class="comment">// If file is too big, resize it.</span>
+    <span class="keyword">if</span> (src.length() &gt; PICTURE_MAX_SIZE) {
+        resizeAndSaveImage(src, newFileName);
+    } <span class="keyword">else</span> {
+        copyImage(src, dest);
+    }
+    <span class="local-variable">this</span>.value = newFileName;
+...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After resizing the file or that if the file does not exceed our limit, we save/copy the file into our data folder
+so that we can reuse it next time if we move the application around.<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> resizeAndSaveImage(<span class="predefined-type">File</span> file, <span class="predefined-type">String</span> newFileName) <span class="directive">throws</span> IllegalValueException {
+    <span class="keyword">try</span> {
+        <span class="predefined-type">BufferedImage</span> resizedImage = resizeImage(<span class="predefined-type">ImageIO</span>.read(file));
+
+        <span class="comment">// Saving of image into data folder</span>
+        <span class="predefined-type">ImageIO</span>.write(resizedImage, <span class="string"><span class="delimiter">&quot;</span><span class="content">png</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> <span class="predefined-type">File</span>(PICTURE_SAVE_LOCATION + newFileName));
+    } <span class="keyword">catch</span> (<span class="exception">IOException</span> e) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalValueException(MESSAGE_PROFILEPICTURE_ERROR);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> copyImage(<span class="predefined-type">File</span> src, <span class="predefined-type">File</span> dest) <span class="directive">throws</span> IllegalValueException {
+    <span class="keyword">try</span> {
+        FileUtils.copyFile(src, dest);
+    } <span class="keyword">catch</span> (<span class="exception">IOException</span> e) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalValueException(MESSAGE_PROFILEPICTURE_ERROR);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To show the picture in the application, <code>PersonCard</code> is updated and we clip the picture with a circle so it looks nice.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="type">void</span> initPicture(ReadOnlyPerson person) {
+    picture.setImage(<span class="keyword">new</span> <span class="predefined-type">Image</span>(person.getPicture().getPictureLocation()));
+
+    Circle circle = <span class="keyword">new</span> Circle(<span class="float">32.0</span>, <span class="float">32.0</span>, <span class="float">30.0</span>);
+    picture.setClip(circle);
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">2.4.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of profile picture<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Copy image file into data folder and use the image from there<br>
+<strong>Pros:</strong> Application and data folder can be transferred to different computers and still work<br>
+<strong>Cons:</strong> May have to take note of size of files added into folder as transferring the data folder may take
+time if the file is too big+</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Saving the path of the image<br>
+<strong>Pros:</strong> No extra work in resizing or copying the file<br>
+<strong>Cons:</strong> Application and data folder cannot be transferred to different computers and be expected to work<br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="enhancement-added-themes"><a class="link" href="#enhancement-added-themes">3. Enhancement Added: Themes</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="external-behavior-2"><a class="link" href="#external-behavior-2">3.1. External behavior</a></h3>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc">from: User Guide</a></mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="change-theme-code-theme-code-kbd-v2-0-kbd"><a class="link" href="#change-theme-code-theme-code-kbd-v2-0-kbd">3.2. Change theme : <code>theme</code> <kbd>V2.0</kbd></a></h3>
+<div class="paragraph">
+<p>Changes the theme of DeathNote.<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: theme</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="big green">Examples</span>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>theme</code> light</p>
+</li>
+<li>
+<p><code>theme</code> dark</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Current available themes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>light</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/lightTheme.png" alt="lightTheme" width="200">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>dark</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/darkTheme.png" alt="darkTheme" width="200">
+</div>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="justification-2"><a class="link" href="#justification-2">3.3. Justification</a></h3>
+<hr>
+<div class="paragraph">
+<p>Theme is added so that we can disguise our Death Note (gamification of our application).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="implementation-2"><a class="link" href="#implementation-2">3.4. Implementation</a></h3>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc">from: Developer Guide</a> written by Jeremy Chan</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="theme-mechanism"><a class="link" href="#theme-mechanism">3.5. Theme mechanism</a></h3>
+<div class="paragraph">
+<p>Theme mechanism uses a singleton class called <code>UiStyle</code> which stores the scene of the application in it.<br>
+This allows the modification of the scene&#8217;s css at runtime.</p>
+</div>
+<div class="paragraph">
+<p>The class <code>UiStyle</code> requires the scene to be set at <code>MainWindow</code> class for it to be used to edit themes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">UiStyle</span> {
+...
+    private <span class="directive">static</span> Scene scene = <span class="predefined-constant">null</span>;
+
+     <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> setScene(Scene s) {
+        scene = s;
+        setToDarkTheme(); <span class="comment">// Default theme</span>
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> setToLightTheme() {
+        scene.getStylesheets().remove(DARK_THEME_STYLE);
+        scene.getStylesheets().add(LIGHT_THEME_STYLE);
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> setToDarkTheme() {
+        scene.getStylesheets().remove(LIGHT_THEME_STYLE);
+        scene.getStylesheets().add(DARK_THEME_STYLE);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example of calling the application to change to light theme:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>UiStyle.getInstance().setToLightTheme();</pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ThemeSequenceDiagram.png" alt="ThemeSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.7.1 : Theme Sequence Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>Although this function can be called anywhere, it should only be called when <code>ThemeCommand</code> is issued.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.5.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of theme<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Pass the scene of the application into a singleton class dedicated for UI usage only<br>
+<strong>Pros:</strong> Changing the theme can be called easily<br>
+<strong>Cons:</strong> Changing of the theme can be called anywhere by any class<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Passing the scene down from <code>MainApp</code> class to <code>ThemeCommand</code> class<br>
+<strong>Pros:</strong> Only <code>ThemeCommand</code> class will be able to modify the theme<br>
+<strong>Cons:</strong> Very tedious as <code>ThemeCommand</code> class is very far down the architecture<br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="enhancement-added-website"><a class="link" href="#enhancement-added-website">4. Enhancement Added: Website</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="external-behavior-3"><a class="link" href="#external-behavior-3">4.1. External behavior</a></h3>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc">from: User Guide</a></mark></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="justification-3"><a class="link" href="#justification-3">4.2. Justification</a></h3>
+<hr>
+<div class="paragraph">
+<p>Having a website so that we can see our contact&#8217;s website if he or she is a professional contact.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="implementation-3"><a class="link" href="#implementation-3">4.3. Implementation</a></h3>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc">from: Developer Guide</a> written by Jeremy Chan</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="website"><a class="link" href="#website">4.4. Website</a></h3>
+<div class="paragraph">
+<p>The website variable in <code>Person</code> is a one of the new parameters in Person which stores a website of the <code>Person</code><br></p>
+</div>
+<div class="paragraph">
+<p>Browser is reloaded with the <code>Person</code> ' s website if the <code>Person</code> selected has a website. If not we google search the
+<code>Person</code> 's name.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">4.4.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of profile picture<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Copy image file into data folder and use the image from there<br>
+<strong>Pros:</strong> Application and data folder can be transferred to different computers and still work<br>
+<strong>Cons:</strong> May have to take note of size of files added into folder as transferring the data folder may take
+time if the file is too big+</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Saving the path of the image<br>
+<strong>Pros:</strong> No extra work in resizing or copying the file<br>
+<strong>Cons:</strong> Application and data folder cannot be transferred to different computers and be expected to work<br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="enhancement-added-colors-for-tags"><a class="link" href="#enhancement-added-colors-for-tags">5. Enhancement Added: Colors for tags</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="external-behavior-4"><a class="link" href="#external-behavior-4">5.1. External behavior</a></h3>
+<hr>
+<div class="paragraph">
+<p>Tags are shown in different colors</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/tagcolor.png" alt="tagcolor">
+</div>
+</div>
+<div class="paragraph">
+<p>Tags can be added using <code>add</code> command while adding a contact or <code>edit</code> command if the contact already exists.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>add n/Dwayne Johnson t/friend</code><br>
+Adds Dwayne Johnson as a contact and adds a "friend" tag to the contact</p>
+</li>
+<li>
+<p><code>edit 1 t/colleague</code><br>
+Edits the tag of the 1st person to be "colleague"</p>
+</li>
+<li>
+<p><code>edit 1 t/</code><br>
+Removes all tag from the 1st person</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="justification-4"><a class="link" href="#justification-4">5.2. Justification</a></h3>
+<hr>
+<div class="paragraph">
+<p>We have colors for tags so it is easier to distinguish different tags.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="implementation-4"><a class="link" href="#implementation-4">5.3. Implementation</a></h3>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc">from: Developer Guide</a> written by Jeremy Chan</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tag-colors"><a class="link" href="#tag-colors">5.4. Tag colors</a></h3>
+<div class="paragraph">
+<p>The colors for tags are randomed upon start up of the application.
+Tags has been modified to use hexadecimal colors instead of having an array of colors
+(e.g. red,blue,green) and selecting from the array of colors.<br>
+This increases the number of colors we can have for tags tremendously.<br></p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">5.4.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of color for tags<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Have tags to be colored using hex instead of defined words<br>
+<strong>Pros:</strong> The number of colors for tags are limited to the number of hex values there are<br>
+<strong>Cons:</strong> Colors are decided by random, the color differences may not be different. (e.g #FFFFFF, #FFFFFE)<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Have tag colors to be in an array and randomly choose from them<br>
+<strong>Pros:</strong> Colors of tags are defined and the difference between any two colors can be seen easily<br>
+<strong>Cons:</strong> Limited number of colors codes<br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="enhancement-added-shown-list-to-be-sorted"><a class="link" href="#enhancement-added-shown-list-to-be-sorted">6. Enhancement Added: Shown list to be sorted</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="external-behavior-5"><a class="link" href="#external-behavior-5">6.1. External behavior</a></h3>
+<hr>
+<div class="paragraph">
+<p>List is sorted by name alphabetically automatically.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/personList.png" alt="personList">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="justification-5"><a class="link" href="#justification-5">6.2. Justification</a></h3>
+<hr>
+<div class="paragraph">
+<p>It is easier to look for contacts when the contacts are sorted.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="implementation-5"><a class="link" href="#implementation-5">6.3. Implementation</a></h3>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc">from: Developer Guide</a> written by Jeremy Chan</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sorted-list"><a class="link" href="#sorted-list">6.4. Sorted list</a></h3>
+<div class="paragraph">
+<p>The list is sorted by names automatically when shown by using java&#8217;s list.sort.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> ObservableList&lt;ReadOnlyPerson&gt; getFilteredPersonList() {
+    <span class="keyword">return</span> FXCollections.unmodifiableObservableList(filteredPersons.sorted());
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">6.4.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Sorting list of contacts<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Return a sorted list when display needs to update<br>
+<strong>Pros:</strong> Very easy to implement,<br>
+<strong>Cons:</strong> Only can sort by name<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Have a sort command to sort contacts<br>
+<strong>Pros:</strong> Contacts can be sorted according to different variables<br>
+<strong>Cons:</strong> New command has to be added.<br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="other-contributions"><a class="link" href="#other-contributions">7. Other contributions</a></h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Added travis to group repo</p>
+</li>
+<li>
+<p>Increased test coverage from 87% to 88% (Pull request: <a href="https://github.com/CS2103AUG2017-W10-B3/main/pull/83">#86</a>)</p>
+</li>
+<li>
+<p>Reported bug on (Pull requests: <a href="https://github.com/CS2103AUG2017-T15-B4/main/issues/234">T15-B4 #234</a>, <a href="https://github.com/CS2103AUG2017-T15-B4/main/issues/236">T15-B4 #236</a>)</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-12 08:50:58 +08:00
+</div>
+</div>
+</body>
+</html>

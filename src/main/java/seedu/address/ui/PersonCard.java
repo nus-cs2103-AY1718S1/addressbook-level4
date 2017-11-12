@@ -1,11 +1,16 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.shape.Circle;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -14,6 +19,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static HashMap<String, String> tagColors = new HashMap<>();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -39,12 +45,24 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    //@@author chilipadiboy
+    @FXML
+    private Label birthday;
+    @FXML
+    private Label remark;
+    //@@author Jemereny
+    @FXML
+    private Label website;
+    @FXML
+    private ImageView picture;
+    //@@author
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        initPicture(person);
         bindListeners(person);
     }
 
@@ -57,15 +75,45 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        //@@author chilipadiboy
+        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        //@@author Jemereny
+        website.textProperty().bind(Bindings.convert(person.websiteProperty()));
+
+        person.pictureProperty().addListener((observable, oldValue, newValue) -> {
+            picture.setImage(new Image(person.getPicture().getPictureLocation()));
+        });
+
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
+        //@@author
     }
 
+    //@@author Jemereny
+    /**
+     * Initialise tag colors for person
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle(UiStyle.getInstance().getBackgroundStyle(getColorForTag(tag.tagName)));
+            tags.getChildren().add(tagLabel);
+        });
     }
+
+    /**
+     * Initialise pictures for person
+     */
+    private void initPicture(ReadOnlyPerson person) {
+        picture.setImage(new Image(person.getPicture().getPictureLocation()));
+
+        Circle circle = new Circle(32.0, 32.0, 30.0);
+        picture.setClip(circle);
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -82,6 +130,16 @@ public class PersonCard extends UiPart<Region> {
         // state check
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
+            && person.equals(card.person);
     }
+
+    //@@author Jemereny
+    private static String getColorForTag(String tagValue) {
+        if (!tagColors.containsKey(tagValue)) {
+            tagColors.put(tagValue, UiStyle.getInstance().getRandomHexColor());
+        }
+
+        return tagColors.get(tagValue);
+    }
+    //@@author
 }

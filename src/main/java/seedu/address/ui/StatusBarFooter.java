@@ -24,7 +24,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     /**
      * Used to generate time stamps.
-     *
+     * <p>
      * TODO: change clock to an instance variable.
      * We leave it as a static variable because manual dependency injection
      * will require passing down the clock reference all the way from MainApp,
@@ -40,13 +40,18 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar totalPersons;
 
 
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(String saveLocation, int totalPersons) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
+        //@@author Jemereny
+        this.totalPersons.setText(totalPersons + " person(s) total");
+        //@@author
     }
 
     /**
@@ -71,11 +76,20 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    //@@author Jemereny
+    private void setTotalPersons(int totalPersons) {
+        this.totalPersons.setText(totalPersons + " person(s) total");
+    }
+    //@@author
+
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        //@@author Jemereny
+        setTotalPersons(abce.data.getPersonList().size());
+        //@@author
     }
 }

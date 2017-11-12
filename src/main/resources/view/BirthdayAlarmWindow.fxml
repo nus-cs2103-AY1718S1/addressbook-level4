@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--@@author chilipadiboy-->
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<TitledPane fx:id="BirthdayTableWindowroot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Birthdays" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <TableView fx:id="BirthdayTable" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="NameColumn" editable="false" sortable="true" prefWidth="300.0" text="Name" />
+          <TableColumn fx:id="BirthdayColumn" editable="false" sortable="true" sortType="DESCENDING" prefWidth="300.0" text="Birthday" />
+        </columns>
+      </TableView>
+   </content>
+</TitledPane>
