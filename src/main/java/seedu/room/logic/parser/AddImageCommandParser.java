@@ -27,18 +27,19 @@ public class AddImageCommandParser implements Parser<AddImageCommand> {
 
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            System.out.println(index.getZeroBased());
+            System.out.println(argMultimap.getValue(PREFIX_IMAGE_URL).get());
             url = validImageFormat(argMultimap.getValue(PREFIX_IMAGE_URL).get());
         } catch (InvalidImageFormatException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_IMAGE_FORMAT, AddImageCommand.MESSAGE_VALID_IMAGE_FORMATS));
         } catch (Exception e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddImageCommand.MESSAGE_USAGE));
         }
-
         return new AddImageCommand(index, url);
     }
 
     public String validImageFormat(String imageUrl) throws InvalidImageFormatException {
-        String validFormatRegex = "([^\\s]+(\\.(?i)(jpg|jpeg|png|bmp))$)";
+        String validFormatRegex = "(.+(\\.(?i)(jpg|jpeg|png|bmp))$)";
         if (imageUrl.matches(validFormatRegex)) {
             return imageUrl;
         } else {
