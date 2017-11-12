@@ -4,9 +4,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: ABC Business Contacts
-ABC Business Contact(ABC) is a desktop Business Contact Management application. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+ABC Business Contact(ABC) is a free and open-source desktop Business Contact Management application that allows the user to store a local database of contacts, and track their appointments. There are a wide variety of commands to optimise organisation and management of a user's contact information. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/derrickchua.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/derrickchua.md[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/derrickchua.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/derrickchua.md[Test code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/derrickchua-reused.md[Reused code]]
 
 === Enhancement Added: Sync
 
@@ -87,3 +87,4 @@ Users should be able to categorise their contacts by period, i.e. week, month or
 
 * Implement tag colours (Pull request https://github.com/CS2103AUG2017-W13-B3/main/pull/1[#1])
 * Fix white PersonListPanel CSS (Pull request https://github.com/CS2103AUG2017-W13-B3/main/pull/75[#75])
+* Discovered bugs during acceptance testing (Issue https://github.com/CS2103AUG2017-F10-B1/main/issues/125[#125])
