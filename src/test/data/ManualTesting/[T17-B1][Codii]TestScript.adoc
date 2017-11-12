@@ -27,35 +27,34 @@ link:https://github.com/CS2103AUG2017-T17-B1/main/blob/master/docs/UserGuide.ado
 === Login screen
 
 ==== CLI version of Login
-
-[width="59%",cols="10%, <30%, <60%",options="header",]
-|=======================================================================
-|Step |Command |Outcome
-|1 |`help` |Help window should open.
-|2 |`list` |Should show “Please log in first” in result display.
-|3 |`login asde hitMeUp123` |Should show “Length of username cannot be less than 6 characters.” in result display.
-|4 |`login loanShark97 short` |Should show “Length of password cannot be less than 6 characters.” in result display.
-|5 |`login @@@@@@ hitMeUp123` |Should show “Username can only consist of uppercase letters (A-Z), lowercase letters (a-z), digits (0-9) and underscores (_)” in result display.
-|6 |`login fakeuser fakepassword` |Should show “Unable to log into Address Book” in result display.
-|7 |`login loanShark97 hitMeUp123` |Should log in successfully.
-|8 |`logout` |Should be returned to login screen.
-|=======================================================================
+. `help`
+** Help window should open.
+. `list`
+** Should show “Please log in first” in result display.
+. `login asde hitMeUp123`
+** Should show “Length of username cannot be less than 6 characters.” in result display.
+. `login loanShark97 short`
+** Should show “Length of password cannot be less than 6 characters.” in result display.
+. `login @@@@@@ hitMeUp123`
+** Should show “Username can only consist of uppercase letters (A-Z), lowercase letters (a-z), digits (0-9) and underscores (_)” in result display.
+. `login fakeuser fakepassword`
+** Should show “Unable to log into Address Book” in result display.
+. `login loanShark97 hitMeUp123`
+** Should log in successfully.
+. `logout`
+** Should be returned to the login screen.
 
 ==== GUI version of Login
 
 === After logging in
 
 ==== Changing themes
-
-[width="59%",cols="10%, <30%, <60%",options="header",]
-|=======================================================================
-|Step |Command |Outcome
-|1 |`theme` |Theme should be changed to a bright theme.
-|2 |`theme` | Theme should be reverted to a dark theme.
-|=======================================================================
+. `theme`
+** Theme should be changed to a bright theme.
+. `theme`
+** Theme should be reverted to the dark theme.
 
 ==== Selection
-
 . `select`
 ** The first person, Bernice Yu, should be selected.
 . `s`
@@ -70,3 +69,27 @@ link:https://github.com/CS2103AUG2017-T17-B1/main/blob/master/docs/UserGuide.ado
 ** The first person, Bernice Yu, should be selected.
 . Click on person card 3 (David Li)
 ** The third person, David Li, should be selected.
+
+==== Addition
+
+. `add`
+** Should show invalid command format message in result display.
+. `add n/John Doe hp/9765432 home/67776747 e/johnd@example.com a/311, Clementi Ave 2, #02-25 pc/123311 d/10000 int/2 dl/11-06-2018 op/61112111 t/friendly`
+** Should show “Phone numbers can only contain numbers, and should be exactly 8 digits long” in result display.
+. `add n/John Doe hp/98765432 home/67776747 e/johnd a/311, Clementi Ave 2, #02-25 pc/123311 d/10000 int/2 dl/11-06-2018 op/61112111 t/friendly`
+** Should show “Person emails should be 2 alphanumeric/period strings separated by '@'” in result display.
+. `add n/John Doe hp/98765432 home/67776747 e/johnd@example.com a/311, Clementi Ave 2, #02-25 pc/12331 d/10000 int/2 dl/11-06-2018 op/61112111 t/friendly`
+** Should show “Postal code must be exactly 6 digits long” in result display.
+. `add n/John Doe hp/98765432 home/67776747 e/johnd@example.com a/311, Clementi Ave 2, #02-25 pc/123311 d/0 int/2 dl/11-06-2018 op/61112111 t/friendly`
+** Should show “Unable to add a person with no debt” in result display.
+. `add n/John Doe hp/98765432 home/67776747 e/johnd@example.com a/311, Clementi Ave 2, #02-25 pc/123311 d/10000 int/2 dl/11-06-2018 op/61112111 t/friendly`
+** John Doe should be added into the address book.
+. `add n/Betty Crowe hp/91234567 home/61234567 e/bcrowe@example.com a/312, Clementi Ave 2, #05-52 pc/123312 d/1000`
+** Betty Crowe should be added into the address book.
+
+==== Deletion
+. `delete 22`
+** Better Crowe should be deleted from the address book.
+. `select 21` +
+. `d`
+** John Doe should be deleted from the address book.
