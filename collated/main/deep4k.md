@@ -77,17 +77,20 @@ public class ModelToggleEvent extends BaseEvent {
 ```
 ###### \java\seedu\address\commons\events\ui\PersonPanelSelectionChangedEvent.java
 ``` java
+
 /**
  * Represents a selection change in the Person List Panel
  */
 public class PersonPanelSelectionChangedEvent extends BaseEvent {
 
     private final PersonCard newSelection;
-    private final String index;
+    private final PersonCard oldSelection;
+    private final String selectedIndex;
 
-    public PersonPanelSelectionChangedEvent(PersonCard newSelection) {
+    public PersonPanelSelectionChangedEvent(PersonCard oldSelection, PersonCard newSelection) {
+        this.oldSelection = oldSelection;
         this.newSelection = newSelection;
-        this.index = newSelection.getPersonCardIndex();
+        this.selectedIndex = newSelection.getPersonCardIndex();
     }
 
     @Override
@@ -99,8 +102,12 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
         return newSelection;
     }
 
+    public PersonCard getOldSelection() {
+        return oldSelection;
+    }
+
     public String getSelectedIndex() {
-        return index;
+        return selectedIndex;
     }
 }
 ```
@@ -968,6 +975,7 @@ public class UnmarkTaskCommand extends UndoableCommand {
         addressBookParser.registerCommandParser(new AliasCommandParser());
         addressBookParser.registerCommandParser(new SortCommandParser());
         addressBookParser.registerCommandParser(new HideCommandParser());
+        addressBookParser.registerCommandParser(new UnhideCommandParser());
         addressBookParser.registerCommandParser(new RemarkCommandParser());
         addressBookParser.registerCommandParser(new UnaliasCommandParser());
         addressBookParser.registerCommandParser(new SelectCommandParser());
@@ -1280,6 +1288,20 @@ public class AddressBookParser {
                 throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
             }
 
+        case UnhideCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new UnhideCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
+
+
         case FindCommand.COMMAND_WORD:
             if (isAliasEnabled) {
                 throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
@@ -1326,6 +1348,19 @@ public class AddressBookParser {
             }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new SortCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
+
+        case ListHiddenCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new ListHiddenCommand();
             } else {
                 throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
             }
@@ -1560,7 +1595,9 @@ public class AddressBookParser {
         commandMap.put("redo", null);
         commandMap.put("undo", null);
         commandMap.put("parent", null);
-        commandMap.put("disable.p", null);
+        commandMap.put("child", null);
+        commandMap.put("listhidden", null);
+        commandMap.put("showbirthdays", null);
     }
 
     public boolean isCommandRegistered(String header) {
@@ -3762,6 +3799,33 @@ public class XmlAdaptedTask {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(tasks);
     }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        if (event.getOldSelection() != null) {
+            try {
+                model.deselectPerson(event.getOldSelection().person);
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "The target person cannot be missing";
+                logger.warning("Failed to DESELECT person card based on clicks");
+            }
+        }
+        try {
+            model.selectPerson(event.getNewSelection().person);
+            raise(new NewResultAvailableEvent(String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS,
+                    event.getSelectedIndex())));
+            raise(new ValidResultDisplayEvent(SelectCommand.COMMAND_WORD));
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+            logger.warning("Failed to SELECT person card based on clicks");
+        }
+    }
+    //author
+
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
