@@ -69,7 +69,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
      */
     private void setAvatar() {
         if (person.getAvatar() != null) {
-            Platform.runLater(() -> avatar.setImage(new Image(person.getAvatar().getPath(), 200, 200, false, true)));
+            Platform.runLater(() -> avatar.setImage(new Image(person.getAvatar().getUri(), 200, 200, false, true)));
         }
     }
 }

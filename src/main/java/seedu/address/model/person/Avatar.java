@@ -24,6 +24,7 @@ public class Avatar {
     public static final String FILE_NOT_IMAGE = "The provided file exists, but it is not an image.";
 
     private String path;
+    private String uri;
 
     public Avatar(String path) throws IllegalValueException {
         requireNonNull(path);
@@ -39,7 +40,8 @@ public class Avatar {
             throw new IllegalValueException(FILE_NOT_IMAGE);
         }
 
-        this.path = file.toURI().toString();
+        this.path = path;
+        this.uri = file.toURI().toString();
     }
 
     /**
@@ -56,20 +58,24 @@ public class Avatar {
         return path;
     }
 
+    public String getUri() {
+        return uri;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Avatar // instanceof handles nulls
-                && this.path.equals(((Avatar) other).path));
+                && this.uri.equals(((Avatar) other).uri));
     }
 
     @Override
     public int hashCode() {
-        return path.hashCode();
+        return uri.hashCode();
     }
 
     @Override
     public String toString() {
-        return "Avatar from " + path;
+        return "Avatar from " + uri;
     }
 }

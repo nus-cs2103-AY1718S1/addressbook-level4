@@ -23,7 +23,8 @@ public class AvatarTest {
         File file = new File(path);
 
         Avatar avatar = new Avatar(path);
-        assertEquals(file.toURI().toString(), avatar.getPath());
+        assertEquals(path, avatar.getPath());
+        assertEquals(file.toURI().toString(), avatar.getUri());
     }
 
     @Test

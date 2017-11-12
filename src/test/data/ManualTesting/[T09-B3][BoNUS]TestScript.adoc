@@ -46,6 +46,10 @@ for more information.
 
 === Add/view/edit/delete contacts
 
+==== Add a new contact
+
+To add a new contact, we need to use the `add` command.
+
 ==== Add avatar to an existing person
 
 To add avatar to a contact, we need to use the `avatar` command.
@@ -56,21 +60,22 @@ _Command:_ +
 _Result:_ +
 `Listed all persons`
 
+. Then move an image file (`.jpg` or `.png`) into the home folder where you use *BoNUS*
+
 . Add avatar to the third person in the listing (assume there are at least three contacts) +
 _Command:_ +
-`avatar 3 http://profileengine.com/large/420503790/nus.soc`
+`avatar 3 someImage.jpg`
 
 === Add/view/edit/delete events
 
 ==== Listing of events
 *Positive test case* +
 _Command:_ +
-`listE`  +
+`listE` +
 _Result:_ +
 `Listed all events`
 
-You should see that the application automatically switches from contact list to event list after
-the command listE.
+You should see that the application automatically switches from contact list to event list after the command listE.
 
 
 *Negative test case* +
@@ -149,6 +154,12 @@ To import data from a `.xml` file, we need to use the `import` command
 
 To import timetable from NUSMods website, we need to use the `import --nusmods` command.
 
+
+[NOTE]
+====
+Make sure you have stable Internet connection when you are going to test this command.
+====
+
 *Positive test cases*
 
 . Open your browser, and copy-paste your NUSMods timetable URL +
@@ -157,7 +168,7 @@ It should look like +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]
 
 . Let's display the event listing first +
 _Command:_ +
-`listE`
+`listE` +
 _Result:_ +
 You should see the event listing interface.
 
