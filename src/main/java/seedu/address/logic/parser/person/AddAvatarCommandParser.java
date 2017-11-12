@@ -43,7 +43,7 @@ public class AddAvatarCommandParser implements Parser<AddAvatarCommand> {
             Avatar avatar = new Avatar(matcher.group("url").trim());
             return new AddAvatarCommand(index, avatar);
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAvatarCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ive.getMessage()));
         }
     }
 }

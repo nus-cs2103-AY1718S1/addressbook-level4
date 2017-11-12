@@ -3,7 +3,6 @@ package seedu.address.logic.commands.person;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
-import static seedu.address.logic.commands.CommandTestUtil.AVATAR_VALID_URL;
 import static seedu.address.logic.commands.person.AddAvatarCommand.MESSAGE_ADD_AVATAR_SUCCESS;
 
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.Command;
@@ -28,13 +28,15 @@ import seedu.address.model.person.Avatar;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
 
+//@@author yunpengn
 public class AddAvatarCommandTest {
+    private static final String VALID_PATH = FileUtil.getPath("./src/test/resources/SampleAvatar.jpg");
     private static Avatar validAvatar;
     private static ModelStub model;
 
     @BeforeClass
     public static void setUp() throws Exception {
-        validAvatar = new Avatar(AVATAR_VALID_URL);
+        validAvatar = new Avatar(VALID_PATH);
         model = new AddAvatarModelStub();
     }
 

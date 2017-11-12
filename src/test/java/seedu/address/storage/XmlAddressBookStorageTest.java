@@ -25,6 +25,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.reminder.Reminder;
+import seedu.address.storage.elements.XmlSerializableAddressBook;
 
 public class XmlAddressBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlAddressBookStorageTest/");

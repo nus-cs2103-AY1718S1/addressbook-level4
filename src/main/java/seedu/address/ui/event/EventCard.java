@@ -3,6 +3,7 @@ package seedu.address.ui.event;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -21,13 +22,15 @@ import seedu.address.ui.UiPart;
  */
 public class EventCard extends UiPart<Region> {
     private static final String FXML = "event/EventListCard.fxml";
-    // Keep a list of all persons.
+    private static final DateTimeFormatter formatter =
+            DateTimeFormatter.ofPattern("dd MMM, yyyy HH:mm", Locale.ENGLISH);
+
+    // The event that is displayed in this card.
     public final ReadOnlyEvent event;
 
     private Image greenNotification = new Image("/images/notifications_green.png");
     private Image redNotification = new Image("/images/notifications_red.png");
     private Image orangeNotification = new Image("/images/notifications_orange.png");
-    private Image notification = new Image("/images/notification-512.png");
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -65,17 +68,18 @@ public class EventCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(event.nameProperty()));
         venue.textProperty().bind(Bindings.convert(event.addressProperty()));
         dateTime.textProperty().bind(Bindings.convert(event.timeProperty()));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+
         for (Reminder r : event.getReminders()) {
-            LocalDate dateToCompare = LocalDate.parse(r.getEvent().getTime().toString().substring(0, 8), formatter);
-            LocalDate date = LocalDate.now();
+            LocalDate dateToCompare = LocalDate.parse(r.getEvent().getTime().getValue(), formatter);
+            LocalDate now = LocalDate.now();
             LocalDate twoDaysBefore = dateToCompare.minus(Period.ofDays(2));
             LocalDate oneDayBefore = dateToCompare.minus(Period.ofDays(1));
-            if (date.isEqual(dateToCompare)) {
+
+            if (now.isEqual(dateToCompare)) {
                 notifications.setImage(redNotification);
-            } else if (date.isEqual(twoDaysBefore)) {
+            } else if (now.isEqual(twoDaysBefore)) {
                 notifications.setImage(greenNotification);
-            } else if (date.isEqual(oneDayBefore)) {
+            } else if (now.isEqual(oneDayBefore)) {
                 notifications.setImage(orangeNotification);
             }
         }

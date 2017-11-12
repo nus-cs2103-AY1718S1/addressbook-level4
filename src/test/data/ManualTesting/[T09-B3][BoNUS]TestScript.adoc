@@ -12,6 +12,9 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B3/main
 
+// Workaround for asciidoctor-pdf compatibility issues.
+:keyboard-icon: &#9000;
+
 By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
@@ -43,8 +46,259 @@ for more information.
 
 === Add/view/edit/delete contacts
 
+==== Add avatar to an existing person
+
+To add avatar to a contact, we need to use the `avatar` command.
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Add avatar to the third person in the listing (assume there are at least three contacts) +
+_Command:_ +
+`avatar 3 http://profileengine.com/large/420503790/nus.soc`
+
 === Add/view/edit/delete events
+
+==== Listing of events
+*Positive test case* +
+_Command:_ +
+`listE`  +
+_Result:_ +
+`Listed all events`
+
+You should see that the application automatically switches from contact list to event list after
+the command listE.
+
+
+*Negative test case* +
+_Command:_ +
+`ListE` +
+_Result:_ +
+`Unknown command` +
+_Command:_ +
+`lIsTE` +
+_Result:_ +
+`Unknown command`
+
+Commands are case sensitive.
+
+
+==== Adding of events
+
+To add an event, we need to use addE n/NAME dt/DATE_TIME a/ADDRESS of the event.
+
+1) Adds a new event with Name `CS3201 Project Meeting`, DateTime `17112017 1530`, Address `School of Computing, SR09, NUS`
+
+
+_Command:_ +
+`addE n/CS3201 Project Meeting dt/17112017 15:30 a/School Of Computing, SR09, NUS` +
+_Result:_ +
+`New event added:  Event: CS3201 Project Meeting |  Date/Time: 17 Nov, 2017 15:30 |  Address: School Of Computing, SR09, NUS`
+
+
+2) Adds a new event with Name `CS1231 Project Meeting`, DateTime `19112017 15:30`, Address `School of Computing, DR1, NUS` +
+_Command:_ +
+`addE n/CS1231 Project Meeting dt/19112017 15:30 a/School Of Computing, DR1, NUS` +
+_Result:_ +
+`New event added:  Event: CS1231 Project Meeting |  Date/Time: 19 Nov, 2017 15:30 |  Address: School of Computing, DR1, NUS`
+
+
+
+==== Deleting of Events +
+
+1) Deletes an Event with index 8 on the Event List
+
+_Command:_ +
+`deleteE 8` +
+_Result:_ +
+`Deleted Event:  Event: Project Meeting for CS2101 |  Date/Time: 01 Dec, 2017 09:00 |  Address: SR09, School of Computing`
+
+2) Deletes an Event with index 11 on the Event List
+_Command:_ +
+`deleteE 11` +
+_Result:_ +
+`Deleted Event:  Event: Family Dinner |  Date/Time: 11 Dec, 2017 19:00 |  Address: Home Sweet Home`
+
+
+
+==== Editing of Events
+1) Edits Event from index 7 of Event list with a edited name of Movie Date with Bro
+_Command:_ +
+editE 7 n/Movie Date with Bro +
+_Result:_ +
+`Edited Event:  Event: Movie Date with Bro |  Date/Time: 22 Nov, 2017 22:00 |  Address: Golden Village Yishun` +
+2) Edits Event from index 6 of Event list with an edited date/time of 18112017 15:00 +
+_Command:_ +
+editE 6 dt/18112017 15:00 +
+_Result:_ +
+`Edited Event:  Event: Family Lunch |  Date/Time: 18 Nov, 2017 15:00 |  Address: Sakae Sushi, Causeway Point`
+
+At this point in time, Movie Date with bro should be at index 7 while
+Family Lunch would be at index 5.
 
 === Import/export data
 
+==== Import data from `.xml` format
+
+To import data from a `.xml` file, we need to use the `import` command
+
+==== Import timetable from NUSMods website
+
+To import timetable from NUSMods website, we need to use the `import --nusmods` command.
+
+*Positive test cases*
+
+. Open your browser, and copy-paste your NUSMods timetable URL +
+_Result:_ +
+It should look like +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++.
+
+. Let's display the event listing first +
+_Command:_ +
+`listE`
+_Result:_ +
+You should see the event listing interface.
+
+. Use the import command +
+_Command:_ +
+`import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++` +
+_Result:_ +
+You should see `CS2103T examination` has been added as an event into *BoNUS*.
+
+*Negative test case*
+
+Try to import the same NUSMods timetable into *BoNUS* again +
+_Command:_ +
+`import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++` +
+_Result:_ +
+`0 examinations have been added as events.` +
+`However, some examination were not added since they already exist in the application.`
+
+==== Export data to `.xml` format
+
+To export data to a `.xml` file, we need to use the `export` command
+
+=== Advance setting
+
+==== Add a new property
+
+To add a new property, we need to use the `config --add-property` command.
+
+*Positive test cases*
+
+. Add a new property with the short name of `h` and full name of `hobby` +
+_Command:_ +
+`config --add-property s/h f/hobby` +
+_Result:_ +
+`Added a new property: s/h f/hobby`
+
+. Adds a new property with the short name of `m`, full name of `major` and specify the regular expression constraint. +
+_Command:_ +
+`config --add-property s/m f/major m/Major should only contain letters and it should not be blank r/[{Alpha}]+` +
+_Result:_ +
+`Added a new property: s/m f/major m/Major should only contain letters and it should not be blank r/[{Alpha}]+`
+
+. Set the value of customize property added just now in `AddCommand` +
+_Command:_ +
+`add n/Linda p/89658712 e/linda@example.com a/School of Computing h/Programming` +
+_Result:_ +
+`New person added: Linda Phone: 89658712 Email: linda@example.com Address: School of Computing Tags:` +
+In the meantime, a new person card belonging to Linda should appear in the person listing panel.
+
+. Verify the value of hobby has been set correctly +
+_Command:_ +
+`find Linda` +
+`select 1` +
+_Result:_ +
+Linda's personal details are shown on the right-hand side of the interface. Properties are ordered by their full names and
+each property takes one line. You should see the value of the row `Hobby` is `Programming`.
+
+*Negative test cases*
+
+. If there already exists a property with the same short name +
+_Command:_ +
+`config --add-property s/a f/attitude` +
+_Result:_ +
+`Another property with the same short name already exists in the application.`
+
+. If the regular expression provided is invalid +
+_Command:_ +
+`config --add-property s/w f/weight m/Weight must be a positive integer. r/*asf`
+_Result:_ +
+`The regular expression you provided is invalid.`
+
+==== Change the color of an existing tag
+
+To change the color of an existing tag, we need to use the `config --set-tag-color` command.
+
+*Positive test cases*
+
+. First, let's list all the contacts to see what tags exist now +
+_Command:_ +
+`list` +
+_Result:_ +
+You should see all contacts stored in *BoNUS* are listed. Let's assume there is a tag called `friends`.
+
+. Change the color of `friends` tag to a pre-defined color name +
+_Command:_ +
+`config --set-tag-color friends BurlyWood` +
+_Result:_ +
+You should notice the color of `friends` tag has been changed to BurlyWood.
+
+. Change the color of `friends` tag to a valid RGB value +
+_Command:_ +
+`config --set-tag-color friends #FF6347` +
+_Result:_ +
+You should notice the color of `friends` tag has been changed to a color similar to red (its legal name is tomato).
+
+*Negative test cases*
+
+. If the tag does not exist in *BoNUS* yet +
+_Command:_ +
+`config --set-tag-color somethingNotExists blue` +
+_Result:_ +
+`There is no such tag.`
+
+. If the provided color name is neither a valid color name defined in CSS standard nor a valid RGB value +
+_Command:_ +
+`config --set-tag-color friends someNonExistColor` +
+_Result:_ +
+The background color of `friends` tag becomes transparent. You may want to use a valid name to change it back.
+
 === Miscellaneous
+
+==== View the help window
+
+. Via command-line input +
+_Command:_ +
+`help` +
+_Result:_ +
+The help window should appear and display user guide to you.
+
+. Via F1 +
+_Command:_ +
+{keyboard-icon} Press the `F1` key on your keyboard.
+_Result:_ +
+The help window should appear and display user guide to you.
+
+. Via mouse +
+_Command:_ +
+Click `Help` -> `Help` on the menu bar at the top of the interface. +
+_Result:_ +
+The help window should appear and display user guide to you.
+
+==== View the command input history
+
+Use the history command to view the history of all input commands +
+_Command:_ +
+`history` +
+_Result:_ +
+`Entered commands (from most recent to earliest):` +
+`...` +
+_(All commands will be listed below.)_
+
+==== Undo/redo previous commands
+
+Use `undo` or `redo` to undo/redo the last command entered.

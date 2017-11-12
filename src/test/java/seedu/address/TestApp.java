@@ -18,9 +18,9 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.UserPrefsStorage;
-import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.storage.elements.XmlSerializableAddressBook;
 import seedu.address.testutil.TestUtil;
-import systemtests.ModelHelper;
+import systemtests.util.ModelHelper;
 
 /**
  * This class is meant to override some properties of MainApp so that it will be suited for
@@ -53,6 +53,7 @@ public class TestApp extends MainApp {
         }
 
     }
+
     public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier,
                    Supplier<ReadOnlyAddressBook> initialEventSupplier, String saveFileLocation) {
         super();

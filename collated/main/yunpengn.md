@@ -1,5 +1,5 @@
 # yunpengn
-###### /java/seedu/address/commons/events/model/TagColorChangedEvent.java
+###### \java\seedu\address\commons\events\model\TagColorChangedEvent.java
 ``` java
 /**
  * Indicates the color of some tag(s) has been changed.
@@ -19,7 +19,17 @@ public class TagColorChangedEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/util/JsonUtil.java
+###### \java\seedu\address\commons\util\FileUtil.java
+``` java
+    /**
+     * Checks whether the given file is an image (according to its MIME type).
+     */
+    public static boolean isImage(File file) {
+        String type = TYPE_MAP.getContentType(file);
+        return type.split("/")[0].equals("image");
+    }
+```
+###### \java\seedu\address\commons\util\JsonUtil.java
 ``` java
     /**
      * Read JSON data from a given URL and convert the data to an instance of the given class.
@@ -30,7 +40,67 @@ public class TagColorChangedEvent extends BaseEvent {
         return objectMapper.readValue(url, instanceClass);
     }
 ```
-###### /java/seedu/address/logic/commands/configs/AddPropertyCommand.java
+###### \java\seedu\address\commons\util\UrlUtil.java
+``` java
+/**
+ * Helps with parsing a given URL and obtain GET parameters from it.
+ */
+public class UrlUtil {
+    public static URL parseUrlString(String url) throws MalformedURLException {
+        return new URL(url);
+    }
+
+    /**
+     * Fetches all GET parameters from a given {@link URL} object. It is assumed that there is no GET parameter with
+     * the same key in the {@code url}. If there is, only the last one (among those parameters with the same name)
+     * will be included in the returned {@link Map}. See also {@link #fetchUrlParameterKeys(URL)}.
+     *
+     * @param url is a given {@link URL} object.
+     *
+     * @return a {@link Map} containing all key-value pairs of GET parameters in the given {@code url}.
+     */
+    public static Map<String, String> fetchUrlParameters(URL url) throws UnsupportedEncodingException {
+        String query = urlDecode(url.getQuery());
+
+        if (Strings.isNullOrEmpty(query)) {
+            return Collections.emptyMap();
+        }
+
+        Map<String, String> pairs = new HashMap<>();
+        for (String pair: query.split("&")) {
+            int index = pair.indexOf("=");
+            pairs.put(pair.substring(0, index), pair.substring(index + 1));
+        }
+
+        return pairs;
+    }
+
+    /**
+     * Fetches the keys all GET parameters from a given {@link URL} object. It is assumed that there is no GET parameter
+     * with the same key in the {@code url}. If there is, only the last one (among those parameters with the same name)
+     * will be included in the returned {@link Set}. See also {@link #fetchUrlParameters(URL)}.
+     *
+     * @param url is a given {@link URL} object.
+     *
+     * @return a {@link Set} containing all keys of GET parameters in the given {@code url}.
+     */
+    public static Set<String> fetchUrlParameterKeys(URL url) throws UnsupportedEncodingException {
+        String query = urlDecode(url.getQuery());
+
+        if (Strings.isNullOrEmpty(query)) {
+            return Collections.emptySet();
+        }
+
+        String[] pairs = query.split("&");
+        return Arrays.stream(pairs).map(pair -> pair.substring(0, pair.indexOf("="))).collect(Collectors.toSet());
+    }
+
+    public static String urlDecode(String url) throws UnsupportedEncodingException {
+        return URLDecoder.decode(url, "utf-8");
+    }
+}
+```
+###### \java\seedu\address\logic\commands\configs\AddPropertyCommand.java
 ``` java
 /**
  * Adds a new property to the application.
@@ -39,10 +109,11 @@ public class AddPropertyCommand extends ConfigCommand {
     public static final String MESSAGE_USAGE = "Example: " + COMMAND_WORD + " --add-property "
             + "s/b f/birthday m/Birthday needs to be a valid date format "
             + "r/^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}";
+    public static final String MESSAGE_SUCCESS = "Added a new property: %1$s";
 
     static final String MESSAGE_DUPLICATE_PROPERTY =
             "Another property with the same short name already exists in the application.";
-    static final String MESSAGE_INVALID_REGEX = "The regular expression you provide is invalid.";
+    static final String MESSAGE_INVALID_REGEX = "The regular expression you provided is invalid.";
 
     private final String shortName;
     private final String fullName;
@@ -70,7 +141,7 @@ public class AddPropertyCommand extends ConfigCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/configs/ChangeTagColorCommand.java
+###### \java\seedu\address\logic\commands\configs\ChangeTagColorCommand.java
 ``` java
 /**
  * Changes the color of an existing tag.
@@ -107,7 +178,7 @@ public class ChangeTagColorCommand extends ConfigCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/configs/ConfigCommand.java
+###### \java\seedu\address\logic\commands\configs\ConfigCommand.java
 ``` java
 /**
  * Customizes the configuration of the application.
@@ -156,7 +227,7 @@ public abstract class ConfigCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/imports/ImportCommand.java
+###### \java\seedu\address\logic\commands\imports\ImportCommand.java
 ``` java
 /**
  * Imports data from various format to the application.
@@ -180,7 +251,7 @@ public abstract class ImportCommand extends UndoableCommand {
             + "script file (should end with .bo).";
 
 ```
-###### /java/seedu/address/logic/commands/imports/ImportCommand.java
+###### \java\seedu\address\logic\commands\imports\ImportCommand.java
 ``` java
     /**
      * Different types of sub-commands within {@link ImportCommand}.
@@ -215,7 +286,7 @@ public abstract class ImportCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/imports/ImportNusmodsCommand.java
+###### \java\seedu\address\logic\commands\imports\ImportNusmodsCommand.java
 ``` java
 /**
  * Imports data from the URL of a NUSMods timetable.
@@ -399,7 +470,7 @@ public class ImportNusmodsCommand extends ImportCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/imports/ModuleInfo.java
+###### \java\seedu\address\logic\commands\imports\ModuleInfo.java
 ``` java
 /**
  * A Java class representation of module information from NUSMods JSON API.
@@ -453,7 +524,7 @@ public class ModuleInfo {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/person/AddAvatarCommand.java
+###### \java\seedu\address\logic\commands\person\AddAvatarCommand.java
 ``` java
 /**
  * Adds an {@link Avatar} to the selected person.
@@ -464,8 +535,8 @@ public class AddAvatarCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds avatar to the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer) IMAGE_URL\n"
-            + "Example: " + COMMAND_WORD + " 1 https://avatars0.githubusercontent.com/u/1342004";
+            + "Parameters: INDEX (must be a positive integer) IMAGE_PATH\n"
+            + "Example: " + COMMAND_WORD + " 1 something.png";
 
     public static final String MESSAGE_ADD_AVATAR_SUCCESS = "Added avatar to person: %1$s";
 
@@ -500,7 +571,7 @@ public class AddAvatarCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ConfigCommandParser.java
+###### \java\seedu\address\logic\parser\ConfigCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ConfigCommand object
@@ -645,7 +716,7 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ImportCommandParser.java
+###### \java\seedu\address\logic\parser\ImportCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new sub-command of {@link ImportCommand} object.
@@ -715,7 +786,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 
 ```
-###### /java/seedu/address/logic/parser/ImportCommandParser.java
+###### \java\seedu\address\logic\parser\ImportCommandParser.java
 ``` java
     private ImportCommand checkScriptImport(String path) {
         return null;
@@ -744,7 +815,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/person/AddAvatarCommandParser.java
+###### \java\seedu\address\logic\parser\person\AddAvatarCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new {@link AddAvatarCommand} object.
@@ -774,12 +845,12 @@ public class AddAvatarCommandParser implements Parser<AddAvatarCommand> {
             Avatar avatar = new Avatar(matcher.group("url").trim());
             return new AddAvatarCommand(index, avatar);
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAvatarCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ive.getMessage()));
         }
     }
 }
 ```
-###### /java/seedu/address/logic/parser/person/AddCommandParser.java
+###### \java\seedu\address\logic\parser\person\AddCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -810,7 +881,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/util/ArgumentMultimap.java
+###### \java\seedu\address\logic\parser\util\ArgumentMultimap.java
 ``` java
     /**
      * Returns the mapping of {@code Prefix} and their corresponding last values for all {@code prefix}es (only if
@@ -832,7 +903,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         return values;
     }
 ```
-###### /java/seedu/address/logic/parser/util/CliSyntax.java
+###### \java\seedu\address\logic\parser\util\CliSyntax.java
 ``` java
     /* Prefix definitions for adding a new customize property. */
     public static final Prefix PREFIX_SHORT_NAME = new Prefix("s/");
@@ -840,7 +911,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public static final Prefix PREFIX_MESSAGE = new Prefix("m/");
     public static final Prefix PREFIX_REGEX = new Prefix("r/");
 ```
-###### /java/seedu/address/logic/parser/util/NaturalLanguageUtil.java
+###### \java\seedu\address\logic\parser\util\NaturalLanguageUtil.java
 ``` java
 /**
  * Utilizes the Natty library to parse datetime representation in human natural language.
@@ -863,7 +934,7 @@ public class NaturalLanguageUtil {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/util/ParserUtil.java
+###### \java\seedu\address\logic\parser\util\ParserUtil.java
 ``` java
     /**
      * Parses all properties in the given {@code HashMap}.
@@ -882,19 +953,19 @@ public class NaturalLanguageUtil {
         return properties;
     }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Adds a new customize property */
     void addProperty(String shortName, String fullName, String message, String regex)
             throws DuplicatePropertyException, PatternSyntaxException;
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Changes the color of an existing tag (through TagColorManager) */
     void setTagColor(Tag tag, String color);
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     //=========== Model support for property component =============================================================
 
@@ -911,7 +982,7 @@ public class NaturalLanguageUtil {
         indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) {
@@ -920,7 +991,7 @@ public class NaturalLanguageUtil {
         indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * Changes the displayed color of an existing tag (through {@link TagColorManager}).
@@ -931,7 +1002,7 @@ public class NaturalLanguageUtil {
         raise(new TagColorChangedEvent(tag, color));
     }
 ```
-###### /java/seedu/address/model/person/Avatar.java
+###### \java\seedu\address\model\person\Avatar.java
 ``` java
 /**
  * Represents the {@link Avatar} image of each {@link Person}. This is a one-to-one relationship, meaning that each
@@ -942,17 +1013,27 @@ public class NaturalLanguageUtil {
  * done by separate methods rather than a single regular expression (the complexity is not at the same level).
  */
 public class Avatar {
-    private static final String INVALID_URL_MESSAGE = "The provided URL is invalid.";
-    private static final String IMG_URL_PATTERN = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}"
-            + "\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)";
+    public static final String INVALID_PATH_MESSAGE = "The provided image path is invalid.";
+    public static final String IMAGE_NOT_EXISTS = "The provided image path does not exist.";
+    public static final String FILE_NOT_IMAGE = "The provided file exists, but it is not an image.";
 
-    private String url;
+    private String path;
 
-    public Avatar(String url) throws IllegalValueException {
-        if (!isValidImageUrl(url)) {
-            throw new IllegalValueException(INVALID_URL_MESSAGE);
+    public Avatar(String path) throws IllegalValueException {
+        requireNonNull(path);
+        if (!isValidAvatarPath(path)) {
+            throw new IllegalValueException(INVALID_PATH_MESSAGE);
         }
-        this.url = url;
+
+        File file = new File(path);
+        if (!FileUtil.isFileExists(file)) {
+            throw new IllegalValueException(IMAGE_NOT_EXISTS);
+        }
+        if (!FileUtil.isImage(file)) {
+            throw new IllegalValueException(FILE_NOT_IMAGE);
+        }
+
+        this.path = file.toURI().toString();
     }
 
     /**
@@ -965,36 +1046,29 @@ public class Avatar {
                 && !FileUtil.hasInvalidNameSeparators(path);
     }
 
-    /**
-     * Checks whether a given string is a valid URL and it points to an image.
-     */
-    private boolean isValidImageUrl(String url) {
-        return url.matches(IMG_URL_PATTERN);
-    }
-
-    public String getUrl() {
-        return url;
+    public String getPath() {
+        return path;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Avatar // instanceof handles nulls
-                && this.url.equals(((Avatar) other).url));
+                && this.path.equals(((Avatar) other).path));
     }
 
     @Override
     public int hashCode() {
-        return url.hashCode();
+        return path.hashCode();
     }
 
     @Override
     public String toString() {
-        return "Avatar from " + url;
+        return "Avatar from " + path;
     }
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     @Override
     public ObjectProperty<Avatar> avatarProperty() {
@@ -1050,7 +1124,7 @@ public class Avatar {
         properties.get().addOrUpdate(toSet);
     }
 ```
-###### /java/seedu/address/model/property/Address.java
+###### \java\seedu\address\model\property\Address.java
 ``` java
 /**
  * Represents a Person's address in the address book.
@@ -1071,8 +1145,24 @@ public class Address extends Property {
     }
 }
 ```
-###### /java/seedu/address/model/property/DateTime.java
+###### \java\seedu\address\model\property\DateTime.java
 ``` java
+    // To check whether the raw input is in standard format.
+    private static final String INPUT_STANDARD_FORMAT = "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}"
+            + "(\\s((0[1-9]|1[0-9]|2[0-3]):([0-5][0-9]))?$)";
+    // The formatter corresponding to raw input from user.
+    private static final SimpleDateFormat inputFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
+    // The formatter corresponding to the format used in UI and storage.
+    private static final SimpleDateFormat outputFormatter = new SimpleDateFormat("dd MMM, yyyy HH:mm", Locale.ENGLISH);
+
+    public DateTime(String value) throws IllegalValueException, PropertyNotFoundException {
+        super(PROPERTY_SHORT_NAME, prepareDateTimeValue(value));
+    }
+
+    public DateTime(Date value) throws IllegalValueException, PropertyNotFoundException {
+        super(PROPERTY_SHORT_NAME, formatDateTime(value));
+    }
+
     /**
      * Returns true if a given string is a valid phone number.
      */
@@ -1088,10 +1178,14 @@ public class Address extends Property {
     /**
      * Prepares the value by checking whether the input can be interpreted by the natural language parser.
      */
-    public static String prepareDateTimeValue(String value) throws IllegalValueException, PropertyNotFoundException {
+    private static String prepareDateTimeValue(String value) throws IllegalValueException, PropertyNotFoundException {
         // Returns the original value directly if it is already in standard format.
-        if (isInStandardFormat(value)) {
-            return value;
+        if (value.matches(INPUT_STANDARD_FORMAT)) {
+            try {
+                return formatDateTime(parseDateTime(value));
+            } catch (ParseException e) {
+                System.err.println("This should never happen. Format check has been performed.");
+            }
         }
 
         Optional<Date> dateObject = NaturalLanguageUtil.parseSingleDateTime(value);
@@ -1102,23 +1196,19 @@ public class Address extends Property {
         }
     }
 
+    public static Date parseDateTime(String date) throws ParseException {
+        return inputFormatter.parse(date);
+    }
+
     /**
-     * Checks whether a string representation of datetime is in standard format.
+     * Converts the given {@link Date} object into the format used in UI and storage.
      */
-    public static boolean isInStandardFormat(String value) {
-        return value.matches(STANDARD_FORMAT);
-    }
-
-    public static Date parseDateTime(String value) throws ParseException {
-        return dateFormatter.parse(value);
-    }
-
-    public static String formatDateTime(Date date) {
-        return dateFormatter.format(date);
+    private static String formatDateTime(Date date) {
+        return outputFormatter.format(date);
     }
 }
 ```
-###### /java/seedu/address/model/property/Email.java
+###### \java\seedu\address\model\property\Email.java
 ``` java
 /**
  * Represents a Person's email in the address book.
@@ -1139,7 +1229,7 @@ public class Email extends Property {
     }
 }
 ```
-###### /java/seedu/address/model/property/exceptions/DuplicatePropertyException.java
+###### \java\seedu\address\model\property\exceptions\DuplicatePropertyException.java
 ``` java
 /**
  * Signals that the property with the same short name already exists.
@@ -1150,7 +1240,7 @@ public class DuplicatePropertyException extends Exception {
     }
 }
 ```
-###### /java/seedu/address/model/property/exceptions/PropertyNotFoundException.java
+###### \java\seedu\address\model\property\exceptions\PropertyNotFoundException.java
 ``` java
 /**
  * Signals that the required property has not been defined yet.
@@ -1165,7 +1255,7 @@ public class PropertyNotFoundException extends Exception {
     }
 }
 ```
-###### /java/seedu/address/model/property/Name.java
+###### \java\seedu\address\model\property\Name.java
 ``` java
 /**
  * Represents a Person's name in the address book.
@@ -1186,7 +1276,7 @@ public class Name extends Property {
     }
 }
 ```
-###### /java/seedu/address/model/property/Phone.java
+###### \java\seedu\address\model\property\Phone.java
 ``` java
 /**
  * Represents a Person's phone number in the address book.
@@ -1207,7 +1297,7 @@ public class Phone extends Property {
     }
 }
 ```
-###### /java/seedu/address/model/property/Property.java
+###### \java\seedu\address\model\property\Property.java
 ``` java
 /**
  * A generic class that represents a property of a person. All properties of a person (including name, email, phone
@@ -1297,7 +1387,7 @@ public class Property {
     }
 }
 ```
-###### /java/seedu/address/model/property/PropertyManager.java
+###### \java\seedu\address\model\property\PropertyManager.java
 ``` java
 /**
  * Manages the different properties (both pre-loaded ones and customize ones) of all persons stored in the
@@ -1434,7 +1524,7 @@ public class PropertyManager {
     }
 }
 ```
-###### /java/seedu/address/model/property/UniquePropertyMap.java
+###### \java\seedu\address\model\property\UniquePropertyMap.java
 ``` java
 /**
  * A HashMap of properties that enforces no nulls and uniqueness between its elements.
@@ -1616,7 +1706,7 @@ public class UniquePropertyMap implements Iterable<Property> {
     }
 }
 ```
-###### /java/seedu/address/model/tag/TagColorManager.java
+###### \java\seedu\address\model\tag\TagColorManager.java
 ``` java
 /**
  * Manages the displayed color of all tags.
@@ -1674,68 +1764,146 @@ public class TagColorManager {
     }
 }
 ```
-###### /java/seedu/address/model/util/SampleDataUtil.java
+###### \java\seedu\address\model\util\SampleDataUtil.java
 ``` java
-
-    public static ArrayList<Event> getSampleEvents() {
+/**
+ * Contains utility methods for populating {@code AddressBook} with sample data.
+ */
+public class SampleDataUtil {
+    public static Person[] getSamplePersons() {
         try {
-            ArrayList<Event> events = new ArrayList<>();
-            String reminderMsg = "You have an event!";
-
-            Event event1 = new Event(new Name("Volleyball Practice"), new DateTime("19102017 08:30"),
-                        new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>());
-            event1.addReminder(new Reminder(event1, reminderMsg));
-            Event event2 = new Event(new Name("CS2103T Lecture"), new DateTime("20102017 14:00"),
-                        new Address("iCube Auditorium, NUS"), new ArrayList<>());
-            event2.addReminder(new Reminder(event2, reminderMsg));
-            Event event3 = new Event(new Name("Project Meeting"), new DateTime("20102017 14:00"),
-                        new Address("iCube Auditorium, NUS"), new ArrayList<>());
-            event3.addReminder(new Reminder(event3, reminderMsg));
-            Event event4 = new Event(new Name("Family Lunch"), new DateTime("20112017 13:00"),
-                        new Address("Sakae Sushi, Causeway Point"), new ArrayList<>());
-            event4.addReminder(new Reminder(event4, reminderMsg));
-            Event event5 = new Event(new Name("Movie date"), new DateTime("22112017 22:00"),
-                        new Address("Golden Village Yishun"), new ArrayList<>());
-            event5.addReminder(new Reminder(event5, reminderMsg));
-            Event event6 = new Event(new Name("Consultation for EE2020"), new DateTime("23112017 16:00"),
-                        new Address("E3-06-14, Faculty of Engineering, NUS "), new ArrayList<>());
-            event6.addReminder(new Reminder(event6, reminderMsg));
-            Event event7 = new Event(new Name("Project Meeting for CS2101"), new DateTime("31112017 09:00"),
-                        new Address("SR09, School of Computing"), new ArrayList<>());
-            event7.addReminder(new Reminder(event7, reminderMsg));
-            Event event8 = new Event(new Name("Dental Appointment"), new DateTime("02122017 14:00"),
-                        new Address("National Dental Centre"), new ArrayList<>());
-            event8.addReminder(new Reminder(event8, reminderMsg));
-            Event event9 = new Event(new Name("Volleyball Practice"), new DateTime("08122017 18:00"),
-                        new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>());
-            event9.addReminder(new Reminder(event9, reminderMsg));
-            Event event10 = new Event(new Name("Lunch with OG mates"), new DateTime("09122017 14:00"),
-                        new Address("The Deck, FASS, NUS"), new ArrayList<>());
-            event10.addReminder(new Reminder(event10, reminderMsg));
-            Event event11 = new Event(new Name("Family Dinner"), new DateTime("11122017 19:00"),
-                        new Address("Home Sweet Home"), new ArrayList<>());
-            event11.addReminder(new Reminder(event11, reminderMsg));
-
-            events.add(event1);
-            events.add(event2);
-            events.add(event3);
-            events.add(event4);
-            events.add(event5);
-            events.add(event6);
-            events.add(event7);
-            events.add(event8);
-            events.add(event9);
-            events.add(event10);
-            events.add(event11);
-            return events;
-
-
+            return new Person[] {
+                new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
+                        new Address("Blk 30 Geylang Street 29, #06-40"),
+                        getTagSet("friends")),
+                new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
+                        new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
+                        getTagSet("colleagues", "friends")),
+                new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
+                        new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
+                        getTagSet("neighbours")),
+                new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
+                        new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
+                        getTagSet("family")),
+                new Person(new Name("Francina Schepers"), new Phone("62667887"), new Email("francina@example.com"),
+                        new Address("Blk 477 Jurong East Street 28, #01-33"),
+                        getTagSet("family")),
+                new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
+                        new Address("Blk 47 Tampines Street 20, #17-35"),
+                        getTagSet("classmates")),
+                new Person(new Name("Lucas Smith"), new Phone("94572019"), new Email("lucas@example.com"),
+                        new Address("Blk 122 Aljunied Lane, #04-26"),
+                        getTagSet("classmates")),
+                new Person(new Name("Rhea Vallo"), new Phone("65028849"), new Email("vallor@example.com"),
+                        new Address("Blk 12 Lorong 14 Marine Parade, #05-25"),
+                        getTagSet("family")),
+                new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
+                        new Address("Blk 45 Aljunied Street 85, #11-31"),
+                        getTagSet("colleagues")),
+                new Person(new Name("Zachary Tang"), new Phone("91676489"), new Email("zachtang@example.com"),
+                        new Address("Blk 43 Marine Crescent, #24-02"),
+                        getTagSet("relatives"))
+            };
         } catch (IllegalValueException | PropertyNotFoundException e) {
             throw new AssertionError("sample data cannot be invalid", e);
         }
     }
+
+    public static ArrayList<ReadOnlyEvent> getSampleEvents() {
+        try {
+            ArrayList<ReadOnlyEvent> events = new ArrayList<>();
+            ReadOnlyEvent toAdd;
+            String reminderMessage = "You have an event!";
+
+            toAdd = new Event(new Name("Volleyball Practice"), new DateTime("19102017 08:30"),
+                    new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("CS2103T Lecture"), new DateTime("20102017 14:00"),
+                    new Address("iCube Auditorium, NUS"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Project Meeting"), new DateTime("20102017 14:00"),
+                    new Address("iCube Auditorium, NUS"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Family Lunch"), new DateTime("20112017 13:00"),
+                    new Address("Sakae Sushi, Causeway Point"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Movie date"), new DateTime("22112017 22:00"),
+                    new Address("Golden Village Yishun"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Consultation for EE2020"), new DateTime("23112017 16:00"),
+                    new Address("E3-06-14, Faculty of Engineering, NUS "), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Project Meeting for CS2101"), new DateTime("31112017 09:00"),
+                    new Address("SR09, School of Computing"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Dental Appointment"), new DateTime("02122017 14:00"),
+                    new Address("National Dental Centre"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Volleyball Practice"), new DateTime("08122017 18:00"),
+                    new Address("OCBC ARENA Hall 3, #01-111"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Lunch with OG mates"), new DateTime("09122017 14:00"),
+                    new Address("The Deck, FASS, NUS"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+            toAdd = new Event(new Name("Family Dinner"), new DateTime("11122017 19:00"),
+                    new Address("Home Sweet Home"), new ArrayList<>());
+            toAdd.addReminder(new Reminder(toAdd, reminderMessage));
+            events.add(toAdd);
+
+            return events;
+        } catch (IllegalValueException | PropertyNotFoundException e) {
+            throw new AssertionError("sample data cannot be invalid", e);
+        }
+    }
+
+    public static ReadOnlyAddressBook getSampleAddressBook() {
+        try {
+            AddressBook sampleAb = new AddressBook();
+
+            // Initialize the PropertyManager by adding all the preLoaded properties.
+            PropertyManager.initializePropertyManager();
+
+            // Add sample contacts.
+            for (Person samplePerson : getSamplePersons()) {
+                sampleAb.addPerson(samplePerson);
+            }
+
+            // Add sample events.
+            for (ReadOnlyEvent sampleEvent : getSampleEvents()) {
+                sampleAb.addEvent(sampleEvent);
+            }
+
+            return sampleAb;
+        } catch (DuplicatePersonException | DuplicateEventException e) {
+            throw new AssertionError("sample data cannot contain duplicate persons/events", e);
+        }
+    }
+
+    /**
+     * Returns a tag set containing the list of strings given.
+     */
+    public static Set<Tag> getTagSet(String... strings) throws IllegalValueException {
+        HashSet<Tag> tags = new HashSet<>();
+        for (String s : strings) {
+            tags.add(new Tag(s));
+        }
+
+        return tags;
+    }
+
+}
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\storage\elements\XmlAdaptedPerson.java
 ``` java
 /**
  * JAXB-friendly version of the Person.
@@ -1757,7 +1925,7 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson() {}
 
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\storage\elements\XmlAdaptedPerson.java
 ``` java
     /**
      * Converts a given Person into this class for JAXB use.
@@ -1766,7 +1934,7 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
         if (source.getAvatar() != null) {
-            avatar = source.getAvatar().getUrl();
+            avatar = source.getAvatar().getPath();
         }
 
         properties = new ArrayList<>();
@@ -1808,7 +1976,7 @@ public class XmlAdaptedPerson {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedProperty.java
+###### \java\seedu\address\storage\elements\XmlAdaptedProperty.java
 ``` java
 /**
  * JAXB-friendly adapted version of the {@link Property}, stored within each person.
@@ -1847,7 +2015,7 @@ public class XmlAdaptedProperty {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedPropertyInfo.java
+###### \java\seedu\address\storage\elements\XmlAdaptedPropertyInfo.java
 ``` java
 /**
  * JAXB-friendly adapted version of the {@link Property}, stores the general information of each property.
@@ -1880,7 +2048,7 @@ public class XmlAdaptedPropertyInfo {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedPropertyManager.java
+###### \java\seedu\address\storage\elements\XmlAdaptedPropertyManager.java
 ``` java
 /**
  * JAXB-friendly adapted version of the {@link PropertyManager}.
@@ -1915,7 +2083,7 @@ public class XmlAdaptedPropertyManager {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\elements\XmlSerializableAddressBook.java
 ``` java
     /**
      * Initialize the {@link PropertyManager} by clearing all existing properties and load information about new
@@ -1926,7 +2094,7 @@ public class XmlAdaptedPropertyManager {
         properties.initializeProperties();
     }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     /**
      * Take note of the following two methods, which overload each other. The one without parameter is used as the
@@ -1972,7 +2140,7 @@ public class XmlAdaptedPropertyManager {
         dataDetailsPanelPlaceholder.getChildren().add(new PersonDetailsPanel(person).getRoot());
     }
 ```
-###### /java/seedu/address/ui/person/PersonCard.java
+###### \java\seedu\address\ui\person\PersonCard.java
 ``` java
     /**
      * Initializes all the tags of a person displayed in different random colors.
@@ -1997,7 +2165,7 @@ public class XmlAdaptedPropertyManager {
         initTags();
     }
 ```
-###### /java/seedu/address/ui/person/PersonCard.java
+###### \java\seedu\address\ui\person\PersonCard.java
 ``` java
 
     @Override
@@ -2019,7 +2187,66 @@ public class XmlAdaptedPropertyManager {
     }
 }
 ```
-###### /java/seedu/address/ui/PropertyLabel.java
+###### \java\seedu\address\ui\person\PersonDetailsPanel.java
+``` java
+/**
+ * The panel on the right side of {@link PersonListPanel}. Used to show the details (including photo and all
+ * properties) of a specific person (selected on the {@link PersonListPanel}).
+ */
+public class PersonDetailsPanel extends UiPart<Region> {
+    private static final String FXML = "person/PersonDetailsPanel.fxml";
+
+    private ReadOnlyPerson person;
+
+    @FXML
+    private Label name;
+    @FXML
+    private ImageView avatar;
+    @FXML
+    private ListView<Label> propertyListKeys;
+    @FXML
+    private ListView<Label> propertyListValues;
+
+    public PersonDetailsPanel(ReadOnlyPerson person) {
+        super(FXML);
+        this.person = person;
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        person.avatarProperty().addListener((observable, oldValue, newValue) -> setAvatar());
+        setAvatar();
+        person.properties().addListener((observable, oldValue, newValue) -> bindProperties());
+        bindProperties();
+    }
+
+    /**
+     * Binds all properties of this person to a {@link ListView} of key-value pairs.
+     */
+    private void bindProperties() {
+        List<Label> keys = new ArrayList<>();
+        List<Label> values = new ArrayList<>();
+
+        person.getSortedProperties().forEach(property -> {
+            Label newPropertyKey = new PropertyLabel(property.getFullName() + ":", "details-property-key");
+            Label newPropertyValue = new PropertyLabel(property.getValue(), "details-property-value");
+
+            keys.add(newPropertyKey);
+            values.add(newPropertyValue);
+        });
+
+        propertyListKeys.setItems(FXCollections.observableList(keys));
+        propertyListValues.setItems(FXCollections.observableList(values));
+    }
+
+    /**
+     * Displays the avatar of the person if the {@code avatar} has been set before.
+     */
+    private void setAvatar() {
+        if (person.getAvatar() != null) {
+            Platform.runLater(() -> avatar.setImage(new Image(person.getAvatar().getPath(), 200, 200, false, true)));
+        }
+    }
+}
+```
+###### \java\seedu\address\ui\PropertyLabel.java
 ``` java
 /**
  * A customize JavaFX {@link Label} class used to display the key-value pairs of all properties.
@@ -2031,7 +2258,35 @@ public class PropertyLabel extends Label {
     }
 }
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\css\Extensions.css
+``` css
+.sidebar-button {
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+
+.details-name-huge-label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 40px;
+    -fx-text-fill: #fffde7;
+}
+
+.details-property-key {
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
+}
+
+.details-property-value {
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
+}
+```
+###### \resources\view\MainWindow.fxml
 ``` fxml
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" minWidth="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
       <VBox fx:id="sideButtonBar" alignment="CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0">
@@ -2071,7 +2326,7 @@ public class PropertyLabel extends Label {
     </StackPane>
   </SplitPane>
 ```
-###### /resources/view/person/PersonDetailsPanel.fxml
+###### \resources\view\person\PersonDetailsPanel.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>

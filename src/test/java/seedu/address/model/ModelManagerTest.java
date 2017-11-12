@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalEvents.EVENT1;
+import static seedu.address.testutil.TypicalEvents.EVENT2;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -28,7 +29,6 @@ import seedu.address.model.reminder.Reminder;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagColorManager;
 import seedu.address.testutil.AddressBookBuilder;
-import seedu.address.testutil.TypicalEvents;
 import seedu.address.testutil.TypicalPersons;
 
 public class ModelManagerTest {
@@ -96,13 +96,16 @@ public class ModelManagerTest {
     public void sortEventList_successfullySortEvent() throws Exception {
         AddressBook addressBook = getTypicalAddressBook();
         UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+
         ModelManager modelManager1 = new ModelManager(addressBook, userPrefs);
-        modelManager.addEvent(TypicalEvents.EVENT2);
-        modelManager.addEvent(EVENT1);
+        modelManager1.addEvent(EVENT2);
         modelManager1.addEvent(EVENT1);
-        modelManager1.addEvent(TypicalEvents.EVENT2);
-        assertEquals(modelManager, modelManager1);
+
+        ModelManager modelManager2 = new ModelManager(addressBook, userPrefs);
+        modelManager2.addEvent(EVENT1);
+        modelManager2.addEvent(EVENT2);
+
+        assertEquals(modelManager1, modelManager2);
     }
 
     @Test
@@ -136,7 +139,7 @@ public class ModelManagerTest {
         ObservableList<ReadOnlyEvent> events = modelManager.getAddressBook().getEventList();
         int originalEventListSize = events.size();
         modelManager.addEvent(EVENT1);
-        modelManager.addEvent(TypicalEvents.EVENT2);
+        modelManager.addEvent(EVENT2);
         modelManager.deleteEvent(events.get(1));
         int newEventListSize = modelManager.getAddressBook().getEventList().size();
         assertEquals(1, newEventListSize - originalEventListSize);

@@ -16,6 +16,7 @@ import seedu.address.commons.exceptions.InvalidNameException;
 import seedu.address.commons.exceptions.InvalidNameSeparatorException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.storage.elements.XmlSerializableAddressBook;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.

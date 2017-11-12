@@ -20,6 +20,7 @@ import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.FindCommand;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
+import systemtests.util.ModelHelper;
 
 public class FindCommandSystemTest extends AddressBookSystemTest {
 

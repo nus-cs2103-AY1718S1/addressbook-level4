@@ -49,6 +49,7 @@ public class CommandTestUtil {
     public static final String VALID_DATE_EVENT2 = "25022018 08:45";
     public static final String VALID_NATURAL_DATE_EVENT1 = "25 Dec 2017 08:30";
     public static final String VALID_NATURAL_DATE_EVENT2 = "Feb 25th 2018 08:45am";
+    public static final String VALID_DISPLAY_DATE_EVENT1 = "25 Dec, 2017 08:30";
     public static final String VALID_VENUE_EVENT1 = "Mels crib";
     public static final String VALID_VENUE_EVENT2 = "Bobs crib";
 
@@ -114,8 +115,6 @@ public class CommandTestUtil {
     public static final String NUSMODS_INVALID_IMPORT = "--nusmods " + NUSMODS_INVALID_URL;
     public static final String NOT_FROM_NUSMODS_IMPORT = "--nusmods " + VALID_URL;
     public static final String VALID_EXPORT_PATH = "something.xml";
-
-    public static final String AVATAR_VALID_URL = "https://avatars0.githubusercontent.com/u/134200";
 
     static {
         PropertyManager.initializePropertyManager();
