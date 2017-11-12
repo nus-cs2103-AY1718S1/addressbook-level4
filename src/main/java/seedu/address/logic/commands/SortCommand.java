@@ -30,6 +30,7 @@ public class SortCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts persons either in ascending or descending order (ascending by default)"
             + " according to prefix specified (name by default)\n"
+            + " prefix including n/, a/, e/, p/"
             + "Parameters: "
             + "[PREFIX/[r]]\n"
             + "Example: " + COMMAND_WORD + " "

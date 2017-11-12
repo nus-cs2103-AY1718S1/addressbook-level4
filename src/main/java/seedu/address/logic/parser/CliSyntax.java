@@ -15,5 +15,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_FAVOURITE = new Prefix("f/");
     public static final Prefix PREFIX_FILEPATH = new Prefix("fp/");
     public static final Prefix PREFIX_CALENDAR_ID = new Prefix("i/");
+    public static final Prefix PREFIX_FACEBOOK = new Prefix("fb/");
+    public static final Prefix PREFIX_TWITTER = new Prefix("tw/");
+    public static final Prefix PREFIX_INSTAGRAM = new Prefix("in/");
+    public static final Prefix PREFIX_GOOGLEPLUS = new Prefix("gp/");
 
 }

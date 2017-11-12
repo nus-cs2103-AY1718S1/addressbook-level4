@@ -10,6 +10,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddFavouriteCommand;
 import seedu.address.logic.commands.AddPersonToGroupCommand;
 import seedu.address.logic.commands.AddScheduleCommand;
+import seedu.address.logic.commands.AddSocialMediaCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CreateGroupCommand;
@@ -135,6 +136,10 @@ public class AddressBookParser {
         case AddScheduleCommand.COMMAND_WORD:
         case AddScheduleCommand.COMMAND_ALT:
             return new AddScheduleCommandParser().parse(arguments);
+
+        case AddSocialMediaCommand.COMMAND_WORD:
+        case AddSocialMediaCommand.COMMAND_ALT:
+            return new AddSocialMediaCommandParser().parse(arguments);
 
         case ResetPictureCommand.COMMAND_WORD:
         case ResetPictureCommand.COMMAND_ALT:

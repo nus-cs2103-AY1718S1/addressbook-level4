@@ -51,7 +51,7 @@
             <StackPane fx:id="groupListPanelPlaceholder" VBox.vgrow="ALWAYS" styleClass="individualBorderInSplitPane"/>
      </VBox>
 
-   <StackPane fx:id="browserPanel" VBox.vgrow="ALWAYS">
+   <StackPane fx:id="mainContactPanel" VBox.vgrow="ALWAYS">
        <padding>
            <Insets bottom="10" left="10" right="10" top="10" />
        </padding>
