@@ -362,7 +362,7 @@ This command changed to current theme to Twilight
 // end::changetheme[]
 
 // tag::map[]
-=== Find the location of a person using Google Map: `m-show` _[Since v1.3]_
+=== Finding the location of a person using Google Map: `m-show` _[Since v1.3]_
 
 You might find it not very convenient to only show the contact's location as text. Therefore, iConnect allows you to see the location! By using this command, without typing in the person's address, you can easily find the location of your friend in Google Map, which will show in the centre browser.
 
@@ -380,7 +380,7 @@ Examples:
 * `m-show 1` +
 Shows the address of person with index 1 on the google map
 
-=== Find the route from user's current location to the person seleted: `m-route` _[Since v1.3]_
+=== Finding the route from user's current location to the person seleted: `m-route` _[Since v1.3]_
 
 Not only can iConnect show the location, it can also show you how to go there! Simply by adding your current location, it will show you the shortest path from your current address to your friend's home in the Google map.
 
