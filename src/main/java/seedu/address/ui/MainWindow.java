@@ -33,7 +33,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/tourist_book_128.png";
 
     private static final String FXML = "MainWindow.fxml";
 
