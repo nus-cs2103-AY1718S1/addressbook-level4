@@ -63,14 +63,6 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     /**
-     * @see Logic#setActiveList(boolean)
-     */
-    @Override
-    public void setActiveList(boolean isCompleted) {
-        model.setActiveList(isCompleted);
-    }
-
-    /**
      * @see Logic#getUncompletedParcelList()
      */
     @Override

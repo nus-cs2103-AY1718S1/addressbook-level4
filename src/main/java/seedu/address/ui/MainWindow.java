@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import static seedu.address.ui.ParcelListPanel.INDEX_SECOND_TAB;
-
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -22,7 +20,6 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.commons.events.ui.ParcelPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowParcelListEvent;
@@ -245,27 +242,13 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         splitPanePlaceholder.setDividerPositions(0.6);
     }
-    //@@author
 
-    //@@author kennard123661
-
-    /**
-     * Sets the active list of the model based on the current selected tab index in the Ui of Ark.
-     */
-    @FXML @Subscribe
-    private void handleTabEvent(JumpToTabRequestEvent event) {
-        logic.setActiveList(event.targetIndex == INDEX_SECOND_TAB.getZeroBased());
-        logger.info("Active list now set to " + (event.targetIndex == INDEX_SECOND_TAB.getZeroBased()
-                ? "completed parcels list." : "uncompleted parcels list."));
-    }
-    //@@author
-
-    //@@author vicisapotato
     @FXML @Subscribe
     private void handleShowParcelListEvent(ShowParcelListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         splitPanePlaceholder.setDividerPositions(0.0);
     }
+
     //@@author
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {

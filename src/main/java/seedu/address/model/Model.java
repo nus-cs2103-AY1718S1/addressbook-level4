@@ -3,8 +3,11 @@ package seedu.address.model;
 import java.util.List;
 import java.util.function.Predicate;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.Status;
@@ -24,14 +27,18 @@ public interface Model {
      */
     Predicate<ReadOnlyParcel> PREDICATE_SHOW_ALL_PARCELS = unused -> true;
 
+    //@@author kennard123661
     /**
      * Sets the active list in the model.
      *
-     * @param isCompleted if true, the active list will be set to the list of {@link Parcel}s with {@link Status} that
-     *                    is COMPLETED. Otherwise, it will be set the list of parcels with {@link Status} that is not
-     *                    COMPLETED.
+     * @param event the {@link JumpToTabRequestEvent} contains the index of the selected Tab. The select tab will
+     *              provide information on the active list to select. If the value of
+     *              {@link JumpToTabRequestEvent#targetIndex} is zero, then the uncompleted parcel list is set as the
+     *              new active list. Otherwise, the completed parcel list is set as the active list
+     *              {@link ModelManager#activeParcels}
      */
-    void setActiveList(boolean isCompleted);
+    @Subscribe
+    void setActiveList(JumpToTabRequestEvent event);
     //@@author
 
     /**
