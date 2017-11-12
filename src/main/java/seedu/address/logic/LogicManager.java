@@ -11,7 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.parcel.ReadOnlyParcel;
 
 /**
  * The main LogicManager of the app.
@@ -45,9 +45,31 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    //@@author kennard123661
     @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return model.getFilteredPersonList();
+    public ObservableList<ReadOnlyParcel> getFilteredParcelList() {
+        return model.getFilteredParcelList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyParcel> getDeliveredParcelList() {
+        return model.getFilteredDeliveredParcelList();
+    }
+
+    @Override
+    public void setActiveList(boolean isDelivered) {
+        model.setActiveList(isDelivered);
+    }
+
+    @Override
+    public ObservableList<ReadOnlyParcel> getUndeliveredParcelList() {
+        return model.getFilteredUndeliveredParcelList();
+    }
+    //@@ author
+
+    @Override
+    public ObservableList<ReadOnlyParcel> getActiveList() {
+        return model.getActiveList();
     }
 
     @Override

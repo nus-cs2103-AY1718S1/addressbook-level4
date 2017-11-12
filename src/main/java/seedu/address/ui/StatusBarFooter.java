@@ -40,12 +40,15 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar totalParcels;
 
 
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(String saveLocation, int totalParcels) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
+        setTotalParcels(totalParcels);
         registerAsAnEventHandler(this);
     }
 
@@ -71,11 +74,16 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    private void setTotalParcels(int totalParcels) {
+        Platform.runLater(() -> this.totalParcels.setText(totalParcels + " parcel(s) total"));
+    }
+
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setTotalParcels(abce.data.getParcelList().size());
     }
 }

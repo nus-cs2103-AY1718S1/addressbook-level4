@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.parcel.ReadOnlyParcel;
 
 /**
  * API of the Logic component
@@ -19,8 +19,22 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
-    /** Returns an unmodifiable view of the filtered list of persons */
-    ObservableList<ReadOnlyPerson> getFilteredPersonList();
+    //@@author kennard123661
+    /** Returns an unmodifiable view of the filtered list of parcels */
+    ObservableList<ReadOnlyParcel> getFilteredParcelList();
+
+    /** Returns an unmodifiable view of the filtered list of parcels with Status COMPLETE */
+    ObservableList<ReadOnlyParcel> getDeliveredParcelList();
+
+    /** Returns an unmodifiable view of the filtered list of parcels with Status not COMPLETE */
+    ObservableList<ReadOnlyParcel> getUndeliveredParcelList();
+
+    /** Returns an unmodifiable view of the filtered list of parcels with Status not COMPLETE */
+    void setActiveList(boolean isDelivered);
+    //@@author
+
+    /** Returns an unmodifiable view of the filtered list of parcels in the active tab */
+    ObservableList<ReadOnlyParcel> getActiveList();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();

@@ -12,8 +12,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.commons.events.ui.ParcelPanelSelectionChangedEvent;
+import seedu.address.model.parcel.ReadOnlyParcel;
 
 /**
  * The Browser Panel of the App.
@@ -21,8 +21,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    public static final String GOOGLE_MAP_URL_PREFIX = "https://www.google.com.sg/maps/search/";
+    public static final int QUERY_POSTAL_CODE_LENGTH = 16;
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -40,11 +40,11 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
-
-    private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+    //@@author vicisapotato
+    private void loadParcelLocationPage(ReadOnlyParcel parcel) {
+        loadPage(GOOGLE_MAP_URL_PREFIX + getMapQueryStringFromPostalString(parcel.getAddress().postalCode.toString()));
     }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
@@ -65,9 +65,19 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    //@@author vicisapotato
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleParcelPanelSelectionChangedEvent(ParcelPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadParcelLocationPage(event.getNewSelection().parcel);
+    }
+    //@@author
+
+    //@@author kennard123661
+    public static String getMapQueryStringFromPostalString(String postalCode) {
+        int firstDigitIndex = 1;
+        int lastDigitIndex = 7;
+
+        return "Singapore+" + postalCode.substring(firstDigitIndex, lastDigitIndex);
     }
 }

@@ -11,7 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -21,7 +21,7 @@ import seedu.address.model.tag.Tag;
 public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
     @XmlElement
-    private List<XmlAdaptedPerson> persons;
+    private List<XmlAdaptedParcel> parcels;
     @XmlElement
     private List<XmlAdaptedTag> tags;
 
@@ -30,7 +30,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableAddressBook() {
-        persons = new ArrayList<>();
+        parcels = new ArrayList<>();
         tags = new ArrayList<>();
     }
 
@@ -39,13 +39,13 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
      */
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
-        persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
+        parcels.addAll(src.getParcelList().stream().map(XmlAdaptedParcel::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
     @Override
-    public ObservableList<ReadOnlyPerson> getPersonList() {
-        final ObservableList<ReadOnlyPerson> persons = this.persons.stream().map(p -> {
+    public ObservableList<ReadOnlyParcel> getParcelList() {
+        final ObservableList<ReadOnlyParcel> parcels = this.parcels.stream().map(p -> {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
@@ -54,7 +54,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        return FXCollections.unmodifiableObservableList(persons);
+        return FXCollections.unmodifiableObservableList(parcels);
     }
 
     @Override

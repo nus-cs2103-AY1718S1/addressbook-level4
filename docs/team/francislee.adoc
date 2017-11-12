@@ -1,0 +1,85 @@
+= Lee Jun Yao Francis - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: deleteTagCommand
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=deleteTag]
+
+---
+
+==== Justification
+
+The deleteTag command is useful to have when dealing with large numbers of parcels.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=deleteTag]
+
+---
+
+=== Enhancement Added: Delivery Dates field
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=deliveryDate]
+
+---
+
+==== Justification
+
+The delivery dates field is important as the list of parcels are sorted by delivery date
+with the earliest at the top. This allows for the user to look at the more pertinent deliveries
+immediately on start up.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=deliveryDate]
+
+---
+
+=== Enhancement Added: Maintain Sorted Order Mechanism
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=sortedList]
+
+---
+
+==== Justification
+
+Having the list in sorted order allows the user to look at the more pertinent deliveries
+more easily.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=sortedList]
+
+---
+
+=== Other contributions
+
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

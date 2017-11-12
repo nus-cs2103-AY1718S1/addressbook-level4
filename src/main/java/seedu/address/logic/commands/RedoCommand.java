@@ -25,6 +25,7 @@ public class RedoCommand extends Command {
         }
 
         undoRedoStack.popRedo().redo();
+        model.maintainSorted();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

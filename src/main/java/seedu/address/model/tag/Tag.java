@@ -5,54 +5,47 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Tag in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
+ * Represents a Tag in the address book. Tag can only be FLAMMABLE, FROZEN, HEAVY or FRAGILE
+ * Guarantees: immutable;
  */
-public class Tag {
+public enum Tag {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-    public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
+    FLAMMABLE, FROZEN, HEAVY, FRAGILE;
 
-    public final String tagName;
+    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags can only be FLAMMABLE, FROZEN, HEAVY or FRAGILE";
 
     /**
-     * Validates given tag name.
-     *
-     * @throws IllegalValueException if the given tag name string is invalid.
+     * Validates given tag tagName.
+     * @throws IllegalValueException if the given tag tagName string is invalid.
      */
-    public Tag(String name) throws IllegalValueException {
-        requireNonNull(name);
-        String trimmedName = name.trim();
-        if (!isValidTagName(trimmedName)) {
+    public static Tag getInstance(String tagName) throws IllegalValueException {
+        requireNonNull(tagName);
+        String trimmedName = tagName.trim();
+
+        String upperCaseName = trimmedName.toUpperCase();
+
+        switch (upperCaseName) {
+        case "FROZEN":
+            return FROZEN;
+
+        case "FLAMMABLE":
+            return FLAMMABLE;
+
+        case "HEAVY":
+            return HEAVY;
+
+        case "FRAGILE":
+            return FRAGILE;
+
+        default:
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
-        this.tagName = trimmedName;
-    }
-
-    /**
-     * Returns true if a given string is a valid tag name.
-     */
-    public static boolean isValidTagName(String test) {
-        return test.matches(TAG_VALIDATION_REGEX);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Tag // instanceof handles nulls
-                && this.tagName.equals(((Tag) other).tagName)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return tagName.hashCode();
     }
 
     /**
      * Format state as text for viewing.
      */
-    public String toString() {
-        return '[' + tagName + ']';
+    public String getFormattedString() {
+        return '[' + this.toString() + ']';
     }
-
 }

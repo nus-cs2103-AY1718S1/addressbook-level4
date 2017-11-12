@@ -1,7 +1,7 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -27,6 +27,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         /* Case: undo clearing address book -> original address book restored */
         String command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        defaultModel.maintainSorted();
         assertCommandSuccess(command,  expectedResultMessage, defaultModel);
         assertSelectedCardUnchanged();
 
@@ -36,15 +37,15 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedResultMessage, new ModelManager());
         assertSelectedCardUnchanged();
 
-        /* Case: selects first card in person list and clears address book -> cleared and no card selected */
+        /* Case: selects first card in parcel list and clears address book -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
-        selectPerson(Index.fromOneBased(1));
+        selectParcel(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardDeselected();
 
-        /* Case: filters the person list before clearing -> entire address book cleared */
+        /* Case: filters the parcel list before clearing -> entire address book cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showParcelsWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
 

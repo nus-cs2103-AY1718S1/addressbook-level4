@@ -23,12 +23,30 @@ public class StorageManager extends ComponentManager implements Storage {
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
-
+    //@@author kennard123661
     public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+
+        Optional<ReadOnlyAddressBook> addressBookOptional;
+        try {
+            addressBookOptional = addressBookStorage.readAddressBook();
+            if (addressBookOptional.isPresent()) {
+                backupAddressBook(addressBookOptional.get());
+                logger.info("AddressBook present, back up success");
+            } else {
+                logger.warning("AddressBook not present, backup not possible");
+            }
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. "
+                    + "Backup of addressbook not available for this instance.");
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. "
+                    + "Backup of addressbook not available for this instance.");
+        }
     }
+    //@@author
 
     // ================ UserPrefs methods ==============================
 
@@ -77,6 +95,18 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    //@@author kennard123661
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, getBackupStorageFilePath());
+    }
+
+    /**
+     * @return filepath to AddressBook backup file.
+     */
+    public String getBackupStorageFilePath() {
+        return addressBookStorage.getAddressBookFilePath() + "-backup.xml";
+    }
+    //@@author
 
     @Override
     @Subscribe

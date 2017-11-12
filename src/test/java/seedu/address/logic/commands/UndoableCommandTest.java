@@ -2,9 +2,9 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.logic.commands.CommandTestUtil.deleteFirstParcel;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstParcelOnly;
+import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -12,8 +12,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -24,12 +24,12 @@ public class UndoableCommandTest {
     @Test
     public void executeUndo() throws Exception {
         dummyCommand.execute();
-        deleteFirstPerson(expectedModel);
+        deleteFirstParcel(expectedModel);
         assertEquals(expectedModel, model);
 
-        showFirstPersonOnly(model);
+        showFirstParcelOnly(model);
 
-        // undo() should cause the model's filtered list to show all persons
+        // undo() should cause the model's filtered list to show all parcels
         dummyCommand.undo();
         expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         assertEquals(expectedModel, model);
@@ -37,16 +37,16 @@ public class UndoableCommandTest {
 
     @Test
     public void redo() {
-        showFirstPersonOnly(model);
+        showFirstParcelOnly(model);
 
-        // redo() should cause the model's filtered list to show all persons
+        // redo() should cause the model's filtered list to show all parcels
         dummyCommand.redo();
-        deleteFirstPerson(expectedModel);
+        deleteFirstParcel(expectedModel);
         assertEquals(expectedModel, model);
     }
 
     /**
-     * Deletes the first person in the model's filtered list.
+     * Deletes the first parcel in the model's filtered list.
      */
     class DummyCommand extends UndoableCommand {
         DummyCommand(Model model) {
@@ -55,11 +55,11 @@ public class UndoableCommandTest {
 
         @Override
         public CommandResult executeUndoableCommand() throws CommandException {
-            ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(0);
+            ReadOnlyParcel parcelToDelete = model.getFilteredParcelList().get(0);
             try {
-                model.deletePerson(personToDelete);
-            } catch (PersonNotFoundException pnfe) {
-                fail("Impossible: personToDelete was retrieved from model.");
+                model.deleteParcel(parcelToDelete);
+            } catch (ParcelNotFoundException pnfe) {
+                fail("Impossible: parcelToDelete was retrieved from model.");
             }
             return new CommandResult("");
         }

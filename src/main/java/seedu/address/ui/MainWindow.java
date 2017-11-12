@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.ParcelListPanel.INDEX_SECOND_TAB;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -8,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -18,7 +21,10 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowParcelListEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -41,7 +47,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private ParcelListPanel parcelListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -55,13 +61,16 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane parcelListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private SplitPane splitPanePlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -129,13 +138,15 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        parcelListPanel = new ParcelListPanel(logic.getUndeliveredParcelList(),
+                logic.getDeliveredParcelList());
+        parcelListPanelPlaceholder.getChildren().add(parcelListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                                                                logic.getFilteredParcelList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -204,14 +215,36 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    public ParcelListPanel getParcelListPanel() {
+        return this.parcelListPanel;
     }
 
     void releaseResources() {
         browserPanel.freeResources();
     }
 
+    //@@author vicisapotato
+    @FXML @Subscribe
+    private void handleMinimizeParcelListEvent(JumpToListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        splitPanePlaceholder.setDividerPositions(0.6);
+    }
+    //@@author
+
+    //@@author kennard123661
+    @FXML @Subscribe
+    private void handleTabEvent(JumpToTabRequestEvent event) {
+        logic.setActiveList(event.targetIndex == INDEX_SECOND_TAB.getZeroBased());
+    }
+    //@@author
+
+    //@@author vicisapotato
+    @FXML @Subscribe
+    private void handleShowParcelListEvent(ShowParcelListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        splitPanePlaceholder.setDividerPositions(0.0);
+    }
+    //@@author
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
