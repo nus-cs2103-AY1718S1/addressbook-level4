@@ -719,11 +719,15 @@ code exists even though it might meet the criteria above. The team is working on
 
 `Status` is used to indicate the current stage of delivery that a parcel is at. It has 4 possible states:
 
-* `PENDING` - This means that the parcel has not been delivered and has not passed the date it is supposed to be
-delivered by. +
-* `DELIVERING` - This means that the parcel is currently working being delivered to its destination address.
-* `COMPLETED` - This indicates that the parcel has been successfully delivered to its destination.
-* `OVERDUE` - This state indicates that the parcel has not been delivered and has passed its due date.
+[width="100%",cols="20%,<80%",options="header",]
+|=======================================================================
+|Status | Description
+|PENDING | This means that the parcel has not been delivered and has not passed the date it is supposed to be
+delivered by.
+|DELIVERING | This means that the parcel is currently working being delivered to its destination address.
+|COMPLETED | This indicates that the parcel has been successfully delivered to its destination.
+|OVERDUE | This state indicates that the parcel has not been delivered and has passed its due date.
+|=======================================================================
 
 These states have different colours codes to allow users to differentiate the `Status` values more easily.
 
@@ -745,79 +749,41 @@ describe the same status of the parcel.
 === Delivery Date field
 
 `Delivery Date` is used to indicate the delivery date that the parcel must be delivered by.
-The dates are only accepted if they are valid. The parcel list is maintained in sorted order by comparing
+The dates are only accepted if they are in the valid format DD-MM-YYYY or understandable by Ark.
+
+Ark is able to recognise various forms of dates as shown in the table below but the dates in the Ark are formatted
+as DD-MM-YYYY. However, invalid inputs such as a phone number or symbols still will be rejected.
+
+Current date as of writing is 12 November 2017.
+
+[width="100%",cols="60%,<40%",options="header",]
+|=======================================================================
+|User input |Date parsed by Ark
+|01-01-2017 | 01-01-2017
+|01/01/2017 | 01-01-2017
+|01.01.2017 | 01-01-2017
+|01-01-17   | 01-01-2017
+|First day of 2017 | 01-01-2017
+|The day before yesterday | 10-11-2017
+|Yesterday | 11-11-2017
+|Today | 12-11-2017
+|Tomorrow | 13-11-2017
+|The day after tomorrow | 14-11-2017
+|Three days from now| 15-11-2017
+|Four days later| 16-11-2017
+|Seventeenth of November| 17-11-2017
+|This Friday| 17-11-2017
+|Next Friday| 24-11-2017
+|Christmas Eve| 24-12-2017
+|A week before Christmas Eve| 17-12-2017
+|A year from now| 12-11-2018
+|Friday of the second week of January| Query too complicated, date defaults to today
+|123456789| Invalid date error shown
+|!@#$%^&*()| Invalid date error shown
+|=======================================================================
+
+The parcel list is maintained in sorted order by comparing
 their delivery dates, with the earliest on top.
-
-[width="100%",cols="8%,<17%,<30%,<45%",options="header",]
-|=======================================================================
-|Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* * *` |onging user |have a backup of my addressbook data |restore my addressbook if the storage file becomes corrupted
-
-|`* * *` |user |add a new parcel |
-
-|`* * *` |user |delete a parcel |
-
-|`* * *` |user |find a parcel by name |locate details of parcels without having to go through the entire list
-
-|`* * *` |user |filter parcels by tags |view specific parcels that are assigned with specific tags
-
-|`* * *` |user |the browser to automatically search for the address of the selected parcel in Google Maps | so that
-I can automatically get information on how to get to an address automatically, on click.
-
-|`* * *` |delivery man who travels a lot |to know the shortest distance from one contact's address to another |
-
-|`* * *` |delivery man who travels a lot |set a reference location |find the shortest distance from my reference
-location to a parcel's delivery location
-
-|`* * *` |delivery company |be able to keep track of my deliveries |deliver the packages on time
-
-|`* * *` |delivery company |be alerted for any deliveries to be done today |deliver the packages on time
-
-|`* * *` |delivery company |sort my deliveries by date |know which packages are more urgent to handle
-
-|`* * *` |delivery man|generate deliver route based on my list of deliveries |know schedule for the day
-
-|`* * *` |delivery company |add a list of deliveries in one shot using Comma Separated Values |conveniently parse
-information from other sources
-
-|`* * *` |delivery company |add deliveries individually |
-
-|`* * *` |delivery company |check for deliveries close to deadline |better prepare for busy periods
-
-|`* * *` |delivery company |archive completed deliveries |refer to them in the future
-
-|`* *` |new user |to have an autocomplete for the commands |I do not need to remember the format of commands
-
-|`* *` |user |store the sender and receiver addresses |use these addresses as destinations/sources of my deliveries
-
-|`* *` |lazy user |send and receive parcel details to and from other companies |minimize the amount of data inputs
-
-|`* *` |forgetful user |be reminded of a parcel's delivery date (if valid) |in case I forget the date
-
-|`* *` |user |share details with contacts with a specific tag |minimize chance of someone else seeing them by accident
-
-|`* *` |busy user |add and remove tasks |use addressbook as a task manager
-
-|`* *` |user with a changing schedule |edit created tasks |change the details of task
-
-|`* *` |user |assign contacts and locations to tasks |link my tasks with people and places
-
-|`* *` |user |assign an expiry date to tasks |tasks are deleted automatically
-
-|`* *` |lazy user |to be notified of the most optimal path of completing my deliveries based on travelling distance |
-
-|`* *` |user |filter tasks according to location |be notified of deliveries I have at a specific location
-
-|`* *` |forgetful user |view daily deliveries |keep track of daily deliveries
-
-|`* *` |user |retrieve my exact location on my device |remember the current address and store my location
-
-|`*` |new user |input instructions into a chatbot interface |I do not need to remember the format of commands
-
-|`*` |user with many parcels in the address book |sort parcels by name |locate a parcel easily
-|=======================================================================
 
 //end::deliveryDate[]
 
@@ -826,11 +792,15 @@ information from other sources
 
 `Tag`s are used to indicate how the parcel should be handled. Tags can contain one or more of the following `Tag`s:
 
-* `FROZEN` - This means the parcel should be refrigerated as its contents are temperature sensitive.
-* `FLAMMABLE` - This means that the parcels' contents are highly flammable and should be kept away from heat.
-* `HEAVY` - This indicates that the parcel is heavy and may require additional manpower to deliver.
-* `FRAGILE` - This state indicates that the parcels' contents can be broken easily and
-requires additional care when handling.
+[width="100%",cols="20%,<80%",options="header",]
+|=======================================================================
+|Tag | Description
+|FROZEN | This means the parcel should be refrigerated as its contents are temperature sensitive.
+|FLAMMABLE | This means that the parcels' contents are highly flammable and should be kept away from heat.
+|HEAVY | This indicates that the parcel is heavy and may require additional manpower to deliver.
+|FRAGILE | This state indicates that the parcels' contents can be broken easily and requires additional care
+when handling.
+|=======================================================================
 
 ==== Design Considerations
 
