@@ -1,18 +1,20 @@
-[[rolodex---test-script]]
-Rolodex - Test Script
----------------------
+[[doc]]
+[[rolodex-test-script]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#rolodex-test-script[]Rolodex
+- Test Script
+---------------------------------------------------------------------------------------------
 
-This is a document explaining the steps to perform manual testing
-(i.e. manual scripted testing), starting with how to load the sample
-data.
+This is a document explaining the steps to perform manual testing (i.e.
+manual scripted testing), starting with how to load the sample data.
 
 You can also view this document
 https://cs2103aug2017-w11-b2.github.io/TestScript[here] in all its html
 glory.
 
 [[setting-up]]
-Setting Up
-~~~~~~~~~~
+https://cs2103aug2017-w11-b2.github.io/TestScript/#setting-up[]Setting
+Up
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1.  *Follow the instructions with numbers labeled closely.*
 2.  Download the latest rolodex.jar from
@@ -35,107 +37,254 @@ directory at which you placed the SampleData.rldx (the file you are
 going to be operating on).
 
 [[add-command]]
-Add Command
-~~~~~~~~~~~
+https://cs2103aug2017-w11-b2.github.io/TestScript/#add-command[]Add
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[basic-functionality]]
-Basic Functionality
-^^^^^^^^^^^^^^^^^^^
+https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality[]Basic
+Functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type
 `add n/Alice Ken p/91234567 e/alice@gmail.com a/900, Alice Street`
 2.  Press `Enter`
 
 [[expected-behaviour]]
-Expected Behaviour
-++++++++++++++++++
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * New contact with entered particulars is added to Rolodex
 * Contact is automatically displayed on the bottom right panel
 * Name, phone, email and address fields are compulsory.
 
 [[abbreviations]]
-Abbreviations
-^^^^^^^^^^^^^
+https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations[]Abbreviations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type
 `a n/Alice Ken p/91234567 e/alice@gmail.com a/800, Alice Street`
 2.  Press `Enter`
 
-[[expected-behaviour-1]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour1[]Expected
+Behaviour
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * New contact with entered particulars is added to Rolodex
 * Contact is automatically displayed on the bottom right panel
 * Name, phone, email and address fields are compulsory
 
+'''''
+
+1.  Type
+`+ n/Alice Ken p/91234567 e/alice@gmail.com a/700, Alice Street`
+2.  Press `Enter`
+
+[[expected-behaviour2]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour2[]Expected
+Behaviour
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* New contact with entered particulars is added to Rolodex
+* Contact is automatically displayed on the bottom right panel
+* Name, phone, email and address fields are compulsory
+
+[[drop-down-list]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list[]Drop-down
+List
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `a`
+2.  Press `Enter` or click to select the `add` option in the drop-down
+list
+3.  Press `Space`
+4.  Type `n/Alice Ken p/91234567 e/alice@gmail.com a/900, Alice Street`
+5.  Press `Enter`
+
+[[expected-behaviour3]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour3[]Expected
+Behaviour
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* New contact with entered particulars is added to Rolodex
+* Contact is automatically displayed on the bottom right panel
+* Name, phone, email and address fields are compulsory
+
+[[auto-completion]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion[]Auto-completion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `add` and press `Tab`
+2.  Type `Alice Ken` and press `Tab`
+3.  Type `91234567` and press `Tab`
+4.  Type `alice@gmail.com` and press `Tab`
+5.  Type `900, Alice Street`
+6.  Press `Enter`
+
+[[expected-behaviour4]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour4[]Expected
+Behaviour
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* New contact with entered particulars is added to Rolodex
+* Contact is automatically displayed on the bottom right panel
+* Name, phone, email and address fields are compulsory
+
+[[invalid-command-suggestion]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `add alice@gmail.com Alice Ken 900, Alice Street 91234567`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean add n/Alice Ken p/91234567 e/alice@gmail.com a/900, Alice
+Street?’
+4.  Press `Enter`
+
+[[expected-behaviour5]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour5[]Expected
+Behaviour
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* New contact with entered particulars is added to Rolodex
+* Contact is automatically displayed on the bottom right panel
+* Name, phone, email and address fields are compulsory
+
+[[keyboard-shortcut]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut[]Keyboard
+Shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `+`
+2.  Type `Alice Ken` and press `Tab`
+3.  Type `91234567` and press `Tab`
+4.  Type `alice@gmail.com` and press `Tab`
+5.  Type `900, Alice Street`
+6.  Press `Enter`
+
+[[expected-behaviour6]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour6[]Expected
+Behaviour:
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* New contact with entered particulars is added to Rolodex
+* Contact is automatically displayed on the bottom right panel
+* Name, phone, email and address fields are compulsory
+
+[[delete-command]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#delete-command[]Delete
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[basic-functionality1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality1[]Basic
+Functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `delete 1`
+2.  Press `Enter`
+
+[[expected-behaviour7]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour7[]Expected
+Behaviour
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* First contact is deleted from Rolodex
+
+[[abbreviations1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations1[]Abbreviations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `d 2`
+2.  Press `Enter`
+
+[[expected-behaviour8]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour8[]Expected
+Behaviour
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Second contact is deleted from Rolodex
+
+'''''
+
 1.  Type `- 3`
 2.  Press `Enter`
 
-[[expected-behaviour-2]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour9]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour9[]Expected
+Behaviour
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * Third contact is deleted from Rolodex
 
-[[auto-completion]]
-Auto-completion
-^^^^^^^^^^^^^^^
+[[auto-completion1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion1[]Auto-completion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `delete` and press `Tab`
 2.  Type `1` and press `Enter`
 
-[[expected-behaviour-3]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour10]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour10[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * First contact is deleted from Rolodex
 
-[[invalid-command-suggestion]]
-Invalid Command Suggestion
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+[[invalid-command-suggestion1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion1[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d21 durian`
 2.  Press `Enter`
 3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
-`Did you mean D21?'
+‘Did you mean D21?’
 4.  Press `Enter`
 
 [[expected-behavior]]
-Expected Behavior
-+++++++++++++++++
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The 21st contact is deleted from Rolodex
 
-[[keyboard-shortcut]]
-Keyboard Shortcut
-^^^^^^^^^^^^^^^^^
+[[keyboard-shortcut1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut1[]Keyboard
+Shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Press `Ctrl` + `D`
 2.  Type `1` and press `Enter`
 
-[[expected-behaviour-4]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour11]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour11[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * First contact is deleted from Rolodex
 
 [[edit-command]]
-Edit Command
-~~~~~~~~~~~~
+https://cs2103aug2017-w11-b2.github.io/TestScript/#edit-command[]Edit
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[[basic-functionality-1]]
-Basic Functionality
-^^^^^^^^^^^^^^^^^^^
+[[basic-functionality2]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality2[]Basic
+Functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type
 `edit 1 n/A p/99999999 e/edit@gmail.com r/Edited contact. t/edited`
 2.  Press `Enter`
 
-[[expected-behaviour-5]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour12]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour12[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The particulars of the first contact are edited with the new inputs.
 * The tag `edited` should be added to the existing tags.
@@ -143,43 +292,62 @@ Expected Behaviour
 panel
 
 [[tag-toggling]]
-Tag Toggling
-^^^^^^^^^^^^
+https://cs2103aug2017-w11-b2.github.io/TestScript/#tag-toggling[]Tag
+Toggling
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `edit 1 t/edited` (A should be the first contact)
 2.  Press `Enter`
 
-[[expected-behaviour-6]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour13]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour13[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The tag `edited` should be removed from A
 
-[[abbreviations-1]]
-Abbreviations
-^^^^^^^^^^^^^
+[[abbreviations2]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations2[]Abbreviations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `e 1 n/B`
 2.  Press `Enter`
 
-[[expected-behaviour-7]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour14]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour14[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * First contact should be renamed to B
+
+'''''
+
+1.  Type `change 1 p/88888888`
+2.  Press `Enter`
+
+[[expected-behaviour15]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour15[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Phone number of first contact should now be “88888888”
+
+'''''
 
 1.  Type `modify 1 e/modified@mail.com`
 2.  Press `Enter`
 
-[[expected-behaviour-8]]
-Expected behaviour
-++++++++++++++++++
+[[expected-behaviour16]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour16[]Expected
+behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* Email of first contact should now be ``modified@mail.com''
+* Email of first contact should now be %22modified@mail.com"
 
-[[drop-down-list]]
-Drop-down List
-^^^^^^^^^^^^^^
+[[drop-down-list1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list1[]Drop-down
+List
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `e`
 2.  Press `↓` until the `edit` option is highlighted in the drop-down
@@ -189,209 +357,1024 @@ list
 5.  Type `n/A p/99999999 e/edit@gmail.com r/Edited contact. t/edited`
 6.  Press `Enter`
 
-[[expected-behaviour-9]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour17]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour17[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The particulars of the first contact are edited with the new inputs.
 * The tag `edited` should be added to the existing tags.
 * The edited contact is automatically displayed on the bottom right
 panel
 
-[[auto-completion-1]]
-Auto-completion
-^^^^^^^^^^^^^^^
+[[auto-completion2]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion2[]Auto-completion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `edit`
 2.  Press `Tab`
 3.  Type `1 n/B`
 4.  Press `Enter`
 
-[[expected-behaviour-10]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour18]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour18[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * First contact should be renamed to B
 
-[[invalid-command-suggestion-1]]
-Invalid Command Suggestion
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+[[invalid-command-suggestion2]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion2[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `edit 1Alice`
 2.  Press `Enter`
 3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
-`Did you mean edit 1 n/Alice?'
+‘Did you mean edit 1 n/Alice?’
 4.  Press `Enter`
 
-[[expected-behaviour-11]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour19]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour19[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * First contact should be renamed to alice
+
+'''''
+
+1.  Type `edt 1 12345678`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean edit 1 p/12345678?’
+4.  Press `Enter`
+
+[[expected-behaviour20]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour20[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Phone number of first contact should now be “12345678”
+
+'''''
 
 1.  Type `edi 1 abc@efg`
 2.  Press `Enter`
 3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
-`Did you mean edit 1 e/abc@efg?'
+‘Did you mean edit 1 e/abc@efg?’
 4.  Press `Enter`
 
-[[expected-behaviour-12]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour21]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour21[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* Email of first contact should now be ``abc@efg''
+* Email of first contact should now be “abc@efg”
+
+'''''
+
+1.  Type `dit 1 3 computing drive`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean edit 1 a/3 computing drive?’
+4.  Press `Enter`
+
+[[expected-behaviour22]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour22[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Address of first contact should now be “3 computing drive”
+
+[[keyboard-shortcut2]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut2[]Keyboard
+Shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `E`
+2.  Type `1 n/bob`
+3.  Press `Enter`
+
+[[expected-behaviour23]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour23[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* First contact should be renamed to bob
+
+[[select-command]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#select-command[]Select
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[basic-functionality3]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality3[]Basic
+Functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `select 1`
+
+[[expected-behaviour24]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour24[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The first contact should be selected
+
+[[abbreviations3]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations3[]Abbreviations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `s 2`
+
+[[expected-behaviour25]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour25[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The second contact should be selected
+
+[[drop-down-list2]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list2[]Drop-Down
+List
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `s`
+2.  Press `↓` until the `select` option is highlighted in the drop-down
+list
+3.  Press `Enter`
+4.  Press `space` and type `3`
+5.  Press `Enter`
+
+[[expected-behaviour26]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour26[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The third contact should be selected
+
+[[auto-completion3]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion3[]Auto-completion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `s`
+2.  Press `Tab`
+3.  Type `1`
+4.  Press `Enter`
+
+[[expected-behaviour27]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour27[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The first contact should be selected
+
+[[invalid-command-suggestion3]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion3[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `s1`
+2.  Press`Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+“Did you mean s 1?”
+4.  Press `Enter`
+
+[[expected-behaviour28]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour28[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The first contact should be selected
+
+[[keyboard-shortcut3]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut3[]Keyboard
+Shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Press `Esc`
+2.  Press `↓` or `↑` several times
+3.  Press `Enter`
+
+[[expected-behaviour29]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour29[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* In step 1, the command box should be deselected
+* In step 2, the contact list should be scrollable
+* In step 3, the command box should be selected
+
+[[email-command]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#email-command[]Email
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[basic-functionality4]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality4[]Basic
+functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `email 1 s/hello`
+2.  Press `Enter`
+
+[[expected-behaviour30]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour30[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Your default email client should open a new compose email window
+* Recipient’s email address should be the first contact’s email address
+* Subject should be “hello”
+
+'''''
 
 1.  Type `email 1`
 2.  Press `Enter`
 
-[[expected-behaviour-13]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour31]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour31[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * Your default email client should open a new compose email window
 * Recipient’s email address should be the first contact’s email address
 (Subject field is optional)
 
-[[auto-completion-2]]
-Auto-completion
-^^^^^^^^^^^^^^^
+[[auto-completion4]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion4[]Auto-completion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `M`
 2.  Press `Tab`
 3.  Type `1 s/hello`
 4.  Press `Tab`
 
-[[expected-behaviour-14]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour32]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour32[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * Your default email client should open a new compose email window
 * Recipient’s email address should be the first contact’s email address
-* Subject should be ``hello''
+* Subject should be “hello”
 
-[[invalid-command-suggestion-2]]
-Invalid Command Suggestion
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+[[invalid-command-suggestion4]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion4[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `mal1 hello`
 2.  Press `Enter`
 3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
-``Did you mean mail 1 s/hello?''
+“Did you mean mail 1 s/hello?”
 4.  Press `Enter`
 
-[[expected-behaviour-15]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour33]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour33[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * Your default email client should open a new compose email window
 * Recipient’s email address should be the first contact’s email address
-* Subject should be ``hello''
+* Subject should be “hello”
 
-[[keyboard-shortcut-1]]
-Keyboard Shortcut
-^^^^^^^^^^^^^^^^^
+[[keyboard-shortcut4]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut4[]Keyboard
+Shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Press `Ctrl` + `M`
 2.  Type `1 s/hello`
 3.  Press `Enter`
 
-[[expected-behaviour-16]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour34]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour34[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * Your default email client should open a new compose email window
 * Recipient’s email address should be the first contact’s email address
-* Subject should be ``hello''
+* Subject should be “hello”
 
 [[find-command]]
-Find Command
-~~~~~~~~~~~~
+https://cs2103aug2017-w11-b2.github.io/TestScript/#find-command[]Find
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[find-by-name]]
-Find by name
-^^^^^^^^^^^^
+https://cs2103aug2017-w11-b2.github.io/TestScript/#find-by-name[]Find by
+name
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 [[exact-matches]]
-Exact matches
-+++++++++++++
+https://cs2103aug2017-w11-b2.github.io/TestScript/#exact-matches[]Exact
+matches
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 1.  Type `find bravo`
 2.  Press `Enter`
 
-[[expected-behavior-1]]
-Expected behavior
+[[expected-behavior1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior1[]Expected
+behavior
 
-* The contact list is filtered with contacts with the name ``Bravo''
+* The contact list is filtered with contacts with the name “Bravo”
 
 [[fuzzy-matching]]
-Fuzzy Matching
-++++++++++++++
+https://cs2103aug2017-w11-b2.github.io/TestScript/#fuzzy-matching[]Fuzzy
+Matching
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 1.  Type `find brabo`
 2.  Press `Enter`
 
-[[expected-behavior-2]]
-Expected Behavior
+[[expected-behavior2]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior2[]Expected
+Behavior
 
 * The contact list is filtered with contacts roughly matching the name
-``brabo'', ``Bravo'' included.
+“brabo”, “Bravo” included.
 
 [[find-by-tag]]
-Find by tag
-^^^^^^^^^^^
+https://cs2103aug2017-w11-b2.github.io/TestScript/#find-by-tag[]Find by
+tag
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `find friends`
 2.  Press `Enter`
 
-[[expected-behavior-3]]
-Expected Behavior
-+++++++++++++++++
+[[expected-behavior3]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior3[]Expected
+Behavior
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* The contact list is filtered with contacts tagged as ``friends''.
+* The contact list is filtered with contacts tagged as “friends”.
 
 [[sorting]]
-Sorting
-^^^^^^^
+https://cs2103aug2017-w11-b2.github.io/TestScript/#sorting[]Sorting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `find friends n/desc`
 2.  Press `Enter`
 
-[[expected-behavior-4]]
-Expected Behavior
-+++++++++++++++++
+[[expected-behavior4]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior4[]Expected
+Behavior
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* The contact list is filtered with contacts tagged as ``friends'',
-sorted by descending order of name.
+* The contact list is filtered with contacts tagged as “friends”, sorted
+by descending order of name.
+
+'''''
 
 1.  Type `find friends p/desc`
 2.  Press `Enter`
 
-[[expected-behavior-5]]
-Expected Behavior
-+++++++++++++++++
+[[expected-behavior5]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior5[]Expected
+Behavior
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* The contact list is filtered with contacts tagged as ``friends'',
-sorted by descending phone.
+* The contact list is filtered with contacts tagged as “friends”, sorted
+by descending phone.
+
+'''''
+
+1.  Type `find friends p/desc`
+2.  Press `Enter`
+
+[[expected-behavior6]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior6[]Expected
+Behavior
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The contact list is filtered with contacts tagged as “friends”, sorted
+by descending phone.
+
+'''''
+
+1.  Type `find friends p/desc a/`
+2.  Press `Enter`
+
+[[expected-behavior7]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior7[]Expected
+Behavior
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The contact list is filtered with contacts tagged as “friends”, sorted
+by descending phone, then by ascending address.
+
+[[auto-completion5]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion5[]Auto-completion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `find`
+2.  Press `Tab`
+3.  Type `bravo`
+4.  Press `Enter`
+
+[[expected-behavior8]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior8[]Expected
+Behavior
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The contact list is filtered with contacts roughly matching the name
+“brabo”, “Bravo” included.
+
+[[keyboard-shortcut5]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut5[]Keyboard
+Shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `F`
+2.  Type `school` and press `Enter`
+
+[[expected-behavior9]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior9[]Expected
+Behavior
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The contact list is filtered with contacts tagged as “school”.
+
+[[invalid-command-suggestion5]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion5[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `findmy friends`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean find friends?’
+4.  Press `Enter`
+
+[[expected-behavior10]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior10[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The contact list is filtered with contacts tagged as “friends”.
+
+[[help-command]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#help-command[]Help
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[basic-functionality5]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality5[]Basic
+Functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `help`
+2.  Press `Enter`
+
+[[expected-behavior11]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior11[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The Rolodex User Guide should be opened in a new window
+
+[[help-window-searching]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#help-window-searching[]Help
+Window Searching
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `add` into the search bar located at the top of the window
+2.  Press `Enter` or click the _Search_ button
+
+[[expected-behavior12]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior12[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* All words “add” in the document should be highlighted in yellow
+
+[[invalid-command-suggestion6]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion6[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `halp me`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean help?’
+4.  Press `Enter`
+
+[[expected-behavior13]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior13[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The Rolodex User Guide should be opened in a new window
+
+[[history-command]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#history-command[]History
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[basic-functionality6]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality6[]Basic
+Functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `history`
+2.  Press `Enter`
+
+[[expected-behavior14]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior14[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Entered commands from most recent to earliest should be displayed on
+the result panel
+
+[[invalid-command-suggestion7]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion7[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `hisdory is a dory pun`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean history?’
+4.  Press `Enter`
+
+[[expected-behavior15]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior15[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Entered commands from most recent to earliest should be displayed on
+the result panel
+
+[[keyboard-shortcut6]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut6[]Keyboard
+Shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `Ctrl` + `H`
+
+[[expected-behavior16]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior16[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* Entered commands from most recent to earliest should be displayed on
+the result panel
+
+[[list-command]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#list-command[]List
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[basic-functionality7]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality7[]Basic
+Functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `list`
+2.  Press `Enter`
+
+[[expected-behavior17]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior17[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* All contacts should be listed in Rolodex
+
+[[abbreviations4]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations4[]Abbreviations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `l`
+2.  Press `Enter`
+
+[[expected-behavior18]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior18[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* All contacts should be listed in Rolodex
+
+'''''
 
 1.  Type `show`
 2.  Press `Enter`
 
-[[expected-behavior-6]]
-Expected Behavior
-+++++++++++++++++
+[[expected-behavior19]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior19[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * All contacts should be listed in Rolodex
+
+'''''
+
+1.  Type `display`
+2.  Press `Enter`
+
+[[expected-behavior20]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior20[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* All contacts should be listed in Rolodex
+
+[[sorting1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#sorting1[]Sorting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `list p/asc a/desc`
+2.  Press `Enter`
+
+[[expected-behavior21]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior21[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The contact list should be sorted by ascending phone, then by
+descending address.
+
+[[invalid-command-suggestion8]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion8[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `lost is me, Am I lost? Yes I am. Lost little lamb`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean list?’
+4.  Press `Enter`
+
+[[expected-behavior22]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior22[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* All contacts should be listed in Rolodex
+
+[[keyboard-shortcut7]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut7[]Keyboard
+Shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `L`
+
+[[expected-behavior23]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behavior23[]Expected
+Behavior
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* All contacts should be listed in Rolodex
+
+[[new-rolodex-command]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#new-rolodex-command[]New
+Rolodex Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[creating-new-rolodex-at-relative-directory]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#creating-new-rolodex-at-relative-directory[]Creating
+New Rolodex at Relative Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `new data/SampleData2.rldx` or `n data/SampleData2.rldx`
+2.  Press `Enter`
+
+[[expected-behaviour35]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour35[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* A new Rolodex is created under the relative directory (data folder
+should be in same place as .jar file).
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. the data file you are currently operating on)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[creating-new-rolodex-at-system-directory]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#creating-new-rolodex-at-system-directory[]Creating
+New Rolodex at System Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[[windows]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#windows[]Windows:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1.  Type `new C:/Users/YOUR_USERNAME/Desktop/SampleData.rldx`
+2.  Press `Enter`
+
+[[mac]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#mac[]Mac:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1.  Type `new /Users/YOUR_USERNAME/Desktop/SampleData.rldx`
+2.  Press `Enter`
+
+[[linux]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#linux[]Linux:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1.  Type `new /home/YOUR_USERNAME/Desktop/SampleData.rldx`
+2.  Press `Enter`
+
+[[expected-behaviour36]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour36[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* A new test file, `SampleData.rldx` should be created on your desktop.
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. the data file you are currently operating on)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[attempting-to-re-create-existing-rolodex]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#attempting-to-re-create-existing-rolodex[]Attempting
+to Re-Create Existing Rolodex
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `new data/SampleData.rldx`
+2.  Press `Enter`
+
+[[expected-behaviour37]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour37[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* An error message should be displayed, prompting to use the `open`
+command instead.
+* The original SampleData.rldx should not be overwritten or changed.
+
+[[auto-completion6]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion6[]Auto-completion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `new`
+2.  Press `Tab`
+3.  Type`data/SampleData3.rldx`
+4.  Press `Enter`
+
+[[expected-behaviour38]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour38[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* A new Rolodex is created under the relative directory (data folder
+should be in same place as .jar file).
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. `data/SampleData3.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[invalid-command-suggestion9]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion9[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `new:( data/SampleData4`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean new data/SampleData3.rldx?’
+4.  Press `Enter`
+
+[[expected-behaviour39]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour39[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* A new Rolodex is created under the relative directory (data folder
+should be in same place as .jar file).
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. `data/SampleData4.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[keyboard-shortcut8]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut8[]Keyboard
+Shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `N`
+2.  Type`data/SampleData5.rldx`
+3.  Press `Enter`
+
+[[expected-behaviour40]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour40[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* A new Rolodex is created under the relative directory (data folder
+should be in same place as .jar file).
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. `data/SampleData5.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[open-rolodex-command]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#open-rolodex-command[]Open
+Rolodex Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[requirements]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#requirements[]Requirements
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Please complete the section
+https://cs2103aug2017-w11-b2.github.io/TestScript/#New-Rolodex-Command[New
+Rolodex Command] before proceeding with this section.
+
+[[opening-rolodex-at-relative-directory]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#opening-rolodex-at-relative-directory[]Opening
+Rolodex at Relative Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `open data/SampleData2.rldx` or `o data/SampleData2.rldx`
+2.  Press `Enter`
+
+[[expected-behaviour41]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour41[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The original Rolodex under the relative directory (data folder should
+be in same place as .jar file) is opened.
+* The status bar on the bottom right of the application updates to the
+opened Rolodex (i.e. `data/SampleData2.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[opening-rolodex-at-system-directory]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#opening-rolodex-at-system-directory[]Opening
+Rolodex at System Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[[windows1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#windows1[]Windows:
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1.  Type `open C:/Users/YOUR_USERNAME/Desktop/SampleData3.rldx`
+2.  Press `Enter`
+
+[[mac1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#mac1[]Mac:
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1.  Type `open /Users/YOUR_USERNAME/Desktop/SampleData3.rldx`
+2.  Press `Enter`
+
+[[linux1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#linux1[]Linux:
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1.  Type `open /home/YOUR_USERNAME/Desktop/SampleData3.rldx`
+2.  Press `Enter`
+
+[[expected-behaviour42]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour42[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The original test file, `SampleData.rldx` should be loaded onto your
+application.
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. `data/SampleData.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[attempting-to-open-non-existent-rolodex]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#attempting-to-open-non-existent-rolodex[]Attempting
+to Open Non-Existent Rolodex
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `open data/SampleData4.rldx`
+2.  Press `Enter`
+
+[[expected-behaviour43]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour43[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* An error message should be displayed, prompting to use the `new`
+command instead.
+* The original SampleData.rldx should not be overwritten or changed.
+
+[[auto-completion7]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion7[]Auto-completion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `open`
+2.  Press `Tab`
+3.  Type `data/SampleData.rldx`
+
+[[expected-behaviour44]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour44[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The original Rolodex under the relative directory (data folder should
+be in same place as .jar file) is opened.
+* The status bar on the bottom right of the application updates to the
+opened Rolodex (i.e. `data/SampleData.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[invalid-command-suggestion10]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion10[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `open:) data/SampleData2`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean open data/SampleData2.rldx?’
+4.  Press `Enter`
+
+[[expected-behaviour45]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour45[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The Rolodex under the relative directory (data folder should be in
+same place as .jar file).
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. `data/SampleData2.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[keyboard-shortcut9]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut9[]Keyboard
+Shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `O`
+2.  Type `data/SampleData.rldx`
+3.  Press `Enter`
+
+[[expected-behaviour46]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour46[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The original Rolodex under the relative directory (data folder should
+be in same place as .jar file) is opened.
+* The status bar on the bottom right of the application updates to the
+opened Rolodex (i.e. `data/SampleData.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[remark-command]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#remark-command[]Remark
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[[basic-functionality8]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality8[]Basic
+Functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `remark 1 r/Loves to talk.`
+2.  Press `Enter`
+3.  Type `select 1`
+4.  Press `Enter`
+
+[[expected-behaviour47]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour47[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The selected contact should have the remark “Loves to talk.”
+
+[[abbreviations5]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations5[]Abbreviations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `rmk 3 r/Loves to sing.`
+2.  Press `Enter`
+3.  Type `select 3`
+4.  Press `Enter`
+
+[[expected-behaviour48]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour48[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+* The selected contact should have the remark “Loves to sing.”
+
+'''''
 
 1.  Type `comment 3 r/Loves to jump.`
 2.  Press `Enter`
 3.  Type `select 3`
 4.  Press `Enter`
 
-[[expected-behaviour-17]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour49]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour49[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* The selected contact should have the remark ``Loves to jump.''
+* The selected contact should have the remark “Loves to jump.”
 
 '''''
 
@@ -400,15 +1383,16 @@ Expected Behaviour
 3.  Type `select 3`
 4.  Press `Enter`
 
-[[expected-behaviour-18]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour50]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour50[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* The selected contact should have the remark ``Loves to eat.''
+* The selected contact should have the remark “Loves to eat.”
 
-[[auto-completion-3]]
-Auto-completion
-^^^^^^^^^^^^^^^
+[[auto-completion8]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion8[]Auto-completion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `remark` and press `Tab`
 2.  Type `1`
@@ -418,15 +1402,17 @@ Auto-completion
 6.  Type `select 1`
 7.  Press `Enter`
 
-[[expected-behaviour-19]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour51]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour51[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* The selected contact should have the remark ``Loves to swim.''
+* The selected contact should have the remark “Loves to swim.”
 
-[[keyboard-shortcut-2]]
-Keyboard shortcut
-^^^^^^^^^^^^^^^^^
+[[keyboard-shortcut10]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut10[]Keyboard
+shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Press `Ctrl` + `R`
 2.  Type `1`
@@ -436,63 +1422,73 @@ Keyboard shortcut
 6.  Type `select 1`
 7.  Press `Enter`
 
-[[expected-behaviour-20]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour52]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour52[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* The selected contact should have the remark ``Loves to dance.''
+* The selected contact should have the remark “Loves to dance.”
 
-[[invalid-command-suggestion-3]]
-Invalid Command Suggestion
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+[[invalid-command-suggestion11]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion11[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `rmk1 Hates dancing`
 2.  Press `Enter`
 3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
-`Did you mean rmk 1 r/Hates dancing?'
+‘Did you mean rmk 1 r/Hates dancing?’
 4.  Press `Enter`
+5.  Type `select 1`
+6.  Press `Enter`
 
-[[expected-behaviour-21]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour53]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour53[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-* The selected contact should have the remark ``Hates dancing''
+* The selected contact should have the remark “Hates dancing”
 
 [[undo-command]]
-Undo Command
-~~~~~~~~~~~~
+https://cs2103aug2017-w11-b2.github.io/TestScript/#undo-command[]Undo
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[[basic-functionality-2]]
-Basic Functionality
-^^^^^^^^^^^^^^^^^^^
+[[basic-functionality9]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality9[]Basic
+Functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `delete 1` and press `Enter`
 2.  Type `undo`
 3.  Press `Enter`
 
-[[expected-behaviour-22]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour54]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour54[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The first contact should remain in Rolodex
 
-[[abbreviations-2]]
-Abbreviations
-^^^^^^^^^^^^^
+[[abbreviations6]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations6[]Abbreviations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `undo`
 3.  Press `Enter`
 
-[[expected-behaviour-23]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour55]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour55[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The first contact should remain in Rolodex
 
-[[drop-down-list-1]]
-Drop-Down List
-^^^^^^^^^^^^^^
+[[drop-down-list3]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list3[]Drop-Down
+List
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `u`
@@ -501,78 +1497,88 @@ list
 4.  Press `Enter`
 5.  Press `Enter`
 
-[[expected-behaviour-24]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour56]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour56[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The first contact should remain in Rolodex
 
-[[invalid-command-suggestion-4]]
-Invalid Command Suggestion
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+[[invalid-command-suggestion12]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion12[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `udon YUMMY!!! :P` and press `Enter`
 3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
-`Did you mean undo?'
+‘Did you mean undo?’
 4.  Press `Enter`
 
-[[expected-behaviour-25]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour57]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour57[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The first contact should remain in Rolodex
 
-[[keyboard-shortcut-3]]
-Keyboard Shortcut
-^^^^^^^^^^^^^^^^^
+[[keyboard-shortcut11]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut11[]Keyboard
+Shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Press `Ctrl` + `Z`
 
-[[expected-behaviour-26]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour58]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour58[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The first contact should remain in Rolodex
 
 [[redo-command]]
-Redo Command
-~~~~~~~~~~~~
+https://cs2103aug2017-w11-b2.github.io/TestScript/#redo-command[]Redo
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[[basic-functionality-3]]
-Basic functionality
-^^^^^^^^^^^^^^^^^^^
+[[basic-functionality10]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality10[]Basic
+functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `undo` and press `Enter`
 3.  Type `redo`
 4.  Press `Enter`
 
-[[expected-behaviour-27]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour59]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour59[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The first contact should be deleted from Rolodex
 
-[[abbreviations-3]]
-Abbreviations
-^^^^^^^^^^^^^
+[[abbreviations7]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations7[]Abbreviations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `undo` and press `Enter`
 3.  Type `r`
 4.  Press `Enter`
 
-[[expected-behaviour-28]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour60]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour60[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The first contact should be deleted from Rolodex
 
-[[drop-down-list-2]]
-Drop-Down List
-^^^^^^^^^^^^^^
+[[drop-down-list4]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list4[]Drop-Down
+List
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `undo` and press `Enter`
@@ -582,95 +1588,457 @@ list
 5.  Press `Enter`
 6.  Press `Enter`
 
-[[expected-behaviour-29]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour61]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour61[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The first contact should be deleted from Rolodex
 
-[[invalid-command-suggestion-5]]
-Invalid Command Suggestion
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+[[invalid-command-suggestion13]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion13[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `undo` and press `Enter`
 3.  Type `redp`
 4.  Press `Enter`
 
-[[expected-behaviour-30]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour62]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour62[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The first contact should be deleted from Rolodex
 
-[[keyboard-shortcut-4]]
-Keyboard Shortcut
-^^^^^^^^^^^^^^^^^
+[[keyboard-shortcut12]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut12[]Keyboard
+Shortcut
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `undo` and press `Enter`
 3.  Press `Ctrl` + `Y`
 
-[[expected-behaviour-31]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour63]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour63[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The first contact should be deleted from Rolodex
 
 [[exit-command]]
-Exit Command
-~~~~~~~~~~~~
+https://cs2103aug2017-w11-b2.github.io/TestScript/#exit-command[]Exit
+Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1.  Type `exit` or `quit` or `close` or `bye` or `esc`
 2.  Press `Enter`
 
-[[expected-behaviour-32]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour64]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour64[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The application should be closed.
 
-[[invalid-command-suggestion-6]]
-Invalid Command Suggestion
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+[[invalid-command-suggestion14]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion14[]Invalid
+Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Reopen the application by clicking the rolodex.jar file.
 2.  Type `exito`
 3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
-`Did you mean exit?'
+‘Did you mean exit?’
 4.  Press `Enter`
 
-[[expected-behaviour-33]]
-Expected Behaviour
-++++++++++++++++++
+[[expected-behaviour65]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour65[]Expected
+Behaviour
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 * The application should be closed.
 
 [[end]]
-End
-~~~
+https://cs2103aug2017-w11-b2.github.io/TestScript/#end[]End
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Congratulations. You have reached the end of the tests. Found any bugs?
 Report it at https://github.com/CS2103AUG2017-W11-B2/main/issues. We’ll
 give you a cookie for finding bugs! :)
 
 [[bonus-star-wars-ep-iv]]
-Bonus: Star Wars Ep IV
-~~~~~~~~~~~~~~~~~~~~~~
+https://cs2103aug2017-w11-b2.github.io/TestScript/#bonus-star-wars-ep-iv[]Bonus:
+Star Wars Ep IV
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[[requirements]]
-Requirements
-^^^^^^^^^^^^
+[[requirements1]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#requirements1[]Requirements
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Make sure you are connected to the internet and are *on a network that
 has port 25 open*. Chances are many universities’s (ahem) networks block
 the incoming port and this won’t work. Solution? Use a tether. Trust us
 - it’s awesome!
 
-[[basic-functionality-4]]
-Basic Functionality
-^^^^^^^^^^^^^^^^^^^
+[[basic-functionality11]]
+https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality11[]Basic
+Functionality
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `starwars` or `sw`
 2.  Press `Enter`.
 3.  Enjoy!
+
+https://cs2103aug2017-w11-b2.github.io/TestScript/#[__]
+
+* https://cs2103aug2017-w11-b2.github.io/TestScript/#rolodex-test-script[Rolodex
+- Test Script]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#setting-up[Setting
+Up]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#add-command[Add
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list[Drop-down
+List]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#delete-command[Delete
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality1[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations1[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion1[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion1[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut1[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#edit-command[Edit
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality2[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#tag-toggling[Tag
+Toggling]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations2[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list1[Drop-down
+List]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion2[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion2[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut2[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#select-command[Select
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality3[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations3[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list2[Drop-Down
+List]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion3[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion3[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut3[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#email-command[Email
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality4[Basic
+functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion4[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion4[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut4[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#find-command[Find
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#find-by-name[Find
+by name]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#find-by-tag[Find
+by tag]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#sorting[Sorting]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion5[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut5[Keyboard
+Shortcut]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion5[Invalid
+Command Suggestion]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#help-command[Help
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality5[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#help-window-searching[Help
+Window Searching]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion6[Invalid
+Command Suggestion]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#history-command[History
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality6[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion7[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut6[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#list-command[List
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality7[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations4[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#sorting1[Sorting]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion8[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut7[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#new-rolodex-command[New
+Rolodex Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#creating-new-rolodex-at-relative-directory[Creating
+New Rolodex at Relative Directory]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#creating-new-rolodex-at-system-directory[Creating
+New Rolodex at System Directory]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#attempting-to-re-create-existing-rolodex[Attempting
+to Re-Create Existing Rolodex]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion6[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion9[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut8[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#open-rolodex-command[Open
+Rolodex Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#requirements[Requirements]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#opening-rolodex-at-relative-directory[Opening
+Rolodex at Relative Directory]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#opening-rolodex-at-system-directory[Opening
+Rolodex at System Directory]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#attempting-to-open-non-existent-rolodex[Attempting
+to Open Non-Existent Rolodex]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion7[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion10[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut9[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#remark-command[Remark
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality8[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations5[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion8[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut10[Keyboard
+shortcut]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion11[Invalid
+Command Suggestion]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#undo-command[Undo
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality9[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations6[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list3[Drop-Down
+List]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion12[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut11[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#redo-command[Redo
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality10[Basic
+functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations7[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list4[Drop-Down
+List]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion13[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut12[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#exit-command[Exit
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion14[Invalid
+Command Suggestion]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#end[End]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#bonus-star-wars-ep-iv[Bonus:
+Star Wars Ep IV]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#requirements1[Requirements]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality11[Basic
+Functionality]
+
+https://cs2103aug2017-w11-b2.github.io/TestScript/#[Expand
+all]https://cs2103aug2017-w11-b2.github.io/TestScript/#[Back to
+top]https://cs2103aug2017-w11-b2.github.io/TestScript/#[Go to bottom]
+
+[[ui-toc-affix]]
+* https://cs2103aug2017-w11-b2.github.io/TestScript/#rolodex-test-script[Rolodex
+- Test Script]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#setting-up[Setting
+Up]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#add-command[Add
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list[Drop-down
+List]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#delete-command[Delete
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality1[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations1[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion1[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion1[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut1[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#edit-command[Edit
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality2[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#tag-toggling[Tag
+Toggling]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations2[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list1[Drop-down
+List]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion2[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion2[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut2[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#select-command[Select
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality3[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations3[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list2[Drop-Down
+List]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion3[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion3[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut3[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#email-command[Email
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality4[Basic
+functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion4[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion4[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut4[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#find-command[Find
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#find-by-name[Find
+by name]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#find-by-tag[Find
+by tag]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#sorting[Sorting]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion5[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut5[Keyboard
+Shortcut]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion5[Invalid
+Command Suggestion]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#help-command[Help
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality5[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#help-window-searching[Help
+Window Searching]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion6[Invalid
+Command Suggestion]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#history-command[History
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality6[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion7[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut6[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#list-command[List
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality7[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations4[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#sorting1[Sorting]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion8[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut7[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#new-rolodex-command[New
+Rolodex Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#creating-new-rolodex-at-relative-directory[Creating
+New Rolodex at Relative Directory]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#creating-new-rolodex-at-system-directory[Creating
+New Rolodex at System Directory]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#attempting-to-re-create-existing-rolodex[Attempting
+to Re-Create Existing Rolodex]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion6[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion9[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut8[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#open-rolodex-command[Open
+Rolodex Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#requirements[Requirements]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#opening-rolodex-at-relative-directory[Opening
+Rolodex at Relative Directory]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#opening-rolodex-at-system-directory[Opening
+Rolodex at System Directory]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#attempting-to-open-non-existent-rolodex[Attempting
+to Open Non-Existent Rolodex]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion7[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion10[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut9[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#remark-command[Remark
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality8[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations5[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion8[Auto-completion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut10[Keyboard
+shortcut]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion11[Invalid
+Command Suggestion]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#undo-command[Undo
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality9[Basic
+Functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations6[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list3[Drop-Down
+List]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion12[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut11[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#redo-command[Redo
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality10[Basic
+functionality]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations7[Abbreviations]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#drop-down-list4[Drop-Down
+List]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion13[Invalid
+Command Suggestion]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#keyboard-shortcut12[Keyboard
+Shortcut]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#exit-command[Exit
+Command]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion14[Invalid
+Command Suggestion]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#end[End]
+** https://cs2103aug2017-w11-b2.github.io/TestScript/#bonus-star-wars-ep-iv[Bonus:
+Star Wars Ep IV]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#requirements1[Requirements]
+*** https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality11[Basic
+Functionality]
+
+https://cs2103aug2017-w11-b2.github.io/TestScript/#[Expand
+all]https://cs2103aug2017-w11-b2.github.io/TestScript/#[Back to
+top]https://cs2103aug2017-w11-b2.github.io/TestScript/#[Go to bottom]
+
+[[coFrameDiv]]
