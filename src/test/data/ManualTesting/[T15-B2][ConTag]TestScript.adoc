@@ -277,6 +277,15 @@ Alias: `w` +
 . The main application window will be opened.
 . The main application window will be opened instead of the welcome screen.
 
+=== Back up address book storage file in location
+
+Alias: `b` +
+*Acceptable format*: `backup TARGET_DIRECTORY`
+
+. Type `backup c:\`.
+
+==== Result
+
 == Exiting the program
 
 Alias: `q` +
