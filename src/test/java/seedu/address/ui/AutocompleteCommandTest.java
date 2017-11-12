@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -28,4 +30,21 @@ public class AutocompleteCommandTest {
         assertEquals(AutocompleteCommand.UNDO, AutocompleteCommand.getInstance("undo"));
     }
 
+    @Test
+    public void hasIndexParameter() throws Exception {
+        assertTrue(AutocompleteCommand.hasIndexParameter("edit"));
+        assertTrue(AutocompleteCommand.hasIndexParameter("delete"));
+        assertFalse(AutocompleteCommand.hasIndexParameter("add"));
+        assertFalse(AutocompleteCommand.hasIndexParameter("all123"));
+        assertFalse(AutocompleteCommand.hasIndexParameter(null));
+    }
+
+    @Test
+    public void hasPrefixParameter() throws Exception {
+        assertTrue(AutocompleteCommand.hasPrefixParameter("edit"));
+        assertTrue(AutocompleteCommand.hasPrefixParameter("add"));
+        assertFalse(AutocompleteCommand.hasPrefixParameter("delete"));
+        assertFalse(AutocompleteCommand.hasPrefixParameter("all123"));
+        assertFalse(AutocompleteCommand.hasPrefixParameter(null));
+    }
 }
