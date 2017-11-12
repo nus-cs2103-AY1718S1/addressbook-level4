@@ -351,16 +351,16 @@ Color name input can be in english or hexadecimal form.
 // tag::appointment[]
 === Set appointment: `appointment`
 
-You can add, sort and remove appointments from a specific contact at a given index. +
+You can add and sort appointments from a specific contact at a given index. +
 
 Appointment can be set using natural language. +
-You can refer to the following http://natty.joestelmach.com/doc.jsp[link] for the supported formats. +
 You can add multiple appointments to the same contact. +
 If no end time of appointment is specified, default appointment time is 1 hour. +
 
 
 [WARNING]
 Please do not input invalid dates/time. +
+You can refer to the following http://natty.joestelmach.com/doc.jsp[link] for the supported formats. +
 You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
 
 [width="59%",cols="<23%,<25%,<30%",options="header",]
@@ -381,18 +381,37 @@ You can only set dates that are after current time. (i.e. You cannot set a time 
 
 *Example:*
 
-Adding appointment +
-
 image::aptexample.png[width="800"]
     Figure 12: Appointment Command Usage Diagram for Adding
 
-Canceling appointments +
+=== Cancel Appointment: `cancel`
+
+You can cancel an appointment with contact. Refer to the daily view to cancel appointments.
+
+If more than one appointment has the same description and contact, the earlier appointment will be deleted.
+
+[NOTE]
+If the appointment does not show on the daily view, it may be too far ahead. +
+As of v1.5, you must wait until a least
+a month before the appointment before the appointment will show up on the daily view.
+This issue will be fixed by v2.0.
+
+
+
+[width="59%",cols="<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Purpose |Format |Example
+
+|Remove an appointment from the contact |`cancel Description with person`| `cancel lunch with James`
+
+|=======================================================================
+
+
+
+*Example:*
 
 image::aptexamplecancel.png[width="800"]
     Figure 13: Appointment Command Usage Diagram for Cancelling
-
-[NOTE]
-If the appointment does not show on the daily view, it may be too far ahead
 
 // end::appointment[]
 
