@@ -595,7 +595,7 @@ Unify's `find` command allows you to search for people based on their details, w
 * Remark
 
 image::UG_header_format.png[width="400"]
-Format: `find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+Format: `find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG] [r/REMARK]...` +
 
 image::UG_header_alias.png[width="400"]
 Alias: `search`, `filter`
@@ -1032,12 +1032,12 @@ image::UG_mainheader_commandsummary.png[width="900"]
 [cols="3*^"]
 |===
 | *COMMAND* | *FORMAT* | *EXAMPLE*
-| *Add* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS r/REMARK i/AVATAR_FILE_PATH [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Loves Tea i/d:/pictures/betsy.png t/friend t/colleague`
+| *Add* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [i/AVATAR_FILE_PATH] [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Loves Tea i/d:/pictures/betsy.png t/friend t/colleague`
 | *Alias* | `alias [ALIAS COMMAND]` | `alias unfriend delete 1`
 | *Clear* | `clear` | `clear`
 | *Delete* | `delete INDEX` | `delete 3`
 | *Edit* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`| `edit 2 n/James Lee r/Loves Cake`
-| *Find* | `find PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS]...` | `find James Jake`
+| *Find* | `find PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS]...` | `find James t/friend`
 | *List* | `list`| `list`
 | *Help* | `help`| `help`
 | *Select* | `select INDEX`| `select 2`
