@@ -54,7 +54,7 @@ To add a new contact, we need to use the `add` command.
 
 Let's add a new person called `Martin` into *BoNUS* +
 _Command:_ +
-`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends`
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends` +
 _Result:_ +
 `New person added: Martin Smith Phone: 85930167 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
 
@@ -62,13 +62,13 @@ _Result:_ +
 
 . The value for one property is invalid +
 _Command:_ +
-`add n/Den Smith p/85930167 e/www.smith.com a/25 New York City`
+`add n/Den Smith p/85930167 e/www.smith.com a/25 New York City` +
 _Result:_ +
 `Person emails should be 2 alphanumeric/period strings separated by '@'.`
 
 . The person already exists +
 _Command:_ +
-`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends`
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends` +
 _Result:_ +
 `This person already exists in the application.`
 
@@ -86,7 +86,7 @@ _Result:_ +
 
 . Let's edit the person called `Martin` we added just now (assume the index is `8`) +
 _Command:_ +
-`edit 8 p/86129854`
+`edit 8 p/86129854` +
 _Result:_ +
 `Edited Person: Martin Smith Phone: 86129854 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
 
@@ -238,7 +238,7 @@ _Command:_ +
 _Result:_ +
 `Deleted Event:  Event: Project Meeting for CS2101 |  Date/Time: 01 Dec, 2017 09:00 |  Address: SR09, School of Computing`
 
-2) Deletes an Event with index 11 on the Event List
+2) Deletes an Event with index 11 on the Event List +
 _Command:_ +
 `deleteE 11` +
 _Result:_ +
@@ -353,7 +353,7 @@ _Result:_ +
 
 . If the regular expression provided is invalid +
 _Command:_ +
-`config --add-property s/w f/weight m/Weight must be a positive integer. r/*asf`
+`config --add-property s/w f/weight m/Weight must be a positive integer. r/*asf` +
 _Result:_ +
 `The regular expression you provided is invalid.`
 
