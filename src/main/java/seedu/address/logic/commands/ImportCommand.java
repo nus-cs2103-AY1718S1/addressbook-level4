@@ -30,6 +30,7 @@ public class ImportCommand extends UndoableCommand {
 
     public static final String MESSAGE_FAILURE_DUPLICATE_PARCELS = "All parcels in the imported save file will create "
             + "duplicate parcels";
+    public static final String MESSAGE_INVALID_FILE_EMPTY = "File to import is empty";
 
     private final List<ReadOnlyParcel> parcels;
 
@@ -50,6 +51,10 @@ public class ImportCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
+
+        if (parcels.isEmpty()) {
+            throw new CommandException(MESSAGE_INVALID_FILE_EMPTY);
+        }
 
         List<ReadOnlyParcel> uniqueParcels = new ArrayList<>(); // list of unique parcels added to Ark.
         List<ReadOnlyParcel> duplicateParcels = new ArrayList<>(); // list of duplicate parcels that are not added
