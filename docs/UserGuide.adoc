@@ -236,6 +236,7 @@ Do take note that:
 * The tag must exist in any person.
 * `INDEX` must be a positive integer
 * `INDEX` of the person refers to his/her `INDEX` in the list displayed.
+* `removetag` is an undoable command, and you can restore your deleted tags.
 ****
 
 Format: `removetag all TAGNAME` OR `removetag INDEX TAGNAME`
@@ -458,7 +459,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `import`, `removetag` and `clear`).
 ====
 
 Examples:
