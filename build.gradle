@@ -97,7 +97,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "[W11-B4][Unify].jar"
         destinationDir = file("${buildDir}/jar/")
     }
 }
