@@ -551,7 +551,7 @@ When `DeleteEventCommand` is executed, the previous state of the address book be
 image::DeleteEventCommandDiagram1.png[width="800"]
 _Figure 5.4.1 Delete Event Command Diagram_
 
-The exectuion of DeleteEventCommand is processed in this way:
+The execution of DeleteEventCommand is processed in this way:
 
 . User will execute `events` to enter Events mode, and user can look through the list of events that he or she may want to delete.
 
@@ -765,7 +765,9 @@ consisting of a list of available colour themes in The Myth's Book.
 As seen in the diagram below, the `ThemeListCommand` inherts from `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
 
 image::ThemeListCommandDiagram1.png[width="800"]
-Figure 5.6.1 Theme List Command Diagram 1
+_Figure 5.6.1 Theme List Command Diagram 1_
+
+The execution of ThemeListCommand is processed in this way:
 
 . When the user execute `themes`, it posts an event `ShowThemeRequestEvent`, which will then be listened and handled by `handleShowThemeEvent` in `MainWindow`.
 
@@ -844,12 +846,12 @@ The following sequence diagram shows how the theme list operation works:
 As seen in the diagram below, when `themes` is typed into the command line input, a new `ThemeListcommand` is created.
 
 image::ThemeListCommandDiagram2.png[width="800"]
-Figure 5.6.2 Theme List Command Diagram 2
+_Figure 5.6.2 Theme List Command Diagram 2_
 
 As seen in the diagram below, when `themes` is executed in `ThemeListCommand`, it will post `ShowThemeRequestEvent` to the `EventsCenter`, which will be handled by `MainWindow` through `handleThemes`.
 
 image::ThemeListCommandDiagram3.png[width="800"]
-Figure 5.6.3 Theme List Command Diagram 3
+_Figure 5.6.3 Theme List Command Diagram 3_
 
 ==== Design Considerations
 
