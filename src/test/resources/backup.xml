@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<residentbook>
+    <persons>
+        <name>Amy Parker</name>
+        <phone>84455255</phone>
+        <email>amy_parker123@example.com</email>
+        <room>08-115</room>
+        <timestamp>null</timestamp>
+        <tagged>level8</tagged>
+    </persons>
+    <persons>
+        <name>Bernard Maddison</name>
+        <phone>98885432</phone>
+        <email>bmad@example.com</email>
+        <room>02-203</room>
+        <timestamp>null</timestamp>
+        <tagged>owesMoney</tagged>
+        <tagged>professor</tagged>
+    </persons>
+    <persons>
+        <name>Carlo Henn</name>
+        <phone>95222563</phone>
+        <email>carlo.h@example.com</email>
+        <room>04-300C</room>
+        <timestamp>null</timestamp>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Danielle Chua</name>
+        <phone>82252533</phone>
+        <email>chua_jj_danielle@example.com</email>
+        <room>06-120</room>
+        <timestamp>null</timestamp>
+        <tagged>friends</tagged>
+    </persons>
+    <tags>level8</tags>
+    <tags>owesMoney</tags>
+    <tags>professor</tags>
+    <tags>friends</tags>
+</residentbook>

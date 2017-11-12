@@ -69,8 +69,11 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ROOM_DESC = " " + PREFIX_ROOM; // empty string not allowed for rooms
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    //@@author blackroxs
     public static final String INVALID_TAG = "testing"; // 'testing' does not exist inside the room book
+    public static final String INVALID_FILE = "testing.xml"; // 'testing.xml' does not exist inside the temp folder
 
+    //@@author
     public static final String VALID_TITLE_POLYMATH = "USPolymath";
     public static final String VALID_LOCATION_POLYMATH = "Chatterbox";
     public static final String VALID_DESCRIPTION_POLYMATH = "Intellectual Night";

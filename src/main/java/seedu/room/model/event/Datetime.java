@@ -28,6 +28,9 @@ public class Datetime {
     public static final String INVALID_TIME_FORMAT =
             "Time should be represented only by digits and in the format hhmm";
 
+    public static final String MULTIPLE_DAY_EVENT_ERROR =
+            "The event should end on the same day";
+
     public final String value;
     public final LocalDateTime datetime;
 
@@ -40,6 +43,10 @@ public class Datetime {
         try {
             if (!isValidDatetime(datetime)) {
                 throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINTS);
+            }
+
+            if (!isSingleDayEvent(datetime)) {
+                throw new IllegalValueException(MULTIPLE_DAY_EVENT_ERROR);
             }
 
             //Update datetime
@@ -66,7 +73,6 @@ public class Datetime {
 
             //Store as a LocalDateTime object
             this.datetime = this.toLocalDateTime(components[0] + " " + starttimeString);
-
             this.value = date + " " + starttimeString + " to " + endtimeString;
 
         } catch (DateTimeException e) {
@@ -88,20 +94,38 @@ public class Datetime {
      * Returns true if a given string is a valid datetime in the format dd/mm/yyyy hhmm k.
      */
     public static boolean isValidDatetime(String test) {
-
         String[] components = test.split(" ");
+        String date = components[0];
+        String startTime = components[1];
 
         //If the format is dd/mm/yyyy hhmm k
         if (components.length == 3) {
-            return isValidDate(components[0]) && isValidTime(components[1]) && isValidDuration(components[2]);
+            String duration = components[2];
+            return isValidDate(date) && isValidTime(startTime) && isValidDuration(duration);
         //If the format is dd/mm/yyyy hhmm to hhmm
         } else if (components.length == 4) {
+            String endtime = components[3];
+            return isValidDate(date) && isValidTime(startTime) && isValidTime(endtime);
+        } else {
+            return false;
+        }
+    }
 
-            for (String k : components) {
-            }
+    /**
+     * Returns true if the event ends on the same day and false if it overflows to the next day
+     */
+    public static boolean isSingleDayEvent(String test) {
+        String[] components = test.split(" ");
+        String startTime = components[1];
 
-
-            return isValidDate(components[0]) && isValidTime(components[1]) && isValidTime(components[3]);
+        //If the format is dd/mm/yyyy hhmm k
+        if (components.length == 3) {
+            String duration = components[2];
+            return endOnTheSameDay (startTime, duration);
+        //If the format is dd/mm/yyyy hhmm to hhmm
+        } else if (components.length == 4) {
+            String endtime = components[3];
+            return endTimeAfterStart(startTime, endtime);
         } else {
             return false;
         }
@@ -192,6 +216,39 @@ public class Datetime {
             return updatedString;
         } else {
             throw new IllegalValueException(INVALID_TIME_FORMAT);
+        }
+    }
+
+    /**
+     * Returns true if the event ends on the same day and false if it overflows to the next day
+     */
+    public static Boolean endOnTheSameDay(String startTimeString, String durationString) {
+        assert(isValidTime(startTimeString));
+        assert(isValidDuration(durationString));
+
+        int startTime = Integer.parseInt(startTimeString);
+        int duration = Integer.parseInt(durationString);
+        int endTime = startTime + 100 * duration;
+        if (endTime > 2359) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Returns true if the event ends on the same day and false if it overflows to the next day
+     */
+    public static Boolean endTimeAfterStart(String startTimeString, String endtimeString) {
+        assert(isValidTime(startTimeString));
+        assert(isValidTime(endtimeString));
+
+        int startTime = Integer.parseInt(startTimeString);
+        int endTime = Integer.parseInt(endtimeString);
+        if (startTime > endTime) {
+            return false;
+        } else {
+            return true;
         }
     }
 

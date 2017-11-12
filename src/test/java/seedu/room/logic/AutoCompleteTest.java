@@ -29,7 +29,7 @@ public class AutoCompleteTest {
     public void assert_baseCommandsMatchUponCreation_success() {
         String[] actualBaseCommands = { "add", "addEvent", "addImage", "backup", "edit", "select", "delete",
             "deleteByTag", "deleteEvent", "deleteImage", "deleteTag", "clear", "find", "list", "highlight", "history",
-            "import", "exit", "help", "undo", "redo", "sort", "swaproom"
+            "import", "exit", "help", "undo", "redo", "sort", "swaproom", "switch"
         };
         String[] baseCommands = autoComplete.getAutoCompleteList();
         assertTrue(Arrays.equals(actualBaseCommands, baseCommands));
@@ -50,7 +50,7 @@ public class AutoCompleteTest {
     public void assert_resetAutoCompleteListMatchBaseCommands_success() {
         String[] actualBaseCommands = { "add", "addEvent", "addImage", "backup", "edit", "select", "delete",
             "deleteByTag", "deleteEvent", "deleteImage", "deleteTag", "clear", "find", "list", "highlight", "history",
-            "import", "exit", "help", "undo", "redo", "sort", "swaproom"
+            "import", "exit", "help", "undo", "redo", "sort", "swaproom", "switch"
         };
         autoComplete.updateAutoCompleteList("");
         String[] baseCommands = autoComplete.getAutoCompleteList();

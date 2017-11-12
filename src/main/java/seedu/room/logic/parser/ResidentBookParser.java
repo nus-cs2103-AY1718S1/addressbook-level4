@@ -29,6 +29,7 @@ import seedu.room.logic.commands.RemoveTagCommand;
 import seedu.room.logic.commands.SelectCommand;
 import seedu.room.logic.commands.SortCommand;
 import seedu.room.logic.commands.SwaproomCommand;
+import seedu.room.logic.commands.SwitchTabCommand;
 import seedu.room.logic.commands.UndoCommand;
 
 import seedu.room.logic.parser.exceptions.ParseException;
@@ -95,6 +96,7 @@ public class ResidentBookParser {
         case DeleteImageCommand.COMMAND_ALIAS:
             return new DeleteImageCommandParser().parse(arguments);
 
+        //@@author sushinoya
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
@@ -103,6 +105,10 @@ public class ResidentBookParser {
         case SwaproomCommand.COMMAND_ALIAS:
             return new SwaproomCommandParser().parse(arguments);
 
+        case SwitchTabCommand.COMMAND_WORD:
+        case SwitchTabCommand.COMMAND_ALIAS:
+            return new SwitchTabCommandParser().parse(arguments);
+
         case AddEventCommand.COMMAND_WORD:
         case AddEventCommand.COMMAND_ALIAS:
             return new AddEventCommandParser().parse(arguments);
@@ -110,6 +116,7 @@ public class ResidentBookParser {
         case DeleteEventCommand.COMMAND_WORD:
         case DeleteEventCommand.COMMAND_ALIAS:
             return new DeleteEventCommandParser().parse(arguments);
+        //@@author
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:

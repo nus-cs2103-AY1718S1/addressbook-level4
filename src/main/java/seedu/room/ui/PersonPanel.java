@@ -16,7 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -133,41 +132,16 @@ public class PersonPanel extends UiPart<Region> {
      */
     private void initImage() {
         try {
-            File picFile = new File(person.getPicture().getPictureUrl());
-            if (picFile.exists()) {
-                FileInputStream fileStream = new FileInputStream(picFile);
-                Image personPicture = new Image(fileStream);
-                picture.setImage(personPicture);
-            } else {
+            initProjectImage();
+        } catch (Exception pfnfe) {
+            try {
                 initJarImage();
+            } catch (Exception jfnfe) {
+                ;
             }
-            picture.setFitHeight(person.getPicture().PIC_HEIGHT);
-            picture.setFitWidth(person.getPicture().PIC_WIDTH);
-            informationPane.getChildren().add(picture);
-            picture.setOnMouseClicked((MouseEvent e) -> {
-                handleAddImage();
-            });
-        } catch (Exception e) {
-            System.out.println("Image not found");
         }
-    }
-
-    /**
-     * Handle loading of image from both within and outside of jar file
-     */
-    public void initJarImage() throws FileNotFoundException {
-        try {
-            InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
-            Image personPicture = new Image(in);
-            picture.setImage(personPicture);
-            person.getPicture().setJarResourcePath();
-        } catch (Exception e) {
-            File picFile = new File(person.getPicture().getJarPictureUrl());
-            FileInputStream fileStream = new FileInputStream(picFile);
-            Image personPicture = new Image(fileStream);
-            picture.setImage(personPicture);
-            person.getPicture().setJarResourcePath();
-        }
+        picture.setFitHeight(person.getPicture().PIC_HEIGHT);
+        picture.setFitWidth(person.getPicture().PIC_WIDTH);
     }
 
     /**
@@ -195,8 +169,6 @@ public class PersonPanel extends UiPart<Region> {
             } catch (Exception e) {
                 System.out.println(e + "Cannot set Image of person");
             }
-        } else {
-            System.out.println("Please select an Image File");
         }
     }
 
@@ -208,21 +180,37 @@ public class PersonPanel extends UiPart<Region> {
         try {
             person.getPicture().resetPictureUrl();
             if (person.getPicture().checkJarResourcePath()) {
-                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
-                person.getPicture().setJarResourcePath();
-                Image personPicture = new Image(in);
-                picture.setImage(personPicture);
+                initJarImage();
             } else {
-                person.getPicture().resetPictureUrl();
-                File picFile = new File(person.getPicture().getPictureUrl());
-                FileInputStream fileStream = new FileInputStream(picFile);
-                Image personPicture = new Image(fileStream);
-                picture.setImage(personPicture);
+                initProjectImage();
             }
         } catch (Exception e) {
             System.out.println("Placeholder Image not found");
         }
     }
+
+    /**
+     * Handle loading of image during development
+     */
+    public void initProjectImage() throws FileNotFoundException {
+        File picFile = new File(person.getPicture().getPictureUrl());
+        FileInputStream fileStream = new FileInputStream(picFile);
+        Image personPicture = new Image(fileStream);
+        picture.setImage(personPicture);
+        informationPane.getChildren().add(picture);
+    }
+
+    /**
+     * Handle loading of image in production (i.e. from jar file)
+     */
+    public void initJarImage() throws FileNotFoundException {
+        InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+        Image personPicture = new Image(in);
+        picture.setImage(personPicture);
+        person.getPicture().setJarResourcePath();
+        informationPane.getChildren().add(picture);
+    }
+
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {

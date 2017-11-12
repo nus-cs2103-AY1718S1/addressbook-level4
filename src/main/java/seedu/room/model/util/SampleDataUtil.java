@@ -36,20 +36,20 @@ public class SampleDataUtil {
                     getTagSet("professor")),
 
                 new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                    new Room("09-100A"), new Timestamp(0),
+                    new Room("10-100A"), new Timestamp(0),
                     getTagSet("level10", "RA")),
 
                 new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                     new Room("21-118"), new Timestamp(0),
-                    getTagSet("level16")),
+                    getTagSet("level21")),
 
                 new Person(new Name("David Li"), new Phone("91023282"), new Email("lidavid@example.com"),
                     new Room("26-105"), new Timestamp(0),
-                    getTagSet("level17")),
+                    getTagSet("level26")),
 
                 new Person(new Name("Irfan Ibrahim"), new Phone("92492321"), new Email("irfan@example.com"),
                     new Room("17-135F"), new Timestamp(0),
-                    getTagSet("level18")),
+                    getTagSet("level17")),
 
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                     new Room("12-120E"), new Timestamp(0),
@@ -61,19 +61,19 @@ public class SampleDataUtil {
 
                 new Person(new Name("Peter Vail"), new Phone("99098758"), new Email("peter@example.com"),
                     new Room("05-150A"), new Timestamp(0),
-                    getTagSet("level21", "RA")),
+                    getTagSet("level5", "RA")),
 
                 new Person(new Name("Shawna Metzger"), new Phone("98383283"), new Email("shwana@example.com"),
                     new Room("20-119"), new Timestamp(0),
-                    getTagSet("level12")),
+                    getTagSet("level20")),
 
                 new Person(new Name("Varun Gupta"), new Phone("91030982"), new Email("varun@example.com"),
                     new Room("30-115"), new Timestamp(0),
-                    getTagSet("level7")),
+                    getTagSet("level30")),
 
                 new Person(new Name("Govind Koyal"), new Phone("92412321"), new Email("govind@example.com"),
                     new Room("16-134F"), new Timestamp(0),
-                    getTagSet("level9", "NUSSU")),
+                    getTagSet("level16", "NUSSU")),
 
                 new Person(new Name("James Hobbit"), new Phone("92620917"), new Email("jamesh@example.com"),
                     new Room("04-120"), new Timestamp(0),
@@ -85,19 +85,19 @@ public class SampleDataUtil {
 
                 new Person(new Name("Sherlock Holmes"), new Phone("90982758"), new Email("sherlock@example.com"),
                     new Room("16-100A"), new Timestamp(0),
-                    getTagSet("level5", "RA")),
+                    getTagSet("level16", "RA")),
 
                 new Person(new Name("Harry Jones"), new Phone("93211233"), new Email("harry@example.com"),
                     new Room("07-118"), new Timestamp(0),
-                    getTagSet("level6", "staff", "helper")),
+                    getTagSet("level7", "staff", "helper")),
 
                 new Person(new Name("Katniss Mallark"), new Phone("92981282"), new Email("kat92@example.com"),
                     new Room("03-115"), new Timestamp(0),
-                    getTagSet("level8")),
+                    getTagSet("level3")),
 
                 new Person(new Name("James T Kirk"), new Phone("98765654"), new Email("kirk@example.com"),
                     new Room("04-135F"), new Timestamp(0),
-                    getTagSet("level19")),
+                    getTagSet("level4")),
 
                 new Person(new Name("Luna Lovegood"), new Phone("92620977"), new Email("luna@example.com"),
                     new Room("21-130"), new Timestamp(0),
@@ -105,11 +105,11 @@ public class SampleDataUtil {
 
                 new Person(new Name("Dolores Umbridge"), new Phone("91928282"), new Email("dolores@example.com"),
                     new Room("16-115"), new Timestamp(0),
-                    getTagSet("level8")),
+                    getTagSet("level16")),
 
                 new Person(new Name("Abeforth"), new Phone("92491321"), new Email("abeforth@example.com"),
                     new Room("15-132"), new Timestamp(0),
-                    getTagSet("level20"))
+                    getTagSet("level15"))
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
