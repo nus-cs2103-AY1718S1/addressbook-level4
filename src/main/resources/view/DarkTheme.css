@@ -161,7 +161,7 @@
 }
 
 .pane-with-border {
-    -fx-background-color: #222646;
+    -fx-background-color: #1a1e37;
     -fx-border-color: transparent;
     -fx-border-top-width: 1px;
 }
@@ -187,9 +187,9 @@
 }
 
 .status-bar .label {
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Old Standard TT";
     -fx-text-fill: white;
-    -fx-font-size: 9pt;
+    -fx-font-size: 10pt;
 }
 
 .status-bar-with-border {
@@ -203,17 +203,15 @@
 }
 
 .grid-pane {
-    -fx-background-color: derive(#1d1d1d, 30%);
-    -fx-border-color: derive(#1d1d1d, 30%);
-    -fx-border-width: 1px;
+    -fx-background-color: #1a1e37;
 }
 
 .grid-pane .anchor-pane {
-    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-background-color: #1a1e37;
 }
 
 .context-menu {
-    -fx-background-color: #222646;
+    -fx-background-color: #1a1e37;
 }
 
 .context-menu .label {
@@ -221,11 +219,11 @@
 }
 
 .menu-bar {
-    -fx-background-color: #222646;
+    -fx-background-color: #1a1e37;
 }
 
 .menu-bar .label {
-    -fx-background-color: #222646;
+    -fx-background-color: #1a1e37;
     -fx-font-size: 12pt;
     -fx-font-family: "Old Standard TT";
     -fx-text-fill: #fffefd;
@@ -240,7 +238,7 @@
 }
 
 .menu:hover .label {
-    -fx-text-fill: #ffdf00;
+    -fx-text-fill: #71ffa0;
 }
 
 .menu:showing .label {
@@ -252,7 +250,7 @@
 }
 
 .menu-item:focused .label {
-    -fx-text-fill: #ffdf00;
+    -fx-text-fill: #71ffa0;
 }
 
 
@@ -361,20 +359,24 @@
     -fx-border-width: 0;
 }
 
+.command-pane {
+    -fx-background-color: derive(#222646, 10%);
+    -fx-background-radius: 10 10 10 10;
+}
+
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #F70D1A;
 }
 
 #commandTextField {
-    -fx-background-color: transparent  #222646 transparent #222646;
+    -fx-background-color: transparent;
     -fx-background-insets: 0;
-    -fx-border-color: transparent transparent #ffdf00 transparent;
     -fx-border-insets: 0;
     -fx-border-width: 1;
     -fx-font-family: "Old Standard TT";
     -fx-font-size: 13pt;
-    -fx-text-fill: white;
+    -fx-text-fill: derive(#71ffa0,-20%);
 }
 
 #filterField, #personListPanel, #personWebpage {

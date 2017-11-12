@@ -43,11 +43,11 @@
 }
 
 .menu:hover .label {
-    -fx-text-fill: #ffdf00;
+    -fx-text-fill: #71ffa0;
 }
 
 .menu:showing .label {
-    -fx-text-fill: #fefdff;
+    -fx-text-fill: #71ffa0;
 }
 
 .menu-item:focused {
@@ -57,3 +57,26 @@
 .menu-item:focused .label {
     -fx-text-fill: #ffdf00;
 }
+
+/* ========== COMMAND BOX ==========*/
+
+.command-pane {
+    -fx-background-color: derive(#222646, 10%);
+    -fx-background-radius: 10 10 10 10;
+}
+
+#commandTypeLabel {
+    -fx-font-size: 11px;
+    -fx-text-fill: #F70D1A;
+}
+
+#commandTextField {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-border-width: 1;
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 13pt;
+    -fx-text-fill: derive(#71ffa0,-20%);
+}
+

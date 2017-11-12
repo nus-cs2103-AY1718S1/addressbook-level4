@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- @@author deep4k -->
+
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -15,8 +16,8 @@
       <ColumnConstraints />
     </columnConstraints>
     <StatusBar fx:id="syncStatus" styleClass="anchor-pane" />
-    <StatusBar fx:id="saveLocationStatus" nodeOrientation="RIGHT_TO_LEFT" styleClass="anchor-pane" GridPane.columnIndex="1" />
-    <StatusBar fx:id="numberStatus" nodeOrientation="RIGHT_TO_LEFT" styleClass="anchor-pane" GridPane.columnIndex="2" />
+    <StatusBar fx:id="saveLocationStatus" nodeOrientation="LEFT_TO_RIGHT" styleClass="anchor-pane" GridPane.columnIndex="1" />
+    <StatusBar fx:id="numberStatus" nodeOrientation="LEFT_TO_RIGHT" styleClass="anchor-pane" GridPane.columnIndex="2" />
     <StatusBar fx:id="timeStatus" nodeOrientation="RIGHT_TO_LEFT" styleClass="anchor-pane" text="" GridPane.columnIndex="3" />
    <rowConstraints>
       <RowConstraints />
