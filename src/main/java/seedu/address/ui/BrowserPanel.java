@@ -45,10 +45,12 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /*
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
+    */
 
     //@@author nelsonqyj
     private void loadMeetingPage(ReadOnlyMeeting meeting) {
@@ -84,12 +86,13 @@ public class BrowserPanel extends UiPart<Region> {
     }
     //@@author
 
+    /*
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
-
+    */
 
 
 }

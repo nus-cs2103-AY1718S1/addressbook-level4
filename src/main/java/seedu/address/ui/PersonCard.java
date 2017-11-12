@@ -24,6 +24,7 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
+    public final int index;
 
     @FXML
     private HBox cardPane;
@@ -46,7 +47,14 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+        this.index = displayedIndex;
     }
+
+    //@@author nelsonqyj
+    public int getZeroBasedIndex() {
+        return index - 1; //to ensure the index is zero-based
+    }
+    //@@author
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties

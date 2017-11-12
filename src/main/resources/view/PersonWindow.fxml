@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<!-- @@author nelsonqyj -->
+
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="335.0" prefWidth="440.0" text="Contact Details" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="190.0" prefWidth="398.0" style="-fx-background-color: paleturquoise;">
+         <children>
+            <Label fx:id="email" layoutX="7.0" layoutY="236.0" text="\$email">
+               <font>
+                  <Font name="Noteworthy Bold" size="17.0" />
+               </font></Label>
+            <Label fx:id="address" layoutX="7.0" layoutY="206.0" text="\$address">
+               <font>
+                  <Font name="Noteworthy Bold" size="17.0" />
+               </font></Label>
+            <Label fx:id="name" layoutX="7.0" layoutY="146.0" text="\$name">
+               <font>
+                  <Font name="Noteworthy Bold" size="17.0" />
+               </font></Label>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/red_contacts_icon.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="383.0" layoutY="263.0" mnemonicParsing="false" onKeyPressed="#handleExit" onMouseClicked="#handleExit" style="-fx-background-color: palevioletred;" text="Done">
+               <font>
+                  <Font name="Noteworthy Bold" size="13.0" />
+               </font></Button>
+            <Label fx:id="phone" layoutX="7.0" layoutY="176.0" text="\$number">
+               <font>
+                  <Font name="Noteworthy Bold" size="17.0" />
+               </font></Label>
+         </children></AnchorPane>
+  </content>
+   <font>
+      <Font name="Noteworthy Bold" size="13.0" />
+   </font>
+</TitledPane>
