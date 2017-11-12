@@ -155,7 +155,8 @@ public class PersonPanel extends UiPart<Region> {
         File selectedPic = picChooser.showOpenDialog(null);
         if (selectedPic != null) {
             try {
-                resident.getPicture().setPictureUrl(resident.getName().toString() + resident.getPhone().toString() + ".jpg");
+                resident.getPicture().setPictureUrl(resident.getName().toString()
+                    + resident.getPhone().toString() + ".jpg");
                 logic.updatePersonListPicture((Person) resident);
                 FileInputStream fileStream;
                 if (resident.getPicture().checkJarResourcePath()) {

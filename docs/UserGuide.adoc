@@ -67,7 +67,7 @@ image::Ui_short_error.PNG[width="790"]
 Format: `help`
 
 // tag::autocomplete[]
-=== Autocomplete CLI
+=== Autocomplete CLI (since v1.3)
 
 Command Line Interface autocomplete feature which auto-generates list of resident names on commands such as find.
 
@@ -174,7 +174,7 @@ Examples:
 
 image::delete_person.png[width="400"]
 
-=== Adding a picture: `GUI image`
+=== Adding a picture: `GUI image` (since v1.2)
 
 Adds a picture of a resident in the resident book +
 Format: `click on the +image button after selecting a resident in the current list of displayed residents`
@@ -182,7 +182,7 @@ Format: `click on the +image button after selecting a resident in the current li
 [TIP]
 Similar to the CLI version of add image, this action is NOT undoable
 
-=== Deleting a picture: `GUI button`
+=== Deleting a picture: `GUI button` (since v1.2)
 
 Deletes a person's picture from the address book +
 Format: `click on the -image button after selecting a resident in the displayed list`
@@ -193,7 +193,7 @@ Similar to the CLI version of add image, this action is NOT undoable
 // end::picture[]
 
 // tag::highlight[]
-=== Highlighting by tag : `highlight`
+=== Highlighting by tag : `highlight` (since v1.4)
 
 Highlights all residents with specified tag / Removes highlighting when residents highlighted
 Format: `highlight TAG_NAME` / `highlight '-'"
@@ -458,9 +458,16 @@ Remove all "pending" tags from list of residents.
 
 Query Facebook using list of emails from resident book.
 
+// tag::personPanel[]
 === Person Panel (since v1.4)
 
-Clicking on a person now displays additional information in the side pane
+Person Panel has been introduced to allow additional information of residents to be displayed.
+
+image::personPanel.png[width="500"]
+
+* Panel includes GUI add and delete image buttons to update pictures of residents
+
+// end::personPanel[]
 
 // tag::Calendar[]
 === Calendar Interface (Since v1.4)
