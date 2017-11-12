@@ -540,7 +540,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `u` (reverses the `delete 1` command) +
 
 // tag::suggestion[]
-=== `y` or `yes` or `ok` or `yea` or `yeah`: Confirming a suggested command _(Since v1.5rc)_
+=== `y` or `yes` or `k` or `ok` or `yea` or `yeah`: Confirming a suggested command _(Since v1.5)_
 
 Confirms a command suggested by Rolodex. +
 Format: `y` or `yes` or `ok` or `yea` or `yeah` +
@@ -552,14 +552,20 @@ A command will be suggested by Rolodex if you make a typo in your command.
 Examples:
 
 * `s3`, a typo for the command `s 3` will be suggested.
-`y` or `yes` or `ok` or `yea` or `yeah` executes `s 3` as normal and _Charlotte Oliviero_ will be selected:
+`y` or `yes` or `k` or `ok` or `yea` or `yeah` executes `s 3` as normal and _Charlotte Oliviero_ will be selected:
 
-image::SuggestionSelect.png[width="500"]
+image::SuggestionSelect.png[width="700"]
 
 * `rmke3 Likes to swim` will be suggested as the formatted command, `rmk 3 r/Likes to swim`.
-`y` or `yes` or `ok` or `yea` or `yeah` executes `rmk 3 r/Likes to swim` as normal and `Likes to swim` will be added to _Charlotte Oliviero_:
+`y` or `yes` or `k` or `ok` or `yea` or `yeah` executes `rmk 3 r/Likes to swim` as normal and `Likes to swim` will be added to _Charlotte Oliviero_:
 
-image::SuggestionRemark.png[width="500"]
+image::SuggestionRemark.png[width="700"]
+
+* `add Linda Jean 410 Madison Avenue NY 10029 friends neighbours ab@de.fg 98437653` will be suggested as the formatted command,
+`add n/Hansel Black p/98437653 e/ab@de.fg a/410 Madison Avenue NY 10029 t/friends t/neighbours`.
+`y` or `yes` or `k` or `ok` or `yea` or `yeah` executes the `add` command as normal and _Linda Jean_ with appropriate fields will be added to the Rolodex:
+
+image::SuggestionAdd.png[width="700"]
 // end::suggestion[]
 
 

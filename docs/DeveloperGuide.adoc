@@ -1148,10 +1148,323 @@ private void clearHighlights(WebEngine engine) {
 // end::helpWindowHighlight[]
 
 // tag::suggestion[]
-== Suggestions Mechanism
-// The suggestion mechanism is implemented at Rolodex's parser level under the logic component.
-// TODO: v1.5
-This feature is a work in progress for v1.5.
+=== Suggestions Mechanism
+The suggestion mechanism is implemented at Rolodex's parser level under the logic component.
+The suggestion is stored as an instance object to be evaluated only if the next command matches any of the suggestion's _affirmation commands_, `y`, `yes`, `k`, `ok`, `yea` or `yeah`, otherwise, the suggestion is destroyed.
+Upon receiving a bogus command, the command string is evaluated by the suggestion object which determines if it can be turned into a valid suggestion to be executed.
+
+For this section's explanation of the suggestions mechanism, the terms _commandWord_, _arguments_ or _rawArgs_ are usually a reference to the following:
+
+image::SuggestionParseLabel.png[]
+
+* _commandWord_: The first resulting word in a whitespace delimited string.
+* _rawArgs_: The raw argument string to be parsed for the suggestion, after excluding the _commandWord_.
+* _arguments_: Can be the same meaning or _rawArgs_ or mean arguments in a broader context. Please adjust to the context if necessary.
+
+The high level sequence diagram for a bogus `udon is yummy` request can be seen below:
+
+image::SuggestionHighLevelSequenceDiagram.png[]
+
+1. User enters a bogus command `udon is yummy`.
+2. `RolodexParser` parses the command and separates the string `udon is yummy` into the commandWord, `udon` and arguments, `is yummy`.
+* `udon` is not a recognized command word
+* The execution is passed on to a new Suggestion instance.
+3. Suggestion determines which command abbreviation `udon` is closest to up to a _specified threshold_, which in this case, is `undo`.
+* Since `undo` does not require any arguments, the supplied arguments `is yummy` are ignored
+* The suggestion is noted as a suggestible exception.
+4. The suggestion is stored as an instance variable in `RolodexParser`.
+5. `RolodexParser` throws a `SuggestibleParseException` to be handled separately from `ParseException` by UI elements.
+* The `CommandBox` is cleared to make way for the user to easily enter any of the suggestion _affirmation commands_.
+* The `ResultDisplay` panel displays a formatted string for the suggestion of the command to be alternatively executed.
+6. At this point, the user enters an _affirmation command_, `k` for the `RolodexParser` to be handled.
+7. As a suggestion is present in `RolodexParser`, the user input `k` is converted into the parsed `Suggestion` and handled as usual.
+
+The behaviour of the `undo` operation remains unchanged, as explained in the <<Undo/Redo Mechanism>> section.
+The suggestions are not limited `undo` commands and are applicable to all commands in the Rolodex. +
+Levenshtein distance is used to determine the closest command to the whitespace delimited first user input.
+If two command abbreviations are of equal distance to the bogus word, an arbitrary command is selected for the suggestion. +
+
+The suggestions are handled differently by different types of `Command`.
+
+==== Commands with No Arguments
+
+The behaviour of commands that are known to have no arguments by default, namely,
+
+* `Clear`
+* `List`
+* `History`
+* `Exit`
+* `Help`
+* `Undo`
+* `Redo`
+
+are handled in a manner similar to `undo` as described above. The arguments are ignored.
+
+==== Commands with a Single Index Type Argument
+
+The commands that hold a single, indexed type argument are
+
+* `Delete`
+* `Select`
+
+These commands require an argument of an index type, within the range from 1 to the total number of persons in the Rolodex.
+The behaviour of index parsing can be seen as such:
+
+[source,java]
+----
+public static int parseFirstIndex(String value, int rolodexSize) throws NumberFormatException {
+    Matcher m = Pattern.compile(INDEX_VALIDATION_REGEX).matcher(value);
+    while (m.find()) {
+        int firstIndex = Math.abs(Integer.parseInt(m.group()));
+        if (firstIndex > 0 && firstIndex <= rolodexSize) {
+            return firstIndex;
+        }
+    }
+    throw new NumberFormatException();
+}
+----
+
+The algorithm searches for instances of an integer in the supplied string and checks if it falls within the possible range of indices.
+If no more integers can be found, the method throws a `NumberFormatException` to be converted into an non-suggestible `ParseException`.
+
+Sometimes users may include the index in the command word, without a whitespace separation. To handle such a case,
+we first look for the index within the arguments, as usual. If no valid indices are found, we search the command word instead.
+
+==== Commands with Directory Type Arguments
+
+The commands that hold a single file path argument are
+
+* `Open`
+* `New`
+
+Arguments for these commands are parsed by using the same filepath validation as seen in <<Open File and New File Mechanism>>,
+except with looser regex that does not validate from the beginning to the end of the string given.
+
+[source,java]
+----
+public static final String FILEPATH_REGEX_NON_STRICT = "(.+)/([^/]+)";
+----
+
+The rest of the string is then formatted into a valid file path and a `.rldx` extension is added to the end of the string.
+
+[source,java]
+----
+public static String parseFirstFilePath(String value) throws IllegalArgumentException {
+    Matcher m = Pattern.compile(FILEPATH_REGEX_NON_STRICT).matcher(replaceBackslashes(value).trim());
+    if (m.find() && isValidRolodexStorageFilepath(m.group())) {
+        return m.group().replaceAll(ROLODEX_FILE_EXTENSION, "").trim() + ROLODEX_FILE_EXTENSION;
+    }
+    throw new IllegalArgumentException();
+}
+----
+
+==== Find Command Suggestions
+
+The `find` command uses a simpler suggestion format by simply taking all arguments, checking if it is not empty and returning it all together.
+
+[source,java]
+----
+public static String parseArguments(String rawArgs) {
+    // Check if null and is a non-empty string.
+    requireNonNull(rawArgs);
+    if (!rawArgs.trim().isEmpty()) {
+        return " " + rawArgs.trim();
+    }
+    return null;
+}
+----
+
+==== Remark/Email Command Suggestions
+
+The `Remark` and `Email` command are in the format of
+
+1. a command word followed by,
+2. an index then,
+3. a memo field.
+
+For the remark command, the memo is simply the remark to be entered into the person's remark field, preceded by the prefix `r/`. +
+The email command's memo field is the subject of the email to be sent, preceded by the prefix `s/`.
+
+Similar to <<Commands with a Single Index Type Argument>>, if the index does not exist in the arguments, the command word is checked instead.
+
+[source,java]
+----
+public static String parseArguments(String commandWord, String rawArgs) {
+    // Check if index (number) exists, removes Remark prefix (if it exists) and re-adds it before returning.
+    if (isParsableIndex(rawArgs, getLastRolodexSize())) {
+        String indexString = Integer.toString(parseFirstIndex(rawArgs, getLastRolodexSize()));
+        String remark = parseRemoveFirstIndex(rawArgs, getLastRolodexSize()).trim().replace(PREFIX_REMARK.toString(), "");
+        return " " + indexString + " " + PREFIX_REMARK + remark;
+    } else if (isParsableIndex(commandWord, getLastRolodexSize())) {
+        String indexString = Integer.toString(parseFirstIndex(commandWord, getLastRolodexSize()));
+        String remark = rawArgs.trim().replace(PREFIX_REMARK.toString(), "");
+        return " " + indexString + " " + PREFIX_REMARK + remark;
+    }
+    return null;
+}
+----
+
+However, instead of stopping at the index, the remainder of the arguments after the index has been removed is parsed as the memo field's contents.
+
+==== Add Command Suggestions
+
+When adding a new person, we have to note that a `Person` has four compulsory fields, `Name`, `Phone`, `Email` and `Address`.
+`Tag` and `Remark` are optional and have to be handled accordingly.
+
+The implementation for `Add` suggestions follow a decision flow model that can be seen through the following activity diagram, from `AddCommandParser.parseArguments(rawArgs)` execution point of view:
+
+image::SuggestionAddActivityDiagram.png[width="600"]
+
+During the handling of a suggestible command arguments for an `Add` command,
+
+1. `rawArgs` is set to be the initial value of the remaining arguments.
+2. Mandatory `Phone` is checked first. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Phones are expected to match the phone regex,
+* having a minimum of digits, or
+* optionally prepended with a `+`,
+* making it easily distinguishable from other numeric formats like the index, building numbers or postal codes.
+3. Mandatory `Email` is checked. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Emails are expected to have the `@` character inside them and regex matching is straightforward,
+* making emails easily distinguishable from other fields.
+4. Existing `Tag` words are checked. If present, extract, remove and continue. Otherwise continue.
+* Words (remaining string delimited by whitespace) that are also tags in the Rolodex session are _existing tag words_.
+5. Tag prefixes (`t/`) are checked. If present, extract, remove and continue. Otherwise continue.
+* `t/TAG` behavior as per normal.
+6. Remark prefixes (`r/`) are checked. If present, extract, remove and continue. Otherwise continue.
+* `r/REMARKS` behavior as per normal.
+7. Mandatory `Address` is checked. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Addresses commonly begin with `Blk`, `Block` or a short number
+* Addresses are expected to be entered after a name (i.e. `COMMAND NAME ... ADDRESS`),
+making it _highly possible_ to obtain the address by getting the substring from the first occurrence of `Blk`, `Block` or the number to the end of the remaining string.
+8. Mandatory `Name` is checked. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Name is the last mandatory argument to be parsed.
+* Name must be non-empty and matches the defined name regex.
+* The unpredictable nature of name words makes it difficult to identify a person's name.
+* As seen in `Address`, if `Name` is entered after (to the right of) `Address`,
+there would be no remaining words to be parsed. Since `Name` must be non-empty, if it is empty, then `Name` is not present.
+9. Build the arguments into a formatted command argument string.
+
+[NOTE]
+As observed via the decision flow, the suggestion does not always suggest the correct format so it is up to the user to validate the command.
+
+Any missing compulsory fields will result in an immediate failure of the command as specified by a person's requirements.
+Optional arguments, on the other hand, may not be present and are represented as empty strings when sent to the final argument builder.
+
+If any of the prefixes are missing, they will be added when the parsed arguments are built, with the exception of remarks and tags with prefixes.
+
+Given a typical unformatted add command string without prefixes `add Bobby Lee bobby@lee.com 583 Lexington Avenue NY 10048 friends 95849301`:
+
+image::AddBobbyCommand.png[width="800"]
+
+We should receive the following suggestion `Did you mean add n/Bobby Lee p/95849301 e/bobby@lee.com a/583 Lexington Avenue NY 10048 t/friends?`:
+
+image::AddBobbySuggestion.png[width="800"]
+
+Using the decision flow modeled above, we can see that the argument suggestions were parsed in the following order:
+
+1. Bobby's phone, `95849301` is detected as a long number and is extracted first.
+2. The email, `bobby@lee.com` is detected as the `@` character is present and is extracted.
+3. The tag, `friends` is an existing tag in the currently loaded Rolodex and we can extract `friends` as a tag.
+4. The address, `583 Lexington Avenue NY 10048` begins with a short number and will be picked up till the end of the remaining string.
+5. The remainder of the arguments should only contain `Bobby Lee` and is matched as his name.
+
+[IMPORTANT]
+As the `Add` command's decision flow requires many acyclic execution paths to its parser, its corresponding NPath complexity
+is known to be large.
+
+==== Edit Command Suggestions
+
+Unlike the `Add` command, the `Edit` command only requires optional (minimum 1) fields and we handle all fields as such.
+However, the `Edit` command also requires <<Commands with a Single Index Type Argument, a mandatory argument of an index type>>,
+similar to <<Remark/Email Command Suggestions>>.
+
+The implementation for `Edit` suggestions follow a decision flow model that can be seen through the following activity diagram, from `EditCommandParser.parseArguments(commandWord, rawArgs)` execution point of view:
+
+image::SuggestionEditActivityDiagram.png[width="800"]
+
+During the handling of a suggestible command arguments for an `Edit` command,
+
+1. `rawArgs` is set to be the initial value of the remaining arguments.
+2. Mandatory `Index` is checked in the remaining arguments first. If present, extract, remove and continue. Otherwise,
+* Mandatory `Index is checked in command word. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Index extraction is similar to behavior in <<Commands with a Single Index Type Argument>> section.
+3. Optional `Phone` is checked first. If present, extract, remove and continue. Otherwise continue.
+* Phones are expected to match the phone regex,
+* having a minimum of digits, or
+* optionally prepended with a `+`,
+* making it easily distinguishable from other numeric formats like the index, building numbers or postal codes.
+4. Optional `Email` is checked. If present, extract, remove and continue. Otherwise continue.
+* Emails are expected to have the `@` character inside them and regex matching is straightforward,
+* making emails easily distinguishable from other fields.
+5. Existing `Tag` words are checked. If present, extract, remove and continue. Otherwise continue.
+* Words (remaining string delimited by whitespace) that are also tags in the Rolodex session are _existing tag words_.
+6. Tag prefixes (`t/`) are checked. If present, extract, remove and continue. Otherwise continue.
+* `t/TAG` behavior as per normal.
+7. Remark prefixes (`r/`) are checked. If present, extract, remove and continue. Otherwise continue.
+* `r/REMARKS` behavior as per normal.
+8. Optional `Address` is checked. If present, extract, remove and continue. Otherwise continue.
+* Addresses commonly begin with `Blk`, `Block` or a short number
+* Addresses are expected to be entered after a name (i.e. `COMMAND NAME ... ADDRESS`),
+making it _highly possible_ to obtain the address by getting the substring from the first occurrence of `Blk`, `Block` or the number to the end of the remaining string.
+9. Optional `Name` is checked. If present, extract, remove and continue. Otherwise continue.
+* Name is the last mandatory argument to be parsed.
+* Name must be non-empty and matches the defined name regex.
+* The unpredictable nature of name words makes it difficult to identify a person's name.
+* As seen in `Address`, if `Name` is entered after (to the right of) `Address`,
+there would be no remaining words to be parsed. Since `Name` must be non-empty, if it is empty, then `Name` is not present.
+10. If no arguments exist (i.e. `Name`, `Phone`, `Email`, `Address`, `Tag`, `Remark` are all empty strings), return as non-suggestible.
+Otherwise, build the arguments into a formatted command argument string.
+
+[NOTE]
+As observed via the decision flow, the suggestion does not always suggest the correct format so it is up to the user to validate the command.
+
+Any missing or invalid index would result in an immediate failure of the command as specified by the command specifications.
+Optional arguments, on the other hand, may not be present and are represented as empty strings when sent to the final argument builder.
+However, if completely no arguments exist (e.g. `edit 1`), the Edit parser would fail a well, defaulting to the original behavior.
+
+If any of the prefixes are missing, they will be added when the parsed arguments are built, with the exception of remarks and tags with prefixes.
+
+Given a typical unformatted edit command string with an invalid address prefix `edit1 p/911A Lexington Avenue`:
+
+image::EditBobbyCommand.png[width="800"]
+
+We should receive the following suggestion `Did you mean edit 1 a/911A Lexington Avenue?`:
+
+image::EditBobbySuggestion.png[width="800"]
+
+Using the decision flow modeled above, we can see that the argument suggestions were parsed in the following order:
+
+1. The index, `1` is incorrectly placed within the command word. `911` is attempted but since 911 is greater 1, no index can be found in the arguments.
+2. The index, `1` is matched in the command word and extracted.
+3. No phone is matched. `911` is detected as a short number and is skipped. The prefix `p/` is removed.
+4. No email is matched.
+5. No tags are matched.
+6. No remarks are matched.
+7. The address, `911A Lexington Avenue` begins with a short number and will be picked up till the end of the remaining string.
+8. The remainder of the arguments are empty when trimmed.
+9. Address is the only valid optional field present and the command is suggested as `edit 1 a/911A Lexington Avenue`.
+
+[IMPORTANT]
+As the `Edit` command's decision flow requires many acyclic execution paths to its parser, its corresponding NPath complexity
+is known to be large.
+
+==== Design Considerations
+
+**Aspect:** Add/Edit Field Matching +
+**Alternative 1 (current choice):** Parsing easy fields first, then parsing address before name in the `Add` command. +
+**Pros:** Application behaves sufficiently well and efficiently in matching field data given certain input assumptions. +
+**Pros:** Shallow learning curve for new users to learn application functions. +
+**Cons:** Extremely high NPath complexity +
+**Cons:** Deviates from the Object-Oriented nature of the codebase into a procedural/functional style. +
+**Alternative 2:** Dictionary analysis of field data. +
+**Pros:** Easier logic to understand for new developers. +
+**Cons:** Maintaining dictionary would be taxing on the development team and may get outdated as data keeps getting outdated. +
+**Cons:** Memory performance decreases drastically as memory has to be used to load dictionary into memory for field analysis. +
+**Cons:** Storage performance decreases drastically as space has to be used to store dictionary.
+**Alternative 3:** No suggestions for add/edit +
+**Pros:** Clean codebase. +
+**Cons:** Steep learning curve for new users to learn application functions.
+
 // end::suggestion[]
 
 === Logging

@@ -130,7 +130,6 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=helpWindowHighlight]
 ---
 
 include::../UserGuide.adoc[leveloffset=2,tag=suggestion]
-include::../UserGuide.adoc[leveloffset=2,tag=suggestion]
 
 ---
 
