@@ -129,12 +129,8 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         MainContactPanel mainContactPanel;
-
         mainContactPanel = new MainContactPanel();
         browserPlaceholder.getChildren().add(mainContactPanel.getRoot());
-
-        ScheduleListPanel scheduleListPanel = new ScheduleListPanel(logic.getFilteredScheduleList());
-        mainContactPanel.getSchedulePlaceholder().getChildren().add(scheduleListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());

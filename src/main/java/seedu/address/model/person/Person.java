@@ -99,7 +99,6 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.favourite = new SimpleObjectProperty<>(favourite);
-        // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.schedule = new SimpleObjectProperty<>(new UniqueScheduleList(schedule));
     }
@@ -227,7 +226,8 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    public void setFavourite(Favourite fav) { this.favourite.set(fav); }
+    public void setFavourite(Favourite fav) {
+        this.favourite.set(fav); }
 
     @Override
     public ObjectProperty<Favourite> favouriteProperty() {
@@ -239,8 +239,10 @@ public class Person implements ReadOnlyPerson {
         return favourite.get();
     }
 
-    public void setProfPic(ProfPic profPic) { this.profPic.set(profPic); }
 
+    public void setProfPic(ProfPic profPic) {
+        this.profPic.set(profPic); }
+  
     @Override
     public ObjectProperty<ProfPic> profPicProperty() {
         return profPic;

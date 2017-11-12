@@ -32,7 +32,7 @@ public class RemoveFavouriteCommandTest {
                 .withTags("owesMoney", "friends").build();
         RemoveFavouriteCommand removeFavouriteCommand = prepareCommand(INDEX_SECOND_PERSON);
 
-        String expectedMessage = String.format(RemoveFavouriteCommand.MESSAGE_UNFAVE_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = String.format(RemoveFavouriteCommand.MESSAGE_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), editedPerson);

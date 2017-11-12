@@ -17,6 +17,7 @@ public class ServiceHandlerUtil {
     public static String makeCall(String url) throws IOException {
 
         URL obj = new URL(url);
+
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("GET");
 
@@ -36,6 +37,5 @@ public class ServiceHandlerUtil {
         in.close();
         return response.toString();
     }
-
 
 }
