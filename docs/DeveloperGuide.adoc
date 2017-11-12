@@ -525,6 +525,96 @@ image::SDaddEventLogicReminder.png[width="700"]
 _Figure 4.4.2.3 : Sequence Diagram for Adding an event (reminders are automatically added)_
 //end::autoReminders[]
 
+//tag::themeSwitch[]
+=== Switch Themes mechanism
+
+As **BoNUS** is targeted at students, we want to allow students to personalise **BoNUS**. Therefore, to open up such a
+possibility, we decided to introduce the `SwitchThemeCommand` to support the toggling of themes between bright and dark
+themes.
+
+In the following sections below, the Switch Themes mechanism will be further elaborated with the aid of
+illustrated diagrams to depict the interactions between the components in **BoNUS**
+
+The _Sequence Diagram_ in _Figure 4.5.1_ illustrates how the components interact for the scenario where the user issues the command
+`delete 1`. Also, the _Sequence Diagram_ illustrates the events-driven architectural style in **BoNUS**
+
+image::SDforSwitchTheme.png[width="400"]
+_Figure 4.5.1 : Events-Driven nature of Switch Theme_
+
+image::SDforSwitchThemesEmphasis.png[width="400"]
+_Figure 4.5.2 : Sequence diagram for Switch Theme mechanism_
+
+
+As can be seen from _Figure 4.5.2_, upon the execution of `theme` command, SwitchThemeEvent
+is then raised :
+[source,java]
+----
+public class SwitchThemeCommand extends Command {
+
+    public static final String COMMAND_WORD = "theme";
+    public static final String COMMAND_ALIAS = "t";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggles between bright and dark theme.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_SUCCESS = "Theme switched!";
+
+    @Override
+    public CommandResult execute() {
+        raise(new SwitchThemeEvent());
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+----
+
+It is from there that the event will be handled by `MainWindow` where the change of theme occurs as shown below:
+[source,java]
+
+----
+ @Subscribe
+    private void handleThemeChanged(SwitchThemeEvent event) {
+        if (prefs.getAddressBookTheme() == darkTheme) {
+            getRoot().getStylesheets().clear();
+            getRoot().getStylesheets().add(brightTheme);
+            getRoot().getStylesheets().add(brightExtension);
+            prefs.setAddressBookTheme(brightTheme);
+        } else {
+            getRoot().getStylesheets().clear();
+            getRoot().getStylesheets().add(darkTheme);
+            getRoot().getStylesheets().add(darkExtension);
+            prefs.setAddressBookTheme(darkTheme);
+        }
+
+    }
+----
+
+==== Design Consideration
+**Aspect:**  How to implement the `theme` command  +
+**Alternative 1 (current choice):** Create a `SwitchThemeCommand` command under `Logic` component.
+Create an event for it to handle +
+the switching of themes in `MainWindow`. Implement the switch theme process in `MainWindow`. No parsing is involved since +
+it is switching between two themes. +
+**Pros:** Simple interaction between `UI` and `Logic` by raising an event to handle the changing of themes in `MainWindow` +
+from `SwitchThemeCommand` under the `Logic` component. +
+**Cons:** Without parsing, only two themes can be set. +
+**Alternative 2:** Handle theme switch by directly accessing `MainWindow` from `SwitchThemeCommand` +
+**Pros:** Shortcut to make the `theme` command work. +
+**Cons:** `Logic` and `UI` component should not be easily interchangeably accessed in this manner. Also, it violates
+ Single Responsibility Principle (SRP). `Logic` is only supposed to handle logic components such as commands, it should
+ not be able to openly access `UI` components such as `MainWindow`.  +
+
+==== Implementation Outline
+
+1. Create a `SwitchThemeCommand` under logic component. Create a `SwitchThemeEvent` for `EventBus` to handle the event
+accordingly whenever `SwitchThemeCommand` is executed.
+
+2. Create a CSS file for BrightTheme which include its main CSS file as well as its extension files. Remove the default
+CSS styles from the `FXML` files in **BoNUS**.
+
+3. Implement the switching of themes in `MainWindow`. Create a method in `MainWindow` to subscribe it to the event change.
+Raise the event whenever `SwitchThemeCommand` is executed such that the theme will change accordingly in `MainWindow`.
+//end::themeSwitch[]
+
 // tag::importExportXml[]
 === Import & Export mechanism
 
