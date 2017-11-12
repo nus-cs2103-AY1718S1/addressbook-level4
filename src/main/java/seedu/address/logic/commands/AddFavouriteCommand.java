@@ -103,10 +103,4 @@ public class AddFavouriteCommand extends UndoableCommand {
                 && this.targetIndex.equals(((AddFavouriteCommand) other).targetIndex)); // state check
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddFavouriteCommand // instanceof handles nulls
-                && this.targetIndex.equals(((AddFavouriteCommand) other).targetIndex)); // state check
-    }
 }
