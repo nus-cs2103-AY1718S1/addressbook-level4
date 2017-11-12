@@ -336,13 +336,13 @@ Remove the remarks of the 3rd person.
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
-image:step1.png[width="70"] Type `edit` into the command box first, then follow the format as shown above, after which press kbd:[Enter] to execute it.
+image:step1.png[width="70"] You can easily edit a person's details by typing `edit` into the command box first, then follow the format as shown above, after which press kbd:[Enter] to execute it.
 
 image::UG_edit1.png[width="590"]
 
-image:step2.png[width="70"] The result box will display "Edited person:" with the edited details.
+image:step2.png[width="70"] Well done! You have successfully edit the person's details if you see the result box displayed "Edited person:" with the edited details.
 
-image:step3.png[width="70"] The details of last updated will be updated with your system time.
+image:step3.png[width="70"] The details of last updated will be also updated with your system time.
 
 image::UG_edit2.png[width="590"]
 {sp}+
