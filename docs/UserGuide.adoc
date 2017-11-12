@@ -514,9 +514,9 @@ Format: `exit`
 [NOTE]
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-// tag::connectuslog[]
-=== Clearing ConnectUs LogFile : `clearlog`
 
+=== Clearing ConnectUs LogFile : `clearlog`
+// tag::connectuslog[]
 If you happen to realise that you committed a mistake after closing the application. Where the function of undo or redo is not valid to use, you can take advantage of our backend logging function that keeps track of all actions done by you in forms of '.txt' file. It includes information of important actions as well as timestamp for each actions done. This command allows you to clear the logfile which you might want to do so to keep the logfile neat and organised. +
 Format: 'clearlog' or 'cl'
 [WARNING]
@@ -524,9 +524,10 @@ All important actions made by the user such as add,clear,edit,delete,import,list
 are recorded in the ConnectUs.txt logfile. Users have the option of clearing the logfile in order to make the log more+
 organised. +
 All information will be wipe out. So use the function with care.
-// end::connectuslogq[]
-// tag::qrgeneration[]
+// end::connectuslog[]
+
 === Generating QR(Quick Response) Code to call a person : `qrcall`
+// tag::qrcall[]
 [NOTE]
 Requires a smartphone with camera and QR Scanner application
 
@@ -547,8 +548,10 @@ Generate QR Call Code for the 2nd person in the address book.
 * `find Betsy` +
 `qc 1` +
 Generate QR Call Code for the 1st person in the results of the `find` command.
+// end::qrcall[]
 
 === Generating QR Code to sms a Contact : `qrsms`
+// tag::qrsms[]
 [NOTE]
 Requires a smartphone with camera and QR Scanner application
 
@@ -569,8 +572,10 @@ Generate QR SMS Code for the 2nd person in the address book.
 * `find Betsy` +
 `qs 1` +
 Generate QR SMS Code for the 1st person in the results of the `find` command.
+// end::qrsms[]
 
 === Generating QR Code to save a Contact : `qrsave`
+// tag::qrsave[]
 [NOTE]
 Requires a smartphone with camera and QR Scanner application. +
 Only information like Contact Name , Email , Address and Phone Number is saved in the process.
@@ -593,7 +598,8 @@ Generate QR Save Contact Code for the 2nd person in the address book.
 * `find Betsy` +
 `qrs 1` +
 Generate QR Save Contact Code for the 1st person in the results of the `find` command.
-// end::qrgeneration[]
+// end::qrsave[]
+
 == Upcoming Features
 (added in v1.2) +
 There are more features to be added to the application. You will soon be able to do the following features:
@@ -659,6 +665,10 @@ This section answers some common questions that you may have. If you have any mo
 |*Upload Photo* | `photo INDEX` OR `photo INDEX FILEPATH` |`photo 3` OR `photo 3 C:\Users\Pictures\photo.jpg`
 |*Delete Photo* | `dphoto INDEX` |`dphoto 3`
 |*Delete All Photos* | `daphotos` |`daphotos`
+|*Clear Log* | `clearlog` | `clearlog`
+|*Generate QR for Calling* | `qrcall INDEX` | `qrcall 1`
+|*Generate QR for SMS* | `qrsms INDEX` | `qrsms 1`
+|*Generate QR for Saving Contact* | `qrsave INDEX` | `qrsave 1`
 
 |=======================================================================
 
@@ -688,4 +698,8 @@ This section answers some common questions that you may have. If you have any mo
 |*Upload Photo* | `p INDEX` OR `p INDEX FILEPATH` |`p 3` OR `p 3 C:\Users\Pictures\photo.jpg`
 |*Delete Photo* | `dp INDEX` |`dp 3`
 |*Delete All Photos* | `dap` |`dap`
+|*Clear Log* | `cl` | `cl`
+|*Generate QR for Calling* | `qc INDEX` | `qc 1`
+|*Generate QR for SMS* | `qs INDEX` | `qs 1`
+|*Generate QR for Saving Contact* | `qrs INDEX` | `qrs 1`
 |=======================================================================

@@ -41,7 +41,7 @@ public class ClearLogCommand extends Command {
 ``` java
 public class LoggingCommand {
     /**
-     *keepLog Method to Write Activity Log To The ConnectUsLog.txt file
+     * Writes onto ConnectUsLog.txt field when new action is executed
      */
     public void keepLog(String logText, String functionType) {
         try (FileWriter fileWrite = new FileWriter("ConnectUsLog.txt", true);
@@ -53,7 +53,7 @@ public class LoggingCommand {
         }
     }
     /**
-     * startUpLog Method will record the time when the application starts
+     * Starts recording activity the moment application starts up
      */
     public void startUpLog() {
         try (FileWriter fileWrite = new FileWriter("ConnectUsLog.txt", true);
@@ -112,7 +112,7 @@ public class QrCallCommand extends Command {
 ``` java
 public class QrGenCallCommand {
     /**
-     * Method to Generate PhoneCall QRCode
+     * Generate PhoneCall QRCode
      */
     public String qrCall(String phoneNum) {
         String qrCodeA = "http://";
@@ -145,7 +145,7 @@ public class QrGenCallCommand {
 ``` java
 public class QrGenSaveContactCommand {
     /**
-     * Method to Generate SaveContact for Phone QRCode
+     * Generates SaveContact QR Link in forms of String
      */
     public String qrSaveContact(String phoneNum, String contactName, String contactEmail) {
         String qrA = "http://";
@@ -187,7 +187,7 @@ public class QrGenSaveContactCommand {
 ``` java
 public class QrGenSmsCommand {
     /**
-     * Method to Generate SMS to Contact QRCode
+     * Generates SMS QR Link in forms of String
      */
     public String qrSms(String phoneNum, String contactName) {
         String qrCodeA = "http://";
@@ -305,7 +305,7 @@ public class QrSmsCommand extends Command {
 ``` java
 public class QrCallCommandParser implements Parser<QrCallCommand> {
     /**
-     * QrCallCommand Parser for String for QrCallCommand
+     * Parses input arguments and creates a new QrCallCommand object
      */
     public QrCallCommand parse(String args) throws ParseException {
         try {
@@ -322,7 +322,7 @@ public class QrCallCommandParser implements Parser<QrCallCommand> {
 ``` java
 public class QrSaveContactCommandParser implements Parser<QrSaveContactCommand> {
     /**
-     * QrSaveContactCommandParser for parsing String for QrSaveContactCommand
+     * Parses input arguments and creates a new QrSaveContactCommand object
      */
     public QrSaveContactCommand parse(String args) throws ParseException {
         try {
@@ -339,7 +339,7 @@ public class QrSaveContactCommandParser implements Parser<QrSaveContactCommand> 
 ``` java
 public class QrSmsCommandParser implements Parser<QrSmsCommand> {
     /**
-     * QrSmsCommandParser for parsing String for QrSmsCommand
+     * Parses input arguments and creates a new QrSmsCommand object
      */
     public QrSmsCommand parse(String args) throws ParseException {
         try {

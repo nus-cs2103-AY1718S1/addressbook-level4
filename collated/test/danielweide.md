@@ -1,6 +1,9 @@
 # danielweide
 ###### \java\seedu\address\logic\commands\ClearLogCommandTest.java
 ``` java
+/**
+ * Test for ClearLogCommand by deleting ConnectUsLog.txt file
+ */
 public class ClearLogCommandTest {
     @Before
     public void prepareCommand() throws CommandException, IOException {
@@ -17,7 +20,7 @@ public class ClearLogCommandTest {
 ``` java
 public class LoggingCommandTest {
     /**
-     * Calling out Method that will log into ConnectUsLog.txt when application is running
+     * Calls Method that will log into ConnectUsLog.txt when application is running
      */
     @Before
     public void prepareStartUpCommand() throws CommandException, IOException {
@@ -44,7 +47,7 @@ public class LoggingCommandTest {
         assertEquals(expectedLines, numOfLines);
     }
     /**
-     * Method to Count Number of Lines in txt file
+     * Count Number of Lines in txt file
      */
     private static int countLines(String filename) throws Exception {
         InputStream inputStream = new BufferedInputStream(new FileInputStream(filename));
