@@ -2,12 +2,13 @@ package seedu.address.ui;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.ProfilePicturesFolder;
+import seedu.address.commons.events.ui.MissingDisplayPictureEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author jaivigneshvenugopal
@@ -16,7 +17,6 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class DebtorProfilePicture extends UiPart<Region> {
     public static final String FXML = "DebtorProfilePicture.fxml";
-    public static final String DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH = "/images/profilePics/";
     public static final String DEFAULT_PROFILEPIC_PATH = "/images/profilePics/unknown.jpg";
     public static final String JPG_EXTENSION = ".jpg";
 
@@ -27,12 +27,24 @@ public class DebtorProfilePicture extends UiPart<Region> {
         super(FXML);
         String imageName = person.getName().toString().replaceAll("\\s+", "");
         String imagePath = DEFAULT_PROFILEPIC_PATH;
+        Image image = new Image(getClass().getResource(imagePath).toExternalForm());
 
         if (person.hasDisplayPicture()) {
-            imagePath =  DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH + imageName + JPG_EXTENSION;
-        }
 
-        Image image = new Image(getClass().getResource(imagePath).toExternalForm());
+            imagePath = ProfilePicturesFolder.getPath() + imageName + JPG_EXTENSION;
+            File imageFile = new File(imagePath);
+
+            if (!imageFile.exists()) {
+                person.setHasDisplayPicture(false);
+                raise(new MissingDisplayPictureEvent(person));
+            } else {
+                try {
+                    image = new Image(imageFile.toURI().toURL().toExternalForm());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         profilePic.setImage(image);
         profilePic.setFitWidth(200);
