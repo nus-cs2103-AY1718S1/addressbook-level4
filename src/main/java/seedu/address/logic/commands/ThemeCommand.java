@@ -4,6 +4,7 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ThemeRequestEvent;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.LogicManager;
 import seedu.address.logic.RecentlyDeletedQueue;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -33,6 +34,7 @@ public class ThemeCommand extends Command {
     }
 
 
+    @Override
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack,
                         RecentlyDeletedQueue queue, String theme) {
         this.theme = theme;
