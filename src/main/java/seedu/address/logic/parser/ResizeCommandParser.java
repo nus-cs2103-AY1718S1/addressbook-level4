@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import seedu.address.logic.commands.ResizeCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.ui.MainWindow;
 
 //@@author newalter
 /**
@@ -25,7 +26,8 @@ public class ResizeCommandParser implements Parser<ResizeCommand> {
         String[] sizeParameters = trimmedArgs.split("\\s+");
         int width = Integer.parseInt(sizeParameters[0]);
         int height = Integer.parseInt(sizeParameters[1]);
-        if (width > ResizeCommand.MAX_WIDTH || height > ResizeCommand.MAX_HEIGHT) {
+        if (width > ResizeCommand.MAX_WIDTH || height > ResizeCommand.MAX_HEIGHT
+            || width < MainWindow.getMinWidth() || height < MainWindow.getMinHeight()) {
             throwParserException();
         }
 
