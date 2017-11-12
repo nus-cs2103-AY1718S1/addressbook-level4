@@ -751,6 +751,26 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_duplicateTimeSlot_failure() {
+
+        model.updateFilteredLessonList(
+                new FixedCodePredicate(model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()).getCode()));
+
+        Lesson firstLesson = new Lesson(model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()));
+        Lesson secondLesson = new Lesson(model.getFilteredLessonList().get(INDEX_SECOND_LESSON.getZeroBased()));
+
+        EditLessonDescriptor descriptor =
+                new EditLessonDescriptorBuilder(secondLesson).withTimeSlot(firstLesson.getTimeSlot().toString())
+                        .withLocation(firstLesson.getLocation().toString()).build();
+
+        EditCommand editCommand = prepareCommand(INDEX_SECOND_LESSON, descriptor);
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+    }
+
+    @Test
     public void execute_duplicateLessonFilteredList_failure() {
         showFirstLessonOnly(model);
 
