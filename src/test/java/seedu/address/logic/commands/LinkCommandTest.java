@@ -71,6 +71,14 @@ public class LinkCommandTest {
         assertCommandFailure(linkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    @Test
+    public void execute_invalidLink_failure() throws Exception {
+        String invalidLink = "nolink.com";
+        LinkCommand linkCommand = prepareCommand(INDEX_FIRST_PERSON, invalidLink);
+
+        assertCommandFailure(linkCommand, model, Messages.MESSAGE_INVALID_LINK_FORMAT);
+    }
+
     /**
      * Edit filtered list where index is larger than size of filtered list,
      * but smaller than size of address book
