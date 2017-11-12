@@ -54,6 +54,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+// tag::add[]
 === Adding a person: `add`
 
 Adds a person to the address book +
@@ -68,6 +69,7 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 * `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/criminal` +
+// end::add[]
 
 === Listing all persons : `list`
 
@@ -363,6 +365,7 @@ Format: `unlock PASSWORD`
 ****
 // end::lockunlock[]
 
+// tag::favourite[]
 === Favouriting a person : `favourite`
 
 Favourites the person identified by the index number used in the last person listing. +
@@ -389,6 +392,7 @@ Favourites the 1st person in the results of the `find` command.
 Favourites the 1st person in the address book. +
 `favourite 1` +
 Unfavourite the 1st person in the address book.
+// end::favourite[]
 
 // tag::export[]
 === Exporting address book : `export`
@@ -468,6 +472,10 @@ A dialog window pops up during contact editing.
 === Real time highlight
 
 Real time highlight when input command is not correct.
+
+=== Import address book
+
+Import address book into the application.
 
 == FAQ
 

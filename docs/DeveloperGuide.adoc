@@ -505,6 +505,7 @@ image::LockSequenceDiagram.png[width="800"]
 
 // end::lock[]
 
+// tag::favourite[]
 === Favourite mechanism
 
 The favourite mechanism is very similar to the one used in edit command. The feature follows the sequence of steps:
@@ -549,6 +550,7 @@ public class FavouriteCommand extends UndoableCommand {
 **Alternative 2:** Save the favourite contacts in a separate list without overwriting the original contact list +
 **Pros:** Does not mess up the original order. +
 **Cons:** Will use more memory (significant if favourite/contact list is large).
+// end::favourite[]
 
 // tag::tdo[]
 === Todo mechanism
@@ -674,6 +676,7 @@ try {
 ----
 // end::export[]
 
+// tag::add[]
 === Enhance Add command
 
 The add command is enhanced to allow empty fields for phone, address and email. Mechanism of the command is exactly the same as previous, with the addition of a `initialiseEmptyFields` method in `AddCommandParser`. The `initialiseEmptyFields` method appends the prefix of each empty field followed by a '-' instead of throwing a `ParseException` if fields are empty.
@@ -695,7 +698,9 @@ private static String initialiseEmptyFields(String args) {
     return args;
 }
 ----
+// end::add[]
 
+// tag::unredo[]
 === Enhance Undo/Redo command
 
 The new `undo` and `redo` commands allows the user to specify how many commands to undo or redo (eg. `undo 5`, `redo 5`).
@@ -719,6 +724,7 @@ public RedoCommand parse(String args) throws ParseException {
     }
 }
 ----
+// end::unredo[]
 
 === Logging
 

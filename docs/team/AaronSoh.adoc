@@ -71,8 +71,7 @@ include::../DeveloperGuide.adoc[tag=add]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undo]
-include::../UserGuide.adoc[tag=redo]
+include::../UserGuide.adoc[tag=undoredo]
 
 #End of Extract#
 
@@ -87,8 +86,7 @@ This command allow users to redo/undo multiple commands at one go, which makes i
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undo]
-include::../DeveloperGuide.adoc[tag=redo]
+include::../DeveloperGuide.adoc[tag=unredo]
 
 #End of Extract#
 
