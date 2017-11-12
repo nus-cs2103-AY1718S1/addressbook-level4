@@ -1,7 +1,7 @@
 package seedu.address.google;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.Collections;
 import java.util.Observable;
 
@@ -42,6 +42,13 @@ public class OAuth extends Observable {
      */
     private final String appName = "W13B3-ABC/1.5RC";
 
+    private final String clientSecretsString = "{\"installed\":{\"client_id\":\"1072257683954-e46sbkdshfmv651ggk7h"
+            + "jjk2qub8obss.apps.googleusercontent.com\",\"project_id\":\"cs2103-183113\",\"auth_uri\":\"https://acc"
+            + "ounts.google.com/o/oauth2/auth\",\"token_uri\":\"https://accounts.google.com/o/oauth2/token\",\"auth_p"
+            + "rovider_x509_cert_url\":\"https://www.googleapis.com/oauth2/v1/certs\",\"client_secret\":\"8c7_QmKYt2h"
+            + "dSPiCBDzcSyHP\",\"redirect_uris\":[\"urn:ietf:wg:oauth:2.0:oob\",\"http://localhost\"]}}";
+
+
     /** Directory to store user credentials. */
     private final java.io.File dataStoreDir =
             new java.io.File(System.getProperty("user.home"), ".store/addressbook");
@@ -66,9 +73,10 @@ public class OAuth extends Observable {
 
     /** Authorizes the installed application to access user's protected data. */
     private Credential authorize() throws Exception {
+        StringReader reader = new StringReader(clientSecretsString);
+
         // load client secrets
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory,
-                new InputStreamReader(OAuth.class.getResourceAsStream("/client_secrets.json")));
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, reader);
         if (clientSecrets.getDetails().getClientId().startsWith("Enter")
                 || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
             System.out.println(
