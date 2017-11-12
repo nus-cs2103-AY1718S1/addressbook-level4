@@ -8,11 +8,13 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.commands.BorrowCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Debt;
 
 //@@author jelneo
-public class BorrowCommandParserTest {
+public class BorrowCommandParserTest extends CommandTest {
 
     private static final String MESSAGE_INVALID_FORMAT =  String.format(MESSAGE_INVALID_COMMAND_FORMAT,
             BorrowCommand.MESSAGE_USAGE);
@@ -24,13 +26,13 @@ public class BorrowCommandParserTest {
     private BorrowCommandParser parser  = new BorrowCommandParser();
 
     @Test
-    public void parse_missingParts_failure() {
+    public void parse_missingParts_failure() throws Exception {
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
-    public void parse_invalidArguments() {
+    public void parse_invalidArguments() throws Exception {
         // invalid index and amount
         assertParseFailure(parser, INVALID_INDEX + " " + INVALID_DEBT_FIGURE, MESSAGE_INVALID_FORMAT);
 
@@ -52,8 +54,8 @@ public class BorrowCommandParserTest {
             amount = new Debt(VALID_DEBT_FIGURE);
             expectedBorrowCommand = new BorrowCommand(amount);
             assertParseSuccess(parser, VALID_DEBT_FIGURE, expectedBorrowCommand);
-        } catch (IllegalValueException ive) {
-            ive.printStackTrace();
+        } catch (IllegalValueException | CommandException e) {
+            e.printStackTrace();
         }
     }
 }

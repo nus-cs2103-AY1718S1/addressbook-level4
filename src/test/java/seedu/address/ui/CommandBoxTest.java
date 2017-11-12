@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.Logic;
@@ -42,6 +43,7 @@ public class CommandBoxTest extends GuiUnitTest {
         testUserPrefs.setAdminUsername(TEST_USERNAME);
         testUserPrefs.setAdminPassword(TEST_PASSWORD);
         model = new ModelManager(getTypicalAddressBook(), testUserPrefs);
+        ListObserver.init(model);
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);

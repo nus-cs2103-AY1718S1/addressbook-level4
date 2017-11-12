@@ -59,9 +59,9 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.ListObserver;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -122,8 +122,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 getModel().getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedPerson);
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: edit a person with new values same as existing v
-        alues -> edited */
+        /* Case: edit a person with new values same as existing values -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + HANDPHONE_DESC_BOB
                 + HOME_PHONE_DESC_BOB + OFFICE_PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + TOTAL_DEBT_DESC_BOB + INTEREST_DESC_BOB + DEADLINE_DESC_BOB
@@ -158,8 +157,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, index, editedPerson);
 
         /* Case: filtered person list, edit index within bounds of address book but out of bounds of person list
-         * -> rejected
-         */
+         * -> rejected */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
@@ -357,8 +355,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsDefaultStyle();
         if (expectedSelectedCardIndex != null) {
             assertSelectedCardChanged();
-        } else {
-            assertSelectedCardUnchanged();
         }
         assertStatusBarUnchangedExceptSyncStatus();
     }

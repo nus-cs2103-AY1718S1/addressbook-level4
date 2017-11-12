@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -21,6 +22,8 @@ public class DebtorProfilePicture extends UiPart<Region> {
 
     @FXML
     private ImageView profilePic = new ImageView();
+    @FXML
+    private AnchorPane profilePicPlaceHolder;
 
     public DebtorProfilePicture(ReadOnlyPerson person) {
         super(FXML);
@@ -42,8 +45,10 @@ public class DebtorProfilePicture extends UiPart<Region> {
         }
 
         profilePic.setImage(image);
-        profilePic.setFitWidth(350);
-        profilePic.setFitHeight(350);
+        profilePic.setFitWidth(450);
+        profilePic.setFitHeight(450);
+        profilePicPlaceHolder.setTopAnchor(this.getImageView(), 20.0);
+        profilePicPlaceHolder.setRightAnchor(this.getImageView(), 50.0);
         registerAsAnEventHandler(this);
     }
 

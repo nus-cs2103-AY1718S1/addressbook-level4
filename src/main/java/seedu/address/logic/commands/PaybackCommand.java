@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -26,29 +27,28 @@ public class PaybackCommand extends UndoableCommand {
             + "Example 2: " + COMMAND_WORD + " 100.50";
 
     public static final String MESSAGE_PAYBACK_SUCCESS = "%1$s has paid $%2$s back";
-    public static final String MESSAGE_PAYBACK_FAILURE = "Amount paid back cannot be more than the debt owed.";
+    public static final String MESSAGE_PAYBACK_FAILURE = "Amount paid back cannot be more than the debt owed";
 
-    private final Index targetIndex;
+    private final ReadOnlyPerson personThatPaidBack;
     private final Debt amount;
 
-    public PaybackCommand(Debt amount) {
-        this.targetIndex = null;
+    public PaybackCommand(Debt amount) throws CommandException {
+        personThatPaidBack = selectPersonForCommand();
         this.amount = amount;
     }
 
-    public PaybackCommand(Index targetIndex, Debt amount) {
-        this.targetIndex = targetIndex;
+    public PaybackCommand(Index targetIndex, Debt amount) throws CommandException {
+        personThatPaidBack = selectPersonForCommand(targetIndex);
         this.amount = amount;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        ReadOnlyPerson personThatPaidBack = selectPerson(targetIndex);
-
+        ReadOnlyPerson targetPerson = personThatPaidBack;
         try {
-            personThatPaidBack = model.deductDebtFromPerson(personThatPaidBack, amount);
-            if (personThatPaidBack.getDebt().toNumber() == 0 && !personThatPaidBack.isBlacklisted()) {
-                model.addWhitelistedPerson(personThatPaidBack);
+            targetPerson = model.deductDebtFromPerson(targetPerson, amount);
+            if (targetPerson.getDebt().toNumber() == 0 && !targetPerson.isBlacklisted()) {
+                targetPerson = model.addWhitelistedPerson(targetPerson);
             }
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
@@ -56,20 +56,20 @@ public class PaybackCommand extends UndoableCommand {
             throw new CommandException(ive.getMessage());
         }
 
-        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        reselectPerson(targetPerson);
 
-        String currentList = listObserver.getCurrentListName();
+        String currentList = ListObserver.getCurrentListName();
 
         return new CommandResult(currentList
-                + String.format(MESSAGE_PAYBACK_SUCCESS, personThatPaidBack.getName(), amount));
+                + String.format(MESSAGE_PAYBACK_SUCCESS, targetPerson.getName(), amount));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof PaybackCommand // instanceof handles nulls
-                && ((this.targetIndex == null && ((PaybackCommand) other).targetIndex == null) // both targetIndex null
-                || this.targetIndex.equals(((PaybackCommand) other).targetIndex)
-                && this.amount.equals(((PaybackCommand) other).amount))); // state check
+                && this.personThatPaidBack.equals(((PaybackCommand) other).personThatPaidBack)
+                && this.amount.equals(((PaybackCommand) other).amount)); // state check
     }
 }

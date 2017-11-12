@@ -138,7 +138,7 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
      */
     private String formatTimeTillDeadline(long years, long months, long days) {
         StringBuilder stringBuilder = new StringBuilder();
-        if (years != 0 ) {
+        if (years != 0) {
             stringBuilder.append(String.format(YEARS_LEFT_TO_REPAY_DEBT_MESSAGE, years));
         }
         if (months != 0) {

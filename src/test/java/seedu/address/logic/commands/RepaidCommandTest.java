@@ -2,21 +2,21 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.ListObserver;
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -25,9 +25,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code RepaidCommand}.
  */
-public class RepaidCommandTest {
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+public class RepaidCommandTest extends CommandTest {
 
     @Test
     public void execute_repaidPersonTwice_success() throws Exception {
@@ -62,22 +60,24 @@ public class RepaidCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RepaidCommand repaidCommand = prepareCommand(outOfBoundIndex);
-
-        assertCommandFailure(repaidCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        prepareCommand(outOfBoundIndex);
+        fail(UNEXPECTED_EXECTION);
     }
 
     @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
+    public void execute_invalidIndexFilteredList_throwsCommandException() throws Exception {
         showFirstPersonOnly(model);
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         RepaidCommand repaidCommand = prepareCommand(outOfBoundIndex);
-
-        assertCommandFailure(repaidCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        fail(UNEXPECTED_EXECTION);
     }
 
     //@@author khooroko
@@ -98,38 +98,43 @@ public class RepaidCommandTest {
 
     @Test
     public void execute_noIndexNoSelection_failure() throws Exception {
-        RepaidCommand repaidCommand = prepareCommand();
-
-        assertCommandFailure(repaidCommand, model, Messages.MESSAGE_NO_PERSON_SELECTED);
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(Messages.MESSAGE_NO_PERSON_SELECTED);
+        prepareCommand();
+        fail(UNEXPECTED_EXECTION);
     }
 
     //@@author jaivigneshvenugopal
     @Test
     public void equals() {
-        RepaidCommand repaidFirstCommand = new RepaidCommand(INDEX_FIRST_PERSON);
-        RepaidCommand repaidSecondCommand = new RepaidCommand(INDEX_SECOND_PERSON);
+        try {
+            RepaidCommand repaidFirstCommand = new RepaidCommand(INDEX_FIRST_PERSON);
+            RepaidCommand repaidSecondCommand = new RepaidCommand(INDEX_SECOND_PERSON);
 
-        // same object -> returns true
-        assertTrue(repaidFirstCommand.equals(repaidFirstCommand));
+            // same object -> returns true
+            assertTrue(repaidFirstCommand.equals(repaidFirstCommand));
 
-        // same values -> returns true
-        RepaidCommand repaidFirstCommandCopy = new RepaidCommand(INDEX_FIRST_PERSON);
-        assertTrue(repaidFirstCommand.equals(repaidFirstCommand));
+            // same values -> returns true
+            RepaidCommand repaidFirstCommandCopy = new RepaidCommand(INDEX_FIRST_PERSON);
+            assertTrue(repaidFirstCommand.equals(repaidFirstCommand));
 
-        // different types -> returns false
-        assertFalse(repaidFirstCommand.equals(1));
+            // different types -> returns false
+            assertFalse(repaidFirstCommand.equals(1));
 
-        // null -> returns false
-        assertFalse(repaidFirstCommand.equals(null));
+            // null -> returns false
+            assertFalse(repaidFirstCommand.equals(null));
 
-        // different person -> returns false
-        assertFalse(repaidFirstCommand.equals(repaidSecondCommand));
+            // different person -> returns false
+            assertFalse(repaidFirstCommand.equals(repaidSecondCommand));
+        } catch (CommandException ce) {
+            ce.printStackTrace();
+        }
     }
 
     /**
      * Returns a {@code RepaidCommand} with the parameter {@code index}.
      */
-    private RepaidCommand prepareCommand(Index index) {
+    private RepaidCommand prepareCommand(Index index) throws CommandException {
         RepaidCommand repaidCommand = new RepaidCommand(index);
         repaidCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return repaidCommand;
@@ -138,7 +143,7 @@ public class RepaidCommandTest {
     /**
      * Returns a {@code RepaidCommand} with no parameters.
      */
-    private RepaidCommand prepareCommand() {
+    private RepaidCommand prepareCommand() throws CommandException {
         RepaidCommand repaidCommand = new RepaidCommand();
         repaidCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return repaidCommand;

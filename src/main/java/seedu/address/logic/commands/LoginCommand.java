@@ -14,11 +14,11 @@ public class LoginCommand extends Command {
 
     public static final String COMMAND_WORD = "login";
 
-    public static final String MESSAGE_LOGIN_ACKNOWLEDGEMENT = "Login successful";
-    public static final String MESSAGE_LOGIN_UNSUCCESSFUL = "Unable to log into Address Book";
     public static final String MESSAGE_LOGIN_REQUEST = "Please log in first";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " USERNAME PASSWORD\nExample: "
             + COMMAND_WORD + " JohnDoe hiIAmJohnDoe123";
+    public static final String MESSAGE_LOGIN_ACKNOWLEDGEMENT = "Login successful";
+    public static final String MESSAGE_LOGIN_UNSUCCESSFUL = "Unable to log into Address Book";
     private static boolean isLoggedIn = false;
     private final Username username;
     private final Password password;

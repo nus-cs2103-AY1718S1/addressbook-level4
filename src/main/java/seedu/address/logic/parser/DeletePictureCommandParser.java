@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DeletePictureCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author jaivigneshvenugopal
@@ -18,7 +19,7 @@ public class DeletePictureCommandParser implements Parser<DeletePictureCommand> 
      * and returns an DeletePictureCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public DeletePictureCommand parse(String args) throws ParseException {
+    public DeletePictureCommand parse(String args) throws ParseException, CommandException {
         try {
             if (args.trim().equals("")) {
                 return new DeletePictureCommand();

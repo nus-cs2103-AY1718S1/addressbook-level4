@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS;
 
+import seedu.address.commons.core.ListObserver;
+
 //@@author jaivigneshvenugopal
 /**
  * Lists all blacklisted persons in the address book to the user.
@@ -22,7 +24,7 @@ public class BlacklistCommand extends Command {
         model.deselectPerson();
         model.changeListTo(COMMAND_WORD);
         model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
-        String currentList = listObserver.getCurrentListName();
+        String currentList = ListObserver.getCurrentListName();
         return new CommandResult(currentList + MESSAGE_SUCCESS);
     }
 }

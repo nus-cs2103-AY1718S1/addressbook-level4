@@ -7,14 +7,17 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.DeselectionEvent;
@@ -34,11 +37,11 @@ public class InfoPanel extends UiPart<Region> {
     private static final String MESSAGE_INFO_HOME_PHONE_FIELD = "Home: ";
     private static final String MESSAGE_INFO_OFFICE_PHONE_FIELD = "Office: ";
     private static final String MESSAGE_INFO_EMAIL_FIELD = "Email: ";
-    private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
+    private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "Postal Code: ";
     private static final String MESSAGE_INFO_CLUSTER_FIELD = "General Location: ";
-    private static final String MESSAGE_INFO_DEBT_FIELD = "Current Debt: $";
-    private static final String MESSAGE_INFO_TOTAL_DEBT_FIELD = "Total Debt: $";
-    private static final String MESSAGE_INFO_INTEREST_FIELD = "Interest: ";
+    private static final String MESSAGE_INFO_DEBT_FIELD = "Current Debt ($): ";
+    private static final String MESSAGE_INFO_TOTAL_DEBT_FIELD = "Total Debt ($): ";
+    private static final String MESSAGE_INFO_INTEREST_FIELD = "Interest (%): ";
     private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date Borrowed: ";
     private static final String MESSAGE_INFO_DEADLINE_FIELD = "Deadline: ";
     private static final String MESSAGE_INFO_DATE_REPAID_FIELD = "Date Repaid: ";
@@ -54,6 +57,12 @@ public class InfoPanel extends UiPart<Region> {
 
     @FXML
     private Pane pane;
+    @FXML
+    private ScrollPane personInfoPanel;
+    @FXML
+    private SplitPane splitPane;
+    @FXML
+    private VBox content;
     @FXML
     private Label name;
     @FXML
@@ -117,13 +126,14 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private StackPane progressBarPlaceholder;
     @FXML
-    private StackPane profilePicPlaceholder;
+    private GridPane personInfoTable;
+    @FXML
+    private AnchorPane profilePicPlaceholder;
     @FXML
     private Text debtRepaymentField;
 
     public InfoPanel(Logic logic) {
         super(FXML);
-
         this.logic = logic;
         loadDefaultPage();
         registerAsAnEventHandler(this);
@@ -150,6 +160,9 @@ public class InfoPanel extends UiPart<Region> {
         nearbyPersonField.setText(MESSAGE_INFO_NEARBY_PERSON_FIELD);
         debtRepaymentField.setText(MESSAGE_INFO_DEBT_REPAYMENT_FIELD);
         bindListeners(person);
+        if (splitPane.lookup(".split-pane-divider") != null) {
+            splitPane.lookup(".split-pane-divider").setMouseTransparent(true);
+        }
     }
 
     /**
@@ -160,6 +173,8 @@ public class InfoPanel extends UiPart<Region> {
         nearbyPersonListPanel = new NearbyPersonListPanel(logic.getAllPersons(), person);
         nearbyPersonListPanelPlaceholder.getChildren().clear();
         nearbyPersonListPanelPlaceholder.getChildren().add(nearbyPersonListPanel.getRoot());
+        personInfoPanel.setVisible(true);
+        personInfoPanel.setContent(content);
     }
 
     //@@author jelneo
@@ -215,7 +230,7 @@ public class InfoPanel extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-font-size:" + "15px");
+            tagLabel.setStyle("-fx-font-size:" + "20px");
             tags.getChildren().add(tagLabel);
         });
         logger.finest("All tags for " + person.getName().toString() + " initialized in info");
@@ -225,28 +240,7 @@ public class InfoPanel extends UiPart<Region> {
      * Sets all info fields to not display anything.
      */
     private void loadDefaultPage() {
-        Label label;
-        Text text;
-        for (Node node: pane.getChildren()) {
-            if (node instanceof Label) {
-                label = (Label) node;
-                label.setText("");
-            } else if (node instanceof Text) {
-                text = (Text) node;
-                text.setText("");
-            } else if (node instanceof TextFlow) {
-                for (Node subNode: ((TextFlow) node).getChildren()) {
-                    if (subNode instanceof Text) {
-                        text = (Text) subNode;
-                        text.setText("");
-                    }
-                    if (subNode instanceof Label) {
-                        label = (Label) subNode;
-                        label.setText("");
-                    }
-                }
-            }
-        }
+        personInfoPanel.setVisible(false);
     }
 
     @Override
@@ -296,6 +290,8 @@ public class InfoPanel extends UiPart<Region> {
         resetNearbyPersonListPanel(event.getNewSelection().person);
         resetDebtRepaymentProgressBar(event.getNewSelection().person);
         resetDebtorProfilePicture(event.getNewSelection().person);
+        personInfoPanel.setVisible(true);
+        personInfoPanel.setContent(content);
     }
 
     @Subscribe
@@ -305,7 +301,7 @@ public class InfoPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleDeselectionEvent(DeselectionEvent event) {
-        unregisterAsAnEventHandler(this);
+        loadDefaultPage();
     }
 
 }

@@ -804,50 +804,45 @@ public RepaidCommand parse(String args) throws ParseException {
 ----
 [source, java]
 ----
-public RepaidCommand() {
-    this.targetIndex = null;
+public RepaidCommand() throws CommandException {
+    personToWhitelist = selectPersonForCommand();
 }
-public CommandResult executeUndoableCommand() throws CommandException {
-    ReadOnlyPerson personToWhitelist = selectPerson(targetIndex);
-    // Perform the command operation as per normal.
+
+public RepaidCommand(Index targetIndex) throws CommandException {
+    personToWhitelist = selectPersonForCommand(targetIndex);
 }
 ----
-The `selectPerson(Index)` method is placed in the `Command` class, and is used by such index-based commands to select
+The `selectPersonForCommand()` and `selectPersonForCommand(Index)` methods are placed in the `Command` class, and is used by such index-based commands to select
 the currently selected person to apply the command on if no index is provided.
 [source, java]
 ----
-public ReadOnlyPerson selectPerson(Index index) throws CommandException {
-    ReadOnlyPerson selectedPerson;
-    if (index == null) {
-        if (model.getSelectedPerson() == null) {
-            throw new CommandException(Messages.MESSAGE_NO_PERSON_SELECTED);
-        } else {
-            selectedPerson = model.getSelectedPerson();
-        }
-    } else {
-        List<ReadOnlyPerson> lastShownList = listObserver.getCurrentFilteredList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-        selectedPerson = lastShownList.get(index.getZeroBased());
+public ReadOnlyPerson selectPersonForCommand() throws CommandException {
+    if (ListObserver.getSelectedPerson() == null) {
+        throw new CommandException(Messages.MESSAGE_NO_PERSON_SELECTED);
     }
-    return selectedPerson;
+    return ListObserver.getSelectedPerson();
+}
+
+public ReadOnlyPerson selectPersonForCommand(Index index) throws CommandException {
+    List<ReadOnlyPerson> lastShownList = ListObserver.getCurrentFilteredList();
+    if (index.getZeroBased() >= lastShownList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+    return lastShownList.get(index.getZeroBased());
 }
 ----
 
 ==== Design Considerations
 
 **Aspect:** Executing index-based commands without index. +
-**Alternative 1 (current choice):** Calling a constructor of the `command` without an `Index` initialises its `targetIndex`
+**Alternative 1 (current choice):** These person to apply the commands on are determined in the constructors. +
+**Pros:** Allows for proper `redo`. +
+**Cons:** Hard to test as Command Exceptions are being thrown from the constructors. +
+**Alternative 2:** Calling a constructor of the `command` without an `Index` initialises its `targetIndex`
 to null, and the null index is handled as a special value during execution. +
 **Pros:** Easy to implement, easy to extend. +
 **Cons:** Although highly unlikely, it may be possible for a `command` to have an unintended null `targetIndex`, which
-will then cause it to behave as an indexless command instead of an error. +
-**Alternative 2:** Find and use the current selection index within the constructor with no parameters. +
-**Pros:** Easier to maintain and test. +
-**Cons:** Difficult to implement as the `model` of a `command` is only set during execution, so it will be hard or even
-impossible to retrieve the current selection in the constructor of a `command`.
+will then cause it to behave as an indexless command instead of an error. May also cause problems with `redo`.
 // end::optionalIndex[]
 
 // tag::interest[]
@@ -949,9 +944,11 @@ private void changeTheme() {
         if (stylesheet.endsWith("DarkTheme.css")) {
             getRoot().getStylesheets().remove(stylesheet);
             getRoot().getStylesheets().add("/view/BrightTheme.css");
+            break;
         } else if (stylesheet.endsWith("BrightTheme.css")) {
             getRoot().getStylesheets().remove(stylesheet);
             getRoot().getStylesheets().add("/view/DarkTheme.css");
+            break;
         }
     }
 }

@@ -2,20 +2,22 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.ListObserver;
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -28,7 +30,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code PaybackCommand}.
  */
-public class PaybackCommandTest {
+public class PaybackCommandTest extends CommandTest {
 
     private static final String VALID_DEBT_FIGURE = "5000000.50";
     private static final String INVALID_DEBT_FIGURE = "-5000000.50";
@@ -36,10 +38,8 @@ public class PaybackCommandTest {
     private static final String MESSAGE_INVALID_FORMAT =  String.format(MESSAGE_INVALID_COMMAND_FORMAT,
             PaybackCommand.MESSAGE_USAGE);
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
     @Test
-    public void execute_successfulPayback() {
+    public void execute_payback_success() {
         ReadOnlyPerson personWhoPayback = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
                 + String.format(PaybackCommand.MESSAGE_PAYBACK_SUCCESS,
@@ -50,16 +50,14 @@ public class PaybackCommandTest {
 
             PaybackCommand paybackCommand = prepareCommand(INDEX_FIRST_PERSON, new Debt(VALID_DEBT_FIGURE));
             assertCommandSuccess(paybackCommand, model, expectedMessage, expectedModel);
-        } catch (IllegalValueException ive) {
-            ive.printStackTrace();
-        } catch (PersonNotFoundException pnfe) {
-            pnfe.printStackTrace();
+        } catch (IllegalValueException | PersonNotFoundException | CommandException e) {
+            e.printStackTrace();
         }
     }
 
     //@@author khooroko
     @Test
-    public void execute_noIndex_successfulPayback() {
+    public void execute_noIndexPayback_success() {
         model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
         ReadOnlyPerson personWhoPayback = model.getSelectedPerson();
         String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
@@ -71,66 +69,56 @@ public class PaybackCommandTest {
 
             PaybackCommand paybackCommand = prepareCommand(null, new Debt(VALID_DEBT_FIGURE));
             assertCommandSuccess(paybackCommand, model, expectedMessage, expectedModel);
-        } catch (IllegalValueException ive) {
-            ive.printStackTrace();
-        } catch (PersonNotFoundException pnfe) {
-            pnfe.printStackTrace();
+        } catch (IllegalValueException | PersonNotFoundException | CommandException e) {
+            e.printStackTrace();
         }
     }
 
     //@@author jelneo
     @Test
-    public void execute_unsuccessfulPayback_dueToInvalidFigure() {
-        try {
-            PaybackCommand paybackCommand = prepareCommand(INDEX_FIRST_PERSON, new Debt(INVALID_DEBT_FIGURE));
-            assertCommandFailure(paybackCommand, model, MESSAGE_INVALID_FORMAT);
-        } catch (IllegalValueException ive) {
-            ive.printStackTrace();
-        }
+    public void execute_invalidDebtFigure_failure() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(Debt.MESSAGE_DEBT_CONSTRAINTS);
+        prepareCommand(INDEX_FIRST_PERSON, new Debt(INVALID_DEBT_FIGURE));
+        fail(UNEXPECTED_EXECTION);
     }
 
     @Test
-    public void execute_unsuccessfulPayback_dueToAmountExceedingDebtOwed() {
+    public void execute_amountExceedDebtOwed_failure() {
         try {
             PaybackCommand paybackCommand = prepareCommand(INDEX_FIRST_PERSON, new Debt(ENORMOUS_DEBT_FIGURE));
             assertCommandFailure(paybackCommand, model, PaybackCommand.MESSAGE_PAYBACK_FAILURE);
-        } catch (IllegalValueException ive) {
-            ive.printStackTrace();
+        } catch (IllegalValueException | CommandException e) {
+            e.printStackTrace();
         }
     }
 
     @Test
-    public void equals() {
-        try {
-            PaybackCommand paybackFirstCommand = new PaybackCommand(INDEX_FIRST_PERSON, new Debt("500"));
-            PaybackCommand paybackSecondCommand = new PaybackCommand(INDEX_SECOND_PERSON, new Debt("300"));
-            PaybackCommand paybackThirdCommand = new PaybackCommand(new Debt("200"));
+    public void equals() throws Exception {
+        PaybackCommand paybackFirstCommand = new PaybackCommand(INDEX_FIRST_PERSON, new Debt("500"));
+        PaybackCommand paybackSecondCommand = new PaybackCommand(INDEX_SECOND_PERSON, new Debt("300"));
 
-            // same object -> returns true
-            assertTrue(paybackFirstCommand.equals(paybackFirstCommand));
-            assertTrue(paybackThirdCommand.equals(paybackThirdCommand));
+        // same object -> returns true
+        assertTrue(paybackFirstCommand.equals(paybackFirstCommand));
 
-            // same values -> returns true
-            PaybackCommand paybackFirstCommandCopy = new PaybackCommand(INDEX_FIRST_PERSON, new Debt("500"));
-            assertTrue(paybackFirstCommand.equals(paybackFirstCommandCopy));
+        // same values -> returns true
+        PaybackCommand paybackFirstCommandCopy = new PaybackCommand(INDEX_FIRST_PERSON, new Debt("500"));
+        assertTrue(paybackFirstCommand.equals(paybackFirstCommandCopy));
 
-            // different types -> returns false
-            assertFalse(paybackFirstCommand.equals(1));
+        // different types -> returns false
+        assertFalse(paybackFirstCommand.equals(1));
 
-            // null -> returns false
-            assertFalse(paybackFirstCommand.equals(null));
+        // null -> returns false
+        assertFalse(paybackFirstCommand.equals(null));
 
-            // different person -> returns false
-            assertFalse(paybackFirstCommand.equals(paybackSecondCommand));
-        } catch (IllegalValueException ive) {
-            ive.printStackTrace();
-        }
+        // different person -> returns false
+        assertFalse(paybackFirstCommand.equals(paybackSecondCommand));
     }
 
     /**
      * Prepares a {@code PaybackCommand}.
      */
-    private PaybackCommand prepareCommand(Index index, Debt debt) {
+    private PaybackCommand prepareCommand(Index index, Debt debt) throws CommandException {
         PaybackCommand command = null;
         if (index == null) {
             command = new PaybackCommand(debt);

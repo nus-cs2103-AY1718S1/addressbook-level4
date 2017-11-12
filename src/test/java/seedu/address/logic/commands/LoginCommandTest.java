@@ -12,6 +12,7 @@ import org.junit.Test;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.Password;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.Username;
@@ -24,8 +25,7 @@ import seedu.address.model.UserPrefs;
 /**
  * Contains integration tests (interaction with the Model) for {@code LoginCommand}.
  */
-public class LoginCommandTest {
-
+public class LoginCommandTest extends CommandTest {
     private static final String TEST_USERNAME = "TESTloanShark97";
     private static final String TEST_PASSWORD = "TESThitMeUp123";
     private final boolean hasLoggedIn = true;

@@ -336,7 +336,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *               two decimal places
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
-    public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
+    public ReadOnlyPerson addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
         Person editedPerson = new Person(target);
 
         try {
@@ -352,6 +352,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "New debt amount should not be invalid since amount and debt field in target have "
                     + "been validated";
         }
+        return editedPerson;
     }
 
     /**
