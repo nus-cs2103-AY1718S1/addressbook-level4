@@ -162,21 +162,18 @@ Expected Behaviour
 * Name, phone, email and address fields are compulsory
 
 [[delete-command]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#delete-command[]Delete
-Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Delete Command
+~~~~~~~~~~~~~~~
 
 [[basic-functionality1]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality1[]Basic
-Functionality
-^^^^
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
 
 1.  Type `delete 1`
 2.  Press `Enter`
 
 [[expected-behaviour7]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour7[]Expected
-Behaviour
+Expected Behaviour
    +++++++++
 
 * First contact is deleted from Rolodex
@@ -189,8 +186,7 @@ Abbreviations
 2.  Press `Enter`
 
 [[expected-behaviour8]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour8[]Expected
-Behaviour
+Expected Behaviour
    +++++++++
 
 * Second contact is deleted from Rolodex
@@ -201,8 +197,7 @@ Behaviour
 2.  Press `Enter`
 
 [[expected-behaviour9]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour9[]Expected
-Behaviour
+Expected Behaviour
    +++++++++
 
 * Third contact is deleted from Rolodex
@@ -215,16 +210,14 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion1[]Auto-comple
 2.  Type `1` and press `Enter`
 
 [[expected-behaviour10]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour10[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * First contact is deleted from Rolodex
 
 [[invalid-command-suggestion1]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion1[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d21 durian`
 2.  Press `Enter`
@@ -248,8 +241,7 @@ Shortcut
 2.  Type `1` and press `Enter`
 
 [[expected-behaviour11]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour11[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * First contact is deleted from Rolodex
@@ -260,17 +252,15 @@ Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[basic-functionality2]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality2[]Basic
-Functionality
-^^^^
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
 
 1.  Type
 `edit 1 n/A p/99999999 e/edit@gmail.com r/Edited contact. t/edited`
 2.  Press `Enter`
 
 [[expected-behaviour12]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour12[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The particulars of the first contact are edited with the new inputs.
@@ -279,16 +269,14 @@ Behaviour
 panel
 
 [[tag-toggling]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#tag-toggling[]Tag
-Toggling
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Tag Toggling
+^^^^^^^^^^^^
 
 1.  Type `edit 1 t/edited` (A should be the first contact)
 2.  Press `Enter`
 
 [[expected-behaviour13]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour13[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The tag `edited` should be removed from A
@@ -301,8 +289,7 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations2[]Abbreviations
 2.  Press `Enter`
 
 [[expected-behaviour14]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour14[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * First contact should be renamed to B
@@ -313,8 +300,7 @@ Behaviour
 2.  Press `Enter`
 
 [[expected-behaviour15]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour15[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * Phone number of first contact should now be “88888888”
@@ -325,8 +311,7 @@ Behaviour
 2.  Press `Enter`
 
 [[expected-behaviour16]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour16[]Expected
-behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * Email of first contact should now be %22modified@mail.com"
@@ -345,8 +330,7 @@ list
 6.  Press `Enter`
 
 [[expected-behaviour17]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour17[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The particulars of the first contact are edited with the new inputs.
@@ -364,16 +348,14 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion2[]Auto-comple
 4.  Press `Enter`
 
 [[expected-behaviour18]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour18[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * First contact should be renamed to B
 
 [[invalid-command-suggestion2]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion2[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `edit 1Alice`
 2.  Press `Enter`
@@ -382,8 +364,7 @@ Command Suggestion
 4.  Press `Enter`
 
 [[expected-behaviour19]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour19[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * First contact should be renamed to alice
@@ -397,8 +378,7 @@ Behaviour
 4.  Press `Enter`
 
 [[expected-behaviour20]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour20[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * Phone number of first contact should now be “12345678”
@@ -412,8 +392,7 @@ Behaviour
 4.  Press `Enter`
 
 [[expected-behaviour21]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour21[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * Email of first contact should now be “abc@efg”
@@ -427,8 +406,7 @@ Behaviour
 4.  Press `Enter`
 
 [[expected-behaviour22]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour22[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * Address of first contact should now be “3 computing drive”
@@ -443,8 +421,7 @@ Shortcut
 3.  Press `Enter`
 
 [[expected-behaviour23]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour23[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * First contact should be renamed to bob
@@ -455,15 +432,13 @@ Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[basic-functionality3]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality3[]Basic
-Functionality
-^^^^
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
 
 1.  Type `select 1`
 
 [[expected-behaviour24]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour24[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should be selected
@@ -494,8 +469,7 @@ list
 5.  Press `Enter`
 
 [[expected-behaviour26]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour26[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The third contact should be selected
@@ -510,16 +484,14 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion3[]Auto-comple
 4.  Press `Enter`
 
 [[expected-behaviour27]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour27[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should be selected
 
 [[invalid-command-suggestion3]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion3[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `s1`
 2.  Press`Enter`
@@ -528,8 +500,7 @@ Command Suggestion
 4.  Press `Enter`
 
 [[expected-behaviour28]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour28[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should be selected
@@ -544,8 +515,7 @@ Shortcut
 3.  Press `Enter`
 
 [[expected-behaviour29]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour29[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * In step 1, the command box should be deselected
@@ -558,16 +528,14 @@ Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[basic-functionality4]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality4[]Basic
-functionality
-^^^^
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
 
 1.  Type `email 1 s/hello`
 2.  Press `Enter`
 
 [[expected-behaviour30]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour30[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * Your default email client should open a new compose email window
@@ -580,8 +548,7 @@ Behaviour
 2.  Press `Enter`
 
 [[expected-behaviour31]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour31[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * Your default email client should open a new compose email window
@@ -598,8 +565,7 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion4[]Auto-comple
 4.  Press `Tab`
 
 [[expected-behaviour32]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour32[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * Your default email client should open a new compose email window
@@ -607,9 +573,8 @@ Behaviour
 * Subject should be “hello”
 
 [[invalid-command-suggestion4]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion4[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `mal1 hello`
 2.  Press `Enter`
@@ -618,8 +583,7 @@ Command Suggestion
 4.  Press `Enter`
 
 [[expected-behaviour33]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour33[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * Your default email client should open a new compose email window
@@ -636,8 +600,7 @@ Shortcut
 3.  Press `Enter`
 
 [[expected-behaviour34]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour34[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * Your default email client should open a new compose email window
@@ -785,9 +748,8 @@ Behavior
 * The contact list is filtered with contacts tagged as “school”.
 
 [[invalid-command-suggestion5]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion5[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `findmy friends`
 2.  Press `Enter`
@@ -808,9 +770,8 @@ Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[basic-functionality5]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality5[]Basic
-Functionality
-^^^^
+Basic Functionality
+^^^^^^^^^^^^^^^^^^^
 
 1.  Type `help`
 2.  Press `Enter`
@@ -838,9 +799,8 @@ Behavior
 * All words “add” in the document should be highlighted in yellow
 
 [[invalid-command-suggestion6]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion6[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `halp me`
 2.  Press `Enter`
@@ -861,9 +821,8 @@ Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[basic-functionality6]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality6[]Basic
-Functionality
-^^^^
+Basic Functionality
+^^^^^^^^^^^^^^^^^^^
 
 1.  Type `history`
 2.  Press `Enter`
@@ -877,9 +836,8 @@ Behavior
 the result panel
 
 [[invalid-command-suggestion7]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion7[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `hisdory is a dory pun`
 2.  Press `Enter`
@@ -916,9 +874,8 @@ Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[basic-functionality7]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality7[]Basic
-Functionality
-^^^^
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
 
 1.  Type `list`
 2.  Press `Enter`
@@ -984,9 +941,8 @@ Behavior
 descending address.
 
 [[invalid-command-suggestion8]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion8[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `lost is me, Am I lost? Yes I am. Lost little lamb`
 2.  Press `Enter`
@@ -1029,8 +985,7 @@ New Rolodex at Relative Directory
 2.  Press `Enter`
 
 [[expected-behaviour35]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour35[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * A new Rolodex is created under the relative directory (data folder
@@ -1067,8 +1022,7 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#linux[]Linux:
 2.  Press `Enter`
 
 [[expected-behaviour36]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour36[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * A new test file, `SampleData.rldx` should be created on your desktop.
@@ -1086,8 +1040,7 @@ to Re-Create Existing Rolodex
 2.  Press `Enter`
 
 [[expected-behaviour37]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour37[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * An error message should be displayed, prompting to use the `open`
@@ -1104,8 +1057,7 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion6[]Auto-comple
 4.  Press `Enter`
 
 [[expected-behaviour38]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour38[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * A new Rolodex is created under the relative directory (data folder
@@ -1116,9 +1068,8 @@ new Rolodex (i.e. `data/SampleData3.rldx`)
 been cleared.
 
 [[invalid-command-suggestion9]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion9[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `new:( data/SampleData4`
 2.  Press `Enter`
@@ -1127,8 +1078,7 @@ Command Suggestion
 4.  Press `Enter`
 
 [[expected-behaviour39]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour39[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * A new Rolodex is created under the relative directory (data folder
@@ -1148,8 +1098,7 @@ Shortcut
 3.  Press `Enter`
 
 [[expected-behaviour40]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour40[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * A new Rolodex is created under the relative directory (data folder
@@ -1181,8 +1130,7 @@ Rolodex at Relative Directory
 2.  Press `Enter`
 
 [[expected-behaviour41]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour41[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The original Rolodex under the relative directory (data folder should
@@ -1219,8 +1167,7 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#linux1[]Linux:
 2.  Press `Enter`
 
 [[expected-behaviour42]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour42[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The original test file, `SampleData.rldx` should be loaded onto your
@@ -1239,8 +1186,7 @@ to Open Non-Existent Rolodex
 2.  Press `Enter`
 
 [[expected-behaviour43]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour43[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * An error message should be displayed, prompting to use the `new`
@@ -1256,8 +1202,7 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion7[]Auto-comple
 3.  Type `data/SampleData.rldx`
 
 [[expected-behaviour44]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour44[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The original Rolodex under the relative directory (data folder should
@@ -1268,9 +1213,8 @@ opened Rolodex (i.e. `data/SampleData.rldx`)
 been cleared.
 
 [[invalid-command-suggestion10]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion10[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `open:) data/SampleData2`
 2.  Press `Enter`
@@ -1279,8 +1223,7 @@ Command Suggestion
 4.  Press `Enter`
 
 [[expected-behaviour45]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour45[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The Rolodex under the relative directory (data folder should be in
@@ -1300,8 +1243,7 @@ Shortcut
 3.  Press `Enter`
 
 [[expected-behaviour46]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour46[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The original Rolodex under the relative directory (data folder should
@@ -1317,8 +1259,7 @@ Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[basic-functionality8]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality8[]Basic
-Functionality
+Basic Functionality
 ^^^^
 
 1.  Type `remark 1 r/Loves to talk.`
@@ -1327,8 +1268,7 @@ Functionality
 4.  Press `Enter`
 
 [[expected-behaviour47]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour47[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The selected contact should have the remark “Loves to talk.”
@@ -1343,8 +1283,7 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations5[]Abbreviations
 4.  Press `Enter`
 
 [[expected-behaviour48]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour48[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The selected contact should have the remark “Loves to sing.”
@@ -1357,8 +1296,7 @@ Behaviour
 4.  Press `Enter`
 
 [[expected-behaviour49]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour49[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The selected contact should have the remark “Loves to jump.”
@@ -1371,8 +1309,7 @@ Behaviour
 4.  Press `Enter`
 
 [[expected-behaviour50]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour50[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The selected contact should have the remark “Loves to eat.”
@@ -1390,8 +1327,7 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#auto-completion8[]Auto-comple
 7.  Press `Enter`
 
 [[expected-behaviour51]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour51[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The selected contact should have the remark “Loves to swim.”
@@ -1410,16 +1346,14 @@ shortcut
 7.  Press `Enter`
 
 [[expected-behaviour52]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour52[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The selected contact should have the remark “Loves to dance.”
 
 [[invalid-command-suggestion11]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion11[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `rmk1 Hates dancing`
 2.  Press `Enter`
@@ -1430,8 +1364,7 @@ Command Suggestion
 6.  Press `Enter`
 
 [[expected-behaviour53]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour53[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The selected contact should have the remark “Hates dancing”
@@ -1442,8 +1375,7 @@ Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[basic-functionality9]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality9[]Basic
-Functionality
+Basic Functionality
 ^^^^
 
 1.  Type `delete 1` and press `Enter`
@@ -1451,8 +1383,7 @@ Functionality
 3.  Press `Enter`
 
 [[expected-behaviour54]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour54[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should remain in Rolodex
@@ -1466,8 +1397,7 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations6[]Abbreviations
 3.  Press `Enter`
 
 [[expected-behaviour55]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour55[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should remain in Rolodex
@@ -1485,16 +1415,14 @@ list
 5.  Press `Enter`
 
 [[expected-behaviour56]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour56[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should remain in Rolodex
 
 [[invalid-command-suggestion12]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion12[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `udon YUMMY!!! :P` and press `Enter`
@@ -1503,8 +1431,7 @@ Command Suggestion
 4.  Press `Enter`
 
 [[expected-behaviour57]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour57[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should remain in Rolodex
@@ -1518,8 +1445,7 @@ Shortcut
 2.  Press `Ctrl` + `Z`
 
 [[expected-behaviour58]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour58[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should remain in Rolodex
@@ -1530,8 +1456,7 @@ Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[basic-functionality10]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality10[]Basic
-functionality
+Basic Functionality
 ^^^^^
 
 1.  Type `d 1` and press `Enter`
@@ -1540,8 +1465,7 @@ functionality
 4.  Press `Enter`
 
 [[expected-behaviour59]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour59[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should be deleted from Rolodex
@@ -1556,8 +1480,7 @@ https://cs2103aug2017-w11-b2.github.io/TestScript/#abbreviations7[]Abbreviations
 4.  Press `Enter`
 
 [[expected-behaviour60]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour60[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should be deleted from Rolodex
@@ -1576,16 +1499,14 @@ list
 6.  Press `Enter`
 
 [[expected-behaviour61]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour61[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should be deleted from Rolodex
 
 [[invalid-command-suggestion13]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion13[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `undo` and press `Enter`
@@ -1593,8 +1514,7 @@ Command Suggestion
 4.  Press `Enter`
 
 [[expected-behaviour62]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour62[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should be deleted from Rolodex
@@ -1609,8 +1529,7 @@ Shortcut
 3.  Press `Ctrl` + `Y`
 
 [[expected-behaviour63]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour63[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The first contact should be deleted from Rolodex
@@ -1624,16 +1543,14 @@ Command
 2.  Press `Enter`
 
 [[expected-behaviour64]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour64[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The application should be closed.
 
 [[invalid-command-suggestion14]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#invalid-command-suggestion14[]Invalid
-Command Suggestion
-^^^^^^^^^^^^^^^^^^^
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.  Reopen the application by clicking the rolodex.jar file.
 2.  Type `exito`
@@ -1642,28 +1559,26 @@ Command Suggestion
 4.  Press `Enter`
 
 [[expected-behaviour65]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#expected-behaviour65[]Expected
-Behaviour
+Expected Behaviour
 +++++++++++++++++
 
 * The application should be closed.
 
 [[end]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#end[]End
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+End
+~~~
 
 Congratulations. You have reached the end of the tests. Found any bugs?
 Report it at https://github.com/CS2103AUG2017-W11-B2/main/issues. We’ll
 give you a cookie for finding bugs! :)
 
 [[bonus-star-wars-ep-iv]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#bonus-star-wars-ep-iv[]Bonus:
-Star Wars Ep IV
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Bonus: Star Wars Ep IV
+~~~~~~~~~~~~~~~~~~~~~~
 
 [[requirements1]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#requirements1[]Requirements
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Requirements
+^^^^^^^^^^^^
 
 Make sure you are connected to the internet and are *on a network that
 has port 25 open*. Chances are many universities’s (ahem) networks block
@@ -1671,9 +1586,8 @@ the incoming port and this won’t work. Solution? Use a tether. Trust us
 - it’s awesome!
 
 [[basic-functionality11]]
-https://cs2103aug2017-w11-b2.github.io/TestScript/#basic-functionality11[]Basic
-Functionality
-^^^^^
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
 
 1.  Type `starwars` or `sw`
 2.  Press `Enter`.
