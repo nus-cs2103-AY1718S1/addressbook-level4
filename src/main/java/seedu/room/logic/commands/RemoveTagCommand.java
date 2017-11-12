@@ -82,9 +82,9 @@ public class RemoveTagCommand extends UndoableCommand {
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit} 
-     * @param personToEdit
-     * @return
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * @param personToEdit person with tag
+     * @return person with tag removed
      */
     private Person removedTagFromPerson(ReadOnlyPerson personToEdit) {
         assert personToEdit != null;
