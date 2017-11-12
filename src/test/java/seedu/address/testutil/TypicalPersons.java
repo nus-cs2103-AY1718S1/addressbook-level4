@@ -73,6 +73,7 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withRemark(VALID_REMARK_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
+    //@@author Xenonym
     // These persons have relationships for the purpose of testing storage mechanisms.
     // they are separate so as not to affect other tests that assume persons are independent eg. system tests
     public static final ReadOnlyPerson JAMES = new PersonBuilder().withName("James King").withPhone("65637492")
@@ -108,6 +109,7 @@ public class TypicalPersons {
             assert false : "impossible to have invalid data in test data";
         }
     }
+    //@@author
 
     private TypicalPersons() {} // prevents instantiation
 
@@ -141,6 +143,7 @@ public class TypicalPersons {
         return ab;
     }
 
+    //@@author Xenonym
     /**
      * Returns an {@code AddressBook} with all the typical persons and with some relationships
      */
@@ -155,6 +158,7 @@ public class TypicalPersons {
         }
         return ab;
     }
+    //@@author
 
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
@@ -164,7 +168,9 @@ public class TypicalPersons {
         return new ArrayList<>(Arrays.asList(DANIEL, BENSON, CARL, ALICE, ELLE, FIONA, GEORGE));
     }
 
+    //@@author Xenonym
     public static List<ReadOnlyPerson> getTypicalPersonsWithRelationships() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, JAMES, KELVIN, LISA));
     }
+    //@@author
 }
