@@ -379,7 +379,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 === Open File and New File Mechanism
 The open new file and creating new file mechanism are handled by two new types of requests under the `EventsCenter`,
 `OpenRolodexRequestEvent` and `RolodexChangedDirectoryEvent`. Upon receiving a new command, the `MainApp` attempts to
-reloads the instance `model` and `logic` but **not the `UI`**.
+reload the instance `model` and `logic` but **not the `UI`**.
 
 The high level sequence diagram for a typical `open` request can be seen below:
 
