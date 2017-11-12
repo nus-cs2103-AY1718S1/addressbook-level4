@@ -59,19 +59,8 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
         Index lastPersonIndex = getLastIndex(modelBeforePinningLast);
         assertCommandSuccess(lastPersonIndex);
 
-        /* Case: undo pinning the last person in the list -> last person unpinned */
-        command = UndoCommand.COMMAND_WORD;
-        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, modelBeforePinningLast, expectedResultMessage);
-
-        /* Case: redo pinning the last person in the list -> last person pinned again */
-        command = RedoCommand.COMMAND_WORD;
-        pinPerson(modelBeforePinningLast, lastPersonIndex);
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, modelBeforePinningLast, expectedResultMessage);
-
         /* Case: unpin the pinned person in the list */
-        pinnedPerson = unpinPerson(modelBeforePinningLast, INDEX_FIRST_PERSON);
+        pinnedPerson = unpinPerson(getModel(), INDEX_FIRST_PERSON);
         command = UnpinCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased();
         expectedResultMessage = String.format(MESSAGE_UNPIN_PERSON_SUCCESS, pinnedPerson);
         assertCommandSuccess(command, modelBeforePinningLast, expectedResultMessage);
