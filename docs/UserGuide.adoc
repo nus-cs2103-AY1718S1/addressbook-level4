@@ -301,7 +301,7 @@ Returns any person having phone number `91234567` exactly
 Returns any person having phone number `91234567` or `12345678` exactly
 * `finds e/amy@example.com` +
 Returns any person having email `amy@example.com` exactly
-* `finds e/amy@example.com john@example.com` +
+* `finds e/amy@example.com `john@example.com`` +
 Returns any person having email `amy@example.com` or `john@example.com` exactly
 * `finds t/[friends]` +
 Returns any person having tag `[friends]` exactly
