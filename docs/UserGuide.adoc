@@ -67,12 +67,11 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. You will see the GUI (Graphical User Interface) appear in a few seconds.
 +
-image::UI.jpeg[width="790"]
+image::defaultUI.jpeg[width="790"]
 _Figure 3.1 : UI_
 +
 ....
-Here are some terms of the components in the GUI for you to refer to before you proceed to the next step
-(you may refer to the labels in Figure 3.1):
+Here are some terms of the components in the GUI for you to refer to before you proceed to the next step (you may refer to the labels in Figure 3.1):
 
 1. File menu: allows you to change colour themes and exit the application
 2. Help menu: clicking on the Help menu will pop out a help window
@@ -89,9 +88,11 @@ Here are some terms of the components in the GUI for you to refer to before you 
 9. Save button: saves the edited information of the contact in the form to the chosen contact
 10. Browser panel: shows the logo image and changes to the map view of the contact's location
     upon clicking on a contact
-11. Clear log button: allows you to clear the log
-12. Generate QR button: allows you to generate QR code of the contact's phone number
-    (the QR code will be displayed in the browser panel)
+11. Clear button: allows you to clear the log
+QR Code Generator Buttons (the QR code will be displayed in the browser panel):
+12. Call button: allows you to generate QR code of the contact's phone number for calling
+13. SMS button: allows you to generate QR code to SMS the contact with a template
+14. Share button: allows you to generate QR code to save contact information into your phone
 ....
 
 .  Type the command in the command box (labelled 3 in Figure 3.1)  and press kbd:[Enter] to execute it. +
