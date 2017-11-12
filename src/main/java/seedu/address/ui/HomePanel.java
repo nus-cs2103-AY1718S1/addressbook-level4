@@ -1,6 +1,6 @@
 package seedu.address.ui;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -20,7 +20,7 @@ import seedu.address.model.UserPrefs;
 public class HomePanel extends UiPart<Region> {
 
     private static final String FXML = "HomePanel.fxml";
-    private static final File dir = new File("src//main//resources//images//Wallpaper");
+    private InputStream is = this.getClass().getResourceAsStream("/images/Wallpaper/img9.jpg");
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
@@ -30,7 +30,7 @@ public class HomePanel extends UiPart<Region> {
     private Label quotesLabel;
 
     private UserPrefs pref;
-    private File[] files = dir.listFiles();
+
     private String[] quotes = {
         "What we want is to see the child in pursuit of knowledge, and not knowledge in pursuit of the child.",
         "Good teaching is one-fourth preparation and three-fourths theatre.",
@@ -60,10 +60,9 @@ public class HomePanel extends UiPart<Region> {
      */
     public void refreshPage() {
         Random random = new Random();
-        File image = files[random.nextInt(files.length)];
-        Image wallpaper = new Image(image.toURI().toString());
-        homePage.setImage(wallpaper);
-        homePage.setFitWidth(pref.getGuiSettings().getWindowWidth());
+        Image image = new Image(is);
+        homePage.setImage(image);
+        homePage.setFitWidth(1650);
         quotesLabel.setMinWidth(500);
         quotesLabel.setStyle("-fx-font: 30 system;");
         quotesLabel.setText(quotes[random.nextInt(quotes.length)]);
