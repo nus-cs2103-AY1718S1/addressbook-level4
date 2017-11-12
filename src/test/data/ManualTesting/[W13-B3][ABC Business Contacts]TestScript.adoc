@@ -13,7 +13,7 @@ Sync
 |S3 |sync | Google Contacts will be updated with local contacts (Only after S2 is completed)
 |S4 |Disable your wifi-connection and run sync | Error message: “Unable to connect to the Internet. Please check your internet and firewall settings
 ”
-|S5 |logout | Error message: “Logged out!”
+|S5 |Enable wifi and logout | Error message: “Logged out!”
 |S6 |sync | Error message: “Please login first”
 |S7 |logout | Error message: “Failure logging out. Are you sure you are logged in?”
 |S8 |login | Browser window opens for Google login (Please complete your login)
@@ -83,7 +83,7 @@ Organization
 |O3 |Press kbd:[tab] | The command would be completed with `find t/friend`
 |O4 |Press kdb:[enter] | 9 persons listed!
 |O5 |list | Listed all persons
-|O6 |fnd t/friend family | 11 persons listed!
+|O6 |find t/friend family | 11 persons listed!
 |O7 |list | Listed all persons
 |O8 |find t/friend family p/81427313 | 12 persons listed!
 |O9 |f e/*@example.com | 9 persons listed!
