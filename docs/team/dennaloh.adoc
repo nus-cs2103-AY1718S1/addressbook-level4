@@ -1,0 +1,69 @@
+= Denna Loh - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancements Added: Sorting Contacts by Name, Finding Contacts by Tag, Email Command
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=sortByName]
+
+include::../UserGuide.adoc[tag=findtag]
+
+include::../UserGuide.adoc[tag=emailCommand]
+
+include::../UserGuide.adoc[tag=gmCommand]
+
+include::../UserGuide.adoc[tag=fbCommand]
+
+---
+
+==== Justification
+
+*Listing all persons:* +
+There is a need to have the contacts sorted by default as this would allow users to be able to look through
+a more organized contact list by default, rather than one without order.
+
+*Locating persons by their tag:* +
+This is necessary for better organization as it will reduce the time users need to spend scrolling through
+the entire list to look for contacts from a particular social group. This adds on to the convenient factor
+of the application.
+
+*Emailing a person:* +
+This command allows users to be able to email their contacts hassle-free as they do not need to open their
+email, compose a new email and copy their contact's email inside. Instead, after typing in the command line,
+the default mail app will appear with the email of the contact already inside.
+
+*Google Map directions to a person's address:* +
+This provides a shortcut to Google Maps using the default browser with the Destination filled up with
+a contact's address. This will allow users to easily get directions to their contact's house for when
+users are visiting their friends or family. This saves users the of mundane task of having to manually open Google Maps
+and typing in their contact's address into the Destination field.
+
+*Searching for a contact on Facebook:* +
+Users can easily search for their contacts on Facebook. As most people use social media as a way to keep up with
+their friends' or family's lives, they often want to add them of platforms such as Facebook. This feature offers a
+convenient way for users to search for any of their contacts on Facebook to add them.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=emailMech]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add Subject and more emails via command line
+
+This will make it more convenient to email multiple people at once.
