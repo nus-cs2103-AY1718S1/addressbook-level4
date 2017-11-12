@@ -9,8 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -20,8 +19,8 @@ import seedu.address.model.tag.Tag;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = { "Brown", "CadetBlue", "DarkOrange",
-        "Gold", "Olive", "PaleVioletRed", "Crimson", "LightSeaGreen", "OrangeRed", "YellowGreen",
+    private static String[] colors = { "DarkCyan", "CadetBlue", "DarkOrange",
+        "Gold", "Olive", "PaleVioletRed", "LightSeaGreen", "OrangeRed", "YellowGreen",
         "Chocolate", "Plum"};
     private static HashMap<String, String> tagColorMap = new HashMap<>();
     private static Random random = new Random();
@@ -41,6 +40,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
+    private Shape fav;
+    @FXML
     private Label id;
     @FXML
     private FlowPane tags;
@@ -53,6 +54,7 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
     }
 
+    //@@author ZhangH795
     private static String getColorForTag(String tagString) {
         String color = "";
         boolean uniqueColor = false;
@@ -70,6 +72,8 @@ public class PersonCard extends UiPart<Region> {
         }
         return color;
     }
+    //@@author ZhangH795
+
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -82,26 +86,26 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author ZhangH795
     /**
      * Binds the Tag with a randomly generated color
      */
     private void initTags(ReadOnlyPerson person) {
-        boolean fav = false;
+        boolean favourite = false;
         for (Tag tag : person.getTags()) {
             if (!tag.tagName.toLowerCase().contains("fav")) {
                 Label tagLabel = new Label(tag.tagName);
                 tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
                 tags.getChildren().add(tagLabel);
             } else {
-                fav = true;
+                favourite = true;
             }
         }
-        if (fav) {
-            Circle circle = new Circle(0, 0, 8);
-            circle.setFill(Color.CORAL);
-            tags.getChildren().add(circle);
+        if (favourite) {
+            fav.setVisible(true);
         }
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

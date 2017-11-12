@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: iConnect
 iConnect is a desktop address book application used for NUS undergraduates social network connection purpose. We aim to make the student's school life much easier and more convenient. With this app, students are able to manage their study, work as well as social activities in a more efficient way. The user is required to interact with the app by typing command line, and it has a GUI created with JavaFX for user's convenience. It is written in Java, and has about 25 thousand line of codes (kLoC).
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/Collated/main/dalessr.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/Collated/test/dalessr.md[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/main/dalessr.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/test/dalessr.md[Test code]]
 
 === Enhancements Added: Find, Map, Birthday
 
@@ -54,4 +54,5 @@ include::../UserGuide.adoc[tag=shell]
 
 * GUI design: built the person details panel (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/84[#84])
 * GUI design: open a new tab in centre panel to display the browser view for each social media icon (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/98[#98])
-* Wrote additional tests to increase coverage from 78% to 80% (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/101[#101])
+* GUI design: command word auto-completion (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/120[#120])
+* Wrote additional tests to increase coverage (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/101[#101], https://github.com/CS2103AUG2017-W09-B3/main/pull/132[#132])

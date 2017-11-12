@@ -166,19 +166,19 @@ Returns any person having names `Betsy`, `Tim`, `John` or living at `Clementi St
 // tag::sort[]
 === Sorting list of persons: `sort` _[Since v1.2]_
 
-Sorts the full list of persons based on the specified attribute. +
+Suppose you wish to have your list of persons ordered by a specific attribute, you may use the `sort` command to do so. Be it name, email, phone, address or even the time it was first added. You can also choose to specify whether the attribute should be sorted in ascending or descending order, allowing you to have control over how your person panel should appear. +
 
-Format: `sort [n/(ASC OR DSC)]`
+Format: `sort [n/(asc OR dsc)]`
 
 [TIP]
-The list can be sorted by one of the following attribute: name, phone, email, address, time added.
+Persons tagged as favourite will be sorted at the top of the list, followed by the rest of the contacts.
 
 ****
 * Sort command only accepts one attribute.
 * The list can be sorted by one of the following attribute: name, phone, email, address, time added.
 * Sorting order depends on the specified choice.
-* The `ASC` signifies sorting in ascending order.
-* The `DSC` signifies sorting in descending order.
+* The `asc` signifies sorting in ascending order.
+* The `dsc` signifies sorting in descending order.
 * Entering command without any argument will default to name in ascending order.
 * Entering command without specifying order will default to ascending order.
 ****
@@ -187,9 +187,9 @@ Examples:
 
 * `sort` +
 Returns list of persons sorted by name added in ascending order
-* `sort p/ASC` +
+* `sort p/asc` +
 Returns list of persons sorted by phone in ascending order
-* `sort t/DSC` +
+* `sort t/dsc` +
 Returns list of persons sorted by time added in descending order
 // tag::sort[]
 
@@ -232,7 +232,7 @@ Deletes the 1st person in the results of the `find` command
 
 You can add a tag to specified person(s) in the address book current listing.
 
-Format: `t-add INDEX TAG`
+Format: `t-add INDEX... TAG`
 
 ****
 * The index refers to the index number shown in the most recent listing, you can key in multiple indices as well.
@@ -248,7 +248,7 @@ This command adds the tag friends to the 2nd and 3rd person in the address book
 // end::tagadd[]
 
 // tag::tagaddfav[]
-=== Setting a person(s) as "favourite" : `t-add` _[Since v1.3]_
+=== Setting person(s) as favourite : `t-add` _[Since v1.3]_
 
 You can mark specified person(s) from the address book as favourite.
 
@@ -318,7 +318,7 @@ This command removes the tag `fav` from all person(s) with the the tag `fav` in 
 // end::tagremovefav[]
 
 // tag::tagfind[]
-=== Find the person(s) with given tags: `t-find` _[Since v1.3]_
+=== Finding the person(s) with given tags: `t-find` _[Since v1.3]_
 
 You can find all persons with the given tag.
 
@@ -337,17 +337,17 @@ This command could also list all the people with tag `friend` if any
 // end::tagfind[]
 
 // tag::changetheme[]
-=== Change the theme according to user input `theme` _[Since v1.5]_
+=== Changing the theme according to user input `theme` _[Since v1.5]_
 
 You can change the current theme into your preferred one.
 
-Format: `theme THEME`
+Format: `theme [THEME] OR [INDEX]`
 
 ****
 * Currently there are 3 themes available, `Twilight`, `Sunburst`, `Minimalism`.
 * `Twilight` is dark in color; `Sunburst` is bright and lively; `Minimalism` is basic and is the default.
-* You can key in `Twilight` or `dark` or `1` to change into dark theme; `Sunburst` or `bright` or `2`to bright theme and `Minimalism` or `default` or `3` to default theme.
-* When you only key in `theme`, the result box would display "1.Twilight 2.Sunburst 3.Minimalism", you can simply key in the index after that to change into your preferred theme.
+* You can key in `Twilight` or `dark` or `1` to change into dark theme; `Sunburst` or `bright` or `2` to bright theme and `Minimalism` or `default` or `3` to default theme.
+* When you only key in `theme`, the result box would display `1.Twilight 2.Sunburst 3.Minimalism`, you can simply key in the index to change into the specific theme.
 * The result indicates that you have successfully changed into your theme of choice.
 ****
 
@@ -362,7 +362,7 @@ This command changed to current theme to Twilight
 // end::changetheme[]
 
 // tag::map[]
-=== Find the location of a person using Google Map: `m-show` _[Since v1.3]_
+=== Finding the location of a person using Google Map: `m-show` _[Since v1.3]_
 
 You might find it not very convenient to only show the contact's location as text. Therefore, iConnect allows you to see the location! By using this command, without typing in the person's address, you can easily find the location of your friend in Google Map, which will show in the centre browser.
 
@@ -380,7 +380,7 @@ Examples:
 * `m-show 1` +
 Shows the address of person with index 1 on the google map
 
-=== Find the route from user's current location to the person seleted: `m-route` _[Since v1.3]_
+=== Finding the route from user's current location to the person seleted: `m-route` _[Since v1.3]_
 
 Not only can iConnect show the location, it can also show you how to go there! Simply by adding your current location, it will show you the shortest path from your current address to your friend's home in the Google map.
 
@@ -402,21 +402,27 @@ Shows the route from `Clementi Street` to the address of person with index numbe
 Shows the route from `John street, block 123, #01-01` to the address of person with index number `7`
 // end::map[]
 
-=== Schedule an Event: s-add _[Since v1.4]_
+=== Adding an Event to Schedule: `s-add` _[Since v1.4]_
 
-Adds an event, along with the members involved, into the calendar.
+With many commitments at hand, it is easy to overlook an event in your schedule. `s-add` allows you to add an event to your calendar and also the people who will be involved in the event.
 
-Format: `s-add [m/INDEX INDEX…] n/NAME t/TIME d/DURATION`
+Format: `s-add [m/INDEX INDEX…] n/NAME t/TIME [d/DURATION]`
 
 [TIP]
-It is possible to create an event without any members.
+You may create an event without any members or create a past event to keep track of your past schedule too.
+
+[TIP]
+Mouse over the greyed-out date in your calendar to see your events for the day.
+
+[TIP]
+You will be notified in the result panel if the newly added event clashes with another event in your calendar.
 
 ****
-* Creates an event with the given event name, event time and duration.
+* Creates an event with the given event name, event time, duration and members.
 * Members added will be reflected in the event list panel.
 * The index must be a positive integer 1, 2, 3, ...
-* TIME will be added in the following format: yyyy-MM-dd HH:mm
-* Duration must be a positive integer and is in minutes.
+* TIME will be added in the following format: `yyyy-MM-dd HH:mm`
+* If duration is specified, it must be in the following format: `#d#h#m` (day/hour/minute)
 ****
 
 Examples:
@@ -424,29 +430,29 @@ Examples:
 * `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/120` +
 Adds a two-hour long event called ‘iConnect Conference’ on 4th of December 2017 at 8:45AM ,with the specified person at index 1, 2 and 3 into the addressbook calendar.
 * `s-add n/Exam Date t/2017-12-04 14:30 d/120` +
-Adds a two-hour long event called ‘Exam Date’ on 4th of December 2017 at 2:30PM into the addressbook calendar.
+Adds a two-hour long event called ‘Exam Date’ on 4th of December 2017 at 2:30PM into the addressbook calendar.+
+* `s-add n/Email Reminder t/2017-12-04 14:30` +
+Adds an event called ‘Email Reminder’ on 4th of December 2017 at 2:30PM into the addressbook calendar.
 
-=== Cancel an Event: s-remove _[Since v1.4]_
+=== Removing an Event from Schedule: `s-remove` _[Since v1.4]_
 
-Removes an event from the calendar.
+Suppose you want to remove multiple events from your calendar, you can use the `s-remove` command with the indexes of events to be deleted.
 
-Format: `s-remove e/INDEX INDEX...`
-
-[TIP]
-It is possible to remove multiple events with a single command.
+Format: `s-remove I/INDEX INDEX...`
 
 ****
-* INDEX is referring to the index of an event in the event list panel
+* `INDEX` in this case is referring to the index of events in the event list panel
 * The index must be a positive integer 1, 2, 3, ...
 * Person details will be updated each time a deletion of event is made.
 ****
 
 Examples:
 
-* `s-remove 1` +
+* `s-remove I/1` +
 Removes a single event with the index 1.
-* `s-remove 1 2 3` +
+* `s-remove I/1 2 3` +
 Removes 3 events with the index 1, 2 and 3.
+
 // tag::export[]
 === Making a backup address book: `export` _[Coming in v1.4]_
 
@@ -683,6 +689,14 @@ By using this command, you can open the shell version of the app. In this way, y
 Format: `shell`
 // end::shell[]
 
+// tag::sync[]
+=== Syncing with phone's contact list : `sync` _[Coming in v2.0]_
+
+You can synchronize contact list on your computer with the contact list in the `iConnect` on your phone.
+
+Format: `sync`
+// end::sync[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book.
@@ -723,12 +737,18 @@ e.g. `find n/James p/8765 e/jamesho@example.com a/clementi street`
 e.g. `sort n/ASC`
 * *Delete* : `delete I/INDEX INDEX...` +
 e.g. `delete I/3 4`
-* *TagAdd* : `t-add INDEX INDEX... [TAG]` +
+* *TagAdd* : `t-add INDEX... TAG` +
 e.g. `t-add 3 4 friends`
-* *TagRemove* : `t-remove INDEX INDEX... [TAG]` +
+* *TagAddFavourite* : `t-add INDEX... favourite` +
+e.g. `t-add 3 4 favourite`
+* *TagRemove* : `t-remove INDEX... TAG` +
 e.g. `t-remove 3 4 friends`
+* *TagRemoveFavourite* : `t-remove INDEX... favourite` +
+e.g. `t-remove 3 4 favourite`
 * *TagFind* : `t-find [TAG]` +
 e.g. `t-find friends`
+* *Theme* : `theme [THEME] OR [INDEX]` +
+e.g. `theme Twilight`
 * *MapShow* : `m-show INDEX` +
 e.g. `m-show 1`
 * *MapRoute* : `m-route INDEX a/ADDRESS` +
