@@ -20,6 +20,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.Schedule;
 
 //@@author limcel
@@ -33,9 +34,7 @@ public class DeleteScheduleCommandTest {
     @Test
     public void execute_validIndexScheduleList_success() throws Exception {
 
-        Calendar calendar = Calendar.getInstance();
-        Schedule newSchedule = new Schedule(ALICE.getName().toString(), calendar);
-        model.addSchedule(newSchedule);
+        model = createAndAddScheduleToModel(model);
         Schedule scheduleToDelete = model.getScheduleList().get(INDEX_FIRST_SCHEDULE.getZeroBased());
         DeleteScheduleCommand deleteScheduleCommand = prepareCommand(INDEX_FIRST_SCHEDULE);
 
@@ -98,6 +97,16 @@ public class DeleteScheduleCommandTest {
      */
     private void showNoSchedule(Model model) {
         assert model.getScheduleList().isEmpty();
+    }
+
+    /**
+     * Creates and add schedule to the model.
+     */
+    private Model createAndAddScheduleToModel(Model model) throws PersonNotFoundException {
+        Calendar calendar = Calendar.getInstance();
+        Schedule newSchedule = new Schedule(ALICE.getName().toString(), calendar);
+        model.addSchedule(newSchedule);
+        return model;
     }
 
 }
