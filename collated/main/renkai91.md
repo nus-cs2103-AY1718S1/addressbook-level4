@@ -1,65 +1,15 @@
 # renkai91
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
-    /**
-     * Menu list option: add image
-     * Raises PersonPanelOptionsDelete, handled by UIManager
-     * Handle Delete user
-     */
-    @FXML
-    public void handleAddImage() {
-        FileChooser picChooser = new FileChooser();
-        File selectedPic = picChooser.showOpenDialog(null);
-        if (selectedPic != null) {
-            try {
-                person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
-                if (person.getPicture().checkJarResourcePath()) {
-                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getJarPictureUrl()));
-                    FileInputStream fileStream = new FileInputStream(person.getPicture().getJarPictureUrl());
-                    Image newPicture = new Image(fileStream);
-                    picture.setImage(newPicture);
-                } else {
-                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
-                    FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
-                    Image newPicture = new Image(fileStream);
-                    picture.setImage(newPicture);
-                }
-            } catch (Exception e) {
-                System.out.println(e + "Invalid File");
-            }
-        } else {
-            System.out.println("Invalid File");
+        public void setBirthday(Birthday birthday) {
+            this.birthday = birthday;
         }
-    }
-```
-###### /java/seedu/address/ui/PersonCard.java
-``` java
-    /**
-     * Initialize image for ever person
-     */
-    private void initImage() {
-        try {
-            try {
-                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
-                person.getPicture().setJarResourcePath();
-                Image personPicture = new Image(in);
-                picture.setImage(personPicture);
-            } catch (Exception e) {
-                File picFile = new File(person.getPicture().getPictureUrl());
-                FileInputStream fileStream = new FileInputStream(picFile);
-                Image personPicture = new Image(fileStream);
-                picture.setImage(personPicture);
-            }
-            picture.setFitHeight(person.getPicture().PIC_HEIGHT);
-            picture.setFitWidth(person.getPicture().PIC_WIDTH);
 
-            cardPane.getChildren().add(picture);
-        } catch (Exception e) {
-            System.out.println("Image not found");
+        public Optional<Birthday> getBirthday() {
+            return Optional.ofNullable(birthday);
         }
-    }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code Birthday} is present.
@@ -70,95 +20,7 @@
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/logic/commands/EditCommand.java
-``` java
-        public void setBirthday(Birthday birthday) {
-            this.birthday = birthday;
-        }
-
-        public Optional<Birthday> getBirthday() {
-            return Optional.ofNullable(birthday);
-        }
-```
-###### /java/seedu/address/model/person/Picture.java
-``` java
-public class Picture {
-
-    public static final int PIC_WIDTH = 100;
-    public static final int PIC_HEIGHT = 100;
-
-    public static final String BASE_URL = System.getProperty("user.dir") + "/data/contact_images/";
-
-    public static final String PLACEHOLDER_IMAGE = System.getProperty("user.dir") + "/src/main/resources/test1.png";
-
-    public static final String BASE_JAR_URL = System.getProperty("user.dir");
-
-    public static final String PLACEHOLDER_JAR_URL = "/images/test1.png";
-
-    private String pictureUrl;
-    private String jarPictureUrl;
-    private boolean jarResourcePath;
-
-    public Picture() {
-        this.pictureUrl = PLACEHOLDER_IMAGE;
-        this.jarPictureUrl = PLACEHOLDER_JAR_URL;
-        this.jarResourcePath = false;
-
-    }
-
-    public String getPictureUrl() {
-        return pictureUrl;
-    }
-
-    public String getJarPictureUrl() {
-        return jarPictureUrl;
-    }
-    public void setJarResourcePath() {
-        this.jarResourcePath = true;
-    }
-    public boolean checkJarResourcePath() {
-        return this.jarResourcePath;
-    }
-
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = BASE_URL + pictureUrl;
-        this.jarPictureUrl = BASE_JAR_URL + pictureUrl;
-    }
-}
-```
-###### /java/seedu/address/model/person/Person.java
-``` java
-    @Override
-    public Address getAddress() {
-        return address.get();
-    }
-
-    public void setBirthday(Birthday birthday) {
-        this.birthday.set(requireNonNull(birthday));
-    }
-
-    @Override
-    public ObjectProperty<Birthday> birthdayProperty() {
-        return birthday;
-    }
-
-    @Override
-    public Birthday getBirthday() {
-        return birthday.get();
-    }
-```
-###### /java/seedu/address/model/person/Person.java
-``` java
-    @Override
-    public ObjectProperty<Picture> pictureProperty() {
-        return picture;
-    }
-    @Override
-    public Picture getPicture() {
-        return picture.get();
-    }
-```
-###### /java/seedu/address/model/person/Birthday.java
+###### \java\seedu\address\model\person\Birthday.java
 ``` java
 /**
  * Represents a Person's birthday in the address book.
@@ -214,7 +76,7 @@ public class Birthday {
      * Check validity of input values
      */
 
-    public static void isValidBirthdayValue (String birthdayString) throws IllegalValueException {
+    public static void isValidBirthdayValue(String birthdayString) throws IllegalValueException {
 
         if (birthdayString.equals(NO_BIRTHDAY_DEFAULT)) {
             return;
@@ -269,4 +131,142 @@ public class Birthday {
     }
 
 }
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    @Override
+    public Address getAddress() {
+        return address.get();
+    }
+
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() {
+        return birthday.get();
+    }
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    @Override
+    public ObjectProperty<Picture> pictureProperty() {
+        return picture;
+    }
+    @Override
+    public Picture getPicture() {
+        return picture.get();
+    }
+```
+###### \java\seedu\address\model\person\Picture.java
+``` java
+public class Picture {
+
+    public static final int PIC_WIDTH = 100;
+    public static final int PIC_HEIGHT = 100;
+
+    public static final String BASE_URL = System.getProperty("user.dir") + "/data/contact_images/";
+
+    public static final String PLACEHOLDER_IMAGE = System.getProperty("user.dir") + "/src/main/resources/test1.png";
+
+    public static final String BASE_JAR_URL = System.getProperty("user.dir");
+
+    public static final String PLACEHOLDER_JAR_URL = "/images/test1.png";
+
+    private String pictureUrl;
+    private String jarPictureUrl;
+    private boolean jarResourcePath;
+
+    public Picture() {
+        this.pictureUrl = PLACEHOLDER_IMAGE;
+        this.jarPictureUrl = PLACEHOLDER_JAR_URL;
+        this.jarResourcePath = false;
+
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public String getJarPictureUrl() {
+        return jarPictureUrl;
+    }
+    public void setJarResourcePath() {
+        this.jarResourcePath = true;
+    }
+    public boolean checkJarResourcePath() {
+        return this.jarResourcePath;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = BASE_URL + pictureUrl;
+        this.jarPictureUrl = BASE_JAR_URL + pictureUrl;
+    }
+}
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    /**
+     * Menu list option: add image
+     * Raises PersonPanelOptionsDelete, handled by UIManager
+     * Handle Delete user
+     */
+    @FXML
+    public void handleAddImage() {
+        FileChooser picChooser = new FileChooser();
+        File selectedPic = picChooser.showOpenDialog(null);
+        if (selectedPic != null) {
+            try {
+                person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
+                if (person.getPicture().checkJarResourcePath()) {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getJarPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getJarPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                } else {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
+                    FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
+                    Image newPicture = new Image(fileStream);
+                    picture.setImage(newPicture);
+                }
+            } catch (Exception e) {
+                System.out.println(e + "Invalid File");
+            }
+        } else {
+            System.out.println("Invalid File");
+        }
+    }
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    /**
+     * Initialize image for ever person
+     */
+    private void initImage() {
+        try {
+            try {
+                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+                person.getPicture().setJarResourcePath();
+                Image personPicture = new Image(in);
+                picture.setImage(personPicture);
+            } catch (Exception e) {
+                File picFile = new File(person.getPicture().getPictureUrl());
+                FileInputStream fileStream = new FileInputStream(picFile);
+                Image personPicture = new Image(fileStream);
+                picture.setImage(personPicture);
+            }
+            picture.setFitHeight(person.getPicture().PIC_HEIGHT);
+            picture.setFitWidth(person.getPicture().PIC_WIDTH);
+
+            cardPane.getChildren().add(picture);
+        } catch (Exception e) {
+            System.out.println("Image not found");
+        }
+    }
 ```
