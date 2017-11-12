@@ -52,11 +52,6 @@ public class HelpCommand extends Command {
         this.commandIdentifier = targetCommandIdentifier;
     }
 
-    //@@author icehawker
-    public HelpCommand(String startUpHelp) throws IllegalValueException {
-        this.commandIdentifier = new CommandIdentifier(startUpHelp);
-    }
-    //@@author CT15
     @Override
     public CommandResult execute() {
         String commandResult;

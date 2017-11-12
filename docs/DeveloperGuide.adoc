@@ -1222,21 +1222,85 @@ existing countries' codes if the plus sign is detected._
 ----
 _Figure 4.11.2: From Phone.java; extracts the digits starting after plus sign and before white space._
 
-Observe in Figure 4.11.3 below, that the contact shows `Country Unavailable` when a generic phone number
-is used without a country code prefix. When its phone number field is edited in Figure 4.11.4, the country
+Finally, the country code obtained is then sent to the Country class, where it is compared against a `Hashmap` of
+country code and name Strings, as shown in Figure 4.11.3:
+
+[source,java]
+----
+    /**
+     * Creates map of country codes and names.
+     */
+    public static Map <String, String> createMap() {
+        Map <String, String> countries = new HashMap<>();
+        // NOTE: all country codes with prefix "1-" and "44-" are not yet allowed by regex.
+        countries.put(DEFAULT_COUNTRY_CODE, DEFAULT_COUNTRY);
+        countries.put("65", "Singapore");
+        countries.put("93", "Afghanistan");
+        countries.put("355", "Albania");
+        countries.put("213", "Algeria");
+        countries.put("1-684", "American Samoa");
+        ...
+        (100+ more lines of countries populated)
+        ...
+        codeList = new ArrayList<String>(countries.keySet());
+                Collections.sort(codeList);
+                return countries;
+        }
+----
+_Figure 4.11.2: From Country.java_
+
+Note that the above default country code and name are defined as such:
+
+[source.java]
+----
+    public static final String DEFAULT_COUNTRY_CODE = "";
+    public static final String DEFAULT_COUNTRY = "Country Unavailable";
+----
+_Figure 4.11.3: From Country.java_
+
+Meanwhile, codeList is instantiated at the end of the HashMap population to facilitate easier output of the full list
+in alphabetical order, should the user want to find out whether the code they are using is inside our database.
+This is expected to be a beta-only feature to facilitate bug reports and troubleshooting, and may not be necessary in
+the official release:
+
+[source.java]
+----
+    public static String getCodeList() {
+        int count = 0;
+        String output = "Valid codes:";
+        for (String code:codeList) {
+            if (count < 29) {
+                output += code + ", ";
+            } else {
+                output += code + ", \n";
+            }
+            count += 1; // record iterations until next newline
+            count = count % 30; // repeat to 30
+        }
+        return output;
+    }
+----
+_Figure 4.11.4: From Country.java; getCodeList() includes output formatting to accommodate the size limitations of the
+result display box, when called by HelpCommand._
+
+As the extra feature to display our supported code list is expected to be temporary, it is called by `help codes` with
+HelpCommand, rather than as a stand-alone help class.
+
+Observe in Figure 4.11.5 below, that the contact shows `Country Unavailable` when a generic phone number
+is used without a country code prefix. When its phone number field is edited in Figure 4.11.6, the country
 name field automatically changes to `Singapore` upon returning the command.
 
 image::country_code demo 1.PNG[width="400"]
-_Figure 4.11.3 : Country code shows unavailable status when no code is entered._
+_Figure 4.11.5 : Country code shows unavailable status when no code is entered._
 
 image::country_code demo 2.PNG[width="400"]
-_Figure 4.11.4 : Country name updated once a matching country code is added to phone number._
+_Figure 4.11.6 : Country name updated once a matching country code is added to phone number._
 
-Note that as shown in Figure 4.11.5, country codes that do not belong to any valid country or state will be
+Note that as shown in Figure 4.11.7, country codes that do not belong to any valid country or state will be
 rejected. The current list of acceptable codes can be listed with the command `help codes`.
 
 image::country_code demo 3.PNG[width="600"]
-_Figure 4.11.5 : Copy from multiple contacts_
+_Figure 4.11.7 : Copy from multiple contacts_
 
 ==== Design Considerations for `Country`
 
@@ -1272,7 +1336,7 @@ of command names and keyboard hotkey shortcuts. This reminds users of valid comm
 reduce the learning curve for novice users, without affecting users who do not need it.
 
 Since this display used to launch completely empty, placing any useful information inside was essentially a zero-cost way to
-increase information displayed. As this box is a pre-emptive Help feature, it currently resides in HelpCommand despite being
+increase information displayed. As this box is a pre-emptive Help feature, it currently resides in HelpCommand (Figure 4.12.2) despite being
 first called at launch, rather than by the user. However, in addition to this, a user enter `help command` to make this quick guide re-appear.
 
 [source,java]
@@ -1284,14 +1348,41 @@ raise(new NewResultAvailableEvent(COMMAND_QUICK_HELP, false));
 ----
 _Figure 4.12.1: From WelcomeScreen.java_
 
-Figure 4.12.2 shows the quick help list of shortcuts, commands and their aliases. Figure 4.12.3 shows this display re-appearing
+[source,java]
+----
+// Quick-start Help contents in a String
+public static final String COMMAND_QUICK_HELP_WORD = "command";
+public static final String COMMAND_QUICK_HELP =
+        "Quick command keyword help: " + "    F1: Full Help window;     F2: Calendar; \n"
+                + AddCommand.COMMAND_WORD + " / " + AddCommand.COMMAND_ALIAS + ";     "
+                + ClearCommand.COMMAND_WORD + " / " + ClearCommand.COMMAND_ALIAS + ";     "
+                + CopyCommand.COMMAND_WORD + " / " + CopyCommand.COMMAND_ALIAS + ";     "
+                + DeleteCommand.COMMAND_WORD + " / " + DeleteCommand.COMMAND_ALIAS + ";     "
+                + CalendarCommand.COMMAND_WORD + " / " + CalendarCommand.COMMAND_ALIAS + ";     "
+                + EditCommand.COMMAND_WORD + " / " + EditCommand.COMMAND_ALIAS + ";     "
+                + ExitCommand.COMMAND_WORD + " / " + ExitCommand.COMMAND_ALIAS + ";     "
+                + FindCommand.COMMAND_WORD + " / " + FindCommand.COMMAND_ALIAS + ";     "
+                + HelpCommand.COMMAND_WORD + " / " + HelpCommand.COMMAND_ALIAS + "; \n"
+                + HistoryCommand.COMMAND_WORD + " / " + HistoryCommand.COMMAND_ALIAS + ";     "
+                + ListCommand.COMMAND_WORD + " / " + ListCommand.COMMAND_ALIAS + ";     "
+                + RedoCommand.COMMAND_WORD + " / " + RedoCommand.COMMAND_ALIAS + ";     "
+                + ScheduleCommand.COMMAND_WORD + " / " + ScheduleCommand.COMMAND_ALIAS + ";     "
+                + LocateCommand.COMMAND_WORD + " / " + LocateCommand.COMMAND_ALIAS + ";     "
+                + UndoCommand.COMMAND_WORD + " / " + UndoCommand.COMMAND_ALIAS + ";     "
+                + BackupCommand.COMMAND_WORD + " / " + BackupCommand.COMMAND_ALIAS + ";     "
+                + Country.COMMAND_WORD;
+
+----
+_Figure 4.12.2: From HelpCommand.java_
+
+Figure 4.12.3 shows the formatted quick help list of shortcuts, commands and their aliases. Figure 4.12.4 shows this display re-appearing
 after the user enters `help command`.
 
 image::country_code demo 1.PNG[width="400"]
 _Figure 4.12.3 : Quick-start help on application launch_
 
 image::quick_help demo 1.PNG[width="400"]
-_Figure 4.12.3 : Quick-start help through entering help command_
+_Figure 4.12.4 : Quick-start help through entering help command_
 
 ==== Design Considerations for `Quick-Start Help`
 
@@ -1343,8 +1434,10 @@ E.g. `backup F:\Backups` and `backup F:\Backups\addressbook.xml` perform the sam
 _Figure 4.13.1: From ParserUtil.java; Detects whether the file name exists in the input, and failing which, whether
 the input ends with a back slash._
 
-The result will be shown to the user as either a successful backup, or a failed one. This feature is fulfilled by the
-code below, in Figure 4.13.2.
+The result will be shown to the user as either a successful backup, or a failed one. As shown in Figure 4.13.2,
+the input directory `String` will be queried as a `Path`; if the destination path is valid, BackupCommand will attempt
+to copy and paste `addressbook.xml` into the target folder, and conclude that the attempt has failed if it detects an
+IO Exception.
 
 [source, java]
 ----
