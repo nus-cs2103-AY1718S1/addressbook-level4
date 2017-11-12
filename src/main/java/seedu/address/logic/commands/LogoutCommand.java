@@ -1,12 +1,12 @@
 package seedu.address.logic.commands;
 
+import java.util.List;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-
-import java.util.List;
 
 //@@author derrickchua
 
@@ -50,6 +50,11 @@ public class LogoutCommand extends Command {
 
     }
 
+    /** Removes all IDs from linked contacts
+     *
+     * @throws DuplicatePersonException
+     * @throws PersonNotFoundException
+     */
     private void resetIDs () throws DuplicatePersonException, PersonNotFoundException {
         List<ReadOnlyPerson> personList = model.getFilteredPersonList();
 

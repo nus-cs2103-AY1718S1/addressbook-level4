@@ -689,11 +689,6 @@ public class SyncCommand extends Command {
             equalAddress = abcAddress.equals("No Address");
         }
 
-//        System.out.println(abcPerson.getName().fullName);
-//        if (!equalPhone) {
-//            System.out.println(gPhone);
-//            System.out.println(abcPhone);
-//        }
         return equalName && equalPhone && equalAddress && equalEmail;
     }
 
