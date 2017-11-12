@@ -192,6 +192,18 @@ public class ModelManager extends ComponentManager implements Model {
         indicateDatabaseChanged();
     }
 
+    @Override
+    public synchronized boolean checkAccount(ReadOnlyAccount account) {
+        for (ReadOnlyAccount tempAccount : database.getAccountList()) {
+            if (tempAccount.getUsername().fullName.equals(account.getUsername().fullName)
+                    && tempAccount.getPassword().value.equals(account.getPassword().value)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     //@@author
 
     //// tag-level operations
