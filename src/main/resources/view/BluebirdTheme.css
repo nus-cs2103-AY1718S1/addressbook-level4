@@ -1,0 +1,59 @@
+
+/* @@author deep4k */
+/* ========== FONTS ==========*/
+@font-face {
+    font-family: Old Standard TT;
+    src: url("/fonts/OldStandard-Regular.ttf");
+}
+
+/* ========== JAVAFX ELEMENTS ==========*/
+
+.pane-with-border {
+    -fx-background-color: #222646;
+    -fx-border-color: transparent;
+    -fx-border-top-width: 1px;
+}
+
+/* ========== MENU BAR ==========*/
+.context-menu {
+    -fx-background-color: #242b51;
+}
+
+.context-menu .label {
+    -fx-text-fill: white;
+}
+
+.menu-bar {
+    -fx-background-color: #242b51;
+}
+
+.menu-bar .label {
+    -fx-background-color: #242b51;
+    -fx-font-size: 12pt;
+    -fx-font-family: "Old Standard TT";
+    -fx-text-fill: #fffefd;
+}
+
+.menu:showing{
+    -fx-background-color: transparent;
+}
+
+.menu:hover{
+    -fx-background-color: transparent;
+}
+
+.menu:hover .label {
+    -fx-text-fill: #ffdf00;
+}
+
+.menu:showing .label {
+    -fx-text-fill: #fefdff;
+}
+
+.menu-item:focused {
+    -fx-background-color: transparent;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: #ffdf00;
+}

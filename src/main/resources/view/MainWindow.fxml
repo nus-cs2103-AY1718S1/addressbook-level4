@@ -32,7 +32,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                      </items>
                   </Menu>
-                  <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help" visible="false">
+                  <Menu fx:id="helpMenu" mnemonicParsing="false" styleClass=".menu-bar .label" text="Help" visible="false">
                      <items>
                         <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="User Guide" />
                         <MenuItem fx:id="helpOverlayItem" mnemonicParsing="false" onAction="#handleOverlay" text="Help Overlay" />
@@ -40,6 +40,10 @@
                      </items>
                   </Menu>
                </menus>
+               <stylesheets>
+                  <URL value="@DarkTheme.css" />
+                  <URL value="@Extensions.css" />
+               </stylesheets>
             </MenuBar>
             <HBox fx:id="sortFindPanelPlaceholder" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border" />
             <SplitPane id="splitPane" fx:id="splitPane" VBox.vgrow="ALWAYS">
@@ -614,4 +618,8 @@
       </ScrollPane>
       <!-- @@author -->
    </children>
+   <stylesheets>
+      <URL value="@DarkTheme.css" />
+      <URL value="@Extensions.css" />
+   </stylesheets>
 </StackPane>

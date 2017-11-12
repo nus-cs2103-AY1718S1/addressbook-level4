@@ -61,7 +61,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String DIM_LABEL = "-fx-text-fill: #555555";
     private static final String BRIGHT_LABEL = "-fx-text-fill: white";
     private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final int MIN_WIDTH = 800;
     private String lastSorted = "Name";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());

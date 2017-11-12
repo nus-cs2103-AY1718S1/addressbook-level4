@@ -1,6 +1,25 @@
-.background {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #383838; /* Used in the default.html file */
+
+@font-face {
+    font-family: Space Mono;
+    src: url("/fonts/SpaceMono-Regular.ttf");
+}
+
+@font-face {
+    font-family: Old Standard TT;
+    src: url("/fonts/OldStandard-Regular.ttf");
+}
+
+/**
+    -fx-my-background: #242b51;
+    -fx-my-foreground: #222646;
+ */
+
+
+
+.root {
+    -fx-background-color: #141572;
+    -fx-accent: derive(#141572, -10%);
+    -fx-focus-color: derive(#f7f5f4, -10%);
 }
 
 .label {
@@ -138,12 +157,12 @@
 }
 
 .anchor-pane {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: transparent;
 }
 
 .pane-with-border {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-border-color: derive(#1d1d1d, 10%);
+    -fx-background-color: #222646;
+    -fx-border-color: transparent;
     -fx-border-top-width: 1px;
 }
 
@@ -194,7 +213,7 @@
 }
 
 .context-menu {
-    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-background-color: #222646;
 }
 
 .context-menu .label {
@@ -202,19 +221,40 @@
 }
 
 .menu-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #222646;
 }
 
 .menu-bar .label {
-    -fx-font-size: 14pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
-    -fx-opacity: 0.9;
+    -fx-background-color: #222646;
+    -fx-font-size: 12pt;
+    -fx-font-family: "Old Standard TT";
+    -fx-text-fill: #fffefd;
 }
 
-.menu .left-container {
-    -fx-background-color: black;
+.menu:showing{
+    -fx-background-color: transparent;
 }
+
+.menu:hover{
+    -fx-background-color: transparent;
+}
+
+.menu:hover .label {
+    -fx-text-fill: #ffdf00;
+}
+
+.menu:showing .label {
+    -fx-text-fill: #fefdff;
+}
+
+.menu-item:focused {
+    -fx-background-color: transparent;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: #ffdf00;
+}
+
 
 /*
  * Metro style Push Button
@@ -327,12 +367,12 @@
 }
 
 #commandTextField {
-    -fx-background-color: transparent #383838 transparent #383838;
+    -fx-background-color: transparent  #222646 transparent #222646;
     -fx-background-insets: 0;
-    -fx-border-color: #383838 #383838 #ffffff #383838;
+    -fx-border-color: transparent transparent #ffdf00 transparent;
     -fx-border-insets: 0;
     -fx-border-width: 1;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Old Standard TT";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
 }
@@ -375,3 +415,5 @@
 #searchBox {
     -fx-background-color: dimgrey;
 }
+
+
