@@ -497,7 +497,7 @@ Removes the remark for the first person.
 User can now add a person with just name and phone details. +
 All other details that are not provided will be filled in by default values as shown in `Figure 3.15.1`.
 
-image::Default_for_empty_fields.png[width="250"]
+image::Default_for_empty_fields.png[width="400"]
 _Figure 3.15.1 : Default values for empty fields_
 
 //tag::photo[]
