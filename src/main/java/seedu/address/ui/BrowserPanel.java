@@ -24,9 +24,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
     //@@author blaqkrow
     public static final String DEFAULT_PAGE = "default.html";
-    //public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps/place/";
-    //public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
     //@@author
     private static final String FXML = "BrowserPanel.fxml";
     private static BrowserPanel instance;
@@ -58,7 +56,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
     }
     /**
-     * Loads call qr
+     * Loads generated Call QR code
      */
     public void loadQrCode(ReadOnlyPerson person) {
         QrGenCallCommand qrGenCallCommand = new QrGenCallCommand();
@@ -67,7 +65,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(qrGenCallCommand.qrCall(person.getPhone().toString()));
     }
     /**
-     * Loads sms qr
+     * Loads generated SMS QR Code
      */
     public void loadSmsQrCode(ReadOnlyPerson person) {
         QrGenSmsCommand qrGenSmsCommand = new QrGenSmsCommand();
@@ -76,7 +74,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(qrGenSmsCommand.qrSms(person.getPhone().toString(), person.getName().fullName));
     }
     /**
-     * Loads save qr
+     * Loads generated share QR code
      */
     public void loadSaveQrCode(ReadOnlyPerson person) {
         QrGenSaveContactCommand qrGenSaveContactCommand = new QrGenSaveContactCommand();
