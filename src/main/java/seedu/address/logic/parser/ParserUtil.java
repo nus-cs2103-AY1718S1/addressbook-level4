@@ -92,10 +92,16 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static ArrayList<Email> parseEmail(Collection<String> email) throws IllegalValueException {
-        requireNonNull(email);
         final ArrayList<Email> temp = new ArrayList<>();
-        for (String e : email) {
-            temp.add(new Email(e));
+        if (email == null) {
+            temp.add(new Email());
+        } else {
+            for (String e : email) {
+                temp.add(new Email(e));
+            }
+        }
+        if (temp.size() == 0) {
+            temp.add(new Email());
         }
         return temp;
     }

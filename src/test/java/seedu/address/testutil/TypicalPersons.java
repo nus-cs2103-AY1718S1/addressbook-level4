@@ -71,6 +71,9 @@ public class TypicalPersons {
     public static final ReadOnlyPerson KENDRICK_NO_ADDRESS = new PersonBuilder().withName("Kendrick Lopez")
             .withEmail("kendrick@example.com").withPhone("86324716")
             .withTags("friend").build();
+    public static final ReadOnlyPerson LEMAR_NO_EMAIL = new PersonBuilder().withName("Lemar Kendrick")
+            .withEmail("kendrick@example.com").withPhone("86324789")
+            .withTags("friend").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)

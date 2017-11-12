@@ -13,7 +13,6 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 ==== Justification
 User should be able to add contact with contact name only.
-*currently email is compulsory field as well.
 
 === Enhancement Added: Edit individual fields [for now: tag only]
 
@@ -47,7 +46,7 @@ include::../UserGuide.adoc[tag=changeTheme]
 
 ==== Justification
 
-A simple modification for aesthetic purpose
+A simple modification for aesthetic purpose. User is able to change theme both on the UI and using command line.
 
 ==== Implementation
 
@@ -72,9 +71,7 @@ Many people have multiple emails for different purposes and the addressbook shou
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
+* Participated in 1.4 bug tracking (https://github.com/CS2103AUG2017-T17-B3/main/issues/59, https://github.com/CS2103AUG2017-W14-B4/main/issues/115)
 == Project: PowerPointLabs
 
 {Optionally (not graded), you may include other projects in your portfolio.}
