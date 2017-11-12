@@ -8,7 +8,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 //@@author limshunyong
 /**
- * import contacts from external source (in .vcf format)
+ * Imports contact from external source (in .vcf format)
  */
 public class ImportCommand extends UndoableCommand {
 
