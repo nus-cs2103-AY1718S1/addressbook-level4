@@ -121,12 +121,15 @@ Some example commands you can try:
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
+[[features]]
 == Features Format
 
 Unify is jam-packed with features and it may be daunting for new users.
-This section of the user guide provides a step by step walk-through of all the commands Unify has to offer.
-Do read our short explanation about Command Format below so that the subsequent portions of this section will make sense to you.
+The subsequent sections of the user guide provides a step by step walk-through of all the commands Unify has to offer.
 
+Do read our short explanation about Command Format and Tags below so that the subsequent portions of this section will make sense to you.
+
+=== Command Format
 ====
 image::UG_header_commandformat.png[width="500"]
 {sp}+
@@ -136,6 +139,20 @@ image::UG_header_commandformat.png[width="500"]
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
+
+=== Tags
+
+Tags are a way for you to label your contacts. Your contacts can contain multiple tags which help you identify them more easily.
+A person's tag will be indicated on the List of Contacts as well as the Contact's details.
+
+image::UG_tag.png[width="590"]
+
+Tags should only contain letters and numbers, and cannot contain any spaces.
+
+[TIP]
+A common way to utilise tags is grouping your contacts with tags. For example, you can tag your family members with a `family` tag.
+Next time if you want to search for your family members, you can execute the link:#find[`find` command] to list your family members.
+
 
 == Basic Features
 image::UG_mainheader_basicfeatures.png[width="900"]
@@ -563,6 +580,7 @@ The `unfriend` command fails as there is no longer such a command.
 image::divider.png[width="900"]
 
 // tag::find[]
+[[find]]
 === Searching for people by details: `find`
 image::UG_commandheader_find.png[width="500"]
 
