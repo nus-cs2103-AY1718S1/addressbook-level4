@@ -66,6 +66,66 @@ include::../DeveloperGuide.adoc[tag=gmap]
 
 ---
 
+=== Enhancement Added: Theme Changer
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=theme1]
+
+include::../UserGuide.adoc[tag=theme2]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Having multiple themes to suit the user needs improves overall user experience, especially for younger target audience.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Import Addressbook
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=import1]
+
+include::../UserGuide.adoc[tag=import2]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Adds convenience for users to import persons from external addressbooks instead of having to add them manually one by one.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=import]
+
+#End of Extract#
+
+---
+
 === Other contributions
 
 * Set up Project environment for Travis, Appveyor and Coveralls

@@ -322,6 +322,9 @@ Icon is similar to a down arrow.
 
 *Author*: Ng Choon Heng
 
+image::delete_selection.png[width="300"]
+_Figure 3.5.1 : Using delete option from Option Menu_
+
 This feature can be found under the new `options` menu
 Deletes the user according to the selected option's parent person.
 
@@ -347,32 +350,40 @@ Display google map of the 2nd person in the address book.
 * `find Betsy` +
 `gmap 1` +
 Display google map the 1st person in the results of the `find` command.
+// end::gmap[]
 
 === Option Menu `Google map` (v1.2)
 
 *Author*: Ng Choon Heng
 
+image::gmap_selection.png[width="300"]
+_Figure 3.7.1 : Using Google Map option from Option menu_
+
 This feature can be found under the new `options` menu. +
 Display the google map data into browser panel based on person's address.
-// end::gmap[]
 
+// tag::theme1[]
 === Themes selection from `File` toolbar (v1.2)
 
 *Author*: Ng Choon Heng
+
+image::theme_selection.png[width="300"]
+_Figure 3.8.1 : Using Theme selection from Menu toolbar_
 
 Allows user to select from a range of user interface themes +
 Function will be found from under the `File` section of menu toolbar. +
 Selected themes will be saved into user preference file upon exit of program. +
 Reinitializing of myBook will display the previous choice of theme.
+// end::theme1[]
 
-//tag::important[]
+// tag::important[]
 === `Important` or `important` tag (v1.2)
 
 *Author*: Soh Hong Hwee
 
 Contacts in user myBook app that has `Important` or `important` tag will always appear at the top of the list. +
 User using versions before v1.2 should add a new person with `important` tag first to enjoy this feature.
-//end::important[]
+// end::important[]
 
 //tag::birthday[]
 === Add Birthday
@@ -420,6 +431,7 @@ Display google map of the person with name *Bernice* in the address book.
 Display google map of the person in the results of the `find` command with *Yu* surname.
 // end::gmap2[]
 
+// tag::theme2[]
 === Changing theme with CLI command (v1.3)
 
 *Author*: Ng Choon Heng
@@ -454,6 +466,7 @@ Examples:
 Changes the addressbook theme to *Caspian* theme. +
 `theme 1` +
 Changes the addressbook theme to theme `INDEX` of one, which is default *DarkTheme*.
+// end::theme2[]
 
 === Remarking a person with `remark` command (v1.3)
 
@@ -495,6 +508,7 @@ This feature is to add photo to individual. +
 Display the photo data into browser panel with a photo size of 100X100.
 //end::photo[]
 
+// tag::import1[]
 === Import XML addressbook command (v1.4)
 
 *Author*: Ng Choon Heng
@@ -515,11 +529,12 @@ Format: `import [RELATIVE_PATH]`
 
 Examples:
 
-`import C:\Users\Choony\newAddressbook.xml` +
+`import C:\Users\Test\newAddressbook.xml` +
 Add new persons from newAddressBook into local addressbook. +
 `import data\addressbok2.xml` +
 Add new persons from addressbook2 from local project +
 folder *data* into local addressbook.
+// end::import1[]
 
 === Add a remark in `add` command (v1.4)
 
@@ -539,6 +554,15 @@ Adds a remark together with name, phone, email and address for the new person in
 * `add Betsy Crowe pp/1234567 e/betsycrowe@gmail.com r/Jogging t/criminal t/friend.` +
 Adds a remark together with name, phone, email, address and tag for the new person in the list.
 
+// tag::import2[]
+=== Import feature from `File` toolbar (v1.5)
+
+image::import_selection.png[width="250"]
+_Figure 3.19.1 : Using import feature from Menu toolbar_
+
+Users can now import external addressbooks from the GUI. Clicking on the `Import Addressbook` button will pop up a File Chooser dialog to allow users to choose the addressbook file. File Chooser dailog has been set to restrict *.xml* extention files only.
+// end::import2[]
+
 === Coming soon in `v2.0`
 
 ==== Close panels in UI from `Button`
@@ -555,6 +579,10 @@ Functions will be found from improved `delete` command.
 
 All the tags in user myBook App will be displayed in a new UI panel. +
 Functions wll be found from `new UI panel`.
+
+==== Export feature
+
+Allowing user to export current addressbook to other destinations and in various formats such as csv, xml or json.
 
 == FAQ
 
