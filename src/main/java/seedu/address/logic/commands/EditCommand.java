@@ -2,12 +2,13 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -44,7 +45,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_ADD_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -105,13 +106,40 @@ public class EditCommand extends UndoableCommand {
         Photo updatedPhoto = editPersonDescriptor.getPhoto().orElse(personToEdit.getPhoto());
         UniquePhoneList updatedPhoneList = editPersonDescriptor.getUniquePhoneList()
                 .orElse(personToEdit.getPhoneList());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        //@@author willxujun
+        Set<Tag> updatedTags = new HashSet<>(personToEdit.getTags());
+        updateTags(updatedTags, editPersonDescriptor);
+        //@@author
         Set<CustomField> updatedCustomFields =
                 editPersonDescriptor.getCustomFields().orElse(personToEdit.getCustomFields());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                 updatedPhoto, updatedPhoneList, updatedTags, updatedCustomFields);
     }
+
+    //@@author willxujun
+
+    /**
+     * clears, adds and removes tags according to the descriptor
+     * @param updatedTags
+     * @param editPersonDescriptor
+     */
+    public static void updateTags(Set<Tag> updatedTags, EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(editPersonDescriptor);
+        editPersonDescriptor.getTagsToAdd().ifPresent(tagsToAdd -> {
+            if (tagsToAdd.isEmpty()) {
+                updatedTags.clear();
+            }
+        });
+        editPersonDescriptor.getTagsToRemove().ifPresent(tagsToRemove -> {
+            if (tagsToRemove.isEmpty()) {
+                updatedTags.clear();
+            }
+        });
+        editPersonDescriptor.getTagsToAdd().ifPresent(updatedTags::addAll);
+        editPersonDescriptor.getTagsToRemove().ifPresent(updatedTags::removeAll);
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -142,7 +170,8 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Photo photo;
         private UniquePhoneList uniquePhoneList;
-        private Set<Tag> tags;
+        private Set<Tag> tagsToAdd;
+        private Set<Tag> tagsToRemove;
         private Set<CustomField> customFields;
 
         public EditPersonDescriptor() {}
@@ -154,7 +183,8 @@ public class EditCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.photo = toCopy.photo;
             this.uniquePhoneList = toCopy.uniquePhoneList;
-            this.tags = toCopy.tags;
+            this.tagsToAdd = toCopy.tagsToAdd;
+            this.tagsToRemove = toCopy.tagsToRemove;
             this.customFields = toCopy.customFields;
         }
 
@@ -163,7 +193,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
-                    this.photo, this.uniquePhoneList, this.tags, this.customFields);
+                    this.photo, this.uniquePhoneList, this.tagsToAdd, this.tagsToRemove, this.customFields);
         }
 
         public void setName(Name name) {
@@ -214,13 +244,23 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(uniquePhoneList);
         }
 
-        public void setTags(Set<Tag> tags) {
-            this.tags = tags;
+        //@@author willxujun
+        public void setTagsToAdd(Set<Tag> tagsToAdd) {
+            this.tagsToAdd = tagsToAdd;
         }
 
-        public Optional<Set<Tag>> getTags() {
-            return Optional.ofNullable(tags);
+        public Optional<Set<Tag>> getTagsToAdd() {
+            return Optional.ofNullable(tagsToAdd);
         }
+
+        public void setTagsToRemove(Set<Tag> tagsToRemove) {
+            this.tagsToRemove = tagsToRemove;
+        }
+
+        public Optional<Set<Tag>> getTagsToRemove() {
+            return Optional.ofNullable(tagsToRemove);
+        }
+        //@@author
 
         public void setCustomFields(Set<CustomField> customFields) {
             this.customFields = customFields;
@@ -251,7 +291,8 @@ public class EditCommand extends UndoableCommand {
                     && getAddress().equals(e.getAddress())
                     && getPhoto().equals(e.getPhoto())
                     && getUniquePhoneList().equals(e.getUniquePhoneList())
-                    && getTags().equals(e.getTags())
+                    && getTagsToAdd().equals(e.getTagsToAdd())
+                    && getTagsToRemove().equals(e.getTagsToRemove())
                     && getCustomFields().equals(e.getCustomFields());
         }
     }
