@@ -405,6 +405,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
 // tag::taskbook[]
+
 === TaskBook
 We develop this application as a parallel of two similar application, namely addressBook and taskBook. They are similar in many ways, including comman commands like `add` for adding a person and `addTask` for adding a task. +
 
@@ -475,6 +476,7 @@ The unit tests stub classes and setUp methods should be updated accordingly. +
 **Alternative 2:** Modify the original code base to reutiliza some of the common functionalities. +
 **Pros:** The code reusage is good and adding a taskBook becomes more efficient. +
 **Cons:** The dependency is very high between addressBook and taskBook, there is a high tendency to break original logic and modelling. +
+
 // end::taskbook[]
 
 === Configuration
@@ -942,6 +944,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
+// tag::shaocong1[]
+
 [discrete]
 === Use case: Delete person
 
@@ -1261,3 +1265,5 @@ Cons:
 
 * Not command line software, so not very friendly for developers and command line lovers
 * Unable to work offline and often clash with not so stable Internet connections
+
+// end::shaocong1[]
