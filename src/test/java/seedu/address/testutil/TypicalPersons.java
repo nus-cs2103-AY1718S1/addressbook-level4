@@ -79,6 +79,7 @@ public class TypicalPersons {
         return ab;
     }
 
+    //@@author HouDenghao
     /**
      * Returns an {@code AddressBook} with all the unsorted persons.
      */
@@ -94,11 +95,21 @@ public class TypicalPersons {
         return ab;
     }
 
+    /**
+     * Returns an empty {@code AddressBook}.
+     */
+    public static AddressBook getEmptyAddressBook() {
+        AddressBook ab = new AddressBook();
+        return ab;
+    }
+
+    //@@author
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 
+    //@@author HouDenghao
     public static List<ReadOnlyPerson> getUnsortedPersons() {
-        return new ArrayList<>(Arrays.asList(CARL, ALICE, BENSON, DANIEL, ELLE, GEORGE, FIONA));
+        return new ArrayList<>(Arrays.asList(CARL, ALICE, BENSON, DANIEL));
     }
 }

@@ -497,10 +497,10 @@ Similar as `add` command, if the `editedPerson` causes some change in `tagList`,
 // tag::find[]
 === Find mechanism
 The Find mechanism is facilitated by `NameContainsKeyWordPredicate` class, which resides in `model.person` package. This command
-supports users of finding a list of persons by tags and names. Any person that has either of the entered keyword will be filtered
-into the list. Such command will inherit from `Command`.
+allows users to find a list of persons by tag and name keywords. A person that has at least one of the keywords will be selected.
+Such command will inherit from `Command`.
 
-The find command accept two types of keyword:
+The find command accepts two types of keywords:
 
 * `tag`: it is identified by a prefix `t/`. +
 e.g. `find t/friends` means to find any person that have a tag called `friends`
@@ -509,16 +509,37 @@ e.g. `find friends` means to find any person whose name contains the keyword `fr
 [NOTE]
 if a `tag name` is not preceded with a prefix `t/`, then the `tag name` will be identified as a `person name`. As a result, the people with their name containing the `tag name` will be displayed.
 
+The mechanism for `NameContainsKeywordPredicate` to select people is implemented this way:
+[source,java]
+@Override
+public boolean test(ReadOnlyPerson person) {
+	boolean isSelected = keywords.stream().anyMatch （keyword –>
+ 			StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+	// check whether this person’s name contains any of the name key word
+	If (isSelected == true) {
+		return isSelected;
+	}
+	for (String keyword : keywords) {
+		If (keyword.length() >= 2 && keyword.substring(0, 2).equals(“t/”) {
+			String tagName = “[” + keyword.substring(2) + “]”;
+			for(Tag tag : person.getTags()) {
+				if (tag.toString().equals(tagName)) {
+ 					isSelected = true;
+ 		}}}
+	return isSelected;
+}
+
 Below is a *_sequence diagram_* _(Figure 4.2)_ for executing a find command: `find t/friends`. It will find persons that have the tag `friends`.
 
 image::findSequenceDiagram.png[width="800"]
 _Figure 4.2: sequence diagram for find command_
 
-The command will be sent to `LogicManager` where it will call `AddressBookParser` to parse
-the command. Subsequently, `FindCommandParser` will parse argument `t/friends` and create a new `findCommand` with
-predicate `t/friends`. The `findCommand` is then executed in `LogicManager`, during which the `findCommand` will update
-the filtered person list with predicate tag called `friends`. This update will cause the person list displayed in GUI to be updated,
-so that the persons with tag `friends` will be displayed.
+The command will be sent to `LogicManager`, and `LogicManager` will call `AddressBookParser` to parse
+the command. Subsequently, `FindCommandParser` will parse the argument `t/friends` and create a new `findCommand` with
+predicate `t/friends`. Then `LogicManager` will execute `findCommand` to update the filtered person list with predicate `friends`.
+
+This update will notify GUI to update the filtered person list,
+so that the persons with the tag `friends` is displayed.
 
 [discrete]
 ==== Design considerations
@@ -526,18 +547,18 @@ so that the persons with tag `friends` will be displayed.
 ---
 **Aspect:**  Implementation of find command +
 **Alternative 1 (current choice):** Select people that have any of the keywords +
-**Pros:**  For every person, we only need to ensure that at least one keyword exists, so we don't need to go through every information of a person.   +
+**Pros:** We only need to ensure that at least one keyword exists for every person.   +
 **Cons:**  It is difficult to know by which keyword a person is selected. +
 **Alternative 2:** Select people that has any of the keywords, and highlight selected keywords in each person's `person card` +
 **Pros:** Shows clearly what keywords each selected person contains. +
 **Cons:**  We need to go through everything of a person, in order to highlight EVERY keyword the person has. +
 
 ---
-**Aspect:** Type of keywords that can be found +
+**Aspect:** Types of keywords that can be found +
 **Alternative 1 (current choice):** Only person name and tag can be used in the find command +
 **Pros:** We only need to check a person's name and tag list to find any matches. +
 **Cons:** User will not be able to find a person by other information such as phone or email. +
-**Alternative 2:** Include every information of a person (i.e. phone, email, address) +
+**Alternative 2:** we allow every information of a person (i.e. phone, email, address) to be used as keywords in the find command. +
 **Pros:** A person can be found in many ways. +
 **Cons:** Implementation is complicated.
 // end::find[]
@@ -637,10 +658,10 @@ The following *_sequence diagram_* _(Figure 4.4)_ shows how add event command wo
 image::AddEventCommandSequenceDiagram.png[width="800"]
 _Figure 4.4: AddEvent command sequence diagram_
 
-The user enters an addEvent command, which is received by `LogicManager`. `LogicManager` calls `AddressBookParser` to parse the command.
-`AddressBookParser` will first check the format of the parameters. If the format is valid, it calls `AddEventCommand` constructor, which returns an `AddEventCommand` object.
-`Logic Manager` receives the `AddEventCommand` object and calls execute(). Then, `AddEventCommand` uses `Model` to execute adding operation, and returns `CommandResult`.
-`Logic Manager` receives the `CommandResult`, and returns to `UI`. +
+The user enters an addEvent command, and the command is received by `LogicManager`. Then `LogicManager` calls `AddressBookParser` to parse the command.
+`AddressBookParser` will first check the format of the parameters. If the format is valid, it constructs a new `AddEventCommand` object.
+`Logic Manager` then executes `AddEventCommand` to add the event into `Model`.
+Then `Logic Manager` will return the command result generated by `AddEventCommand` to `UI`. +
 // end::addE[]
 
 // tag::listE[]
@@ -846,20 +867,20 @@ The UI will then be updated to display the events found.
 
 // tag::interaction[]
 === Person-Event interaction
-In this application, we allow users to connect events and persons to show that some persons participate some events. We will explain it in terms of Model and Storage. +
-
+Events and persons can be connected (i.e.joined) if a person participates in an event. The connected relationship can also be disjoined. We will explain the implementation of the relationship in terms of Model and Storage.
 [discrete]
 ==== Model level
-For model, we simply use the "referencing model", which is shown in the diagram _(Figure 4.9.1)_ below: +
+For model, we simply use a "referencing model" to show the relationship between person and event, as shown in the following diagram. +
 
 image::DG_model_join.png[width = "800"]
 _Figure 4.9.1: interaction model_
 
-Referring to the diagram _(Figure 4.9.1)_ above, there is a participant list in the Event model, which stores all the persons who are involved in this event.
+There is a participant list in the Event model, which stores all the persons who are involved in this event.
 Similarly, the participation list in Person model stores all the event in which this person joins.
 
-Hence, we need to maintain both lists when operating `join` and `disjoin` commands. +
-The following code shows how `disjoin` operates:
+Hence, we need to maintain both lists when operating `join` and `disjoin` commands. The two commands are implemented in a similar way.
+Take `disjoin` command as the example, and `join` command uses the same idea to implement. The command will call `ModelManager` 's quitEvent() method to connect the person and the event.
+The following code segment from `ModelManager`shows how `quitEvent()` operates:
 
 [source,java]
 public void disjoin(Person personToRemove, Event eventToRemove) {
@@ -868,14 +889,17 @@ public void disjoin(Person personToRemove, Event eventToRemove) {
     // Save changes to the storage.
 }
 
+`AddressBook` and `EventList` will then locate the person/event-to-remove in its list, and perform deletion.
+
 [discrete]
 ==== Storage level
-For storage, since persons and events reference each other, it is easy to have an *Infinity loop of reference*, as shown in the diagram _(Figure 3.9.2)_ below:
+In storage, we cannot use the `referencing model` which is used in the `Model` component. This is because that it is easy to have an *Infinity loop of reference*. As shown in the diagram _(Figure 3.9.2)_ below,
+an event A references a person X, and X references another event B, and B continues to reference another person Y....As a result, the referencing list will be incredibly long:
 
 image::DG_infinity loop.png[width = "800"]
 _Figure 4.9.2: infinity loop_
 
-To solve it, we create two storage entities: `XmlAdaptedEventNoParticipant` and `XmlAdaptedPersonNoParticipation`. Both of them do not have participant or participation information.
+To solve the *infinity loop reference*, we create two storage entities: `XmlAdaptedEventNoParticipant` and `XmlAdaptedPersonNoParticipation` for referencing purposes. Both of them do not have participant or participation information.
 Hence, we can avoid the infinity referencing problem. +
 The updated storage is shown in the diagram _(Figure 4.9.3)_ below:
 

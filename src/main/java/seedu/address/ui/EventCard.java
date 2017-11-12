@@ -10,7 +10,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 
 // @@author HouDenghao
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of a {@code Event}.
  */
 public class EventCard extends UiPart<Region> {
 
@@ -47,7 +47,7 @@ public class EventCard extends UiPart<Region> {
     }
 
     /**
-     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * Binds the individual UI elements to observe their respective {@code Event} properties
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyEvent event) {
