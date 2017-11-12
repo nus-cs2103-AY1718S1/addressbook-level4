@@ -177,13 +177,13 @@ public class EventCalendar extends UiPart<Region> {
  * Create dates in month TODO: change this
  */
 class MonthDateBuilder {
+    private static final int MAX_NUMBER_DAYS = 42;
     private Integer[] monthYearArray;
     private String[] monthDateArray;
     private Calendar calendar;
     private Integer firstDayOfMonth;
     private Integer maxDayOfMonth;
     private String nameOfMonth;
-    private static final int MAX_NUMBER_DAYS = 42;
 
     public MonthDateBuilder() {
         calendar = Calendar.getInstance();
@@ -261,8 +261,6 @@ class MonthDateBuilder {
 
     public void setNameOfMonth() {
         switch(monthYearArray[0]) {
-        default:
-            nameOfMonth = "January";
         case Calendar.JANUARY: nameOfMonth = "January";
                 break;
         case Calendar.FEBRUARY: nameOfMonth = "February";
@@ -287,6 +285,8 @@ class MonthDateBuilder {
                 break;
         case Calendar.DECEMBER: nameOfMonth = "December";
                 break;
+        default:
+            nameOfMonth = "January";
         }
     }
 
