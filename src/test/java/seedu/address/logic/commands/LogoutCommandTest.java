@@ -8,6 +8,8 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -26,9 +28,8 @@ public class LogoutCommandTest {
     public void execute_addLogout_success() throws Exception {
 
         LogoutCommand logoutCommand = prepareCommand();
-
         java.io.File filetoDelete =
-                new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
+                new java.io.File("data/StoredCredential");
         filetoDelete.mkdirs();
         filetoDelete.createNewFile();
         String expectedMessage = String.format(LogoutCommand.MESSAGE_SUCCESS);
@@ -42,7 +43,7 @@ public class LogoutCommandTest {
         LogoutCommand logoutCommand = prepareCommand();
 
         java.io.File filetoDelete =
-                new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
+                new java.io.File("data/StoredCredential");
         filetoDelete.delete();
         String expectedMessage = String.format(LogoutCommand.MESSAGE_FAILURE);
         assertCommandFailure(logoutCommand, model, expectedMessage);
@@ -72,6 +73,7 @@ public class LogoutCommandTest {
      */
     private LogoutCommand prepareCommand() {
         LogoutCommand logoutcommand = new LogoutCommand();
+        logoutcommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return logoutcommand;
     }
 

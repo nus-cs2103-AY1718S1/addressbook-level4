@@ -191,7 +191,7 @@ resize: Resize the MainWindows to the specified (300<=)WIDTH(<=1920) and (230<=)
 |Z17 |sync |”Synchronised” message, and Mary Brown should appear
 |Z18 |e 1 p/91234567 | “Edited Person: Abraham Lionel Phone: 91234567 Email: abraham@lionel.com Address: No Address Note: Has 3 children Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]”
 |Z19 |sync | “Synchronised” and Google Contact should now have Phone Number: 91234567 for Abraham Lionel
-|Z20 |Remove Abraham Lionel’s phone number | Abraham Lionel’s Google Contact phone number should be blank
+|Z20 |Remove Abraham Lionel’s phone number in Google Contacts | Abraham Lionel’s Google Contact phone number should be blank
 |Z21 |sync | “Synchronised” and Abraham Lionel’s phone number is now blank in ABC
 |Z22 |delete 1| Deleted Person: Abraham Lionel Phone: No Phone Number Email: abraham@lionel.com Address: No Address Note: Has 3 children Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]
 |Z23 |sync | “Synchronised” and Abraham Lionel should no longer appear in Google Contacts

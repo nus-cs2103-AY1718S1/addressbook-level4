@@ -51,7 +51,7 @@ public class SyncCommand extends Command {
     public static final String MESSAGE_FAILURE_INTERNET =
             "Unable to connect to the Internet. Please check your internet and firewall settings";
 
-    private static PeopleService client;
+    protected static PeopleService client;
 
     private static HashSet<String> syncedIDs;
 
@@ -135,6 +135,8 @@ public class SyncCommand extends Command {
                 toDelete.add(person);
                 syncedIDs.remove(id);
                 continue;
+            } else if (!id.equals("") && !syncedIDs.contains(id)) {
+                syncedIDs.add(id);
             }
 
         }
@@ -175,7 +177,6 @@ public class SyncCommand extends Command {
 
         for (Person person : connections) {
             try {
-
                 String id = person.getResourceName();
                 String gName = retrieveFullGName(person);
                 if (!syncedIDs.contains(id)) {
@@ -215,6 +216,7 @@ public class SyncCommand extends Command {
                     client.people().deleteContact(id).execute();
                 }
                 toRemove.add(id);
+                logger.info("Removing id: " + id);
                 continue;
             }
 
@@ -224,6 +226,7 @@ public class SyncCommand extends Command {
                 // Contact is no longer existent on Google servers
                 seedu.address.model.person.Person updatedPerson = setId(aPerson, "");
                 updatePerson(aPerson, updatedPerson);
+                logger.info("Removing id: " + id);
                 toRemove.add(id);
                 continue;
             }
@@ -361,9 +364,9 @@ public class SyncCommand extends Command {
                     ? new Phone(null)
                     : new seedu.address.model.person.Phone(phone.getValue().replaceAll("\\s+", ""));
             seedu.address.model.person.Address aAddress = (
-                    address == null || !seedu.address.model.person.Address.isValidAddress(address.getStreetAddress()))
+                    address == null || !seedu.address.model.person.Address.isValidAddress(address.getFormattedValue()))
                     ? new seedu.address.model.person.Address(null)
-                    : new seedu.address.model.person.Address(address.getStreetAddress());
+                    : new seedu.address.model.person.Address(address.getFormattedValue());
             Email aEmail = (email == null || !Email.isValidEmail(email.getValue()))
                     ? new Email(null)
                     : new Email(email.getValue());
@@ -410,9 +413,9 @@ public class SyncCommand extends Command {
                     ? new Phone(null)
                     : new seedu.address.model.person.Phone(phone.getValue().replaceAll("\\s+", ""));
             seedu.address.model.person.Address aAddress = (
-                    address == null || !seedu.address.model.person.Address.isValidAddress(address.getStreetAddress()))
+                    address == null || !seedu.address.model.person.Address.isValidAddress(address.getFormattedValue()))
                     ? new seedu.address.model.person.Address(null)
-                    : new seedu.address.model.person.Address(address.getStreetAddress());
+                    : new seedu.address.model.person.Address(address.getFormattedValue());
             Email aEmail = (email == null || !Email.isValidEmail(email.getValue()))
                     ? new Email(null)
                     : new Email(email.getValue());
@@ -502,7 +505,7 @@ public class SyncCommand extends Command {
      *
      */
 
-    private seedu.address.model.person.Person setId(ReadOnlyPerson person, String id) {
+    protected static seedu.address.model.person.Person setId(ReadOnlyPerson person, String id) {
         seedu.address.model.person.Person updated = new seedu.address.model.person.Person(person);
         updated.setId(new Id(id));
         return updated;
@@ -576,7 +579,16 @@ public class SyncCommand extends Command {
 
         connections.forEach(e -> {
             String name = retrieveFullGName(e);
-            result.put(name, e);
+            if (!result.containsKey(name)) {
+                result.put(name, e);
+            } else {
+                if (hashName.containsKey(name)) {
+                    ReadOnlyPerson person = hashName.get(name);
+                    if (equalPerson(person, e)) {
+                        result.put(name, e);
+                    }
+                }
+            }
 
         });
 
@@ -589,7 +601,7 @@ public class SyncCommand extends Command {
      */
     private void saveStatus(Serializable object) {
         try {
-            FileOutputStream saveFile = new FileOutputStream("syncedIDs.dat");
+            FileOutputStream saveFile = new FileOutputStream("data/syncedIDs.dat");
             ObjectOutputStream out = new ObjectOutputStream(saveFile);
             out.writeObject(object);
             out.close();
@@ -606,7 +618,7 @@ public class SyncCommand extends Command {
     private Object loadStatus() {
         Object result = null;
         try {
-            FileInputStream saveFile = new FileInputStream("syncedIDs.dat");
+            FileInputStream saveFile = new FileInputStream("data/syncedIDs.dat");
             ObjectInputStream in = new ObjectInputStream(saveFile);
             result = in.readObject();
             in.close();
@@ -653,7 +665,7 @@ public class SyncCommand extends Command {
                 ? null
                 : gPerson.getPhoneNumbers().get(0);
         String abcPhone = abcPerson.getPhone().value;
-        String gPhone;
+        String gPhone = null;
         boolean equalPhone;
 
         if (phone != null) {
@@ -671,7 +683,7 @@ public class SyncCommand extends Command {
         boolean equalAddress;
 
         if (address != null) {
-            gAddress = address.getStreetAddress();
+            gAddress = address.getFormattedValue();
             equalAddress = gAddress.equals(abcAddress);
         } else {
             equalAddress = abcAddress.equals("No Address");
