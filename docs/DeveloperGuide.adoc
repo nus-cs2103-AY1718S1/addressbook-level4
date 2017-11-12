@@ -595,6 +595,8 @@ image::MusicList.jpg[width="200"]
 **Pros:** Able to hold music track title name, which can be use to display to the user in the result box +
 **Cons:** Requires an array to keep track of the music tracks for each genre. More code manipulation required when adding more music tracks +
 
+{sp}
+
 **Aspect:** Which music file to play first +
 
 **Alternative 1 (current choice):** Play the music file that starts with 1 then increase from there +
@@ -604,6 +606,8 @@ image::MusicList.jpg[width="200"]
 **Alternative 2:** Play a random music file +
 **Pros:** Has a chance to be different the next time the user starts playing music. +
 **Cons:** User does not know which song is going to be played next.
+
+---
 // end::musiccommand[]
 
 // tag::radiocommand[]
@@ -687,6 +691,8 @@ image::header_warning.png[width="400"]
 * Remember to check the status of the stream urls. As it is possible but highly unlikely that one of those radio broadcast has shutdown.
 // end::radiocommand[]
 
+---
+
 // tag::sharecommand[]
 === Share Contacts by Email Mechanism
 
@@ -760,6 +766,8 @@ image::header_warning.png[width="400"]
 
 // end::sharecommand[]
 
+---
+
 // tag::audiblefeedback[]
 === Audible Feedback Mechanism
 Audio feedback are created by using 2 different audio cues. First is the typing sound, that is created by playing a .mp3 sound file using the `Audio.java` class. You may use this class to play a sound file without looping. You just have to create a new `Audio`
@@ -814,6 +822,8 @@ dependencies {
 **Cons:** Users may find it annoying as every action they take, the system will play an audio cue. +
 
 // end::audiblefeedback[]
+
+---
 
 // tag::alias[]
 === Aliases
