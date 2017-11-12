@@ -12,9 +12,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.customField.CustomField;
 import seedu.address.model.customField.UniqueCustomFieldList;
-import seedu.address.model.person.exceptions.PhoneNotFoundException;
-import seedu.address.model.person.phone.Phone;
-import seedu.address.model.person.phone.UniquePhoneList;
 
 //@@author LuLechuan
 public class UniqueCustomFieldListTest {
