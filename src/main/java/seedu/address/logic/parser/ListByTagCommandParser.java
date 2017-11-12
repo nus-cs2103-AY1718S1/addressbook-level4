@@ -32,10 +32,7 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ListByTagCommand.MESSAGE_USAGE));
         }
-
-
         return new ListByTagCommand(new TagContainsKeywordsPredicate(evaluateList));
-
     }
 
     /**

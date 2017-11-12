@@ -33,7 +33,6 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
@@ -139,7 +138,6 @@ public class CommandBox extends UiPart<Region> {
         default:
         }
     }
-
 
     /**
      * Deletes the word or a chunk of blank spaces on the left.
@@ -453,7 +451,6 @@ public class CommandBox extends UiPart<Region> {
             return (!containsDate() && (addPollSuccessful() || editPollSuccessful()));
         default:
             return (containsAllCompulsoryPrefix() && (addPollSuccessful() || editPollSuccessful()));
-
         }
     }
 
@@ -610,7 +607,6 @@ public class CommandBox extends UiPart<Region> {
         if (!historySnapshot.hasPrevious()) {
             return;
         }
-
         replaceText(historySnapshot.previous());
     }
 
@@ -623,7 +619,6 @@ public class CommandBox extends UiPart<Region> {
         if (!historySnapshot.hasNext()) {
             return;
         }
-
         replaceText(historySnapshot.next());
     }
 
@@ -681,7 +676,6 @@ public class CommandBox extends UiPart<Region> {
      */
     private void setStyleToIndicateCommandFailure() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
-
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
             return;
         }
