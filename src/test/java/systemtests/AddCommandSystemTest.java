@@ -51,6 +51,8 @@ import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
+    public static final String FIELD_SEPERATOR = ", ";
+
     @Test
     public void add() throws Exception {
         Model model = getModel();
@@ -81,9 +83,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a duplicate person -> rejected */
         command = AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        expectedModel = getModel();
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different tags -> Prompt Message */
         // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
@@ -91,26 +91,26 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         // AddressBook#addPerson(ReadOnlyPerson)
         command = AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + " " + PREFIX_TAG.getPrefix() + "friends";
-        expectedModel = getModel();
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a person with all fields same as another person in the address book except name
-         * -> Duplicate Phone Message Prompt
+         * -> Duplicate Fields Message Prompt
          */
         command = AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
         expectedModel = getModel();
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.PHONE_FIELD));
+        assertCommandSuccess(command, expectedModel, String.format(AddCommand.MESSAGE_DUPLICATE_FIELD,
+                AddCommand.PHONE_FIELD + FIELD_SEPERATOR + AddCommand.ADDRESS_FIELD + FIELD_SEPERATOR
+                        + AddCommand.EMAIL_FIELD));
 
         /* Case: add a person with all fields same as another person in the address book except phone
-         *  -> Duplicate Name Message Prompt*/
+         *  -> Duplicate Fields Message Prompt*/
         command = AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
         expectedModel = getModel();
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
+        assertCommandSuccess(command, expectedModel, String.format(AddCommand.MESSAGE_DUPLICATE_FIELD,
+                AddCommand.NAME_FIELD + FIELD_SEPERATOR + AddCommand.ADDRESS_FIELD + FIELD_SEPERATOR
+                        + AddCommand.EMAIL_FIELD));
 
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORDVAR_2 + " " + KEYWORD_MATCHING_MEIER);
@@ -218,7 +218,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertApplicationDisplaysExpected("" , expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
-        //assertStatusBarUnchangedExceptSyncStatus();
+        assertStatusBarUnchangedExceptSyncStatus();
     }
 
     /**

@@ -1,8 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.UndoableCommand.MESSAGE_DUPLICATE_FIELD;
-import static seedu.address.logic.commands.UndoableCommand.NAME_FIELD;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -21,7 +20,6 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class AddCommandIntegrationTest {
 
-    //@@author LeeYingZheng
     private Model model;
 
     @Before
@@ -43,9 +41,7 @@ public class AddCommandIntegrationTest {
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
         Person personInList = new Person(model.getAddressBook().getPersonList().get(0));
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        assertCommandSuccess(prepareCommand(personInList, model), model,
-                String.format(MESSAGE_DUPLICATE_FIELD, NAME_FIELD), expectedModel);
+        assertCommandFailure(prepareCommand(personInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
     /**

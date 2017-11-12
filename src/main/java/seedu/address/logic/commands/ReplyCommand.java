@@ -37,12 +37,8 @@ public class ReplyCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
 
-        if (UndoableCommand.isWaitingforReply) {
-            if (AddCommand.requiresHandling()) {
-                return handleAddCommand();
-            } else {
-                return new CommandResult(MESSAGE_COMMAND_MISHANDLED);
-            }
+        if (AddCommand.isWaitingforReply()) {
+            return handleAddCommand();
         } else {
             return new CommandResult(MESSAGE_COMMAND_INVALID);
         }
@@ -55,8 +51,7 @@ public class ReplyCommand extends Command {
 
         if (toReply.equalsIgnoreCase(COMMAND_WORDVAR_YES)) {
 
-            UndoableCommand.reply();
-            AddCommand.setHandlingFalse();
+            AddCommand.reply();
             try {
                 model.addPerson(storedPerson);
                 return new CommandResult(String.format(MESSAGE_SUCCESS, storedPerson));
@@ -65,8 +60,7 @@ public class ReplyCommand extends Command {
             }
 
         } else {
-            UndoableCommand.reply();
-            AddCommand.setHandlingFalse();
+            AddCommand.reply();
             return new CommandResult(MESSAGE_COMMAND_ROLLBACK);
         }
     }
