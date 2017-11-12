@@ -95,7 +95,7 @@ The following features of MedNus are tested in this section.
 
 |`list reverse` |`Displayed list reverse` |Contacts list in contacts panel reversed.
 
-|`list ascending` |`Listed persons by name in ascending order`. |Contacts list in contacts panel sorted by name in ascending order.
+|`list ascending` |`Listed persons by name in ascending order` |Contacts list in contacts panel sorted by name in ascending order.
 
 |`list descending` |`Listed persons by name in descending order` |Contacts list in contacts panel sorted by name in descending order.
 
@@ -157,9 +157,9 @@ This section shows you commands related to appointments and calendar views. +
 |Command To Enter |Expected Output |Remarks
 
 
-|`appt 1 d/Dinner, tomorrow 7pm` |`New appointment added. ` |Appointment added for 1 hour (default) at the next day 7pm
+|`appt 1 d/Dinner, tomorrow 7pm` |`New appointment added.` |Appointment added for 1 hour (default) at the next day 7pm
 
-|`appt 2 d/Lunch, tomorrow 12pm to 2pm` | `New appointment added. ` |Appointment added accordingly, next day 12pm to 2pm.
+|`appt 2 d/Lunch, tomorrow 12pm to 2pm` | `New appointment added.` |Appointment added accordingly, next day 12pm to 2pm.
 
 |`calendar w` |`View changed.` |Calendar view changed to week view
 
