@@ -356,33 +356,97 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::PrivateDatabase[]
 
-=== Login Function
+=== Private Database System
 
-The Login function work by using many different components. To facilitated its implementation there is a `LoginCommand` inside the `LogicManager` and `AddressBook Parser`. The `LoginCommand` works by taking the input and checking it with a database of accounts. If the inputs are verified, it will call upon the `UI` to restart the addressbook application with the new filepath.
+The `Private Database` system is implemented by creating a separate xml database file, similar to the system used in the current
+database. To facilitate its implementation, there are account models that allows the user to create a unique account in the
+`Unique Account List` with the parameters `Username` and `Password`.
+When the Gentleman's Guide is started, the `Main App` searches for an existing account database. If one
+is not present, it would load a new account database with a typical account with `Username:` private and `Password:` password.
+The `Create Account`, `Login` and `Logout` function extends an abstract `Command` class.
+
+
+
+The below shows the inheritance diagram for the abstract `Command` class.
+
+image::Inheritance_Login.JPG[width="800"]
+_Figure 4.2.0.1 : Inheritance Diagram for Private Database Commands._
+
+
+
+As it can be seem, `Create Account`, `Login` and `Logout` extends the abstract `Command` class. Thus when the user call
+on the according commands, with the right parameters, the `LogicManager` will call on the command to `Execute`.
+A detailed explanation of the individual commands can be found below.
+
+==== Create Account
+
+The `Create Account` function is implemented by extending the abstract class `Command`. When the `Create Account` function is entered with the command
+`create` and the parameters `u/USERAME` and `p/PASSWORD`, the Gentleman's guide will look through the current accounts for the existence of an account with the same `USERNAME`.
+If it exists, it would show a Duplicate Account message. If an account does not exist, it would create the account with the entered parameters.
+
+The below shows the interaction of the features through the multiple components.
+
+image::CreateAccountSequenceDiagram.JPG[width="800"]
+_Figure 4.2.1.1 : Interactions in the Create Account Command._
+
+
+
+As it can be seen, the `LogicManager` will call on the `CreateAccountCommand` to execute. It will then call on the model
+to add and `Account` which would throw a `DuplicateAccountException` if the account already exists. If not, it will update the
+`FilteredAccountList` and the `database`.
+
+Thus User can choose to Create an account if he does not already have one, but he will not be able to access the other users database.
+
+==== Login/Logout Function
+
+The Login and Logout function work using similar principles. The functions work by using many different components. To facilitate
+its implementation there is a `LoginCommand`
+inside the `LogicManager` and `AddressBook Parser`. The `LoginCommand` works by taking the input and checking it with a
+database of accounts that are available in the separate database created as explained earlier in the Create Function.
+If the inputs are verified, it will call upon the `UI` to restart the addressbook application with
+the new filepath. The `LogoutCommand` works similar to the `LoginCommand` except that it does not check with the account database.
+Instead, the `Logoutcommand` simply  call on the `UI` to restart the addressbook application with its default filepath.
 
 The process of how the feature functions and what would happen is as follows:
 
-image::LoginSequenceDiagram.JPG[width="800"]
-_Figure 4.2.1 : Interactions in the Login Command._
+image::LoginSequenceDiagram.JPG[width="1000"]
+_Figure 4.2.2.1 : Interactions in the Login Command._
 
 
 
 As it can be seen, when the `logincommand` is called, if the credentials are correct, it would call on the `UiManager` to restart the application with the user database and model. The `Restart()` method created new user configs, preferences and storage according to the username. It then called on the current `Mainwindow` to close and closes the `primarystage` that the current `Mainwindow` is using. From there, it will call on the `UiManager` to initialise with the user `logic`, user `storage`, user `preferences` and user `config`.
 
-The User can choose to Create an account if he does not already have one, but he will not be able to access the other users database.
-
-Similiarly, the user can choose to implement the `logoutcommand` which would call on the `restart()` method with the parememter addressbook. The application would then restart and load the public addressbook.
+Similiarly, the user can choose to implement the `logoutcommand` which would call on the `restart()` method with the parameter addressbook. The application would then restart and load the public addressbook.
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `LoginFunction` +
-**Alternative 1:** Create a whole new `LoginFunction` interface, with its own GUI etc +
-**Pros:** `LoginFunction will have seperate Userprofile and database. It would be a more versatile application +
-**Cons:** Diffiult to implement and even harder to test +
-**Alternative 2 (current choice):** Implement a `LoginCommand` function at the `CommandBox` +
-**Pros:** Easier to implement. Achieves the basic functions of security +
-**Cons:** Doesnt look as good.
+**Aspect:** Implementation of `LoginFunction`. +
+**Alternative 1:** Create a whole new `LoginFunction` interface, with its own GUI. +
+**Pros:** `LoginFunction will have separate User profile and database. It would be a more versatile application. +
+**Cons:** Difficult to implement and even harder to test. +
+**Alternative 2 (current choice):** Implement a `LoginCommand` function at the `CommandBox`. +
+**Pros:** Easier to implement. Achieves the basic functions of security. +
+**Cons:** Does not look as good.
+
+**Aspect:** Implementation of `Private Database`. +
+**Alternative 1 (current choice):** Create a `Private Database` from scratch. +
+**Pros:** `Database` will build on the current data storing methods. Easier to implement. +
+**Cons:** Not as secure. +
+**Alternative 2:** Implement a `Private Database` using a MySql Database.+
+**Pros:** More secure, a more widely used method. +
+**Cons:** Less code to write as most of it would be pre-written and in built into MySql.
+
+**Aspect:** Implementation of `Private Database` as `UndoableCommand` or `Command`. +
+**Alternative 1 (current choice):** `Command`. +
+**Pros:** `Database` more reliable and less complicated. +
+**Cons:** Less versatility. +
+**Alternative 2:** `UndoableCommand`. +
+**Pros:** More versatility, allows for easy undo of accidental accounts. +
+**Cons:** Increased complication, allowing for potential errors that the `Undo` command would work in the wrong database.
+
+// end::PrivateDatabase[]
 
 ---
 
@@ -404,8 +468,8 @@ You will not be able to enter the birthday parameter when adding contacts. +
 Suppose that you have a list of persons. The birthday parameters of each contact will be empty if you have not modified them before. +
 You can then choose to add their birthday using the BirthdayCommand. For example if you want to add the birthday of the
 second person in your contact list, key in " `birthday 2 b/20/07/1994` "  where his birthday is 20/07/1994. +
-Similarly, you can edit their birthday using the same command.+
-To delete their birthday simply not key in anything for his birthday. For example, +
+Similarly, you can edit their birthday using the same command. +
+To delete their birthday, simply not key in anything for his birthday. For example,
 " `birthday 2 b/` "
 
 The following sequence diagram shows how the birthday operation works:
@@ -418,17 +482,17 @@ _Figure 4.3.1.1b : Interactions in the Birthday Command._
 **Aspect:** Adding Birthday parameter +
 **Alternative 1 (current choice):** Add birthday parameter separately after person object is created. +
 **Pros:** Lesser parameters to add while creating person class and easier to implement. +
-**Cons:** Slower for users to add in all the parameters +
+**Cons:** Slower for users to add in all the parameters. +
 **Alternative 2:**  Add birthday parameter during the creation of person object. +
 **Pros:** Faster for users to add in all the parameters. +
 **Cons:** More parameters to add while creating person class and harder to implement. +
 
 ---
 **Aspect:** Birthday commands with specific uses +
-**Alternative 1 (current choice):** Only one birthday command to add / edit / delete birthday from person +
+**Alternative 1 (current choice):** Only one birthday command to add / edit / delete birthday from person. +
 **Pros:** Convenient, lesser commands for users to remember. +
-**Cons:** Birthday command is very general and may be confusing to the user instead +
-**Alternative 2:**  Create other commands such as editBirthday and deleteBirthday +
+**Cons:** Birthday command is very general and may be confusing to the user instead. +
+**Alternative 2:**  Create other commands such as editBirthday and deleteBirthday. +
 **Pros:** Less convenient, many commands for users to remember. +
 **Cons:** Each command is specific and purpose of each command is clear. +
 
@@ -436,29 +500,62 @@ _Figure 4.3.1.1b : Interactions in the Birthday Command._
 
 // end::birthday[]
 
-// tag::tagretrieve[]
-=== Tag & Retrieve mechanism
+=== Tags Manipulation & Retrieve mechanism
 
-The `TagCommand`and `RetrieveCommand` reside in the `commands` of `Logic`.
+Three commands for tags manipulation, namely `TagCommand`, `UntagCommand` and `RetagCommand`, together with `RetrieveCommand`, all reside in the `commands` of `Logic`.
 
 ==== Tag command
 
-`TagCommand` : allows user to assign tags to the persons at the specified index in the last person listing.
+Tag command allows user to assign tags to the persons at the specified index in the last person listing.
 
-This command inherits from `UndoableCommand`. Thus, it can be undone.
+This command inherits from `UndoableCommand`. Thus, the tagging action can be undone.
 
-For every index specified, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside the `AddressBook` 's person list with the new person object.
+For every person at the index specified, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside `AddressBook` 's person list with the new person object.
 
 The following sequence diagram shows how the tag operation works:
 
 image::TagSequenceDiagram.png[width="800"]
 _Figure 4.4.1.1 : Interactions in the Tag Command._
 
+==== Untag command
+
+Untag command allows user to remove tags from the persons at the specified index in the last person listing.
+In addition, user can choose to:
+
+* Remove all tags from the persons at the specified index in the last person listing.
+* Remove the specified tags from all persons in the last person listing.
+* Remove all tags from all persons in the last person listing.
+
+This command inherits from `UndoableCommand`. Thus, the untagging action can be undone.
+
+Compared to `TagCommand`, `UntagCommand` has a boolean attribute called `toAllInFilteredList` to indicate whether untagging will be applied
+to all persons in filtered list or not.
+
+The following sequence diagram shows how the untag operation works:
+
+image::UntagSequenceDiagram.png[width="800"]
+_Figure 4.4.1.1 : Interactions in the Untag Command._
+
+Similar to tag command operation, for every person that will be untagged, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside `AddressBook` 's person list with the new person object.
+
+After having updated all relevant persons, `UntagCommand` will utilize `deleteUnusedTag()` of `Model` to remove any unused `Tag` inside `AddressBook` 's unique tag list.
+
+==== Retag command
+
+Retag command allows user to rename an existing tag to a new tag name.
+
+This command inherits from `UndoableCommand`. Thus, the retagging action can be undone.
+
+At the beginning of its execution, the command updates person filterd list with all persons inside the addressbook by calling `updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS)` of `Model`.
+After that, it will loop through the filtered list and perform update on persons with the specified old tag name similar to how `TagCommand` and `UntagCommand` updates persons.
+
+After having updated the person list of `AddressBook` where necessary, `RetagCommand` will call `deleteUnusedTag()` of `Model` on the old `Tag` to remove it from `AddressBook` 's unique tag list.
+
 ==== Retrieve command
 
-`RetrieveCommand` : allows user to list all persons that have been assigned an tag already existing inside the unique tag list.
+`RetrieveCommand` : allows user to list all persons that have been assigned a tag already existing inside the unique tag list.
 
-This command inherits from `Command`, so it cannot be undone.
+This command inherits from `Command`, so retrieving cannot be undone.
 
 Suppose that the address book already has a sufficiently large number of persons, some of whom have a certain `Tag`. The `UniqueTagList` will contain this tag. +
 
@@ -469,7 +566,7 @@ We will now parse the command argument to get the name of the tag which user wan
 [NOTE]
 If the tag name provided by user is empty or invalid, an `Exception` will be thrown during parsing.
 
-We use `TagContainsKeyWordPredicate` to test whether the tag is inside the tag list of each person in the address book and get the filtered person list with `getFilteredPersonList()` of `Model` to display to user.
+We use `TagContainsKeyWordPredicate` to test whether the tag is inside the tag list of each person in the address book and get the filtered person list with `updateFilteredPersonList()` of `Model` to display to user.
 
 [NOTE]
 If the filtered person list is empty, that means the tag user want to look for does not exist. User will then be notified of all existing tags.
@@ -481,14 +578,24 @@ _Figure 4.4.1.1 : Sequence Diagram for the Retrieve Command._
 
 ==== Design Considerations
 
-**Aspect:** Updating the filtered person list +
+**Aspect:** Adding tags to person's tag list +
+**Alternative 1 (current choice):** Use `Set` to implement person's tag list and to store tags to be added during command parsing. +
+**Pros:** Duplicated tags will be automatically taken care of. +
+**Cons:** The order of tags inside person's tag list is not maintained. Users may want the tags of their contacts
+to be arranged according to the time added. +
+**Alternative 2:**  Using `List` implement person's tag list and to store tags to be added. +
+**Pros:** Full control over the order of tags inside person's tag list. +
+**Cons:** Duplicated tags need to be handled manually. +
+
+---
+
+**Aspect:** Finding out all persons with the specififed tag +
 **Alternative 1 (current choice):** Go through every person in the addressbook to filter out those having the tag. +
 **Pros:** Easy to implement. +
 **Cons:** Slower if the addressbook contains a large number of persons +
 **Alternative 2:**  Create a list attribute for `Tag` to store all persons currently having that tag. +
 **Pros:** Faster to get the persons as the filtered person list is already created. +
 **Cons:** Requires to save the lists of all existing tags to storage file. +
-// end::tagretrieve[]
 
 === Reminder list
 
@@ -503,6 +610,7 @@ e.g. `addReminder z/Proposal Submission p/Low d/12/11/2017 m/Submit to Manager t
 
 ==== EditReminderCommand
 
+==== EditReminderCommand
 `EditReminderCommand`: Edits the details of reminders in address book. +
 e.g. `editReminder 2 p/Medium m/Submit to Department Head`
 
@@ -535,6 +643,7 @@ Missing details during adding of reminders will result in Invalid Command format
 
 [NOTE]
 If an invalid Index is given during editing and deleting reminders, an `Exception` would be thrown.
+
 
 // tag::find[]
 === Find Mechanism
@@ -573,11 +682,13 @@ with the keyword.
 image::BeforeAndAfterFindReminder.png[width=850"]
 _Figure 4.6.3.1 Reminder list before and after the findReminder command_
 
-[Note]
-Only keywords are searched, incomplete keywords in command such as `findEmail alex@example` will not return contact
+
+[NOTE]
+====
+- Only keywords are searched, incomplete keywords in command such as `findEmail alex@example` will not return contact
 with email "alex@example.com". +
-* All find commands are case insensitive (e.g. "high" will match "High").
-* Only full words will be matched (e.g. "8123" will not match "81234567").
+- All find commands are case insensitive (e.g. "high" will match "High"). +
+====
 
 ==== Design Considerations
 
@@ -641,10 +752,20 @@ the type of sort command he wants +
 
 // end::sort[]
 
-==== Expansion
-Clicking on any of the `Reminder` card will expand its details. The expanded
+// tag::selectReminder[]
+
+==== Select Reminder
+Clicking on any of the `Reminder` card or typing the command `selectReminder` followed by the index of the `Reminder` card will expand its details. The expanded
 details would be displayed beside it. +
 It allow viewing of the entire `message` field if it is too long.
+
+===== Implementation
+
+The `Select Reminder` is implemented using event handlers. Clicking on the `Reminder` card or typing the `selectReminder` command
+will call different select reminder event. The subscribers to the events in the `BrowserPanel` class will receive the event and call on the `BrowserPanel` to load the
+appropriate `Reminder` card to display.
+
+// end::selectReminder[]
 
 === Logging
 
@@ -1101,7 +1222,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 
 [discrete]
