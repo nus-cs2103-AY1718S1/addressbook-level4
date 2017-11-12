@@ -58,9 +58,8 @@ public class AddRemoveTagsCommand extends UndoableCommand {
 
         checkParameterValidity(lastShownList);
 
-        Person editedPerson;
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        editedPerson = prepareEditedPerson(personToEdit);
+        Person editedPerson = prepareEditedPerson(personToEdit);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -109,7 +108,7 @@ public class AddRemoveTagsCommand extends UndoableCommand {
         assert personToEdit != null;
 
         Set<Tag> personTags = personToEdit.getTags();
-        HashSet<Tag> newTags = new HashSet<Tag>(personTags);
+        HashSet<Tag> newTags = new HashSet<>(personTags);
         newTags.addAll(tags);
 
         AccessCount accessCount = new AccessCount((personToEdit.getAccessCount().numAccess() + 1));
