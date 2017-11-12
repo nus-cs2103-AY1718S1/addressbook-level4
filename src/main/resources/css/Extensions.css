@@ -20,6 +20,7 @@
     -fx-text-fill: white;
 }
 
+/* @@author yunpengn */
 .sidebar-button {
     -fx-background-insets: 0,1,2;
     -fx-background-radius: 3,2,1;

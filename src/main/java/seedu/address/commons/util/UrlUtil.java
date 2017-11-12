@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.base.Strings;
 
+//@@author yunpengn
 /**
  * Helps with parsing a given URL and obtain GET parameters from it.
  */

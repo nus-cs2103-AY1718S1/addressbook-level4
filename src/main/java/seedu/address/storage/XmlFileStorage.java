@@ -7,6 +7,7 @@ import javax.xml.bind.JAXBException;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
+import seedu.address.storage.elements.XmlSerializableAddressBook;
 
 /**
  * Stores AddressBook data in an XML file

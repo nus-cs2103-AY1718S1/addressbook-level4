@@ -17,7 +17,6 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FbCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -32,6 +31,7 @@ import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.logic.commands.person.EditCommand;
 import seedu.address.logic.commands.person.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.person.EmailCommand;
+import seedu.address.logic.commands.person.FbCommand;
 import seedu.address.logic.commands.person.FindCommand;
 import seedu.address.logic.commands.person.FindTagCommand;
 import seedu.address.logic.commands.person.GMapCommand;

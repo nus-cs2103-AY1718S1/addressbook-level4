@@ -3,6 +3,7 @@ package seedu.address.model.property;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -17,10 +18,14 @@ import seedu.address.model.property.exceptions.PropertyNotFoundException;
 public class DateTime extends Property {
     private static final String PROPERTY_SHORT_NAME = "dt";
 
-    // The standard format for storing a date time in string format.
-    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
-    private static final String STANDARD_FORMAT = "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}"
+    //@@author yunpengn
+    // To check whether the raw input is in standard format.
+    private static final String INPUT_STANDARD_FORMAT = "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}"
             + "(\\s((0[1-9]|1[0-9]|2[0-3]):([0-5][0-9]))?$)";
+    // The formatter corresponding to raw input from user.
+    private static final SimpleDateFormat inputFormatter = new SimpleDateFormat("ddMMyyyy HH:mm");
+    // The formatter corresponding to the format used in UI and storage.
+    private static final SimpleDateFormat outputFormatter = new SimpleDateFormat("dd MMM, yyyy HH:mm", Locale.ENGLISH);
 
     public DateTime(String value) throws IllegalValueException, PropertyNotFoundException {
         super(PROPERTY_SHORT_NAME, prepareDateTimeValue(value));
@@ -30,7 +35,6 @@ public class DateTime extends Property {
         super(PROPERTY_SHORT_NAME, formatDateTime(value));
     }
 
-    //@@author yunpengn
     /**
      * Returns true if a given string is a valid phone number.
      */
@@ -46,10 +50,14 @@ public class DateTime extends Property {
     /**
      * Prepares the value by checking whether the input can be interpreted by the natural language parser.
      */
-    public static String prepareDateTimeValue(String value) throws IllegalValueException, PropertyNotFoundException {
+    private static String prepareDateTimeValue(String value) throws IllegalValueException, PropertyNotFoundException {
         // Returns the original value directly if it is already in standard format.
-        if (isInStandardFormat(value)) {
-            return value;
+        if (value.matches(INPUT_STANDARD_FORMAT)) {
+            try {
+                return formatDateTime(parseDateTime(value));
+            } catch (ParseException e) {
+                System.err.println("This should never happen. Format check has been performed.");
+            }
         }
 
         Optional<Date> dateObject = NaturalLanguageUtil.parseSingleDateTime(value);
@@ -60,18 +68,14 @@ public class DateTime extends Property {
         }
     }
 
+    public static Date parseDateTime(String date) throws ParseException {
+        return inputFormatter.parse(date);
+    }
+
     /**
-     * Checks whether a string representation of datetime is in standard format.
+     * Converts the given {@link Date} object into the format used in UI and storage.
      */
-    public static boolean isInStandardFormat(String value) {
-        return value.matches(STANDARD_FORMAT);
-    }
-
-    public static Date parseDateTime(String value) throws ParseException {
-        return dateFormatter.parse(value);
-    }
-
-    public static String formatDateTime(Date date) {
-        return dateFormatter.format(date);
+    private static String formatDateTime(Date date) {
+        return outputFormatter.format(date);
     }
 }

@@ -8,13 +8,10 @@ import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.UserPrefs;
 
 //@@author junyango
-
-
 /**
  * A class to access UserPrefs stored in the hard disk as a json file
  */
 public class JsonUserPrefsStorage implements UserPrefsStorage {
-
     private String filePath;
     private String addressBookTheme;
 

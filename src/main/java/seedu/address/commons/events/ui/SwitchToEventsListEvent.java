@@ -1,6 +1,7 @@
 package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
+
 //@@author junyango
 /**
  * Represents a change that invokes list switching

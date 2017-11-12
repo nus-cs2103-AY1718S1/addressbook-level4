@@ -78,7 +78,6 @@ public class Person implements ReadOnlyPerson {
             this.address = new SimpleObjectProperty<>(new Address(getProperty("a")));
         } catch (IllegalValueException | PropertyNotFoundException e) {
             // TODO: Better error handling
-            e.printStackTrace();
             System.err.println("This should never happen.");
         }
 

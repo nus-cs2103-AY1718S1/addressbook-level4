@@ -16,6 +16,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.PropertyLabel;
 import seedu.address.ui.UiPart;
 
+//@@author yunpengn
 /**
  * The panel on the right side of {@link PersonListPanel}. Used to show the details (including photo and all
  * properties) of a specific person (selected on the {@link PersonListPanel}).
@@ -68,7 +69,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
      */
     private void setAvatar() {
         if (person.getAvatar() != null) {
-            Platform.runLater(() -> avatar.setImage(new Image(person.getAvatar().getUrl())));
+            Platform.runLater(() -> avatar.setImage(new Image(person.getAvatar().getPath(), 200, 200, false, true)));
         }
     }
 }

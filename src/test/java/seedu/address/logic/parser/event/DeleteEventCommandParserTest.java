@@ -17,7 +17,7 @@ import seedu.address.logic.commands.event.DeleteEventCommand;
  * The path variation for those two cases occur inside the ParserUtil, and
  * therefore should be covered by the ParserUtilTest.
  */
-public class DeleteEventParserTest {
+public class DeleteEventCommandParserTest {
 
     private DeleteEventParser parser = new DeleteEventParser();
 

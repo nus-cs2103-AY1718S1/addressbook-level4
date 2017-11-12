@@ -73,7 +73,6 @@ public class EventListPanel extends UiPart<Region> {
      * Custom {@code ListCell} that displays the graphics of a {@code EventCard}.
      */
     class EventListViewCell extends ListCell<EventCard> {
-
         @Override
         protected void updateItem(EventCard event, boolean empty) {
             super.updateItem(event, empty);
