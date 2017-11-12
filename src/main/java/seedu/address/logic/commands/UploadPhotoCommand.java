@@ -34,7 +34,7 @@ public class UploadPhotoCommand extends UndoableCommand {
             + "Parameters: "
             + "INDEX (must be a positive integer)\n"
             + "photoPath"
-            + "Example: " + COMMAND_WORD + " 1" + "/img.png";
+            + "Example: " + COMMAND_WORD + " 1" + " /img.png";
 
     public static final String MESSAGE_UPDATE_PERSON_PHOTO_SUCCESS = "Updated Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";

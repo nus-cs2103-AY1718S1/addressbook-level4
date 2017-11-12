@@ -63,7 +63,10 @@ public interface ReadOnlyPerson {
             builder.append(" Tags: ");
         }
         getTags().forEach(builder::append);
-        getCustomFields().forEach(builder::append);
+        for (CustomField customField : getCustomFields()) {
+            builder.append(" ");
+            builder.append(customField.toString());
+        }
         return builder.toString();
     }
 

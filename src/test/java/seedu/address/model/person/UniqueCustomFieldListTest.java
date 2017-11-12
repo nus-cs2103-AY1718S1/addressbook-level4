@@ -53,7 +53,7 @@ public class UniqueCustomFieldListTest {
         try {
             list.add(new CustomField("NichName", "Ah"));
             list.add(new CustomField("Age", "21"));
-            list.add(new CustomField("Age", "")); //now the size reduce to 1
+            list.add(new CustomField("Age", ""));  // Removes custom field "Age"
         } catch (IllegalValueException e) {
             logger.warning("Input value are invalid");
         }
@@ -72,11 +72,11 @@ public class UniqueCustomFieldListTest {
             list1.add(new CustomField("NickName", "Ah"));
             list1.add(new CustomField("Age", "21"));
             list1.add(new CustomField("Birthday", "29/02/1996"));
-            list1.add(new CustomField("Age", ""));
+            list1.add(new CustomField("Age", ""));  // Removes custom field "Age"
             list2.add(new CustomField("Birthday", "29/02/1996"));
             list2.add(new CustomField("Age", "21"));
             list2.add(new CustomField("NickName", "Ah"));
-            list2.add(new CustomField("Age", ""));
+            list2.add(new CustomField("Age", ""));  // Removes custom field "Age"
         } catch (IllegalValueException e) {
             logger.warning("Input value is invalid");
         }
