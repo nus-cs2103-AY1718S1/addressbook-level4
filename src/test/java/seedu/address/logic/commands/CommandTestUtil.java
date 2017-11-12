@@ -63,11 +63,9 @@ public class CommandTestUtil {
     public static final String VALID_EVENT_NAME_SECOND = "Second Meeting";
     public static final String VALID_EVENT_DESC_FIRST = "Discuss A & B 12354 ?";
     public static final String VALID_EVENT_DESC_SECOND = "??2Discuss A & B 12**354 ?";
-    //@@author Adoby7
     public static final String VALID_EVENT_TIME_FIRST = "31/12/2018";
     public static final String VALID_EVENT_TIME_SECOND = "29/02/2020"; //leap year
     public static final String VALID_EVENT_TIME_THIRD = "29/02/2000";
-    //@@author
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -99,12 +97,8 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_EVENT_NAME = " " + PREFIX_EVENT_NAME + "Meeting & "; // '&' not allowed in names
     public static final String INVALID_EVENT_DESC = " " + PREFIX_EVENT_DESCRIPTION + " "; //Empty description
-    //@@author Adoby7
     public static final String INVALID_EVENT_TIME_FIRST = " " + PREFIX_EVENT_TIME + "03/15/2017";
-    public static final String INVALID_EVENT_TIME_SECOND = " " + PREFIX_EVENT_TIME + "31/11/2017"; // 30 days in Nov
-    public static final String INVALID_EVENT_TIME_THIRD = " " + PREFIX_EVENT_TIME + "29/02/2017";
-    public static final String INVALID_EVENT_TIME_FORTH = " " + PREFIX_EVENT_TIME + "29/02/2100"; //Not a leap year
-    //@@author
+    public static final String INVALID_EVENT_TIME_SECOND = " " + PREFIX_EVENT_TIME + "29/02/2100"; //Not a leap year
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

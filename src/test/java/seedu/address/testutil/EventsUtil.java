@@ -1,9 +1,14 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
+
 import guitests.GuiRobot;
 import javafx.application.Platform;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.event.ReadOnlyEvent;
 
 /**
  * Helper methods related to events.
@@ -22,5 +27,14 @@ public class EventsUtil {
      */
     public static void postLater(BaseEvent event) {
         Platform.runLater(() -> EventsCenter.getInstance().post(event));
+    }
+
+    public static String getEventDetails(ReadOnlyEvent event) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(PREFIX_EVENT_NAME + event.getEventName().fullEventName + " ");
+        sb.append(PREFIX_EVENT_DESCRIPTION + event.getDescription().eventDesc + " ");
+        sb.append(PREFIX_EVENT_TIME + event.getEventTime().eventTime);
+
+        return sb.toString();
     }
 }

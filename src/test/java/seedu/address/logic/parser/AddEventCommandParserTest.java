@@ -10,9 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.EVENT_TIME_SECOND;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_NAME;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_TIME_FIRST;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_TIME_FORTH;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_TIME_SECOND;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_TIME_THIRD;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_DESC_FIRST;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_NAME_FIRST;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_TIME_FIRST;
@@ -28,7 +26,7 @@ import seedu.address.model.event.EventName;
 import seedu.address.model.event.EventTime;
 import seedu.address.testutil.EventBuilder;
 
-//@@author Adoby7
+// @@author Adoby7
 public class AddEventCommandParserTest {
     private AddEventCommandParser parser = new AddEventCommandParser();
 
@@ -91,11 +89,6 @@ public class AddEventCommandParserTest {
         assertParseFailure(parser, AddEventCommand.COMMAND_WORD + EVENT_NAME_FIRST + EVENT_DESC_FIRST
                 + INVALID_EVENT_TIME_SECOND, EventTime.MESSAGE_EVENT_TIME_CONSTRAINTS);
 
-        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + EVENT_NAME_FIRST + EVENT_DESC_FIRST
-                + INVALID_EVENT_TIME_THIRD, EventTime.MESSAGE_EVENT_TIME_CONSTRAINTS);
-
-        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + EVENT_NAME_FIRST + EVENT_DESC_FIRST
-                + INVALID_EVENT_TIME_FORTH, EventTime.MESSAGE_EVENT_TIME_CONSTRAINTS);
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, AddEventCommand.COMMAND_WORD + INVALID_EVENT_NAME + EVENT_DESC_FIRST
                 + INVALID_EVENT_TIME_SECOND, EventName.MESSAGE_EVENT_NAME_CONSTRAINTS);
