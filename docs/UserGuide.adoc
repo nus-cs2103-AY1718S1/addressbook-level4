@@ -110,7 +110,7 @@ Press kbd:[Tab] after typing `add` to generate the required field(s). See link:#
 Alternatives: `add` can be replaced by `a` or `+` +
 Keyboard shortcut: kbd:[Ctrl+A]
 
-[TIP]
+[NOTE]
 A person can have any number of tags (including 0)
 
 Examples:
@@ -369,7 +369,7 @@ After creating a new Rolodex, verify that you have correctly created the Rolodex
 
 image::OpenNewStatusBar.png[width="700"]
 
-[NOTE]
+[WARNING]
 ====
 The `new` command will refresh your session and all existing _undoable_ commands will be cleared. It is recommended that you confirm you are satisfied with your changes before opening a new file.
 ====
@@ -411,12 +411,12 @@ After opening the Rolodex, verify that you have correctly opened the Rolodex at 
 
 image::OpenNewStatusBar.png[width="700"]
 
-[NOTE]
+[IMPORTANT]
 ====
 Opening a file without a `.rldx` extension **will not save your changes**.
 ====
 
-[NOTE]
+[WARNING]
 ====
 The `open` command will refresh your session and all existing _undoable_ commands will be cleared. It is recommended that you confirm you are satisfied with your changes before opening a new file.
 ====
