@@ -87,6 +87,7 @@ public class AppointCommand extends UndoableCommand {
                 appointCal.setTime(newDate);
                 isLate = current.before(appointCal);
             } catch (ParseException e) {
+                throw new CommandException(INPUT_DATE_INVALID); //should not happen
             }
             if (!isLate) {
                 throw new CommandException(INPUT_DATE_INVALID);
