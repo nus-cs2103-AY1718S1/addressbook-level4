@@ -11,7 +11,8 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String addressBookName = "ConTag";
+    private boolean isWelcomeScreenEnabled = false;
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -45,6 +46,20 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
+    //@@author CT15
+    public void enableWelcomeScreen() {
+        isWelcomeScreenEnabled = true;
+    }
+
+    public void disableWelcomeScreen() {
+        isWelcomeScreenEnabled = false;
+    }
+
+    public boolean getWelcomeScreenEnabledInfo() {
+        return isWelcomeScreenEnabled;
+    }
+
+    //@@author
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -58,12 +73,13 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(addressBookName, o.addressBookName)
+                && Objects.equals(isWelcomeScreenEnabled, o.isWelcomeScreenEnabled);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
+        return Objects.hash(guiSettings, addressBookFilePath, addressBookName, isWelcomeScreenEnabled);
     }
 
     @Override
@@ -72,6 +88,7 @@ public class UserPrefs {
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nWelcomeScreen is enabled : " + isWelcomeScreenEnabled);
         return sb.toString();
     }
 

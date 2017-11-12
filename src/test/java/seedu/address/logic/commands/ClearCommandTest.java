@@ -29,8 +29,9 @@ public class ClearCommandTest {
      * Generates a new {@code ClearCommand} which upon execution, clears the contents in {@code model}.
      */
     private ClearCommand prepareCommand(Model model) {
+        UserPrefs prefs = new UserPrefs();
         ClearCommand command = new ClearCommand();
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 }

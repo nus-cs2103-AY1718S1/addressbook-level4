@@ -21,17 +21,25 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.AddressContainsKeywordsPredicate;
+import seedu.address.model.person.CountryContainsKeywordsPredicate;
+import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ScheduleContainsKeywordsPredicate;
+import seedu.address.model.person.TagContainsKeywordsPredicate;
+
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private UserPrefs prefs = new UserPrefs();
+    private Model model = new ModelManager(getTypicalAddressBook(), prefs);
 
     @Test
-    public void equals() {
+    public void equalsName() {
         NameContainsKeywordsPredicate firstPredicate =
                 new NameContainsKeywordsPredicate(Collections.singletonList("first"));
         NameContainsKeywordsPredicate secondPredicate =
@@ -57,6 +65,170 @@ public class FindCommandTest {
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 
+    //@@author jin-ting
+    @Test
+    public void equalsPhone() {
+        PhoneContainsKeywordsPredicate firstPredicate =
+                new PhoneContainsKeywordsPredicate(Collections.singletonList("98989898"));
+        PhoneContainsKeywordsPredicate secondPredicate =
+                new PhoneContainsKeywordsPredicate(Collections.singletonList("98741444"));
+
+        FindCommand findFirstCommand = new FindCommand(firstPredicate);
+        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(findFirstCommand.equals(findFirstCommand));
+
+        // same values -> returns true
+        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
+        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(findFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(findFirstCommand.equals(findSecondCommand));
+    }
+
+    @Test
+    public void equalsEmail() {
+        EmailContainsKeywordsPredicate firstPredicate =
+                new EmailContainsKeywordsPredicate(Collections.singletonList("abc@example.com"));
+        EmailContainsKeywordsPredicate secondPredicate =
+                new EmailContainsKeywordsPredicate(Collections.singletonList("abc@gg.com"));
+
+        FindCommand findFirstCommand = new FindCommand(firstPredicate);
+        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(findFirstCommand.equals(findFirstCommand));
+
+        // same values -> returns true
+        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
+        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(findFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(findFirstCommand.equals(findSecondCommand));
+    }
+
+    @Test
+    public void equalsAddress() {
+        AddressContainsKeywordsPredicate firstPredicate =
+                new AddressContainsKeywordsPredicate(Collections.singletonList("1,Bishan Street 10,#10-00 ,555665"));
+        AddressContainsKeywordsPredicate secondPredicate =
+                new AddressContainsKeywordsPredicate(Collections.singletonList("8,Bishan Street 20,#09-09 ,545665"));
+
+        FindCommand findFirstCommand = new FindCommand(firstPredicate);
+        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(findFirstCommand.equals(findFirstCommand));
+
+        // same values -> returns true
+        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
+        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(findFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(findFirstCommand.equals(findSecondCommand));
+    }
+
+    @Test
+    public void equalsSchedule() {
+        ScheduleContainsKeywordsPredicate firstPredicate =
+                new  ScheduleContainsKeywordsPredicate(Collections.singletonList("Party,Interview"));
+        ScheduleContainsKeywordsPredicate secondPredicate =
+                new  ScheduleContainsKeywordsPredicate(Collections.singletonList("Concert"));
+
+        FindCommand findFirstCommand = new FindCommand(firstPredicate);
+        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(findFirstCommand.equals(findFirstCommand));
+
+        // same values -> returns true
+        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
+        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(findFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(findFirstCommand.equals(findSecondCommand));
+    }
+
+    @Test
+    public void equalsTags() {
+        TagContainsKeywordsPredicate firstPredicate =
+                new  TagContainsKeywordsPredicate(Collections.singletonList("schoolmates,friends"));
+        TagContainsKeywordsPredicate secondPredicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("teacher"));
+
+        FindCommand findFirstCommand = new FindCommand(firstPredicate);
+        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(findFirstCommand.equals(findFirstCommand));
+
+        // same values -> returns true
+        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
+        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(findFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(findFirstCommand.equals(findSecondCommand));
+    }
+
+    @Test
+    public void equalsCountry() {
+        CountryContainsKeywordsPredicate firstPredicate =
+                new   CountryContainsKeywordsPredicate (Collections.singletonList("China,USA"));
+        CountryContainsKeywordsPredicate  secondPredicate =
+                new  CountryContainsKeywordsPredicate (Collections.singletonList("Hong Kong"));
+
+        FindCommand findFirstCommand = new FindCommand(firstPredicate);
+        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(findFirstCommand.equals(findFirstCommand));
+
+        // same values -> returns true
+        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
+        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(findFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(findFirstCommand.equals(findSecondCommand));
+    }
+
+    //@@author
     @Test
     public void execute_zeroKeywords_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
@@ -77,7 +249,7 @@ public class FindCommandTest {
     private FindCommand prepareCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 

@@ -48,8 +48,9 @@ public class AddCommandIntegrationTest {
      * Generates a new {@code AddCommand} which upon execution, adds {@code person} into the {@code model}.
      */
     private AddCommand prepareCommand(Person person, Model model) {
+        UserPrefs prefs = new UserPrefs();
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 }

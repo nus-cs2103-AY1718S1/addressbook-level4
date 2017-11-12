@@ -9,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
@@ -31,17 +32,26 @@ public class PersonListPanel extends UiPart<Region> {
         super(FXML);
         setConnections(personList);
         registerAsAnEventHandler(this);
+        personListView.setPlaceholder(new Label("No Persons Available!"));
     }
 
+    /**
+     * Creates a list of {@code PersonCard} from {@code personList}, sets them to the {@code personListView}
+     * and adds listener to {@code personListView} for selection change.
+     */
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
         ObservableList<PersonCard> mappedList = EasyBind.map(
                 personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
-        setEventHandlerForSelectionChangeEvent();
+        addListenerForSelectionChangeEvent();
     }
 
-    private void setEventHandlerForSelectionChangeEvent() {
+    /**
+     * Adds a listener to {@code personListView} so that
+     * selected item raises {@code PersonPanelSelectionChangedEvent}.
+     */
+    private void addListenerForSelectionChangeEvent() {
         personListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
@@ -61,6 +71,10 @@ public class PersonListPanel extends UiPart<Region> {
         });
     }
 
+    /**
+     * Handles a {@code JumpToListRequestEvent} by scrolling to the index indicated by {@code event}.
+     * @param event A {@code JumpToListRequestEvent} posted to the EventBus.
+     */
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

@@ -13,7 +13,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
 
-public class SampleDataTest extends AddressBookGuiTest {
+public class
+    SampleDataTest extends AddressBookGuiTest {
     @Override
     protected AddressBook getInitialData() {
         // return null to force test app to load data from file only
@@ -26,6 +27,7 @@ public class SampleDataTest extends AddressBookGuiTest {
         String filePath = TestUtil.getFilePathInSandboxFolder("SomeFileThatDoesNotExist1234567890.xml");
         deleteFileIfExists(filePath);
         return filePath;
+
     }
 
     /**

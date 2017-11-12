@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.ScheduleCardHandle;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.schedule.Schedule;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -20,9 +22,10 @@ public class GuiTestAssert {
     public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getAddress(), actualCard.getAddress());
-        assertEquals(expectedCard.getEmail(), actualCard.getEmail());
+        assertEquals(expectedCard.getEmails(), actualCard.getEmails());
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
+        assertEquals(expectedCard.getSchedules(), actualCard.getSchedules());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
@@ -32,10 +35,21 @@ public class GuiTestAssert {
     public static void assertCardDisplaysPerson(ReadOnlyPerson expectedPerson, PersonCardHandle actualCard) {
         assertEquals(expectedPerson.getName().fullName, actualCard.getName());
         assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
+        assertEquals(expectedPerson.getEmails().stream().map(email -> email.value).collect(Collectors.toList()),
+                actualCard.getEmails());
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedSchedule}.
+     */
+    public static void assertCardDisplaysSchedule(Schedule expectedSchedule, ScheduleCardHandle actualCard) {
+        assertEquals(expectedSchedule.getScheduleDate().value, actualCard.getDate());
+        assertEquals(expectedSchedule.getActivity().value, actualCard.getActivity());
+        assertEquals(expectedSchedule.getPersonInvolvedNames().stream().map(name -> name.toString())
+                        .collect(Collectors.toList()), actualCard.getNames());
     }
 
     /**

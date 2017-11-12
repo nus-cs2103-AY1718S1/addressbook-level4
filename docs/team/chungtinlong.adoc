@@ -1,0 +1,103 @@
+= Chung Tin Long - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== ConTag
+ConTag is an efficient and feature-packed desktop address book application for the most demanding business users and busiest frequent travellers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/main/icehawker.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/test/icehawker.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Copy email address(es) of selected contacts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=copy]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Multiple emails are copied rather than other fields as it is the most used mode of communication in a personal computer (PC),
+which is where this application resides.
+
+Phone numbers are seldom used as PCs do not typically have the ability to perform voice calls, and even web calls such as
+Skype calls are usually able to take in both email and phone number inputs. Meanwhile, the physical address does not have
+an urgent need to be copied as the Locate command in our app already copies the address and displays it on Google Maps.
+As such, until user feedback proves otherwise, copying email addresses is the main priority for this feature.
+
+In terms of mode of input, current multiple email copy works with one or more indices as the user can already filter for a small list of people
+that may be of interest, cutting the amount of scrolling significantly. In addition, as we assume that most users
+using the application would not have to send email to a massive number of recipients at a time, which may cause our implementation
+to become prohibitively inefficient.
+
+However, eventually allowing the command to accept a range of indices (copy 1 - 4 rather than 1 2 3 4), and even a "copy all"
+command that takes in all currently displayed contacts, are potential planned features for v 2.0. We may need to conduct investigation
+of user preferences and usage patterns to decide which input methods to include, as allowing too many modes of input can be
+confusing to novice users and inefficient for the app to process (thereby increasing wait time and resource usage).
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=copy]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Infer name of country from a phone number's country code, and display it on the contact's panel
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=country_code]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Most importantly, this feature allows the user to skip the input of a new contact's country, and makes the country section
+of the Address input optional as well. This reduces the number of steps during contact creation and modification.
+
+This implementation involves detecting the start and end of the country code prefix in a phone number with "+" and " "
+respectively because this is a widely used international convention, and the plus sign and first white space are unique.
+This allows for completely reliable detection of the start and end of every country code. Codes are validated against a current
+local database of all valid country codes (at time of application release) and invalid codes are rejected, so that users are
+notified of user input errors immediately.
+
+The default "Country not available" status for numbers with no country code are designed to give completeness and symmetry to
+the contact list, so that users are not left wondering if the "missing" line in some contacts are from deliberate design.
+We expect to update shortly and be able to detect and infer the country name from the Address.
+
+A future update will include support for multiple phone numbers as a standard, with multiple countries displayed if phone
+numbers differ in country codes, as well.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=country_code]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+*

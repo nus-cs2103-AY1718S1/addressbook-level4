@@ -1,0 +1,7 @@
+/*@@author 17navasaw*/
+.label {
+    -fx-font-size: 24pt;
+    -fx-font-family: "Arial Narrow";
+    -fx-text-fill: "white";
+    -fx-opacity: 0.9;
+}

@@ -1,19 +1,26 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.BackupCommand.BACKUP_DIR_SUFFIX;
+import static seedu.address.logic.commands.BackupCommand.BACKUP_DIR_SUFFIX_ALT;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.commandidentifier.CommandIdentifier;
+import seedu.address.commons.core.enablingkeyword.EnablingKeyword;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Country;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.address.Address;
+import seedu.address.model.person.email.Email;
+import seedu.address.model.schedule.Activity;
+import seedu.address.model.schedule.ScheduleDate;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -33,6 +40,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -61,6 +69,18 @@ public class ParserUtil {
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
     }
 
+    //@@author icehawker
+    /**
+     * Parses a {@code Optional<String> country} into an {@code Optional<Country>} if {@code country} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+
+    public static Optional<Country> parseCountry(Optional<String> country) throws IllegalValueException {
+        requireNonNull(country);
+        return country.isPresent() ? Optional.of(new Country(country.get())) : Optional.empty();
+    }
+    //@@author
+
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -70,15 +90,83 @@ public class ParserUtil {
         return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
     }
 
+    //@@author 17navasaw
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    public static Set<Email> parseEmails(Collection<String> emails) throws IllegalValueException {
+        requireNonNull(emails);
+        final Set<Email> emailSet = new HashSet<>();
+        for (String emailName : emails) {
+            emailSet.add(new Email(emailName));
+        }
+        return emailSet;
     }
 
+    //@@author CT15
+    /**
+     * Parses a {@code Optional<String> scheduleDate} into an {@code Optional<ScheduleDate>}
+     * if {@code scheduleDate} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ScheduleDate> parseScheduleDate(Optional<String> scheduleDate) throws IllegalValueException {
+        requireNonNull(scheduleDate);
+        return scheduleDate.isPresent() ? Optional.of(new ScheduleDate(scheduleDate.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String activity} into an {@code Optional<Activity>} if {@code activity} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Activity> parseActivity(Optional<String> activity) throws IllegalValueException {
+        requireNonNull(activity);
+        return activity.isPresent() ? Optional.of(new Activity(activity.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code commandWord} into an {@code CommandWord} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the specified commandWord is invalid.
+     */
+    public static CommandIdentifier parseCommandIdentifier(String commandWord) throws IllegalValueException {
+        requireNonNull(commandWord);
+        return new CommandIdentifier(commandWord.trim());
+    }
+
+    /**
+     * Parses {@code enablingKeyword} into an {@code EnablingKeyword} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the specified enablingKeyword is invalid (neither "enable" nor "disable").
+     */
+    public static EnablingKeyword parseEnablingKeyword(String enablingKeyword) throws IllegalValueException {
+        requireNonNull(enablingKeyword);
+        return new EnablingKeyword(enablingKeyword.trim());
+    }
+
+    //@@author icehawker
+    /**
+     * Parses {@code address} returns a cleaned version, in case user has not included the file name in input.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the input address is invalid.
+     */
+    public static String parseBackup(String address) throws IllegalValueException {
+        requireNonNull(address);
+        if (!address.contains(BACKUP_DIR_SUFFIX)) {
+            // if input ends with '\' character, concat without '\' symbol
+            if (address.contains("/(?:\\)$/")) {
+                return address.trim().concat(BACKUP_DIR_SUFFIX);
+            } else {
+                return address.trim().concat(BACKUP_DIR_SUFFIX_ALT);
+            }
+        }
+        return address.trim();
+    }
+
+    //@@author
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author 17navasaw -->
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="192.0" prefWidth="598.0" stylesheets="@ReminderTheme.css">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="20.0" prefHeight="37.0" prefWidth="152.0" text="REMINDER!" AnchorPane.bottomAnchor="138.0" AnchorPane.leftAnchor="227.0" AnchorPane.rightAnchor="219.0" AnchorPane.topAnchor="20.0">
+               <font>
+                  <Font name="Arial Narrow" size="30.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="141.0" layoutY="66.0" prefHeight="29.0" prefWidth="350.0" text="1 more day to these activities: " AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="130.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <StackPane fx:id="reminderWindowBottom" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <ListView fx:id="reminderSchedulesListView" prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </StackPane>
+  </items>
+</SplitPane>

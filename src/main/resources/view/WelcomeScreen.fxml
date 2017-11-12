@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author CT15 -->
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:id="welcomeWindow">
+    <stylesheets>
+        <URL value="@Welcome.css" />
+    </stylesheets>
+    <top>
+        <StackPane fx:id="logoPlaceHolder" VBox.vgrow="NEVER">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="20" />
+            </padding>
+        </StackPane>
+    </top>
+    <center>
+        <StackPane fx:id="textPlaceHolder" VBox.vgrow="NEVER">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+        </StackPane>
+    </center>
+    <bottom>
+        <StackPane fx:id="buttonPlaceHolder" VBox.vgrow="NEVER">
+            <padding>
+                <Insets bottom="20" left="10" right="10" top="10" />
+            </padding>
+        </StackPane>
+    </bottom>
+</BorderPane>
