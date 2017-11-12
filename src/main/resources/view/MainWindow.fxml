@@ -603,7 +603,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="remark 1" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <TextField alignment="CENTER" editable="false" style="-fx-background-color: transparent; -fx-text-fill: #bdadff;" text="remark 1 r/Likes to swim." GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="20.0" />
                      </font>
