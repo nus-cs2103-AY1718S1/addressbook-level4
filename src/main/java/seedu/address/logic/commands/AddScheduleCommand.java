@@ -32,10 +32,10 @@ public class AddScheduleCommand extends UndoableCommand {
             + "(Should be expressed in standard 24 hours time, no more accurate than 30 minutes and no earlier "
             + "than 0600 and no later than 2330\n"
             + "Example: "
-            + COMMAND_WORD + " 1"
-            + PREFIX_DAY + "Monday"
-            + PREFIX_START_TIME + "0700"
-            + PREFIX_END_TIME + "1430";
+            + COMMAND_WORD + " 1 "
+            + PREFIX_DAY + "Monday "
+            + PREFIX_START_TIME + "0700 "
+            + PREFIX_END_TIME + "1430 ";
 
     public static final String MESSAGE_ADD_SCHEDULE_PERSON_SUCCESS = "Free time slot successfully added";
 
