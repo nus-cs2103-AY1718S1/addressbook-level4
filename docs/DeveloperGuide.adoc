@@ -555,9 +555,9 @@ Code from `ModelManager`
 
 ---
 **Aspect:** How does add event executes +
-**Alternative 1 (current choice):** Take in Name(person) , Date(event) and Address(person) +
-**Pros:** Simple to implement as add event uses the current Name for the Person as the Name of event and Address of the event due to similar CliSyntax. +
-**Cons:** Developer might get confused with the different use of imports as Name and Address are from person while Date is from events. +
+**Alternative 1 (current choice):** Take in EventName(event) , Date(event) and Address(person) +
+**Pros:** Simple to implement as add event uses EventName and Date from Event and Address from Person due to similar CliSyntax. +
+**Cons:** Developer might get confused with the different use of imports as EventName and Date are from events while Address is from person. +
 // end::addevent[]
 
 // tag::deleteevent[]
