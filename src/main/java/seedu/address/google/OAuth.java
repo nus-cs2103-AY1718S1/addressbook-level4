@@ -19,9 +19,6 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.PeopleServiceScopes;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.model.Model;
-
 //@@author derrickchua-reused
 /**Singleton class
  *
@@ -34,10 +31,6 @@ import seedu.address.model.Model;
 public class OAuth extends Observable {
 
     private static final OAuth oauth = new OAuth();
-
-    private OAuth () { }
-
-    private Model model;
 
     /**
      * Be sure to specify the name of your application. If the application name is {@code null} or
@@ -69,6 +62,8 @@ public class OAuth extends Observable {
     private final JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
     private com.google.api.services.people.v1.PeopleService client;
+
+    private OAuth () { }
 
     /** Authorizes the installed application to access user's protected data. */
     private Credential authorize() throws Exception {
