@@ -658,23 +658,27 @@ e.g.`import ark_save`
 
 === Features added in v1.0
 In version v1.0, users will be able to: +
-
-{{More to be added}}
+* Add Parcels to Ark.
+* List Parcels in Ark.
+* Delete Parcels in Ark by list index.
+* Edit Parcels in Ark.
+* Find Parcels in Ark by name.
+* Undo commands
+* Redo commands
+* Display command History
 
 === Features added v1.1
 In version v1.1, users will be able to: +
 
-* have their data backed up automatically when Ark is launched.
-
-{{More to be added}}
+* Have their data backed up automatically when Ark is launched.
+* Delete tag from all parcels in Ark.
 
 === Features added in v1.2
 In version v1.2, users will be able to: +
 
 * Work with parcels instead of persons.
 * Add and edit the tracking numbers of parcels.
-
-{{More to be added}}
+* Delete tag command deprecated.
 
 === Features added in v1.3
 In version v1.3, users will be able to: +
@@ -683,22 +687,22 @@ In version v1.3, users will be able to: +
 * Import parcels stored in an Ark storage file in xml format into Ark.
 * Have Ark maintain a sorted list of parcels according to when they need to be delivered.
 
-{{More to be added}}
-
 === Features added in v1.4
 In version v1.4, users will be able to: +
 
 * Click on tabs to select between two lists, one of which contains undelivered and the other, delivered parcels
 * Add parcel-related tags to inform delivery personnel on additional precautions to take while delivering a parcel.
 
-{{More to be added}}
-
 === Features added in v1.5rc
-In version v1.3, users will be able to: +
+In version v1.5rc, users will be able to: +
 
 * View a tooltip of parcel details when they mouseover the detail. i.e. `address`
 
-{{More to be added}}
+=== Features added in v1.5
+In version v1.5, users will be able to: +
+
+* Use Telegram Bots to interface with the Ark Software.
+* Upload QR codes of delivery parcels to mark them as completed.
 
 == Features Coming in v2.0
 
