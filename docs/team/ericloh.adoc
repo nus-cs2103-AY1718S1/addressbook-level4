@@ -10,8 +10,8 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. +
 It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: +
-link:{collatedDir}/main/Eric.md[Functional code] +
-link:{collatedDir}/test/Eric.md[Test code] +
+link:https://github.com/CS2103AUG2017-T17-B2/main/blob/master/collated/main/Eric.md[Functional code] +
+link:{https://github.com/CS2103AUG2017-T17-B2/main/blob/master/collated/test/Eric.md[Test code] +
 
 === Enhancement Added: Setting Tag Color
 
