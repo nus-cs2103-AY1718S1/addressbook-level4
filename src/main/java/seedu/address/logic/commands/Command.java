@@ -24,19 +24,6 @@ public abstract class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
 
-    //@@author qihao27
-    /**
-     * Constructs a feedback message to summarise an operation that displayed a listing of persons with same predicate.
-     *
-     * @return summary message for persons displayed
-     */
-    public static String getMessageForSamePredicatePersonListShownSummary() {
-        return "Multiple contacts with specified name found!\n"
-            + "Please add more details for distinction or use the following command:\n"
-            + DeleteCommand.MESSAGE_USAGE;
-    }
-    //@@author
-
     /**
      * Executes the command and returns the result message.
      *
