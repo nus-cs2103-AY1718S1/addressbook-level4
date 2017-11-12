@@ -42,29 +42,29 @@ public class MonthDateBuilder {
         Integer dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
         switch (dayOfWeek) {
-            case Calendar.SUNDAY:
-                firstDayOfMonth = 0;
-                break;
-            case Calendar.MONDAY:
-                firstDayOfMonth = 1;
-                break;
-            case Calendar.TUESDAY:
-                firstDayOfMonth = 2;
-                break;
-            case Calendar.WEDNESDAY:
-                firstDayOfMonth = 3;
-                break;
-            case Calendar.THURSDAY:
-                firstDayOfMonth = 4;
-                break;
-            case Calendar.FRIDAY:
-                firstDayOfMonth = 5;
-                break;
-            case Calendar.SATURDAY:
-                firstDayOfMonth = 6;
-                break;
-            default:
-                firstDayOfMonth = 0;
+        case Calendar.SUNDAY:
+            firstDayOfMonth = 0;
+            break;
+        case Calendar.MONDAY:
+            firstDayOfMonth = 1;
+            break;
+        case Calendar.TUESDAY:
+            firstDayOfMonth = 2;
+            break;
+        case Calendar.WEDNESDAY:
+            firstDayOfMonth = 3;
+            break;
+        case Calendar.THURSDAY:
+            firstDayOfMonth = 4;
+            break;
+        case Calendar.FRIDAY:
+            firstDayOfMonth = 5;
+            break;
+        case Calendar.SATURDAY:
+            firstDayOfMonth = 6;
+            break;
+        default:
+            firstDayOfMonth = 0;
         }
     }
 
@@ -95,32 +95,32 @@ public class MonthDateBuilder {
 
     public void setNameOfMonth() {
         switch(monthYearArray[0]) {
-            case Calendar.JANUARY: nameOfMonth = "January";
-                break;
-            case Calendar.FEBRUARY: nameOfMonth = "February";
-                break;
-            case Calendar.MARCH: nameOfMonth = "March";
-                break;
-            case Calendar.APRIL: nameOfMonth = "April";
-                break;
-            case Calendar.MAY: nameOfMonth = "May";
-                break;
-            case Calendar.JUNE: nameOfMonth = "June";
-                break;
-            case Calendar.JULY: nameOfMonth = "July";
-                break;
-            case Calendar.AUGUST: nameOfMonth = "August";
-                break;
-            case Calendar.SEPTEMBER: nameOfMonth = "September";
-                break;
-            case Calendar.OCTOBER: nameOfMonth = "October";
-                break;
-            case Calendar.NOVEMBER: nameOfMonth = "November";
-                break;
-            case Calendar.DECEMBER: nameOfMonth = "December";
-                break;
-            default:
-                nameOfMonth = null;
+        case Calendar.JANUARY: nameOfMonth = "January";
+            break;
+        case Calendar.FEBRUARY: nameOfMonth = "February";
+            break;
+        case Calendar.MARCH: nameOfMonth = "March";
+            break;
+        case Calendar.APRIL: nameOfMonth = "April";
+            break;
+        case Calendar.MAY: nameOfMonth = "May";
+            break;
+        case Calendar.JUNE: nameOfMonth = "June";
+            break;
+        case Calendar.JULY: nameOfMonth = "July";
+            break;
+        case Calendar.AUGUST: nameOfMonth = "August";
+            break;
+        case Calendar.SEPTEMBER: nameOfMonth = "September";
+            break;
+        case Calendar.OCTOBER: nameOfMonth = "October";
+            break;
+        case Calendar.NOVEMBER: nameOfMonth = "November";
+            break;
+        case Calendar.DECEMBER: nameOfMonth = "December";
+            break;
+        default:
+            nameOfMonth = null;
         }
     }
 
