@@ -67,6 +67,7 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(position, new Person(toAdd));
     }
 
+    // @@author HouDenghao
     /**
      * Sorts the person list.
      */
@@ -76,6 +77,7 @@ public class UniquePersonList implements Iterable<Person> {
                 return p1.getName().toString().compareToIgnoreCase(p2.getName().toString()); } });
     }
 
+    // @@author
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
