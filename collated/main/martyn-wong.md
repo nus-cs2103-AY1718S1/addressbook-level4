@@ -141,9 +141,31 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 ```
 ###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
-    private void loadPersonMap(ReadOnlyPerson person) {
+    /***
+     * Loads google map of person
+     * @param person
+     */
+    private void loadPersonMap(ReadOnlyPerson person) throws CommandException {
+        if (personSelected == null) {
+            throw new CommandException("Please select a person");
+        }
+        setMapsChosenTrue();
+        setLinkedinChosenFalse();
         loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    /**
+     * Setter method to set the Boolean value of hasMapsBeenChosen
+     */
+    public void setMapsChosenTrue () {
+        hasMapsBeenChosen = true;
+    }
+
+    public void setMapsChosenFalse () {
+        hasMapsBeenChosen = false;
+    }
 ```

@@ -53,11 +53,6 @@
 ```
 ###### /java/seedu/address/logic/commands/AddMeetingCommandTest.java
 ``` java
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
 public class AddMeetingCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -67,65 +62,51 @@ public class AddMeetingCommandTest {
         thrown.expect(NullPointerException.class);
         new AddMeetingCommand(null);
     }
-    /*
+
+    //successful meeting added without Asana configuration
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        AddCommandTest.ModelStubAcceptingPersonAdded modelStub = new AddCommandTest.ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_addMeeting_success() throws Exception {
+        ModelStubAcceptingMeetingAdded modelStub = new ModelStubAcceptingMeetingAdded();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        ArrayList<InternalId> ids = new ArrayList<>();
+        ids.add(new InternalId(2));
+        LocalDateTime localDateTime = LocalDateTime.of(2020, 10, 31, 18, 00);
+        Meeting expectedMeeting = new Meeting(localDateTime, "Computing", "Project meeting", ids);
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        CommandResult commandResult = getAddMeetingCommand(expectedMeeting, modelStub).execute();
+        assertEquals(AddMeetingCommand.MESSAGE_SUCCESS_ASANA_NO_CONFIG, commandResult.feedbackToUser);
     }
 
+    //Duplicate meeting
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        AddCommandTest.ModelStub modelStub = new AddCommandTest.ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_duplicateMeeting_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateMeetingException();
+
+        ArrayList<InternalId> ids = new ArrayList<>();
+        ids.add(new InternalId(2));
+        LocalDateTime localDateTime = LocalDateTime.of(2020, 10, 31, 18, 00);
+        Meeting expectedMeeting = new Meeting(localDateTime, "Computing", "Project meeting", ids);
+
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddMeetingCommand.MESSAGE_DUPLICATE_MEETING);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
-    }
-
-    @Test
-    public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
-
-        // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
-
-        // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
-
-        // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
-
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        getAddMeetingCommand(expectedMeeting, modelStub).execute();
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
-     *
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+     * Generates a new AddMeetingCommand with the details of the given person.
+     */
+    private AddMeetingCommand getAddMeetingCommand (Meeting meeting, Model model) {
+        AddMeetingCommand command = new AddMeetingCommand(meeting);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
+
     /**
      * A default model stub that have all of the methods failing.
-     *
+     */
     private class ModelStub implements Model {
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
@@ -158,6 +139,11 @@ public class AddMeetingCommandTest {
         public boolean deleteTag(Tag[] tags) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
             return false;
+        }
+
+        @Override
+        public void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
+            fail("This method should not be called.");
         }
 
         @Override
@@ -210,12 +196,12 @@ public class AddMeetingCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
-     *
-    private class ModelStubThrowingDuplicatePersonException extends AddCommandTest.ModelStub {
+     * A Model stub that always throw a DuplicateMeetingException when trying to add a meeting.
+     */
+    private class ModelStubThrowingDuplicateMeetingException extends ModelStub {
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException {
+            throw new DuplicateMeetingException();
         }
 
         @Override
@@ -225,14 +211,14 @@ public class AddMeetingCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
-     *
-    private class ModelStubAcceptingPersonAdded extends AddCommandTest.ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+     * A Model stub that always accept the meeting being added.
+     */
+    private class ModelStubAcceptingMeetingAdded extends ModelStub {
+        final ArrayList<ReadOnlyMeeting> meetingsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
+        public void addMeeting(ReadOnlyMeeting meeting) {
+            meetingsAdded.add(new Meeting(meeting));
         }
 
         @Override
@@ -240,8 +226,38 @@ public class AddMeetingCommandTest {
             return new AddressBook();
         }
     }
-    */
+
 }
+```
+###### /java/seedu/address/logic/commands/CommandTestUtil.java
+``` java
+    public static final String VALID_DATE = "31/10/2020";
+    public static final String VALID_TIME = "1800";
+    public static final String VALID_LOCATION = "Computing";
+    public static final String VALID_NOTES = "Project meeting";
+    public static final String VALID_PERSON = "2";
+
+    public static final String PAST_DATE = "31/10/1995";
+    public static final String INVALID_DATE = "12/11/198";
+
+```
+###### /java/seedu/address/logic/commands/CommandTestUtil.java
+``` java
+    public static final String DATE_VALID = " " + PREFIX_DATE + VALID_DATE;
+    public static final String TIME_VALID = " " + PREFIX_TIME + VALID_TIME;
+    public static final String LOCATION_1 = " " + PREFIX_LOCATION + VALID_LOCATION;
+    public static final String NOTES_1 = " " + PREFIX_NOTES + VALID_NOTES;
+    public static final String PERSON_1 = " " + PREFIX_PERSON + VALID_PERSON;
+
+    public static final String DATE_PAST = " " + PREFIX_DATE + PAST_DATE;
+    public static final String DATE_INVALID = " " + PREFIX_DATE + INVALID_DATE;
+
+    public static final String ADD_MEETING_INVALID_FORMAT = "Invalid command format! \n"
+            + "addMeeting: Adds a meeting to the address book. Parameters: on DATE from TIME at LOCATION about NOTES "
+            + "with PERSON 1 with PERSON 2 ...\n"
+            + "Example: addMeeting on 20/11/2017 from 1800 at UTown Starbucks about Project Meeting with 1";
+
+
 ```
 ###### /java/seedu/address/logic/commands/DeleteTagCommandTest.java
 ``` java
@@ -269,11 +285,13 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
 
+```
+###### /java/seedu/address/logic/commands/DeleteTagCommandTest.java
+``` java
 /***
  * Focuses tests on model's deleteTag method, assumes DeleteTagCommandParser test handles tests for converting User
  * input into type suitable for deleteTag method (i.e. String Array)
  */
-
 public class DeleteTagCommandTest {
 
     @Rule
@@ -372,21 +390,6 @@ public class DeleteTagCommandTest {
 ```
 ###### /java/seedu/address/logic/commands/ListByMostSearchedCommandTest.java
 ``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UniqueMeetingList;
-import seedu.address.model.UserPrefs;
-
 /***
  * Class of tests for ListByMostSearchedCommandTest
  */
@@ -424,29 +427,67 @@ public class ListByMostSearchedCommandTest {
     }
 }
 ```
+###### /java/seedu/address/logic/commands/ListCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
+ */
+public class ListCommandTest {
+
+    private Model model;
+    private Model expectedModel;
+    private ListCommand listCommand;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), new UniqueMeetingList(), new UserPrefs());
+
+        listCommand = new ListCommand();
+        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+    }
+
+    @Test
+    public void execute_list_successfully() {
+        showFirstPersonOnly(model);
+        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_listCheckAlphabeticalSequence() {
+        listCommand.executeUndoableCommand();
+
+        String personAFullName;
+        String personBFullName;
+
+        for (int i = 0; i < model.getFilteredPersonList().size(); i++) {
+            for (int j = i + 1; j < model.getFilteredPersonList().size(); j++) {
+                personAFullName = model.getFilteredPersonList().get(i).getName().fullName;
+                personBFullName = model.getFilteredPersonList().get(j).getName().fullName;
+                assertTrue(personAFullName.compareTo(personBFullName) <=  0);
+            }
+        }
+
+    }
+}
+```
+###### /java/seedu/address/logic/commands/SetupAsanaCommandTest.java
+``` java
+/**
+ * Tests if setup Asana command is successful
+ */
+public class SetupAsanaCommandTest {
+
+    @Test
+    public void setup_asana_success() throws Exception {
+        CommandResult commandResult = new SetupAsanaCommand().execute();
+        assertEquals(SetupAsanaCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+    }
+
+}
+```
 ###### /java/seedu/address/logic/parser/AddMeetingCommandParserTest.java
 ``` java
-import static DATE_VALID;
-import static seedu.address.logic.commands.CommandTestUtil.LOCATION_1;
-import static seedu.address.logic.commands.CommandTestUtil.NOTES_1;
-import static seedu.address.logic.commands.CommandTestUtil.PERSON_1;
-import static TIME_VALID;
-
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import org.junit.Test;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
-import seedu.address.logic.commands.AddMeetingCommand;
-
-import seedu.address.model.Meeting;
-
-import seedu.address.model.person.InternalId;
-
 public class AddMeetingCommandParserTest {
     private AddMeetingCommandParser parser = new AddMeetingCommandParser();
     @Test
@@ -457,92 +498,51 @@ public class AddMeetingCommandParserTest {
         Meeting expectedMeeting = new Meeting(localDateTime, "Computing", "Project meeting", ids);
 
         // Add meeting successfully
-        assertParseSuccess(parser, AddMeetingCommand.COMMAND_WORD + DATE_1 + TIME_1 + LOCATION_1 + NOTES_1
-                + PERSON_1, new AddMeetingCommand(expectedMeeting));
-        /*
-        // multiple phones - last phone accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple emails - last email accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple addresses - last address accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-
-        // multiple tags - all accepted
-        Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                new AddCommand(expectedPersonMultipleTags));
-        */
-    }
-    /*
-    @Test
-    public void parse_optionalFieldsMissing_success() {
-        // zero tags
-        Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags().withSearchCount().build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
+        assertParseSuccess(parser, AddMeetingCommand.COMMAND_WORD + DATE_VALID + TIME_VALID + LOCATION_1
+                + NOTES_1 + PERSON_1, new AddMeetingCommand(expectedMeeting));
     }
 
+    //meeting date is in the past
     @Test
-    public void parse_compulsoryFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+    public void parse_dateFromPast_failure() throws IllegalValueException {
 
-        // missing name prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_PAST + TIME_VALID + LOCATION_1
+                + NOTES_1 + PERSON_1, "Please enter a date & time that is in the future.");
+    }
 
-        // missing phone prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + VALID_PHONE_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
+    //missing fields
+    @Test
+    public void parse_missingFields_failure() {
 
-        // missing email prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + VALID_EMAIL_BOB + ADDRESS_DESC_BOB, expectedMessage);
+        //missing id
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_VALID + TIME_VALID + LOCATION_1
+                + NOTES_1, ADD_MEETING_INVALID_FORMAT);
 
-        // missing address prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + VALID_ADDRESS_BOB, expectedMessage);
+        //missing date
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + TIME_VALID + LOCATION_1
+                + NOTES_1 + PERSON_1, ADD_MEETING_INVALID_FORMAT);
 
-        // all prefixes missing
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + VALID_PHONE_BOB
-                + VALID_EMAIL_BOB + VALID_ADDRESS_BOB, expectedMessage);
+        //missing time
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_VALID + LOCATION_1
+                + NOTES_1 + PERSON_1, ADD_MEETING_INVALID_FORMAT);
+
+        //missing location
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_VALID + TIME_VALID
+                + NOTES_1 + PERSON_1, ADD_MEETING_INVALID_FORMAT);
+
+        //missing notes
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_VALID + TIME_VALID + LOCATION_1
+                 + PERSON_1, ADD_MEETING_INVALID_FORMAT);
     }
 
     @Test
-    public void parse_invalidValue_failure() {
-        // invalid name
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
+    public void parse_invalidDate_failure() {
 
-        // invalid phone
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        assertParseFailure(parser, AddMeetingCommand.COMMAND_WORD + DATE_INVALID + TIME_VALID + LOCATION_1
+                + NOTES_1, ADD_MEETING_INVALID_FORMAT);
 
-        // invalid email
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
+    }
 
-        // invalid address
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + INVALID_ADDRESS_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                Address.MESSAGE_ADDRESS_CONSTRAINTS);
-
-        // invalid tag
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_TAG_CONSTRAINTS);
-
-        // two invalid values, only first invalid value reported
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + INVALID_ADDRESS_DESC, Name.MESSAGE_NAME_CONSTRAINTS);
-    }*/
 }
 ```
 ###### /java/seedu/address/logic/parser/AddressBookParserTest.java
@@ -554,19 +554,68 @@ public class AddMeetingCommandParserTest {
         assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_WORD + " 3")
                 instanceof ListByMostSearchedCommand);
     }
+
+    @Test
+    public void parseCommand_addMeeting() throws Exception {
+
+        //Create new Id arrayList
+        ArrayList<InternalId> ids = new ArrayList<>();
+        ids.add(new InternalId(1));
+
+        //create a new localDateTime
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HHmm");
+        String dateTime = "27/10/2020 1800";
+        LocalDateTime localDateTime = LocalDateTime.parse(dateTime, formatter);
+
+        //Create an expected new meeting
+        Meeting newMeeting = new Meeting(localDateTime, "Computing", "Coding Project", ids);
+
+        //create new user-input based add meeting command
+        AddMeetingCommand command = (AddMeetingCommand)
+                parser.parseCommand(AddMeetingCommand.COMMAND_WORD + " "
+                        + PREFIX_DATE + " 27/10/2020 "
+                        + PREFIX_TIME + " 1800 "
+                        + PREFIX_LOCATION + " Computing "
+                        + PREFIX_NOTES + " Coding Project "
+                        + PREFIX_PERSON + " 1");
+
+        assertEquals(new AddMeetingCommand(newMeeting), command);
+    }
+
+    @Test
+    public void parseCommand_deleteTag_one() throws Exception {
+        String [] tags = {"friends"};
+        DeleteTagCommand command = (DeleteTagCommand) parser.parseCommand(
+                DeleteTagCommand.COMMAND_WORD + " " + "friends");
+        assertEquals(new DeleteTagCommand(tags), command);
+    }
+
+    @Test
+    public void parseCommand_deleteTag_multiple() throws Exception {
+        String [] tags = {"friends", "colleagues"};
+        DeleteTagCommand command = (DeleteTagCommand) parser.parseCommand(
+                DeleteTagCommand.COMMAND_WORD + " " + "friends" + " " + "colleagues");
+        assertEquals(new DeleteTagCommand(tags), command);
+    }
+
+    @Test
+    public void parseCommand_setUniqueKey() throws Exception {
+        String accessCode = "0/b62305d262c673af5c042bfad54ef832";
+        SetUniqueKeyCommand command = (SetUniqueKeyCommand) parser.parseCommand(
+                SetUniqueKeyCommand.COMMAND_WORD + " " + accessCode);
+        assertEquals(new SetUniqueKeyCommand(accessCode), command);
+    }
+
+    @Test
+    public void parseCommand_setupAsana() throws Exception {
+        assertTrue(parser.parseCommand(SetupAsanaCommand.COMMAND_WORD) instanceof SetupAsanaCommand);
+        assertTrue(parser.parseCommand(SetupAsanaCommand.COMMAND_ALIAS) instanceof SetupAsanaCommand);
+        assertTrue(parser.parseCommand(SetupAsanaCommand.COMMAND_WORD + " 2") instanceof SetupAsanaCommand);
+    }
+
 ```
 ###### /java/seedu/address/logic/parser/DeleteTagCommandParserTest.java
 ``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.DeleteTagCommand;
-
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
  * outside of the DeleteTagCommand code. For example, inputs "1" and "1 abc" take the
@@ -601,6 +650,200 @@ public class DeleteTagCommandParserTest {
     }
 }
 ```
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
+``` java
+    private static final String INVALID_DATE = "22/12/198";
+    private static final String INVALID_TIME = "+5";
+    private static final String INVALID_LOCATION = " ";
+    private static final String INVALID_NOTES = " ";
+    private static final String INVALID_PERSON = "#1";
+    private static final String INVALID_FORMAT_ACCESSCODE = "Gibberish";
+
+    private static final String VALID_DATE = "27/11/2020";
+    private static final String VALID_TIME = "1800";
+    private static final String VALID_LOCATION = "UTown";
+    private static final String VALID_NOTES = "Meeting";
+    private static final String VALID_PERSON = "1";
+    private static final String VALID_FORMAT_ACCESSCODE = "0/1g23j765kl985";
+
+```
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
+``` java
+    @Test
+    public void parseLocation_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseLocation(null);
+    }
+
+    @Test
+    public void parseLocation_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseLocation(Optional.of(INVALID_LOCATION));
+    }
+
+    @Test
+    public void parseLocation_validValue_returnsLocation() throws Exception {
+
+        Optional<String> actualLocation = ParserUtil.parseLocation(Optional.of(VALID_LOCATION));
+
+        assertEquals(VALID_LOCATION, actualLocation.get());
+    }
+
+    @Test
+    public void parseNotes_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseNotes(null);
+    }
+
+    @Test
+    public void parseNotes_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseNotes(Optional.of(INVALID_NOTES));
+    }
+
+    @Test
+    public void parseNotes_validValue_returnsEmail() throws Exception {
+
+        Optional<String> actualNotes = ParserUtil.parseLocation(Optional.of(VALID_NOTES));
+
+        assertEquals(VALID_NOTES, actualNotes.get());
+    }
+
+    @Test
+    public void parseDate_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDate(null);
+    }
+
+    @Test
+    public void parseDate_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDate(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDate_validValue_returnsDate() throws Exception {
+
+        Optional<String> actualDate = ParserUtil.parseDate(Optional.of(VALID_DATE));
+
+        assertEquals(VALID_DATE, actualDate.get());
+    }
+    @Test
+    public void parseTime_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTime(null);
+    }
+
+    @Test
+    public void parseTime_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTime(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseTime_validValue_returnsTime() throws Exception {
+
+        Optional<String> actualTime = ParserUtil.parseTime(Optional.of(VALID_TIME));
+
+        assertEquals(VALID_TIME, actualTime.get());
+    }
+
+    @Test
+    public void parseDateTime_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDateTime(null, null);
+    }
+
+    @Test
+    public void parseDateTime_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseDateTime(INVALID_DATE, INVALID_TIME);
+    }
+
+    @Test
+    public void parseDateTime_validValue_returnsDateTime() throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HHmm");
+        String dateTime = VALID_DATE + " " + VALID_TIME;
+        LocalDateTime localDateTimeExpected = LocalDateTime.parse(dateTime, formatter);
+
+        LocalDateTime localDateTimeActual = ParserUtil.parseDateTime(VALID_DATE, VALID_TIME);
+
+        assertEquals(localDateTimeExpected, localDateTimeActual);
+    }
+
+    @Test
+    public void parseIds_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseIds(null);
+    }
+
+    @Test
+    public void parseIds_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ArrayList<String> ids = new ArrayList<>();
+        ids.add(INVALID_PERSON);
+        ParserUtil.parseIds(ids);
+    }
+
+    @Test
+    public void parseIds_validValue_returnsIds() throws Exception {
+        //expected data
+        ArrayList<InternalId> idsExpected = new ArrayList<>();
+        idsExpected.add(new InternalId(Integer.parseInt(VALID_PERSON)));
+
+        //actual data
+        ArrayList<String> idsActual = new ArrayList<>();
+        idsActual.add(VALID_PERSON);
+
+        ArrayList<InternalId> actualIds = ParserUtil.parseIds(idsActual);
+
+        assertEquals(idsExpected, actualIds);
+    }
+
+    @Test
+    public void parseAccessCode_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseAccessCode(null);
+    }
+
+    @Test
+    public void parseAccessCode_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseAccessCode(INVALID_FORMAT_ACCESSCODE);
+    }
+
+    @Test
+    public void parseAccessCode_validValue_returnsAccessCode() throws Exception {
+
+        String actualAccessCode = ParserUtil.parseAccessCode(VALID_FORMAT_ACCESSCODE);
+
+        assertEquals(VALID_FORMAT_ACCESSCODE, actualAccessCode);
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/SetUniqueKeyCommandParserTest.java
+``` java
+public class SetUniqueKeyCommandParserTest {
+    private SetUniqueKeyCommandParser parser = new SetUniqueKeyCommandParser();
+
+    @Test
+    public void parse_accessCode_success() {
+        String accessCode = "0/1e2345h78hy70";
+
+        assertParseSuccess(parser, accessCode,
+                new SetUniqueKeyCommand(accessCode));
+
+    }
+
+    @Test
+    public void parse_accessCode_failure() {
+        String accessCode = "gibberish";
+
+        assertParseFailure(parser, accessCode, "Please make sure the access code you have copied "
+                + "follows the format:\nDIGIT/ALPHANUMERICS");
+    }
+
+}
+```
 ###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
@@ -615,68 +858,16 @@ public class DeleteTagCommandParserTest {
         return this;
     }
 ```
-###### /java/seedu/address/testutil/TypicalPersons.java
+###### /java/seedu/address/testutil/TypicalTags.java
 ``` java
 /**
- * A utility class containing a list of {@code Person} objects to be used in tests.
+ * A utility class containing a list of {@code Index} objects to be used in tests.
  */
-public class TypicalPersons {
-
-    public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
-            .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("85355255")
-            .withTags("friends").withSearchCount().build();
-    public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25")
-            .withEmail("johnd@example.com").withPhone("98765432")
-            .withTags("owesMoney", "friends").withSearchCount().build();
-    public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").withSearchCount().build();
-    public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withSearchCount().build();
-    public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave").withSearchCount().build();
-    public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").withSearchCount().build();
-    public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").withSearchCount().build();
-
-    // Manually added
-    public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withEmail("stefan@example.com").withAddress("little india").withSearchCount().build();
-    public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withAddress("chicago ave").withSearchCount().build();
-
-    // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND)
-            .withSearchCount().build();
-    public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .withSearchCount().build();
-
-    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
-
-    private TypicalPersons() {} // prevents instantiation
-
-    /**
-     * Returns an {@code AddressBook} with all the typical persons.
-     */
-    public static AddressBook getTypicalAddressBook() {
-        AddressBook ab = new AddressBook();
-        for (ReadOnlyPerson person : getTypicalPersons()) {
-            try {
-                ab.addPerson(person);
-            } catch (DuplicatePersonException e) {
-                assert false : "not possible";
-            }
-        }
-        return ab;
-    }
-
-    public static List<ReadOnlyPerson> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
-    }
+public class TypicalTags {
+    public static final String [] SINGLE_TAG_DELETION = new String [] {"friends"};
+    public static final String [] SINGLE_TAG_DELETION_ALT = new String [] {"colleagues"};
+    public static final String [] MULTIPLE_TAG_DELETION = new String [] {"friends", "colleagues"};
+    public static final String [] TAG_DOES_NOT_EXIST = new String[] {"blahblah"};
 }
 ```
 ###### /java/seedu/address/ui/BrowserPanelTest.java
