@@ -396,12 +396,22 @@ _Figure 4.1.7 : Undo Redo Activity Diagram_
 **Alternative 2:** Use `HistoryManager` for undo/redo +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
-// end::undoredo[]
+//end::undoredo[]
+
+//tag::opennew[]
 
 === `open` and `new` command mechanism
 
+image::OpenCommandSequenceDiagram.PNG[width="800"]
+_Figure 4.2.1 : Open Existing Address Book Sequence Diagram_
+
+image::NewCommandSequenceDiagram.PNG[width="800"]
+_Figure 4.2.2 : Create New Address Book Sequence Diagram_
+
+From the sequence diagram, we can see that the workflow is very similar. One thing to note is that even though the
+preprocessing is different, in the end they will post the same `SwitchAddressBookRequestEvent` to the `EventsCenter`.
+
 image::OpenAddressBookEvent.png[width="800"]
-_Figure 4.2.1 : Open New Address Book Sequence Diagram_
 
 As you can see from the diagram, when the `Open` button is clicked in the Application, it raises an event and triggers `MainApp` to update new Application metadata and restart the UI.
 
@@ -409,7 +419,24 @@ This loads the selected XML file which opens a new address book with contacts fr
 
 ==== Design considerations
 
-**Aspect:** Which component is responsible for
+**Aspect:** Similarity of implementation for Open and New command.
+
+**Alternative 1 (current choice):** Separate the two commands until the final `post` event. +
+**Pros:** Middle ground between Alternative 2 and Alternative 3. Merge similar actions together while separating classes
+ that are doing different operations. In this case, the similar part is to finally open a new DeathNote (reset, initialize, restart...).
+ Therefore, we use the same RequestEvent for both commands. The preprocessing is different, since one check for existing file and one
+ check for the other way round, we separate both of them. +
+**Cons:** Slightly harder for developers to get understand how `SwitchAddressBookRequestEvent` works. +
+**Alternative 2:** Separate the two commands totally. +
+**Pros:** Easier for new developers to understand the underlying mechanism because they can treat them as different operations. +
+**Cons:** Hard to maintain. Since two commands are very similar. If a bug is found in one of them, the other one is
+likely to be affected as well. Hence twice amount of work for the same outcome. +
+**Alternative 3:** Combine the two commands totally. +
+**Pros:** Easier to maintain because everything is within the same class. +
+**Cons:** Confusing to understand. NewCommand checks that `Path` is not an existing file but OpenCommand checks that `Path`
+ is an existing file. The implementation is likely to have many conditional statements. Changing one class affects both commands. +
+
+//end::opennew[]
 
 //tag::add[]
 
