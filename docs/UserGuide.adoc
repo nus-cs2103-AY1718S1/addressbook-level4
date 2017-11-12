@@ -528,7 +528,7 @@ image::autocompleteWithExitCommandCycle.PNG[width="400"]
 _Figure 5.21.4 : Pressing kbd:[Tab] again will cycle to the next matching command_
 
 *Autocomplete for prefixes:* +
-For commands that require prefixes, you can press kbd:[Tab] after filling in the command word.Ark will bring you to the
+For commands that require prefixes, you can press kbd:[Tab] after filling in the command word. Ark will bring you to the
 next missing prefix for you to fill in. After this, you can then press tab to cycle through the list of prefixes.
 
 image::autocompleteWithFullAddCommandAndOnePrefix.PNG[width="400"]
