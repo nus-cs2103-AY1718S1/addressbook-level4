@@ -24,6 +24,7 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    boolean isFavourite();
     ObjectProperty<UniqueEventList> eventProperty();
     Set<Event> getEvents();
     DateAdded getDateAdded();

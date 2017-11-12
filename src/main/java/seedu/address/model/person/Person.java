@@ -165,6 +165,19 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
+     * Checks whether a person has favourite tag.
+     */
+    @Override
+    public boolean isFavourite() {
+        for (Tag tag : getTags()) {
+            if (tag.tagName.toLowerCase().contains("fav")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Returns an immutable event set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */

@@ -18,7 +18,6 @@ import seedu.address.model.person.exceptions.EmptyListException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 
-
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
  * <p>
@@ -76,6 +75,24 @@ public class UniquePersonList implements Iterable<Person> {
     }
     //@@author
 
+    //@@author ZhangH795
+    /**
+     * Put favourite on top of the person list.
+     */
+    public void sortByFavourite() {
+        internalList.sort(new Comparator<ReadOnlyPerson>() {
+            public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
+                if (p1.isFavourite()) {
+                    return -1;
+                } else if (p2.isFavourite()) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        });
+    }
+    //@@author
 
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
