@@ -1919,7 +1919,7 @@ public class TutorialPanel extends UiPart<Region> {
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints prefHeight="30.0" vgrow="ALWAYS" />
+          <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
             <Label style="-fx-text-fill: white;" text="  Representation" />
