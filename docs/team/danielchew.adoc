@@ -70,7 +70,7 @@ Currently the data is stored at the user's computer but we have to support netwo
 
 === Other contributions
 
-* •	Proofread and edited the User Guide and Developer Guide, correct sentence structures, grammar mistakes and language errors. [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/UserGuide.adoc[User Guide]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/DeveloperGuide.adoc[Developer Guide]]
-* Updated the GUI theme (Pull request https://github.com/CS2103AUG2017-W13-B4/main/pull/129)
-* Change Model Module UI test cases (Pull request https://github.com/CS2103AUG2017-W13-B4/main/pull/105)
-* Did acceptance testing for group W09-B4 (Issue https://github.com/CS2103AUG2017-W09-B4/main/issues/78)
+* Proofread and edited the User Guide and Developer Guide, correct sentence structures, grammar mistakes and language errors. [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/UserGuide.adoc[User Guide]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/DeveloperGuide.adoc[Developer Guide]]
+* Updated the GUI theme (Pull request https://github.com/CS2103AUG2017-W13-B4/main/pull/129[#129])
+* Change Model Module UI test cases (Pull request https://github.com/CS2103AUG2017-W13-B4/main/pull/105[#105])
+* Did acceptance testing for group W09-B4 (Issue https://github.com/CS2103AUG2017-W09-B4/main/issues/78[#78])
