@@ -6,6 +6,36 @@ To start testing, replace addressbook.xml in the data folder with SampleData.xml
 
 === Adding a person: `add`
 
+Input: `add` +
+Expected result: Command failed, invalid command format +
+
+Input: `add n/John Doe` +
+Expected result: Command failed, invalid command format, at least name, phone number, email and address needed +
+
+Input: `add n/ p/ a/ e/ t/` +
+Expected result: Command failed, person names should only contain alphanumeric characters and spaces, and it should not be blank +
+
+Input: `add n/John Doe p/98765432 a/322, Seng Kang Ave 5, #02-25  e/johnd@example.com t/friends t/owesMoney l/twitter.com`
+Expected result: Command failed, because l/ or  r/ is not recognised in `add` command so it registers as a long tag with a whitespace and tags names should only be alphanumeric +
+
+Input: `add n/John Doe p/98765432 a/311, Clementi Ave 2, #02-25 e/johnd@example.com` +
+Expected result: Command success, John Doe has been added with his details +
+
+Input: `undo` +
+Expected result: Command success, changes made by add command can be undone +
+
+Input:  `add n/John Doe p/98765432 a/311, Clementi Ave 2, #02-25 e/johnd@example.com t/friends t/owesMoney`
+Expected result: Command success, John Doe has been added with his details +
+
+Input:  `add n/John Doe p/98765432 a/322, Seng Kang Ave 5, #02-25  e/johnd@example.com t/friends t/owesMoney`
+Expected result: Command success, John Doe has been added with his details because this john doe has a different address (also works if they have differen email or phone number) +
+
+Input: `undo` +
+Expected result: Command success, changes made by add command can be undone +
+
+Input: `undo` +
+Expected result: Command success, changes made by add command can be undone, so we can revert the sample data back to the original state +
+
 === Undoing previous command : `undo`
 
 === Redoing the previously undone command : `redo`
@@ -148,7 +178,45 @@ Expected result: Command success, David has been unfavourited and is no longer a
 
 === Selecting a person : `select`
 
+Input: `select` +
+Expected result: Command failure, invalid command format.
+
+Input: `select abc` +
+Expected result: Command failure, invalid command format.
+
+Input: `select 50` +
+Expected result: Command failure, the person index provided is invalid, since the person data provided does not reach 50. +
+
+Input: `select 1` +
+Expected result: Command success, first person in index is selected +
+
 === Linking Twitter to a person : `link`
+
+Input: `link` +
+Expected result: Command failure, invalid command format. +
+
+Input: `link 50` +
+Expected result: Command failure, the person index provided is invalid, since the person data provided does not reach 50. +
+
+Input: `link 1 l/Hello` +
+Expected result: Command failure, link format is invalid link. +
+
+Input: `link 1 l/twitter.commmmm` +
+Expected result: Command failure, link format is invalid link. +
+
+Input: `link 1 l/twitter.com/randomnumber!!!!!!!!!!` +
+Expected result: Command success, because it is a valid twitter url format,
+however when person is selected it should show that twitter page doesn't exist if there is no twitter handle of "randomnumber!!!!!!!!!!". +
+
+Input: `link 1 l/twitter.com/_david_li_` +
+Expected result: Command success, when person is selected, it should show a twitter page at _david_li_'s profile. +
+
+Input: `undo` +
+Expected result: Command success, link is an undoable command +
+
+Input: `link 1` +
+Expected result: Command success, the twitter link should be removed, and when person is selected, it should show a twitter search for the person's name. +
+
 
 === Clearing all entries : `clear`
 
@@ -164,7 +232,76 @@ Expected result: Command success, David has been unfavourited and is no longer a
 
 === Add a remark note to contact: `addremark`
 
+Input: `addremark` +
+Expected result: Command failure, invalid command format. +
+
+Input: `addremark abc` +
+Expected result: Command failure, invalid command format. +
+
+Input: `addremark 50` +
+Expected result: Command failure, the person index provided is invalid, since the person data provided does not reach 50. +
+
+Input: `addremark 1` +
+Expected result: Command success, when person of index 1 is selected you should see that he has a blank remark added, we allow users to add blank remarks to just note that have things they want to do with a person, but do not want to specify. +
+
+Input: `addremark 1 Eat lunch` +
+Expected result: Command failure, invalid command format, r/ is needed before a remark you want to add. +
+
+Input: `addremark 1 r/` +
+Expected result: Command success, when person of index 1 is selected you should see that he now has 2 blank remarks added, we allow any kind of string for remarks +
+
+Input: `undo` +
+Expected results: Command success, addremark is an undoable command +
+
+Input: `undo` +
+Expected results: Command success, addremark is an undoable command, both empty remarks should disappear from the pending remarks of the specific person. +
+
+Input: `addremark 1 r/r/` +
+Expected result: Command success, when person of index 1 is selected you should see a remark "r/" has been added, because there is no space between the r/ and r/, so the 2nd r/ is registered as a remark.
+
+Input: `addremark 1 r/ r/ r/Eat lunch` +
+Expected result: Command success, when person of index 1 is selected you should see 2 blanks remarks and 1 remark that is "Eat lunch" added. +
+
+Input: `addremark 1 r/SUPERLONGREMARK_SUPERLONGREMARK_SUPERLONGREMARK_SUPERLONGREMARKSUPERLONGREMARK_SUPERLONGREMARK` +
+Expected result: Command success, when person of index 1 is selected you should see the long remark being added, and you can scroll left or right on the remark panel to look at the whole remark. +
+
+Input: `addremark 1 r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks` +
+Expected result: Command success, when person of index 1 is selected you should see many remarks being added, and you can scroll up or down to looks through the remarks. +
+
+Input: `addremark 2 r/Sample remark` +
+Expected result: Command success, you should see the person(s) with pending remarks list at the right increase in number, if index 2 doesn't have a remark before. +
+
 === Remove a remark note from contact: `removeremark`
+
+Input: `removeremark` +
+Expected result: Command failure, invalid command format. +
+
+Input: `removeremark abc` +
+Expected result: Command failure, invalid command format. +
+
+Input: `removeremark 50` +
+Expected result: Command failure, the person index provided is invalid, since the person data provided does not reach 50. +
+
+Input: `removeremark 1` +
+Expected result: Command success, this command clears all the remarks from the person of index 1 (can be used even if there are no remarks), you should also see the person disappear from the person(s) with pending remarks list. +
+
+Input: `removeremark 1 abc` +
+Expected result: Command failure, invalid command format.
+
+Input: `removeremark 1 1` +
+Expected result: Command failure, the remark index provided is invalid, since all the person's (of index 1) remark has been removed in the previous command and there are no more remarks left. +
+
+Input: `undo` +
+Expected results: Command success, removeremark is an undoable command, you should get back all the remarks you added in the addremark tests section. +
+
+Input: `removeremark 1 1 2 3 4` +
+Expected results: Command success, the remarks with index 1, 2, 3 and 4 should be removed from the remark list of the person of index 1. +
+
+Input: `removeremark 1 1 2 5 7 2 1` +
+Expected results: Command success, the remarks with index 1, 2, 5 and 7 should be removed from the remark list of the person of index 1 (duplicate remark index in a single command are ignored). +
+
+Input: `removeremark 1 1 2 50` +
+Expected results: Command failure, although the person of index 1 should still have remark index of 1 and 2, he does not have a remark index of 50, so the command fails.
 
 == Miscellaneous features
 
