@@ -376,24 +376,28 @@ If not included in the add command, the default value of both the phone and emai
 value for the status field is `PENDING`.
 
 //tag::import[]
-
 [#import]
-=== Import multiple parcels stored in an xml storage file: `import`
+=== Import Multiple Parcels into Ark `import`
 
-Imports the parcels in an Ark `.xml` storage file stored in `/data/import/` folder of Ark's home directory to Ark +
-Format: `import FILE_NAME`
+You can import parcels into Ark using the `import` feature. This feature works with valid save files of Ark. To use
+this feature, you must first copy/move the save file that you want to import into the `/data/import/` folder of
+Ark's home directory. Then you can type the following command into the `CommandBox`, `import `, followed by the name
+of your file.
+
+[NOTE]
+Ark will only import files that are stored in the `.xml` format.
+
+[WARNING]
+Your file name is should only contain alphanumeric or underscore characters. e.g. `ark_save`, `ark_save1`; +
+Files name that contain characters other than alphanumeric or underscore characters will be rejected. e.g. `ark#1`; +
+Do not include the file type in your file name. The following inputs for the file name will be rejected. `ark_save.xml`; +
 
 Examples:
 
 * `import ark` - This will import parcels stored in `data/import/ark.xml` into the current instance of Ark
 * `import ark_save` - This will import parcels stored in `data/import/ark_save.xml` into the current instance of Ark.
 
-[NOTE]
-====
-File names should only contain alphanumeric or underscore characters i.e. `ark1`, `ark_save1`
-Non alphanumeric file names will not be accepted. i.e. `$addressbook#!@,`
-====
-
+Format: `import FILE_NAME`
 //end::import[]
 
 === Listing all parcels : `list`
