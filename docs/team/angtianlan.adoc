@@ -23,7 +23,7 @@ include::../UserGuide.adoc[tag=sort]
 
 ==== Justification
 
-After users have used ModU for a period of time, they will accumulate numerous data that make it difficult for them to find the information they need in ModU. This new sort command can sort the list of modules, lessons and locations in a meaningful manner and make it easier for user to find the information he or she needs.
+After users have used ModU for a period of time, they will accumulate numerous data that make it difficult for them to find the information they need in ModU. This new sort command can sort the list of modules, lessons and locations in a meaningful manner and make it much easier for user to find the information he or she needs.
 
 ==== Implementation
 

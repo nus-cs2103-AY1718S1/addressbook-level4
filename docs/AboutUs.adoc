@@ -13,8 +13,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Ang Tian Lan
 image::tianlan.jpg[width="150", align="left"]
-{empty} [https://github.com/angtianlannus[github]][<<angtianlan#, portfolio>>]
-
+{empty} [https://github.com/angtianlannus[github]][https://cs2103aug2017-w13-b4.github.io/main/team/angtianlan.html[Project Portfolio]]
 
 Role: Developer +
 Responsibilities: Storage component, adding SortCommand, enhance FindCommand, BookedSlot constraint and related tests.
@@ -23,7 +22,7 @@ Responsibilities: Storage component, adding SortCommand, enhance FindCommand, Bo
 
 === Cao Liang
 image::liang_profile_pic.jpeg[width="150", align="left"]
-{empty}[https://github.com/caoliangnus[github]] [<<caoliang#, portfolio>>]
+{empty}[https://github.com/caoliangnus[github]] [https://cs2103aug2017-w13-b4.github.io/main/team/caoliang.html[Project Portfolio]]
 
 
 Role: Developer +
@@ -33,7 +32,7 @@ Responsibilities: Data
 
 === Wang Junming
 image::WangJunming.jpg[width="150", align="left"]
-{empty}[https://github.com/junming403[github]] [<<wangjunming#, portfolio>>]
+{empty}[https://github.com/junming403[github]] [https://cs2103aug2017-w13-b4.github.io/main/team/wangjunming.html[Project Portfolio]]
 
 Role: Developer +
 Responsibilities: Logic component, editing list//edit/delete command, adding view, mark, unmark, remark command.
@@ -42,8 +41,7 @@ Responsibilities: Logic component, editing list//edit/delete command, adding vie
 
 === Chew Chaow Thong Daniel
 image::DanielChew.jpg[width="150", align="left"]
-{empty}[https://github.com/cctdaniel[github]] [<<danielchew#, portfolio>>]
-
+{empty}[https://github.com/cctdaniel[github]] [https://cs2103aug2017-w13-b4.github.io/main/team/danielchew.html[Project Portfolio]]
 
 Role: Developer +
 Responsibilities: UI component, changed overall theme, add CustomiseCommand, add SwitchThemeCommand and related tests.
