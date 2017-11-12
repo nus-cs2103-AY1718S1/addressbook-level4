@@ -214,7 +214,7 @@ public class ModelManager extends ComponentManager implements Model {
                 assert false : "This person cannot be missing from addressbook";
             }
         }
-        addressBook.addBlacklistedPerson(newBlacklistPerson);
+        newBlacklistPerson = addressBook.addBlacklistedPerson(newBlacklistPerson);
         updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         indicateAddressBookChanged();
         return newBlacklistPerson;
@@ -306,6 +306,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void syncWhitelist() {
         filteredWhitelistedPersons = new FilteredList<>(this.addressBook.getWhitelistedPersonList());
+        filteredWhitelistedPersons.setPredicate(filteredWhitelistedPersons.getPredicate());
     }
     //@@author
 
@@ -339,6 +340,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Logs user out
      */
     public void logout() {
+        deselectPerson();
         raise(new LoginAppRequestEvent(false));
     }
 
@@ -369,9 +371,10 @@ public class ModelManager extends ComponentManager implements Model {
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     @Override
-    public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
-        addressBook.addDebtToPerson(target, amount);
+    public ReadOnlyPerson addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
+        ReadOnlyPerson person = addressBook.addDebtToPerson(target, amount);
         indicateAddressBookChanged();
+        return person;
     }
 
     /**
@@ -394,6 +397,7 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author jaivigneshvenugopal
     @Override
     public void changeListTo(String listName) {
+        setCurrentListName(listName);
         raise(new ChangeInternalListEvent(listName));
     }
     //@@author

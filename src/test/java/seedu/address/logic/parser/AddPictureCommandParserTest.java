@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -7,6 +8,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.commands.AddPictureCommand;
 
 //@@author jaivigneshvenugopal
@@ -17,13 +19,19 @@ import seedu.address.logic.commands.AddPictureCommand;
  * The path variation for those two cases occur inside the ParserUtil, and
  * therefore should be covered by the ParserUtilTest.
  */
-public class AddPictureCommandParserTest {
+public class AddPictureCommandParserTest extends CommandTest {
     private AddPictureCommandParser parser = new AddPictureCommandParser();
 
     @Test
-    public void parse_validArgs_returnsAddPictureCommand() {
-        assertParseSuccess(parser, "", new AddPictureCommand());
+    public void parse_validArgs_returnsAddPictureCommand() throws Exception {
         assertParseSuccess(parser, "1", new AddPictureCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_noIndex_returnsAddPictureCommand() throws Exception {
+        selectFirstPerson();
+        assertEquals(new AddPictureCommand(), new AddPictureCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "", new AddPictureCommand());
     }
 
     @Test

@@ -8,11 +8,13 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.commands.PaybackCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Debt;
 
 //@@author jelneo
-public class PaybackCommandParserTest {
+public class PaybackCommandParserTest extends CommandTest {
 
     private static final String MESSAGE_INVALID_FORMAT =  String.format(MESSAGE_INVALID_COMMAND_FORMAT,
             PaybackCommand.MESSAGE_USAGE);
@@ -42,7 +44,7 @@ public class PaybackCommandParserTest {
     }
 
     @Test
-    public void parse_validArguments() {
+    public void parse_validArguments() throws Exception {
         try {
             Index index = Index.fromOneBased(Integer.valueOf(VALID_INDEX));
             Debt amount = new Debt(VALID_DEBT_FIGURE);
@@ -52,8 +54,8 @@ public class PaybackCommandParserTest {
             amount = new Debt(VALID_DEBT_FIGURE);
             expectedPaybackCommand = new PaybackCommand(amount);
             assertParseSuccess(parser, " " + VALID_DEBT_FIGURE, expectedPaybackCommand);
-        } catch (IllegalValueException ive) {
-            ive.printStackTrace();
+        } catch (IllegalValueException | CommandException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -14,8 +14,10 @@ import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.model.ModelManager;
 import seedu.address.model.person.ReadOnlyPerson;
 
 public class PersonListPanelTest extends GuiUnitTest {
@@ -28,6 +30,7 @@ public class PersonListPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
+        ListObserver.init(new ModelManager());
         PersonListPanel personListPanel = new PersonListPanel(TYPICAL_PERSONS, ListCommand.COMMAND_WORD);
         uiPartRule.setUiPart(personListPanel);
 

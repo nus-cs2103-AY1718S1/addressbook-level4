@@ -33,7 +33,7 @@ public class SortCommandParserTest {
     }
 
     @Test
-    public void parse_validOrdering_success() {
+    public void parse_validOrdering_success() throws Exception {
         SortCommand expectedCommand;
 
         expectedCommand = new SortCommand(ORDERING_DEFAULT);

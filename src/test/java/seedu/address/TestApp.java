@@ -99,6 +99,13 @@ public class TestApp extends MainApp {
         return copy;
     }
 
+    /**
+     * Returns the current model. Should only be used for initializing {@code ListObserver}.
+     */
+    public Model getRealModel() {
+        return model;
+    }
+
     @Override
     public void start(Stage primaryStage) {
         ui.start(primaryStage);

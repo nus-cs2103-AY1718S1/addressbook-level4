@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -20,42 +21,38 @@ public class BanCommand extends UndoableCommand {
             + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "Example: " + COMMAND_WORD + " 1";
     public static final String MESSAGE_BAN_PERSON_SUCCESS = "%1$s has been added to BLACKLIST";
-    public static final String MESSAGE_BAN_PERSON_FAILURE = "%1$s is already in BLACKLIST!";
+    public static final String MESSAGE_BAN_BLACKLISTED_PERSON_FAILURE = "%1$s is already in BLACKLIST!";
 
-    private final Index targetIndex;
+    private final ReadOnlyPerson personToBan;
 
-    public BanCommand() {
-        this.targetIndex = null;
+    public BanCommand() throws CommandException {
+        personToBan = selectPersonForCommand();
     }
 
-    public BanCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
+    public BanCommand(Index targetIndex) throws CommandException {
+        personToBan = selectPersonForCommand(targetIndex);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        String messageToDisplay = MESSAGE_BAN_PERSON_SUCCESS;
-
-        ReadOnlyPerson personToBan = selectPerson(targetIndex);
-
         if (personToBan.isBlacklisted()) {
-            messageToDisplay = MESSAGE_BAN_PERSON_FAILURE;
-        } else {
-            model.addBlacklistedPerson(personToBan);
+            throw new CommandException(String.format(MESSAGE_BAN_BLACKLISTED_PERSON_FAILURE, personToBan.getName()));
         }
 
-        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        ReadOnlyPerson targetPerson = model.addBlacklistedPerson(personToBan);
 
-        String currentList = listObserver.getCurrentListName();
+        ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        reselectPerson(targetPerson);
 
-        return new CommandResult(currentList + String.format(messageToDisplay, personToBan.getName()));
+        String currentList = ListObserver.getCurrentListName();
+
+        return new CommandResult(currentList + String.format(MESSAGE_BAN_PERSON_SUCCESS, personToBan.getName()));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof BanCommand // instanceof handles nulls
-                && ((this.targetIndex == null && ((BanCommand) other).targetIndex == null) // both targetIndex null
-                || this.targetIndex.equals(((BanCommand) other).targetIndex))); // state check
+                && this.personToBan.equals(((BanCommand) other).personToBan)); // state check
     }
 }

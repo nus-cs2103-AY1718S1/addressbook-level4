@@ -10,7 +10,6 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,24 +18,19 @@ import java.util.List;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.CommandTest;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author jelneo
 /**
  * Contains integration tests (interaction with the Model) for {@code FilterCommand}.
  */
-public class FilterCommandTest {
+public class FilterCommandTest extends CommandTest {
     public static final String ONE_OR_MORE_SPACES_REGEX = "\\s+";
     public static final String[] SAMPLE_TAGS = "violent friendly".split(ONE_OR_MORE_SPACES_REGEX);
     public static final String[] SAMPLE_TAG = {"cooperative"};
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void equals() {
@@ -114,13 +108,9 @@ public class FilterCommandTest {
     private void assertCommandSuccess(FilterCommand command, String expectedMessage,
                                       List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
-        try {
-            CommandResult commandResult = command.execute();
-            assertEquals(expectedMessage, commandResult.feedbackToUser);
-            assertEquals(expectedList, model.getFilteredPersonList());
-            assertEquals(expectedAddressBook, model.getAddressBook());
-        } catch (CommandException ce) {
-            ce.printStackTrace();
-        }
+        CommandResult commandResult = command.execute();
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }

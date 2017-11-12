@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -20,41 +21,36 @@ public class AddPictureCommand extends UndoableCommand {
             + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "Example: " + COMMAND_WORD + " 1";
     public static final String MESSAGE_ADDPIC_SUCCESS = "%1$s profile picture has been updated!";
-    public static final String MESSAGE_ADDPIC_FAILURE = "Unable to update %1$s profile picture!";
+    public static final String MESSAGE_ADDPIC_FAILURE = "Unable to update profile picture!";
 
-    private final Index targetIndex;
+    private final ReadOnlyPerson personToUpdate;
 
-    public AddPictureCommand() {
-        this.targetIndex = null;
+    public AddPictureCommand() throws CommandException {
+        personToUpdate = selectPersonForCommand();
     }
 
-    public AddPictureCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
+    public AddPictureCommand(Index targetIndex) throws CommandException {
+        personToUpdate = selectPersonForCommand(targetIndex);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        String messageToDisplay = MESSAGE_ADDPIC_SUCCESS;
-
-        ReadOnlyPerson personToUpdate = selectPerson(targetIndex);
-
         if (!model.addProfilePicture(personToUpdate)) {
-            messageToDisplay = MESSAGE_ADDPIC_FAILURE;
+            throw new CommandException(MESSAGE_ADDPIC_FAILURE);
         }
 
-        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        reselectPerson(personToUpdate);
 
-        String currentList = listObserver.getCurrentListName();
+        String currentList = ListObserver.getCurrentListName();
 
-        return new CommandResult(currentList + String.format(messageToDisplay, personToUpdate.getName()));
+        return new CommandResult(currentList + String.format(MESSAGE_ADDPIC_SUCCESS, personToUpdate.getName()));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddPictureCommand // instanceof handles nulls
-                && ((this.targetIndex == null
-                && ((AddPictureCommand) other).targetIndex == null) // both targetIndex null
-                || this.targetIndex.equals(((AddPictureCommand) other).targetIndex))); // state check
+                && this.personToUpdate.equals(((AddPictureCommand) other).personToUpdate)); // state check
     }
 }

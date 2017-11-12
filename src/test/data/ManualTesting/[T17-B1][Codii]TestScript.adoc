@@ -1,0 +1,177 @@
+= Script for Manual Testing
+
+== Introduction
+This document will explain the step-by-step procedure to perform manual testing. +
+
+== Setting up
+
+=== Downloading the application
+.  You can download the latest version of `Codii` link:https://github.com/CS2103AUG2017-T17-B1/main/releases[here]. +
+.  Make sure that the `codii.jar` is saved in a folder without any other jar files. This will be the `main` folder for your `Codii` application.
+
+=== Loading the sample data
+[NOTE]
+By default, the data stored in the `codii.jar` file already contains the sample data. The following steps will guide you in generating a fresh copy of the sample data
+into the `Codii` application should the need arise. +
+
+. Open up the jar file from the `main` folder.
+. Log into Codii. Details on logging in, including a working sample username and password, can be found link:https://github.com/CS2103AUG2017-T17-B1/main/blob/master/docs/UserGuide.adoc#logging-into-the-address-book-application-using-command-line-interface-cli-code-login-code[here]. +
+. You have to make a change to the address book to generate a `data folder` if you have not already done so. For convenience, you can simply delete a contact. Steps on how to delete a contact can be found
+link:https://github.com/CS2103AUG2017-T17-B1/main/blob/master/docs/UserGuide.adoc#deleting-a-person-code-delete-code[here].
+. Within the `main` folder, there is a `data` folder that stores the data of all the contacts in `Codii`.
+. Within the `data` folder, replace the `addressbook.xml` file with the new `sample data` file. Ensure that there is only one `.xml` file in the `data` folder.
+. Rename the file in the `data` folder to `addressbook.xml`.
+
+== Test Script
+
+=== Login screen
+
+==== CLI version of Login
+. `help`
+** Help window should open.
+. `list`
+** Should show “Please log in first” in result display.
+. `login asde hitMeUp123`
+** Should show “Length of username cannot be less than 6 characters.” in result display.
+. `login loanShark97 short`
+** Should show “Length of password cannot be less than 6 characters.” in result display.
+. `login @@@@@@ hitMeUp123`
+** Should show “Username can only consist of uppercase letters (A-Z), lowercase letters (a-z), digits (0-9) and underscores (_)” in result display.
+. `login fakeuser fakepassword`
+** Should show “Unable to log into Address Book” in result display.
+. `login loanShark97 hitMeUp123`
+** Should log in successfully.
+. `logout`
+** Should be returned to the login screen.
+
+==== GUI version of Login
+
+=== After logging in
+
+==== Changing themes
+. `theme`
+** Theme should be changed to a bright theme.
+. `theme`
+** Theme should be reverted to the dark theme.
+
+==== Selection
+. `select`
+** The first person, Bernice Yu, should be selected.
+. `s`
+** The second person, Alex Yeoh, should be selected.
+. `select 4`
+** The fourth person, Charlotte Oliveiro, should be selected.
+. `select 999`
+** Should show “The person index provided is invalid” in result display.
+. `select 20`
+** The last person, Timmy Zhu, should be selected.
+. `select`
+** The first person, Bernice Yu, should be selected.
+. Click on person card 3 (David Li)
+** The third person, David Li, should be selected.
+
+==== Addition
+
+. `add`
+** Should show invalid command format message in result display.
+. `add n/John Doe hp/9765432 home/67776747 e/johnd@example.com a/311, Clementi Ave 2, #02-25 pc/123311 d/10000 int/2 dl/11-06-2018 op/61112111 t/friendly`
+** Should show “Phone numbers can only contain numbers, and should be exactly 8 digits long” in result display.
+. `add n/John Doe hp/98765432 home/67776747 e/johnd a/311, Clementi Ave 2, #02-25 pc/123311 d/10000 int/2 dl/11-06-2018 op/61112111 t/friendly`
+** Should show “Person emails should be 2 alphanumeric/period strings separated by '@'” in result display.
+. `add n/John Doe hp/98765432 home/67776747 e/johnd@example.com a/311, Clementi Ave 2, #02-25 pc/12331 d/10000 int/2 dl/11-06-2018 op/61112111 t/friendly`
+** Should show “Postal code must be exactly 6 digits long” in result display.
+. `add n/John Doe hp/98765432 home/67776747 e/johnd@example.com a/311, Clementi Ave 2, #02-25 pc/123311 d/0 int/2 dl/11-06-2018 op/61112111 t/friendly`
+** Should show “Unable to add a person with no debt” in result display.
+. `add n/John Doe hp/98765432 home/67776747 e/johnd@example.com a/311, Clementi Ave 2, #02-25 pc/123311 d/10000 int/2 dl/11-06-2018 op/61112111 t/friendly`
+** John Doe should be added into the address book.
+. `add n/Betty Crowe hp/91234567 home/61234567 e/bcrowe@example.com a/312, Clementi Ave 2, #05-52 pc/123312 d/1000`
+** Betty Crowe should be added into the address book.
+
+==== Deletion
+. `delete 22`
+** Better Crowe should be deleted from the address book.
+. `select 21`
+** Selected John Doe.
+. `d`
+** John Doe should be deleted from the address book.
+
+==== Editing
+. `edit`
+** Should show invalid command format message in result display.
+. `edit 1 n/Alice Pauline`
+** Bernice Yu’s `name` should be changed to “Alice Pauline”
+. `select 4`
+** Selected Charlotte Oliveiro.
+. `edit pc/418132`
+** Charlotte Oliveiro’s `postal code` and `general location` should be changed to “418132” and “Geylang, Eunos” respectively.
+. `edit 2 td/0`
+** Should show “Total debt cannot be set to zero” in result display.
+. `edit 2 td/1`
+** Should show “Total debt cannot be less than current debt” in result display.
+
+==== Undoing
+. `undo`
+** Charlotte Oliveiro’s `postal code` and `general location` should be restored to “560011” and “Bishan, Ang Mo Kio” respectively.
+. `undo`
+** Alice Pauline should be renamed to Bernice Yu.
+. `undo`
+** John Doe should be in the address book.
+
+==== Redoing
+. `redo`
+** John Doe should be removed from the address book.
+
+==== Sorting
+. `sort email`
+** Should show invalid command format message in result display.
+. `sort debt`
+** Contacts should be sorted in descending debt order.
+. `sort name`
+** Contacts should be sorted in ascending lexicographical order.
+. `sort deadline`
+** Contacts with existing debts should be sorted in increasing deadline order. Contacts that have cleared their debts should be at the bottom of the list.
+. `sort cluster`
+** Contacts should be sorted in their postal districts (select the contacts in order to verify).
+. `sort`
+** Contacts should be sorted in ascending lexicographical order.
+
+====  Finding
+. `find 1`
+** Person list panel should be empty.
+. `find li yu`
+** Person list panel should show Bernice and David.
+
+
+==== Displaying different lists
+. `list`
+** Should display full masterlist in person list panel.
+. `blacklist`
+** Should show Farhan, Herbert, Kanyee and Nigel in person list panel.
+. `whitelist`
+** Should show Gisela, Queenie, Sam and Timmy in person list panel.
+. `overduelist`
+** Should show David, Irfan, Monica and Ah Seng in person list panel.
+. `ls`
+** Should display full masterlist in person list panel.
+
+==== Selecting contacts from “all contacts in this area” list panel
+. `select 1`
+** Alex should be selected.
+. `nearby 2`
+** Roy should be selected.
+
+==== Updating contacts that have repaid their debts
+. `repaid 1`
+** Alex’s debt should show $0/$10000, and if selected, should show the date repaid to the day this command is entered.
+. `select 2`
+** Selected Bernice.
+. `repaid`
+** Bernice’s debt should show $0/$500, and her date repaid should be the day this command is entered.
+. `whitelist`
+** Alex and Bernice should be in the person list panel.
+. `undo`
+** Bernice should be removed from the person list panel.
+. `borrow 1 1`
+** Alex should be removed from the person list panel.
+. `repaid 1`
+** Should show “Gisela Tan has already repaid debt!” in result display.

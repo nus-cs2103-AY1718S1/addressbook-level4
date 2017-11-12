@@ -4,6 +4,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.Password;
@@ -36,14 +37,16 @@ public class MainWindowHandle extends StageHandle {
         testUserPrefs.setAdminUsername(TEST_USERNAME);
         testUserPrefs.setAdminPassword(TEST_PASSWORD);
         modelManager = new ModelManager(getTypicalAddressBook(), testUserPrefs);
+        ListObserver.init(modelManager);
         simulateLogin();
         Platform.runLater(() -> {
             personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
             resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
             commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
             mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
-            infoPanel = new InfoPanelHandle(getChildNode(InfoPanelHandle.INFO_PANEL_ID));
             statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
+            Platform.runLater(() -> {
+                infoPanel = new InfoPanelHandle(getChildNode(InfoPanelHandle.INFO_PANEL_ID)); });
         });
     }
 

@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
+import seedu.address.commons.core.ListObserver;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.AddCommand;
@@ -47,6 +48,7 @@ public class PreLoginCommandBoxTest extends GuiUnitTest {
     public void setUp() {
         model = new ModelManager();
         modelManager = new ModelManager();
+        ListObserver.init(model);
 
         Logic logic = new LogicManager(model);
         adminUsername = TEST_USERNAME;

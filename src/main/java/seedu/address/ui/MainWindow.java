@@ -19,7 +19,6 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
-import seedu.address.commons.events.ui.DeselectionEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.NearbyPersonNotInCurrentListEvent;
@@ -231,9 +230,11 @@ public class MainWindow extends UiPart<Region> {
             if (stylesheet.endsWith("DarkTheme.css")) {
                 getRoot().getStylesheets().remove(stylesheet);
                 getRoot().getStylesheets().add("/view/BrightTheme.css");
+                break;
             } else if (stylesheet.endsWith("BrightTheme.css")) {
                 getRoot().getStylesheets().remove(stylesheet);
                 getRoot().getStylesheets().add("/view/DarkTheme.css");
+                break;
             }
         }
     }
@@ -319,17 +320,6 @@ public class MainWindow extends UiPart<Region> {
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         raise(new JumpToListRequestEvent(Index.fromZeroBased(logic.getFilteredPersonList()
                 .indexOf(event.getNewSelection().person))));
-    }
-
-    /**
-     * Ensures that the {@code InfoPanel} is cleared when the current list is empty (via {@code DeleteCommand} and
-     * {@code ClearCommand}).
-     */
-    @Subscribe
-    private void handleDeselectionEvent(DeselectionEvent event) {
-        infoPanel = new InfoPanel(logic);
-        infoPanelPlaceholder.getChildren().clear();
-        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
     }
 
     /**

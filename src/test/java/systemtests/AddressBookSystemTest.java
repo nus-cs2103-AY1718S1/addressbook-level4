@@ -26,6 +26,7 @@ import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -60,7 +61,7 @@ public abstract class AddressBookSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication();
         mainWindowHandle = setupHelper.setupMainWindowHandle();
-
+        ListObserver.init(testApp.getRealModel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -125,7 +126,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void showPersonsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assert getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size();
+        assert ListObserver.getCurrentFilteredList().size() < getModel().getAddressBook().getPersonList().size();
     }
 
     /**
@@ -196,8 +197,7 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getInfoPanel().isSelectedPersonChanged());
-        assertTrue(getPersonListPanel().isSelectedPersonCardChanged(mainWindowHandle.getPersonListPanel()));
+        assertFalse(mainWindowHandle.getPersonListPanel().isSelectedPersonCardChanged());
     }
 
     /**

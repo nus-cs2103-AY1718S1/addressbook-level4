@@ -6,6 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.BorrowCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Debt;
 
@@ -22,7 +23,7 @@ public class BorrowCommandParser implements Parser<BorrowCommand> {
 
 
     @Override
-    public BorrowCommand parse(String args) throws ParseException {
+    public BorrowCommand parse(String args) throws ParseException, CommandException {
         requireNonNull(args);
 
         Index index;
