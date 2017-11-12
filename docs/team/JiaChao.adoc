@@ -4,25 +4,26 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: cherBook
-cherBook is an address book application used by teachers to monitor students' academic progress.
+cherBook is a desktop application designed to help teachers monitor students' academic performance and manage their schedules.
+My team and I built cherBook as an enhancement to the original https://github.com/se-edu/addressbook-level4[`Addressbook-level4`] by https://github.com/se-edu[`Team SE-EDU`].
+This project was built as part of the software engineering module `CS2103T` offered by the School of Computing (SoC) in the National University of Singapore (NUS).
 The user interacts with it using a CLI, and it has a GUI created with JavaFX.
-It is written in Java, and has about 8 kLoC.
+It is written in Java, and has about 30 kLoC.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T16-B2/main/blob/master/collated/main/lincredibleJC.md[Functional code]] [https://github.com/CS2103AUG2017-T16-B2/main/blob/master/collated/test/lincredibleJC.md[Test code]]
 
 == Roles and Responsibilities
 * Role: Team Lead
 * Responsibilities:
-** In charge of Logic Component
+** In charge of Logic Component.
 ** Git Expert: Advises the group for git matters.
 ** Integration: Versioning of the code, maintaining the code repository, integrating various parts of the software to create a whole.
 ** Scheduling: and tracking: Defining, assigning, and tracking project tasks.
 
 == List of Enhancements Implemented
-. Add Command aliases for all commands
-. Add Grades and FormClass attributes to the Student
-. Add FindTags Feature to find students by Tags
-. Add Statistics Panel
+. Command aliases for all commands
+. FindTags Command to find students by Tags
+. Statistics Panel Logic and UI
 
 == List of Enhancement Proposed
 . Add Compare command to compare statistics of different student groups
