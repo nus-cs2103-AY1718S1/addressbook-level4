@@ -410,8 +410,8 @@ After `readContactFromFile` is finished, `AddMultipleByTsvCommandParser` calls `
 
 Finding contacts using different parameters is used so as to allow the user to find their contacts without having to rely on just one contact detail.
 
-image::FindCommandSequenceDiagram.PNG[width="800"]
-_Figure 4.3 : Sequence diagram for FindCommand_
+image::FindCommandSequenceDiagram.png[width="800"]
+_Figure 4.3 : Sequence diagram for `FindCommand`_
 
 Find command extends from commands, and it cannot be undone using the undo function. By keying in the command word `find`, along with the required parameters, the command word will be detected in the `AddressBookParser` class where the arguments will be passed over to the `FindCommandParser` class, as seen from figure 4.3 above.
 
@@ -429,6 +429,16 @@ A parse exception is thrown by the FindCommandParser if the user does not input 
 
 A noteworthy part to mention is that the find function in TheYellowPage is designed to check for every keyword, as such, keying in ambiguous keywords such as `block 42` for address is likely to return many contacts.
 
+==== Design considerations
+
+**Aspect:** Address check of  `FindCommand` +
+**Alternative 1 (current choice):** Search by checking all keywords +
+**Pros:** By checking each keyword individually, users will be able to retrieve all the contacts whose address is in a particular region (eg: Searching `Serangoon` will return all contacts with address `Serangoon`. +
+**Cons:** Common keywords like `blk` or `street` may return a lot of contact results. +
+**Alternative 2:** Find by checking entire address parameter as a whole +
+**Pros:** By checking the address as a whole, users will be able to find the exact contact that they want without getting a ton of redundant results. +
+**Cons:** It is possible to have multiple contacts with the same address in an office setting which makes checking address as a whole parameter less effective.
+
 // end::FindCommand[]
 
 // tag::deleteMultipleCommand[]
@@ -437,8 +447,8 @@ A noteworthy part to mention is that the find function in TheYellowPage is desig
 
 Deleting multiple contacts is used so as to allow the user to delete multiple contacts with the use of a single command, saving time and without the need to clear the entire list.
 
-image::DeleteMultipleCommandSequenceDiagram.PNG[width="800"]
-_Figure 4.4 : Sequence diagram for deleteMultipleCommand_
+image::DeleteMultipleCommandSequenceDiagram.png[width="800"]
+_Figure 4.4 : Sequence diagram for `deleteMultipleCommand`_
 
 Delete multiple contacts extends from undoable commands, and it can be undone using the undo function. By keying in the command word `deleteMul` along with `indexes`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `DeleteMultipleCommandParser` class, as seen from figure 4.4 above.
 
@@ -452,9 +462,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
 }
 ----
 
-As our indexes are intended to take in multiple index values, we will use a `String[] listOfIndex = trimmedArgs.split("\\s+");` to split the arguments into individual indexes and store them into the String array for use. We will use a `Collections.reverse(list);` to ensure that the user will be able to delete the correct indexes. The `ArrayList<String> list = new ArrayList<String>(Arrays.asList(listOfIndex));` is used to convert the list of index into an arrayList for use by the collections utility.
-
-We will now create a `ArrayList<Index> arrayOfIndex = new ArrayList<Index>();` to store the indexes that we will need for the feature. We will store the indexes into the arraylist using a for loop. However, as the arguments in the `listOfIndex` arraylist is in a string format, we will need to convert them into an integer format before storing it into the `ArrayList<Index> arrayOfIndex`. This arrayList will be returned to the `DeleteMultipleCommand` class for use.
+As our indexes are intended to take in multiple index values, a `String[] listOfIndex = trimmedArgs.split("\\s+");` is used to split the arguments into individual indexes and store them into the String array. A `Collections.reverse(list);` is used to ensure that the user will be able to delete the correct indexes. The `ArrayList<String> list = new ArrayList<String>(Arrays.asList(listOfIndex));` is used to convert the list of index into an arrayList for use by the collections utility.
 
 In the `DeleteMultipleCommand` class, the commandResult method is used which compares the index with the `lastShownList` in the model, similar to the method used in the `deleteCommand`. However, as `DeleteMultipleCommand` is designed to take in multiple indexes, a for-loop is used to loop the commandResult method so as to check for every index within the arrayList. The names that are deleted will be stored inside a `String listOfDeletedContacts` which will be used to display the results on the UI.
 
