@@ -636,34 +636,34 @@ my own copy of Ark. How can I do this? +
 == Command Summary
 |===
 | *Command* | *Compulsory fields* | *Optional fields* | *Example usage* |
-| *Add* | *`#/TRACKING_NUMBER` +
-          *`n/NAME` +
-          *`p/PHONE_NUMBER` +
-          *`e/EMAIL` +
-          *`a/ADDRESS` +
-          *`d/DELIVERY_DATE` |
-          *`s/STATUS` +
-          *`t/TAG` |
+| *Add* | *`#/TRACKING_NUMBER`* +
+          *`n/NAME`* +
+          *`p/PHONE_NUMBER`* +
+          *`e/EMAIL`* +
+          *`a/ADDRESS`* +
+          *`d/DELIVERY_DATE`* |
+          *`s/STATUS`* +
+          *`t/TAG`* |
  `add #/RR906906906SG n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, S123465 d/12-12-2012 s/pending t/flammable`|
 | *Clear* | | | `clear` |
-| *Delete* | * `INDEX` | | `delete 1` |
-| *Edit* | *`INDEX` | *`#/TRACKING_NUMBER` +
-                      *`n/NAME` +
-                      *`p/PHONE_NUMBER` +
-                      *`e/EMAIL` +
-                      *`a/ADDRESS` +
-                      *`d/DELIVERY_DATE`
-                      *`s/STATUS` +
-                      *`t/TAG`
+| *Delete* | *`INDEX`* | | `delete 1` |
+| *Edit* | *`INDEX`* | *`#/TRACKING_NUMBER`* +
+                      *`n/NAME`* +
+                      *`p/PHONE_NUMBER`* +
+                      *`e/EMAIL`* +
+                      *`a/ADDRESS`* +
+                      *`d/DELIVERY_DATE`*
+                      *`s/STATUS`* +
+                      *`t/TAG`*
 | `edit 2 #/RR000000000SG n/James Lee e/jameslee@example.com` |
-| *Find* | *`KEYWORD` | *`ADDITIONAL KEYWORDS` | `find John` |
+| *Find* | *`KEYWORD`* | *`ADDITIONAL KEYWORDS`* | `find John` |
 | *List* | | | `list` |
 | *Help* | | | `help` |
-| *Select* | *`INDEX` | | `select 1`|
+| *Select* | *`INDEX`* | | `select 1`|
 | *History* | | | `history` |
 | *Undo* | | | `undo` |
-| *Redo* | | | `Redo |
-| *Import* | *`FILE_NAME` | | `import ark_save`|
+| *Redo* | | | `Redo` |
+| *Import* | *`FILE_NAME`* | | `import ark_save`|
 |===
 == Patch Notes
 
