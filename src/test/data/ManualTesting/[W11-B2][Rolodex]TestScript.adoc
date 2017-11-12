@@ -310,7 +310,7 @@ Expected Behaviour
 Expected Behaviour
 +++++++++++++++++
 
-* Email of first contact should now be %22modified@mail.com"
+* Email of first contact should now be "modified@mail.com"
 
 [[drop-down-list1]]
 Drop-Down List
