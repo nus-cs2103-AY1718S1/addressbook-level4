@@ -1377,6 +1377,36 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Find the Facebook profile of a person
+
+*MSS*
+
+1. User requests to view the Facebook profile of a person specified by an index number.
+2. UniCity loads the Facebook search page with the person's name.
++
+Use case ends.
+
+[discrete]
+=== Use case: Display a person's address on Google Maps
+
+*MSS*
+
+1. User requests to view the address of a person specified by an index number on Google Maps.
+2. UniCity displays the address on Google Maps.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The person's address is not entered.
++
+[none]
+** 2a1. UniCity displays an error message.
++
+Use case ends.
+
+[discrete]
 === Use case: List all persons
 
 *MSS*
@@ -1390,6 +1420,46 @@ Use case ends.
 
 [none]
 * 2a. The list is empty.
++
+[none]
+** 2a1. UniCity displays an empty list.
++
+Use case ends.
+
+discrete]
+=== Use case: Favourite a person
+
+*MSS*
+
+1. User requests to favourite a person specified by an index number.
+2. UniCity locates the person and marks this person as a favourite contact.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The index number is out of bound.
++
+[none]
+** 2a1. UniCity throws an exception.
++
+Use case ends.
+
+[discrete]
+=== Use case: List all favourite persons
+
+*MSS*
+
+1. User requests to view all favourite persons in the list.
+2. UniCity displays a list of all favourite contacts.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no favourite contacts in UniCity.
 +
 [none]
 ** 2a1. UniCity displays an empty list.
