@@ -23,6 +23,7 @@ public class Address {
 
     public final String value;
 
+    //@@author Ernest
     /**
      * Validates given address.
      *
@@ -44,6 +45,7 @@ public class Address {
         }
         this.value = sb.toString().trim();
     }
+    //@@author
 
     /**
      * Returns true if a given string is a valid person email.
