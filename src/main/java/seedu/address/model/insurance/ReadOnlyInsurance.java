@@ -1,9 +1,9 @@
 package seedu.address.model.insurance;
 
+import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.UUID;
 
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 
@@ -13,8 +13,8 @@ import javafx.beans.property.StringProperty;
  */
 public interface ReadOnlyInsurance {
 
-    String getInsuranceName();
-    StringProperty insuranceNameProperty();
+    InsuranceName getInsuranceName();
+    ObjectProperty<InsuranceName> insuranceNameProperty();
     ObjectProperty<UUID> idProperty();
     UUID getId();
     EnumMap getRoleToPersonNameMap();
@@ -27,14 +27,14 @@ public interface ReadOnlyInsurance {
     ObjectProperty<InsurancePerson> beneficiaryProperty();
     InsurancePerson getBeneficiary();
     String getBeneficiaryName();
-    DoubleProperty premiumProperty();
-    Double getPremium();
-    StringProperty premiumStringProperty();
-    String getPremiumString();
-    StringProperty contractNameProperty();
-    String getContractName();
+    ObjectProperty<Premium> premiumProperty();
+    Premium getPremium();
+    ObjectProperty<ContractFileName> contractFileNameProperty();
+    ContractFileName getContractFileName();
+    LocalDate getSigningDate();
     StringProperty signingDateStringProperty();
     String getSigningDateString();
+    LocalDate getExpiryDate();
     StringProperty expiryDateStringProperty();
     String getExpiryDateString();
 
@@ -45,13 +45,17 @@ public interface ReadOnlyInsurance {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getId().equals(this.getId()) // state checks here onwards
-                && other.getOwnerName().equals(this.getOwnerName())
-                && other.getInsuredName().equals(this.getInsuranceName())
+                && other.getInsuranceName().equals(this.getInsuranceName())
+                && other.getRoleToPersonNameMap().equals(this.getRoleToPersonNameMap())
+                && other.getOwner().equals(this.getOwner())
+                && other.getInsured().equals(this.getInsured())
                 && other.getBeneficiaryName().equals(this.getBeneficiaryName())
                 && other.getPremium().equals(this.getPremium())
+                && other.getSigningDate().equals(this.getSigningDate())
                 && other.getSigningDateString().equals(this.getSigningDateString())
-                && other.getExpiryDateString().equals(this.getExpiryDateString()))
-                && other.getContractName().equals(this.getContractName());
+                && other.getExpiryDate().equals(this.getExpiryDate()))
+                && other.getExpiryDateString().equals(this.getExpiryDateString())
+                && other.getContractFileName().equals(this.getContractFileName());
     }
 
     /**
@@ -67,9 +71,9 @@ public interface ReadOnlyInsurance {
                 .append("  Beneficiary: ")
                 .append(getBeneficiaryName())
                 .append(" \nPremium: ")
-                .append(getPremiumString())
+                .append(getPremium())
                 .append("  Contract File: ")
-                .append(getContractName())
+                .append(getContractFileName())
                 .append("  Signing Date: ")
                 .append(getSigningDateString())
                 .append("  Expiry Date: ")

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.nio.file.InvalidPathException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -16,6 +17,10 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.AppUtil.PanelChoice;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.insurance.ContractFileName;
+import seedu.address.model.insurance.InsuranceName;
+import seedu.address.model.insurance.InsurancePerson;
+import seedu.address.model.insurance.Premium;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
@@ -150,36 +155,46 @@ public class ParserUtil {
 
     //@@author OscarWang114
     /**
-     * Parses a {@code Optional<String> owner} into an {@code Optional<String>} if {@code owner} is present.
+     * Parses a {@code Optional<String> name} into an {@code Optional<InsuranceName>} if {@code owner} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<String> parseNameForInsurance(Optional<String> name) throws IllegalValueException {
+    public static Optional<InsuranceName> parseInsuranceName(Optional<String> name) throws IllegalValueException {
         requireNonNull(name);
-        return name.isPresent() ? Optional.of(name.get()) : Optional.empty();
+        return name.isPresent() ? Optional.of(new InsuranceName(name.get())) : Optional.empty();
     }
     /**
-     * Parses a {@code Optional<String> premium} into an {@code Optional<Double>} if {@code premium} is present.
+     * Parses a {@code Optional<String> insurancePerson} into an {@code Optional<InsurancePerson>} if {@code premium}
+     * is present. See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<InsurancePerson> parseInsurancePerson(Optional<String> person) throws IllegalValueException {
+        requireNonNull(person);
+        return person.isPresent() ? Optional.of(new InsurancePerson(person.get())) : Optional.empty();
+    }
+    /**
+     * Parses a {@code Optional<String> premium} into an {@code Optional<Premium>} if {@code premium} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Double> parsePremium(Optional<String> premium) throws IllegalValueException {
+    public static Optional<Premium> parsePremium(Optional<String> premium) throws IllegalValueException {
         requireNonNull(premium);
-        try {
-            if (premium.isPresent()) {
-                return Optional.of(Double.parseDouble(premium.get()));
-            } else {
-                return Optional.empty();
-            }
-        } catch (NumberFormatException nfe) {
-            throw new IllegalValueException("Premium input cannot be recognised as a double!");
-        }
+        return premium.isPresent() ? Optional.of(new Premium(premium.get())) : Optional.empty();
     }
     /**
-     * Parses a {@code Optional<String> contract} into an {@code Optional<String>} if {@code contract} is present.
+     * Parses a {@code Optional<String> contract} into an {@code Optional<ContractFileName>} if {@code contract}
+     * is present. See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ContractFileName> parseContractFileName(Optional<String> contract)
+            throws IllegalValueException {
+        requireNonNull(contract);
+        return contract.isPresent() ? Optional.of(new ContractFileName(contract.get())) : Optional.empty();
+    }
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<LocalDate>} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<String> parseContract(Optional<String> contract) throws IllegalValueException {
-        requireNonNull(contract);
-        return contract.isPresent() ? Optional.of(contract.get()) : Optional.empty();
+    public static Optional<LocalDate> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        DateParser dateParser = new DateParser();
+        return date.isPresent() ? Optional.of(dateParser.parse(date.get())) : Optional.empty();
     }
 
     //@@author Juxarius

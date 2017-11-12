@@ -2,45 +2,49 @@ package seedu.address.model.insurance;
 
 import java.util.Optional;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author OscarWang114
 /**
- * Represents a person and his/her name in an insurance in LISA.
+ * Represents a person and his/her name in an insurance inside LISA.
  */
 public class InsurancePerson {
 
-    //TODO: Change from String to Name
-    private StringProperty name;
+    private ObjectProperty<Name> name;
     private Optional<ReadOnlyPerson> person;
 
-    public InsurancePerson(String name) {
+    public InsurancePerson(String nameString) throws IllegalValueException {
+        final Name name = new Name(nameString);
+        this.name = new SimpleObjectProperty(name);
         this.person = Optional.empty();
-        this.name = new SimpleStringProperty(name);
     }
 
     public InsurancePerson(ReadOnlyPerson person) {
+        this.name = new SimpleObjectProperty<>(person.getName());
         this.person = Optional.of(person);
-        this.name = new SimpleStringProperty(person.getName().fullName);
     }
 
-    public void setName(String name) {
-        this.name = new SimpleStringProperty(name);
+    public InsurancePerson(Name name) {
+        this.name = new SimpleObjectProperty<>(name);
+        this.person = Optional.empty();
     }
+
     public String getName() {
-        return name.getValue();
+        return name.get().toString();
     }
 
-    public StringProperty nameProperty() {
+    public ObjectProperty<Name> nameProperty() {
         return name;
     }
 
     public void setPerson(ReadOnlyPerson person) {
         this.person = Optional.of(person);
     }
-    //TODO: Fix
+
     public Optional<ReadOnlyPerson> getOptionalPerson() {
         return person;
     }

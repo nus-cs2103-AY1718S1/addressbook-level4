@@ -6,8 +6,8 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 /**
  * Signals that the operation will result in duplicate Insurance objects.
  */
-public class DuplicateInsuranceContractNameException extends DuplicateDataException {
-    public DuplicateInsuranceContractNameException() {
-        super("Operation would result in duplicate insurance contract names");
+public class DuplicateContractFileNameException extends DuplicateDataException {
+    public DuplicateContractFileNameException() {
+        super("Operation would result in duplicate insurance contract file names");
     }
 }

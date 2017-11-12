@@ -79,7 +79,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         enableNameToProfileLink(insurance);
 
         bindListeners(insurance);
-        setPremiumLevel(insurance.getPremium());
+        setPremiumLevel(insurance.getPremium().toDouble());
     }
 
     public ReadOnlyInsurance getInsurance() {
@@ -112,7 +112,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
      * @param insurance
      */
     private void initializeContractFile(ReadOnlyInsurance insurance) {
-        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractName());
+        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractFileName());
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
         } else {
@@ -152,7 +152,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
             try {
                 Desktop.getDesktop().open(insuranceFile);
             } catch (IOException ee) {
-                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractName());
+                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractFileName());
             }
         });
     }
@@ -168,8 +168,8 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
         insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
-        contractName.textProperty().bind(Bindings.convert(insurance.contractNameProperty()));
-        premium.textProperty().bind(Bindings.convert(insurance.premiumStringProperty()));
+        contractName.textProperty().bind(Bindings.convert(insurance.contractFileNameProperty()));
+        premium.textProperty().bind(Bindings.convert(insurance.premiumProperty()));
         signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
         expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));
     }
@@ -193,7 +193,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         enableNameToProfileLink(event.getInsurance());
         initializeContractFile(event.getInsurance());
         bindListeners(event.getInsurance());
-        setPremiumLevel(event.getInsurance().getPremium());
+        setPremiumLevel(event.getInsurance().getPremium().toDouble());
         raise(new SwitchToInsurancePanelRequestEvent());
     }
     //@@author

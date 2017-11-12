@@ -27,7 +27,6 @@ import java.util.UUID;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.logic.parser.Prefix;
-import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.insurance.UniqueLifeInsuranceList;
 import seedu.address.model.tag.Tag;
@@ -49,10 +48,8 @@ public class Person implements ReadOnlyPerson {
     private String reason;
 
     private ObjectProperty<UniqueTagList> tags;
-    //@@author OscarWang114
     private ObjectProperty<List<UUID>> lifeInsuranceIds;
     private ObjectProperty<UniqueLifeInsuranceList> lifeInsurances;
-    //@@author
 
     /**
      * Every field must be present and not null.
@@ -68,10 +65,8 @@ public class Person implements ReadOnlyPerson {
         this.gender = new SimpleObjectProperty<>(gender);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        //@@author OscarWang114
         this.lifeInsuranceIds = new SimpleObjectProperty<>(lifeInsuranceIds);
         this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
-        //@@author
     }
 
     /**
@@ -106,19 +101,6 @@ public class Person implements ReadOnlyPerson {
         }
 
     }
-    //@@author
-
-    //@@author OscarWang114
-    public Person(ReadOnlyPerson source, LifeInsurance lifeInsurance) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getDateOfBirth(), source.getGender(), source.getTags());
-        if (source.getLifeInsuranceIds() != null) {
-            this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
-        }
-        addLifeInsurances(lifeInsurance);
-
-    }
-    //@@author
 
     public void setName(Name name) {
         this.name.set(requireNonNull(name));
@@ -247,20 +229,22 @@ public class Person implements ReadOnlyPerson {
     //@@author
 
     //@@author OscarWang114
-
     /**
-     * adds an Id
-     * @param idToAdd
+     * Adds a life insurance id to {@code lifeInsuranceIds} of this person.
+     * Returns if a duplicate of the id to add already exists in the list.
      */
-    public void addLifeInsuranceIds(UUID idToAdd) {
+    public void addLifeInsuranceIds(UUID toAdd) {
         for (UUID id : lifeInsuranceIds.get()) {
-            if (id.equals(idToAdd)) {
+            if (id.equals(toAdd)) {
                 return;
             }
         }
-        lifeInsuranceIds.get().add(idToAdd);
+        lifeInsuranceIds.get().add(toAdd);
     }
 
+    /**
+     * Clears the list of life insurance ids in this person.
+     */
     public void clearLifeInsuranceIds() {
         lifeInsuranceIds = new SimpleObjectProperty<>(new ArrayList<UUID>());
     }
@@ -275,10 +259,16 @@ public class Person implements ReadOnlyPerson {
         return this.lifeInsuranceIds.get();
     }
 
+    /**
+     * Adds a life insurance to {@code UniqueLifeInsuranceList} of this person.
+     */
     public void addLifeInsurances(ReadOnlyInsurance lifeInsurance) {
         this.lifeInsurances.get().add(lifeInsurance);
     }
 
+    /**
+     * Clears the list of life insurances in this person.
+     */
     public void clearLifeInsurances() {
         this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
     }

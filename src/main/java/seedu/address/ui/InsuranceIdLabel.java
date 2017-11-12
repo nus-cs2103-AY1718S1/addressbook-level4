@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
@@ -25,8 +26,8 @@ public class InsuranceIdLabel extends UiPart<Region> {
 
     public InsuranceIdLabel(ReadOnlyInsurance insurance) {
         super(FXML);
-        insuranceId.textProperty().bind(insurance.insuranceNameProperty());
-        setPremiumLevel(insurance.getPremium());
+        insuranceId.textProperty().bind(Bindings.convert(insurance.insuranceNameProperty()));
+        setPremiumLevel(insurance.getPremium().toDouble());
         insuranceId.setOnMouseClicked(e -> raise(new InsuranceClickedEvent(insurance)));
     }
 

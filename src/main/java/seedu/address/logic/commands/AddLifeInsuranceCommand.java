@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BENEFICIARY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT_FILE_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -13,9 +13,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SIGNING_DATE;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
-import seedu.address.model.insurance.exceptions.DuplicateInsuranceContractNameException;
+import seedu.address.model.insurance.exceptions.DuplicateContractFileNameException;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -37,7 +38,7 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
             + PREFIX_PREMIUM + "PREMIUM "
             + PREFIX_SIGNING_DATE + "SIGNING_DATE "
             + PREFIX_EXPIRY_DATE + "EXPIRY_DATE "
-            + PREFIX_CONTRACT_NAME + "CONTRACT_NAME\n"
+            + PREFIX_CONTRACT_FILE_NAME + "CONTRACT_NAME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Term Life "
             + PREFIX_OWNER + "Alex Yeoh "
@@ -46,25 +47,27 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
             + PREFIX_PREMIUM + "600 "
             + PREFIX_SIGNING_DATE + "17 11 2017 "
             + PREFIX_EXPIRY_DATE + "17 11 2037 "
-            + PREFIX_CONTRACT_NAME + "AlexYeoh-TermLife";
+            + PREFIX_CONTRACT_FILE_NAME + "AlexYeoh-TermLife";
 
     public static final String MESSAGE_SUCCESS = "New insurance added: %1$s";
-    public static final String MESSAGE_DUPLICATE_INSURANCE_CONTRACT_FILE =
+    public static final String MESSAGE_DUPLICATE_INSURANCE = "AddressBooks should not have duplicate insurances";
+
+    public static final String MESSAGE_DUPLICATE_CONTRACT_FILE_NAME =
             "This insurance contract file already exists in LISA";
 
-    private final LifeInsurance lifeInsurance;
+    private final LifeInsurance toAdd;
 
     /**
      * Creates an {@code AddLifeInsuranceCommand} to add the specified {@code LifeInsurance}
      */
     public AddLifeInsuranceCommand(ReadOnlyInsurance toAdd) {
-        lifeInsurance = new LifeInsurance(toAdd);
+        this.toAdd = new LifeInsurance(toAdd);
     }
 
     /**
      * Check if any {@code ReadOnlyPerson} arguments (owner, insured, and beneficiary) required to create a
      * life insurance are inside the person list by matching their names case-insensitively. If matches,
-     * set the person as the owner, insured, or beneficiary accordingly. Note that a person can
+     * set the person as the owner, insured, or beneficiary accordingly.
      */
     private void isAnyPersonInList(List<ReadOnlyPerson> list, LifeInsurance lifeInsurance) {
         String ownerName = lifeInsurance.getOwner().getName();
@@ -73,13 +76,13 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
         for (ReadOnlyPerson person: list) {
             String lowerCaseName = person.getName().toString().toLowerCase();
             if (lowerCaseName.equals(ownerName)) {
-                lifeInsurance.setOwner(person);
+                lifeInsurance.setOwner(new InsurancePerson(person));
             }
             if (lowerCaseName.equals(insuredName)) {
-                lifeInsurance.setInsured(person);
+                lifeInsurance.setInsured(new InsurancePerson(person));
             }
             if (lowerCaseName.equals(beneficiaryName)) {
-                lifeInsurance.setBeneficiary(person);
+                lifeInsurance.setBeneficiary(new InsurancePerson(person));
             }
         }
     }
@@ -88,23 +91,22 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         List<ReadOnlyPerson> personList = model.getFilteredPersonList();
-        isAnyPersonInList(personList, lifeInsurance);
+        isAnyPersonInList(personList, toAdd);
         try {
-            model.addLifeInsurance(lifeInsurance);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, lifeInsurance));
+            model.addLifeInsurance(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateInsuranceException die) {
-            throw new AssertionError("AddressBooks should not have duplicate insurances");
-        } catch (DuplicateInsuranceContractNameException dicne) {
-            throw new CommandException(MESSAGE_DUPLICATE_INSURANCE_CONTRACT_FILE);
+            throw new AssertionError(MESSAGE_DUPLICATE_INSURANCE);
+        } catch (DuplicateContractFileNameException dicne) {
+            throw new CommandException(MESSAGE_DUPLICATE_CONTRACT_FILE_NAME);
         }
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddLifeInsuranceCommand); // instanceof handles nulls
-                //&& toAdd.equals(((AddLifeInsuranceCommand) other).toAdd));
-        //TODO: need to compare every nonstatic class member.
+                || (other instanceof AddLifeInsuranceCommand // instanceof handles nulls
+                && toAdd.equals(((AddLifeInsuranceCommand) other).toAdd));
     }
 
     //@@author arnollim

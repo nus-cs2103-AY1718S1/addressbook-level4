@@ -12,10 +12,11 @@ import java.util.UUID;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.function.ThrowingConsumer;
+import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.insurance.UniqueLifeInsuranceMap;
-import seedu.address.model.insurance.exceptions.DuplicateInsuranceContractNameException;
+import seedu.address.model.insurance.exceptions.DuplicateContractFileNameException;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.Person;
@@ -34,9 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
-    //@@author OscarWang114
     private final UniqueLifeInsuranceMap lifeInsuranceMap;
-    //@@author
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -48,9 +47,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
-        //@@author OscarWang114
         lifeInsuranceMap = new UniqueLifeInsuranceMap();
-        //@@author
     }
 
     public AddressBook() {}
@@ -75,7 +72,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //@@author OscarWang114
     public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances)
-            throws DuplicateInsuranceException, DuplicateInsuranceContractNameException {
+            throws DuplicateInsuranceException, DuplicateContractFileNameException {
         this.lifeInsuranceMap.setInsurances(insurances);
     }
 
@@ -111,13 +108,13 @@ public class AddressBook implements ReadOnlyAddressBook {
             setLifeInsurances(newData.getLifeInsuranceMap());
         } catch (DuplicateInsuranceException die) {
             assert false : "AddressBooks should not have duplicate insurances";
-        } catch (DuplicateInsuranceContractNameException dicne) {
+        } catch (DuplicateContractFileNameException dicne) {
             assert false : "AddressBooks should not have duplicate insurance contract names";
         }
-        syncMasterLifeInsuranceMap();
+        syncMasterLifeInsuranceMapWith(persons);
 
         try {
-            syncMasterPersonList();
+            syncMasterPersonListWith(lifeInsuranceMap);
         } catch (InsuranceNotFoundException infe) {
             assert false : "AddressBooks should not contain id that doesn't match to an insurance";
         }
@@ -138,7 +135,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
-        // TODO: consider reverse the order?
         persons.add(newPerson);
         persons.sortPersons();
         syncWithUpdate();
@@ -172,13 +168,13 @@ public class AddressBook implements ReadOnlyAddressBook {
      *Adds an insurance to the address book.
      */
     public void addInsurance(ReadOnlyInsurance i)
-            throws DuplicateInsuranceException, DuplicateInsuranceContractNameException {
+            throws DuplicateInsuranceException, DuplicateContractFileNameException {
         LifeInsurance lifeInsurance = new LifeInsurance(i);
         lifeInsuranceMap.put(lifeInsurance.getId(), lifeInsurance);
         syncWithUpdate();
     }
+    //@@author
     //@@author Juxarius
-
     /**
      * @param target insurance to be deleted
      * @throws InsuranceNotFoundException
@@ -191,7 +187,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
     //@@author
-
 
     /**
      * Ensures that every tag in this person:
@@ -242,9 +237,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Function to update the overall links between insurances and persons after a change in LISA
      */
     private void syncWithUpdate() {
-        syncMasterLifeInsuranceMap();
+        syncMasterLifeInsuranceMapWith(persons);
         try {
-            syncMasterPersonList();
+            syncMasterPersonListWith(lifeInsuranceMap);
         } catch (InsuranceNotFoundException infe) {
             assert false : "AddressBooks should not have duplicate insurances";
         }
@@ -260,24 +255,24 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Ensures that every insurance in the master map:
      *  - links to its owner, insured, and beneficiary {@code Person} if they exist in master person list respectively
      */
-    public void syncMasterLifeInsuranceMap() {
+    public void syncMasterLifeInsuranceMapWith(UniquePersonList persons) {
         clearAllPersonsInsuranceIds();
         lifeInsuranceMap.forEach((id, insurance) -> {
-            insurance.resetAllInsurancePerson();
-            String owner = insurance.getOwner().getName();
-            String insured = insurance.getInsured().getName();
-            String beneficiary = insurance.getBeneficiary().getName();
+            insurance.resetAllInsurancePersons();
+            String owner = insurance.getOwnerName();
+            String insured = insurance.getInsuredName();
+            String beneficiary = insurance.getBeneficiaryName();
             persons.forEach(person -> {
-                if (person.getName().fullName.equals(owner)) {
-                    insurance.setOwner(person);
+                if (person.getName().toString().equals(owner)) {
+                    insurance.setOwner(new InsurancePerson(person));
                     person.addLifeInsuranceIds(id);
                 }
-                if (person.getName().fullName.equals(insured)) {
-                    insurance.setInsured(person);
+                if (person.getName().toString().equals(insured)) {
+                    insurance.setInsured(new InsurancePerson(person));
                     person.addLifeInsuranceIds(id);
                 }
-                if (person.getName().fullName.equals(beneficiary)) {
-                    insurance.setBeneficiary(person);
+                if (person.getName().toString().equals(beneficiary)) {
+                    insurance.setBeneficiary(new InsurancePerson(person));
                     person.addLifeInsuranceIds(id);
                 }
             });
@@ -289,7 +284,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Ensures that every person in the master list:
      *  - contains the correct life insurance corresponding to its id from the master map
      */
-    public void syncMasterPersonList() throws InsuranceNotFoundException {
+    public void syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap) throws InsuranceNotFoundException {
         persons.forEach((ThrowingConsumer<Person>) person -> {
             List<UUID> idList = person.getLifeInsuranceIds();
             if (!idList.isEmpty()) {

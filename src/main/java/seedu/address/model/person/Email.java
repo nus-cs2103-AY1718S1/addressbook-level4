@@ -20,7 +20,7 @@ public class Email {
 
     //@@author OscarWang114
     /**
-     * Initialize a Email object with value of empty String. This can ONLY be used in the default field of
+     * Initialize a Email object with value of empty String. This can only be used in the default field of
      * {@code AddPersonOptionalFieldDescriptor}
      */
     public Email() {

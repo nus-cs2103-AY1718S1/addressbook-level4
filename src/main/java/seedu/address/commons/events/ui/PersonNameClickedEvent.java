@@ -2,9 +2,10 @@ package seedu.address.commons.events.ui;
 
 import java.util.Optional;
 
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.ObjectProperty;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.insurance.InsurancePerson;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author RSJunior37
@@ -34,7 +35,7 @@ public class PersonNameClickedEvent extends BaseEvent {
         return target.getOptionalPerson();
     }
 
-    public StringProperty getPersonName() {
+    public ObjectProperty<Name> getPersonName() {
         return target.nameProperty();
     }
     //@@author

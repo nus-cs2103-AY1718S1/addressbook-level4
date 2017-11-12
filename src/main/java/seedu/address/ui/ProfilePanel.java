@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -21,6 +21,7 @@ import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.SwitchToProfilePanelRequestEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author RSJunior37
@@ -97,7 +98,7 @@ public class ProfilePanel extends UiPart<Region> {
     /**
      * Load person page with only his/her name with person does not exist in Lisa message
      */
-    private void loadPersonPage(StringProperty name) {
+    private void loadPersonPage(ObjectProperty<Name> name) {
         unbindListenersAndClearText();
         this.name.textProperty().bind(Bindings.convert(name));
         this.address.setText(PERSON_DOES_NOT_EXIST_IN_LISA_MESSAGE);

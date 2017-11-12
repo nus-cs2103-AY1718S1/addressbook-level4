@@ -7,15 +7,13 @@ import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.UUID;
 
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.DateParser;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Name;
 
 //@@author OscarWang114
 /**
@@ -29,103 +27,96 @@ public class LifeInsurance implements ReadOnlyInsurance {
      */
     enum Roles { OWNER, INSURED, BENEFICIARY }
     private ObjectProperty<UUID> id;
+    private ObjectProperty<InsuranceName> insuranceName;
     private EnumMap<Roles, String> roleToPersonNameMap;
     private ObjectProperty<InsurancePerson> owner;
     private ObjectProperty<InsurancePerson> insured;
     private ObjectProperty<InsurancePerson> beneficiary;
-    private DoubleProperty premium;
-    private StringProperty premiumString;
-    private StringProperty contractName;
-    private StringProperty signingDateString;
-    private StringProperty expiryDateString;
+    private ObjectProperty<Premium> premium;
+    private ObjectProperty<ContractFileName> contractFileName;
 
     //@@author Juxarius
-    private StringProperty insuranceName;
     private LocalDate signingDate;
     private LocalDate expiryDate;
+    private StringProperty signingDateString;
+    private StringProperty expiryDateString;
     //@@author
 
     //@author OscarWang114
     /**
      * Constructor for {@code XmlAdaptedLifeInsurance.toModelType()}
      */
-    public LifeInsurance(String id, String insuranceName, String owner, String insured, String beneficiary,
-                         Double premium, String contractName, String signingDateInput, String expiryDateInput)
+    public LifeInsurance(UUID id, InsuranceName insuranceName, InsurancePerson owner, InsurancePerson insured,
+                         InsurancePerson beneficiary, Premium premium, ContractFileName contractFileName,
+                         LocalDate signingDate, LocalDate expiryDate)
             throws IllegalValueException {
-        this.id = new SimpleObjectProperty<>(UUID.fromString(id));
-        this.insuranceName = new SimpleStringProperty(insuranceName);
+        this.id = new SimpleObjectProperty<>(id);
+        this.insuranceName = new SimpleObjectProperty<>(insuranceName);
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
-        this.roleToPersonNameMap.put(Roles.OWNER, owner);
-        this.roleToPersonNameMap.put(Roles.INSURED, insured);
-        this.roleToPersonNameMap.put(Roles.BENEFICIARY, beneficiary);
-        this.owner = new SimpleObjectProperty<>(new InsurancePerson(owner));
-        this.insured = new SimpleObjectProperty<>(new InsurancePerson(insured));
-        this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiary));
-        this.premium = new SimpleDoubleProperty(premium);
-        this.contractName = new SimpleStringProperty(contractName);
-        this.signingDate = new DateParser().parse(signingDateInput);
+        this.roleToPersonNameMap.put(Roles.OWNER, owner.getName());
+        this.roleToPersonNameMap.put(Roles.INSURED, insured.getName());
+        this.roleToPersonNameMap.put(Roles.BENEFICIARY, beneficiary.getName());
+        this.owner = new SimpleObjectProperty<>(owner);
+        this.insured = new SimpleObjectProperty<>(insured);
+        this.beneficiary = new SimpleObjectProperty<>(beneficiary);
+        this.premium = new SimpleObjectProperty<>(premium);
+        this.contractFileName = new SimpleObjectProperty(contractFileName);
+        this.signingDate = signingDate;
         this.signingDateString = new SimpleStringProperty(this.signingDate.format(DateParser.DATE_FORMAT));
-        this.expiryDate = new DateParser().parse(expiryDateInput);
+        this.expiryDate = expiryDate;
         this.expiryDateString = new SimpleStringProperty(this.expiryDate.format(DateParser.DATE_FORMAT));
-        this.premiumString = new SimpleStringProperty(this.getPremiumString());
     }
 
     /**
      * Constructor for {@code AddLifeInsuranceCommand}
      */
-    public LifeInsurance(String insuranceName, String owner, String insured, String beneficiary, Double premium,
-                         String contractName, LocalDate signingDate, LocalDate expiryDate) {
-        requireAllNonNull(owner, insured, beneficiary, premium, contractName);
+    public LifeInsurance(InsuranceName insuranceName, InsurancePerson owner, InsurancePerson insured,
+                         InsurancePerson beneficiary, Premium premium, ContractFileName contractFileName,
+                         LocalDate signingDate, LocalDate expiryDate) {
+        requireAllNonNull(owner, insured, beneficiary, premium, contractFileName, signingDate, expiryDate);
         this.id = new SimpleObjectProperty<>(UUID.randomUUID());
-        this.insuranceName = new SimpleStringProperty(insuranceName);
+        this.insuranceName = new SimpleObjectProperty<>(insuranceName);
         this.roleToPersonNameMap = new EnumMap<>(Roles.class);
-        this.roleToPersonNameMap.put(Roles.OWNER, owner);
-        this.roleToPersonNameMap.put(Roles.INSURED, insured);
-        this.roleToPersonNameMap.put(Roles.BENEFICIARY, beneficiary);
-        this.owner = new SimpleObjectProperty<>(new InsurancePerson(owner));
-        this.insured = new SimpleObjectProperty<>(new InsurancePerson(insured));
-        this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiary));
-        this.premium = new SimpleDoubleProperty(premium);
-        this.contractName = new SimpleStringProperty(contractName);
+        this.roleToPersonNameMap.put(Roles.OWNER, owner.getName());
+        this.roleToPersonNameMap.put(Roles.INSURED, insured.getName());
+        this.roleToPersonNameMap.put(Roles.BENEFICIARY, beneficiary.getName());
+        this.owner = new SimpleObjectProperty<>(owner);
+        this.insured = new SimpleObjectProperty<>(insured);
+        this.beneficiary = new SimpleObjectProperty<>(beneficiary);
+        this.premium = new SimpleObjectProperty<>(premium);
+        this.contractFileName = new SimpleObjectProperty<>(contractFileName);
         this.signingDate = signingDate;
         this.signingDateString = new SimpleStringProperty(this.signingDate.format(DateParser.DATE_FORMAT));
         this.expiryDate = expiryDate;
         this.expiryDateString = new SimpleStringProperty(this.expiryDate.format(DateParser.DATE_FORMAT));
-        this.premiumString = new SimpleStringProperty(this.getPremiumString());
     }
 
     /**
      * Creates a copy of the given ReadOnlyInsurance.
      */
     public LifeInsurance(ReadOnlyInsurance source) {
+        this(source.getInsuranceName(), source.getOwner(), source.getInsured(), source.getBeneficiary(),
+                source.getPremium(), source.getContractFileName(), source.getSigningDate(), source.getExpiryDate());
         this.id = new SimpleObjectProperty<>(source.idProperty().get());
-        this.insuranceName = new SimpleStringProperty(source.getInsuranceName());
-        this.roleToPersonNameMap = new EnumMap<>(Roles.class);
-        this.roleToPersonNameMap.put(Roles.OWNER, source.getOwner().getName());
-        this.roleToPersonNameMap.put(Roles.INSURED, source.getInsured().getName());
-        this.roleToPersonNameMap.put(Roles.BENEFICIARY, source.getBeneficiary().getName());
-        this.owner = new SimpleObjectProperty<>(source.getOwner());
-        this.insured = new SimpleObjectProperty<>(source.getInsured());
-        this.beneficiary = new SimpleObjectProperty<>(source.getBeneficiary());
-        this.premium = new SimpleDoubleProperty(source.getPremium());
-        this.premiumString = new SimpleStringProperty(this.getPremiumString());
-        this.contractName = new SimpleStringProperty(source.getContractName());
-        this.signingDateString = new SimpleStringProperty(source.getSigningDateString());
-        this.expiryDateString = new SimpleStringProperty(source.getExpiryDateString());
     }
 
     /**
      * Resets the value of the owner, insured, beneficiary of this insurance. Every new {@code InsurancePerson}
-     * object is constructed with the {@code name} field assigned and the {@code person} field unassigned.
+     * object is constructed with the name field assigned as {@code Name} and the person field
+     * assigned as {@code Optional.empty()}.
      */
-    public void resetAllInsurancePerson() {
-        String ownerName = this.roleToPersonNameMap.get(Roles.OWNER);
-        String insuredName = this.roleToPersonNameMap.get(Roles.INSURED);
-        String beneficiaryName = this.roleToPersonNameMap.get(Roles.BENEFICIARY);
+    public void resetAllInsurancePersons() {
+        final Name ownerName = this.owner.get().nameProperty().get();
+        final Name insuredName = this.insured.get().nameProperty().get();
+        final Name beneficiaryName = this.beneficiary.get().nameProperty().get();
         this.owner = new SimpleObjectProperty<>(new InsurancePerson(ownerName));
         this.insured = new SimpleObjectProperty<>(new InsurancePerson(insuredName));
         this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiaryName));
 
+    }
+
+    public void setId(UUID id) {
+        this.id = new SimpleObjectProperty<>(id);
     }
 
     @Override
@@ -138,23 +129,33 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return id.get();
     }
 
+    public void setInsuranceName(InsuranceName insuranceName) {
+        this.insuranceName = new SimpleObjectProperty<>(insuranceName);
+    }
+
+    @Override
+    public ObjectProperty<InsuranceName> insuranceNameProperty() {
+        return insuranceName;
+    }
+
+    @Override
+    public InsuranceName getInsuranceName() {
+        return insuranceName.get();
+    }
+
     @Override
     public EnumMap getRoleToPersonNameMap() {
         return roleToPersonNameMap;
     }
 
-    public void setOwner(ReadOnlyPerson owner) {
+    public void setOwner(InsurancePerson owner) {
         requireNonNull(owner);
-        this.owner.get().setPerson(owner);
+        this.owner = new SimpleObjectProperty<>(owner);
     }
 
     @Override
     public ObjectProperty<InsurancePerson> ownerProperty() {
         return owner;
-    }
-
-    public void setInsuranceName(String insuranceName) {
-        this.insuranceName.set(requireNonNull(insuranceName));
     }
 
     @Override
@@ -167,9 +168,9 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return owner.get().getName();
     }
 
-    public void setInsured(ReadOnlyPerson insured) {
+    public void setInsured(InsurancePerson insured) {
         requireNonNull(insured);
-        this.insured.get().setPerson(insured);
+        this.insured = new SimpleObjectProperty<>(insured);
     }
 
     @Override
@@ -187,9 +188,9 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return insured.get().getName();
     }
 
-    public void setBeneficiary(ReadOnlyPerson beneficiary) {
+    public void setBeneficiary(InsurancePerson beneficiary) {
         requireNonNull(beneficiary);
-        this.beneficiary.get().setPerson(beneficiary);
+        this.beneficiary = new SimpleObjectProperty<>(beneficiary);
     }
 
     @Override
@@ -207,57 +208,46 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return beneficiary.get().getName();
     }
 
-    public void setPremium(Double premium) {
+    public void setPremium(Premium premium) {
         this.premium.set(requireNonNull(premium));
-        this.premiumString.set(getPremiumString());
     }
 
     @Override
-    public DoubleProperty premiumProperty() {
+    public ObjectProperty<Premium> premiumProperty() {
         return premium;
     }
 
     @Override
-    public Double getPremium() {
+    public Premium getPremium() {
         return premium.get();
     }
 
-    //@author Juxarius
-    @Override
-    public StringProperty insuranceNameProperty() {
-        return insuranceName;
+    public void setContractFileName(ContractFileName contractFileName) {
+        this.contractFileName = new SimpleObjectProperty<>(contractFileName);
     }
 
     @Override
-    public String getInsuranceName() {
-        return insuranceName.get();
+    public ObjectProperty<ContractFileName> contractFileNameProperty() {
+        return contractFileName;
     }
 
     @Override
-    public StringProperty premiumStringProperty() {
-        return premiumString;
+    public ContractFileName getContractFileName() {
+        return contractFileName.get();
+    }
+
+    public void setSigningDate(LocalDate signingDate) {
+        this.signingDate = signingDate;
+        setSigningDateString(signingDate.format(DateParser.DATE_FORMAT));
     }
 
     @Override
-    public String getPremiumString() {
-        return "S$ " + String.format("%.2f", premium.get());
-    }
-    //@author
-
-    //@@author OscarWang114
-    @Override
-    public StringProperty contractNameProperty() {
-        return contractName;
+    public LocalDate getSigningDate() {
+        return signingDate;
     }
 
-    @Override
-    public String getContractName() {
-        return contractName.get();
-    }
-
-    public void setSigningDateString(String signingDateString) throws IllegalValueException {
-        this.signingDate = new DateParser().parse(signingDateString);
-        this.signingDateString.set(requireNonNull(signingDateString));
+    private void setSigningDateString(String signingDateString) {
+        this.signingDateString = new SimpleStringProperty(signingDateString);
     }
 
     @Override
@@ -270,9 +260,18 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return signingDateString.get();
     }
 
-    public void setExpiryDateString(String expiryDateString) throws IllegalValueException {
-        this.expiryDate = new DateParser().parse(expiryDateString);
-        this.expiryDateString.set(requireNonNull(expiryDateString));
+    public void setExpiryDate(LocalDate expiryDate) {
+        this.expiryDate = expiryDate;
+        setExpiryDateString(expiryDate.format(DateParser.DATE_FORMAT));
+    }
+
+    @Override
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
+
+    private void setExpiryDateString(String expiryDateString) {
+        this.expiryDateString = new SimpleStringProperty(expiryDateString);
     }
 
     @Override
@@ -283,10 +282,6 @@ public class LifeInsurance implements ReadOnlyInsurance {
     @Override
     public String getExpiryDateString() {
         return expiryDateString.get();
-    }
-
-    public void setContractName(String contractName) {
-        this.contractName.set(requireNonNull(contractName));
     }
 
     @Override

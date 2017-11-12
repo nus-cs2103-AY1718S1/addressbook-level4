@@ -13,7 +13,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
-import seedu.address.model.insurance.exceptions.DuplicateInsuranceContractNameException;
+import seedu.address.model.insurance.exceptions.DuplicateContractFileNameException;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -86,10 +86,10 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //@author OscarWang114
+    //@@author OscarWang114
     @Override
     public synchronized void addLifeInsurance(ReadOnlyInsurance insurance)
-            throws DuplicateInsuranceException, DuplicateInsuranceContractNameException {
+            throws DuplicateInsuranceException, DuplicateContractFileNameException {
         addressBook.addInsurance(insurance);
         updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
         indicateAddressBookChanged();
@@ -125,7 +125,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredInsurances.setPredicate(predicate);
     }
-    //
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

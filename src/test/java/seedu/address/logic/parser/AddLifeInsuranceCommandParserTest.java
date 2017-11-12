@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BENEFICIARY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONTRACT_FILE_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSURED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -31,7 +31,7 @@ public class AddLifeInsuranceCommandParserTest {
         assertCommandFail(parser, command);
         command += " " + PREFIX_PREMIUM + 493.34;
         assertCommandFail(parser, command);
-        command += " " + PREFIX_CONTRACT_NAME + "contract.pdf";
+        command += " " + PREFIX_CONTRACT_FILE_NAME + "contract.pdf";
         assertCommandFail(parser, command);
         command += " " + PREFIX_SIGNING_DATE + "01 11 2011";
         assertCommandFail(parser, command);

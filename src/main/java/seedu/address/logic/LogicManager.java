@@ -130,7 +130,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public ObservableList<ReadOnlyInsurance> getFilteredInsuranceList() {
         return model.getFilteredInsuranceList();
     }
-    //
+    //@@author
 
     @Override
     public ListElementPointer getHistorySnapshot() {
