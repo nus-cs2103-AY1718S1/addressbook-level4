@@ -556,7 +556,7 @@ image::DG_seq_music.png[width="900"]
 
 The following activity diagram summarises what happens inside the `MusicCommand` when a user executes a new command:
 
-image::DG_activity_music.png[width="700"]
+image::DG_activitydiagram_music.png[width="700"]
 
 {sp}
 
@@ -662,7 +662,7 @@ image::DG_seq_radio.png[width="900"]
 
 The following activity diagram summarises what happens inside the `RadioCommand` when a user executes a new command:
 
-image::DG_activity_radio.png[width="700"]
+image::DG_activitydiagram_radio.png[width="700"]
 
 {sp}
 
@@ -725,7 +725,7 @@ image::DG_seq_share.png[width="900"]
 
 The following activity diagram summarises what happens inside the `ShareCommand` when a user executes a new command:
 
-image::DG_activity_share.png[width="700"]
+image::DG_activitydiagram_share.png[width="700"]
 
 {sp}
 
