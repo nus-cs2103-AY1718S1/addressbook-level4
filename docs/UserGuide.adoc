@@ -74,6 +74,10 @@ Command Line Interface autocomplete feature which auto-generates list of residen
 Examples:
 * typing `a` returns a list of commands starting with `add`.
 * typing `find ` returns a list of resident names autocompleted.
+* typing `edit ` returns a list of possible indexes
+
+image::autocomplete.png[width="400"]
+
 // end::autocomplete[]
 
 // tag::addevent[]
@@ -138,14 +142,23 @@ Example of temporary resident that stays for 2 days:
 === Adding a picture: addImage
 
 Adds an image to a resident in the resident book as specified by the current index +
-Format: `addImage INDEX IMAGE_URL`
+Format: `addImage INDEX url/IMAGE_URL`
 
 [TIP]
-The url to the image must start from the root folder
+This is NOT an undoable command
+
+[NOTE]
+===============
+. Only the formats: `JPG`/`JPEG`/`PNG`/`BMP` are allowed
+. Addition of an image can only occur once a resident has been added, there is no image urll field in person creation +
+. Each resident can only have 1 image, specifying a image url replaces the current image with the new one.
+===============
 
 Examples:
 
-* `addImage 1 /Users/username/Downloads/placeholder.jpg`
+* `addImage 7 url//Users/username/Downloads/image.jpg`
+
+image::add_person.png[width="400"]
 
 === Deleting a picture: deleteImage
 
@@ -153,35 +166,30 @@ Deletes an image to a resident in the resident book as specified by the current 
 Format: `deleteImage INDEX`
 
 [TIP]
-Deletes the Image of the resident in the current list of displayed residents
+This is NOT an undoable command
 
 Examples:
 
 * `deleteImage 1`
 
+image::delete_person.png[width="400"]
+
 === Adding a picture: `GUI image`
 
-Adds a picture of a person to the resident book +
-Format: `click on the placeholder image after adding the person into the addressbook`
-
-Adds a person to the resident book
-Format: `click on 'Add Image' button after adding the person into the residentbook`
+Adds a picture of a resident in the resident book +
+Format: `click on the +image button after selecting a resident in the current list of displayed residents`
 
 [TIP]
-One person can only have 1 picture, adding additional images replaces the current one
-
-Example:
-
-image::add_person.png[width="400"]
+Similar to the CLI version of add image, this action is NOT undoable
 
 === Deleting a picture: `GUI button`
 
 Deletes a person's picture from the address book +
-Format: `click on the placeholder image after adding the person into the addressbook`
+Format: `click on the -image button after selecting a resident in the displayed list`
 
-Example:
+[TIP]
+Similar to the CLI version of add image, this action is NOT undoable
 
-image::delete_person.png[width="400"]
 // end::picture[]
 
 // tag::highlight[]
@@ -190,9 +198,12 @@ image::delete_person.png[width="400"]
 Highlights all residents with specified tag / Removes highlighting when residents highlighted
 Format: `highlight TAG_NAME` / `highlight '-'"
 
+[TIP]
+Only `highlight -` will remove highlighting, highlighting invalid tags would only give an +
+error message in the message box
+
 Examples:
-* `highlight colleague`
-* `highlight owes money`
+* `highlight owesmoney`
 * `highlight -` - Clears current highlighting
 // end::highlight[]
 
