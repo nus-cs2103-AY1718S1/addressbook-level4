@@ -436,7 +436,6 @@ _Figure 4.3.1.1b : Interactions in the Birthday Command._
 
 // end::birthday[]
 
-// tag::tagretrieve[]
 === Tags Manipulation & Retrieve mechanism
 
 Three commands for tags manipulation, namely `TagCommand`, `UntagCommand` and `RetagCommand`, together with `RetrieveCommand`, all reside in the `commands` of `Logic`.
@@ -515,6 +514,17 @@ _Figure 4.4.1.1 : Sequence Diagram for the Retrieve Command._
 
 ==== Design Considerations
 
+**Aspect:** Adding tags to person's tag list +
+**Alternative 1 (current choice):** Use `Set` to implement person's tag list and to store tags to be added during command parsing. +
+**Pros:** Duplicated tags will be automatically taken care of. +
+**Cons:** The order of tags inside person's tag list is not maintained. Users may want the tags of their contacts
+to be arranged according to the time added. +
+**Alternative 2:**  Using `List` implement person's tag list and to store tags to be added. +
+**Pros:** Full control over the order of tags inside person's tag list. +
+**Cons:** Duplicated tags need to be handled manually. +
+
+---
+
 **Aspect:** Finding out all persons with the specififed tag +
 **Alternative 1 (current choice):** Go through every person in the addressbook to filter out those having the tag. +
 **Pros:** Easy to implement. +
@@ -522,7 +532,6 @@ _Figure 4.4.1.1 : Sequence Diagram for the Retrieve Command._
 **Alternative 2:**  Create a list attribute for `Tag` to store all persons currently having that tag. +
 **Pros:** Faster to get the persons as the filtered person list is already created. +
 **Cons:** Requires to save the lists of all existing tags to storage file. +
-// end::tagretrieve[]
 
 === Reminder list
 
