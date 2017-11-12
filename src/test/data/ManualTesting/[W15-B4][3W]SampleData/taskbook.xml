@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<taskbook>
+    <tasks>
+        <taskName>picnic</taskName>
+        <taskDescription>have fun at Botanic Garden</taskDescription>
+        <startDateTime>26-11-2017 10:00pm</startDateTime>
+        <endDateTime>26-11-2017 11:00pm</endDateTime>
+        <id>621329686</id>
+        <tagged>friends</tagged>
+        <complete>false</complete>
+        <priority>3</priority>
+    </tasks>
+    <tasks>
+        <taskName>meeting</taskName>
+        <taskDescription>meeting with friends to discuss the final exam preparation</taskDescription>
+        <startDateTime>27-11-2017 11:00am</startDateTime>
+        <endDateTime>27-11-2017 12:00am</endDateTime>
+        <id>2009452255</id>
+        <tagged>project</tagged>
+        <complete>false</complete>
+        <priority>2</priority>
+    </tasks>
+    <tasks>
+        <taskName>discussion</taskName>
+        <taskDescription>discuss about the software demo</taskDescription>
+        <startDateTime>27-11-2017 02:00pm</startDateTime>
+        <endDateTime>27-11-2017 05:00pm</endDateTime>
+        <id>1172283457</id>
+        <tagged>assignment</tagged>
+        <complete>false</complete>
+        <priority>1</priority>
+    </tasks>
+    <tasks>
+        <taskName>demo</taskName>
+        <taskDescription>demo for software enginerring</taskDescription>
+        <startDateTime>28-11-2017 11:00am</startDateTime>
+        <endDateTime>28-11-2017 12:00am</endDateTime>
+        <id>963580043</id>
+        <tagged>graded</tagged>
+        <complete>false</complete>
+        <priority>1</priority>
+    </tasks>
+    <tasks>
+        <taskName>date</taskName>
+        <taskDescription>date with my girlfriend</taskDescription>
+        <startDateTime>29-11-2017 08:00pm</startDateTime>
+        <endDateTime>29-11-2017 10:00pm</endDateTime>
+        <id>952107314</id>
+        <tagged>love</tagged>
+        <complete>false</complete>
+        <priority>3</priority>
+    </tasks>
+    <tasks>
+        <taskName>exam</taskName>
+        <taskDescription>CS2103 mock exam</taskDescription>
+        <startDateTime>10-11-2017 02:00pm</startDateTime>
+        <endDateTime>10-11-2017 03:00pm</endDateTime>
+        <id>592588671</id>
+        <tagged>exam</tagged>
+        <complete>false</complete>
+        <priority>3</priority>
+    </tasks>
+    <tasks>
+        <taskName>presentation</taskName>
+        <taskDescription>CS2102 demo presentation</taskDescription>
+        <startDateTime>13-11-2017 08:00am</startDateTime>
+        <endDateTime>13-11-2017 09:00am</endDateTime>
+        <id>230119132</id>
+        <tagged>presentation</tagged>
+        <tagged>project</tagged>
+        <complete>false</complete>
+        <priority>3</priority>
+    </tasks>
+    <tasks>
+        <taskName>reflection</taskName>
+        <taskDescription>CS2101 reflection submission</taskDescription>
+        <startDateTime>13-11-2017 10:00am</startDateTime>
+        <endDateTime>13-11-2017 10:00am</endDateTime>
+        <id>1397199626</id>
+        <tagged>assignment</tagged>
+        <complete>false</complete>
+        <priority>3</priority>
+    </tasks>
+    <tasks>
+        <taskName>play games</taskName>
+        <taskDescription>play games with Barden</taskDescription>
+        <startDateTime>16-11-2017 10:00am</startDateTime>
+        <endDateTime>16-11-2017 03:00pm</endDateTime>
+        <id>1199841477</id>
+        <tagged>game</tagged>
+        <complete>false</complete>
+        <peopleIndices>-51706712</peopleIndices>
+        <priority>3</priority>
+    </tasks>
+    <tasks>
+        <taskName>final exam review</taskName>
+        <taskDescription>review knowledge for CS2103</taskDescription>
+        <startDateTime>17-11-2017 10:00am</startDateTime>
+        <endDateTime>17-11-2017 03:00pm</endDateTime>
+        <id>1226038061</id>
+        <tagged>exam</tagged>
+        <complete>false</complete>
+        <priority>3</priority>
+    </tasks>
+    <tags>love</tags>
+    <tags>exam</tags>
+    <tags>presentation</tags>
+    <tags>game</tags>
+    <tags>assignment</tags>
+    <tags>project</tags>
+    <tags>graded</tags>
+    <tags>friends</tags>
+</taskbook>
