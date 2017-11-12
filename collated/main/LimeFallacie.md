@@ -1,5 +1,5 @@
 # LimeFallacie
-###### /java/seedu/address/logic/commands/ExportCommand.java
+###### \java\seedu\address\logic\commands\ExportCommand.java
 ``` java
 /**
  * Exports the contacts list in file format to a provided directory in the provided filename
@@ -38,7 +38,7 @@ public class ExportCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ImportCommand.java
+###### \java\seedu\address\logic\commands\ImportCommand.java
 ``` java
 /**
  *  Imports a contacts list as an .xml document and resets the current addressbook into the written one
@@ -90,7 +90,7 @@ public class ImportCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ListCommand.java
+###### \java\seedu\address\logic\commands\ListCommand.java
 ``` java
 /**
  * Lists all persons in the address book to the user.
@@ -137,7 +137,7 @@ public class ListCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
  * Sorts list according to sort type entered.
@@ -192,12 +192,12 @@ public class SortCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
     private final Storage storage;
 
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
     public LogicManager(Model model, Storage storage) {
         this.model = model;
@@ -208,7 +208,7 @@ public class SortCommand extends Command {
     }
 
 ```
-###### /java/seedu/address/logic/parser/ExportCommandParser.java
+###### \java\seedu\address\logic\parser\ExportCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ExportCommand object
@@ -234,7 +234,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ListCommandParser.java
+###### \java\seedu\address\logic\parser\ListCommandParser.java
 ``` java
 /**
  * Parses ListCommand arguments and creates a ListCommand object
@@ -255,7 +255,7 @@ public class ListCommandParser implements Parser<ListCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a String and checks for validity. Leading and trailing whitespaces will be removed
@@ -274,7 +274,7 @@ public class ListCommandParser implements Parser<ListCommand> {
     }
 
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a String argument for tag. Leading and trailing whitespaces will be removed
@@ -295,7 +295,7 @@ public class ListCommandParser implements Parser<ListCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/SortCommandParser.java
+###### \java\seedu\address\logic\parser\SortCommandParser.java
 ``` java
 /**
  * Parses SortCommand arguments and creates a SortCommand object
@@ -317,7 +317,7 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 }
 ```
-###### /java/seedu/address/MainApp.java
+###### \java\seedu\address\MainApp.java
 ``` java
     @Override
     public void init() throws Exception {
@@ -346,12 +346,12 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     private UserPrefs colourPrefs;
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -381,14 +381,14 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     private void updateAllPersons(HashMap<Tag, String> allTagColours) {
         colourPrefs.updateColorMap(allTagColours);
     }
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void sort(String sortType) throws DuplicatePersonException, EmptyAddressBookException {
@@ -425,13 +425,15 @@ public class SortCommandParser implements Parser<SortCommand> {
         sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(comparator);
         newList.addAll(sortedList);
 
-        if (newList.isEmpty()) throw new EmptyAddressBookException();
+        if (newList.isEmpty()) {
+            throw new EmptyAddressBookException();
+        }
 
         return newList;
     }
 
 ```
-###### /java/seedu/address/model/UserPrefs.java
+###### \java\seedu\address\model\UserPrefs.java
 ``` java
     private HashMap<String, String> colourMap;
     private String addressBookName = "Circles";
@@ -442,7 +444,7 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 
 ```
-###### /java/seedu/address/model/UserPrefs.java
+###### \java\seedu\address\model\UserPrefs.java
 ``` java
     public HashMap<String, String> getColourMap() {
         return colourMap;

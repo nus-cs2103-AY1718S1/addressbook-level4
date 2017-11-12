@@ -25,6 +25,7 @@ import seedu.address.commons.events.ui.NewPersonInfoEvent;
 import seedu.address.commons.events.ui.NewPersonListEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.SetColourCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.ReadOnlyGroup;
@@ -180,7 +181,7 @@ public class ModelManager extends ComponentManager implements Model {
                 return;
             }
         }
-        throw new IllegalValueException("No such tag!");
+        throw new IllegalValueException(SetColourCommand.SETCOLOUR_INVALID_TAG);
     }
 
     @Override

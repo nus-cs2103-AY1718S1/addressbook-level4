@@ -4,15 +4,14 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectGroupCommand.MESSAGE_SELECT_GROUP_SUCCESS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
 import static seedu.address.testutil.TypicalGroups.getTypicalGroups;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_GROUP;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectGroupCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
@@ -49,7 +48,8 @@ public class SelectGroupCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         int invalidIndex = getModel().getGroupList().size() + 1;
-        assertCommandFailure(SelectGroupCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+        assertCommandFailure(SelectGroupCommand.COMMAND_WORD + " " + invalidIndex,
+                MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
 
         /* Case: select the current selected card -> selected */
         assertCommandSuccess(command, middleIndex);
@@ -92,8 +92,8 @@ public class SelectGroupCommandSystemTest extends AddressBookSystemTest {
      * of the selected person, and the model related components equal to the current model.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the command box has the default style class and the status bar remain unchanged. The resulting
-     * browser url and selected card will be verified if the current selected card and the card at
+     * Also verifies that the command box has the default style class and the status bar remain unchanged.
+     * The resulting selected card will be verified if the current selected card and the card at
      * {@code expectedSelectedCardIndex} are different.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
@@ -102,7 +102,6 @@ public class SelectGroupCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
                 MESSAGE_SELECT_GROUP_SUCCESS, expectedSelectedCardIndex.getOneBased());
-        int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
@@ -116,7 +115,7 @@ public class SelectGroupCommandSystemTest extends AddressBookSystemTest {
      * box displays {@code expectedResultMessage} and the model related components equal to the current model.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * Also verifies that the selected card and status bar remain unchanged, and the command box has the
      * error style.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */

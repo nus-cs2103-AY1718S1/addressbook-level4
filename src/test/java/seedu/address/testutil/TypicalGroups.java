@@ -1,13 +1,5 @@
 package seedu.address.testutil;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.group.ReadOnlyGroup;
-import seedu.address.model.group.exceptions.DuplicateGroupException;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
@@ -16,6 +8,15 @@ import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.GEORGE;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.address.model.AddressBook;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
+
+//@@author eldonng
 /**
  * A utility class containing a list of {@code Group} objects to be used in tests.
  */
@@ -30,6 +31,10 @@ public class TypicalGroups {
     public static final ReadOnlyGroup SAMPLE_GROUP_3 = new GroupBuilder().withGroupName("Sample Group 3")
             .withGroupMembers(new ArrayList<>(Arrays.asList(ALICE, GEORGE))).build();
 
+    /**
+     * Adds all the groups to the sample address book
+     * @param ab
+     */
     public static void addGroupsToAddressBook(AddressBook ab) {
         for (ReadOnlyGroup group : TypicalGroups.getTypicalGroups()) {
             try {

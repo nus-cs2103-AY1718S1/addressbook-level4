@@ -27,7 +27,7 @@ import seedu.address.storage.Storage;
 import seedu.address.testutil.TypicalStorage;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
-
+//@@author eldonng
 public class SelectGroupCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
@@ -113,7 +113,8 @@ public class SelectGroupCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        JumpToGroupListRequestEvent lastEvent = (JumpToGroupListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        JumpToGroupListRequestEvent lastEvent =
+                (JumpToGroupListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
         assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
     }
 
