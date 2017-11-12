@@ -36,7 +36,7 @@ Responsibilities: Storage + UI + Documentation
 
 === Nabeel Zaheer
 image::nabeelzaheer.png[width="150", align="left"]
-{empty}[https://github.com/NabeelZhr[github]] [<<NabeelZhr#, portfolio>>]
+{empty}[https://github.com/NabeelZhr[github]] [<<nabeelzaheer#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model + Documentation
