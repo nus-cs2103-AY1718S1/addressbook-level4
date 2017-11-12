@@ -181,12 +181,12 @@ Contribution to Bluebird
 * Updated the UI of Bluebird
 (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/14[#14], https://github.com/CS2103AUG2017-T15-B4/main/pull/58[#58],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/73[#73], https://github.com/CS2103AUG2017-T15-B4/main/pull/118[#118],
-https://github.com/CS2103AUG2017-T15-B4/main/pull/134[#134], https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#143],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/144[#144], https://github.com/CS2103AUG2017-T15-B4/main/pull/165[#165],
-https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
-https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208], https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245],
-https://github.com/CS2103AUG2017-T15-B4/main/pull/257[#257])
-* Updated a help overlay for Bluebird (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/189[#189], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208])
+https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245], https://github.com/CS2103AUG2017-T15-B4/main/pull/257[#257],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/267[#267])
+* Updated a help overlay for Bluebird (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/189[#189], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/262[#262], https://github.com/CS2103AUG2017-T15-B4/main/pull/267[#267])
 * Added Bluebird result image feedback when inputting commands (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#142],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245])
 * Added toggling of Ui between Person, Task, Alias, Pinned, and All lists (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
