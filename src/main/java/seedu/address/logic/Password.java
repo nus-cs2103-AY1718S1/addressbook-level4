@@ -6,7 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author jelneo
 /**
- * Represents the password of a user account
+ * Represents the password of a user account.
  */
 public class Password {
     public static final int PASSWORD_MIN_LENGTH = 6;
@@ -21,9 +21,8 @@ public class Password {
 
     /**
      * Validates a given password.
-     *
      * @param value the password of the user
-     * @throws IllegalValueException if given value string is invalid.
+     * @throws IllegalValueException if given value string is invalid
      */
     public Password(String value) throws IllegalValueException {
         requireNonNull(value);
@@ -38,14 +37,18 @@ public class Password {
     }
 
     /**
-     * Returns if a given string has a valid password length.
+     * Checks if a given string has a valid password length.
+     * @return {@code true} if the given string is a of a valid password length,
+     * otherwise {@code false}
      */
     public static boolean isValidPasswordLength(String testVal) {
         return testVal.length() >= PASSWORD_MIN_LENGTH;
     }
 
     /**
-     * Returns if a given string has valid password characters.
+     * Checks if a given string has valid password characters.
+     * @return {@code true} if the given string contains valid password characters,
+     * otherwise {@code false}
      */
     public static boolean hasValidPasswordCharacters(String testVal) {
         return testVal.matches(PASSWORD_VALIDATION_REGEX);

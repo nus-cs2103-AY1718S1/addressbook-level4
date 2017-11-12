@@ -26,7 +26,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author jelneo
 /**
- * Contains integration tests (interaction with the Model) and unit tests for BorrowCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code BorrowCommand}.
  */
 public class BorrowCommandTest {
 

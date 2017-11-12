@@ -1,7 +1,8 @@
 package seedu.address.commons.events.ui;
 
+import static seedu.address.logic.commands.LoginCommand.setLoginStatus;
+
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.logic.commands.LoginCommand;
 
 //@@author jelneo
 /**
@@ -13,7 +14,7 @@ public class LoginAppRequestEvent extends BaseEvent {
 
     public LoginAppRequestEvent(boolean hasLoginSuccessfully) {
         this.hasLoginSuccessfully = hasLoginSuccessfully;
-        LoginCommand.setLoginStatus(hasLoginSuccessfully);
+        setLoginStatus(hasLoginSuccessfully);
     }
 
     public boolean getLoginStatus() {

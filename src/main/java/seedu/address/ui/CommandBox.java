@@ -123,9 +123,8 @@ public class CommandBox extends UiPart<Region> {
     }
 
     //@@author jelneo
-
     /**
-     * Masks password starting from second whitespace(if it exists) until the end of input
+     * Masks password starting from the second whitespace(if it exists) until another whitespace is detected.
      */
     private void handlePasswordMasking() {
         String currentInput = commandTextField.getText();
@@ -136,7 +135,7 @@ public class CommandBox extends UiPart<Region> {
         currentMaskFromIndex = indexOfSecondWhitespace + 1;
         indexOfLastChar = inputLength - 1;
 
-        // update index indicating where to start masking from if user deletes and re-enters password
+        // update index that indicates where to start masking from if the user deletes and re-enters password
         if (maskFromIndex == 0) {
             maskFromIndex = currentMaskFromIndex;
         }
@@ -160,7 +159,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Initialise the necessary variables for password masking
+     * Initialise the necessary variables for password masking.
      */
     private void initialiseVariablesUsedInMasking() {
         passwordFromInput = "";
@@ -168,7 +167,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Mask text field from second whitespace onwards
+     * Mask text field from second whitespace onwards.
      * @param currentInput the current text in the command box
      */
     private void maskPasswordInput(String currentInput) {
@@ -185,7 +184,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Updates {@code passwordFromInput} field appropriately when user backspaces
+     * Updates {@code passwordFromInput} field appropriately when user backspaces.
      */
     private void handleBackspaceEvent() {
         if (getNumOfSpaces(commandTextField.getText()) < 2) {
@@ -197,7 +196,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Returns an integer that represents the number of spaces in a given string
+     * Returns an integer that represents the number of whitespaces in a given string.
      */
     private int getNumOfSpaces(String currentInput) {
         int count = 0;
@@ -216,29 +215,29 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         String commandText = commandTextField.getText();
-        if (commandText.trim().equals(LoginCommand.COMMAND_WORD) && !isLoggedIn()) {
+        String trimmedCommandText = commandText.trim();
+        if (trimmedCommandText.equals(LoginCommand.COMMAND_WORD) && !isLoggedIn()) {
             commandTextField.setText("");
             raise(new ChangeToLoginViewEvent());
             return;
         }
 
-        if (LoginCommand.isLoggedIn() && commandText.contains(LoginCommand.COMMAND_WORD)) {
+        if (isLoggedIn() && commandText.contains(LoginCommand.COMMAND_WORD)) {
             raise(new NewResultAvailableEvent(ALREADY_LOGGED_IN_MESSAGE, true));
         } else {
-            // allow only help, exit and login commands to execute before login
+            // allow only help, exit and login commands to be executed before login
             boolean isCommandExecutableBeforeLogin = commandText.contains(LoginCommand.COMMAND_WORD)
                     || commandText.contains(ExitCommand.COMMAND_WORD)
                     || commandText.contains(HelpCommand.COMMAND_WORD);
 
-            if (isCommandExecutableBeforeLogin || LoginCommand.isLoggedIn()) {
-                String commandInput = commandTextField.getText();
+            if (isCommandExecutableBeforeLogin || isLoggedIn()) {
                 try {
-                    executeAllowedCommands(commandInput);
+                    executeAllowedCommands(commandText);
                 } catch (CommandException | ParseException e) {
                     initHistory();
                     // handle command failure
                     setStyleToIndicateCommandFailure();
-                    logger.info("Invalid command: " + commandTextField.getText());
+                    logger.info("Invalid command: " + commandText);
                     raise(new NewResultAvailableEvent(e.getMessage(), true));
                 }
             } else {

@@ -1,7 +1,8 @@
 package seedu.address.commons.events.ui;
 
+import static seedu.address.logic.commands.LogoutCommand.setLogoutStatus;
+
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.logic.commands.LogoutCommand;
 
 //@@author jelneo
 /**
@@ -13,7 +14,7 @@ public class LogoutAppRequestEvent extends BaseEvent {
 
     public LogoutAppRequestEvent(boolean hasLogoutSuccessfully) {
         this.hasLogoutSuccessfully = hasLogoutSuccessfully;
-        LogoutCommand.setLogoutStatus(hasLogoutSuccessfully);
+        setLogoutStatus(hasLogoutSuccessfully);
     }
 
     public boolean getLogoutStatus() {

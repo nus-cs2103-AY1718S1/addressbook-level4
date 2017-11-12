@@ -6,7 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author jelneo
 /**
- * Represents the username of a user account
+ * Represents the username of a user account.
  */
 public class Username {
 
@@ -22,9 +22,8 @@ public class Username {
 
     /**
      * Validates a given username.
-     *
      * @param value the username of the user
-     * @throws IllegalValueException if given value string is invalid.
+     * @throws IllegalValueException if the given {@code value} is invalid
      */
     public Username(String value) throws IllegalValueException {
         requireNonNull(value);
@@ -39,14 +38,18 @@ public class Username {
     }
 
     /**
-     * Returns if a given string has a valid username length.
+     * Checks if a given string has a valid username length.
+     * @return {@code true} if the given string is a of a valid username length,
+     * otherwise {@code false}
      */
     public static boolean isValidUsernameLength(String testVal) {
         return testVal.length() >= USERNAME_MIN_LENGTH;
     }
 
     /**
-     * Returns if a given string has valid username characters.
+     * Checks if a given string has valid username characters.
+     * @return {@code true} if the given string contains valid username characters,
+     * otherwise {@code false}
      */
     public static boolean hasValidUsernameCharacters(String testVal) {
         return testVal.matches(USERNAME_VALIDATION_REGEX);

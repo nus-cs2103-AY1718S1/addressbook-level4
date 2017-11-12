@@ -49,7 +49,7 @@ public class MainWindowHandle extends StageHandle {
 
     //@@author jelneo
     /**
-     * Logs into admin user account so that other GUI tests can test the main GUIs in the address book
+     * Logs into sample user account so that other GUI tests can test the main GUIs in the address book.
      */
     public static void simulateLogin() {
         try {
@@ -67,7 +67,7 @@ public class MainWindowHandle extends StageHandle {
     //@@author
 
     /**
-     * Retrieves new infopanel and personlistpanel when list changes.
+     * Retrieves new info panel and person list panel when list changes.
      */
     public void updateChangeInList() {
         personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));

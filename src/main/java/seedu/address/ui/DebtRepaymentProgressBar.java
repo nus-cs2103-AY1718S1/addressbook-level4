@@ -17,7 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author jelneo
 /**
- * Displays debt repayment progress bar for each person
+ * Displays debt repayment progress bar of each person.
  */
 public class DebtRepaymentProgressBar extends UiPart<Region> {
     private static final String FXML = "DebtRepaymentProgressBar.fxml";
@@ -27,8 +27,10 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
     private static final String YEARS_LEFT_TO_REPAY_DEBT_MESSAGE = "%1$s years(s)";
     private static final String MONTHS_LEFT_TO_REPAY_DEBT_MESSAGE = " %1$s month(s)";
     private static final String DAYS_LEFT_TO_REPAY_DEBT_MESSAGE = " %1$s day(s)";
-    private Double totalDebt;
-    private Double repaid;
+    private static final String COMPLETED_TEXT_ID = "completedText";
+    private static final String NO_DEADLINE_TEXT_ID = "noDeadlineText";
+    private static final String REPAYMENT_INFO_TEXT_ID = "repaymentInfoText";
+    private ReadOnlyPerson person;
     private Double ratio;
 
     @FXML
@@ -41,19 +43,10 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
     public DebtRepaymentProgressBar(ReadOnlyPerson person) {
         super(FXML);
 
-        totalDebt = person.getTotalDebt().toNumber();
-        repaid = totalDebt - person.getDebt().toNumber();
-        ratio = repaid / totalDebt;
+        this.person = person;
+        ratio = getFractionThatIsRepaid(person);
         progressBar.setProgress(ratio);
-        repaymentInfo.textProperty().bind(Bindings.convert(getRepaymentStatus(person)));
-        repaymentInfo.textProperty().addListener((unused1, unused2, unused3) -> {
-            // style repaymentInfo whenever its value changes
-            styleRepaymentProgressInfo();
-        });
-        percentage.textProperty().bind(Bindings.convert(getPercentage(ratio)));
-        percentage.textProperty().addListener((unused1, unused2, unused3) -> {
-            getRepaymentStatus(person);
-        });
+        bindListeners();
         progressBar.getStyleClass().clear();
         progressBar.getStyleClass().add("progress-bar");
         styleRepaymentProgressInfo();
@@ -61,21 +54,47 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
     }
 
     /**
-     * Styles repayment information that is located next to the debt repayment progress bar
+     * Calculates the amount that is repaid by a person in fraction.
+     * @return the fraction of debt repaid over the total debt of a person
+     */
+    private Double getFractionThatIsRepaid(ReadOnlyPerson person) {
+        Double totalDebt = person.getTotalDebt().toNumber();
+        Double repaid = totalDebt - person.getDebt().toNumber();
+        return repaid / totalDebt;
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code DebtRepaymentProgressBar} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners() {
+        repaymentInfo.textProperty().bind(Bindings.convert(getRepaymentStatus()));
+        repaymentInfo.textProperty().addListener((unused1, unused2, unused3) -> {
+            // style repaymentInfo whenever its value changes
+            styleRepaymentProgressInfo();
+        });
+        percentage.textProperty().bind(Bindings.convert(getPercentage(ratio)));
+        percentage.textProperty().addListener((unused1, unused2, unused3) -> {
+            getRepaymentStatus();
+        });
+    }
+
+    /**
+     * Styles repayment information that is located next to the debt repayment progress bar.
      */
     private void styleRepaymentProgressInfo() {
         String repaymentInformation = repaymentInfo.getText();
         if (repaymentInformation.equals(COMPLETED_REPAYMENT_MESSAGE)) {
-            repaymentInfo.setId("completedText");
+            repaymentInfo.setId(COMPLETED_TEXT_ID);
         } else if (repaymentInformation.equals(NO_DEADLINE_REPAYMENT_MESSAGE)) {
-            repaymentInfo.setId("noDeadlineText");
+            repaymentInfo.setId(NO_DEADLINE_TEXT_ID);
         } else {
-            repaymentInfo.setId("repaymentInfoText");
+            repaymentInfo.setId(REPAYMENT_INFO_TEXT_ID);
         }
     }
 
     /**
-     * Returns a {@code ObservableValue<String>} to bind to {@code percentage} property
+     * Returns a {@code ObservableValue<String>} to bind to {@code percentage} property.
      */
     private ObservableValue<String> getPercentage(Double ratio) {
         String percentage = String.format("%.2f", ratio * 100);
@@ -83,37 +102,39 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
     }
 
     /**
-     * Returns a {@code ObservableValue<String>} to bind to {@code repaymentInfo} property
+     * Returns a {@code ObservableValue<String>} to bind to {@code repaymentInfo} property.
      */
-    private ObservableValue<String> getRepaymentStatus(ReadOnlyPerson person) {
+    private ObservableValue<String> getRepaymentStatus() {
         Deadline deadline = person.getDeadline();
         if (person.getDebt().toNumber() == 0) {
             return new SimpleObjectProperty<>(COMPLETED_REPAYMENT_MESSAGE);
-        } else if (deadline.toString().equals(NO_DEADLINE_SET)) {
+        }
+
+        if (deadline.toString().equals(NO_DEADLINE_SET)) {
             return new SimpleObjectProperty<>(NO_DEADLINE_REPAYMENT_MESSAGE);
+        }
+
+        LocalDate deadlineDate = deadline.getDeadlineAsLocalDate();
+        LocalDate today = LocalDate.now();
+
+        if (Period.between(today, deadlineDate).isNegative()) {
+            return new SimpleObjectProperty<>(OVERDUE_REPAYMENT_MESSAGE);
         } else {
-            LocalDate deadlineDate = deadline.getDeadlineAsLocalDate();
-            LocalDate today = LocalDate.now();
+            Period timeInterval = Period.between(today, deadlineDate);
+            long years = timeInterval.getYears();
+            long months = timeInterval.getMonths();
+            long days = timeInterval.getDays();
 
-            if (Period.between(today, deadlineDate).isNegative()) {
-                return new SimpleObjectProperty<>(OVERDUE_REPAYMENT_MESSAGE);
-            } else {
-                Period timeInterval = Period.between(today, deadlineDate);
-                long years = timeInterval.getYears();
-                long months = timeInterval.getMonths();
-                long days = timeInterval.getDays();
-
-                return new SimpleObjectProperty<>(formatTimeTillDeadline(years, months, days));
-            }
+            return new SimpleObjectProperty<>(formatTimeTillDeadline(years, months, days));
         }
     }
 
     /**
-     * Formats the difference in time from now till a deadline into a {@code String}
+     * Formats the difference in time from now till a deadline into a {@code String}.
      * @param years years left till deadline
      * @param months months left till deadline
      * @param days days left till deadline
-     * @return a formatted string that states the difference between now and the deadline
+     * @return a formatted string that states the time difference between now and the deadline
      */
     private String formatTimeTillDeadline(long years, long months, long days) {
         StringBuilder stringBuilder = new StringBuilder();

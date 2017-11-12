@@ -319,14 +319,15 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author jelneo
     /**
-     * Authenticates user
+     * Performs user authentication.
      * @throws UserNotFoundException if username and password does not match those in the user preference file
      * @throws IllegalValueException if username and password does not meet username and password requirements
      */
     public void authenticateUser(Username username, Password password) throws UserNotFoundException,
             IllegalValueException {
         Username fileUsername = new Username(getUsernameFromUserPref());
-        if (fileUsername.equals(username) && checkAgainstPasswordFromUserPref(password.toString(),
+        String enteredPassword = password.toString();
+        if (fileUsername.equals(username) && isSamePasswordAsUserPref(enteredPassword,
                 userPrefs.getPasswordSalt())) {
             raise(new LoginAppRequestEvent(true));
         } else {
@@ -336,7 +337,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Logs user out
+     * Logs user out.
      */
     public void logout() {
         raise(new LoginAppRequestEvent(false));
@@ -351,22 +352,22 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Checks the entered password against the password stored in {@code UserPrefs} class
+     * Checks the entered password against the password stored in {@code UserPrefs} class.
      * @param currPassword password entered by user
      * @return true if the hash generated from the entered password matches the hashed password stored
      * in {@code UserPrefs}
      */
-    public boolean checkAgainstPasswordFromUserPref(String currPassword, byte[] salt) {
+    public boolean isSamePasswordAsUserPref(String currPassword, byte[] salt) {
         String hashedPassword = getSha512SecurePassword(currPassword, salt);
         return hashedPassword.equals(userPrefs.getAdminPassword());
     }
 
     /**
-     * Increase the debt of a person by the amount indicated
+     * Increases the debt of a person by the amount indicated.
      * @param target person in the address book who borrowed more money
      * @param amount amount that the person borrowed. Must be either a positive integer or positive number with
      *               two decimal places
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list
      */
     @Override
     public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
@@ -375,13 +376,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Decrease the debt of a person by the amount indicated
+     * Decreases the debt of a person by the amount indicated.
      * @param target person in the address book who paid back some money
      * @param amount amount that the person paid back. Must be either a positive integer or positive number with
      *               two decimal places
-     * @return repayingPerson
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
+     * @return the repaying person
+     * @throws PersonNotFoundException if {@code target} could not be found in the list
+     * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed
      */
     @Override
     public ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,

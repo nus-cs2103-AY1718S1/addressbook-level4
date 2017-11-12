@@ -164,7 +164,7 @@ public class InfoPanel extends UiPart<Region> {
 
     //@@author jelneo
     /**
-     * Resets the debt repayment progress bar
+     * Resets the debt repayment progress bar.
      * @param person the person whose person card is selected in the address book
      */
     private void resetDebtRepaymentProgressBar(ReadOnlyPerson person) {

@@ -5,7 +5,7 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Indicates that login inputs have changed
+ * Indicates that login inputs have changed.
  */
 public class LoginInputChangeEvent extends BaseEvent {
     @Override
