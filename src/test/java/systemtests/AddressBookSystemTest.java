@@ -61,7 +61,7 @@ public abstract class AddressBookSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication();
         mainWindowHandle = setupHelper.setupMainWindowHandle();
-        ListObserver.init(getRealModel());
+        ListObserver.init(testApp.getRealModel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -256,12 +256,5 @@ public abstract class AddressBookSystemTest {
      */
     protected Model getModel() {
         return testApp.getModel();
-    }
-
-    /**
-     * Returns the current model. Should only be used for initializing {@code ListObserver}.
-     */
-    protected Model getRealModel() {
-        return testApp.getRealModel();
     }
 }
