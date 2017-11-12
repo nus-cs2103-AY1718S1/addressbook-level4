@@ -536,7 +536,7 @@ In the following sections below, the Switch Themes mechanism will be further ela
 illustrated diagrams to depict the interactions between the components in **BoNUS**
 
 The _Sequence Diagram_ in _Figure 4.5.1_ illustrates how the components interact for the scenario where the user issues the command
-`delete 1`.
+`delete 1`. Also, the _Sequence Diagram_ illustrates the events-driven architectural style in **BoNUS**
 
 image::SDforSwitchTheme.png[width="400"]
 _Figure 4.5.1 : Events-Driven nature of Switch Theme_
