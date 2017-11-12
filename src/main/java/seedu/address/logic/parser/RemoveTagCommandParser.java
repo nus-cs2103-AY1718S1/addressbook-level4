@@ -19,7 +19,6 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
     public RemoveTagCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (Tag.isValidTagName(trimmedArgs)) {
-            System.out.println(Tag.isValidTagName(trimmedArgs));
             return new RemoveTagCommand(trimmedArgs);
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));

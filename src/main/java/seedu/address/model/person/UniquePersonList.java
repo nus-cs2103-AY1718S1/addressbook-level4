@@ -105,8 +105,20 @@ public class UniquePersonList implements Iterable<Person> {
         ReadOnlyPerson fromPerson = relationshipToRemove.getFromPerson();
         ReadOnlyPerson toPerson = relationshipToRemove.getToPerson();
 
-        boolean removedFromPersonRelationship = ((Person) fromPerson).removeRelationship(relationshipToRemove);
-        boolean removedToPersonRelationship = ((Person) toPerson).removeRelationship(relationshipToRemove);
+        ReadOnlyPerson fromPersonCopy = fromPerson.copy();
+        ReadOnlyPerson toPersonCopy = toPerson.copy();
+
+        boolean removedFromPersonRelationship = ((Person) fromPersonCopy).removeRelationship(relationshipToRemove);
+        boolean removedToPersonRelationship = ((Person) toPersonCopy).removeRelationship(relationshipToRemove);
+        try {
+            setPerson(fromPerson, fromPersonCopy);
+            setPerson(toPerson, toPersonCopy);
+        } catch (DuplicatePersonException dpe) {
+            assert false : "impossible as there must be relationship to be deleted";
+        } catch (PersonNotFoundException psnfe) {
+            assert false : "impossible as the person will definitely be there";
+        }
+
         return removedFromPersonRelationship && removedToPersonRelationship;
     }
 

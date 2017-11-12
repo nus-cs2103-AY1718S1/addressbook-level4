@@ -11,6 +11,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.model.relationship.UniqueRelationshipList;
@@ -238,6 +239,20 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     @Override
     public int compareTo(Person o) {
         return this.getName().toString().compareToIgnoreCase(o.getName().toString());
+    }
+
+    /**
+     * Used in debugging to print out the relationshipList of this person
+     */
+    public void printRelationshipList() {
+        String border = "-----------------------------------------------------" + "\n";
+        String intro = "Intro: " + this.toString() + "\n";
+        String relationshipStr = "";
+        Set<Relationship> relationships = this.getRelationships();
+        for (Relationship relationship: relationships) {
+            relationshipStr = relationshipStr + relationship.toString() + "\n";
+        }
+        LogsCenter.getLogger(Person.class).fine(border + intro + relationshipStr + border);
     }
 
 }
