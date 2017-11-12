@@ -553,7 +553,7 @@ Edit a person, Add a person or Favorite a person.
 **Cons:** Difficult to implement system tests. +
 // end::favorite[]
 
-
+// tag::birthday[]
 == Birthday Detail
 
 A birthday detail is implemented under the Person class as Birthday. Users will add the birthday in along with the add command.
@@ -576,7 +576,7 @@ See this http://github.com/NgSuli/main[PR] for the full solution.
 **Alternative 2:** Make the birthday attribute optional.
 **Pros:** Allows the user freedom to decide what they want in the addressbook.
 **Cons:** Slightly more tedious to implement.
-
+//end::birthday[]
 
 == Documentation
 
