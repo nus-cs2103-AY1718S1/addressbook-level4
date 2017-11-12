@@ -130,7 +130,7 @@ public class EditCommand extends UndoableCommand {
             updatedTags.addAll(editPersonDescriptor.getTags().get());
         }
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedDateOfBirth, updatedGender, updatedTags);
+                updatedDateOfBirth, updatedGender, updatedTags, personToEdit.getLifeInsuranceIds());
     }
     //@@author
 
@@ -155,7 +155,8 @@ public class EditCommand extends UndoableCommand {
     //@@author arnollim
     @Override
     public String toString() {
-        return COMMAND_WORD + " " + index.getOneBased();
+        String feedbackToUser = COMMAND_WORD + " " + index.getOneBased();
+        return feedbackToUser;
     }
     //@@author
 

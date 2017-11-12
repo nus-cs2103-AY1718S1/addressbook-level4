@@ -1,4 +1,3 @@
-//@@author Pujitha97
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
@@ -14,11 +13,10 @@ import seedu.address.logic.parser.exceptions.EmptyFieldException;
  * Represents a Person's date of birth in the address book.
  */
 public class DateOfBirth {
+    //@@author Juxarius
     public static final String MESSAGE_DOB_CONSTRAINTS =
             "Please enter in Day Month Year format where the month can be a number or the name"
                     + " and the year can be input in 2-digit or 4-digit format.";
-    //@@author
-    //@@author Juxarius
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
@@ -36,8 +34,7 @@ public class DateOfBirth {
         this.dateOfBirth = LocalDate.now();
         this.dateSet = false;
     }
-    //@@author
-    //@@author Pujitha97
+
     /**
      * Validates given Date of Birth.
      *
@@ -65,6 +62,7 @@ public class DateOfBirth {
     public String toString() {
         return dateSet ? dateOfBirth.format(DateParser.DATE_FORMAT) : "";
     }
+    //@@author Pujitha97
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

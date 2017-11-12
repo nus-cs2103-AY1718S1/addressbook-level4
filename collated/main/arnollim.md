@@ -53,7 +53,8 @@
 ``` java
     @Override
     public String toString() {
-        return COMMAND_WORD + " " + index.getOneBased();
+        String feedbackToUser = COMMAND_WORD + " " + index.getOneBased();
+        return feedbackToUser;
     }
 ```
 ###### /java/seedu/address/logic/commands/PrintCommand.java
@@ -61,6 +62,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_FILEPATH;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -85,14 +87,14 @@ public class PrintCommand extends Command {
 
     public static final String[] COMMAND_WORDS = {"print"};
     public static final String COMMAND_WORD = "print";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Saves the addressbook into a .txt file named by you for your viewing.\n"
             + "Example: " + COMMAND_WORD + " filename\n"
-            + "file can then be found in the in data/ folder as data/filename.txt";
-
+            + "file can then be found in the in data/ folder as data/filename.txt\n"
+            + MESSAGE_INVALID_FILEPATH;
     public static final String MESSAGE_SUCCESS = "Address Book has been saved!\n"
-            + "Find your Address Book in the %1$s.txt file you created in data/%1$s.txt.";
+            + "Find your Address Book in the %1$s.txt file you created "
+            + "in the same directory as the application file path!";
 
     private final String fileName;
 
@@ -110,21 +112,31 @@ public class PrintCommand extends Command {
 
         List<String> lines = new ArrayList<>();
         String timeStamp = new SimpleDateFormat("dd/MM/YYYY" + " " + "HH:mm:ss").format(new Date());
-        lines.add("LISA was last updated on: " + timeStamp + "\n\n");
 
+        //First line in the .txt file is the time and date printed, so that the user will know the recency
+        //of the printed address book
+        lines.add("LISA was last updated on: " + timeStamp + "\n\n");
+        //Next, feedback the total number of contacts at said time and date
         lines.add("There are " + lastShownList.size() + " contacts in LISA\n\n");
 
         int personIndex = 1;
+
+        //iterating through each person in LISA
         for (ReadOnlyPerson person: lastShownList) {
             String entry = personIndex + ". " + person.getAsParagraph();
             lines.add(entry);
-            lines.add("\n" + person.getName().fullName +
-                    " is a personnel involved in the following insurance policies:\n");
+            lines.add("\n" + person.getName().fullName
+                    + " is a personnel involved in the following insurance policies:\n");
 
             UniqueLifeInsuranceList insurances = person.getLifeInsurances();
             int insuranceIndex = 1;
+
+            //within each person, iterate through all the insurance policies associated
+            //with this person
             for (ReadOnlyInsurance insurance: insurances) {
-                lines.add("Insurance Policy " + insuranceIndex + ": =========");
+                String insuranceHeader = "Insurance Policy " + insuranceIndex
+                        + ": " + insurance.getInsuranceName() + " ======";
+                lines.add(insuranceHeader);
                 String owner = insurance.getOwner().getName();
                 String insured = insurance.getInsured().getName();
                 String beneficiary = insurance.getBeneficiary().getName();
@@ -138,7 +150,17 @@ public class PrintCommand extends Command {
                         + "Signing Date: " + signingDate + "\n"
                         + "Expiry Date: " + expiryDate
                 );
-                lines.add("===========================\n");
+
+                //insuranceEnd is just a printed line "=====" which ties with the length
+                //of insuranceHeader to make the txt file more organised.
+                String insuranceEnd = "";
+                int headerLength = insuranceHeader.length();
+                for( int i = 1; i<= headerLength; i++) {
+                    insuranceEnd = insuranceEnd + "=";
+                }
+                lines.add(insuranceEnd);
+
+                lines.add("\n");
                 insuranceIndex++;
             }
             lines.add("--------End of " + person.getName().fullName + "'s profile");
@@ -146,14 +168,14 @@ public class PrintCommand extends Command {
             personIndex++;
         }
 
-        Path file = Paths.get("data/" + fileName + ".txt");
+        Path file = Paths.get(fileName + ".txt");
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-
-        return new CommandResult(String.format(MESSAGE_SUCCESS, this.fileName));
+        String feedbackToUser = String.format(MESSAGE_SUCCESS, this.fileName);
+        return new CommandResult(feedbackToUser);
     }
 
 }
@@ -161,8 +183,9 @@ public class PrintCommand extends Command {
 ###### /java/seedu/address/logic/commands/UndoCommand.java
 ``` java
         String commandString = undoRedoStack.peekUndo().toString();
-        String feedbackToUser = parseCommand(commandString);
+        String feedbackToUser = parseUndoCommand(commandString);
         undoRedoStack.popUndo().undo();
+
         return new CommandResult(feedbackToUser);
 ```
 ###### /java/seedu/address/logic/commands/UndoCommand.java
@@ -170,7 +193,7 @@ public class PrintCommand extends Command {
     /**
      * Parses the output command to display the previously undone command
      */
-    public static String parseCommand(String commandString) {
+    public static String parseUndoCommand(String commandString) {
         String output = String.format(FULL_MESSAGE_SUCCESS, commandString);
         return output;
     }
@@ -191,9 +214,8 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 
 
-
 /**
- * Format full help instructions for every command for display.
+ * Format the feedback to the user when asked "why" about a certain person index.
  */
 public class WhyCommand extends Command {
 
@@ -203,12 +225,12 @@ public class WhyCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tells you why.\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_WHY_REMARK_SUCCESS = "Added remark to Person: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-
     public static final String SHOWING_WHY_MESSAGE = "Because %1$s lives in %2$s";
     public static final String SHOWING_WHY_MESSAGE_2 = "Because %1$s is born in %2$s";
     public static final String SHOWING_WHY_MESSAGE_3 = "Because %1$s's email is %2$s";
+    public static final String SHOWING_WHY_MESSAGE_NO_ADDRESS = "Because %1$s has no address";
+    public static final String SHOWING_WHY_MESSAGE_NO_DOB = "Because %1$s has no date of birth";
+    public static final String SHOWING_WHY_MESSAGE_NO_EMAIL = "Because %1$s has no email";
 
     private final Index targetIndex;
 
@@ -227,10 +249,7 @@ public class WhyCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-
         ReadOnlyPerson personToAnswer = lastShownList.get(targetIndex.getZeroBased());
-        Name name = personToAnswer.getName();
-        Address address = personToAnswer.getAddress();
         String reason = personToAnswer.getReason();
         return new CommandResult(reason);
     }
@@ -238,6 +257,17 @@ public class WhyCommand extends Command {
 ```
 ###### /java/seedu/address/logic/parser/PrintCommandParser.java
 ``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_FILEPATH;
+
+import java.nio.file.InvalidPathException;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.PrintCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
 /**
  * Parses input arguments and identifies the desired filename to return a new PrintCommand
  */
@@ -248,6 +278,7 @@ public class PrintCommandParser implements Parser<PrintCommand> {
      * and returns a PrintCommand Object with the specified file name
      * @throws ParseException if the user input does not conform the expected format
      * which requires at a valid string
+     * @throws ParseException if the user input includes illegal filepath characters
      */
     public PrintCommand parse(String args) throws ParseException {
         try {
@@ -256,6 +287,9 @@ public class PrintCommandParser implements Parser<PrintCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrintCommand.MESSAGE_USAGE));
+        } catch (InvalidPathException ipe) {
+            throw new ParseException (
+                    String.format(MESSAGE_INVALID_FILEPATH, PrintCommand.MESSAGE_USAGE));
         }
     }
 
@@ -265,29 +299,23 @@ public class PrintCommandParser implements Parser<PrintCommand> {
 ``` java
 package seedu.address.logic.parser;
 
-//import static java.util.Objects.requireNonNull;
-//import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-//import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.WhyCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * WhyCommandParser: Adapted from DeleteCommandParser due to similarities
+ * WhyCommandParser: Parses the User input into a valid Why Command
  */
 public class WhyCommandParser implements Parser<WhyCommand> {
     /**
-     * Parses the given {@code String} of arguments in the context of the ReasonCommand
-     * and returns an RemarkCommand object for execution.
+     * Parses the given {@code Index} of arguments in the context of the WhyCommnad
+     * and returns a WhyCommand Object with the specified index.
      * @throws ParseException if the user input does not conform the expected format
      */
     public WhyCommand parse(String args) throws ParseException {
-        /**
-         Parsing
-         */
         try {
             Index index = ParserUtil.parseIndex(args);
             return new WhyCommand(index);
@@ -308,6 +336,7 @@ public class WhyCommandParser implements Parser<WhyCommand> {
         UndoableCommand toUndo = undoStack.peek();
         return toUndo;
     }
+
     /**
      * Peeks and returns the command at the top of the Redo Stack.
      */
@@ -324,14 +353,34 @@ public class WhyCommandParser implements Parser<WhyCommand> {
         Name name = this.getName();
         Email email = this.getEmail();
         DateOfBirth dob = this.getDateOfBirth();
+
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(3);
+
         if (randomInt == 0) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
+
+            if (address.toString() == "") {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_NO_ADDRESS, name);
+            } else {
+                this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
+            }
+
         } else if (randomInt == 1) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
+
+            if (dob.toString() == "") {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_NO_DOB, name);
+            } else {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
+            }
+
         } else if (randomInt == 2) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
+
+            if (email.value == "") {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_NO_EMAIL, name);
+            } else {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
+            }
+
         }
         return reason;
     }
@@ -356,72 +405,21 @@ public class WhyCommandParser implements Parser<WhyCommand> {
         return builder.toString();
     }
 ```
-###### /java/seedu/address/model/person/Reason.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
-package seedu.address.model.person;
-
-import static java.util.Objects.requireNonNull;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
-/**
- * Represents a Person's reason for "why" in the address book.
- */
-public class Reason {
-
-    public static final String SHOWING_WHY_MESSAGE = "Because %1$s lives in %2$s";
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person reason can take any values, and it should not be blank";
-
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
-
-    public final String value;
-
-    /**
-     * Validates given address.
-     *
-     * @throws IllegalValueException if given address string is invalid.
-     */
-    public Reason(String reason) throws IllegalValueException {
-        requireNonNull(reason);
-        if (!isValidReason(reason)) {
-            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
-        }
-        this.value = reason;
-    }
-
-    /**
-     * Returns true if a given string is a valid person email.
-     */
-    public static boolean isValidReason(String test) {
-        return test.matches(ADDRESS_VALIDATION_REGEX);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Address // instanceof handles nulls
-                && this.value.equals(((Address) other).value)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
-}
+        sortPersons();
 ```
 ###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
+        replacement.sortPersons();
+```
+###### /java/seedu/address/model/person/UniquePersonList.java
+``` java
+    /**
+     * Sorts the internal list of people in alphabetical order
+     * rather than in order of date added. This is more useful to the user especially when scrolling
+     * the addressbook manually to search for contacts
+     */
     public void sortPersons() throws DuplicatePersonException {
         ObservableList<Person> listToSort = FXCollections.observableArrayList(internalList);
         listToSort.sort((ReadOnlyPerson first, ReadOnlyPerson second)-> {

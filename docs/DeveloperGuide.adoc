@@ -218,6 +218,74 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::commandWord[]
+=== Multiple Command Words
+
+Many commands require the user to type out the entire word which can be a hassle. We want to provide
+familiar users with shortcuts to the commands. Also, was suggested by textbook.
+
+This feature is implemented by adding a public constant `String[] COMMAND_WORDS` in every command class.
+The `AddressBookParser` will also have to change its implementation. We classified every command
+into an enumerator `CommandType` which all the command words can funnel into.
+
+`v1.5 Implementation` +
+A `HashMap` is used to contain all links from key command words to their `CommandType` enumerator.
+The `commandWord` is passed into the processing function. The function checks if the map is empty,
+in which case, it calls the map setup function, then refers to the map to get its respective
+`CommandType` and the default is `CommandType.NONE` which returns an invalid command error message.
+The map setup function converts every `COMMAND_WORDS` to a stream before mapping it with the `forEach`
+function.
+
+`v1.2 Implementation` +
+A brute force approach is applied where the `commandWord` is compared against every command's
+`COMMAND_WORDS` using for-in-if loops. Any successful comparison is to return the respective
+`CommandType` enumerator.
+// end::commandWord[]
+
+// tag::prefixAutofill[]
+=== Prefix Autofill
+
+When adding a new insurance, all fields are require as a contract needs to be complete before it is valid.
+However, due to the multitude of information required, users should have the convenience of
+pressing enter with an unfilled command to trigger the autofill to prompt you with the prefixes
+required and move the the caret to the next field.
+
+This enhancement follows a similar method to the autofill feature, however, since it does not
+require the pulling of data from the LISA, it is simpler.
+
+A `MissingPrefixException` is thrown from the `AddLifeInsuranceCommandParser` in the case of
+a missing prefix OR an empty field. This exception is caught by the `LogicManager` which analyses
+and fills the missing prefix.
+
+*How the analysis is done*
+
+----
+catch (MissingPrefixException mpe) {
+        // this assertion is because this exception should only
+        // be thrown by the addli command,
+        // to change if this exception is used elsewhere
+        final String inputToTest = commandText;
+        assert Arrays.stream(AddLifeInsuranceCommand.COMMAND_WORDS).anyMatch(commandWord ->
+            inputToTest.contains(commandWord));
+        commandText = getCommandWithFilledPrefixes(commandText);
+        throw mpe;
+}
+----
+
+Since we are assuming that this exception is only thrown by the `AddLifeInsuranceCommandParser` ,
+we use the assert here together with a lambda function to ensure that the `commandText` starts with
+any of the valid `COMMAND_WORDS`. In the case that another new function throws the same exception,
+this assert needs to be removed and the catch should handle the exception appropriately.
+
+The `commandText` is then sent to the autofill function which gets the constant `Set<Prefix>` from `CliSyntax`
+called `PREFIXES_INSURANCE` and filters the list according to which is not already inside the
+`commandText`, appends the prefixes and returns the filled text.
+
+The filled text is then passed on to the `history`. `commandBox` then takes over to show the last
+command as from the `historySnapshot` and places the caret at the 1st empty field found.
+
+// end::prefixAutofill[]
+
 // tag::dateParser[]
 === Date Parser
 
@@ -810,9 +878,9 @@ In the case that the file exist in the project folder, the entry for contract fi
          if (isFileExists(insuranceFile)) {
              activateLinkToInsuranceFile();
          } else {
-             contractPath.getStyleClass().clear();
-             contractPath.getStyleClass().add("missing-file");
-             contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
+             contractName.getStyleClass().clear();
+             contractName.getStyleClass().add("missing-file");
+             contractName.setOnMouseClicked(new EventHandler<MouseEvent>() {
                  @Override
                  public void handle(MouseEvent event) {
                      FileChooser.ExtensionFilter extFilter =
@@ -846,9 +914,9 @@ Upon successful retrieval of the file, or adding of the file if it does not exis
 [source,java]
 ----
 private void activateLinkToInsuranceFile() {
-         contractPath.getStyleClass().clear();
-         contractPath.getStyleClass().add("valid-file");
-         contractPath.setOnMouseClicked(event -> {
+         contractName.getStyleClass().clear();
+         contractName.getStyleClass().add("valid-file");
+         contractName.setOnMouseClicked(event -> {
              try {
                  Desktop.getDesktop().open(insuranceFile);
              } catch (IOException ee) {

@@ -53,6 +53,7 @@ public class UndoRedoStack {
         UndoableCommand toUndo = undoStack.peek();
         return toUndo;
     }
+
     /**
      * Peeks and returns the command at the top of the Redo Stack.
      */

@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.insurance.exceptions.DuplicateInsuranceContractNameException;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 
@@ -30,7 +31,7 @@ public class UniqueLifeInsuranceMap {
     private final ObservableList<ReadOnlyInsurance> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the map contains an equivalent UUID as the given argument.
+     * Returns true if the map contains an equivalent key {@code UUID} as the given argument.
      */
     public boolean containsKey(UUID toCheck) {
         requireNonNull(toCheck);
@@ -38,7 +39,7 @@ public class UniqueLifeInsuranceMap {
     }
 
     /**
-     * Returns true if the map contains an equivalent insurance as the given argument.
+     * Returns true if the map contains an equivalent value {@code ReadOnlyInsurance} as the given argument.
      */
     public boolean containsValue(ReadOnlyInsurance toCheck) {
         requireNonNull(toCheck);
@@ -46,17 +47,45 @@ public class UniqueLifeInsuranceMap {
     }
 
     /**
+     * Returns true if an insurance inside the map contains an equivalent {@code contractName} as the given argument.
+     */
+    public boolean containsContractName(String toCheck) {
+        requireNonNull(toCheck);
+        return internalMap.values().stream().anyMatch(li ->
+            li.getContractName().equals(toCheck)
+        );
+    }
+
+    /**
      * Adds an life insurance to the map.
      *
      * @throws DuplicateInsuranceException if the life insurance to add is a duplicate of an
-     * existing life insurance in the list.
+     * existing life insurance in the map.
      */
-    public void put(UUID key, ReadOnlyInsurance toPut) throws DuplicateInsuranceException {
+    public void put(UUID key, ReadOnlyInsurance toPut)
+            throws DuplicateInsuranceException, DuplicateInsuranceContractNameException {
         requireNonNull(toPut);
         if (containsValue(toPut)) {
             throw new DuplicateInsuranceException();
         }
+        if (containsContractName(toPut.getContractName())) {
+            throw new DuplicateInsuranceContractNameException();
+        }
         internalMap.put(key, new LifeInsurance(toPut));
+    }
+
+    /**
+     * Replaces an life insurance in the map.
+     *
+     * @throws InsuranceNotFoundException if the id of the life insurance {@code toSet} can not be found
+     * in the map.
+     */
+    public void replace(UUID key, ReadOnlyInsurance toSet) throws InsuranceNotFoundException {
+        requireNonNull(toSet);
+        if (!containsKey(key)) {
+            throw new InsuranceNotFoundException();
+        }
+        internalMap.replace(key, new LifeInsurance(toSet));
     }
 
     /**
@@ -83,7 +112,8 @@ public class UniqueLifeInsuranceMap {
         syncMappedListWithInternalMap();
     }
 
-    public void setInsurances(Map<UUID, ? extends ReadOnlyInsurance> insurances) throws DuplicateInsuranceException {
+    public void setInsurances(Map<UUID, ? extends ReadOnlyInsurance> insurances)
+            throws DuplicateInsuranceException, DuplicateInsuranceContractNameException {
         final UniqueLifeInsuranceMap replacement = new UniqueLifeInsuranceMap();
         for (final Map.Entry<UUID, ? extends ReadOnlyInsurance> entry : insurances.entrySet()) {
             replacement.put(entry.getKey(), entry.getValue());
@@ -110,7 +140,18 @@ public class UniqueLifeInsuranceMap {
         assert CollectionUtil.elementsAreUnique(internalMap.values());
         return FXCollections.unmodifiableObservableList(internalList);
     }
-    //@@author
+    //@@author Juxarius
+
+    /**
+     * @param insurance insurance to be deleted
+     * @return
+     */
+    public boolean remove(ReadOnlyInsurance insurance) {
+        requireNonNull(insurance);
+        boolean removeSuccess = internalMap.remove(insurance.getId(), insurance);
+        syncMappedListWithInternalMap();
+        return removeSuccess;
+    }
 
     //@@author OscarWang114
     /**

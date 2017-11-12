@@ -50,7 +50,7 @@ public class RedoCommandTest {
         String lastCommand = undoRedoStack.peekRedo().toString();
         Command previousCommand = addressBookParser.parseCommand(lastCommand);
         String previousCommandString = previousCommand.toString();
-        String expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
+        String expectedResultMessage = RedoCommand.parseRedoCommand(previousCommandString);
         assertCommandSuccess(redoCommand, model, expectedResultMessage, expectedModel);
 
         // single command in redoStack
@@ -58,7 +58,7 @@ public class RedoCommandTest {
         lastCommand = undoRedoStack.peekRedo().toString();
         previousCommand = addressBookParser.parseCommand(lastCommand);
         previousCommandString = previousCommand.toString();
-        expectedResultMessage = RedoCommand.parseCommand(previousCommandString);
+        expectedResultMessage = RedoCommand.parseRedoCommand(previousCommandString);
         assertCommandSuccess(redoCommand, model, expectedResultMessage, expectedModel);
         //@@author
 

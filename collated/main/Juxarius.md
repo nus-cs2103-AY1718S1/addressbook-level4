@@ -39,6 +39,74 @@ public class InsuranceClickedEvent extends BaseEvent {
         this.panelChoice = panelChoice;
     }
 ```
+###### \java\seedu\address\commons\util\AppUtil.java
+``` java
+    /**
+     * Choice of panel to be selected
+     */
+    public enum PanelChoice {
+        PERSON, INSURANCE
+    }
+```
+###### \java\seedu\address\logic\commands\DeleteCommand.java
+``` java
+    public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
+            + ": Deletes the person/insurance identified by the index number used in the last listing.\n"
+            + "An additional argument left/l/right/r/person/p/insurance/i can be added to indicate\n"
+            + "choice of left or right panel. Choice is person panel by default.\n"
+            + "Parameters: INDEX (must be a positive integer) [PANEL_CHOICE]\n"
+            + "Example: " + COMMAND_WORD + " 1 insurance";
+
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_INSURANCE_SUCCESS = "Deleted Insurance %1$s";
+
+    private final Index targetIndex;
+    private final PanelChoice panelChoice;
+
+    public DeleteCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+        this.panelChoice = PanelChoice.PERSON;
+    }
+
+
+    public DeleteCommand(Index targetIndex, PanelChoice panelChoice) {
+        this.targetIndex = targetIndex;
+        this.panelChoice = panelChoice;
+    }
+
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyInsurance> insuranceList = model.getFilteredInsuranceList();
+
+        if (panelChoice == PanelChoice.PERSON && targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } else if (panelChoice == PanelChoice.INSURANCE && targetIndex.getZeroBased() >= insuranceList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_INSURANCE_DISPLAYED_INDEX);
+        }
+
+        String commandResultMessage = "";
+        try {
+            if (panelChoice == PanelChoice.PERSON) {
+                ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+                model.deletePerson(personToDelete);
+                commandResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+            } else if (panelChoice == PanelChoice.INSURANCE) {
+                ReadOnlyInsurance insuranceToDelete = insuranceList.get(targetIndex.getZeroBased());
+                model.deleteInsurance(insuranceToDelete);
+                commandResultMessage = String.format(MESSAGE_DELETE_INSURANCE_SUCCESS,
+                        insuranceToDelete.getInsuranceName());
+            }
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+        } catch (InsuranceNotFoundException infe) {
+            assert false : "The target insurance cannot be missing";
+        }
+        return new CommandResult(commandResultMessage);
+    }
+```
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
     /**
@@ -71,7 +139,7 @@ public class InsuranceClickedEvent extends BaseEvent {
             updatedTags.addAll(editPersonDescriptor.getTags().get());
         }
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedDateOfBirth, updatedGender, updatedTags);
+                updatedDateOfBirth, updatedGender, updatedTags, personToEdit.getLifeInsuranceIds());
     }
 ```
 ###### \java\seedu\address\logic\commands\EditCommand.java
@@ -101,7 +169,7 @@ public class InsuranceClickedEvent extends BaseEvent {
     public CommandResult execute() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        List<ReadOnlyInsurance> insuranceList = model.getInsuranceList();
+        List<ReadOnlyInsurance> insuranceList = model.getFilteredInsuranceList();
 
         if (panelChoice == PanelChoice.PERSON && targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -134,13 +202,34 @@ public class InsuranceClickedEvent extends BaseEvent {
             }
             commandText = getAutoFilledCommand(commandText, efe.getIndex());
             throw efe;
+        } catch (MissingPrefixException mpe) {
+            // this assertion is because this exception should only be thrown by the addli command
+            // to change if this exception is used elsewhere
+            final String inputToTest = commandText;
+            assert Arrays.stream(AddLifeInsuranceCommand.COMMAND_WORDS).anyMatch(commandWord ->
+                inputToTest.contains(commandWord));
+            commandText = getCommandWithFilledPrefixes(commandText);
+            throw mpe;
         } finally {
             history.add(commandText);
         }
     }
-```
-###### \java\seedu\address\logic\LogicManager.java
-``` java
+
+    /**
+     * Fill in the prefixes that require filling
+     * @param commandText original input command text
+     * @return command with empty prefixes
+     */
+    private String getCommandWithFilledPrefixes(String commandText) {
+        String filledText = commandText + " ";
+        Set<Prefix> missingPrefixes = PREFIXES_INSURANCE.stream().filter(prefix ->
+                !commandText.contains(prefix.getPrefix())).collect(Collectors.toSet());
+        for (Prefix missingPrefix : missingPrefixes) {
+            filledText += missingPrefix.getPrefix() + " ";
+        }
+        return filledText;
+    }
+
     /**
      * Replaces the given command text with filled command text
      * @param commandText original input command text
@@ -156,14 +245,14 @@ public class InsuranceClickedEvent extends BaseEvent {
                 commandText = commandText.replaceFirst(prefixInConcern, replacementText);
             }
         }
-        if (commandText.contains(PREFIX_TAG.getPrefix())) {
+        if (commandText.contains(" " + PREFIX_TAG.getPrefix())) {
             String formattedTags = PREFIX_TAG.getPrefix()
-                    + person.getDetailByPrefix(PREFIX_TAG).replaceAll(" ", " t/") + " ";
+                    + person.getDetailByPrefix(PREFIX_TAG).replaceAll(" ", " " + PREFIX_TAG) + " ";
             commandText = commandText.replaceFirst(PREFIX_TAG.getPrefix(), formattedTags);
         }
         if (commandText.contains(PREFIX_DELTAG.getPrefix())) {
             String formattedTags = PREFIX_DELTAG.getPrefix()
-                    + person.getDetailByPrefix(PREFIX_DELTAG).replaceAll(" ", " t/") + " ";
+                    + person.getDetailByPrefix(PREFIX_DELTAG).replaceAll(" ", " " + PREFIX_DELTAG) + " ";
             commandText = commandText.replaceFirst(PREFIX_DELTAG.getPrefix(), formattedTags);
         }
         return commandText.trim();
@@ -175,13 +264,31 @@ public class InsuranceClickedEvent extends BaseEvent {
      * Enumerator list to define the types of commands.
      */
     private enum CommandType {
-        ADD, ADDLI, CLEAR, DEL, EDIT, EXIT, FIND, PFIND, HELP, HISTORY, LIST, PRINT, REDO, UNDO, SELECT, WHY, NONE
+        ADD,
+        ADDLI,
+        CLEAR,
+        DEL,
+        EDIT,
+        EXIT,
+        FIND,
+        PFIND,
+        HELP,
+        HISTORY,
+        LIST,
+        PRINT,
+        REDO,
+        UNDO,
+        SELECT,
+        WHY,
+        NONE
     }
 
     /**
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    private static HashMap<String, CommandType> commandWordMap = new HashMap<>();
 
     /**
      * Parses user input into command for execution.
@@ -246,7 +353,7 @@ public class InsuranceClickedEvent extends BaseEvent {
             return new RedoCommand();
 
         case PRINT:
-            return new PrintCommand(arguments);
+            return new PrintCommandParser().parse(arguments);
 
         case WHY:
             return new WhyCommandParser().parse(arguments);
@@ -256,98 +363,66 @@ public class InsuranceClickedEvent extends BaseEvent {
         }
     }
 
+    /**
+     * Set up a map for O(1) command word to commandType access
+     */
+    private void setUpCommandWordMap() {
+        Arrays.stream(AddCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.ADD));
+        Arrays.stream(AddLifeInsuranceCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.ADDLI));
+        Arrays.stream(ClearCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.CLEAR));
+        Arrays.stream(DeleteCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.DEL));
+        Arrays.stream(EditCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.EDIT));
+        Arrays.stream(ExitCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.EXIT));
+        Arrays.stream(FindCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.FIND));
+        Arrays.stream(PartialFindCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.PFIND));
+        Arrays.stream(HelpCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.HELP));
+        Arrays.stream(HistoryCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.HISTORY));
+        Arrays.stream(ListCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.LIST));
+        Arrays.stream(PrintCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.PRINT));
+        Arrays.stream(RedoCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.REDO));
+        Arrays.stream(UndoCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.UNDO));
+        Arrays.stream(SelectCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.SELECT));
+        Arrays.stream(WhyCommand.COMMAND_WORDS)
+                .forEach(commandWord -> commandWordMap.put(commandWord, CommandType.WHY));
+    }
+
 
     /**
-     * Searches the entire list of acceptable command words in each command and returns the enumerated value type.
+     * Searches the map for the commandWord
      * @param commandWord
      * @return enumerated value for the switch statement to process
      */
 
     private CommandType getCommandType(String commandWord) {
-        for (String word : AddCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.ADD;
-            }
+        if (commandWordMap.isEmpty()) {
+            setUpCommandWordMap();
         }
-        for (String word : AddLifeInsuranceCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.ADDLI;
-            }
-        }
-        for (String word : ClearCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.CLEAR;
-            }
-        }
-        for (String word : DeleteCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.DEL;
-            }
-        }
-        for (String word : EditCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.EDIT;
-            }
-        }
-        for (String word : ExitCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.EXIT;
-            }
-        }
-        for (String word : FindCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.FIND;
-            }
-        }
-        for (String word : PartialFindCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.PFIND;
-            }
-        }
-        for (String word : HelpCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.HELP;
-            }
-        }
-        for (String word : HistoryCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.HISTORY;
-            }
-        }
-        for (String word : ListCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.LIST;
-            }
-        }
-        for (String word : RedoCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.REDO;
-            }
-        }
-        for (String word : SelectCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.SELECT;
-            }
-        }
-        for (String word : UndoCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.UNDO;
-            }
-        }
-
-        for (String word : WhyCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.WHY;
-            }
-        }
-        for (String word : PrintCommand.COMMAND_WORDS) {
-            if (commandWord.contentEquals(word)) {
-                return CommandType.PRINT;
-            }
-        }
-
-        return CommandType.NONE;
+        return commandWordMap.getOrDefault(commandWord, CommandType.NONE);
     }
+```
+###### \java\seedu\address\logic\parser\CliSyntax.java
+``` java
+    public static final Set<Prefix> PREFIXES_PERSON = new HashSet<>(Arrays.asList(
+            PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DOB, PREFIX_GENDER));
+    public static final Set<Prefix> PREFIXES_INSURANCE = new HashSet<>(Arrays.asList(
+            PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY, PREFIX_PREMIUM, PREFIX_CONTRACT_NAME,
+            PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE));
+}
 ```
 ###### \java\seedu\address\logic\parser\DateParser.java
 ``` java
@@ -464,6 +539,37 @@ public class DateParser {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\DeleteCommandParser.java
+``` java
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteCommand
+     * and returns an DeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeleteCommand parse(String args) throws ParseException {
+        try {
+            String[] inputs = args.split("\\s");
+            String indexString = Arrays.stream(inputs).filter(s -> s.matches("\\d+"))
+                    .findFirst().orElseThrow(() -> new IllegalValueException("No index found!"));
+            Optional<String> panelString = Arrays.stream(inputs).filter(s -> s.matches("\\p{Alpha}+")).findFirst();
+            PanelChoice panelChoice;
+            if (inputs.length < 2) {
+                throw new IllegalValueException("Too little input arguments!");
+            } else if (inputs.length > 2 && panelString.isPresent()) {
+                panelChoice = ParserUtil.parsePanelChoice(panelString.get().toLowerCase());
+            } else {
+                panelChoice = PanelChoice.PERSON;
+            }
+            Index index = ParserUtil.parseIndex(indexString);
+            return new DeleteCommand(index, panelChoice);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+```
 ###### \java\seedu\address\logic\parser\EditCommandParser.java
 ``` java
     /**
@@ -573,6 +679,22 @@ public class EmptyFieldException extends ParseException {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\exceptions\MissingPrefixException.java
+``` java
+
+/**
+ * To signal a request for autofilling prefixes in add insurance command due to the multitude of prefixes required
+ */
+public class MissingPrefixException extends ParseException {
+    /**
+     * Signal to inform autofilling of prefixes and/or re positioning of caret
+     * @param message
+     */
+    public MissingPrefixException(String message) {
+        super(message);
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
 
@@ -605,13 +727,13 @@ public class EmptyFieldException extends ParseException {
             String indexString = Arrays.stream(inputs).filter(s -> s.matches("\\d+"))
                     .findFirst().orElseThrow(() -> new IllegalValueException("No index found!"));
             Optional<String> panelString = Arrays.stream(inputs).filter(s -> s.matches("\\p{Alpha}+")).findFirst();
-            SelectCommand.PanelChoice panelChoice;
+            PanelChoice panelChoice;
             if (inputs.length < 2) {
                 throw new IllegalValueException("Too little input arguments!");
             } else if (inputs.length > 2 && panelString.isPresent()) {
                 panelChoice = ParserUtil.parsePanelChoice(panelString.get().toLowerCase());
             } else {
-                panelChoice = SelectCommand.PanelChoice.PERSON;
+                panelChoice = PanelChoice.PERSON;
             }
             Index index = ParserUtil.parseIndex(indexString);
             return new SelectCommand(index, panelChoice);
@@ -621,6 +743,21 @@ public class EmptyFieldException extends ParseException {
         }
     }
 }
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+
+    /**
+     * @param target insurance to be deleted
+     * @throws InsuranceNotFoundException
+     */
+    public void deleteInsurance(ReadOnlyInsurance target) throws InsuranceNotFoundException {
+        if (lifeInsuranceMap.remove(target)) {
+            syncWithUpdate();
+        } else {
+            throw new InsuranceNotFoundException();
+        }
+    }
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
@@ -634,6 +771,10 @@ public class EmptyFieldException extends ParseException {
         } catch (InsuranceNotFoundException infe) {
             assert false : "AddressBooks should not have duplicate insurances";
         }
+    }
+
+    private void clearAllPersonsInsuranceIds() {
+        persons.forEach(p -> p.clearLifeInsuranceIds());
     }
 ```
 ###### \java\seedu\address\model\insurance\LifeInsurance.java
@@ -659,6 +800,21 @@ public class EmptyFieldException extends ParseException {
         });
     }
 ```
+###### \java\seedu\address\model\insurance\UniqueLifeInsuranceMap.java
+``` java
+
+    /**
+     * @param insurance insurance to be deleted
+     * @return
+     */
+    public boolean remove(ReadOnlyInsurance insurance) {
+        requireNonNull(insurance);
+        boolean removeSuccess = internalMap.remove(insurance.getId(), insurance);
+        syncMappedListWithInternalMap();
+        return removeSuccess;
+    }
+
+```
 ###### \java\seedu\address\model\person\Address.java
 ``` java
         if (address.isEmpty()) {
@@ -667,6 +823,9 @@ public class EmptyFieldException extends ParseException {
 ```
 ###### \java\seedu\address\model\person\DateOfBirth.java
 ``` java
+    public static final String MESSAGE_DOB_CONSTRAINTS =
+            "Please enter in Day Month Year format where the month can be a number or the name"
+                    + " and the year can be input in 2-digit or 4-digit format.";
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
@@ -683,6 +842,34 @@ public class EmptyFieldException extends ParseException {
     public DateOfBirth() {
         this.dateOfBirth = LocalDate.now();
         this.dateSet = false;
+    }
+
+    /**
+     * Validates given Date of Birth.
+     *
+     * @throws IllegalValueException if given date of birth string is invalid.
+     */
+    public DateOfBirth(String dob) throws IllegalValueException {
+        requireNonNull(dob);
+        if (dob.isEmpty()) {
+            throw new EmptyFieldException(PREFIX_DOB);
+        }
+        if (!isValidDateOfBirth(dob)) {
+            throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
+        }
+        this.dateOfBirth = new DateParser().parse(dob);
+        this.dateSet = true;
+    }
+
+    /**
+     * Returns true if a given string is a valid person date of birth.
+     */
+    public static boolean isValidDateOfBirth(String test) {
+        return test.matches(DOB_VALIDATION_REGEX);
+    }
+    @Override
+    public String toString() {
+        return dateSet ? dateOfBirth.format(DateParser.DATE_FORMAT) : "";
     }
 ```
 ###### \java\seedu\address\ui\CommandBox.java
@@ -709,12 +896,35 @@ public class EmptyFieldException extends ParseException {
             commandTextField.positionCaret(commandTextField.getText().length());
             raise(new NewResultAvailableEvent("Autofilled!", false));
 
+        } catch (MissingPrefixException mpe) {
+            initHistory();
+            logger.info("Autofilling Prefixes!");
+            historySnapshot.next();
+            String filledCommand = historySnapshot.previous();
+            int unfilledPrefixPosition = filledCommand.indexOf("/ ") + 1;
+            commandTextField.setText(filledCommand.trim());
+            commandTextField.positionCaret(unfilledPrefixPosition);
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage(), true));
+        }
+    }
+```
+###### \java\seedu\address\ui\InsuranceCard.java
+``` java
+    private void setPremiumLevel(Double premium) {
+        if (premium > 500.0) {
+            insuranceName.getStyleClass().add("gold-insurance-header");
+            index.getStyleClass().add("gold-insurance-header");
+        } else if (premium > 100.0) {
+            insuranceName.getStyleClass().add("silver-insurance-header");
+            index.getStyleClass().add("silver-insurance-header");
+        } else {
+            insuranceName.getStyleClass().add("normal-insurance-header");
+            index.getStyleClass().add("normal-insurance-header");
         }
     }
 ```
@@ -738,7 +948,7 @@ public class EmptyFieldException extends ParseException {
     }
 
     /**
-     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     * Scrolls to the {@code InsuranceCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
@@ -754,11 +964,12 @@ public class EmptyFieldException extends ParseException {
             scrollTo(event.targetIndex);
         }
     }
+
     @Subscribe
     private void handleInsuranceClickedEvent(InsuranceClickedEvent event) {
-        ObservableList<InsuranceProfile> insurances = insuranceListView.getItems();
+        ObservableList<InsuranceCard> insurances = insuranceListView.getItems();
         for (int i = 0; i < insurances.size(); i++) {
-            if (insurances.get(i).getInsurance().getInsuranceName().equals(event.getInsurance().getInsuranceName())) {
+            if (insurances.get(i).getInsurance().getId().equals(event.getInsurance().getId())) {
                 insuranceListView.scrollTo(i);
                 insuranceListView.getSelectionModel().select(i);
                 break;
@@ -767,21 +978,6 @@ public class EmptyFieldException extends ParseException {
     }
     // weird phenomenon that a filteredList does not contain elements in the original list and cannot be used
     // in the select command
-```
-###### \java\seedu\address\ui\InsuranceProfile.java
-``` java
-    private void setPremiumLevel(Double premium) {
-        if (premium > 500.0) {
-            insuranceName.getStyleClass().add("gold-insurance-header");
-            index.getStyleClass().add("gold-insurance-header");
-        } else if (premium > 100.0) {
-            insuranceName.getStyleClass().add("silver-insurance-header");
-            index.getStyleClass().add("silver-insurance-header");
-        } else {
-            insuranceName.getStyleClass().add("normal-insurance-header");
-            index.getStyleClass().add("normal-insurance-header");
-        }
-    }
 ```
 ###### \java\seedu\address\ui\InsuranceProfilePanel.java
 ``` java
@@ -816,7 +1012,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     @FXML
     private Label expiryDate;
     @FXML
-    private Label contractPath;
+    private Label contractName;
 
     public InsuranceProfilePanel() {
         super(FXML);
@@ -895,7 +1091,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     -fx-opacity: 1;
 }
 
-#insuranceProfilePanel .dynamic-labels {
+#insuranceProfilePanel .dynamic-labels, .valid-file, .missing-file {
     -fx-font-size: 15pt;
     -fx-font-family: "Segoe UI SemiLight";
     -fx-text-fill: white;
@@ -916,7 +1112,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     -fx-opacity: 1;
 }
 
-#insuranceProfilePanel #owner:hover, #insuranceProfilePanel #insured:hover, #insuranceProfilePanel #beneficiary:hover {
+#insuranceProfilePanel #owner:hover, #insuranceProfilePanel #insured:hover, #insuranceProfilePanel #beneficiary:hover, .valid-file:hover {
     -fx-text-fill: #ff4500;
 }
 
@@ -962,7 +1158,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 ```
-###### \resources\view\InsuranceProfile.fxml
+###### \resources\view\InsuranceCard.fxml
 ``` fxml
          <VBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
             <children>
@@ -1016,7 +1212,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
                               <Label fx:id="owner" styleClass="dynamic-labels" text="\$owner" />
                               <Label fx:id="insured" styleClass="dynamic-labels" text="\$insured" />
                               <Label fx:id="beneficiary" styleClass="dynamic-labels" text="\$beneficiary" />
-                              <Label fx:id="contractPath" styleClass="dynamic-labels" text="\$contractPath" />
+                              <Label fx:id="contractName" styleClass="dynamic-labels" text="\$contractName" />
                               <Label fx:id="premium" styleClass="dynamic-labels" text="\$premium" />
                               <Label fx:id="signingDate" styleClass="dynamic-labels" text="\$signingDate" />
                               <Label fx:id="expiryDate" styleClass="dynamic-labels" text="\$expiryDate" />

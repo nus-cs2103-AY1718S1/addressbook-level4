@@ -21,10 +21,14 @@ public class CliSyntax {
     public static final Prefix PREFIX_INSURED = new Prefix("i/");
     public static final Prefix PREFIX_BENEFICIARY = new Prefix("b/");
     public static final Prefix PREFIX_PREMIUM = new Prefix("pr/");
-    public static final Prefix PREFIX_CONTRACT = new Prefix("c/");
+    public static final Prefix PREFIX_CONTRACT_NAME = new Prefix("c/");
     public static final Prefix PREFIX_SIGNING_DATE = new Prefix("sd/");
     public static final Prefix PREFIX_EXPIRY_DATE = new Prefix("ed/");
     public static final Prefix PREFIX_GENDER = new Prefix("g/");
+    //@@author Juxarius
     public static final Set<Prefix> PREFIXES_PERSON = new HashSet<>(Arrays.asList(
             PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DOB, PREFIX_GENDER));
+    public static final Set<Prefix> PREFIXES_INSURANCE = new HashSet<>(Arrays.asList(
+            PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY, PREFIX_PREMIUM, PREFIX_CONTRACT_NAME,
+            PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE));
 }

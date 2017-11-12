@@ -57,14 +57,14 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     @FXML
     private Label expiryDate;
     @FXML
-    private Label contractPath;
+    private Label contractName;
 
     public InsuranceProfilePanel() {
         super(FXML);
         insuranceScrollPane.setFitToWidth(true);
         insuranceProfilePanel.prefWidthProperty().bind(insuranceScrollPane.widthProperty());
         insuranceProfilePanel.prefHeightProperty().bind(insuranceScrollPane.heightProperty());
-        enableNameToProfileLink(insurance);
+        setAllToNull();
         registerAsAnEventHandler(this);
     }
 
@@ -86,7 +86,6 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         return insurance;
     }
 
-
     /**
      * Listen for click event on person names to be displayed as profile
      * @param insurance
@@ -97,21 +96,29 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         beneficiary.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
     }
 
+    private void setAllToNull() {
+        owner.setText(null);
+        insured.setText(null);
+        beneficiary.setText(null);
+        contractName.setText(null);
+        premium.setText(null);
+        signingDate.setText(null);
+        expiryDate.setText(null);
+    }
 
     /**
      * Checks if pdf file exist in project, if not add click event on contract field to add file with filechooser
      * Then add click event on contract field to open up the file
      * @param insurance
      */
-
     private void initializeContractFile(ReadOnlyInsurance insurance) {
-        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
+        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractName());
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
         } else {
-            contractPath.getStyleClass().clear();
-            contractPath.getStyleClass().add("missing-file");
-            contractPath.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            contractName.getStyleClass().clear();
+            contractName.getStyleClass().add("missing-file");
+            contractName.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
                     FileChooser.ExtensionFilter extFilter =
@@ -119,18 +126,19 @@ public class InsuranceProfilePanel extends UiPart<Region> {
                     FileChooser chooser = new FileChooser();
                     chooser.getExtensionFilters().add(extFilter);
                     File openedFile = chooser.showOpenDialog(null);
-                    activateLinkToInsuranceFile();
 
                     if (isFileExists(openedFile)) {
                         try {
                             Files.copy(openedFile.toPath(), insuranceFile.toPath());
+                            if (isFileExists(insuranceFile)) {
+                                activateLinkToInsuranceFile();
+                            }
                         } catch (IOException ex) {
                             logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
                         }
                     }
                 }
             });
-
         }
     }
 
@@ -138,13 +146,13 @@ public class InsuranceProfilePanel extends UiPart<Region> {
      *  Enable the link to open contract pdf file and adjusting the text hover highlight
      */
     private void activateLinkToInsuranceFile() {
-        contractPath.getStyleClass().clear();
-        contractPath.getStyleClass().add("valid-file");
-        contractPath.setOnMouseClicked(event -> {
+        contractName.getStyleClass().clear();
+        contractName.getStyleClass().add("valid-file");
+        contractName.setOnMouseClicked(event -> {
             try {
                 Desktop.getDesktop().open(insuranceFile);
             } catch (IOException ee) {
-                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
+                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractName());
             }
         });
     }
@@ -160,7 +168,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
         insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
-        contractPath.textProperty().bind(Bindings.convert(insurance.contractPathProperty()));
+        contractName.textProperty().bind(Bindings.convert(insurance.contractNameProperty()));
         premium.textProperty().bind(Bindings.convert(insurance.premiumStringProperty()));
         signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
         expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));
