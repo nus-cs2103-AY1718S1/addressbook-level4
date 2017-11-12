@@ -27,7 +27,7 @@ import seedu.room.model.tag.Tag;
 /**
  * Allows the addition of an image to a resident currently in the resident book
  */
-public class AddImageCommand extends UndoableCommand {
+public class AddImageCommand extends Command {
     public static final String COMMAND_WORD = "addImage";
     public static final String COMMAND_ALIAS = "ai";
 
@@ -58,7 +58,7 @@ public class AddImageCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {

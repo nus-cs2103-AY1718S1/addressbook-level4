@@ -24,7 +24,7 @@ import seedu.room.model.tag.Tag;
 /**
  * Allows deletion of an image for a specified person
  */
-public class DeleteImageCommand extends UndoableCommand {
+public class DeleteImageCommand extends Command {
     public static final String COMMAND_WORD = "deleteImage";
     public static final String COMMAND_ALIAS = "di";
 
@@ -48,7 +48,7 @@ public class DeleteImageCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
