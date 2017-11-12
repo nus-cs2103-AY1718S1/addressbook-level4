@@ -93,8 +93,8 @@ public class AddCommandParser implements Parser<AddCommand> {
      * Returns an empty {@code ArrayList} when no email is added in contact
      */
     private static ArrayList<Email> createEmptyEmailList() {
-        ArrayList<seedu.address.model.person.Email> emptyEmailList = new ArrayList<>();
-        seedu.address.model.person.Email emptyEmail = new seedu.address.model.person.Email();
+        ArrayList<Email> emptyEmailList = new ArrayList<>();
+        Email emptyEmail = new Email();
         emptyEmailList.add(emptyEmail);
         return emptyEmailList;
     }

@@ -100,6 +100,9 @@ public class ParserUtil {
                 temp.add(new Email(e));
             }
         }
+        if (temp.size() == 0) {
+            temp.add(new Email());
+        }
         return temp;
     }
 
