@@ -202,10 +202,10 @@ _Alias:_ `remove` `-`
 
 You can delete a group of people from the address book.
 
-Format: `delete I/INDEX INDEX ...` (or) `delete n/NAME`
-
 image::multiDeleteCommand.png[width="500"]
 _Figure 3.7.1 : Deleting multiple person_
+
+Format: `delete I/INDEX INDEX ...` (or) `delete n/NAME`
 
 ****
 * Deletes person with given name or at these given specified `INDEX`.
@@ -256,10 +256,10 @@ This command adds the tag friends to the 2nd and 3rd person in the address book
 
 You can mark specified person(s) from the address book as favourite.
 
-Format: `t-add INDEX... favourite`
-
 image::tAddCommand.png[width="500"]
 _Figure 3.9.1 : Tagging multiple person as favourite_
+
+Format: `t-add INDEX... favourite`
 
 ****
 * All person(s) tagged as `favourite` by you will be shown as a coral shaped circle in front of the tag list.
@@ -309,10 +309,10 @@ This command removes the tag `friends` from all person(s) with the tag `friends`
 
 You can remove specified person(s) in the address book from your `favourite` list.
 
-Format: `t-remove INDEX... favourite`
-
 image::tRemoveCommand.png[width="500"]
 _Figure 3.11.1 : Removing tag from multiple persons_
+
+Format: `t-remove INDEX... favourite`
 
 ****
 * You can also use `fav`, and words containing `fav` interchangeably with `favourite`.
@@ -335,10 +335,10 @@ This command removes the tag `fav` from all person(s) with the the tag `fav` in 
 
 You can find all persons with the given tag.
 
-Format: `t-find TAG`
-
 image::tFindCommand.png[width="500"]
 _Figure 3.12.1 : Finding all persons tagged 'fav'_
+
+Format: `t-find TAG`
 
 ****
 * The results show a list of person(s) who has their `tagName` matching exactly; also those with `tagName` containing in `TAG` or the other way round.
@@ -357,8 +357,6 @@ This command could also list all the people with tag `friend` if any
 
 You can change the current theme into your preferred one.
 
-Format: `theme [THEME] OR [INDEX]`
-
 image::twilightTheme.png[width="790"]
 _Figure 3.13.1 : Twilight Theme_
 
@@ -366,8 +364,9 @@ image::minimalismTheme.png[width="790"]
 _Figure 3.13.2 : Minimalism Theme_
 
 image::sunburstTheme.png[width="790"]
-_Figure 3.13.3 Sunburst Theme: _
+_Figure 3.13.3 : Sunburst Theme_
 
+Format: `theme [THEME] OR [INDEX]`
 
 ****
 * Currently there are 3 themes available, `Twilight`, `Sunburst`, `Minimalism`.
@@ -430,12 +429,10 @@ Shows the route from `John street, block 123, #01-01` to the address of person w
 
 === Adding an Event to Schedule: `s-add` _[Since v1.4]_
 
-With many commitments at hand, it is easy to overlook an event in your schedule. `s-add` allows you to add an event to your calendar and also the people who will be involved in the event.
+With many commitments at hand, it is easy to overlook an event in your schedule. `s-add` allows you to add an event to your calendar and include persons from your addressbook as members of the event.
 
-Format: `s-add [m/INDEX INDEX…] n/NAME t/TIME [d/DURATION]`
-
-[TIP]
-You may create an event without any members or create a past event to keep track of your past schedule too.
+image::sAddCommand.png[width="790"]
+_Figure 3.16.1 : Adding an event titled 'Orientation Camp' to address book_
 
 [TIP]
 Mouse over the greyed-out date in your calendar to see your events for the day.
@@ -443,8 +440,7 @@ Mouse over the greyed-out date in your calendar to see your events for the day.
 [TIP]
 You will be notified in the result panel if the newly added event clashes with another event in your calendar.
 
-image::sAddCommand.png[width="790"]
-_Figure 3.16.1 : Adding an event to address book_
+Format: `s-add [m/INDEX INDEX…] n/NAME t/TIME [d/DURATION]`
 
 ****
 * Creates an event with the given event name, event time, duration and members.
@@ -467,10 +463,10 @@ Adds an event called ‘Email Reminder’ on 4th of December 2017 at 2:30PM into
 
 Suppose you want to remove multiple events from your calendar, you can use the `s-remove` command with the indexes of events to be deleted.
 
-Format: `s-remove I/INDEX INDEX...`
-
 image::sRemoveCommand.png[width="790"]
-_Figure 3.17.1 : Removing an event from address book_
+_Figure 3.17.1 : Removing multiple events from address book_
+
+Format: `s-remove I/INDEX INDEX...`
 
 ****
 * `INDEX` in this case is referring to the index of events in the event list panel
@@ -593,10 +589,10 @@ You find that people you wrongly deleted from address book in recycle bin, you c
 
 You can restore person(s) from bin to address book.
 
-Format: `bin-restore INDEX INDEX ...`
-
 image::multiRestoreCommand.png[width="600"]
 _Figure 3.23.1 : Restoring multiple persons from recycle bin_
+
+Format: `bin-restore INDEX INDEX ...`
 
 ****
 * Recovers the people at these given specified `INDEX`.
