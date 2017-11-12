@@ -70,6 +70,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
                     try {
                         if (email == null) {
                             email = name.replaceAll("\\s+", "") + "@example.com";
+                            tagList.add(new Tag("containsDummyValue"));
                         }
 
                         Name n = new Name(name);
