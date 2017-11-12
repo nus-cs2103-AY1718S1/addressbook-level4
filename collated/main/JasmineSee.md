@@ -84,7 +84,7 @@ public class ChangeThemeCommand extends Command {
 ``` java
 
 /**
- * Delete photo of specified person.
+ * Deletes photo of specified person.
  */
 public class DeletePhotoCommand extends Command {
     public static final String COMMAND_WORD = "dphoto";
@@ -295,7 +295,7 @@ public class RemoveTagCommand extends UndoableCommand {
 ###### /java/seedu/address/logic/commands/TagCommand.java
 ``` java
 /**
- * Lists all persons in the address book to the user.
+ * Lists all persons in the address book that has the specified tag(s) to the user.
  */
 public class TagCommand extends Command {
 
