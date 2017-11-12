@@ -23,7 +23,7 @@ public class HighlightCommand extends UndoableCommand {
     public static final String MESSAGE_RESET_HIGHLIGHT = "Removed all highlights on Residents.";
     public static final String MESSAGE_NONE_HIGHLIGHTED = "No Highlighted Residents.";
 
-    public static final String MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS = "Highlighted persons with tag: ";
+    public static final String MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS = "Highlighted residents with tag: ";
     public static final String MESSAGE_TAG_NOT_FOUND = "Tag not found: ";
 
     private final String highlightTag;

@@ -37,23 +37,23 @@ public class AutoCompleteTest {
 
     @Test
     public void assert_autoCompleteListNamesUpdate_success() {
-        List<ReadOnlyPerson> persons = model.getFilteredPersonList();
+        List<ReadOnlyPerson> residents = model.getFilteredPersonList();
         autoComplete.updateAutoCompleteList("find");
         String[] updatedList = autoComplete.getAutoCompleteList();
 
-        for (int i = 0; i < persons.size(); i++) {
-            String findPersonString = "find " + persons.get(i).getName().toString();
+        for (int i = 0; i < residents.size(); i++) {
+            String findPersonString = "find " + residents.get(i).getName().toString();
             assertTrue(findPersonString.equals(updatedList[i]));
         }
     }
 
     @Test
     public void assert_autoCompleteListIndexUpdate_success() {
-        List<ReadOnlyPerson> persons = model.getFilteredPersonList();
+        List<ReadOnlyPerson> residents = model.getFilteredPersonList();
         autoComplete.updateAutoCompleteList("edit");
         String[] updatedList = autoComplete.getAutoCompleteList();
 
-        for (int i = 0; i < persons.size(); i++) {
+        for (int i = 0; i < residents.size(); i++) {
             String editResidentIndex = "edit " + (i + 1);
             assertTrue(editResidentIndex.equals(updatedList[i]));
         }

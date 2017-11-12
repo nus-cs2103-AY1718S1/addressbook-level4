@@ -37,22 +37,22 @@ public class AutoComplete {
             this.resetAutocompleteList();
             break;
         case "find":
-            this.autoCompleteList = getConcatPersonsArray("find");
+            this.autoCompleteList = getConcatResidentsArray("find");
             break;
         case "edit":
-            this.autoCompleteList = getConcatPersonsArray("edit");
+            this.autoCompleteList = getConcatResidentsArray("edit");
             break;
         case "delete":
-            this.autoCompleteList = getConcatPersonsArray("delete");
+            this.autoCompleteList = getConcatResidentsArray("delete");
             break;
         case "select":
-            this.autoCompleteList = getConcatPersonsArray("select");
+            this.autoCompleteList = getConcatResidentsArray("select");
             break;
         case "addImage":
-            this.autoCompleteList = getConcatPersonsArray("addImage");
+            this.autoCompleteList = getConcatResidentsArray("addImage");
             break;
         case "deleteImage":
-            this.autoCompleteList = getConcatPersonsArray("deleteImage");
+            this.autoCompleteList = getConcatResidentsArray("deleteImage");
             break;
         default:
             return;
@@ -60,7 +60,7 @@ public class AutoComplete {
     }
 
     // Concatenate Persons to suggestions when command typed
-    private String[] getConcatPersonsArray(String command) {
+    private String[] getConcatResidentsArray(String command) {
         String[] newAutoCompleteList = new String[personsStringArray.size()];
         for (int i = 0; i < personsStringArray.size(); i++) {
             if (command.equals("find")) {
@@ -84,8 +84,8 @@ public class AutoComplete {
      */
     public void updatePersonsArray() {
         personsStringArray.clear();
-        for (ReadOnlyPerson p: model.getFilteredPersonList()) {
-            personsStringArray.add(p.getName().toString());
+        for (ReadOnlyPerson resident: model.getFilteredPersonList()) {
+            personsStringArray.add(resident.getName().toString());
         }
     }
 
