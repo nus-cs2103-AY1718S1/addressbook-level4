@@ -398,7 +398,7 @@ _Figure 4.1.7 : Undo Redo Activity Diagram_
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-=== Open new AddressBook mechanism
+=== `open` and `new` command mechanism
 
 image::OpenAddressBookEvent.png[width="800"]
 _Figure 4.2.1 : Open New Address Book Sequence Diagram_
@@ -409,16 +409,16 @@ This loads the selected XML file which opens a new address book with contacts fr
 
 ==== Design considerations
 
-**Aspect:** Architectural Design +
-**Alternative 1 (current choice):** Event-Driven Architectural Style +
-**Alternative 2:** N-Tier Architectural Design +
+**Aspect:** Which component is responsible for
 
-=== Adds a person with optional fields
 //tag::add[]
+
+=== Making parameters optional
+
 Adding a new person into DeathNote requires only `Name`. All other fields are optional. This is
 achieved by allowing field objects to be instantiated with `null` parameter.
 
-Problems arise when these field classes can created with a `null` parameter. Necessary changes are mostly about additional
+Problems arise when field objects are instantiated with a `null` parameter. Necessary changes are mostly about additional
 checks of `null` in its respective class:
 
 ----
@@ -452,19 +452,23 @@ checks of `null` in its respective class:
         return false;
     }
 ----
-//end::add[]
+
 ==== Design considerations
 
-**Aspect:** Nature of field object when dealing with `null` +
+**Aspect:** Which component is responsible for `null`. +
 
-**Alternative 1 (current choice):** Each `Person` must have all field objects being non-null, but the respective objects
-can have `null` in their `value` field. +
-**Pros:** Only each field class needs to be modified. No other components are affected. +
-**Cons:** All existing tests will fail, since it wasn't meant to be allowed. +
+**Alternative 1 (current choice):** Parameters can be instantiated with `null` parameter, but the object itself cannot be `null`.
+**Pros:** Only parameter classes that are within `Model` component need to be modified. Other components are still functioning
+correctly. This improves coherent within `Model` component. +
+**Cons:** Potentially confusing for new developers. This design is equivalent to "having a phone with `null` number" rather
+than the more intuitive "doesn't have a phone".
 
-**Alternative 2:** Each `Person` can have field objects being `null`. +
-**Pros:** Only little modification needed to make in `Model` component. +
-**Cons:** Since many components rely on each field object being non-null, this design will fail the other components. +
+**Alternative 2:** Parameter objects can be `null`. +
+**Pros:** More intuitive for a new developer. Easier modification on `Model` component.
+**Cons:** Many components rely on the assumption that parameter objects are non-null. Hence, this design will fail the other components.
+More verification is needed outside the `Model` component when interacting with these parameter objects. This increases coupling. +
+
+//end::add[]
 
 //tag::parameter[]
 
@@ -534,6 +538,18 @@ https://github.com/CS2103AUG2017-W10-B3/main/pull/8/files[Adding birthday parame
 **Cons:** It is not consistent with the variables in `Person` +
 
 //end::parameter[]
+
+//tag::find[]
+
+=== Find Command
+
+
+
+==== Design considerations
+
+
+
+//end::find[]
 
 //tag::website[]
 

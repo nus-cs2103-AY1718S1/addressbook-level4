@@ -113,9 +113,8 @@ Adds a person to DeathNote +
 
   Evil Format: curse n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
 
-//end::add[]
-
 * Only `NAME` field is compulsory +
+//end::add[]
 * Birthday must be in DD/MM/YYYY format +
 * Website must start with `https`` +
 * Picture must be in PNG format +
@@ -210,6 +209,7 @@ Finds persons who matches the given attributes. +
 * The order of the keywords for NAME does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * The other prefixes require the exact words
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+//end::find[]
 
 [big green]#Examples#:
 
@@ -219,7 +219,6 @@ Returns `john` and `John Doe`
 Returns any person having names `Betsy`, `Tim`, or `John`
 * `find n/John p/96654253`
 Returns a contact named "John" with phone number "96654253".
-//end::find[]
 
 === Select a person : `select` / `s`
 
