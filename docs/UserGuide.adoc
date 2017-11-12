@@ -113,7 +113,7 @@ Read more about parcel tags in the link:#tag[Tags section] below.
 The Name field represents the name of the parcel's recipient. It can contain the name of the organisation or the person
  that you are delivering to the parcel to. +
 
-[Note]
+[NOTE]
 The Name field will only allow alphanumeric characters separated by whitespace. e.g. `John Doe`;
 `8 Noodles at Shangri-La's Rasa Sentosa Resort & Spa` +
 Non-alphanumeric entries will be rejected by Ark. e.g. `John Doe!`
@@ -165,7 +165,7 @@ deliver your parcel to.
 [NOTE]
 The Address field will only allow you to add an address with at least a single character as the text representation of
 the address, and appended with a valid postal code, separated from the text representation of the address with space(s).
-e.g. `123, example street #05-26 S012345`. +
+e.g. `123, example street #05-26 S012345`; +
 You can learn more about valid postal code entries below. +
 
 //tag::postalCode[]
@@ -176,7 +176,7 @@ Ark can store the postal address of locations in Singapore. It only accepts valu
 The postal code of a parcel is used to query Google Maps when the `select` command is executed or when a parcel in the
 Parcel List Panel is clicked.
 
-*Postal codes must be appended to the end of the address text.* i.e. Suppose you are adding a new parcel into Ark and
+*Postal codes must be appended to the end of the address text.* e.g. Suppose you are adding a new parcel into Ark and
 entered `add ...(Some info)... a/NUS School of Computing, COM1, 13 Computing Drive, S117417 ...(More info required
 in the add command)...`. In this case, `S11417` is the postal code of the above address and is appended to its
 respective address, separated by a space.
@@ -199,7 +199,7 @@ The Email field represents the email contact of the parcel's recipient. It can c
 or the person that you are delivering to the parcel to.
 
 [NOTE]
-The Email field will only allow alphanumeric or periods characters separated by an `@`character. e.g. `John@example.com`
+The Email field will only allow alphanumeric or periods characters separated by an `@` character. e.g. `John@example.com`
 
 //tag::deliveryDate[]
 [#delivery-date]
@@ -230,7 +230,7 @@ inputs to add a `PENDING` `Status`.
 
 //tag::tags[]
 [#tags]
-=== Tag Field: Delivery Tag of Parcel
+=== Tags Field: Delivery Tags of Parcel
 
 `Tag`s are used to indicate how the parcel should be handled. Tags can contain one or more of the following `Tag`s:
 
@@ -240,7 +240,7 @@ inputs to add a `PENDING` `Status`.
 * `FRAGILE` - This state indicates that the parcels' contents can be broken easily and
 requires additional care when handling.
 
-To input a `Tag`, you can type insensitive formats of the above `Tag`s. e.g. `frozen` or `Frozen` are valid inputs
+To input a `Tag`, you can type insensitive formats of any of the above `Tags`. e.g. `frozen` or `Frozen` are valid inputs
 to add a `FROZEN` `Tag`.
 
 [NOTE]
