@@ -417,16 +417,14 @@ If the list is already in the correct alphabetical order, the address book will 
 The following code will show how the list is being returned to the user:
 [source,java]
 ----
-public ObservableList<ReadOnlyPerson> asObservableListSortedByName() {
-    internalList.sort(new Comparator<Person>() {
-        @Override
-        public int compare(Person o1, Person o2) {
-           return ((o1.getName().toString().toLowerCase()).compareTo(o2.getName().toString().toLowerCase()));
-        }
-     });
-     return FXCollections.unmodifiableObservableList(mappedList);
+    /**
+     * Returns an observable list as as an unmodifiable {@code ObservableList}
+     */
+    public ObservableList<ReadOnlyPerson> asObservableListSortedByName() {
+        internalList.sort((o1, o2) ->((o1.getName().toString().toLowerCase())
+                .compareTo(o2.getName().toString().toLowerCase())));
+        return FXCollections.unmodifiableObservableList(mappedList);
     }
-}
 ----
 The sort mechanism is implemented this way to ensure that all person names in the `UniquePersonList` is compared to at the lowest level of abstraction.
 
@@ -456,9 +454,9 @@ The sort mechanism is implemented this way to ensure that all person names in th
 **Alternative 1 (current choice):** Creates an empty `ArrayList` to obtain the names from the `UniquePersonList` before sorting occurs. The `sort` overwrites the existing list of unsorted contacts.  +
 **Pros:** The original list of unsorted contacts is not altered. +
 **Cons:** Additional space usage and longer time needed to overwrite the original contact list, inefficiency and memory wastage may arise. +
-**Alternative 2:** Manually edit the list of contacts in cherBook. +
-**Pros:** Do not need to maintain a separate list, just reuse what is already in the codebase, and it saves space. +
-**Cons:**  Inefficient as compared to using an algorithm. If the user made a mistake, the change cannot be reverted as the original list of contacts is not saved. +
+**Alternative 2:** Creates a new list of persons to sort each time a command that filters the person list is entered. +
+**Pros:** User can sort accordingly to the filtered person list that he/she has implemented. Able to revert any changes if user does not want their contact list to be sorted. +
+**Cons:** User have to continously use the sort command for every filtered person list change. Inefficient if the user wants their contact list to be sorted at all times. +
 // end::sortimplementation[]
 
 
@@ -510,7 +508,9 @@ The following will show how the `schedule` is added into the AddressBook:
     @Override
     public void addSchedule(Schedule schedule) {
         addressBook.addSchedule(schedule);
+        addressBook.sortSchedules();
         indicateAddressBookChanged();
+        indicateScheduleListChanged();
     }
 ----
 It is implemented this way to ensure that all `schedules` are added into the AddressBook with the lowest level of abstraction.
@@ -1681,9 +1681,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |redo an action |redo an undone action
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident [Coming in v2.0]
+|`* *` |user |have a welcome page |feel motivated from wallpaper and quotes
 
-|`* *` |user |customise the welcome page of the address book |feel motivated from wallpaper and quotes [Coming in v2.0]
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident [Coming in v2.0]
 
 |`* *` |first time user |prompt user to input name |personalise the addressBook [Coming in v2.0]
 
@@ -1913,12 +1913,12 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Schedule
+=== Use case: Add Schedule
 
 *MSS*
 
-1.  User requests to schedule person
-2.  AddressBook adds the scheduled person to the schedule list
+1.  User requests to add schedule with a given person index, time and date
+2.  AddressBook adds the schedule to the schedule list
 3.  AddressBook displays the result of user's request
 +
 Use case ends.
