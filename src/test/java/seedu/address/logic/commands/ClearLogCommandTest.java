@@ -10,6 +10,9 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 //@@author danielweide
+/**
+ * Test for ClearLogCommand by deleting ConnectUsLog.txt file
+ */
 public class ClearLogCommandTest {
     @Before
     public void prepareCommand() throws CommandException, IOException {
