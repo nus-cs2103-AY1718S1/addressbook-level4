@@ -115,6 +115,8 @@ public class AddCommandTest {
         return command;
     }
 
+    //@@author
+
     /**
      * A default model stub that have all of the methods failing.
      */
@@ -313,6 +315,8 @@ public class AddCommandTest {
         }
     }
 
+    //@@author junming403
+
     /**
      * A Model stub that always thrown duplicate time slot exception.
      */
@@ -334,5 +338,7 @@ public class AddCommandTest {
             return new AddressBook();
         }
     }
+    //@@author
+
 
 }

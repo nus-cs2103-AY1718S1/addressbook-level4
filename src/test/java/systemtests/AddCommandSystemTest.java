@@ -188,6 +188,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + INVALID_LECTURER_DESC;
         assertCommandFailure(command, Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
     }
+    //@@author
 
     /**
      * Executes the {@code AddCommand} that adds {@code toAdd} to the model and verifies that the command box displays

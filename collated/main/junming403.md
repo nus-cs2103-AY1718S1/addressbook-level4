@@ -134,6 +134,7 @@ public class ClearCommand extends UndoableCommand {
         EventsCenter.getInstance().post(new RemarkChangedEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
 }
 ```
 ###### /java/seedu/address/logic/commands/DeleteCommand.java
@@ -2220,8 +2221,7 @@ public class UniqueLocationPredicate implements Predicate<ReadOnlyLesson> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniqueLocationPredicate // instanceof handles nulls
-                && this.uniqueLocationSet.equals(((UniqueLocationPredicate) other).uniqueLocationSet)); // state check
+                || (other instanceof UniqueLocationPredicate); // instanceof handles nulls
     }
 
 }
@@ -2251,9 +2251,9 @@ public class UniqueModuleCodePredicate implements Predicate<ReadOnlyLesson> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniqueModuleCodePredicate // instanceof handles nulls
-                && this.uniqueCodeSet.equals(((UniqueModuleCodePredicate) other).uniqueCodeSet)); // state check
+                || (other instanceof UniqueModuleCodePredicate); // instanceof handles nulls
     }
+
 
 }
 ```
