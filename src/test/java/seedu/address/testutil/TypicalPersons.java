@@ -19,12 +19,8 @@ import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.AddressBook;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.relationship.Relationship;
-import seedu.address.model.relationship.RelationshipDirection;
-import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -70,12 +66,6 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withRemark(VALID_REMARK_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
-    // The persons with relationships
-    public static final ReadOnlyPerson JOEY = new PersonBuilder().withName("Joey Chou").withPhone("84123424")
-            .withEmail("stefanlee@example.com").withAddress("little australia").build();
-    public static final ReadOnlyPerson KWEW = new PersonBuilder().withName("Kwew Oo").withPhone("8482131")
-            .withEmail("hansbrown@example.com").withAddress("chicago bull").build();
-
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     private TypicalPersons() {} // prevents instantiation
@@ -108,21 +98,6 @@ public class TypicalPersons {
             }
         }
         return ab;
-    }
-
-    /**
-     * add an relationship into the TypicalPersons for testing purposes
-     */
-    public static void addRelationshipsIntoCAndF() {
-        Relationship relationshipForTesting = new Relationship(FIONA, CARL, RelationshipDirection.UNDIRECTED);
-        try {
-            Person fCast = (Person) FIONA;
-            Person cCast = (Person) CARL;
-            fCast.addRelationship(relationshipForTesting);
-            cCast.addRelationship(relationshipForTesting);
-        } catch (DuplicateRelationshipException dre) {
-            assert false : "not possible";
-        }
     }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {
