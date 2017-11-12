@@ -67,7 +67,7 @@ public class RemoveTagCommand extends UndoableCommand {
         tagInTargetIndexesChecker(lastShownList);
 
         try {
-            model.removeTag(this.targetIndexes, this.tagToRemove);
+            model.removeTag(this.targetIndexes, this.tagToRemove, COMMAND_WORDVAR_1);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
