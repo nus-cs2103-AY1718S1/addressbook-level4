@@ -1,8 +1,8 @@
 # Jeremy
-###### \java\seedu\address\logic\commands\ListAscendingNameCommand.java
+###### /java/seedu/address/logic/commands/ListAscendingNameCommand.java
 ``` java
 /**
- * Finds and lists all persons in address book in ascending order by name
+ * Finds and lists all persons in address book in ascending order by name.
  */
 public class ListAscendingNameCommand extends Command {
 
@@ -18,6 +18,11 @@ public class ListAscendingNameCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed persons by name in ascending order";
 
+    /**
+     * Returns a success message and filters the list by name in ascending order.
+     *
+     * @return CommandResult(MESSAGE_SUCCESS).
+     */
     @Override
     public CommandResult execute() {
         model.listNameAscending();
@@ -26,7 +31,7 @@ public class ListAscendingNameCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ListByTagCommand.java
+###### /java/seedu/address/logic/commands/ListByTagCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose tag contains any of the argument keywords.
@@ -49,12 +54,23 @@ public class ListByTagCommand extends Command {
         this.predicate = predicate;
     }
 
+    /**
+     * Returns a success message and updates the filtered person list.
+     *
+     * @return new CommandResult(MESSAGE_SUCCESS).
+     */
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+    /**
+     * Checks if 'other' is the same object or an instance of this object.
+     *
+     * @param other Another object type for comparison.
+     * @return True if 'other' is the same object or an instance of this object.
+     */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -63,7 +79,7 @@ public class ListByTagCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ListDescendingNameCommand.java
+###### /java/seedu/address/logic/commands/ListDescendingNameCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book in descending order by name
@@ -82,6 +98,11 @@ public class ListDescendingNameCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed persons by name in descending order";
 
+    /**
+     * Returns a success message and filters display list by name in descending order.
+     *
+     * @return Success message.
+     */
     @Override
     public CommandResult execute() {
         model.listNameDescending();
@@ -90,7 +111,7 @@ public class ListDescendingNameCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ListFailureCommand.java
+###### /java/seedu/address/logic/commands/ListFailureCommand.java
 ``` java
 /**
  * Prints failure message if invalid arguments are passed after a list command
@@ -115,7 +136,11 @@ public class ListFailureCommand extends Command {
             + COMMAND_WORD + " rev \n"
             + COMMAND_WORD + " reverse \n";
 
-
+    /**
+     * Returns a failure message to indicate invalid command available in list package.
+     *
+     * @return Failure Message.
+     */
     @Override
     public CommandResult execute() {
         return new CommandResult(MESSAGE_FAILURE);
@@ -123,7 +148,7 @@ public class ListFailureCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ListReverseCommand.java
+###### /java/seedu/address/logic/commands/ListReverseCommand.java
 ``` java
 /**
  * Reverses existing displayed list
@@ -142,6 +167,11 @@ public class ListReverseCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Displayed list reversed";
 
+    /**
+     * Returns success message and reverses list.
+     *
+     * @return Success Message.
+     */
     @Override
     public CommandResult execute() {
         model.listNameReversed();
@@ -149,7 +179,7 @@ public class ListReverseCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RemarkCommand.java
+###### /java/seedu/address/logic/commands/RemarkCommand.java
 ``` java
 /**
  * Adds/Remove a remark from a person identified using it's last displayed index from the address book.
@@ -178,7 +208,10 @@ public class RemarkCommand extends UndoableCommand {
     private final Remark remark;
 
     /**
-     * Creates a RemarkCommand to add the remark
+     * Returns nothing. Setter class to set index and remark of contact.
+     *
+     * @param inputIndex Index on filtered list to add the remark to.
+     * @param inputRemark Remark to give to the contact.
      */
     public RemarkCommand(Index inputIndex, Remark inputRemark) {
         requireNonNull(inputIndex);
@@ -188,6 +221,14 @@ public class RemarkCommand extends UndoableCommand {
         this.remark = inputRemark;
     }
 
+    /**
+     * Returns success message and adds a remark to a contact.
+     *
+     * @return Success Message.
+     * @throws CommandException If index is invalid.
+     * @throws CommandException If there is a duplicate person when updating data.
+     * @throws AssertionError If person is missing from data.
+     */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -199,7 +240,7 @@ public class RemarkCommand extends UndoableCommand {
         ReadOnlyPerson personToEdit = lastShownList.get(personIndex.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(),
                 personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getBloodType(),
-                personToEdit.getTags(), this.remark, personToEdit.getAppointments());
+                personToEdit.getTags(), this.remark, personToEdit.getRelationship(), personToEdit.getAppointments());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -213,9 +254,10 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-     * Checks if
-     * (a) Object is the same object
-     * (b) Object is an instance of the object and that personIndex and remarkString are the same
+     * Checks if 'other' is the same object or an instance of this object.
+     *
+     * @param other Another object for evaluation.
+     * @return True if 'other' is the same object or an instance of this object.
      */
     @Override
     public boolean equals(Object other) {
@@ -226,41 +268,46 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-     * Outputs success message based on whether a remark is added or removed
+     * Returns the appropriate success message depending on whether a remark is added or removed.
+     *
+     * @param editedPerson ReadOnlyPerson that is edited.
+     * @return Remove Remark message if a remark is removed or success remark message if remark is added.
      */
     private String outputCorrectTypeOfSuccessMessage(ReadOnlyPerson editedPerson) {
         if (editedPerson.getRemark().toString().isEmpty()) {
             return String.format(MESSAGE_REMOVE_REMARK_SUCCESS, editedPerson);
-        } else {
-            return String.format(MESSAGE_REMARK_PERSON_SUCCESS, editedPerson);
         }
+        return String.format(MESSAGE_REMARK_PERSON_SUCCESS, editedPerson);
     }
 
 }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParser.java
+###### /java/seedu/address/logic/parser/AddCommandParser.java
 ``` java
             Phone phone = (!arePrefixesPresent(argMultimap, PREFIX_PHONE))
-                    ? new Phone("000") : ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+                    ? new Phone(NON_COMPULSORY_PHONE)
+                    : ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = (!arePrefixesPresent(argMultimap, PREFIX_EMAIL))
-                    ? new Email("null@null.com") : ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+                    ? new Email(NON_COMPULSORY_EMAIL)
+                    : ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = (!arePrefixesPresent(argMultimap, PREFIX_ADDRESS))
-                    ? new Address("???") : ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+                    ? new Address(NON_COMPULSORY_ADDRESS)
+                    : ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Bloodtype bloodType = (!arePrefixesPresent(argMultimap, PREFIX_BLOODTYPE))
                     ? new Bloodtype(NON_COMPULSORY_BLOODTYPE)
                     : ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
             Remark remark = (!arePrefixesPresent(argMultimap, PREFIX_REMARK))
                     ? new Remark("") : ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
 
     /**
      * Returns the correct list feature based on word after list
      *
-     * @param arguments full user input arguments
-     * @return the command based on arguments provided
-     * @throws ParseException if the user input does not conform the expected format
+     * @param arguments full user input arguments.
+     * @return the command based on arguments provided.
+     * @throws ParseException If the user input does not conform the expected format.
      */
     private Command listEvaluator(String arguments) throws ParseException {
         String[] argSplit = arguments.trim().split(" ");
@@ -292,7 +339,7 @@ public class RemarkCommand extends UndoableCommand {
         return returnThisCommand;
     }
 ```
-###### \java\seedu\address\logic\parser\ListByTagCommandParser.java
+###### /java/seedu/address/logic/parser/ListByTagCommandParser.java
 ``` java
 
 /**
@@ -312,23 +359,23 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
         String[] tagKeyWords = trimmedArgs.split("\\s+");
         List<String> evaluateList = Arrays.asList(tagKeyWords);
 
-        if (trimmedArgs.isEmpty() || invalidListTagArgs(evaluateList)) {
+        if (trimmedArgs.isEmpty() || isInvalidArgs(evaluateList)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ListByTagCommand.MESSAGE_USAGE));
         }
-
-
         return new ListByTagCommand(new TagContainsKeywordsPredicate(evaluateList));
-
     }
 
     /**
-     * Returns true if tag list argument is invalid.
-     * Tag list is invalid if
-     * 1. List starts or ends with "AND" or "OR"
-     * 2. "AND" or "OR" are clustered together
+     * Checks if tag list argument is invalid.
+     * Tag list is invalid if:
+     * 1. List starts or ends with "AND" or "OR".
+     * 2. "AND" or "OR" are clustered together.
+     *
+     * @param evaluateList list of input text to be evaluated.
+     * @return True if list argument is invalid.
      */
-    private boolean invalidListTagArgs(List<String> evaluateList) {
+    private boolean isInvalidArgs(List<String> evaluateList) {
         boolean multipleAndOrCluster = hasManyAndOrClustered(evaluateList);
         boolean startWithAndOr = startsWithAndOr(evaluateList);
         boolean endWithAndOr = endsWithAndOr(evaluateList);
@@ -336,32 +383,42 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
     }
 
     /**
-     * Returns true if list starts with "AND" or "OR"
+     * Checks if list starts with "AND" or "OR".
+     *
+     * @param evaluateList list of input text to be evaluated.
+     * @return True if list starts with "AND" or "OR.
      */
     private boolean startsWithAndOr(List<String> evaluateList) {
-        boolean startWithAndOr = "and".equalsIgnoreCase(evaluateList.get(0))
-                || "or".equalsIgnoreCase(evaluateList.get(0));
+        String firstString = evaluateList.get(0);
+        boolean startWithAndOr = isAnd(firstString) || isOr(firstString);
         return startWithAndOr;
     }
 
     /**
-     * Returns true if list ends with "AND" or "OR"
+     * Checks if list ends with "AND" or "OR".
+     *
+     * @param evaluateList list of input text to be evaluated.
+     * @return True if list ends with "AND" or "OR.
      */
     private boolean endsWithAndOr(List<String> evaluateList) {
-        boolean endWithAndOr = "and".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1))
-                || "or".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1));
+        String lastString = evaluateList.get(evaluateList.size() - 1);
+        boolean hasAnd = isAnd(lastString);
+        boolean hasOr = isOr(lastString);
+        boolean endWithAndOr = hasAnd || hasOr;
         return endWithAndOr;
     }
 
     /**
-     * Returns true if "AND" or "OR" strings are clustered together
+     * Checks if "AND" or "OR" strings are clustered together.
+     *
+     * @param evaluateList list of input text to be evaluated.
+     * @return True if "AND" or "OR" strings are clustered together.
      */
     private boolean hasManyAndOrClustered(List<String> evaluateList) {
         String previousString = "";
         boolean multipleAndOrCluster = false;
         for (String str : evaluateList) {
-            if (("and".equalsIgnoreCase(previousString) || "or".equalsIgnoreCase(previousString))
-                    && ("and".equalsIgnoreCase(str) || "or".equalsIgnoreCase(str))) {
+            if (areBothAndOr(previousString, str)) {
                 multipleAndOrCluster = true;
                 break;
             }
@@ -369,20 +426,56 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
         }
         return multipleAndOrCluster;
     }
+
+    /**
+     * Checks if both input strings are "and" or "or".
+     *
+     * @param before Word before.
+     * @param after  Word after.
+     * @return True if both contains either "and" or "or".
+     */
+    private boolean areBothAndOr(String before, String after) {
+        boolean isAndOrBefore = isAnd(before) || isOr(before);
+        boolean isAndOrAfter = isAnd(after) || isOr(after);
+        return isAndOrAfter && isAndOrBefore;
+    }
+
+    /**
+     * Checks if string is "and".
+     *
+     * @param string String to be evaluated.
+     * @return True if string is "and".
+     */
+    private boolean isAnd(String string) {
+        return "and".equalsIgnoreCase(string);
+    }
+
+    /**
+     * Checks if string is "or".
+     *
+     * @param string String to be evaluated.
+     * @return True if string is "or".
+     */
+    private boolean isOr(String string) {
+        return "or".equalsIgnoreCase(string);
+    }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
+     *
+     * @param remark String to be evaluated for remark prefix.
+     * @return Remark command if remark prefix is present else returns Optional.empty().
      */
     public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
         requireNonNull(remark);
         return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
     }
 ```
-###### \java\seedu\address\logic\parser\RemarkCommandParser.java
+###### /java/seedu/address/logic/parser/RemarkCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RemarkCommand object
@@ -393,7 +486,9 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
      * Parses the given {@code String} of arguments in the context of the RemarkCommand
      * and returns an RemarkCommand object for execution.
      *
-     * @throws ParseException if the user input does not conform the expected format
+     * @param args input args entered by user.
+     * @return Remark command with user defined index and remark.
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public RemarkCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
@@ -419,6 +514,10 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
+     *
+     * @param argumentMultimap ArgumentMultimap parsed from input arguments and remark prefix.
+     * @param prefixes Remark prefix.
+     * @return True if none of the prefixes contains empty optional values.
      */
     private static boolean isPrefixPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
@@ -426,25 +525,43 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
 
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
+
+    /**
+     * Filters person list by name in ascending order.
+     *
+     * @return Filtered UniquePersonList.
+     */
     public ObservableList<ReadOnlyPerson> getPersonListSortByNameAscending() {
         return persons.asObservableListSortedByNameAsc();
     }
 
+    /**
+     * Filters person list by name in descending order.
+     *
+     * @return Filtered UniquePersonList.
+     */
     public ObservableList<ReadOnlyPerson> getPersonListSortByNameDescending() {
         return persons.asObservableListSortedByNameDsc();
     }
 
+    /**
+     * Filters person list in reverse order.
+     *
+     * @return Filtered UniquePersonList.
+     */
     public ObservableList<ReadOnlyPerson> getPersonListReversed() {
         return persons.asObservableListReversed();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     /**
+     * Returns an unmodifiable filtered ReadOnlyPerson list, filtered by name in ascending order.
+     *
      * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
-     * in increasing chronological order
+     * in increasing chronological order.
      */
     @Override
     public ObservableList<ReadOnlyPerson> listNameAscending() {
@@ -453,8 +570,10 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     }
 
     /**
+     * Returns an unmodifiable filtered ReadOnlyPerson list, filtered by name in descending order.
+     *
      * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
-     * in decreasing chronological order
+     * in decreasing chronological order.
      */
     @Override
     public ObservableList<ReadOnlyPerson> listNameDescending() {
@@ -463,7 +582,9 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     }
 
     /**
-     * @return an unmodifiable view of the list of ReadOnlyPerson that is reversed
+     * Returns an unmodifiable filtered  and reversed ReadOnlyPerson list.
+     *
+     * @return an unmodifiable view of the list of ReadOnlyPerson that is reversed.
      */
     @Override
     public ObservableList<ReadOnlyPerson> listNameReversed() {
@@ -472,7 +593,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     }
 
 ```
-###### \java\seedu\address\model\person\Remark.java
+###### /java/seedu/address/model/person/Remark.java
 ``` java
 /**
  * Represents a Person's remark in the address book.
@@ -482,9 +603,6 @@ public class Remark {
 
     public final String value;
 
-    /**
-     * Validates given remark.
-     */
     public Remark(String remark) {
         requireNonNull(remark);
         this.value = remark;
@@ -507,10 +625,9 @@ public class Remark {
         return value.hashCode();
     }
 
-
 }
 ```
-###### \java\seedu\address\model\person\TagContainsKeywordsPredicate.java
+###### /java/seedu/address/model/person/TagContainsKeywordsPredicate.java
 ``` java
 
 /**
@@ -523,15 +640,20 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         this.keywords = keywords;
     }
 
+    /**
+     * Checks if keywords contains "AND" or "OR".
+     *
+     * @param person ReadOnlyPerson to be evaluated.
+     * @return Predicate depending if "AND" or "OR" are present.
+     */
     @Override
     public boolean test(ReadOnlyPerson person) {
         boolean containsAndOr = keywords.toString().toLowerCase().contains("and")
                 || keywords.toString().toLowerCase().contains("or");
         if (containsAndOr) {
             return predicateWithAndOr(person);
-        } else {
-            return predicateWithoutAndOr(person);
         }
+        return predicateWithoutAndOr(person);
     }
 
     @Override
@@ -541,28 +663,28 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
     }
 
-
     /**
-     * Returns the predicate for the case where the input text does not contain "AND" / "OR"
-     * Default Logic: Treated as "AND"
-     * Filters users who has ALL input tags
+     * Returns the predicate for the case where the input text does not contain "AND" / "OR".
+     * Default Logic: Treated as "AND".
+     * Filters users who has ALL input tags.
+     *
+     * @param person ReadOnlyPerson to be evaluated.
+     * @return True if person has all tags in keywords list.
      */
     private boolean predicateWithoutAndOr(ReadOnlyPerson person) {
         int foundTags = 0;
         for (String keyword : keywords) {
-            for (Tag tags : person.getTags()) {
-                if (tags.tagName.equalsIgnoreCase(keyword)) {
-                    foundTags += 1;
-                    break;
-                }
-            }
+            foundTags += checkPersonTags(keyword, person);
         }
         return (foundTags == keywords.size());
     }
 
     /**
-     * Returns the predicate for the case where the input text contains and / or
-     * If "AND" or "OR" is not specified, value treated as "AND"
+     * Returns the predicate for the case where the input text contains and / or.
+     * If "AND" or "OR" is not specified, value treated as "AND".
+     *
+     * @param person ReadOnlyPerson to be evaluated.
+     * @return True if person has all required tags.
      */
     private boolean predicateWithAndOr(ReadOnlyPerson person) {
         List<List<String>> finalPredicate = generateTagNestledList();
@@ -575,24 +697,25 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Returns true if person contains all tags in list
+     * Returns true if person contains all tags in input list
+     *
+     * @param listOfTags List of tags to be checked.
+     * @param person ReadOnlyPerson to be checked against.
+     * @return True if ReadOnlyPerson has all tags in the provided list.
      */
     private boolean evaluateListOfTags(List<String> listOfTags, ReadOnlyPerson person) {
         int foundTags = 0;
         for (String tag : listOfTags) {
-            for (Tag tags : person.getTags()) {
-                if (tags.tagName.equalsIgnoreCase(tag)) {
-                    foundTags += 1;
-                    break;
-                }
-            }
+            foundTags += checkPersonTags(tag, person);
         }
         return foundTags == listOfTags.size();
     }
 
     /**
-     * Returns a nestled list, containing all the list of tags which are seperated by "OR"
-     * or joined by "AND"
+     * Returns a nestled list, containing all the list of tags which are separated by "OR"
+     * or joined by "AND".
+     *
+     * @return Nestled list separated by "AND" or "OR".
      */
     private List<List<String>> generateTagNestledList() {
         List<List<String>> finalPredicate = new ArrayList<>();
@@ -616,7 +739,10 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Instantiates an empty stack and pushes a list of keywords into the stack
+     * Instantiates an empty stack and pushes a list of keywords into the stack.
+     *
+     * @param keywords Keywords to be pushed into stack for "AND" "OR" evaluation.
+     * @return Stack containing all the keywords passed by user.
      */
     private Stack<String> createStack(List<String> keywords) {
         Stack<String> myStack = new Stack<>();
@@ -625,9 +751,25 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         }
         return myStack;
     }
+
+    /**
+     * Checks if person contains the input tag.
+     *
+     * @param tag Tag to search for.
+     * @param person Person to search.
+     * @return 1 if person has tag. 0 if person does not have tag.
+     */
+    private int checkPersonTags (String tag, ReadOnlyPerson person) {
+        for (Tag tags: person.getTags()) {
+            if (tags.tagName.equalsIgnoreCase(tag)) {
+                return 1;
+            }
+        }
+        return 0;
+    }
 }
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * @return the list as an unmodifiable list and sorted by name in ascending order
@@ -659,15 +801,29 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
+
+    /**
+     * Saves a backup of the address book.
+     *
+     * @param addressBook Address book to be saved. Cannot be null.
+     * @throws IOException if address book is invalid.
+     */
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
     }
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorage.java
+###### /java/seedu/address/storage/XmlAddressBookStorage.java
 ``` java
+
+    /**
+     * Saves a backup address book.
+     *
+     * @param addressBook Address book to be saved. Cannot be null.
+     * @throws IOException If input address book is invalid.
+     */
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath + "-backup.xml");
@@ -675,10 +831,12 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     /**
-     * Handles KeyPress Commands that are not keyed with Shift button held down
+     * Handles KeyPress Commands that are not keyed with Shift button held down.
+     *
+     * @param keyEvent Key event pressed by user.
      */
     private void handleStandardPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
@@ -706,17 +864,17 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
             boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
             if (isCaretWithin) {
                 break;
-            } else {
-                addsNextPrefix();
-                break;
             }
+            addsNextPrefix();
+            break;
         default:
         }
     }
 
-
     /**
-     * Handles KeyPress Commands that are keyed with Shift button held down
+     * Handles KeyPress Commands that are keyed with Shift button held down.
+     *
+     * @param keyEvent Key event pressed by user with shift pressed.
      */
     private void handleShiftPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
@@ -737,16 +895,15 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         }
     }
 
-
     /**
      * Deletes the word or a chunk of blank spaces on the left.
      * Does not matter if caret is at end of text or between lines. Method will automatically
      * detect and execute.
-     * 1. If Caret is at far left, break;
-     * 2. If Caret is at far right, check if left side is blank or word and execute appropriately
-     * 3. If " " is present on the left of Caret, delete all blank spaces before
-     * 4. If Caret is between word, execute normal delete method
-     * 5. If Character is on the left and " " is on the right, delete chunk on left
+     * 1. If Caret is at far left, break.
+     * 2. If Caret is at far right, check if left side is blank or word and execute appropriately.
+     * 3. If " " is present on the left of Caret, delete all blank spaces before.
+     * 4. If Caret is between word, execute normal delete method.
+     * 5. If Character is on the left and " " is on the right, delete chunk on left.
      */
     private void deleteByChunk() {
         int originalCaretPosition = commandTextField.getCaretPosition();
@@ -767,21 +924,24 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         commandTextField.positionCaret(newCaretPosition);
     }
 
-
     /**
-     * Deletes chunk in the situation where caret is at the far right
+     * Deletes chunk in the situation where caret is at the far right.
+     *
+     * @param newCaretPosition Passes in the existing caret position.
+     * @return newCaretPosition shifted left by chunk.
      */
     private int farRightDeleteChunk(int newCaretPosition) {
         if (isEmptyBefore(newCaretPosition)) {
             return shiftLeftIgnoringSpaces(newCaretPosition);
-        } else {
-            return shiftLeftIgnoringWords(newCaretPosition);
         }
+        return shiftLeftIgnoringWords(newCaretPosition);
     }
 
-
     /**
-     * Forms a new word with all string elements between the two parameters removed
+     * Sets a new word with all string elements between the two parameters removed.
+     *
+     * @param newCaretPosition Left boundary of the word.
+     * @param originalCaretPosition Right boundary of the word.
      */
     private void setNewWord(int newCaretPosition, int originalCaretPosition) {
         String before = commandTextField.getText().substring(0, newCaretPosition);
@@ -795,9 +955,11 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         commandTextField.setText(answer);
     }
 
-
     /**
-     * Checks if caret is at either ends
+     * Checks if caret is at either ends.
+     *
+     * @param originalCaretPosition Caret to evaluate.
+     * @return True if caret is either at far left or far right.
      */
     private boolean atEitherEnds(int originalCaretPosition) {
         boolean atFarLeft = (originalCaretPosition == 0);
@@ -854,20 +1016,22 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         commandTextField.positionCaret(newCaretPosition);
     }
 
-
     /**
-     * Shifts the caret left, ignoring all empty spaces
+     * Shifts the caret left, ignoring all empty spaces.
      * <p>
      * Note: Will not implement exception throwing here as shiftCaretLeftByWord is set up in such a way
      * that pre-conditions as follows are met. Do not want to write code which will affect test coverage
-     * which is impossible to resolve
+     * which is impossible to resolve.
      * <p>
      * Pre-Condition 1: Current caret position must have an empty space string on the left.
-     * It must never be called if there is a possibility of the string before
-     * it being not an empty space
+     * It must never be called if there is a possibility of the string before.
+     * it being not an empty space.
      * <p>
      * Pre-Condition 2: newCaretPosition should never be in the situation where there is a possibility
-     * of it being 0
+     * of it being 0.
+     *
+     * @param newCaretPosition Current caret position.
+     * @return New caret position.
      */
     private int shiftLeftIgnoringSpaces(int newCaretPosition) {
         int caretHolder = newCaretPosition;
@@ -880,20 +1044,23 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return caretHolder;
     }
 
-
     /**
-     * Shifts the caret right, ignoring all empty spaces
+     * Shifts the caret right, ignoring all empty space.
      * <p>
      * Note: Will not implement exception throwing here as shiftCaretRightByWord is set up in such a way
      * that pre-conditions as follows are met. Do not want to write code which will affect test coverage
-     * which is impossible to resolve
+     * which is impossible to resolve.
      * <p>
      * Pre-Condition 1: Current caret position must have an empty space string on the right.
      * It must never be called if there is a possibility of the string after
-     * it being not an empty space
+     * it being not an empty space.
      * <p>
      * Pre-Condition 2: newCaretPosition should never be in the situation where there is a possibility
-     * of it being at most right position
+     * of it being at most right position.
+     *
+     * @param newCaretPosition Current caret position.
+     * @param maxAchievablePosition Right most bound of word.
+     * @return New caret position.
      */
     private int shiftRightIgnoringSpaces(int newCaretPosition, int maxAchievablePosition) {
         int caretHolder = newCaretPosition;
@@ -906,20 +1073,22 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return caretHolder;
     }
 
-
     /**
-     * Shifts the caret left, ignoring all char
+     * Shifts the caret left, ignoring all char.
      * <p>
      * Note: Will not implement exception throwing here as shiftCaretLeftByWord is set up in such a way
      * that pre-conditions as follows are met. Do not want to write code which will affect test coverage
-     * which is impossible to resolve
+     * which is impossible to resolve.
      * <p>
      * Pre-Condition 1: Current caret position must have an empty space string on the left.
      * It must never be called if there is a possibility of the string before
-     * it being not an empty space
+     * it being not an empty space.
      * <p>
      * Pre-Condition 2: newCaretPosition should never be in the situation where there is a possibility
-     * of it being 0
+     * of it being 0.
+     *
+     * @param newCaretPosition Current caret position.
+     * @return New caret position.
      */
     private int shiftLeftIgnoringWords(int newCaretPosition) {
         int caretHolder = newCaretPosition;
@@ -932,20 +1101,23 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return caretHolder;
     }
 
-
     /**
-     * Shifts the caret right, ignoring all char
+     * Shifts the caret right, ignoring all char.
      * <p>
      * Note: Will not implement exception throwing here as shiftCaretRightByWord is set up in such a way
      * that pre-conditions as follows are met. Do not want to write code which will affect test coverage
-     * which is impossible to resolve
+     * which is impossible to resolve.
      * <p>
      * Pre-Condition 1: Current caret position must have an empty space string on the right.
      * It must never be called if there is a possibility of the string before
-     * it being not an empty space
+     * it being not an empty space.
      * <p>
      * Pre-Condition 2: newCaretPosition should never be in the situation where there is a possibility
-     * of it being at most right position
+     * of it being at most right position.
+     *
+     * @param newCaretPosition Current caret position.
+     * @param maxAchievablePosition Right most caret position.
+     * @return New caret position.
      */
     private int shiftRightIgnoringWords(int newCaretPosition, int maxAchievablePosition) {
         int caretHolder = newCaretPosition;
@@ -959,7 +1131,10 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Returns true if string element before currentCaretPosition index is empty
+     * Checks if string element before currentCaretPosition index is empty.
+     *
+     * @param currentCaretPosition Current caret position.
+     * @return True if string element before currentCaretPosition index is empty.
      */
     private boolean isEmptyBefore(int currentCaretPosition) {
         Character charBefore = commandTextField.getText().charAt(currentCaretPosition - 1);
@@ -968,7 +1143,10 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Returns true if string element after currentCaretPosition index is empty
+     * Checks if string element after currentCaretPosition index is empty.
+     *
+     * @param currentCaretPosition Current caret position.
+     * @return True if string element after currentCaretPosition index is empty.
      */
     private boolean isEmptyAfter(int currentCaretPosition) {
         Character charAfter = commandTextField.getText().charAt(currentCaretPosition);
@@ -1005,8 +1183,10 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Fundamental Check: Checks if add poll KeyWord is in the input text
-     * Additional Checks: Checks if prefix is in the input text
+     * Checks if add or edit KeyWord is in the input text. Also checks if prefix is in the input text.
+     *
+     * @param element String to be evaluated.
+     * @return True if contains add or edit keyword and relevant prefixes.
      */
     private boolean containsPrefix(String element) {
         switch (element) {
@@ -1026,14 +1206,14 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
             return (!containsDate() && (addPollSuccessful() || editPollSuccessful()));
         default:
             return (containsAllCompulsoryPrefix() && (addPollSuccessful() || editPollSuccessful()));
-
         }
     }
 
     /**
-     * Polls the input statement to check if sentence starts with " add " or " a "
-     * <p>
-     * Additional Note: Polling method accounts for blank spaces in front
+     * Checks if sentence starts with " add " or " a ".
+     * Accounts for blank space in front.
+     *
+     * @return True if if sentence starts with " add " or " a ".
      */
     private boolean addPollSuccessful() {
         String stringToEvaluate = commandTextField.getText().trim();
@@ -1053,29 +1233,30 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Polls the input statement to check if
-     * 1. sentence starts with " edit " or " e " and
-     * 2. is followed by a valid INDEX
-     * <p>
-     * Additional Note: Polling method accounts for blank spaces in front
+     * Checks if sentence starts with " edit " or " e " and is followed by a valid INDEX.
+     * Accounts for blank spaces in front.
+     *
+     * @return True if sentence starts with " edit " or " e " and is followed by a valid INDEX.
      */
     private boolean editPollSuccessful() {
         String stringToEvaluate = commandTextField.getText().trim();
         if (stringToEvaluate.length() < 3 || !stringToEvaluate.contains(" ")) {
             return false;
-        } else {
-            String[] splittedString = stringToEvaluate.split(" ");
-            boolean containsEditWord = splittedString[0].equalsIgnoreCase("edit");
-            boolean containsEditShorthand = splittedString[0].equalsIgnoreCase("e");
-            boolean containsEditCommand = containsEditShorthand || containsEditWord;
-            String regex = "[0-9]+";
-            boolean containsOnlyNumbers = splittedString[1].matches(regex);
-            return containsEditCommand && containsOnlyNumbers;
         }
+        String[] splittedString = stringToEvaluate.split(" ");
+        boolean containsEditWord = splittedString[0].equalsIgnoreCase("edit");
+        boolean containsEditShorthand = splittedString[0].equalsIgnoreCase("e");
+        boolean containsEditCommand = containsEditShorthand || containsEditWord;
+        String regex = "[0-9]+";
+        boolean containsOnlyNumbers = splittedString[1].matches(regex);
+        return containsEditCommand && containsOnlyNumbers;
     }
 
     /**
-     * Checks if the first two elements of the string are "a "
+     * Checks if the first two elements of the string are "a ".
+     *
+     * @param stringToEvaluate String to check.
+     * @return True if the first two elements of the string are "a ".
      */
     private boolean containsAInFirstTwoChar(String stringToEvaluate) {
         return (Character.toString(stringToEvaluate.charAt(0)).equalsIgnoreCase(AddCommand.COMMAND_ALIAS)
@@ -1083,7 +1264,10 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Checks if the first four elements of the string are "add "
+     * Checks if the first four elements of the string are "add ".
+     *
+     * @param stringToEvaluate String to check.
+     * @return True if the first four elements of the string are "add ".
      */
     private boolean containsAddInFirstFourChar(String stringToEvaluate) {
         return (stringToEvaluate.substring(0, 3).equalsIgnoreCase(AddCommand.COMMAND_WORD)
@@ -1091,7 +1275,9 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Checks if the commandTextField all prefixes excluding tag
+     * Checks if the commandTextField all prefixes excluding tag.
+     *
+     * @return True if all prefixes are present.
      */
     private boolean containsAllCompulsoryPrefix() {
         return containsAddress() && containsEmail() && containsBloodtype()
@@ -1100,14 +1286,17 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Adds prefix string to existing text input
+     * Adds prefix string to existing text input.
+     *
+     * @param prefix Prefix to add.
+     * @return Text input concatenated with prefix.
      */
     private String concatPrefix(Prefix prefix) {
         return commandTextField.getText().concat(" ").concat(prefix.getPrefix());
     }
 
     /**
-     * Checks if existing input has Bloodtype Prefix String
+     * @return True if existing input has Bloodtype Prefix String.
      */
     private boolean containsBloodtype() {
         String currentInput = commandTextField.getText();
@@ -1115,7 +1304,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Checks if existing input has Remark Prefix String
+     * @return True if existing input has Remark Prefix String.
      */
     private boolean containsRemark() {
         String currentInput = commandTextField.getText();
@@ -1123,7 +1312,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Checks if existing input has Remark Prefix String
+     * @return True if existing input has Date Prefix String.
      */
     private boolean containsDate() {
         String currentInput = commandTextField.getText();
@@ -1131,7 +1320,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Checks if existing input has Address Prefix String
+     * @return True if existing input has Address Prefix String.
      */
     private boolean containsAddress() {
         String currentInput = commandTextField.getText();
@@ -1139,7 +1328,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Checks if existing input has Email Prefix String
+     * @return True if existing input has Email Prefix String.
      */
     private boolean containsEmail() {
         String currentInput = commandTextField.getText();
@@ -1147,7 +1336,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Checks if existing input has Phone Prefix String
+     * @return True if existing input has Phone Prefix String.
      */
     private boolean containsPhone() {
         String currentInput = commandTextField.getText();
@@ -1155,24 +1344,24 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Checks if existing input has Name Prefix String
+     * @return True if existing input has Name Prefix String.
      */
     private boolean containsName() {
         String currentInput = commandTextField.getText();
         return currentInput.contains(PREFIX_NAME.getPrefix());
     }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
     /**
-     * Gets the text field for testing purposes
+     * @return the text field for testing purposes
      */
     public TextField getCommandTextField() {
         return commandTextField;
     }
 }
 ```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
     <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
@@ -1186,7 +1375,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     <StackPane fx:id="statusbarPlaceholder" prefHeight="13.0" prefWidth="692.0" VBox.vgrow="ALWAYS" />
 </VBox>
 ```
-###### \resources\view\MedNusTheme.css
+###### /resources/view/MedNusTheme.css
 ``` css
 background {
     -fx-background-color: red;
@@ -1231,7 +1420,7 @@ background {
 }
 
 .table-view {
-    -fx-base: blue;
+    -fx-base: black;
     -fx-control-inner-background: red;
     -fx-background-color: red;
     -fx-table-cell-border-color: transparent;
@@ -1283,11 +1472,11 @@ background {
     -fx-padding: 0 0 0 0;
 }
 
-.list-cell:filled:even { /* Used for cell background */
+.list-cell:filled(even) { /* Used for cell background */
     -fx-background-color: #F2F2F2;
 }
 
-.list-cell:filled:odd { /* Used for cell background */
+.list-cell:filled(odd) { /* Used for cell background */
     -fx-background-color: #F2F2F2;
 }
 
@@ -1399,7 +1588,7 @@ background {
     -fx-background-color: blue;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: black;
     -fx-border-radius: 20;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
@@ -1410,7 +1599,7 @@ background {
 
 .button:pressed, .button:default:hover:pressed {
   -fx-background-color: white;
-  -fx-text-fill: blue;
+  -fx-text-fill: red;
 }
 
 .button:focused {
@@ -1428,7 +1617,7 @@ background {
 
 .button:default {
     -fx-background-color: -fx-focus-color;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: black;
 }
 
 .button:default:hover {
@@ -1436,7 +1625,7 @@ background {
 }
 
 .dialog-pane {
-    -fx-background-color: blue;
+    -fx-background-color: black;
 }
 
 .dialog-pane > *.button-bar > *.container {
@@ -1450,7 +1639,7 @@ background {
 }
 
 .dialog-pane:header *.header-panel {
-    -fx-background-color: blue;
+    -fx-background-color: black;
 }
 
 .dialog-pane:header *.header-panel *.label {
@@ -1493,7 +1682,7 @@ background {
 
 #commandTypeLabel {
     -fx-font-size: 11px;
-    -fx-text-fill: #F70D1A;
+    -fx-text-fill: black;
 }
 
 #commandTextField { /* Command box */
