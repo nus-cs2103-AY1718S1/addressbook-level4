@@ -426,11 +426,11 @@ public class ListByMostSearchedCommandTest {
 ```
 ###### /java/seedu/address/logic/parser/AddMeetingCommandParserTest.java
 ``` java
-import static seedu.address.logic.commands.CommandTestUtil.DATE_1;
+import static DATE_VALID;
 import static seedu.address.logic.commands.CommandTestUtil.LOCATION_1;
 import static seedu.address.logic.commands.CommandTestUtil.NOTES_1;
 import static seedu.address.logic.commands.CommandTestUtil.PERSON_1;
-import static seedu.address.logic.commands.CommandTestUtil.TIME_1;
+import static TIME_VALID;
 
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 

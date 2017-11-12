@@ -23,11 +23,11 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
 
+//@@author Sri-vatsa
 /***
  * Focuses tests on model's deleteTag method, assumes DeleteTagCommandParser test handles tests for converting User
  * input into type suitable for deleteTag method (i.e. String Array)
  */
-
 public class DeleteTagCommandTest {
 
     @Rule

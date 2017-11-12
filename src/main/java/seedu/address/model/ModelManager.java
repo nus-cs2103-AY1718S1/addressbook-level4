@@ -84,7 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author Sri-vatsa
-    /** Raises an event to indicate the model has chnaged */
+    /** Raises an event to indicate the model has changed */
     private void indicateMeetingListChanged() {
         raise(new MeetingListChangedEvent(meetingList));
     }
@@ -137,7 +137,6 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return hasOneOrMoreDeletion;
     }
-    //@@author Sri-vatsa
 
     /***
      * Adds a meeting to the Unique meeting list
@@ -165,12 +164,8 @@ public class ModelManager extends ComponentManager implements Model {
         meetingList.add(meeting);
         indicateMeetingListChanged();
     }
-    /*
-    @Override
-    public void addAccessToken(String accessToken) {
-    }*/
-
     //@@author
+
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
@@ -243,7 +238,7 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
     }
-    //@@author Sri-vatsa
+
     //=========== Sort addressBook methods =============================================================
     /***
      * Sorts persons in address book by searchCount
@@ -254,7 +249,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-    //@@author Sri-vatsa
+
     /***
      * Sorts persons in Address book alphabetically
      */

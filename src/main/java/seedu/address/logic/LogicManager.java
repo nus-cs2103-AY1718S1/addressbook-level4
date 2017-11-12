@@ -9,28 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddMeetingCommand;
-import seedu.address.logic.commands.ChooseCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.DeleteTagCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListByMostSearchedCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.MapCommand;
-import seedu.address.logic.commands.NextMeetingCommand;
-import seedu.address.logic.commands.PrefCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SearchCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.*;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -95,6 +74,8 @@ public class LogicManager extends ComponentManager implements Logic {
                 ListByMostSearchedCommand.COMMAND_WORD,
                 RedoCommand.COMMAND_WORD,
                 SelectCommand.COMMAND_WORD,
+                SetupAsanaCommand.COMMAND_WORD,
+                SetUniqueKeyCommand.COMMAND_WORD,
                 UndoCommand.COMMAND_WORD,
                 PrefCommand.COMMAND_WORD,
                 ChooseCommand.COMMAND_WORD,
@@ -122,6 +103,8 @@ public class LogicManager extends ComponentManager implements Logic {
                 ListByMostSearchedCommand.MESSAGE_TEMPLATE,
                 RedoCommand.MESSAGE_TEMPLATE,
                 SelectCommand.MESSAGE_TEMPLATE,
+                SetupAsanaCommand.MESSAGE_TEMPLATE,
+                SetUniqueKeyCommand.MESSAGE_TEMPLATE,
                 UndoCommand.MESSAGE_TEMPLATE,
                 PrefCommand.MESSAGE_TEMPLATE,
                 ChooseCommand.MESSAGE_TEMPLATE,

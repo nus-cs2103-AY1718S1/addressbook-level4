@@ -1,11 +1,9 @@
 package seedu.address.testutil;
 
-
+//@@author Sri-vatsa
 /**
- * @author Sri-vatsa
  * A utility class containing a list of {@code Index} objects to be used in tests.
  */
-
 public class TypicalTags {
     public static final String [] SINGLE_TAG_DELETION = new String [] {"friends"};
     public static final String [] SINGLE_TAG_DELETION_ALT = new String [] {"colleagues"};

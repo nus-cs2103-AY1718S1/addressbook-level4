@@ -5,8 +5,12 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,23 +19,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.*;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListByMostSearchedCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NextMeetingCommand;
-import seedu.address.logic.commands.PrefCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Meeting;
+import seedu.address.model.person.InternalId;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -121,6 +113,65 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListByMostSearchedCommand.COMMAND_WORD + " 3")
                 instanceof ListByMostSearchedCommand);
     }
+
+    @Test
+    public void parseCommand_addMeeting() throws Exception {
+
+        //Create new Id arrayList
+        ArrayList<InternalId> ids = new ArrayList<>();
+        ids.add(new InternalId(1));
+
+        //create a new localDateTime
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HHmm");
+        String dateTime = "27/10/2020 1800";
+        LocalDateTime localDateTime = LocalDateTime.parse(dateTime, formatter);
+
+        //Create an expected new meeting
+        Meeting newMeeting = new Meeting(localDateTime,"Computing", "Coding Project", ids);
+
+        //create new user-input based add meeting command
+        AddMeetingCommand command = (AddMeetingCommand)
+                parser.parseCommand(AddMeetingCommand.COMMAND_WORD + " "
+                        + PREFIX_DATE + " 27/10/2020 "
+                        + PREFIX_TIME + " 1800 "
+                        + PREFIX_LOCATION + " Computing "
+                        + PREFIX_NOTES + " Coding Project "
+                        + PREFIX_PERSON + " 1");
+
+        assertEquals(new AddMeetingCommand(newMeeting), command);
+    }
+
+    @Test
+    public void parseCommand_deleteTag_one() throws Exception {
+        String [] tags = {"friends"};
+        DeleteTagCommand command = (DeleteTagCommand) parser.parseCommand(
+                DeleteTagCommand.COMMAND_WORD + " " + "friends");
+        assertEquals(new DeleteTagCommand(tags), command);
+    }
+
+    @Test
+    public void parseCommand_deleteTag_multiple() throws Exception {
+        String [] tags = {"friends", "colleagues"};
+        DeleteTagCommand command = (DeleteTagCommand) parser.parseCommand(
+                DeleteTagCommand.COMMAND_WORD + " " + "friends" + " " + "colleagues");
+        assertEquals(new DeleteTagCommand(tags), command);
+    }
+
+    @Test
+    public void parseCommand_setUniqueKey() throws Exception {
+        String accessCode = "0/b62305d262c673af5c042bfad54ef832";
+        SetUniqueKeyCommand command = (SetUniqueKeyCommand) parser.parseCommand(
+                SetUniqueKeyCommand.COMMAND_WORD + " " + accessCode);
+        assertEquals(new SetUniqueKeyCommand(accessCode), command);
+    }
+
+    @Test
+    public void parseCommand_setupAsana() throws Exception {
+        assertTrue(parser.parseCommand(SetupAsanaCommand.COMMAND_WORD) instanceof SetupAsanaCommand);
+        assertTrue(parser.parseCommand(SetupAsanaCommand.COMMAND_ALIAS) instanceof SetupAsanaCommand);
+        assertTrue(parser.parseCommand(SetupAsanaCommand.COMMAND_WORD + " 2") instanceof SetupAsanaCommand);
+    }
+
     //@@author
 
     @Test

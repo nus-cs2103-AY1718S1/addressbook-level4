@@ -33,7 +33,6 @@ public class ResultDisplay extends UiPart<Region> {
     }
 
     //@@author Sri-vatsa
-
     public ResultDisplay(String message) {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);

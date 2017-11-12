@@ -96,7 +96,6 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     //@@author Sri-vatsa
-
     /***
      * Loads pages based on choose command selection
      */
@@ -124,8 +123,8 @@ public class BrowserPanel extends UiPart<Region> {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
     }
-    //@@author Sri-vatsa
 
+    //@@author Sri-vatsa
     /**
      * Setter method to set the Boolean value of hasLinkedinBeenChosen
      */
