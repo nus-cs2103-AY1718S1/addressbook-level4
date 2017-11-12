@@ -581,7 +581,7 @@ public ImportCommand(String filePath) {
 
 A button is also added onto the top bar menu to facilitate import via clicking and choosing file from FileChooser.
 
-image::import_file_Ui.png[width="300"]
+image::import_file_Ui.png[width="800"]
 
 [NOTE]
 If the filePath is invalid, then there are no file that is readable and hence, an exception will be thrown. Users will be notified to check their filePath.
