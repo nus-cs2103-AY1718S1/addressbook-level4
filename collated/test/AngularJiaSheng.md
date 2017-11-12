@@ -1,5 +1,5 @@
 # AngularJiaSheng
-###### \java\seedu\address\model\UniqueWebLinkListTest.java
+###### /java/seedu/address/model/UniqueWebLinkListTest.java
 ``` java
 public class UniqueWebLinkListTest {
     @Rule
@@ -13,7 +13,7 @@ public class UniqueWebLinkListTest {
     }
 }
 ```
-###### \java\systemtests\DeleteTagCommandSystemTest.java
+###### /java/systemtests/DeleteTagCommandSystemTest.java
 ``` java
 
 public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
