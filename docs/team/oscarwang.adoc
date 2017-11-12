@@ -47,7 +47,6 @@ include::../DeveloperGuide.adoc[tag=add]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=li]
 
 #End of Extract#
 
