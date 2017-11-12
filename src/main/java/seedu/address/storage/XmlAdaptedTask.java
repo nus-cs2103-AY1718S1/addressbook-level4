@@ -10,6 +10,9 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTime;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 
@@ -51,10 +54,10 @@ public class XmlAdaptedTask {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedTask(ReadOnlyTask source) {
-        taskName = source.getName();
-        taskDescription = source.getDescription();
-        startDateTime = source.getStartDateTime();
-        endDateTime = source.getEndDateTime();
+        taskName = source.getName().toString();
+        taskDescription = source.getDescription().toString();
+        startDateTime = source.getStartDateTime().toString();
+        endDateTime = source.getEndDateTime().toString();
         tagged = new ArrayList<>();
         id = source.getId();
         for (Tag tag : source.getTags()) {
@@ -75,10 +78,10 @@ public class XmlAdaptedTask {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
-        final String taskName = this.taskName;
-        final String taskDescription = this.taskDescription;
-        final String startDateTime = this.startDateTime;
-        final String endDateTime = this.endDateTime;
+        final Name taskName = new Name(this.taskName);
+        final Description taskDescription = new Description(this.taskDescription);
+        final DateTime startDateTime = new DateTime(this.startDateTime);
+        final DateTime endDateTime = new DateTime(this.endDateTime);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Boolean complete = this.complete;
         final ArrayList<Integer> peopleIndices = new ArrayList<>(this.peopleIndices);

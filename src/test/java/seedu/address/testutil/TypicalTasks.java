@@ -7,7 +7,6 @@ import java.util.List;
 
 import seedu.address.model.TaskBook;
 import seedu.address.model.task.ReadOnlyTask;
-import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 /**
@@ -15,21 +14,20 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
  */
 public class TypicalTasks {
 
-    public static final ReadOnlyTask PICNIC = new Task("picnic",
-            "Have a good time with my best friends",
-            "20/05/2018-12:00pm",
-            "20/05/2018-13:00pm", 2).withTags("Friends", "Fun");
+    public static final ReadOnlyTask PICNIC = new TaskBuilder().withName("picnic")
+            .withDescription("Have a good time with my best friends")
+            .withStart("20-05-2018 11:00pm")
+            .withEnd("20-05-2018 12:00pm").withTags("Friends", "Fun").build();
 
-    public static final ReadOnlyTask MEETING = new Task("meeting",
-            "Have a CS2101 group meeting for oral presentation 2",
-            "20/05/2017-12:00pm",
-            "20/05/2017-13:00pm", 3).withTags("Study");
+    public static final ReadOnlyTask MEETING = new TaskBuilder().withName("meeting")
+            .withDescription("Have a CS2101 group meeting for oral presentation 2")
+            .withStart("20-05-2017 11:00pm")
+            .withEnd("20-05-2017 12:00pm").withTags("Study").build();
 
-    public static final ReadOnlyTask EXAM = new Task("CS2103 exam",
-            "Have a final exam for CS2103T",
-            "20/05/2017-15:00pm",
-            "20/05/2017-16:00pm", 1).withTags("Study");
-
+    public static final ReadOnlyTask EXAM = new TaskBuilder().withName("CS2103 exam")
+            .withDescription("Have a final exam for CS2103T")
+            .withStart("20-05-2016 11:00pm")
+            .withEnd("20-05-2016 12:00pm").withTags("Study").build();
 
     private TypicalTasks() {} // prevents instantiation
 

@@ -14,14 +14,14 @@ import seedu.address.model.tag.UniqueTagList;
 public interface ReadOnlyTask {
 
     // Content property
-    ObjectProperty<String> nameProperty();
-    String getName();
-    ObjectProperty<String> descriptionProperty();
-    String getDescription();
-    ObjectProperty<String> startTimeProperty();
-    String getStartDateTime();
-    ObjectProperty<String> endTimeProperty();
-    String getEndDateTime();
+    ObjectProperty<Name> nameProperty();
+    Name getName();
+    ObjectProperty<Description> descriptionProperty();
+    Description getDescription();
+    ObjectProperty<DateTime> startTimeProperty();
+    DateTime getStartDateTime();
+    ObjectProperty<DateTime> endTimeProperty();
+    DateTime getEndDateTime();
 
     // functional property
     ObjectProperty<Integer> priorityProperty();

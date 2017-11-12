@@ -15,9 +15,13 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTime;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
@@ -52,6 +56,7 @@ public class EditTaskCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the task book.";
+    public static final String MESSAGE_DATE_TIME_TASK = "This task edit has date time error: start <= end.";
 
     private final Index index;
     private final EditTaskDescriptor editTaskDescriptor;
@@ -77,7 +82,13 @@ public class EditTaskCommand extends UndoableCommand {
         }
 
         ReadOnlyTask taskToEdit = lastShownList.get(index.getZeroBased());
-        Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+
+        Task editedTask = null;
+        try {
+            editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+        } catch (IllegalValueException e) {
+            throw new CommandException(MESSAGE_DATE_TIME_TASK);
+        }
 
         try {
             model.updateTask(taskToEdit, editedTask);
@@ -95,13 +106,16 @@ public class EditTaskCommand extends UndoableCommand {
      * edited with {@code editTaskDescriptor}.
      */
     private static Task createEditedTask(ReadOnlyTask taskToEdit,
-                                             EditTaskDescriptor editTaskDescriptor) {
+                                             EditTaskDescriptor editTaskDescriptor) throws IllegalValueException {
         assert taskToEdit != null;
 
-        String updatedTaskName = editTaskDescriptor.getName().orElse(taskToEdit.getName());
-        String updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
-        String updatedStartDateTime = editTaskDescriptor.getStartDateTime().orElse(taskToEdit.getStartDateTime());
-        String updatedEndDateTime = editTaskDescriptor.getEndDateTime().orElse(taskToEdit.getEndDateTime());
+        Name updatedTaskName = editTaskDescriptor.getName().orElse(taskToEdit.getName());
+        Description updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
+        DateTime updatedStartDateTime = editTaskDescriptor.getStartDateTime().orElse(taskToEdit.getStartDateTime());
+        DateTime updatedEndDateTime = editTaskDescriptor.getEndDateTime().orElse(taskToEdit.getEndDateTime());
+        if (updatedStartDateTime.compareTo(updatedEndDateTime) == -1) {
+            throw new IllegalValueException(MESSAGE_DATE_TIME_TASK);
+        }
         Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
         Boolean updateComplete = editTaskDescriptor.getComplete().orElse(taskToEdit.getComplete());
         //Remark updatedRemark = taskToEdit.getRemark(); // edit command does not allow editing remarks
@@ -135,10 +149,10 @@ public class EditTaskCommand extends UndoableCommand {
      * corresponding field value of the task.
      */
     public static class EditTaskDescriptor {
-        private String taskName;
-        private String description;
-        private String start;
-        private String end;
+        private Name taskName;
+        private Description description;
+        private DateTime start;
+        private DateTime end;
         private Set<Tag> tags;
         private Boolean complete;
 
@@ -161,35 +175,35 @@ public class EditTaskCommand extends UndoableCommand {
                     this.tags, this.complete);
         }
 
-        public void setName(String taskName) {
+        public void setName(Name taskName) {
             this.taskName = taskName;
         }
 
-        public Optional<String> getName() {
+        public Optional<Name> getName() {
             return Optional.ofNullable(taskName);
         }
 
-        public void setDescription(String description) {
+        public void setDescription(Description description) {
             this.description = description;
         }
 
-        public Optional<String> getDescription() {
+        public Optional<Description> getDescription() {
             return Optional.ofNullable(description);
         }
 
-        public void setStart(String start) {
+        public void setStart(DateTime start) {
             this.start = start;
         }
 
-        public Optional<String> getStartDateTime() {
+        public Optional<DateTime> getStartDateTime() {
             return Optional.ofNullable(start);
         }
 
-        public void setEnd(String end) {
+        public void setEnd(DateTime end) {
             this.end = end;
         }
 
-        public Optional<String> getEndDateTime() {
+        public Optional<DateTime> getEndDateTime() {
             return Optional.ofNullable(end);
         }
 

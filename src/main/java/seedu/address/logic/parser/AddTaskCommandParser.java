@@ -17,6 +17,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTime;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 
@@ -41,10 +44,17 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
         }
 
         try {
-            String name = ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME)).get();
-            String description = ParserUtil.parseString(argMultimap.getValue(PREFIX_DESCRIPTION)).get();
-            String startDateTime = ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME)).get();
-            String endDateTime = ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).get();
+            Name name = new Name(ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME)).get());
+            Description description =
+                    new Description(ParserUtil.parseString(argMultimap.getValue(PREFIX_DESCRIPTION)).get());
+            DateTime startDateTime =
+                    new DateTime(ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME)).get());
+            DateTime endDateTime =
+                    new DateTime(ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).get());
+
+            if (startDateTime.compareTo(endDateTime) == -1) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
+            }
 
             Optional<Integer> priority = ParserUtil.parseInteger(argMultimap.getValue(PREFIX_PRIORITY));
 
