@@ -74,7 +74,7 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `Bluebird.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for Bluebird.
 // tag::tutorial[]
 .  Double-click the file to start Bluebird. Once started, a quick start tutorial as shown in Figure 2.1 below will pop out to guide you on
    how to use BlueBird.
