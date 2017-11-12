@@ -441,6 +441,9 @@ Only one `remark` is saved at any one time, if the user does `Remark` on the sam
 // tag::findtags[]
 === FindTags mechanism
 
+The `FindTagsCommand` class inheriteds from the `Command` class.
+It allows users to search students by their tags.
+
 The `FindTags` mechanism is facilitated by the `TagsContainKeywordsPredicate`, which resides within `FindTagsCommand`.
 The `TagsContainKeywordsPredicate` tests whether each person's tags contain all keywords input by the user
 and thus supports AND search.
@@ -453,7 +456,7 @@ _Figure 4.41 : Sequence Diagram of `FindTags` Operation_
 As can seen from above, when a `FindTags` command is called, E.g. `findtags NUS friends`.
 An instance of `TagsContainKeywordsPredicate` is created.
 
-The `TagsContainsKeywordsPredicate` found inside `FindTagsCommand` is implemented this way:
+The newly created `TagsContainsKeywordsPredicate` used to implement `FindTagsCommand` is shown below:
 
 ----
 public class TagsContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
@@ -478,7 +481,7 @@ Inside the `TagsContainKeywordsPredicate`, the search terms `NUS` and `friends` 
 The overidding `test()` method evluates whether the person's tags matches all the search terms in `keywords`.
 This `TagsContainKeywordsPredicate` is then used to test every person in the AddressBook and filter them.
 
-The `FindTagsCommand` is implemented this way:
+The newly created `FindTagsCommand` class is shown below:
 
 ----
 public class FindTagsCommand extends Command {
@@ -506,6 +509,8 @@ The `AddressBookChangedEvent` indicates that the `model` has changed and the cau
 This search feature is implemented using `Predicate` because `Predicate` help move the business logic to a more central place, helping in unit-testing them separately.
 Also, the `Predicate` can can be reused, improving code manageability and readability.
 
+---
+
 ==== Design Considerations
 
 **Aspect:** Have a separate predicate class to support `findtags` +
@@ -515,6 +520,8 @@ Also, the `Predicate` can can be reused, improving code manageability and readab
 **Alternative 2:** Create `TagsContainsKeywordsPredicate` as an inner class in `FindTagsCommand` class. +
 **Pros:** It makes the codebase less complex as there are less classes. +
 **Cons:** It adds complexity to the `FindTagsCommand` source file and reduces re-usability of the `Predicate` outside of the `FindTagsCommand` +
+
+---
 
 **Aspect:** Whether to use AND or OR search +
 **Alternative 1 (current choice):** AND search +
@@ -528,6 +535,7 @@ E.g. `findtags track dance` calculates statistics for the `track` and `dance` gr
 **Cons:** Or search does not help teachers find students with a specific combination of tags efficiently. +
 E.g. `findtags track dance` does not narrow down the list of students returned to students who have both the `track` and `dance` tag. +
 
+---
 // end::findtags[]
 
 // tag::undoredo[]
@@ -955,6 +963,9 @@ _Figure 4.111 : Sequence Diagram of `Tab` Operation_
 // tag::statisticspanel[]
 === Statistics Panel mechanism
 
+The `StatisticsPanel` class inherits from the `UiPart` class.
+It displays to users the statistics of the current list of students in the `StudentsPanel` element of the user interface.
+
 The `Statistics Panel` is implemented using the `Statistics` class and The `FilteredPersonListChangedEvent` event.
 The `Statistics` class supports the calculating of statistics for the current list of students in the `PersonListPanel` and
 the `FilteredPersonListChangedEvent` indicates that the FilteredPersonList in the model has changed and is used to update the `Statsistics Panel`.
@@ -1031,7 +1042,7 @@ The `Labels` (texts) in the User Interface are set according to the updated `Sta
 This updates and shows the statistic values of the current `filteredPersonList` on the `StatisticsPanel` in the User Interface.
 At the same time, the `AddressBookChangedEvent` is also being handled, saving the addressBook data.
 
-
+---
 
 ==== Design Considerations
 **Aspect:** How to update the `Statistics Panel` +
@@ -1043,6 +1054,8 @@ At the same time, the `AddressBookChangedEvent` is also being handled, saving th
 only a few changes to are needed for `AddressBookChangedEvent` to do also update the `Statistics Panel`. +
 **Cons:** This violates the Single Responsibility Principle (SRP) by having giving `AddressBookChangedEvent` the additional responsibility of updating the `Statistics Panel`.  +
 
+---
+
 **Aspect:** How to raise the `FilteredPersonListChangedEvent` in the `ModelManager` +
 **Alternative 1 (current choice):** Create a separate `updateStatisticsPanel()` method to raise the event to update the `Statistics Panel` +
 **Pros:** Reduces coupling and increases cohesion by giving a single responsibility to the `updateStatisticsPanel()` method. +
@@ -1050,6 +1063,8 @@ only a few changes to are needed for `AddressBookChangedEvent` to do also update
 **Alternative 2:** Raise the `FilteredPersonListChangedEvent` together with the `AddressBookChangedEvent` +
 **Pros:** Reduces the number of similar methods in the source code, making it less complex and easier to understand +
 **Cons:** Increases coupling in the source code +
+
+---
 // end::statisticspanel[]
 
 // tag::uniquetagcolor[]
