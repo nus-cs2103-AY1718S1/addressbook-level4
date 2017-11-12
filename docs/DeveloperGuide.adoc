@@ -590,9 +590,7 @@ public class SyncCommand extends Command {
 
             try {
                 List<ReadOnlyPerson> personList = model.getFilteredPersonList();
-                
                 initialise();
-                
                 checkContacts();
                 updateContacts();
                 exportContacts(personList);
@@ -638,11 +636,8 @@ public class SyncCommand extends Command {
         for (String id : syncedIDs) {
             seedu.address.model.person.ReadOnlyPerson aPerson;
             Person person;
-            
-            // Checks whether person and aPerson still exists, mainly for defensive programming 
-
+            // Checks whether person and aPerson still exists, mainly for defensive programming
             // We check the last updated times for both contacts
-
             if (compare < 0) {
                 // We update the remote contact
             } else if (compare > 0) {
@@ -661,7 +656,6 @@ with an ID yet.
 ----
 public class SyncCommand extends Command {
   // variables, constructor and other methods
-
     private void importContacts () throws IOException {
 
         for (Person person : connections) {
