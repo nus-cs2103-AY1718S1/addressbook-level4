@@ -194,6 +194,7 @@ Deletes the 1st person in the results of the `find` command.
 Delete commands are _undoable_ with the `undo` command.
 ====
 
+//tag::dropdownlist[]
 === Drop-down List of Possible Commands
 It might be daunting for a new user to see all these commands and their formats. But with the help of the drop-down list, you do not need to memorise any of them.
 
@@ -201,12 +202,12 @@ When you type your commands inside the command box, you will notice that a drop-
 
 For example, if you type the letter "e", a drop-down list consisting of three options `edit`, `email` and `exit` appears, as shown in the screenshot below.
 
-image
+image::DropDownList1.png[width="300"]
 
 The list will get updated as you type, to only display commands that match your input. Following the previous example,
 if you type the letter "m" after having typed in "e", the list should only consist of the `email` command now.
 
-image
+image::DropDownList2.png[width="300"]
 
 When the drop-down list is shown, you can:
 
@@ -220,7 +221,7 @@ or
 After you have selected the command you wish to enter, you should see it displayed in the command box.
 For example, you should see the following when you select `email` in the drop-down list.
 
-image
+image::DropDownList3.png[width="800"]
 
 Now you can:
 
@@ -230,7 +231,8 @@ Now you can:
 If you want to see a list of all commands, simply type kbd:[Space] in an empty command box.
 The following list should appear.
 
-image
+image::DropDownList4.png[width="300"]
+//end::dropdownlist[]
 
 [[edit]]
 === `edit`, `e`, `change` or `modify`: Editing a Person _(Since v1.3)_

@@ -13,21 +13,28 @@ include::../../README.adoc[tag=applicationDescription]
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/main/mingruiii.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/test/jo-lyn.md[Test code]]
 
+=== Enhancement Added: Drop-down List
+
+==== External behavior
+
+include::../UserGuide.adoc[leveloffset=2,tag=dropdownlist]
+
+==== Justification
+It will be difficult for the user to memorise all the commands. The drop-down list reminds the user of possible commands as he/she types,
+making keying in commands much easier.
+
+==== Implementation
+
 === Enhancement Added: Auto-completion
 
 ==== External behavior
 
----
-
 include::../UserGuide.adoc[leveloffset=2,tag=autocomplete]
-
----
-
 
 ==== Justification
 
-It is difficult for the user to remember all the fields and the corresponding prefixes. Auto-completion ensures that the user will know exactly what is required.
-Auto-selection of the placeholder will improve user experience by a lot, because the user can directly type in information without having to manually place the cursor.
+It will be difficult for the user to remember all the fields and the corresponding prefixes. Auto-completion ensures that the user will know exactly what is required.
+Auto-selection of the placeholder will improve user experience, because the user can directly type in information without having to manually place the cursor.
 
 ==== Implementation
 
