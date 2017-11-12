@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Steve Jobs</name>
+        <phone>98765432</phone>
+        <email>steve@apple.com</email>
+        <comment></comment>
+        <appoint>15:50</appoint>
+        <address>Heaven</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>2017</tagged>
+        <tagged>T12</tagged>
+    </persons>
+    <persons>
+        <name>Bill Gates</name>
+        <phone>11122345</phone>
+        <email>bill.g@microsoft.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>2016</tagged>
+        <tagged>T12</tagged>
+    </persons>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <comment>Likes to swim.</comment>
+        <appoint>20/10/2017 15:50</appoint>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>2017</tagged>
+        <tagged>T12</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <comment>As quick as a leopard.</comment>
+        <appoint>27/11/2017 10:00</appoint>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone>85355255</phone>
+        <email>alice@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>123, Jurong West Ave 6, #08-111</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>2016</tagged>
+        <tagged>T12</tagged>
+    </persons>
+    <persons>
+        <name>Benson Meier</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Carl Kurz</name>
+        <phone>95352563</phone>
+        <email>heinz@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>wall street</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>enemy</tagged>
+    </persons>
+    <persons>
+        <name>Hoon Meier</name>
+        <phone>8482424</phone>
+        <email>stefan@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>little india</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>enemy</tagged>
+    </persons>
+    <persons>
+        <name>Amy Bee</name>
+        <phone>11111111</phone>
+        <email>amy@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Block 312, Amy Street 1</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>2017</tagged>
+        <tagged>T12</tagged>
+    </persons>
+    <persons>
+        <name>Bob Choo</name>
+        <phone>22222222</phone>
+        <email>bob@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Block 123, Bobby Street 3</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>friend</tagged>
+        <tagged>husband</tagged>
+    </persons>
+    <persons>
+        <name>Elon Musk</name>
+        <phone>93719473</phone>
+        <email>elm@tesla.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Tesla, Inc. 3500 Deer Creek Road ap/15:30</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>boss</tagged>
+    </persons>
+    <persons>
+        <name>Phung Tuan Hoang</name>
+        <phone>93463991</phone>
+        <email>cs2103testacc@gmail.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>PGP Resident 27 Prince George's Park</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>student</tagged>
+    </persons>
+    <persons>
+        <name>David Beckham</name>
+        <phone>99223842</phone>
+        <email>beckham@dontknowwhat.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>23 Holland Park, London, England</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>superstar</tagged>
+    </persons>
+    <persons>
+        <name>Johny Craig</name>
+        <phone>99224432</phone>
+        <email>craig@singer.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>23 Dien Bien Phu, Ha Noi, Vietnam</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>singer</tagged>
+    </persons>
+    <persons>
+        <name>Vivian Balakrishnan</name>
+        <phone>23247499</phone>
+        <email>vivian@pap.com.sg</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>21 Geylang Ave 69, Singapore</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>2017</tagged>
+        <tagged>T12</tagged>
+    </persons>
+    <persons>
+        <name>Michael Jackson</name>
+        <phone>12344321</phone>
+        <email>MJ@heaven.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Heaven</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>2027</tagged>
+        <tagged>T32</tagged>
+    </persons>
+        <persons>
+        <name>Jony Crack</name>
+        <phone>12345678</phone>
+        <email>jcraig@singer.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>23 Dien Bien Phu, Ha Noi, Vietnam</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>linger</tagged>
+    </persons>
+    <persons>
+        <name>Nivian Bala</name>
+        <phone>456321234</phone>
+        <email>livian@pap.com.sg</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>21 Geylang Ave 69, Singapore</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>2057</tagged>
+        <tagged>R12</tagged>
+    </persons>
+    <persons>
+        <name>Nichael Hackson</name>
+        <phone>12344321</phone>
+        <email>NH@heaven.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Heaven</address>
+        <avatar>\images\generic_avatar.png</avatar>
+        <tagged>2217</tagged>
+        <tagged>T62</tagged>
+    </persons>
+    <tags>owesMoney</tags>
+    <tags>colleagues</tags>
+    <tags>friend</tags>
+    <tags>classmates</tags>
+    <tags>dead</tags>
+    <tags>neighbours</tags>
+    <tags>husband</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+    <tags>boss</tags>
+    <tags>student</tags>
+    <tags>superstar</tags>
+    <tags>singer</tags>
+    <tags>minister</tags>
+    <tags>rich</tags>
+    <tags>2017</tags>
+    <tags>T12</tags>
+    <tags>2016</tags>
+    <tags>enemy</tags>
+</addressbook>
