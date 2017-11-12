@@ -231,6 +231,7 @@ Format: `clear`
 
 === Key features
 
+// tag::find[]
 ==== Finding persons by any field : `find` [Since v1.2 and v1.4]
 
 => Alias: `f` <=
@@ -267,12 +268,10 @@ Returns person with phone of `98989898`
 * `find p/9898 7888` +
 Returns person with phone of `98989898` and `99997888`
 
-
 * `find a/Geylang` +
 Returns person with address `30, Geylang Street 29 , #10-08, Singapore 705678`
 * `find a/#10-08` +
 Returns person with address `30, Geylang Street 29 , #10-08, Singapore 705678`
-
 
 * `find t/boss` +
 Returns all persons with tag `boss`
@@ -286,6 +285,7 @@ Returns all persons with tag `Party` and `Presentation`
 
 * `find c/Singapore` +
 Returns all persons of country code `Singapore`
+// end::find[]
 
 // tag::locate[]
 ==== Locating a person's address : `locate` [Since v1.2]
@@ -375,6 +375,7 @@ Outputs the 1st person's email address in console: `johndoe@example.com`
 Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: `a@a.com; d@d.com; e@e.com`
 // end::copy[]
 
+//tag::calendar[]
 ==== Opening calendar : `calendar` [Since v1.3]
 
 => Alias: `cl` <=
@@ -388,7 +389,8 @@ Opens up calendar browser in the address book. +
 * `calendar` (using command word) +
 * `cl` (using alias) +
 Opens up calendar browser in the address book.
-
+// end::calendar[]
+//tag::email[]
 ==== Emailing persons : `email` [Since v1.5]
 
 => Alias: `m` <=
@@ -411,7 +413,7 @@ Emails the 1st and 2nd person in the address book.
 * `find n/Betsy` +
 `email 1` +
 Emails the 1st person in the results of the `find` command.
-
+// end::email[]
 //tag::backup[]
 ==== Back up address book : `backup` [Since v1.5]
 
@@ -601,4 +603,3 @@ To *transfer data* to another Computer, install the app in the other computer an
 |link:#enabling-and-disabling-the-welcome-screen-code-welcome-code-since-v1-5[Welcome] | `w` | `welcome ENABLING_KEYWORD` | `welcome enable`
 
 |=======================================================================
-
