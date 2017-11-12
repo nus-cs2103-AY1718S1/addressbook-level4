@@ -22,8 +22,9 @@ public class MapsPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String MAPS_DIR_URL_PREFIX = "https://www.google.com/maps/dir/?api=1";
-    public static final String MAPS_DEFAULT_ORIGIN = "&origin=National+University+of+Singapore";
+    public static final String MAPS_DEFAULT_ORIGIN = "&origin=My+Location";
     public static final String MAPS_DEST_PREFIX = "&destination=";
+    public static final String MAPS_SEARCH_URL_SUFFIX = "&dg=dbrw&newdg=1";
 
     private static final String FXML = "MapsPanel.fxml";
 
@@ -45,7 +46,7 @@ public class MapsPanel extends UiPart<Region> {
 
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(MAPS_DIR_URL_PREFIX + MAPS_DEFAULT_ORIGIN + MAPS_DEST_PREFIX
-                + person.getAddress().value.replaceAll(" ", "+"));
+                + person.getAddress().value.replaceAll(" ", "+") + MAPS_SEARCH_URL_SUFFIX);
     }
 
     public void loadPage(String url) {

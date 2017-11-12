@@ -8,6 +8,7 @@ import static seedu.address.ui.MapsPanel.DEFAULT_PAGE;
 import static seedu.address.ui.MapsPanel.MAPS_DEFAULT_ORIGIN;
 import static seedu.address.ui.MapsPanel.MAPS_DEST_PREFIX;
 import static seedu.address.ui.MapsPanel.MAPS_DIR_URL_PREFIX;
+import static seedu.address.ui.MapsPanel.MAPS_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
@@ -20,8 +21,6 @@ import seedu.address.MainApp;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 
 public class MapsPanelTest extends GuiUnitTest {
-
-    private static final String MAPS_END_OF_URL_PREFIX = "&dg=dbrw&newdg=1";
 
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
 
@@ -47,7 +46,7 @@ public class MapsPanelTest extends GuiUnitTest {
         // associated web page of a person
         postNow(selectionChangedEventStub);
         URL expectedPersonUrl = new URL(MAPS_DIR_URL_PREFIX + MAPS_DEFAULT_ORIGIN + MAPS_DEST_PREFIX
-                + DANIEL.getAddress().toString().replaceAll(" ", "+") + MAPS_END_OF_URL_PREFIX);
+                + DANIEL.getAddress().toString().replaceAll(" ", "+") + MAPS_SEARCH_URL_SUFFIX);
 
         waitUntilMapLoaded(mapsPanelHandle);
         assertEquals(expectedPersonUrl, mapsPanelHandle.getLoadedUrl());

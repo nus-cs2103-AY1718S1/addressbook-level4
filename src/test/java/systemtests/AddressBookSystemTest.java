@@ -7,6 +7,7 @@ import static seedu.address.ui.MapsPanel.DEFAULT_PAGE;
 import static seedu.address.ui.MapsPanel.MAPS_DEFAULT_ORIGIN;
 import static seedu.address.ui.MapsPanel.MAPS_DEST_PREFIX;
 import static seedu.address.ui.MapsPanel.MAPS_DIR_URL_PREFIX;
+import static seedu.address.ui.MapsPanel.MAPS_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -197,7 +198,7 @@ public abstract class AddressBookSystemTest {
         URL expectedUrl;
         try {
             expectedUrl = new URL(MAPS_DIR_URL_PREFIX + MAPS_DEFAULT_ORIGIN + MAPS_DEST_PREFIX
-                    + selectCardAddress.replaceAll(" ", "+"));
+                    + selectCardAddress.replaceAll(" ", "+") + MAPS_SEARCH_URL_SUFFIX);
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
