@@ -97,4 +97,21 @@ public class UndoRedoStack {
         return undoStack.equals(stack.undoStack)
                 && redoStack.equals(stack.redoStack);
     }
+
+    /**
+     * Clear redo stack.
+     */
+    public void clearRedoStack() {
+        redoStack.clear();
+    }
+
+    /**
+     * Clear undo stack.
+     */
+    public void clearUndoStack() {
+        undoStack.clear();
+    }
+
+
+
 }

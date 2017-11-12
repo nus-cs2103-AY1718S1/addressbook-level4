@@ -35,4 +35,5 @@ public class ClearCommand extends UndoableCommand {
         EventsCenter.getInstance().post(new RemarkChangedEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
 }
