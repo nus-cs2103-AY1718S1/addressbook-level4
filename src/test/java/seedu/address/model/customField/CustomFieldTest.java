@@ -10,11 +10,14 @@ public class CustomFieldTest {
 
     @Test
     public void isValidCustomField() {
-        // invalid addresses
+        // valid custom field
+        assertTrue(CustomField.isValidCustomField("NickName"));
+    }
+
+    @Test
+    public void isInvalidCustomField() {
+        // invalid custom fields
         assertFalse(CustomField.isValidCustomField("")); // empty string
         assertFalse(CustomField.isValidCustomField(" ")); // spaces only
-
-        // valid addresses
-        assertTrue(CustomField.isValidCustomField("NickName"));
     }
 }
