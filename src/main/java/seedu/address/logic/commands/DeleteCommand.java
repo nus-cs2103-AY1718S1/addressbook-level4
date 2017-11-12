@@ -39,7 +39,9 @@ public class DeleteCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        boolean requireJump = personToDelete.equals(model.getSelectedPerson());
+        boolean requireJump = personToDelete.equals(model.getSelectedPerson())
+                && ListObserver.getIndexOfPersonInCurrentList(personToDelete).getOneBased()
+                != ListObserver.getCurrentFilteredList().size();
         Index index = ListObserver.getIndexOfPersonInCurrentList(personToDelete);
         try {
             model.deletePerson(personToDelete);
@@ -49,6 +51,8 @@ public class DeleteCommand extends UndoableCommand {
         ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
         if (requireJump) {
             EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+        } else {
+            model.deselectPerson();
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName()));
