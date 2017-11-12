@@ -26,12 +26,18 @@ public class PhoneCommandParserTest {
     private PhoneCommandParser parser = new PhoneCommandParser();
 
     @Test
-    public void parse_validArgs_returnsPhoneCommand () throws IllegalValueException {
+    public void parse_validArgsWithIndex_returnsPhoneCommand () throws IllegalValueException {
         PhoneCommand expectedPhoneCommand = new PhoneCommand(INDEX_FIRST_PERSON, "add", new Phone("233333"));
         assertParseSuccess(parser, "1 add 233333", expectedPhoneCommand);
 
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n 1 \n \t add \n \t 233333 \t ", expectedPhoneCommand);
+    }
+
+    @Test
+    public void parse_validArgsWithName_returnsPhoneCommand () throws IllegalValueException {
+        PhoneCommand expectedPhoneCommand = new PhoneCommand("Alice Pauline", "add", new Phone("233333"));
+        assertParseSuccess(parser, "byName add 233333 Alice Pauline", expectedPhoneCommand);
     }
 
     @Test

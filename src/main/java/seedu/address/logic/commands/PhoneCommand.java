@@ -34,12 +34,20 @@ public class PhoneCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "updatePhone";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Updates one person's additional phone identified by the index"
-            + " number used in the last person listing.\n"
-            + "Parameters: "
-            + "INDEX (must be a positive integer)\n"
-            + "ACTION \n"
-            + "VALUE"
-            + "Example: " + COMMAND_WORD + " 1" + " add" + " 6583609887";
+            + " number used in the last person listing or the name of the person.\n"
+            + "if index is used to identify the person\n"
+            + "Parameters: \n"
+            + "INDEX (must be a positive integer) "
+            + "ACTION "
+            + "PHONE\n"
+            + "Example: " + COMMAND_WORD + " 1" + " add" + " 6583609887\n"
+            + "if name is used to identify the person\n"
+            + "Parameters: \n"
+            + "byName "
+            + "ACTION "
+            + "PHONE "
+            + "NAME\n"
+            + "Example: " + COMMAND_WORD + " byName" + " add" + " 6583609887" + "Alex Yeoh";
 
     private static final String COMMAND_SHOW_ALL_PHONES  = "showAllPhones";
     private static final String COMMAND_ADD = "add";
@@ -55,6 +63,7 @@ public class PhoneCommand extends UndoableCommand {
     private static final String ADD_PHONE_SUCCESS_MESSAGE = "Phone number %s has been added.\n";
     private static final String REMOVE_PHONE_SUCCESS_MESSAGE = "Phone number %s has been removed.\n";
     private static final String TOTAL_NUMBER_OF_PHONES = "The updated phone list now has %s phone numbers.\n";
+    private static final String UNSPECIFIED_NAME = "unspecified";
 
     private final Logger logger = LogsCenter.getLogger(PhoneCommand.class);
 
@@ -64,11 +73,21 @@ public class PhoneCommand extends UndoableCommand {
 
     private final String action;
 
+    private final String name;
+
 
     public PhoneCommand(Index targetIndex, String action,  Phone phone) {
         this.targetIndex = targetIndex;
         this.action = action;
         this.phone = phone;
+        this.name = UNSPECIFIED_NAME;
+    }
+
+    public PhoneCommand(String name, String action, Phone phone) {
+        this.name = name;
+        this.action = action;
+        this.phone = phone;
+        this.targetIndex = new Index(99999);
     }
 
     /**
@@ -109,11 +128,16 @@ public class PhoneCommand extends UndoableCommand {
         return phone;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof PhoneCommand // instanceof handles nulls
-                && this.targetIndex.equals(((PhoneCommand) other).getIndex())
+                && (this.targetIndex.equals(((PhoneCommand) other).getIndex())
+                || this.name.equals(((PhoneCommand) other).getName()))
                 && this.action.equals(((PhoneCommand) other).getAction())
                 && this.phone.equals(((PhoneCommand) other).getPhone()));
     }
@@ -121,14 +145,31 @@ public class PhoneCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        ReadOnlyPerson personToUpdatePhoneList = null;
 
         logger.info("Get the person of the specified index.");
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            logger.warning(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (name.equals(UNSPECIFIED_NAME)) {
+
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                logger.warning(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            personToUpdatePhoneList = lastShownList.get(targetIndex.getZeroBased());
+        } else {
+
+            for (int i = 0; i < lastShownList.size(); i++) {
+                if (lastShownList.get(i).getName().toString().equals(name)) {
+                    personToUpdatePhoneList = lastShownList.get(i);
+                    break;
+                }
+            }
+            if (personToUpdatePhoneList == null) {
+                throw new CommandException(Messages.MESSAGE_UNFOUND_PERSON_NAME);
+            }
+
         }
 
-        ReadOnlyPerson personToUpdatePhoneList = lastShownList.get(targetIndex.getZeroBased());
         try {
             Person personUpdated = updatePersonPhoneList(personToUpdatePhoneList, action, phone);
             UniquePhoneList uniquePhoneList = personUpdated.getPhoneList();
