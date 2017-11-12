@@ -20,8 +20,8 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.socialmedia.SocialMedia;
-import seedu.address.model.socialmedia.UniqueSocialMediaList;
+import seedu.address.model.socialMedia.SocialMedia;
+import seedu.address.model.socialMedia.UniqueSocialMediaList;
 import seedu.address.model.tag.Tag;
 
 /**

@@ -11,8 +11,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Address {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person addresses can take any values, and it can be blank. " +
-                    "A blank address will be represented as \"---\"";
+            "Person addresses can take any values, and it can be blank. "
+                    + "A blank address will be represented as \"---\"";
 
     /*
      * The first character of the address must not be a whitespace,

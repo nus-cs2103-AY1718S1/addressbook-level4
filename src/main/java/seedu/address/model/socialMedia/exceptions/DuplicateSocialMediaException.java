@@ -1,4 +1,4 @@
-package seedu.address.model.socialmedia.exceptions;
+package seedu.address.model.socialMedia.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
 
