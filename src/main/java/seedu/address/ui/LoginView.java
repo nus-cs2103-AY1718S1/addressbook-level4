@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.LoginCommand.isLoggedIn;
+
 import java.util.logging.Logger;
 
 import javafx.beans.property.ObjectProperty;
@@ -15,7 +17,6 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -24,9 +25,13 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Displays username and password fields
  */
 public class LoginView extends UiPart<Region> {
+    public static final String SEPARATOR = "|";
+    public static final String GUI_LOGIN_COMMAND_FORMAT = "login " + "%1$s" + SEPARATOR + "%2$s" + SEPARATOR;
+
     private static final String FXML = "LoginView.fxml";
     private static final Logger logger = LogsCenter.getLogger(LoginView.class);
 
+    private static boolean showingLoginView = false;
     private final Logic logic;
     private ObjectProperty<Username> username;
     private ObjectProperty<Password> password;
@@ -53,17 +58,21 @@ public class LoginView extends UiPart<Region> {
     private void handleLoginInputChanged() {
         String usernameText = usernameField.getText();
         String passwordText = passwordField.getText();
-        if (!usernameText.isEmpty() && !passwordText.isEmpty()) {
-            // process login inputs
-
-            try {
-                CommandResult commandResult;
-                commandResult = logic.execute(LoginCommand.COMMAND_WORD + " " + usernameText
-                        + " " + passwordText);
+        // process login inputs
+        try {
+            CommandResult commandResult;
+            if (!containSeparatorString(usernameText) && !containSeparatorString(passwordText)) {
+                commandResult = logic.execute(String.format(GUI_LOGIN_COMMAND_FORMAT, usernameText, passwordText));
                 raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
-            } catch (CommandException | ParseException e) {
-                raise(new NewResultAvailableEvent(e.getMessage(), true));
+            } else if (containSeparatorString(usernameText)) {
+                throw new ParseException(Username.MESSAGE_USERNAME_CHARACTERS_CONSTRAINTS);
+            } else {
+                throw new ParseException(Password.MESSAGE_PASSWORD_CHARACTERS_CONSTRAINTS);
             }
+        } catch (CommandException | ParseException e) {
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
+        }
+        if (isLoggedIn()) {
             usernameField.setText("");
             passwordField.setText("");
         }
@@ -75,5 +84,21 @@ public class LoginView extends UiPart<Region> {
     @FXML
     private void handleBackToCommandView() {
         EventsCenter.getInstance().post(new ChangeToCommandBoxView());
+    }
+
+    public static void setShowingLoginView(boolean val) {
+        showingLoginView = val;
+    }
+
+    public static boolean isShowingLoginView() {
+        return showingLoginView;
+    }
+
+    /**
+     * Checks if {@code input} contains {@code SEPARATOR}
+     * @return true if {@code input} contains {@code SEPARATOR}
+     */
+    private boolean containSeparatorString(String input) {
+        return input.contains(SEPARATOR);
     }
 }

@@ -163,6 +163,21 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+
+    @Test
+    public void commandBox_successfulBlankingOfPassword() {
+        commandBoxHandle.run(String.format(LoginCommand.COMMAND_WORD , " ", TEST_USERNAME, " ", TEST_PASSWORD));
+        String blankedPassword = maskPassword(TEST_PASSWORD);
+        assertEquals(String.format(LoginCommand.COMMAND_WORD , " ", TEST_USERNAME, " ", blankedPassword),
+                commandBoxHandle.getInput());
+    }
+
+    @Test
+    public void commandBox_unsuccessfulLoginWhenAlreadyLoggedIn() {
+        commandBoxHandle.run(String.format(LoginCommand.COMMAND_WORD));
+        assertBehaviorForFailedCommand();
+    }
+
     /**
      * Runs a command that fails, then verifies that <br>
      *      - the text remains <br>
@@ -192,4 +207,16 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(keycode);
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
+
+    /**
+     * Helper method to masks password for testing
+     */
+    private String maskPassword(String passwordInput) {
+        String password = "";
+        for (int i = 0; i < passwordInput.length(); i++) {
+            password += CommandBox.BLACK_CIRCLE;
+        }
+        return password;
+    }
+
 }
