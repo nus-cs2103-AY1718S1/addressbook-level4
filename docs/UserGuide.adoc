@@ -684,26 +684,37 @@ my own copy of Ark. How can I do this? +
 
 
 == Command Summary
-
-* *Add* `add #/TRACKING_NUMBER n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERY_DATE s/[STATUS] [t/TAG]...` +
-e.g. `add #/RR906906906SG n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, S123465 d/12-12-2012 s/pending t/frozen t/flammable`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [#/TRACKING_NUMBER] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DELIVERY_DATE] s/[STATUS] [t/TAG]...` +
-e.g. `edit 2 #/RR000000000SG n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Import*: `import` FILE_NAME +
-e.g.`import ark_save`
-
+|===
+| *Command* | *Description* | *Compulsory fields* | *Optional fields* | *Example usage*
+| *Add* | Adds a new parcel to Ark |`#/TRACKING_NUMBER` +
+                                    `n/NAME` +
+                                    `p/PHONE_NUMBER` +
+                                    `e/EMAIL` +
+                                    `a/ADDRESS` +
+                                    `d/DELIVERY_DATE` |
+                                    `s/STATUS` +
+                                    `t/TAG` |
+ `add #/RR906906906SG n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, S123465 d/12-12-2012 s/pending t/flammable`
+| *Clear* | Deletes *all* parcels from Ark |  | | `clear`
+| *Delete* | Deletes a particular parcel from Ark | `INDEX` | | `delete 1`
+| *Edit* | Edits the details of a particular parcel in Ark | `INDEX` | `#/TRACKING_NUMBER` +
+                      `n/NAME` +
+                      `p/PHONE_NUMBER` +
+                      `e/EMAIL` +
+                      `a/ADDRESS` +
+                      `d/DELIVERY_DATE` +
+                      `s/STATUS` +
+                      `t/TAG`
+| `edit 2 #/RR000000000SG n/James Lee e/jameslee@example.com`
+| *Find* | Searches Ark for a parcel containing a particular keyword |`KEYWORD` | `ADDITIONAL KEYWORDS` | `find John`
+| *List* | Lists all parcels currently in Ark | | | `list`
+| *Help* | Opens the help window | | | `help`
+| *Select* | Selects a particular parcel in Ark | `INDEX` | | `select 1`
+| *History* | Displays the history of previous commands executed in Ark | | | `history`
+| *Undo* | Undoes the latest command executed in Ark | | | `undo`
+| *Redo* | Redoes the latest undone command in Ark | | | `Redo`
+| *Import* | Imports one or more parcels from an xml file  | `FILE_NAME` | | `import ark_save`
+|===
 == Patch Notes
 
 === Features added in v1.0
@@ -723,6 +734,7 @@ In version v1.2, users will be able to: +
 
 * Work with parcels instead of persons.
 * Add and edit the tracking numbers of parcels.
+* Use `Tab` to autocomplete basic commands.
 
 {{More to be added}}
 
@@ -732,6 +744,7 @@ In version v1.3, users will be able to: +
 * Add one of four possible Status to parcels. i.e. `PENDING`, `DELIVERING`, `COMPLETED` and `OVERDUE`.
 * Import parcels stored in an Ark storage file in xml format into Ark.
 * Have Ark maintain a sorted list of parcels according to when they need to be delivered.
+* Use `Tab` to cycle through possible commands if there are multiple options available.
 
 {{More to be added}}
 
@@ -740,13 +753,15 @@ In version v1.4, users will be able to: +
 
 * Click on tabs to select between two lists, one of which contains undelivered and the other, delivered parcels
 * Add parcel-related tags to inform delivery personnel on additional precautions to take while delivering a parcel.
+* Use `Tab` to fill in the next prefix for `add` command.
 
 {{More to be added}}
 
 === Features added in v1.5rc
-In version v1.3, users will be able to: +
+In version v1.5rc, users will be able to: +
 
 * View a tooltip of parcel details when they mouseover the detail. i.e. `address`
+* Use `Tab` to cycle through indexes and prefixes for all commands that require them.
 
 {{More to be added}}
 

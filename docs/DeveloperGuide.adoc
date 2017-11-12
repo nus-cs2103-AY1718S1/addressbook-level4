@@ -1194,16 +1194,26 @@ Windows, Linux, Unix, OS-X
 [appendix]
 == Product Survey
 
-*Product Name*
+Table 1. *Swift*, reviewed by A. Pen Gwyn +
+|===
+| Pros | Cons
+| Clean UI | Cannot keep track of how parcel is handled e.g Fragile
+| Automated dispatching | Expensive
+| Proprietary batching algorithm |
+|===
 
-Author: ...
+Table 2. *Parcel Management Software*, reviewed by P. Tato +
+|===
+| Pros | Cons
+| Able to keep track of large amounts of data | Poor UI
+| Fast and Reliable  | Cannot add multiple parcels quickly
+| Able to generate delivery routes |
+|===
 
-Pros:
+Table 3. *Journey*, reviewed by John Prodman +
+|===
+| Pros | Cons
+| Clean and Intuitive UI | Slow response time
+| Automated delivery scheduling |
+|===
 
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
