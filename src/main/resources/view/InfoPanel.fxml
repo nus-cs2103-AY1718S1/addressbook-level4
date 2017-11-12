@@ -34,7 +34,7 @@
                     <items>
                         <VBox fx:id="infoPanelPlaceholder">
                            <children>
-                              <Label fx:id="name" alignment="TOP_LEFT" styleClass="window_big_label" text="\$name" wrapText="true">
+                              <Label fx:id="name" alignment="TOP_LEFT" styleClass="window_big_label" text="" wrapText="true">
                                  <font>
                                     <Font size="48.0" />
                                  </font>

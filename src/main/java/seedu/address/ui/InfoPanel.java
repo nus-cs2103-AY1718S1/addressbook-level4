@@ -160,7 +160,9 @@ public class InfoPanel extends UiPart<Region> {
         nearbyPersonField.setText(MESSAGE_INFO_NEARBY_PERSON_FIELD);
         debtRepaymentField.setText(MESSAGE_INFO_DEBT_REPAYMENT_FIELD);
         bindListeners(person);
-        splitPane.lookup(".split-pane-divider").setMouseTransparent(true);
+        if (splitPane.lookup(".split-pane-divider") != null) {
+            splitPane.lookup(".split-pane-divider").setMouseTransparent(true);
+        }
     }
 
     /**
