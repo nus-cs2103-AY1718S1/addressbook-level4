@@ -648,10 +648,8 @@ public class SyncCommand extends Command {
 ----
 
 ===== Importing and exporting of contacts
-We then move on to importing of new Google Contacts, and exporting of new *ABC* contacts to Google servers.
-To achieve this, we iterate through all Google Contacts and *ABC* contacts respectively, and import or export them accordingly if they are not linked
+We then move on to importing of new Google Contacts, and exporting of new *ABC* contacts to Google servers. To achieve this, we iterate through all Google Contacts and *ABC* contacts respectively, and import or export them accordingly if they are not linked
 with an ID yet.
-
 ----
 public class SyncCommand extends Command {
   // variables, constructor and other methods

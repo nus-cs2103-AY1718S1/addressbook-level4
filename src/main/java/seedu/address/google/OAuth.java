@@ -73,7 +73,7 @@ public class OAuth extends Observable {
                 || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
             System.out.println(
                     "Enter Client ID and Secret from https://code.google.com/apis/console/?api=people "
-                            + "into seedu/address/src/main/resources/client_secrets.json");
+                            + "into data/client_secrets.json");
             System.exit(1);
         }
 

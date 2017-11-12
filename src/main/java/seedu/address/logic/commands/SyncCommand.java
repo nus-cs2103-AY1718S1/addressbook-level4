@@ -79,11 +79,12 @@ public class SyncCommand extends Command {
             try {
                 List<ReadOnlyPerson> personList = model.getFilteredPersonList();
 
-                initialise();
+                initialise(personList);
 
-                checkContacts();
+                checkContacts(personList);
                 updateContacts();
                 exportContacts(personList);
+
                 if (connections != null) {
                     importContacts();
                 }
@@ -102,13 +103,12 @@ public class SyncCommand extends Command {
      *
      * @throws Exception
      */
-    private void initialise() throws Exception {
+    private void initialise(List<ReadOnlyPerson> personList) throws Exception {
         client = clientFuture.get();
         ListConnectionsResponse response = client.people().connections().list("people/me")
                 .setPersonFields("metadata,names,emailAddresses,addresses,phoneNumbers")
                 .execute();
         connections = response.getConnections();
-        List<ReadOnlyPerson> personList = model.getFilteredPersonList();
         hashId = constructHashId(personList);
         hashName = constructHashName(personList);
 
@@ -125,18 +125,22 @@ public class SyncCommand extends Command {
      *
      * @throws Exception
      */
-    private void checkContacts() throws Exception {
-        List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+    private void checkContacts(List<ReadOnlyPerson> personList) throws Exception {
+        List<ReadOnlyPerson> toDelete = new ArrayList<ReadOnlyPerson>();
         for (ReadOnlyPerson person : personList) {
             String id = person.getId().getValue();
 
-            if (!hashGoogleId.containsKey(id)) {
+            if (!id.equals("") && !hashGoogleId.containsKey(id)) {
                 logger.info("Deleting local contact");
-                model.deletePerson(person);
+                toDelete.add(person);
                 syncedIDs.remove(id);
                 continue;
             }
 
+        }
+
+        for (ReadOnlyPerson dPerson: toDelete) {
+            model.deletePerson(dPerson);
         }
     }
 
@@ -149,9 +153,9 @@ public class SyncCommand extends Command {
     private void exportContacts (List<ReadOnlyPerson> personList) throws Exception {
         for (ReadOnlyPerson person : personList) {
             if (person.getId().getValue().equals("")) {
-                if (hashGoogleName.containsKey(person.getName().fullName)) {
+                if (!hashGoogleName.containsKey(person.getName().fullName)) {
                     addGoogleContact(person);
-                } else if (hashGoogleName.containsKey(person.getName().fullName)) {
+                } else {
                     // We check if the person is identical, and link them if they are
                     Person gPerson = hashGoogleName.get(person.getName().fullName);
                     if (equalPerson(person, gPerson)) {
@@ -177,7 +181,7 @@ public class SyncCommand extends Command {
                 if (!syncedIDs.contains(id)) {
                     if (!hashName.containsKey(gName)) {
                         addAContact(person);
-                    } else if (hashName.containsKey((gName))) {
+                    } else {
                         seedu.address.model.person.ReadOnlyPerson aPerson = hashName.get(gName);
                         if (equalPerson(aPerson, person)) {
                             linkContacts(aPerson, person);
@@ -204,6 +208,7 @@ public class SyncCommand extends Command {
         for (String id : syncedIDs) {
             seedu.address.model.person.ReadOnlyPerson aPerson;
             Person person;
+
             if (!hashId.containsKey(id)) {
                 // Contact has been deleted locally. We update this remotely
                 if (hashGoogleId.containsKey(id)) {
@@ -215,16 +220,15 @@ public class SyncCommand extends Command {
 
             aPerson = hashId.get(id);
 
-            if (hashGoogleId.containsKey(id)) {
-                person = hashGoogleId.get(id);
-            } else {
+            if (!hashGoogleId.containsKey(id)) {
                 // Contact is no longer existent on Google servers
-                aPerson = hashId.get(id);
                 seedu.address.model.person.Person updatedPerson = setId(aPerson, "");
                 updatePerson(aPerson, updatedPerson);
-                syncedIDs.remove(id);
+                toRemove.add(id);
                 continue;
             }
+
+            person = hashGoogleId.get(id);
 
             String lastUpdated = person.getMetadata().getSources().get(0).getUpdateTime();
             Instant gTime = Instant.parse(lastUpdated);
@@ -251,7 +255,7 @@ public class SyncCommand extends Command {
             } else if (compare > 0) {
 
                 // The local contact is updated
-                seedu.address.model.person.Person updatedPerson = convertGooglePerson(person);
+                seedu.address.model.person.Person updatedPerson = convertGooglePerson(person, aPerson);
                 model.updatePerson(aPerson, updatedPerson);
             }
         }
@@ -325,7 +329,7 @@ public class SyncCommand extends Command {
     }
 
     /** Converts a Google Person to a local Person
-     * @derrickchua TODO:Fix phone numbers
+     *
      * @param person
      * @return
      * @throws IllegalValueException
@@ -366,6 +370,55 @@ public class SyncCommand extends Command {
             aPerson = new seedu.address.model.person.Person(aName, aPhone, aEmail, aAddress,
                     new Note(""), new Id(id), new LastUpdated(lastUpdated),
                     new HashSet<Tag>(), new HashSet<Meeting>());
+        }
+
+        return aPerson;
+    }
+
+    /** Converts a Google Person with an already existing entry to a local Person
+     *
+     * @param person
+     * @param aOldPerson
+     * @return
+     * @throws IllegalValueException
+     */
+
+    private seedu.address.model.person.Person convertGooglePerson (Person person, ReadOnlyPerson aOldPerson)
+            throws IllegalValueException {
+        seedu.address.model.person.Person aPerson = null;
+
+        Name name = (person.getNames() == null)
+                ? null
+                : person.getNames().get(0);
+        PhoneNumber phone = (person.getPhoneNumbers() == null)
+                ? null
+                : person.getPhoneNumbers().get(0);
+        Address address = (person.getAddresses() == null)
+                ? null
+                : person.getAddresses().get(0);
+        EmailAddress email = (person.getEmailAddresses() == null)
+                ? null
+                : person.getEmailAddresses().get(0);
+        String id = person.getResourceName();
+        String lastUpdated = getLastUpdated(person);
+
+        if (name == null) {
+            logger.warning("Google Contact has no retrievable name");
+        } else {
+            seedu.address.model.person.Name aName = new seedu.address.model.person.Name(retrieveFullGName(person));
+            Phone aPhone = (phone == null || !Phone.isValidPhone(phone.getValue().replaceAll("\\s+", "")))
+                    ? new Phone(null)
+                    : new seedu.address.model.person.Phone(phone.getValue().replaceAll("\\s+", ""));
+            seedu.address.model.person.Address aAddress = (
+                    address == null || !seedu.address.model.person.Address.isValidAddress(address.getStreetAddress()))
+                    ? new seedu.address.model.person.Address(null)
+                    : new seedu.address.model.person.Address(address.getStreetAddress());
+            Email aEmail = (email == null || !Email.isValidEmail(email.getValue()))
+                    ? new Email(null)
+                    : new Email(email.getValue());
+            aPerson = new seedu.address.model.person.Person(aName, aPhone, aEmail, aAddress,
+                    aOldPerson.getNote(), new Id(id), new LastUpdated(lastUpdated),
+                    aOldPerson.getTags(), aOldPerson.getMeetings());
         }
 
         return aPerson;
