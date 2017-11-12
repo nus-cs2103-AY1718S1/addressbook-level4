@@ -29,7 +29,6 @@ public class AddCommand extends UndoableCommand {
             new HashSet<>(Arrays.asList(COMMAND_WORD, "a", "+"));
     public static final String COMMAND_HOTKEY = "Ctrl+Equals";
     public static final String FORMAT = "add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS";
-    public static final String[] LIST_OF_FIELDS = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS"};
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the rolodex. "
             + "Parameters: "

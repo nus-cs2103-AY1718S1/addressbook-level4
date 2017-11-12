@@ -103,10 +103,13 @@ public class CommandBox extends UiPart<Region> {
         loadKeyboardIcons();
         keyboardIcon.setImage(keyboardIdle);
         pause = new PauseTransition(Duration.millis(MILLISECONDS_SINCE_TYPING));
+
         TextFields.bindAutoCompletion(commandTextField, sr -> {
             Set<String> suggestedCommands = new HashSet<>();
             for (String command: LIST_OF_ALL_COMMANDS) {
-                if (!command.equals(sr.getUserText()) && command.startsWith(sr.getUserText().trim().toLowerCase())) {
+                if (!sr.getUserText().isEmpty() && !command.equals(sr.getUserText())
+                        && command.startsWith(sr.getUserText().trim().toLowerCase())) {
+
                     suggestedCommands.add(command);
                 }
             }
