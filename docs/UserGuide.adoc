@@ -900,7 +900,7 @@ Shorthand Alias: `rs` +
 Function: Resizes the main window to the specified width and height in pixels +
 Format: `resize WIDTH HEIGHT`
 [NOTE]
-Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
+Restriction on WIDTH and HEIGHT: `300 < = WIDTH < = width of the screen display`, `230 < = HEIGHT < = height of the screen display`
 [NOTE]
 You *CANNOT* `undo` a `resize` command
 ====

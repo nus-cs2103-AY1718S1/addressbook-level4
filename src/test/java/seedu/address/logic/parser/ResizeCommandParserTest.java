@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.ResizeCommand;
+import seedu.address.ui.MainWindow;
 
 //@@author newalter
 public class ResizeCommandParserTest {
@@ -32,7 +33,8 @@ public class ResizeCommandParserTest {
         // invalid arguments that are out of bound
         assertParseFailure(parser, String.format("%d %d", ResizeCommand.MAX_WIDTH + 1, ResizeCommand.MAX_HEIGHT),
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ResizeCommand.MESSAGE_USAGE));
-
+        assertParseFailure(parser, String.format("%d %d", ResizeCommand.MAX_WIDTH, MainWindow.getMinHeight() - 1),
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ResizeCommand.MESSAGE_USAGE));
 
     }
 }

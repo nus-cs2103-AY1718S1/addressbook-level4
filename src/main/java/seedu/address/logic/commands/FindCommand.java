@@ -47,19 +47,28 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        Predicate<ReadOnlyPerson> finalPredicate = FALSE;
-        for (Predicate predicate : predicates) {
-            finalPredicate = finalPredicate.or(predicate);
-        }
+        Predicate<ReadOnlyPerson> predicate = combinePredicates();
 
         Predicate<? super ReadOnlyPerson>  currentPredicate = model.getPersonListPredicate();
         if (currentPredicate == null) {
-            model.updateFilteredPersonList(finalPredicate);
+            model.updateFilteredPersonList(predicate);
         } else {
-            model.updateFilteredPersonList(finalPredicate.and(currentPredicate));
+            model.updateFilteredPersonList(predicate.and(currentPredicate));
         }
         model.updateFilteredMeetingList(new MeetingContainPersonPredicate(model.getFilteredPersonList()));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    /**
+     * combines the list of predicates into a single predicate for execution
+     * by taking OR operations
+     */
+    private Predicate<ReadOnlyPerson> combinePredicates() {
+        Predicate<ReadOnlyPerson> combinedPredicate = FALSE;
+        for (Predicate predicate : predicates) {
+            combinedPredicate = combinedPredicate.or(predicate);
+        }
+        return combinedPredicate;
     }
     //@@author
 

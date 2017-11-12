@@ -32,8 +32,8 @@ public class MainWindow extends UiPart<Region> {
 
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
-    private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final int MIN_HEIGHT = 230;
+    private static final int MIN_WIDTH = 300;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -223,4 +223,12 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setHeight(event.getHeight());
     }
     //@@author
+
+    public static int getMinHeight() {
+        return MIN_HEIGHT;
+    }
+
+    public static int getMinWidth() {
+        return MIN_WIDTH;
+    }
 }
