@@ -1,4 +1,3 @@
-//@@author ngzuyao
 package seedu.address.ui;
 
 import java.util.HashMap;
@@ -10,7 +9,6 @@ import com.google.common.eventbus.Subscribe;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -18,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author ngzuyao
 /**
  * The person information panel of the app.
  */
@@ -140,6 +139,7 @@ public class PersonInformationPanel extends UiPart<Region> {
             optionalPhoneList.getChildren().add(otherPhone);
         });
     }
+    //@@author
 
     /**
      * Initialise custom field display flowpane
@@ -159,6 +159,7 @@ public class PersonInformationPanel extends UiPart<Region> {
     }
     //@@author
 
+    //@@author ngzuyao
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -166,7 +167,6 @@ public class PersonInformationPanel extends UiPart<Region> {
         bindListeners(event.getNewSelection().person, event.getNewSelection().stringid);
     }
 
-    //@@author ngzuyao
     private void setLabelIndentation() {
         phoneLabel.setMinHeight(MIN_HEIGHT);
         phoneLabel.setMinWidth(MIN_WIDTH);
@@ -185,7 +185,6 @@ public class PersonInformationPanel extends UiPart<Region> {
         label.setMinWidth(MIN_WIDTH);
         label.setMinHeight(MIN_HEIGHT);
     }
-    //@@author
 
     @Override
     public boolean equals(Object other) {
