@@ -122,6 +122,8 @@ the application can then simply use their laptop's web camera feature to scan th
 
 * Documentation
 - Included a `Back to Top` button for both User Guide and Developer Guide that improves user friendliness.
+(Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/42[#42])
+
 
 Software Contributions
 
