@@ -128,6 +128,18 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Meeting} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withMeeting(String meetingName, String meetingTime) {
+        try {
+            this.person.setMeetings(SampleDataUtil.getMeetingSet(meetingName, meetingTime));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("meetings are expected to be unique.");
+        }
+        return this;
+    }
+
     public Person build() {
         return this.person;
     }

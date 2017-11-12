@@ -45,4 +45,21 @@ public class MeetingCard extends UiPart<Region> {
         meetingTime.textProperty().bind(Bindings.convert(meeting.meetingTimeProperty()));
     }
 
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof MeetingCard)) {
+            return false;
+        }
+
+        // state check
+        MeetingCard card = (MeetingCard) other;
+        return id.getText().equals(card.id.getText())
+                && meeting.equals(card.meeting);
+    }
 }

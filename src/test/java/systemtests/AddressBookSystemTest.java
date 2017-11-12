@@ -82,7 +82,7 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public MeetingListPanelHandle getBrowserPanel() {
+    public MeetingListPanelHandle getMeetingListPanel() {
         return mainWindowHandle.getMeetingListPanel();
     }
 
