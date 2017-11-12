@@ -635,19 +635,19 @@ my own copy of Ark. How can I do this? +
 
 == Command Summary
 |===
-| *Command* | *Compulsory fields* | *Optional fields* | *Example usage* |
-| *Add* | `#/TRACKING_NUMBER` +
-          `n/NAME` +
-          `p/PHONE_NUMBER` +
-          `e/EMAIL` +
-          `a/ADDRESS` +
-          `d/DELIVERY_DATE` |
-          `s/STATUS` +
-          `t/TAG` |
+| *Command* | *Description* | *Compulsory fields* | *Optional fields* | *Example usage* |
+| *Add* | Adds a new parcel to Ark |`#/TRACKING_NUMBER` +
+                                    `n/NAME` +
+                                    `p/PHONE_NUMBER` +
+                                    `e/EMAIL` +
+                                    `a/ADDRESS` +
+                                    `d/DELIVERY_DATE` |
+                                    `s/STATUS` +
+                                    `t/TAG` |
  `add #/RR906906906SG n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, S123465 d/12-12-2012 s/pending t/flammable`|
-| *Clear* | | | `clear` |
-| *Delete* | `INDEX` | | `delete 1` |
-| *Edit* | `INDEX` | `#/TRACKING_NUMBER` +
+| *Clear* | Deletes *all* parcels from Ark |  | | `clear` |
+| *Delete* | Deletes a particular parcel from Ark | `INDEX` | | `delete 1` |
+| *Edit* | Edits the details of a particular parcel in Ark | `INDEX` | `#/TRACKING_NUMBER` +
                       `n/NAME` +
                       `p/PHONE_NUMBER` +
                       `e/EMAIL` +
@@ -656,14 +656,14 @@ my own copy of Ark. How can I do this? +
                       `s/STATUS` +
                       `t/TAG`
 | `edit 2 #/RR000000000SG n/James Lee e/jameslee@example.com` |
-| *Find* | `KEYWORD` | `ADDITIONAL KEYWORDS` | `find John` |
-| *List* | | | `list` |
-| *Help* | | | `help` |
-| *Select* | `INDEX` | | `select 1`|
-| *History* | | | `history` |
-| *Undo* | | | `undo` |
-| *Redo* | | | `Redo` |
-| *Import* | `FILE_NAME` | | `import ark_save`|
+| *Find* | Searches Ark for a parcel containing a particular keyword |`KEYWORD` | `ADDITIONAL KEYWORDS` | `find John` |
+| *List* | Lists all parcels currently in Ark | | | `list` |
+| *Help* | Opens the help window | | | `help` |
+| *Select* | Selects a particular parcel in Ark | `INDEX` | | `select 1`|
+| *History* | Displays the history of previous commands executed in Ark | | | `history` |
+| *Undo* | Undoes the latest command executed in Ark | | | `undo` |
+| *Redo* | Redoes the latest undone command in Ark | | `Redo` |
+| *Import* | Imports one or more parcels from an xml file  | `FILE_NAME` | | `import ark_save`|
 |===
 == Patch Notes
 
