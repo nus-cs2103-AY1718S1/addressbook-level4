@@ -45,7 +45,10 @@ include::../UserGuide.adoc[tag=favouriteunfavourite]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+University students tend to make many friends while they are in school, and when the contacts list increase in number, it becomes hard for the students to keep track
+which one of them are their close friends. Furthermore, it becomes tedious to search around the contacts list to find their good or even best friends. Hence, `FavouriteCommand`,
+`UnfavouriteCommand` and `FavouriteListCommand` will help university students better categorise their good and best friends, so that they can easily look for their best friends when they need to.
+This would also help improve the efficiency of using The Myth's Book, as less time would be spent trying to find their favourited contacts.
 
 ==== Implementation
 
@@ -79,7 +82,10 @@ include::../UserGuide.adoc[tag=switch]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+University students in this age would often like customisation of their application. Furthermore, different students have different preferences in how their application should look like.
+If there is no customisation, some students may not want to use the application as it does not appeal to them. Hence, `SwitchThemeCommand`, `ThemeListCommand` and `Bright Theme` provides the ability for
+university students to choose the type of colour theme they want their The Myth's Book to have. This improves the overall user experience of the university students since they can choose their
+preferred colour theme for the application.
 
 ==== Implementation
 
@@ -111,7 +117,10 @@ include::../UserGuide.adoc[tag=events]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+University students are often particular about the overall organisation and structure of an application. They would prefer to have lesser things to see or look at.
+Hence, `EventsCommand` helps reduce the amount of objects to look at, by replacing the `PersonList`, and only showing items that are related to `Events`, such as
+the details of the events, a calendar and a Google Maps browser to help the students navigate to their intended location. `EventsCommand` will help improve the overall
+user-friendliness and user experience of The Myth's Book, since the students will not be overwhelmed by multiple objects to view.
 
 ==== Implementation
 
@@ -143,7 +152,9 @@ include::../UserGuide.adoc[tag=deleteevent]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+University students are particular with the organisation of their events, and hence, with `DeleteEventCommand`, they can clean up their events list
+by deleting completed events so that they can better keep track of their upcoming or overdue events. This way, university students will be able to
+plan their schedule accordingly and balance their study life and social life.
 
 ==== Implementation
 
@@ -175,7 +186,10 @@ include::../UserGuide.adoc[tag=findtag]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+University students tend to make many friends while they are in school, and when the contacts list increase in number, it becomes hard for the students to differentiate
+or find the correct contacts. Hence, `FindTagCommand` will help university students better search for their group of friends through the finding of the contacts' tags,
+Furthermore, `FindTagCommand` will also prevent the university students to find the wrong friends, maybe due to the similarities in the name.
+This would also help improve the efficiency of using The Myth's Book, as less time would be spent trying to find the correct contacts.
 
 ==== Implementation
 
