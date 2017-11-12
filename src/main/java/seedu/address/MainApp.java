@@ -226,10 +226,6 @@ public class MainApp extends Application {
     public void stop() {
         logger.info("============================ [ Stopping Address Book ] =============================");
         ui.stop();
-        if (botStarted && !botSession.equals(null)) {
-            logger.info("Terminating ArkBot...");
-            botSession.stop();
-        }
         try {
             storage.saveUserPrefs(userPrefs);
         } catch (IOException e) {
