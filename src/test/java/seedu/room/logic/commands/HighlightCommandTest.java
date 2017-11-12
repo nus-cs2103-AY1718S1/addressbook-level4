@@ -32,7 +32,7 @@ public class HighlightCommandTest {
         String highlightTag = listOfTags.get(0).getTagName();
         HighlightCommand highlightCommand = prepareCommand(highlightTag);
 
-        String expectedMessage = HighlightCommand.MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS + highlightTag;
+        String expectedMessage = String.format(HighlightCommand.MESSAGE_PERSONS_HIGHLIGHTED_SUCCESS, highlightTag);
 
         ModelManager expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
         expectedModel.updateHighlightStatus(highlightTag);
@@ -45,7 +45,8 @@ public class HighlightCommandTest {
         String nonExistentTag = getNonExistentTag();
         HighlightCommand highlightCommand = prepareCommand(nonExistentTag);
 
-        assertCommandFailure(highlightCommand, model, HighlightCommand.MESSAGE_TAG_NOT_FOUND + nonExistentTag);
+        String expectedMessage = String.format(HighlightCommand.MESSAGE_TAG_NOT_FOUND, nonExistentTag);
+        assertCommandFailure(highlightCommand, model, expectedMessage);
     }
 
     @Test
@@ -53,7 +54,8 @@ public class HighlightCommandTest {
         String emptyTag = "";
         HighlightCommand highlightCommand = prepareCommand(emptyTag);
 
-        assertCommandFailure(highlightCommand, model, HighlightCommand.MESSAGE_TAG_NOT_FOUND + emptyTag);
+        String expectedMessage = String.format(HighlightCommand.MESSAGE_TAG_NOT_FOUND, emptyTag);
+        assertCommandFailure(highlightCommand, model, expectedMessage);
     }
 
     @Test
@@ -98,22 +100,26 @@ public class HighlightCommandTest {
 
     @Test
     public void equals() {
-        String testTag = "test";
-        String otherTestTag = "other test";
-        HighlightCommand highlightCommandFirst = new HighlightCommand(testTag);
-        HighlightCommand highlightCommandSecond = new HighlightCommand(otherTestTag);
+        String tagRa = "RA";
+        String tagExchange = "Exchange";
+        HighlightCommand highlightCommandRa = new HighlightCommand(tagRa);
+        HighlightCommand highlightCommandRaDuplicate = new HighlightCommand(tagRa);
+        HighlightCommand highlightCommandExchange = new HighlightCommand(tagExchange);
 
         // same object -> returns true
-        assertTrue(highlightCommandFirst.equals(highlightCommandFirst));
+        assertTrue(highlightCommandRa.equals(highlightCommandRa));
+
+        // different object same values -> returns true
+        assertTrue(highlightCommandRa.equals(highlightCommandRaDuplicate));
 
         // different argument -> returns false
-        assertFalse(highlightCommandFirst.equals(highlightCommandSecond));
+        assertFalse(highlightCommandRa.equals(highlightCommandExchange));
 
-        // different values -> returns false
-        assertFalse(highlightCommandFirst.equals(1));
+        // different object type -> returns false
+        assertFalse(highlightCommandRa.equals(tagRa));
 
         // null -> returns false
-        assertFalse(highlightCommandFirst.equals(null));
+        assertFalse(highlightCommandRa.equals(null));
     }
 
     /**
