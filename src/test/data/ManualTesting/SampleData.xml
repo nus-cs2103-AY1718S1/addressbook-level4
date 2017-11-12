@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Adam Zablocki</name>
+        <phone>92624417</phone>
+        <email>adamz@example.com</email>
+        <address>Blk 45 Strawberry Street 85, #11-31</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+        <grouped>CS2103</grouped>
+    </persons>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment>01/01/3000 00:00 60</appointment>
+        <tagged>askForHackathon</tagged>
+        <grouped>University</grouped>
+        <grouped>Family</grouped>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+        <grouped>Neigbours</grouped>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+        <tagged>coffeeTomorrow</tagged>
+    </persons>
+    <persons>
+        <name>Erfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+        <tagged>hasMyPencil</tagged>
+    </persons>
+    <persons>
+        <name>Goy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+        <tagged>owesMoney</tagged>
+        <grouped>CS2103</grouped>
+    </persons>
+    <persons>
+        <name>Hen Spore</name>
+        <phone>23123532</phone>
+        <email>ben@example.com</email>
+        <address>Blk 2, Mango Street 85, #11-31</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+        <grouped>CS2108</grouped>
+    </persons>
+    <persons>
+        <name>Lo Cheng</name>
+        <phone>92492021</phone>
+        <email>wo@example.com</email>
+        <address>Blueberry Street 20, #11-01</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+        <tagged>hasMyPencil</tagged>
+    </persons>
+    <persons>
+        <name>Patrick Smith</name>
+        <phone>23123532</phone>
+        <email>patrick@example.com</email>
+        <address>Blk 2, Mango Street 85, #11-31</address>
+        <profilePicturePath>pic1.jpeg</profilePicturePath>
+        <appointment></appointment>
+        <grouped>CS2108</grouped>
+    </persons>
+    <persons>
+        <name>Patrick Tywin</name>
+        <phone>23512352</phone>
+        <email>ala@example.com</email>
+        <address>Mickiewicz Street 29, #06-40</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment>01/01/3000 00:00 60</appointment>
+        <tagged>askForHackathon</tagged>
+        <grouped>University</grouped>
+        <grouped>Family</grouped>
+    </persons>
+    <persons>
+        <name>Peter Brudnicki</name>
+        <phone>95272758</phone>
+        <email>brudnicki@example.com</email>
+        <address>New Gardens, #07-18</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+    </persons>
+    <persons>
+        <name>Ramila Maslowska</name>
+        <phone>34212342</phone>
+        <email>kamila@example.com</email>
+        <address>Bogata Street 65, #11-04</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+        <grouped>School</grouped>
+    </persons>
+    <persons>
+        <name>San Karajas</name>
+        <phone>91031282</phone>
+        <email>patrik@example.com</email>
+        <address>Daleka Street 2, #16-43</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+    </persons>
+    <persons>
+        <name>Stephen Boganski</name>
+        <phone>92492021</phone>
+        <email>mari@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+        <tagged>hasMyPencil</tagged>
+    </persons>
+    <persons>
+        <name>Swat Males</name>
+        <phone>92624417</phone>
+        <email>adramb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+        <tagged>owesMoney</tagged>
+        <grouped>CS2103</grouped>
+    </persons>
+    <persons>
+        <name>Tata Szalata</name>
+        <phone>12343532</phone>
+        <email>agata@example.com</email>
+        <address>Blk 2, Mango Street 85, #11-31</address>
+        <profilePicturePath>pic1.jpeg</profilePicturePath>
+        <appointment></appointment>
+        <grouped>CS2108</grouped>
+    </persons>
+    <persons>
+        <name>Wamian Franczk</name>
+        <phone>92492021</phone>
+        <email>francik@example.com</email>
+        <address>Zachodnia Street 20, #11-01</address>
+        <profilePicturePath>pic1.jpeg</profilePicturePath>
+        <appointment></appointment>
+        <tagged>hasMyPencil</tagged>
+    </persons>
+    <persons>
+        <name>Weter Zuck</name>
+        <phone>92214417</phone>
+        <email>peter@example.com</email>
+        <address>Blk 45 Strawberry Street 85, #11-31</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+        <grouped>CS2103</grouped>
+    </persons>
+    <persons>
+        <name>Zen Muller</name>
+        <phone>23123122</phone>
+        <email>stephen@example.com</email>
+        <address>Blk 2, German Street 85, #11-31</address>
+        <profilePicturePath>default_pic.png</profilePicturePath>
+        <appointment></appointment>
+        <grouped>CS2108</grouped>
+    </persons>
+    <tags>owesMoney</tags>
+    <tags>askForHackathon</tags>
+    <tags>hasMyPencil</tags>
+    <tags>coffeeTomorrow</tags>
+    <groups>School</groups>
+    <groups>University</groups>
+    <groups>Family</groups>
+    <groups>CS2108</groups>
+    <groups>CS2103</groups>
+    <groups>Neigbours</groups>
+</addressbook>

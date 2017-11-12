@@ -5,6 +5,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Loading the sample data
 
+Create a folder `data` in the directory where from where the jar file is going to be run. Rename the `SampleData.xml`
+file to `addressbook.xml` and copy it to the newly created `data` folder. When you run the application, 20 contacts
+will be loaded
+
 == Outline
 The test cases are designed so that each category of tests is self contained, meaning that completing one of them
 does not influence the outcome of the other tests. If you perform individual tests from a category, it might be in
