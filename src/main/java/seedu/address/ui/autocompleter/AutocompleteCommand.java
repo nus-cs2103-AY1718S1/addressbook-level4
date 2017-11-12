@@ -119,22 +119,26 @@ public enum AutocompleteCommand {
     /**
      * Returns true if {@code command} takes in an {@code Index} as an argument
      */
-    public static boolean hasIndexParameter (String command) {
+    public static boolean hasIndexParameter (String command) throws IllegalArgumentException {
         try {
             return Arrays.asList(commandsWithIndexes).contains(command);
         } catch (NullPointerException e) {
             return false;
+        } catch (IllegalArgumentException ie) {
+            throw new IllegalArgumentException();
         }
     }
 
     /**
      * Returns true if {@code command} takes in a {@code Prefix} as an argument
      */
-    public static boolean hasPrefixParameter (String command) {
+    public static boolean hasPrefixParameter (String command) throws IllegalArgumentException {
         try {
             return Arrays.asList(commandsWithPrefixes).contains(command);
         } catch (NullPointerException e) {
             return false;
+        } catch (IllegalArgumentException ie) {
+            throw new IllegalArgumentException();
         }
     }
 
