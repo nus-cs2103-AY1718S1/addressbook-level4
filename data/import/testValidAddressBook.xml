@@ -16,7 +16,7 @@
         <phone isPrivate="false">87249245</phone>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street S123112</address>
-        <deliveryDate>05-05-2017</deliveryDate>
+        <deliveryDate>10-05-2017</deliveryDate>
         <status>delivering</status>
     </parcels>
     <parcels>
@@ -25,7 +25,7 @@
         <phone isPrivate="false">95352563</phone>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street S123113</address>
-        <deliveryDate>05-05-2017</deliveryDate>
+        <deliveryDate>10-05-2017</deliveryDate>
         <status>overdue</status>
     </parcels>
     <parcels>
@@ -61,7 +61,7 @@
         <phone isPrivate="false">9482442</phone>
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street S123127</address>
-        <deliveryDate>05-05-2017</deliveryDate>
+        <deliveryDate>12-05-2017</deliveryDate>
         <status>pending</status>
         <tagged>FROZEN</tagged>
     </parcels>

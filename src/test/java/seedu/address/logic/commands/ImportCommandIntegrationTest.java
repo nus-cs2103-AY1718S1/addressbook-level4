@@ -55,6 +55,18 @@ public class ImportCommandIntegrationTest {
         assertCommandFailure(prepareCommand(parcels, model), model, ImportCommand.MESSAGE_FAILURE_DUPLICATE_PARCELS);
     }
 
+    @Test
+    public void execute_emptyParcelList_throwsCommandException() {
+        List<ReadOnlyParcel> emptyParcelList = new ArrayList<>();
+        List<ReadOnlyParcel> addedParcels = new ArrayList<>();
+        List<ReadOnlyParcel> duplicateParcels = new ArrayList<>();
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.addAllParcels(emptyParcelList, addedParcels, duplicateParcels);
+
+        assertCommandFailure(prepareCommand(emptyParcelList, model), model, ImportCommand.MESSAGE_INVALID_FILE_EMPTY);
+    }
+
     /**
      * Generates a new {@code ImportCommand} which upon execution, adds all {@link ReadOnlyParcel}(s) in {@code parcels}
      *  into the {@link Model}.

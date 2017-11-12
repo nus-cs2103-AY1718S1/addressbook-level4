@@ -144,9 +144,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> uniqueParcels,
                                            List<ReadOnlyParcel> duplicateParcels) {
+        assert parcels != null : "parcels should not be null";
+        assert uniqueParcels != null : "uniqueParcels should not be null";
+        assert duplicateParcels != null : "duplicateParcels should not be null";
 
         for (ReadOnlyParcel parcel : parcels) {
             ReadOnlyParcel parcelToAdd = new Parcel(parcel);
+
             try {
                 addressBook.addParcel(parcelToAdd); // throws duplicate parcel exception if parcel is non-unique
                 uniqueParcels.add(parcelToAdd);
@@ -155,6 +159,7 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
 
+        maintainSorted();
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
         indicateAddressBookChanged();
     }
@@ -219,7 +224,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void maintainSorted() {
         addressBook.sort();
-        indicateAddressBookChanged();
     }
 
     @Override
