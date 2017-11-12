@@ -50,6 +50,22 @@ for more information.
 
 To add a new contact, we need to use the `add` command.
 
+*Positive test case*
+
+Let's add a new person called `Martin` into *BoNUS* +
+_Command:_ +
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends`
+_Result:_ +
+`New person added: Martin Smith Phone: 85930167 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
+
+*Negative test case*
+
+. The value for one property is invalid +
+_Command:_ +
+`add n/Den Smith p/85930167 e/www.smith.com a/25 New York City`
+_Result:_ +
+`Person emails should be 2 alphanumeric/period strings separated by '@'.`
+
 ==== Add avatar to an existing person
 
 *Positive test case*
@@ -130,7 +146,7 @@ or if the expression is not simple or clear enough.
 * Avoid putting the year first when using the non-standard format.
 ====
 
-To add an event, we need to use addE n/NAME dt/DATE_TIME a/ADDRESS of the event.
+To add an event, we need to use `addE n/NAME dt/DATE_TIME a/ADDRESS` of the event.
 
 1) Adds a new event with Name `CS3201 Project Meeting`, DateTime `17112017 1530`, Address `School of Computing, SR09, NUS`
 
