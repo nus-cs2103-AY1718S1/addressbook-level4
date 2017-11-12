@@ -27,7 +27,7 @@ public class AddTagCommand extends UndoableCommand {
     /**
      *
      * @param tag to be added to address book
-     * @param index of the person in the filtered list to remove tag
+     * @param index of the person in the filtered list to add tag
      */
     public AddTagCommand(Set<Tag> tag, Set<Index> index, String indexDisplay)  {
         this.tag = tag;
@@ -76,7 +76,8 @@ public class AddTagCommand extends UndoableCommand {
 
         boolean check1 = checkEqual(tag, e.tag);
         boolean check2 = checkEqual(index, e.index);
-        return check1 && check2;
+        boolean check3 = indexDisplay.equals(e.indexDisplay);
+        return check1 && check2 && check3;
     }
 
     /**
@@ -130,7 +131,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
     private final Set<Tag> tag;
     private final Set<Index> index;
-    private final List<String> indexDisplay;
+    private final List<String> indexList;
 
     /**
      *
@@ -140,7 +141,7 @@ public class RemoveTagCommand extends UndoableCommand {
     public RemoveTagCommand(Set<Tag> tag, Set<Index> index, List<String> indexDisplay)  {
         this.tag = tag;
         this.index = index;
-        this.indexDisplay = indexDisplay;
+        this.indexList = indexDisplay;
     }
 
     @Override
@@ -149,7 +150,7 @@ public class RemoveTagCommand extends UndoableCommand {
         String successMessage;
         String notFound;
 
-        String indexInput = indexDisplay.stream().collect(Collectors.joining(", "));
+        String indexDisplay = indexList.stream().collect(Collectors.joining(", "));
 
         if (!index.isEmpty()) {
 
@@ -158,8 +159,8 @@ public class RemoveTagCommand extends UndoableCommand {
                     throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
                 }
             }
-            successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from index " + indexInput + ".", tag);
-            notFound = String.format(MESSAGE_TAG_NOT_FOUND + " index: " + indexInput + ".", tag);
+            successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from index " + indexDisplay + ".", tag);
+            notFound = String.format(MESSAGE_TAG_NOT_FOUND + " index: " + indexDisplay + ".", tag);
         } else {
             successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from address book.", tag);
             notFound = String.format(MESSAGE_TAG_NOT_FOUND + " the address book.", tag);
@@ -167,7 +168,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
 
         try {
-            model.removeTag(tag, indexDisplay);
+            model.removeTag(tag, indexList);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(
                     String.format
@@ -197,7 +198,8 @@ public class RemoveTagCommand extends UndoableCommand {
 
         boolean check1 = checkEqual(tag, e.tag);
         boolean check2 = checkEqual(index, e.index);
-        return check1 && check2;
+        boolean check3 = indexList.equals(e.indexList);
+        return check1 && check2 && check3;
     }
 
     /**
@@ -241,6 +243,10 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddTagCommand parse(String args) throws ParseException {
+        final int indexLowerLimit = 0;
+        final int indexUpperLimit = 1;
+        final int indexIsTag = 2;
+        final int indexIsRange = 3;
         Set<Tag> toAddSet = new HashSet<>();
         Set<Index> index = new HashSet<>();
         String indexInput;
@@ -253,39 +259,29 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
 
         StringTokenizer st = new StringTokenizer(args.trim(), " ");
 
+        List<String> firstItemArray;
         String firstItem = st.nextToken();
-        boolean isRange = false;
-        boolean startUpper = false;
-        boolean firstTag = false;
-        String lowerLimit = "";
-        String upperLimit = "";
 
-        char[] firstItemArray = firstItem.toCharArray();
+        firstItemArray = fillCheckArray(firstItem);
 
-        if (firstItem.contains("-")) {
+        boolean firstTag;
+        boolean isRange;
+        String lowerLimit = firstItemArray.get(indexLowerLimit);
+        String upperLimit = firstItemArray.get(indexUpperLimit);
+        String checkFirstTag = firstItemArray.get(indexIsTag);
+        String checkIsRange = firstItemArray.get(indexIsRange);
+
+        if (checkIsRange.equals("true")) {
             isRange = true;
+        } else {
+            isRange = false;
         }
 
-        // Check character of first keyword of input
-        for (char c : firstItemArray) {
-            if (!Character.isDigit(c)) {
-                if (c == '-') {
-                    startUpper = true;
-                } else {
-                    if (!isRange && Character.isLetter(c)) {
-                        firstTag = true;
-                        break;
-                    }
-                }
-            } else {
-                if (startUpper) {
-                    upperLimit += c;
-                } else {
-                    lowerLimit += c;
-                }
-            }
+        if (checkFirstTag.equals("true")) {
+            firstTag = true;
+        } else {
+            firstTag = false;
         }
-
 
         // Check if first keyword is tag or index
         if (firstTag) {
@@ -339,38 +335,27 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
 
             String newToken = st.nextToken();
 
-            boolean isRangeAgain = false;
-            boolean startUpperAgain = false;
-            boolean isTag = false;
-            String lowerLimit2 = "";
-            String upperLimit2 = "";
+            firstItemArray = fillCheckArray(newToken);
 
-            if (newToken.contains("-")) {
+            boolean isTag;
+            boolean isRangeAgain;
+            String lowerLimit2 = firstItemArray.get(indexLowerLimit);
+            String upperLimit2 = firstItemArray.get(indexUpperLimit);
+            String checkIsTag = firstItemArray.get(indexIsTag);
+            String checkIsRangeAgain = firstItemArray.get(indexIsRange);
+
+            if (checkIsRangeAgain.equals("true")) {
                 isRangeAgain = true;
+            } else {
+                isRangeAgain = false;
             }
 
-            char[] nextItemArray = newToken.toCharArray();
-
-
-            // Check characters of remaining keywords
-            for (char c : nextItemArray) {
-                if (!Character.isDigit(c)) {
-                    if (c == '-') {
-                        startUpperAgain = true;
-                    } else {
-                        if (!isRangeAgain) {
-                            isTag = true;
-                            break;
-                        }
-                    }
-                } else {
-                    if (startUpperAgain) {
-                        upperLimit2 += c;
-                    } else {
-                        lowerLimit2 += c;
-                    }
-                }
+            if (checkIsTag.equals("true")) {
+                isTag = true;
+            } else {
+                isTag = false;
             }
+
 
             // Adding of tag with no overlap
             if (isTag) {
@@ -392,18 +377,18 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
                 } else {
                     if (isRangeAgain) {
-                        // Check if range is appropriate
-                        int lower = Integer.parseInt(lowerLimit2);
-                        int upper = Integer.parseInt(upperLimit2);
-                        if (lower > upper) {
-                            throw new ParseException("Invalid index range provided.\n"
-                                    + String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
-                        }
-
                         // Check if any of the limit is empty
                         boolean isLowerValidAgain = lowerLimit2.isEmpty();
                         boolean isUpperValidAgain = upperLimit2.isEmpty();
                         if (isLowerValidAgain || isUpperValidAgain) {
+                            throw new ParseException("Invalid index range provided.\n"
+                                    + String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
+                        }
+
+                        // Check if range is appropriate
+                        int lower = Integer.parseInt(lowerLimit2);
+                        int upper = Integer.parseInt(upperLimit2);
+                        if (lower > upper) {
                             throw new ParseException("Invalid index range provided.\n"
                                     + String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
                         }
@@ -440,9 +425,67 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
             }
 
         }
+        if (toAddSet.isEmpty()) {
+            throw new ParseException("Please provide an input for tag\n"
+                    + String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
+        }
         Collections.sort(indexSet);
         indexInput = indexSet.stream().collect(Collectors.joining(", "));
         return new AddTagCommand(toAddSet, index, indexInput);
+    }
+
+    /**
+     *
+     * @param token
+     * @return checkArray containing values for checking
+     */
+    private List<String> fillCheckArray(String token) {
+        List<String> checkArray = new ArrayList<>();
+
+        boolean startUpper = false;
+        String isRange = "false";
+        String isTag = "false";
+        String lowerLimit = "";
+        String upperLimit = "";
+
+        char[] itemArray = token.toCharArray();
+
+        if (token.contains("-")) {
+            isRange = "true";
+        }
+
+        // Check character of first keyword of input
+        for (char c : itemArray) {
+            if (!Character.isDigit(c)) {
+                if (c == '-') {
+                    startUpper = true;
+                } else {
+                    if (isRange.equals("false")) {
+                        isTag = "true";
+                        break;
+                    } else {
+                        if (startUpper) {
+                            upperLimit = "";
+                            break;
+                        } else {
+                            lowerLimit = "";
+                            break;
+                        }
+                    }
+                }
+            } else {
+                if (startUpper) {
+                    upperLimit += c;
+                } else {
+                    lowerLimit += c;
+                }
+            }
+        }
+        checkArray.add(0, lowerLimit);
+        checkArray.add(1, upperLimit);
+        checkArray.add(2, isTag);
+        checkArray.add(3, isRange);
+        return checkArray;
     }
 
 }
@@ -556,6 +599,10 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public RemoveTagCommand parse(String args) throws ParseException {
+        final int indexLowerLimit = 0;
+        final int indexUpperLimit = 1;
+        final int indexIsTag = 2;
+        final int indexIsRange = 3;
         Set<Tag> toRemoveSet = new HashSet<>();
         Set<Index> index = new HashSet<>();
         List<String> indexSet = new ArrayList<>();
@@ -567,38 +614,30 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
 
         StringTokenizer st = new StringTokenizer(args, " ");
 
+        List<String> firstItemArray;
         String firstItem = st.nextToken();
-        boolean isRange = false;
-        boolean removeAll = false;
-        boolean startUpper = false;
-        String lowerLimit = "";
-        String upperLimit = "";
 
-        char[] firstItemArray = firstItem.toCharArray();
+        firstItemArray = fillCheckArray(firstItem);
 
-        if (firstItem.contains("-")) {
+        boolean removeAll;
+        boolean isRange;
+        String lowerLimit = firstItemArray.get(indexLowerLimit);
+        String upperLimit = firstItemArray.get(indexUpperLimit);
+        String checkFirstTag = firstItemArray.get(indexIsTag);
+        String checkIsRange = firstItemArray.get(indexIsRange);
+
+        if (checkIsRange.equals("true")) {
             isRange = true;
+        } else {
+            isRange = false;
         }
 
-        // Check character of first keyword of input
-        for (char c : firstItemArray) {
-            if (!Character.isDigit(c)) {
-                if (c == '-') {
-                    startUpper = true;
-                } else {
-                    if (!isRange) {
-                        removeAll = true;
-                        break;
-                    }
-                }
-            } else {
-                if (startUpper) {
-                    upperLimit += c;
-                } else {
-                    lowerLimit += c;
-                }
-            }
+        if (checkFirstTag.equals("true")) {
+            removeAll = true;
+        } else {
+            removeAll = false;
         }
+
 
 
         // Check if remove tag from index or whole contact list
@@ -660,38 +699,26 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
 
             String newToken = st.nextToken();
 
-            boolean isRangeAgain = false;
-            boolean startUpperAgain = false;
-            boolean isTag = false;
-            String lowerLimit2 = "";
-            String upperLimit2 = "";
+            firstItemArray = fillCheckArray(newToken);
 
-            if (newToken.contains("-")) {
+            boolean isTag;
+            boolean isRangeAgain;
+            String lowerLimit2 = firstItemArray.get(indexLowerLimit);
+            String upperLimit2 = firstItemArray.get(indexUpperLimit);
+            String checkIsTag = firstItemArray.get(indexIsTag);
+            String checkIsRangeAgain = firstItemArray.get(indexIsRange);
+
+            if (checkIsRangeAgain.equals("true")) {
                 isRangeAgain = true;
+            } else {
+                isRangeAgain = false;
             }
 
-            char[] nextItemArray = newToken.toCharArray();
-
-            // Check characters of remaining keywords
-            for (char c : nextItemArray) {
-                if (!Character.isDigit(c)) {
-                    if (c == '-') {
-                        startUpperAgain = true;
-                    } else {
-                        if (!isRangeAgain) {
-                            isTag = true;
-                            break;
-                        }
-                    }
-                } else {
-                    if (startUpperAgain) {
-                        upperLimit2 += c;
-                    } else {
-                        lowerLimit2 += c;
-                    }
-                }
+            if (checkIsTag.equals("true")) {
+                isTag = true;
+            } else {
+                isTag = false;
             }
-
 
             // Adding of tag with no overlap
             if (isTag) {
@@ -713,18 +740,18 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
                 } else {
                     if (isRangeAgain) {
-                        // Check if range is appropriate
-                        int lower = Integer.parseInt(lowerLimit2);
-                        int upper = Integer.parseInt(upperLimit2);
-                        if (lower > upper) {
-                            throw new ParseException("Invalid index range provided.\n"
-                                    + String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
-                        }
-
                         // Check if any of the limit is empty
                         boolean isLowerValidAgain = lowerLimit2.isEmpty();
                         boolean isUpperValidAgain = upperLimit2.isEmpty();
                         if (isLowerValidAgain || isUpperValidAgain) {
+                            throw new ParseException("Invalid index range provided.\n"
+                                    + String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+                        }
+
+                        // Check if range is appropriate
+                        int lower = Integer.parseInt(lowerLimit2);
+                        int upper = Integer.parseInt(upperLimit2);
+                        if (lower > upper) {
                             throw new ParseException("Invalid index range provided.\n"
                                     + String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
                         }
@@ -763,6 +790,60 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
         }
         Collections.sort(indexSet);
         return new RemoveTagCommand(toRemoveSet, index, indexSet);
+    }
+
+    /**
+     *
+     * @param token
+     * @return checkArray containing values for checking
+     */
+    private List<String> fillCheckArray(String token) {
+        List<String> checkArray = new ArrayList<>();
+
+        boolean startUpper = false;
+        String isRange = "false";
+        String isTag = "false";
+        String lowerLimit = "";
+        String upperLimit = "";
+
+        char[] itemArray = token.toCharArray();
+
+        if (token.contains("-")) {
+            isRange = "true";
+        }
+
+        // Check character of first keyword of input
+        for (char c : itemArray) {
+            if (!Character.isDigit(c)) {
+                if (c == '-') {
+                    startUpper = true;
+                } else {
+                    if (isRange.equals("false")) {
+                        isTag = "true";
+                        break;
+                    } else {
+                        if (startUpper) {
+                            upperLimit = "";
+                            break;
+                        } else {
+                            lowerLimit = "";
+                            break;
+                        }
+                    }
+                }
+            } else {
+                if (startUpper) {
+                    upperLimit += c;
+                } else {
+                    lowerLimit += c;
+                }
+            }
+        }
+        checkArray.add(0, lowerLimit);
+        checkArray.add(1, upperLimit);
+        checkArray.add(2, isTag);
+        checkArray.add(3, isRange);
+        return checkArray;
     }
 
 }
