@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -151,9 +152,11 @@ public class ParserUtil {
             throws DateTimeParseException, NumberFormatException, IllegalValueException {
         requireNonNull(time);
         requireNonNull(duration);
+
+        LocalDateTime eventTime = DateTimeUtil.parseStringToLocalDateTime(time.get());
+
         return (time.isPresent())
-                ? Optional.of(new EventTime(DateTimeUtil.parseStringToLocalDateTime(time.get()),
-                DateTimeUtil.parseDuration(duration)))
+                ? Optional.of(new EventTime(eventTime, DateTimeUtil.parseDuration(duration)))
                 : Optional.empty();
     }
 

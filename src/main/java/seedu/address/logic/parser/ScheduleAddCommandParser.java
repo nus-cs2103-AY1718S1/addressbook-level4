@@ -20,13 +20,14 @@ import seedu.address.model.event.EventDuration;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.EventTime;
 
+//@@author eldriclim
 /**
  * Parses input arguments and creates a new ScheduleAddCommand object
  */
 public class ScheduleAddCommandParser implements Parser<ScheduleAddCommand> {
 
-    private static final String ERROR_INVALID_DATE = "Invalid date detected.";
-    private static final String ERROR_PARSING_DURATION = "Duration has to be in the following format: #d#h#m\n"
+    static final String ERROR_INVALID_DATE = "Invalid date detected.";
+    static final String ERROR_PARSING_DURATION = "Duration has to be in the following format: #d#h#m\n"
             + "d:day, h:hour, m:minute";
 
     /**
@@ -61,6 +62,7 @@ public class ScheduleAddCommandParser implements Parser<ScheduleAddCommand> {
 
             EventTime eventTime = ParserUtil.parseEventTime(
                     argMultimap.getValue(PREFIX_EVENT_TIME), durationInput).get();
+
             EventDuration eventDuration = ParserUtil.parseEventDuration(
                     durationInput);
 
@@ -75,7 +77,7 @@ public class ScheduleAddCommandParser implements Parser<ScheduleAddCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         } catch (DateTimeParseException dve) {
-            throw new ParseException(ERROR_INVALID_DATE, dve);
+            throw new ParseException(ERROR_INVALID_DATE);
         }
     }
 
@@ -87,5 +89,7 @@ public class ScheduleAddCommandParser implements Parser<ScheduleAddCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
+
+
 
 }

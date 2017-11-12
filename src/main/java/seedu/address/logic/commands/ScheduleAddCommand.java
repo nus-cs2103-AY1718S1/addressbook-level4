@@ -120,6 +120,15 @@ public class ScheduleAddCommand extends UndoableCommand {
         }
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ScheduleAddCommand // instanceof handles nulls
+                && eventName.equals(((ScheduleAddCommand) other).eventName)
+                && eventTime.equals(((ScheduleAddCommand) other).eventTime)
+                && eventDuration.equals(((ScheduleAddCommand) other).eventDuration)
+                && uniqueMemberIndexes.equals(((ScheduleAddCommand) other).uniqueMemberIndexes));
+    }
 
     /**
      * Stores the details of modified person with updated event list. Each non-empty field value will replace the
