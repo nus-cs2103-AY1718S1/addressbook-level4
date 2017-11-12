@@ -18,6 +18,7 @@ import org.junit.ClassRule;
 
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.DetailsPanelHandle;
+import guitests.guihandles.EventListPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -81,6 +82,10 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
+    public EventListPanelHandle getEventListPanel() {
+        return mainWindowHandle.getEventListPanel();
+    }
+
     public DetailsPanelHandle getDetailsPanel() {
         return mainWindowHandle.getDetailsPanel();
     }
@@ -142,6 +147,15 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
+    }
+
+    /**
+     * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
+     * {@code expectedResultMessage}
+     */
+    protected void assertEventDisplaysExpected(String expectedCommandInput, String expectedResultMessage) {
+        assertEquals(expectedCommandInput, getCommandBox().getInput());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
     }
 
     /**

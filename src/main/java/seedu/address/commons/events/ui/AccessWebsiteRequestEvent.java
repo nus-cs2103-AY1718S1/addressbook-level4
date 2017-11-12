@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 
 //@@author DarrenCzen
 /**
- * An event requesting to view the website of a person.
+ * Indicates a request to load the website of a person in the Browser.
  */
 public class AccessWebsiteRequestEvent extends BaseEvent {
 

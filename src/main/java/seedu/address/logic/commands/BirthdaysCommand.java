@@ -14,6 +14,7 @@ public class BirthdaysCommand extends Command {
             + "who have their birthdays today.\n"
             + "Parameters: KEYWORD \n"
             + "Example: " + COMMAND_WORD;
+    public static final String MESSAGE_SUCCESS = "Listed all people with birthdays";
 
     private CheckIfBirthday check = new CheckIfBirthday();
 
@@ -24,5 +25,6 @@ public class BirthdaysCommand extends Command {
         model.updateFilteredPersonList(check);
         return new CommandResult(getBirthdayMessageSummary(model.getFilteredPersonList().size()));
     }
+
 
 }

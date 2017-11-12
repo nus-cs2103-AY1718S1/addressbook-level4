@@ -13,7 +13,6 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.PopulateRequestEvent;
-import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.event.exceptions.DuplicateEventException;
@@ -205,8 +204,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     //@@author chernghann
     public void addEvent(ReadOnlyEvent p) throws DuplicateEventException {
-        Event newEvent = new Event(p);
-        events.add(newEvent);
+        events.add(p);
         EventsCenter.getInstance().post(new PopulateRequestEvent(events));
     }
     //@@author
@@ -219,6 +217,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
         if (events.remove(event)) {
+            EventsCenter.getInstance().post(new PopulateRequestEvent(events));
             return true;
         } else {
             throw new EventNotFoundException();

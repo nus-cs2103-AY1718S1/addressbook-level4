@@ -7,9 +7,15 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 The Myth’s Book is an address book dedicated for university students to store useful information such as websites, phone numbers and emails of the people around them for personal usage. The application helps students to keep track of birthday dates and upcoming events through a calendar and facilitate convenient access to their friend’s website and even Google Maps location through the in-built browser panel in the application. Furthermore, there are many useful tools such as finding group tags (e.g. friends, neighbours) and switching themes for better user preference and usability.
 
 The Myth’s Book is a Command Line Input based software which helps caters to students who are efficient and comfortable in typing out command line inputs to manipulate with information of their contacts in the address book. The Myth’s Book is a software application that is coded in Java programming language.
+
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/archthegit.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/test/archthegit.md[Test code]][https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/unused/archthegit.md[Unused code]]
 
-=== Enhancement Added: Modified find Command (V1.0)
+== Purpose of Project Portfolio
+
+The purpose of this project portfolio is to showcase my contribution to the Myth's Book, A project for the introductory Software Engineering module (CS2103T) at the National University of Singapore. It highlights some of the key features I implemented during the course of this module and the technical details behind how these features were implemented. It also demonstrates my ability to work with a large code base (approx. 8KLoC).
+
+---
+=== Enhancement Added: Modified Find Command (V1.0)
 
 ==== External behavior
 
@@ -24,10 +30,7 @@ include::../UserGuide.adoc[tag=find]
 
 ==== Justification
 
-Modifying the find command was necessary as my teammates and I found it unfriendly that we could'nt search for a part of somebody's name. Since we fit into the same category as our target users we thought the users would feel the same.
-
-I designed it so that the search only works if the substring is 2 characters or longer.As searching for one character might
-not filter out anybody in The Myth's Book at all.
+Modifying the find command was necessary as my teammates and I found it unfriendly that we could'nt search for a part of somebody's name. Since we fit into the same category as our target users we thought the users would feel the same. I designed it so that the search only works if the substring is 2 characters or longer.As searching for one character might not filter out anybody in The Myth's Book at all.
 
 
 ==== Implementation
@@ -42,20 +45,9 @@ include::../DeveloperGuide.adoc[tag=find]
 ---
 === Enhancement Added: Birthday Field (V1.1)
 
-==== External behavior
-
----
-#Start of Extract [from: User Guide]#
-
-include::../UserGuide.adoc[tag=find]
-
-#End of Extract#
-
----
-
 ==== Justification
 
-It was the first part of a two part modification. For university students, storing of birthdays would be a valuable addition. This would also help me implement reminders for birthdays in the later versions of the application.
+It was the first of a two part modification. For university students, storing of birthdays would be a valuable addition as their social life consists of meeting up for friends' birthdays and so on. Additionally,This would also help me implement reminders for birthdays in the later version of the application.
 
 ---
 
@@ -73,13 +65,15 @@ include::../UserGuide.adoc[tag=details]
 ---
 
 ==== Justification
-The team decided to reduce the amount of information shown on the person card as it seemed too cluttered
+Since The Myth's Book has 9 fields, putting all that information on the person card would not only make it messy but also be unfriendly for the user as they have to then search for the information. Hence I decided to implement the details panel while only showing name, tags, email and phone number on the person card.
+
+---
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=find]
+include::../DeveloperGuide.adoc[tag=details]
 
 #End of Extract#
 
@@ -99,8 +93,9 @@ include::../UserGuide.adoc[tag=reminder]
 
 ==== Justification
 
-Made a birthday reminder so that university students can check if their friend's have birthdays today. This is a rather useful feature for students as they usually celebrate birthdays.
+It happens that students have a lot of friends and cannot always keep track of which of their friends have a birthday. A large part of a university student's social scene revolves around meeting their friends and attending parties. Birthdays are usually a big reason for these meet ups between friends. Therefore, I think the reminders feature would be a valuable addition to The Myth's Book.
 
+---
 ==== Implementation
 
 ---
@@ -111,12 +106,15 @@ include::../DeveloperGuide.adoc[tag=birthday]
 #End of Extract#
 
 ---
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Task Manager
 
-{Explain similar to the Undo/Redo feature above.}
+A to-do list to remind university students when their assignment or submissions are due. This facilitates our purpose to reduce multi-tasking as much as possible as now even the tasks they have to do is in one application.
 
 === Other contributions
 
-* Fixed bugs in the details panel ( Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/130)
-* Acceptance testing feedback given to `Team T09-B2` [https://github.com/CS2103AUG2017-T09-B2/main/issues?q=is%3Aissue+is%3Aclosed [Issues]]
+* Fixed bugs in the details panel [Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/130[pull request]]
+* Acceptance testing feedback given to `Team T09-B2` [https://github.com/CS2103AUG2017-T09-B2/main/issues?q=is%3Aissue+is%3Aclosed[Issues]]
+* Increased test coverage by 0.6% [https://github.com/CS2103AUG2017-T15-B3/main/pull/95[pull request]]
+
+
 

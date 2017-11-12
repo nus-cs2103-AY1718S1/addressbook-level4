@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 
 //@@author DarrenCzen
 /**
- * An event requesting to view the location of a person.
+ * Indicates a request to load the location of a person on Google Maps Search in the Browser.
  */
 public class AccessLocationRequestEvent extends BaseEvent {
     public final String location;

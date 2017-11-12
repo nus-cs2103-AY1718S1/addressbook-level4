@@ -23,6 +23,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class SelectCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void select() {
+        executeCommand("list");
         /* Case: select the first card in the person list, command with leading spaces and trailing spaces
          * -> selected
          */

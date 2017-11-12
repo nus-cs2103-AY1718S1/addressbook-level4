@@ -19,7 +19,6 @@ public class Birthday {
             + "|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
 
     public static final String BIRTHDAY_TEMPORARY = "NIL";
-
     public final String value;
 
     //@@author archthegit
@@ -29,11 +28,9 @@ public class Birthday {
      * @throws IllegalValueException if given birthday string is invalid.
      */
     public Birthday(String birthday) throws IllegalValueException {
-        //@@author DarrenCzen
         if (birthday == null) {
             this.value = BIRTHDAY_TEMPORARY;
         } else {
-            //@@author archthegit
             String trimmedBirthday = birthday.trim();
             if (!isValidBirthday(trimmedBirthday)) {
                 throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
@@ -42,7 +39,6 @@ public class Birthday {
         }
     }
 
-    //@@author DarrenCzen
     /**
      * Returns true if a given string is a valid person birthday.
      */
@@ -50,7 +46,6 @@ public class Birthday {
         return test.matches(BIRTHDAY_VALIDATION_REGEX)
                 || test.matches(BIRTHDAY_TEMPORARY);
     }
-    //@@author archthegit
     @Override
     public String toString() {
         return value;
@@ -67,6 +62,8 @@ public class Birthday {
     public int hashCode() {
         return value.hashCode();
     }
+
+
 
 }
 

@@ -6,8 +6,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Purpose
 
 This project portfolio displays the contributions and enhancements made to the software, The Myth's Book,
-along with its justifications. The portfolio will first introduce The Myth's Book and subsequently talk
-about the enhancements and contributions made by Darren Chin.
+along with its justifications made by Darren Chin. The portfolio will first introduce The Myth's Book and subsequently talk
+about the enhancements and other contributions.
 
 == Project: The Myth's Book
 The Myth's Book is an address book dedicated for university students to store useful information such
@@ -25,8 +25,9 @@ The Myth's Book is a software application that is coded in `Java` programming la
 ---
 === Enhancement Added: Sort Command, Sort Names Alphabetically
 
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/46[#46]
+This section includes the behaviour and justification of the sort command and explains how it is implemented.
+
+Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/46[#46]
 
 ==== External behavior
 
@@ -41,9 +42,10 @@ include::../UserGuide.adoc[tag=sort]
 
 ==== Justification
 
-The `Sort Command` enhances the organization of contact/person list of The Myth's Book by sorting the contacts based
-on their names alphabetically. Therefore, this allows users to be able to view and look through the overall contacts list in
-an orderly manner whenever needed which attributes to the factor of user-friendliness and user-readability.
+University students are often very particular about the way things are organized around them and
+the `Sort Command` helps to organize the contacts list of The Myth's Book by sorting the contacts based
+on their names alphabetically. Therefore, this contributes to the aspect of user friendliness and allows
+users to be able to look through the overall contacts list in an orderly manner whenever needed with better user-readability.
 
 ==== Implementation
 
@@ -56,10 +58,11 @@ include::../DeveloperGuide.adoc[tag=sort]
 
 ---
 
-=== Enhancement Added: Access Command, Accessing a website of a contact
+=== Enhancement Added: Access Command, accessing a website of a contact
 
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/77[#77]
+This section includes the behaviour and justification of the `Access Command` and explains how it is implemented.
+
+Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/77[#77]
 
 ==== External behavior
 
@@ -74,8 +77,9 @@ include::../UserGuide.adoc[tag=access]
 
 ==== Justification
 
-The `Access Command` allows users to be able to access the website of a contact through the in-built browser panel which
-helps to facilitate ease of access for users. The command also helps users to avoid opening other programs and avoid switching
+University students are often very particular about convenience in using software programs and
+the `Access Command` allows users to be able to access the website of a contact through the in-built browser panel which
+ eliminates tediousness and helps to facilitate ease of accessing websites for users. The command also helps users to avoid opening other programs and avoid switching
 between programs so as to facilitate user-friendliness and create an `all-in-one` platform in The Myth's Book.
 
 ==== Implementation
@@ -89,10 +93,11 @@ include::../DeveloperGuide.adoc[tag=access]
 
 ---
 
-=== Enhancement Added: Location Command, Locate an address of a user
+=== Enhancement Added: Location Command, locate an address of a user
 
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/79[#79]
+This section includes the behaviour and justification of the `Location Command` and explains how it is implemented.
+
+Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/79[#79]
 
 ==== External behavior
 
@@ -107,7 +112,8 @@ include::../UserGuide.adoc[tag=locate]
 
 ==== Justification
 
-The `Location Command` allows users to be able to access the address of a contact through the in-built browser panel
+University students are often very particular about convenience in using software programs and
+the `Location Command` allows users to be able to access the address of a contact through the in-built browser panel
 using Google Maps Search which helps to facilitate ease of access for users.
 The command also helps users to avoid opening other programs and avoid switching between programs so as to facilitate
 user-friendliness and create an `all-in-one` platform in The Myth's Book.
@@ -124,10 +130,11 @@ include::../DeveloperGuide.adoc[tag=locate]
 ---
 
 
-=== Enhancement: Add Command, Optional fields
+=== Enhancement Added: Optional fields for Add Command
 
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/99[#99], https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96]
+This section includes the behaviour and justification of the tweaking of `AddCommand` and explains how it is implemented.
+
+Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/99[#99], https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96]
 
 ==== External behavior
 
@@ -142,85 +149,266 @@ include::../UserGuide.adoc[tag=add]
 
 ==== Justification
 
-The implementation of optional fields when adding a contact allows users to be able to add contacts with ease
-as it is not realistically possible for users to attain every information of a contact when adding a contact.
+The `AddCommand` can take in `9` different fields (name, phone, email, school email, home number,
+website, birthday, address, tags) which is a lot of information required for users to fill in
+if all were necessary to fill in in order to add a contact.
+Furthermore, University students are often very particular about convenience
+in using software programs and it is not realistically possible for users to attain every
+piece of information from a contact when adding a contact.
+The implementation of optional fields when adding a contact allows users to only need the
+name, phone and email of a person and be able to add contacts with ease.
 The enhancement also helps to facilitate user-friendliness in using The Myth's Book.
 
 ---
 
-=== Enhancement: Website field for Person Class
+==== Implementation
 
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/57[#57]
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=optionalfield]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Added: Website field for Person Class
+
+This section includes the behaviour and justification of adding website field for each contact in The Myth's Book.
+
+Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/57[#57]
 
 ==== External behavior
 
 ---
+
+Users are able to store website information for every single one of their contacts in The Myth's Book with any valid link.
+
+The website inputted should follow this format `https://www.anyName.com/anyContent` where both `anyName` and `anyContent` can be alphanumeric. +
+You must have `https://www.` and a domain name like `.com` or `.net` in the inputted website or it will result in inputted format error. +
 
 ---
 
 ==== Justification
 
+As most university students frequently use social network platforms today, it is viable that
+users might want to have the website information of their contacts.
 The implementation of website field for a contact allows users to carry out activities
 of university students such as browsing a person's social network website in The Myth's Book.
 
 ---
+==== Implementation
 
-=== Enhancement: Allow inputted names to become capitalized fully
+---
 
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/123/commits/cf57e5e78374ec3ee69125e8342ed27c9efa06da[#123]
+In the implementation of the website field, instead of using a self implemented regex, the testing
+of validity of an inputted website uses a url validator method that is provided by
+the package belonging to `Apache Commons Validator` which proves to be more useful and
+efficient than a self-implemented regex to test a validity of a link.
+
+---
+
+=== Enhancement Added: Switching between Persons Mode and Events Mode
+
+This section includes the behaviour and justification of the switching between modes in The Myth's Book and explains how it is implemented.
+
+Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/142[#142]
 
 ==== External behavior
 
 ---
+
+
+There are two modes in The Myth’s Book which are the Persons mode and the Events mode.
+For the two different modes, there will be different groups of command available for users to use.
+
+The commands are categorised into three groups:
+
+* `Person Commands` such as the `AddCommand` or `EditCommand`.
+* `Event Commands` such as the `AddEventCommand` or `DeleteEventCommand`.
+* `General Commands` such as the `HelpCommand` or `SwitchThemeCommand`.
+
+The `General Commands` can be used in both Persons and Events modes.
+
+By default, whenever you start the application, The Myth’s Book, you should be in Persons mode.
+
+By typing `list`, you will enter the Persons mode, where you can only use `Person Commands` such as add, delete, edit, access and others which are listed in Persons Command Features of the User Guide.
+
+By typing `events`, you will enter the Events mode, where you can only use `Event Commands` such as addevent and deleteevent, and the details of how to use them will be listed in Events Command Features of the User Guide.
+
+---
+
+==== Justification
+
+The implementation of the mode switching will help to maintain better usability as it can separate
+and classify features and commands for both Persons and Events. This will allow commands related
+to both modes to exist concurrently with lesser bugs in the application where user can use The
+Myth's Book with better user-friendliness. As bugs might exist when users might commands related
+to `Person Commands` while he is viewing the `EventListPanel`, there is a need to actually
+implement the mode switching enhancement to improve the software and keep the software as bug-free as
+possible for better user experience.
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=modeswitch]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Convert inputted names to become capitalized fully(Upper CamelCase)
+
+This section includes the behaviour and justification of fully capitalizing inputted names for each contact and explains how it is implemented.
+
+Suggestion from joppeel who did acceptance testing for The Myth's Book: https://github.com/CS2103AUG2017-T15-B3/main/issues/108[Suggestion]
+
+Idea adapted from user, scottb, on StackOverFlow: https://stackoverflow.com/users/2015912/scottb[Profile of scottb] https://stackoverflow.com/a/15738441[Code Implementation]
+
+My Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/123/commits/cf57e5e78374ec3ee69125e8342ed27c9efa06da[#123]
+
+==== External behavior
+
+---
+
+It will convert names of contacts who are added into The Myth's Book to Upper CamelCase.
+
+* Suppose a user inputs name `daRRen cHiN` for a contact, name will be handled and displayed as `Darren Chin`
+once contact is added successfully into The Myth's Book.
 
 ---
 ==== Justification
 
 The implementation of capitalizing names fully for a contact being added allows users to
 be able to view a sorted person list in a more orderly manner(alphabetically and lexicographically)
-in The Myth's Book.
+when the contact list is sorted through the `Sort Command` in The Myth's Book.
 
 ---
 
-=== Enhancement: Alias for basic commands
-
-Code on GitHub: +
-Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/34[#34]
-
-==== External behavior
+==== Implementation
 
 ---
 
+The implementation of converting inputted names to become capitalized fully(Upper CamelCase) helps
+to complement the sort command for users.
+
+Suppose a user would like to add a new contact with an address to The Myth's Book and executes the `AddCommand`
+by typing `add n/adam bait e/adambait@example.com p/98123414`.
+
+The conversion of the name is processed in this way:
+
+. User will input `add n/adam bait e/adambait@example.com p/98123414 a/18 Taiseng`.
+. Input of user will be handled by the `LogicManager` and parse as an argument through the `AddressBookParser` and `AddCommandParser`.
+. `AddCommandParser` will check for all the prefixes inputted and the existence of compulsory prefixes required.
+. Inputted string name of `"adam bait"` will then be handled through methods in `ParserUtil.java` and `Name.java`.
+. Inputted string name will be accepted as a parameter into a constructor of `Name.java`.
+. In the constructor, string name will be be parsed through the method `toCapitalized` where
+only the first initial of each part of a full name (also after every whitespace) is converted to upper case while
+the rest of the letters of the name are converted to lowercase.
+. The string name of `"adam bait"` will converted to `"Adam Bait"` after being parsed through
+the method and stored as a string variable that is part of the `Name` class which is returned back to
+the `AddCommandParser` so that it can add the person as a contact.
+. User will be able to see contact's name being displayed as `"Adam Bait"` once contact is
+added successfully.
+
+Code of `toCapitalized` method inside `Name.java`:
+[source,java]
+----
+public static String toCapitalized(String s) {
+    final String delimiters = " ";
+    StringBuilder newString = new StringBuilder();
+    boolean isCapital = true;
+
+    for (char c : s.toCharArray()) {
+        c = (isCapital) ? Character.toUpperCase(c) : Character.toLowerCase(c);
+        newString.append(c);
+
+        isCapital = (delimiters.indexOf((int) c) >= 0);
+    }
+    return newString.toString();
+}
+----
+
 ---
 
-==== Justification
-
-The implementation of website field for a contact allows users to carry out activities
-of university students such as browsing a person's social network website in The Myth's Book.
+=== Enhancement Proposed: Importing and Exporting of contacts
+==== External behavior & Justification
 
 ---
 
-=== Enhancement proposed: Toggling of Person List and Events List
-
-==== External behavior
+This enhancement proposal allows users to be able to export contacts so that the information of their
+own contacts can be conveniently imported and integrated into the same software, The Myth's Book, on another computer.
+This also helps to allows users to be able to save their contacts in a portable state that is
+able to load itself in the case of software corruption where user can just simply reinstall software
+and load the saved state of their contact list.
 
 ---
 
+=== Enhancement Proposed: Phone messaging of contacts through software
+==== External behavior & Justification
+
 ---
 
-==== Justification
+This enhancement proposal will enable users to be able to send phone messages to a contact
+via The Myth's Book. By proposing such an enhancement, it will make the storing of phone
+information for contacts more useful as users would be able to send messages conveniently
+in The Myth's Book without having to access their phones.
 
+---
 
 === Other contributions
 
-* Wrote introduction and about of The Myth's Book for User Guide and Developer Guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/91[#91])
-* Change structure of software's user guide and updated preface of most sections in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
-* Added prefix table for Add Command in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
-* Updated software's user guide to be more user friendly and user focused. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/134[#134])
-* Updated software's developer guide to showcase more user stories. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/35[#35], https://github.com/CS2103AUG2017-T15-B3/main/pull/53[#53])
+==== Additional Contributions to software application
+
+These are the additional contributions that I have made to the software and testing of The Myth's Book.
+You can click and view the attached pull request links to see some of the additional codes written by me.
+
+* Helped teammate to create an Events Details Panel for `Event` component of The Myth's Book (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/142[#142])
 * Wrote additional tests to test hashcode of person's attributes to increase test coverage (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96])
+* Implemented Aliases for basic commands (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/34[#34])
+* Increased test coverage of software by 1.5% (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/153[#153])
+
+
+==== Contributions to software's documentation
+
+These are the contributions that I have made to the documentation of The Myth's Book.
+As some of the documentation might be too long, parts of the documentation has been cropped into images for
+better user readability. You can click and view the attached pull request links to see more of the documentation written by me.
+
+* Wrote introduction and about of The Myth's Book for User Guide & Developer Guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/91[#91])
+
+Image of Introduction & About of User Guide
+
+image::UserGuideIntro.PNG[width="550"]
+
+Image of Introduction & About of Developer Guide
+
+image::DevGuideIntro.PNG[width="550"]
+
+* Added most of the user stories in software's developer guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/35[#35], https://github.com/CS2103AUG2017-T15-B3/main/pull/53[#53])
+
+** Image of Some User Stories written in Developer Guide
+
+image::UserStoryDG.PNG[width="600"]
+
+* Updated software's user guide to be more user friendly and user focused. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/134[#134])
+* Change structure of software's user guide and updated preface of most sections in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
+
+** Image of some prefaces written in User Guide
+
+image::PrefaceUG.PNG[width="600"]
+
+
+* Added prefix table for Add Command in user guide. (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/123[#123])
+
+** Image of prefix table for Add Command written in User Guide
+
+image::UGPrefix.PNG[width="500"]
 
 ==== Contribution to Acceptance Testing: HitMeUp (CS2103AUG2017-W14-B3)
 

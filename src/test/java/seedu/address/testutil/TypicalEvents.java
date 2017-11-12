@@ -31,8 +31,6 @@ public class TypicalEvents {
             .withAddress("MD7, NUS").build();
     public static final ReadOnlyEvent NATIONALDAY = new EventBuilder().withName("National Day").withDate("8/09/2017")
             .withAddress("Padang").build();
-    public static final ReadOnlyEvent CHRISTMAS = new EventBuilder().withName("Christmas").withDate("25/12/2017")
-            .withAddress("Iceland").build();
 
     // Manually added - Event's details found in {@code CommandTestUtil}
     public static final ReadOnlyEvent EVENT_A = new EventBuilder().withName(VALID_EVENT_A_NAME)

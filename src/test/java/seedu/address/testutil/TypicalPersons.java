@@ -38,7 +38,7 @@ public class TypicalPersons {
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withSchEmail("alicepauline@u.nus.edu")
             .withWebsite("https://www.twitter.com/alice")
-            .withBirthday("12/11/1998")
+            .withBirthday("12/10/1998")
             .withPhone("85355255").withHomeNumber("65822291")
             .withFavourite("false")
             .withTags("friends").build();
@@ -47,44 +47,44 @@ public class TypicalPersons {
             .withEmail("johnd@example.com").withPhone("98765432").withHomeNumber("65432112")
             .withSchEmail("bensonmeier@u.nus.edu")
             .withWebsite("https://www.facebook.com/benson")
-            .withBirthday("12/11/1998").withFavourite("false")
+            .withBirthday("12/10/1998").withFavourite("false")
             .withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withHomeNumber("68912301").withEmail("heinz@example.com").withSchEmail("e0014559@u.nus.edu")
             .withWebsite("https://www.facebook.com/carl")
-            .withBirthday("12/11/1998").withFavourite("false")
+            .withBirthday("12/10/1998").withFavourite("false")
             .withAddress("wall street").withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withHomeNumber("63123112").withEmail("cornelia@example.com").withSchEmail("daniel.meier@u.nus.edu")
             .withWebsite("https://www.facebook.com/daniel")
-            .withBirthday("12/11/1998").withFavourite("false")
+            .withBirthday("12/10/1998").withFavourite("false")
             .withAddress("10th street").withTags("owesMoney", "colleagues").build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withHomeNumber("65123411").withEmail("werner@example.com").withSchEmail("ellemeyer@u.ntu.edu")
             .withWebsite("https://www.facebook.com/elle")
-            .withBirthday("12/11/1998").withFavourite("false")
+            .withBirthday("12/10/1998").withFavourite("false")
             .withAddress("michegan ave").withTags("friends", "neighbours").build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withHomeNumber("62134411").withEmail("lydia@example.com").withSchEmail("fionaaa@u.nus.edu")
             .withWebsite("https://www.facebook.com/fiona")
-            .withBirthday("12/11/1998").withFavourite("false")
+            .withBirthday("12/10/1998").withFavourite("false")
             .withAddress("little tokyo").withTags("neighbours", "owesMoney").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withHomeNumber("68901234").withEmail("anna@example.com").withSchEmail("bestgeorge@u.nus.edu")
             .withWebsite("https://www.facebook.com/george")
-            .withBirthday("12/11/1998").withFavourite("false")
+            .withBirthday("12/10/1998").withFavourite("false")
             .withAddress("4th street").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
             .withHomeNumber("67512082").withEmail("stefan@example.com").withSchEmail("hoonguy@u.nus.edu")
             .withWebsite("https://www.facebook.com/hoon")
-            .withAddress("little india").withBirthday("12/11/1998").withFavourite("false")
+            .withAddress("little india").withBirthday("12/10/1998").withFavourite("false")
             .build();
     public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withHomeNumber("67521341").withEmail("hans@example.com").withSchEmail("idamueller@u.nus.edu")
             .withWebsite("https://www.facebook.com/ida")
-            .withAddress("chicago ave").withBirthday("12/11/1998").withFavourite("false")
+            .withAddress("chicago ave").withBirthday("12/10/1998").withFavourite("false")
             .build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}

@@ -36,6 +36,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author DarrenCzen
 /**
  * Parses user input.
  */
@@ -47,7 +48,7 @@ public class AddressBookParser {
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     /**
-     * Lock mechanism.
+     * Used to control lock mechanism for different commands between person and events platforms.
      */
     private static Boolean personListActivated = true;
 

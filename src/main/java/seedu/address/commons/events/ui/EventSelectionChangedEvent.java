@@ -5,7 +5,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 
 //@@author DarrenCzen
 /**
- * Event to handle info change in the case of edit
+ * Indicates a request to handle information change in the case of an edit to an event
  */
 public class EventSelectionChangedEvent extends BaseEvent {
     private final ReadOnlyEvent newSelection;

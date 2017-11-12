@@ -62,6 +62,8 @@ public class Name {
 
     //@@author DarrenCzen
     /**
+     * This method was adapted from user, scottb, on StackOverFlow.
+     * Code Implementation: https://stackoverflow.com/a/15738441
      * This method converts a name to become capitalized fully.
      * e.g. from "dArrEn cHiN" to "Darren Chin"
      */
