@@ -129,7 +129,7 @@ A possible method of doing so would be changing the `UserPrefs` object that woul
 The Command was to allow users to change the color of tags, but we didnt have a way to store the changes, so the colours would revert back to default whenever the program was restarted.
 (Pull Requests link:https://github.com/CS2103AUG2017-T17-B3/main/pull/37[#37], link:https://github.com/CS2103AUG2017-T17-B3/main/pull/43[#43]) +
 
-* Found bugs and made suggestions for Team W15-B3 during trial acceptance testing.
+* Found bugs and made suggestions for ConnectUs (Team W15-B3) during trial acceptance testing.
 (Issues link:https://github.com/CS2103AUG2017-W15-B3/main/issues/94[#94], link:https://github.com/CS2103AUG2017-W15-B3/main/issues/98[#98],
 link:https://github.com/CS2103AUG2017-W15-B3/main/issues/99[#99], link:https://github.com/CS2103AUG2017-W15-B3/main/issues/100[#100])
 
