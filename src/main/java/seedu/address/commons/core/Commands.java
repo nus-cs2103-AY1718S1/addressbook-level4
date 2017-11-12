@@ -71,6 +71,7 @@ public class Commands {
         RedoCommand.COMMAND_ALIAS,
         RelPathCommand.COMMAND_ALIAS,
         RemarkCommand.COMMAND_ALIAS,
+        RemoveTagCommand.COMMAND_ALIAS,
         SelectCommand.COMMAND_ALIAS,
         SortCommand.COMMAND_ALIAS,
         UndoCommand.COMMAND_ALIAS
@@ -106,6 +107,7 @@ public class Commands {
 
         for (int i = 0; i < ALL_COMMAND_WORDS.length; i++) {
             ALL_COMMANDS_AND_SHORT_MESSAGES.put(ALL_COMMAND_WORDS[i], ALL_SHORT_MESSAGE_USAGES[i]);
+            ALL_COMMANDS_AND_SHORT_MESSAGES.put(ALL_COMMAND_ALIASES[i], ALL_SHORT_MESSAGE_USAGES[i]);
         }
     }
 

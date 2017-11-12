@@ -12,6 +12,8 @@ import seedu.address.model.person.exceptions.TagNotFoundException;
  */
 public class RemoveTagCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "removeTag";
+    public static final String COMMAND_ALIAS = "rt";
+
 
     public static final String COMMAND_PARAMETERS = "TAGNAME (must be alphanumeric)";
 

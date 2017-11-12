@@ -142,9 +142,11 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
+        commandBox.setCustomAutoComplete(resultDisplay);
         resultDisplay.setLinkedInput(commandBox);
     }
 
+    //@@author
     void hide() {
         primaryStage.hide();
     }

@@ -51,6 +51,34 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+=== Autocompleting commands : kbd:[Tab]
+
+Completes a command by filling the command box with the first suggestion shown in the result display. +
+Format: `INPUT`, then pressing kbd:[Tab]
+
+[.float-group]
+--
+[.left]
+image::CommandBoxPreAutocomplete.png[width="350"]
+image::CommandBoxPostAutocomplete.png[width="350"]
+--
+
+****
+* Only commands with the first few letters matching the current user input are considered as valid suggestions.
+* Excepting when the application is first started, not keying in any commands/ keying only blank spaces will cause all possible commands to be displayed.
+* By default, the first suggestion is the `add` command (e.g. keying in a blank space and then pressing kbd:[Tab] will cause `add` to appear in the command box).
+****
+
+Examples:
+
+* Type `a` followed by kbd:[Tab]
+* Type `add` followed by kbd:[Tab]
+
+=== Clearing the command box : kbd:[Control]
+
+Clears the command box instantaneously. +
+Format: kbd:[Control]
+
 === Viewing help : `help`
 
 Format: `help`
@@ -58,7 +86,7 @@ Format: `help`
 // tag::EnhancedAdd[]
 === Adding a person: `add`
 
-Adds a person to the address book +
+Adds a person to the address book. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS r/REMARK [t/TAG]...`
 
 [TIP]

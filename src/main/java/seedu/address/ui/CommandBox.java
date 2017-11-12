@@ -2,15 +2,11 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import org.controlsfx.control.textfield.AutoCompletionBinding;
-import org.controlsfx.control.textfield.TextFields;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.Commands;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
@@ -31,9 +27,10 @@ public class CommandBox extends UiPart<Region> {
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
+    private ResultDisplay linkedResultDisplay;
+
     @FXML
     private TextField commandTextField;
-    private AutoCompletionBinding<String> autoCompletionBinding;
 
     //@@author joanneong
     public CommandBox(Logic logic) {
@@ -41,10 +38,11 @@ public class CommandBox extends UiPart<Region> {
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
-        autoCompletionBinding = TextFields.bindAutoCompletion(commandTextField, Commands.getAllCommandWords());
-        autoCompletionBinding.setVisibleRowCount(3);
-        autoCompletionBinding.setMinWidth(100);
         historySnapshot = logic.getHistorySnapshot();
+    }
+
+    void setCustomAutoComplete(ResultDisplay resultDisplay) {
+        this.linkedResultDisplay = resultDisplay;
     }
 
     /**
@@ -54,7 +52,6 @@ public class CommandBox extends UiPart<Region> {
         return commandTextField;
     }
 
-    //@@author
     /**
      * Handles the key press event, {@code keyEvent}.
      */
@@ -73,11 +70,23 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+
+        case TAB:
+            keyEvent.consume();
+            autoCompleteWithTopSuggestion();
+            break;
+
+        case CONTROL:
+            keyEvent.consume();
+            clearInput();
+            break;
+
         default:
             // let JavaFx handle the keypress
         }
     }
 
+    //@@author
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}
@@ -104,6 +113,28 @@ public class CommandBox extends UiPart<Region> {
         replaceText(historySnapshot.next());
     }
 
+    //@@author joanneong
+    /**
+     * Sets the command box to the top valid suggestion that is not an empty string.
+     */
+    private void autoCompleteWithTopSuggestion() {
+        String topSuggestion = linkedResultDisplay.getCurrentTopSuggestion();
+
+        if (!topSuggestion.isEmpty()) {
+            replaceText(topSuggestion);
+        }
+    }
+
+    /**
+     * Sets the command box to be empty.
+     *
+     * This is essentially a shortcut for users to delete typed inputs.
+     */
+    private void clearInput() {
+        replaceText("");
+    }
+
+    //@@author
     /**
      * Sets {@code CommandBox}'s text field with {@code text} and
      * positions the caret to the end of the {@code text}.
