@@ -591,7 +591,8 @@ Both current choices above facilitate the creation of link:#viewing-of-user-s-ag
 //tag::scheduleMultiple[]
 === Scheduling an Activity with Multiple Persons [Since v1.4]
 
-This is an enhancement of the previously added feature of scheduling an activity with a single person.
+
+
 ==== Design Considerations
 //end::scheduleMultiple[]
 
