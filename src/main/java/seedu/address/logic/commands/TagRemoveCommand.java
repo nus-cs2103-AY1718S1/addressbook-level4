@@ -73,27 +73,31 @@ public class TagRemoveCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         ObservableList<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         Tag tagToRemove = (Tag) tagRemoveDescriptor.getTags().toArray()[0];
-        String tagInString = tagToRemove.toString();
-        String tagInString1 = tagInString.substring(1, tagInString.lastIndexOf("]"));
-        boolean looseFind = tagInString1.toLowerCase().contains(FAVOURITE_KEYWORD);
+        String tagInStringRaw = tagToRemove.toString();
+        String tagInString = tagInStringRaw.substring(1, tagInStringRaw.lastIndexOf("]"));
+
+        boolean looseFind = tagInString.toLowerCase().contains(FAVOURITE_KEYWORD);
         boolean removeAll = false;
-        TagMatchingKeywordPredicate tagPredicate = new TagMatchingKeywordPredicate(tagInString1, looseFind);
+        TagMatchingKeywordPredicate tagPredicate = new TagMatchingKeywordPredicate(tagInString, looseFind);
 
         StringBuilder editedPersonDisplay = new StringBuilder();
-        ArrayList<Index> indexList = index;
         checkIndexInRange(lastShownList);
+
+        ArrayList<Index> indexList = index;
         if (index.size() == 0) {
             removeAll = true;
             indexList = makeFullIndexList(lastShownList.size());
         }
+
         ObservableList<ReadOnlyPerson> selectedPersonList = createSelectedPersonList(indexList, lastShownList);
         FilteredList<ReadOnlyPerson> tagFilteredPersonList = new FilteredList<>(selectedPersonList);
         tagFilteredPersonList.setPredicate(tagPredicate);
         if (tagFilteredPersonList.size() == 0) {
-            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, tagInString));
+            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, tagInStringRaw));
         } else if (!removeAll && tagFilteredPersonList.size() < indexList.size()) {
-            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND_FOR_SOME, tagInString));
+            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND_FOR_SOME, tagInStringRaw));
         }
+
         for (int i = 0; i < tagFilteredPersonList.size(); i++) {
             ReadOnlyPerson personToEdit = tagFilteredPersonList.get(i);
             Set<Tag> modifiableTagList = createModifiableTagSet(personToEdit.getTags(), tagToRemove);
@@ -108,15 +112,8 @@ public class TagRemoveCommand extends UndoableCommand {
                 throw new AssertionError("The target person cannot be missing");
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            editedPersonDisplay.append(createTagListDisplay(editedPerson));
 
-            int tagListStringStartIndex = 1;
-            int tagListStringEndIndex;
-            String tagChangedDisplayRaw = editedPerson.getTags().toString();
-            tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
-            String tagChangedDisplay = editedPerson.getName() + " Tag List: "
-                    + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
-
-            editedPersonDisplay.append(String.format(MESSAGE_REMOVE_TAG_SUCCESS, tagChangedDisplay));
             Index defaultIndex = new Index(0);
             EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
 
@@ -141,6 +138,19 @@ public class TagRemoveCommand extends UndoableCommand {
             }
         }
         return modifiable;
+    }
+
+    /**
+     * @param editedPerson edited person to show tag list
+     */
+    public String createTagListDisplay(Person editedPerson) {
+        int tagListStringStartIndex = 1;
+        int tagListStringEndIndex;
+        String tagChangedDisplayRaw = editedPerson.getTags().toString();
+        tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
+        String tagChangedDisplay = editedPerson.getName() + " Tag List: "
+                + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
+        return String.format(MESSAGE_REMOVE_TAG_SUCCESS, tagChangedDisplay);
     }
 
     /**
