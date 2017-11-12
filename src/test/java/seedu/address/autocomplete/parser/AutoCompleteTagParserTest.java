@@ -1,6 +1,5 @@
 package seedu.address.autocomplete.parser;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -15,12 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.autocomplete.AutoCompleteTestUtils;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
@@ -36,10 +34,11 @@ public class AutoCompleteTagParserTest {
     private AutoCompleteTagParser parser;
     private ModelStubWithRequiredMethods mockModel;
     private final List<ReadOnlyPerson> allPersonsAdded = Arrays.asList(
-            new ReadOnlyPerson[]{ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE});
+            ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE);
 
-    @Before
-    public void fillMockModel() {
+    //@@author john19950730
+    @Test
+    public void testParsePossibilities() {
         mockModel = new ModelStubWithRequiredMethods();
         try {
             mockModel.addAllPersons(allPersonsAdded);
@@ -47,33 +46,22 @@ public class AutoCompleteTagParserTest {
             fail("This exception should not be thrown.");
         }
         parser = new AutoCompleteTagParser(mockModel);
-    }
 
-    //@@author john19950730
-    @Test
-    public void testParsePossibilities() {
         // multiple matches
         String preamble = "findtag f";
-        assertEquals(parser.parseForPossibilities(preamble),
-                Arrays.asList(preamble + "riends",
-                        preamble + "amily",
-                        preamble));
+        AutoCompleteTestUtils.assertParserPossibilities(preamble, parser,
+                preamble + "riends",
+                preamble + "amily");
 
         // single match
         preamble = "removetag c";
-        assertEquals(parser.parseForPossibilities(preamble),
-                Arrays.asList(preamble + "olleagues",
-                        preamble));
+        AutoCompleteTestUtils.assertParserPossibilities(preamble, parser,
+                preamble + "olleagues");
 
         // no match
         preamble = "removetag friends g";
-        assertEquals(parser.parseForPossibilities(preamble),
-                Arrays.asList(preamble));
-    }
+        AutoCompleteTestUtils.assertParserPossibilities(preamble, parser);
 
-    //@@author
-    @After
-    public void cleanUpMockModel() {
         mockModel = null;
         parser = null;
     }

@@ -38,14 +38,12 @@ public class AutoCompletePossibilitiesManager {
 
     private final Logger logger = LogsCenter.getLogger(AutoCompleteManager.class);
 
-    private final List<Prefix> allPrefixes = Arrays.asList(new Prefix[] {
-        PREFIX_NAME,
-        PREFIX_PHONE,
-        PREFIX_EMAIL,
-        PREFIX_ADDRESS,
-        PREFIX_TAG,
-        PREFIX_REMARK
-    });
+    private final List<Prefix> allPrefixes = Arrays.asList(PREFIX_NAME,
+            PREFIX_PHONE,
+            PREFIX_EMAIL,
+            PREFIX_ADDRESS,
+            PREFIX_TAG,
+            PREFIX_REMARK);
     private final Model model;
     private final IdentityParser identity = new IdentityParser();
     private final AutoCompleteCommandParser commandParser = new AutoCompleteCommandParser();
@@ -53,11 +51,11 @@ public class AutoCompletePossibilitiesManager {
     private final AutoCompleteTagParser tagParser;
     private final AutoCompleteByPrefixModelParser modelParser;
     private final AutoCompleteSetStringParser sortFieldParser =
-            new AutoCompleteSetStringParser(Arrays.asList(new String[] {"name", "phone", "email"}));
+            new AutoCompleteSetStringParser(Arrays.asList("name", "phone", "email"));
     private final AutoCompleteSetStringParser sortOrderParser =
-            new AutoCompleteSetStringParser(Arrays.asList(new String[] {"asc", "dsc"}));
+            new AutoCompleteSetStringParser(Arrays.asList("asc", "dsc"));
     private final AutoCompleteSetStringParser themeParser =
-            new AutoCompleteSetStringParser(Arrays.asList(new String[] {"DarkTheme", "RedTheme"}));
+            new AutoCompleteSetStringParser(Arrays.asList("DarkTheme", "RedTheme"));
     private final LinkedList<AutoCompletePossibilities> cache = new LinkedList<AutoCompletePossibilities>();
     private final int maxSize;
 

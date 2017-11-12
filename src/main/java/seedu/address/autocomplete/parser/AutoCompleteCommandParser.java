@@ -33,27 +33,25 @@ import seedu.address.logic.commands.UndoCommand;
  */
 public class AutoCompleteCommandParser implements AutoCompleteParser {
 
-    private static final List<CommandWordUsageTuple> COMMAND_WORDS_LIST = Arrays.asList(new CommandWordUsageTuple[] {
-        new CommandWordUsageTuple(AddCommand.COMMAND_WORD, AddCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(ChangeThemeCommand.COMMAND_WORD, ChangeThemeCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(EditCommand.COMMAND_WORD, EditCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(ExitCommand.COMMAND_WORD, ExitCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(ExportCommand.COMMAND_WORD, ExportCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(FindCommand.COMMAND_WORD, FindCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(FindTagCommand.COMMAND_WORD, FindTagCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(HelpCommand.COMMAND_WORD, HelpCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(HistoryCommand.COMMAND_WORD, HistoryCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(ImportCommand.COMMAND_WORD, ImportCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(ListCommand.COMMAND_WORD, ListCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(RedoCommand.COMMAND_WORD, RedoCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(RemarkCommand.COMMAND_WORD, RemarkCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(RemoveTagCommand.COMMAND_WORD, RemoveTagCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(SelectCommand.COMMAND_WORD, SelectCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(SortCommand.COMMAND_WORD, SortCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_USAGE)
-    });
+    private static final List<CommandWordUsageTuple> COMMAND_WORDS_LIST = Arrays.asList(new CommandWordUsageTuple(AddCommand.COMMAND_WORD, AddCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(ChangeThemeCommand.COMMAND_WORD, ChangeThemeCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(EditCommand.COMMAND_WORD, EditCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(ExitCommand.COMMAND_WORD, ExitCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(ExportCommand.COMMAND_WORD, ExportCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(FindCommand.COMMAND_WORD, FindCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(FindTagCommand.COMMAND_WORD, FindTagCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(HelpCommand.COMMAND_WORD, HelpCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(HistoryCommand.COMMAND_WORD, HistoryCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(ImportCommand.COMMAND_WORD, ImportCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(ListCommand.COMMAND_WORD, ListCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(RedoCommand.COMMAND_WORD, RedoCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(RemarkCommand.COMMAND_WORD, RemarkCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(RemoveTagCommand.COMMAND_WORD, RemoveTagCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(SelectCommand.COMMAND_WORD, SelectCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(SortCommand.COMMAND_WORD, SortCommand.COMMAND_USAGE),
+            new CommandWordUsageTuple(UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_USAGE));
 
     /**
      * Generates a list of possible commands from the supplied user input stub
