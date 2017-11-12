@@ -19,8 +19,6 @@ endif::[]
 
 This is s CLI (Command-Line Interface) Address Book application written in Java. Built by developers, for developers.
 
-This application is targeted for users who prefer an extra entertainment to their everyday lives.
-
 == Site Map
 
 * <<UserGuide#, User Guide>>
