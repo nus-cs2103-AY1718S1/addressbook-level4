@@ -28,10 +28,7 @@ public class EventPanelSelectionChangedEvent extends BaseEvent {
 
     public ObservableList<ReadOnlyPerson> getMemberAsArrayList() {
 
-        List<ReadOnlyPerson> memberList = new ArrayList<>(
-                selectedEvent.getMemberList().asReadOnlyMemberList());
-
-        return FXCollections.observableArrayList(memberList);
+        return FXCollections.observableArrayList(selectedEvent.getMemberList().asReadOnlyMemberList());
     }
 
     public String getEventName() {
