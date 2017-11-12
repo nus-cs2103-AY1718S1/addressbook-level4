@@ -21,8 +21,10 @@ public class UndoRedoStack {
     }
 
     public UndoRedoStack(UndoRedoStack toBeCopied) {
-        undoStack = (Stack<UndoableCommand>) toBeCopied.undoStack.clone();
-        redoStack = (Stack<UndoableCommand>) toBeCopied.redoStack.clone();
+        undoStack = new Stack<>();
+        redoStack = new Stack<>();
+        undoStack.addAll(toBeCopied.undoStack);
+        redoStack.addAll(toBeCopied.redoStack);
     }
 
     /**

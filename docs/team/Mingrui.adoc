@@ -4,34 +4,57 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Rolodex
-Rolodex is a desktop Address Book application for computing professionals who prefer working without a mouse to manage their contacts more efficiently.
-Rolodex is an extension of AddressBook - Level 4, which is a desktop address book application used for teaching Software Engineering principles.
-The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+include::../../README.adoc[tag=applicationDescription]
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/main/mingruiii.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/test/jo-lyn.md[Test code]]
 
-=== Enhancement Added: Add a drop down list for command input
+=== Enhancement Added: Auto-completion
 
 ==== External behavior
+
+---
+
+include::../UserGuide.adoc[leveloffset=2,tag=autocomplete]
+
+---
 
 
 ==== Justification
 
-When users forget the command formats, they can easily view them in the drop down list, without having to go to the help page.
+It is difficult for the user to remember all the fields and the corresponding prefixes. Auto-completion ensures that the user will know exactly what is required.
+Auto-selection of the placeholder will improve user experience by a lot, because the user can directly type in information without having to manually place the cursor.
 
 ==== Implementation
 
+include::../DeveloperGuide.adoc[leveloffset=2,tag=auto-completion]
 
+=== Enhancement Added: Opening email composer
 
-=== Enhancement Proposed: Enable auto-completion in the command line
+==== External behavior
 
-Update the drop-down list as the user type in the command, to suggest possible command that the user wants to type.
+---
+
+include::../UserGuide.adoc[leveloffset=2,tag=email]
+
+---
+
+==== Justification
+
+This feature makes emailing a contact much easier. The user no longer has to go through the tedious process of copying the contact's email address, opening the email application
+or website and pasting the email address there. All these can be done with a short and simple command within two seconds.
+
+=== Enhancement Proposed: Integration of social media
+
+Link Rolodex with the user's Facebook account and automatically match contacts in Rolodex to the user's Facebook friends, so that the user can view their friends' social media updates in Rolodex.
 
 === Other contributions
 
-* Updated the General Documentation (Pull requests https://github.com[#7])
-* Added abbreviations for commands (Pull requests https://github.com[#10])
+* Updated the General Documentation (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/7[#7] https://github.com/CS2103AUG2017-W11-B2/main/pull/22[#22])
+* Added abbreviations for commands (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/10[#10])
+* Added hotkeys for auto-completion commands (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/87[#87])
+* Added confirmation dialog for delete, clear and exit commands (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/114[#114])
 
-== Project: https://zy-ang.github.io/AutoNameGenerator/[AutoNameGenerator]
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+endif::[]
+ifndef::env-github[]
+include::../NavigationMenu.adoc[]
+endif::[]

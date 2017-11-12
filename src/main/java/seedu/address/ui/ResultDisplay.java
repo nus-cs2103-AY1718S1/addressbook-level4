@@ -18,6 +18,9 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
  */
 public class ResultDisplay extends UiPart<Region> {
 
+    public static final String WELCOME_TEXT = "Welcome to Rolodex! If you need somewhere to start, "
+            + "type \"help\" to view the user guide.";
+
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
 
@@ -30,6 +33,7 @@ public class ResultDisplay extends UiPart<Region> {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);
         registerAsAnEventHandler(this);
+        resultDisplay.setPromptText(WELCOME_TEXT);
     }
 
     public void setFocus() {

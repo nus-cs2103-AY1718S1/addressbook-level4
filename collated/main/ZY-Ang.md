@@ -243,7 +243,7 @@ public class InvalidExtensionException extends IOException {
 ```
 ###### \java\seedu\address\logic\commands\ListCommand.java
 ``` java
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ":"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": "
             + "Displays all persons in the rolodex, "
             + "sorted by the specified sort order or the default sort order." + "\n"
             + "Parameters: " + MESSAGE_SORT_USAGE + "\n"
@@ -381,6 +381,154 @@ public class StarWarsCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\Suggestion.java
+``` java
+/**
+ * Suggests another command that could be used for execution.
+ */
+public class Suggestion {
+
+    public static final String COMMAND_WORD = "y";
+    public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
+            new HashSet<>(Arrays.asList(COMMAND_WORD, "yes", "ok", "yea", "yeah"));
+
+    private static final int COMMAND_TYPO_TOLERANCE = 3;
+
+    private final String commandWord;
+    private final String arguments;
+
+    public Suggestion(String commandWord, String arguments) {
+        this.commandWord = commandWord.trim();
+        this.arguments = arguments.trim();
+    }
+
+    /**
+     * Returns an instructional message that suggests the actual command to be executed.
+     */
+    public String getPromptMessage() {
+        return String.format(MESSAGE_PROMPT_COMMAND, getCommandString());
+    }
+
+    /**
+     * Returns a formatted command string in the format
+     * in which users would typically enter into the command box.
+     */
+    public String getCommandString() {
+        String closestCommand = getClosestCommandWord();
+        return closestCommand + getFormattedArgs(closestCommand);
+    }
+
+    /**
+     * Returns {@code true} if the arguments can be converted
+     * into proper arguments for the given {@code closestCommand}.
+     */
+    private boolean isFormattableArgs(String closestCommand) {
+        String formattedArgs = getFormattedArgs(closestCommand);
+        return closestCommand != null
+                && formattedArgs != null;
+    }
+
+    /**
+     * Returns the formatted arguments given a {@code closestCommand}
+     * or a {@code null} {@code String} if not formattable.
+     */
+    public String getFormattedArgs(String closestCommand) {
+        // Custom parser for AddCommand.
+        if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            // TODO: v1.5 try to match arguments with ALL person models, otherwise return null
+
+        // Custom parser for EditCommand.
+        } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            // TODO: v1.5 try to match arguments with SOME person models, otherwise return null
+
+        // Custom parser for RemarkCommand.
+        } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            return RemarkCommandParser.parseArguments(commandWord, arguments);
+
+        // Custom parser for FindCommand.
+        } else if (FindCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            return FindCommandParser.parseArguments(arguments);
+
+        // Commands with directory-type arguments.
+        } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
+                || NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            if (tryParseFilePath(arguments)) {
+                return " " + parseFirstFilePath(arguments);
+            }
+
+        // Commands with simple index-type arguments.
+        } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
+                || DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            if (tryParseInt(arguments)) {
+                return " " + Integer.toString(parseFirstInt(arguments));
+            } else if (tryParseInt(commandWord)) {
+                return " " + Integer.toString(parseFirstInt(commandWord));
+            }
+
+        // Commands with no arguments.
+        } else if (ClearCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
+                || ListCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
+                || HistoryCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
+                || ExitCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
+                || HelpCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
+                || UndoCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)
+                || RedoCommand.COMMAND_WORD_ABBREVIATIONS.contains(closestCommand)) {
+            return "";
+        }
+        return null;
+    }
+
+    private String setToAmerican(String input) {
+        String output = input;
+        JLanguageTool langTool = new JLanguageTool(new AmericanEnglish());
+        try {
+            List<RuleMatch> matches = langTool.check(output);
+            while (!matches.isEmpty()) {
+                RuleMatch match = matches.iterator().next();
+                output = output.substring(0, match.getFromPos())
+                        + match.getSuggestedReplacements().iterator().next()
+                        + output.substring(match.getToPos());
+                matches = langTool.check(output);
+            }
+        } catch (IOException e) {
+            return null;
+        }
+        return output;
+    }
+
+    /**
+     * Returns the command word closest to the entered command
+     * (in terms of levenshteinDistance).
+     *
+     * Returns a {@code null} {@code String} if no possible
+     * command word exists within the tolerance level specified
+     * by {@code COMMAND_TYPO_TOLERANCE}.
+     */
+    public String getClosestCommandWord() {
+        int min = COMMAND_TYPO_TOLERANCE;
+        String word = null;
+        for (String possibleCommand : POSSIBLE_COMMAND_WORDS) {
+            int distance = levenshteinDistance(commandWord, possibleCommand);
+            if (distance < min) {
+                min = distance;
+                word = possibleCommand;
+            }
+        }
+        return word;
+    }
+
+    /**
+     * Returns {@code true} if the {@code commandWord} and
+     * {@code arguments} can be successfully converted
+     * into a {@code Command}, {@code false} otherwise.
+     */
+    public boolean isSuggestible() {
+        String closestCommand = getClosestCommandWord();
+        return closestCommand != null
+                && isFormattableArgs(closestCommand);
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\UndoCommand.java
 ``` java
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
@@ -393,6 +541,16 @@ public class StarWarsCommand extends Command {
 ```
 ###### \java\seedu\address\logic\LogicManager.java
 ``` java
+    @Override
+    public UndoRedoStack getUndoRedoStack() {
+        return undoRedoStack;
+    }
+
+    @Override
+    public void clearUndoRedoStack() {
+        undoRedoStack.clear();
+    }
+
     @Override
     public ObservableList<ReadOnlyPerson> getLatestPersonList() {
         return model.getLatestPersonList();
@@ -407,6 +565,7 @@ public class StarWarsCommand extends Command {
                     PREFIX_PHONE,
                     PREFIX_EMAIL,
                     PREFIX_ADDRESS,
+                    PREFIX_REMARK,
                     PREFIX_TAG
             ));
 
@@ -423,6 +582,9 @@ public class StarWarsCommand extends Command {
             new SortArgument(PREFIX_EMAIL.toString());
     public static final SortArgument SORT_ARGUMENT_ADDRESS_DEFAULT =
             new SortArgument(PREFIX_ADDRESS.toString());
+    public static final SortArgument SORT_ARGUMENT_REMARK_DEFAULT =
+            new SortArgument(PREFIX_REMARK.toString());
+
     public static final SortArgument SORT_ARGUMENT_NAME_ASCENDING =
             new SortArgument(PREFIX_NAME.concat(POSTFIX_ASCENDING));
     public static final SortArgument SORT_ARGUMENT_PHONE_ASCENDING =
@@ -431,6 +593,9 @@ public class StarWarsCommand extends Command {
             new SortArgument(PREFIX_EMAIL.concat(POSTFIX_ASCENDING));
     public static final SortArgument SORT_ARGUMENT_ADDRESS_ASCENDING =
             new SortArgument(PREFIX_ADDRESS.concat(POSTFIX_ASCENDING));
+    public static final SortArgument SORT_ARGUMENT_REMARK_ASCENDING =
+            new SortArgument(PREFIX_REMARK.concat(POSTFIX_ASCENDING));
+
     public static final SortArgument SORT_ARGUMENT_NAME_DESCENDING =
             new SortArgument(PREFIX_NAME.concat(POSTFIX_DESCENDING));
     public static final SortArgument SORT_ARGUMENT_PHONE_DESCENDING =
@@ -439,6 +604,8 @@ public class StarWarsCommand extends Command {
             new SortArgument(PREFIX_EMAIL.concat(POSTFIX_DESCENDING));
     public static final SortArgument SORT_ARGUMENT_ADDRESS_DESCENDING =
             new SortArgument(PREFIX_ADDRESS.concat(POSTFIX_DESCENDING));
+    public static final SortArgument SORT_ARGUMENT_REMARK_DESCENDING =
+            new SortArgument(PREFIX_REMARK.concat(POSTFIX_DESCENDING));
 
     /* SortArgument set */
     public static final Set<SortArgument> POSSIBLE_SORT_ARGUMENTS =
@@ -447,23 +614,79 @@ public class StarWarsCommand extends Command {
                     SORT_ARGUMENT_PHONE_DEFAULT,
                     SORT_ARGUMENT_EMAIL_DEFAULT,
                     SORT_ARGUMENT_ADDRESS_DEFAULT,
+                    SORT_ARGUMENT_REMARK_DEFAULT,
                     SORT_ARGUMENT_NAME_DESCENDING,
                     SORT_ARGUMENT_PHONE_DESCENDING,
                     SORT_ARGUMENT_EMAIL_DESCENDING,
                     SORT_ARGUMENT_ADDRESS_DESCENDING,
+                    SORT_ARGUMENT_REMARK_DESCENDING,
                     SORT_ARGUMENT_NAME_ASCENDING,
                     SORT_ARGUMENT_PHONE_ASCENDING,
                     SORT_ARGUMENT_EMAIL_ASCENDING,
-                    SORT_ARGUMENT_ADDRESS_ASCENDING));
+                    SORT_ARGUMENT_ADDRESS_ASCENDING,
+                    SORT_ARGUMENT_REMARK_ASCENDING));
+
+    /* Command abbreviations set */
+    public static final Set<String> POSSIBLE_COMMAND_WORDS = ImmutableSet.<String>builder()
+        .addAll(AddCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(ClearCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(DeleteCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(EditCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(ExitCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(FindCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(HelpCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(HistoryCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(ListCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(NewCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(OpenCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(RedoCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(RemarkCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(SelectCommand.COMMAND_WORD_ABBREVIATIONS)
+        .addAll(UndoCommand.COMMAND_WORD_ABBREVIATIONS)
+        .build();
+```
+###### \java\seedu\address\logic\parser\exceptions\ParseArgsException.java
+``` java
+/**
+ * Represents a parse error encountered by a parser when handling arguments.
+ */
+public class ParseArgsException extends IllegalValueException {
+
+    public ParseArgsException(String message) {
+        super(message);
+    }
+
+    public ParseArgsException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\exceptions\SuggestibleParseException.java
+``` java
+/**
+ * Represents an invalid argument error encountered by a parser.
+ * Used to handle suggestions.
+ */
+public class SuggestibleParseException extends IllegalValueException {
+
+    public SuggestibleParseException(String message) {
+        super(message);
+    }
+
+    public SuggestibleParseException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\FindCommandParser.java
 ``` java
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
+     * @throws ParseArgsException if the user input does not conform the expected format but can be suggested to.
      */
-    public FindCommand parse(String args) throws ParseException {
+    public FindCommand parse(String args) throws ParseException, ParseArgsException {
         String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {
@@ -477,10 +700,23 @@ public class StarWarsCommand extends Command {
         setupArguments(keywords, dataKeywords, sortArgumentList, FindCommand.MESSAGE_USAGE);
 
         if (dataKeywords.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseArgsException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         return new FindCommand(new PersonDataContainsKeywordsPredicate(dataKeywords), sortArgumentList);
+    }
+
+    /**
+     * Returns a formatted argument string given unformatted {@code rawArgs}
+     * or a {@code null} {@code String} if not formattable.
+     */
+    public static String parseArguments(String rawArgs) {
+        // Check if null and is a non-empty string.
+        requireNonNull(rawArgs);
+        if (!rawArgs.trim().isEmpty()) {
+            return " " + rawArgs.trim();
+        }
+        return null;
     }
 ```
 ###### \java\seedu\address\logic\parser\ListCommandParser.java
@@ -560,6 +796,170 @@ public class OpenCommandParser implements Parser<OpenCommand> {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Returns the first integer found in a {@code String}.
+     * @param value to be parsed.
+     * @return {@code int} positive, non-zero value of the integer.
+     * @throws NumberFormatException if no integer was found.
+     */
+    public static int parseFirstInt(String value) throws NumberFormatException {
+        Pattern numbers = Pattern.compile("-?\\d+");
+        Matcher m = numbers.matcher(value);
+        if (m.find()) {
+            int firstInt = Integer.parseInt(m.group());
+            if (firstInt != 0) {
+                return Math.abs(firstInt);
+            }
+        }
+        throw new NumberFormatException();
+    }
+
+    /**
+     * Returns a {@code String} after the first integer has been removed.
+     * @param value to be parsed.
+     * @return a {@code String} without the first integer.
+     */
+    public static String parseRemoveFirstInt(String value) {
+        String firstInt;
+        try {
+            firstInt = Integer.toString(parseFirstInt(value));
+        } catch (NumberFormatException e) {
+            firstInt = "";
+        }
+        return value.substring(0, value.indexOf(firstInt)).trim()
+                .concat(" ")
+                .concat(value.substring(value.indexOf(firstInt) + firstInt.length()).trim()).trim();
+    }
+
+    /**
+     * Attempts to parse a {@code String} to a file path.
+     * Looks for a regex given a value and parses the first instance of the file path.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean tryParseFilePath(String value) {
+        try {
+            parseFirstFilePath(value);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the file path found in a {@code String}.
+     * @param value to be parsed.
+     * @return {@code String} value of the file path appended with the file extension.
+     * @throws IllegalArgumentException if no file path was found.
+     */
+    public static String parseFirstFilePath(String value) throws IllegalArgumentException {
+        Pattern filepath = Pattern.compile(FILEPATH_REGEX_NON_STRICT);
+        Matcher m = filepath.matcher(replaceBackslashes(value).trim());
+        if (m.find() && isValidRolodexStorageFilepath(m.group())) {
+            return m.group().replaceAll(ROLODEX_FILE_EXTENSION, "").trim() + ROLODEX_FILE_EXTENSION;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * Attempts to parse a {@code String} to a phone.
+     * Looks for a regex given a value and parses the first instance of the phone.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean tryParsePhone(String value) {
+        try {
+            parseFirstPhone(value);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the phone found in a {@code String}.
+     * @param value to be parsed.
+     * @return {@code String} value of the phone.
+     * @throws IllegalArgumentException if no phone was found.
+     */
+    public static String parseFirstPhone(String value) throws IllegalArgumentException {
+        Pattern phone = Pattern.compile(PHONE_VALIDATION_REGEX);
+        Matcher m = phone.matcher(value);
+        if (m.find()) {
+            return m.group();
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * Returns a {@code String} after the first phone has been removed.
+     * @param value to be parsed.
+     * @return a {@code String} without the first phone.
+     */
+    public static String parseRemoveFirstPhone(String value) {
+        String firstPhone;
+        try {
+            firstPhone = parseFirstPhone(value);
+        } catch (IllegalArgumentException e) {
+            firstPhone = "";
+        }
+        return value.substring(0, value.indexOf(firstPhone)).trim()
+                .concat(" ")
+                .concat(value.substring(value.indexOf(firstPhone) + firstPhone.length()).trim()).trim();
+    }
+
+    /**
+     * Attempts to parse a {@code String} to a email.
+     * Looks for a regex given a value and parses the first instance of the email.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean tryParseEmail(String value) {
+        try {
+            parseFirstEmail(value);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the email found in a {@code String}.
+     * @param value to be parsed.
+     * @return {@code String} value of the email.
+     * @throws IllegalArgumentException if no email was found.
+     */
+    public static String parseFirstEmail(String value) throws IllegalArgumentException {
+        Pattern email = Pattern.compile(EMAIL_VALIDATION_REGEX);
+        Matcher m = email.matcher(value);
+        if (m.find()) {
+            return m.group();
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * Returns a {@code String} after the first email has been removed.
+     * @param value to be parsed.
+     * @return a {@code String} without the first email.
+     */
+    public static String parseRemoveFirstEmail(String value) {
+        String firstEmail;
+        try {
+            firstEmail = parseFirstEmail(value);
+        } catch (IllegalArgumentException e) {
+            firstEmail = "";
+        }
+        return value.substring(0, value.indexOf(firstEmail)).trim()
+                .concat(" ")
+                .concat(value.substring(value.indexOf(firstEmail) + firstEmail.length()).trim()).trim();
+    }
+```
 ###### \java\seedu\address\logic\parser\Postfix.java
 ``` java
 /**
@@ -606,8 +1006,31 @@ public class Postfix {
         return prefix.concat(postfix.toString());
     }
 ```
+###### \java\seedu\address\logic\parser\RemarkCommandParser.java
+``` java
+    /**
+     * Returns a formatted argument string given unformatted
+     * {@code commandWord} and {@code rawArgs}
+     * or a {@code null} {@code String} if not formattable.
+     */
+    public static String parseArguments(String commandWord, String rawArgs) {
+        // Check if index (number) exists, removes Remark prefix (if it exists) and re-adds it before returning.
+        if (tryParseInt(rawArgs)) {
+            String indexString = Integer.toString(parseFirstInt(rawArgs));
+            String remark = parseRemoveFirstInt(rawArgs).trim().replace(PREFIX_REMARK.toString(), "");
+            return " " + indexString + " " + PREFIX_REMARK + remark;
+        } else if (tryParseInt(commandWord)) {
+            String indexString = Integer.toString(parseFirstInt(commandWord));
+            String remark = rawArgs.trim().replace(PREFIX_REMARK.toString(), "");
+            return " " + indexString + " " + PREFIX_REMARK + remark;
+        }
+        return null;
+    }
+```
 ###### \java\seedu\address\logic\parser\RolodexParser.java
 ``` java
+    private Suggestion suggestion;
+
     /**
      * Parses user input into command for execution.
      *
@@ -615,47 +1038,99 @@ public class Postfix {
      * @return the command based on the user input
      * @throws ParseException if the user input does not conform the expected format
      */
-    public Command parseCommand(String userInput) throws ParseException {
-        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+    public Command parseCommand(String userInput) throws ParseException, SuggestibleParseException {
+        Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord").toLowerCase();
-        final String arguments = matcher.group("arguments");
-        if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new AddCommandParser().parse(arguments);
-        } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new EditCommandParser().parse(arguments);
-        } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new SelectCommandParser().parse(arguments);
-        } else if (DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new DeleteCommandParser().parse(arguments);
-        } else if (ClearCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new ClearCommand();
-        } else if (FindCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new FindCommandParser().parse(arguments);
-        } else if (ListCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new ListCommandParser().parse(arguments);
-        } else if (HistoryCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new HistoryCommand();
-        } else if (ExitCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new ExitCommand();
-        } else if (HelpCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new HelpCommand();
-        } else if (UndoCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new UndoCommand();
-        } else if (RedoCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new RedoCommand();
-        } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new OpenCommandParser().parse(arguments);
-        } else if (NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new NewCommandParser().parse(arguments);
-        }  else if (StarWarsCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            return new StarWarsCommand();
-        } else {
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        String commandWord = matcher.group("commandWord").toLowerCase();
+        String arguments = matcher.group("arguments");
+        if (suggestion != null && Suggestion.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+            commandWord = suggestion.getClosestCommandWord();
+            arguments = suggestion.getFormattedArgs(commandWord);
         }
+        suggestion = null;
+
+        try {
+            if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new AddCommandParser().parse(arguments);
+            } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new EditCommandParser().parse(arguments);
+            } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new SelectCommandParser().parse(arguments);
+            } else if (DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new DeleteCommandParser().parse(arguments);
+            } else if (ClearCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new ClearCommand();
+            } else if (FindCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new FindCommandParser().parse(arguments);
+            } else if (ListCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new ListCommandParser().parse(arguments);
+            } else if (HistoryCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new HistoryCommand();
+            } else if (ExitCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new ExitCommand();
+            } else if (HelpCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new HelpCommand();
+            } else if (UndoCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new UndoCommand();
+            } else if (RedoCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new RedoCommand();
+            } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new OpenCommandParser().parse(arguments);
+            } else if (NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new NewCommandParser().parse(arguments);
+            } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new RemarkCommandParser().parse(arguments);
+            }  else if (StarWarsCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new StarWarsCommand();
+            } else {
+                handleSuggestion(commandWord, arguments);
+            }
+        } catch (ParseArgsException e) {
+            handleSuggestion(commandWord, arguments, e);
+        }
+
+        throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    /**
+     * Tries to parse a {@code commandWord} and {@code arguments} into
+     * a {@code Suggestion} to be handled by the next parse instruction if
+     * the user chooses.
+     * @param commandWord to be parsed into Suggestion
+     * @param arguments to be parsed into Suggestion
+     * @throws SuggestibleParseException if tbe command word and arguments are suggestible,
+     * @throws ParseException otherwise.
+     */
+    private void handleSuggestion(String commandWord, String arguments)
+            throws SuggestibleParseException, ParseException {
+        suggestion = new Suggestion(commandWord, arguments);
+        if (suggestion.isSuggestible()) {
+            throw new SuggestibleParseException(suggestion.getPromptMessage());
+        }
+        suggestion = null;
+        throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    /**
+     * Tries to parse a {@code commandWord} and {@code arguments} into
+     * a {@code Suggestion} to be handled by the next parse instruction if
+     * the user chooses.
+     * @param commandWord to be parsed into Suggestion
+     * @param arguments to be parsed into Suggestion
+     * @throws SuggestibleParseException if tbe command word and arguments are suggestible,
+     * @throws ParseException otherwise.
+     */
+    private void handleSuggestion(String commandWord, String arguments, ParseArgsException pae)
+            throws SuggestibleParseException, ParseException {
+        suggestion = new Suggestion(commandWord, arguments);
+        if (suggestion.isSuggestible()) {
+            throw new SuggestibleParseException(suggestion.getPromptMessage());
+        }
+        suggestion = null;
+        throw new ParseException(pae.getMessage(), pae);
     }
 ```
 ###### \java\seedu\address\logic\parser\SortArgument.java
@@ -760,6 +1235,7 @@ public class SortUtil {
         storage.setNewRolodexStorage(rolodexStorage);
         Model modelToBeLoaded = initModelManager(storage, userPrefs);
         model.resetData(modelToBeLoaded.getRolodex());
+        logic.clearUndoRedoStack();
         EventsCenter.getInstance().post(new RolodexChangedDirectoryEvent(newRolodexPath));
     }
 ```
@@ -837,6 +1313,13 @@ public class SortUtil {
     //=========== Latest Person List Accessors =============================================================
 
     /**
+     * Returns the index of the given person
+     */
+    public Index getIndex(ReadOnlyPerson target) {
+        return Index.fromZeroBased(sortedPersons.indexOf(target));
+    }
+
+    /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
      * {@code rolodex}
      */
@@ -895,7 +1378,7 @@ public class SortUtil {
 ###### \java\seedu\address\model\person\Name.java
 ``` java
     public int compareTo(Name other) {
-        return toString().compareTo(other.toString());
+        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 ```
 ###### \java\seedu\address\model\person\Person.java
@@ -968,8 +1451,10 @@ public class SortUtil {
             return c;
         } else if ((c = getEmail().compareTo(otherPerson.getEmail())) != 0) {
             return c;
+        } else if ((c = getAddress().compareTo(otherPerson.getAddress())) != 0) {
+            return c;
         } else {
-            return getAddress().compareTo(otherPerson.getAddress());
+            return getRemark().compareTo(otherPerson.getRemark());
         }
     }
 
@@ -990,6 +1475,8 @@ public class SortUtil {
             return getEmail().compareTo(otherPerson.getEmail());
         } else if (sortArgument.equals(SORT_ARGUMENT_ADDRESS_DEFAULT)) {
             return getAddress().compareTo(otherPerson.getAddress());
+        } else if (sortArgument.equals(SORT_ARGUMENT_REMARK_DEFAULT)) {
+            return getRemark().compareTo(otherPerson.getRemark());
         } else if (sortArgument.equals(SORT_ARGUMENT_NAME_DESCENDING)) {
             return otherPerson.getName().compareTo(getName());
         } else if (sortArgument.equals(SORT_ARGUMENT_PHONE_DESCENDING)) {
@@ -998,6 +1485,8 @@ public class SortUtil {
             return otherPerson.getEmail().compareTo(getEmail());
         } else if (sortArgument.equals(SORT_ARGUMENT_ADDRESS_DESCENDING)) {
             return otherPerson.getAddress().compareTo(getAddress());
+        } else if (sortArgument.equals(SORT_ARGUMENT_REMARK_DESCENDING)) {
+            return otherPerson.getRemark().compareTo(getRemark());
         } else if (sortArgument.equals(SORT_ARGUMENT_NAME_ASCENDING)) {
             return getName().compareTo(otherPerson.getName());
         } else if (sortArgument.equals(SORT_ARGUMENT_PHONE_ASCENDING)) {
@@ -1006,6 +1495,8 @@ public class SortUtil {
             return getEmail().compareTo(otherPerson.getEmail());
         } else if (sortArgument.equals(SORT_ARGUMENT_ADDRESS_ASCENDING)) {
             return getAddress().compareTo(otherPerson.getAddress());
+        } else if (sortArgument.equals(SORT_ARGUMENT_REMARK_ASCENDING)) {
+            return getRemark().compareTo(otherPerson.getRemark());
         } else {
             return compareTo(otherPerson);
         }
@@ -1163,7 +1654,8 @@ public class PersonSortingUtil {
  */
 public class RolodexStorageUtil {
 
-    public static final Pattern FILEPATH_REGEX = Pattern.compile("^(.+)/([^/]+)$");
+    public static final String FILEPATH_REGEX = "^(.+)/([^/]+)$";
+    public static final String FILEPATH_REGEX_NON_STRICT = "(.+)/([^/]+)";
 
     public static final String ROLODEX_FILE_EXTENSION = ".rldx";
 
@@ -1178,7 +1670,8 @@ public class RolodexStorageUtil {
      * Returns true if the full filepath string given is a valid filepath
      */
     public static boolean isValidRolodexStorageFilepath(String rolodexFilepath) {
-        return FILEPATH_REGEX.matcher(rolodexFilepath).matches();
+        Pattern filepath = Pattern.compile(FILEPATH_REGEX);
+        return filepath.matcher(rolodexFilepath).matches();
     }
 }
 ```
@@ -1218,9 +1711,80 @@ public class RolodexStorageUtil {
         return filePath.equals(other.filePath);
     }
 ```
+###### \java\seedu\address\ui\CommandBox.java
+``` java
+    /**
+     * Handles the Enter button pressed event.
+     */
+    @FXML
+    protected void handleCommandInputChanged() {
+        try {
+            CommandResult commandResult = logic.execute(commandTextField.getText());
+            initHistory();
+            historySnapshot.next();
+            // process result of the command
+            commandTextField.setText("");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+
+        } catch (CommandException | ParseException e) {
+            initHistory();
+            // handle command failure
+            setStyleToIndicateCommandFailure();
+            logger.info("Invalid command, un-suggestible: " + commandTextField.getText());
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        } catch (SuggestibleParseException e) {
+            initHistory();
+            // handle command failure
+            logger.info("Invalid command, suggestible: " + commandTextField.getText());
+            commandTextField.setText("");
+            setStyleToIndicateCommandFailure();
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+    }
+```
 ###### \java\seedu\address\ui\HelpWindow.java
 ``` java
     public static final String HELP_FILE_PATH = "/docs/Help.html";
+```
+###### \java\seedu\address\ui\HelpWindow.java
+``` java
+    public HelpWindow() {
+        super(FXML);
+
+        txtSearch.setOnAction(event -> {
+            if (browser.getEngine().getDocument() != null) {
+                highlight(browser.getEngine(), txtSearch.getText());
+            }
+        });
+
+        btnSearch.setDefaultButton(true);
+        btnSearch.setOnAction(actionEvent -> txtSearch.fireEvent(new ActionEvent()));
+
+        btnClear.setOnAction(actionEvent -> clearHighlights(browser.getEngine()));
+        btnClear.setCancelButton(true);
+
+        controls.disableProperty().bind(browser.getEngine().getLoadWorker().runningProperty());
+        txtSearch.disableProperty().bind(browser.getEngine().getLoadWorker().runningProperty());
+
+        Scene scene = new Scene(getRoot());
+        //Null passed as the parent stage to make it non-modal.
+        dialogStage = createDialogStage(TITLE, null, scene);
+        dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+        FxViewUtil.setStageIcon(dialogStage, ICON);
+
+        String userGuideUrl = getClass().getResource(HELP_FILE_PATH).toString();
+        browser.getEngine().load(userGuideUrl);
+    }
+
+    private void highlight(WebEngine engine, String text) {
+        engine.executeScript("$('body').removeHighlight().highlight('" + text + "')");
+    }
+
+    private void clearHighlights(WebEngine engine) {
+        engine.executeScript("$('body').removeHighlight()");
+        txtSearch.clear();
+    }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java

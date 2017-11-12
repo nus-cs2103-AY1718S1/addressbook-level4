@@ -3,6 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
+import static seedu.address.ui.ResultDisplay.WELCOME_TEXT;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,9 @@ public class ResultDisplayTest extends GuiUnitTest {
 
     @Test
     public void display() {
+        // prompt text
+        assertEquals(WELCOME_TEXT, resultDisplayHandle.getPromptText());
+
         // default result text
         guiRobot.pauseForHuman();
         assertEquals("", resultDisplayHandle.getText());

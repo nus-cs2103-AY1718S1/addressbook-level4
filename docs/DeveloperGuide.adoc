@@ -764,26 +764,39 @@ public void handleKeyPress() {
 }
 ----
 The `mainNode` refers to the node containing the all UI components in the application,
-and `addEventFilter` captures key events received by that node.
+and `addEventFilter` captures key events received by that node. The application will continue to listen
+to key presses done by the user once this method is called.
 
-NOTE: Another common method used for capturing key events is `keyOnPressed`.
+NOTE: Another common method used for capturing key events is `onKeyPressed`.
 In this case, `addEventFilter` is used instead as key events captured by the former will be consumed by the `TextField` used in the application.
 `addEventFilter` captures the key events before they are consumed by the `TextField`.
 
-When the user presses a key combination which matches one that is assigned to the `KeyCombination` attribute in the `KeyListenerUtil` class, the corresponding action will be executed.
+When the user presses a key combination which matches one that is assigned, a corresponding action will be executed.
 An example of such an execution is given as shown:
 
 [source, java]
 ----
 private void executeKeyEvents(KeyEvent keyEvent) {
-	if (FOCUS_PERSON_LIST.match(keyEvent)) {
+	if (KEY_COMBINATION_FOCUS_PERSON_LIST.match(keyEvent)) {
 		// action to focus on person list
 	}
 	// … more cases
 }
 ----
-Where the key combination `FOCUS_PERSON_LIST` matches the `keyEvent` captured by the event filter.
+Where the application focuses on the person list when the user presses a key combination that is assigned to `KEY_COMBINATION_FOCUS_PERSON_LIST`.
 
+The mapping of `KEY_COMBINATION_FOCUS_PERSON_LIST` to a key combination can be found in the `KeyListenerUtil` class.
+
+[source, java]
+----
+public class KeyListenerUtil {
+
+    public static final KeyCombination KEY_COMBINATION_FOCUS_PERSON_LIST = KeyCombination.valueOf("Esc");
+    // … more mappings
+}
+----
+In this case, `KEY_COMBINATION_FOCUS_PERSON_LIST` is mapped to the kbd:[esc] key. As such, a user
+pressing the kbd:[esc] key will result in the application focusing on the person list.
 
 ==== Design Considerations
 
@@ -804,6 +817,194 @@ Where the key combination `FOCUS_PERSON_LIST` matches the `keyEvent` captured by
 **Cons:**  An extra step for user to execute the command, i.e. pressing `Enter`.
 
 // end::shortcut[]
+
+[[detailPanel]]
+=== Person Detail Panel
+
+// tag::detailPanelBehavior[]
+
+The person detail panel displays the complete information of a person that is selected.
+
+image::detailPanel.png[width="600"]
+
+image::detailPanelLabeled.png[width="600"]
+
+// end::detailPanelBehavior[]
+
+// tag::detailPanelImp[]
+
+The behavior of the panel is mostly event-driven, where the information displayed on the panel
+changes depending on various user actions, such as a person selection, editing of a person, addition of a person, etc.
+
+For example, the sequence diagram below shows the sequence of events to update the panel display when the user edits a person
+(the logic aspect of updating the person detail is omitted for brevity).
+
+image::DetailPanelSequenceDiagram.png[width="800"]
+
+The information displayed on the panel is extracted from the `ReadOnlyPerson` that is returned by the `EventsCenter`.
+The details of the implementation can be seen from the following code snippets.
+
+[source, java]
+----
+/**
+* Shows the details of the person on the panel
+*/
+private void showPersonDetails(ReadOnlyPerson person) {
+    setAvatar(person);
+    setTextFields(person);
+    setTags(person);
+}
+----
+
+The `showPersonDetails` method is called when a `PersonEditedEvent` is raised, which occurs when the user edits a person.
+
+[source,java]
+----
+/**
+* Updates the panel when the details of the selected person is changed
+*/
+@Subscribe
+private void handlePersonDetailsChangedEvent(PersonEditedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    showPersonDetails(event.editedPerson);
+}
+----
+
+The behavior of the panel is summarized in the table below.
+
+[width=60%, cols="2,3"]
+|===
+| User Action | Panel Behavior
+
+| Select a person | Display selected person
+| Edit a person | Display newly edited person
+| Add a person | Display newly added person
+| Clear the list | Display empty panel
+| Call undo | Display empty panel
+| Call redo | Behavior as per command that is redone
+| Other commands | No change in display
+|===
+
+==== Design Considerations
+
+**Aspect:** Synchronization of person details with the panel display +
+**Alternative 1 (current choice):** Using the event system to update the panel +
+**Pros:** Allows for custom panel behavior for different user actions. +
+**Cons:** Increase coupling as updating the panel relies on the logic component for user actions involving commands. +
+**Alternative 2:** Bind the fields in the panel to their corresponding object properties +
+**Pros:** Less coupling. +
+**Cons:**  Higher implementation overhead to set up the bindings properly and
+difficult to enforce custom panel behaviour for specific user actions.
+// end::detailPanelImp[]
+
+// tag::uiImprovements[]
+=== UI Improvements
+
+The user interface of the application has been revamped to take on a clean design, which aims to improve
+the user's experience with Rolodex.
+
+image::Ui2.png[width="800"]
+
+Other improvements made to the UI include the following features:
+
+==== Randomized Avatars Colors
+
+Avatar colors are randomized and generated over a color range to reduce the chance of two adjacent persons sharing the same avatar color.
+Some results from using this color generator can be seen from the following screenshots.
+
+image:avatars.png[width="300"] image:avatars2.png[width="300"]
+
+The generation of avatar colors involves two steps: +
+
+1. Randomly pick a default color from `ColorsUtil`, which contains a list of selected colors chosen from
+link:https://www.materialui.co/blog/what-is-material-ui/[Google's material ui color palette]. +
+2. Generate a randomized offset value to create a new color which values differ from the default color by this offset.
+
+The code snippet below shows the details of how the color values are manipulated in the color generator.
+[source, java]
+----
+/**
+* Generates a new color with a random offset from {@code Color defaultColor}.
+*
+* @return The new color in hexadecimal {@code String} format
+*/
+private static String generateNewColor(Color defaultColor) {
+    int r = defaultColor.getRed();
+    int g = defaultColor.getGreen();
+    int b = defaultColor.getBlue();
+
+    int newR = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (r + generateOffset())));
+    int newG = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (g + generateOffset())));
+    int newB = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (b + generateOffset())));
+
+    return String.format("#%02x%02x%02x", newR, newG, newB);
+}
+----
+
+An upper bound is applied to the offset to ensure that the new color does not deviate too far from the default color.
+
+==== Keyboard Icon
+
+A keyboard icon is added in the command box to provide visual feedback for certain user events:
+
+** image:keyboard.png[width="30"] : User is idle
+** image:keyboardTyping.png[width="30"] : User is typing
+** image:keyboardError.png[width="30"] : User entered an invalid command
+
+The keyboard icon is updated by setting `ImageView` of the icon to one of the three variations as shown above, whichever is appropriate
+for the current state of the user.
+
+In particular, to check that the user is idle, we measure the time elapsed since any changes made to the
+`CommandBox`. This is done with the `PauseTransition` class from JavaFX, which allows us to execute an event after a set duration.
+For better illustration, below is a simplified code snippet of the implementation.
+
+[source, java]
+----
+private void updateKeyboardIcon() {
+
+    // set icon to typing keyboard
+
+    pause.setOnFinished(event -> {
+        // set icon to idle keyboard
+    });
+    pause.playFromStart(); // reset timer
+}
+----
+`pause` is a `PauseTransition` object, and `setOnFinished` takes in an event handler as its parameter.
+
+==== Autoselection for Newly Added/Edited Person
+
+A newly added, or edited person will automatically be selected in the `PersonListPanel`. This makes it easier for the user to take note
+of changes made to their contacts.
+
+This implementation is done by raising an event whenever the add and edit commands are executed.
+The `PersonListPanel` is registered as an event handler and will subsequently scroll to the person that is newly modified.
+
+This feature is integrated with the link:#detailPanel[Person Detail Panel implementation], and more details on the event handling
+can be found under the section.
+
+==== Responsive Split Pane
+
+The split pane which separates the contact list from the other UI components is responsive.
+Its divider is automatically maintained at the optimal position when the window size changes.
+
+This is achieved by setting up listeners to the property of the window. The divider will be repositioned when the listener
+detects any changes in the window property. The code below illustrates the implementation in greater detail.
+
+[source, java]
+----
+private void setSplitPaneDividerPosition() {
+
+    // repositions divider when window is just showed
+    primaryStage.showingProperty().addListener((observable, oldValue, newValue) ->
+            splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
+
+    // repositions divider when window width changes
+    primaryStage.widthProperty().addListener((observable, oldValue, newValue) ->
+            splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
+}
+----
+// end::uiImprovements[]
 
 // tag::helpWindowHighlight[]
 === Help Window Highlighting
@@ -945,6 +1146,13 @@ private void clearHighlights(WebEngine engine) {
 .highlight{background-color:yellow}
 ----
 // end::helpWindowHighlight[]
+
+// tag::suggestion[]
+== Suggestions Mechanism
+// The suggestion mechanism is implemented at Rolodex's parser level under the logic component.
+// TODO: v1.5
+This feature is a work in progress for v1.5.
+// end::suggestion[]
 
 === Logging
 

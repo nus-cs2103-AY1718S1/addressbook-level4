@@ -10,6 +10,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.RolodexParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.exceptions.SuggestibleParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -32,7 +33,8 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException {
+    public CommandResult execute(String commandText)
+            throws CommandException, ParseException, SuggestibleParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = rolodexParser.parseCommand(commandText);

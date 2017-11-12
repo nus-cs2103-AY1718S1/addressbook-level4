@@ -50,11 +50,18 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initialisePerson(ReadOnlyPerson person, int displayedIndex) {
         id.setText(Integer.toString(displayedIndex));
+        setAvatar(person);
+        setTags(person);
+    }
 
+    private void setAvatar(ReadOnlyPerson person) {
         initial.setText(Avatar.getInitial(person.getName().fullName));
         avatar.setFill(Paint.valueOf(Avatar.getColor(person.getName().fullName)));
+    }
 
-        setTags(person);
+    private void setTags(ReadOnlyPerson person) {
+        tags.getChildren().clear();
+        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
     /**
@@ -64,11 +71,6 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> setTags(person));
-    }
-
-    private void setTags(ReadOnlyPerson person) {
-        tags.getChildren().clear();
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
     @Override

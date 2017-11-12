@@ -18,20 +18,20 @@
     </columnConstraints>
     <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
       <padding>
-        <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+        <Insets bottom="33.0" left="30.0" right="30.0" top="33.0" />
       </padding>
       <HBox alignment="CENTER_LEFT" spacing="5">
             <StackPane>
                <children>
                   <Circle fx:id="avatar" fill="#4faaff" radius="25.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-                  <Label id="initial_small" fx:id="initial" alignment="CENTER" contentDisplay="CENTER" text="\$initial" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" />
+                  <Label id="initialSmall" fx:id="initial" alignment="CENTER" contentDisplay="CENTER" text="\$initial" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" />
                </children>
             </StackPane>
             <VBox alignment="CENTER_LEFT">
                <children>
                   <HBox>
                      <children>
-                    <Label fx:id="name" minWidth="0.0" styleClass="cell_big_label" text="\$first" wrapText="true" />
+                    <Label fx:id="name" minWidth="0.0" styleClass="cell-name-label" text="\$first" wrapText="true" />
                      </children>
                   </HBox>
                <FlowPane fx:id="tags" />
@@ -48,7 +48,7 @@
   </GridPane>
    <HBox alignment="CENTER_RIGHT">
       <children>
-      <Label fx:id="id" alignment="CENTER_RIGHT" minWidth="0.0" styleClass="cell_id_label" textAlignment="RIGHT" wrapText="true" />
+      <Label fx:id="id" alignment="CENTER_RIGHT" minWidth="0.0" styleClass="cell-id-label" textAlignment="RIGHT" wrapText="true" />
       </children>
       <padding>
          <Insets right="30.0" />

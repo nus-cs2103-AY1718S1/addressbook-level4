@@ -56,13 +56,16 @@ public class KeyListener {
      * Handles key press events
      */
     public void handleKeyPress() {
-
         mainNode.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (commandBox.isFocused() || !(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN)) {
+            if (isNotScrolling(event)) {
                 commandBox.processInput();
             }
             executeKeyEvent(event);
         });
+    }
+
+    private boolean isNotScrolling(KeyEvent event) {
+        return commandBox.isFocused() || !(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN);
     }
 
     /**
