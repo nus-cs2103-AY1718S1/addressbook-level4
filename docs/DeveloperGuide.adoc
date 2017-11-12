@@ -1206,7 +1206,7 @@ private void selectRecipient(Index index) {
 ----
 ==== Email Command Parser
 `EmailCommandParser` class is used to parse input arguments in the context of the `EmailCommand`. It maps the positive integer in the argument to `INDEX`,
-and the string following the prefix `s/` to `SUBJECT`. If the user did not input a subject, the subject would be an empty string. 
+and the string following the prefix `s/` to `SUBJECT`. If the user did not input a subject, the subject would be an empty string.
 
 The `SUBJECT` string must be percent-encoded, which means all the spaces must be replaced with `%20`. This is to avoid follow the URI syntax standard.
 Otherwise a `java.net.URISyntaxException` would be thrown when sending the URI. Above mentioned implementation is shown in the code snippet below.
