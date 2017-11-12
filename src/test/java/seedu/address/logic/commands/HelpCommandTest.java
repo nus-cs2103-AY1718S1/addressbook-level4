@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.HelpCommand.SHOWING_HELP_MESSAGE;
 
-import javax.swing.*;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -69,7 +68,7 @@ public class HelpCommandTest {
         result = new HelpCommand("undo").execute();
         assertEquals(UndoCommand.MESSAGE_USAGE, result.feedbackToUser);
 
-        result = new HelpCommand("bin-fresh").execute();
+        result = new HelpCommand("bin-").execute();
         assertEquals(BinclearCommand.MESSAGE_USAGE, result.feedbackToUser);
 
         result = new HelpCommand("bin-delete").execute();

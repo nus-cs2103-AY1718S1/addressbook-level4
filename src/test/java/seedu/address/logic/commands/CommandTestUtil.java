@@ -167,7 +167,7 @@ public class CommandTestUtil {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         } catch (DuplicatePersonException d) {
-            throw new AssertionError("Person in the filtered list should not be duplicate",d);
+            throw new AssertionError("Person in the filtered list should not be duplicate", d);
         }
     }
 }

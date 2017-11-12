@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
+
 import org.junit.Test;
 
 import seedu.address.logic.commands.exceptions.CommandException;
