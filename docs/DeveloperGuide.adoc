@@ -708,12 +708,30 @@ The feature is more powerful and useful than find which only searches by name.
 
 ==== Implementation
 
+The search command checks the keyword(s) given by the user against any parameters contained in the selected person
+[source,java]
+----
+public boolean test(ReadOnlyPerson person) {
+    return keywords.stream()
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAsText(), keyword));
+}
+----
+
 The keywords are generated as list of strings, which is then checked against the details of the persons
 in address book.
+[source,java]
+----
+public PersonContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+----
 
 The details are returned as strings, by the ReadOnlyPerson method in the person model. The list of searched
 people is then continually updated, before it is finally returned to the user
-
+[source,java]
+----
+ model.updateFilteredPersonList(predicate);
+----
 
 ==== Design Considerations
 
@@ -732,8 +750,28 @@ Displays the google maps location of a person's address
 When 'map' command is executed, it retrieves the current list of people,
 and selects the person's address based on the index given.
 
+[source,java]
+----
+List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+ReadOnlyPerson personToShow = lastShownList.get(index.getZeroBased());
+----
+
 The address is then passed into a url template for a page loader to display
 the google maps on the browser panel
+
+[source,java]
+----
+private void loadPersonMap(ReadOnlyPerson person) throws CommandException {
+    if (personSelected == null) {
+        throw new CommandException("Please select a person");
+    }
+    setMapsChosenTrue();
+    setLinkedinChosenFalse();
+    loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
+            + GOOGLE_SEARCH_URL_SUFFIX);
+}
+----
 
 ==== Design Considerations
 
