@@ -76,6 +76,10 @@ public class UntagCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
+        if (!tags.isEmpty() && Collections.disjoint(model.getAddressBook().getTagList(), tags)) {
+            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, joinTagList(tags)));
+        }
+
         if (toAllPersonsInFilteredList) {
             return new CommandResult(untagAllPersonsInFilteredList(lastShownList));
         }
@@ -84,10 +88,6 @@ public class UntagCommand extends UndoableCommand {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(MESSAGE_INVALID_INDEXES);
             }
-        }
-
-        if (!tags.isEmpty() && Collections.disjoint(model.getAddressBook().getTagList(), tags)) {
-            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, joinTagList(tags)));
         }
 
         return new CommandResult(untagSpecifiedPersonsInFilteredList(lastShownList));
