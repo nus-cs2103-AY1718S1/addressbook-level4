@@ -18,7 +18,6 @@ public class ReplyCommand extends Command {
     public static final String COMMAND_WORDVAR_NO = "no";
     public static final String MESSAGE_COMMAND_ROLLBACK = "Command not executed.";
     public static final String MESSAGE_COMMAND_INVALID = "No command to confirm execution.";
-    private static final String MESSAGE_COMMAND_MISHANDLED = "Command handled inappropriately!";
 
     private static Person storedPerson;
 
