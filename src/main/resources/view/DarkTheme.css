@@ -239,6 +239,14 @@
    -fx-background-color: transparent;
 }
 
+.text-area {
+    text-area-background: transparent ;
+}
+
+.text-area .content {
+    -fx-background-color: text-area-background ;
+}
+
 /*
  * Metro style Push Button
  * Author: Pedro Duque Vieira
@@ -378,7 +386,6 @@
 
 
 #resultDisplay .content {
-    -fx-background-image: url("../images/backgroundUp.jpg");
     background-color: transparent !important;
     -fx-background-radius: 0;
 }

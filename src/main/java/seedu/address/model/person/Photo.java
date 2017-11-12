@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import java.io.File;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author LuLechuan
@@ -7,6 +9,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a Person's photo in the address book.
  */
 public class Photo {
+
+    public static final String MESSAGE_PHOTO_NOT_FOUND = "The given path name does not exist";
 
     public final String pathName;
 
@@ -22,13 +26,20 @@ public class Photo {
      * Constructs with a given pathName.
      */
     public Photo(String pathName) throws IllegalValueException {
-        //requireNonNull(pathName);
-
         this.pathName = pathName;
     }
 
     public String getPathName() {
         return pathName;
+    }
+
+    /**
+     *
+     * @return true if a given pathname has unknown value
+     */
+    public static boolean isUnknownPath(String test) {
+        File file = new File(test);
+        return !file.exists();
     }
 
     @Override
