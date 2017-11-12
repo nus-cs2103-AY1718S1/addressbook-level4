@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -65,6 +66,14 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    //@@author qihao
+    @FXML
+    private Button todoButton;
+
+    @FXML
+    private Button browserButton;
+    //@@author
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -150,6 +159,13 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        //@@author qihao27
+        todoButton = new Button();
+        browserButton = new Button();
+        todoButton.setOnAction(event -> handleTodoButton());
+        browserButton.setOnAction(event -> handleBrowserButton());
+        //@@author
     }
 
     void hide() {
@@ -234,6 +250,26 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    //@@author qihao27
+    /**
+     * Toggle to todolist view.
+     */
+    @FXML
+    private void handleTodoButton() {
+        todoButton = new Button();
+        switchPlaceholderDisplay(1);
+    }
+
+    /**
+     * Toggle to browser view.
+     */
+    @FXML
+    private void handleBrowserButton() {
+        browserButton = new Button();
+        switchPlaceholderDisplay(2);
+    }
+    //@@author
+
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
@@ -254,6 +290,4 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchPlaceholderDisplay(event.mode);
     }
-    //@@author
-
 }

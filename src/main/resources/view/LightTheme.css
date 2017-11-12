@@ -96,6 +96,7 @@
 
 .list-view {
     -fx-background-insets: 0;
+    -fx-border-color: derive(#824424, 100%);
     -fx-padding: 0;
 }
 
@@ -150,7 +151,7 @@
 
 .pane-with-border {
      -fx-background-color: derive(#f3e4c6, 20%);
-     -fx-border-color: derive(#f3e4c6, 10%);
+     -fx-border-color: transparent;
      -fx-border-top-width: 1px;
 }
 
@@ -224,28 +225,32 @@
  * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
  */
 .button {
-    -fx-padding: 5 22 5 22;
-    -fx-border-color: #e2e2e2;
+    -fx-padding: 0 0 0 0;
+    -fx-border-color: derive(#824424, 70%);
     -fx-border-width: 2;
     -fx-background-radius: 0;
-    -fx-background-color: #f3e4c6;
+    -fx-background-color: derive(#824424, 100%);
+    -fx-font-weight: bold;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-font-size: 12pt;
+    -fx-text-fill: black;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: #3a3a3a;
+    -fx-background-color: derive(-fx-focus-color, 30%);
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
 .button:pressed, .button:default:hover:pressed {
-  -fx-background-color: white;
-  -fx-text-fill: #f3e4c6;
+  -fx-background-color: derive(-fx-focus-color, 30%);
+  -fx-text-fill: black;
 }
 
 .button:focused {
-    -fx-border-color: black, black;
+    -fx-background-color: derive(#824424, 70%);
+    -fx-border-color: derive(#824424, 70%);
     -fx-border-width: 1, 1;
     -fx-border-style: solid, segments(1, 1);
     -fx-border-radius: 0, 0;
@@ -332,7 +337,7 @@
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;
     -fx-background-radius: 7;
-    -fx-border-color: #383838 #383838 #383838 #383838;
+    -fx-border-color: derive(#824424, 100%);
     -fx-border-insets: 0;
     -fx-border-radius: 7;
     -fx-border-width: 1;
@@ -346,8 +351,11 @@
 }
 
 #resultDisplay .content {
-    -fx-background-color: transparent, #f3e4c6, transparent, #f3e4c6;
+    -fx-background-color: #f3e4c6;
     -fx-background-radius: 5;
+    -fx-border-color: derive(#824424, 100%);
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
 }
 
 #tags {

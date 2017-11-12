@@ -4,21 +4,24 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -30,6 +33,9 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteByNameCommand}.
  */
 public class DeleteByNameCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -61,13 +67,42 @@ public class DeleteByNameCommandTest {
     }
 
     @Test
-    public void execute_deleteByName_multiplePersonsFound() throws ParseException, CommandException {
-        String expectedMessage = "Multiple contacts with specified name found!\n"
-            + "Please add more details for distinction or use the following command:\n"
-            + DeleteCommand.MESSAGE_USAGE;
-        DeleteByNameCommand command = prepareCommand("Kurz Elle Kunz");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA),
-            Arrays.asList());
+    public void execute_validInput_success() throws Exception {
+        DeleteByNameCommand deleteByNameCommand = prepareCommand("carl");
+        String expectedMessage = String.format(DeleteByNameCommand.MESSAGE_DELETE_PERSON_SUCCESS, CARL);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(CARL);
+
+        assertCommandSuccess(deleteByNameCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_multiplePersonsFound_throwCommandException() throws Exception {
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(DeleteByNameCommand.MESSAGE_MULTIPLE_PERSON_FOUND);
+
+        DeleteByNameCommand command = prepareCommand("Meier");
+        CommandResult commandResult = command.execute();
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        assertCommandSuccess(command, model, DeleteByNameCommand.MESSAGE_MULTIPLE_PERSON_FOUND, expectedModel);
+        assertCommandExecuteSuccess(commandResult, DeleteByNameCommand.MESSAGE_MULTIPLE_PERSON_FOUND,
+            Arrays.asList(DANIEL, BENSON, HOON), Arrays.asList(DANIEL, BENSON, HOON));
+    }
+
+    @Test
+    public void execute_nameNotFound_throwCommandException() throws Exception {
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(DeleteByNameCommand.MESSAGE_PERSON_NAME_ABSENT);
+
+        DeleteByNameCommand command = prepareCommand("John");
+        CommandResult commandResult = command.execute();
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        assertCommandSuccess(command, model, DeleteByNameCommand.MESSAGE_PERSON_NAME_ABSENT, expectedModel);
+        assertCommandExecuteSuccess(commandResult, DeleteByNameCommand.MESSAGE_PERSON_NAME_ABSENT,
+            Arrays.asList(DANIEL, BENSON, HOON), Arrays.asList());
     }
 
     /**
@@ -75,7 +110,8 @@ public class DeleteByNameCommandTest {
      */
     private DeleteByNameCommand prepareCommand(String userInput) {
         DeleteByNameCommand deleteByNameCommand =
-                new DeleteByNameCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new DeleteByNameCommand(
+                new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         deleteByNameCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteByNameCommand;
     }
@@ -87,14 +123,12 @@ public class DeleteByNameCommandTest {
      * - the {@code AddressBook} in model remains the same
      * if the size of {@code ActualList<ReadOnlyPerson>} is more than 1
      */
-    private void assertCommandSuccess(DeleteByNameCommand command, String expectedMessage,
-                                      List<ReadOnlyPerson> expectedList,
-                                      List<ReadOnlyPerson> actualList) throws CommandException {
-        CommandResult commandResult = command.execute();
-
+    private void assertCommandExecuteSuccess(CommandResult commandResult, String expectedMessage,
+                                      List<ReadOnlyPerson> oldList,
+                                      List<ReadOnlyPerson> newList) throws CommandException {
         assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList, model.getFilteredPersonList());
-        if (actualList.size() > 1) {
+        assertEquals(oldList, model.getFilteredPersonList());
+        if (newList.size() > 1) {
             AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
             assertEquals(expectedAddressBook, model.getAddressBook());
         }

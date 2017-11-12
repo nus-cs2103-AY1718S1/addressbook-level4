@@ -595,11 +595,53 @@ Select command also has options. After parsed by `AddressBookParser` and `Comman
 // tag::deletebyname[]
 === Delete by name mechanism
 
-It is an undoable delete command that offers an alternative to the existing delete command.
+It is an undoable delete command that offers an alternative to the existing `delete` command.
 
-It takes in the `String` user input name and compare it with all persons' name field. As the iterator traverse through the contact list, the first person with the occurrence of the specified `String` name will be removed from the list.
+It takes in the user input name and compare it with all persons' name field. Similar to `find` by name, the user input name has to be the entire first/last/full name of the persons stored in the address book. Multiple contacts can be shortlisted by separating names by spaces.
 
-As the command will always call the entire list for comparison, there is no need to modify list for the command to e executed.
+As the command will always call the entire list before execution, there is no need to modify list for the command to be executed.
+
+The code below shows how this command handles different input situations:
+[source,java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+    model.updateFilteredPersonList(predicate);
+    List<ReadOnlyPerson> predicateList = model.getFilteredPersonList();
+
+    if (predicateList.size() > 1) {
+        throw new CommandException(MESSAGE_MULTIPLE_PERSON_FOUND);
+    } else if (predicateList.size() == 0) {
+        throw new CommandException(MESSAGE_PERSON_NAME_ABSENT);
+    } else {
+        ReadOnlyPerson personToDelete = predicateList.get(0);
+
+        try {
+            model.deletePerson(personToDelete);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : MESSAGE_PERSON_NAME_ABSENT;
+        }
+
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+    }
+}
+----
+
+After parsing a valid user input name(s), the command will get a `filteredPersonList` using the parsed input:
+
+* The contact is deleted immediately if there is only one result found.
+* A updated list will be shown with multiple persons found.
+* A warning message will be shown if no match can be found with the specified name.
+
+==== Design Consideration
+
+**Aspect:** Parsing of user inputs +
+**Alternative 1 (current choice):** Convert the `String` user input into a `Predicate<ReadOnlyPerson>` object. +
+**Pros:** Able to shortlist contacts with multiple names. +
+**Cons:** Reject inputs that do not match the entire first/last/full name. +
+**Alternative 2:** Utilise the given `String` user inputs +
+**Pros:** Do not need to parse inputs before comparision. +
+**Cons:** Able to delete contacts with a single letter or contacts with short name can not be deleted (set a minimum comparision `String` length, e.g. the input has to be at least 3 characters long).
 // end::deletebyname[]
 
 // tag::export[]
