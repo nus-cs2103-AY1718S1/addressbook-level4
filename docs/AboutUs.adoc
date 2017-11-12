@@ -22,7 +22,7 @@ Responsibilities: UI
 
 === Cheng Jin Ting
 image::JT.jpg[width="150", align="left"]
-{empty}[http://github.com/jin-ting[github]] [<<JinTing#, portfolio>>]
+{empty}[http://github.com/jin-ting[github]] [<<ChengJinTing#, portfolio>>]
 
 Role: User Guide + Scheduling
 
@@ -32,7 +32,7 @@ Responsibilities: Model
 
 === Calvin Tantio
 image::ct15.png[width="150", align="left"]
-{empty}[https://github.com/ct15[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/ct15[github]] [<<calvintantio#, portfolio>>]
 
 Role: Developer Guide + Code Quality
 
@@ -42,7 +42,7 @@ Responsibilities: Logic
 
 === Chung Tin Long
 image::icehawk.jpg[width="150", align="left"]
-{empty}[https://github.com/icehawker[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/icehawker[github]] [<<chungtinlong#, portfolio>>]
 
 Role: Developer Guide
 
