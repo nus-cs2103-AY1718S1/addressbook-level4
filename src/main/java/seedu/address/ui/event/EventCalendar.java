@@ -108,7 +108,6 @@ public class EventCalendar extends UiPart<Region> {
 
     private MonthDateBuilder monthDateBuilder;
 
-
     public EventCalendar() {
         super(FXML);
         monthDateBuilder = new MonthDateBuilder();
