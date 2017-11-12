@@ -444,8 +444,8 @@ _Figure 23: Activity Diagram for viewCommand_
 **Pros**: It would be easy to understand and do not use extra spaces to store different kind of lists (For example, location list). +
 **Cons**: This will increase overhead due to implementation of new predicates. +
 **Alternative 2 (previous choice)**: Store lesson list, unique module list and unique location list separately and switches to different panel list before calling view command. +
-**Pros**: This implementation will make the overall structure more organized. +
-**Cons**: It would be much harder to implement and the switching of panel will cause heavier load to the system compared to a single panel.
+**Pros**: This implementation will make the data structure more organized. +
+**Cons**: Waste of space due to muptiple list is created and the switching of panel will cause heavier load to the system compared to a single panel.
 
 // end::list/view[]
 
@@ -470,11 +470,11 @@ Each lesson is only allowed to be added into the marked list once, thus any furt
 
 **Aspect**: Implementation of mark/unmark +
 **Alternative 1 (current choice)**: Create an extra attribute **isMarked** for each lesson to record if the lesson is in the marked list. +
-**Pros**: It would be easier to implement list marked since we are using predicates to update the lesson list. +
-**Cons**: It is requires to filter out marked lessons every time. +
+**Pros**: It would be easy to implement `list marked` since we are using predicates to update the lesson list. +
+**Cons**: It requires to filter out marked lessons every time. +
 **Alternative 2 (previous choice)**: Stores additional marked lesson list. +
-**Pros**: We do not need to filter out the marked lessons each time. +
-**Cons**: Lessons might be stored multiple times.
+**Pros**: No do not need to filter out the marked lessons each time. +
+**Cons**: Lessons might be stored two times which could potentially waste space.
 
 // end::mark/unmark[]
 

@@ -37,7 +37,6 @@ import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 import seedu.address.testutil.LessonBuilder;
 
-//@@author junming403
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
  */
@@ -50,6 +49,7 @@ public class EditCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     }
 
+    //@@author junming403
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
 
@@ -300,6 +300,7 @@ public class EditCommandTest {
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
+    //@@author
 
     @Test
     public void equals() {
@@ -326,6 +327,7 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_LESSON, DESC_CS2101)));
     }
 
+    //@@author junming403
     /**
      * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
      */
@@ -343,4 +345,5 @@ public class EditCommandTest {
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editCommand;
     }
+    //@@author
 }

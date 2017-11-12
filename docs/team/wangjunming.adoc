@@ -14,9 +14,9 @@ ModU uses the command line interface (CLI) as the main input. The natural langua
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/junming403.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/junming403.md[Test code]]
 
-* [Note] Contributions include some classes like `Addcommand` and `AddCommandTest`. This is because our product totally changed the model base from `person` to `lesson`. The command and test has been rewritten, although still based on original addCommand and addCommandTest.
+* [Note] Contributions include some classes like `AddCommand` and `AddCommandTest`. This is because our product totally changed the model base from `person` to `lesson`. The command and test has been rewritten, although still based on original addCommand and addCommandTest.
 * [Note] Due to the restriction of the app `Visual Paradigm`. The notation of sequence diagram is slightly different from the notation taught in CS2103T, for exmaple, the object creation has not been shown. We have asked Professor Damith about this and he agreed we can continue to use this app.
-* [Note] Some pictures in this graph might look strange because they are supposed to be gif in User Guide. [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/UserGuide.adoc[user guide]]
+* [Note] Some pictures below might look strange because they are supposed to be gif in User Guide. [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/UserGuide.adoc[user guide]]
 
 === Enhancement Added: View/List/Edit/Delete
 

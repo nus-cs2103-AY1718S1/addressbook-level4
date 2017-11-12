@@ -390,6 +390,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                     "edited module code is not valid");
         }
     }
+    //@@author
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>

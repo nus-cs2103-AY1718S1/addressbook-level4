@@ -30,8 +30,7 @@ public class UniqueLocationPredicate implements Predicate<ReadOnlyLesson> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniqueLocationPredicate // instanceof handles nulls
-                && this.uniqueLocationSet.equals(((UniqueLocationPredicate) other).uniqueLocationSet)); // state check
+                || (other instanceof UniqueLocationPredicate); // instanceof handles nulls
     }
 
 }
