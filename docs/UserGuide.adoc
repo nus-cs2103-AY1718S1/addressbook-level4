@@ -89,6 +89,8 @@ For the details of each command, you may refer to the link:#features[Features] s
 
 == Features
 
+To get a full understanding of the capabilities of your Rolodex, we recommend following this https://cs2103aug2017-w11-b2.github.io/TestScript[guide].
+
 ====
 *Command Format*
 
