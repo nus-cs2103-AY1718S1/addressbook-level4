@@ -75,6 +75,7 @@ public class TodoCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_DUPLICATE_TODOITEM = "This todo item already exists in the address book.";
     public static final String MESSAGE_ERROR_PREFIX = "Undefined prefix";
+    public static final String MESSAGE_INVALID_TODOITEM_INDEX = "The todo item index provided is invalid";
 
     private String optionPrefix;
     private Index personIndex;
@@ -146,6 +147,9 @@ public class TodoCommand extends UndoableCommand {
     private void executeTodoDeleteOne() throws CommandException,
             PersonNotFoundException, DuplicatePersonException {
         ReadOnlyPerson person = getReadOnlyPersonFromIndex();
+        if (itemIndex.getZeroBased() >= person.getTodoItems().size()) {
+            throw new CommandException(MESSAGE_INVALID_TODOITEM_INDEX);
+        }
         todoItem = person.getTodoItems().get(itemIndex.getZeroBased());
         model.deleteTodoItem(person, todoItem);
     }
