@@ -74,5 +74,6 @@ include::../DeveloperGuide.adoc[tag=appointmentimplementation]
 * Make deletion of appointments easier. Remove the need to type in the whole description to delete.
 
 === Other Contributions
+* https://github.com/CS2103AUG2017-T17-B2/main/pull/101[Revamped Developer Guide content] with Ru Shan
 * https://github.com/CS2103AUG2017-W09-B2/main/issues/121[Uncover bugs for other teams]
 
