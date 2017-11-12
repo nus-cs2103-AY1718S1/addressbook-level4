@@ -9,10 +9,9 @@ It is designed to support the busy work life business-(gentle)men by helping the
 The interaction between user and Gentleman’s Guide is mostly done through a Command Line Interface (CLI). +
 This application is written in Java, with its Graphical User Interface (GUI) created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*About portfolio*:
+*About Project Portfolio*:
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/main/duyson98.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/test/duyson98.md[Test code]]
-
 
 === Enhancement Added: Retrieve command, Tag/Untag/Retag commands, View command
 
@@ -82,6 +81,11 @@ include::../DeveloperGuide.adoc[tag=viewcommand]
 
 === Other Contributions
 
-* Added a digital clock to display date and time inside the GUI of the address book.
+* Added a digital clock to display current date and time inside the footer panel of the application's GUI (Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/94[94]).
+* Created reminder feature's model component and wrote JUnit tests for it. (Pull requests https://github.com/CS2103AUG2017-T09-B1/main/pull/49[49],
+https://github.com/CS2103AUG2017-T09-B1/main/pull/90[90], https://github.com/CS2103AUG2017-T09-B1/main/pull/104[104])
+* Implemented days countdown for reminder card (Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/112[112]).
+* Wrote JUnit tests for various classes.
+* Reported bug for Project ModU (Issue https://github.com/CS2103AUG2017-W13-B4/main/issues/255[255])
 
 == Project
