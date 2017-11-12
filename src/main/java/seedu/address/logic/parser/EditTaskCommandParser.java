@@ -64,6 +64,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
             if (parserStart.isPresent()) {
                 //editTaskDescriptor.setStart(new DateTime(parserStart.get()));
                 startDateTime = new DateTime(parserStart.get());
+                editTaskDescriptor.setStart(new DateTime(parserStart.get()));
             }
 
             Optional<String> parserEnd = ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME));
@@ -71,14 +72,13 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
             if (parserEnd.isPresent()) {
                 //editTaskDescriptor.setEnd(new DateTime(parserEnd.get()));
                 endDateTime = new DateTime(parserEnd.get());
+                editTaskDescriptor.setEnd(new DateTime(parserEnd.get()));
             }
 
+            // additional checking for dateTime validity
             if (startDateTime != null && endDateTime != null) {
                 if (startDateTime.compareTo(endDateTime) == -1) {
                     throw new ParseException(EditTaskCommand.MESSAGE_DATE_TIME_TASK);
-                } else {
-                    editTaskDescriptor.setEnd(new DateTime(parserEnd.get()));
-                    editTaskDescriptor.setStart(new DateTime(parserStart.get()));
                 }
             }
 
