@@ -575,11 +575,14 @@ public ImportCommand(String filePath) {
 }
 ----
 
+A button is also added onto the top bar menu to facilitate import via clicking and choosing file from FileChooser.
+image::import_file_Ui.png[width="300"]
+
 [NOTE]
 If the filePath is invalid, then there are no file that is readable and hence, an exception will be thrown. Users will be notified to check their filePath.
 If the file specified is exactly the same as the current ResidentBook, there is nothing to import. The NoUniqueImport Exception will be throw. Users will be notified to check their file.
 
-The following is the NoUniqueImport Exception.
+The following is the NoUniqueImport Exception:
 [source,java]
 ----
 public class NoUniqueImport extends Exception {
@@ -597,7 +600,8 @@ Future enhancements may include a selection option from the UI and allowing the 
 
 //tage::backup
 === Backup Command
-The backup command saves the current ResidentBook into backup.xml located in the project location. One consideration for this mechanism is that backup should only happen when necessary, as it will take up a lot of space. +
+The backup command saves the current ResidentBook into backup.xml located in the project location. One consideration for this mechanism is that backup should only happen when necessary, as it will take up a lot of space.
+
 A future enhancement can allow user to specify backup location and file name.
 
 
