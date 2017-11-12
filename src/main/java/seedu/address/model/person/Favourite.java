@@ -15,4 +15,10 @@ public class Favourite {
         return value;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Favourite // instanceof handles nulls
+                && this.value.equals(((Favourite) other).value)); // state check
+    }
 }

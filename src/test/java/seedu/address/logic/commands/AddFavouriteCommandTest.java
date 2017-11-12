@@ -26,7 +26,8 @@ public class AddFavouriteCommandTest {
 
     @Test
     public void addFavouriteSuccess() throws Exception {
-        Person editedPerson = new PersonBuilder().withFavourite(true).withEmail("alice@example.com").build();
+        Person editedPerson = new PersonBuilder().withFavourite(true).withProfPic("Alice Pauline.png")
+                .withEmail("alice@example.com").build();
         AddFavouriteCommand addFavouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(AddFavouriteCommand.MESSAGE_FAVE_PERSON_SUCCESS, editedPerson);
