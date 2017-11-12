@@ -12,7 +12,7 @@ import seedu.room.model.person.ReadOnlyPerson;
  */
 public class AutoComplete {
 
-    private final String[] baseCommands = { "add", "addEvent", "addImage", "backup", "edit", "select", "delete",
+    public static final String[] BASE_COMMANDS = { "add", "addEvent", "addImage", "backup", "edit", "select", "delete",
         "deleteByTag", "deleteEvent", "deleteImage", "deleteTag", "clear", "find", "list", "highlight", "history",
         "import", "exit", "help", "undo", "redo", "sort", "swaproom"
     };
@@ -22,7 +22,7 @@ public class AutoComplete {
 
     public AutoComplete(Model model) {
         this.model = model;
-        autoCompleteList = baseCommands;
+        autoCompleteList = BASE_COMMANDS;
         personsStringArray = new ArrayList<String>();
         this.updatePersonsArray();
     }
@@ -76,7 +76,7 @@ public class AutoComplete {
      * Reset autocomplete suggestions to base commands
      */
     public void resetAutocompleteList() {
-        this.autoCompleteList = baseCommands;
+        this.autoCompleteList = BASE_COMMANDS;
     }
 
     /**

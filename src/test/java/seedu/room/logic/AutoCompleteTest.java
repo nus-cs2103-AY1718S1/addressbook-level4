@@ -1,4 +1,3 @@
-//@@author shitian007
 package seedu.room.logic;
 
 import static org.junit.Assert.assertTrue;
@@ -15,14 +14,11 @@ import seedu.room.model.ModelManager;
 import seedu.room.model.UserPrefs;
 import seedu.room.model.person.ReadOnlyPerson;
 
+//@@author shitian007
 public class AutoCompleteTest {
 
     private AutoComplete autoComplete;
     private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
-    String[] AUTOCOMPLETE_BASE_COMMANDS = { "add", "addEvent", "addImage", "backup", "edit", "select", "delete",
-            "deleteByTag", "deleteEvent", "deleteImage", "deleteTag", "clear", "find", "list", "highlight", "history",
-            "import", "exit", "help", "undo", "redo", "sort", "swaproom"
-    };
 
     @Before
     public void setUp() {
@@ -32,7 +28,7 @@ public class AutoCompleteTest {
     @Test
     public void assert_baseCommandsMatchUponCreation_success() {
         String[] baseCommands = autoComplete.getAutoCompleteList();
-        assertTrue(Arrays.equals(AUTOCOMPLETE_BASE_COMMANDS, baseCommands));
+        assertTrue(Arrays.equals(AutoComplete.BASE_COMMANDS, baseCommands));
     }
 
     @Test
@@ -63,13 +59,13 @@ public class AutoCompleteTest {
     public void assert_resetAutoCompleteListMatchBaseCommands_success() {
         autoComplete.resetAutocompleteList();
         String[] baseCommands = autoComplete.getAutoCompleteList();
-        assertTrue(Arrays.equals(AUTOCOMPLETE_BASE_COMMANDS, baseCommands));
+        assertTrue(Arrays.equals(AutoComplete.BASE_COMMANDS, baseCommands));
     }
 
     @Test
     public void assert_autoCompleteListResetonEmptyStringInput_success() {
         autoComplete.updateAutoCompleteList("");
         String[] baseCommands = autoComplete.getAutoCompleteList();
-        assertTrue(Arrays.equals(AUTOCOMPLETE_BASE_COMMANDS, baseCommands));
+        assertTrue(Arrays.equals(AutoComplete.BASE_COMMANDS, baseCommands));
     }
 }
