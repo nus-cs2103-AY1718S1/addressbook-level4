@@ -40,7 +40,7 @@ public class SetPathCommand extends UndoableCommand {
     private String reformatPath(String path) {
         path = path.replaceAll("\\\\", "/");
         String lastChar = path.substring(path.length() - 1);
-        if (!lastChar.equals('/')) {
+        if (!lastChar.equals("/")) {
             path = path.concat("/");
         }
         return path;
