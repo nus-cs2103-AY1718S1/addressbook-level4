@@ -118,9 +118,14 @@ public class SortCommand extends Command {
      * This method initialize the booked slot
      */
     public void initializeBookedSlot() {
+        filteredLessons.setPredicate(PREDICATE_SHOW_ALL_LESSONS);
+
         for (int i = 0; i < filteredLessons.size(); i++) {
             bookedList.add(new BookedSlot(filteredLessons.get(i).getLocation(), filteredLessons.get(i).getTimeSlot()));
         }
+
+        filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
+
     }
 
     @Override

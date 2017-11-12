@@ -780,7 +780,7 @@ public class EditCommandTest {
                 new EditLessonDescriptorBuilder(lessonInList).build());
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_LESSON);
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
     }
 
     @Test

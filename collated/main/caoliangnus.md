@@ -492,7 +492,6 @@ public class ModelManager extends ComponentManager implements Model {
         filteredRemarks.setPredicate(PREDICATE_SHOW_ALL_REMARKS);
         Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
         ListingUnit.setCurrentPredicate(predicate);
-        filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
         bookedList = new ArrayList<BookedSlot>();
         initializeBookedSlot();
         currentViewingAttribute = "default";
@@ -1570,6 +1569,8 @@ public class CombinePanel extends UiPart<Region> {
     private static final int COL = 13;
     private static final int START_TIME = 8;
 
+    private static final Pattern LOCATION_KEYWORD_PATTERN = Pattern.compile(".*(?=-)");
+
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
     private GridData[][] gridData;
@@ -1797,7 +1798,19 @@ public class CombinePanel extends UiPart<Region> {
     /************* BROWSER PANNEL *********/
 
     private void loadLessonPage(ReadOnlyLesson lesson) {
-        loadPage(NUS_MAP_SEARCH_URL_PREFIX + lesson.getLocation().toString());
+        loadPage(NUS_MAP_SEARCH_URL_PREFIX + getImportantKeywords(lesson.getLocation().toString()));
+    }
+
+    /**
+     * Get substring before hyphen.
+     */
+    private String getImportantKeywords(String location) {
+        Matcher matcher = LOCATION_KEYWORD_PATTERN.matcher(location);
+        if (matcher.find()) {
+            return matcher.group(0);
+        } else {
+            return location;
+        }
     }
 
 
@@ -2041,8 +2054,8 @@ public class CommandBox extends UiPart<Region> {
         configPrefixList();
         keywordLabel.getStyleClass().add("keyword-label-default");
         keywordColorMap = getCommandKeywordColorMap();
-        String[] commands = {"help", "add", "list", "edit", "find",
-            "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view", "swt"};
+        String[] commands = {"help", "add", "list", "edit", "find", "delete", "select", "history", "undo", "redo",
+            "clear", "exit", "customise", "view", "theme", "mark", "unmark", "remark", "color"};
         TextFields.bindAutoCompletion(commandTextField, commands); // controlsfx
         tick.setFitHeight(30);
         tick.setFitWidth(30);
