@@ -1156,8 +1156,14 @@ The `Statistics Panel` is implemented using the `Statistics` class and The `Filt
 The `Statistics` class supports the calculating of statistics for the current list of students in the `PersonListPanel` and
 the `FilteredPersonListChangedEvent` indicates that the FilteredPersonList in the model has changed and is used to update the `Statsistics Panel`.
 
+The following activity diagram shows how the StatisticsPanel mechanism works:
+
+image::StatisticsPanelActivityDiagram.png[width="800"]
+_Figure 4.14.1 : Activity Diagram of updating the`Statistics Panel` ._
+
 Whenever the user enters any `Command` that modifies the addressBook data, the `Model` Component posts
 a `FilteredPersonListChangedEvent` containing the `filteredPersonsList` to the `EventsCenter`.
+At the same time, an `AddressBookChangedEvent` that indicates that the model has changed is also posted to the `EventsCenter`.
 
 The `FilteredPersonListChangedEvent` is implemented this way:
 
@@ -1220,8 +1226,8 @@ The `loadListStatistics()` is implemented this way:
 
 The `Labels` (texts) in the User Interface are set according to the updated `Statistics` instance's getter methods.
 This updates and shows the statistic values of the current `filteredPersonList` on the `StatisticsPanel` in the User Interface.
+At the same time, the `AddressBookChangedEvent` is also being handled, saving the addressBook data.
 
-//The following activity diagram shows how the StatisticsPanel mechanism works:
 
 
 ==== Design Considerations
