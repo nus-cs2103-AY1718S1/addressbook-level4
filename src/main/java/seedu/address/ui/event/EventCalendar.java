@@ -183,7 +183,7 @@ class MonthDateBuilder {
     private Integer firstDayOfMonth;
     private Integer maxDayOfMonth;
     private String nameOfMonth;
-    private int MAX_NUMBER_DAYS = 42;
+    private static final int MAX_NUMBER_DAYS = 42;
 
     public MonthDateBuilder() {
         calendar = Calendar.getInstance();
