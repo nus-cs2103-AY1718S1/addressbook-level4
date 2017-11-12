@@ -115,7 +115,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             remaining = mandatoryIndexArgs.get().getValue();
         } else if (mandatoryIndexCommand.isPresent()) {
             index = mandatoryIndexCommand.get().getKey();
-            remaining = mandatoryIndexCommand.get().getValue();
         } else {
             return null;
         }
