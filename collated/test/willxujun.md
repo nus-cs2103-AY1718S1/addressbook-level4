@@ -96,7 +96,8 @@ public class SearchCommandTest {
      */
     private SearchCommand prepareCommand(String userInput) {
         SearchCommand command =
-                new SearchCommand(new NamePhoneTagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new SearchCommand(new NamePhoneTagContainsKeywordsPredicate(
+                        Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -107,7 +108,8 @@ public class SearchCommandTest {
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(SearchCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    private void assertCommandSuccess(SearchCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
@@ -156,6 +158,45 @@ public class SearchParserTest {
     }
 
 }
+```
+###### \java\seedu\address\testutil\PersonBuilder.java
+``` java
+    /**
+     * Set the {@code tags} to the person we are building
+     */
+    public PersonBuilder withTags(Set<Tag> tags) {
+        CollectionUtil.elementsAreUnique(tags);
+        this.person.setTags(tags);
+        return this;
+    }
+```
+###### \java\systemtests\EditCommandSystemTest.java
+``` java
+        /* Case: add a tag -> edited*/
+        index = INDEX_FIRST_PERSON;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
+        ReadOnlyPerson personToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
+        Set<Tag> originalTags = new HashSet<>(personToEdit.getTags());
+        originalTags.add(new Tag(VALID_TAG_FRIEND));
+        System.out.println(personToEdit.getAsText());
+        editedPerson = new PersonBuilder(personToEdit)
+                .withTags(originalTags).build();
+        assertCommandSuccess(command, index, editedPerson);
+
+        /* Case: delete a tag -> edited*/
+        index = INDEX_FIRST_PERSON;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + RM_TAG_DESC_FRIEND;
+        originalTags.remove(new Tag(VALID_TAG_FRIEND));
+        editedPerson = new PersonBuilder(personToEdit)
+                .withTags(originalTags).build();
+        assertCommandSuccess(command, index, editedPerson);
+
+        /* Case: add a tag then delete the same tag -> edited*/
+        index = INDEX_FIRST_PERSON;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND + RM_TAG_DESC_FRIEND;
+        editedPerson = new PersonBuilder(personToEdit)
+                .withTags(originalTags).build();
+        assertCommandSuccess(command, index, editedPerson);
 ```
 ###### \java\systemtests\FindCommandSystemTest.java
 ``` java

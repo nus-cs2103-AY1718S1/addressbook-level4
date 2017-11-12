@@ -602,7 +602,7 @@ public class YahooWeatherRequest {
 ###### \resources\view\MainWindow.fxml
 ``` fxml
 
-<VBox xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="topContainer" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
@@ -637,6 +637,9 @@ public class YahooWeatherRequest {
    </SplitPane>
 
   <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
+      <padding>
+          <Insets bottom="5" left="10" right="10" top="5" />
+      </padding>
   </StackPane>
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5" VBox.vgrow="ALWAYS">
@@ -644,7 +647,10 @@ public class YahooWeatherRequest {
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin></StackPane>
     </VBox>
       <GridPane minWidth="1000" prefHeight="650">
       <StackPane fx:id="personInformationPanelPlaceholder" GridPane.columnIndex="1" GridPane.rowIndex="0" />

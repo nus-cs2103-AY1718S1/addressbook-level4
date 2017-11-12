@@ -1,4 +1,18 @@
 # LuLechuan
+###### \java\seedu\address\commons\events\ui\ShowWeatherRequestEvent.java
+``` java
+/**
+ * An event requesting to view the yahoo weather page.
+ */
+public class ShowWeatherRequestEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
 ###### \java\seedu\address\logic\commands\CustomCommand.java
 ``` java
 /**
@@ -201,6 +215,27 @@ public class UploadPhotoCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\WeatherCommand.java
+``` java
+/**
+ * Open the Yahoo Weather Window.
+ */
+public class WeatherCommand extends Command {
+
+    public static final String COMMAND_WORD = "weather";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Opens Yahoo Weather Window.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String SHOWING_WEATHER_MESSAGE = "Opened Yahoo Weather Window.";
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ShowWeatherRequestEvent());
+        return new CommandResult(SHOWING_WEATHER_MESSAGE);
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\CustomCommandParser.java
 ``` java
 /**
@@ -281,7 +316,8 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
             if (st.hasMoreTokens()) {
                 photoPath = st.nextToken();
             } else {
-                photoPath = "..\\addressbook4\\docs\\images\\default_photo.png";
+                photoPath = System.getProperty("user.dir")
+                        + "/docs/images/default_photo.png";
             }
 
             while (st.hasMoreTokens()) {
@@ -585,7 +621,8 @@ public class Photo {
      *  Constructs a default photo.
      */
     public Photo() {
-        pathName = "..\\addressbook-level4\\docs\\images\\default_photo.png";
+        pathName = System.getProperty("user.dir")
+                + "/docs/images/default_photo.png";
     }
 
     /**
@@ -741,17 +778,34 @@ public class XmlAdaptedPhone {
     /**
      *  Sets a background image for a stack pane
      */
-    private void setBackground(StackPane pane, String pathname, int width, int height) {
+    private void setBackground(Pane pane, String pathname, String jarPath, int width, int height) {
         File file = new File(pathname);
         try {
-            BackgroundImage backgroundImage = new BackgroundImage(
-                    new Image(file.toURI().toURL().toString(), width, height, false, true),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
-            pane.setBackground(new Background(backgroundImage));
+            if (file.exists()) {
+                BackgroundImage backgroundImage = new BackgroundImage(
+                        new Image(file.toURI().toURL().toString(), width, height, false, true),
+                        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT);
+                pane.setBackground(new Background(backgroundImage));
+            } else {
+                Image photo = createJarImage(jarPath, width, height);
+                BackgroundImage backgroundImage = new BackgroundImage(
+                        photo, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT);
+                pane.setBackground(new Background(backgroundImage));
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     *  Create an image that can be used by the Jar file
+     */
+    public Image createJarImage(String jarPath, int width, int height) {
+        InputStream inputStream = this.getClass().getResourceAsStream(jarPath);
+        Image photo = new Image(inputStream, width, height, false, true);
+        return photo;
     }
 ```
 ###### \java\seedu\address\ui\PersonCard.java
@@ -765,13 +819,26 @@ public class XmlAdaptedPhone {
         File photoImage = new File(pathName);
         Image photo = null;
         try {
-            photo = new Image(photoImage.toURI().toURL().toString(), 80, 80, false, false);
+            if (photoImage.exists()) {
+                photo = new Image(photoImage.toURI().toURL().toString(), 40, 40, false, true);
+            } else {
+                photo = createJarImage("/images/default_photo.png");
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         photoContainer.setImage(photo);
 
-        Circle clip = new Circle(60, 60, 50);
+        Circle clip = new Circle(30, 30, 25);
         photoContainer.setClip(clip);
+    }
+
+    /**
+     *  Create an image that can be used by the Jar file
+     */
+    public Image createJarImage(String jarPath) {
+        InputStream inputStream = this.getClass().getResourceAsStream(jarPath);
+        Image photo = new Image(inputStream, 40, 40, false, true);
+        return photo;
     }
 ```
