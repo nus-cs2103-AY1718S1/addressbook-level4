@@ -1,8 +1,7 @@
 = Script for Manual Testing
 
 == Introduction
-This document will explain the step-by-step procedure to perform manual testing.
-asdfsdf +
+This document will explain the step-by-step procedure to perform manual testing. +
 
 == Setting up
 
@@ -17,7 +16,57 @@ into the `Codii` application should the need arise. +
 
 . Open up the jar file from the `main` folder.
 . Log into Codii. Details on logging in, including a working sample username and password, can be found link:https://github.com/CS2103AUG2017-T17-B1/main/blob/master/docs/UserGuide.adoc#logging-into-the-address-book-application-using-command-line-interface-cli-code-login-code[here]. +
-. You have to make a change to the address book to generate a `data folder` if you have not already done so.
+. You have to make a change to the address book to generate a `data folder` if you have not already done so. For convenience, you can simply delete a contact. Steps on how to delete a contact can be found
+link:https://github.com/CS2103AUG2017-T17-B1/main/blob/master/docs/UserGuide.adoc#deleting-a-person-code-delete-code[here].
 . Within the `main` folder, there is a `data` folder that stores the data of all the contacts in `Codii`.
 . Within the `data` folder, replace the `addressbook.xml` file with the new `sample data` file. Ensure that there is only one `.xml` file in the `data` folder.
-. Rename the file to `addressbook.xml`.
+. Rename the file in the `data` folder to `addressbook.xml`.
+
+== Test Script
+
+=== Login screen
+
+==== CLI version of Login
+
+[width="59%",cols="10%, <30%, <60%",options="header",]
+|=======================================================================
+|Step |Command |Outcome
+|1 |`help` |Help window should open.
+|2 |`list` |Should show “Please log in first” in result display.
+|3 |`login asde hitMeUp123` |Should show “Length of username cannot be less than 6 characters.” in result display.
+|4 |`login loanShark97 short` |Should show “Length of password cannot be less than 6 characters.” in result display.
+|5 |`login @@@@@@ hitMeUp123` |Should show “Username can only consist of uppercase letters (A-Z), lowercase letters (a-z), digits (0-9) and underscores (_)” in result display.
+|6 |`login fakeuser fakepassword` |Should show “Unable to log into Address Book” in result display.
+|7 |`login loanShark97 hitMeUp123` |Should log in successfully.
+|8 |`logout` |Should be returned to login screen.
+|=======================================================================
+
+==== GUI version of Login
+
+=== After logging in
+
+==== Changing themes
+
+[width="59%",cols="10%, <30%, <60%",options="header",]
+|=======================================================================
+|Step |Command |Outcome
+|1 |`theme` |Theme should be changed to a bright theme.
+|2 |`theme` | Theme should be reverted to a dark theme.
+|=======================================================================
+
+==== Selection
+
+. `select`
+** The first person, Bernice Yu, should be selected.
+. `s`
+** The second person, Alex Yeoh, should be selected.
+. `select 4`
+** The fourth person, Charlotte Oliveiro, should be selected.
+. `select 999`
+** Should show “The person index provided is invalid” in result display.
+. `select 20`
+** The last person, Timmy Zhu, should be selected.
+. `select`
+** The first person, Bernice Yu, should be selected.
+. Click on person card 3 (David Li)
+** The third person, David Li, should be selected.
