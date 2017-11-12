@@ -10,8 +10,15 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.api.services.people.v1.model.*;
 import org.junit.Test;
+
+import com.google.api.services.people.v1.model.Address;
+import com.google.api.services.people.v1.model.EmailAddress;
+import com.google.api.services.people.v1.model.Name;
+import com.google.api.services.people.v1.model.Person;
+import com.google.api.services.people.v1.model.PersonMetadata;
+import com.google.api.services.people.v1.model.PhoneNumber;
+import com.google.api.services.people.v1.model.Source;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -123,6 +130,10 @@ public class SyncCommandTest {
         return synccommand;
     }
 
+    /** Prepares a Google Person which is the equivalent of the ABC Person ALICE for testing
+     *
+     * @return
+     */
     private Person prepareAliceGoogle() {
         Person result  = new Person();
         PersonMetadata metadata = new PersonMetadata();
