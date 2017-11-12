@@ -54,7 +54,7 @@ To add a new contact, we need to use the `add` command.
 
 Let's add a new person called `Martin` into *BoNUS* +
 _Command:_ +
-`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends`
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends` +
 _Result:_ +
 `New person added: Martin Smith Phone: 85930167 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
 
@@ -62,13 +62,13 @@ _Result:_ +
 
 . The value for one property is invalid +
 _Command:_ +
-`add n/Den Smith p/85930167 e/www.smith.com a/25 New York City`
+`add n/Den Smith p/85930167 e/www.smith.com a/25 New York City` +
 _Result:_ +
 `Person emails should be 2 alphanumeric/period strings separated by '@'.`
 
 . The person already exists +
 _Command:_ +
-`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends`
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends` +
 _Result:_ +
 `This person already exists in the application.`
 
@@ -86,7 +86,7 @@ _Result:_ +
 
 . Let's edit the person called `Martin` we added just now (assume the index is `8`) +
 _Command:_ +
-`edit 8 p/86129854`
+`edit 8 p/86129854` +
 _Result:_ +
 `Edited Person: Martin Smith Phone: 86129854 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
 
@@ -176,6 +176,7 @@ _Result:_ +
 === Add/view/edit/delete events
 
 ==== Listing of events
+. First, let's start by listing all the events in **BoNUS** +
 *Positive test case* +
 _Command:_ +
 `listE` +
@@ -184,14 +185,16 @@ _Result:_ +
 
 You should see that the application automatically switches from contact list to event list after the command listE.
 
-
 *Negative test case* +
+
+. Incorrect capitalization of command +
 _Command:_ +
 `ListE` +
 _Result:_ +
 `Unknown command` +
+. Invalid spelling +
 _Command:_ +
-`lIsTE` +
+`listEE` +
 _Result:_ +
 `Unknown command`
 
@@ -210,62 +213,138 @@ or if the expression is not simple or clear enough.
 * Avoid putting the year first when using the non-standard format.
 ====
 
-To add an event, we need to use `addE n/NAME dt/DATE_TIME a/ADDRESS` of the event.
-
-1) Adds a new event with Name `CS3201 Project Meeting`, DateTime `17112017 1530`, Address `School of Computing, SR09, NUS`
-
-
+. Let's start by adding an Event called `CS3201 Project Meeting` into **BoNUS**. +
 _Command:_ +
 `addE n/CS3201 Project Meeting dt/17112017 15:30 a/School Of Computing, SR09, NUS` +
 _Result:_ +
-`New event added:  Event: CS3201 Project Meeting |  Date/Time: 17 Nov, 2017 15:30 |  Address: School Of Computing, SR09, NUS`
-
-
-2) Adds a new event with Name `CS1231 Project Meeting`, DateTime `19112017 15:30`, Address `School of Computing, DR1, NUS` +
-_Command:_ +
-`addE n/CS1231 Project Meeting dt/19112017 15:30 a/School Of Computing, DR1, NUS` +
-_Result:_ +
-`New event added:  Event: CS1231 Project Meeting |  Date/Time: 19 Nov, 2017 15:30 |  Address: School of Computing, DR1, NUS`
-
+`New event added:  Event: CS3201 Project Meeting |  Date/Time: 17 Nov, 2017 15:30 |  Address: School Of Computing, SR09, NUS` +
+You should see a new Event Card with the name CS3201 Project Meeting added into **BoNUS**.
 
 
 ==== Deleting of Events +
 
-1) Deletes an Event with index 8 on the Event List
+*Positive Test Case*
 
+. Deletes an Event with index 8 on the Event List +
 _Command:_ +
 `deleteE 8` +
 _Result:_ +
 `Deleted Event:  Event: Project Meeting for CS2101 |  Date/Time: 01 Dec, 2017 09:00 |  Address: SR09, School of Computing`
 
-2) Deletes an Event with index 11 on the Event List
+*Negative Test Cases*
+
+. Invalid index +
 _Command:_ +
-`deleteE 11` +
+`deleteE -1` +
 _Result:_ +
-`Deleted Event:  Event: Family Dinner |  Date/Time: 11 Dec, 2017 19:00 |  Address: Home Sweet Home`
+`Invalid command format!`
+`deleteE: Deletes the event identified by the index number used in the last event listing.`
+`Parameters: INDEX (must be a positive integer)`
+
+. Person with the index not exist +
+2) Deletes an Event with index 11 on the Event List +
+_Command:_ +
+`deleteE 300` +
+_Result:_ +
+`The event index provided is invalid`
 
 
 
 ==== Editing of Events
-1) Edits Event from index 7 of Event list with a edited name of Movie Date with Bro
+
+*Positive test case*
+
+. First, let's list all the events in *BoNUS* +
 _Command:_ +
-editE 7 n/Movie Date with Bro +
+`listE` +
+_Result:_ +
+`Listed all events`
+
+. Let's try to edit an event from index 6 of Event list.
+_Command:_ +
+editE 6 n/Movie Date with Bro +
 _Result:_ +
 `Edited Event:  Event: Movie Date with Bro |  Date/Time: 22 Nov, 2017 22:00 |  Address: Golden Village Yishun` +
-2) Edits Event from index 6 of Event list with an edited date/time of 18112017 15:00 +
-_Command:_ +
-editE 6 dt/18112017 15:00 +
-_Result:_ +
-`Edited Event:  Event: Family Lunch |  Date/Time: 18 Nov, 2017 15:00 |  Address: Sakae Sushi, Causeway Point`
 
-At this point in time, Movie Date with bro should be at index 7 while
-Family Lunch would be at index 5.
+At this point in time, you should see an event with name `Movie Date with Bro` at index 6 of Event List.
 
 === Import/export data
 
 ==== Import data from `.xml` format
 
 To import data from a `.xml` file, we need to use the `import` command
+
+*Positive test cases*
+
+. If the XML file at `<BoNUS home folder>/bonus.xml` contains data recognizable by *BoNUS*, this command imports data
+that does not exist in *BoNUS* +
+_Command:_ +
+`import bonus.xml` +
+_Result:_ +
+`Imported data from: bonus.xml`
+
+*Negative test cases*
+
+. If the specified file is not found +
+_Command:_ +
+`import bonus.xml` +
+_Result:_ +
+`The specified file does not exist.`
+
+. If the specified file does not end with an extension of `.xml` +
+_Command:_ +
+`import bonus.notxml` +
+_Result:_ +
+`The file path does not point to an XML file.`
+
+. If a file name is not provided +
+_Command:_ +
+`import .xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. If the specified file name and any non-existent folder names contain any prohibited characters +
+_Command:_ +
+`import b%nus.xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. For `Windows` users, if the specified file path contains `/` as a name-separator +
+_Command:_ +
+`import folder/bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `maxOS` and `Linux` users, if the specified file path contains `\` as a name-separator +
+_Command:_ +
+`import folder\bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `Windows` users, if the specified file path contains consecutive name-separators `\\` +
+_Command:_ +
+`import folder\\bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. For `maxOS` and `Linux` users, if the specified file path contains consecutive name-separators `//` +
+_Command:_ +
+`import folder//bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. If the specified file path contains consecutive extension-separators `..` +
+_Command:_ +
+`import bonus..xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. If the data in the specified file is not recognizable by *BoNUS* +
+_Command:_ +
+`import bonus.xml` +
+_Result:_ +
+`The data in the specified XML file is not in the correct format as recognized by BoNUS.` +
+`Please try to import from another XML file.`
 
 ==== Import timetable from NUSMods website
 
@@ -307,6 +386,167 @@ _Result:_ +
 ==== Export data to `.xml` format
 
 To export data to a `.xml` file, we need to use the `export` command
+
+[NOTE]
+====
+Existing files will be overwritten.
+====
+
+*Positive test cases*
+
+. Exports the current data in *BoNUS* to `<BoNUS home folder>/bonus.xml` +
+_Command:_ +
+`export bonus.xml` +
+_Result:_ +
+`Exported address book data to: bonus.xml`
+
+. For `Windows` users, this command exports the current data in *BoNUS* to `<BoNUS home folder>\new_folder\bonus.xml`,
+after creating the non-existing folder `<BoNUS home folder>\new_folder` +
+_Command:_ +
+`export new_folder\bonus.xml` +
+_Result:_ +
+`Exported address book data to: new_folder\bonus.xml`
+
+. For `macOS` and `Linux` users, this command exports the current data in *BoNUS* to `<BoNUS home folder>/new_folder/bonus.xml`,
+after creating the non-existing folder `<BoNUS home folder>/new_folder` +
+_Command:_ +
+`export new_folder/bonus.xml` +
+_Result:_ +
+`Exported address book data to: new_folder/bonus.xml`
+
+*Negative test cases*
+
+. If the specified file does not end with an extension of `.xml` +
+_Command:_ +
+`export bonus.notxml` +
+_Result:_ +
+`The file path does not point to an XML file.`
+
+. If a file name is not provided +
+_Command:_ +
+`export .xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. If the specified file name and any non-existent folder names contain any prohibited characters +
+_Command:_ +
+`export b%nus.xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. For `Windows` users, if the specified file path contains `/` as a name-separator +
+_Command:_ +
+`export folder/bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `maxOS` and `Linux` users, if the specified file path contains `\` as a name-separator +
+_Command:_ +
+`export folder\bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `Windows` users, if the specified file path contains consecutive name-separators `\\` +
+_Command:_ +
+`export folder\\bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. For `maxOS` and `Linux` users, if the specified file path contains consecutive name-separators `//` +
+_Command:_ +
+`export folder//bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. If the specified file path contains consecutive extension-separators `..` +
+_Command:_ +
+`export bonus..xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+=== Email a contact on your contact list
+
+To email anyone on your contact list, you can use the `email` command.
+
+*Positive test case*
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Emailing Alex Yeoh +
+_Command:_ +
+`email 1` +
+_Result:_ +
+`Opened email to Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]` +
+
+At this point in time, you should see the default email application of your OS to be opened with the email of Alex already input at To:
+
+*Negative test cases*
+
+. Invalid command and Invalid index +
+_Command:_ +
+`email -1` +
+_Result:_ +
+`Invalid command format!
+The person index provided is invalid`.
+
+. Invalid index
+_Command:_ +
+`email 300000` +
+_Result:_ +
+`The person index provided is invalid`.
+
+=== Searching up a contact on Google Maps
+
+To search up a person's address on Google Maps, you can use the `gmap` command
+
+*Positive test case*
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Next, let's try to search up a person's address on Google Maps! +
+_Command:_ +
+`gmap 1`  +
+_Result:_ +
+`Opened Google Maps to get to Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]`
+
+At this point in time, you should see a browser opening Google Maps with `Alex Yeoh` 's address.
+
+*Negative test cases*
+
+. Invalid command and invalid index +
+_Command:_ +
+`gmap -1` +
+_Result:_ +
+`gmap: Opens Google Maps in default browser with the address of the person identified by the index number used in the last person listing being the Destination.
+Parameters: INDEX (must be a positive integer)`
+
+. Invalid index
+_Command:_ +
+`gmap 300000` +
+_Result:_ +
+`The person index provided is invalid`
+
+=== Switch themes
+
+To switch themes, we need to use the `theme` command.
+
+*Positive test case*
+
+. Let's try to switch themes
+_Command:_ +
+`theme` +
+_Result:_ +
+`Theme switched!`
+
+At this point in time, you should see the theme being switched from dark to bright theme.
 
 === Advance setting
 
@@ -353,7 +593,7 @@ _Result:_ +
 
 . If the regular expression provided is invalid +
 _Command:_ +
-`config --add-property s/w f/weight m/Weight must be a positive integer. r/*asf`
+`config --add-property s/w f/weight m/Weight must be a positive integer. r/*asf` +
 _Result:_ +
 `The regular expression you provided is invalid.`
 

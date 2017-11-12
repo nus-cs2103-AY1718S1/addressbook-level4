@@ -3,6 +3,7 @@ package seedu.address.model.reminder;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,8 +14,6 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
-
-
 /**
  * A list of reminders that enforces uniqueness between its elements and does not allow nulls.
  *
@@ -24,8 +23,6 @@ import seedu.address.model.reminder.exceptions.DuplicateReminderException;
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniqueReminderList implements Iterable<Reminder> {
-
-
     private final ObservableList<Reminder> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyReminder> mappedList = EasyBind.map(internalList, (reminder) -> reminder);
@@ -38,7 +35,9 @@ public class UniqueReminderList implements Iterable<Reminder> {
             add(reminder);
         }
     }
+
     public UniqueReminderList() {
+
     }
 
     /**
