@@ -361,7 +361,7 @@ Format: `setcolour TAGS COLOUR`
 
 1. Enter `setcolour friends red` to set all the tags `friends` to red in Circles.
 
-image::Figure 17.PNG[width="790"]
+image::Figure17.PNG[width="790"]
 _Figure 17: Changing colour for a tag_ +
 
 [TIP]
@@ -379,7 +379,7 @@ Format: `sort` +
 1. Enter `sort name` to sort contacts by name in alphabetical order.
 2. Circles will now have your contacts sorted by name and displayed as shown in Figure 13.
 
-image::Figure 18.PNG[width="790"]
+image::Figure18.PNG[width="790"]
 _Figure 18: Sorting address book by name_ +
 
 [TIP]
