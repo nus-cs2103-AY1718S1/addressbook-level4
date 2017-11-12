@@ -514,9 +514,9 @@ Paths should be absolute paths and not relative ones. Also, paths should point t
 
 It is recommended to create a folder and fill it up with the necessary profile pictures for the application. If there is a need to add a new picture, it should be added into this specific folder. +
 
-The folder should only contain pictures with the `.jpg` extension. Moreover the pictures should be named after the debtors in the application's database. +
+The folder should only contain pictures with the `.jpg` extension. Moreover, the pictures should be named after the debtors in the application's database. +
 
-For example, for the debtor Alex Yeoh, the name of his picture should be `AlexYeoh.jpg` +
+For example, for the debtor Alex Yeoh, the name of her picture should be `AlexYeoh.jpg` +
 As for the debtor Bernice Yu, the name of her picture should be `BerniceYu.jpg` +
 
 If it is necessary to change the location of the folder, the `setpath` command should be used again to indicate this change in location of the profile pictures folder. +
