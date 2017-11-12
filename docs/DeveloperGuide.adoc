@@ -370,10 +370,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // tag::addevent[]
 === Add Event mechanism
 
-Add event mechanism adds an event which stores in the The Myth's Book,
-which will then be used in a Calendar in future implementation. A reminder feature will also be tagged on to the event.
-
-The add event mechanism is facilitated by a `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
+Add event mechanism adds an event which stores in the The Myth's Book. The add event mechanism is facilitated by a `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
 different events with their information given by the user. This command inherits from `UndoableCommand`.
 
 From Figure 5.2.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the SortCommand
@@ -382,22 +379,29 @@ can be undoable, where the previous state of the address book before sorting is 
 image::AddEventDiagram.PNG[width="800"]
 Figure 5.2.1 AddEventCommand Logic Class Diagram
 
+The execution of AddEventCommand is processed in this way:
+
+. User will execute and create a new `AddEventCommand` so as to add an event into The Myth's Book.
+. When `executeUndoable()` of `AddEventCommand` is called, `model.addEvent()` in the method will be processed.
+. The `internalList` of the address book is then accessed and sorted through a `lambda` function which
+  compares the name of everyone and necessarily switches the position between contacts throughout the `internalList` by comparing names between person r1 and r2 sequentially.
+. After `internalList` is sorted, function `updateFilterPersonList(PREDICATE_SHOW_ALL_PERSONS)` is called
+  to update the list being filtered and also call an event `indicatedAddressBookChanged()`
+  to update the `PersonListPanel` of the GUI being shown.
+
 Code of `AddEventCommand`:
 
 ----
-public class AddEventCommand extends UndoableCommand {
-
-@Override
- public CommandResult executeUndoableCommand() throws CommandException {
-    requireNonNull(model);
-     try {
-         model.addEvent(toAdd);
-         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addEvent(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateEventException e) {
-        throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         }
     }
-}
 ----
 
 A UniqueEventList is also created to store the list of Events in AddressBook.java

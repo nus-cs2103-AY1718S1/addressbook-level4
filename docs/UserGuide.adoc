@@ -457,6 +457,7 @@ By typing this command, you will be able to add an event `ZoukOut` in The Myth's
 By typing this command, you will be able to add an event `Halloween Horror Night` in The Myth's Book.
 
 If input is correct, you will be able to see the event being added successfully into The Myth's Book and receive the following displayed result in the Results Display Panel.
+The date of the event on the calendar will be populated with a different shade of color to signify that there is an event on that date.
 
 image::sampleeventresult.PNG[width="700"]
 
@@ -574,12 +575,12 @@ This `Details Panel` is a graphical user interface that shows you all the `hidde
 === Calendar
 
 The Calendar is a graphical user interface that displays a calendar for the user. +
-You will be able to navigate through different months to view the events on different days and dates of different months.
+You will be able to navigate through different months to view the events on different dates in different months.
 
 image::calendar.PNG[width="700"]
 Figure 7.2.1
 
-Furthermore, you can add events after clicking on the specific date. A pop up window (Figure 7.2.2) will appear prompting you to fill up the details of the event.
+Furthermore, you can add events after clicking on the specific date. A pop up window (Figure 7.2.2) will appear prompting you to fill up the details of the event (NAME and ADDRESS of the event).
 
 image::popupwindow.PNG[width="300"]
 Figure 7.2.2
