@@ -109,6 +109,12 @@ public class AddReminderCommandTest {
         }
 
         @Override
+        public boolean checkAccount(ReadOnlyAccount account) {
+            fail("This method should not be called");
+            return true;
+        }
+
+        @Override
         public void addAccount(ReadOnlyAccount account) throws DuplicateAccountException {
             fail("This method should not be called");
         }
