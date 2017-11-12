@@ -287,8 +287,6 @@ Adds the 1st person from the results of the `find` command to the group Family.
 
 === Removing from groups : `ungroup`
 
-[NOTE]
-Coming in v2.0: ungroup
 
 Used to remove from a group person identified by the index used in the last person listing. +
 Format: `ungroup INDEX gn/GROUP_NAME` +

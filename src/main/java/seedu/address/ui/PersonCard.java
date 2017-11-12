@@ -102,7 +102,10 @@ public class PersonCard extends UiPart<Region> {
         } catch (IllegalArgumentException iae) {
             im = new Image(getPath(DEFAULT_PICTURE));
         }
+        profilePicture.setPreserveRatio(false);
         profilePicture.setImage(im);
+        profilePicture.setFitWidth(90);
+        profilePicture.setFitHeight(120);
     }
 
     /**
