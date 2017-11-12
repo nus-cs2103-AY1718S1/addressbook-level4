@@ -558,9 +558,10 @@ image::MusicActivityDiagram.png[width="400"]
 // end::musiccommand[]
 
 // tag::radiocommand[]
-// end::Radiocommand[]
+=== Radio Commands
+// end::radiocommand[]
 
-// tag::ShareCommand[]
+// tag::sharecommand[]
 === Sending Email
 The sending email function is an external library and requires internet connection.
 
@@ -574,7 +575,7 @@ The sending email function is an external library and requires internet connecti
 **Pros:** Different subject header can be used for different purpose. +
 **Cons:** Can be abused and send negative subject header +
 
-// end::ShareCommand[]
+// end::sharecommand[]
 
 // tag::alias[]
 === Aliases

@@ -3,7 +3,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: Unify Address Book
+{sp}
+
 image::engsheng_projectheader.png[width="900"]
 `Unify` is a Command Line Interface AddressBook that helps users manage your contacts efficiently. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 12 kLoC.
 
@@ -15,10 +16,37 @@ image::engsheng_header_enhancementadded.png[width="900"]
 
 {sp}
 
-image::engsheng_header_music.png[width="900"]
+image::engsheng_header_share.png[width="900"]
 
 {sp}
 
+image::engsheng_header_externalbehavior.png[width="900"]
+
+include::../UserGuide.adoc[tag=sharecommand]
+
+{sp}
+
+image::engsheng_header_justification.png[width="900"]
+
+Most of us enjoy listening to music while we do our work. Hence, by having a built-in music player, users can enjoy some tunes while they adding, or editing or any other related task in Unify address book.
+
+You may ask, "Why can't I use other streaming services such as Spotify?" Well, the reason is that this does not require internet connection, and since it is already built-in, it encourages users to use it immediately
+without any second thought. Users would prefer this method as removes the hassle of requiring multiple clicks to finding a music to play by having just a single command execution to play some music.
+
+
+image::engsheng_header_implementation.png[width="900"]
+
+include::../DeveloperGuide.adoc[tag=sharecommand]
+
+{sp}
+
+image::divider.png[width="900"]
+
+{sp}
+
+image::engsheng_header_music.png[width="900"]
+
+{sp}
 
 image::engsheng_header_externalbehavior.png[width="900"]
 
@@ -38,14 +66,103 @@ image::engsheng_header_implementation.png[width="900"]
 
 include::../DeveloperGuide.adoc[tag=musiccommand]
 
-{sp}+
+{sp}
 
-=== image:engsheng_header_enhancementproposed.png[width="900"]
-=== Enhancement Proposed: Add command `remark`
+image::divider.png[width="900"]
 
-{Explain similar to the Undo/Redo feature above.}
+{sp}
 
-=== image:engsheng_header_contribution.png[width="900"]
+image::engsheng_header_radio.png[width="900"]
+
+{sp}
+
+image::engsheng_header_externalbehavior.png[width="900"]
+
+include::../UserGuide.adoc[tag=radiocommand]
+
+{sp}
+
+image::engsheng_header_justification.png[width="900"]
+
+Most of us enjoy listening to music while we do our work. Hence, by having a built-in music player, users can enjoy some tunes while they adding, or editing or any other related task in Unify address book.
+
+You may ask, "Why can't I use other streaming services such as Spotify?" Well, the reason is that this does not require internet connection, and since it is already built-in, it encourages users to use it immediately
+without any second thought. Users would prefer this method as removes the hassle of requiring multiple clicks to finding a music to play by having just a single command execution to play some music.
+
+
+image::engsheng_header_implementation.png[width="900"]
+
+include::../DeveloperGuide.adoc[tag=radiocommand]
+
+{sp}
+
+image::divider.png[width="900"]
+
+{sp}
+
+image::engsheng_header_audiblefeedback.png[width="900"]
+
+{sp}
+
+image::engsheng_header_externalbehavior.png[width="900"]
+
+include::../UserGuide.adoc[tag=audiblefeedback]
+
+image::divider.png[width="900"]
+
+{sp}
+
+image::engsheng_header_justification.png[width="900"]
+
+It is very important to give user some form of feedback other than visual feedback. Minor audio cues can make a tremendous difference in user-experience. In Unify,
+
+I want the users to feel that they are in control, hence I have added the typing sound that gives user the sense of every input they make is being input successfully, every characters every key press is essential.
+
+The next audio cue I have added is the Text-To-Speech feature, specifically, this feature allows Unify to "speak" to the user. Giving a more human-like feedback to the user.
+When a command is executed successfully Unify will announced that it is executed successfully. In addition, when the user selects a contact's name, Unify will say out name of the selected contact's name.
+
+This Text-To-Speech feature was part of the initiative together with the (not yet implemented) Speech-To-Text feature to bring in users who has vision disabilities into using Unify as well. Potentially increasing our user base.
+
+image::divider.png[width="900"]
+
+{sp}
+
+image::engsheng_header_remarks.png[width="900"]
+
+{sp}
+
+image::engsheng_header_externalbehavior.png[width="900"]
+
+include::../UserGuide.adoc[tag=addcommand]
+
+include::../UserGuide.adoc[tag=editcommand]
+
+{sp}
+
+image::engsheng_header_justification.png[width="900"]
+
+Instead of separating remarks into another command. I have decided to implement it together with add and edit command instead. This streamline the process of adding and editing a remark. Even though, this involves editing existing code base, I believe the outcome is much better than having remarks as a separate command.
+
+image::engsheng_header_enhancementproposed.png[width="900"]
+
+{sp}
+
+image::engsheng_header_proposed_stt.png[width="900"]
+
+Sometimes, we want another form of input. By having Speech-To-Text features implemented into Unify, we are able to give users a another form of input.
+
+This feature could be also extremely beneficial to users that suffers from slow typing or prefer to multitask
+and use their speech to execute commands instead. This feature may be also tied together with the existing Text-To-Speech feature to help users who may suffer from some form of disabilities, to give them a hands-free yet full user experience of Unify without any drawbacks.
+
+I have tried experimenting with some Speech-To-Text codes, but I do not enough time for it to be implemented in the final product of V1.5 of Unify.
+
+The codes can be here [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/unused/hanselblack.md[Unused code]] while the resource files can be found here [https://github.com/CS2103AUG2017-W11-B4/main/tree/master/unused/resources/edu/cmu/sphinx/models/en-us[Resources]]
+
+Note that the codes above are using [https://cmusphinx.github.io/[CMUSphinx Open Source Speech Recognition ]]
+
+{sp}
+
+image::engsheng_header_contribution.png[width="900"]
 
 * Created template for User Guide step by step design (Pull requests https://github.com/CS2103AUG2017-W11-B4/main/pull/74/commits/d3724bd9bd95a51cf9821906166835419259f050[#74])
 * Enhanced and overhauled the design the User Guide to make it user-friendly and appealing, made every images used in User Guide, except for respective developer screenshot (Pull requests https://github.com/CS2103AUG2017-W11-B4/main/pull/62[#62])

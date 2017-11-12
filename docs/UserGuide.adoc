@@ -159,6 +159,8 @@ image::UG_mainheader_basicfeatures.png[width="900"]
 //-
 {sp}
 
+// tag::addcommand[]
+
 === Adding a person: `add`
 
 image::UG_commandheader_add.png[width="500"]
@@ -204,6 +206,8 @@ image::header_note.png[width="400"]
 * For Windows users, if you are unsure how to get the path of the image click http://www.howto-connect.com/copy-path-of-a-file-or-folder-in-windows-10/[here]
 
 image::divider.png[width="900"]
+
+// end::addcommand[]
 
 === Clearing all entries : `clear`
 image::UG_commandheader_clear.png[width="500"]
@@ -291,6 +295,7 @@ image::UG_delete2.png[width="590"]
 
 image::divider.png[width="900"]
 
+// tag::editcommand[]
 === Editing a person : `edit`
 
 image::UG_commandheader_edit.png[width="500"]
@@ -343,6 +348,8 @@ image::UG_edit2.png[width="590"]
 {sp}+
 
 image::divider.png[width="900"]
+
+// end::editcommand[]
 
 === Exiting the program : `exit`
 image::UG_commandheader_exit.png[width="500"]
@@ -673,12 +680,12 @@ image::UG_find3.png[width="590"]
 image::divider.png[width="900"]
 // end::find[]
 
-// tag::ShareCommand[]
+// tag::sharecommand[]
 === Sharing contact's details by email : `share`
 image::UG_commandheader_share.png[width="500"]
 
 Want to share a contact to your colleagues or friends via e-mail?
-Unify's `share` command lets you email the selected contact's details to your designated email! +
+Unify's `share` command lets you email the selected contact's details to your designated email!
 
 image::UG_header_format.png[width="400"]
 Format:
@@ -754,7 +761,7 @@ image::UG_share2a.png[width="590"]
 {sp}+
 
 image::divider.png[width="900"]
-// end::ShareCommand[]
+// end::sharecommand[]
 
 // tag::musiccommand[]
 === Playing music : `music play`
@@ -798,7 +805,7 @@ image::divider.png[width="900"]
 image::UG_commandheader_musicstop.png[width="500"]
 
 Maybe the music is getting a little distracting or you are just not in the mood for some tunes.
-`music stop` stops the current music track playing so that you can focus on the task at hand.+
+`music stop` stops the current music track playing so that you can focus on the task at hand.
 
 image::UG_header_format.png[width="400"]
 Format: `music stop`
@@ -809,7 +816,7 @@ image:step1.png[width="70"] To stop the music from playing, type `music stop` in
 
 image::UG_musicstop1.png[width="590"]
 
-image:step2.png[width="70"] Now you have the silence that you need and the result box will display "Music Stopped". +
+image:step2.png[width="70"] Now you have the silence that you need and the result box will display "Music Stopped".
 
 image::UG_musicstop2.png[width="590"]
 
