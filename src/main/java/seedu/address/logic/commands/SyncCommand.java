@@ -377,7 +377,8 @@ public class SyncCommand extends Command {
 
     /** Converts a Google Person with an already existing entry to a local Person
      *
-     * @param person, aOldPerson
+     * @param person
+     * @param aOldPerson
      * @return
      * @throws IllegalValueException
      */
