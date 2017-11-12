@@ -12,12 +12,12 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B4/main
 
-By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
+By: `T09-B4`      Since: `Nov 2017`      Licence: `MIT`
 
 == *Introduction*
+
 `The Classroom v1.5` is a program designed for students who are frequently involved in group and collaborative projects
-to maintain their contact list. You can use _**The Classroom**_
- to add, delete, find, sort,  group contacts and even maintain a to-do list with your contacts.
+to maintain their contact list. You can use _**The Classroom**_ to add, delete, find, sort,  group contacts and even maintain a to-do list with your contacts.
 
 == *About*
 This guide shows you how to get started using _**The Classroom**_.
@@ -75,6 +75,8 @@ image::Ui.png[width="790"]
 
 *Format:* `help`
 
+image::help.png[width="700"]
+
 *Suggestion for use:* If you are unsure on what commands are available or how a particular command work.
 
 ==== Adding a person: `add`
@@ -82,6 +84,8 @@ image::Ui.png[width="790"]
 *Description:* Adds a new person to the contact list.
 
 *Format:* `add` `n/NAME` `p/PHONE_NUMBER` `e/EMAIL` `a/ADDRESS` `[t/TAG]...`
+
+image::add.png[width="700"]
 
 [NOTE]
 Adding `TAGS` are optional.
@@ -99,6 +103,8 @@ Adding `TAGS` are optional.
 
 *Format:* `list`
 
+image::list.png[width="300"]
+
 *Suggestion for use:* If you want to view all contacts in the contact list.
 
 // tag::tags[]
@@ -107,6 +113,8 @@ Adding `TAGS` are optional.
 *Description:* Shows a list of all tags in the contact list.
 
 *Format:* `tags`
+
+image::tags.png[width="300"]
 
 *Suggestion for use:* If you want to view all existing tags in _**The Classroom**_.
 
@@ -117,6 +125,8 @@ Adding `TAGS` are optional.
 *Description:* Edits contact details of an existing person in the contact list.
 
 *Format:* `edit` `INDEX` `[n/NAME]` `[p/PHONE]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]...`
+
+image::edit.png[width="700"]
 
 ****
 * Edits the person at the specified `INDEX`. `INDEX` refers to the index number shown in the last person listing. The `INDEX` must be a *positive integer* (1, 2, 3, ...).
@@ -141,6 +151,8 @@ Adding `TAGS` are optional.
 *Description:* Favourites or unfavourites an existing person in the contact list.
 
 *Format:* `favourite` `INDEX`
+
+image::favourite.png[width="700"]
 
 ****
 * Favourites/Unfavourites the person at the specified `INDEX`. `INDEX` refers to the index number shown in the last person listing. The `INDEX` must be a *positive integer* (1, 2, 3, ...).
@@ -169,6 +181,8 @@ Favourites/Unfavourites the 1st person from the results of the `find` command.
 *Description:* Finds persons whose specified _field_ contain any of the given keywords.
 
 *Format:* `find` `[PREFIX KEYWORD]...`
+
+image::findc.png[width="300"]
 
 ****
 * `PREFIX` has to be given to specify which _field_ to search for.
@@ -214,6 +228,8 @@ Returns any person having tags `friends`, `colleagues`, or both.
 
 *Format:* `delete` `INDEX`
 
+image::delete.png[width="700"]
+
 ****
 * Deletes the person at the specified `INDEX`.
 * `INDEX` refers to the index number shown in the most recent listing.
@@ -237,6 +253,8 @@ Deletes the 1st person from the results of the `find` command.
 *Description:* Sorts the contact list according to the specified _data field_.
 
 *Format:* `sort` `DATAFIELD`
+
+image::sort.png[width="300"]
 
 ****
 * Possible `DATAFIELD` entries are: `Name`, `Phone`, `Email`, `Address`.
@@ -269,6 +287,8 @@ Sorts the contact list according to their phone numbers in reverse order without
 
 *Format:* `select` `INDEX`
 
+image::select.png[width="300"]
+
 ****
 * Selects the person and loads the Twitter search page of the person at the specified `INDEX`.
 * `INDEX` refers to the index number shown in the most recent listing.
@@ -292,6 +312,8 @@ Selects the 1st person from the results of the `find` command.
 
 *Format:* `history`
 
+image::history.png[width="300"]
+
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and following input respectively in the command box.
@@ -305,6 +327,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 *Description:* Restores the contact list to the state before the previous _undoable_ command was executed.
 
 *Format:* `undo`
+
+image::undo.png[width="150"]
 
 [NOTE]
 ====
@@ -338,6 +362,8 @@ Reverses the `clear` command followed by reversing the `delete` `1` command.
 
 *Format:* `redo`
 
+image::redo.png[width="150"]
+
 *Examples:*
 
 * `delete` `1` +
@@ -370,6 +396,7 @@ The second `redo` command reverses the first `undo` command and re-execute the `
 
 *Format:* `addtag` `INDEX...` `TAG...`
 
+image::addtagc.png[width="300"]
 
 ****
 * Adds multiple tags to multiple indexes as specified.
@@ -408,6 +435,8 @@ Adds the `friends` tag to the person from the second to fifth index in the conta
 *Description:* Removes the specified tag(s).
 
 *Format:* `removetag` `INDEX...` `TAG...`
+
+image::removetagc.png[width="300"]
 
 [NOTE]
 ====
@@ -451,21 +480,22 @@ Removes the `friends` tag from the second to fifth person in the contact list.
 // end::addremove[]
 
 // tag::remarkchecklist[]
-==== Add/remove a remark note to contact: `addremark`, `removeremark`
+==== Add a remark note to contact: `addremark`, `removeremark`
 
-*Description:* Adds/Removes the specified remarks(s).
+*Description:* Adds the specified remark(s).
 
-Format to add remark: `addremark INDEX r/REMARK...` +
-Format to remove remark: `removeremark INDEX REMARKINDEX...`
+Format: `addremark INDEX r/REMARK...` +
+
+image::addremarkc.png[width="850"]
 
 ****
-* Add/Remove multiple remarks from multiple indexes as specified.
+* Add multiple remarks from multiple indexes as specified.
 * `INDEX` refers to the index number shown in the last person listing.
-** Only one `INDEX` can be selected at a time, although multiple `REMARKINDEX` can be selected
-* The `INDEX` and `REMARKINDEX` must be a *positive integer* ( `1, 2, 3, ...`).
+** Only one `INDEX` can be selected at a time
+* The `INDEX` must be a *positive integer* ( `1, 2, 3, ...`).
 ****
 [TIP]
-A person can have any number of remarks (including 0) +
+You can add any number of remarks +
 Remarks can be anything (including a blank) +
 GUI will display a list of person with pending remarks on the right.
 
@@ -476,10 +506,34 @@ Examples:
 
 * `addremark 1 r/Have a beer with him on Sunday`
 * `addremark 3 r/Finish project with him by tomorrow r/Eat supper with him at 10`
+
+*Suggestion for use:* If you want to add a remark pertaining to a person to take note of a task you want to do with him/her.
+
+==== Remove a remark note to contact: `addremark`, `removeremark`
+
+*Description:* Removes the specified remark(s).
+
+Format: `removeremark INDEX REMARKINDEX...`
+
+image::removeremarkc.png[width="850"]
+
+****
+* Remove multiple remarks from multiple indexes as specified.
+* `INDEX` refers to the index number shown in the last person listing.
+** Only one `INDEX` can be selected at a time, although multiple `REMARKINDEX` can be selected
+* The `INDEX` and `REMARKINDEX` must be a *positive integer* ( `1, 2, 3, ...`).
+****
+[TIP]
+You can remove any number of remarks up to the amount available for the specified person +
+If you do not specify any `REMARKINDEX`, all remarks will be removed from the specified person
+
+Examples:
+
 * `removeremark 1 1 3`
 * `removeremark 2 1`
+* `remove remark 1`
 
-Suggestion for use: You want to remind yourself that a particular contact likes to swim.
+*Suggestion for use:* If you want to remove a remark pertaining to a person to take note of a task you want to do with him/her.
 
 // end::remarkchecklist[]
 
@@ -501,6 +555,8 @@ Examples:
 
 * `link 1 l/https://www.twitter.com/john.doe`
 
+*Suggestion for use:* If you want add a twitter link to a person so that you can identify him/her more easily or use the twitter messaging function to converse.
+
 // end::link[]
 
 ==== Clearing all entries : `clear`
@@ -508,6 +564,8 @@ Examples:
 *Description:* Clears all entries in _**The Classroom**_.
 
 *Format:* `clear`
+
+image::clear.png[width="300"]
 
 *Suggestion for use:* If you want to begin a brand new contact list.
 

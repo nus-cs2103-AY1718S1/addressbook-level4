@@ -9,6 +9,9 @@ It is especially helpful in helping students manage and increase the efficiency 
 The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 8 kLoC. +
 The Classroom is built up from the [https://github.com/se-edu/addressbook-level4[AddressBook - Level 4]] (an address book application used for teaching Software Engineering principles)
 
+The purpose of this portfolio is to highlight the changes that I made to improve the application from the basic address book
+application and why the enhancements were made, along with how they were implemented.
+
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/main/limyongsong.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/test/limyongsong.md[Test code]]
 
 === Enhancement Added: Remark CheckList
