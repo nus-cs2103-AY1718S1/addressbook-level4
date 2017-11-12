@@ -18,7 +18,6 @@ public class NameTextField extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "NameTextField.fxml";
-
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
 
     @FXML

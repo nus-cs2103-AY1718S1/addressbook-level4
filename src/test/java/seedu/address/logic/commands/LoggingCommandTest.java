@@ -1,61 +1,68 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 //@@author danielweide
 public class LoggingCommandTest {
-
-    @Test
-    public void execute_checkIfLoggingExist() {
-        boolean expectedOutput = true;
-        boolean testOutput = true;
-        try {
-            prepareStartUpCommand();
-            Path f1 = Paths.get("ConnectUsLog.txt");
-            byte[] file1 = Files.readAllBytes(f1); // if ConnectUsLog.txt exist means pass
-        } catch (Exception e) {
-            testOutput = false; //if ConnectUsLog.txt does not exist means fail
-        }
-        assertEquals(expectedOutput, testOutput);
-    }
-    @Test
-    public void execute_checkIfLoggingIsDone() {
-        boolean expectedOutput = true;
-        boolean testOutput;
-        try {
-            prepareKeepLogCommand();
-            Path f2 = Paths.get("ConnectUsLog.txt");
-            byte[] file1 = Files.readAllBytes(f2); // if ConnectUsLog.txt exist means pass
-            testOutput = true;
-        } catch (Exception e) {
-            testOutput = false; // if ConnectUsLog.txt is not found it will fail
-        }
-        assertEquals(expectedOutput, testOutput);
-    }
     /**
-     * Calling out Method that will log into ConnectUsLog.txt when application is running
+     * Calls Method that will log into ConnectUsLog.txt when application is running
      */
-    private void prepareStartUpCommand() throws CommandException, IOException {
+    @Before
+    public void prepareStartUpCommand() throws CommandException, IOException {
         LoggingCommand loggingCommand = new LoggingCommand();
         ClearLogCommand clearLogCommand = new ClearLogCommand();
         clearLogCommand.execute(); //remove ConnectUs.txt file
         loggingCommand.startUpLog(); //create new ConnectUs.txt file
     }
+    @Test
+    public void execute_checkIfLoggingExist() {
+
+        assertTrue(new File("ConnectUsLog.txt").isFile());
+
+    }
+    @Test
+    public void execute_checkIfLoggingIsDone() {
+        int numOfLines = 0;
+        int expectedLines = 1;
+        try {
+            numOfLines = countLines("ConnectUsLog.txt");
+        } catch (Exception e) {
+            numOfLines = -1;
+        }
+        assertEquals(expectedLines, numOfLines);
+    }
     /**
-     * Calling out Method that will log into ConnectUsLog.txt when action is executed
+     * Count Number of Lines in txt file
      */
-    private void prepareKeepLogCommand() throws CommandException, IOException {
-        LoggingCommand loggingCommand = new LoggingCommand();
-        ClearLogCommand clearLogCommand = new ClearLogCommand();
-        clearLogCommand.execute(); //remove ConnectUs.txt file
-        loggingCommand.keepLog("test", "test"); //create new ConnectUs.txt file
+    private static int countLines(String filename) throws Exception {
+        InputStream inputStream = new BufferedInputStream(new FileInputStream(filename));
+        try {
+            byte[] reading = new byte[1024];
+            int count = 0;
+            int readChars = 0;
+            boolean empty = true;
+            while ((readChars = inputStream.read(reading)) != -1) {
+                empty = false;
+                for (int i = 0; i < readChars; i++) {
+                    if (reading[i] == '\n') {
+                        ++count;
+                    }
+                }
+            }
+            return (count == 0 && !empty) ? 1 : count;
+        } finally {
+            inputStream.close();
+        }
     }
 }

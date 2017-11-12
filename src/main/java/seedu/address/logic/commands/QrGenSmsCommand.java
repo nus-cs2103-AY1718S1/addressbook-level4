@@ -1,12 +1,12 @@
 package seedu.address.logic.commands;
 
 /**
- * Method for application to call out for different QR Functions
+ * Generates SMS QR Link in forms of String
  */
 //@@author danielweide
 public class QrGenSmsCommand {
     /**
-     * Method to Generate SMS to Contact QRCode
+     * Generates SMS QR Link in forms of String
      */
     public String qrSms(String phoneNum, String contactName) {
         String qrCodeA = "http://";

@@ -9,9 +9,9 @@ The user can tag entries for more efficient search and can open up an email clie
 such as his/her address on Google Maps. The user interacts with it using a CLI, although there are additional GUI elements created in JavaFX such as a form to edit contacts, and a QR generator for you to scan
 the contact's number and automatically port it to your smartphone. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/main/danielweide.md] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/test/danielweide.md]
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: LoggingCommand/ClearLog
 
 ==== External behavior
 
@@ -19,7 +19,35 @@ the contact's number and automatically port it to your smartphone. It is written
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=connectuslog]
-include::../UserGuide.adoc[tag=qrgeneration]
+
+#End of Extract#
+
+---
+
+==== Justification
+The LoggingCommand feature was implemented to ensure that user are still able to check the actions they executed. Only important actions such as "Add" , "Clear" , "Edit" , "Select" . etc. are recorded to the ConnectUsLog.txt file. This allow the user to have chance to check for mistakes or accidental removal of contact after realising it was a mistake committed weeks ago. +
+Since there is ConnectUsLog.txt involved , user can also have the option to clear the file in order to make their records more neat compared to needing to browse through huge number of record which was confirmed unnecessary. +
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=loggingcom]
+include::../DeveloperGuide.adoc[tag=clearlog]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: QR(Quick Response) code generation for Calling
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=qrcall]
 
 #End of Extract#
 
@@ -27,30 +55,80 @@ include::../UserGuide.adoc[tag=qrgeneration]
 
 ==== Justification
 
-"clearlog" feature was implemented on top of another features implement to keep track of important actions such as "Edit" , "Select" , "Add" & "Clear". This ensure the user are able to identify mistakes committed on certain period of time where undo or redo function would not be usable once the application is close. So the "ClearLog" function clears the entries in ConnectUs.txt files and keep a record on when it was cleared. This allows the user to keep neat and organised entries of action used. +
-"qrcall" feature was implemented to reduce chance of human error and time when the user wants to make call to specific contact. With the help of Quick Response Code (QR Code), the user just need to use their smartphone to scan the code which will instruct the phone on what to do. This helps save time and chance for error during the time when the user needs to make a call. +
-"qrsms" feature was implemented to keep our user free from human error and help save time to compose a sms. It comes with function where there is greeting template message . The user simply need to scan the QR Code to compose their sms for the intended contact. +
-"qrsavecontact" feature was implemented to help Android users to save contact easily by simply scanning the QR Code to save contact they want from the addressbook application. This will help save a lot of time if the user needs to save multiple acount and reduce chances of human error with potential of wrong information keyed in during the process of manual saving of contact information.
+The QRCall feature was implemented to reduce chance of human error and time when the user wants to make call to specific contact. With the help of Quick Response Code (QR Code), the user just need to use their smartphone to scan the code which will instruct the phone on what to do. This helps save time and chance for error during the time when the user needs to make a call. +
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-Ongoing.
+include::../DeveloperGuide.adoc[tag=qrcall]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Addition of Voice Command with Google Voice Recognition
+=== Enhancement Added: QR(Quick Response) code generation for SMS
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=qrsms]
+
+#End of Extract#
+
+---
+
+==== Justification
+The QRSMS feature was implemented to keep our user free from human error and help save time to compose a sms. It comes with function where there is greeting template message . The user simply need to scan the QR Code to compose their sms for the intended contact. +
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=qrsms]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: QR (Quick Response) Code Generation for Saving Contact Number
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=qrsave]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The QRSaveContact feature was implemented to help Android users to save contact easily by simply scanning the QR Code to save contact they want from the addressbook application. This will help save a lot of time if the user needs to save multiple acount and reduce chances of human error with potential of wrong information keyed in during the process of manual saving of contact information.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=qrsave]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Addition of Voice Command with Google Voice Recognition `Coming in v2.0`
 
 As most of the features that i implemented are targeted at user convenience. The proposed suggestion will help make the application more easy to use with just commanding the application on what to do while you can multitask with other task you are busy with.
 
 === Other contributions
 
 * Offers suggestions for team with alternative solution to solve the issue they encountered with
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+* Assist with refining User Guide
+* Found some bugs in other team's project during Acceptance Testing (Issues https://github.com/CS2103AUG2017-W11-B1/main/issues/158[158], https://github.com/CS2103AUG2017-W11-B1/main/issues/160[160])
