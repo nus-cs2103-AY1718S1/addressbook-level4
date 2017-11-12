@@ -555,9 +555,13 @@ The design for filtering the existing list applies the [https://en.wikipedia.org
 === Synchronisation with Google Contacts
 
 ==== Mechanism
-Authentication and synchronisation of data with a user's Google Contacts is done via the `sync` command, which is a subclass of `Command`. This command works in conjunction with the Google Client and People API.
+Authentication and bi-directional synchronisation of data with a user's Google Contacts is done via the `sync` command, which is a subclass of `Command`. This command works in conjunction with the Google Client and People API.
 
-Firstly, the command posts an `AuthorizationEvent` event to the EventCenter, which is then handled by a `OAuth` class, which is chiefly responsible for authorization and interaction with a user's Google Contacts. Hence, threading allows for the application to run in the background, while the user can perform other tasks. The user is redirected to login to Google via his default browser through the invoked `authorize` method. A callback is then done to create a `Credential` which is then used to instantiate a `PeopleService` instance. `PeopleService` is then used to perform create, read, update, and delete (CRUD) functions on the user's Google Contacts. The following diagram shows the entire sequence. This can be seen in Figure 3.5.1.
+A `PeopleService` instance is required and obtained via the `LoginCommand` before synchronisation is possible.
+`PeopleService` is then used to perform Create, Read, Update, and Delete (CRUD) operations on the user's Google Contacts,
+which is used in `SyncCommand`. The four primary methods in `SyncCommand` are `checkContacts`, `updateContacts`, `importContacts` and `exportContacts`. +
+
+The sequence diagram for the command can be seen below, in Figure 3.5.1:
 
 image::SyncCommandSequenceDiagram.png[width="1000"]
 _Figure 3.5.1: Sync Command Sequence Diagram
@@ -565,152 +569,159 @@ _Figure 3.5.1: Sync Command Sequence Diagram
 ==== Methods
 
 ===== SyncCommand
-Below is the implementation of SyncCommand. Upon execution, the AuthorizationEvent is sent and the command notifies the user that synchronisation has been initiated.
+Below is the implementation of SyncCommand.
+Upon execution, the command checks if a PeopleService instance has been instantiated, and throws a `CommandException` if it has not.
+It then runs the `initialise` method, which preprocesses the *ABC* and Google Contacts data, before performing the 4 main functions,
+`checkContacts`, `updateContacts`, `importContacts` and `exportContacts`.
 
 [source,java]
 ----
 public class SyncCommand extends Command {
   //...variables, constructor, other methods
 
-  @Override
-  public CommandResult executeUndoableCommand() throws CommandException {
+    @Override
+    public CommandResult execute() throws CommandException {
 
-      try {
-          List<ReadOnlyPerson> personList = model.getFilteredPersonList();
-          AuthorizationEvent event = new AuthorizationEvent(personList);
-          EventsCenter.getInstance().post(event);
-          return new CommandResult(String.format(MESSAGE_SUCCESS));
-      } catch (Exception e) {
-          throw new CommandException(MESSAGE_FAILURE);
-      }
+        if (clientFuture == null || !clientFuture.isDone()) {
+            throw new CommandException(MESSAGE_FAILURE);
+        } else {
 
-  }
+            syncedIDs =  (loadStatus() == null) ? new HashSet<String>() : (HashSet) loadStatus();
+
+            try {
+                List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+                
+                initialise();
+                
+                checkContacts();
+                updateContacts();
+                exportContacts(personList);
+                if (connections != null) {
+                    importContacts();
+                }
+
+                saveStatus(syncedIDs);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return new CommandResult(String.format(MESSAGE_SUCCESS));
+    }
 }
 ----
 
-===== AuthorizationEvent handler
-The `OAuth` class handles the `AuthorizationEvent`. It first runs the `authorize` method to obtain a `Credential`, and uses that to create a `PeopleService`. The `exportContacts` method is then invoked to export all contacts from *ABC* to Google Contacts. Below is the code for the handler.
+===== Checking and updating of contacts
+A `syncedIDs.dat` file is maintained to keep track of the contacts that have been synchronised currently, as each link between an *ABC* and a Google contact consists of an unique ID. `checkContacts` ensures that contacts on both ends still exist, and removes the link if either of them no longer exist. `updateContacts`, on the other hand, compares linked contacts, and if there is a difference, it updates the contact that has an older timestamp. Below is the implementation of the 2 functions respectively.
 
 [source,java]
 ----
-public class OAuth {
+public class SyncCommand extends Command {
   // variables, constructor and other methods
+  
+  private void checkContacts() throws Exception {
+        List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+        for (ReadOnlyPerson person : personList) {
+            String id = person.getId().getValue();
 
-  @Subscribe
-  public static void handleAuthorizationEvent(AuthorizationEvent event) throws Throwable {
-      new Thread (() -> {
-          try {
-              // initialize the transport
-              httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+            if (!hashGoogleId.containsKey(id)) {
+                logger.info("Deleting local contact");
+                model.deletePerson(person);
+                syncedIDs.remove(id);
+                continue;
+            }
 
-              // initialize the data store factory
-              dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
-
-              // authorization
-              Credential credential = authorize();
-              // set up global People instance
-              client = new PeopleService.Builder(
-                      httpTransport, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
-
-              exportContacts(event.getPersonList());
-          } catch (IOException e) {
-              System.err.println(e.getMessage());
-          } catch (Throwable t) {
-              t.printStackTrace();
-          }
-      }).start();
-
-
-  }
-----
-
-===== Authorize with Google servers
-Below is the `authorize` method implemented in `OAuth`, which uses the `People API` to get an authorization token. This is used to create a `PeopleService` to retrieve Google Contacts information. A `clients_secret.json` file is used to provide the required Client ID and Secret for the Google API. A `Credential` is returned from this method, which is then used to create a `PeopleService`.
-
-[source,java]
-----
-public class OAuth {
-  // variables, constructor and other methods
-
-  /** Authorizes the installed application to access user's protected data. */
-  private static Credential authorize() throws Exception {
-      // load client secrets
-      GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-              new InputStreamReader(OAuth.class.getResourceAsStream("/client_secrets.json")));
-      if (clientSecrets.getDetails().getClientId().startsWith("Enter")
-              || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-          System.out.println(
-                  "Enter Client ID and Secret from https://code.google.com/apis/console/?api=people "
-                          + "into seedu/address/src/main/resources/client_secrets.json");
-          System.exit(1);
-      }
-
-      // set up authorization code flow
-      GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-              httpTransport, JSON_FACTORY, clientSecrets,
-              Collections.singleton(PeopleServiceScopes.CONTACTS)).setDataStoreFactory(dataStoreFactory)
-              .build();
-
-      // authorize
-
-      return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+        }
   }
 
+      private void updateContacts() throws Exception {
+        List<String> toRemove = new ArrayList<String>();
+        for (String id : syncedIDs) {
+            seedu.address.model.person.ReadOnlyPerson aPerson;
+            Person person;
+            
+            // Checks whether person and aPerson still exists, mainly for defensive programming 
+
+            // We check the last updated times for both contacts
+
+            if (compare < 0) {
+                // We update the remote contact
+            } else if (compare > 0) {
+                // We update the local contact
+            }
+        }
+    } 
 }
 ----
 
-===== Export contacts to Google Contacts
-Lastly, AddressBook contacts are then exported to Google Contacts via the `exportContacts` method. A `ReadOnlyPersonList` is obtained from the current AddressBook, and iterated through to add their entries into the user's Google account via the `createContact` method provided by People API. The code is shown below.
+===== Importing and exporting of contacts
+We then move on to importing of new Google Contacts, and exporting of new *ABC* contacts to Google servers.  
+To achieve this, we iterate through all Google Contacts and *ABC* contacts respectively, and import or export them accordingly if they are not linked 
+with an ID yet.
 
-[source,java]
 ----
-public class OAuth {
+public class SyncCommand extends Command {
+  // variables, constructor and other methods
 
-  /**Uploads AddressBook contacts to Google Contacts
-   * TODO: Prevent adding of duplicates
-   */
-  private static void exportContacts (List<ReadOnlyPerson> personList) throws IOException {
-      for (ReadOnlyPerson person : personList) {
-          Person contactToCreate = new Person();
-          List<Name> name = new ArrayList<Name>();
-          List<EmailAddress> email = new ArrayList<EmailAddress>();
-          List<Address> address = new ArrayList<Address>();
-          List<PhoneNumber> phone = new ArrayList<PhoneNumber>();
-          name.add(new Name().setGivenName(person.getName().fullName));
-          email.add(new EmailAddress().setValue(person.getEmail().value));
-          address.add(new Address().setFormattedValue(person.getAddress().value));
-          phone.add(new PhoneNumber().setValue(person.getPhone().value));
+    private void importContacts () throws IOException {
 
-          contactToCreate.setNames(name)
-                          .setEmailAddresses(email)
-                          .setAddresses(address)
-                          .setPhoneNumbers(phone);
+        for (Person person : connections) {
+                String id = person.getResourceName();
+                String gName = retrieveFullGName(person);
+                if (!syncedIDs.contains(id)) {
+                    if (!hashName.containsKey(gName)) {
+                        // We import the contact if there is no contact of a similar name
+                    } else if (hashName.containsKey((gName))) {
+                        seedu.address.model.person.ReadOnlyPerson aPerson = hashName.get(gName);
+                        if (equalPerson(aPerson, person)) {
+                            //We link the 2 contacts if they have the same details
+                        } else {
+                            // We can safely import the contacts as they have different details
+                        }
+                    } 
+                }
+        }
+    }
 
-          Person createdContact = client.people().createContact(contactToCreate).execute();
-      }
-  }
+    private void exportContacts (List<ReadOnlyPerson> personList) throws Exception {
+        for (ReadOnlyPerson person : personList) {
+            if (person.getId().getValue().equals("")) {
+                if (hashGoogleName.containsKey(person.getName().fullName)) {
+                    // We can safely export the contact as there is no one with a similar name
+                } else if (hashGoogleName.containsKey(person.getName().fullName)) {
+                    // We check if the person is identical, and link them if they are
+                    Person gPerson = hashGoogleName.get(person.getName().fullName);
+                    if (equalPerson(person, gPerson)) {
+                        // We link the similar contacts
+                    } else {
+                        // We can safely export the contact as their other details are not similar
+                    }
+                }
+            }
+        }
+    }
+}
 ----
 
 ==== Design Considerations
-**Aspect:** Google Authorization +
-**Alternative 1 (current choice):** Use a thread +
-**Pros:** Users can use the application and execute other commands asynchronously from the authorization. +
-**Cons:** More difficult to show the progress of the syncCommand.
+**Aspect:** It is difficult to keep track of which contacts have been synchronised +
+**Alternative 1 (current choice):** An unique ID is assigned to each contact, and a global syncedIDS HashTable is stored  +
+**Pros:** It is easy to link/unlink synchronised contacts and keep track of the IDs that are in use. +
+**Cons:** Requires a persistent data file to be stored for synchronised IDs.
 
-**Alternative 2:** Block the application while waiting for authorization +
-**Pros:** Users will know the progress of the SyncCommand. +
-**Cons:** Application will freeze if authorization is done, or done in a manner not coded for by the People API (e.g. exiting the window via the 'X' or 'Close' button.
+**Alternative 2:** Use an ID field for each contact, but keep no global data file +
+**Pros:** Less resources and room for error +
+**Cons:** Requires more time for synchronisation, and it will be difficult to remove Google Contacts that have been deleted locally. +
 
 ---
 
-**Aspect:** Accessing `OAuth` from `Logic` +
-**Alternative 1 (current choice):** Use an `Event` and a `Subscriber` to communicate between the two different components +
-**Pros:** Maintains low coupling and prevents unnecessary addition of dependencies. +
-**Cons:** Handlers have to be created to handle `Events` when they occur. +
+**Aspect:** Authorisation cannot be performed synchronously due to the Google People library +
+**Alternative 1 (current choice):**  Introduce a new command `login` which is asynchronous, while `sync` remains synchronous
+**Pros:** `Model` can be updated as we remain on the application thread +
+**Cons:** It is difficult to control the number of open threads, which can impact system resources, and we have to run `login` before `sync` +
 
-**Alternative 2:** Create an `OAuth` object in `Logic` +
-**Pros:** No handlers are required to process `Events`. +
-**Cons:** Introduces unnecessary dependencies.
+**Alternative 2:** We implement synchronous usage of the Google Peopl library +
+**Pros:** No threading and hence complication is required. +
+**Cons:** It is extremely difficult to achieve this.
 // end::sync[]
 
 === Logging
@@ -1216,8 +1227,6 @@ Use case resumes at step 2.
 .  Data should only be accessible to the user himself.
 .  Should be compatible with earlier versions.
 .  Should be able to handle all possible exceptions.
-
-{More to be added}
 
 [appendix]
 == Glossary
