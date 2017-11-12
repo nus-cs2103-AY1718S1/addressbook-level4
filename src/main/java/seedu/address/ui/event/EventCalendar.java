@@ -118,7 +118,7 @@ public class EventCalendar extends UiPart<Region> {
     }
 
     public void setDates(String[] monthDateArray) {
-        for (int i=0; i<MAX_NUMBER_DAYS; i++) {
+        for (int i = 0; i < MAX_NUMBER_DAYS; i++) {
             dateArray[i].setText(monthDateArray[i]);
         }
     }
