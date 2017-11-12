@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_ARGUMENT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -23,7 +24,7 @@ public class ChooseCommandParser implements Parser<ChooseCommand> {
             return new ChooseCommand(browserType);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChooseCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_ARGUMENT, ChooseCommand.MESSAGE_USAGE));
         }
     }
 }
