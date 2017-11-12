@@ -569,6 +569,8 @@ The appointment feature was implemented as an end-to-end feature that added modi
 
 The implementation process consisted of first creating the appoint command which behaves just like the comment command, making the new command accept arguments, adding extra line in Person Card reserved for the appointment information, and implementing the Appoint Command execution in Logic.
 
+An improvement to the Appointment feature have been added so that it catches any invalid date inputs that occur before the current time of usage, as there is no point making an appointment in the past. This was implemented by using the Calendar and Date libraries in Java.
+
 ==== Design Considerations
 **Aspect:** Implementation of `Appoint` +
 **Alternative 1 (current choice):** Simply create a new `Appoint` Component which behaves very similarly to the `Comment` feature +
