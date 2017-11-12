@@ -777,11 +777,13 @@ public static Optional<Name> parseName(Optional<String> name, String command) th
 === Parent Mode
 When Bluebird is launched, the boolean variable `isParentEnabled` in `AddressBookParser` is set to `false`
 by default. This means that Parent Mode will be off by default and the number of commands
-available will be limited. The `ParentModeCommand` will enable all commands for the parent to use.
+available will be limited. The `ParentModeCommand` will enable all commands for the parent to use by setting
+`isParentEnabled` to `true`.
 
 The code snippet below shows how `AddressBookParser` prevents certain commands such as `DeleteCommand` from
 executing when `isParentEnabled` is `false`. A `ParseException` will be thrown which will display
-"Unknown Command" to the user.
+"Unknown Command" to the user. If `isParentEnabled` is `true` the `DeleteCommand` will be accepted and
+executed accordingly.
 
 [source, java]
 ----
@@ -797,6 +799,12 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_WORD:
             if (!isParentEnabled) {
                 throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            ...
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new DeleteCommandParser().parse(checkedArguments);
+            } else {
+                return new DeleteTaskCommandParser().parse(checkedArguments);
             }
     ...
     }
