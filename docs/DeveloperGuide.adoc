@@ -667,10 +667,8 @@ Only twitter link are allowed to be added.
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
-* You can control the logging level using the `logLevel` setting in the configuration file. 
-(See link:#configuration[Configuration])
-* You can obtain the `Logger` for a class using `LogsCenter.getLogger(Class)` which will log messages according to 
-the specified logging level.
+* You can control the logging level using the `logLevel` setting in the configuration file.(See link:#configuration[Configuration])
+* You can obtain the `Logger` for a class using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level.
 * Currently log messages are output through: `Console` and to a `.log` file.
 
 *Logging Levels*
@@ -737,9 +735,9 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 *Method 3: Using Gradle (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. 
-In the headless mode, GUI tests do not show up on the screen. That means that you can do other things on the Computer while the tests are running.
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. +
 
+In the headless mode, GUI tests do not show up on the screen. That means that you can do other things on the Computer while the tests are running.
 To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
 === Types of tests
