@@ -45,8 +45,8 @@
         <country>Thailand</country>
         <emails>pr_relations@boonrawd.co.th</emails>
         <address>999 Samsen Road, Dusit, Bangkok 10300 Thailand</address>
-        <scheduled>Date: 21-11-2017 Activity: Meet clients Person(s): Bangkok Cable Co Ltd; Boonrawd Brewery Co Ltd; </scheduled>
         <scheduled>Date: 30-11-2017 Activity: Meeting with PR head Person(s): Boonrawd Brewery Co Ltd; </scheduled>
+        <scheduled>Date: 21-11-2017 Activity: Meet clients Person(s): Bangkok Cable Co Ltd; Boonrawd Brewery Co Ltd; </scheduled>
         <tagged>companies</tagged>
         <tagged>Thailand</tagged>
     </persons>
@@ -56,8 +56,8 @@
         <country>Thailand</country>
         <emails>bcc@bangkokcable.com</emails>
         <address>187 Ratchadamri Rd, Lumphini Pathum Wan, Bangkok 10330</address>
-        <scheduled>Date: 01-12-2017 Activity: Meeting with president Person(s): Bangkok Cable Co Ltd; </scheduled>
         <scheduled>Date: 21-11-2017 Activity: Meet clients Person(s): Bangkok Cable Co Ltd; Boonrawd Brewery Co Ltd; </scheduled>
+        <scheduled>Date: 01-12-2017 Activity: Meeting with president Person(s): Bangkok Cable Co Ltd; </scheduled>
         <tagged>companies</tagged>
         <tagged>Thailand</tagged>
     </persons>
@@ -67,8 +67,8 @@
         <country>Singapore</country>
         <emails>vivaitrust@gmail.com</emails>
         <address>750, Chai Chee Rd, Singapore 469000</address>
-        <scheduled>Date: 03-12-2017 Activity: Investment talks Person(s): Procter and Gamble; Viva Industrial Trust; </scheduled>
         <scheduled>Date: 02-12-2017 Activity: Investment talk Person(s): Viva Industrial Trust; </scheduled>
+        <scheduled>Date: 03-12-2017 Activity: Investment talks Person(s): Procter and Gamble; Viva Industrial Trust; </scheduled>
         <tagged>companies</tagged>
     </persons>
     <persons>
@@ -80,14 +80,158 @@
         <scheduled>Date: 03-12-2017 Activity: Investment talks Person(s): Procter and Gamble; Viva Industrial Trust; </scheduled>
         <tagged>companies</tagged>
     </persons>
+    <persons>
+        <name>Nance Jr</name>
+        <phone>+65 90808070</phone>
+        <country>Singapore</country>
+        <emails>bball@gmail.com</emails>
+        <address>3, Stadium Drive, Singapore 397630</address>
+        <tagged>sportsman</tagged>
+    </persons>
+    <persons>
+        <name>Bryant</name>
+        <phone>+93 607078080</phone>
+        <country>Afghanistan</country>
+        <emails>clever32@gmail.com</emails>
+        <address>1, Great Massoud Avenue Khwaja Rawash,Kabul Afghanistan</address>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Des Walker</name>
+        <phone>98765765</phone>
+        <country>Country Unavailable</country>
+        <emails>dess@hotmail.com</emails>
+        <address>38, Clementi Road, Singapore 129764</address>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Alex Hunter</name>
+        <phone>+65 98765765</phone>
+        <country>Singapore</country>
+        <emails>ahunt@hotmail.com</emails>
+        <address>12, Kent Ridge Dr, Singapore 119243</address>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Tan Kian Heng</name>
+        <phone>+591 90990283</phone>
+        <country>Bolivia</country>
+        <emails>kian46@gg.com</emails>
+        <address>1100, Carbon Place, CO 80301</address>
+        <scheduled>Date: 20-04-2018 Activity: Finalize Contract Person(s): Tan Kian Heng; </scheduled>
+        <scheduled>Date: 17-01-2018 Activity: Renew Contract Person(s): Tan Kian Heng; </scheduled>
+        <tagged>Customer</tagged>
+    </persons>
+    <persons>
+        <name>Belle Young</name>
+        <phone>+60 90999655</phone>
+        <country>Malaysia</country>
+        <emails>bella@tt.com</emails>
+        <address>80000, Johor Bahru, 8988877</address>
+        <scheduled>Date: 15-12-2017 Activity: Team meeting Person(s): Belle Young; </scheduled>
+        <tagged>Boss</tagged>
+    </persons>
+    <persons>
+        <name>Tanyl Tan</name>
+        <phone>+852 97677765</phone>
+        <country>Hong Kong</country>
+        <emails>tanyl@tt.com</emails>
+        <address>899, Kowloon Street 45, 8900877</address>
+        <scheduled>Date: 09-01-2018 Activity: Renew Contact Person(s): Tanyl Tan; </scheduled>
+        <tagged>Customer</tagged>
+    </persons>
+    <persons>
+        <name>Clara Chan</name>
+        <phone>+65 89766955</phone>
+        <country>Singapore</country>
+        <emails>clara45@tt.com</emails>
+        <address>12, Tampines Street 1, 556342</address>
+        <scheduled>Date: 30-12-2017 Activity: Meeting Person(s): Clara Chan; </scheduled>
+        <tagged>Contractor</tagged>
+    </persons>
+    <persons>
+        <name>Kenny Gun</name>
+        <phone>+65 89970094</phone>
+        <country>Singapore</country>
+        <emails>kenny@example.com</emails>
+        <address>12, Bukit Batok Street 10 ,553302</address>
+        <scheduled>Date: 30-12-2017 Activity: House Warming Person(s): Kenny Gun; </scheduled>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Ken Han</name>
+        <phone>+65 90080094</phone>
+        <country>Singapore</country>
+        <emails>han1622@yahoo.com</emails>
+        <address>12, Orchard Street 13 ,554321</address>
+        <scheduled>Date: 29-12-2017 Activity: Interview Person(s): Ken Han; </scheduled>
+        <tagged>Newbie</tagged>
+    </persons>
+    <persons>
+        <name>Alicia Keys</name>
+        <phone>+63 80001094</phone>
+        <country>Philippines</country>
+        <emails>alicia@example.com</emails>
+        <address>8105 Davao del Norte, Purok 5 Salvacion, Panabo City</address>
+        <scheduled>Date: 12-03-2018 Activity: Presentation Person(s): Alicia Keys; </scheduled>
+        <tagged>Clients</tagged>
+    </persons>
+    <persons>
+        <name>Benjamin Lo</name>
+        <phone>+65 98766678</phone>
+        <country>Singapore</country>
+        <emails>benja787@example.com</emails>
+        <address>5, Woodlands Street 10 ,509881</address>
+        <scheduled>Date: 11-01-2018 Activity: Party Person(s): Benjamin Lo; </scheduled>
+        <tagged>SchoolMates</tagged>
+    </persons>
+    <persons>
+        <name>Kelvin Cheng</name>
+        <phone>+852 97877887</phone>
+        <country>Hong Kong</country>
+        <emails>kelvincheng@tt.com</emails>
+        <address>21, Prince Edward Road ,876556</address>
+        <scheduled>Date: 23-12-2017 Activity: Project Meeting Person(s): Kelvin Cheng; </scheduled>
+        <tagged>Team</tagged>
+    </persons>
+    <persons>
+        <name>Melvin Kong</name>
+        <phone>+48 90099887</phone>
+        <country>Poland</country>
+        <emails>kelvincheng@tt.com</emails>
+        <address>Adampolska 13, 00 999 Warszawa, Poland</address>
+        <scheduled>Date: 23-03-2018 Activity: Meeting overseas boss Person(s): Melvin Kong; </scheduled>
+        <tagged>Boss</tagged>
+    </persons>
     <schedules>Date: 21-11-2017 Activity: Meet clients Person(s): Bangkok Cable Co Ltd; Boonrawd Brewery Co Ltd; </schedules>
     <schedules>Date: 30-11-2017 Activity: Meeting with PR head Person(s): Boonrawd Brewery Co Ltd; </schedules>
     <schedules>Date: 01-12-2017 Activity: Meeting with president Person(s): Bangkok Cable Co Ltd; </schedules>
     <schedules>Date: 02-12-2017 Activity: Investment talk Person(s): Viva Industrial Trust; </schedules>
     <schedules>Date: 03-12-2017 Activity: Investment talks Person(s): Procter and Gamble; Viva Industrial Trust; </schedules>
+    <schedules>Date: 15-12-2017 Activity: Team meeting Person(s): Belle Young; </schedules>
+    <schedules>Date: 23-12-2017 Activity: Project Meeting Person(s): Kelvin Cheng; </schedules>
+    <schedules>Date: 29-12-2017 Activity: Interview Person(s): Ken Han; </schedules>
+    <schedules>Date: 30-12-2017 Activity: House Warming Person(s): Kenny Gun; </schedules>
+    <schedules>Date: 30-12-2017 Activity: Meeting Person(s): Clara Chan; </schedules>
+    <schedules>Date: 09-01-2018 Activity: Renew Contact Person(s): Tanyl Tan; </schedules>
+    <schedules>Date: 11-01-2018 Activity: Party Person(s): Benjamin Lo; </schedules>
+    <schedules>Date: 17-01-2018 Activity: Renew Contract Person(s): Tan Kian Heng; </schedules>
+    <schedules>Date: 12-03-2018 Activity: Presentation Person(s): Alicia Keys; </schedules>
+    <schedules>Date: 23-03-2018 Activity: Meeting overseas boss Person(s): Melvin Kong; </schedules>
+    <schedules>Date: 20-04-2018 Activity: Finalize Contract Person(s): Tan Kian Heng; </schedules>
     <tags>USA</tags>
-    <tags>companies</tags>
     <tags>UX</tags>
-    <tags>Lead</tags>
+    <tags>Customer</tags>
+    <tags>student</tags>
     <tags>Thailand</tags>
+    <tags>Clients</tags>
+    <tags>sportsman</tags>
+    <tags>companies</tags>
+    <tags>Boss</tags>
+    <tags>Contractor</tags>
+    <tags>Lead</tags>
+    <tags>friend</tags>
+    <tags>Team</tags>
+    <tags>SchoolMates</tags>
+    <tags>Newbie</tags>
 </addressbook>
