@@ -33,6 +33,10 @@ public class SetPathCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+    /**
+     * Reformats the path to suit the application
+     * @return modified path to suit the application
+     */
     private String reformatPath(String path) {
         path = path.replaceAll("\\\\", "/");
         String lastChar = path.substring(path.length() - 1);
