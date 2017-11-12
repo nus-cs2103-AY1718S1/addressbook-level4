@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -31,7 +32,8 @@ public class UnbanCommandParserTest extends CommandTest {
     public void parse_noIndex_returnsUnBanCommand() throws Exception {
         model.changeListTo(BlacklistCommand.COMMAND_WORD);
         selectFirstPerson();
-        assertParseSuccess(parser, "", new UnbanCommand(INDEX_FIRST_PERSON));
+        assertEquals(new UnbanCommand(), new UnbanCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "", new UnbanCommand());
     }
 
     @Test

@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -29,7 +30,8 @@ public class AddPictureCommandParserTest extends CommandTest {
     @Test
     public void parse_noIndex_returnsAddPictureCommand() throws Exception {
         selectFirstPerson();
-        assertParseSuccess(parser, "", new AddPictureCommand(INDEX_FIRST_PERSON));
+        assertEquals(new AddPictureCommand(), new AddPictureCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "", new AddPictureCommand());
     }
 
     @Test

@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -29,7 +30,8 @@ public class DeleteCommandParserTest extends CommandTest {
     @Test
     public void parse_noIndex_returnsDeleteCommand() throws Exception {
         selectFirstPerson();
-        assertParseSuccess(parser, "", new DeleteCommand(INDEX_FIRST_PERSON));
+        assertEquals(new DeleteCommand(), new DeleteCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "", new DeleteCommand());
     }
 
     @Test

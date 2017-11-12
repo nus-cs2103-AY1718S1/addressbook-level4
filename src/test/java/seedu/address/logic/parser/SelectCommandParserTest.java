@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -25,7 +26,8 @@ public class SelectCommandParserTest extends CommandTest {
 
     @Test
     public void parse_noIndex_returnsSelectCommand() throws Exception {
-        assertParseSuccess(parser, "", new SelectCommand(INDEX_FIRST_PERSON));
+        assertEquals(new SelectCommand(), new SelectCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "", new SelectCommand());
     }
 
     @Test
