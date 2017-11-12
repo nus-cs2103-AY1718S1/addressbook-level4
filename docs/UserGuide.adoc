@@ -673,6 +673,7 @@ In version v1.2, users will be able to: +
 
 * Work with parcels instead of persons.
 * Add and edit the tracking numbers of parcels.
+* Use `Tab` to autocomplete basic commands.
 
 {{More to be added}}
 
@@ -682,6 +683,7 @@ In version v1.3, users will be able to: +
 * Add one of four possible Status to parcels. i.e. `PENDING`, `DELIVERING`, `COMPLETED` and `OVERDUE`.
 * Import parcels stored in an Ark storage file in xml format into Ark.
 * Have Ark maintain a sorted list of parcels according to when they need to be delivered.
+* Use `Tab` to cycle through possible commands if there are multiple options available.
 
 {{More to be added}}
 
@@ -690,13 +692,15 @@ In version v1.4, users will be able to: +
 
 * Click on tabs to select between two lists, one of which contains undelivered and the other, delivered parcels
 * Add parcel-related tags to inform delivery personnel on additional precautions to take while delivering a parcel.
+* Use `Tab` to fill in the next prefix for `add` command.
 
 {{More to be added}}
 
 === Features added in v1.5rc
-In version v1.3, users will be able to: +
+In version v1.5rc, users will be able to: +
 
 * View a tooltip of parcel details when they mouseover the detail. i.e. `address`
+* Use `Tab` to cycle through indexes and prefixes for all commands that require them.
 
 {{More to be added}}
 
