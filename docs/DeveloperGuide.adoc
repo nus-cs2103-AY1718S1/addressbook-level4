@@ -230,6 +230,10 @@ This section describes how certain features are implemented.
 
 The undo/redo mechanism is facilitated by an **UndoRedoStack**, which resides in **LogicManager**. It supports undoing and redoing of commands that modify the state of ModU (e.g. add, edit). Such commands will inherit from **UndoableCommand**.
 
+[NOTE]
+The `undo` command does not work after `list` or `view` command. +
+The `redo` command only works if the previous command is `undo`. +
+
 **UndoRedoStack** only deals with **UndoableCommands**. Commands that cannot be undone will inherit from **Command** instead. The following diagram shows the _Inheritance Diagram (Figure 11)_ for commands.
 
 image::LogicCommandClassDiagram.png[width="800"]
