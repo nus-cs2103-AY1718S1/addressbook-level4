@@ -242,6 +242,294 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section explains to you in detail how certain features of the cherBook are implemented.
 The relevant diagrams and code examples will be used to aid the understanding of the features' implementation.
 
+// tag::commandshortcuts[]
+=== Command Alias mechanism
+
+The Command Alias mechanism is facilitated by the `COMMAND_ALIAS` in each `Command` class and the `parseCommand()` method in `AddressBookParser`.
+The `AddressBookParser` is responsible for analyzing command words while each command's `COMMAND_ALIAS` stores the command alias to be accepted by the parser.
+
+The aliased added to each command class is implemented like this e.g. `FindCommand` :
+
+```
+public class FindCommand extends Command {
+    public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_ALIAS = "f";
+    //...... other logic ......
+}
+```
+Just like how we store each individual command word constant `COMMAND_WORD` inside each `Command` class e.g. `FindCommand.COMMAND_WORD`, `DeleteCommand.COMMAND_WORD` , a new constant was added for each command alias e.g. `FindCommand.COMMAND_ALIAS`.
+
+The `parseCommand()` in `AddressBookParser` is implemented like this:
+
+```
+ public Command parseCommand(String userInput) throws ParseException {
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        final String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
+        switch (commandWord) {
+
+        case AddCommand.COMMAND_WORD://Fallthrough
+        case AddCommand.COMMAND_ALIAS:
+            return new AddCommandParser().parse(arguments);
+        // ...... more conditions ......
+        default:
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
+    }
+```
+
+When a command alias is detected in the switch statement, it will result in the return statement below it, causing it to behave similarly to its corresponding command word.
+When a command word is detected, it will fall through and executes the command as per normal.
+
+==== Design Considerations
+**Aspect:** Where to add the command Aliases +
+**Alternative 1 (current choice):** Add the aliases in each `Command` Class +
+**Pros:** More cohesive command classes. +
+**Cons:** None. +
+**Alternative 2:** Add the aliases in the AddressBookParser.parseCommand(String) method. +
+**Pros:** Easier to read code in the AddressBookParser . +
+**Cons:** Use of magic numbers/strings means that the code is harder to trace and debug. +
+// end::commandshortcuts[]
+
+// tag::optionalInput[]
+=== Optional Inputs/Fields mechanism
+
+The `optional inputs/fields` mechanism is facilitated by making changes to `AddCommandParser` class in the `Logic` component.
+This feature enables several input/fields of the student to be optional.
+
+[NOTE]
+Student's phone number, email, address and postal code are optional inputs/fields.
+
+The following sequence diagram shows you how the `optional inputs/fields` operation works:
+
+image::OptionalInputsSequenceDiagram.png[width="800"]
+_Figure 4.6.1 : Sequence Diagram of Optional Inputs/Fields Operation_
+
+The optionalInput method will append messages indicating that those optional fields are not recorded if the user chooses not to include those fields.
+The method can be seen in the code section below.
+
+----
+    public static String optionalInput(String input) {
+        if (!input.contains("a/")) {
+            input = input + " a/ (Address not recorded)";
+        }
+        if (!input.contains("e/")) {
+            input = input + " e/ (Email not recorded)";
+        }
+        if (!input.contains("c/")) {
+            input = input + " c/ (Postal code not recorded)";
+        }
+        if (!input.contains(" p/")) {
+            input = input + " p/ (Student phone not recorded)";
+        }
+        return input;
+    }
+----
+
+The output of the method is illustrated in the following picture.
+
+image::OptionalInputMessage.png[width="300"]
+_Figure 4.6.2 : Messages shown when the user does not enter the optional fields_
+
+Prefixes of the optional fields - `PREFIX_PHONE`, `PREFIX_EMAIL`, `PREFIX_ADDRESS` and `PREFIX_POSTALCODE` are removed from
+the code segment below. The ensures that the `ParseException` will not be thrown if the user chooses not to include the
+optional fields.
+
+----
+if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_PARENTPHONE, PREFIX_FORMCLASS,
+                PREFIX_GRADES)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        }
+----
+
+==== Design Considerations
+
+Aspect: Implementation of optional fields/inputs. +
+Alternative 1 (current choice): This feature manipulates the input to include the missing optional input prefix, along with a message
+stating that the field is not recorded. +
+Pros: Simpler to understand and tweak this feature as it only manipulates the parsed input of the user. +
+Cons: Unable to implement UI features that requires the attribute to have a optional property. +
+Alternative 2: This feature implements a optional characteristic in optional attributes. +
+Pros: Optionality aspect of the attributes can be used by other features of cherBook. +
+Cons: Harder to understand the mechanism and more work is required implement changes to this feature. +
+// end::optionalInput[]
+
+// tag::remark[]
+===  Remark mechanism
+The `remark` mechanism is facilitated by making changes to the `Remark` class in the `Model` component. It enables the user to overwrite a single `remark` of the student.
+
+To avoid confusion and an overly complicated `UI`, only one `remark` per person is stored.
+
+The following sequence diagram shows how the `remark` operation works:
+
+image::RemarkSequenceDiagramForLogic.PNG[width="800"]
+_Figure 4.8.1 : Sequence Diagram of `Remark` Operation_
+
+`Remark` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+
+image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.8.2 : Inheritance Diagram for Commands_
+
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+
+Commands that are not undoable are implemented this way:
+[source,java]
+----
+public class RemarkCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... remark logic ...
+    }
+}
+----
+
+With the extra layer, the commands that are undoable are implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+      executeUndoableCommand();
+    }
+}
+public class DeleteCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}
+----
+When the user adds a new `person` to the address book, that person's `remark` field will be denoted by `(add a remark)`. Users are then able to add a single `remark`.
+
+[NOTE]
+If the user tries to add `remark` together with adding a new `Person`, it will display as invalid as the `addCommand` does not allow the addition of remarks other then through the use of using the `Remark` command.
+
+[NOTE]
+When the user attempts to `add`/`edit` a remark via the `add`/`edit` command, he will be prompted by a message stating
+that adding of remarks in `add`/`edit` command is not allowed.
+
+[NOTE]
+Only one `remark` is saved at any one time, if the user does `Remark` on the same person, it will be overwritten.
+
+==== Design Considerations
+**Aspect:** Implementation of `UndoableCommand` +
+**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`. +
+**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
+**Cons:** Hard for new developers to understand the template pattern. +
+**Alternative 2:** Just override `execute()`. +
+**Pros:** Does not involve the template pattern, easier for new developers to understand. +
+**Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+
+---
+
+**Aspect** Implementation of `Remark` field. +
+**Alternative 1 (current choice):** Add a field in person as well as making it a command. +
+**Pros:** Able to easily change context of the field without much hassle. +
+**Cons:** Harder to debug as it is both a field and a command. +
+**Alternative 2:** Making it a field only. +
+**Pros:** Easier to keep track and debug. +
+**Cons:** Much harder and longer to implement a feature to solely change the remarks.
+
+---
+// end::remark[]
+
+// tag::findtags[]
+=== FindTags mechanism
+
+The `FindTags` mechanism is facilitated by the `TagsContainKeywordsPredicate`, which resides within `FindTagsCommand`.
+The `TagsContainKeywordsPredicate` tests whether each person's tags contain all keywords input by the user
+and thus supports AND search.
+
+The following sequence diagram shows how the FindTags operation works:
+
+image::FindTagsSequenceDiagramForLogic.png[width="800"]
+_Figure 4.13.1 : Sequence Diagram of `FindTags` Operation_
+
+As can seen from above, when a `FindTags` command is called, E.g. `findtags NUS friends`.
+An instance of `TagsContainKeywordsPredicate` is created.
+
+The `TagsContainsKeywordsPredicate` found inside `FindTagsCommand` is implemented this way:
+
+----
+public class TagsContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    private final List<String> keywords;
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .allMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTagsAsString(), keyword));
+    }
+    // ... other logic ...
+}
+----
+
+[NOTE]
+The test is case insensitive as `StringUtil.containsWordIgnoreCase()` ignores case.
+[NOTE]
+This search operation is an `AND search`
+So only persons with at least both `friends` and `NUS` will be displayed. Persons with only `friends` or only `NUS` will not be displayed. +
+
+Inside the `TagsContainKeywordsPredicate`, the search terms `NUS` and `friends` are stored inside the `keywords` list.
+The overidding `test()` method evluates whether the person's tags matches all the search terms in `keywords`.
+This `TagsContainKeywordsPredicate` is then used to test every person in the AddressBook and filter them.
+
+The `FindTagsCommand` is implemented this way:
+
+----
+public class FindTagsCommand extends Command {
+    private final TagsContainsKeywordsPredicate predicate;
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(
+            getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+    // ... other logic ...
+}
+----
+
+The `predicate` is passed through `model.updateFilteredPersonList(predicate)` to update the `filteredPersonList`.
+This causes the `filteredPersonList` to only contain students whose tags match all keywords `NUS` and `friends`
+and also display them in the `PersonListPanel` UI element.
+
+However if there are no persons with all keywords in the tags, the `PersonListPanel` will just be blank.
+
+Meanwhile, the `ModelManager` posts a `AddressBookChanged event` and a `FilteredPersonListChangedEvent` to the `EventsCenter`.
+The `AddressBookChangedEvent` indicates that the `model` has changed and the causing the `FilteredPersonListChangedEvent` updates the `StatisticsPanel` of the UI to reflect the new Statistics for the new list of students.
+
+This search feature is implemented using `Predicate` because `Predicate` help move the business logic to a more central place, helping in unit-testing them separately.
+Also, the `Predicate` can can be reused, improving code manageability and readability.
+
+==== Design Considerations
+
+**Aspect:** Have a separate predicate class to support `findtags` +
+**Alternative 1 (current choice):** Have a `TagsContainsKeywordsPredicate` to facilitate search. +
+**Pros:** Easy for new Computer Science undergraduates to understand. They are likely to be the new incoming developers of our project. +
+**Cons:** Makes the application more complex to understand according to the More Is More Complex (MIMC) principle. For example, a separate `TagsContainsKeywordsPredicate` class is needed when the same can be done by inserting it as an inner class in the `FindTagsCommand` class. +
+**Alternative 2:** Create `TagsContainsKeywordsPredicate` as an inner class in `FindTagsCommand` class. +
+**Pros:** It makes the codebase less complex as there are less classes. +
+**Cons:** It adds complexity to the `FindTagsCommand` source file and reduces re-usability of the `Predicate` outside of the `FindTagsCommand` +
+
+**Aspect:** Whether to use AND or OR search +
+**Alternative 1 (current choice):** AND search +
+**Pros:** Allows users to find students with a specific combination of tags much more efficiently. +
+E.g. `findtags band dance` only returns the list of students who have both the `band` and `dance` tag rather all students with either the `band` or `dance` tag. +
+**Cons:** Does not allow users to calculate statistics for more than one group of students at a time.  +
+E.g. `findtags band dance` cannot calculate  statistics for the `track` and `dance` groups combined. +
+**Alternative 2:** OR search +
+**Pros:** Allows users to calculate statistics for more than one group of students at a time. +
+E.g. `findtags track dance` calculates statistics for the `track` and `dance` groups combined. +
+**Cons:** Or search does not help teachers find students with a specific combination of tags efficiently. +
+E.g. `findtags track dance` does not narrow down the list of students returned to students who have both the `track` and `dance` tag. +
+
+// end::findtags[]
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
@@ -461,7 +749,7 @@ The sort mechanism is implemented this way to ensure that all person names in th
 // end::sortimplementation[]
 
 
-=== Schedule mechanism
+=== Add Schedule mechanism
 // tag::schedulereason[]
 The `schedule` mechanism is implemented using `ScheduleCommand`. It supports the scheduling of contacts in cherBook for better management of time.
 The reason for the implementation of scheduling is to allow cherBook users (teacher/educator) to add schedules they have like consultations or meetings with their students or fellow colleagues.
@@ -574,68 +862,195 @@ The schedules would be listed in the `ResultDisplay` panel, and each schedule wo
 **Cons:** The user do not have the alternative to view information of the schedules from each individual contact. +
 // end::viewscheduleimplementation[]
 
-// tag::optionalInput[]
-=== Optional Inputs/Fields mechanism
 
-The `optional inputs/fields` mechanism is facilitated by making changes to `AddCommandParser` class in the `Logic` component.
-This feature enables several input/fields of the student to be optional.
+//tag::home[]
+=== Home Page mechanism
+`Home` mechanism is implemented using HomeCommand.
+It displays the home page when the user enter the command and each time a randomly selected wallpaper and quote would be displayed.
+
+When the home page is displayed, the extendedPersonCard, StatsPanel and GraphPanel would be switched out. Only when the user
+select a new person would the three panes swap back.
 
 [NOTE]
-Student's phone number, email, address and postal code are optional inputs/fields.
+As we would be focusing on CLI implementations, we did not enable a way to select a person through clicking when the home page
+is displayed.
 
-The following sequence diagram shows you how the `optional inputs/fields` operation works:
+image::HomeSequenceDiagram.png[width="800"]
+_Figure 4.11.1 : Sequence Diagram of `home` Operation_
 
-image::OptionalInputsSequenceDiagram.png[width="800"]
-_Figure 4.6.1 : Sequence Diagram of Optional Inputs/Fields Operation_
+==== Design Considerations
+**Aspect:**  To have a soft security feature. +
+**Alternative 1 (current choice):** Disable easy access to data, only users who knows the command are able to view. +
+**Pros:** Easy to implement. +
+**Cons:** Easier to be break through  +
+**Alternative 2:** Have a login page before displaying the main window. +
+**Pros:** The application as a whole would be more secure. +
+**Cons:** Takes a longer time to implement. +
+---
 
-The optionalInput method will append messages indicating that those optional fields are not recorded if the user chooses not to include those fields.
-The method can be seen in the code section below.
+//end::home[]
 
-----
-    public static String optionalInput(String input) {
-        if (!input.contains("a/")) {
-            input = input + " a/ (Address not recorded)";
-        }
-        if (!input.contains("e/")) {
-            input = input + " e/ (Email not recorded)";
-        }
-        if (!input.contains("c/")) {
-            input = input + " c/ (Postal code not recorded)";
-        }
-        if (!input.contains(" p/")) {
-            input = input + " p/ (Student phone not recorded)";
-        }
-        return input;
-    }
-----
 
-The output of the method is illustrated in the following picture.
+// tag::graphpanel[]
+=== GraphPanel Mechanism
 
-image::OptionalInputMessage.png[width="300"]
-_Figure 4.6.2 : Messages shown when the user does not enter the optional fields_
+`LineChart` mechanism is implemented using `javaFX`. It takes in `FilteredPersonList` and plots a graph based on those who are in the same `formClass`. +
+Using `XYChart.series` to store the data of the persons name and grade, a `coordinate` is created and a `line` is drawn connecting all the `coordinates`. +
+These coordinates are sorted in ascending order so that the user is able to identify those in the lower quartile.
 
-Prefixes of the optional fields - `PREFIX_PHONE`, `PREFIX_EMAIL`, `PREFIX_ADDRESS` and `PREFIX_POSTALCODE` are removed from
-the code segment below. The ensures that the `ParseException` will not be thrown if the user chooses not to include the
-optional fields.
+The `LineChart` mechanism is implemented this way:
 
 ----
-if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_PARENTPHONE, PREFIX_FORMCLASS,
-                PREFIX_GRADES)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+for (ReadOnlyPerson people : people) {
+            if (people.getFormClass().equals(person.getFormClass())) {
+                series.getData().add(new XYChart.Data<>(people.getName().toString(),
+                        Double.parseDouble(people.getGrades().toString())));
+            }
         }
+            series.getData().sort(Comparator.comparingDouble(d -> d.getYValue()));
+       //...other logic...
 ----
 
 ==== Design Considerations
+**Aspect:** Graph to be displayed for an effective visual aid +
+**Alternative 1 (current choice):** Line chart to display the grades of student. +
+**Pros:** Easier to implement. +
+**Cons:** May not be the most appropriate way to display grades of students.  +
+**Alternative 2:** Bell curve to display the grades of students. +
+**Pros:** A better representation of the student grades and it is easier to interpret. +
+**Cons:** Much harder to plot a graph based on statistics then raw data.
 
-Aspect: Implementation of optional fields/inputs. +
-Alternative 1 (current choice): This feature manipulates the input to include the missing optional input prefix, along with a message
-stating that the field is not recorded. +
-Pros: Simpler to understand and tweak this feature as it only manipulates the parsed input of the user. +
-Cons: Unable to implement UI features that requires the attribute to have a optional property. +
-Alternative 2: This feature implements a optional characteristic in optional attributes. +
-Pros: Optionality aspect of the attributes can be used by other features of cherBook. +
-Cons: Harder to understand the mechanism and more work is required implement changes to this feature. +
-// end::optionalInput[]
+---
+// end::graphpanel[]
+
+
+//tag::tab[]
+=== Tabs mechanism
+`Tabs` mechanism is implemented using TabsCommand.
+It swaps tab panel between lineChart and barChart based on the index input by the user.
+
+When the user types `tab [INDEX]`, it creates raises new `event` named `JumpToTabRequestEvent`, which prompts the subscribed
+method in `GraphPanel` to change the tab page based on[INDEX].
+
+[NOTE]
+The number of valid index is based on the number of tabs created, in this case it would be 2. +
+A invalid index would be displayed if the index provided is out of bounds.
+
+image::TabSequenceDiagram.png[width="800"]
+_Figure 4.10.1 : Sequence Diagram of `Tab` Operation_
+
+==== Design Considerations
+**Aspect:**  To display different chart types to help visual aid. +
+**Alternative 1 (current choice):** Do a TabPane. +
+**Pros:** More versatile and easier to further expand in the future. +
+**Cons:** More cumbersome to start.  +
+**Alternative 2:** Multiple graphs on the same pane. +
+**Pros:** A easier comparison of the student grades between different graph types. +
+**Cons:** Difficult to further expand as there are limited space. Graph may be shrinked as well.
+
+---
+//end::tab[]
+
+// tag::statisticspanel[]
+=== Statistics Panel mechanism
+
+The `Statistics Panel` is implemented using the `Statistics` class and The `FilteredPersonListChangedEvent` event.
+The `Statistics` class supports the calculating of statistics for the current list of students in the `PersonListPanel` and
+the `FilteredPersonListChangedEvent` indicates that the FilteredPersonList in the model has changed and is used to update the `Statsistics Panel`.
+
+The following activity diagram shows how the StatisticsPanel mechanism works:
+
+image::StatisticsPanelActivityDiagram.png[width="800"]
+_Figure 4.14.1 : Activity Diagram of updating the`Statistics Panel` ._
+
+Whenever the user enters any `Command` that modifies the addressBook data, the `Model` Component posts
+a `FilteredPersonListChangedEvent` containing the `filteredPersonsList` to the `EventsCenter`.
+At the same time, an `AddressBookChangedEvent` that indicates that the model has changed is also posted to the `EventsCenter`.
+
+The `FilteredPersonListChangedEvent` is implemented this way:
+
+```
+public class FilteredPersonListChangedEvent extends BaseEvent {
+
+    private final ObservableList<ReadOnlyPerson> currentFilteredList;
+
+    public FilteredPersonListChangedEvent(ObservableList<ReadOnlyPerson> currentFilteredList) {
+        this.currentFilteredList = currentFilteredList;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public ObservableList<ReadOnlyPerson> getCurrentFilteredPersonList() {
+        return currentFilteredList;
+    }
+}
+```
+
+Meanwhile in the `StatisticsPanel` class, the `handleFilteredPersonListChangedEvent` event handler which is subscribed to `EventsCenter` handles the `FilteredPersonListChangedEvent` event.
+
+The `handleFilteredPersonListChangedEvent` event handler is implemented this way:
+
+```
+    @FXML
+    @Subscribe
+    private void handleFilteredPersonListChangedEvent(FilteredPersonListChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        statistics.initScore(event.getCurrentFilteredPersonList()); // Updates the statistics instance values
+        loadListStatistics();
+    }
+```
+
+When handling the event, the `Statistics` instance in `StatisticsPanel` has its values updated by the `initScore()` method.
+This means that the values returned from the `Statistics` class's getter methods when called are now updated.
+
+The `loadListStatistics()` method in `StatisticsPanel` is then called.
+
+The `loadListStatistics()` is implemented this way:
+
+```
+    /**
+    * Updates list Statistics in the Statistics panel
+    */
+    protected void loadListStatistics() {
+        mean.setText(statistics.getMeanString());
+        median.setText(statistics.getMedianString());
+        mode.setText(statistics.getModeString());
+        variance.setText(statistics.getVarianceString());
+        standardDeviation.setText(statistics.getStdDevString());
+        quartile1.setText(statistics.getQuartile1String());
+        quartile3.setText(statistics.getQuartile3String());
+        interquartileRange.setText(statistics.getInterquartileRangeString());
+    }
+```
+
+The `Labels` (texts) in the User Interface are set according to the updated `Statistics` instance's getter methods.
+This updates and shows the statistic values of the current `filteredPersonList` on the `StatisticsPanel` in the User Interface.
+At the same time, the `AddressBookChangedEvent` is also being handled, saving the addressBook data.
+
+
+
+==== Design Considerations
+**Aspect:** How to update the `Statistics Panel` +
+**Alternative 1 (current choice):** Create a new `FilteredPersonListChangedEvent` just for updating the `Statistics Panel`. +
+**Pros:** Adherence to the Single Responsibility Principle (SRP) increases cohesion among the different `Events` and reduces coupling. +
+**Cons:** Increases the number of classes in the source code, making it more complex according to the More Is More Complex (MIMC) principle. +
+**Alternative 2:** Modify `AddressBookChangedEvent` to also update the `Statistics Panel`. +
+**Pros:** Since a change in the `model` triggers both the `AddressBookChangedEvent` and the updating of the `Statistics Panel`,
+only a few changes to are needed for `AddressBookChangedEvent` to do also update the `Statistics Panel`. +
+**Cons:** This violates the Single Responsibility Principle (SRP) by having giving `AddressBookChangedEvent` the additional responsibility of updating the `Statistics Panel`.  +
+
+**Aspect:** How to raise the `FilteredPersonListChangedEvent` in the `ModelManager` +
+**Alternative 1 (current choice):** Create a separate `updateStatisticsPanel()` method to raise the event to update the `Statistics Panel` +
+**Pros:** Reduces coupling and increases cohesion by giving a single responsibility to the `updateStatisticsPanel()` method. +
+**Cons:** Makes the application more complex to understand according to the More Is More Complex (MIMC) principle. +
+**Alternative 2:** Raise the `FilteredPersonListChangedEvent` together with the `AddressBookChangedEvent` +
+**Pros:** Reduces the number of similar methods in the source code, making it less complex and easier to understand +
+**Cons:** Increases coupling in the source code +
+// end::statisticspanel[]
 
 // tag::uniquetagcolor[]
 === Unique Color Tag mechanism
@@ -747,419 +1162,6 @@ Alternative 2: Tag colors are assigned by the user. +
 Pros: User will have more freedom in personalising the tags. +
 Cons: The range of colors will be more limited. +
 // end::uniquetagcolor[]
-
-// tag::remark[]
-===  remark mechanism
-The `remark` mechanism is facilitated by making changes to the `Remark` class in the `Model` component. It enables the user to overwrite a single `remark` of the student.
-
-To avoid confusion and an overly complicated `UI`, only one `remark` per person is stored.
-
-The following sequence diagram shows how the `remark` operation works:
-
-image::RemarkSequenceDiagramForLogic.PNG[width="800"]
-_Figure 4.8.1 : Sequence Diagram of `Remark` Operation_
-
-`Remark` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
-
-image::LogicCommandClassDiagram.png[width="800"]
-_Figure 4.8.2 : Inheritance Diagram for Commands_
-
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
-
-Commands that are not undoable are implemented this way:
-[source,java]
-----
-public class RemarkCommand extends Command {
-    @Override
-    public CommandResult execute() {
-        // ... remark logic ...
-    }
-}
-----
-
-With the extra layer, the commands that are undoable are implemented this way:
-[source,java]
-----
-public abstract class UndoableCommand extends Command {
-    @Override
-    public CommandResult execute() {
-        // ... undo logic ...
-      executeUndoableCommand();
-    }
-}
-public class DeleteCommand extends UndoableCommand {
-    @Override
-    public CommandResult executeUndoableCommand() {
-        // ... delete logic ...
-    }
-}
-----
-When the user adds a new `person` to the address book, that person's `remark` field will be denoted by `(add a remark)`. Users are then able to add a single `remark`.
-
-[NOTE]
-If the user tries to add `remark` together with adding a new `Person`, it will display as invalid as the `addCommand` does not allow the addition of remarks other then through the use of using the `Remark` command.
-
-[NOTE]
-When the user attempts to `add`/`edit` a remark via the `add`/`edit` command, he will be prompted by a message stating
-that adding of remarks in `add`/`edit` command is not allowed.
-
-[NOTE]
-Only one `remark` is saved at any one time, if the user does `Remark` on the same person, it will be overwritten.
-
-==== Design Considerations
-**Aspect:** Implementation of `UndoableCommand` +
-**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`. +
-**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
-**Cons:** Hard for new developers to understand the template pattern. +
-**Alternative 2:** Just override `execute()`. +
-**Pros:** Does not involve the template pattern, easier for new developers to understand. +
-**Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
-
----
-
-**Aspect** Implementation of `Remark` field. +
-**Alternative 1 (current choice):** Add a field in person as well as making it a command. +
-**Pros:** Able to easily change context of the field without much hassle. +
-**Cons:** Harder to debug as it is both a field and a command. +
-**Alternative 2:** Making it a field only. +
-**Pros:** Easier to keep track and debug. +
-**Cons:** Much harder and longer to implement a feature to solely change the remarks.
-
----
-// end::remark[]
-
-// tag::graphpanel[]
-=== GraphPanel Mechanism
-
-`LineChart` mechanism is implemented using `javaFX`. It takes in `FilteredPersonList` and plots a graph based on those who are in the same `formClass`. +
-Using `XYChart.series` to store the data of the persons name and grade, a `coordinate` is created and a `line` is drawn connecting all the `coordinates`. +
-These coordinates are sorted in ascending order so that the user is able to identify those in the lower quartile.
-
-The `LineChart` mechanism is implemented this way:
-
-----
-
-for (ReadOnlyPerson people : people) {
-            if (people.getFormClass().equals(person.getFormClass())) {
-                series.getData().add(new XYChart.Data<>(people.getName().toString(),
-                        Double.parseDouble(people.getGrades().toString())));
-            }
-        }
-            series.getData().sort(Comparator.comparingDouble(d -> d.getYValue()));
-       //...other logic...
-----
-
-==== Design Considerations
-**Aspect:** Graph to be displayed for an effective visual aid +
-**Alternative 1 (current choice):** Line chart to display the grades of student. +
-**Pros:** Easier to implement. +
-**Cons:** May not be the most appropriate way to display grades of students.  +
-**Alternative 2:** Bell curve to display the grades of students. +
-**Pros:** A better representation of the student grades and it is easier to interpret. +
-**Cons:** Much harder to plot a graph based on statistics then raw data.
-
----
-// end::graphpanel[]
-
-//tag::tab[]
-=== Tabs mechanism
-`Tabs` mechanism is implemented using TabsCommand.
-It swaps tab panel between lineChart and barChart based on the index input by the user.
-
-When the user types `tab [INDEX]`, it creates raises new `event` named `JumpToTabRequestEvent`, which prompts the subscribed
-method in `GraphPanel` to change the tab page based on[INDEX].
-
-[NOTE]
-The number of valid index is based on the number of tabs created, in this case it would be 2. +
-A invalid index would be displayed if the index provided is out of bounds.
-
-image::TabSequenceDiagram.png[width="800"]
-_Figure 4.10.1 : Sequence Diagram of `Tab` Operation_
-
-==== Design Considerations
-**Aspect:**  To display different chart types to help visual aid. +
-**Alternative 1 (current choice):** Do a TabPane. +
-**Pros:** More versatile and easier to further expand in the future. +
-**Cons:** More cumbersome to start.  +
-**Alternative 2:** Multiple graphs on the same pane. +
-**Pros:** A easier comparison of the student grades between different graph types. +
-**Cons:** Difficult to further expand as there are limited space. Graph may be shrinked as well.
-
----
-//end::tab[]
-
-//tag::home[]
-=== Home mechanism
-`Home` mechanism is implemented using HomeCommand.
-It displays the home page when the user enter the command and each time a randomly selected wallpaper and quote would be displayed.
-
-When the home page is displayed, the extendedPersonCard, StatsPanel and GraphPanel would be switched out. Only when the user
-select a new person would the three panes swap back.
-
-[NOTE]
-As we would be focusing on CLI implementations, we did not enable a way to select a person through clicking when the home page
-is displayed.
-
-image::HomeSequenceDiagram.png[width="800"]
-_Figure 4.11.1 : Sequence Diagram of `home` Operation_
-
-==== Design Considerations
-**Aspect:**  To have a soft security feature. +
-**Alternative 1 (current choice):** Disable easy access to data, only users who knows the command are able to view. +
-**Pros:** Easy to implement. +
-**Cons:** Easier to be break through  +
-**Alternative 2:** Have a login page before displaying the main window. +
-**Pros:** The application as a whole would be more secure. +
-**Cons:** Takes a longer time to implement. +
----
-
-//end::home[]
-
-// tag::commandshortcuts[]
-=== Command Alias mechanism
-
-The Command Alias mechanism is facilitated by the `COMMAND_ALIAS` in each `Command` class and the `parseCommand()` method in `AddressBookParser`.
-The `AddressBookParser` is responsible for analyzing command words while each command's `COMMAND_ALIAS` stores the command alias to be accepted by the parser.
-
-The aliased added to each command class is implemented like this e.g. `FindCommand` :
-
-```
-public class FindCommand extends Command {
-    public static final String COMMAND_WORD = "find";
-    public static final String COMMAND_ALIAS = "f";
-    //...... other logic ......
-}
-```
-Just like how we store each individual command word constant `COMMAND_WORD` inside each `Command` class e.g. `FindCommand.COMMAND_WORD`, `DeleteCommand.COMMAND_WORD` , a new constant was added for each command alias e.g. `FindCommand.COMMAND_ALIAS`.
-
-The `parseCommand()` in `AddressBookParser` is implemented like this:
-
-```
- public Command parseCommand(String userInput) throws ParseException {
-        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        }
-
-        final String commandWord = matcher.group("commandWord");
-        final String arguments = matcher.group("arguments");
-        switch (commandWord) {
-
-        case AddCommand.COMMAND_WORD://Fallthrough
-        case AddCommand.COMMAND_ALIAS:
-            return new AddCommandParser().parse(arguments);
-        // ...... more conditions ......
-        default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
-        }
-    }
-```
-
-When a command alias is detected in the switch statement, it will result in the return statement below it, causing it to behave similarly to its corresponding command word.
-When a command word is detected, it will fall through and executes the command as per normal.
-
-==== Design Considerations
-**Aspect:** Where to add the command Aliases +
-**Alternative 1 (current choice):** Add the aliases in each `Command` Class +
-**Pros:** More cohesive command classes. +
-**Cons:** None. +
-**Alternative 2:** Add the aliases in the AddressBookParser.parseCommand(String) method. +
-**Pros:** Easier to read code in the AddressBookParser . +
-**Cons:** Use of magic numbers/strings means that the code is harder to trace and debug. +
-// end::commandshortcuts[]
-
-
-// tag::findtags[]
-=== FindTags mechanism
-
-The `FindTags` mechanism is facilitated by the `TagsContainKeywordsPredicate`, which resides within `FindTagsCommand`.
-The `TagsContainKeywordsPredicate` tests whether each person's tags contain all keywords input by the user
-and thus supports AND search.
-
-The following sequence diagram shows how the FindTags operation works:
-
-image::FindTagsSequenceDiagramForLogic.png[width="800"]
-_Figure 4.13.1 : Sequence Diagram of `FindTags` Operation_
-
-As can seen from above, when a `FindTags` command is called, E.g. `findtags NUS friends`.
-An instance of `TagsContainKeywordsPredicate` is created.
-
-The `TagsContainsKeywordsPredicate` found inside `FindTagsCommand` is implemented this way:
-
-----
-public class TagsContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
-    private final List<String> keywords;
-
-    @Override
-    public boolean test(ReadOnlyPerson person) {
-        return keywords.stream()
-                .allMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTagsAsString(), keyword));
-    }
-    // ... other logic ...
-}
-----
-
-[NOTE]
-The test is case insensitive as `StringUtil.containsWordIgnoreCase()` ignores case.
-[NOTE]
-This search operation is an `AND search`
-So only persons with at least both `friends` and `NUS` will be displayed. Persons with only `friends` or only `NUS` will not be displayed. +
-
-Inside the `TagsContainKeywordsPredicate`, the search terms `NUS` and `friends` are stored inside the `keywords` list.
-The overidding `test()` method evluates whether the person's tags matches all the search terms in `keywords`.
-This `TagsContainKeywordsPredicate` is then used to test every person in the AddressBook and filter them.
-
-The `FindTagsCommand` is implemented this way:
-
-----
-public class FindTagsCommand extends Command {
-    private final TagsContainsKeywordsPredicate predicate;
-
-    @Override
-    public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
-        return new CommandResult(
-            getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
-    }
-    // ... other logic ...
-}
-----
-
-The `predicate` is passed through `model.updateFilteredPersonList(predicate)` to update the `filteredPersonList`.
-This causes the `filteredPersonList` to only contain students whose tags match all keywords `NUS` and `friends`
-and also display them in the `PersonListPanel` UI element.
-
-However if there are no persons with all keywords in the tags, the `PersonListPanel` will just be blank.
-
-Meanwhile, the `ModelManager` posts a `AddressBookChanged event` and a `FilteredPersonListChangedEvent` to the `EventsCenter`.
-The `AddressBookChangedEvent` indicates that the `model` has changed and the causing the `FilteredPersonListChangedEvent` updates the `StatisticsPanel` of the UI to reflect the new Statistics for the new list of students.
-
-This search feature is implemented using `Predicate` because `Predicate` help move the business logic to a more central place, helping in unit-testing them separately.
-Also, the `Predicate` can can be reused, improving code manageability and readability.
-
-==== Design Considerations
-
-**Aspect:** Have a separate predicate class to support `findtags` +
-**Alternative 1 (current choice):** Have a `TagsContainsKeywordsPredicate` to facilitate search. +
-**Pros:** Easy for new Computer Science undergraduates to understand. They are likely to be the new incoming developers of our project. +
-**Cons:** Makes the application more complex to understand according to the More Is More Complex (MIMC) principle. For example, a separate `TagsContainsKeywordsPredicate` class is needed when the same can be done by inserting it as an inner class in the `FindTagsCommand` class. +
-**Alternative 2:** Create `TagsContainsKeywordsPredicate` as an inner class in `FindTagsCommand` class. +
-**Pros:** It makes the codebase less complex as there are less classes. +
-**Cons:** It adds complexity to the `FindTagsCommand` source file and reduces re-usability of the `Predicate` outside of the `FindTagsCommand` +
-
-**Aspect:** Whether to use AND or OR search +
-**Alternative 1 (current choice):** AND search +
-**Pros:** Allows users to find students with a specific combination of tags much more efficiently. +
-E.g. `findtags band dance` only returns the list of students who have both the `band` and `dance` tag rather all students with either the `band` or `dance` tag. +
-**Cons:** Does not allow users to calculate statistics for more than one group of students at a time.  +
-E.g. `findtags band dance` cannot calculate  statistics for the `track` and `dance` groups combined. +
-**Alternative 2:** OR search +
-**Pros:** Allows users to calculate statistics for more than one group of students at a time. +
-E.g. `findtags track dance` calculates statistics for the `track` and `dance` groups combined. +
-**Cons:** Or search does not help teachers find students with a specific combination of tags efficiently. +
-E.g. `findtags track dance` does not narrow down the list of students returned to students who have both the `track` and `dance` tag. +
-
-// end::findtags[]
-
-// tag::statisticspanel[]
-=== Statistics Panel mechanism
-
-The `Statistics Panel` is implemented using the `Statistics` class and The `FilteredPersonListChangedEvent` event.
-The `Statistics` class supports the calculating of statistics for the current list of students in the `PersonListPanel` and
-the `FilteredPersonListChangedEvent` indicates that the FilteredPersonList in the model has changed and is used to update the `Statsistics Panel`.
-
-The following activity diagram shows how the StatisticsPanel mechanism works:
-
-image::StatisticsPanelActivityDiagram.png[width="800"]
-_Figure 4.14.1 : Activity Diagram of updating the`Statistics Panel` ._
-
-Whenever the user enters any `Command` that modifies the addressBook data, the `Model` Component posts
-a `FilteredPersonListChangedEvent` containing the `filteredPersonsList` to the `EventsCenter`.
-At the same time, an `AddressBookChangedEvent` that indicates that the model has changed is also posted to the `EventsCenter`.
-
-The `FilteredPersonListChangedEvent` is implemented this way:
-
-```
-public class FilteredPersonListChangedEvent extends BaseEvent {
-
-    private final ObservableList<ReadOnlyPerson> currentFilteredList;
-
-    public FilteredPersonListChangedEvent(ObservableList<ReadOnlyPerson> currentFilteredList) {
-        this.currentFilteredList = currentFilteredList;
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-    public ObservableList<ReadOnlyPerson> getCurrentFilteredPersonList() {
-        return currentFilteredList;
-    }
-}
-```
-
-Meanwhile in the `StatisticsPanel` class, the `handleFilteredPersonListChangedEvent` event handler which is subscribed to `EventsCenter` handles the `FilteredPersonListChangedEvent` event.
-
-The `handleFilteredPersonListChangedEvent` event handler is implemented this way:
-
-```
-    @FXML
-    @Subscribe
-    private void handleFilteredPersonListChangedEvent(FilteredPersonListChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        statistics.initScore(event.getCurrentFilteredPersonList()); // Updates the statistics instance values
-        loadListStatistics();
-    }
-```
-
-When handling the event, the `Statistics` instance in `StatisticsPanel` has its values updated by the `initScore()` method.
-This means that the values returned from the `Statistics` class's getter methods when called are now updated.
-
-The `loadListStatistics()` method in `StatisticsPanel` is then called.
-
-The `loadListStatistics()` is implemented this way:
-
-```
-    /**
-    * Updates list Statistics in the Statistics panel
-    */
-    protected void loadListStatistics() {
-        mean.setText(statistics.getMeanString());
-        median.setText(statistics.getMedianString());
-        mode.setText(statistics.getModeString());
-        variance.setText(statistics.getVarianceString());
-        standardDeviation.setText(statistics.getStdDevString());
-        quartile1.setText(statistics.getQuartile1String());
-        quartile3.setText(statistics.getQuartile3String());
-        interquartileRange.setText(statistics.getInterquartileRangeString());
-    }
-```
-
-The `Labels` (texts) in the User Interface are set according to the updated `Statistics` instance's getter methods.
-This updates and shows the statistic values of the current `filteredPersonList` on the `StatisticsPanel` in the User Interface.
-At the same time, the `AddressBookChangedEvent` is also being handled, saving the addressBook data.
-
-
-
-==== Design Considerations
-**Aspect:** How to update the `Statistics Panel` +
-**Alternative 1 (current choice):** Create a new `FilteredPersonListChangedEvent` just for updating the `Statistics Panel`. +
-**Pros:** Adherence to the Single Responsibility Principle (SRP) increases cohesion among the different `Events` and reduces coupling. +
-**Cons:** Increases the number of classes in the source code, making it more complex according to the More Is More Complex (MIMC) principle. +
-**Alternative 2:** Modify `AddressBookChangedEvent` to also update the `Statistics Panel`. +
-**Pros:** Since a change in the `model` triggers both the `AddressBookChangedEvent` and the updating of the `Statistics Panel`,
-only a few changes to are needed for `AddressBookChangedEvent` to do also update the `Statistics Panel`. +
-**Cons:** This violates the Single Responsibility Principle (SRP) by having giving `AddressBookChangedEvent` the additional responsibility of updating the `Statistics Panel`.  +
-
-**Aspect:** How to raise the `FilteredPersonListChangedEvent` in the `ModelManager` +
-**Alternative 1 (current choice):** Create a separate `updateStatisticsPanel()` method to raise the event to update the `Statistics Panel` +
-**Pros:** Reduces coupling and increases cohesion by giving a single responsibility to the `updateStatisticsPanel()` method. +
-**Cons:** Makes the application more complex to understand according to the More Is More Complex (MIMC) principle. +
-**Alternative 2:** Raise the `FilteredPersonListChangedEvent` together with the `AddressBookChangedEvent` +
-**Pros:** Reduces the number of similar methods in the source code, making it less complex and easier to understand +
-**Cons:** Increases coupling in the source code +
-// end::statisticspanel[]
 
 === Logging
 
