@@ -119,14 +119,19 @@ Examples:
 Adds a temporary resident to the resident book which will be deleted when the number of days specified has elapsed +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ROOM [temp/NUMBER_OF_DAYS] [t/TAG]...`
 
-[TIP]
-Deletion of temporary resident is done at the start up of the addressbook, so restarting your addressbook may help if you
-realised a certain temporary resident stills remains in your address book after its expiry date.
+
+[NOTE]
+===============
+. This feature is optional. If you do not wish to add a temporary person, simply do not add in "temp/" when adding a person. +
+. Deletion of temporary resident is done at the start up of the addressbook, so restarting your addressbook may help if you
+realised a certain temporary resident stills remains in your address book after its expiry date. +
+===============
 
 
-Examples:
+Example of temporary resident that stays for 2 days:
 
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 temp/2 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Hostel p/1234567 temp/2 t/guest t/tour t/student` +
+
 // end::temporaryperson[]
 
 // tag::picture[]
@@ -287,14 +292,14 @@ Deletes the 1st person in the results of the `find` command.
 === Deleting persons by tag: `deletebytag`
 
 Deletes all persons in the address book who has the supplied tag. +
-Format: `deletebytag TAG`
+Format: `deletebytag TAG` +
+Command Alias: `dbt`
 
 
 ****
 * The addressbook automatically updates as the deletion happens.
 * `TAG` supplied is case-sensitive i.e. friends is different from Friends. This is to allow more freedom for users in the
 creation of tags. Please take note of this when using this command.
-* The alias for this command is dbt
 * This command will delete all persons who have the supplied `TAG`, even if they contain tags other than the tag supplied (Refer to example below).
 ****
 
@@ -438,7 +443,7 @@ Examples:
 * `rm pending` +
 Remove all "pending" tags from list of residents.
 
-=== Facebook Search (coming in V2.0)
+=== Facebook Search (coming in v2.0)
 
 Query Facebook using list of emails from resident book.
 
@@ -446,18 +451,26 @@ Query Facebook using list of emails from resident book.
 
 Clicking on a person now displays additional information in the side pane
 
+// tag::Calendar[]
 === Calendar Interface (Since v1.4)
 
-Calendar has been introduced to allow the hostel administrator to view events.
+Calendar has been introduced to allow the hostel administrator to view events happening in the hostel.
 Events can be seen on calendar interface for clearer view since v1.5
 
 image::Calendar_UI.png[width="790"]
 
-* Event names are truncated on the calendar to allow uniform calendar grid size +
+* Click on the "PREV" or "NEXT" button to navigate to the previous or next month.
 
-* Calendar is dynamically updated when events are added or deleted
+* Event names are truncated on the calendar to allow uniform calendar grid size. +
 
-* Calendar will bring you to current month when events are added or deleted
+* Calendar is dynamically updated when events are added or deleted.
+
+* Calendar will stay at the month you are at when events are added or deleted.
+
+* The current date will be appear in grey colour on the calendar(i.e. 12th Nov in the picture).
+
+* Users can also click on individual dates. Selected date will turn green(i.e. 29th Nov in the picture). In v2.0, users can
+click on any day on the calendar and a list of events on that day can be displayed in greater detail.
 
 [TIP]
 When there are three of more events on the same day, calendar only shows two of those events
@@ -467,6 +480,7 @@ Example:
 
 image::Day_Events.png[width="300"]
 
+// end::Calendar[]
 
 === Events (Since v1.4)
 
