@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -22,9 +23,12 @@ import seedu.room.commons.core.Config;
 import seedu.room.commons.core.GuiSettings;
 import seedu.room.commons.core.LogsCenter;
 import seedu.room.commons.events.model.EventBookChangedEvent;
+import seedu.room.commons.events.model.ResidentBookChangedEvent;
 import seedu.room.commons.events.ui.ExitAppRequestEvent;
 import seedu.room.commons.events.ui.NewResultAvailableEvent;
+import seedu.room.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.room.commons.events.ui.ShowHelpRequestEvent;
+import seedu.room.commons.events.ui.SwitchTabRequestEvent;
 import seedu.room.commons.util.FxViewUtil;
 import seedu.room.logic.Logic;
 import seedu.room.logic.commands.CommandResult;
@@ -32,6 +36,7 @@ import seedu.room.logic.commands.ImportCommand;
 import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.logic.parser.exceptions.ParseException;
 import seedu.room.model.UserPrefs;
+
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -82,6 +87,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private TabPane tabPane;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -279,7 +287,34 @@ public class MainWindow extends UiPart<Region> {
 
     @Subscribe
     public void handleCalenderBoxPanelChange(EventBookChangedEvent event) {
+        switchTab(1);
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         calandarBoxPanel.getCalendarBox().populateCalendar(YearMonth.now(), this.logic.getFilteredEventList());
     }
+
+
+    //@@author sushinoya
+    public void switchTab(int index) {
+        tabPane.getSelectionModel().select(index);
+    }
+
+    @Subscribe
+    private void handleSwitchTabEvent(SwitchTabRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchTab(event.targetIndex);
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChange(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchTab(0);
+    }
+
+    @Subscribe
+    public void handleResidentBoxPanelChange(ResidentBookChangedEvent event) {
+        switchTab(0);
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    }
+    //@@author
+
 }
