@@ -153,7 +153,6 @@ public class SortCommandTest {
     private boolean notReverseOrder = false;
     private boolean reverseOrder = true;
 
-
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
