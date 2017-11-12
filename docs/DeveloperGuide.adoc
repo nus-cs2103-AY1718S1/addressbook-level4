@@ -447,7 +447,7 @@ Tag command allows user to assign tags to the persons at the specified index in 
 
 This command inherits from `UndoableCommand`. Thus, the tagging action can be undone.
 
-For every person at the index specified, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside the `AddressBook` 's person list with the new person object.
+For every person at the index specified, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside `AddressBook` 's person list with the new person object.
 
 The following sequence diagram shows how the tag operation works:
 
@@ -456,8 +456,8 @@ _Figure 4.4.1.1 : Interactions in the Tag Command._
 
 ==== Untag command
 
-The basic untag command allows user to remove tags from the persons at the specified index in the last person listing.
-With three additional extensions, user can now:
+Untag command allows user to remove tags from the persons at the specified index in the last person listing.
+In addition, user can choose to:
 
 * Remove all tags from the persons at the specified index in the last person listing.
 * Remove the specified tags from all persons in the last person listing.
@@ -468,12 +468,25 @@ This command inherits from `UndoableCommand`. Thus, the untagging action can be 
 Compared to `TagCommand`, `UntagCommand` has a boolean attribute called `toAllInFilteredList` to indicate whether untagging will be applied
 to all persons in filtered list or not.
 
-Similar to tag command operation, for every person that will be untagged, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside the `AddressBook` 's person list with the new person object.
-
 The following sequence diagram shows how the untag operation works:
 
 image::UntagSequenceDiagram.png[width="800"]
 _Figure 4.4.1.1 : Interactions in the Untag Command._
+
+Similar to tag command operation, for every person that will be untagged, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside `AddressBook` 's person list with the new person object.
+
+After having updated all relevant persons, `UntagCommand` will utilize `deleteUnusedTag()` of `Model` to remove any unused `Tag` inside `AddressBook` 's unique tag list.
+
+==== Retag command
+
+Retag command allows user to rename an existing tag to a new tag name.
+
+This command inherits from `UndoableCommand`. Thus, the retagging action can be undone.
+
+At the beginning of its execution, the command updates person filterd list with all persons inside the addressbook by calling `updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS)` of `Model`.
+After that, it will loop through the filtered list and perform update on persons with the specified old tag name similar to how `TagCommand` and `UntagCommand` updates persons.
+
+After having updated the person list of `AddressBook` where necessary, `RetagCommand` will call `deleteUnusedTag()` of `Model` on the old `Tag` to remove it from `AddressBook` 's unique tag list.
 
 ==== Retrieve command
 
@@ -502,7 +515,7 @@ _Figure 4.4.1.1 : Sequence Diagram for the Retrieve Command._
 
 ==== Design Considerations
 
-**Aspect:** Updating the filtered person list +
+**Aspect:** Finding out all persons with the specififed tag +
 **Alternative 1 (current choice):** Go through every person in the addressbook to filter out those having the tag. +
 **Pros:** Easy to implement. +
 **Cons:** Slower if the addressbook contains a large number of persons +
@@ -1122,7 +1135,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 
 [discrete]
