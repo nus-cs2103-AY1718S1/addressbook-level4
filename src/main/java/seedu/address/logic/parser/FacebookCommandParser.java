@@ -11,7 +11,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new FacebookCommand object.
  */
-public class FacebookCommandParser {
+public class FacebookCommandParser implements Parser<FacebookCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the FacebookCommand

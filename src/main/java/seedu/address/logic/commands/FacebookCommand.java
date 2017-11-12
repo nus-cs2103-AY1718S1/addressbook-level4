@@ -51,5 +51,12 @@ public class FacebookCommand extends Command {
         EventsCenter.getInstance().post(new ShowFacebookRequestEvent(name));
         return new CommandResult(SHOWING_FACEBOOK_MESSAGE);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FacebookCommand // instanceof handles nulls
+                && this.targetIndex.equals(((FacebookCommand) other).targetIndex)); // state check
+    }
     //@@author
 }
