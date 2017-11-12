@@ -693,6 +693,9 @@ The method can be seen in the code section below.
         if (!input.contains("c/")) {
             input = input + " c/ (Postal code not recorded)";
         }
+        if (!input.contains(" p/")) {
+            input = input + " p/ (Student phone not recorded)";
+        }
         return input;
     }
 ----
