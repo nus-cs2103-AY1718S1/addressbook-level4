@@ -468,7 +468,7 @@ Current `DATAFIELD` entries that are allowed are: `Name`, `Phone`, `Email` and `
 
 Using `-ignorefav` after `DATAFIELD` will sort the contact list without prioritising favourites first. +
 
-Using `-reverse` after `DATAFIELD` will sort the contact list according to the `DATAFIELD` but in *reverse oreder* +
+Using `-reverse` after `DATAFIELD` will sort the contact list according to the `DATAFIELD` but in *reverse order* +
 
 The sort feature uses *JavaFX 8's* `SortedList` to wrap around the `FilteredList` in `ModelManager` to enable sorting. This is because `FilteredList` is *unmodifiable* as of *JavaFX 8* and thus cannot be sorted. +
 
@@ -665,12 +665,13 @@ The link command allows users to add twitter links to a person, so as to make us
 By having a link field under each person, we are able to load a twitter link when the person is selected.
 
 image::person.png[width="400"]
-_Figure 3.9.1 : Attributes of Person class_
+_Figure 3.9.1a : Attributes of Person class_
 
 Since only one twitter link is allowed for each person, we have designed the link command to replace any old twitter links
 with the current twitter link used in the link command so that it is easy to use for the user.
 
 image::LinkActivityDiagram.png[width="600"]
+_Figure 3.9.1b : Activity Diagram showing how link command is used_
 
 [NOTE]
 Only twitter link are allowed to be added.
@@ -733,7 +734,7 @@ Here are the steps for you to convert the project documentation files to PDF for
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 4.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -1448,19 +1449,5 @@ Data fields
 The different components of a contact's details.
 ....
 
-[appendix]
-== Product Survey
 
-*Product Name*
 
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

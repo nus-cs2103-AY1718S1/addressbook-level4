@@ -23,7 +23,7 @@ public class LinkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "link";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a facebook link to person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a twitter link to person identified "
             + "by the index number used in the last person listing. "
             + "Existing links will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "

@@ -206,6 +206,14 @@ public class LinkCommandTest {
         assertCommandFailure(linkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    @Test
+    public void execute_invalidLink_failure() throws Exception {
+        String invalidLink = "nolink.com";
+        LinkCommand linkCommand = prepareCommand(INDEX_FIRST_PERSON, invalidLink);
+
+        assertCommandFailure(linkCommand, model, Messages.MESSAGE_INVALID_LINK_FORMAT);
+    }
+
     /**
      * Edit filtered list where index is larger than size of filtered list,
      * but smaller than size of address book
@@ -498,7 +506,7 @@ public class LinkCommandParserTest {
 
     @Test
     public void parse_indexSpecified_failure() throws Exception {
-        final Link link = new Link("facebook.com");
+        final Link link = new Link("twitter.com");
 
         // have link
         Index targetIndex = INDEX_FIRST_PERSON;
@@ -574,7 +582,7 @@ public class LinkTest {
 
     @Test
     public void equals() {
-        Link link = new Link("facebook.com");
+        Link link = new Link("twitter.com");
 
         // same object -> returns true
         assertTrue(link.equals(link));
@@ -590,7 +598,7 @@ public class LinkTest {
         assertFalse(link.equals(null));
 
         // different person -> returns false
-        Link differentLink = new Link("facebook.com/gg");
+        Link differentLink = new Link("twitter.com/gg");
         assertFalse(link.equals(differentLink));
     }
 }
