@@ -2,6 +2,7 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author jaivigneshvenugopal
 /**
  * Represents a change of internal list in the Person List Panel
  */
