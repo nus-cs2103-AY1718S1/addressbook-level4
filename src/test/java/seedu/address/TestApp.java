@@ -32,8 +32,10 @@ public class TestApp extends MainApp {
 
     public static final String SAVE_LOCATION_FOR_TESTING_ADDRESSBOOK = TestUtil
             .getFilePathInSandboxFolder("sampleData.xml");
+    //@@author bladerail
     public static final String SAVE_LOCATION_FOR_TESTING_USERPROFILE = TestUtil
             .getFilePathInSandboxFolder("sampleUserProfile.xml");
+    //@@author
     public static final String APP_TITLE = "Test App";
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
@@ -41,7 +43,9 @@ public class TestApp extends MainApp {
     protected static final String ADDRESS_BOOK_NAME = "Test";
     protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
     protected String saveFileLocationAddressBook = SAVE_LOCATION_FOR_TESTING_ADDRESSBOOK;
+    //@@author bladerail
     protected String saveFileLocationUserProfile = SAVE_LOCATION_FOR_TESTING_USERPROFILE;
+    //@@author
 
     public TestApp() {
     }
@@ -73,11 +77,14 @@ public class TestApp extends MainApp {
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
         userPrefs.setAddressBookFilePath(saveFileLocationAddressBook);
+        //@@author bladerail
         userPrefs.setUserProfileFilePath(saveFileLocationUserProfile);
+        //@@author
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
         return userPrefs;
     }
 
+    //@@author bladerail
     @Override
     protected UserPerson initUserPerson(UserProfileStorage storage) {
         UserPerson userPerson = super.initUserPerson(storage);
@@ -90,6 +97,7 @@ public class TestApp extends MainApp {
         return userPerson;
 
     }
+    //@@author
 
     /**
      * Returns a defensive copy of the address book data stored inside the storage file.

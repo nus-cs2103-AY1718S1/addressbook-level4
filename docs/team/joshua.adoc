@@ -121,8 +121,9 @@ Further enhancements to be implemented: Share other contacts in the addressbook 
 
 === Other contributions
 
-* Minor changes to improve readability of code, as per Codacy's recommendations.
-* Fixed typecasting errors that were causing -Xlint warnings to appear upon compilation.
+* Minor changes to improve readability of code and maintain consistency (https://github.com/CS2103AUG2017-F11-B2/main/pull/121/files[CommandTestUtil #121])
+* Fixed typecasting errors that were causing -Xlint warnings to appear upon compilation. (https://github.com/CS2103AUG2017-F11-B2/main/pull/97/files[SampleDataUtil #97], https://github.com/CS2103AUG2017-F11-B2/main/pull/141/files[ModelManager #141])
+* Participated in 1.4 bug tracking (Issues https://github.com/CS2103AUG2017-T10-B2/main/issues/82[#82], https://github.com/CS2103AUG2017-T10-B2/main/issues/83[#83], https://github.com/CS2103AUG2017-W14-B4/main/issues/109[#109], https://github.com/CS2103AUG2017-W14-B4/main/issues/112[#112])
 
 == Project: PowerPointLabs
 

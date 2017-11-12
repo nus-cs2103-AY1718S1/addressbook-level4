@@ -6,6 +6,7 @@ import org.controlsfx.control.textfield.AutoCompletionBinding;
 
 import impl.org.controlsfx.autocompletion.SuggestionProvider;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteTagCommand;
@@ -19,6 +20,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShareCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UpdateUserCommand;
@@ -59,6 +61,7 @@ public class AutoCompleteSuggestions {
         //suggestionList.addPossibleSuggestions(FilterCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(ListCommand.COMMAND_WORD);
         suggestionList.addPossibleSuggestions(SortCommand.COMMAND_WORD);
+        suggestionList.addPossibleSuggestions(SelectCommand.COMMAND_WORD);
         //suggestionList.addPossibleSuggestions(SortCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(HistoryCommand.COMMAND_WORD);
         suggestionList.addPossibleSuggestions(ExitCommand.COMMAND_WORD);
@@ -70,9 +73,11 @@ public class AutoCompleteSuggestions {
         suggestionList.addPossibleSuggestions(RemarkCommand.COMMAND_WORD);
         //suggestionList.addPossibleSuggestions(RemarkCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(UpdateUserCommand.COMMAND_WORD);
+        suggestionList.addPossibleSuggestions(ShareCommand.COMMAND_WORD);
         //suggestionList.addPossibleSuggestions(UpdateUserCommand.MESSAGE_USAGE_EXAMPLE);
         suggestionList.addPossibleSuggestions(WebCommand.COMMAND_WORD);
         //suggestionList.addPossibleSuggestions(WebCommand.MESSAGE_USAGE_EXAMPLE);
+        suggestionList.addPossibleSuggestions(ChangeThemeCommand.COMMAND_WORD);
     }
 
     public static SuggestionProvider<String> getSuggestionList() {

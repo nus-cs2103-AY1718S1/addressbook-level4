@@ -19,6 +19,9 @@ import seedu.address.model.util.SampleUserPersonUtil;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author bladerail
+/**
+ * Contains integration tests (interaction with the Model) for {@code ShareCommand}.
+ */
 public class ShareCommandTest {
 
     @Rule

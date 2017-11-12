@@ -529,8 +529,14 @@ be sorted easily. +
 ==== Design Considerations
 **Aspect:** Sort Command vs List Command +
 **Pros:** A user might only want to enter sort once, but does not want to have to enter the entire command again
-to obtain the same listing. Thus, Sort Command will sort the list while List Command will redisplay the last shown list. +
+to obtain the same listing. Thus, Sort Command will sort the list while List Command will redisplay the last sorted list. +
 **Cons:** Multiple commands might confuse the user. +
+
+==== Design Considerations
+**Aspect:** Display entire list vs Display filtered list +
+**Current choice:** Display filtered list
+**Pros:** Good for those who want to see the filtered list sorted. Gives list command more value. +
+**Cons:** Extra code to remember previous predicate. +
 
 ==== Design Considerations
 **Aspect:** FilterType aliases +
@@ -560,9 +566,9 @@ The "Enter" key is added as an accelerator for the OK button and the "Escape" ke
 the cancel button. The UserProfile can be found under "File" --> "User Profile" and has an accelerator
 key "F2".
 
-image::UserProfileMenuItem.png[width="208" height="315"]
-
 image::UserProfileWindow.png[width="400" height="300"]
+
+image::UserProfileWindowInvalidEntry.png[width="400" height="300"]
 
 ==== Design Considerations
 **Aspect:** Choice of location for storing UserProfile Data +
@@ -579,7 +585,7 @@ variables. +
 **Cons:** Reduced flexibility as now, both AddressBook data and UserProfile cannot be separated
 
 ==== Further enhancements
-+ Share UserProfile with others
++ Modify settings and userPrefs in the UserProfile
 
 // end::UserProfile[]
 

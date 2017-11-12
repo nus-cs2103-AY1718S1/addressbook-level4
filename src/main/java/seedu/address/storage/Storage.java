@@ -34,6 +34,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, UserProfi
     @Override
     void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 
+    //@@author bladerail
     @Override
     String getUserProfileFilePath();
 
@@ -45,6 +46,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, UserProfi
 
     void handleUserPersonChangedEvent(UserPersonChangedEvent upce);
 
+    //@@author
 
     /**
      * Saves the current version of the Address Book to the hard disk.
