@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.logic.commands.tasks.EditTaskCommand;
 import seedu.address.logic.commands.tasks.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -43,6 +44,10 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         try {
             index = ParserUtil.parseIndex(getIndexForEdit(argMultimap.getPreamble()));
         } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE));
+        }
+
+        if (!AddTaskCommandParser.isSinglePrefixPresent(argMultimap)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE));
         }
 
