@@ -206,22 +206,39 @@ Deletes the 1st person in the results of the `find` command.
 
 === Deleting a tag : `removetag`
 
-Removes a tag from every person in the list in the address book. +
-If an an index is given the tag is removed from the person +
-in the specified index shown on the list. +
-Format: `removetag all TAGNAME` OR `removetag INDEX TAGNAME`
-
 [NOTE]
 Remove Tag command available since v1.1 +
 Option to remove a tag for selected people since V1.2
 
+If you want to remove a certain tag from the address book or from a specific person in your addressbook, you can use the removetag function to perform this action. +
 
+To do so simply follow these steps
+
+. Type `removetag` followed by the `INDEX` of the person and the `TAG` that you wish to remove.
++
+[TIP]
+If you are trying to delete a `TAG` from everybody in the list, type `all` in the `INDEX` field.
++
+An example is shown below.
++
+image::removetag.png[width="790"]
+_Figure 4.7.1 : Rubrika main page_
++
+. Upon pressing `ENTER` you should be greeted with a confirmation message.
++
+image::removetag-2.png[width="790"]
+_Figure 4.7.1 : Remove Tag Confirmation message_
+
+The `TAG` that you have given should now be removed from the addressbook or from the person corresponding to the `INDEX` in the list. +
+
+Do take note that:
 ****
-* Deletes every tag that matches the TAGNAME.
-* Deletes tag from specified index if INDEX is given.
 * The tag must exist in any person.
-* Index must be a positive integer
+* `INDEX` must be a positive integer
+* `INDEX` of the person refers to his/her `INDEX` in the list displayed.
 ****
+
+Format: `removetag all TAGNAME` OR `removetag INDEX TAGNAME`
 
 Examples:
 
@@ -242,16 +259,27 @@ Deletes tag `enemy` from the first person in the list shown in the address book.
 [NOTE]
 Sort feature available since v1.3
 
-Sorts the list of person in the addressbook. +
-You may choose to sort based on a parameter and display in +
-ascending or descending order.
+To help keep your contact list in an organise manner, you can choose to rearrange your contacts in a specified order. +
 
-[NOTE]
-Sort command is NOT undoable nor redoable, since the order is not preserved, and will revert to original order on execution of many other commands.
+Currently, Rubrika allows you to list your clients by your client's name, email or phone in ascending or descending order.
 
+. Type `sort` followed by the `FIELD` followed by the `ORDER` that you wish to list your contacts. An example is shown below.
++
+image::sort.png[width="790"]
+_Figure 4.8.1 : Rubrika main page_
++
+. Upon pressing `ENTER` you should see a confirmation message.
++
+image::sort-2.png[width="790"]
+_Figure 4.8.1 : Sort confirmation message_
+
+Your list of contacts should not be displayed in the specified order based on your choice.
+
+Do take note that:
 ****
-* FIELD must be name, email or phone.
-* ORDER must be asc (ascending) or dsc (descending)
+* The available `FIELD` are name, email or phone.
+* The available `ORDER` are be asc (ascending) or dsc (descending)
+* Sort is not an undoable command.
 ****
 
 Format: `sort FIELD ORDER` +
@@ -310,7 +338,6 @@ To create the export file, please refer to link:#export[Exporting Contacts]
 +
 image::import-window.png[width="790"]
 _Figure 4.10.1 : Import window_
-
 +
 . Select the file you want to import and select `open`.
 +
@@ -325,6 +352,7 @@ _Figure 4.10.3 : Comfirmation message_
 
 Your contact list should now contain your contacts you had previously as well as the contacts that was included in the file.
 
+Do take note that:
 ****
 * The function only imports contacts that do not exist in the current address book.
 * Duplicate persons in your contact list will be ignored.
