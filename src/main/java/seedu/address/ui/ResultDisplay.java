@@ -101,7 +101,7 @@ public class ResultDisplay extends UiPart<Region> {
             imageDisplay.setImage(new Image(FIND_ICON));
             break;
         case "hide":
-            listSizeDisplay.setVisible(true);
+            listSizeDisplay.setVisible(false);
             imageDisplay.setImage(new Image(HIDE_ICON));
             break;
         case "task":
