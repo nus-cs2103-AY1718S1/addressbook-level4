@@ -10,7 +10,7 @@ ABC Business Contacts was developed by the team W13B3 from CS2103T AY17/18, Nati
 
 === Derrick Chua
 image::derrickchua.jpg[width="150", align="left"]
-{empty}[https://github.com/derrickchua[github]][<<derrickchua#, Portfolio>>]
+{empty}[https://github.com/derrickchua[github]][<<derrickchua#, portfolio>>]
 
 Role: Project Member +
 Responsibilities: UI, Scheduling and Tracking
@@ -19,7 +19,7 @@ Responsibilities: UI, Scheduling and Tracking
 
 === Lim Yang Sheng
 image::LimYangSheng.jpg[width="150", align="left"]
-{empty}[http://github.com/LimYangSheng[github]][https://github.com/CS2103AUG2017-W13-B3/main/tree/master/docs/team/limyangsheng.adoc[portfolio]]
+{empty}[http://github.com/LimYangSheng[github]][<<limyangsheng#, portfolio>>]
 
 Role: Project Member +
 Responsibilities: Storage, Documentation
@@ -28,7 +28,7 @@ Responsibilities: Storage, Documentation
 
 === Li Zeyong
 image::newalter.jpg[width="150", align="left"]
-{empty}[http://github.com/newalter[github]][https://github.com/CS2103AUG2017-W13-B3/main/tree/master/docs/team/lizeyong.adoc[portfolio]]
+{empty}[http://github.com/newalter[github]][<<lizeyong#, portfolio>>]
 
 Role: Project Member +
 Responsibilities: Logic, Code Quality
@@ -37,7 +37,7 @@ Responsibilities: Logic, Code Quality
 
 === Lee Guo Sheng Alexander
 image::alexanderlee.jpg[width="150", align="left"]
-{empty}[http://github.com/alexanderleegs[github]][https://github.com/CS2103AUG2017-W13-B3/main/tree/master/docs/team/alexanderleegs.adoc[portfolio]]
+{empty}[http://github.com/alexanderleegs[github]][<<alexanderleegs#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model, Deliverables and deadlines
