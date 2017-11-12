@@ -6,6 +6,9 @@ import java.util.Optional;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.ParserUtil;
+import seedu.address.model.task.DateTime;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
 
 /**
@@ -40,7 +43,10 @@ public class EditTaskDescriptorBuilder {
      */
     public EditTaskDescriptorBuilder withName(String name) {
         try {
-            ParserUtil.parseString(Optional.of(name)).ifPresent(descriptor::setName);
+            Optional<String> parserName = ParserUtil.parseString(Optional.of(name));
+            if (parserName.isPresent()) {
+                descriptor.setName(new Name(name));
+            }
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("name is expected to be unique.");
         }
@@ -52,7 +58,10 @@ public class EditTaskDescriptorBuilder {
      */
     public EditTaskDescriptorBuilder withDescription(String description) {
         try {
-            ParserUtil.parseString(Optional.of(description)).ifPresent(descriptor::setDescription);
+            Optional<String> parserDescription = ParserUtil.parseString(Optional.of(description));
+            if (parserDescription.isPresent()) {
+                descriptor.setDescription(new Description(description));
+            }
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("description is expected to be unique.");
         }
@@ -64,9 +73,12 @@ public class EditTaskDescriptorBuilder {
      */
     public EditTaskDescriptorBuilder withStart(String start) {
         try {
-            ParserUtil.parseString(Optional.of(start)).ifPresent(descriptor::setStart);
+            Optional<String> parserStartTime = ParserUtil.parseString(Optional.of(start));
+            if (parserStartTime.isPresent()) {
+                descriptor.setStart(new DateTime(start));
+            }
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("start time is expected to be unique.");
+            throw new IllegalArgumentException(ive.getMessage());
         }
         return this;
     }
@@ -76,9 +88,12 @@ public class EditTaskDescriptorBuilder {
      */
     public EditTaskDescriptorBuilder withEnd(String end) {
         try {
-            ParserUtil.parseString(Optional.of(end)).ifPresent(descriptor::setEnd);
+            Optional<String> parserEndTime = ParserUtil.parseString(Optional.of(end));
+            if (parserEndTime.isPresent()) {
+                descriptor.setEnd(new DateTime(end));
+            }
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("end time is expected to be unique.");
+            throw new IllegalArgumentException(ive.getMessage());
         }
         return this;
     }

@@ -10,6 +10,9 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTime;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 
@@ -18,8 +21,6 @@ import seedu.address.model.task.Task;
  */
 public class XmlAdaptedTask {
 
-    @XmlElement
-    private static Integer nextId;
     @XmlElement(required = true)
     private String taskName;
     @XmlElement(required = true)
@@ -53,11 +54,10 @@ public class XmlAdaptedTask {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedTask(ReadOnlyTask source) {
-        nextId = Task.getNextId();
-        taskName = source.getName();
-        taskDescription = source.getDescription();
-        startDateTime = source.getStartDateTime();
-        endDateTime = source.getEndDateTime();
+        taskName = source.getName().toString();
+        taskDescription = source.getDescription().toString();
+        startDateTime = source.getStartDateTime().toString();
+        endDateTime = source.getEndDateTime().toString();
         tagged = new ArrayList<>();
         id = source.getId();
         for (Tag tag : source.getTags()) {
@@ -74,15 +74,14 @@ public class XmlAdaptedTask {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Task toModelType() throws IllegalValueException {
-        Task.setNextId(nextId);
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
-        final String taskName = this.taskName;
-        final String taskDescription = this.taskDescription;
-        final String startDateTime = this.startDateTime;
-        final String endDateTime = this.endDateTime;
+        final Name taskName = new Name(this.taskName);
+        final Description taskDescription = new Description(this.taskDescription);
+        final DateTime startDateTime = new DateTime(this.startDateTime);
+        final DateTime endDateTime = new DateTime(this.endDateTime);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Boolean complete = this.complete;
         final ArrayList<Integer> peopleIndices = new ArrayList<>(this.peopleIndices);

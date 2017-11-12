@@ -19,9 +19,9 @@ image::images/Ui.png[width="600"]
 endif::[]
 
 * This is a desktop contact&task organizer application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java product application by students in http://www.nus.edu.sg[NUS] module https://nusmods.com/modules/CS2103T[CS2103T]
+* It is a Java product application by team `CS2103AUG2017-W15-B4` in http://www.nus.edu.sg[NUS] module https://nusmods.com/modules/CS2103T[CS2103T]
 * The base app, https://github.com/se-edu/addressbook-level4[Address Book (level 4)] is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* 3W organize the users contacts, tasks, the linkage between this two, and corresponding location information.
+* 3W organize the users' contacts, tasks, the linkage between this two, and the corresponding location information. Managing tasks and contacts become easy with 3W.
 
 == Site Map
 

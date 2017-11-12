@@ -28,6 +28,7 @@ import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
+import seedu.address.testutil.TypicalTasks;
 
 public class AddTaskCommandTest {
 
@@ -43,7 +44,7 @@ public class AddTaskCommandTest {
     @Test
     public void execute_taskAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingTaskAdded modelStub = new ModelStubAcceptingTaskAdded();
-        Task validTask = new Task("task1", "fun", "12:00", "23:00");
+        ReadOnlyTask validTask = TypicalTasks.getTypicalTasks().get(0);
 
         //CommandResult commandResult = getAddCommandForTask(validTask, modelStub).execute();
 
@@ -56,7 +57,7 @@ public class AddTaskCommandTest {
     @Test
     public void execute_duplicateTask_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicateTaskException();
-        Task validTask = new Task("task1", "fun", "12:00", "23:00");
+        ReadOnlyTask validTask = TypicalTasks.getTypicalTasks().get(0);
 
         thrown.expect(DuplicateTaskException.class);
         //thrown.expectMessage(AddTaskCommand.MESSAGE_DUPLICATE_TASK);

@@ -92,7 +92,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 ==== Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the address book and task book to the state before the previous _undoable_ command was executed. +
 Format: `undo`/`u`
 
 [NOTE]
@@ -277,6 +277,8 @@ Examples:
 
 === Tasks Operations
 
+// tag::shaocong1[]
+
 ==== Selecting a task : `selectTask`
 
 Selects the task identified by the index number used in the last task listing. +
@@ -313,6 +315,8 @@ Edits the name, description, start time, finish time ad tag of the 1st task to b
 * `editTask 2 t/teammates`
 Edits the tag of the 2nd task to be `teammates` only and others remain same.
 
+// end::shaocong1[]
+
 ==== Exporting a task to a string of addTask command: `exportTask`
 
 Export the details of the task by the index number +
@@ -329,6 +333,8 @@ Examples:
 
 * `export 1` in the default setting +
 Returns `addTask n/picnic d/have fun at Botanic Garden s/1/1/2099 12:00pm e/1/1/2099 15:00pm t/friends `
+
+// tag::shaocong2[]
 
 ==== Deleting a task : `deleteTask`
 
@@ -348,6 +354,8 @@ Examples:
 * `deleteTask` 1 +
 Deletes the 1st task in the task book.
 
+// end::shaocong2[]
+
 ==== Marking a task : `markTask`
 
 Marks the specific task from the task book. +
@@ -365,6 +373,8 @@ Examples:
 * `list` +
 * `markTask 1` +
 Marks the 1st task in the task book to be completed.
+
+// tag::shaocong3[]
 
 ==== Setting a priority for a task : `setPriority`
 
@@ -391,10 +401,14 @@ An Exception is thrown: A priority value is defined within integer range of 1 to
 Sorts the task currently present in the taskBook by priority. +
 Format: `taskByPriority`/`tbp`
 
+// end::shaocong3[]
+
 ==== Sorting tasks by end date : `taskbyend`
 
 Sorts the list of tasks by their end date +
 Format: `taskByEnd`/`tbe`
+
+// tag::shaocong4[]
 
 [NOTE]
 ====
@@ -413,6 +427,8 @@ A task can have any number of tags (including 0), the tag mechanism is the same 
 Examples:
 
 * `addTask n/picnic d/have fun at Botanic Garden s/1/1/2017 12:00pm f/1/1/2017 15:00pm c/3 t/friends`
+
+// end::shaocong4[]
 
 === link Operations
 

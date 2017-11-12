@@ -105,16 +105,16 @@ public class EditTaskCommandTest {
 
         assertCommandSuccess(editTaskCommand, model, expectedMessage, expectedModel);
     }
-
-    /*@Test
+    /*
+    @Test
     public void execute_duplicateTaskUnfilteredList_failure() {
         Task firstTask = new Task(model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased()));
         EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(firstTask).build();
         EditTaskCommand editTaskCommand = prepareTaskCommand(INDEX_SECOND_TASK, descriptor);
 
         assertTaskCommandFailure(editTaskCommand, model, EditTaskCommand.MESSAGE_DUPLICATE_TASK);
-    }*/
-
+    }
+    */
     /*@Test
     public void execute_duplicateTaskFilteredList_failure() {
         showFirstTaskOnly(model);

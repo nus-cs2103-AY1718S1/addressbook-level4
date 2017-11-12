@@ -20,12 +20,16 @@ import seedu.address.logic.commands.EditTaskCommand;
 import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTime;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Name;
 
 /**
  * Parses input arguments and creates a new EditTaskCommand object
  */
 public class EditTaskCommandParser implements Parser<EditTaskCommand> {
 
+    //@@author ShaocongDong
     /**
      * Parses the given {@code String} of arguments in the context of the EditTaskCommand
      * and returns an EditTaskCommand object for execution.
@@ -47,12 +51,38 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
 
         EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
         try {
-            ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME)).ifPresent(editTaskDescriptor::setName);
-            ParserUtil.parseString(argMultimap.getValue(PREFIX_DESCRIPTION))
-                    .ifPresent(editTaskDescriptor::setDescription);
-            ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME))
-                    .ifPresent(editTaskDescriptor::setStart);
-            ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).ifPresent(editTaskDescriptor::setEnd);
+            Optional<String> parserName = ParserUtil.parseString(argMultimap.getValue(PREFIX_NAME));
+            if (parserName.isPresent()) {
+                editTaskDescriptor.setName(new Name(parserName.get()));
+            }
+            Optional<String> parserDescription = ParserUtil.parseString(argMultimap.getValue(PREFIX_DESCRIPTION));
+            if (parserDescription.isPresent()) {
+                editTaskDescriptor.setDescription(new Description(parserDescription.get()));
+            }
+
+            Optional<String> parserStart = ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME));
+            DateTime startDateTime = null;
+            if (parserStart.isPresent()) {
+                //editTaskDescriptor.setStart(new DateTime(parserStart.get()));
+                startDateTime = new DateTime(parserStart.get());
+                editTaskDescriptor.setStart(new DateTime(parserStart.get()));
+            }
+
+            Optional<String> parserEnd = ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME));
+            DateTime endDateTime = null;
+            if (parserEnd.isPresent()) {
+                //editTaskDescriptor.setEnd(new DateTime(parserEnd.get()));
+                endDateTime = new DateTime(parserEnd.get());
+                editTaskDescriptor.setEnd(new DateTime(parserEnd.get()));
+            }
+
+            // additional checking for dateTime validity
+            if (startDateTime != null && endDateTime != null) {
+                if (startDateTime.compareTo(endDateTime) == -1) {
+                    throw new ParseException(EditTaskCommand.MESSAGE_DATE_TIME_TASK);
+                }
+            }
+
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

@@ -61,7 +61,8 @@ public class ParserUtil {
      */
     public static Optional<String> parseString(Optional<String> stringOptional) throws IllegalValueException {
         requireNonNull(stringOptional);
-        return Optional.of(stringOptional.get());
+        return stringOptional.isPresent() ? Optional.of(stringOptional.get()) : Optional.empty();
+        //return Optional.of(stringOptional.get());
     }
 
     /**

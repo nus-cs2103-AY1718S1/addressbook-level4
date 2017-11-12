@@ -1,3 +1,4 @@
+//@@author ShaocongDong
 package seedu.address.model.task;
 
 import java.util.ArrayList;
@@ -14,14 +15,14 @@ import seedu.address.model.tag.UniqueTagList;
 public interface ReadOnlyTask {
 
     // Content property
-    ObjectProperty<String> nameProperty();
-    String getName();
-    ObjectProperty<String> descriptionProperty();
-    String getDescription();
-    ObjectProperty<String> startTimeProperty();
-    String getStartDateTime();
-    ObjectProperty<String> endTimeProperty();
-    String getEndDateTime();
+    ObjectProperty<Name> nameProperty();
+    Name getName();
+    ObjectProperty<Description> descriptionProperty();
+    Description getDescription();
+    ObjectProperty<DateTime> startTimeProperty();
+    DateTime getStartDateTime();
+    ObjectProperty<DateTime> endTimeProperty();
+    DateTime getEndDateTime();
 
     // functional property
     ObjectProperty<Integer> priorityProperty();
@@ -41,7 +42,7 @@ public interface ReadOnlyTask {
      */
     default boolean isSameStateAs(ReadOnlyTask other) {
         return other == this // short circuit if same object
-                || other != null // this is first to avoid NPE below
+                || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getDescription().equals(this.getDescription())
                 && other.getStartDateTime().equals(this.getStartDateTime())
@@ -49,8 +50,7 @@ public interface ReadOnlyTask {
                 && other.getComplete().equals(this.getComplete())
                 //&& other.getId().equals(this.getId())
                 && other.getPriority().equals(this.getPriority())
-                && other.getTags().equals(this.getTags())
-                && other.getComplete().equals(this.getComplete());
+                && other.getTags().equals(this.getTags()));
     }
 
     /**

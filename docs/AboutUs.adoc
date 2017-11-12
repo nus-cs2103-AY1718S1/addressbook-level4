@@ -16,8 +16,12 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::shaocongdong.png[width="150", align="left"]
 {empty}[http://github.com/ShaocongDong[github]] [<<shaocongdong#, portfolio>>]
 
-Role: Task Book Manager +
-Responsibilities: Functionalities of task book
+Role: Developer +
+Responsibilities: TaskBook functionalities
+
+* Components in charge of: Model & Logic
+* Aspects/tools in charge of: JUnit testing, Travis, GH-Pages, Developer Guide
+* Code written: [https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/main/ShaocongDong.md[functional code]][https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/test/ShaocongDong.md[test code]]
 
 '''
 

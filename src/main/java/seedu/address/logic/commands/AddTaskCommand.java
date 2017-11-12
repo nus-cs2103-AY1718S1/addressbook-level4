@@ -33,8 +33,8 @@ public class AddTaskCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "picnic "
             + PREFIX_DESCRIPTION + "have fun at Botanic Garden "
-            + PREFIX_START_DATE_TIME + "26/11/2017 12:00pm "
-            + PREFIX_END_DATE_TIME + "26/11/2017 15:00pm "
+            + PREFIX_START_DATE_TIME + "26-11-2017 11:00am "
+            + PREFIX_END_DATE_TIME + "26-11-2017 12:00am "
             + PREFIX_PRIORITY + "3 "
             + PREFIX_TAG + "friends ";
 
