@@ -321,9 +321,8 @@ image::redoexample.png[width="800"]
     Figure 11: Redo Command Usage Diagram
 
 [WARNING]
-Please do not input invalid dates/time. +
-You can refer to the following http://natty.joestelmach.com/doc.jsp[link] for the supported formats. +
-You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
+*Known issue:* when `redo` is used on a modified list. +
+If you change the list after an `undo` (e.g. by using `duplicates`), and then use `redo`, `redo will `
 // end::undoredo[]
 
 === Clearing all entries : `clear`
