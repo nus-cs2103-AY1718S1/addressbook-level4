@@ -23,6 +23,8 @@ public class EventCalendarTest {
     public void test() throws Exception {
         assertEquals(monthDateBuilder.getNameOfMonth(), "November");
         assertEquals(monthDateArray[2], " ");
+        assertEquals(monthDateArray[3], "1");
+        assertEquals(monthDateArray[20], "18");
         assertEquals(monthDateArray[34], " ");
     }
 

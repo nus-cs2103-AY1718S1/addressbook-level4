@@ -730,12 +730,27 @@ schedule and it would be easy to check what day it falls on to ensure their avai
 include having to see what dates lie on a particular day for students to plan weekly events. All in all, it provides a
 convenient way for students to have access to a calendar without having to open any external applications.
 
-==== Design Considerations
+==== Implementation Outline
 
-*Aspect:*
+1. Create a `EventCalendar` class that contains the month that will be shown, containing all the necessary information
+required for a monthly calender (i.e. dates, name of month).
 
-image::EventCalendarClassDiagram.png[width="300"]
-_Figure 4.9 : Reminders via different colour schemes to indicate urgency_
+2. Create `monthDateBuilder` class that will be used to set the current month and year of the calendar. It will also be
+arranging the dates in a way that will correspond to which day of the week it will be.
+
+3. The `Calendar` class is used to set the current year and month. It is also used to set the number of days in the
+current month and the day that the first day of the month falls on. This is required to build the monthly view.
+
+4. There are a maximum of 42 "spaces" to fill up in every month. The `buildMonthArray` method uses an algorithm where
+the days before the first day of the month will be a blank, while the subsequent days will be filled up depending on
+the value of the first day of the month and the "space". The last part will continue to be blanks until the 42nd
+"space".
+
+image::EventCalendarClassDiagram.png[width="800"]
+_Figure 4.9.1.1 : Class Diagram for `EventCalendar`_
+
+image::MonthDateBuilderClassDiagram.png[width="800"]
+_Figure 4.9.1.2 : Class Diagram for `MonthDateBuilder`_
 // end::calendarMech[]
 
 === Configuration
