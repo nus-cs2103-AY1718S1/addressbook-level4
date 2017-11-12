@@ -17,7 +17,7 @@ public class BindeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "bin-delete";
 
-    public static final String MESSAGE_SUCCESS = "Forever deleted.";
+    public static final String MESSAGE_SUCCESS = "Deleted from bin.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":Delete the person in bin.";
     private ArrayList<Index> targets;
     private boolean isValid = true;
