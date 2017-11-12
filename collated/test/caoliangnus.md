@@ -47,6 +47,7 @@ import seedu.address.model.module.Code;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.FixedCodePredicate;
+
 import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 
@@ -574,14 +575,14 @@ public class ClassTypeTest {
 
     @Test
     public void isValidClassType() {
-        // invalid addresses
+        // invalid classtype
         assertFalse(ClassType.isValidClassType("")); // empty string
         assertFalse(ClassType.isValidClassType(" ")); // spaces only
         assertFalse(ClassType.isValidClassType("Lecture")); // spell out 'lecture'
         assertFalse(ClassType.isValidClassType("Tutorial")); // spell out 'Tutorial'
 
 
-        // valid addresses
+        // valid classtype
         assertTrue(ClassType.isValidClassType("lec"));
         assertTrue(ClassType.isValidClassType("Lec")); // One capital character
         assertTrue(ClassType.isValidClassType("LEc")); // Two capital characters
@@ -630,14 +631,14 @@ public class GroupTest {
 
     @Test
     public void isValidGroup() {
-        // invalid phone numbers
+        // invalid group numbers
         assertFalse(Group.isValidGroup("")); // empty string
         assertFalse(Group.isValidGroup(" ")); // spaces only
         assertFalse(Group.isValidGroup("phone")); // non-numeric
         assertFalse(Group.isValidGroup("9011p041")); // alphabets within digits
         assertFalse(Group.isValidGroup("9312 1534")); // spaces within digits
 
-        // valid phone numbers
+        // valid group numbers
         assertTrue(Group.isValidGroup("9")); // exactly 1 numbers
         assertTrue(Group.isValidGroup("93121534")); //more than 1 number
         assertTrue(Group.isValidGroup("124293842033123")); // long phone numbers
@@ -665,7 +666,7 @@ public class LocationTest {
 public class TimeSlotTest {
     @Test
     public void isValidTimeSlot() {
-        // invalid phone numbers
+        // invalid time slot
         assertFalse(TimeSlot.isValidTimeSLot("")); // empty string
         assertFalse(TimeSlot.isValidTimeSLot(" ")); // spaces only
         assertFalse(TimeSlot.isValidTimeSLot("FRI")); // no '['
@@ -674,7 +675,7 @@ public class TimeSlotTest {
         assertFalse(TimeSlot.isValidTimeSLot("FRI[10001200]")); // no '-'
         assertFalse(TimeSlot.isValidTimeSLot("FRI[1200-1000]")); // start time less than end time
 
-        // valid phone numbers
+        // valid time slot
         assertTrue(TimeSlot.isValidTimeSLot("FRI[1000-1200]")); // Must follow this format
     }
 }
@@ -1203,6 +1204,52 @@ public class TypicalLessons {
 ```
 ###### /java/seedu/address/ui/CommandBoxTest.java
 ``` java
+
+    @Test
+    public void computeMarginTest() {
+        Text text = new Text("m/");
+
+        //XSmall Font size
+        Font font = new Font("Monospace regular", 12);
+        text.setFont(font);
+        double expectedMargin = commandBox.computeMargin(1, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+        //Small Font size
+        font = new Font("Monospace regular", 17);
+        text.setFont(font);
+        expectedMargin = commandBox.computeMargin(2, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+        //Default Font size
+        font = new Font("Monospace regular", 25);
+        text.setFont(font);
+        expectedMargin = commandBox.computeMargin(3, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+        //Large Font size
+        font = new Font("Monospace regular", 32);
+        text.setFont(font);
+        expectedMargin = commandBox.computeMargin(4, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+        //XLarge Font size
+        font = new Font("Monospace regular", 40);
+        text.setFont(font);
+        expectedMargin = commandBox.computeMargin(5, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+    }
+
+    @Test
+    public void getTagIndexListTest() {
+        String textInput = "l/Victor l/Jack";
+        ArrayList<Integer> expectedList = new ArrayList<Integer>();
+        expectedList.add(0); // the first index for l/ is 0
+        expectedList.add(9); // the second index for l/ is 9
+        assertEquals(commandBox.getTagIndexList(textInput), expectedList);
+    }
+
     @Test
     public void configActiveKeywordTest() {
         String commandKeyword = "list";

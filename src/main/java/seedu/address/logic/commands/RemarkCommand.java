@@ -4,8 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.ListingUnit.MODULE;
 
 import java.util.List;
+import java.util.logging.Logger;
 
+import seedu.address.MainApp;
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.RemarkChangedEvent;
@@ -40,6 +43,8 @@ public class RemarkCommand extends UndoableCommand {
     public static final String MESSAGE_REMARK_MODULE_SUCCESS = "Remarked Module: %1$s";
     public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Deleted Remark: %1$s";
     public static final String MESSAGE_WRONG_LISTING_UNIT_FAILURE = "You can only remark a module";
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+
 
     private final String remarkContent;
     private final Index index;
@@ -95,7 +100,9 @@ public class RemarkCommand extends UndoableCommand {
         if (ListingUnit.getCurrentListingUnit().equals(MODULE)) {
             try {
                 model.deleteRemark(remarkToDelete);
+                logger.info("---[Remark deleting success]Deleted remark:" + remarkToDelete);
             } catch (RemarkNotFoundException e) {
+                logger.info("---[Remark deleting failure]The remark to delete does not exist: " + remarkContent);
                 throw new CommandException(e.getMessage());
             }
             EventsCenter.getInstance().post(new RemarkChangedEvent());
@@ -121,9 +128,12 @@ public class RemarkCommand extends UndoableCommand {
             try {
                 Remark remark = new Remark(remarkContent, moduleToRemark.getCode());
                 model.addRemark(remark);
+                logger.info("---[Remark success]Added Remark: " + remark);
             } catch (DuplicateRemarkException e) {
+                logger.info("---[Remark failure]Duplicate Remark: " + remarkContent);
                 throw new CommandException(e.getMessage());
             } catch (IllegalValueException e) {
+                logger.info("---[Remark failure]Invalid Remark" + remarkContent);
                 throw new CommandException(e.getMessage());
             }
             EventsCenter.getInstance().post(new RemarkChangedEvent());

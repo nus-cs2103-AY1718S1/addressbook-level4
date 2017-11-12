@@ -165,7 +165,7 @@ public interface Model {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with ModU: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
         filteredLessons = new FilteredList<>(this.addressBook.getLessonList());
@@ -185,6 +185,60 @@ public interface Model {
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public ReadOnlyAddressBook getAddressBook() {
+        return addressBook;
+    }
+
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    private void indicateAddressBookChanged() {
+        raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    @Override
+    public synchronized void deleteLesson(ReadOnlyLesson target) throws LessonNotFoundException {
+        addressBook.removeLesson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteLessonSet(List<ReadOnlyLesson> lessonList) throws LessonNotFoundException {
+
+        for (ReadOnlyLesson lesson : lessonList) {
+            addressBook.removeLesson(lesson);
+        }
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
+        addressBook.addLesson(lesson);
+        indicateAddressBookChanged();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
+            throws DuplicateLessonException, LessonNotFoundException {
+        requireAllNonNull(target, editedLesson);
+        addressBook.updateLesson(target, editedLesson);
+        indicateAddressBookChanged();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyModule} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyLesson> getFilteredLessonList() {
+        return FXCollections.unmodifiableObservableList(filteredLessons);
     }
 
     @Override
@@ -277,10 +331,7 @@ public class ClassType {
      * Returns true if a given string is a valid lesson class type.
      */
     public static boolean isValidClassType(String test) {
-        if (test.matches(CLASSTYPE_VALIDATION_REGEX) && containKeyword(test)) {
-            return true;
-        }
-        return false;
+        return test.matches(CLASSTYPE_VALIDATION_REGEX) && containKeyword(test);
     }
 
     private static boolean containKeyword(String test) {
@@ -1281,6 +1332,19 @@ public class CombinePanel extends UiPart<Region> {
 
 
     /**
+     * Check for timetable grid.
+     */
+    public boolean isOccupy(int row, int col, int span) {
+        for (int i = 0; i < span; i++) {
+            if (gridDataCheckTable[row][col + i] == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
      * Generate timetable grid.
      */
     public void generateTimeTableGrid() {
@@ -1316,9 +1380,9 @@ public class CombinePanel extends UiPart<Region> {
     }
 
 
-    private int getWeekDay(String text) {
-        text = text.toUpperCase();
-        switch (text) {
+    private int getWeekDay(String textInput) {
+        textInput = textInput.toUpperCase();
+        switch (textInput) {
         case "MON":
             return 0;
         case "TUE":
@@ -1670,6 +1734,7 @@ public class CombinePanel extends UiPart<Region> {
             break;
         default:
             tagLabel.getStyleClass().add("keyword-label-default");
+            break;
         }
 
         stackPane.getChildren().add(tagLabel);
