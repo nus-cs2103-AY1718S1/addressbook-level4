@@ -173,7 +173,7 @@ public class RemoveTagCommandTest {
     @Test
     public void execute_removeTagInvalidIndex() throws IllegalValueException {
         //addressbook does not have specified Index.
-        assertCommandFailure(prepareCommand(10,"prospective"), model,
+        assertCommandFailure(prepareCommand(10, "prospective"), model,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
@@ -288,13 +288,11 @@ public class SortCommandTest {
         String tag = "foo";
         RemoveTagCommand command = (RemoveTagCommand) parser.parseCommand(
                 RemoveTagCommand.COMMAND_WORD + " " + "all" + " " + tag);
-        assertTrue(command instanceof RemoveTagCommand);
         assertEquals(new RemoveTagCommand(new Tag(tag)), command);
 
 
         RemoveTagCommand command2 = (RemoveTagCommand) parser.parseCommand(
                 RemoveTagCommand.COMMAND_WORD + " " + "5" + " " + tag);
-        assertTrue(command2 instanceof RemoveTagCommand);
         assertEquals(new RemoveTagCommand(Index.fromOneBased(5), new Tag(tag)), command2);
     }
 
@@ -302,21 +300,21 @@ public class SortCommandTest {
     public void parseCommand_sort() throws Exception {
         SortCommand command = (SortCommand) parser.parseCommand(
                 SortCommand.COMMAND_WORD + " " + "name asc");
-        assertTrue(command instanceof SortCommand);
+        assertEquals(new SortCommand(ReadOnlyPerson.NAMESORTASC), command);
     }
 
     @Test
     public void parseCommand_export() throws Exception {
         ExportCommand command = (ExportCommand) parser.parseCommand(
                 ExportCommand.COMMAND_WORD + " " + "output.vcf");
-        assertTrue(command instanceof ExportCommand);
+        assertEquals(new ExportCommand("output.vcf"), command);
     }
 
     @Test
     public void parseCommand_import() throws Exception {
         ImportCommand command = (ImportCommand) parser.parseCommand(ImportCommand.COMMAND_WORD + " "
                         + ImportCommandParserTest.TEST_FILE_DIRECTORY + "ValidTypicalAddressBook.xml");
-        assertTrue(command instanceof  ImportCommand);
+        assertEquals(new ImportCommand(getTypicalAddressBook().getPersonList()), command);
     }
 ```
 ###### \java\seedu\address\logic\parser\ExportCommandParserTest.java
@@ -410,6 +408,10 @@ public class ImportCommandParserTest {
     public void parse_validArgs_success() {
         //Valid xml file with data of getTypicalAddressBook.
         assertParseSuccess(parser, TEST_FILE_DIRECTORY + "ValidTypicalAddressBook.xml",
+                new ImportCommand(getTypicalAddressBook().getPersonList()));
+
+        //Valid vcf file with data of getTypicalAddressBook.
+        assertParseSuccess(parser, TEST_FILE_DIRECTORY + "ValidTypicalAddressBook.vcf",
                 new ImportCommand(getTypicalAddressBook().getPersonList()));
     }
 }

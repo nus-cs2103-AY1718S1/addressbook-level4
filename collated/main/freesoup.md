@@ -286,41 +286,74 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     @Override
     public ImportCommand parse(String userInput) throws ParseException {
         File file;
+
         if (userInput.trim().isEmpty()) {
-            FileWrapper fw = new FileWrapper();
-            EventsCenter.getInstance().post(new ImportFileChooseEvent(fw));
-            file = fw.getFile();
-            if (file == null) {
-                throw new ParseException(ImportCommand.MESSAGE_IMPORT_CANCELLED);
-            }
+            file = getFileFromImportWindow();
         } else {
             file = new File(userInput.trim());
         }
+
         if (file.getName().endsWith(ImportCommand.XML_EXTENSION)) {
-            try {
-                ReadOnlyAddressBook importingBook = XmlFileStorage.loadDataFromSaveFile(file);
-                List<ReadOnlyPerson> importList = importingBook.getPersonList();
-
-                return new ImportCommand(importList);
-            } catch (DataConversionException dce) {
-                throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
-            } catch (FileNotFoundException fnfe) {
-                throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
-            }
-
+            return importByXml(file);
         } else if (file.getName().endsWith(ImportCommand.VCF_EXTENSION)) {
-            try {
-                List<ReadOnlyPerson> importList = VcfImport.getPersonList(file);
-                return new ImportCommand(importList);
-            } catch (IllegalValueException ive) {
-                throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
-            } catch (IOException ioe) {
-                throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
-            }
-
+            return importByVcf(file);
         } else {
             throw new ParseException(ImportCommand.MESSAGE_WRONG_FORMAT);
         }
+    }
+
+    /**
+     * Creates an ImportCommand with the list of contacts given in the vcf file.
+     * @param file of .vcf file format containing list of contacts.
+     * @return ImportCommand that contains the list of contact given in the vcf file
+     * @throws ParseException if filepath given is not found or if file is corrupted.
+     */
+    private ImportCommand importByVcf(File file) throws ParseException {
+        try {
+            List<ReadOnlyPerson> importList = VcfImport.getPersonList(file);
+
+            return new ImportCommand(importList);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
+        } catch (IOException ioe) {
+            throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
+        }
+    }
+
+    /**
+     * Creates an ImportCommand with the list of contacts given in the xml file.
+     * @param file of .xml file format containing list of contacts.
+     * @return ImportCommand that contains the list of contact given in the xml file
+     * @throws ParseException if filepath given is not found or if file is corrupted.
+     */
+    private ImportCommand importByXml(File file) throws ParseException {
+        try {
+            ReadOnlyAddressBook importingBook = XmlFileStorage.loadDataFromSaveFile(file);
+            List<ReadOnlyPerson> importList = importingBook.getPersonList();
+
+            return new ImportCommand(importList);
+        } catch (DataConversionException dce) {
+            throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
+        } catch (FileNotFoundException fnfe) {
+            throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
+        }
+    }
+
+    /**
+     * Raises an event to open a File Explorer and returns the file to be imported
+     * @return File containing contacts to be created
+     * @throws ParseException if File Explorer was closed before a file has been selected
+     */
+    private File getFileFromImportWindow() throws ParseException {
+        File file;
+        FileWrapper fw = new FileWrapper();
+
+        EventsCenter.getInstance().post(new ImportFileChooseEvent(fw));
+        file = fw.getFile();
+        if (file == null) {
+            throw new ParseException(ImportCommand.MESSAGE_IMPORT_CANCELLED);
+        }
+        return file;
     }
 }
 ```
@@ -534,8 +567,7 @@ public class VcfExport {
         logger.fine("Attempting to write to data file: " + file.getPath());
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
-        for (int i = 0; i < list.size(); i++) {
-            ReadOnlyPerson person = list.get(i);
+        for (ReadOnlyPerson person : list) {
             Set<Tag> tagList = person.getTags();
             bw.write("BEGIN:VCARD\n");
             bw.write("VERSON:2.1\n");
@@ -543,17 +575,23 @@ public class VcfExport {
             bw.write("EMAIL:" + person.getEmail() + "\n");
             bw.write("TEL:" + person.getPhone() + "\n");
             bw.write("ADR:" + person.getAddress() + "\n");
+
             if (!person.getRemark().isEmpty()) {
-                bw.write("RM:" + person.getRemark() + "\n");
+                bw.write("NOTE:" + person.getRemark() + "\n");
             }
-            for (Tag tag : tagList) {
-                bw.write("TAG:" + tag.getTagName() + "\n");
+
+            if (!tagList.isEmpty()) {
+                bw.write("CATEGORIES:");
+                for (Tag tag : tagList) {
+                    bw.write(tag.getTagName());
+                }
+                bw.write("\n");
             }
+
             bw.write("END:VCARD\n");
         }
         bw.close();
     }
-
 }
 ```
 ###### \java\seedu\address\storage\VcfImport.java
@@ -600,12 +638,13 @@ public class VcfImport {
                     case "ADR":
                         address = new Address(parameter);
                         break;
-                    case "RM":
+
+                    case "NOTE":
                         remark = new Remark(parameter);
                         break;
-                    case "TAG":
-                        Tag tag = new Tag(parameter);
-                        tagList.add(tag);
+
+                    case "CATEGORIES":
+                        tagList = parseTag(parameter);
                         break;
                     default:
                     }
@@ -620,6 +659,22 @@ public class VcfImport {
         }
         br.close();
         return importList;
+    }
+
+    /**
+     * Parses the parameters CATEGORIES field of the vCard into a Set of Tag Objects
+     * @param list String of tags to be imported.
+     * @throws IllegalValueException if tag does not conform to the requirements.
+     */
+    private static Set<Tag> parseTag(String list) throws IllegalValueException {
+        Set<Tag> tagSet = new HashSet<>();
+        String[] tagList = list.split(",");
+
+        for (String tag : tagList) {
+            tagSet.add(new Tag(tag));
+        }
+
+        return tagSet;
     }
 }
 ```
