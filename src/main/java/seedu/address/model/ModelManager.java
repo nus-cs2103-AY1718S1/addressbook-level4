@@ -194,10 +194,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized boolean checkAccount(ReadOnlyAccount account) {
-        for (ReadOnlyAccount tempAccount : database.getAccountList()){
-            if (tempAccount.getUsername().fullName.equals(account.getUsername().fullName) &&
-                    tempAccount.getPassword().value.equals(account.getPassword().value)) {
-            return true;
+        for (ReadOnlyAccount tempAccount : database.getAccountList()) {
+            if (tempAccount.getUsername().fullName.equals(account.getUsername().fullName)
+                    && tempAccount.getPassword().value.equals(account.getPassword().value)) {
+                return true;
             }
         }
 
