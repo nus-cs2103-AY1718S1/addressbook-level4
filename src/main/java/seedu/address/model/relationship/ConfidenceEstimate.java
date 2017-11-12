@@ -36,8 +36,12 @@ public class ConfidenceEstimate {
         this.value = Double.parseDouble(trimmedEstimate);
     }
 
-    public ConfidenceEstimate(double estimate) {
-        value = estimate;
+    public ConfidenceEstimate(double estimate) throws IllegalValueException {
+        if (estimate >= 0 && estimate <= 100) {
+            value = estimate;
+        } else {
+            throw new IllegalValueException(MESSAGE_CONFIDENCE_ESTIMATE_CONSTRAINTS);
+        }
     }
 
     /**
