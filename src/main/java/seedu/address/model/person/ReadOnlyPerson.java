@@ -74,7 +74,7 @@ public interface ReadOnlyPerson {
                 .append(" Address: ")
                 .append(getAddress())
                 .append(" Comments: ")
-                .append(getAddress())
+                .append(getComment())
                 .append(" Appointments: ")
                 .append(getAppoint())
                 .append(" Tags: ");
