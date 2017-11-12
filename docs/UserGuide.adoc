@@ -86,7 +86,8 @@ Format: `login USERNAME PASSWORD`
 It is advisable to use the GUI login instead of the CLI login. +
 The current implementation for password masking in the CLI login is less sophisticated than the GUI login.
 This can lead to unexpected or incorrect behaviors such as inconsistent masking of password or being unable to log in when username and password are entered correctly. +
-The CLI login is option is available for convenience only.
+To reduce unexpected behaviors, users are advised to add or delete characters from the end of the command only. +
+*The CLI login option is available for convenience only.*
 
 Examples:
 
@@ -109,6 +110,8 @@ Format: `login`
 1) Type `login` and press kbd:[Enter] in the command box. You should see the same welcome page as shown in Figure 1.3. +
 2) Enter username and password in the respective fields. +
 3) Press kbd:[Enter] or click the `Log in` button. +
+
+To return to the command box, click the `Back to command box` button.
 
 image::loginView.PNG[width="790"]
 _Figure 1.3 : How the welcome screen looks like after `login` is entered in the command box_
@@ -182,6 +185,7 @@ Format: `edit [INDEX] [n/NAME] [hp/HANDPHONE_NUMBER] [home/HOME_PHONE_NUMBER] [o
 * At least one of the optional fields, other than `INDEX`, must be provided.
 * Existing values will be updated to the input values.
 * The date of debt borrowed cannot be edited.
+* The total debt cannot be set to zero.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
@@ -220,13 +224,14 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 // tag::borrow[]
 === Increasing the debt of a debtor: `borrow`
 
-Increase the debt of a debtor by the amount entered. +
+Increases the debt of a debtor by the amount entered. +
 Format: `borrow [INDEX] AMOUNT`
 
 ****
-* Increases the debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* If no index is specified, the debt of the currently selected person is increased instead.
+* Increases the debt and total debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the debt of the currently selected person is updated instead.
 * `AMOUNT` has to be in dollars and cents. For example: `500.50` which represents $500.50.
+* This command also sets the date repaid to `NOT REPAID` if the person previously fully repaid his/her debts.
 ****
 
 Examples:
@@ -244,14 +249,15 @@ Increases the debt of the 2nd person by $234.
 // tag::payback[]
 === Decreasing the debt of a person: `payback`
 
-Decrease the debt of a person by the amount entered. +
+Decreases the debt of a person by the amount entered. +
 Format: `payback [INDEX] AMOUNT`
 
 ****
 * Decreases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* If no index is specified, the debt of the currently selected person is decreased instead.
-* `AMOUNT` has to be in dollars and cents. For example: `600` which represents $600.
-* `AMOUNT` repaid cannot be more than the debt owed by the person at the specifiec `INDEX`
+* If no index is specified, the debt of the currently selected person is updated instead.
+* `AMOUNT` has to be in dollars and cents. For example: `600.15` which represents $600.15.
+* `AMOUNT` repaid cannot be more than the debt owed by the person at the specifiec `INDEX`.
+* If a person fully repays his/her debts, the date repaid will be set to the day that this command was entered. Also, the person will be listed in the whitelist.
 ****
 
 Examples:
@@ -443,11 +449,11 @@ Sorts the contacts in the address book by their postal districts.
 // tag::filter[]
 === Filter contacts by tags : `filter`
 
-Filter contacts in the address book according to the tags specified. +
+Filters contacts in the address book according to the tags specified. +
 Format: `filter TAG1 TAG2 ...`
 
 ****
-* Contacts which contain at least one of the tags specified will be shown in the list.
+* Contacts which contain *at least one* of the tags specified will be shown in the list.
 ** e.g. A person in the address book, Alex, has two tags: `friendly` and `cooperative`. When the command `filter friendly` is entered, Alex will be shown in the filtered list.
 ****
 
@@ -660,9 +666,10 @@ transferred to whitelist and date repaid is set to the date the command is execu
 * *Login* : `login USERNAME PASSWORD` +
 e.g. `login userAcc_123 pa$$_Word!@#&`
 * *Login using GUI* : `login` +
-e.g.
+e.g. See Figure 1.3:
 
-image::loginView.png[width="790"]
+image::loginView.PNG[width="790"]
+_Figure 1.3 : How the welcome screen looks like after `login` is entered in the command box_
 
 * *Logout* : `logout`
 * *Add* : `add n/NAME hp/HANDPHONE_NUMBER home/HOME_PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE d/DEBT [op/OFFICE_PHONE_NUMBER] [dl/DEADLINE] [int/INTEREST] [t/TAG]...` +
