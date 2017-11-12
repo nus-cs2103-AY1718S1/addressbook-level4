@@ -228,8 +228,11 @@ public class FindDetailDescriptorTest {
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.After;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
@@ -240,11 +243,34 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.security.SecurityManager;
 import seedu.address.security.SecurityStubUtil;
 
 public class LockCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void equals() {
+        LockCommand firstCommand = new LockCommand("first");
+        LockCommand secondCommand = new LockCommand("second");
+
+        // same object -> returns true
+        assertTrue(firstCommand.equals(firstCommand));
+
+        // same values -> returns true
+        LockCommand firstCopy = new LockCommand("first");
+        assertTrue(firstCommand.equals(firstCopy));
+
+        // different types -> returns false
+        assertFalse(firstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(firstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstCommand.equals(secondCommand));
+    }
 
     @Test
     public void test_execute_whenUnSecured() throws ParseException, CommandException {
@@ -263,8 +289,8 @@ public class LockCommandTest {
     }
 
     @Test
-    public void test_execute_whenIoexception() throws ParseException, CommandException {
-        new SecurityStubUtil().initialSecurityWithIoexception(false);
+    public void test_execute_whenIoException() throws ParseException, CommandException {
+        new SecurityStubUtil().initialSecurityWithIoException(false);
 
         LockCommand command = prepareCommand("1234");
         assertCommandSuccess(command, LockCommand.MESSAGE_ERROR_STORAGE_ERROR);
@@ -276,6 +302,11 @@ public class LockCommandTest {
 
         LockCommand command = prepareCommand("1234");
         assertCommandSuccess(command, LockCommand.MESSAGE_ERROR_LOCK_PASSWORD);
+    }
+
+    @After
+    public void after() {
+        SecurityManager.setInstance(null);
     }
 
     /**
@@ -558,6 +589,18 @@ public class TodoCommandTest {
         }
     }
 
+    @Test
+    public void execute_invalidDeleteIndex_throwsException() {
+        try {
+            Index index = Index.fromOneBased(2);
+            Index itemIndex = Index.fromOneBased(2);
+            prepareCommand(TodoCommand.PREFIX_TODO_DELETE_ONE, index, null, itemIndex).execute();
+            Assert.fail("Execute without throwing exception");
+        } catch (CommandException e) {
+            Assert.assertEquals(e.getMessage(), TodoCommand.MESSAGE_INVALID_TODOITEM_INDEX);
+        }
+    }
+
     /**
      * Returns an {@code TodoCommand} with parameters
      */
@@ -575,8 +618,11 @@ public class TodoCommandTest {
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.After;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
@@ -587,10 +633,33 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.security.SecurityManager;
 import seedu.address.security.SecurityStubUtil;
 
 public class UnlockCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void equals() {
+        UnlockCommand firstCommand = new UnlockCommand("first");
+        UnlockCommand secondCommand = new UnlockCommand("second");
+
+        // same object -> returns true
+        assertTrue(firstCommand.equals(firstCommand));
+
+        // same values -> returns true
+        UnlockCommand firstCopy = new UnlockCommand("first");
+        assertTrue(firstCommand.equals(firstCopy));
+
+        // different types -> returns false
+        assertFalse(firstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(firstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstCommand.equals(secondCommand));
+    }
 
     @Test
     public void test_execute_whenSecured() throws ParseException, CommandException {
@@ -610,7 +679,7 @@ public class UnlockCommandTest {
 
     @Test
     public void test_execute_whenIoexception() throws ParseException, CommandException {
-        new SecurityStubUtil().initialSecurityWithIoexception(true);
+        new SecurityStubUtil().initialSecurityWithIoException(true);
 
         UnlockCommand command = prepareCommand("1234");
         assertCommandSuccess(command, UnlockCommand.MESSAGE_ERROR_STORAGE_ERROR);
@@ -622,6 +691,11 @@ public class UnlockCommandTest {
 
         UnlockCommand command = prepareCommand("1234");
         assertCommandSuccess(command, UnlockCommand.MESSAGE_ERROR_LOCK_PASSWORD);
+    }
+
+    @After
+    public void after() {
+        SecurityManager.setInstance(null);
     }
 
     /**
@@ -661,33 +735,6 @@ public class UnlockCommandTest {
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
-    public void parseCommand_add_alias() throws Exception {
-        Person person = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddAliasCommand(person));
-        assertEquals(new AddCommand(person), command);
-    }
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_clear_alias() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
-    }
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_delete_alias() throws Exception {
-        DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
-    }
-
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
     public void parseCommand_lock() throws Exception {
         String password = "typicalPassword";
         LockCommand command = (LockCommand) parser.parseCommand(
@@ -702,75 +749,18 @@ public class UnlockCommandTest {
                 UnlockCommand.COMMAND_WORD + " " + password);
         assertEquals(new UnlockCommand(password), command);
     }
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_edit_alias() throws Exception {
-        Person person = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
-        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_ALIAS + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
-    }
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_find_alias() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
-    }
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_history_alias() throws Exception {
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS) instanceof HistoryCommand);
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS + " 3") instanceof HistoryCommand);
 
-        try {
-            parser.parseCommand("histories");
-            fail("The expected ParseException was not thrown.");
-        } catch (ParseException pe) {
-            assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
-        }
-    }
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
     @Test
-    public void parseCommand_list_alias() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
+    public void parseCommand_todo() throws Exception {
+        TodoCommand command = (TodoCommand) parser.parseCommand(TodoCommand.COMMAND_WORD);
+        assertEquals(new TodoCommand(TodoCommand.PREFIX_TODO_LIST_ALL, null, null, null), command);
     }
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
+
     @Test
-    public void parseCommand_select_alias() throws Exception {
-        SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_ALIAS + " " + SelectCommand.PREFIX_SELECT_SEARCH_ADDRESS
-                        + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON, BrowserSearchMode.GOOGLE_SEARCH_ADDRESS), command);
-    }
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_redoCommandAlias_returnsRedoCommand() throws Exception {
-        assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS) instanceof RedoCommand);
-        assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
-    }
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_undoCommandAlias_returnsUndoCommand() throws Exception {
-        assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);
-        assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
+    public void parseCommand_switch() throws Exception {
+        String mode = "1";
+        SwitchCommand command = (SwitchCommand) parser.parseCommand(SwitchCommand.COMMAND_WORD + " " + mode);
+        assertEquals(new SwitchCommand(mode), command);
     }
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
@@ -796,6 +786,11 @@ public class UnlockCommandTest {
         } catch (ParseException e) {
             assertEquals(e.getMessage(), MESSAGE_IS_ENCRYPTD);
         }
+    }
+
+    @After
+    public void after() {
+        SecurityManager.setInstance(null);
     }
 ```
 ###### \java\seedu\address\logic\parser\FindCommandParserTest.java
@@ -1833,14 +1828,16 @@ public class TimeConvertUtilTest {
 ``` java
 package seedu.address.security;
 
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 import java.util.Optional;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.EncryptOrDecryptException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -1855,8 +1852,10 @@ public class SecurityManagerTest {
     public void test_equalInstance() {
         Security instance1 = SecurityManager.getInstance(storage);
         Security instance2 = SecurityManager.getInstance();
-        Security instance3 = SecurityManager.getInstance(instance1);
-        Security instance4 = SecurityManager.getInstance(instance2);
+        SecurityManager.setInstance(instance1);
+        Security instance3 = SecurityManager.getInstance();
+        SecurityManager.setInstance(instance2);
+        Security instance4 = SecurityManager.getInstance();
 
         Assert.assertTrue(instance1 == instance2);
         Assert.assertTrue(instance2 == instance3);
@@ -1876,12 +1875,6 @@ public class SecurityManagerTest {
     }
 
     @Test
-    public void test_raise() {
-        Security security = SecurityManager.getInstance(storage);
-        security.raise(new NewResultAvailableEvent("new result"));
-    }
-
-    @Test
     public void test_isSecured() {
         Security security = SecurityManager.getInstance(storage);
         Assert.assertFalse(security.isSecured());
@@ -1894,69 +1887,89 @@ public class SecurityManagerTest {
     }
 
     @Test
-    public void test_encryptAddressBook() throws IOException, EncryptOrDecryptException {
-        Security security = SecurityManager.getInstance(storage);
-        security.encryptAddressBook("");
+    public void test_encryptAddressBook() {
+        try {
+            Security security = SecurityManager.getInstance(storage);
+            security.encryptAddressBook("");
+        } catch (IOException | EncryptOrDecryptException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw exception.");
+        }
     }
 
     @Test
-    public void test_decryptAddressBook() throws IOException, EncryptOrDecryptException {
-        Security security = SecurityManager.getInstance(storage);
-        security.decryptAddressBook("");
+    public void test_decryptAddressBook() {
+        try {
+            Security security = SecurityManager.getInstance(storage);
+            security.decryptAddressBook("");
+        } catch (IOException | EncryptOrDecryptException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw exception.");
+        }
+    }
+
+    @After
+    public void after() {
+        SecurityManager.setInstance(null);
     }
 
     private class StorageStub implements Storage {
 
         @Override
         public String getUserPrefsFilePath() {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public void saveUserPrefs(UserPrefs userPrefs) throws IOException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public String getAddressBookFilePath() {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public Optional<ReadOnlyAddressBook> readAddressBook() throws
                 DataConversionException, IOException {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public Optional<ReadOnlyAddressBook> readAddressBook(String filePath)
                 throws DataConversionException, IOException {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
-
+            fail("This method should not be called.");
         }
 
         @Override
@@ -1967,13 +1980,13 @@ public class SecurityManagerTest {
         @Override
         public void encryptAddressBook(String password)
                 throws IOException, EncryptOrDecryptException {
-
+            // simulate the execution
         }
 
         @Override
         public void decryptAddressBook(String password)
                 throws IOException, EncryptOrDecryptException {
-
+            // simulate the execution
         }
     }
 }
@@ -1982,8 +1995,11 @@ public class SecurityManagerTest {
 ``` java
 package seedu.address.security;
 
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.exceptions.EncryptOrDecryptException;
 
@@ -2006,6 +2022,7 @@ public class SecurityStubUtil {
 
         @Override
         public void configSecurity(String... permittedCommands) {
+            fail("This method should not be called.");
         }
 
         @Override
@@ -2015,6 +2032,7 @@ public class SecurityStubUtil {
 
         @Override
         public void raise(BaseEvent event) {
+            EventsCenter.getInstance().post(event);
         }
 
         @Override
@@ -2029,20 +2047,22 @@ public class SecurityStubUtil {
 
         @Override
         public void encryptAddressBook(String password) throws IOException, EncryptOrDecryptException {
+            // simulate the execution
         }
 
         @Override
         public void decryptAddressBook(String password) throws IOException, EncryptOrDecryptException {
+            // simulate the execution
         }
     }
 
     /**
      * Represents a SecurityManager which indicates that the address book is secured.
      */
-    private class SecurityStubIoexception extends BaseSecurityStub {
+    private class SecurityStubIoException extends BaseSecurityStub {
 
 
-        public SecurityStubIoexception(boolean isSecured) {
+        public SecurityStubIoException(boolean isSecured) {
             super(isSecured);
         }
 
@@ -2079,19 +2099,19 @@ public class SecurityStubUtil {
     }
 
     public void initialUnSecuredSecurity() {
-        SecurityManager.getInstance(new BaseSecurityStub(false));
+        SecurityManager.setInstance(new BaseSecurityStub(false));
     }
 
     public void initialSecuredSecurity() {
-        SecurityManager.getInstance(new BaseSecurityStub(true));
+        SecurityManager.setInstance(new BaseSecurityStub(true));
     }
 
-    public void initialSecurityWithIoexception(boolean isSecured) {
-        SecurityManager.getInstance(new SecurityStubIoexception(isSecured));
+    public void initialSecurityWithIoException(boolean isSecured) {
+        SecurityManager.setInstance(new SecurityStubIoException(isSecured));
     }
 
     public void initialSecurityWithEncryptOrDecryptException(boolean isSecured) {
-        SecurityManager.getInstance(new SecurityStubEncryptOrDecryptException(isSecured));
+        SecurityManager.setInstance(new SecurityStubEncryptOrDecryptException(isSecured));
     }
 }
 ```
@@ -2141,20 +2161,25 @@ public class SecurityUtilTest {
     }
 
     @Test
-    public void test_encrypt_noException() throws Exception {
-        String password = "tempPassword";
+    public void test_encrypt_noException() {
+        try {
+            String password = "tempPassword";
 
-        // encrypt normal file
-        write_tempXmlFile("a normal file");
-        SecurityUtil.encrypt(file, password);
+            // encrypt normal file
+            write_tempXmlFile("a normal file");
+            SecurityUtil.encrypt(file, password);
 
-        // encrypt a xml file
-        write_tempXmlFile(SecurityUtil.XML_STARTER + "<addressbook></addressbook>");
-        SecurityUtil.encrypt(file, password);
+            // encrypt a xml file
+            write_tempXmlFile(SecurityUtil.XML_STARTER + "<addressbook></addressbook>");
+            SecurityUtil.encrypt(file, password);
 
-        // encrypt file without content
-        write_tempXmlFile("");
-        SecurityUtil.encrypt(file, password);
+            // encrypt file without content
+            write_tempXmlFile("");
+            SecurityUtil.encrypt(file, password);
+        } catch (IOException | EncryptOrDecryptException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw exception.");
+        }
     }
 
     @Test
@@ -2456,12 +2481,12 @@ public class TodoItemUtil {
     // Persons with TodoItems fields
     public static final ReadOnlyPerson BILL = new PersonBuilder().withName("Bill")
             .withAddress("PGPR B1").withEmail("bill@example.com")
-            .withPhone("12345678").withTags("friends")
+            .withPhone("12345678").withTags("classmates", "friends")
             .withTodoItem(getTodoItemOne())
             .build();
     public static final ReadOnlyPerson CAT = new PersonBuilder().withName("Cat")
             .withAddress("PGPR B2").withEmail("cat@example.com")
-            .withPhone("23456789").withTags("friends")
+            .withPhone("23456789").withTags("classmates", "friends")
             .withTodoItem(getTodoItemTwo())
             .build();
     public static final ReadOnlyPerson DARWIN = new PersonBuilder().withName("Drawin")
@@ -2469,7 +2494,6 @@ public class TodoItemUtil {
             .withPhone("34567890").withTags("friends")
             .withTodoItem(getTodoItemOne(), getTodoItemTwo())
             .build();
-
 ```
 ###### \java\seedu\address\testutil\TypicalPersons.java
 ``` java
@@ -2687,4 +2711,136 @@ public class TodoPanelTest extends GuiUnitTest {
         }
     }
 }
+```
+###### \java\systemtests\FindCommandSystemTest.java
+``` java
+    @Test
+    public void findByDetail() {
+        /* Case: find multiple persons in address book by name detail, command with leading spaces and trailing spaces
+         * -> 2 persons found
+         */
+        String command = "   " + FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL
+                + "  " + PREFIX_NAME + KEYWORD_MATCHING_MEIER + "   ";
+        Model expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first names of Benson and Daniel are "Meier"
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons in address book by name detail, name is not complete
+         * -> 3 persons found
+         */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_NAME + "me";
+        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL, ELLE); // Benson Meier, Daniel Meier, Elle Meyer
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person in address book, name is not exist -> 0 person found  */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_NAME + "abc";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find phone number -> 1 person found  */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_PHONE + "85355255";
+        ModelHelper.setFilteredList(expectedModel, ALICE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find phone number in address book, but phone is not complete -> 2 persons found */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_PHONE + "87";
+        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find phone number in address book, phone is not exist -> 0 person found */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_PHONE + "00000000";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find email -> 1 person found  */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_EMAIL + "alice";
+        ModelHelper.setFilteredList(expectedModel, ALICE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find email in address book, but email is not complete -> 2 persons found */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_EMAIL + "n";
+        ModelHelper.setFilteredList(expectedModel, BENSON, CARL, DANIEL, ELLE, GEORGE, DARWIN);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find email in address book, email is not exist -> 0 person found */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL
+                + " " + PREFIX_EMAIL + "@outlook.com";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find address -> 1 person found  */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL
+                + " " + PREFIX_ADDRESS + "wall street";
+        ModelHelper.setFilteredList(expectedModel, CARL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find address in address book, but address is not complete -> 3 persons found */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_ADDRESS + "pgpr";
+        ModelHelper.setFilteredList(expectedModel, BILL, CAT, DARWIN);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find address in address book, address is not exist -> 0 person found */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL
+                + " " + PREFIX_ADDRESS + "Singapore";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tag -> 1 person found  */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_TAG + "owesMoney";
+        ModelHelper.setFilteredList(expectedModel, BENSON);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tag in address book, but tag is not complete -> 5 persons found */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_TAG + "class";
+        ModelHelper.setFilteredList(expectedModel, BILL, CAT);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tag in address book, tag is not exist -> 0 person found */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_TAG + "Singapore";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: undo previous find command -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo previous find command -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+    }
+
+    @Test
+    public void findFuzzySearch() {
+        /* Case: find multiple persons in address book by fuzzy search, command with leading spaces and trailing spaces
+         * -> 3 persons found
+         */
+        String command = "   " + FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_FUZZY_FIND + "   me";
+        Model expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL, ELLE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons in address book -> all persons found */
+        command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_FUZZY_FIND + "@example";
+        ModelHelper.setFilteredList(expectedModel, getTypicalPersons());
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+    }
 ```
