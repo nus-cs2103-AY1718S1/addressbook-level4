@@ -43,18 +43,22 @@ public class UnhideCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToHide = lastShownList.get(targetIndex.getZeroBased());
+
+        ReadOnlyPerson personToUnhide = lastShownList.get(targetIndex.getZeroBased());
+
+        if (!personToUnhide.isPrivate()) {
+            throw new CommandException(Messages.MESSAGE_PERSON_ALREADY_UNHIDDEN);
+        }
 
         try {
-            model.unhidePerson(personToHide);
+            model.unhidePerson(personToUnhide);
             model.updateFilteredPersonList(predicate);
             model.updateFilteredPersonList(Model.PREDICATE_SHOW_ONLY_HIDDEN);
-
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
 
-        return new CommandResult(String.format(MESSAGE_UNHIDE_PERSON_SUCCESS, personToHide));
+        return new CommandResult(String.format(MESSAGE_UNHIDE_PERSON_SUCCESS, personToUnhide));
     }
 
     @Override

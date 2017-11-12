@@ -47,7 +47,7 @@ public class HideCommand extends Command {
         if (personToHide.isPrivate()) {
             throw new CommandException(Messages.MESSAGE_PERSON_ALREADY_HIDDEN);
         }
-        
+
         try {
             model.hidePerson(personToHide);
             model.updateFilteredPersonList(predicate);

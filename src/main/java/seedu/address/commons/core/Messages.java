@@ -28,5 +28,6 @@ public class Messages {
     public static final String MESSAGE_PERSON_ALREADY_SELECTED = "Chirp! This person is already selected.";
     public static final String MESSAGE_PERSON_ALREADY_UNPINNED = "Chirp! This person is not pinned.";
     public static final String MESSAGE_PERSON_ALREADY_HIDDEN = "Chirp! This person is already hidden";
+    public static final String MESSAGE_PERSON_ALREADY_UNHIDDEN = "Chirp! This person is not hidden";
     public static final String MESSAGE_PERSON_BIRTHDAY_TODAY = "Chirp! Here are the birthdays for today.";
 }

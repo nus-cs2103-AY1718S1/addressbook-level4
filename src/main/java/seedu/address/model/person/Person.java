@@ -24,7 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Remark> remark;
-    private ObjectProperty<Boolean> isPrivate;
+    private boolean isPrivate;
     private ObjectProperty<Boolean> isPinned;
     private ObjectProperty<Boolean> isSelected;
 
@@ -44,7 +44,7 @@ public class Person implements ReadOnlyPerson {
         this.remark = new SimpleObjectProperty<>(remark);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.isPrivate = new SimpleObjectProperty<>(isPinned);
+        this.isPrivate = isPrivate;
         this.isPinned = new SimpleObjectProperty<>(isPinned);
         this.isSelected = new SimpleObjectProperty<>(isSelected);
     }
@@ -75,18 +75,13 @@ public class Person implements ReadOnlyPerson {
         this.phone.set(requireNonNull(phone));
     }
 
-    @Override
-    public ObjectProperty<Boolean> hideProperty() {
-        return isPrivate;
-    }
-
     public boolean isPrivate() {
-        return isPrivate.get();
+        return isPrivate;
     }
 
     //@@author wynkheng
     public boolean setPrivate(boolean isPrivate) {
-        this.isPrivate.set(isPrivate);
+        this.isPrivate = isPrivate;
         return true;
     }
     //@@author

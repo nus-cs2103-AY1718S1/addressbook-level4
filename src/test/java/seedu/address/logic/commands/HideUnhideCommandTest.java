@@ -20,11 +20,13 @@ import seedu.address.logic.commands.person.UnhideCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.NameIsPrivatePredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 public class HideUnhideCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private NameIsPrivatePredicate predicate = new NameIsPrivatePredicate(true);
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
@@ -35,15 +37,20 @@ public class HideUnhideCommandTest {
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.hidePerson(personToHide);
+        expectedModel.updateFilteredPersonList(predicate);
 
         assertCommandSuccess(hideCommand, model, expectedMessage, expectedModel);
 
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ONLY_HIDDEN);
         ReadOnlyPerson personToUnhide = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UnhideCommand unhideCommand = prepareUnhideCommand(INDEX_FIRST_PERSON);
 
-        expectedMessage = String.format(UnhideCommand.MESSAGE_UNHIDE_PERSON_SUCCESS, personToHide);
+        expectedMessage = String.format(UnhideCommand.MESSAGE_UNHIDE_PERSON_SUCCESS, personToUnhide);
 
+        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.unhidePerson(personToUnhide);
+        expectedModel.updateFilteredPersonList(predicate);
+        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ONLY_HIDDEN);
 
         assertCommandSuccess(unhideCommand, model, expectedMessage, expectedModel);
     }
@@ -79,7 +86,7 @@ public class HideUnhideCommandTest {
         model.unhidePerson(personToUnhide);
         UnhideCommand unhideCommand = prepareUnhideCommand(INDEX_FIRST_PERSON);
 
-        assertCommandFailure(unhideCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(unhideCommand, model, Messages.MESSAGE_PERSON_ALREADY_UNHIDDEN);
     }
 
     @Test
@@ -91,9 +98,10 @@ public class HideUnhideCommandTest {
 
         String expectedMessage = String.format(HideCommand.MESSAGE_HIDE_PERSON_SUCCESS, personToHide);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.pinPerson(personToHide);
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         showFirstPersonOnly(expectedModel);
+        expectedModel.hidePerson(personToHide);
+        expectedModel.updateFilteredPersonList(predicate);
 
         assertCommandSuccess(hideCommand, model, expectedMessage, expectedModel);
 
@@ -105,8 +113,11 @@ public class HideUnhideCommandTest {
         expectedMessage = String.format(UnhideCommand.MESSAGE_UNHIDE_PERSON_SUCCESS, personToUnhide);
 
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.unhidePerson(personToHide);
         showFirstPersonOnly(expectedModel);
+        expectedModel.unhidePerson(personToHide);
+        expectedModel.updateFilteredPersonList(predicate);
+        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ONLY_HIDDEN);
+
 
         assertCommandSuccess(unhideCommand, model, expectedMessage, expectedModel);
     }

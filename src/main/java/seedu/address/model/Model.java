@@ -28,7 +28,7 @@ public interface Model {
     //@@author
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_NOT_HIDDEN = person -> !person.isPrivate();
 
-    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ONLY_HIDDEN = person -> person.isPrivate();
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ONLY_HIDDEN = ReadOnlyPerson::isPrivate;
 
     Predicate<ReadOnlyTask> PREDICATE_SHOW_ALL_TASKS = unused -> true;
 
