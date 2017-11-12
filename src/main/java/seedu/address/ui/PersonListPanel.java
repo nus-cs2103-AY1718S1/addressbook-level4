@@ -15,16 +15,15 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Panel containing the list of persons.
  */
 public class PersonListPanel extends UiPart<Region> {
+    private static ObservableList<ReadOnlyPerson> personList;
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
-    private static ObservableList<ReadOnlyPerson> personList;
 
     @FXML
     private ListView<PersonCard> personListView;
