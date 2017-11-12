@@ -92,7 +92,13 @@ public class PersonCard extends UiPart<Region> {
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
+    @FXML
     private void bindListeners(ReadOnlyPerson person) {
+        phone.setId("phone");
+        address.setId("address");
+        email.setId("email");
+        birthday.setId("birthday");
+        details.setId("details");
 
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
@@ -117,16 +123,11 @@ public class PersonCard extends UiPart<Region> {
     }
 
     //@@author deep4k
-    
+
     /**
      * Sets the additional info needed for their respective {@code person } properties
      */
     private void initDetails(ReadOnlyPerson person) {
-
-        phone.setId("phone");
-        address.setId("address");
-        email.setId("email");
-        birthday.setId("birthday");
 
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
@@ -169,7 +170,6 @@ public class PersonCard extends UiPart<Region> {
         emailImage.setFitHeight(100);
         emailImage.setFitWidth(40);
 
-        details.setId("details");
         details.getChildren().add(phoneImage);
         details.getChildren().add(phone);
         details.getChildren().add(locationImage);
@@ -183,7 +183,7 @@ public class PersonCard extends UiPart<Region> {
         details.setAlignment(Pos.CENTER_LEFT);
 
     }
-    
+
     //@@author
 
     /**
