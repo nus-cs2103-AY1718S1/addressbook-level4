@@ -52,6 +52,8 @@ To add a new contact, we need to use the `add` command.
 
 ==== Add avatar to an existing person
 
+*Positive test case*
+
 To add avatar to a contact, we need to use the `avatar` command.
 
 . First, let's list all the contacts in *BoNUS* +
@@ -66,6 +68,30 @@ logo of Java from https://www.hostingireland.ie/images/java-logo.png[here] as a 
 . Add avatar to the third person in the listing (assume there are at least three contacts) +
 _Command:_ +
 `avatar 3 java-logo.png`
+
+[NOTE]
+====
+* Do not move, rename or delete the image you use as an avatar; otherwise, it will not be shown in *BoNUS*.
+* You are suggested to move the image into the home folder where you use *BoNUS*.
+* Do not be _nasty_ about the input file. If you provide an invalid file that looks like an image but is not an actual image,
+the area reserved for avatar will simply become transparent.
+====
+
+*Negative test cases*
+
+. Use an invalid index +
+_Command:_ +
+`avatar -1 java-logo.png` +
+_Result:_ +
+`Invalid command format!` +
+`Index is not a non-zero unsigned integer.`
+
+. Use a non-existing file +
+_Command:_ +
+`avatar 1 no-java.png` +
+_Result:_ +
+`Invalid command format!` +
+`The provided image path does not exist.`
 
 === Add/view/edit/delete events
 
