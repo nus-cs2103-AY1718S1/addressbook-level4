@@ -1,10 +1,7 @@
 package seedu.address.logic.commands;
 
-import javafx.concurrent.Task;
-
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Format full help instructions for every command for display.
