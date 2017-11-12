@@ -929,41 +929,25 @@ image::UG_mainheader_commandsummary.png[width="900"]
 //-
 {sp}
 
-[cols="2*^"]
+[cols="3*^"]
 |===
-| COMMAND | FORMAT
-.2+| Add | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS r/REMARK [t/TAG]...`
-         | *E.g.* `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Loves Tea t/friend t/colleague`
-.2+| Alias | `alias [ALIAS COMMAND]`
-         | *E.g.* `alias unfriend delete 1`
-.2+| Clear | `clear`
-         | *E.g.* `clear`
-.2+| Delete | `delete INDEX`
-         | *E.g.* `delete 3`
-.2+| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`
-         | *E.g.* `edit 2 n/James Lee r/Loves Cake`
-.2+| Find | `find PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS]...`
-         | *E.g.* `find James Jake`
-.2+| List | `list`
-         | *E.g.* `list`
-.2+| Help | `help`
-         | *E.g.* `help`
-.2+| Select | `select INDEX`
-         | *E.g.* `select 2`
-.2+| History | `history`
-         | *E.g.* `history`
-.2+| Music | `music [MUSIC COMMAND] [GENRE]`
-         | *E.g.* `music play pop` +
-         *E.g.* `music stop`
-.2+| Radio | `radio [RADIO COMMAND] [GENRE]`
-         | *E.g.* `radio play pop` +
-         *E.g.* `radio stop`
-
-.2+| Redo | `redo`
-         | *E.g.* `redo`
-.2+| Undo | `undo`
-         | *E.g.* `undo`
-.2+| Unalias | `unalias ALIAS`
-         | *E.g.* `unalias unfriend`
+| COMMAND | FORMAT | EXAMPLE
+| Add | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS r/REMARK [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Loves Tea t/friend t/colleague`
+| Alias | `alias [ALIAS COMMAND]` | `alias unfriend delete 1`
+| Clear | `clear` | `clear`
+| Delete | `delete INDEX` | `delete 3`
+| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`| `edit 2 n/James Lee r/Loves Cake`
+| Find | `find PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS]...` | *E.g.* `find James Jake`
+| List | `list`| `list`
+| Help | `help`| `help`
+| Select | `select INDEX`| `select 2`
+| History | `history`| `history`
+.2+| Music| `music play [GENRE]`
+| `music play pop` | `music stop` | `music stop`
+.2+| Radio| `radio play [GENRE]`
+| `radio play pop` | `radio stop` | `radio stop`
+| Redo | `redo` | `redo`
+| Undo | `undo` | `undo`
+| Unalias | `unalias ALIAS` | `unalias unfriend`
 |===
 
