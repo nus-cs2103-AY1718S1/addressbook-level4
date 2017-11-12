@@ -37,7 +37,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+    public void deletePerson(ReadOnlyPerson... target) throws PersonNotFoundException {
         fail("This method should not be called.");
     }
 
