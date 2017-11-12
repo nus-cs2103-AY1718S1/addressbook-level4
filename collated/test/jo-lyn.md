@@ -135,11 +135,11 @@ public class KeyListenerTest extends RolodexGuiTest {
     }
 
     @Test
-    public void executeKeyEventForOpenCommand() {
+    public void executeKeyEventForOpenRolodexCommand() {
         KeyCodeCombination openKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+O");
 
         guiRobot.push(openKeyCode);
-        assertEquals(OpenRolodexCommand.COMMAND_WORD + " ", getCommandBox().getInput());
+        assertEquals(OpenRolodexCommand.FORMAT, getCommandBox().getInput());
     }
 
     @Test
@@ -147,7 +147,7 @@ public class KeyListenerTest extends RolodexGuiTest {
         KeyCodeCombination newKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+N");
 
         guiRobot.push(newKeyCode);
-        assertEquals(NewRolodexCommand.COMMAND_WORD + " ", getCommandBox().getInput());
+        assertEquals(NewRolodexCommand.FORMAT, getCommandBox().getInput());
     }
 
     @Test
