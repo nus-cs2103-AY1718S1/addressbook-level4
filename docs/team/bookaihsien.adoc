@@ -70,7 +70,7 @@ This feature allows multiple users to use the same application on the same devic
 
 #Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=multi]
+include::../DeveloperGuide.adoc[tag=opennew]
 
 #End of Extract#
 
