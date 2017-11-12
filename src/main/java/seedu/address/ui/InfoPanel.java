@@ -236,6 +236,7 @@ public class InfoPanel extends UiPart<Region> {
         logger.finest("All tags for " + person.getName().toString() + " initialized in info");
     }
 
+    //@@author jelneo
     /**
      * Sets all info fields to not display anything.
      */
@@ -243,6 +244,7 @@ public class InfoPanel extends UiPart<Region> {
         personInfoPanel.setVisible(false);
     }
 
+    //@@author khooroko
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
