@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 //@@author LuLechuan
 /**
@@ -24,7 +25,9 @@ public class Photo {
      * Constructs with a given pathName.
      */
     public Photo(String pathName) throws IllegalValueException {
-        //requireNonNull(pathName);
+        if (isUnknownPath(pathName)) {
+            throw new IllegalValueException("The given path name does not exist");
+        }
 
         this.pathName = pathName;
     }
