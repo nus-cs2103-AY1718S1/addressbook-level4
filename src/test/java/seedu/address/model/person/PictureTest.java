@@ -1,7 +1,9 @@
 //@@author Jemereny
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -17,6 +19,19 @@ public class PictureTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void constructorTest() throws Exception {
+        thrown.expect(IllegalValueException.class);
+
+        // Valid picture
+        Picture picture = new Picture(PictureUtil.getValidPictureString());
+        assertNotNull(picture.value);
+
+        // Invalid picture
+        picture = new Picture("invalidPhoto.jpg");
+        assertNotNull(picture.value);
+    }
 
     @Test
     public void isValidPicture() {
