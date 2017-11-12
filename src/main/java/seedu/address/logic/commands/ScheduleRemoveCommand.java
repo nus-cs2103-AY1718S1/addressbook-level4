@@ -109,6 +109,13 @@ public class ScheduleRemoveCommand extends UndoableCommand {
         }
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ScheduleRemoveCommand // instanceof handles nulls
+                && uniqueEventIndexes.equals(((ScheduleRemoveCommand) other).uniqueEventIndexes));
+    }
+
 
     /**
      * Stores the details of modified person with updated event list. Each non-empty field value will replace the
@@ -145,34 +152,6 @@ public class ScheduleRemoveCommand extends UndoableCommand {
         public Set<Event> createModifiableEventList(Set<Event> unmodifiableEventList) {
             Set<Event> modifiableEventList = new HashSet<>(unmodifiableEventList);
             return modifiableEventList;
-        }
-
-        public Name getName() {
-            return name;
-        }
-
-        public Phone getPhone() {
-            return phone;
-        }
-
-        public Email getEmail() {
-            return email;
-        }
-
-        public Address getAddress() {
-            return address;
-        }
-
-        public Set<Tag> getTags() {
-            return tags;
-        }
-
-        public Set<Event> getEvents() {
-            return events;
-        }
-
-        public DateAdded getDateAdded() {
-            return dateAdded;
         }
 
         public Person createUpdatedPerson() {

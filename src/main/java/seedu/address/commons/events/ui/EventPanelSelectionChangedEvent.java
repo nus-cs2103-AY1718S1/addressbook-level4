@@ -1,8 +1,5 @@
 package seedu.address.commons.events.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
@@ -28,10 +25,7 @@ public class EventPanelSelectionChangedEvent extends BaseEvent {
 
     public ObservableList<ReadOnlyPerson> getMemberAsArrayList() {
 
-        List<ReadOnlyPerson> memberList = new ArrayList<>(
-                selectedEvent.getMemberList().asReadOnlyMemberList());
-
-        return FXCollections.observableArrayList(memberList);
+        return FXCollections.observableArrayList(selectedEvent.getMemberList().asReadOnlyMemberList());
     }
 
     public String getEventName() {
