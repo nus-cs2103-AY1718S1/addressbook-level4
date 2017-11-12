@@ -110,15 +110,20 @@ For the following tutorials, command formatting will be explained using the foll
 This is not applicable for parameters without a prefix.
 For example, if a command syntax uses: edit INDEX n/NAME, then the INDEX parameter MUST be in the
 exact position as in the syntax, in this case, after the command word i.e. edit.
+
 // tag::switch[]
 === Switching Between Address Book and Task Manager : `switch`
 
 To help you save time to remember all the commands in Mobilize, you can toggle between address book and task manager using:
 
-Format: `switch ab` or `switch tm`
+Format: `switch addressbook` or `switch taskmanager`
+
+[TIP]
+You can use `ab` for `addressbook` and `tm` for `taskmanager` in the command.
 
 [NOTE]
-The default system of Mobilize will be address book.
+The default mode of Mobilize will be address book.
+
 // end::switch[]
 === Managing Contacts
 
@@ -223,7 +228,7 @@ __Constraints__
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-tag::tag[]
+// tag::tag[]
 ==== Tagging multiple contacts : `tag` +
 
 Tags are a useful way of grouping and labeling contacts. But editing them manually, one by one, can be a tedious process.
@@ -251,7 +256,7 @@ __Constraints__
 * Every INDEX must be separated by a comma.
 * Every TAG must have a prefix.
 ****
-end::tag[]
+// end::tag[]
 
 // tag::detag[]
 ==== Removing tags from multiple contacts : `detag`
@@ -353,15 +358,16 @@ Selects the 1st person in the results of the `find` command.
 
 __Constraints__
 
+Note the following constraints when selecting contacts:
+
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
 * INDEX *must be a positive integer* 1, 2, 3, ...
 * If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
 ****
 
 === Managing Tasks
 
-tag::addtask[]
+// tag::addtask[]
 ==== Adding tasks: `add`
 
 Whether it is a host of pending submissions, a get-together or a multiday program, adding it to Mobilize can easily help you keep track of it all. +
@@ -402,15 +408,16 @@ _Constraints_ +
 ****
 * Dates MUST be preceded by one of the prefixes.
 ****
-end::addtask[]
+// end::addtask[]
 
-tag::find[]
+// tag::find[]
 ==== Finding tasks by description or deadline: `find`
+Want to find a task? The find feature allows you to find task(s) by descriptions or deadlines.
 
-To find people whose description contain any of the given keywords, use +
+To find task(s) whose descriptions contain any of the given keywords, use +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-To find people by deadlines, use +
+To find task(s) by deadlines, use +
 Format: `find DD-MM-YYYY`
 
 Examples:
@@ -429,20 +436,23 @@ __Constraints:__
 ****
 * The search is case insensitive. e.g `finish` will match `Finish`.
 * The order of the keywords does not matter. e.g. `Finish task` will match `task finish`.
-* Only the description and deadline is searched.
+* Only the description and deadline are searched.
 * Only full words will be matched e.g `Finish` will not match `Finished`.
-* Only valid date will be matched e.g `291017` will not match `29-10-2017`.
+* Only valid dates will be matched e.g `291017` will not match `29-10-2017`.
 ****
+// end::find[]
+
 // tag::deletetask[]
 
-// end::find[]
 ==== Deleting tasks : `delete`
 
-To delete the specified task from the task manager, use: +
+Due to our fast changing lives, if your task was cancelled suddenly and you would like to delete the task from your task manager, the delete function is here to save your day!
 
 Format: `delete INDEX`
 
 __Constraints__
+
+Note the following constraints when deleting a task:
 
 ****
 * Deletes the task at the specified `INDEX`.
@@ -452,7 +462,8 @@ __Constraints__
 ****
 // end::deletetask[]
 
-tag::edittask[]
+// tag::edittask[]
+
 ==== Editing tasks: `edit`
 
 Change of plans? The edit feature offers a hassle-free solution to change any parameter of an existing task.
@@ -482,7 +493,7 @@ __Constraints__
 * If a prefix is used with a blank parameter, the respective date associated with that prefix will be deleted.
 ****
 
-end::edittask[]
+// end::edittask[]
 ==== Archiving completed tasks: `archive` [Coming in V2.0]
 
 Done with your task? Congratulations! To mark it as done, just key in:
@@ -505,21 +516,21 @@ __Constraints:__
 // tag::list[]
 ==== Listing tasks : `list` +
 
-To go back to the default list of tasks after a round of filtering, use:
+You can use the list command to go back to the default list of tasks after a search.
 
 Format: `list`
 // end::list[]
+
 // tag::select[]
 ==== Selecting a task: `select`
+You can use the select command to select the task identified by the index number used in the last task listing.
 
-To select the task identified by the index number used in the last task listing, use: +
 Format: `select INDEX`
 
-****
-* Selects the task at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+[NOTE]
+====
+All contacts involved in the selected task will be listed. There will be no changes in the displayed list of contacks if there are no involved personnel.
+====
 
 Examples:
 
@@ -530,10 +541,13 @@ Selects the 2nd task in the task manager.
 `select 1` +
 Selects the 1st task in the results of the `find` command.
 
-[NOTE]
-====
-The selected task will show involved people in the address book. If there are no involved personnel, there will be no changes in the displayed list of contacts.
-====
+__Constraints:__
+****
+* Selects the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
 // end::select[]
 === Managing Common Features
 
