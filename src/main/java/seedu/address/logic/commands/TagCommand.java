@@ -4,7 +4,7 @@ import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
 //@@author JasmineSee
 /**
- * Lists all persons in the address book to the user.
+ * Lists all persons in the address book that has the specified tag(s) to the user.
  */
 public class TagCommand extends Command {
 
