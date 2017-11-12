@@ -35,11 +35,35 @@ Expected result: Command failed, phone can only contain numbers and should be at
 Input: `edit 5 e/char.com` +
 Expected result: Command failed, email should be 2 alphanumeric/period strings separated by '@' +
 
-Input: `edit 5 n/Charlotte Wee p/98765432 e/char@example.com a/Blk 10 Ang Mo Kio Street 74, #11-04 t/friends` +
-Expected result: Command success, name, phone, email, address and tag can be edited +
+Input: `edit 5 n/Charlotte Wee` +
+Expected result: Command success, name has been edited +
 
 Input: `undo` +
-Expected result: Command success, changes made by edit command can be undone +
+Expected result: Command success, name edit can be undone +
+
+Input: `edit 5 p/98765432` +
+Expected result: Command success, phone has been edited +
+
+Input: `undo` +
+Expected result: Command success, phone edit can be undone +
+
+Input: `edit 5 e/char@example.com` +
+Expected result: Command success, email has been edited +
+
+Input: `undo` +
+Expected result: Command success, email edit can be undone +
+
+Input: `edit 5 a/Blk 10 Ang Mo Kio Street 74, #11-04` +
+Expected result: Command success, address has been edited +
+
+Input: `undo` +
+Expected result: Command success, address edit can be undone +
+
+Input: `edit 5 t/friends` +
+Expected result: Command success, tag 'neighbour' has been changed to 'friends' +
+
+Input: `undo` +
+Expected result: Command success, tag change can be undone +
 
 === Finding persons : `find`
 
@@ -112,6 +136,9 @@ Expected result:  Command success, contact list has been sorted by address ignor
 
 Input: `sort address -reverse` +
 Expected result: Command success, contact list is now sorted by address in reverse order +
+
+Input: `sort address -ignorefav -reverse` +
+Expected result:  Command success, contact list has been sorted by address in reverse order ignoring favourites, David is not at index 1 anymore +
 
 Input: `sort name` +
 Expected result: Command success, contact list is now sorted by name +
