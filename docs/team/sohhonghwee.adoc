@@ -101,6 +101,8 @@ include::../DeveloperGuide.adoc[tag=sort]
 
 include::../UserGuide.adoc[tag=add]
 
+include::../UserGuide.adoc[tag=add2]
+
 #End of Extract#
 
 ---
@@ -115,8 +117,6 @@ To facilitate quicker adding and making it possible to add when user do have all
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=add]
-
-include::../UserGuide.adoc[tag=add2]
 
 #End of Extract#
 
