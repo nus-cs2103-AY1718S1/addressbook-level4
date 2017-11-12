@@ -222,7 +222,6 @@ Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-
 === Deleting a person : `delete` `Since v1.0`
 
 Removes an existing person from cherBook. +
@@ -389,14 +388,13 @@ Returns any person having both `friends` and `owesMoney` tags
 // end::findtags[]
 
 // tag::remark[]
-=== Adding/Deleting a remark to a person : `remark` `Since v1.2`
-//TODO: Simlify and make the UG for remark operations more consise
-Adds or removes a remark from the specified person in cherBook +
+=== Overwrites a remark to a person : `remark` `Since v1.2`
+Overwrites a remark from the specified person in cherBook +
 Format: `remark Index [rm/REMARK]` +
 Shorthand: `rm Index [rm/REMARK]`
 
 ****
-* Adds or deletes a `remark` at the specific`INDEX`.
+* Overwrites a `remark` at the specific`INDEX`.
 * The index refers to the index number currently shown in the `Students Panel`.
 * The index *must be positive integer* 1, 2, 3, ...
 ****
@@ -410,13 +408,13 @@ Examples:
 
 * `list` +
 `remark 2 rm/This is a remark` +
-Overwrites/adds the 1st person remark.
+Overwrites the 1st person remark.
 * `find betsy` +
 `remark 1 rm/Betsy is a female` +
-Overwrites/adds the 1st person in the results of `find` command.
+Overwrites the 1st person in the results of `find` command.
 * `list` +
 `remark 2 rm/` +
-removes `remark` from the 2nd person in the address book.
+Overwrites `remark` from the 2nd person in the address book and displays it as `(add a new remark)`.
 
 Example:
 
@@ -554,8 +552,8 @@ The details changes automatically where there is a change to the list of student
 You can use these details to pick out relevant information you need from your student.
 // end::studentdetailspanel[]
 
-// tag::optionalinputtagstwo[]
 
+// tag::optionalinputtagstwo[]
 === Optional fields for adding a person `Since v1.3`
 
 You can find a list of optional input fields for the add command in the table below.
@@ -578,6 +576,7 @@ a message will be generated to inform you that the particular field is not recor
 
 // end::optionalinputtagstwo[]
 
+
 // tag::graphpanel[]
 === Graph Panel `Since v1.3`
 
@@ -587,6 +586,11 @@ There are two tabs for you to choose from, line or bar and can be switch by usin
 The details changes when another student from a different class is selected.
 You can use these graph to better understand the trends of `grades` in a glance to easily see who are the weaker or stronger students.
 // end::graphpanel[]
+
+Example:
+
+image::ExitImage.png[width="800"]
+_Figure 4.19 : Exits your cherBook_
 
 Example:
 
