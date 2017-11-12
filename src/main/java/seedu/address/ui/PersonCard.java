@@ -69,15 +69,27 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    private final ImageView heart;
+    private final ImageView heartOutline;
+    private final ImageView fbicon;
+    private final Image personHolder;
+
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
+        personHolder = new Image(getClass().getResourceAsStream(DEFAULT));
+        Circle circle = new Circle(25);
+        circle.setFill(new ImagePattern(personHolder));
+        picture.setGraphic(circle);
+        heart = new ImageView(new Image(getClass().getResourceAsStream(ICON), 25, 25, false, false));
+        heartOutline = new ImageView(new Image(getClass().getResourceAsStream(ICON_OUTLINE), 20, 20, false, false));
+        fbicon = new ImageView(new Image(getClass().getResourceAsStream(FACEBOOK), 25, 25, false, false));
+
         initLabelColor();
         this.person = person;
         id.setText(displayedIndex + ". ");
         initFavorite(person);
         initFbIcon(person);
-        initImage();
         initTags(person);
         bindListeners(person);
     }
@@ -139,38 +151,15 @@ public class PersonCard extends UiPart<Region> {
      * Instantiate favorite label
      */
     private void initFavorite(ReadOnlyPerson person) {
-        ImageView image;
-        if (person.getFavorite().favorite) {
-            image = new ImageView(new Image(getClass().getResourceAsStream(ICON)));
-            image.setFitHeight(25);
-            image.setFitWidth(25);
-        } else {
-            image = new ImageView(new Image(getClass().getResourceAsStream(ICON_OUTLINE)));
-            image.setFitHeight(20);
-            image.setFitWidth(20);
-        }
-        favorite.setGraphic(image);
+        favorite.setGraphic(person.getFavorite().favorite ? heart : heartOutline);
     }
 
     /**
      * Instantiate the facebook icon if a facebook account is linked with the person
      */
     private void initFbIcon(ReadOnlyPerson person) {
-        ImageView image = new ImageView(new Image(getClass().getResourceAsStream(FACEBOOK)));
-        image.setFitHeight(25);
-        image.setFitWidth(25);
-        facebookPage.setGraphic(image);
+        facebookPage.setGraphic(fbicon);
         facebookPage.setVisible(!person.getFacebook().value.equals(""));
-    }
-
-    /**
-     * Instantiate image of a person.
-     */
-    private void initImage() {
-        Image image = new Image(getClass().getResourceAsStream(DEFAULT));
-        Circle circle = new Circle(25);
-        circle.setFill(new ImagePattern(image));
-        picture.setGraphic(circle);
     }
 
 

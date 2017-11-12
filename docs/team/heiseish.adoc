@@ -48,11 +48,12 @@ in the contact book to let the user view with ease and message should the need a
 
 === Other contributions
 
-* Update UI for PersonCard.
+* Update UI for PersonCard and GroupCard.
 * Add favorite, remark, major and facebook attribute to the Person class.
 * Add auto complete for command box.
 * Replace google search with google map for direction searching.
 * Adjust text color in the result display to better indicate the type of results.
 * Add random color generator for (except for pre-defined) labels.
+* Add graphical navigation for UI components.
 
 == Project: TBA

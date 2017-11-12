@@ -27,7 +27,6 @@ public class FavoriteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_FAVORITE_PERSON_SUCCESS = "Favorited Person: %1$s";
-    public static final String MESSAGE_UNFAVORITE_PERSON_SUCCESS = "Unfavorited Person: %1$s";
 
     private final Index targetIndex;
 
@@ -56,11 +55,8 @@ public class FavoriteCommand extends UndoableCommand {
         Favorite newFavorite = new Favorite(!personToFavorite.getFavorite().favorite);
         favoritedPerson.setFavorite(newFavorite);
 
-        if (newFavorite.favorite) {
-            return new CommandResult(String.format(MESSAGE_FAVORITE_PERSON_SUCCESS, favoritedPerson));
-        } else {
-            return new CommandResult(String.format(MESSAGE_UNFAVORITE_PERSON_SUCCESS, favoritedPerson));
-        }
+        return new CommandResult(String.format(MESSAGE_FAVORITE_PERSON_SUCCESS, favoritedPerson));
+
 
     }
 
