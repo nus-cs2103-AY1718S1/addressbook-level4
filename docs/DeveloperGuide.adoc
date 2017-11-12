@@ -484,8 +484,8 @@ _Figure 5.2.2 EventsCommand Logic Sequence Diagram_
 Add event mechanism adds an event which stores in the The Myth's Book. The add event mechanism is facilitated by an `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
 different events with their information given by the user. This command inherits from `UndoableCommand`.
 
-From Figure 5.3.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the SortCommand
-can be undoable, where the previous state of the address book before sorting is saved.
+From Figure 5.3.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the AddEventCommand
+can be undoable, where the previous state of The Myth's Book before the event is saved.
 
 image::AddEventDiagram.PNG[width="800"]
 _Figure 5.3.1 AddEventCommand Logic Class Diagram_
