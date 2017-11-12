@@ -53,17 +53,17 @@ public class PropertyManager {
                 // Adds name as a pre-loaded property.
                 addNewProperty("n", "Name",
                         "Person names should only contain alphanumeric characters and spaces, "
-                                + "and it should not be blank",
+                                + "and it should not be blank.",
                         "[\\p{Alnum}][\\p{Alnum} ]*");
 
                 // Adds email as a pre-loaded property.
                 addNewProperty("e", "Email",
-                        "Person emails should be 2 alphanumeric/period strings separated by '@'",
+                        "Person emails should be 2 alphanumeric/period strings separated by '@'.",
                         "[\\w\\.]+@[\\w\\.]+");
 
                 // Adds phone number as a pre-loaded property.
                 addNewProperty("p", "Phone",
-                        "Phone numbers can only contain numbers, and should be at least 3 digits long",
+                        "Phone numbers can only contain numbers, and should be at least 3 digits long.",
                         "\\d{3,}");
 
                 // Adds address as a pre-loaded property.
@@ -72,9 +72,9 @@ public class PropertyManager {
 
                 // Adds date/time as a pre-loaded property.
                 addNewProperty("dt", "DateTime", "Event date & time should be "
-                                + "simple and clear enough for the application to understand", DEFAULT_REGEX);
+                                + "simple and clear enough for the application to understand.", DEFAULT_REGEX);
             } catch (DuplicatePropertyException dpe) {
-                throw new AssertionError("Pre-loaded properties cannot be invalid", dpe);
+                throw new AssertionError("Pre-loaded properties cannot be invalid.", dpe);
             }
 
             initialized = true;

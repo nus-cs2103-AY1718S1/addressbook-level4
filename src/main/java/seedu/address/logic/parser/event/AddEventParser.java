@@ -17,6 +17,7 @@ import seedu.address.logic.parser.util.ArgumentTokenizer;
 import seedu.address.logic.parser.util.ParserUtil;
 import seedu.address.logic.parser.util.Prefix;
 import seedu.address.model.event.Event;
+import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
@@ -41,6 +42,11 @@ public class AddEventParser implements Parser<AddEventCommand> {
         // TODO: Keep this checking for now. These pre-loaded properties are compulsory.
         if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_DATE_TIME)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
+        }
+
+        /* Have to explicitly check DateTime because of natural language parsing. */
+        if (!DateTime.isValidTime(argMultimap.getValue(PREFIX_DATE_TIME).get())) {
+            throw new ParseException(PropertyManager.getPropertyConstraintMessage("dt"));
         }
 
         try {
