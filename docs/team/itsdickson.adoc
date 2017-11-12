@@ -30,7 +30,7 @@ _Figure 1.1 The Myth's Book UI_
 
 This section includes the behaviour, justification and implementation of `FavouriteCommand`, `Unfavouritecommand` and `FavouriteListCommand`.
 
-(Pull Requests https://github.com/CS2103AUG2017-T15-B3/main/pull/67[#67], https://github.com/CS2103AUG2017-T15-B3/main/pull/82[#82])
+*Code on GitHub*: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/67[#67], https://github.com/CS2103AUG2017-T15-B3/main/pull/82[#82]
 
 ==== External behavior
 
@@ -65,7 +65,7 @@ include::../DeveloperGuide.adoc[tag=favouriteunfavourite]
 
 This section includes the behaviour, justification and implementation of `SwitchThemeCommand` and `ThemeListCommand`. It also includes the behaviour and justification of `Bright Theme`.
 
-(Pull Requests https://github.com/CS2103AUG2017-T15-B3/main/pull/50[#50], https://github.com/CS2103AUG2017-T15-B3/main/pull/63[#63], https://github.com/CS2103AUG2017-T15-B3/main/pull/78[#78])
+*Code on GitHub*: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/50[#50], https://github.com/CS2103AUG2017-T15-B3/main/pull/63[#63], https://github.com/CS2103AUG2017-T15-B3/main/pull/78[#78]
 
 ==== External behavior
 
@@ -102,7 +102,7 @@ include::../DeveloperGuide.adoc[tag=switch]
 
 This section includes the behaviour, justification and implementation of `EventsCommand`.
 
-(Pull Request https://github.com/CS2103AUG2017-T15-B3/main/pull/135[#135])
+*Code on GitHub*: Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/135[#135]
 
 ==== External behavior
 
@@ -137,7 +137,7 @@ include::../DeveloperGuide.adoc[tag=events]
 
 This section includes the behaviour, justification and implementation of `DeleteEventCommand`.
 
-(Pull Request https://github.com/CS2103AUG2017-T15-B3/main/pull/107[#107])
+*Code on GitHub*: Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/107[#107]
 
 ==== External behavior
 
@@ -171,7 +171,7 @@ include::../DeveloperGuide.adoc[tag=deleteevent]
 
 This section includes the behaviour, justification and implementation of `FindTagCommand`.
 
-(Pull Requests https://github.com/CS2103AUG2017-T15-B3/main/pull/86[#86], https://github.com/CS2103AUG2017-T15-B3/main/pull/103[#103])
+*Code on GitHub*: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/86[#86], https://github.com/CS2103AUG2017-T15-B3/main/pull/103[#103]
 
 ==== External behavior
 
@@ -202,10 +202,28 @@ include::../DeveloperGuide.adoc[tag=findtag]
 
 ---
 
-=== Enhancement Proposed:
+=== Enhancement Proposed: Composing and Sending of Emails
+
+==== External Behaviour
+
+This enhancement will allow university students to compose and send emails to their classmates or professors. It will include an `EmailCommand` that takes in the `index` specified by the user.
+A pop-up window will be activated and it will go to an `Outlook` window, where university students can compose to the email field of the contact specified by the user.
+This enhancement will make use of the `Outlook API`.
+
+==== Justification
+
+University students would prefer having lesser things to worry about amidst their work load. Hence, this enhancement will reduce the multi-tasking factor of university students, so that
+students don't have to open multiple application or browsers. This would improve efficiency of using The Myth's Book and also the efficiency of the students doing their work, as they don't have to
+waste time opening additional browsers to send an email.
 
 === Other contributions
 
 * Acceptance Testing on `Team T16-B1` (https://github.com/CS2103AUG2017-T16-B1/main/issues[Issues])
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Updated the GUI color scheme, structure, layout and overall outlook (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/97[#97], https://github.com/CS2103AUG2017-T15-B3/main/pull/124[#124])
+* Updated the images used in User Guide (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/106[#106])
+* Updated AddCommand and EditCommand so that the application will select the person added or edited (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/124[#124])
+* Created additional color scheme `Bright Theme` for users to choose (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/50[#50])
+* Created use cases in Developer Guide (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/39[#39])
+* Updated User Guide layout (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/102[#102], https://github.com/CS2103AUG2017-T15-B3/main/pull/152[#152])
+* Implemented randomised colors for tags in PersonCard (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/37[#37])
+* Implemented tests to increase overall test coverage (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/63[#63], https://github.com/CS2103AUG2017-T15-B3/main/pull/82[#82], https://github.com/CS2103AUG2017-T15-B3/main/pull/103[#103])
