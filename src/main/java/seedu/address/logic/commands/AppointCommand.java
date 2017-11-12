@@ -3,6 +3,10 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINT;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -33,9 +37,11 @@ public class AppointCommand extends UndoableCommand {
     public static final String MESSAGE_ADD_APPOINT_SUCCESS = "Added appoint to Person: %1$s";
     public static final String MESSAGE_DELETE_APPOINT_SUCCESS = "Removed appoint from Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String INPUT_DATE_INVALID = "Invalid Input: The input date is before the current time";
 
     private final Index index;
     private final Appoint appoint;
+    private boolean isLate;
 
     /**
      * @param index   of the person in the filtered person list to edit the appoint
@@ -69,6 +75,26 @@ public class AppointCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
+
+        if (!appoint.value.isEmpty()) {
+            try {
+                Calendar current = Calendar.getInstance();
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy h:mm");
+                String currentDate = formatter.format(current.getTime());
+                System.out.println(currentDate);
+                String appointDate = this.appoint.value;
+                Date newDate = formatter.parse(appointDate);
+                Calendar appointCal = Calendar.getInstance();
+                appointCal.setTime(newDate);
+                isLate = current.before(appointCal);
+            } catch (ParseException e) {
+                throw new CommandException(INPUT_DATE_INVALID); //should not happen
+            }
+            if (!isLate) {
+                throw new CommandException(INPUT_DATE_INVALID);
+            }
+        }
+
         model.updateFilteredListToShowAll();
 
         return new CommandResult(generateSuccessMessage(editedPerson));

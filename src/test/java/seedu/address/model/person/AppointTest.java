@@ -9,7 +9,7 @@ public class AppointTest {
 
     @Test
     public void equals() {
-        Appoint appoint = new Appoint("Hello");
+        Appoint appoint = new Appoint("20/12/2018 13:30");
 
         // same object -> returns true
         assertTrue(appoint.equals(appoint));
@@ -25,7 +25,7 @@ public class AppointTest {
         assertFalse(appoint.equals(null));
 
         // different person -> returns false
-        Appoint differentAppoint = new Appoint("Bye");
+        Appoint differentAppoint = new Appoint("20/11/2018 13:30");
         assertFalse(appoint.equals(differentAppoint));
     }
 }
