@@ -571,7 +571,7 @@ _Figure 4.3.3: UI display of a successful `ScheduleCommand` execution_
 
 **Aspect:** Valid date format +
 **Alternative 1 (current choice)**: DD-MM-YYYY is the only valid date format +
-**Pros:** It is now possible to arrange the dates based on which date comes first. +
+**Pros:** It is now possible to arrange the schedules based on which date comes first. +
 **Cons:** Users have lesser flexibility in inputting dates. +
 **Alternative 2:** Allowing users to key in dates in DD-MM format in addition to DD-MM-YYYY format  +
 **Pros:** This gives users a greater flexibility when keying in dates.  +
@@ -635,7 +635,7 @@ The outcome of schedule multiple command execution is shown in _Figure 4.4.1_ be
 
 image::ScheduleCommandMultipleScreenShot.png[width="400"]
 
-_Figure 4.4.1: UI display of an enhanced successful `ScheduleCommand` execution_
+_Figure 4.4.1: UI display of a successful enhanced `ScheduleCommand` execution_
 
 ==== Design Considerations
 
@@ -645,13 +645,13 @@ _Figure 4.4.1: UI display of an enhanced successful `ScheduleCommand` execution_
 **Alternative 2:** Use ArrayList to store indices input  +
 **Cons:** Users receive an error message if they input non-unique indices.
 
-**Aspect:** Data structure to support scheduling multiple activities with one `Person` +
-**Alternative 1 (current choice)**: DD-MM-YYYY is the only valid date format +
-**Pros:** It is now possible to arrange the dates based on which date comes first. +
-**Cons:** Users have lesser flexibility in inputting dates. +
-**Alternative 2:** Allowing users to key in dates in DD-MM format in addition to DD-MM-YYYY format  +
-**Pros:** This gives users a greater flexibility when keying in dates.  +
-**Cons:** This creates ambiguity when arranging the schedules based on dates.
+**Aspect:** Data structure to support scheduling multiple activities with a contact +
+**Alternative 1 (current choice)**: Use ArrayList to store multiple schedules +
+**Pros:** This makes it possible to arrange the schedules based on dates. +
+**Cons:** There is a need to check for duplicate schedules so that all the schedules attached to a person are unique. +
+**Alternative 2:** Use Set to store multiple schedules  +
+**Pros:** There is no need to specially check for duplicate schedules.  +
+**Cons:** The arrangement of the schedules will appear at random.
 //end::scheduleMultiple[]
 
 //tag::welcomeWindow[]
