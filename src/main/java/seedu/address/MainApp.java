@@ -76,13 +76,10 @@ public class MainApp extends Application {
         executor = Executors.newFixedThreadPool(30);
 
         model = initModelManager(storage, userPrefs);
-        oauth.setModel(model);
 
         logic = new LogicManager(model, oauth, executor);
 
         ui = new UiManager(logic, config, userPrefs);
-
-
 
         initEventsCenter();
     }
