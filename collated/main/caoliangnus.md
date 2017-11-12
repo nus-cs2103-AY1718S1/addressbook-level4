@@ -242,6 +242,60 @@ public interface Model {
     }
 
     @Override
+    public ReadOnlyAddressBook getAddressBook() {
+        return addressBook;
+    }
+
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    private void indicateAddressBookChanged() {
+        raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    @Override
+    public synchronized void deleteLesson(ReadOnlyLesson target) throws LessonNotFoundException {
+        addressBook.removeLesson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteLessonSet(List<ReadOnlyLesson> lessonList) throws LessonNotFoundException {
+
+        for (ReadOnlyLesson lesson : lessonList) {
+            addressBook.removeLesson(lesson);
+        }
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
+        addressBook.addLesson(lesson);
+        indicateAddressBookChanged();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
+            throws DuplicateLessonException, LessonNotFoundException {
+        requireAllNonNull(target, editedLesson);
+        addressBook.updateLesson(target, editedLesson);
+        indicateAddressBookChanged();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyModule} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyLesson> getFilteredLessonList() {
+        return FXCollections.unmodifiableObservableList(filteredLessons);
+    }
+
+    @Override
     public void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate) {
         requireNonNull(predicate);
         filteredLessons.setPredicate(predicate);
@@ -1278,6 +1332,19 @@ public class CombinePanel extends UiPart<Region> {
 
 
     /**
+     * Check for timetable grid.
+     */
+    public boolean isOccupy(int row, int col, int span) {
+        for (int i = 0; i < span; i++) {
+            if (gridDataCheckTable[row][col + i] == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
      * Generate timetable grid.
      */
     public void generateTimeTableGrid() {
@@ -1781,6 +1848,47 @@ public class CombinePanel extends UiPart<Region> {
         return keywordColorMap;
     }
 
+}
+```
+###### /java/seedu/address/ui/HelpWindow.java
+``` java
+    public HelpWindow() {
+        super(FXML);
+        Scene scene = new Scene(getRoot());
+        //Null passed as the parent stage to make it non-modal.
+        dialogStage = createDialogStage(TITLE, null, scene);
+        dialogStage.setResizable(true);
+        FxViewUtil.setStageIcon(dialogStage, ICON);
+
+        WebEngine engine = browser.getEngine();
+        engine.setUserAgent(USER_AGENT);
+        String userGuideUrl = getClass().getResource(USERGUIDE_FILE_PATH).toString();
+        engine.load(userGuideUrl);
+    }
+    //@author
+
+    /**
+     * Shows the help window.
+     * @throws IllegalStateException
+     * <ul>
+     *     <li>
+     *         if this method is called on a thread other than the JavaFX Application Thread.
+     *     </li>
+     *     <li>
+     *         if this method is called during animation or layout processing.
+     *     </li>
+     *     <li>
+     *         if this method is called on the primary stage.
+     *     </li>
+     *     <li>
+     *         if {@code dialogStage} is already showing.
+     *     </li>
+     * </ul>
+     */
+    public void show() {
+        logger.fine("Showing help page about the application.");
+        dialogStage.showAndWait();
+    }
 }
 ```
 ###### /resources/view/CombinePanel.fxml
