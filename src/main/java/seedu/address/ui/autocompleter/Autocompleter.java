@@ -63,6 +63,9 @@ public class Autocompleter {
         switch (state) {
         case COMMAND:
             clearResultsWindow();
+            if (isImportOrFindCommand()) {
+                return textInCommandBox;
+            }
             return (possibleAutocompleteResults.isEmpty()) ? textInCommandBox : possibleAutocompleteResults.get(0);
 
         case EMPTY:
@@ -100,6 +103,11 @@ public class Autocompleter {
             clearResultsWindow();
             return textInCommandBox;
         }
+    }
+
+    private boolean isImportOrFindCommand() {
+        return currentCommand.equals(AutocompleteCommand.IMPORT)
+                || currentCommand.equals(AutocompleteCommand.FIND);
     }
 
     /**
