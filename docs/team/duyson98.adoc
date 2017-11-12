@@ -4,12 +4,15 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Gentleman's Guide
-Gentleman's Guide is a desktop address book application modified from the Address Book - Level 4 to store person contacts and reminders. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+Gentleman's Guide is a desktop contact book application modified from the Address Book - Level 4, created by https://se-edu.github.io/[SE-EDU team].
+It is designed to support the busy work life business-(gentle)men by helping them keep track of their contacts and reminding them about upcoming deadlines.
+The interaction between user and Gentleman’s Guide is mostly done through a Command Line Interface (CLI). +
+This application is written in Java, with its Graphical User Interface (GUI) created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*About portfolio*:
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/main/duyson98.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/test/duyson98.md[Test code]]
 
-*Purpose of portfolio*: This portfolio is written to reflect the contributions made by the author to the Gentleman's Guide.
-It shows how all the features implemented by the author work.
 
 === Enhancement Added: Retrieve command, Tag/Untag/Retag commands, View command
 
@@ -41,7 +44,35 @@ to reflect the changes in your relationship with the contact owners.
 ---
 #Start of Extract [from: User Guide]#
 
-include::../DeveloperGuide.adoc[tag=tagretrieve]
+include::../DeveloperGuide.adoc[tag=taggingfunctions]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: View contact profile
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=viewprofile]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+
+
+==== Implementation
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../DeveloperGuide.adoc[tag=viewcommand]
 
 #End of Extract#
 

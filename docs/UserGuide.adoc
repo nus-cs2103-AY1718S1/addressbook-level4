@@ -416,7 +416,7 @@ Selects the 2nd reminder in the Gentleman's Guide.
 
 // end::selectReminder[]
 
-// tag::view[]
+// tag::viewprofile[]
 === Opening full profile of a person : `view`
 
 *The Gentleman comes across the contact of an old friend who he has not seen for a long time.
@@ -430,7 +430,7 @@ Format: `view INDEX`
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
-// end::view[]
+// end::viewprofile[]
 
 Examples:
 
