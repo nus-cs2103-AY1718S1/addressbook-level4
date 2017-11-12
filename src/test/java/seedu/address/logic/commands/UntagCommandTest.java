@@ -9,6 +9,7 @@ import static seedu.address.logic.commands.UntagCommand.MESSAGE_INVALID_INDEXES;
 import static seedu.address.logic.commands.UntagCommand.MESSAGE_SUCCESS_ALL_TAGS;
 import static seedu.address.logic.commands.UntagCommand.MESSAGE_SUCCESS_ALL_TAGS_IN_LIST;
 import static seedu.address.logic.commands.UntagCommand.MESSAGE_SUCCESS_MULTIPLE_TAGS_IN_LIST;
+import static seedu.address.logic.commands.UntagCommand.MESSAGE_TAG_NOT_FOUND;
 import static seedu.address.testutil.TypicalAccounts.getTypicalDatabase;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -19,7 +20,10 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.StringJoiner;
 
 import org.junit.Test;
 
@@ -292,9 +296,33 @@ public class UntagCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
         UntagCommand command = prepareCommand(false, Arrays.asList(INDEX_FIRST_PERSON, outOfBoundIndex),
-                Arrays.asList(new Tag("tagOne"), new Tag("tagTwo")));
+                Arrays.asList(new Tag("friends"), new Tag("randomTag")));
 
         assertCommandFailure(command, model, MESSAGE_INVALID_INDEXES);
+    }
+
+    @Test
+    public void execute_tagsNotFound_failure() throws Exception {
+        Tag firstNotFoundTag = new Tag("tagOne");
+        Tag secondNotFoundTag = new Tag("tagTwo");
+
+        Set<Tag> uniqueTags = new HashSet<>();
+        for (ReadOnlyPerson person : model.getAddressBook().getPersonList()) {
+            uniqueTags.addAll(person.getTags());
+        }
+        StringJoiner joiner = new StringJoiner(", ");
+        for (Tag tag : uniqueTags) {
+            joiner.add(tag.toString());
+        }
+
+        UntagCommand command = prepareCommand(false,
+                Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON),
+                Arrays.asList(firstNotFoundTag, secondNotFoundTag));
+
+        String expectedMessage = String.format(MESSAGE_TAG_NOT_FOUND,
+                firstNotFoundTag.toString() + ", " + secondNotFoundTag.toString(), joiner.toString());
+
+        assertCommandFailure(command, model, expectedMessage);
     }
 
     @Test
@@ -358,8 +386,8 @@ public class UntagCommandTest {
     /**
      * Returns an {@code UntagCommand}.
      */
-    private UntagCommand prepareCommand(Boolean toAllInFilteredList, List<Index> indexes, List<Tag> tags) {
-        UntagCommand command = new UntagCommand(toAllInFilteredList, indexes, tags);
+    private UntagCommand prepareCommand(Boolean toAllPersonsInFilteredList, List<Index> indexes, List<Tag> tags) {
+        UntagCommand command = new UntagCommand(toAllPersonsInFilteredList, indexes, tags);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

@@ -200,11 +200,11 @@ public class AddressBookParserTest {
         assertEquals(new UntagCommand(false, Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON,
                 INDEX_THIRD_PERSON), Collections.emptyList()), command);
 
-        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -a " + "friends/enemies");
+        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -all " + "friends/enemies");
         assertEquals(new UntagCommand(true, Collections.emptyList(),
                 Arrays.asList(secondTag, firstTag)), command);
 
-        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -a");
+        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -all");
         assertEquals(new UntagCommand(true, Collections.emptyList(), Collections.emptyList()), command);
     }
 
