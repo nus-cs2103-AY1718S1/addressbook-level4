@@ -1,5 +1,5 @@
 # ngzuyao
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -18,7 +18,7 @@
         initPhoto(person);
     }
 ```
-###### \java\seedu\address\ui\PersonInformationPanel.java
+###### /java/seedu/address/ui/PersonInformationPanel.java
 ``` java
 package seedu.address.ui;
 
@@ -66,6 +66,10 @@ public class PersonInformationPanel extends UiPart<Region> {
     @FXML
     private VBox optionalPhoneList;
     @FXML
+    private VBox customFieldNameList;
+    @FXML
+    private VBox customFieldValueList;
+    @FXML
     private FlowPane tags;
     @FXML
     private Label name;
@@ -85,8 +89,6 @@ public class PersonInformationPanel extends UiPart<Region> {
     private Label email;
     @FXML
     private Label emailLabel;
-    @FXML
-    private Label customFields;
 
     public PersonInformationPanel() {
         super(FXML);
@@ -133,10 +135,10 @@ public class PersonInformationPanel extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        customFields.textProperty().bind(Bindings.convert(person.customFieldProperty()));
         id.setText(Integer.toString(personId));
         optionalPhoneList.getChildren().clear();
         initOptionalPhones(person);
+        initCustomField(person);
     }
 
     /**
@@ -166,15 +168,11 @@ public class PersonInformationPanel extends UiPart<Region> {
         });
     }
 
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonInformation(event.getNewSelection().person, event.getNewSelection().stringid);
-        bindListeners(event.getNewSelection().person, event.getNewSelection().stringid);
-    }
-
+    /**
+     * Initialise custom field display flowpane
+     */
 ```
-###### \java\seedu\address\ui\PersonInformationPanel.java
+###### /java/seedu/address/ui/PersonInformationPanel.java
 ``` java
     private void setLabelIndentation() {
         phoneLabel.setMinHeight(MIN_HEIGHT);

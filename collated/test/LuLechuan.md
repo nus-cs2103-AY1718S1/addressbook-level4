@@ -1,5 +1,5 @@
 # LuLechuan
-###### \java\seedu\address\logic\commands\CustomCommandTest.java
+###### /java/seedu/address/logic/commands/CustomCommandTest.java
 ``` java
 public class CustomCommandTest {
 
@@ -34,7 +34,7 @@ public class CustomCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteByNameCommandTest.java
+###### /java/seedu/address/logic/commands/DeleteByNameCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -109,6 +109,103 @@ public class DeleteByNameCommandTest {
         model.updateFilteredPersonList(p -> false);
 
         assert model.getFilteredPersonList().isEmpty();
+    }
+}
+```
+###### /java/seedu/address/logic/commands/UploadPhotoCommandTest.java
+``` java
+public class UploadPhotoCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_personAcceptedByModel_updatePhotoSuccessful() throws Exception {
+        Person updatedPerson = new PersonBuilder(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased())).withPhoto(
+                System.getProperty("user.dir") + "/docs/images/wolf.jpg").build();
+
+        Photo photo = new Photo(System.getProperty("user.dir") + "/docs/images/wolf.jpg");
+        UploadPhotoCommand uploadPhotoCommand = prepareCommand(INDEX_FIRST_PERSON, photo);
+
+        String expectedMessage = String.format(UploadPhotoCommand.MESSAGE_UPDATE_PERSON_PHOTO_SUCCESS, updatedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
+
+        assertCommandSuccess(uploadPhotoCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_personAcceptedByModel_deleteIconPhoto() throws IllegalValueException, PersonNotFoundException {
+        Person updatedPerson = new PersonBuilder(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased())).withPhoto(null).build();
+
+        Photo photo = new Photo(null);
+        UploadPhotoCommand uploadPhotoCommand = prepareCommand(INDEX_FIRST_PERSON, photo);
+
+        String expectedMessage = String.format(UploadPhotoCommand.MESSAGE_UPDATE_PERSON_PHOTO_SUCCESS, updatedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
+
+        assertCommandSuccess(uploadPhotoCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidPersonIndexUnfilteredList_failure() throws IllegalValueException {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Photo photo = new Photo(System.getProperty("user.dir") + "/docs/images/wolf.jpg");
+        UploadPhotoCommand uploadPhotoCommand = prepareCommand(outOfBoundIndex, photo);
+
+        assertCommandFailure(uploadPhotoCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    /**
+     * Returns a {@code CustomCommand} with the parameters {@code index + CustomFieldName + CustomFieldValue}.
+     */
+    private UploadPhotoCommand prepareCommand(Index index, Photo photo) {
+        UploadPhotoCommand command = new UploadPhotoCommand(index, photo);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+}
+```
+###### /java/seedu/address/logic/parser/CustomCommandParserTest.java
+``` java
+public class CustomCommandParserTest {
+
+    private CustomCommandParser parser = new CustomCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsCustomCommand() throws IllegalValueException {
+        assertParseSuccess(parser, "1 NickName Ah",
+                new CustomCommand(INDEX_FIRST_PERSON, new CustomField("NickName", "Ah")));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, CustomCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/logic/parser/UploadPhotoCommandParserTest.java
+``` java
+public class UploadPhotoCommandParserTest {
+
+    private UploadPhotoCommandParser parser = new UploadPhotoCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsUploadPhotoCommand() throws IllegalValueException {
+        assertParseSuccess(parser, "1", new UploadPhotoCommand(INDEX_FIRST_PERSON, new Photo()));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, UploadPhotoCommand.MESSAGE_USAGE));
     }
 }
 ```
