@@ -78,7 +78,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Updates AutoCompleteList according to current TextField input
+     * Updates AutoCompleteList according to current {@code commandTextField} input
      */
     public void updateAutoCompleteList() {
         logic.updateAutoCompleteList(commandTextField.getText());

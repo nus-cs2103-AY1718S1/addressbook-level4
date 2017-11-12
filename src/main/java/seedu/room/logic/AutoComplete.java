@@ -7,8 +7,8 @@ import seedu.room.model.person.ReadOnlyPerson;
 
 //@@author shitian007
 /**
- * AutoComplete class integrated into LogicManager to keep track of current set
- * of autocomplete suggestions
+ * AutoComplete class integrated into {@code Logic} to keep track of current set
+ * of autocomplete suggestions according to user input
  */
 public class AutoComplete {
 
@@ -29,7 +29,7 @@ public class AutoComplete {
 
     /**
      * Updates AutoComplete suggestions according to user typed input
-     * @param userInput
+     * @param userInput determines suggestions
      */
     public void updateAutoCompleteList(String userInput) {
         switch (userInput) {
@@ -59,7 +59,10 @@ public class AutoComplete {
         }
     }
 
-    // Concatenate Persons to suggestions when command typed
+    /**
+     * @param command typed in by the user
+     * @return String array of suggestions with the index/name of the list of the displayed residents appended
+     */
     private String[] getConcatResidentsArray(String command) {
         String[] newAutoCompleteList = new String[personsStringArray.size()];
         for (int i = 0; i < personsStringArray.size(); i++) {
@@ -73,14 +76,14 @@ public class AutoComplete {
     }
 
     /**
-     * Reset autocomplete suggestions to base commands
+     * Reset {@code autoCompleteList} list to base commands
      */
     public void resetAutocompleteList() {
         this.autoCompleteList = BASE_COMMANDS;
     }
 
     /**
-     * Update array of persons suggestions when list modified
+     * Update {@code personStringArray} when list in {@code Model} model modified
      */
     public void updatePersonsArray() {
         personsStringArray.clear();
@@ -90,9 +93,8 @@ public class AutoComplete {
     }
 
     /**
-     * Getter for auto-complete list suggestions
+     * @return Last updated array of suggestions
      */
-    // Update array of persons suggestions when list modified
     public String[] getAutoCompleteList() {
         return autoCompleteList;
     }

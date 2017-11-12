@@ -28,7 +28,7 @@ import seedu.room.model.person.ReadOnlyPerson;
 
 //@@author shitian007
 /**
- * The person information panel of the app.
+ * An UI Component that displays additional information for a selected {@code Person}
  */
 public class PersonPanel extends UiPart<Region> {
 
@@ -37,7 +37,7 @@ public class PersonPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
 
-    private ReadOnlyPerson person;
+    private ReadOnlyPerson resident;
 
     @FXML
     private ImageView picture;
@@ -79,21 +79,23 @@ public class PersonPanel extends UiPart<Region> {
     }
 
     /**
-     * loads the selected person's information to be displayed.
+     * Loads the properties of the selected {@code Person}
+     * This method is called whenever an update is made to the selected resident or a new resident is selected
+     * @param resident whose properties are updated in the Person Panel UI
      */
-    private void loadPersonInformation(ReadOnlyPerson person) {
-        this.person = updatePersonFromLogic(person);
-        name.textProperty().setValue(person.getName().toString());
-        phone.textProperty().setValue(person.getPhone().toString());
-        address.textProperty().setValue(person.getRoom().toString());
-        email.textProperty().setValue(person.getEmail().toString());
+    private void loadPersonInformation(ReadOnlyPerson resident) {
+        this.resident = updatePersonFromLogic(resident);
+        name.textProperty().setValue(resident.getName().toString());
+        phone.textProperty().setValue(resident.getPhone().toString());
+        address.textProperty().setValue(resident.getRoom().toString());
+        email.textProperty().setValue(resident.getEmail().toString());
         initTags();
         initImage();
         enableButtons(true);
     }
 
     /**
-     * @param state Set button status
+     * @param state of button set
      */
     private void enableButtons(boolean state) {
         this.addImageButton.setDisable(!state);
@@ -101,14 +103,14 @@ public class PersonPanel extends UiPart<Region> {
     }
 
     /**
-     * @param person whose image is to be updated within the filtered persons list
-     * @return the updated person
+     * @param resident whose image is to be updated within the filtered persons list
+     * @return a {@code Person} that is the updated resident
      */
-    private ReadOnlyPerson updatePersonFromLogic(ReadOnlyPerson person) {
+    private ReadOnlyPerson updatePersonFromLogic(ReadOnlyPerson resident) {
         List<ReadOnlyPerson> personList = logic.getFilteredPersonList();
         for (ReadOnlyPerson p : personList) {
-            if (p.getName().toString().equals(person.getName().toString())
-                    && p.getPhone().toString().equals(person.getPhone().toString())) {
+            if (p.getName().toString().equals(resident.getName().toString())
+                    && p.getPhone().toString().equals(resident.getPhone().toString())) {
                 return p;
             }
         }
@@ -116,11 +118,11 @@ public class PersonPanel extends UiPart<Region> {
     }
 
     /**
-     * Sets a background color for each tag.
+     * Sets a background color for each tag of the selected {@code Person}
      */
     private void initTags() {
         tags.getChildren().clear();
-        person.getTags().forEach(tag -> {
+        resident.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-background-color: " + tag.getTagColor());
             tags.getChildren().add(tagLabel);
@@ -128,7 +130,7 @@ public class PersonPanel extends UiPart<Region> {
     }
 
     /**
-     * Initializes image for every person in person card
+     * Initializes image for the selected resident {@code Person}
      */
     private void initImage() {
         try {
@@ -140,12 +142,12 @@ public class PersonPanel extends UiPart<Region> {
                 ;
             }
         }
-        picture.setFitHeight(person.getPicture().PIC_HEIGHT);
-        picture.setFitWidth(person.getPicture().PIC_WIDTH);
+        picture.setFitHeight(resident.getPicture().PIC_HEIGHT);
+        picture.setFitWidth(resident.getPicture().PIC_WIDTH);
     }
 
     /**
-     * Button handler for adding image to person
+     * GUI Button handler for adding image to resident
      */
     @FXML
     private void handleAddImage() {
@@ -153,33 +155,35 @@ public class PersonPanel extends UiPart<Region> {
         File selectedPic = picChooser.showOpenDialog(null);
         if (selectedPic != null) {
             try {
-                person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
-                logic.updatePersonListPicture((Person) person);
-                if (person.getPicture().checkJarResourcePath()) {
-                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getJarPictureUrl()));
-                    FileInputStream fileStream = new FileInputStream(person.getPicture().getJarPictureUrl());
-                    Image newPicture = new Image(fileStream);
-                    picture.setImage(newPicture);
+                resident.getPicture().setPictureUrl(resident.getName().toString()
+                    + resident.getPhone().toString() + ".jpg");
+                logic.updatePersonListPicture((Person) resident);
+                FileInputStream fileStream;
+                if (resident.getPicture().checkJarResourcePath()) {
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg",
+                        new File(resident.getPicture().getJarPictureUrl()));
+                    fileStream = new FileInputStream(resident.getPicture().getJarPictureUrl());
                 } else {
-                    ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
-                    FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
-                    Image newPicture = new Image(fileStream);
-                    picture.setImage(newPicture);
+                    ImageIO.write(ImageIO.read(selectedPic), "jpg",
+                        new File(resident.getPicture().getPictureUrl()));
+                    fileStream = new FileInputStream(resident.getPicture().getPictureUrl());
                 }
+                Image newPicture = new Image(fileStream);
+                picture.setImage(newPicture);
             } catch (Exception e) {
-                System.out.println(e + "Cannot set Image of person");
+                System.out.println(e + "Cannot set Image of resident");
             }
         }
     }
 
     /**
-     * Button handler for resetting a person's image
+     * GUI Button handler for resetting a resident's image
      */
     @FXML
     private void handleResetImage() {
         try {
-            person.getPicture().resetPictureUrl();
-            if (person.getPicture().checkJarResourcePath()) {
+            resident.getPicture().resetPictureUrl();
+            if (resident.getPicture().checkJarResourcePath()) {
                 initJarImage();
             } else {
                 initProjectImage();
@@ -191,9 +195,10 @@ public class PersonPanel extends UiPart<Region> {
 
     /**
      * Handle loading of image during development
+     * @throws FileNotFoundException when image url is invalid
      */
     public void initProjectImage() throws FileNotFoundException {
-        File picFile = new File(person.getPicture().getPictureUrl());
+        File picFile = new File(resident.getPicture().getPictureUrl());
         FileInputStream fileStream = new FileInputStream(picFile);
         Image personPicture = new Image(fileStream);
         picture.setImage(personPicture);
@@ -202,12 +207,13 @@ public class PersonPanel extends UiPart<Region> {
 
     /**
      * Handle loading of image in production (i.e. from jar file)
+     * @throws FileNotFoundException when image url is invalid
      */
     public void initJarImage() throws FileNotFoundException {
-        InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+        InputStream in = this.getClass().getResourceAsStream(resident.getPicture().getJarPictureUrl());
         Image personPicture = new Image(in);
         picture.setImage(personPicture);
-        person.getPicture().setJarResourcePath();
+        resident.getPicture().setJarResourcePath();
         informationPane.getChildren().add(picture);
     }
 
