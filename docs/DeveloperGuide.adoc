@@ -509,8 +509,8 @@ image::LockSequenceDiagram.png[width="800"]
 
 The favourite mechanism is very similar to the one used in edit command. The feature follows the sequence of steps:
 
-. `AddressBookParser` calls upon `FavouriteCommandParser`, which in turn calls upon `FavouriteCommand` and parses the argument as an index.
-. The person identified by the index in `AddressBook` is replaced with a new person that has its `favourite` instance inverted to either `true` or `false`.
+. `AddressBookParser` calls upon `FavouriteCommandParser`, which parses the argument as an index and creates a FavouriteCommand object.
+. The person identified by the index (personToFavourite) in `AddressBook` is replaced with a new person (favouritedPerson) that has its `favourite` instance inverted to either `true` or `false`.
 . The `favouritePerson` method in AddressBook then creates two `UniquePersonList` to implement the sorting. Persons with `favourite` = `true` will be sorted into the `favouriteList`. Persons with `favourite` = `false` will be sorted into the `notFavouriteList`.
 . The two lists will then be merged into the `persons` list in `AddressBook`, with `favouriteList` being at the top.
 
@@ -540,15 +540,30 @@ public class FavouriteCommand extends UndoableCommand {
 }
 ----
 
-==== Design Consideration
+==== Design Considerations
 
 **Aspect:** Sorting of contact list with favourites +
-**Alternative 1 (current choice):** Create two lists to overwrite original order. +
+**Alternative 1 (current choice):** Favourited contacts are sorted separately. +
+**Pros:** Favourite contact remains at the top of the list. +
+**Cons:** Does not preserve the original order of the favourite contacts list. +
+**Alternative 2:** All contacts sorted in order +
 **Pros:** Easy to implement. +
-**Cons:** Does not preserve the original order of the contact list. +
-**Alternative 2:** Save the favourite contacts in a separate list without overwriting the original contact list +
-**Pros:** Does not mess up the original order. +
-**Cons:** Will use more memory (significant if favourite/contact list is large).
+**Cons:** Favourite contacts are no longer at the top of the list after sorting. +
+**Alternative 3:** Favourite contacts are not included in sorting +
+**Pros:** Preserves original order of favourites. Favourite contacts remain at the top of the list. +
+**Cons:** User may want to sort favourites if list is large. +
+
+---
+
+**Aspect:** Unfavouriting contacts in a sorted list +
+**Alternative 1 (current choice):** Contact removed from favourites is pushed to bottom of favourite list. +
+**Pros:** Easy to implement. +
+**Cons:** Does not follow the order of the sorting. User have to re-enter desired sort command after unfavouriting to get the correct order. +
+**Alternative 2:** Unfavourited contact automatically sorted according to last used sort command +
+**Pros:** Automatically sorts the list without having to type another command. +
+**Cons:** User may not want the unfavourited contact to be sorted. +
+
+
 
 // tag::tdo[]
 === Todo mechanism
@@ -634,9 +649,9 @@ try {
 
 === Enhance Add command
 
-The add command is enhanced to allow empty fields for phone, address and email. Mechanism of the command is exactly the same as previous, with the addition of a `initialiseEmptyFields` method in `AddCommandParser`. The `initialiseEmptyFields` method appends the prefix of each empty field followed by a '-' instead of throwing a `ParseException` if fields are empty.
+The add command is enhanced to allow user to leave certain fields empty (phone, address and email). Mechanism of the command is exactly the same as before, with the addition of a `initialiseEmptyFields` method in `AddCommandParser`. The `initialiseEmptyFields` method appends the prefix of each empty field followed by a '-' instead of throwing a `ParseException` if fields are empty.
 
-The code below shows how the `initiliseEmptyFields` method is implemented:
+The code below shows how the `initialiseEmptyFields` method is implemented:
 
 [source,java]
 ----
@@ -653,6 +668,8 @@ private static String initialiseEmptyFields(String args) {
     return args;
 }
 ----
+
+
 
 === Enhance Undo/Redo command
 
