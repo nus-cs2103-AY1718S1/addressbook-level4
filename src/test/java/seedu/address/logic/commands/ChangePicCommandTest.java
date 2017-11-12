@@ -3,11 +3,11 @@ package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PICTURE_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.model.person.ProfilePicture.DEFAULT_PICTURE;
+import static seedu.address.model.util.SampleDataUtil.SAMPLE_PICTURE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -38,7 +38,7 @@ public class ChangePicCommandTest {
     public void execute_changepic_success() throws Exception {
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .build();
-        editedPerson.setProfilePicture(new ProfilePicture(VALID_PICTURE_PATH));
+        editedPerson.setProfilePicture(new ProfilePicture(SAMPLE_PICTURE));
 
         ChangePicCommand changePicCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getProfilePicture().value);
 
@@ -56,7 +56,7 @@ public class ChangePicCommandTest {
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(personInFilteredList).build();
-        editedPerson.setProfilePicture(new ProfilePicture(VALID_PICTURE_PATH));
+        editedPerson.setProfilePicture(new ProfilePicture(SAMPLE_PICTURE));
         ChangePicCommand changePicCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getProfilePicture().value);
         String expectedMessage = String.format(ChangePicCommand.MESSAGE_CHANGEPIC_SUCCESS, editedPerson.getName());
 
@@ -69,7 +69,7 @@ public class ChangePicCommandTest {
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        ChangePicCommand changePicCommand = prepareCommand(outOfBoundIndex, VALID_PICTURE_PATH);
+        ChangePicCommand changePicCommand = prepareCommand(outOfBoundIndex, SAMPLE_PICTURE);
 
         assertCommandFailure(changePicCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -85,7 +85,7 @@ public class ChangePicCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        ChangePicCommand changePicCommand = prepareCommand(outOfBoundIndex, VALID_PICTURE_PATH);
+        ChangePicCommand changePicCommand = prepareCommand(outOfBoundIndex, SAMPLE_PICTURE);
 
         assertCommandFailure(changePicCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -108,10 +108,10 @@ public class ChangePicCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new ChangePicCommand(INDEX_SECOND_PERSON, VALID_PICTURE_PATH)));
+        assertFalse(standardCommand.equals(new ChangePicCommand(INDEX_SECOND_PERSON, SAMPLE_PICTURE)));
 
         // different groups -> returns false
-        assertFalse(standardCommand.equals(new ChangePicCommand(INDEX_FIRST_PERSON, VALID_PICTURE_PATH)));
+        assertFalse(standardCommand.equals(new ChangePicCommand(INDEX_FIRST_PERSON, SAMPLE_PICTURE)));
     }
 
     /**
