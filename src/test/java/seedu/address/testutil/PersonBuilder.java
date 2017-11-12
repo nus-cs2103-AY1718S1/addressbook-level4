@@ -128,6 +128,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Person} that we are building to be hidden.
+     */
+    public PersonBuilder withHidden(boolean isPinned) {
+        this.person.setPrivate(isPinned);
+        return this;
+    }
+
     //@@author wynkheng
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.

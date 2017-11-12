@@ -136,6 +136,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void unhidePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void pinPerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }

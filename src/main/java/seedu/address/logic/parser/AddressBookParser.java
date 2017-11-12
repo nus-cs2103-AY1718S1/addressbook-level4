@@ -33,12 +33,14 @@ import seedu.address.logic.commands.person.FindPinnedCommand;
 import seedu.address.logic.commands.person.HideCommand;
 import seedu.address.logic.commands.person.ListAliasCommand;
 import seedu.address.logic.commands.person.ListCommand;
+import seedu.address.logic.commands.person.ListHiddenCommand;
 import seedu.address.logic.commands.person.ListPinCommand;
 import seedu.address.logic.commands.person.PinCommand;
 import seedu.address.logic.commands.person.RemarkCommand;
 import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.commands.person.ShowBirthdaysCommand;
 import seedu.address.logic.commands.person.SortCommand;
+import seedu.address.logic.commands.person.UnhideCommand;
 import seedu.address.logic.commands.person.UnpinCommand;
 import seedu.address.logic.commands.task.ListTaskCommand;
 import seedu.address.logic.commands.task.MarkTaskCommand;
@@ -58,6 +60,7 @@ import seedu.address.logic.parser.person.PinCommandParser;
 import seedu.address.logic.parser.person.RemarkCommandParser;
 import seedu.address.logic.parser.person.SelectCommandParser;
 import seedu.address.logic.parser.person.SortCommandParser;
+import seedu.address.logic.parser.person.UnhideCommandParser;
 import seedu.address.logic.parser.person.UnpinCommandParser;
 import seedu.address.logic.parser.task.AddTaskCommandParser;
 import seedu.address.logic.parser.task.DeleteTaskCommandParser;
@@ -240,6 +243,20 @@ public class AddressBookParser {
                 throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
             }
 
+        case UnhideCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new UnhideCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
+
+
         case FindCommand.COMMAND_WORD:
             if (isAliasEnabled) {
                 throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
@@ -286,6 +303,19 @@ public class AddressBookParser {
             }
             if (isPersonEnabled && !isTaskEnabled) {
                 return new SortCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
+
+        case ListHiddenCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new ListHiddenCommand();
             } else {
                 throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
             }
@@ -520,7 +550,9 @@ public class AddressBookParser {
         commandMap.put("redo", null);
         commandMap.put("undo", null);
         commandMap.put("parent", null);
-        commandMap.put("disable.p", null);
+        commandMap.put("child", null);
+        commandMap.put("listhidden", null);
+        commandMap.put("showbirthdays", null);
     }
 
     public boolean isCommandRegistered(String header) {

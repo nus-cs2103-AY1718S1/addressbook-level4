@@ -28,6 +28,8 @@ public interface Model {
     //@@author
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_NOT_HIDDEN = person -> !person.isPrivate();
 
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ONLY_HIDDEN = person -> person.isPrivate();
+
     Predicate<ReadOnlyTask> PREDICATE_SHOW_ALL_TASKS = unused -> true;
 
     /**
@@ -52,7 +54,13 @@ public interface Model {
      */
     void hidePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    /**
+     * Unhides the given person.
+     */
+    void unhidePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
     //@@author Alim95
+
     /**
      * Pins the given person.
      */
@@ -91,6 +99,7 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     //@@author Alim95
+
     /**
      * Sorts the AddressBook.
      */

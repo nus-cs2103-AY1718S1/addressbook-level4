@@ -40,6 +40,8 @@ public interface ReadOnlyPerson {
 
     Set<Tag> getTags();
 
+    ObjectProperty<Boolean> hideProperty();
+    
     boolean isPrivate();
 
     //@@author Alim95
