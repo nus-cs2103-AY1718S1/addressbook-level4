@@ -116,9 +116,9 @@ public class PersonBuilder {
     /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
-    public PersonBuilder withEmail(String... email) {
+    public PersonBuilder withEmail(String... emails) {
         try {
-            this.person.setEmail(SampleDataUtil.getEmailSet(email));
+            this.person.setEmail(SampleDataUtil.getEmailSet(emails));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }

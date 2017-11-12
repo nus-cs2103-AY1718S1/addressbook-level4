@@ -94,7 +94,7 @@ public class ParserUtil {
     public static ArrayList<Email> parseEmail(Collection<String> email) throws IllegalValueException {
         final ArrayList<Email> temp = new ArrayList<>();
         if (email == null) {
-            temp.add(new Email("empty@email.com"));
+            temp.add(new Email());
         } else {
             for (String e : email) {
                 temp.add(new Email(e));

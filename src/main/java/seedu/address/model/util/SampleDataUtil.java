@@ -80,8 +80,12 @@ public class SampleDataUtil {
      * */
     public static ArrayList<Email> getEmailSet(String... emails) throws IllegalValueException {
         ArrayList<Email> emailList = new ArrayList<>();
-        for (String e : emails) {
-            emailList.add(new Email(e));
+        if (emails == null) {
+            emailList.add(new Email());
+        } else {
+            for (String e : emails) {
+                emailList.add(new Email(e));
+            }
         }
         return emailList;
     }
