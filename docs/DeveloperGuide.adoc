@@ -865,6 +865,35 @@ pressing the kbd:[esc] key will result in the application focusing on the person
 
 // end::shortcut[]
 
+// tag::auto-complete-shortcut[]
+=== Auto-complete Command Shortcuts
+The link:#shortcut[Keyboard Shortcut Mechanism] is the foundation of this implementation.
+
+When an auto-complete command shortcut is pressed, the corresponding command format will be displayed.
+The following codes shows the example for `add` command shortcut.
+
+[source,java]
+----
+private void executeKeyEvents(KeyEvent keyEvent) {
+    if (KEY_COMBINATION_ADD.match(keyEvent)) {
+        displayCommandFormat(AddCommand.FORMAT);
+    }
+    // … more cases
+}
+----
+
+The `displayCommandFormat` method simulates entering the command word followed by pressing kbd:[Tab].
+The method implementation is shown below.
+
+[source,java]
+----
+private void displayCommandFormat(String command) {
+    commandBox.replaceText(command);
+    commandBox.pressTab();
+}
+----
+// end::auto-complete-shortcut[]
+
 [[detailPanel]]
 === Person Detail Panel
 
