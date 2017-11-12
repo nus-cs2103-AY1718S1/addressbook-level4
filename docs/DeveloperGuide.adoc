@@ -713,7 +713,9 @@ The following activity diagram summarises what happens inside the `ShareCommand`
 image::DG_activity_share.png[width="700"]
 
 {sp}
+
 ==== Prerequisites/Dependencies
+
 The sharing of contacts by email function requires an external library. You have to add `compile 'javax.mail:mail:1.4.7'` to dependencies in `build.gradle` file. as shown below.
 
 [source,java]
