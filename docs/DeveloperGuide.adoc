@@ -18,7 +18,7 @@ By: `CS2103AUG2017-W09-B4`      Since: `Aug 2017`      Licence: `MIT`
 
 === About Bamboo
 
-Bamboo is a command-line interface (CLI) based address book application.
+Bamboo is a command-line interface (CLI) based address book application directed at students.
 It is a one-stop solution to help you manage your contacts in an efficient and
 convenient manner. Using Bamboo, you can organize contacts into groups,
 find common schedules and get connected to your contacts’ social media platforms.
@@ -26,11 +26,14 @@ find common schedules and get connected to your contacts’ social media platfor
 === Purpose
 
 This document serves as the developers' guide for developing Bamboo.
-It assumes that you have an intermediate understanding of Java.
+It assumes that you have an intermediate level of understanding of Java.
 It describes how to start developing Bamboo with the Intellij IDE,
 as well as the structure of various components in the Bamboo application.
 
 == Setting up
+
+This section provides developers with the steps required to set up everything before beginning development
+on Bamboo.
 
 === Prerequisites
 
@@ -126,7 +129,7 @@ link:#common-classes[*`Commons`*] represents a collection of classes used by mul
 
 The rest of the App consists of four components:
 
-* link:#ui-component[*`UI`*] : The UI of the App.
+* link:#ui-component[*`UI`*] : The user interface of the application.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
@@ -164,36 +167,40 @@ The sections below give more details of each component.
 
 === UI component
 
+The `UI` component, or user interface, houses all the different front-end components that users see upon running
+Bamboo. It allows users to interact with Bamboo through its components, such as buttons and input boxes.
+
 image::UiClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
 
-*TODO: Edit diagram towards the end to reflect final names or changes*
-
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts (e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `GroupListPanel`, `StatusBarFooter`, `ContactDetailsPanel`, etc.). All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts (e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `GroupListPanel`, `StatusBarFooter`, `MainContactPanel`, etc.). All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 `.fxml` files should only be used to *define the basic layout or content placeholders* in the UI. *Actual content values should be instantiated by code* as much as possible.
 
-The `.fxml` files may not immediately reflect all the UI parts that are seen on run-time. This is because some UI parts are instantiated by code only on run-time, so opening the `.fxml` files in Scene Builder will not show certain parts of the UI
+The `.fxml` files may not immediately reflect all the UI parts that are seen in `Scene Builder`. This is because some UI parts are instantiated by code only on run-time, so opening the `.fxml` files in `Scene Builder` will not show certain parts of the UI
 (e.g. the circular contact image in the contact details panel, instantiated inside `setContactImage()` in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetailsPanel.java[`ContactDetailsPanel.java`]).
 
-The `UI` component does the following:
+The `UI` component does the following things:
 
 * Uses `.fxml` and resource files (e.g. images, fonts) in `src\main\resources` that gives the application its look.
 * Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` changes.
+* Binds itself to some data in the `Model` so that the UI can automatically update when data in the `Model` component changes.
 * Responds to events raised from various parts of the application (through event subscribers such as `handlePersonPanelSelectionChangedEvent` in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetailsPanel.java[`ContactDetailsPanel.java`]) and updates the UI accordingly.
 * Animates certain parts of the application, mostly in the contact details panel.
 
 === Logic component
 
+The `Logic` component houses the main logical components of the application, which processes commands
+entered by users and handles them accordingly.
+
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 2.3.2 : Structure of Commands in the Logic Component_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -210,6 +217,8 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
+The `Model` component houses all the main data of Bamboo (e.g. contact details, schedules, numbers, etc.).
+
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
@@ -223,6 +232,9 @@ The `Model`,
 * does not depend on any of the other three components.
 
 === Storage component
+
+The `Storage` component reads data from the hard disk and writes to it as well. This gives
+Bamboo data persistence, so that data does not disappear upon closing Bamboo.
 
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
@@ -371,7 +383,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 // tag::sort[]
 === Sorting
-The sort mechanism is facilitated by `SortCommand`, which extends `UndoableCommand`.
+The sorting mechanism is facilitated by `SortCommand`, which extends `UndoableCommand`.
 It supports the sorting of persons in the address book by the `PREFIX` specified.
 If the `r` flag is specified, the list of persons will be sorted in descending order.
 
@@ -388,11 +400,11 @@ original starting order as when the App initializes.
 
 === Finding
 The finding mechanism is facilitated by `FindCommand`, which extends `Command`.
-It supports finding a list of specific persons by offering any substring of person's contact field
-(including name, by default, phone numbers, email, address or even their tags) with `PREFIX` specified.
+It supports finding a list of specific persons by entering any substring of a person's contact field.
+This includes a person's name, phone number, email, address or even their tags with `PREFIX` specified.
 
-Finding a person is facilitated using PartialSearchUtil which examine whether a base list contains any word whose
-substring appears in the target list. Mapping each attribute to the find Parser and returns a list of persons
+Finding a person is facilitated using `PartialSearchUtil`, which examines whether a base list contains any word whose
+substring appears in the target list. It maps each attribute to the `find` parser and returns a list of persons
 matching find condition.
 
 ==== Design Considerations
@@ -418,6 +430,7 @@ any future changes to these classes may be more contrived and difficult.
 **Pros:** Sorting order is preserved after program exits. +
 **Cons:** The original order of the address book is lost during every sort.
 // end::sort[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -443,59 +456,59 @@ Certain properties of the application can be controlled (e.g App name, logging l
 The commands related to the Favourite system rely on the `Favourite` attribute class which is a `model` component.
 
 ==== Add & Remove contact from Favourites (since V1.2)
-**Adding a Favourite:** This feature's functions are mainly contained in the command class `AddFavouriteCommand` with it's
+**Adding a Favourite:** This feature's functions are mainly contained in the command class `AddFavouriteCommand` with its
 supporting parser class `AddFavouriteCommandParser`:
 
 * `AddFaveCommandParser`: This class is called by `AddressBookParser` and handles the parsing of the index argument and
-passes the parsed index on to an initialised **AddFavouriteCommand** object.
+passes the parsed index into an initialised **AddFavouriteCommand** object.
 
 * `AddFavouriteCommand`: You may modify the command word (fadd), usage instructions and all other functions necessary for
 the command to mark a `Person` as a Favourite in this class. +
-The current implementation takes in the parsed index, retrieves the `Person` object of the parsed index, set's the
+The current implementation takes in the parsed index, retrieves the `Person` object of the parsed index, sets the
 `Favourite` attribute to true and updates the in-memory model list of **Persons** with the updated **Person**.
 
 **Removing a Favourite:** This feature's functions are mainly contained in the command class `RemoveFavouriteCommand` with
- it's supporting parser class `RemoveFavouriteCommandParser`:
+ its supporting parser class `RemoveFavouriteCommandParser`:
 
 * `RemoveFaveCommandParser`: This class is called by `AddressBookParser` and handles the parsing of the index argument and
-passes the parsed index on to an initialised **RemoveFavouriteCommand** object.
+passes the parsed index into an initialised **RemoveFavouriteCommand** object.
 
 * `RemoveFavouriteCommand`: You may modify the command word (fremove), usage instructions and all other functions necessary for
 the command to unmark a `Person` as a Favourite in this class. +
 The current implementation of this function works exactly like it does in `AddFavouriteCommand` except that the `Person`
 retreived from the parsed index has their `Favourite` attribute updated to false.
 
-==== Listing of only Favourite contacts (Since V1.3)
+==== Listing of only Favourite contacts (since V1.3)
 
-**List command option:** The **list** command can now list only contacts marked as favourites with "list /f" +
-This feature works by updating the model's person filteredList with the predicate **isFavourite()** in `ListCommand`.
+**List command option:** The **list** command can now list only contacts marked as favourites with "list /f".
+This feature works by updating the model's `filteredList` of `Person` objects with the predicate **isFavourite()** in `ListCommand`.
 
-==== Other modifications to existing components to handle favourites (Since V1.4)
+==== Other modifications to existing components to handle favourites (since V1.4)
 
-`UniquePersonList`: The **setPerson()** function that is called whenever a **Person** object has been modified to to
-also change a **Person's** order in the model list if their **Favourite** attribute's value has been changed.
+`UniquePersonList`: The **setPerson()** function (that is called whenever a **Person** object has been modified)
+also changes a `Person`'s order in the model list if their **Favourite** attribute's value has been changed.
 
 * If the **Favourite**'s value has been changed to true, the modified **Person** is removed from the internal model list and
 reinserted at the top of the list among the other favourites in lexicographical order.
 
-* If the **Favourite**'s value has been changed to false, the modified **Person** moved from it's position among the favourites
-and inserted into the position after the last favourite person in the internal model list
+* If the **Favourite**'s value has been changed to false, the modified **Person** is moved from its position among the favourites
+and inserted into the position after the last favourite person in the internal model list.
 // end::faveSystem[]
 
 // tag::profPicSystem[]
 === Profile Picture Feature
-A user's profile picture is retrieved by and displayed in the UI class `MainContactPanel` with **setContactImage(Person)**
-a contact's  path stored in a contact's `ProfPic` person attribute and can be modified with the use of 2 commands
-explain below.
+A user's profile picture is retrieved by and displayed in the UI class `MainContactPanel` with **setContactImage(Person)**.
+A contact's path stored in a contact's `ProfPic` person attribute can be modified with the use of 2 commands
+explained below.
 
-==== Setting profile picture (Since V1.4)
+==== Setting profile picture (since V1.4)
 **Setting a new profile picture**: This feature's functions are mainly contained in the command class `SetPictureCommand`
-with it's supporting parser class `SetPictureCommandParser`:
+with its supporting parser class `SetPictureCommandParser`:
 
 * `SetPictureCommandParser`: This class is called by `AddressBookParser` and handles the parsing of the index argument
-and provided filepath and passes the parsed index and filepath on to an initialised **SetPictureCommand** object.
+and provided filepath, then passes the parsed index and filepath into an initialised **SetPictureCommand** object.
 
-* `SetPictureCommand`: You may modify the command word (ppset) and it's syntax, usage instructions and all other functions necessary for
+* `SetPictureCommand`: You may modify the command word (ppset) and its syntax, usage instructions and all other functions necessary for
 the set picture command in this class. +
 The current implementation takes in the parsed index and filepath and stores them. Then,
 
@@ -504,10 +517,10 @@ The current implementation takes in the parsed index and filepath and stores the
 ** The verified .png is then copied to the local folder **images** of the application and stored under the contact name of the
  provided index as **images\contactName.png**
 
-** The **Person** provided by the index has it's `ProfPic` attribute's path var modified to **contactName.png** and
+** The **Person** provided by the index has its `ProfPic` attribute's path var modified to **contactName.png** and
 the modified **Person** saved to the in-memory model list of **Persons**
 
-==== Resetting profile picture (Since V1.4)
+==== Resetting profile picture (since V1.4)
 **Resetting a contact's profile picture** This feature's functions are mainly contained in the command class `ResetPictureCommand`
 with it's supporting parser class `ResetPictureCommandParser`:
 
@@ -525,21 +538,21 @@ attribute's path var to the default "maleIcon.png before saving the modified **P
 
 ==== Layout of the user interface (since V1.1)
 
-The application uses various panels such as `StackPanes` and `BorderPanes` defined in `.fxml` files that define the basic layout, with no content inside of it.
+The application uses various panels such as `StackPanes` and `BorderPanes` inside `.fxml` files that define the basic layout, with no content inside of it.
 Content is usually created or instantiated by code.
 
 ==== Layout of the contact details panel (since V1.2)
 
-The contact details *main* panel (ContactDetailsPanel.fxml) uses a 2x2 `GridPane` to show the following:
+The main contact panel (MainContactPanel.fxml) uses a 2x2 `GridPane` to show the following:
 
  * Contact's image
  * Contact's details
  * Four social media icons
- * Common available schedules with the contact
+ * Contact's schedule
 
 ==== Layout of contact's image and social icons (since V1.2)
 
-The (0, 0) and (1, 0) cells of the contact details main panel contains nested `BorderPane` objects. These `BorderPanes` then create `Circle` objects.
+The (0, 0) and (1, 0) cells of the main contact panel contain nested `BorderPane` objects. These `BorderPanes` then create `Circle` objects.
 
 These `Circle` objects are created when the `setContactImage()` and `setIcons()` methods are run. These two methods run inside `handlePersonPanelSelectionChangedEvent()` when the user selects a person in the person list panel.
 
@@ -548,16 +561,16 @@ A `BorderPane` supports both positioning and resizing of objects inside of it.
 
 ==== Layout of the contact's details (since V1.2)
 
-The (1,0) cell of the contact details main panel contains a `VBox` object that creates four empty `Label` objects in `setupContactDetailsBox()`.
+The (1,0) cell of the main contact panel contains a `VBox` object that creates four empty `Label` objects in `setupContactDetailsBox()`.
 The values of these `Label` objects are updated in `setContactDetails()` when a person is selected in the person list panel.
 
 The `setContactDetails()` method takes in a `ReadOnlyPerson` object as an argument, which holds the values of a person's contact details that are used to update the `Label` objects.
 
 ==== Animation in the contact details panel (since V1.2)
 
-UI parts (nodes) in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetailsPanel.java[`ContactDetailsPanel.java`] are passed into a method called `easeIn` in the same file. This method takes in any node(s) and animates it through the use of various `Transitions`.
+UI parts (nodes) in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetailsPanel.java[`ContactDetailsPanel.java`] are passed into a method called `easeIn` in the same file. This method takes in `Node` objects and animates them through the use of various `Transitions` objects.
 
-`ParallelTransition` is used to play multiple `Transition` objects simultaneously. In this case, it plays `FadeTransition` and `TranslateTransition` together, resulting in what looks like a fade-in from the right.
+`ParallelTransition` is used to play multiple `Transition` objects simultaneously. In this case, it plays `FadeTransition` and `TranslateTransition` together, resulting in what looks like text and images fading in from nothing.
 
 == Documentation
 
@@ -596,7 +609,7 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies. Refer to `5.3 Troubleshooting Testing` if test failures occur.
+The most reliable way to run tests is the third one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies. Refer to `5.3 Troubleshooting Testing` if test failures occur.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
