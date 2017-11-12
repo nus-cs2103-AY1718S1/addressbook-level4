@@ -492,7 +492,7 @@ image::facebook_post_sequence_diagram.png[width="800"]
 // tag::social-media-accounts[]
 === Social Media Accounts
 
-Information about contact's social media accounts are encapsulated by the `SocialInfo` class. The list of `SocialInfo` associated
+Information about contact's social media accounts are encapsulated by the `SocialInfo` class. The list of `SocialInfos` associated
 with a `Person` is handled by the `UniqueSocialInfoList`, which guarantees that at most one of each type of social media type is
 associated with the contact.
 
@@ -505,7 +505,7 @@ image::SocialInfoClassDiagram.png[width="800"]
 
 The form `SOCIAL_TYPE_IDENTIFIER USERNAME` is used to represent a `SocialInfo` as a parameter in a CLI command.
 The `SocialInfoMapping` class handles the mapping between the input `SOCIAL_TYPE_IDENTIFER` and the url format of the associated social media platform.
-A `Collection` of these raw social info parameters can then be passed to the `parseSocialInfo` method in the `SocialInfoMapping` class for parsing.
+A `Collection` of these raw social info parameters can be passed to the `parseSocialInfo` method in the `SocialInfoMapping` class for parsing.
 
 The following sequence diagram shows how input `rawSocialInfos` are parsed to obtain the appropriate `SocialInfos`:
 
@@ -574,7 +574,8 @@ which classes designed for each social platform will extend. +
 **Cons:** Difficult to handle marshalling/unmarshalling to XML format using the JAXB library.
 Adds significant complexity to the codebase when number of supported platforms grow. +
 **Additional Info:** An assessment of the major social media platforms shows that the username is sufficient to identify
-users on all the major platforms at present.
+users on all the major platforms at present. The first alternative was thus selected to ensure complexity of the codebase
+remains manageable as support for more social media platforms is added.
 
 ---
 
@@ -766,12 +767,14 @@ Each class that inherits from the `SortCommand` would then implement the `getCom
 ==== Design Considerations
 **Aspect:** Where sorting should be handled +
 **Alternative 1 (current choice):** Handle sorts at the `ModelManager` level using the Observer pattern +
-**Pros:** Sorting does not require IO operations, which are computationally more expensive compared to in-memory operations. +
+**Pros:** Sorting is performed on an in-memory list decoupled from the data file, and hence does not require IO operations which are
+computationally more expensive compared to in-memory operations. +
 **Cons:** Slightly longer startup time might be observed as the data file is not sorted and hence has to be sorted upon every startup. +
 **Alternative 2:** Handle sorts at the `AddressBook` level by sorting the `personList` directly +
 **Pros:** Startup might be faster as the data file should have already been sorted. Also reduces complexity of the `Model`
 as there is no need to maintain any additional data structures. +
-**Cons:** Every sort operation will require writing to the data file, which requires IO operations that are slower compared
+**Cons:** As the `personList` is supposed to mirror the data file, every sort operation will involve updating the data file
+in order to keep it in sync with the `personList`. This requires IO operations that are slower compared
 to in-memory operations.
 
 ---
