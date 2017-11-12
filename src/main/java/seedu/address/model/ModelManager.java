@@ -70,7 +70,6 @@ public class ModelManager extends ComponentManager implements Model {
         bookedList = new ArrayList<BookedSlot>();
         initializeBookedSlot();
         currentViewingAttribute = "default";
-        indicateAddressBookChanged();
     }
     //@@author
 
