@@ -1553,6 +1553,16 @@ The sorting algorithm lies in the `UniquePersonList` class where a self-defined 
 
 ---
 
+==== Design Considerations
+
+**Aspect:** What attributes to be sorted by the user. +
+**Alternative 1 (current choice):** Currently, the sort command only allows sorting the name of the contact list. +
+**Pros:** The most logical way is to sort by the name as all other attributes is associated to the name of the person in the list +
+**Cons:** User may want to sort by other attributes to allow better managing and retrieving of contacts +
+**Alternative 2:** implement sort by various attributes +
+**Pros:** Allows user to sort by attributes to their preference.  +
+**Cons:** Does not make any sense when sorting by attributes such as Phone number or address. +
+
 // end::sort[]
 
 == Documentation
