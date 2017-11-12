@@ -734,7 +734,7 @@ When the `Continue` button is pressed, `WelcomeScreen` will pass the `MainWindow
 
 ---
 
-**Aspect:** Enable and disable welcome screen +
+**Aspect:** Disabling welcome screen +
 **Alternative 1 (current choice)**: Users have the choice to enable or disable welcome screen. +
 **Pros:** Users who want the welcome screen to be displayed can save time by skipping the welcome screen.
 **Cons:** A new command must be created to cater to this purpose. +
