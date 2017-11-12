@@ -26,8 +26,8 @@ import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
 //@@author caoliangnus
 /**
- * Wraps all data at the address-book level
- * Duplicates are not allowed (by .equals comparison)
+ * The class is Addressbook, but this class wraps all data at module level
+ * A module contains lessons, lecturers and remarks
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
@@ -51,7 +51,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -74,6 +74,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    //@@author caoliangnus
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -96,7 +97,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds a lesson to the address book.
-     * Also checks the new lesson's lecturers and Ls {@link #lecturers} with any new lecturers found,
+     * Also checks the new lesson's lecturers {@link #lecturers} with any new lecturers found,
      * and updates the lecturer objects in the lesson to point to those in {@link #lecturers}.
      *
      * @throws DuplicateLessonException if an equivalent lesson already exists.
@@ -115,7 +116,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //@@author junming403
     /**
      * Adds a lesson to the marked list.
-     * Only person exists in the ModU can be added into the marked list.
+     * Only lesson exists in the ModU can be added into the marked list.
      *
      * @throws DuplicateLessonException if an equivalent lesson already exists.
      */
@@ -129,7 +130,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes a lesson from the marked list.
-     * Only person exists in the marked List can be unbookmarked from the marked list.
+     * Only lesson exists in the marked List can be unbookmarked from the marked list.
      */
     public void unBookmarkLesson(ReadOnlyLesson m) throws NotRemarkedLessonException {
         if (m.isMarked()) {
@@ -140,6 +141,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    //@@author caoliangnus
     /**
      * Replaces the given lesson {@code target} in the list with {@code editedReadOnlyLesson}.
      * {@code AddressBook}'s lecturers list will be updated with the lecturers of {@code editedReadOnlyLesson}.
@@ -248,6 +250,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    //@@author caoliangnus
     //// util methods
 
     @Override
@@ -273,6 +276,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    //@@author caoliangnus
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

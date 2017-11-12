@@ -62,6 +62,7 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author caoliangnus
 /**
  * The UI component that is responsible for receiving user command inputs.
  */
@@ -143,7 +144,7 @@ public class CommandBox extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    //@@author caoliangnus
+
     /**
      * This method create a list of prefix used in the command
      */
@@ -337,6 +338,8 @@ public class CommandBox extends UiPart<Region> {
         keywordLabel.setVisible(true);
 
         keywordLabel.getStyleClass().clear();
+
+        //These magic numbers are used for handling different font size
         Insets leftInset = new Insets(0, 0, 0, 17);
 
         switch (fontIndex) {
@@ -390,6 +393,8 @@ public class CommandBox extends UiPart<Region> {
 
         tagLabel.getStyleClass().clear();
         double margin = computeMargin(0, inputText);
+
+        //These magic numbers are used for handling different font size
         Insets leftInset = new Insets(0, 0, 0, margin + 17);
 
         switch (fontIndex) {

@@ -15,7 +15,7 @@ import seedu.address.model.lecturer.UniqueLecturerList;
 
 //@@author caoliangnus
 /**
- * Represents a Lesson in the address book.
+ * Represents a Lesson in the application.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Lesson implements ReadOnlyLesson {
