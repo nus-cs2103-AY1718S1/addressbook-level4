@@ -267,6 +267,78 @@ Family Lunch would be at index 5.
 
 To import data from a `.xml` file, we need to use the `import` command
 
+*Positive test cases*
+
+. If the XML file at `<BoNUS home folder>/bonus.xml` contains data recognizable by *BoNUS*, this command imports the
+data that do not exist in *BoNUS* into the application +
+_Command:_ +
+`import bonus.xml` +
+_Result:_ +
+`Imported data from: bonus.xml`
+
+*Negative test cases*
+
+. If the specified file is not found +
+_Command:_ +
+`import bonus.xml` +
+_Result:_ +
+`The specified file does not exist.`
+
+. If the specified file does not end with an extension of `.xml` +
+_Command:_ +
+`import bonus.notxml` +
+_Result:_ +
+`The file path does not point to an XML file.`
+
+. If a file name is not provided +
+_Command:_ +
+`import .xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. If the specified file name and any non-existent folder names contain any prohibited characters +
+_Command:_ +
+`import b%nus.xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. For `Windows` users, if the specified file path contains `/` as a name-separator +
+_Command:_ +
+`import folder/bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `maxOS` and `Linux` users, if the specified file path contains `\` as a name-separator +
+_Command:_ +
+`import folder\bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `Windows` users, if the specified file path contains consecutive name-separators `\\` +
+_Command:_ +
+`import folder\\bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. For `maxOS` and `Linux` users, if the specified file path contains consecutive name-separators `//` +
+_Command:_ +
+`import folder//bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. If the specified file path contains consecutive extension-separators `..` +
+_Command:_ +
+`import bonus..xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. If the data in the specified file is not recognizable by *BoNUS* +
+_Command:_ +
+`import bonus.xml` +
+_Result:_ +
+`The data in the specified XML file is not in the correct format as recognized by BoNUS.` +
+`Please try to import from another XML file.`
+
 ==== Import timetable from NUSMods website
 
 To import timetable from NUSMods website, we need to use the `import --nusmods` command.
@@ -307,6 +379,83 @@ _Result:_ +
 ==== Export data to `.xml` format
 
 To export data to a `.xml` file, we need to use the `export` command
+
+[NOTE]
+====
+Existing files will be overwritten.
+====
+
+*Positive test cases*
+
+. Exports the current data in *BoNUS* to `<BoNUS home folder>/bonus.xml` +
+_Command:_ +
+`export bonus.xml` +
+_Result:_ +
+`Exported address book data to: bonus.xml`
+
+. For `Windows` users, this command exports the current data in *BoNUS* to `<BoNUS home folder>\new_folder\bonus.xml`,
+after creating the non-existing folder `<BoNUS home folder>\new_folder` +
+_Command:_ +
+`export new_folder\bonus.xml` +
+_Result:_ +
+`Exported address book data to: new_folder\bonus.xml`
+
+. For `macOS` and `Linux` users, this command exports the current data in *BoNUS* to `<BoNUS home folder>/new_folder/bonus.xml`,
+after creating the non-existing folder `<BoNUS home folder>/new_folder` +
+_Command:_ +
+`export new_folder/bonus.xml` +
+_Result:_ +
+`Exported address book data to: new_folder/bonus.xml`
+
+*Negative test cases*
+
+. If the specified file does not end with an extension of `.xml` +
+_Command:_ +
+`export bonus.notxml` +
+_Result:_ +
+`The file path does not point to an XML file.`
+
+. If a file name is not provided +
+_Command:_ +
+`export .xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. If the specified file name and any non-existent folder names contain any prohibited characters +
+_Command:_ +
+`export b%nus.xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. For `Windows` users, if the specified file path contains `/` as a name-separator +
+_Command:_ +
+`export folder/bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `maxOS` and `Linux` users, if the specified file path contains `\` as a name-separator +
+_Command:_ +
+`export folder\bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `Windows` users, if the specified file path contains consecutive name-separators `\\` +
+_Command:_ +
+`export folder\\bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. For `maxOS` and `Linux` users, if the specified file path contains consecutive name-separators `//` +
+_Command:_ +
+`export folder//bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. If the specified file path contains consecutive extension-separators `..` +
+_Command:_ +
+`export bonus..xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
 
 === Advance setting
 
