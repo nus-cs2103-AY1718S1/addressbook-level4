@@ -70,19 +70,19 @@ public class PersonSelectionChangedEvent extends BaseEvent {
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
-        if (preppedWord.length() >= 2) {
-            if (TestIfWordIsInName(preppedWord, wordsInPreppedSentence)) return true;
+        if ((preppedWord.length() >= 2) && isWordInName(preppedWord, wordsInPreppedSentence)) {
+                return true;
         }
         return false;
     }
 
     /**
-     * Returns true if keyword is a substring of the name ignoring cases.
+     * Returns true if keyword is in the starting part of the name ignoring cases.
      * @param preppedWord
      * @param wordsInPreppedSentence
      * @return
      */
-    private static boolean TestIfWordIsInName(String preppedWord, String[] wordsInPreppedSentence) {
+    private static boolean isWordInName(String preppedWord, String[] wordsInPreppedSentence) {
         for (String wordInSentence : wordsInPreppedSentence) {
             if ((wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()))
                     && (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()))) {
@@ -92,35 +92,6 @@ public class PersonSelectionChangedEvent extends BaseEvent {
         return false;
     }
 
-
-    /**
-     * Returns a detailed message of the t, including the stack trace.
-     */
-    public static String getDetails(Throwable t) {
-        requireNonNull(t);
-        StringWriter sw = new StringWriter();
-        t.printStackTrace(new PrintWriter(sw));
-        return t.getMessage() + "\n" + sw.toString();
-    }
-
-    /**
-     * Returns true if {@code s} represents a non-zero unsigned integer
-     * e.g. 1, 2, 3, ..., {@code Integer.MAX_VALUE} <br>
-     * Will return false for any other non-null string input
-     * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
-     * @throws NullPointerException if {@code s} is null.
-     */
-    public static boolean isNonZeroUnsignedInteger(String s) {
-        requireNonNull(s);
-
-        try {
-            int value = Integer.parseInt(s);
-            return value > 0 && !s.startsWith("+"); // "+1" is successfully parsed by Integer#parseInt(String)
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-    }
-}
 ```
 ###### /java/seedu/address/logic/commands/BirthdaysCommand.java
 ``` java
