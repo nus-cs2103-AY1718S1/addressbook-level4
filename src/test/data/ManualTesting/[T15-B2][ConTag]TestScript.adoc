@@ -282,9 +282,11 @@ Alias: `w` +
 Alias: `b` +
 *Acceptable format*: `backup TARGET_DIRECTORY`
 
-. Type `backup c:\`.
+. Type `backup c:\` (for Windows users).
 
 ==== Result
+
+. An exact copy of the addressbook.xml is pasted into the indicated location. Overwriting a previous address book is not allowed to prevent accidental wiping of useful information, removing a previous address book file from the same location is required for subsequent back ups.
 
 == Exiting the program
 
