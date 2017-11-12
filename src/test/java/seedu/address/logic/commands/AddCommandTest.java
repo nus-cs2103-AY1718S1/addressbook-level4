@@ -151,15 +151,17 @@ public class AddCommandTest {
         }
 
         @Override
-        public void removeTag(Set<Tag> tag, List<String> index) throws  PersonNotFoundException,
+        public Set<Tag> removeTag(Set<Tag> tag, List<String> index) throws  PersonNotFoundException,
                 DuplicatePersonException {
             fail("This method should not be called.");
+            return null;
         }
 
         @Override
-        public void addTag(Set<Tag> tag, Set<Index> index) throws  PersonNotFoundException,
+        public Set<Tag> addTag(Set<Tag> tag, Set<Index> index) throws  PersonNotFoundException,
                 DuplicatePersonException {
             fail("This method should not be called.");
+            return null;
         }
     }
 

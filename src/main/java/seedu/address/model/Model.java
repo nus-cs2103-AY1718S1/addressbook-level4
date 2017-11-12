@@ -55,13 +55,13 @@ public interface Model {
     void sortByDataFieldFirst(String dataField, boolean isFavIgnored, boolean isReverseOrder);
 
     /**
-     * Removes given tag from specified index
+     * Removes given tag from specified index and returns a set of tags that has been removed
      * @param tag
      * @param index
      * @throws PersonNotFoundException
      * @throws DuplicatePersonException
      */
-    void removeTag(Set<Tag> tag, List<String> index) throws PersonNotFoundException, DuplicatePersonException;
+    Set<Tag> removeTag(Set<Tag> tag, List<String> index) throws PersonNotFoundException, DuplicatePersonException;
 
     /**
      * Adds tag to specified index
@@ -70,5 +70,5 @@ public interface Model {
      * @throws PersonNotFoundException
      * @throws DuplicatePersonException
      */
-    void addTag(Set<Tag> tag, Set<Index> index) throws PersonNotFoundException, DuplicatePersonException;
+    Set<Tag> addTag(Set<Tag> tag, Set<Index> index) throws PersonNotFoundException, DuplicatePersonException;
 }
