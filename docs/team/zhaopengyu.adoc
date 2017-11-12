@@ -37,6 +37,8 @@ include::../UserGuide.adoc[tag=bin]
 ---
 #Start of Extract [from: Developer Guide]#
 
+include::../DeveloperGuide.adoc[tag=delete]
+
 include::../DeveloperGuide.adoc[tag=help]
 
 include::../DeveloperGuide.adoc[tag=export]

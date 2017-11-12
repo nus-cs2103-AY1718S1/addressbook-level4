@@ -5,13 +5,16 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_MEMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventDuration;
@@ -20,6 +23,7 @@ import seedu.address.model.event.EventTime;
 import seedu.address.model.event.MemberList;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -100,6 +104,9 @@ public class ScheduleAddCommand extends UndoableCommand {
             model.addEvent(toUpdate, toReplace, event);
 
             commandResultString += String.format(MESSAGE_SUCCESS, event.toString());
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            Index defaultIndex = new Index(0);
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
 
             return new CommandResult(commandResultString);
         } catch (DuplicateEventException e) {
@@ -135,6 +142,7 @@ public class ScheduleAddCommand extends UndoableCommand {
         private Set<Tag> tags;
         private Set<Event> events;
         private DateAdded dateAdded;
+        private Birthday birthday;
 
         public EditEventListPersonDescriptor(ReadOnlyPerson toCopy, Event event) {
             this.name = toCopy.getName();
@@ -143,6 +151,7 @@ public class ScheduleAddCommand extends UndoableCommand {
             this.address = toCopy.getAddress();
             this.tags = toCopy.getTags();
             this.dateAdded = toCopy.getDateAdded();
+            this.birthday = toCopy.getBirthday();
 
             this.events = createModifiableEventList(toCopy.getEvents());
             this.events.add(event);
@@ -154,7 +163,7 @@ public class ScheduleAddCommand extends UndoableCommand {
         }
 
         public Person createUpdatedPerson() {
-            return new Person(name, phone, email, address, tags, events, dateAdded);
+            return new Person(name, birthday, phone, email, address, tags, events, dateAdded);
         }
     }
 }

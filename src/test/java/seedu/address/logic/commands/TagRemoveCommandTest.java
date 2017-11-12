@@ -51,7 +51,7 @@ public class TagRemoveCommandTest {
         singlePersonIndexList.add(INDEX_FIRST_PERSON);
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Set<Tag> singleTagSet = new HashSet<Tag>();
+        Set<Tag> singleTagSet = new HashSet<>();
         Tag onlyTag = new Tag(VALID_TAG_HUSBAND);
         singleTagSet.add(onlyTag);
 
