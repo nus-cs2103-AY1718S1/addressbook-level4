@@ -15,8 +15,9 @@ endif::[]
 By: `T09-B4`      Since: `Nov 2017`      Licence: `MIT`
 
 == *Introduction*
-`The Classroom` is a program to maintain your contact list. You can use _**The Classroom**_
- to add, delete, find, sort,  group contacts and even maintain a to-do list with your contacts.
+
+`The Classroom v1.5` is a program designed for students who are frequently involved in group and collaborative projects
+to maintain their contact list. You can use _**The Classroom**_ to add, delete, find, sort,  group contacts and even maintain a to-do list with your contacts.
 
 == *About*
 This guide shows you how to get started using _**The Classroom**_.
@@ -57,7 +58,8 @@ image::Ui.png[width="790"]
 ====
 *Understanding Command Format*
 
-* Words in `UPPER CASE` are the parameters supplied by the user.
+* Words in `UPPER CASE` are the parameters supplied by the user. +
+** Parameters are keywords corresponding to your input.
 ** e.g. In `add n/NAME`, `NAME` is the parameter.
 * Items in `square brackets` are optional.
 ** e.g Commands which specify `n/NAME [t/TAG]` can accept `n/John Doe t/friend` or `n/John Doe` as input.
@@ -93,7 +95,7 @@ Adding `TAGS` are optional.
 * `add` `n/John Doe` `p/98765432` `e/johnd@example.com` `a/John street, block 123, #01-01`
 * `add` `n/Betsy Crowe` `t/friend` `e/betsycrowe@example.com` `a/Newgate Prison` `p/1234567` `t/criminal`
 
-*Suggestion for use:* You want to add a new contact to you contact list.
+*Suggestion for use:* You want to add a new contact to your contact list.
 
 ==== Listing all persons : `list`
 
@@ -497,6 +499,7 @@ Remarks can be anything (including a blank) +
 GUI will display a list of person with pending remarks on the right.
 
 image::remarkchecklist.png[width="400"]
+_Figure 4.1.16.1 : Remark List indicating remark for David Li_
 
 Examples:
 
@@ -505,7 +508,11 @@ Examples:
 * `removeremark 1 1 3`
 * `removeremark 2 1`
 
-*Suggestion for use:* If you want to add/remove a remark pertaining to a person to take note of a task you want to do with him/her.
+
+Suggestion for use: You want to remind yourself that a particular contact likes to swim.
+
+*Suggestion for use:* If you want to add/remove a remark pertaining to a person to take note of a task you want to do with him/her (e.g. You want to remind yourself that a particular person likes to swim).
+
 // end::remarkchecklist[]
 
 // tag::link[]
@@ -520,6 +527,7 @@ A person can have only one link, any changes will update the existing link to be
 Only twitter links are accepted
 
 image::twitterlink.png[width="500"]
+_Figure 4.1.17.1 : Browser displaying Twitter profile of contact with a link_
 
 Examples:
 
@@ -592,6 +600,7 @@ The command keywords can be substituted by their aliases. +
 
 *A*: Install the app on the other computer and replace the empty data file with the file containing your data.
 
+
 == *Coming in v2.0*
 
 === Ability to create private accounts: `create`
@@ -625,6 +634,7 @@ Examples:
 * `login` `u/johndoeuser` `p/abcd1234`
 * `logout`
 
+// tag::enhancedfind[]
 === Ability to highlight keyword from the `Find Command` result
 
 Based on the user inputs, the corresponding keywords in the result of the Find Command will be highlighted. +
@@ -634,6 +644,9 @@ Command: `find` `n/ber` `a/serangoon`
 Result:
 
 image::highlight.png[width=""]
+_Figure 7.3.1 : Result display upon execution of Find command with highlighted keywords_
+
+// end::enhancedfind[]
 
 === Ability to `import` and `export` contact list manually or using a cloud service
 

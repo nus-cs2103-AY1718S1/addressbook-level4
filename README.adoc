@@ -7,13 +7,10 @@ https://ci.appveyor.com/project/limyongsong/main/branch/master[image:https://ci.
 https://coveralls.io/github/CS2103AUG2017-T09-B4/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-T09-B4/main/badge.svg?branch=master[Coverage Status]]
 https://www.codacy.com/app/limyongsong/main?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CS2103AUG2017-T09-B4/main&amp;utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/9f5b16b1b4bf47ee8cd1d5d1c155eb02[Codacy Badge]]
 
-ifdef::env-github[]
-image::docs/images/Ui.png[width="600"]
-endif::[]
 
-ifndef::env-github[]
-image::images/Ui.png[width="600"]
-endif::[]
+image::docs/images/Ui.png[width="600"]
+
+
 
 * The Classroom is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * It is a Java application intended for use to help increase efficiency of group work for people of any background.
