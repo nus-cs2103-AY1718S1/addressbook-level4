@@ -36,14 +36,13 @@ public class LoginCommand extends Command {
     public CommandResult execute() {
 
         if (model.checkAccount(account)) {
-                try {
-                    MainApp.getUi().restart(account.getUsername().fullName);
-                } catch (Exception e) {
-
-                    logger.info("Exception caught" + e.toString());
-                }
-                return new CommandResult(MESSAGE_SUCCESS);
+            try {
+                MainApp.getUi().restart(account.getUsername().fullName);
+            } catch (Exception e) {
+                logger.info("Exception caught" + e.toString());
             }
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
 
         return new CommandResult(MESSAGE_FAILURE);
 
