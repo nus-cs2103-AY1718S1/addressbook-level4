@@ -1,4 +1,21 @@
 # chrisboo
+###### \java\seedu\address\commons\util\ConfigUtilTest.java
+``` java
+    @Test
+    public void updateConfigTest() throws DataConversionException, IOException {
+        Config original = getTypicalConfig();
+
+        String configFilePath = testFolder.getRoot() + File.separator + "TempConfig.json";
+        ConfigUtil.saveConfig(original, configFilePath);
+
+        String updatedTitle = "Updated Title";
+        original.setAppTitle(updatedTitle);
+        updateConfig(configFilePath, updatedTitle);
+        Config readBack = ConfigUtil.readConfig(configFilePath).get();
+
+        assertEquals(readBack, original);
+    }
+```
 ###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
         FindPersonDescriptor firstPerson = new FindPersonDescriptor();
@@ -20,6 +37,155 @@
         // same values -> returns true
         FindCommand findFirstCommandCopy = new FindCommand(firstPerson);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+```
+###### \java\seedu\address\logic\commands\NewCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) for {@code NewCommand}.
+ */
+public class NewCommandTest {
+
+    @Test
+    public void execute_fileNotExist_success() {
+        assertExecutionSuccess(getFilePathInDataFolder("nonExistentFile.xml"));
+    }
+
+    @Test
+    public void execute_fileExists_failure() {
+        assertExecutionFailure(getFilePathInDataFolder("sampleData.xml"), Messages.MESSAGE_EXISTING_FILE);
+    }
+
+    @Test
+    public void equals() {
+        File firstFile = new File(getFilePathInDataFolder("sampleData.xml"));
+        File secondFile = new File(getFilePathInDataFolder("sampleData2.xml"));
+
+        NewCommand newFirstCommand = new NewCommand(firstFile);
+        NewCommand newSecondCommand = new NewCommand(secondFile);
+
+        // same object -> returns true
+        assertTrue(newFirstCommand.equals(newFirstCommand));
+
+        // same values -> returns true
+        NewCommand newFirstCommandCopy = new NewCommand(firstFile);
+        assertTrue(newFirstCommand.equals(newFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(newFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(newFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(newFirstCommand.equals(newSecondCommand));
+    }
+
+    /**
+     * Executes a {@code NewCommand} with the given {@code filePath}.
+     */
+    private void assertExecutionSuccess(String filePath) {
+        NewCommand newCommand = new NewCommand(new File(filePath));
+
+        try {
+            CommandResult commandResult = newCommand.execute();
+            assertEquals(String.format(NewCommand.MESSAGE_OPEN_DEATHNOTE_SUCCESS, filePath),
+                commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+    }
+
+    /**
+     *
+     * Executes a {@code NewCommand} with the given {@code filePath}, and checks that {@code CommandException} is
+     * thrown with {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(String filePath, String expectedMessage) {
+        NewCommand newCommand = new NewCommand(new File(filePath));
+
+        try {
+            newCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(ce.getMessage(), expectedMessage);
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\commands\OpenCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) for {@code OpenCommand}.
+ */
+public class OpenCommandTest {
+
+    @Test
+    public void execute_fileExists_success() {
+        assertExecutionSuccess(getFilePathInDataFolder("sampleData.xml"));
+    }
+
+    @Test
+    public void execute_fileNotExist_failure() {
+        assertExecutionFailure(
+            getFilePathInDataFolder("nonExistentFile.xml"), Messages.MESSAGE_INVALID_FILE_PATH);
+    }
+
+    @Test
+    public void equals() {
+        File firstFile = new File(getFilePathInDataFolder("sampleData.xml"));
+        File secondFile = new File(getFilePathInDataFolder("sampleData2.xml"));
+
+        OpenCommand openFirstCommand = new OpenCommand(firstFile);
+        OpenCommand openSecondCommand = new OpenCommand(secondFile);
+
+        // same object -> returns true
+        assertTrue(openFirstCommand.equals(openFirstCommand));
+
+        // same values -> returns true
+        OpenCommand openFirstCommandCopy = new OpenCommand(firstFile);
+        assertTrue(openFirstCommand.equals(openFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(openFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(openFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(openFirstCommand.equals(openSecondCommand));
+    }
+
+    /**
+     * Executes a {@code OpenCommand} with the given {@code filePath}.
+     */
+    private void assertExecutionSuccess(String filePath) {
+        OpenCommand openCommand = new OpenCommand(new File(filePath));
+
+        try {
+            CommandResult commandResult = openCommand.execute();
+            assertEquals(String.format(OpenCommand.MESSAGE_OPEN_DEATHNOTE_SUCCESS, filePath),
+                commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+    }
+
+    /**
+     *
+     * Executes a {@code OpenCommand} with the given {@code filePath}, and checks that {@code CommandException} is
+     * thrown with {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(String filePath, String expectedMessage) {
+        OpenCommand openCommand = new OpenCommand(new File(filePath));
+
+        try {
+            openCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(ce.getMessage(), expectedMessage);
+        }
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
@@ -81,6 +247,70 @@
         assertParseSuccess(parser, " n/Alice p/123456", expectedFindCommand);
     }
 ```
+###### \java\seedu\address\logic\parser\NewCommandParserTest.java
+``` java
+public class NewCommandParserTest {
+
+    private static String MESSAGE_INVALID_FORMAT =
+        String.format(MESSAGE_INVALID_COMMAND_FORMAT, NewCommand.MESSAGE_USAGE);
+
+    private NewCommandParser parser = new NewCommandParser();
+
+    @Test
+    public void parse_missingParts_failure() {
+        // no path specified
+        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidPath_failure() {
+        // path is a directory
+        assertParseFailure(parser, getFilePathInDataFolder(""), MESSAGE_INVALID_FORMAT);
+
+        // path is not a DeathNote file
+        assertParseFailure(parser, getFilePathInDataFolder("random.file"), MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_validArgs_success() {
+        String fileName = "sampleData.xml";
+        String filePath = getFilePathInDataFolder(fileName);
+        assertParseSuccess(parser, filePath, new NewCommand(new File(filePath)));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\OpenCommandParserTest.java
+``` java
+public class OpenCommandParserTest {
+
+    private static String MESSAGE_INVALID_FORMAT =
+        String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenCommand.MESSAGE_USAGE);
+
+    private OpenCommandParser parser = new OpenCommandParser();
+
+    @Test
+    public void parse_missingParts_failure() {
+        // no path specified
+        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidPath_failure() {
+        // path is a directory
+        assertParseFailure(parser, getFilePathInDataFolder(""), MESSAGE_INVALID_FORMAT);
+
+        // path is not a DeathNote file
+        assertParseFailure(parser, getFilePathInDataFolder("random.file"), MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_validArgs_success() {
+        String fileName = "sampleData.xml";
+        String filePath = getFilePathInDataFolder(fileName);
+        assertParseSuccess(parser, filePath, new OpenCommand(new File(filePath)));
+    }
+}
+```
 ###### \java\seedu\address\model\person\BirthdayTest.java
 ``` java
     @Test
@@ -97,6 +327,25 @@
         assertTrue(Birthday.isValidBirthday("31/12/1993"));
         assertTrue(Birthday.isValidBirthday("01/01/1994"));
         assertTrue(Birthday.isValidBirthday("1/1/1994"));
+    }
+```
+###### \java\seedu\address\storage\JsonUserPrefsStorageTest.java
+``` java
+    @Test
+    public void updateUserPrefsTest() throws DataConversionException, IOException {
+        UserPrefs original = getTypicalUserPrefs();
+
+        String userPrefsFilePath = testFolder.getRoot() + File.separator + "TempPrefs.json";
+        JsonUserPrefsStorage.saveUserPrefs(original, userPrefsFilePath);
+
+        String updatedAddressBookFilePath = "updatedaddressbook.xml";
+        String updatedAddressBookFileName = "updatedAddressBookName";
+        original.setAddressBookFilePath(updatedAddressBookFilePath);
+        original.setAddressBookName(updatedAddressBookFileName);
+        updateUserPrefs(userPrefsFilePath, updatedAddressBookFilePath, updatedAddressBookFileName);
+        UserPrefs readBack = JsonUserPrefsStorage.readUserPrefs(userPrefsFilePath).get();
+
+        assertEquals(readBack, original);
     }
 ```
 ###### \java\seedu\address\testutil\FindPersonDescriptorBuilder.java
@@ -229,6 +478,22 @@ public class FindPersonDescriptorBuilder {
         return descriptor;
     }
 }
+```
+###### \java\seedu\address\testutil\TestUtil.java
+``` java
+    /**
+     * Folder used to store data needed for testing
+     */
+    private static final String DATA_FOLDER = FileUtil.getPath("./src/test/data/");
+```
+###### \java\seedu\address\testutil\TestUtil.java
+``` java
+    /**
+     * Prepends {@code fileName} with file path in data folder
+     */
+    public static String getFilePathInDataFolder(String fileName) {
+        return new File(DATA_FOLDER + fileName).getAbsolutePath();
+    }
 ```
 ###### \java\systemtests\AddCommandSystemTest.java
 ``` java

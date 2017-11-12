@@ -125,6 +125,9 @@ Adds a person to DeathNote +
 * `add n/Abel`
 * `add n/Boby p/97741234 e/boby@example.com b/15/02/1992 w/https:www.website.com/`
 * `add n/Carol pic/C:\Users\user\Desktop\Carol.png t/actor t/neighbor`
+//tag::profilepictureadd[]
+* `add n/Dwayne Johnson pic/C:\Users\user\Desktop\TheRock.png`
+//end::profilepictureadd[]
 
 === Add a remark : `remark` kbd:[V2.0]
 //tag::remark[]
@@ -166,8 +169,10 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 * `edit 2 w/https://www.yahoo.com/ p/97883421` +
 Edits the website of the 2nd person to be https://www.yahoo.com/ and change the contact number to 97883421.
-* `edit 1 pic/C:\pictures\clown.png +
+//tag::profilepictureedit[]
+* `edit 1 pic/C:\pictures\clown.png` +
 Edits the picture of the 1st person to the picture specified in the path i.e. clown.png
+//end::profilepictureedit[]
 
 === Delete a person : `delete` / `d` / `destroy`
 
@@ -194,8 +199,10 @@ Deletes the 2nd person in the displayed list.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Find a person: `find` / `f` / `summon` kbd:[V2.0]
 //tag::find[]
+
+=== Find a person: `find` / `f` / `summon` kbd:[V2.0]
+
 Finds persons who matches the given attributes. +
 
   Format: find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...
