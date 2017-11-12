@@ -61,6 +61,7 @@ include::../DeveloperGuide.adoc[tag=shaocong1]
 
 === Other contributions
     . Generate JAR file for weekly milestones.
+    . Prepare sample data and manual test script.[https://github.com/ShaocongDong/addressbook-level4/commit/beed824f7340ac812ae7c92e9831212da3f9492c[commit]]
     . Update task model for UI integration[https://github.com/CS2103AUG2017-W15-B4/main/pull/14/commits/a129504f10ea2716ab38b4620cabf35eefd71347[commit]]
     . Design the fxml and css file for TaskBook panel and task card for our UI.
     . Make link response message more friendly[https://github.com/CS2103AUG2017-W15-B4/main/pull/70[pull request]]
