@@ -354,7 +354,10 @@ _Figure 4.10 : Selects the contact in your cherBook with the specified index_
 // tag::sort[]
 === Sorting all persons : `sort` `Since v1.2`
 
-Shows a list of all persons in cherBook with their names sorted in alphabetical order. +
+Helps you sort all persons in cherBook. +
+Shows you a list of all persons in cherBook with their names sorted in alphabetical order. +
+If you want your list to be sorted at all times, you can use this sort command after adding contacts into cherBook, +
+After that, your contact list would always be sorted when you perform other commands on cherBook. +
 Format: `sort` +
 Shorthand: `st`
 
