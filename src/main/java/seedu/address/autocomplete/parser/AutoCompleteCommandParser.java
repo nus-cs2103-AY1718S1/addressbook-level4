@@ -33,7 +33,8 @@ import seedu.address.logic.commands.UndoCommand;
  */
 public class AutoCompleteCommandParser implements AutoCompleteParser {
 
-    private static final List<CommandWordUsageTuple> COMMAND_WORDS_LIST = Arrays.asList(new CommandWordUsageTuple(AddCommand.COMMAND_WORD, AddCommand.COMMAND_USAGE),
+    private static final List<CommandWordUsageTuple> COMMAND_WORDS_LIST = Arrays.asList(
+            new CommandWordUsageTuple(AddCommand.COMMAND_WORD, AddCommand.COMMAND_USAGE),
             new CommandWordUsageTuple(ChangeThemeCommand.COMMAND_WORD, ChangeThemeCommand.COMMAND_USAGE),
             new CommandWordUsageTuple(ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_USAGE),
             new CommandWordUsageTuple(DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_USAGE),

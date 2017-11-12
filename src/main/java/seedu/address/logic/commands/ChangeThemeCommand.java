@@ -17,13 +17,11 @@ public class ChangeThemeCommand extends Command {
 
     private final String theme;
 
-    public ChangeThemeCommand( String theme)
-    {
+    public ChangeThemeCommand( String theme) {
         this.theme = theme;
     }
     @Override
-    public CommandResult execute()
-    {
+    public CommandResult execute() {
         EventsCenter.getInstance().post(new ChangeThemeEvent(theme));
         return new CommandResult(String.format(MESSAGE_SUCCESS + theme));
     }
