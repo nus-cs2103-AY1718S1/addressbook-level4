@@ -59,13 +59,13 @@ public class UndoRedoStackTest {
         // non-empty redoStack
         undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne),
                 Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));
-        undoRedoStack.push(new UndoCommand());
+        undoRedoStack.push(new UndoCommand(2));
         assertStackStatus(Collections.singletonList(dummyUndoableCommandOne),
                 Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));
 
         // empty redoStack
         undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne), Collections.emptyList());
-        undoRedoStack.push(new UndoCommand());
+        undoRedoStack.push(new UndoCommand(2));
         assertStackStatus(Collections.singletonList(dummyUndoableCommandOne), Collections.emptyList());
     }
 
@@ -74,13 +74,13 @@ public class UndoRedoStackTest {
         // non-empty redoStack
         undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne),
                 Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));
-        undoRedoStack.push(new RedoCommand());
+        undoRedoStack.push(new RedoCommand(2));
         assertStackStatus(Collections.singletonList(dummyUndoableCommandOne),
                 Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));
 
         // empty redoStack
         undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne), Collections.emptyList());
-        undoRedoStack.push(new RedoCommand());
+        undoRedoStack.push(new RedoCommand(2));
         assertStackStatus(Collections.singletonList(dummyUndoableCommandOne), Collections.emptyList());
     }
 

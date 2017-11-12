@@ -33,6 +33,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTags(person.getTags());
+        descriptor.setSocialMedia(person.getSocialMedia());
     }
 
     /**
@@ -95,6 +96,17 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+
+    //@@author kenpaxtonlim
+    /**
+     * Sets the {@code SocialMedia} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withSocialMedia(String facebook, String twitter, String instagram) {
+        descriptor.setSocialMedia(ParserUtil.parseSocialMedia(
+                Optional.of(facebook), Optional.of(twitter), Optional.of(instagram), true));
+        return this;
+    }
+    //@@author
 
     public EditPersonDescriptor build() {
         return descriptor;
