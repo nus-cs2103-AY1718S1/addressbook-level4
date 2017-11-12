@@ -21,7 +21,6 @@ public class Birthday {
     public static final String BIRTHDAY_TEMPORARY = "NIL";
     public final String value;
 
-    //@@author archthegit
     /**
      * Validates given birthday.
      *
@@ -62,8 +61,6 @@ public class Birthday {
     public int hashCode() {
         return value.hashCode();
     }
-
-
 
 }
 

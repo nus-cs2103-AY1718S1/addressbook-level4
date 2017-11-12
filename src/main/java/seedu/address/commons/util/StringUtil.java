@@ -65,11 +65,22 @@ public class StringUtil {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         if (preppedWord.length() >= 2) {
-            for (String wordInSentence : wordsInPreppedSentence) {
-                if ((wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()))
-                        && (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()))) {
-                    return true;
-                }
+            if (TestIfWordIsInName(preppedWord, wordsInPreppedSentence)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if keyword is a substring of the name ignoring cases.
+     * @param preppedWord
+     * @param wordsInPreppedSentence
+     * @return
+     */
+    private static boolean TestIfWordIsInName(String preppedWord, String[] wordsInPreppedSentence) {
+        for (String wordInSentence : wordsInPreppedSentence) {
+            if ((wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()))
+                    && (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()))) {
+                return true;
             }
         }
         return false;
