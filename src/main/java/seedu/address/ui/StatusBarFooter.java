@@ -23,6 +23,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
+    private static final String NO_INTERNET_CONNECTION_WARNING = "Weather report available once connect to internet :)";
 
     /**
      * Used to generate time stamps.
@@ -41,7 +42,7 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar syncStatus;
     @FXML
-    private StatusBar saveLocationStatus;
+    private StatusBar weatherReport;
     @FXML
     private StatusBar totalPersons;
 
@@ -50,7 +51,7 @@ public class StatusBarFooter extends UiPart<Region> {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setTotalPersons(totalPersons);
-        setSaveLocation(getWeather());
+        setSaveWeather(getWeather());
         registerAsAnEventHandler(this);
     }
 
@@ -75,8 +76,8 @@ public class StatusBarFooter extends UiPart<Region> {
         return clock;
     }
 
-    private void setSaveLocation(String location) {
-        Platform.runLater(() -> this.saveLocationStatus.setText(location));
+    private void setSaveWeather(String weather) {
+        Platform.runLater(() -> this.weatherReport.setText(weather));
     }
 
     private void setSyncStatus(String status) {
@@ -84,9 +85,15 @@ public class StatusBarFooter extends UiPart<Region> {
     }
 
     //@@author eeching
-    private String getWeather() throws JAXBException, IOException {
-        WeatherRequest request = new WeatherRequest();
-        return request.getSgWeather();
+    private String getWeather() throws JAXBException {
+        try {
+            WeatherRequest request = new WeatherRequest();
+            return request.getSgWeather();
+        } catch (IOException e) {
+            logger.warning("no internet connection");
+            return NO_INTERNET_CONNECTION_WARNING;
+        }
+
     }
     //@@author
     @Subscribe
