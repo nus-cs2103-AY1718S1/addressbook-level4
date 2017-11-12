@@ -170,7 +170,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
     //@@author Hailinx
     @Test
     public void findByDetail() {
-        /* Case: find multiple persons in address book by name detail, command with leading spaces and trailing spaces
+        /* Case: find multiple persons in address book by name field, command with leading spaces and trailing spaces
          * -> 2 persons found
          */
         String command = "   " + FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL
