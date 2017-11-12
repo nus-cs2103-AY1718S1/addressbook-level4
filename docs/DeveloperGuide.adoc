@@ -1304,37 +1304,21 @@ As the `Edit` command's decision flow requires many acyclic execution paths to i
 is known to be large.
 
 ==== Design Considerations
-// TODO: Design Considerations Mark
 
-**Aspect:** Parse Order +
-**Alternative 1 (current choice):** Parsing address before name in the `Add` command. +
-**Pros:** The application can be quickly reloaded onto the active window. +
-**Cons:** User might need to switch back and forth between the Rolodex directories. +
-**Alternative 2:** Dictionary attack. +
-**Constraint:** link:#java-fx[JavaFX] only allows launch(args) to be launched once per execution time on a code level.
-Another approach would be to reload the application with a loaded and built .jar. +
+**Aspect:** Add/Edit Field Matching +
+**Alternative 1 (current choice):** Parsing easy fields first, then parsing address before name in the `Add` command. +
+**Pros:** Application behaves sufficiently well and efficiently in matching field data given certain input assumptions. +
+**Pros:** Shallow learning curve for new users to learn application functions. +
+**Cons:** Extremely high NPath complexity +
+**Cons:** Deviates from the Object-Oriented nature of the codebase into a procedural/functional style. +
+**Alternative 2:** Dictionary analysis of field data. +
 **Pros:** Easier logic to understand for new developers. +
-**Cons:** Building and debugging with a second .jar will be confusing and problematic to any development workflow. +
-**Alternative 3:** Open a new window with the loaded data. +
-**Pros:** The user can continue to operate on the previous Rolodex application. +
-**Cons:** The developer would have to spend time configuring different `EventsCenter` posts for the different application windows.
-
----
-
-**Aspect:** Saving only to files with `.rldx` extensions +
-**Alternative 1 (current choice):** Write to the active directory only if it has a `.rldx` extension. +
-**Pros:** The application control becomes stricter, preventing users from writing to a file with say a `.png` extension. +
-**Cons:** Extensions become forced even for valid databases with `.xml` file types. +
-**Alternative 2:** Allow writable to all file extensions. +
-**Pros:** Users can have more freedom in choice of file naming. +
-**Cons:** If the user accidentally writes to a file that is not a valid database, the user would corrupt the file data.
-
----
-
-**Aspect:** Separating `open` and `new` commands +
-**Alternative 1 (current choice):** Two commands, one for opening existing files and one for creating new files. +
-**Pros:** The user can easily be notified if a file exists or if it has been moved. +
-**Cons:** The user would have to take note of two commands instead of one. +
+**Cons:** Maintaining dictionary would be taxing on the development team and may get outdated as data keeps getting outdated. +
+**Cons:** Memory performance decreases drastically as memory has to be used to load dictionary into memory for field analysis. +
+**Cons:** Storage performance decreases drastically as space has to be used to store dictionary.
+**Alternative 3:** No suggestions for add/edit +
+**Pros:** Clean codebase. +
+**Cons:** Steep learning curve for new users to learn application functions.
 
 // end::suggestion[]
 
