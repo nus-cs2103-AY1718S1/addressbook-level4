@@ -46,7 +46,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Ark application.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Ui.png[width="790"] //CHANGE
 _Figure 3.1.1 : Ark's Startup Window_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
@@ -63,7 +63,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 == Layout
 These are the main components of the Ark user interface that will help you to interact with Ark. +
 
-image::Ark_Main_Window_Sections.png[width="890"]
+image::Ark_Main_Window_Sections.png[width="890"] //CHANGE
 _Figure 4 : This is the main window of Ark with each section color coded_
 
 1. *Menu Bar* - Click on the options here to access the main or help menu.
@@ -78,26 +78,26 @@ delivered parcels, click on the `Completed Parcels` tab.
 
 === More About Browser Panel
 
-image::Browser_Display_After_Selection.png[width="890"]
+image::Browser_Display_After_Selection.png[width="890"] //CHANGE
 _Figure 4.1.1 : Selecting a parcel_
 
 Selecting a parcel activates the Browser Panel. In the diagram above, when the 4th parcel belonging to Cornelia
-Meier is selected, the Browser Panel is activated and displays the destination address of the parcel. Tn this case,
-Cornelia wants his parcel to be delivered to 10th Street Singapore 123114. +
+Meier, at index 4, is selected, the Browser Panel is activated and displays the destination address of the parcel.
+In this case, Cornelia wants her parcel to be delivered to 10th Street Singapore 123114. +
 
 === More About Parcel List Panel
 
-image::ParcelCard.png[width="890"]
+image::ParcelCard.png[width="890"] //CHANGE
 _Figure 4.2.1 : Labelled Parcel Card_
 
 1. *Parcel Index* - This is the index number of the parcel in the displayed list.
 2. *Name* - This is the name of the recipient of the parcel.
-3. *Phone* - This is the phone number of the recipient of the parcel.
-4. *Address* - This is the address to deliver the parcel to. The address must end with the postal code of the address.
+3. *Tracking Number* - This is the tracking number of the parcel. You can read more about it Ark's parcel tracking
+   numbers in the #tracking-number[Tracking Numbers section] below.
+4. *Phone* - This is the phone number of the recipient of the parcel.
+5. *Address* - This is the address to deliver the parcel to. The address must end with the postal code of the address.
  You can read more about postal codes in Ark in the #postal-code[Postal Code section] below.
-5. *Email* - This is the email address of the recipient of the parcel.
-6. *Tracking Number* - This is the tracking number of the parcel. You can read more about it Ark's parcel tracking
-numbers in the #tracking-number[Tracking Numbers section] below.
+6. *Email* - This is the email address of the recipient of the parcel.
 7. *Delivery Date* - This is the delivery date of the parcel. The parcel should be delivered on dates prior to or on
 this date.
 8. *Status* - This is the status of the parcel in the delivery workflow. Read more about parcel delivery status
