@@ -24,7 +24,7 @@ import seedu.room.model.tag.Tag;
 /**
  * Allows deletion of an image for a specified person
  */
-public class DeleteImageCommand extends Command {
+public class DeleteImageCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "deleteImage";
     public static final String COMMAND_ALIAS = "di";
 
@@ -34,7 +34,7 @@ public class DeleteImageCommand extends Command {
             + "Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 3 ";
 
-    public static final String MESSAGE_RESET_IMAGE_SUCCESS = "Successfully reset image for Person: %1$s";
+    public static final String MESSAGE_RESET_IMAGE_SUCCESS = "Successfully deleted image for Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the resident book.";
 
     private final Index index;
@@ -48,7 +48,7 @@ public class DeleteImageCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
