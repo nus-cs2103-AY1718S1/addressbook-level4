@@ -143,23 +143,28 @@ public class Relationship {
 
     @Override
     public boolean equals(Object other) {
-        boolean correspondingPersonCheck = true;
-        if (this.getDirection() != ((Relationship) other).getDirection()) {
-            return false;
-        } else {
-            if (this.isUndirected() && ((Relationship) other).isUndirected()) {
-                correspondingPersonCheck = (this.getFromPerson().equals(((Relationship) other).getFromPerson())
-                        && this.getToPerson().equals(((Relationship) other).getToPerson()))
-                        || (this.getFromPerson().equals(((Relationship) other).getToPerson())
-                                && this.getToPerson().equals(((Relationship) other).getFromPerson()));
-            } else if (!this.isUndirected() && !((Relationship) other).isUndirected()) {
-                correspondingPersonCheck = this.getFromPerson().equals(((Relationship) other).getFromPerson())
-                        && this.getToPerson().equals(((Relationship) other).getToPerson());
-            }
-        }
 
-        return other == this // short circuit if same object
-                || (other instanceof Relationship // instanceof handles nulls
-                && correspondingPersonCheck);
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (other instanceof Relationship) { //instance of handles null
+
+            boolean correspondingPersonCheck = true;
+            if (this.getDirection() != ((Relationship) other).getDirection()) {
+                return false;
+            } else {
+                if (this.isUndirected() && ((Relationship) other).isUndirected()) {
+                    correspondingPersonCheck = (this.getFromPerson().equals(((Relationship) other).getFromPerson())
+                            && this.getToPerson().equals(((Relationship) other).getToPerson()))
+                            || (this.getFromPerson().equals(((Relationship) other).getToPerson())
+                            && this.getToPerson().equals(((Relationship) other).getFromPerson()));
+                } else if (!this.isUndirected() && !((Relationship) other).isUndirected()) {
+                    correspondingPersonCheck = this.getFromPerson().equals(((Relationship) other).getFromPerson())
+                            && this.getToPerson().equals(((Relationship) other).getToPerson());
+                }
+            }
+            return correspondingPersonCheck;
+        } else {
+            return false;
+        }
     }
 }
