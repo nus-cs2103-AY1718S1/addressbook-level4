@@ -90,23 +90,6 @@ public class PhoneCommandTest {
         assertCommandSuccess(phoneCommand, model, expectedMessage, expectedModel);
     }
 
-    @Test
-    public void execute_personAcceptedByModel_showAllPhonesSuccessful() throws Exception {
-        Person updatedPerson = new PersonBuilder(model.getFilteredPersonList()
-                .get(INDEX_FIRST_PERSON.getZeroBased())).build();
-
-        PhoneCommand phoneCommand = prepareCommand(INDEX_FIRST_PERSON, "showAllPhones", new Phone("000"));
-
-        String expectedMessage = "The primary phone number is 85355255.\n"
-                + "The additional phone number(s) are/is \n"
-                + "1/ 24444\n"
-                + "2/ 2333\n";
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
-
-        assertCommandSuccess(phoneCommand, model, expectedMessage, expectedModel);
-    }
 
     @Test
     public void execute_personAcceptedByModel_invalidCommandSuccessful() throws Exception {
