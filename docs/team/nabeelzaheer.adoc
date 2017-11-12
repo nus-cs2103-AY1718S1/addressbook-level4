@@ -6,7 +6,7 @@
 == Project: The Classroom
 The Classroom is a desktop address book application designed to specifically cater to students to manage their contacts.
 The user interacts with it using a CLI, and it has a GUI created with JavaFX.
-It is written in Java, and has about 6 kLoC.
+It is written in Java.
 The Classroom is equipped with features and functionalities aimed to facilitate in effectively managing contacts'
 details as well as tasks that they may share with them which is represented  in the application in the form of remarks.
 
@@ -15,7 +15,7 @@ further push the capabilities of the application towards total user-customisatio
 included to further illustrate the implementation and execution of these features.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/main/NabeelZaheer.md[Functional code]]
-[https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/test/NabeelZaheer.md[Test code]] {give links to collated code files}
+[https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/test/NabeelZaheer.md[Test code]] +
 
 === Enhancement Added: Add/Remove Tags
 
@@ -34,7 +34,8 @@ include::../UserGuide.adoc[tag=addremove]
 
 The feature to add and remove tags in the application is crucial not only as an added functionality of the application but
 also as a practical use for users. As our audience is targeted towards students who in a form or another will be involved in
-group projects, the above mentioned feature is implemented to cater to this particular aspect of our target audience.
+group projects, the above mentioned feature is implemented to cater to this particular aspect of our target audience by allowing them to
+organise contacts based on their different groups and associations.
 
 Furthermore, the current design of this feature is such that it allows versatility on how the feature is executed.
 For instance, users can provide a range of index from which a tags are to be removed. Such versatility in performance
@@ -97,10 +98,14 @@ include::../DeveloperGuide.adoc[tag=find]
 * For the `Find` feature of the application, a mechanism can be implemented to *highlight* keywords specified keywords
 in the filtered list of the results as shown in the screenshot below. +
 
-image::highlight.png[width=""]
+#Start of Extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag=enhancedfind]
 
-* Implement a scheduling feature to allow user to keep track of personal tasks and act as a reminder.
+#End of Extract#
+
+* Implement a scheduling feature to allow user to keep track of personal tasks and act as a reminder by incorporating
+the Clock and Date aspect.
 
 === Other contributions
 

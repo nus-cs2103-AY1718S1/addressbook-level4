@@ -1,11 +1,9 @@
 = About Us
 :relfileprefix: team/
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+The Clasroom was developed by T09-B4 team. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
@@ -32,16 +30,16 @@ image::limyongsong.png[width="150", align="left"]
 {empty}[https://github.com/limyongsong[github]] [<<limyongsong#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Storage + UI
+Responsibilities: Storage + UI + Documentation
 
 '''
 
 === Nabeel Zaheer
 image::nabeelzaheer.png[width="150", align="left"]
-{empty}[https://github.com/NabeelZhr[github]] [<<NabeelZhr#, portfolio>>]
+{empty}[https://github.com/NabeelZhr[github]] [<<nabeelzaheer#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Model
+Responsibilities: Model + Documentation
 
 '''
 
@@ -50,6 +48,6 @@ image::onghongjing.png[width="150", align="left"]
 {empty}[http://github.com/Houjisan[github]] [<<onghongjing#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Logic
+Responsibilities: Logic + Documentation
 
 '''
