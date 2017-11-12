@@ -23,6 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author martyn-wong
@@ -39,6 +40,12 @@ public class MapCommandTest {
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
+    }
+
+    @Test
+    public void execute_validArgs_success() {
+        Selection.setPersonSelected();
+        assertExecutionSuccess(INDEX_FIRST_PERSON);
     }
 
     @Test
@@ -86,6 +93,22 @@ public class MapCommandTest {
 
         // different person -> returns false
         assertFalse(mapFirstCommand.equals(mapSecondCommand));
+    }
+
+    /**
+     * Executes a {@code MapCommand} with the given {@code arguments},
+     */
+    private void assertExecutionSuccess(Index index) {
+        MapCommand mapCommand = prepareCommand(index);
+        ReadOnlyPerson personToMap = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        String expectedMessage = String.format(MapCommand.MESSAGE_MAP_SHOWN_SUCCESS, personToMap);
+
+        try {
+            CommandResult commandResult = mapCommand.execute();
+            assertEquals(expectedMessage, commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Assert Execution Failed: ", ce);
+        }
     }
 
     /**
