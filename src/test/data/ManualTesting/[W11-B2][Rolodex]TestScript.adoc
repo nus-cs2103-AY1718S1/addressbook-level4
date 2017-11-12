@@ -1318,7 +1318,7 @@ Undo Command
 
 [[basic-functionality9]]
 Basic Functionality
-^^^^
+^^^^^^^^^^^^^^^^^^
 
 1.  Type `delete 1` and press `Enter`
 2.  Type `undo`
@@ -1396,7 +1396,7 @@ Redo Command
 
 [[basic-functionality10]]
 Basic Functionality
-^^^^^
+^^^^^^^^^^^^^^^^^^
 
 1.  Type `d 1` and press `Enter`
 2.  Type `undo` and press `Enter`
