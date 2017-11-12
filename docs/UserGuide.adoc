@@ -106,6 +106,11 @@ Format: `help [COMMAND_IDENTIFIER]`
 [TIP]
 A command identifier includes all existing commands and their aliases.
 
+// tag::quick_start[]
+[TIP]
+You can count on the quick-start help list of commands in the result display upon application start
+if you need a quick reminder of the function you need to enter!
+// end::quick_start[]
 [NOTE]
 Close all help windows before executing `help [COMMAND_IDENTIFIER]`.
 
@@ -117,7 +122,7 @@ Examples:
 // end::help[]
 
 === Modifying contacts
-// tag::country_code[]
+
 // tag::multipleemails[]
 ==== Adding a person: `add` [Last updated in v1.3]
 
@@ -134,7 +139,7 @@ A person must have at least 1 email. *[v1.3 update]*
 
 [TIP]
 ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
-
+// tag::country_code[]
 [TIP]
 Phone numbers may optionally include country codes, beginning with '+' and with a white space between the code and the rest of the phone number.
 
@@ -143,6 +148,8 @@ Examples:
 
 * `add n/John Doe p/+1 98765432 e/johnd@example.com a/123, John street, #01-01, Singapore 407989`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/12345678 t/criminal`
+
+// end::country_code[]
 
 ==== Editing a person : `edit` [Last updated in v1.3]
 
@@ -156,10 +163,11 @@ Ensure that you have input the correct prefix [n/NAME] , [p/PHONE] , [e/EMAIL]  
 
 [TIP]
 ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
-
+// tag::country_code2[]
 [TIP]
 Can't figure how to change a contact's country?
 Country name is automatically inferred from any country code input in the phone number.
+// end::country_code2[]
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -175,7 +183,7 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-// end::country_code[]
+
 // end::multipleemails[]
 
 ==== Deleting person(s) : `delete` [Last updated in v1.1]

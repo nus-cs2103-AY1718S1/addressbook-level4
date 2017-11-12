@@ -715,7 +715,7 @@ _Figure 4.4.6g : Find by country [c/COUNTRY]_
 ---
 //end::find[]
 
-//tag::CopyCommand[]
+//tag::copy[]
 === Copy email address to clipboard [Since v1.2]
 
 The `copy` function uses the Clipboard in Toolkit API to automatically copy emails of selected indexes onto the system clipboard.
@@ -787,7 +787,8 @@ confusing to novice users and inefficient for the app to process (thereby increa
 
 Alternatively, it may also be possible to permanently display all fields in each contact listing as selectable text. However, this means that the user is required to select each line of text via user interface rather than command line, which contradicts a core requirement of the project.
 
-//tag::CopyCommand[]
+//end::copy[]
+
 ---
 
 //tag::calendar[]
@@ -1328,7 +1329,7 @@ the idea of allowing custom user-defined input, concurrent to a default country 
 
 ---
 //end::country_code[]
-//start::quick_start[]
+//tag::quick_start[]
 === Quick-Start Help [Since v.1.5]
 
 At application launch, the result display box (directly beneath the command box where user inputs commands) shows a handy list
@@ -1404,7 +1405,7 @@ on the app. As such, it was unfeasible to add even more panes to the window and 
 
 ---
 //end::quick_start[]
-//start::backup[]
+//tag::backup[]
 === Contact Backup [Since v1.5]
 
 Contact information is valuable, and users may want to back up their data. By providing a user-friendly backup method,
