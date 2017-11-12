@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!-- @author Linus -->
+<html>
+<title>Main Content</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+<style type="text/css">
+    html {
+        height: 100%;
+        width: 100%;
+    }
+
+    body {
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+        padding: 0px
+    }
+
+    img {
+        user-drag: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+
+    strong {
+        font-size: 18px;
+    }
+    p {
+        word-break: break-all;
+    }
+
+    .container{
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+    }
+    .row{
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+    }
+</style>
+
+<body onload="initialize()">
+
+<!-- First Grid: Picture & Contact Info -->
+<div class="row">
+    <div class="card col-4">
+        <img class="card-img-top" id="avatar" src="../images/defaultAvatar.png" alt="Card image cap">
+        <div class="card-body">
+
+            <strong>
+                <h3>Contact Information</h3>
+                <h3 id="name"></h3>
+                <p id="phone"></p>
+                <p id="address"></p>
+                <p id="email"></p>
+                <p id="birthday"></p>
+                <p id="tags"></p>
+            </strong>
+
+        </div>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid col-8" style="padding: 20px; background: #f7f7f7">
+        <h1 style="text-align: center"><b>My Events</b></h1>
+
+        <div class="card border-primary mb-3">
+            <div class="card-header">CS2103 Group Meeting</div>
+            <div class="card-body text-primary">
+                <h4 class="card-title">To discuss our project Unibook</h4>
+                <p class="card-text">We plan to meet in Utown ERC library at 7:00 pm.</p>
+            </div>
+        </div>
+        <div class="card border-secondary mb-3">
+            <div class="card-header">CS2105 Group Meeting</div>
+            <div class="card-body text-secondary">
+                <h4 class="card-title">To discuss our group assignment</h4>
+                <p class="card-text">We plan to meet in Utown ERC library at 7:00 pm.</p>
+            </div>
+        </div>
+
+        <div class="card border-success mb-3">
+            <div class="card-header">CS2107 Group Meeting</div>
+            <div class="card-body text-success">
+                <h4 class="card-title">To discuss our group assignment</h4>
+                <p class="card-text">We plan to meet in Utown ERC library at 7:00 pm.</p>
+            </div>
+        </div>
+        <div class="card border-danger mb-3">
+            <div class="card-header">CS2109 Group Meeting</div>
+            <div class="card-body text-danger">
+                <h4 class="card-title">To discuss our group assignment</h4>
+                <p class="card-text">We plan to meet in Utown ERC library at 7:00 pm.</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    function initialize() {
+
+        document.setName = function setName(name) {
+            document.getElementById("name").innerHTML = "Name: " + name;
+        }
+
+        document.setEmail = function setEmail(email) {
+            document.getElementById("email").innerHTML = "Email(s): " + email;
+        }
+
+        document.setPhone = function setPhone(phone) {
+            document.getElementById("phone").innerHTML = "Phone(s): " + phone;
+        }
+
+        document.setAddress = function setAddress(address) {
+            document.getElementById("address").innerHTML = "Address: " + address;
+        }
+
+        document.setAvatar = function setAvatar(avatar) {
+            document.getElementById("avatar").src = avatar;
+        }
+
+        document.setTags = function setTags(tags) {
+            tagArray = tags.split(" ");
+            tagsHtml = '';
+            tagsColor = ["primary", "secondary", "success", "danger", "warning", "info"];
+            tagArray.forEach(function (ele, i) {
+
+                colorIndex = ele.charCodeAt(0) % 6;
+
+                tagsHtml += " <span class='badge badge-" + tagsColor[colorIndex] + "' >"  + ele + "</span>";
+
+            });
+            document.getElementById("tags").innerHTML = "Tags: " + tagsHtml;
+        }
+
+    }
+
+</script>
+
+</body>
+</html>
+
+<!-- @author -->

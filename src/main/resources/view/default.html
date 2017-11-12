@@ -1,9 +1,163 @@
 <!DOCTYPE html>
+<!-- @@author Linus -->
 <html>
-<head>
-    <link rel="stylesheet" href="DarkTheme.css">
-</head>
+<title>Home Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
-<body class="background">
+<style type="text/css">
+    html {
+        height: 100%;
+        width: 100%;
+    }
+
+    body {
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+        padding: 0px
+    }
+
+    img {
+        user-drag: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+
+    strong {
+        font-size: 18px;
+    }
+    p {
+        word-break: break-all;
+    }
+
+    .container{
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+    }
+    .row{
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+    }
+</style>
+
+<body>
+
+<!-- First Grid: Picture & Contact Info -->
+<div class="row">
+    <div class="card col-4">
+        <img class="card-img-top" src="../images/bg.jpeg" alt="Card image cap">
+        <div class="card-body">
+
+            <strong>
+                <h3>Project Name: UniBook</h3>
+                <h3>Current Version: <span class='badge badge-warning'>v1.5</span></h3>
+                <p>License: <span class='badge badge-info'>MIT</span> Build: <span class='badge badge-success'>passing</span> codacy: <span class='badge badge-primary'>A</span></p>
+                <p>Developers: Sirisha, Peng Xu, Vos, Henning</p>
+                <p>Tutorial: T13-B2</p>
+                <p>Last updated: 2017/11/12</p>
+            </strong>
+
+        </div>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid col-8" style="padding: 20px; background: #f7f7f7">
+        <h1 style="text-align: center"><b>Unibook Commands</b></h1>
+        <div class="card border-primary mb-3">
+            <div class="card-header">Home command</div>
+            <div class="card-body text-primary">
+                <h4 class="card-title">Goes back to the home panel. </h4>
+            </div>
+        </div>
+        <div class="card border-secondary mb-3">
+            <div class="card-header">Avatar command</div>
+            <div class="card-body text-info">
+                <h4 class="card-title">Adds an avatar image for selected person. </h4>
+                <p class="card-text">Parameters: avtar INDEX u/Image URL</p>
+                <p class="card-text">Example: avatar 1 u/http://139.59.227.237/public/avatar3.jpg</p>
+            </div>
+        </div>
+        <div class="card border-success mb-3">
+            <div class="card-header">Fav command</div>
+            <div class="card-body text-success">
+                <h4 class="card-title">Adds the person identified by the index number used in the last person listing
+                    to the favourite list. Format: fav INDEX fv INDEX </h4>
+                <p class="card-text">Parameters: fav INDEX | fv INDEX.</p>
+                <p class="card-text">Example: fav 1</p>
+            </div>
+        </div>
+        <div class="card border-warning mb-3">
+            <div class="card-header">Unfav command</div>
+            <div class="card-body text-warning">
+                <h4 class="card-title">Removes the person identified by the index number used in the favourite list from the favourite list.</h4>
+                    <p class="card-title">Parameters: unfav INDEX | unfv INDEX.</p>
+                    <p class="card-text">Example: unfav 1</p>
+            </div>
+        </div>
+        <div class="card border-primary mb-3">
+            <div class="card-header">Favlist command</div>
+            <div class="card-body text-primary">
+                <h4 class="card-title">Shows a list of all the persons in the Favourite List. </h4>
+                <p class="card-title">Parameters: unfav INDEX | unfv INDEX.</p>
+                <p class="card-text">Example: unfav 1</p>
+            </div>
+        </div>
+        <div class="card border-success mb-3">
+            <div class="card-header">Add command</div>
+            <div class="card-body text-success">
+                <h4 class="card-title">Adds a person to the address book. </h4>
+                <p class="card-text">Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS [s/SCORE] [t/TAG]...</p>
+            </div>
+        </div>
+        <div class="card border-danger mb-3">
+            <div class="card-header">Edit command</div>
+            <div class="card-body text-danger">
+                <h4 class="card-title">Edits an existing person in the address book.</h4>
+                <p class="card-txt">Parameters: INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​ e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​</p>
+            </div>
+        </div>
+        <div class="card border-secondary mb-3">
+            <div class="card-header">Delete command</div>
+            <div class="card-body text-secondary">
+                <h4 class="card-title">Deletes the person identified by the index number used in the last person listing.</h4>
+                <p class="card-text">Parameters: INDEX (must be a positive integer)</p>
+            </div>
+        </div>
+        <div class="card border-primary mb-3">
+            <div class="card-header">Find command</div>
+            <div class="card-body text-primary">
+                <h4 class="card-title">Finds persons whose names contain any of the given keywords.</h4>
+                <p class="card-text">Parameters: find KEYWORD [MORE_KEYWORDS]...</p>
+            </div>
+        </div>
+        <div class="card border-danger mb-3">
+            <div class="card-header">Clear command</div>
+            <div class="card-body text-danger">
+                <h4 class="card-title">Clears all entries from the address book.</h4>
+            </div>
+        </div>
+        <div class="card border-warning mb-3">
+            <div class="card-header">Undo command</div>
+            <div class="card-body text-warning">
+                <h4 class="card-title">Restores the address book to the state before the previous undoable command was executed.</h4>
+            </div>
+        </div>
+        <div class="card border-secondary mb-3">
+            <div class="card-header">Redo command</div>
+            <div class="card-body text-info">
+                <h4 class="card-title">Reverses the most recent undo command.</h4>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 </body>
 </html>
+<!-- @@author -->

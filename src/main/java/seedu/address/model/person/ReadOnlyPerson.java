@@ -16,12 +16,20 @@ public interface ReadOnlyPerson {
     Name getName();
     ObjectProperty<Phone> phoneProperty();
     Phone getPhone();
+    //@@author siri99
+    ObjectProperty<Birthday> birthdayProperty();
+    Birthday getBirthday();
+    //@@author siri99
     ObjectProperty<Email> emailProperty();
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Score> scoreProperty();
+    Score getScore();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+
+    Avatar getAvatarPic();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -31,6 +39,7 @@ public interface ReadOnlyPerson {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
+                && other.getBirthday().equals(this.getBirthday())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()));
     }
@@ -41,15 +50,32 @@ public interface ReadOnlyPerson {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+//                .append("avatar: ")
+//                .append(getAvatarPic())
                 .append(" Phone: ")
                 .append(getPhone())
+                //@@author siri99
+                .append(" Birthday: ")
+                .append(getBirthday())
+                //@@author siri99
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                //@@author Henning
+                .append(" ")
+                .append(getScore())
+                //@@author
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }
 
+    default String getOnlyTags() {
+        final StringBuilder builder = new StringBuilder();
+        for (Tag tag : getTags()) {
+            builder.append(" " + (tag.tagName).toLowerCase());
+        }
+        return builder.toString();
+    }
 }

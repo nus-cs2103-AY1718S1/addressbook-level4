@@ -30,8 +30,10 @@ public class EditPersonDescriptorBuilder {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
+        descriptor.setBirthday(person.getBirthday());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setScore(person.getScore());
         descriptor.setTags(person.getTags());
     }
 
@@ -59,6 +61,20 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author siri99
+    /**
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author siri99
+
     /**
      * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -79,6 +95,18 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseAddress(Optional.of(address)).ifPresent(descriptor::setAddress);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Score} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withScore(String score) {
+        try {
+            ParserUtil.parseScore(Optional.of(score)).ifPresent(descriptor::setScore);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("score is expected to be unique");
         }
         return this;
     }

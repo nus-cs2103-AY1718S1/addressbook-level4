@@ -41,6 +41,40 @@ public class StringUtil {
         return false;
     }
 
+    //@@author siri99
+    /**
+     * Returns true if the {@code sentence} contains any part of the {@code word}.
+     *   Ignores case, and full word match is not required, word just has to be a substring.
+     *   <br>examples:<pre>
+     *       containsSubstringOfWord("ABc def", "abc") == true
+     *       containsSubstringOfWord("ABc def", "DEF") == true
+     *       containsSubstringOfWord("ABc def", "AB") == false //not a full word match
+     *       </pre>
+     * @param sentence cannot be null
+     * @param word cannot be null, cannot be empty, must be a single word with minimum 2 characters
+     */
+    public static boolean containsSubstringOfWord(String sentence, String word) {
+        requireNonNull(sentence);
+        requireNonNull(word);
+
+        String preppedWord = word.trim();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+
+        String preppedSentence = sentence;
+        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+
+        if (preppedWord.length() >= 2) {
+            for (String wordInSentence : wordsInPreppedSentence) {
+                if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    //@@author siri99
+
     /**
      * Returns a detailed message of the t, including the stack trace.
      */

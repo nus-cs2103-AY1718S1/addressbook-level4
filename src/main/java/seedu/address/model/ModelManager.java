@@ -15,6 +15,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.ui.ChangeInternalListEvent;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -24,7 +25,12 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
-    private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private FilteredList<ReadOnlyPerson> filteredPersons;
+    //@@author siri99
+    private final FilteredList<ReadOnlyPerson> filteredFavouritePersons;
+
+    private String currentList;
+    //@@author siri99
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +43,10 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        //@@author siri99
+        filteredFavouritePersons = new FilteredList<>(this.addressBook.getFavouritePersonList());
+        //@@author siri99
+        this.currentList = "list";
     }
 
     public ModelManager() {
@@ -65,12 +75,30 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author siri99
+    @Override
+    public synchronized void removeFavouritePerson(ReadOnlyPerson person) throws PersonNotFoundException {
+        addressBook.removeFavouritePerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+    //@@author siri99
+
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+
+    //@@author siri99
+    @Override
+    public synchronized void addFavouritePerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        addressBook.addFavouritePerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+    //@@author siri99
 
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
@@ -81,6 +109,23 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author siri99
+    @Override
+    public void changeListTo(String listName) {
+        raise(new ChangeInternalListEvent(listName));
+    }
+
+    @Override
+    public String getCurrentList() {
+        return currentList;
+    }
+
+    @Override
+    public void setCurrentList(String currentList) {
+        this.currentList =  currentList;
+    }
+    //@@author siri99
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -89,8 +134,17 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+        setCurrentList("list");
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
+
+    //@@author siri99
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredFavouritePersonList() {
+        setCurrentList("favlist");
+        return FXCollections.unmodifiableObservableList(filteredFavouritePersons);
+    }
+    //@@author siri99
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
@@ -98,6 +152,33 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author siri99
+    @Override
+    public void updateFilteredFavouritePersonList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        filteredFavouritePersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void sortFilteredPersonListName() {
+        addressBook.sortPersonsByName();
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void sortFilteredPersonListBirthday() {
+        addressBook.sortPersonsByBirthday();
+        indicateAddressBookChanged();
+    }
+    //@@author siri99
+
+    //@@author Henning
+    @Override
+    public void sortFilteredPersonListScore() {
+        addressBook.sortPersonsByScore();
+        indicateAddressBookChanged();
+    }
+    //@@author Henning
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

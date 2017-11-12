@@ -29,6 +29,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
+
     }
 
     @Override
@@ -45,10 +46,23 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
     }
+
+    //@@author siri99
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredFavoritePersonList() {
+        return model.getFilteredFavouritePersonList();
+    }
+
+    @Override
+    public String getCurrentList() {
+        return model.getCurrentList();
+    }
+    //@@author siri99
 
     @Override
     public ListElementPointer getHistorySnapshot() {

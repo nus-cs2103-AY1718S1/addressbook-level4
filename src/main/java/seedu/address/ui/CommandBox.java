@@ -3,7 +3,9 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
@@ -29,6 +31,12 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextField commandTextField;
+    @FXML
+    private Button add;
+    @FXML
+    private Button undo;
+    @FXML
+    private Button redo;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -100,14 +108,28 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleCommandInputChanged() {
+        CommandResult commandResult = new CommandResult("");
+        String commandText = commandTextField.getText();
         try {
-            CommandResult commandResult = logic.execute(commandTextField.getText());
-            initHistory();
-            historySnapshot.next();
-            // process result of the command
-            commandTextField.setText("");
-            logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            if (logic.getCurrentList().contains("favlist") && ((commandText.contains("delete")
+                    || commandText.contains("edit")) || commandText.contains("sort"))) {
+                commandResult = new CommandResult("Edit/Delete/Sort commands do not work in Favourite List");
+                initHistory();
+                historySnapshot.next();
+                // process result of the command
+                commandTextField.setText("");
+                logger.info("Result: " + commandResult.feedbackToUser);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+
+            } else {
+                commandResult = logic.execute(commandTextField.getText());
+                initHistory();
+                historySnapshot.next();
+                // process result of the command
+                commandTextField.setText("");
+                logger.info("Result: " + commandResult.feedbackToUser);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            }
 
         } catch (CommandException | ParseException e) {
             initHistory();
@@ -147,5 +169,80 @@ public class CommandBox extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
+    //@@author Jacob Vosburgh
+    /**
+     * handles button events given to it by the fxml doc that it is set as controller for by the constructor in UiPart
+     * @param buttonEvent
+     */
+    @FXML
+    private void handleAddButtonAction(ActionEvent buttonEvent) {
+        //@@author
+        //@@author siri99
+        CommandResult commandResult = new CommandResult("");
+        if (logic.getCurrentList().contains("favlist")) {
+            commandResult = new CommandResult("Add command does not work in favourite list");;
+        } else { //@@author siri99
+            //@@author Jacob Vosburgh
+            AddWindow addWindow = new AddWindow(logic);
+            addWindow.show();
+        }
+        logger.info("Result: " + commandResult.feedbackToUser);
+        raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+    }
+    /**
+     * handles button events given to it by the fxml doc that it is set as controller for by the constructor in UiPart
+     * @param buttonEvent
+     */
+    @FXML
+    private void handleUndoButtonAction(ActionEvent buttonEvent) {
+        try {
+            CommandResult commandResult = logic.execute("undo");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+        } catch (CommandException | ParseException e) {
+            // handle command failure
+            logger.info("Delete call failed on index undo");
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
 
+    }
+
+    /**
+     * handles button events given to it by the fxml doc that it is set as controller for by the constructor in UiPart
+     * @param buttonEvent
+     */
+    @FXML
+    private void handleRedoButtonAction(ActionEvent buttonEvent) {
+        try {
+            CommandResult commandResult = logic.execute("redo");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+        } catch (CommandException | ParseException e) {
+            // handle command failure
+            logger.info("Delete call failed on index redo");
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+
+    }
+    //@@author
+    //@@author siri99
+    /**
+     * handles button events given to it by the fxml document for which it is set as controller by
+     * a constructor in UiPart. handleFavListButton event handles the event when the Favlist button
+     * containing a 'star' icon to represent a fav list is clicked.
+     * @param buttonEvent
+     */
+    @FXML
+    private void handleFavlistButtonAction(ActionEvent buttonEvent) {
+        try {
+            CommandResult commandResult = logic.execute("favlist");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+        } catch (CommandException | ParseException e) {
+            // handling command failure
+            logger.info("Delete call failed on index favlist");
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+    }
+    //@@author siri99
 }

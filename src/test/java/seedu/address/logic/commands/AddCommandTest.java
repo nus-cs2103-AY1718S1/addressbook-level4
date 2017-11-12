@@ -112,6 +112,62 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author siri99
+        @Override
+        public void sortFilteredPersonListName() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortFilteredPersonListBirthday() {
+            fail("This method should not be called.");
+        }
+
+        //@@author Henning
+        @Override
+        public void sortFilteredPersonListScore() {
+            fail("This method should not be called.");
+        }
+        //@@author Henning
+
+        @Override
+        public void addFavouritePerson(ReadOnlyPerson target) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removeFavouritePerson(ReadOnlyPerson target) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void changeListTo(String listName) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void setCurrentList(String currentList)  {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public String getCurrentList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredFavouritePersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredFavouritePersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+        //@@author siri99
+
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");

@@ -20,7 +20,17 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
     /** Returns an unmodifiable view of the filtered list of persons */
+    //String getCurrentListNamePersonList();
+
+    /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
+
+    //@@author siri99
+    /** Returns an unmodifiable view of the filtered list of favourited persons */
+    ObservableList<ReadOnlyPerson> getFilteredFavoritePersonList();
+
+    String getCurrentList();
+    //@@author siri99
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();

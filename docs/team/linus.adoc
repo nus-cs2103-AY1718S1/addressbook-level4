@@ -1,0 +1,157 @@
+= Peng Xu - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: UniBook - To manage your wonderful uni life
+UniBook is a desktop address book application used for manage your uni friends information. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T13-B2/main/blob/master/collated/main/Linus.md[Functional code]] [https://github.com/CS2103AUG2017-T13-B2/main/blob/master/collated/test/Linus.md[Test code]]
+
+=== Enhancement Added: Avatar Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=avatar]
+
+#End of Extract#
+
+---
+
+==== Justification
+Add avatar command gives the user function that they can upload their avatar image by
+specifying the URL of the image.
+
+Example command:
+
+1. avatar INDEX [u/Image URL] - Adds avatar image for the person who has the index number
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=AddAvatarCommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Home Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=homeCommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+Home command is to privide the function that users can always go back to home page
+
+There are three commands:
+
+1. home - go back to home panel
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=homeCommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Theme Menu
+
+==== External behavior
+---
+
+The user can choose 2 different types of theme for Addressbook
+* Black (Default)
+* Light
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=theme]
+
+#End of Extract#
+---
+
+=== Implementation
+---
+#Start of Extract [from: Dev Guide]#
+
+include::../DeveloperGuide.adoc[tag=themeMenu]
+
+#End of Extract#
+---
+
+=== Enhancement Added: Browse Panel
+
+==== External behavior
+---
+
+**Aspect:** Try to make browser panel be user-friendly and looks good
+**Pros:** The whole UI on browser panel looks nice and the usage of colors is decent.
+**Cons:** Using external css framework takes more time to load. Some functions are hard-coded that it cannot be changed dynamically.
+
+The Browser panel was created by HTML code, CSS and It uses front-end framework Bootstrap4.0 and raw Javascript code.
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=browsePanel]
+
+#End of Extract#
+---
+
+=== Implementation
+---
+#Start of Extract [from: Dev Guide]#
+
+include::../DeveloperGuide.adoc[tag=browsePanel]
+
+#End of Extract#
+---
+
+
+=== Other contributions
+
+* Beautified the browser panel and it can show the person's detail as well as upcoming events. (Pull requests: https://github.com/CS2103AUG2017-T13-B2/main/pull/68)
+* Added status bar at the bottom of personList panel to show the size of current personList. (Pull requests: https://github.com/CS2103AUG2017-T13-B2/main/pull/12)
+* Added SampleData generate functions that can generate fake persons automatically. (Link: https://github.com/CS2103AUG2017-T13-B2/main/pull/112)
+* Testing for another team's product. (Issue https://github.com/CS2103AUG2017-W13-B4/main/issues/253)
+* Wrote additional tests to increase coverage (AddAvatarCommand Test, HomeCommandTest, AvatarTest, StatusBarTest etc)
+* Added User cases (Link: https://github.com/CS2103AUG2017-T13-B2/main/projects/1)
+* Added User Stories (Link: https://github.com/CS2103AUG2017-T13-B2/main/projects/1)
+* Help Matched the color of tags to the same as the browser tags.
+* Updated our UI.png, Version number of project regularly.
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=userstories2]
+
+#End of Extract#
+---
+* Added Use Cases
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=usecases2]
+
+#End of Extract#
+
+---

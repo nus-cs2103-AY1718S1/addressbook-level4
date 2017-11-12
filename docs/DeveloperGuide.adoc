@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -344,6 +344,335 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+---
+// tag::favouritelist[]
+
+=== Favourite List mechanism
+
+The feature is implemented in a similar way to the ‘Delete’ and ‘List’ features – it uses the index
+instead of name to add/remove a person from the Favourite List.
+
+The Favourite List feature is split into 3 commands:
+
+1.	`favlist` – This command displays the favourite list. The command favlist raises an event called ChangeInternalListEvent which is handled and then displays the favourite list.
+2.	`fav` – This command calls the FavCommandParser class which parses the input arguments and creates a FavCommand object, this class then adds the number at the index entered by the user into the favourite list (while making sure there are no duplicate entries).
+3.	`unfav` – This command calls the UnfavCommandParser class which parses the input arguments and creates a UnfavCommand object, this class then removes the number at the index entered by the user from the favourite list.
+
+The command to view the favourite list is “favlist” or “fl”.
+
+The `favlist` command inherits from `Undoable Command`. Thus it is supportive of undoing and redoing (using undo and redo command) the current state of Addressbook.
+The following sequence diagram depicts the basic interactions involved between the user and the different application components when the user executes the favourite list command.
+
+image::FavouriteListCommandSequenceDiagram1.png[width="800"]
+_Figure 3.2.1 : Basic Sequence Diagram of the "favlist" command_
+
+image::FavouriteListCommandSequenceDiagram2.png[width="800"]
+_Figure 3.2.2 : Sequence Diagram of the interaction between ModelManager and AddressBook for favlist command_
+
+This `Logic` interface is used to obtain the copy of the Favourite list when required. As seen by Figure 3.2.1 and Figure 3.2.2 above, to obtain the current favourite list of the address book, "favlist" or “fl” string is first recorded by the `Command Box` and then passed to the Logic interface for execution.
+
+The Logic Interface uses Logic Manager to package the String command received by it as a Command object. The respective object (in this case the FavouriteListCommand object) is executed in the Logic Manager class. Instructions as follows:
+
+[source,java]
+----
+public CommandResult executeUndoableCommand() {
+    model.changeListTo(COMMAND_WORD);
+    model.updateFilteredFavouritePersonList(PREDICATE_SHOW_ALL_FAVOURITE_PERSONS);
+    return new CommandResult(MESSAGE_SUCCESS);
+}
+
+----
+
+The favlist command calls the calls the getFilteredFavoritePersonList() method residing in the `Logic` interface. LogicManager successively calls the Model interface. `Model` uses ModelManager class to return the filteredFavouritePersons list back to the calling method.
+
+Before being passed back, filteredFavouritePersons list calls getFavouritePersonList() method of AddressBook class which then calls the getFavouritePersonList() method in `XmlSerializbleAddressBook`. The XmlSerializbleAddressBook  method loads the stored contacts from favourite list and returns it to AddressBook which then returns it to ModelManager. Thus the `filteredFavouritePersons` is now updated with the favourite contacts which are then displayed to the user by calling the changeListTo method which calls the `ChangeInternalListEvent` which is subsequently handled by other methods and the Favourite list is displayed on the personListPanel.
+
+This implementation also supports `syncing` of the favourite list with the main list by deleting/editing the person in the favourite list if the person is deleted/edited respectively in the main list. The following code snippet enables this sync mechanism.
+----
+if (persons.remove(key)) {
+            if (favouritePersons.contains(key)) {
+                favouritePersons.remove(key);
+            }
+            return true;
+----
+There is also a Star button beside the command line at the top of the addressbook which is the `Favourite` button.
+The button calls a button Event that is handled by handleFavlistButtonAction. The handler calls the favourite list command as
+shown below.
+----
+CommandResult commandResult = logic.execute("favlist");
+logger.info("Result: " + commandResult.feedbackToUser);
+raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+----
+
+The `fav` command creates a FavCommand object that calls addFavouritePerson method of ModelManager. This method calls addFavouritePerson method of AddressBook which then calls the add method from UniquePersonList as shown in the code snippet and diagram below.
+
+----
+requireNonNull(toAdd);
+    if (contains(toAdd)) {
+        throw new DuplicatePersonException();
+    }
+internalList.add(new Person(toAdd));
+----
+
+image::FavCommandSequenceDiagram.png[width="800"]
+_Figure 3.2.3 : Sequence Diagram of the interaction between ModelManager and AddressBook for fav command_
+
+The `unfav` command creates a FavCommand object that calls removeFavouritePerson method of ModelManager. This method calls removeFavouritePerson method of AddressBook which then calls the remove method from UniquePersonList as shown in the code snippet and diagram below.
+
+----
+if (favouritePersons.remove(key)) {
+    return true;
+    } else {
+        throw new PersonNotFoundException();
+    }
+----
+
+image::UnfavCommandSequenceDiagram.png[width="800"]
+_Figure 3.2.4 : Sequence Diagram of the interaction between ModelManager and AddressBook for unfav command_
+
+==== Design Considerations
+
+**Aspect:** Use of other commands in Favourite list setup (Delete, Edit, Sort Command etc). +
+**Alternative 1 (current choice):** Restrict users from using certain commands in favourite list.  +
+**Pros:** Users will never make a mistake. +
+**Cons:** Users need to go back to the main list whenever they want to edit/ delete a person.  +
+**Alternative 2:** Mention the specific list of commands that the user can use while in the favourite list in the user guide  +
+**Pros:** Ease of implementation. No need to restrict commands in favourite list. +
+**Cons:** User might use commands for the wrong purpose. For example, the user might think deleting a person from
+ the favourite list will just remove the person from the favourite list, but in reality it will
+ delete the person from the main list as well. The user might get confused between commands such
+ as delete and unfav.
+
+---
+// end::favouritelist[]
+// tag::sort[]
+=== Sort Command mechanism
+
+
+This Sort command calls the `SortCommandParser` class which parses the input argument and creates a `SortCommand` object, this class then stores the argument in a String called sortFilter.
+
+If sortFilter is `‘name’`, or if there is no filter, it calls the sortFilteredPersonListName method of ModelManager. The method calls sortPersonsByName method of AddressBook which then calls sortPersonsByName of UniquePersonList. It sorts the person list in alphabhetical order of names.
+
+If the sortfilter is `‘birthday’ or ‘b’`, it calls the sortFilteredPersonListBirthday method of `ModelManager`. The method calls sortPersonsByBirthday
+method of `AddressBook` which then calls s sortPersonsByBirthday of `UniquePersonList`. It sorts the person list in ascending order of birthdays from January to December.
+
+If the sortfilter is `‘score’` or `‘s’`, it calls the sortFilteredPersonListScore method of `ModelManager`. This method then calls the sortPersonsByScore
+method of `AdressBook` which then calls sortPersonsByScore of `UniquePersonList`. The list of persons is then sorted in descending order by Group Score.
+
+----
+switch (sortFilter) {
+    case "name":
+    default:
+        model.sortFilteredPersonListName();
+        return new CommandResult(MESSAGE_SUCCESS_NAME);
+
+    case "birthday":
+    case "b":
+        model.sortFilteredPersonListBirthday();
+        return new CommandResult(MESSAGE_SUCCESS_BIRTHDAY);
+
+    case "score":
+    case "s":
+        model.sortFilteredPersonListScore();
+        return new CommandResult(MESSAGE_SUCCESS_SCORE);
+    }
+----
+
+image::SortCommandSequenceDiagram.PNG[width="800"]
+_Figure 3.3.1 : Sequence Diagram of the sort command_
+
+The Collections.sort method is used in sortPersonsByName, sortPersonsByBirthday and sortPersonsByScore in UniquePersonList
+which sorts the provided observable list using the given comparator.
+
+----
+Comparator<ReadOnlyPerson> personComparator = new Comparator<ReadOnlyPerson>() {
+
+    public int compare(ReadOnlyPerson person1, ReadOnlyPerson person2) {
+
+        String personName1 = person1.getName().toString();
+        String personName2 = person2.getName().toString();
+
+        return personName1.compareTo(personName2);
+    }
+
+};
+
+FXCollections.sort(internalList, personComparator);
+----
+// end::sort[]
+---
+// tag::find[]
+=== Enhanced Find Command mechanism
+
+The `NameContainsKeyWordsPredicate` class which is in the Person
+class is the main class which enables users to find any person
+using their full name, part of the name, or tags of the person.
+The NameContainsKeywordsPredicate class uses functions from the
+StringUtil class to carry out the comparison for find feature.
+
+1. Find by `name`: The containsWordIgnoreCase function in StringUtil
+checks whether the name entered by the user is equal to the name of
+the person in AddressBook (implemented v1.0).
+
+2. Find by `substring` of name: The containsSubstringOfWord function
+first checks if the length of the substring is greater than or
+equal to 2. Then, Using an enhanced for loop, the function iterates
+through the words in a person’s name and checks to see if any of
+them contain with the substring (implemented v1.3).
+
+3. Find by `Tags`: The test method in NameContainsKeyWordsPredicate uses
+two sets, one containing the tag entered by the user and the other
+containing the set of tags of each person and compares accordingly (implemented v1.2).
+
+==== Design Considerations
+
+**Aspect:** Use of other commands in Favourite list setup (Delete, Edit Command etc). +
+**Alternative 1 (current choice):** Allow users to use find by name, substring of name, and tags in one command by simply typing Find followed by name or tag. Eg. Find Alice Mark friends +
+**Pros:** Users will not make a mistake. Convenient to use. +
+**Alternative 2:** Seperate the different find categories using labels such as '/n' for name and '/t' for tags. Eg. find n/Alice n/Mark t/friends +
+**Pros:** More clear use of command as users are explicitly specifying whether they are searching for name or tag. +
+**Cons:** Not convenient as users need to type in the labels for each name or tag they want to find.  +
+// end::find[]
+// tag::undoRedoButton[]
+
+=== Undo and Redo Buttons
+
+Because undo and redo are actions often performed repeatedly, it makes sense that they should be presented as a button, to allow them to be pressed repeatedly.
+
+=== Design Considerations
+
+**Aspect:** Undo and Redo button presses may conflict with undo and redo command calls.
+**Alternative 1 (current choice):** Use the button press to trigger a call of the command as if it was typed manually.
+**Pros:** Makes the behavior of the undo and redo buttons work intuitively alongside the undo and redo commands
+**Cons:** Makes the commands redundant, and might confuse people who expect them to behave differently.
+// end::undoRedoButton[]
+// tag::deleteButton[]
+
+=== Delete Button
+
+Delete commands rely on a somewhat arbitrary index, which requires you to locate the person card in the UI before you can execute a delete. We can eliminate the manual entry by adding a button that performs it as soon as you find the person card.
+
+=== Design Considerations
+
+**Aspect:** Delete when in the favorite list should behave rationally
+**Alternative 1 (current choice):** prevent the use of the delete button from te favorite list.
+**Pros:** Prevents users from confusing the 'unfav' action with the delete button, preventing accidental deletions.
+**Cons:** The presence of the delete button on the cards, even in the favorite list, is now useless.
+// end::deleteButton[]
+// tag::editButton[]
+
+=== Edit Button
+
+Opens a prompt that allows immediate edits to be performed without using the edit command's complex syntax.
+
+=== Design Considerations
+
+**Aspect:** The text boxes have not visual connection to the data they will change, making it hard to tell what field is being edited.
+**Alternative 1 (current choice):** Give prompt text in the text boxes, indicating the corresponding field.
+**Pros:** Makes it clear which field is being changed.
+**Cons:** Still requires the user to retype an entire field even if the only error was a minor typo.
+// end::editButton[]
+// tag::addButton[]
+
+=== Add Button
+
+Opens a prompt that allows immediate adds to be performed without using the add command's complex syntax. +
+Functions via calls of the 'add()' command.
+
+image::UiComponentAddButtonSequenceDiagram.png[width="600"]
+_Figure 3.11.1 : Sequence Diagram of Add Button Functionality_
+
+=== Design Considerations
+
+**Aspect:** Some fields are optional, and users may not be aware of this when adding.
+**Alternative 1 (current choice):** Includes 'Optional' in text boxes corresponding to optional fields.
+**Pros:** Makes it clear which fields are optionals.
+**Cons:** Leaving empty fields when filling in a new person is unintuitive.
+// end::addButton[]
+
+// tag::AddAvatarCommand[]
+=== Add Avatar mechanism
+
+The feature is to get avatar image through url link (if it's valid http address) and store the image into local directory called avatar.
+At the same time, updates avatar node in current person xml nodes with the image location. Then, it will raise an
+PersonPanelSelectionChangedEvent then force the program jump to the person whose avatar just been updated in order to
+reload his/her profile page.
+
+* AddAvatar Class Diagram
+
+image::AddAvatarClassDiagram.png[width="800"]
+
+* AddAvatar Logic Sequence Diagram
+
+image::AddAvatarLogicSequenceDiagram.png[width="800"]
+
+The command to add avatar image is “avatar INDEX u/Image URL”.
+
+
+// end::AddAvatarCommand[]
+
+// tag::homeCommand[]
+=== Home command mechanism
+
+The feature is implemented in a similar way to the 'Select' feature.
+
+The command is to help user go back to home browser panel simply just raise new event.
+
+* HomeCommand Class Diagramm
+
+image::HomeCommandClassDiagram.png[width="800"]
+
+// end::homeCommand[]
+
+// tag::themeMenu[]
+=== Theme Menu
+
+**Aspect:** Provides experienced users with more theme options and they can have a better experience
+
+The feature is implemented by using Java.fxml.FXML library that when user select themes on menubar. It
+will trigger an click event. Based on what user clicked, t will rerender the css files to reload the
+whole main window.
+
+* High level Diagramm
+
+image::themeMenuHighLevelDiagram.png[width="800"]
+
+// end::themeMenu[]
+// tag::browsePanel[]
+
+=== Broswer Panel
+
+**Aspect:** Try to make browser panel be user-friendly and looks good
+**Pros:** The whole UI on browser panel looks nice and the usage of colors is decent.
+**Cons:** Using external css framework takes more time to load. Some functions are hard-coded that it cannot be changed dynamically.
+
+The Browser panel was created by HTML code, CSS and It uses front-end framework Bootstrap4.0 and raw Javascript code.
+
+// end::browsePanel[]
+
+// tag::GroupScore[]
+=== Group Score mechanism
+
+The group score parameter allows the user to attach an optional group score from 0-9
+to persons in the addressbook, which is meant to reflect how valuable these persons would
+be in a group. For best user experience, 9 should correspond to most valuable and 0 to least valuable,
+as the sort command will sort from highest to lowest, when sorting by Group Score.
+
+The group score is implemented much like the other parameters.
+This means, it has its own score class that mostly checks if the given
+input is valid, and initializes a score object if that is the case. +
+Furthermore, to make the Group Score optional, when the `AddCommandParser` calls
+the `parseScore` method in the `ParserUtil` class, if no Group Score input has been received
+the `parseScore` method will instantiate a Score object with an empty string, and return that.
+A sequence diagram of how a Score object is instantiated by the `AddCommandParser` can be seen below.
+
+image::Hennings_diagram.png[width="800"]
+
+Lastly, it should be mentioned that the core functionality of the Group Score parameter
+is its integration with the sort command, which was expanded upon under the `sort command` section.
+
+// end::GroupScore[]
 
 === Logging
 
@@ -713,6 +1042,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
+
 [appendix]
 == User Stories
 
@@ -721,28 +1051,78 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App (implemented v1.0)
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person | add entries of new people (implemented v1.0)
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a person |remove entries that I no longer need (implemented v1.0)
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list (implemented v1.0)
+// tag::userstories[]
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* *` |user |hide private contact details |minimize chance of someone else seeing them by accident (coming in v2.0)
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily (implemented v1.3)
+
+|`* *` |novice user |use commands by using shortcuts (example 'f' instead of 'find') | I can use the features more easily/ fastly (implemented v1.1)
+
+|`* * *` |novice user |be given suggestions for commands close to what I type when commands are entered incorrectly |I can learn quickly from my mistakes (coming in v2.0)
+
+|`*` |novice user |Log out of my own addressbook and into another |I can set up an account for my friend
+
+|`* *` |novice user |delete people by clicking on a 'delete' button on the list |I can delete people easily (implemented v1.2)
+
+|`* *` |experienced user |edit people's details by using a edit button |I can modify details easily (implemented v1.3)
+
+|`* *` |novice user |search by tags |I can find my friends faster (implemented v1.2)
+
+|`*` |experienced user |duplicate a person |When I discover my contact has an identical twin with whom he shares his name, home, and phone I can add him quickly
+
+|`* *` |experienced user |add some contacts to a favourite list |they are easier to find (implemented v1.4)
+
+|`* *` |experienced user| add more labels to the find feature (more customized find)| I can add multiple conditions to find (implemented v1.3)
+
+|`* *` |novice user |sort list results by any keywords in addressbook |I can easily find the right information (implemented v1.5)
+
+|`* *` |experienced user| check when the last time I logged in| I can make sure if my account is still secure
+
+|`* *` |experienced user| select and delete my history| I can easily protect my privacy in case that other people might see it
+
+|`* *` |experienced user| create custom lists/folders like 'family', 'work' etc| I can organize contacts into folders so that it is more easy to retrieve
+
+|`*` |experienced user| can share a contact folder with another friend who is using addressbook| can have a shared database of contacts common to both of us
+
+|`*` |novice user |see a home window at the start of this program |it will be more convenient (implemented v1.4)
+
+|`* *` |experienced user| import other data into my addressbook| I can easily manage my all of my data (coming in v2.0)
+
+|`* *` |experienced user| export my data as csv, json, spreedsheet file| I can backup my data or send it to another app (coming in v2.0)
+
+|`* *` |experienced user| print all of my data | I can use them in real-life
+
+|`* *` |forgetful user | be able to find people by substring of names | I can find people easily even when I don't remember their complete name (implemented v1.3)
+// end::userstories[]
+
+// tag::userstories2[]
+|`* *` |new user| return to home panel | I can go back to home panel after I check other people's information (implemented v1.3)
+
+|`* *` |experienced user| see the size of current list | I can see the size of the list without scrolling down (implemented v1.2)
+
+|`* *` |experienced user| change the theme | I can change the theme of the program based on my taste (implemented v1.3)
+
+|`* *` |experienced user| upload avatar image | I can set up my profile image that I'd like to show to others (implemented v1.4)
+// end::userstories2[]
+
 |=======================================================================
 
-{More to be added}
-
 [appendix]
+
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
-[discrete]
-=== Use case: Delete person
+
+=== Use case: UC1 Delete person
 
 *MSS*
 
@@ -767,7 +1147,99 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+// tag::usecases[]
+
+=== Use Case: UC2 Display Contacts after customized find (custom search)
+
+*MSS*
+
+1. User enters keywords for different categories he wants to search by (eg. name, tags)
+2. AddressBook finds the list of people who satisfy all the conditions entered by the user
+3. AddressBook displays all these contacts and details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No people are found satisfying the given conditions
++
+Use case ends.
+
+=== Use Case: UC2 Import Contacts
+
+*MSS*
+
+1. User receives the contact file
+2. User selects import contacts option
+3. The Address Book app prompts user for location of this contact file
+4. User enters location
+5. Address Book merges the contact file into existing contact file
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 4a. File address entered by user does not exist
+1. Eror message displayed
+2. User prompted to re-enter correct location
++
+Use case ends.
+
+=== Use Case: Use Case: UC3 Export Contacts
+
+*MSS*
+
+1. User selects contacts to export
+2. AddressBook creates file with list of contacts that user selected
+3. User specifices location to store this file of contacts
+4. AddressBook stores data as indicated
+5. User sends data to intended receiever
++
+Use case ends.
+
+=== Use Case: UC4 Adding Contacts to Favourite List
+
+*MSS*
+
+1. User selects contacts to add to favourite list
+2. AddressBook adds contacts to list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Duplicate contact
+1. AddressBook prompts user if it can merge duplicate contacts
+2. If user allows, it will merge duplicate contacts
++
+Use case ends.
+
+// end::usecases[]
+
+// tag::usecases2[]
+=== Use Case: UC5 Adding avatar images to persons' profile
+
+*MSS*
+
+1. User adds avatar image by providing the image url.
+2. AddressBook download the avatar image from Internet and store it locally.
+3. AddressBook creates new node for current person in address.xml to store the image path.
++
+Use case ends.
+
+=== Use Case: UC3 Adding theme change menu
+
+*MSS*
+
+1. User can change theme by click the theme button in menu bar.
+2. Two themes to be offered.
++
+Use case ends.
+
+// end::usecases2[]
 
 [appendix]
 == Non Functional Requirements
@@ -775,7 +1247,11 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
+// tag::nfr[]
+.  The system should not take more than 3 seconds to complete a command.
+.  The system should automatically log out after 30 mins of inactivity (security)
+.  The system should have easily accesible walkthrough/ guide for novice users to familiarise themselves with the environment.
+// end::nfr[]
 {More to be added}
 
 [appendix]
@@ -794,20 +1270,3 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

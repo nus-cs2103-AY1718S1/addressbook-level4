@@ -1,0 +1,167 @@
+= Unibook Test Script
+:toc:
+:toc-placement: preamble
+:imagesDir: images
+:stylesDir: stylesheets
+
+Begin your test by launching Unibook. A window should open, providing you with a wonderful new list of friends. +
+All sample data is generated internally. No need to load anything.
+
+== Command Line Functions
+
+=== Add a person
+
+Enter the command _add n/George Washington p/12310866 b/22/2/1732 e/georgeWashington@usa.gov a/200 Pennsylvania Ave, Washington DC s/9 t/president_ +
+Observe that the text updates to inform you of successful entry, and George Washington now appears at the bottom of the list, observable by scrolling down.
+Click on him to open him in the browser, currently with a default avatar picture.
+
+Enter the command _add n/Nancy Wheeler p/98123456 e/nancy20@gmail.com a/Blk 276 Dover Road, Singapore_ +
+Observe that the text updates to inform you of successful entry, and Nancy Wheeler now appears at the bottom of the list,
+observable by scrolling down. Note that since you have not added the optional fields: birthday, score and tags - score and tag
+do not appear, and her birthday description below phone number on the PersonCard says 'No Birthday Listed'.
+
+=== Edit a person
+Enter the command _edit 1 p/91234567 s/10_
+Displays the erorr message as score must be between 0 and 9 inclusive.
+
+Enter the command _edit 1 p/91234567 b/29/02/2015_
+Displays the erorr message as a non-leap year will not have 29th Feb.
+
+Enter the command _edit 1 p/91234567 b/29/20/2015_
+Displays the erorr message as a 20 is not a valid month number.
+
+Enter the command _edit 1 p/91234567 b/19/05/2015 s/8_
+The person at index 1 now has an updated birthday and score field.
+
+=== Add an avatar to a person
+
+Enter the command _avatar 7 u/https://upload.wikimedia.org/wikipedia/commons/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg_ +
+Wait a couple of seconds until the text under the command line updates to *Update avatar picture for Person: George Washington*
+Click on another person, then click on George Washington again. Observe that the profile picture is now the image sourced by the url.
+
+=== Sort the list
+Enter the command _sort_ +
+Locate George Washington in the now alphabetically sorted list. He should appear near the middle of the list.
+
+Enter the command _sort birthday_ +
+Locate George Washington in the list now sorted by Birthday (day and month) using his birthday, 22/2/1732. He should appear near the beginning of the list.
+
+Enter the command _sort s_ +
+Locate George Washington in the list now sorted by Group Score using his value for Group Score, 9. He should appear near the top of the list.
+
+Enter the command _sort name_ +
+Locate George Washington in the now alphabetically sorted list. He should appear near the middle of the list.
+
+Enter the command _sort b_ +
+Locate George Washington in the list now sorted by Birthday (day and month) using his birthday, 22/2/1732. He should appear near the beginning of the list.
+
+Enter the command _sort score_ +
+Locate George Washington in the list now sorted by Group Score using his value for Group Score, 9. He should appear near the top of the list.
+
+=== Use the favorite list
+_fv_ is an alias command that works the same way as _fav_. +
+For example, _fav 1_ and _fv 1_ mean the same thing. +
+_ufv_ is an alias command that works the same way as _unfav_. +
+For example, _unfav 1_ and _unfv 1_ mean the same thing. +
+
+Enter the command _fav_ and the index number that appears next to George Washington, his index on the list. +
+Observe that the text under the command line states that George Washington has been added to the Favourite List.
+
+Enter the command _favlist_ +
+Observe the new list that now contains our only favourited contact, George Washington.
+
+Enter the command _list_ +
+Observe that the list has returned to the main list of all contacts.
+
+Enter the command _fv 1_ +
+
+Enter the command _favlist_ +
+Observe that the favourite list now contains two persons, George Washington,
+and the person at index 1 of main list that you just added to favourite list in the previous command.
+
+Enter the command _unfav 2_ +
+Observe that the list no longer has the second person added, and again only contains George Washington.
+
+Enter the command _list_ +
+
+Enter the command _home_ +
+Observe that the browser now shows the UniBook home page, with information on commands and the current version.
+
+=== Use the search function
+Note that the find command is case insensitive for both names and tags.
+For example, find George, find GeORgE, find george, find GEORGE will give the same results.
+_f_ is an alias command that works the same way as _find_.
+For example, _find friends_ and _f friends_ mean the same thing.
+
+Enter the command _find George_ +
+Observe that the list now only shows people with the substring 'george' in their name or who are tagged as 'george'.
+
+Enter the command _f friends_ +
+Observe that the list now only shows people with the substring 'friends' in their name or who are tagged as 'friends'.
+
+Enter the command _find friends George_ +
+Observe that the list now only shows people with the substring 'George or 'friends' in their name or who are tagged with 'George or 'friends'.
+
+Enter the command _find geo_ +
+Observe that the list now only shows people with the substring 'geo in their name or who are tagged with 'geo'. It will display George Washington
+as one of its results as his name contains the substring 'geo'.
+
+Rejoice at completion of the command line portion of the testing.
+
+== Interact with the User Interface
+
+=== Add a person
+
+Click the 'Add' button, found at the top of the page.
+Observe that it has opened a new window with prompts for all possible fields for a new contact. +
+Enter 'Issac Newton' in the first box. +
+Enter 'scientist' in the second box. +
+Enter '39401234' in the third box. +
+Enter '25/12/1642' in the third box. +
+Enter 'Woolsthorpe, Lincolnshire, England' in the fourth box. +
+Enter 'newton@apple.com' in the fifth box. +
+Enter '7' in the sixth box. +
+Click the 'Add' button at the bottom of the window, and observe it disappear.
+Observe that Isaac Newton has been added to your contact list, with all fields as entered.
+
+== Edit a person
+
+Click the 'Edit' button on Isaac Newton's card.
+Observe that it has opened a new window with prompts for all fields. +
+Enter 'mathematician astronomer theologian physicist' in the tags field. +
+Enter '8' in the 'Group Score' text box. +
+Click the 'Edit' button at the bottom of the window, and observe it disappear. +
+Observe that Isaac Newton's Tags are now mathematician, astronomer, theologian, and physicist, and his Group Score has been updated to an '8'.
+
+== Use the Undo and redo Buttons
+
+Click the Undo button at the top of the window, towards the right hand side.
+Observe that the previous edit performed has been undone, and Isaac Newton's Tag is again 'scientist' and his group score '7'.
+
+Click the Redo button at the top of the window, towards the right hand side.
+Observe that the previous undo has been redone, and Isaac Newton again has the Tags mathematician, astronomer, theologian, and physicist, and his Group Score is an '8'.
+
+== Change the theme
+
+Click the 'Theme' dropdown at the top of the window over the command bar.
+Mouse over 'Light' and click.
+Observe that the address book has now brightened, and is visible even in direct sunlight.
+
+Unless you are testing in direct sunlight, click the 'Theme' dropdown at the top of the window again.
+Mouse over 'Dark' and click.
+Observe that the address book has now darkened, and will no longer damage your eyes on prolonged use.
+
+== View the favorite list quickly (Star Button)
+
+Click on the star button near the top of the screen.
+Observe that you are now viewing your favorite list, which only has George Washington.
+
+Enter the command _list_
+
+Click the X button on the top right of George Washington's box. That is the delete button.
+Observe that George Washington is no longer present in the list.
+
+Click the star button again, and observe that now the favorite list is now empty. It does not have George Washington as the favourite list
+is synced with the main list.
+
+Rejoice, for you have now completed testing for UniBook, the address book for university students.
