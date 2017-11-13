@@ -53,7 +53,11 @@ include::../UserGuide.adoc[tag=facebook]
 The purpose of introducing facebook command was so users can keep themselves up to date of their friends' social media posts. +
 We understand that university students have social media accounts and they use it frequently for academic or social purposes. +
 Since UniCity aims to connect people together, this feature will set a foundation for future enhancements that involves other social media websites
-and including links to social media accounts for each contacts.
+and including links to social media accounts for each contacts. +
+The facebook command was initially created by me to allow users to log in and navigate through facebook;
+I programmed UniCity to only show the facebook log in page when `facebook` command was typed in the early stages of development. +
+Subsequently, Jiashu modified this feature by changing the behaviour of the command to allow users to search for a specified contact on Facebook. +
+The facebook command now requires an additional parameter `INDEX` that searches the person of a specified contact in UniCity. +
 
 ==== Implementation
 
