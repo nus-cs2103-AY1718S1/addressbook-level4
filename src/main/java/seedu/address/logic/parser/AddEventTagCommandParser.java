@@ -18,6 +18,8 @@ import seedu.address.model.schedule.Day;
 import seedu.address.model.schedule.Time;
 import seedu.address.model.tag.Tag;
 
+//@@author hj2304
+
 /**
  * Parses the arguments for AddEventTagFunction and creates a new AddEventTagCommand
  */

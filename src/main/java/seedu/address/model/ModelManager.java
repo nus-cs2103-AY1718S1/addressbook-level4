@@ -90,7 +90,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
-
+    //@@author hj2304
     public void addEventToPerson(Integer index, Tag event) {
         addressBook.addEventToPerson(index, event);
     }
@@ -164,7 +164,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-    //@@author
+    //@@author hj2304
     /**
      * Tests meeting time.
      */

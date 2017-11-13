@@ -15,6 +15,7 @@ import seedu.address.model.schedule.Slot;
 import seedu.address.model.schedule.Time;
 import seedu.address.model.tag.Tag;
 
+//@@author hj2304
 /**
  * Adds a tag to persons who are in an event if the event can be scheduled.
  */

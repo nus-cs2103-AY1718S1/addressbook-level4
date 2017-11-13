@@ -159,6 +159,7 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author hj2304
     /**
      * adds an eventTag to the person
      * @param event
