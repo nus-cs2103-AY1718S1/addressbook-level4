@@ -35,9 +35,13 @@ A popup window notifying you of OVERDUE parcels will appear if there are OVERDUE
 *Description:* On startup, if there are any parcels found with the OVERDUE status in the uncompleted parcel list
 it will cause a popup window notifying the user of the number of OVERDUE parcels. +
 *Input:* - +
-*Expected output:* For the sampledata xml file. A popup window with the title of "Important" will appear over the main window of the Ark application.
+*Expected output:* For the sample data xml file. A popup window with the title of "Important" will appear over the main window of the Ark application.
 The content header will read "Overdue Parcels" and the content text will show
 "You have parcels whose status are overdue\n Number of overdue parcels: 5"
+
+*Description:* No popup window should show if there are no OVERDUE parcels +
+*Input:* `clear` and close the application. Reopen the application again. +
+*Expected output:* There should be no popup window.
 
 === Startup Backup
 
