@@ -59,18 +59,6 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
     }
 
     /**
-     * Ensures every relationship in the argument list exists in this object.
-     */
-    public void mergeFrom(UniqueRelationshipList from) {
-        final Set<Relationship> alreadyInside = this.toSet();
-        from.internalList.stream()
-                .filter(relationship -> !alreadyInside.contains(relationship))
-                .forEach(internalList::add);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
      * Returns true if the list contains an equivalent Relationship as the given argument.
      */
     public boolean contains(Relationship toCheck) {
@@ -122,16 +110,6 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
         return other == this // short circuit if same object
                 || (other instanceof UniqueRelationshipList // instanceof handles nulls
                 && this.internalList.equals(((UniqueRelationshipList) other).internalList));
-    }
-
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueRelationshipList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
     }
 
     @Override
