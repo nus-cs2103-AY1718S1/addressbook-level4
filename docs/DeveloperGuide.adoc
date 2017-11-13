@@ -455,6 +455,21 @@ any overlap with an existing event, this will generate a
 
 // end::scheduling[]
 
+// tag::repeat[]
+=== Schedule Recurring Event
+
+Recurring event can be scheduled using either the `repeat` command or by
+specifying the `p/` field in eventedi. As shown in the diagram
+below, the command will then edit the existing event with the
+specified `repeat period`. When the new event is added, a TimerTask is
+triggered, which will schedule a task to add a new event to AddressBook
+immediately after this event finishes in the future. In this way, we can have
+ infinitely recurring events as long as a new event can be added.
+
+image::repeatEventSequenceDiagrams.png[width=800]
+
+// end::repeat[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -583,17 +598,25 @@ the change does not affect that particular panel or card.
 Another optional field that can be added to a contact is the photo field. It
 can be added in two ways:
 
-. Through GUI
-* When the `updatephoto` command is executed, or when the `import photo`
+* Through GUI
+** When the `updatephoto` command is executed, or when the `import photo`
 button on the person panel (beneath the person's photo) is clicked, a
 `FileChooser` window will be opened in the main UI.
-* After user has chosen the image file (restricted to jpg/jpeg/png format),
+** After user has chosen the image file (restricted to jpg/jpeg/png format),
 the file path will be passed into a new EditCommand `edit [index]
 ph/[filepath]` which will then be processed by the `Logic` component. After
 parsing, the command will be executed, and `Model` component will make the
-corresponding change (updating the `Photo` field of the person with )
+corresponding change (updating the `Photo` field of the person with ). The
+change will then be reflected in UI through an `AddressBookChangedEvent`. The
+ process can be illustrated with the following sequence diagram.
 
-. By specifying ahrough the `add` or `edit` command
+image::photoGUISequenceDiagrams.png[width="1000"]
+
+* By specifying through the `add` or `edit` command
+
+When using CLI, the image file to be imported as the photo can be specified
+with the `ph/` field in edit/add commands. After the command is successfully
+parsed, the process will be similar to the sequence diagram shown above.
 
 
 

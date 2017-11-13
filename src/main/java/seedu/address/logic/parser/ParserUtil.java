@@ -176,7 +176,8 @@ public class ParserUtil {
                 throw new IllegalValueException(Photo.MESSAGE_PHOTO_CONSTRAINTS);
             } else {
                 try {
-                    destFilePath = "data" + s + fileName;
+                    destFilePath = "src" + s + "main" + s + "resources" + s
+                            + "images" + s + fileName;
                     File originalFile = new File(originalFilePath);
                     File destFile = new File(destFilePath);
 
@@ -249,7 +250,7 @@ public class ParserUtil {
     /**
      * Parses {@code Collection<String> relationship} into a {@code Set<Relationship>}.
      */
-    public static Set<Relationship> parseRels(Collection<String> relation) throws IllegalValueException {
+    public static Set<Relationship> parseRel(Collection<String> relation) throws IllegalValueException {
         requireNonNull(relation);
         final Set<Relationship> relationSet = new HashSet<>();
         for (String relationType : relation) {
