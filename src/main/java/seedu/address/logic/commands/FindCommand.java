@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.core.ListObserver;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
@@ -9,6 +12,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_WORD_ALIAS = "f";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
@@ -23,8 +27,12 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        requireNonNull(model);
+        model.deselectPerson();
+        int listSize = ListObserver.updateCurrentFilteredList(predicate);
+        String currentList = ListObserver.getCurrentListName();
+        return new CommandResult(currentList
+                + getMessageForPersonListShownSummary(listSize));
     }
 
     @Override

@@ -1,0 +1,15 @@
+{
+  "guiSettings" : {
+    "windowWidth" : 1932.0,
+    "windowHeight" : 740.0,
+    "windowCoordinates" : {
+      "x" : 7,
+      "y" : 30
+    }
+  },
+  "addressBookFilePath" : "data/addressbook.xml",
+  "addressBookName" : "Codii",
+  "adminUsername" : "loanShark97",
+  "adminPassword" : "89a6a0f1d74b471f96018a84ab9b5562a39e0d09e3f48872a5fca8fb8b01c404a993e47ce384495196df6eba140af5e83eb98d20b7e3dbb361a94bfe8827a695",
+  "passwordSaltInString" : "KeAnoJrBdpqc0AnhiZDSPw=="
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox>
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:">
+               <HBox.margin>
+                  <Insets right="10.0" top="6.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <TextField fx:id="usernameField" onAction="#handleLoginInputChanged" promptText="Enter username">
+               <HBox.margin>
+                  <Insets bottom="3.0" top="3.0" />
+               </HBox.margin></TextField>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:">
+               <HBox.margin>
+                  <Insets left="30.0" right="10.0" top="6.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <PasswordField fx:id="passwordField" onAction="#handleLoginInputChanged" promptText="Enter password">
+               <HBox.margin>
+                  <Insets bottom="3.0" top="3.0" />
+               </HBox.margin></PasswordField>
+            <Button mnemonicParsing="false" onMouseClicked="#handleLoginInputChanged" text="Log in">
+               <HBox.margin>
+                  <Insets left="30.0" right="30.0" top="6.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="backToCommandBox" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#handleBackToCommandView" text="Back to command box">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets top="6.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</StackPane>

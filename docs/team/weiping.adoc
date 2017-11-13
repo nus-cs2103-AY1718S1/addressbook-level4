@@ -1,0 +1,189 @@
+= Khoo Wei Ping - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Codii
+[https://github.com/CS2103AUG2017-T17-B1/main[Codii]] is a desktop address book application specially designed for debt collectors to manage debtors in a simple manner. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+
+Debt collectors can store information such as the amount owed, debt borrow date and debt cleared date in addition to debtor’s personal information.
+
+Unique features such as an interest calculator help debt collectors manage debts more efficiently.
+
+Codii is evolved from https://github.com/nus-cs2103-AY1718S1/addressbook-level4[AddressBook - Level 4], which is a desktop address book application used for teaching Software Engineering principles.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T17-B1/main/tree/master/collated/main/khooroko.md[Functional code]] [https://github.com/CS2103AUG2017-T17-B1/main/tree/master/collated/test/khooroko.md[Test code]]
+
+=== Enhancement Added: Storage backup
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=saveload]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The backup is a safety measure in case the main storage file is corrupted or deleted by accident.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sort command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Debt collectors would want to sort their contacts in various ways for easier viewing.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Cluster field
+
+==== External behaviour
+
+`Clusters` are generated based on based on https://www.ura.gov.sg/realEstateIIWeb/resources/misc/list_of_postal_districts.htm[postal districts].
+
+==== Justification
+
+An easy way to group contacts is needed for a debt collector to better plan his/her trips.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=cluster]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Nearby command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=nearby]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Debt collectors may want to see details of nearby contacts to plan a more effective visiting schedule
+
+=== Enhancement Added: Making index optional for commands
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide] written by Jelena Neo Hui Ling#
+
+include::../UserGuide.adoc[tag=borrow]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Calling commands directly on the currently selected person makes much more intuitive sense than always supplying an
+`INDEX` each time. This also increases the flexibility and convenience of Codii.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=optionalIndex]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Switching themes
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The ability to change themes can make the user feel more as though the app belongs to him/her as it is a form of
+customisation. It allows for a much better user experience.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+==== Various UI enhancements
+* Replacing the browser with full information panel (Pull request https://github.com/CS2103AUG2017-T17-B1/main/pull/48[#48])
+* Creating the nearby persons panel inside the full information panel (Pull request https://github.com/CS2103AUG2017-T17-B1/main/pull/128[#128])
+* Adding a display for current list and selected index (Pull request https://github.com/CS2103AUG2017-T17-B1/main/pull/249[#249])
+
+==== Miscellaneous
+* Restructure commands (Pull request https://github.com/CS2103AUG2017-T17-B1/main/pull/29[#296])
+* Raise and fix https://github.com/CS2103AUG2017-T17-B1/main/issues?utf8=%E2%9C%93&q=is%3Aissue%20label%3Abug%20[bugs]
+* Assist teammates with debugging tests
+* Report bugs and raise suggestions for another team (Issues https://github.com/CS2103AUG2017-T10-B3/main/issues/78[#78], https://github.com/CS2103AUG2017-T10-B3/main/issues/76[#76], https://github.com/CS2103AUG2017-T10-B3/main/issues/82[#82])
+* Offer a bug fix for reuse (Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/196[#196])
+* Help others on Slack
+** Suggest alternative for importing Address Book level 4 for those facing issues with gradle
+** Remind others to delete .json files and the data/ folder if they were doing acceptance testing for another team in the same folder that they saved their own .jar file.
+
+== Project: Dog Mario
+
+https://github.com/DogMario/Dog-Mario[Dog Mario] is a PC game developed with https://github.com/tbhbhbh[Tan Bing Hwang] as an independent project for http://nusskylab-dev.comp.nus.edu.sg/[CP2106 Independent Software Development Project (Orbital)].

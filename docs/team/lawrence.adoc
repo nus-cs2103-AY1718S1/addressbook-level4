@@ -1,0 +1,87 @@
+= Lawrence Koh Yong Hong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Codii
+[https://github.com/CS2103AUG2017-T17-B1/main[Codii]] is a desktop address book application specially
+designed for debt collectors to manage debtors in a simple manner. It has a GUI but most of the user
+interactions happen using a CLI (Command Line Interface).
+
+Debt collectors can store information such as the amount owed, debt borrow date and debt cleared date in addition to debtor’s personal information.
+
+Unique features such as an interest calculator help debt collectors manage debts more efficiently.
+
+Codii is evolved from [https://github.com/nus-cs2103-AY1718S1/addressbook-level4[AddressBook - Level 4]] which is a desktop address book application used for teaching Software Engineering principles.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T17-B1/main/tree/master/collated/main/lawwman.md[Functional code]] [https://github.com/CS2103AUG2017-T17-B1/main/tree/master/collated/test/lawwman.md[Test code]]
+
+=== Enhancement Added: Date Storing Mechanism
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=datestoring]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Overdue List Command
+
+==== External Behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=overduelist]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It would be more convenient for debt collectors to view all the debtors with overdue debts with a simple
+command.
+
+=== Enhancement Added: Interest calculator
+
+==== External Behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=interestCalculator]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It would be convenient for debt collectors to have their debtors' debts updated automatically.
+However, it should be noted that it is still a basic feature as it only accrues a debtor's debt at the start of each month.
+An updated version will be included in V2.0.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=interest]
+
+#End of Extract#
+
+---
+
+
+=== other contributions
+
+==== Added various fields to the Person Class
+* Debt field
+* Interest field
+* Date Borrow field
+* Deadline field

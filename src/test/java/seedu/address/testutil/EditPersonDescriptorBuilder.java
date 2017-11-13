@@ -29,9 +29,16 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder(ReadOnlyPerson person) {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
-        descriptor.setPhone(person.getPhone());
+        descriptor.setHandphone(person.getHandphone());
+        descriptor.setHomePhone(person.getHomePhone());
+        descriptor.setOfficePhone(person.getOfficePhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setPostalCode(person.getPostalCode());
+        descriptor.setDebt(person.getDebt());
+        descriptor.setTotalDebt(person.getTotalDebt());
+        descriptor.setInterest(person.getInterest());
+        descriptor.setDeadline(person.getDeadline());
         descriptor.setTags(person.getTags());
     }
 
@@ -48,13 +55,73 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Handphone} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withPhone(String phone) {
+    public EditPersonDescriptorBuilder withHandphone(String handphone) {
         try {
-            ParserUtil.parsePhone(Optional.of(phone)).ifPresent(descriptor::setPhone);
+            ParserUtil.parseHandphone(Optional.of(handphone)).ifPresent(descriptor::setHandphone);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("phone is expected to be unique.");
+            throw new IllegalArgumentException("handphone is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code HomePhone} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withHomePhone(String homePhone) {
+        try {
+            ParserUtil.parseHomePhone(Optional.of(homePhone)).ifPresent(descriptor::setHomePhone);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("home phone is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code OfficePhone} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withOfficePhone(String officePhone) {
+        try {
+            ParserUtil.parseOfficePhone(Optional.of(officePhone)).ifPresent(descriptor::setOfficePhone);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("office phone is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Debt} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDebt(String debt) {
+        try {
+            ParserUtil.parseDebt(Optional.of(debt)).ifPresent(descriptor::setDebt);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("debt is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code totalDebt} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withTotalDebt(String totalDebt) {
+        try {
+            ParserUtil.parseDebt(Optional.of(totalDebt)).ifPresent(descriptor::setTotalDebt);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("total debt is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Interest} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withInterest(String interest) {
+        try {
+            ParserUtil.parseInterest(Optional.of(interest)).ifPresent(descriptor::setInterest);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("interest is expected to be unique.");
         }
         return this;
     }
@@ -79,6 +146,30 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseAddress(Optional.of(address)).ifPresent(descriptor::setAddress);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code PostalCode} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withPostalCode(String postalCode) {
+        try {
+            ParserUtil.parsePostalCode(Optional.of(postalCode)).ifPresent(descriptor::setPostalCode);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("postal code is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Deadline} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDeadline(String deadline) {
+        try {
+            ParserUtil.parseDeadlineForEdit(Optional.of(deadline)).ifPresent(descriptor::setDeadline);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("deadline is expected to be unique.");
         }
         return this;
     }

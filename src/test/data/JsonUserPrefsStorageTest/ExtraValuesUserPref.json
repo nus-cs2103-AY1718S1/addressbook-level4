@@ -10,5 +10,7 @@
     }
   },
   "addressBookFilePath" : "addressbook.xml",
-  "addressBookName" : "TypicalAddressBookName"
+  "addressBookName" : "TypicalAddressBookName",
+  "adminUsername" : "TESTloanShark97",
+  "adminPassword" : "TESThitMeUp123"
 }

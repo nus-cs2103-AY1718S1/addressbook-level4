@@ -17,10 +17,18 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.NearbyPersonNotInCurrentListEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.BlacklistCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.OverdueListCommand;
+import seedu.address.logic.commands.WhitelistCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -29,7 +37,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/sharkie.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -40,13 +48,17 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private InfoPanel infoPanel;
+    private StartUpPanel startUpPanel;
     private PersonListPanel personListPanel;
+    private PersonListStartUpPanel personListStartUpPanel;
     private Config config;
     private UserPrefs prefs;
+    private CommandBox commandBox = null;
+    private HelpWindow helpWindow;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane infoPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -79,6 +91,8 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+
+        helpWindow = new HelpWindow();
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -126,22 +140,106 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), ListCommand.COMMAND_WORD);
+        personListPanelPlaceholder.getChildren().clear();
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        infoPanel = new InfoPanel(logic);
+        infoPanelPlaceholder.getChildren().clear();
+        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
+        fillInnerPartsForCommandBox();
+    }
+
+    //@@author jelneo
+    /**
+     * Fills up all the placeholders of window once the app starts up.
+     * Should only display welcome page without contacts.
+     */
+    void fillInnerPartsForStartUp() {
+        startUpPanel = new StartUpPanel(primaryStage);
+        infoPanelPlaceholder.getChildren().clear();
+        infoPanelPlaceholder.getChildren().add(startUpPanel.getRoot());
+
+        personListStartUpPanel = new PersonListStartUpPanel();
+        personListPanelPlaceholder.getChildren().clear();
+        personListPanelPlaceholder.getChildren().add(personListStartUpPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
-
-        CommandBox commandBox = new CommandBox(logic);
+        commandBox = new CommandBox(logic);
+        commandBoxPlaceholder.getChildren().clear();
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    /**
+     * Fills up the placeholder of command box.
+     */
+    void fillInnerPartsForCommandBox() {
+        commandBoxPlaceholder.getChildren().clear();
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+
+    /**
+     * Changes from command box to login view with text fields for username and password.
+     */
+    public void fillCommandBoxWithLoginFields() {
+        LoginView loginView = new LoginView(logic);
+        commandBoxPlaceholder.getChildren().clear();
+        commandBoxPlaceholder.getChildren().add(loginView.getRoot());
+    }
+
+    //@@author jaivigneshvenugopal
+    /**
+     * Fills up the placeholders of PersonListPanel with the given list name.
+     * Should only display welcome page without contacts.
+     */
+    void fillInnerPartsWithIndicatedList(String listName) {
+
+        switch(listName) {
+
+        case BlacklistCommand.COMMAND_WORD:
+            personListPanel = new PersonListPanel(logic.getFilteredBlacklistedPersonList(), listName);
+            break;
+        case WhitelistCommand.COMMAND_WORD:
+            personListPanel = new PersonListPanel(logic.getFilteredWhitelistedPersonList(), listName);
+            break;
+        case OverdueListCommand.COMMAND_WORD:
+            personListPanel = new PersonListPanel(logic.getFilteredOverduePersonList(), listName);
+            break;
+        default:
+            personListPanel = new PersonListPanel(logic.getFilteredPersonList(), ListCommand.COMMAND_WORD);
+        }
+
+        personListPanelPlaceholder.getChildren().clear();
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        infoPanel = new InfoPanel(logic);
+        infoPanelPlaceholder.getChildren().clear();
+        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
+    }
+
+    //@@author khooroko
+    /**
+     * Changes the current theme.
+     */
+    private void changeTheme() {
+        for (String stylesheet : getRoot().getStylesheets()) {
+            if (stylesheet.endsWith("DarkTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/BrightTheme.css");
+                break;
+            } else if (stylesheet.endsWith("BrightTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/DarkTheme.css");
+                break;
+            }
+        }
+    }
+
+    //@@author
     void hide() {
         primaryStage.hide();
     }
@@ -188,7 +286,6 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
 
@@ -204,17 +301,33 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author khooroko
+    /**
+     * Sets the person panel to display the unfiltered masterlist and raises a {@code JumpToListRequestEvent}.
+     */
+    @Subscribe
+    private void handleNearbyPersonNotInCurrentListEvent(NearbyPersonNotInCurrentListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logic.resetFilteredPersonList();
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), ListCommand.COMMAND_WORD);
+        personListPanelPlaceholder.getChildren().clear();
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        raise(new JumpToListRequestEvent(Index.fromZeroBased(logic.getFilteredPersonList()
+                .indexOf(event.getNewSelection().person))));
+    }
+
+    /**
+     * Handles a request to change theme.
+     */
+    @Subscribe
+    private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        changeTheme();
     }
 }

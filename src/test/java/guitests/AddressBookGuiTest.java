@@ -9,8 +9,8 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
-import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.InfoPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -56,7 +56,10 @@ public abstract class AddressBookGuiTest {
         FxToolkit.showStage();
 
         mainWindowHandle = new MainWindowHandle(stage);
+        // Login is required to test main GUIs in the address book
+        mainWindowHandle.simulateLogin();
         mainWindowHandle.focus();
+        mainWindowHandle.updateChangeInList();
     }
 
     /**
@@ -79,8 +82,8 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    protected BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
+    protected InfoPanelHandle getInfoPanel() {
+        return mainWindowHandle.getInfoPanel();
     }
 
     protected StatusBarFooterHandle getStatusBarFooter() {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane fx:id="startUpPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="welcome" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/welcome.png" />
+         </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport></ImageView>
+   </children>
+</StackPane>

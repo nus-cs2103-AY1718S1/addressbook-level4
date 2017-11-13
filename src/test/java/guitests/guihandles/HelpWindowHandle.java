@@ -2,6 +2,8 @@ package guitests.guihandles;
 
 import java.net.URL;
 
+import org.testfx.api.FxRobot;
+
 import guitests.GuiRobot;
 import javafx.stage.Stage;
 
@@ -23,6 +25,10 @@ public class HelpWindowHandle extends StageHandle {
      */
     public static boolean isWindowPresent() {
         return new GuiRobot().isWindowShown(HELP_WINDOW_TITLE);
+    }
+
+    public FxRobot getLoadedPage() {
+        return new GuiRobot().targetWindow(HELP_WINDOW_TITLE);
     }
 
     /**

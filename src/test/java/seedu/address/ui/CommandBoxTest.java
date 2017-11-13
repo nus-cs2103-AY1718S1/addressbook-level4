@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
+import static guitests.guihandles.MainWindowHandle.TEST_PASSWORD;
+import static guitests.guihandles.MainWindowHandle.TEST_USERNAME;
 import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
 
@@ -9,11 +12,19 @@ import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
+import seedu.address.commons.core.ListObserver;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.CommandHistory;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.Password;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.Username;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.model.Model;
+import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -24,10 +35,15 @@ public class CommandBoxTest extends GuiUnitTest {
     private ArrayList<String> errorStyleOfCommandBox;
 
     private CommandBoxHandle commandBoxHandle;
+    private ModelManager model;
 
     @Before
     public void setUp() {
-        Model model = new ModelManager();
+        UserPrefs testUserPrefs = new UserPrefs();
+        testUserPrefs.setAdminUsername(TEST_USERNAME);
+        testUserPrefs.setAdminPassword(TEST_PASSWORD);
+        model = new ModelManager(getTypicalAddressBook(), testUserPrefs);
+        ListObserver.init(model);
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);
@@ -39,7 +55,27 @@ public class CommandBoxTest extends GuiUnitTest {
 
         errorStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
+        simulateLogin();
     }
+
+    //@@author jelneo
+    /**
+     * Logs into sample user account so that other GUI tests can test the main GUIs in the address book.
+     */
+    public void simulateLogin() {
+        try {
+            Username username = new Username(TEST_USERNAME);
+            Password password = new Password(TEST_PASSWORD);
+            LoginCommand loginCommand = new LoginCommand(username, password);
+            loginCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+            loginCommand.execute();
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        } catch (CommandException ce) {
+            ce.printStackTrace();
+        }
+    }
+    //@@author
 
     @Test
     public void commandBox_startingWithSuccessfulCommand() {
@@ -125,6 +161,21 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+
+    @Test
+    public void commandBox_successfulBlankingOfPassword() {
+        commandBoxHandle.run(String.format(LoginCommand.COMMAND_WORD , " ", TEST_USERNAME, " ", TEST_PASSWORD));
+        String blankedPassword = maskPassword(TEST_PASSWORD);
+        assertEquals(String.format(LoginCommand.COMMAND_WORD , " ", TEST_USERNAME, " ", blankedPassword),
+                commandBoxHandle.getInput());
+    }
+
+    @Test
+    public void commandBox_unsuccessfulLoginWhenAlreadyLoggedIn() {
+        commandBoxHandle.run(String.format(LoginCommand.COMMAND_WORD));
+        assertBehaviorForFailedCommand();
+    }
+
     /**
      * Runs a command that fails, then verifies that <br>
      *      - the text remains <br>
@@ -154,4 +205,16 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(keycode);
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
+
+    /**
+     * Helper method to masks password for testing
+     */
+    private String maskPassword(String passwordInput) {
+        String password = "";
+        for (int i = 0; i < passwordInput.length(); i++) {
+            password += CommandBox.BLACK_CIRCLE;
+        }
+        return password;
+    }
+
 }

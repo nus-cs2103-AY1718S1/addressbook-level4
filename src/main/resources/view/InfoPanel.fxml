@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+      <StackPane.margin>
+         <Insets />
+      </StackPane.margin>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+   <children>
+      <ScrollPane fx:id="personInfoPanel" fitToWidth="true" focusTraversable="false">
+         <content>
+            <VBox fx:id="content">
+               <children>
+                  <SplitPane id=".split-pane" fx:id="splitPane" dividerPositions="0.6" style="-fx-padding: 0 1 0 1;">
+                    <items>
+                        <VBox fx:id="infoPanelPlaceholder">
+                           <children>
+                              <Label fx:id="name" alignment="TOP_LEFT" styleClass="window_big_label" text="" wrapText="true">
+                                 <font>
+                                    <Font size="48.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Text fx:id="debtRepaymentField" fill="GREY" text="Debt repayment progress">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <StackPane fx:id="progressBarPlaceholder" alignment="CENTER_LEFT">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </StackPane>
+                              <GridPane fx:id="personInfoTable">
+                                 <columnConstraints>
+                                    <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="216.0" minWidth="10.0" prefWidth="204.0" />
+                                    <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" prefWidth="417.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="45.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Text fx:id="debtField" fill="gray" styleClass="window_small_label" text="Current Debt: ">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="debt" styleClass="window_small_label" text="\$debt" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Text fx:id="totalDebtField" fill="gray" styleClass="window_small_label" text="Total Debt: " GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="totalDebt" styleClass="window_small_label" text="\$totalDebt" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Text fx:id="interestField" fill="GREY" styleClass="window_small_label" text="Interest: " GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="interest" styleClass="window_small_label" text="\$interest" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Text fx:id="dateBorrowField" fill="gray" styleClass="window_small_label" text="Date borrowed: " GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="dateBorrow" styleClass="window_small_label" text="\$dateBorrow" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Text fx:id="deadlineField" fill="GREY" styleClass="window_small_label" text="Deadline: " GridPane.rowIndex="4">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="deadline" styleClass="window_small_label" text="\$deadline" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Text fx:id="dateRepaidField" fill="gray" styleClass="window_small_label" text="Date Repaid: " GridPane.rowIndex="5">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="dateRepaid" styleClass="window_small_label" text="\$dateRepaid" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Text fx:id="handphoneField" fill="gray" styleClass="window_small_label" text="HP: " GridPane.rowIndex="6">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="handphone" styleClass="window_small_label" text="\$phone" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Text fx:id="homePhoneField" fill="gray" styleClass="window_small_label" text="HP: " GridPane.rowIndex="7">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="homePhone" styleClass="window_small_label" text="\$phone" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Text fx:id="officePhoneField" fill="gray" styleClass="window_small_label" text="HP: " GridPane.rowIndex="8">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="officePhone" styleClass="window_small_label" text="\$phone" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Text fx:id="addressField" fill="gray" styleClass="window_small_label" text="Address: " GridPane.rowIndex="9">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="address" alignment="TOP_LEFT" styleClass="window_small_label" text="\$address" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Text fx:id="postalCodeField" fill="gray" styleClass="window_small_label" text="S" GridPane.rowIndex="10">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="postalCode" styleClass="window_small_label" text="\$postalCode" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Text fx:id="clusterField" fill="gray" styleClass="window_small_label" text="General Location: " GridPane.rowIndex="11">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="cluster" styleClass="window_small_label" text="\$cluster" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Text fx:id="emailField" fill="gray" styleClass="window_small_label" text="Email: " GridPane.rowIndex="12">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <Label fx:id="email" styleClass="window_small_label" text="\$email" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="15.0" right="15.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </GridPane>
+                              <FlowPane fx:id="tags" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="774.0">
+                                 <padding>
+                                    <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </FlowPane>
+                              <Text fx:id="nearbyPersonField" fill="gray" text="Other contacts nearby: ">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <StackPane fx:id="nearbyPersonListPanelPlaceholder" prefHeight="200.0" VBox.vgrow="NEVER">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <HBox fx:id="nearbyPersonList" minHeight="150.0" prefHeight="150.0">
+                                       <padding>
+                                          <Insets bottom="10" left="10" right="10" top="10" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </StackPane>
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="25.0" right="15.0" top="20.0" />
+                           </padding>
+                        </VBox>
+                        <AnchorPane fx:id="profilePicPlaceholder" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </AnchorPane>
+                    </items>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </SplitPane>
+               </children>
+            </VBox>
+         </content></ScrollPane>
+   </children>
+</StackPane>

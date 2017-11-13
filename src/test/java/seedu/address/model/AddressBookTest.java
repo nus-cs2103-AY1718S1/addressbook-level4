@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,6 +31,8 @@ public class AddressBookTest {
     @Test
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
+        assertEquals(Collections.emptyList(), addressBook.getBlacklistedPersonList());
+        assertEquals(Collections.emptyList(), addressBook.getWhitelistedPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
     }
 
@@ -64,6 +67,18 @@ public class AddressBookTest {
     }
 
     @Test
+    public void getBlacklistedPersonList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getBlacklistedPersonList().remove(0);
+    }
+
+    @Test
+    public void getWhitelistedPersonList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getWhitelistedPersonList().remove(0);
+    }
+
+    @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
@@ -87,9 +102,28 @@ public class AddressBookTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
+            return persons.stream().filter(person -> person.isBlacklisted())
+                    .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
+            return persons.stream().filter(person -> person.isWhitelisted())
+                    .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getOverduePersonList() {
+            return persons.stream().filter(person -> person.hasOverdueDebt())
+                    .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        }
+
+        @Override
         public ObservableList<Tag> getTagList() {
             return tags;
         }
+
     }
 
 }

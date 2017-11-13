@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+﻿= Codii - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,31 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T17-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103Aug2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
+
+**Table of Contents**
+
+== About
+
+This user guide gives you an overview of how to use Codii.
+This guide includes step-by-step instructions on how each command work, FAQs and a summary of every command you will learn.
+
+The terms used in this guide are as follows: +
+
+* Blacklist - List of people who are banned +
+* Whitelist - List of people who have cleared their debts +
+* Overdue list - List of people who have overdue debt +
+* Index - The ordering of a contact in the list +
+* Cluster - The general location of a person based on [https://www.ura.gov.sg/realEstateIIWeb/resources/misc/list_of_postal_districts.htm[postal districts]]
+
+== Introduction
+
+Codii is a free-to-use address book catered to suit the needs of debt collectors. You can enter debtors into Codii,
+track the amount of debt owed, manage deadlines, ban and unban debtors and even organise them by location.
+
+Codii is available for the Linux, Windows, and Mac OS operating systems.
 
 == Quick Start
 
@@ -22,18 +44,24 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `codii.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Codii.
+.  Double-click the file to start the app. The GUI, as seen in Figure 1.1 below, should appear in a few seconds.
++
+image::UiStartUp.PNG[width="790"]
+_Figure 1.1 : Codii login page_
++
+.  Log into the app using the format specified in the welcome screen. The application should look similar to Figure 1.2 after clicking on a person in the left panel.
 +
 image::Ui.png[width="790"]
+_Figure 1.2 : Full information of the person that is selected in the left panel_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe hp/98765432 home/60773707 e/johnd@example.com a/John street, block 123, #01-01 pc/321123 d/123 dl/11-12-2018` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -47,50 +75,140 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Parameters can be in any order e.g. if the command specifies `n/NAME hp/HANDPHONE_NUMBER`, `hp/HANDPHONE_NUMBER n/NAME` is also acceptable.
 ====
+
+// tag::login[]
+=== Logging into the address book application using Command Line Interface (CLI) : `login`
+
+Logs into the address book. +
+Format: `login USERNAME PASSWORD`
+
+[NOTE]
+It is advisable to use the GUI login instead of the CLI login. +
+The current implementation for password masking in the CLI login is less sophisticated than the GUI login.
+This can lead to unexpected or incorrect behaviors such as inconsistent masking of password or being unable to log in when username and password are entered correctly. +
+To reduce unexpected behaviors, users are advised to add or delete characters from the end of the command only. +
+*The CLI login option is available for convenience only given that we want the user to be able to accomplish tasks faster using CLI than a GUI.*
+
+Examples:
+
+* `login userAcc_123 pa$$_Word!@#&`
+* `login batMan_111 (Batcave.327+-)`
+
+[NOTE]
+Sample account to log into address book: +
+Username: *loanShark97* +
+Password: *hitMeUp123* +
+
+// end::login[]
+
+// tag::loginGUI[]
+=== Logging into the address book application using Graphic User Interface (GUI): `login`
+
+Logs into the address book. +
+Format: `login`
+
+1) Type `login` and press kbd:[Enter] in the command box. You should see the same welcome page as shown in Figure 1.3. +
+2) Enter username and password in the respective fields. +
+3) Press kbd:[Enter] or click the `Log in` button. +
+
+To return to the command box, click the `Back to command box` button.
+
+image::loginView.PNG[width="790"]
+_Figure 1.3 : How the welcome screen looks like after `login` is entered in the command box_
+
+[NOTE]
+Sample account to log into address book: +
+Username: *loanShark97* +
+Password: *hitMeUp123* +
+
+// end::loginGUI[]
+
+// tag::logout[]
+=== Logging out of the address book application : `logout`
+
+Logs out of the address book. +
+Format: `logout`
+// end::logout[]
 
 === Viewing help : `help`
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a debtor: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a debtor to the address book. Date borrowed for debtor is automatically +
+noted down. The `Office phone`, `Deadline`, `Interest` and `Tag` fields are optional. +
+Format: `add n/NAME hp/HANDPHONE_NUMBER home/HOME_PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE d/DEBT [op/OFFICE_PHONE_NUMBER] [dl/DEADLINE] [int/INTEREST] [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A debtor can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe hp/98765432 home/60773707 op/60073007 e/johnd@example.com a/John street, block 123, #01-01 pc/321123 d/123 dl/11-11-2018`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison hp/81234567 home/61018123 pc/000001 d/1234 t/criminal`
 
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
+// tag::blacklist[]
+=== Listing all blacklisted persons : `blacklist`
+
+Shows a list of all blacklisted persons in the address book. +
+Format: `blacklist`
+// end::blacklist[]
+
+// tag::whitelist[]
+=== Listing all whitelisted persons : `whitelist`
+
+Shows a list of all whitelisted persons in the address book. +
+Format: `whitelist`
+// end::whitelist[]
+
+// tag::overduelist[]
+=== Listing all persons with overdue debt: `overduelist`
+
+[NOTE]
+It should be noted that each time the user logs into `Codii`, it checks through the address book for debtors
+whose deadlines have been passed and automatically adds them into the overdue list. +
+
+[NOTE]
+If any debtor in the overdue list has cleard his/her debt, they are removed from the overdue list. +
+
+Shows a list of all persons with overdue debt in the address book. +
+Format: `overduelist`
+// end::overduelist[]
+
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Edits an existing debtor, blacklisted/whitelisted contact in the address book. +
+Format: `edit [INDEX] [n/NAME] [hp/HANDPHONE_NUMBER] [home/HOME_PHONE_NUMBER] [op/OFFICE_PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] [d/DEBT] [td/TOTAL DEBT] [dl/DEADLINE] [int/INTEREST] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* (e.g. 1, 2, 3, ...)
+* If no index is specified, the currently selected person is edited instead.
+* At least one of the optional fields, other than `INDEX`, must be provided.
 * Existing values will be updated to the input values.
+* The date of debt borrowed cannot be edited.
+* The total debt cannot be set to zero.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 1 p/91234567 pc/333111 e/johndoe@example.com` +
+Edits the phone number, postal code, and email address of the 1st person to be `91234567`, `333111`, and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `list` +
+`select 1` +
+`edit n/Peeta Pen` +
+Edits the name of the 1st person in the address book to be `Peeta Pen`.
 
 === Locating persons by name: `find`
 
@@ -112,15 +230,85 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::borrow[]
+=== Increasing the debt of a debtor: `borrow`
+
+Increases the debt of a debtor by the amount entered. +
+Format: `borrow [INDEX] AMOUNT`
+
+****
+* Increases the debt and total debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* (e.g. 1, 2, 3, ...)
+* If no index is specified, the debt of the currently selected person is updated instead.
+* `AMOUNT` has to be in dollars and cents. For example: `500.50` which represents $500.50.
+* This command also sets the date repaid to `NOT REPAID` if the person previously fully repaid his/her debts.
+****
+
+Examples:
+
+* `borrow 1 500` +
+Increases the debt of the 1st person by $500.
+* `borrow 2 1000.10` +
+Increases the debt of the 2nd person by $1000.10.
+* `list` +
+`select 2` +
+`borrow 234` +
+Increases the debt of the 2nd person by $234.
+// end::borrow[]
+
+// tag::payback[]
+=== Decreasing the debt of a person: `payback`
+
+Decreases the debt of a person by the amount entered. +
+Format: `payback [INDEX] AMOUNT`
+
+****
+* Decreases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* (e.g. 1, 2, 3, ...)
+* If no index is specified, the debt of the currently selected person is updated instead.
+* `AMOUNT` has to be in dollars and cents. For example: `600.15` which represents $600.15.
+* `AMOUNT` repaid cannot be more than the debt owed by the person at the specifiec `INDEX`.
+* If a person fully repays his/her debts, the date repaid will be set to the day that this command was entered. Also, the person will be listed in the whitelist if he/she is not blacklisted.
+****
+
+Examples:
+
+* `payback 1 500` +
+Decreases the debt of the 1st person by $500.
+* `payback 2 1000.10` +
+Decreases the debt of the 2nd person by $1000.10.
+* `list` +
+`select 3` +
+`payback 234` +
+Decreases the debt of the 3rd person by $234.
+// end::payback[]
+
+// tag::repaid[]
+=== Resetting the debt of a person: `repaid`
+
+Resets the debt of a person to zero and sets the date repaid field of that person. +
+Format: `repaid [INDEX]`
+
+****
+* Resets the debt of the person at the specified `INDEX` to zero. The index refers to the index number shown in the last person listing. The index *must be a positive integer* (e.g. 1, 2, 3, …​)
+* If no index is specified, the debt of the currently selected person is resetted instead.
+****
+
+Examples:
+
+* `repaid 1` +
+Resets the debt of the 1st person to zero and sets the date of repayment in his/her record.
+* `select 2` +
+`repaid` +
+Resets the debt of the 2nd person to zero and sets the date of repayment in his/her record.
+// end::repaid[]
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete [INDEX]`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* Deletes the person at the specified `INDEX`. The index refers to the index number shown in the most recent listing. The index *must be a positive integer* (e.g. 1, 2, 3, ...)
+* If no index is specified, the currently selected person is deleted instead.
 ****
 
 Examples:
@@ -131,16 +319,70 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+* `list` +
+`select 4` +
+`delete` +
+Deletes the 4th person in the address book.
+
+=== Banning a debtor : `ban`
+
+Adds the specified debtor from current records to blacklist. +
+Format: 'ban [INDEX]'
+
+****
+* Bans the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
+* If no index is specified, the currently selected person is banned instead.
+****
+
+Examples:
+
+* `list` +
+`ban 2` +
+Adds the 2nd person in the address book to blacklist.
+* `find Betsy` +
+`ban 1` +
+Adds the 1st person in the results of the `find` command to blacklist.
+* `select 3` +
+`ban` +
+Adds the 3rd person in the address book to blacklist.
+
+=== Unbanning a blacklisted person : `unban`
+
+Removes the specified person from blacklist. +
+Format: 'unban [INDEX]'
+
+****
+* Unbans the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
+* If no index is specified, the currently selected person is unbanned instead.
+****
+
+Examples:
+
+* `blacklist` +
+`unban 2` +
+Removes the 2nd person from blacklist.
+* `find Betsy` +
+`unban 1` +
+Removes the 1st person in the results of the `find` command from blacklist.
+* `select 3` +
+`unban` +
+Removes the 3rd person in the address book from blacklist.
 
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select [INDEX]`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the full information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
+* If no index is specified, the next person in the last person listing is selected instead.
+* If no index is specified, and no one was selected, the first person in the last person listing is selected instead.
 ****
 
 Examples:
@@ -150,7 +392,30 @@ Examples:
 Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st person in the results of the `find` command. +
+`select` +
+Selects the first person in the last person listing.
+
+// tag::nearby[]
+=== Selecting a nearby person: `nearby`
+
+Selects the person identified by the index number used in the listing of nearby contacts of currently selected person, +
+Format: `nearby INDEX`
+
+****
+* A person must be selected before this command is called.
+* Selects the person and loads the full information of the person at the specified `INDEX`.
+* The index refers to the index number shown in the nearby contacts listing.
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+`nearby 1` +
+Selects the 1st person in the same `cluster` as the previously selected person.
+// end::nearby[]
 
 === Listing entered commands : `history`
 
@@ -161,6 +426,44 @@ Format: `history`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+// tag::sort[]
+=== Sorting all contacts : `sort`
+
+Sorts all the contacts in the address book in specified order. If no order is specified, the contacts are sorted in ascending lexographical order. +
+Format: `sort [ORDERING]`
+
+****
+* Valid orderings are: `name`, `cluster`, `deadline` and `debt`.
+* If no ordering is specified, the address book will be sorted by name.
+****
+
+Examples:
+
+* `sort` +
+Sorts the contacts in the address book by name.
+* `sort cluster` +
+Sorts the contacts in the address book by their postal districts.
+// end::sort[]
+
+// tag::filter[]
+=== Filter contacts by tags : `filter`
+
+Filters contacts in the address book according to the tags specified. +
+Format: `filter TAG1 TAG2 ...`
+
+****
+* Contacts which contain *at least one* of the tags specified will be shown in the list.
+** e.g. A person in the address book, Alex, has two tags: `friendly` and `cooperative`. When the command `filter friendly` is entered, Alex will be shown in the filtered list.
+****
+
+Examples:
+
+* `filter friendly` +
+Displays contacts with the `friendly` tag.
+* `filter tricky violent dishonest` +
+Displays contacts who have at least one of these three tags: `tricky`, `violent`, `dishonest`.
+// end::filter[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -212,41 +515,316 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::setpath[]
+=== Setting the path to local profile pictures folder : `setpath`
+
+Sets the folder location to access and import debtors' profile pictures. +
+Paths should be absolute paths and not relative ones. Also, paths should point to the folder rather than the picture itself. +
+
+It is recommended to create a folder and fill it up with the necessary profile pictures for the application. If there is a need to add a new picture, it should be added into this specific folder. +
+
+The folder should only contain pictures with the `.jpg` extension. Moreover, the pictures should be named after the debtors in the application's database. +
+
+For example, for the debtor Alex Yeoh, the name of her picture should be `AlexYeoh.jpg` +
+As for the debtor Bernice Yu, the name of her picture should be `BerniceYu.jpg` +
+
+If it is necessary to change the location of the folder, the `setpath` command should be used again to indicate this change in location of the profile pictures folder. +
+
+Format: `setpath [PATH]`
+
+Examples:
+
+* `setpath C:/Users/acer/Desktop/SE/profilepic/` +
+* `setpath C:/Users/acer/Desktop/SE/profilepic` +
+* `setpath C:\Users\acer\Desktop\SE\profilepic\` +
+* `setpath C:\Users\acer\Desktop\SE\profilepic` +
+* `setpath out/production/resources/images/` +
+* `setpath out/production/resources/images` +
+* `setpath out\production\resources\images\` +
+* `setpath out\production\resources\images` +
+// end::setpath[]
+
+// tag::addpic[]
+=== Adding a profile picture to a person : `addpic`
+
+Adds a user specified profile picture to the specified person. +
+
+A path to the pictures folder must first be set using the `setpath` command +
+The picture of the debtor should already be present in this folder and should be named after the debtor himself. +
+
+Examples: +
+
+Roy Balakrishnan's picture should be named as `RoyBalakrishnan` and the extension of the file should be `.jpg` +
+
+Full file name: `RoyBalakrishnan.jpg` +
+
+Herbert He's picture should be named as `HerbertHe` and the extension of the file should be `.jpg` +
+
+Full file name: `HerbertHe.jpg` +
+
+Format to add picture to the selected person : 'addpic [INDEX]'
+
+****
+* Adds a profile picture to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
+* If no index is specified, the command acts on the currently selected person.
+****
+
+Examples:
+
+* `list` +
+`setpath C:\Users\acer\Desktop\SE1\profilepic` +
+`addpic 2` +
+Adds a picture to the 2nd person in masterlist.
+* `find Betsy` +
+`setpath C:\Users\acer\Desktop\SE2\profilepic` +
+`addpic 1` +
+Adds a profile picture to the 1st person from the results of the `find` command.
+* `select 3` +
+`setpath C:\Users\acer\Desktop\SE7\profilepic` +
+`addpic` +
+Adds a profile picture to the 3rd person from the masterlist in the address book.
+// end::addpic[]
+
+// tag::delpic[]
+=== Deleting the profile picture of a person : `delpic`
+
+Removes the profile picture of the specified person. +
+Format: 'delpic [INDEX]'
+
+****
+* Removes the profile picture of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
+* If no index is specified, the command acts on currently selected person.
+****
+
+Examples:
+
+* `list` +
+`delpic 2` +
+Deletes the picture of the 2nd person in masterlist.
+* `find Betsy` +
+`delpic 1` +
+Deletes the profile picture of the 1st person from the results of the `find` command.
+* `select 3` +
+`delpic` +
+Deletes the profile picture of the 3rd person from the masterlist in the address book.
+// end::delpic[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
 Format: `clear`
+
+// tag::theme[]
+=== Changing themes: `theme`
+
+Changes between the two available themes shown below in Figures 4.25.1 and 4.25.2 below. +
+Format: `theme`
+
+image::Ui.png[width="790"]
+_Figure 4.25.1 : Dark theme (default)_
+
+image::BrightTheme.PNG[width="790"]
+_Figure 4.25.2 : Bright theme_
+// end::theme[]
 
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
+// tag::saveload[]
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+Address book data is saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually. +
+If address book data can be loaded successfully, backup address book data is saved upon starting the program.
+
+=== Loading the data
+
+If the data file does not exist or cannot be read:
+[none]
+* Backup data file will be loaded, if available and readable.
++
+[none]
+* If backup data is unavailable:
++
+[none]
+** You will be given a sample address book.
++
+[none]
+* If backup data exists but cannot be read :
++
+[none]
+** You will be given an empty address book.
+
+[NOTE]
+====
+To quickly revert address book data to the state of last use:
+[none]
+* 1. Delete addressbook.xml.
++
+[none]
+* 2. Rename addressbook.xml-backup.xml to addressbook.xml.
+====
+// end::saveload[]
+
+
+== Non-command features
+
+// tag::interestCalculator[]
+=== Interest Calculator
+
+[NOTE]
+This is only applicable to debtors with a set interest rate. For the current version, only positive whole numbers are accepted. +
+
+[NOTE]
+`Codii` only checks through its list of debtors when the user logs into the application. +
+
+At the start of each month, `Codii` will check through the list of debtors and accrue their debt
+if applicable. Even if the user has not logged into `Codii` for many months, the application will compound
+the debt accordingly.
+
+This is convenient for debts or loans with a monthly interest rate.
+// end::interestCalculator[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous address book. +
+
+*Q*: What is the difference between `repaid` command and `payback` command? +
+*A*: `repaid` command completely clears a debtor's debt while `payback` clears a specified amount. In both cases, when the debt reaches zero, the person is
+transferred to whitelist and date repaid is set to the date the command is executed. +
+
+*Q*: If I `delete` someone from the `masterlist`, will he/she be deleted from the other lists as well? +
+*A*: Yes. +
+
+*Q*: Is it possible to send a blacklisted person to the `whitelist`? +
+*A*: No. You have to `unban` the person prior to sending him/her to the `whitelist`. +
+
+*Q*: When will a debtor's `debt` be accrued by his/her loan's interest rate? +
+*A*: As of now, the default date to accrue is on the first day of the month. +
+
+*Q*: If I execute the `sort` command in the `masterlist`, will the other lists be sorted as well? +
+*A*: Yes. +
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+A quick summary of all available commands for your easy reference:
+
+* *Login* : `login USERNAME PASSWORD` +
+e.g. `login userAcc_123 pa$$_Word!@#&`
+* *Login using GUI* : `login` +
+e.g. See Figure 1.3:
+
+image::loginView.PNG[width="790"]
+_Figure 1.3 : How the welcome screen looks like after `login` is entered in the command box_
+
+* *Logout* : `logout`
+* *Add* : `add n/NAME hp/HANDPHONE_NUMBER home/HOME_PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE d/DEBT [op/OFFICE_PHONE_NUMBER] [dl/DEADLINE] [int/INTEREST] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/123466 d/123 dl/11-03-2017 t/friend t/colleague`
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *Borrow* : `borrow [INDEX] AMOUNT` +
+e.g. `borrow 1 500.50`
+* *Pay back* : `payback [INDEX] AMOUNT` +
+e.g. `payback 1 500.50`
+* *Repaid* : `repaid [INDEX]` +
+e.g. `payback 1`
+* *Delete* : `delete [INDEX]` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Ban* : `ban [INDEX]` +
+e.g. `ban 3`
+* *Unban* : `unban [INDEX]` +
+e.g. `unban 3`
+* *Edit* : `edit [INDEX] [n/NAME] [hp/HANDPHONE_NUMBER] [home/HOME_PHONE_NUMBER] [op/OFFICE_PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] [d/DEBT] [td/TOTAL DEBT] [dl/DEADLINE] [int/INTEREST] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Blacklist* : `blacklist`
+* *Whitelist* : `whitelist`
+* *Overduelist* : `overduelist`
 * *Help* : `help`
-* *Select* : `select INDEX` +
+* *Select* : `select [INDEX]` +
 e.g.`select 2`
 * *History* : `history`
+* *Nearby* : `nearby INDEX` +
+e.g. `nearby 2`
+* *Sort* : `sort [ORDERING]` +
+e.g. `sort debt`
+* *Add Picture*  : `addpic [INDEX]` +
+e.g. `addpic 2`
+* *Delete Picture*  : `delpic [INDEX]` +
+e.g. `delpic 2`
+* *Setpath* : `setpath [PATH]` +
+e.g. `setpath C:/Users/acer/Desktop/SE/profilepic/` +
+e.g. `setpath C:/Users/acer/Desktop/SE/profilepic` +
+e.g. `setpath C:\Users\acer\Desktop\SE\profilepic\` +
+e.g. `setpath C:\Users\acer\Desktop\SE\profilepic` +
+* *Filter* : `filter TAG1 TAG2 ...` +
+e.g `filter friendly cooperative`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Theme* : `theme`
+
+== Current features
+
+* `Add` a person (since v1.0)
+* `Delete` a person (since v1.0)
+* Have a help screen with detailed instructions (since v1.0)
+* Add tags to contacts (since v1.0)
+* `Edit` contacts (since v1.0)
+* `Find` contacts by name (since v1.0)
+* Automatic backup storage (since v1.0)
+* `Debt` field (since v1.0)
+* Prevent duplicate contacts (since v1.0)
+
+* `Login` command (since v1.1)
+* Password masking (since v1.1)
+* `Postal code` field (since v1.1)
+* `Deadline` field (since v1.1)
+* `Date borrowed` field (since v1.1)
+* `Blacklist` (since v1.1)
+* Full info panel (since v1.1)
+* `Ban` and `Unban` a person (since v1.1)
+
+* `Nearby` command (since v1.2)
+* `Borrow` command (since v1.2)
+* Display nearby contacts (since v1.2)
+* `Interest` field (since v1.2)
+
+* `Sort` by various fields (since v1.3)
+* `Payback` command (since v1.3)
+* `Repaid` command (since v1.3)
+* `Whitelist` command (since v1.3)
+* `Logout` command (since v1.3)
+* Person's debts are automatically incremented according to the interest rate of their loan (since v1.3)
+
+* Filter contacts by tags (since v1.4)
+* Replace `Phone` field with `Handphone`, `Home phone` and `Office phone` (since v1.4)
+* List of people who have overdue debts. (since v1.4)
+* A progress bar to indicate how much of the person's debt has been paid off. (since v1.4)
+
+* Profile pictures of clients shown next to their details. (since v1.5)
+* Different appearance themes (since v1.5)
+
+== Features to be included by `V2.0`
+
+* Export a person's contact in another format.
+* `Help` command that displays screenshots of positive examples.
+* View the last login time.
+* Impose different periods of ban on a specified person in the blacklist
+* 2FA authentication for login and every other important action.
+* Validity checks on client's personal information.
+* Send an email notification to the user when the user's account is logged in from an unknown device.
+* An automated journey scheduler.
+* 'Add log' button that generates specific date and time.
+* A file uploading feature.
+* Random generation of a contact from the cleared list.
+* Allow the creation a custom fields.
+* Have unique tag colors for each tag and synchronise tag colors in the info panel with the ones in the person card.
+* Person's interest field can accept floating point number. As of now, only positive whole numbers are allowed.

@@ -126,6 +126,18 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
     }
 
     /**
+     * Returns true if the selected {@code PersonCard} is different from the value remembered by the most recent
+     * {@code rememberSelectedPersonCard()} call.
+     */
+    public boolean isSelectedPersonCardChanged(Object other) {
+        if (!(other instanceof PersonListPanelHandle)) {
+            throw new AssertionError("Wrong object passed in");
+        }
+        PersonListPanelHandle personListPanelHandle = (PersonListPanelHandle) other;
+        return getSelectedCardIndex() == personListPanelHandle.getSelectedCardIndex();
+    }
+
+    /**
      * Returns the size of the list.
      */
     public int getListSize() {

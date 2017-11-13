@@ -1,0 +1,123 @@
+= Jaivignesh Venugopal - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Codii
+[https://github.com/CS2103AUG2017-T17-B1/main[Codii]] is a desktop address book application specially designed for debt collectors to manage debtors in a simple manner. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+
+Debt collectors can store information such as the amount owed, debt borrow date and debt cleared date in addition to debtor’s personal information.
+
+Unique features such as an interest calculator help debt collectors manage debts more efficiently.
+
+Codii is evolved from [https://github.com/nus-cs2103-AY1718S1/addressbook-level4[AddressBook - Level 4]] which is a desktop address book application used for teaching Software Engineering principles.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T17-B1/main/blob/master/collated/main/jaivigneshvenugopal.md[Functional code]] [https://github.com/CS2103AUG2017-T17-B1/main/blob/master/collated/test/jaivigneshvenugopal.md[Test code]]
+
+=== Enhancement Added: Blacklist/Whitelist command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=blacklist]
+
+include::../UserGuide.adoc[tag=whitelist]
+
+#End of Extract#
+
+---
+
+==== Justification (Blacklist)
+
+As a debt collector, there is an important requirement to categorize debtors into different categories. One of these categories include debtors who have been blacklisted. This branding could have been given by the client banks or the debt collection agencies themselves. Nonetheless, the message is clear; these blacklisted debtors must be handled with caution.
+
+Thus, it is a requirement to have access to a list of blacklisted people. That is essentially what the `blacklist` command does. Moreover, working in the blacklist gives exclusive and focused control over the debtors in this list alone. Meaning, when working in the blacklist, users will not be able to access non-blacklisted persons. This is because the commands work exclusively on blacklisted debtors alone.
+
+To access other lists, specific commands have to be used to toggle.
+
+==== Justification (Whitelist)
+
+As a debt collector, it is also important to identify and categorize debtors who have repaid all their debts. Ultimately, that is the purpose of the `whitelist` command. Debt collection agencies regularly need to liase with client banks to submit reports on debtors' activities and repayment amounts. Thus, having a list of debtors who have repaid their debts, along with the date that they repaid the full amount, essentially helps to track debtors' activities.
+
+If the debt collection agency happens to be a subsidiary institution to a bank, this whitelist feature will also aid in allowing the voice-call sectors to contact people for additional loan-signups.
+
+As aforementioned, to access other lists, specific commands have to be used to toggle.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=list]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Repaid command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=repaid]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A debt collector will have the job to record down the collections for the day from each debtor. If a debtor has paid off his/her total debt, there should be an easy way for the debt collector to update`debt`, `totalDebt`, `dateRepaid` and `isWhitelisted` fields of the debtor. That is the purpose of the `Repaid` command.
+
+This is very similar to the `Payback` command, however, `Repaid` command excels in automating three different tasks so that life is indeed simpler for debt collectors to key in information in the system.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=repaid]
+
+#End of Extract#
+
+---
+=== Enhancement Added: Add/Remove Profile Picture
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addpic]
+
+include::../UserGuide.adoc[tag=delpic]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A debt collector might need to conduct house visits to collect debts from people. Thus, having commands that allow the user to add/remove pictures for each individual debtors helps him/her quickly identify a specific debtor during official house visits.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=setpath/addpic/delpic]
+
+#End of Extract#
+
+---
+=== Other contributions
+
+* Set up sync between all commands and all lists (masterlist/blacklist/whitelist) (https://github.com/CS2103AUG2017-T17-B1/main/pull/166)
+* Create a dateRepaid field (https://github.com/CS2103AUG2017-T17-B1/main/pull/54)
+
+== Project: WiredIn
+[https://github.com/archthegit/wiredInV0/[WiredIn]] is a web application that collates raw csv files from various banks and displays the information variedly in a visually pleasing manner. This application was developed with [https://github.com/archthegit/[Archana Pradeep]] for [http://nusskylab-dev.comp.nus.edu.sg/[CP2106 Independent Software Development Project (Orbital)]].

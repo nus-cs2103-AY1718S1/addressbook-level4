@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.InfoPanelHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -19,10 +20,10 @@ public class GuiTestAssert {
      */
     public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
-        assertEquals(expectedCard.getAddress(), actualCard.getAddress());
-        assertEquals(expectedCard.getEmail(), actualCard.getEmail());
         assertEquals(expectedCard.getName(), actualCard.getName());
-        assertEquals(expectedCard.getPhone(), actualCard.getPhone());
+        assertEquals(expectedCard.getDebt(), actualCard.getDebt());
+        assertEquals(expectedCard.getTotalDebt(), actualCard.getTotalDebt());
+        assertEquals(expectedCard.getDeadline(), actualCard.getDeadline());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
@@ -31,13 +32,37 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysPerson(ReadOnlyPerson expectedPerson, PersonCardHandle actualCard) {
         assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
+        assertEquals(expectedPerson.getDebt().toString(), actualCard.getDebt());
+        assertEquals(expectedPerson.getTotalDebt().toString(), actualCard.getTotalDebt());
+        assertEquals(expectedPerson.getDeadline().valueToDisplay, actualCard.getDeadline());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
 
+    //@@author khooroko
+    /**
+     * Asserts that {@code actualInfo} displays the details of {@code expectedPerson}.
+     */
+    public static void assertInfoDisplaysPerson(ReadOnlyPerson expectedPerson, InfoPanelHandle actualInfo) {
+        assertEquals(expectedPerson.getName().fullName, actualInfo.getName());
+        assertEquals(expectedPerson.getHandphone().value, actualInfo.getHandphone());
+        assertEquals(expectedPerson.getHomePhone().value, actualInfo.getHomePhone());
+        assertEquals(expectedPerson.getOfficePhone().value, actualInfo.getOfficePhone());
+        assertEquals(expectedPerson.getEmail().value, actualInfo.getEmail());
+        assertEquals(expectedPerson.getAddress().value, actualInfo.getAddress());
+        assertEquals(expectedPerson.getPostalCode().value, actualInfo.getPostalCode());
+        assertEquals(expectedPerson.getCluster().value, actualInfo.getCluster());
+        assertEquals(expectedPerson.getInterest().value, actualInfo.getInterest());
+        assertEquals(expectedPerson.getDebt().toString(), actualInfo.getDebt());
+        assertEquals(expectedPerson.getTotalDebt().toString(), actualInfo.getTotalDebt());
+        assertEquals(expectedPerson.getDateBorrow().value, actualInfo.getDateBorrow());
+        assertEquals(expectedPerson.getDeadline().valueToDisplay, actualInfo.getDeadline());
+        assertEquals(expectedPerson.getDateRepaid().value, actualInfo.getDateRepaid());
+        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualInfo.getTags());
+    }
+
+    //@@author
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
