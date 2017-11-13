@@ -35,7 +35,6 @@ public class CalendarView {
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private VBox view;
     private Text calendarTitle;
-    private LocalDate calendarDate;
     private YearMonth currentYearMonth;
     private ObservableList<ReadOnlyPerson> contactList;
     private Logic logic;
@@ -105,7 +104,7 @@ public class CalendarView {
      */
     public void populateCalendar(YearMonth yearMonth) {
         // Get the date we want to start with on the calendar
-        this.calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
+        LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
         // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
         while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
             calendarDate = calendarDate.minusDays(1);
@@ -141,7 +140,6 @@ public class CalendarView {
                     }
 
                     ap.setOnMouseClicked(event -> {
-
                         String findCommandText = FindCommand.COMMAND_WORDVAR_1 + " " + ap.getAccessibleText();
                         try {
                             CommandResult commandResult = logic.execute(findCommandText);
@@ -150,12 +148,7 @@ public class CalendarView {
                             logger.info("Invalid command: " + findCommandText);
                         }
                     });
-                } else {
-
                 }
-
-                //System.out.println("date value: " + dateValue);
-                //System.out.println("birthday value: " + birthdayValue.substring(0,5));
             }
 
             ap.getChildren().add(txt);
@@ -177,16 +170,14 @@ public class CalendarView {
      * Move the month back by one. Repopulate the calendar with the correct dates.
      */
     public void previousMonth() {
-        currentYearMonth = currentYearMonth.minusMonths(1);
-        populateCalendar(currentYearMonth);
+        populateCalendar(currentYearMonth.minusMonths(1));
     }
 
     /**
      * Move the month forward by one. Repopulate the calendar with the correct dates.
      */
     public void nextMonth() {
-        currentYearMonth = currentYearMonth.plusMonths(1);
-        populateCalendar(currentYearMonth);
+        populateCalendar(currentYearMonth.plusMonths(1));
     }
 
     public VBox getView() {
@@ -197,6 +188,7 @@ public class CalendarView {
      * Returns the correct format of the day in String format
      */
     private String getFormatDate(String day, String month) {
+
         if (day.length() == 1) {
             day = "0" + day;
         }
