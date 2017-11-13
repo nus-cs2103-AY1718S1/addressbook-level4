@@ -14,7 +14,7 @@ image::nelsonqyj.png[width="150", align="left"]
 {empty}[http://www.comp.nus.edu.sg/~nelsonqyj[homepage]] [https://github.com/nelsonqyj[github]] [<<nelsonqyj#, portfolio>>]
 
 Role: Member +
-Responsibilities: LOGIC
+Responsibilities: Logic
 
 '''
 === Ng Kheng Yi
@@ -30,7 +30,7 @@ image::melvinleo.jpg[width="150", align="left"]
 {empty}[https://github.com/Melvin-leo[github]] [<<Melvin-leo#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI & Storage
+Responsibilities: UI & Model
 
 '''
 === Muhammad Syabil Bin Mohamed Sazali
