@@ -12,7 +12,7 @@ import java.util.PriorityQueue;
  */
 public class MrtMapLogic {
     //require five minutes to transfer station
-    private final int INTERCHANGE_TRANSFER_TIME = 5;
+    private static final int INTERCHANGE_TRANSFER_TIME = 5;
 
     private ArrayList<MrtStation> mrtStations = new ArrayList<MrtStation>();
     private ArrayList<Integer> trainTimings = new ArrayList<Integer>();
@@ -31,7 +31,7 @@ public class MrtMapLogic {
     /**
      * MrtStation object represents a physical Mrt Station's information
      */
-    class MrtStation{
+    class MrtStation {
         private String name;
         private String shortName;
 
@@ -43,7 +43,7 @@ public class MrtMapLogic {
             this.name = name;
             this.shortName = shortName;
             this.stationCodes = new String[stationCodes.length];
-            for(int i = 0; i < stationCodes.length; i++) {
+            for (int i = 0; i < stationCodes.length; i++) {
                 this.stationCodes[i] = stationCodes[i];
             }
         }
@@ -92,7 +92,7 @@ public class MrtMapLogic {
 
         public String[] getStationCodes() {
             String[] stationCodes = new String[getNumInterchange()];
-            for(int i = 0; i < getNumInterchange(); i++) {
+            for (int i = 0; i < getNumInterchange(); i++) {
                 stationCodes[i] = this.stationCodes[i];
             }
             return stationCodes;
@@ -114,7 +114,7 @@ public class MrtMapLogic {
         protected int mrtIndex;
         protected int travelDuration;
 
-        public IntPair(int mrtIndex, int travelInterval){
+        public IntPair(int mrtIndex, int travelInterval) {
             this.mrtIndex = mrtIndex;
             this.travelDuration = travelInterval;
         }
@@ -280,7 +280,7 @@ public class MrtMapLogic {
      * from the first stop. This information is needed for Dijkstra's Algorithm
      * This method acts as data storage.
      */
-    private void populateTrainTimings() {{
+    private void populateTrainTimings() {
         trainTimings.add(0);
         trainTimings.add(3);
         trainTimings.add(5);
@@ -426,8 +426,11 @@ public class MrtMapLogic {
         trainTimings.add(66);
     }
 
-    }
-
+    /**
+     * Populate the hashmap populateStationCodeToIndex
+     * Note that before this method is called, mrtStations must already be filled
+     * i.e., populateMrtStations() must already be called;
+     */
     private void populateStationCodeToIndex() {
         for(int i=0; i<mrtStations.size(); i++) {
             MrtStation mrtStation = mrtStations.get(i);
@@ -435,7 +438,7 @@ public class MrtMapLogic {
             stationCodeToIndex.put(stationCode, i);
         }
     }
-
+    
     private void populateNameToIndex(){
         for(int i = 0; i<mrtStations.size(); i++){
             MrtStation mrtStation = mrtStations.get(i);
