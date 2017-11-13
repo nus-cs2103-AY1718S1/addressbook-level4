@@ -422,7 +422,7 @@ Resident book data are saved in the hard disk automatically after any command th
 There is no need to save manually.
 
 // tag::backup[]
-=== Back up of data : `backup`
+=== Back up of data : `backup` (since 1.3)
 
 Resident book data can be stored in a back up file when necessary. This is good in case any the existing resident book is corrupted, or when the semester is over. +
 Format: `backup`
@@ -432,7 +432,7 @@ image::backup.png[width='800']
 // end::backup[]
 
 // tag::import[]
-=== Import data : `import` (Since v1.2)
+=== Import data : `import` (Since v1.4)
 
 Add contact details from external xml file into current resident book. This can be done through typing commands or selecting from the UI.+
 Format: import FILE_PATH

@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: Resident Book
 ResidentBook is a newly conceptualised administrative tool catered for staffs handling hostel and college operations. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in OOP style in Java.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-F09-B1/main/tree/master/collated/main/blackroxs.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B1/main/tree/master/collated/test/blackroxs.md[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B1/main/tree/master/collated/main/blackroxs.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B1/main/tree/master/collated/test/blackroxs.md[Test code]]
 
 === Enhancement Added: Backup
 
