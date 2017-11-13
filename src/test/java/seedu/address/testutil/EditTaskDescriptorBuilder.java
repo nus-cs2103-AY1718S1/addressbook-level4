@@ -29,8 +29,9 @@ public class EditTaskDescriptorBuilder {
     public EditTaskDescriptorBuilder(ReadOnlyTask task) {
         descriptor = new EditTaskDescriptor();
         descriptor.setDescription(task.getDescription());
-        descriptor.setStartDate(task.getStartDate());
         descriptor.setDeadline(task.getDeadline());
+        descriptor.setStartTime(task.getStartTime());
+        descriptor.setEndTime(task.getEndTime());
         descriptor.setTags(task.getTags());
     }
 
@@ -47,18 +48,6 @@ public class EditTaskDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code StartDate} of the {@code EditTaskDescriptor} that we are building.
-     */
-    public EditTaskDescriptorBuilder withStartDate(String startDate) {
-        try {
-            ParserUtil.parseStartDate(Optional.of(startDate)).ifPresent(descriptor::setStartDate);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("start date is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
      * Sets the {@code Deadline} of the {@code EditTaskDescriptor} that we are building.
      */
     public EditTaskDescriptorBuilder withDeadline(String deadline) {
@@ -66,6 +55,18 @@ public class EditTaskDescriptorBuilder {
             ParserUtil.parseDeadline(Optional.of(deadline)).ifPresent(descriptor::setDeadline);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("deadline is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code startTime} of the {@code EditTaskDescriptor} that we are building.
+     */
+    public EditTaskDescriptorBuilder withEventTimes(String time) {
+        try {
+            ParserUtil.parseEventTimes(Optional.of(time)).ifPresent(descriptor::setEventTimes);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("start time is expected to be unique");
         }
         return this;
     }

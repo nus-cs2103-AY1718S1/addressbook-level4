@@ -34,6 +34,7 @@ public class ResultDisplay extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author raisa2010
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         if (event.isInvalid) {
@@ -44,8 +45,8 @@ public class ResultDisplay extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
     }
+    //@@author
 
-    //@@author raisa2010
     /**
      * Sets the result display style to indicate a failed command.
      */
@@ -59,7 +60,6 @@ public class ResultDisplay extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
-    //@@author
     /**
      * Sets the result display style to use the default style.
      */

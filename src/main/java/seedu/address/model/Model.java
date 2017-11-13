@@ -66,7 +66,7 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /** Adds the given task */
-    void addTask(ReadOnlyTask task) throws DuplicateTaskException;
+    void addTask(ReadOnlyTask task) throws IllegalValueException;
     //@@author eryao95
     void deleteTask(ReadOnlyTask target) throws TaskNotFoundException;
     //@@author
