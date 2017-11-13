@@ -691,7 +691,7 @@ In the method `execute()` under `FindTagCommand`, the predicate is then used to 
 The filtered list size is then parsed into the `getMessageForPersonListShownSummary(int)` which will return the `CommandResult` to show to the user.
 
 image::FindTagComponentSequenceDiagram.png[width="800"]
-_Figure 4.8.1 : Sequence Diagram of FindTag function_
+_Figure 4.9.1 : Sequence Diagram of FindTag function_
 [NOTE]
 
 The `FindTag` command is not undoable so it will just override `execute()`.
