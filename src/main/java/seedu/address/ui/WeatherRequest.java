@@ -2,7 +2,6 @@ package seedu.address.ui;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.StringTokenizer;
 import javax.xml.bind.JAXBException;
 
 import com.github.fedy2.weather.YahooWeatherService;
