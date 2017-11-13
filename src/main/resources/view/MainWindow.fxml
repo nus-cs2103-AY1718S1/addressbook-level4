@@ -1,56 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- @@author ChenXiaoman -->
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <stylesheets>
-    <URL value="@DarkTheme.css" />
-    <URL value="@Extensions.css" />
-  </stylesheets>
+    <stylesheets>
+        <URL value="@Extensions.css"/>
+    </stylesheets>
 
-  <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-    <Menu mnemonicParsing="false" text="File">
-      <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-    </Menu>
-    <Menu mnemonicParsing="false" text="Help">
-      <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-    </Menu>
-  </MenuBar>
+    <SplitPane dividerPositions="0.5, 0.5" prefHeight="0.0" prefWidth="690.0">
+        <items>
+            <MenuBar fx:id="menuBar" prefHeight="29.0">
+                <Menu mnemonicParsing="false" text="File">
+                    <MenuItem id="logout" mnemonicParsing="false" onAction="#handleLogoutEvent" text="Logout"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Theme">
+                    <MenuItem fx:id="brightTheme" mnemonicParsing="false" onAction="#handleChangeBrightTheme"
+                              text="Bright"/>
+                    <MenuItem fx:id="darkTheme" mnemonicParsing="false" onAction="#handleChangeDarkTheme" text="Dark"/>
+                </Menu>
+            </MenuBar>
 
-  <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-    <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
-    </padding>
-  </StackPane>
+            <Button alignment="TOP_RIGHT" onAction="#handleIncreaseFontSize" text="+" wrapText="true"/>
 
-  <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-      minHeight="100" prefHeight="100" maxHeight="100">
-    <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
-    </padding>
-  </StackPane>
-
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
-      <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
-      </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-    </VBox>
-
-    <StackPane fx:id="browserPlaceholder" prefWidth="340" >
-      <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
-      </padding>
+            <Button alignment="TOP_RIGHT" onAction="#handleDecreaseFontSize" text="-"
+                    wrapText="true"/>
+        </items>
+    </SplitPane>
+    <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
+        <padding>
+            <Insets bottom="5" left="10" right="10" top="5" />
+        </padding>
     </StackPane>
-  </SplitPane>
 
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
+        <padding>
+            <Insets bottom="5" left="10" right="10" top="5" />
+        </padding>
+    </StackPane>
+
+    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+        <VBox fx:id="personList" maxWidth="350.0" minWidth="159.0" prefWidth="350.0" SplitPane.resizableWithParent="false">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <StackPane fx:id="personListPanelPlaceholder" maxWidth="400.0" prefWidth="375.0" VBox.vgrow="ALWAYS" />
+        </VBox>
+
+        <StackPane fx:id="browserPlaceholder" prefWidth="700.0" SplitPane.resizableWithParent="false">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+
+        </StackPane>
+        <VBox fx:id="reminders" maxWidth="340.0" prefWidth="320.0">
+            <children>
+                <StackPane fx:id="reminderListPlaceholder" layoutX="20.0" layoutY="20.0" prefHeight="590.0" />
+            </children>
+        </VBox>
+    </SplitPane>
+
+
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+
 </VBox>

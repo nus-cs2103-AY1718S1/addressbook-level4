@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Weaver - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,25 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W13-B2`      Since: `Aug 2017`      Licence: `MIT`
+
+*`Weaver`* is a command line based software for storing and managing contact information. It satisfies almost all functions might be needed by university students on storing and managing contact information.
+
+
+== Introduction
+
+=== Audiences
+
+All university students. +
+People who have the need for storing and managing contact information efficiently are suggested to use *`Weaver`*.
+
+=== Purposes
+
+. *`Weaver`* aims at providing efficient solution for university students to store and manage contact information.
+. It devotes to improve the experience when users try to add person , delete person , edit person , remark person ect.
+. Targeted at university students, *`Weaver`* is bringing shortcut for students to note meetings, calendars and course information.
+
+*`Weaver`* is a command line based software for storing and managing contact information. It satisfies almost all functions might be needed by university students on storing and managing contact information.
 
 == Setting up
 
@@ -95,9 +113,6 @@ _Figure 2.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
-[TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
-
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
@@ -153,7 +168,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `LoginPage` and a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow` and `LoginPage`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -303,7 +318,7 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
-==== Design Considerations
+==== Design considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
@@ -345,6 +360,895 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Search Command
+
+** The search command simply makes the find command more powerful as it looks for people with same name and date of birth. +
+** Implementation is similar to the find command. +
+** The command takes in two arguments, namely the name of the person and the date of birth. +
+** Exceptions are thrown if invalid commands are entered. +
+
+Below is a code snippet which shows how the search command parses the arguements. +
+
+---
+    @Override
+    public boolean test (ReadOnlyPerson person) {
+
+        if (keywords.size() <= 1) {
+            logger.warning("The number of arguements entered do not match the command format");
+            return false;
+        }
+
+        return StringUtil.containsWordIgnoreCase(person.getName().fullName, keywords.get(0))
+               && StringUtil.containsWordIgnoreCase(person.getDateOfBirth().date, keywords.get(1));
+    }
+---
+// tag::remark[]
+
+
+=== Remark mechanism
+
+The remark mechanism remarks contacts with their module information.
+The command takes two parameters, Index and ModuleInfo. TargetIndex specifies the person you want to remark to. And the module information specifies the person's module information.
+If the index is invalid or the module information is not in the correct format, exceptions will be thrown. +
+Format - photo [INDEX] [MODULEINFO]
+e.g. remark 1 CS2103/LEC/1
+
+[NOTE]
+The correct format for module information is: +
+MODULETITLE/MODULETYPE/MODULENUM
+// end::remark[]
+
+// tag::loginlogout[]
+=== Login / Logout mechanism
+
+The `login / logout` mechanism is a page which requires user to key in his username and password before he can use the addressbook. And once he is logged in, there will be a automatically generated file named as `username + addressbook.xml` storing the information about his own addressbook.
+
+[NOTE]
+It uses files which stores the information of legal username and password pair to check whether the username and password key in by users are valid.
+
+image::login.png[width="800"]
+
+With the extra layer, the UiManager is calling login page before it calls the MainWindow:
+[source,java]
+----
+
+loginPage = new LoginPage(primaryStage, config, storage, prefs, logic, accPrefs);
+loginPage.show();
+
+
+----
+
+The check mechanism is implemented in this way:
+[source,java]
+----
+private boolean checkValid(String username, String password) {
+        return accPrefs.getHm().get(username).equals(password);
+}
+----
+[NOTE]
+If user key in wrong user name or password, he will stuck at login page until he manages to get in.
+
+
+Read the account information from file and save them into a hashmap.
+[source,java]
+----
+public AccountsStorage setAccountMsg() throws DataConversionException, IOException {
+        String accountMsg = this.readAccountsPrefs(this.accountsPath).toString();
+        this.hm = makeMap(accountMsg);
+        return this;
+}
+
+----
+
+Logout is implemented using JavaFX.
+[source,java]
+----
+@FXML
+private void handleLogoutEvent() {
+    logger.info("Trying to logout");
+    this.hide();
+    this.releaseResources();
+    LoginPage loginPage = new LoginPage(primaryStage, config, storage, prefs, logic, accPrefs);
+    loginPage.show();
+}
+
+----
+
+image::logout.png[width="200"]
+
+==== Design considerations
+
+**Aspect:** Implementation of `login / logout` feature +
+**Alternative 1 (current choice):** `login` is compulsory. User must login before he can use the addressbook  +
+**Pros:** Easier to implement. Not changing the structure of code. +
+**Cons:** Previous test cases need to be rewrote to get use to this new page. +
+**Alternative 2:** `login` is  optional. User can still use this addressbook without login. +
+**Pros:** Previous test cases can still be used. +
+**Cons:** Need to invoke `login page` from command level, which is very hard to implement. It changes a considerable
+part of structure of the whole code.
+
+---
+
+**Aspect:** User experiences  +
+**Alternative 1 (current choice):** `login` is compulsory. User must login before he can use the addressbook +
+**Pros:** Level of security is increased. Each user has a separate file to store addressbook. This software now support
+multiple users. +
+**Cons:** User needs an account to use this addressbook. Operation become one layer more complex. +
+**Alternative 2:** `login` is  optional. User can still use this addressbook without login.  +
+**Pros:** Multiple choices for users. More flexible. +
+**Cons:** The default page becomes public, anyone can read and modify it. +
+// end::loginlogout[]
+
+---
+
+// tag::register[]
+=== Register mechanism
+
+The register feature enables users to put new valid accounts inside the accounts.json file. The file operations are similar to the one used in Login/Logout feature.
+
+[NOTE]
+It puts account information in the accounts.json file. Users must key in the same password twice for confirm.
+
+image::Register.png[width="800"]
+
+The check mechanism requires the username to be unique from all different ones:
+[source,java]
+----
+private boolean checkValid() {
+    if (accPrefs.getHm().get(username.getText()) != null) {
+        logger.info("Register faild");
+        return false;
+    } else {
+        logger.info("Register successful");
+        return password.getText().equals(password1.getText());
+    }
+}
+
+----
+
+[NOTE]
+If user key in wrong password, he will be stuck at login page until he manages to get in.
+
+Register is implemented using JavaFX.
+[source,java]
+----
+@FXML
+private void handleRegisterEvent() {
+    try {
+        logger.info("Trying to register");
+        if (checkValid()) {
+            accPrefs.getHm().put(username.getText(), password.getText());
+            accPrefs.saveAccountsPrefs(accPrefs, accPrefs.getUserPrefsFilePath());
+            loginPage = new LoginPage(primaryStage, config, storage, prefs, logic, accPrefs);
+            this.hide();
+            loginPage.show();
+        }
+    } catch (IOException e) {
+        logger.info("Invalid input");
+    }
+}
+----
+
+[NOTE]
+A user can go back using the back button.
+// end::register[]
+
+
+// tag::customizetagcolor[]
+=== Customize tag color mechanism
+Tag color can be changed by giving a `ChangeTagColorCommand`.
+[NOTE]
+User can change one or more than one tag to a different color in one command.
+
+The diagram below shows the hierarchy of ChangeTagColorCommand.
+
+image::ChangeTagColorCommandClassDiagram.png[width="600"]
+
+We use a new class `TagColor` to represent a color of a tag. For every `Tag` object, it has a new field `tagColor` of `TagColor` class which stores its associate tag color.
+
+[NOTE]
+When the tag color of a tag has not specified by the user yet, it is in default color orange. +
+Tags with the same tag name are of the same color.
+
+The diagram below shows the hierarchy of TagColor class.
+
+image::TagColorClassDiagram.png[width="400"]
+
+After every `ChangeTagColorCommand`, the tag and tag color pair will be stored in the storage file.
+An `ChangeTagColorEvent` is raised so that the tag color in the UI is also updated accordingly. +
+The structure in .xml storage file is like the following:
+[source,css]
+----
+<persons>
+    <name>John Doe</name>
+    <phone>98765432</phone>
+    <email>johnd@example.com</email>
+    <tagged>
+        <name>friends</name>
+        <color>orange</color>
+    </tagged>
+</persons>
+<tags>
+    <name>friends</name>
+    <color>orange</color>
+</tags>
+----
+The following code shows the execution of `ChangeTagColorCommand`
+[source,java]
+----
+protected CommandResult executeUndoableCommand() throws CommandException {
+        // Store all non existing tags
+        Set<Tag> nonExistingTagList = new HashSet<>();
+
+        // Check whether tags in the tagList are not existing tags
+        for (Tag tag: tagList) {
+            if (!isExistingTagName(tag)) {
+                nonExistingTagList.add(tag);
+            }
+        }
+
+        // There are tags that are not existing tags
+        if (nonExistingTagList.size() != 0) {
+            throw new CommandException(String.format(MESSAGE_NOT_EXISTING_TAGS, nonExistingTagList));
+        }
+
+        try {
+            model.updateTagColorPair(tagList, color);
+        } catch (IllegalValueException e) {
+            throw new CommandException(MESSAGE_FAILED);
+        }
+
+        EventsCenter.getInstance().post(new ChangeTagColorEvent(color.tagColorName));
+
+        return new CommandResult(String.format(MESSAGE_CHANGE_TAG_COLOR_SUCCESS, tagList, color.tagColorName));
+    }
+----
+The sequence diagram below shows how the `ChangeTagColorCommand` works.
+
+image::ChangeTagColorSequenceDiagram.png[width="800"]
+
+==== Design considerations
+
+**Aspect:** How to associate each tag with a tag color? +
+**Alternative 1 (current choice):** Create a new class `TagColor` and add a new field to `Tag` class. +
+**Pros:** The associate tag color is easy to get from a given tag. It is also very intuitive for each tag to have its tag color. +
+**Cons:** It is complicated to implement. +
+**Alternative 2:** Create a static hash map of all tag names(String) and their associate tag color(String) inside `Tag` class. +
+**Pros:** It is easy to implement. +
+**Cons:** All the methods associated with tag color will be stored inside `Tag` class, violates the single responsibility principle of classes.
+
+---
+
+**Aspect:** Colors supported of `TagColor` +
+**Alternative 1 (current choice):** Developers specify a list of available colors for users. +
+**Pros:** It is easy to check whether the tag color name user typed in is valid. +
+**Cons:** The choices of color is limited. +
+**Alternative 2:** User can type in Hex Color Code as the color for tags. +
+**Pros:** User may not know what is Hex Color Code. +
+**Cons:** The colors available are various.
+// end::customizetagcolor[]
+
+
+// tag::customizeFontSize[]
+=== Customize font size mechanism
+The font size of the application can be changed via `ChangeFontSizeCommand` or by pressing the '+' or '-' button on the right top corner.
+
+A new class FontSize is used to represent a font size.
+
+The following diagram shows the hierarchy of FontSize class
+
+image::FontSizeClassDiagram.png[width="500"]
+
+[NOTE]
+Only five font sizes are supported: XS, S, M, L, XL
+
+User can change the font size by giving the name of the exact font size which they want the app to be changed to. E.g. `fs xl`. Or they can
+type in "+" or "-" symbol to increase or decrease the current font size. E.g. `fs +` +
+
+Pressing the "+" button equals to giving `fs +` command and similarly for "-" button. +
+
+If the current font size is the largest one and the user still gives `fs +` command or presses the "+" button to increase font sizes, a warning
+will be shown on the display box saying "The current font size is the largest one." Similarly for decreasing the font size.
+
+When a `ChangeFontSizeCommand` is made, a `ChangeFontSizeEvent` is raised. This event will be received by UI components such as
+PersonCard. So that the font size in UI components will be updated accordingly. The following code shows how the event is handled
+in the PersonCard.java.
+
+[source,java]
+----
+@Subscribe
+private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
+    String newFontSize = event.getFontSize();
+    initTags(person, newFontSize);
+    setFontSize(newFontSize);
+    setSizeForAllImagesAccordingToFontSize(newFontSize);
+    setSizeForPhotosAccordingToFontSize(newFontSize);
+}
+----
+
+Noted that not only the font size is changed, the size of images and icons also are enlarged or reduced according to the
+new font size. +
+
+When the user exits the app, the current font size will be stored in the preferences.json in the following format.
+
+[source,json]
+----
+{
+  "guiSettings" : {
+    "windowWidth" : 781.0,
+    "windowHeight" : 600.0,
+    "windowCoordinates" : {
+      "x" : 426,
+      "y" : 111
+    },
+    "fontSize" : "m",
+    "theme" : "bright"
+  },
+  "addressBookFilePath" : "data/addressbook.xml",
+  "addressBookName" : "MyAddressBook"
+}
+----
+==== Design considerations
+
+**Aspect:** How to represent a font size? +
+**Alternative 1 (current choice):** Create a new class `FontSize`. +
+**Pros:** The methods associated with font size can be encapsulated inside one class. +
+**Cons:** It increases coupling as a lot of UI components need to call the method of `FontSize` class. +
+**Alternative 2:** Create a new field of `String` type in `GuiSetting` class. +
+**Pros:** It is easy to implement. +
+**Cons:** The methods associated with font size will appear repeatedly in many UI component classes.
+
+---
+
+// end::customizeFontSize[]
+
+// tag::deletepersontag[]
+=== Deleting a person's tag mechanism
+
+The Deleting a person's tag mechanism consists of `DeleteTagCommand` and `DeleteTagCommandParser` classes.
+The `DeleteTagCommandParser` resides inside `LogicManager`. `DeleteTagCommandParser` only deals with `Parser`. It is created from `AddressBookParser`. The following diagram shows the flow for parser:
+
+image::LogicClassDiagram.png[width="800"]
+
+`XYZCommand Parser` inherits from the `Parser` interface and is created by the AddressBook Parser as the `DeleteTagCommandParser`.
+[NOTE]
+The tags are parsed under `parseTagsForDelete`, while the person index is parsed under `parse` before execution. The tags are identified by the prefix `t/` to be parsed for deletion, and it must be fully matched.
+
+The `DeleteTagCommand` resides inside `LogicManager`. It supports undoing and redoing of that modifies the state of Weaver. Such commands will inherit from `UndoableCommand`.
+
+`DeleteTagCommand` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+
+image::LogicCommandClassDiagram.png[width="800"]
+
+`UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteTagCommand`.
+
+Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command.
+
+Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+
+Commands that are not undoable are implemented this way:
+[source,java]
+----
+public class ListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... list logic ...
+    }
+}
+----
+With the extra layer, the commands that are undoable are implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class DeleteTagCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}
+----
+
+Inside the `DeleteTagCommand` class, a `DeleteTagDescriptor` identifying the tags to be deleted will be created from `DeleteTagCommandParser`, which will create and update a new `createTagDeletedPerson` accordingly. This will overwrite the existing `ReadOnlyPerson` Person's Tags while retaining the rest of its attributes as seen from the Model diagram below.
+
+image::ModelClassDiagram.png[width="800"]
+
+As you can see from the `Model` diagram, the `Person` retains the attributes that inherit it except for its own `UniqueTagList`, which is modified only for that particular `Person`.
+
+Suppose that the user has just launched the application.
+
+The user executes a new `DeleteTagCommand`, `deletetag 5 t/friends`, to delete the tag `friends` of the 5th person in the address book. The tags and the index are parsed into `DeleteTagCommandParser` before the `deletetag` command executes.
+
+As the user continues to use the program, he might decide to delete more than one tags. For example, the user may execute `deletetag 2 t/colleagues t/friends` to delete multiple tags.
+
+[NOTE]
+If the tags are not fully matched, it will throw an `Exception`.
+
+The user now decides that deleting the tags was a mistake, and decides to undo that action using `undo`.
+
+Using the `Undo/Redo` stack, we will restore the address book to the state before the `delete/t` command is executed.
+
+[NOTE]
+If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
+
+==== Design considerations
+
+**Aspect:** Implementation of `DeleteTagCommand` +
+**Alternative 1 (current choice):** To access the `Person` and overwrite a new `Person` to it. +
+**Pros:** It will not lose the same tags for other `Person` it is now part of the default behaviour. Classes that deal with `Tags` like `UniqueTagsList` do not have to be deleted. +
+**Cons:** It will be hard for new developers to understand the `UniqueTagsList`. +
+**Alternative 2:** To delete the `Tag` in the `UniqueTagsList` +
+**Pros:** It does not involve `Person` model, easier for new developers to understand with less coupling. +
+**Cons:** It will defeat the purpose of deleting a tag solely of the specific `Person`. Might take more effort to organise tags for users.
+
+---
+
+**Aspect:** Implementation of `DeleteTagCommandParser` +
+**Alternative 1 (current choice):** To be able to utilise `Index` and tag prefix `t/`. +
+**Pros:** It will be able to delete multiple tags. It is easy to implement. +
+**Cons:** It will pose difficulties for the user. User will have to type additional prefixes to delete. +
+**Alternative 2:** To not utilise prefix `t/`. +
+**Pros:** It will be easier and faster to delete with no prefix identifier. +
+**Cons:** It will be difficult to implement, as it is harder to tokenize the arguments to differentiate between index and tag.
+
+---
+
+**Aspect:** Implementation of deleting only a person's tags +
+**Alternative 1 (current choice):**
+To continue to contain the tag in `UniqueTagsList` even if there are no tags for any `Person`. +
+**Pros:** It will be easy to implement. +
+**Cons:** It may have performance issues in terms of memory usage. +
+**Alternative 2:** To clean up the `UniqueTagsList` after deleting its last tag. +
+**Pros:** It will use less memory (e.g. for `UniqueTagsList`, will not contain tags that are not present in any `Person`). +
+**Cons:** It must be ensured that the implementation for discovering the last tags of the list
+ is correct. It may be harder to implement for new developers.
+
+// end::deletepersontag[]
+
+// tag::addphoto[]
+=== Adding a photo to a contact in your personalised Weaver.
+
+** The add Photo command adds a display picture to a particular contact.
+** The command takes in two parameters, TargetIndex that is the index of the person to add a photo and the image filepath. +
+** The command can also be used to delete an existing picture of a person.If the person has no display picture and the user attempts to delete a picture, an exception
+will be thrown. +
+** The photo Command is inherited from the `UndoableCommand` class. The command supports the Undo/Redo mechanism in Weaver. +
+** The photo command is done with the help of ImageView property in JAVAFX, hence it is an attempt to enhance the UI. +
+
+
+
+*PRE-REQUISITE* +
+There is a pre-requisite for the command to work. The image that is going to be added to the contact must already be
+present on the user's local PC. If it is not so, Weaver is going to throw an exception and prompt the user to add a valid File path.
+
+
+*Working Flow* +
+
+** The `PhotoCommandParser` Class parses the arguments entered in the photo command.The class then throws an Exception with the
+appropriate message depending on whether the File name is present in the path specified by the user or if the number of arguments entered
+is not equal to two. +
+
+** The `PhotoCommand` class takes care of Invalid conditions like incorrect index. +
+
+** It then creates a new instance of the `FileImage` class. `FileImage` is an attribute that every person must have.
+A new `Person` is created with the updated `FileImage` and the existing model is updated.
+
+*Sequence Diagram*
+
+image::PhotoSequenceDiagram.png[width="800"]
+Figure 3.2
+
+The Sequence diagram (Figure 3.2) above shows the working flow of the Photo command feature. +
+
+** The `ModelManager` class implements the `addPhotoToPerson` method that adds a valid file image as an attribute to the person.
+
+----
+    person.imageProperty().setValue( new FileImage(FilePath));
+    updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    indicateAddressBookChanged();
+----
+
+** The filePath entered must be a valid one, else Weaver will throw an exception. +
+
+----
+ if (FileExists) {
+    try {
+    Index index = ParserUtil.parseIndex(keywords[0]);
+    return new PhotoCommand(index, (keywords[1]));
+            }
+  catch (IllegalValueException ive) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, PhotoCommand.MESSAGE_USAGE));
+            }
+
+        }
+----
+
+** Once the Image is set and the file is then removed from the specified directory, Weaver will no longer display the picture. +
+
+Refer to Figure 3.3 below for the Inheritance diagram of the command. +
+
+image::PhotoCommand.png[width="590" length="150" ]
+Figure 3.3
+
+The binder for attaching the image to the Person Card each time, is implemented in the following way. +
+
+----
+Image display = new Image(file.toURI().toString());
+
+image.setImage(display);
+----
+
+image::Wireframe.png[width="790"]
+Figure 3.4 Wireframe
+
+The wireframe for binding the image is shown above in Figure 3.4. +
+
+
+==== Reasons for this type of implementation
+
+* The feature can be implemented using CommandLine by just stating name of the file. +
+
+* The index can be used easily used to reference the person. +
+
+* The user can access the image from any directory in the PC. +
+
+==== Design considerations
+
+**Aspect:** How should the user choose the Image. +
+**Alternative1: (current choice): ** Enter the File path present on
+the desktop. +
+**Pros:** Makes use of Commad Line Interface. +
+**Cons:** User has to make sure the file exists on his/her Desktop. +
+**Alternative2:** Make use of FileChooser that prompts user to choose file from
+any directory. +
+**Pros:** User can choose any image from any location. +
+**Cons:** Makes use of a dialog box instead of Command Line. +
+
+---
+
+**Aspect:** How should the image be stored. +
+**Alternative1:** Image is stored in the `images` directory of the project by invoking `ImageStorage` class. +
+**Pros:** Each image is assigned a unique hashcode. +
+**Cons:** The working flow is not easy for incomimg developers to follow. +
+**Alternative2:** Image should be stored in the directory whose path is satisfied. +
+**Pros:** Easy for new developers to comprehend. +
+**Cons:** If the image is removed from the directory, Weaver will have no access to the image. +
+
+// end::addphoto[]
+
+// tag::facebook[]
+=== FaceBook Integration
+
+** The facebook command helps the user to view the profile page of a person on the contact list. +
+** If the user has no username the facebook page will not be loaded in the browser panel and an exception will be thrown. +
+** The command takes in one argument which is the index of the person. +
+
+
+==== Working flow
+
+** The `FaceBookCommand Parser` class parses the argument and throws an exception if the index entered
+is invalid. +
+** A new event `handleFaceBookEvent`  is then raised. +
+** The Brower Panel class then loads the page with the url of the profile page to be viewed on Facebook. +
+
+Below are few code snippets to guide you through the working of the feature. +
+
+---
+ public void loadPersonFaceBookPage(ReadOnlyPerson person, String username) {
+
+ String url =  FACEBOOK_PROFILE_PAGE + username;
+loadPage(url);
+    }
+---
+
+image::FacebookSequence.png[width="790"]
+
+Figure 3.1
+
+** Refer to figure 3.1 above which shows the sequence diagram of the Facebook command. +
+It clearly demonstrates how the command interacts with the Logic, Model and UI components. +
+It also shows how the event is raised and hence the page is loaded in the browser panel. +
+
+
+
+==== Reasons for this kind of implementation
+
+* This helps the user to take a quick glance of the the profile image of the contacts on his/her list. +
+
+* It is better than opening a brower on the desktop. +
+
+* It does not require the user to search for the person on the facebook homepage which can be a tedious task. +
+
+
+==== Design Considerations
+
+**Aspect:** How should the user view the profile page. +
+**Alternative1 : ** View the profile page on a web browser +
+**Pros:** Helps user exercise other functionalities like using messenger. +
+**Cons:** Does not make use of Weaver in any useful way. +
+**Alternative2:** View the profile page on the browser panel. +
+**Pros:** Makes it quicker and adds a function to the personalised Weaver. +
+**Cons:** Limits the functionalities that can be used on facebook. +
+
+// end::facebook[]
+// tag::email[]
+=== Email Feature
+
+** Weaver includes the `email` command which helps users contact persons on their contact list using the default browser in their desktop. +
+
+** This feature will work for users with a Gmail Account. +
+
+[TIP]
+The recipients are those persons with a common tag. +
+
+** The command takes in two parameters, the tag name and the subject line that the user wants in the email body. +
+
+Refer to the sequence diagram 4.1 below to see how the command parses the arguements and completes execution. +
+
+image::EmailSequence.png[width="800"]
+Figure 4.1 +
+
+The command will throw an exception in the following cases :
+
+ ** The number of tags entered is not equal to 1. +
+ ** The tag name does not match any of the tags in Weaver. +
+ ** The subject line is not valid. +
+
+**  Below is the high level sequence diagram of the command. +
+
+image::EmailHigh.png[width="800"]
+
+The following code snippet shows the Gmail Browser URL used and how the desktop browser is opened. +
+
+ ---
+ appendEmailAddress = appendEmailAddress.substring(0, appendEmailAddress.length() - 1);
+
+ String Gmail_Url = "https://mail.google.com/mail/?view=cm&fs=1&to=" + appendEmailAddress + "&su=" + subject;
+
+ if(Desktop.isDesktopSupported()) {
+ Desktop.getDesktop().browse(new URI(Gmail_Url));
+         }
+
+ ---
+
+==== Reasons for this kind of implementation
+
+** Gmail is the most widely used web browser and most people are likely to have a Gmail account.
+Hence Gmail was the most appropriate email service. +
+
+** Opening the Gmail compose page on the browser is more convenient than working on the browser panel of Weaver since
+the browser panel restricts some functionalities. +
+
+==== Design Considerations
+
+**Aspect:** How should the user send the mail. +
+**Alternative1 : (currently used) ** Open the default web browser +
+**Pros:** Makes sending emails a hassle free job and this also makes use of Weaver CLI in a good way. +
+**Cons:** Depends on the type of browser and its compatibility +
+**Alternative2:** Send the email using browser panel +
+**Pros:** Makes it quicker and adds a function to the personalised Weaver. +
+**Cons:** Limits the functionalities that can be used on Gmail since the browser panel is not updated. +
+
+// end::email[]
+
+// tag::reminder[]
+=== Adding a reminders list to Weaver.
+
+** The reminders panel displays the list of reminders that the user has entered. +
+** A reminder class has three main attributes, Details of reminder, due date and the priority level of the reminder. +
+** Reminder objects are kept in the UniqueReminderList which ensures there are no duplicate reminders. +
+** The Model manager carries out the operations related to reminders. +
+** Exceptions are thrown if invalid commands entered. +
+
+** There are three main commands associated with this feature. +
+
+* Adding a reminder to the list. +
+e.g. - `reminder g/CS2103T Assignmet p/High d/12.11.2017`. +
+
+* Removing a reminder. +
+e.g. - `remove 1`. +
+
+* Changing a reminder. +
+e.g. - `change 1 d/12.12.2017`. +
+
+** The commands to add and remove reminders will inherit from Undoable Command. +
+
+The diagram (Figure 5.1) below gives the high level architecture diagram of the implementation. +
+
+image::ReminderArchi.png[width="800"]
+
+** The reminders panel is implemented in a similar manner like the person list panel. +
+** Data is written/stored in the same addressbook.xml file. +
+
+image::LogicReminder.png[width="800"]
+(Figure 5.2)
+
+Figure 5.2 above shows the Logic Component Diagram of the Reminders Panel implementation. +
+[TIP]
+ Note how the LogicManager class implements the interface Logic and is associated with the undo redo stack. +
+
+==== Reasons for this kind of implementation
+
+** The implementation is easy to follow and comprehend. +
+** Storing in the same file makes the organization better. +
+
+==== Design Considerations
+
+**Aspect:** How to store each reminder +
+**Alternative1 : (currently used) ** Reminders stored in the addressbook.xml file +
+**Pros:** Implementation easy to follow for future developers. +
+**Cons:** Can violate higher levels of software engineering principles. +
+**Alternative2:** Store reminder objects separately in a different xml file +
+**Pros:** More in sync with SE principles. +
+**Cons:** Harder to implement and follow. +
+
+// end::reminder[]
+
+// tag::nusmods[]
+=== Nusmods Integration
+
+** The nusmods command helps the user to view the nusmods website which displays module information stored in the
+person's remark.
+** If the module information are not stored in the correct format or there is no such module in nusmods, it will not be
+displayed.
+
+
+==== Working flow
+When the person panel is clicked, an FXML function will handle this and start to parse the module information.
+After parsing this information into URL format which is supported by NUSMODS, an URL is made and passed to the
+Google engine. And the brower panel will go to the NUSMODS page which contains this person's module information.
+ +
+
+image::nusmods.png[width="800"]
+
+==== Reasons for this kind of implementation
+
+* This helps the user to take a quick glance of the the Nusmods information.
+* It is better than opening a brower on the desktop. +
+* It is convenient for users to shedule their time using this feature. +
+// end::nusmods[]
+
+// tag::encrypt[]
+=== Encrypt your file (not used in V1.5).
+
+** With this feature embedded in the Weaver, all the files will be encrypted automatically +
+
+* When user tries to login, the "account.json" file is decrypted and information is fetched for checking the
+authentication of the accounts. Once the check is finished, it's encrypted. +
+
+* When the user login, his xml file will be decrypted and become editable.  +
+
+* When the user logout, his xml file will be encrypted and become not readable. +
+
+[source,java]
+----
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
+import javax.crypto.CipherOutputStream;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
+
+/**
+ * method for encrypt / decrypt the files
+ */
+public class CipherUnit {
+    private static String key = "squirrel123"; // needs to be at least 8 characters for DES
+    private static String dest;
+
+    /**
+    * class for encrypting files
+    */
+    public static void encrypt(String path) {
+        try {
+            dest = path;
+            FileInputStream fis = new FileInputStream(path);
+            FileOutputStream fos = new FileOutputStream("data/temp.xml");
+            encryptOrDecrypt(key, Cipher.ENCRYPT_MODE, fis, fos);
+            swapName("data/temp.xml");
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+    * class for decrypting files
+    */
+    public static void decrypt(String path) {
+        try {
+            dest = path;
+            FileInputStream fis = new FileInputStream(path);
+            FileOutputStream fos = new FileOutputStream("data/temp.xml");
+            encryptOrDecrypt(key, Cipher.DECRYPT_MODE, fis, fos);
+            swapName("data/temp.xml");
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+    * translating method
+    */
+    public static void encryptOrDecrypt(String key, int mode, InputStream is, OutputStream os) throws Throwable {
+
+        DESKeySpec dks = new DESKeySpec(key.getBytes());
+        SecretKeyFactory skf = SecretKeyFactory.getInstance("DES");
+        SecretKey desKey = skf.generateSecret(dks);
+        Cipher cipher = Cipher.getInstance("DES"); // DES/ECB/PKCS5Padding for SunJCE
+
+        if (mode == Cipher.ENCRYPT_MODE) {
+            cipher.init(Cipher.ENCRYPT_MODE, desKey);
+            CipherInputStream cis = new CipherInputStream(is, cipher);
+            doCopy(cis, os);
+        } else if (mode == Cipher.DECRYPT_MODE) {
+            cipher.init(Cipher.DECRYPT_MODE, desKey);
+            CipherOutputStream cos = new CipherOutputStream(os, cipher);
+            doCopy(is, cos);
+        }
+    }
+
+    /**
+    * do a copy
+    */
+    public static void doCopy(InputStream is, OutputStream os) throws IOException {
+        byte[] bytes = new byte[64];
+        int numBytes;
+        while ((numBytes = is.read(bytes)) != -1) {
+            os.write(bytes, 0, numBytes);
+        }
+        os.flush();
+        os.close();
+        is.close();
+    }
+
+    /**
+    * used to replace files encypted/decrypted with the dectypted/encrypted one.
+    */
+    public static boolean swapName(String source) {
+        File tmp = new File(source);
+
+        File swapFile1 = new File(dest);
+
+        return tmp.renameTo(swapFile1);
+
+    }
+
+}
+----
+
+==== Mechanism of encrytion
+** We use RES mechanism provided by java to make encrypted files.  +
+** When a file needs to be encrypted/decrypted, the system first create a temporary file named "temp.xml"
+to store the encryption/decryption information.
+** After this temporary file successfully stores all the information. The system will try to rename it as the
+original name of the file before encryption/decryption. And then the previous original file will be replaced by the
+encrypted/decrypted. (This works on OSX but not on Windows and UNIX).
+
+==== Reason for giving up this feature
+
+** The most important reason is, different operating system has different ways to manage the files. Thus the current
+mechanism might not work as expected on different operating systems. When replacing files with their encrypted/decrypted copy,
+different operating system will behave differently. Some will replace the file while some will keep both. +
+// end::encrypt[]
+
+// tag::Logging[]
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -371,16 +1275,16 @@ We use asciidoc for writing documentation.
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -437,7 +1341,8 @@ e.g. `seedu.address.storage.StorageManagerTest`
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
-=== Troubleshooting Testing
+=== Troubleshooting testing
+
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
@@ -449,11 +1354,11 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
-=== Continuous Integration
+=== Continuous integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Making a Release
+=== Making a release
 
 Here are the steps to create a new release.
 
@@ -462,14 +1367,14 @@ Here are the steps to create a new release.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Managing dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
+== Suggested programming tasks to get started
 
 Suggested path for new programmers:
 
@@ -610,7 +1515,7 @@ Edits the remark for the first person to `Likes to drink coffee.`
 * `remark 1 r/` +
 Removes the remark for the first person.
 
-==== Step-by-step Instructions
+==== Step-by-step instructions
 
 ===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
 Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
@@ -709,37 +1614,143 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 . Update `RemarkCommandTest` to test that the `execute()` logic works.
 
-==== Full Solution
+==== Full solution
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
-== User Stories
+== User stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |edit the existing information stored in the database|the information can be up-to-date
 
-|`* * *` |user |add a new person |
+|`* * *` |user |undo a command | correct the mistake I made accidentally
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |import information from FaceBook |save me the effort to add friends' information
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |add date of birth of a person |remember the birthday of my friends
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |see person's social media page in AddressBook|check persons's social media page easily and directly in one app
+
+|`* * *` |user added many tags to persons|customize tag colour|visualize different tag by its color
+
+|`* * *` |user added many tags to persons|customize tag colour|visualize different tag by its color
+
+|`* * *` |user |be able to view photos of my contacts in the address book | recognize contacts more easily
+
+|`* * *` |user |be able to find persons based on name and Date of Birth | we can narrow the scope when users have same names
+
+|`* * *` |user |add a remark for somebody | customize the descriptions
+
+|`* * *` |user |directly contact a person by email, by clicking on email button | have instant access to communication
+
+|`* * *`|user |confirm before clearing |not clear the contents accidentally
+
+|`* * *`|user |edit a person |modify an address conveniently
+
+|`* *` |user |view a more attractive icon for the AddressBook | the AddressBook has a better appeal
+
+|`* *` |user |view the details of a person on Facebook by clicking on the name | get more information of the person
+
+|`* *` |user |want a better name for my Application | have a more appealing name for my application
+
+|`* *` |user |want to get notifications about birthdays/events coming up | be aware of important events in the coming week
+
+|`* *` |users with many person in address book |view all the tags by a single command| have an idea of the different associations I have with my contacts
+
+|`* *` |user |share the contact information in my addressbook to others' |share contact infomation conveniently
+
+|`* *` |user |have shortcuts for each command |don't have to type the whole command each time
+
+|`* *` |user |have a copy button for each category of information |copy and paste information easily
+
+|`* *` |user |be able to customize the color set of user interface|customize the display as I like
+
+|`* *` |user |be able to display person according to frequency I access their contacts|access the contacts that are more possible for me to access easily
+
+|`* *` |user |be able to delete tags|delete wrong tags
+
+|`* *` |user |be able to move the windows and tables in the user interface around|choose the combination of positions of windows as I like
+
+|`* *` |user |be able to click on contact to open windows to display and modify their information|look through and modify their information easily
+
+|`* *` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* *`|user |see a history bar |keep track of my previous searches
+
+|`* *`|user |see random people on the front page |get in touch with old friends
+
+|`* *`|user with frequent contacts |have a favourites list |find them easily
+
+|`*` |user |sort persons by date of birth |see a list of people from youngest to oldest or oldest to youngest
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |find all the friends or other relationships I have | have a good idea of the type of relationships I have with the contacts of my address book
+
+|`*` |user |be able to move the windows and tables in the user interface around|choose the combination of positions of windows as I like
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*`|user |be notified of birthdays |send them well wishes
+
+|`*`|user |delete people with a specific tag |clean up my list
+
+|`*`|user |log in |access privately
+
+|`*`|user |customise the display |view the list to my preference
+
 |=======================================================================
 
-{More to be added}
 
 [appendix]
-== Use Cases
+== Use cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Login / Logout
+
+*MSS*
+
+1.  User key in username and password.
+2.  User clicks `Login` or press `Enter`
+3.  Addressbook responses.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Username and password are correct.
++
+User manages to login and continue with the MainWindow.
+
+* 3a. The given index is invalid.
++
+User resumes at step 1.
+
+=== Use case: Social integration
+
+*MSS*
+
+1. User clicks on the button, 'Social Media'.
+2. AddressBook sends an intent to FaceBook where the homepage of the person's account is displayed.
+3. User gets all the required information
++
+Use case ends.
+
+*EXTENSIONS*
+
+[none]
+* 2a. The person does not have a FaceBook account.
++
+Use case ends.
+=======
 
 [discrete]
 === Use case: Delete person
@@ -767,14 +1778,193 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to edit persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit information of a specific person in the list
+4.  AddressBook edits the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Remark person
+
+*MSS*
+
+1.  User requests the list of person.
+2.  AddressBook shows the list of person.
+3.  User requests to remark persons by specifying index and remark
+4.  AddressBook remarks the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The index is illegal.
++
+Use case ends. AddressBook shows an error message.
+
+[discrete]
+=== Use case: Change color of a tag
+
+*MSS*
+
+1.  User requests to change a tag to another color
+2.  AddressBook changes the color of the tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The given tag does not exist.
+
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 2b. The given color is not available.
++
+[none]
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Show the list of persons by frequency
+*MSS*
+
+1.  User requests to show a list of person that is mostly accessed by keying in "list freq" keyword
+2.  AddressBook shows this list of person in descending frequency order
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete a tag
+*MSS*
+
+1.  User requests to show one of a person using find command
+2.  AddressBook shows this person
+3.  User requests to delete one of this person's tag by specifying a index of tag
+4.  AddressBook deletes the tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The tag list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Confirmation before clearing
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to clear the list
+4.  AddressBook shows a message for confirmation
+5.  User confirms clearing the list
+6.  AddressBook clears the list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 5a. User chooses to cancel.
++
+Use case ends.
+
+* 5b. The given input is invalid.
++
+[none]
+** 5b1. AddressBook shows an error message.
++
+Use case resumes at step 3.
+
+[discrete]
+=== Use case: Random person at front page
+
+*MSS*
+
+1.  AddressBook shows a random person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook shows a message to prompt adding new contacts.
++
+Use case ends.
+
+=======
 
 [appendix]
-== Non Functional Requirements
+== Non functional requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work on both 32-bit and 64-bit environment.
+.  Should have enough security features to protect data of a user.
+.  The user guide should be clear and easy to understand by new users.
+.  The system should be usable by a novice.
+.  The project is open-source and available on GitHub.
+.  Should secure contact information safely.
+.  Should be able to open the application in 2 seconds.
+.  The application should provide several aesthetic designed color sets.
+.  Should respond within two seconds.
 
 {More to be added}
 
@@ -795,19 +1985,10 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[Environment-bit]]
+Environment Bit
+
+....
+32/64 bits refer to the number of bits that compose a data element
+....
 [appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

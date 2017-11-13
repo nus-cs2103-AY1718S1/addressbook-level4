@@ -1,0 +1,232 @@
+= Ronak Lakhotia - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Weaver
+Weaver is a desktop address book application meant for NUS students. It helps to manage and store information about your friends and family.
+In particular Weaver helps students maintain their day to day school timetable and schedule their daily reminders so that they can keep up with the fast paced university life.
+It also includes social media integration and other features that is in sync with students of NUS.
+
+The user interacts with it using a Command Line Interface, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC. Some of the tools used for this project are
+Github, Intellij, SceneBuilder and JAVAFX.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B2/main/blob/master/collated/main/RonakLakhotia.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B2/main/blob/master/collated/test/RonakLakhotia.md[Test code]]
+
+=== Enhancement Added: Facebook Integration
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=facebook]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+** This implementation is very useful for users as they can connect with their friends and family through
+Weaver, thereby saving them the trouble of opening a browser on their desktop. It also promotes a healthy social media life. +
+
+** The command format is easy to follow. Opening the facebook page on the browser panel is more convenient than
+searching for the person manually on the default browser.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=facebook]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add command `photo`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addphoto]
+
+#End of Extract#
+
+---
+==== Justification
+
+** Allows user to choose any image in their local device and use Command Line Interface to specify the path of the image. +
+
+** This way the user can display the pictures on their contact lists. Users can also identify people more easily if two or+
+more people have the same name. It also adds a visual appeal to the Application. +
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addphoto]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add command `email`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+==== Justification
+
+** Gmail is the most widely used Email service platform and everyone around has a gmail account. +
+
+** Multiple tags are not allowed because the email that a user may want to send to his/her friends will not be the same he would
+want to someone to whom he owes money. +
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+=== Enhancements Added : Reminders Panel
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=reminder]
+
+#End of Extract#
+
+---
+==== Justification
+
+** A reminders panel is very important in a students day to day life as it helps them keep
+up with the daily tasks and assignments. +
+
+** The implementation is easy and the UI is clean without any attempt to overcomplicate it. +
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=reminder]
+
+#End of Extract#
+
+---
+=== Enhancements Proposed: v2.0 Iteration
+
+Listed below are some of the enhancements I intend to do in Weaver by the v2.0 iteration. +
+
+==== Favourites list Feature:
+
+This feature will display all persons in Weaver that are frequently accessed based on the commands. +
+Say for instance, a person's location is searched a few times and that person is also looked up on facebook,
+it will increase the popularity of the person and he/she will show up on the top of the list. +
+
+===== External Behavior:
+
+The method that can be used for this implementaion is to keep another attribute, called popularity for each person.
+This attribute is incremented each time a person is accessed. Depending on the value of this attribute the list is to be sorted. +
+
+===== Justification
+
+** Contacts who are frequently looked up in Weaver are going to be close relatives and friends of the user. Hence It is justified
+to separate contacts based on popularity. +
+
+** The method of implementation would be to raise an event each time a person is accessed. This will in turn also
+raise an event to indicate that the addressbook has changed.
+
+==== Implementation
+
+Refer to figure 5.3 below that gives a brief outline of how I plan to implement the popularity list. +
+
+image::popularity.png[width="800"]
+Figure 5.3
+
+
+=== Other Significant Contributions Made in Weaver and this Module in general.
+
+==== Code contributions besides features stated above.
+
+* Implemented Case-insensitive find command. This is in harmony with Software Engineering principles as the end product is easier to use for users. So a command like `fINd` will be executed nevertheless. +
+
+* Added an important attribute, Date Of Birth to each person. (Pull requests https://github.com/CS2103AUG2017-W13-B2/main/pull/17[#17]). +
+
+* Implemented a Search Command. The search command makes the find command more powerful as it searches for a person based on his/her
+name and Date of Birth. It is useful when there are more than one perosn with the same name and the user
+wants to look only for a particular person (Pull requests https://github.com/CS2103AUG2017-W13-B2/main/pull/116[#116]). +
+
+* Wrote additional tests to increase coverage (Pull requests https://github.com/RonakLakhotia/addressbook-level4/pull/8[#8]) . +
+
+* Implementing the Reminders panel was very useful as it gave me a good understanding of how the various components of the codebase interact with each other. +
+
+* Wrote extensive use cases and documentation in the form of user guide and developer guide. +
+
+==== Active Participation in Forum. +
+
+* I have participated actively in forum discussions and have helped my peers. Below are two such instances. +
+
+1) I helped a colleague of mine resolve a issue with code collation. I was credited by the person who
+asked the question. (https://github.com/nus-cs2103-AY1718S1/forum/issues/171[Here]) is the link to the issue. +
+
+2) I also engaged in a healthy discussion with my peers about Single Responsibility Principle and helped the person
+by giving me insight. (https://github.com/nus-cs2103-AY1718S1/forum/issues/152[Here]) is the link to the issue. +
+
+
+==== Technical Leadership +
+
+* I have demonstrated good coding and technical skills by helping one of my peers find an important bug and also offered my code for reuse. +
+
+1) I helped my friends resolve a bug that seemed difficult to get around with. It took a long time to come up with a solution and I was credited
+for the issue being resolved. (https://github.com/nus-cs2103-AY1718S1/forum/issues/206[Here]) is the link to the issue. +
+
+2) I also offered my code for reuse. The feature I proposed was reminders panel implementation.
+(https://github.com/nus-cs2103-AY1718S1/forum/issues/178[Here]) is the link to the issue. +
+
+3) I helped other teams find bugs in their product during the practical exam simulation we had in Week 11.
+(https://github.com/CS2103AUG2017-T09-B4/main/issues/101#issuecomment-341641998[Bug]) is the link to the issue. +
+
+4) In the team project, I took a leader's role and created issues, therby assigning deadlines. +
+
+5) Also set up important tools for the project like Travis and Coveralls. +
+
+=== PROJECT: NUSEvents +
+
+** I was actively involved in a side project of my own over the recent summer break. +
+
+==== ABOUT THE PROJECT
+
+Students coming into university want to experience an enriching and diverse campus life. One of the most integral parts of a campus life is the host of events taking place around the campus. We want to bring forth an application by means of which members of the NUS family will be able to view the various events going around the campus on a day to day basis. Now there will be no need to worry about searching websites, scrolling through emails and pages on Facebook to know what events are being organized by various faculties and clubs. This will be convenient for all students and members of the various faculties as it will enable them to indicate their interest in the events that they want to attend.
+
+** The project was about developing an Android Application that will help students keep track of
+the various events going around campus. +
+
+
+** The project was done with another friend of mine and we were careful in following the Software Engineering norms.
+(https://github.com/RonakLakhotia/NusEvents[Here]) is a link to the project repository. +
+
+
+

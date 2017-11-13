@@ -26,6 +26,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.storage.AccountsStorage;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
@@ -40,16 +41,17 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
     protected Ui ui;
     protected Logic logic;
-    protected Storage storage;
+    protected StorageManager storage;
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    protected AccountsStorage accPrefs;
 
 
     @Override
@@ -58,8 +60,12 @@ public class MainApp extends Application {
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
-
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        //@@author yangminxingnus
+        AccountsStorage accountsPrefs = new AccountsStorage(config.getAccountsPath());
+
+        accPrefs = initAccPrefs(accountsPrefs);
+        //@@author
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
@@ -70,7 +76,7 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model);
 
-        ui = new UiManager(logic, config, userPrefs);
+        ui = new UiManager(logic, config, storage, userPrefs, accPrefs);
 
         initEventsCenter();
     }
@@ -145,6 +151,42 @@ public class MainApp extends Application {
         return initializedConfig;
     }
 
+    //@@author yangminxingnus
+    /**
+     * Returns a {@code UserPrefs} using the file at {@code storage}'s user prefs file path,
+     * or a new {@code UserPrefs} with default configuration if errors occur when
+     * reading from the file.
+     */
+    protected AccountsStorage initAccPrefs(AccountsStorage storage) {
+        String prefsFilePath = storage.getAccPrefsFilePath();
+        logger.info("Using account prefs file : " + prefsFilePath);
+
+        AccountsStorage initializedPrefs;
+        try {
+            Optional<AccountsStorage> prefsOptional = storage.readAccountsPrefs(prefsFilePath);
+            initializedPrefs = prefsOptional.orElse(new AccountsStorage());
+        } catch (DataConversionException e) {
+            logger.warning("Account Prefs file at " + prefsFilePath + " is not in the correct format. "
+                    + "Using default account prefs");
+            initializedPrefs = new AccountsStorage();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. "
+                    + "Will be starting with default account information");
+            initializedPrefs = new AccountsStorage();
+        }
+
+        //Update prefs file in case it was missing to begin with or there are new/unused fields
+        try {
+            storage.saveAccountsPrefs(initializedPrefs, prefsFilePath);
+        } catch (IOException e) {
+            logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
+        }
+
+        return initializedPrefs;
+    }
+    //@@author
+
+
     /**
      * Returns a {@code UserPrefs} using the file at {@code storage}'s user prefs file path,
      * or a new {@code UserPrefs} with default configuration if errors occur when
@@ -183,7 +225,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting Weaver " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 

@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>John Doe</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <date>11.11.1995</date>
+        <remark></remark>
+        <username>john.doe</username>
+        <tagged>
+            <name>friends</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <date>15.10.1997</date>
+        <remark>MA1101R/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>colleagues</name>
+            <color>orange</color>
+        </tagged>
+        <tagged>
+            <name>friends</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <date>12.02.1994</date>
+        <remark>CS3230/LEC/1</remark>
+        <username>ronak.lakhotia</username>
+        <tagged>
+            <name>neighbours</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <date>21.09.1990</date>
+        <remark>CS2101/SEC/1,CS2102/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>family</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Mary</name>
+        <phone>92492021</phone>
+        <email>email@gmail.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <date>13.10.1997</date>
+        <remark>CS2103T/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>classmates</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Damith</name>
+        <phone>91234567</phone>
+        <email>damith@example.com</email>
+        <address>PGP</address>
+        <date>17.08.1993</date>
+        <remark>CS2105/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>colleagues</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Ronak Lakhotia</name>
+        <phone>93911558</phone>
+        <email>email@gmail.com</email>
+        <address>Prince Georges Park</address>
+        <date>11.11.1998</date>
+        <remark>CS2101/SEC/1,CS2102/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>colleagues</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Alice Paul</name>
+        <phone>18765432</phone>
+        <email>alice@example.com</email>
+        <address>10 Eunos Road 8</address>
+        <date>17.11.1997</date>
+        <remark>CS2103T/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>colleague</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Darren Lee</name>
+        <phone>92925432</phone>
+        <email>lee@example.com</email>
+        <address>13-37 Mandalay Towers</address>
+        <date>11.11.2000</date>
+        <remark>CS2105/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>friends</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Kushagra goyal</name>
+        <phone>78965432</phone>
+        <email>kush@example.com</email>
+        <address>16 Sandilands Road</address>
+        <date>19.09.1998</date>
+        <remark>CS2102/LEC/1</remark>
+        <username>kush.goel</username>
+        <tagged>
+            <name>cricketer</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Yash</name>
+        <phone>1233432</phone>
+        <email>yash@example.com</email>
+        <address>81 Victoria St, Singapore</address>
+        <date>22.02.1997</date>
+        <remark>CS3230/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>NUSComputing</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Adam Warne</name>
+        <phone>1113142</phone>
+        <email>adam@example.com</email>
+        <address>81 Victoria St, Singapore</address>
+        <date>22.09.1997</date>
+        <remark>CS2010/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>classmate</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Aadyaa</name>
+        <phone>8332121</phone>
+        <email>aadyaa@example.com</email>
+        <address>Prince Georges Park</address>
+        <date>16.08.1997</date>
+        <remark>CS2103T/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>NUSComputing</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Sam</name>
+        <phone>91765432</phone>
+        <email>Sam@example.com</email>
+        <address>21 Lower Kent Ridge Rd</address>
+        <date>14.09.1997</date>
+        <remark>CS2010/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>friends</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Jacob</name>
+        <phone>81765432</phone>
+        <email>Jacob@example.com</email>
+        <address>50 Nanyang Ave</address>
+        <date>21.10.1997</date>
+        <remark>CS2105/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>cricketer</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Jake</name>
+        <phone>52765432</phone>
+        <email>Jake@example.com</email>
+        <address>461 Clementi Road</address>
+        <date>29.10.1997</date>
+        <remark>CS2106/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>owesMoney</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Rahul</name>
+        <phone>992765432</phone>
+        <email>Rahul@example.com</email>
+        <address>77 Ayer Rajah Crescent</address>
+        <date>30.10.1997</date>
+        <remark>CS2107/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>senior</name>
+            <color>orange</color>
+        </tagged>
+        <tagged>
+            <name>owesMoney</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Rohit Paul</name>
+        <phone>81815432</phone>
+        <email>rohit@example.com</email>
+        <address>Suntec Tower 5</address>
+        <date>16.09.1997</date>
+        <remark>MA1521/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>senior</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Ronak Lakhotia</name>
+        <phone>71815432</phone>
+        <email>ronak@example.com</email>
+        <address>69 Balestier Rd</address>
+        <date>13.10.1997</date>
+        <remark>MA1521/LEC/1,MA1101R/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>cricketer</name>
+            <color>orange</color>
+        </tagged>
+        <tagged>
+            <name>footballer</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <persons>
+        <name>Darren</name>
+        <phone>21815432</phone>
+        <email>darren@example.com</email>
+        <address>Prince Georges Park</address>
+        <date>12.12.1995</date>
+        <remark>MA1521/LEC/1,MA1101R/LEC/1</remark>
+        <username></username>
+        <tagged>
+            <name>friends</name>
+            <color>orange</color>
+        </tagged>
+        <image></image>
+    </persons>
+    <tags>
+        <name>neighbours</name>
+        <color>orange</color>
+    </tags>
+    <tags>
+        <name>classmate</name>
+        <color>orange</color>
+    </tags>
+    <tags>
+        <name>colleague</name>
+        <color>orange</color>
+    </tags>
+    <tags>
+        <name>friends</name>
+        <color>orange</color>
+    </tags>
+    <tags>
+        <name>cricketer</name>
+        <color>orange</color>
+    </tags>
+    <tags>
+        <name>senior</name>
+        <color>orange</color>
+    </tags>
+    <tags>
+        <name>owesMoney</name>
+        <color>orange</color>
+    </tags>
+    <tags>
+        <name>footballer</name>
+        <color>orange</color>
+    </tags>
+    <tags>
+        <name>colleagues</name>
+        <color>orange</color>
+    </tags>
+    <tags>
+        <name>classmates</name>
+        <color>orange</color>
+    </tags>
+    <tags>
+        <name>family</name>
+        <color>orange</color>
+    </tags>
+    <tags>
+        <name>NUSComputing</name>
+        <color>orange</color>
+    </tags>
+    <reminders>
+        <details>CS2103T Assignment</details>
+        <priority>Priority Level: High</priority>
+        <dueDate>12.05.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>Group meeting</details>
+        <priority>Priority Level: High</priority>
+        <dueDate>12.11.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>CS2105 Assignment</details>
+        <priority>Priority Level: High</priority>
+        <dueDate>12.11.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>Varsity Team Practice</details>
+        <priority>Priority Level: Low</priority>
+        <dueDate>13.11.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>NUSSU meeting</details>
+        <priority>Priority Level: Medium</priority>
+        <dueDate>15.12.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>Attend Workshop</details>
+        <priority>Priority Level: Medium</priority>
+        <dueDate>16.12.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>Consultation with prof</details>
+        <priority>Priority Level: High</priority>
+        <dueDate>16.12.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>Presentation</details>
+        <priority>Priority Level: High</priority>
+        <dueDate>18.12.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>GEH Quiz2</details>
+        <priority>Priority Level: High</priority>
+        <dueDate>22.12.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>Internship fair</details>
+        <priority>Priority Level: Low</priority>
+        <dueDate>25.12.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>Book flight tickets</details>
+        <priority>Priority Level: Low</priority>
+        <dueDate>20.11.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>Apply for NOC</details>
+        <priority>Priority Level: Medium</priority>
+        <dueDate>29.12.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>SEP results</details>
+        <priority>Priority Level: low</priority>
+        <dueDate>29.12.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>New year Eve party</details>
+        <priority>Priority Level: low</priority>
+        <dueDate>31.12.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>Reading week starts</details>
+        <priority>Priority Level: low</priority>
+        <dueDate>19.11.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>CS2106 Final Exam</details>
+        <priority>Priority Level: medium</priority>
+        <dueDate>02.12.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>CS2103T Final Exam</details>
+        <priority>Priority Level: medium</priority>
+        <dueDate>04.06.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>CS2010 Final Exam</details>
+        <priority>Priority Level: medium</priority>
+        <dueDate>06.06.2017</dueDate>
+    </reminders>
+    <reminders>
+        <details>School begins</details>
+        <priority>Priority Level: medium</priority>
+        <dueDate>14.01.2018</dueDate>
+    </reminders>
+    <reminders>
+        <details>CS3230 Lecture</details>
+        <priority>Priority Level: High</priority>
+        <dueDate>15.01.2018</dueDate>
+    </reminders>
+</addressbook>

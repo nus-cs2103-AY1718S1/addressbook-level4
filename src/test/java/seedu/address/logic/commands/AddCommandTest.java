@@ -7,6 +7,8 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -14,6 +16,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -24,6 +28,11 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagColor;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -100,7 +109,22 @@ public class AddCommandTest {
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             fail("This method should not be called.");
         }
-
+        @Override
+        public void sendMailToContacts(String tagName, String subject, List<ReadOnlyPerson> lastShownList) {
+            fail("This method should never be called");
+        }
+        @Override
+        public void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException {
+            fail("This method should not be called.");
+        }
+        @Override
+        public void deleteReminder(ReadOnlyReminder reminder) throws ReminderNotFoundException {
+            fail("This method should not be called.");
+        }
+        @Override
+        public void clearBrowserPanel() {
+            fail("This method should not be called.");
+        }
         @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
@@ -111,7 +135,17 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
-
+        @Override
+        public void addPhotoPerson(ReadOnlyPerson person, String FilePath, Index targetIndex)
+                throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+        //@@author yangminxingnus
+        @Override
+        public void addRemarkPerson(ReadOnlyPerson person, String FilePath, Index targetIndex) {
+            fail("This method should not be called.");
+        }
+        //@@author
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
@@ -122,6 +156,26 @@ public class AddCommandTest {
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
+        //@@author RonakLakhotia
+        @Override
+        public void updateReminder(ReadOnlyReminder target, ReadOnlyReminder changedReminder) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
+            fail("This method should not be called.");
+            return null;
+        }
+        @Override
+        public void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate) {
+            fail("This method should not be called.");
+        }
+        //@@author
+        @Override
+        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
@@ -130,7 +184,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        public void updateTagColorPair(Set<Tag> tagList, TagColor color) throws IllegalValueException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void faceBook(ReadOnlyPerson person) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
     }

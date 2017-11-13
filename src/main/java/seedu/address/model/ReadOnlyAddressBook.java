@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -14,6 +15,15 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate persons.
      */
     ObservableList<ReadOnlyPerson> getPersonList();
+
+    //@@author RonakLakhotia
+    /**
+     * Returns an unmodifiable view of the reminders list.
+     * This list will not contain any duplicate reminders.
+     */
+
+    ObservableList<ReadOnlyReminder> getReminderList();
+    //@@author
 
     /**
      * Returns an unmodifiable view of the tags list.

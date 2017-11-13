@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
@@ -21,6 +22,7 @@ public class HelpWindow extends UiPart<Region> {
     private static final String ICON = "/images/help_icon.png";
     private static final String FXML = "HelpWindow.fxml";
     private static final String TITLE = "Help";
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko";
 
     @FXML
     private WebView browser;
@@ -35,8 +37,10 @@ public class HelpWindow extends UiPart<Region> {
         dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
         FxViewUtil.setStageIcon(dialogStage, ICON);
 
+        WebEngine engine = browser.getEngine();
+        engine.setUserAgent(USER_AGENT);
         String userGuideUrl = getClass().getResource(USERGUIDE_FILE_PATH).toString();
-        browser.getEngine().load(userGuideUrl);
+        engine.load(userGuideUrl);
     }
 
     /**
@@ -59,6 +63,6 @@ public class HelpWindow extends UiPart<Region> {
      */
     public void show() {
         logger.fine("Showing help page about the application.");
-        dialogStage.showAndWait();
+        dialogStage.show();
     }
 }

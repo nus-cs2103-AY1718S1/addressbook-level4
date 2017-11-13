@@ -17,6 +17,8 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.AccountsStorage;
+import seedu.address.storage.StorageManager;
 
 /**
  * The manager of the UI component.
@@ -31,21 +33,47 @@ public class UiManager extends ComponentManager implements Ui {
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
-
+    //@@author yangminxingnus
     private Logic logic;
+    private StorageManager storage;
     private Config config;
     private UserPrefs prefs;
     private MainWindow mainWindow;
+    private LoginPage loginPage;
+    private AccountsStorage accPrefs;
+    private RegisterPage registerPage;
 
-    public UiManager(Logic logic, Config config, UserPrefs prefs) {
+    private int test;
+    public UiManager(Logic logic, Config config, StorageManager storage, UserPrefs prefs, AccountsStorage accPrefs) {
         super();
         this.logic = logic;
+        this.storage = storage;
         this.config = config;
         this.prefs = prefs;
+        this.accPrefs = accPrefs;
     }
 
     @Override
     public void start(Stage primaryStage) {
+        logger.info("Starting UI...");
+
+        primaryStage.setTitle(config.getAppTitle());
+
+        //Set the application icon.
+        primaryStage.getIcons().add(getImage(ICON_APPLICATION));
+
+
+        try {
+            loginPage = new LoginPage(primaryStage, config, storage, prefs, logic, accPrefs, this);
+            loginPage.show();
+        } catch (Throwable e) {
+            showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
+        }
+    }
+
+    @Override
+    public void start(Stage primaryStage, int test) {
+        this.test = 1;
         logger.info("Starting UI...");
         primaryStage.setTitle(config.getAppTitle());
 
@@ -53,22 +81,28 @@ public class UiManager extends ComponentManager implements Ui {
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
         try {
-            mainWindow = new MainWindow(primaryStage, config, prefs, logic);
+            mainWindow = new MainWindow(primaryStage, config, storage, prefs, logic, accPrefs, this);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
-
         } catch (Throwable e) {
-            logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
     }
 
     @Override
     public void stop() {
-        prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
-        mainWindow.hide();
-        mainWindow.releaseResources();
+        if (test == 1) {
+            prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
+            mainWindow.releaseResources();
+            mainWindow.hide();
+        } else {
+            prefs.updateLastUsedGuiSetting(loginPage.getCurrentGuiSetting());
+            loginPage.releaseResources();
+            loginPage.hide();
+
+        }
     }
+    //@@author
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
         final String content = details + ":\n" + cause.toString();
@@ -78,7 +112,31 @@ public class UiManager extends ComponentManager implements Ui {
     private Image getImage(String imagePath) {
         return new Image(MainApp.class.getResourceAsStream(imagePath));
     }
+    //@@author yangminxingnus
+    public MainWindow getMainWindow() {
+        return mainWindow;
+    }
 
+    public LoginPage getLoginPage() {
+        return loginPage;
+    }
+
+    public RegisterPage getRegisterPage() {
+        return registerPage;
+    }
+
+    public void setLoginPage(LoginPage loginPage) {
+        this.loginPage = loginPage;
+    }
+
+    public void setMainWindow(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
+    }
+
+    public void setRegisterPage(RegisterPage registerPage) {
+        this.registerPage = registerPage;
+    }
+    //@@author
     void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
         showAlertDialogAndWait(mainWindow.getPrimaryStage(), type, title, headerText, contentText);
     }

@@ -1,0 +1,849 @@
+= Weaver Test Script For Manual Testing
+
+== Load Sample data
+
+** To load the sample data, follow the instructions given below:- +
+** 1) Download the [W13-B2][Weaver]SampleData.xml file. +
+
+[TIP]
+IMPORTANT STEP - RENAME THE FILE TO `SampleData.xml`. Please note the use of Uppercase characters 'S' and 'D'. +
+
+** 2) Run the [W13-B2][Weaver].jar file to open the app. +
+** 3) ** LOGIN ** with the Username - `admin` and Password - `admin` . +
+** 4) After logging in make a change to the Weaver data by executing the command - `edit 1 n/change` . +
+** 5) Close the app. You will notice that the `data` folder is created. +
+** 6) Open the data folder. Drag/Copy the SampleData.xml file into the data folder. +
+** 7) Close the folder. Run the App again.  You will see the Login page again. +
+** 8) Click on ** REGISTER ** to register a new account. +
+** 9) Enter username as **SampleData**. `S` and `D` must in uppercase. `SampleData` is case-sensitive. Enter any password. Please Take a note of the password since you will be needing it. After entering credentials click on ** REGISTER ** +
+** 10) You will reach the **LOGIN** page. +
+** 11) Login with the username **SampleData** and the password you used to register. Click on the ** LOGIN ** button. +
+** 12) The app opens with the data. +
+
+[TIP]
+ 	If at any point the app stops responding, close the app and restart again with username ‘SampleData.xml’ and the password you used to register. Click on the ** LOGIN ** button each time you need to enter the app with the credentials. +
+
+
+** IMPORTANT NOTE - The outputs provided in this sheet are according to the inputs we have put. Please note if you put different inputs, the output will be different. +
+
+
+== Test login feature
+** Start the app, and now the only valid username and password pairs are {admin, admin} and {user, user}. +
+** Try to login with any name and password that are not valid and see the warning window poping up. +
+** Try to login with valid username and password pair and see the mainWindow(the effect of correctly login) +
+
+== Test register feature
+** Go to the register page using the button “register” on the right bottom of login page.
+** Choose any username and password to register. If you use duplicate username, you will get a pop up window and need to choose other valid username.
+** Choose a valid username, but key in different password purposely to see the effect. +
+** Register using any new username and whatever password to see the effect of correct registering. +
+** Login with valid username and password pair and see the mainWindow(the effect of correctly login) +
+
+** Please note - After you have tested the LOGIN and REGISTER feature follow the steps below :- +
+1) Close the app. +
+2) Login in again with the USERNAME - `SampleData` and PASSWORD - You used to register the account with username `SampleData` . +
+
+=== Command 0
+
+* `undo`  +
+* *Result* - No more commands to undo! +
+
+=== Help Command
+
+* `help` +
+* *Result* - A new window appears with a summary of all commands, FAQS and shortcuts.
+It is the Weaver User handbook. +
+
+=== Add Command
+
+*COMMAND 0* - `add` +
+
+* *Result* +
+Invalid command format!
+add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS b/Date of Birth r/REMARK [f/IMAGE]
+[u/USERNAME][t/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/13.10.1997 r/CS2103T/LEC/1 f/
+u/john.doe t/friends t/owesMoney +
+
+*COMMAND 1* - `add n/User p/999222 e/user@gmail.com a/Prince Georges Park b/29.02.2017 r/CS2103T/LEC/1 f/ u/ t/friends` +
+
+* *Result* +
+Date of Birth must be a Valid Date that is days should be less than 32 , months should be less than 12
+.For the month of February make sure days are less than 29 unless it is a leap year.
+The following format should be followed:
+'.' and '-' can be used as separators.
+
+*COMMAND 2* - `add n/User p/999222 e/user@gmail.com a/Prince Georges Park b/29.02.2000 r/CS2103T/LEC/1 f/ u/ t/friends` +
+
+* *Result* +
+New person added: User Phone: 999222 Email: user@gmail.com Address: Prince Georges Park Date of birth: 29.02.2000
+Remark: CS2103T/LEC/1 FilePath:  Facebook Username:  Tags: [friends]
+
+*COMMAND 3* - `add n/Dummy p/999222 e/dummy@gmail.com a/Prince Georges Park b/29.02.2017 r/CS2103T/LEC/1 f/random.png u/ t/friends` +
+
+* *Result* +
+File Path must be correctly entered, that is the image must exist in the path specified
+For example: src/resources/images/clock.png +
+
+*COMMAND 4* - `add n/Dummy p/999222 e/dummy@gmail.com a/Prince Georges Park b/31.04.2017 r/CS2103T/LEC/1 f/ u/ t/friends` +
+
+* *Result* +
+Date of Birth must be a Valid Date that is days should be less than 32 , months should be less than 12
+.For the month of February make sure days are less than 29 unless it is a leap year.
+The following format should be followed:
+'.' and '-' can be used as separators. +
+
+*COMMAND 5* - `add n/Dummy p/999222 e/dummy@gmail.com`  +
+
+* *Result* +
+New person added: Dummy Phone: 999222 Email: dummy@gmail.com Address:  Date of birth:  Remark:  FilePath:
+Facebook Username:  Tags: +
+
+*COMMAND 6* - `add n/new.user p/191919 e/dummy@gmail.com a/Prince Georges Park b/31.04.2017 r/CS2103T/LEC/1 f/ u/
+t/friends` +
+
+* *Result* +
+Person names should only contain alphanumeric characters and spaces, and it should not be blank +
+
+*COMMAND 7* - `add n/newuser p/191919 e/dummygmail.com a/Prince Georges Park b/31.04.2017 r/CS2103T/LEC/1 f/ u/
+t/friends` +
+
+* *Result* +
+Person emails should be 2 alphanumeric/period strings separated by '@' +
+
+=== Edit Command
+
+*COMMAND 0* - `edit 5` +
+
+* *Result* +
+At least one field to edit must be provided. +
+
+*COMMAND 1* - `edit 5 n/ChangeIt` +
+
+* *Result* +
+Edited Person: ChangeIt Phone: 92492021 Email: email@gmail.com Address: Blk 47 Tampines Street 20, #17-35 Date of birth: 13.10.1997 Remark: CS2103T/LEC/1 FilePath: Facebook Username: Tags: [classmates]
+
+*COMMAND 3* - `edit 3 u/ronak.lakhotia` +
+
+* *Result* +
+Edited Person: Charlotte Oliveiro Phone: 93210283 Email: charlotte@example.com Address: Blk 11 Ang Mo Kio Street 74, #11-04 Date of birth: 12.02.1994 Remark: CS3230/LEC/1 FilePath:  Facebook Username: ronak.lakhotia Tags: [neighbours] +
+
+*COMMAND 4* - `edit 0` +
+
+* *Result* +
+Invalid command format!
+edit: Edits the details of the person identified by the index number used in the last person listing. Existing values
+will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/DATE_OF_BIRTH] [r/REMARK]
+[f/IMAGE[t/TAG]...
+Example: edit 1 p/91234567 e/johndoe@example.com +
+
+*COMMAND 5* - `edit 5 f/*please enter a valid file path*` +
+
+* *Result* +
+Success message is displayed with an image displayed at the person of index 5.  +
+
+*COMMAND 6* - `edit 6 n/another a/PGP p/91234567 e/another@example.com` +
+
+* *Result* +
+Edited Person: another Phone: 91234567 Email: another@example.com Address: PGP Date of birth: 17.08.1993 Remark: CS2105/LEC/1 FilePath:  Facebook Username:  Tags: [colleagues] +
+
+
+
+=== Remark Command
+*COMMAND 0* - `remark` +
+
+* *Result* +
+Invalid command format!
+remark: Remark the module information of the person identified by the index. Existing modulelist will be overwritten by the input.
+Parameters: INDEX (must be a positive integer) r/MODULENAME1/MODULETYPE1/NUM1,MODULENAME2/MODULETYPE2/NUM2
+Example: remark 1 r/CS2101/SEC/1,CS2104/LEC/1,CS2105/LEC/1,CS2102/LEC/1
+
+*COMMAND 1* - `remark 1 r/CS2101/SEC/` +
+
+* *Result* +
+Invalid command format!
+remark: Remark the module information of the person identified by the index. Existing modulelist will be overwritten by the input.
+Parameters: INDEX (must be a positive integer) r/MODULENAME1/MODULETYPE1/NUM1,MODULENAME2/MODULETYPE2/NUM2
+Example: remark 1 r/CS2101/SEC/1,CS2104/LEC/1,CS2105/LEC/1,CS2102/LEC/1
+
+*COMMAND 2* - `remark 1 r/CS2101//1` +
+
+* *Result* +
+Invalid command format!
+remark: Remark the module information of the person identified by the index. Existing modulelist will be overwritten by the input.
+Parameters: INDEX (must be a positive integer) r/MODULENAME1/MODULETYPE1/NUM1,MODULENAME2/MODULETYPE2/NUM2
+Example: remark 1 r/CS2101/SEC/1,CS2104/LEC/1,CS2105/LEC/1,CS2102/LEC/1
+
+*COMMAND 3* - `remark 1 r//SEC/1` +
+
+* *Result* +
+Invalid command format!
+remark: Remark the module information of the person identified by the index. Existing modulelist will be overwritten by the input.
+Parameters: INDEX (must be a positive integer) r/MODULENAME1/MODULETYPE1/NUM1,MODULENAME2/MODULETYPE2/NUM2
+Example: remark 1 r/CS2101/SEC/1,CS2104/LEC/1,CS2105/LEC/1,CS2102/LEC/1
+
+
+*COMMAND 4* - `remark 1 r/CS2101/SEC/1,CS2104/LEC/1,CS2105/LEC/1,CS2102/LEC/1` +
+
+* *Result* +
+Added remark to Person: John Doe Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Date of birth: 11.11.1995 Remark: CS2101/SEC/1,CS2104/LEC/1,CS2105/LEC/1,CS2102/LEC/1 FilePath:  Facebook Username: john.doe Tags: [friends] +
+
+*COMMAND 5* - `remark 1 r/` +
+
+* *Result* +
+Added remark to Person: John Doe Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Date of birth: 11.11.1995 Remark:  FilePath:  Facebook Username: john.doe Tags: [friends]  +
+
+=== Logout Command
+*COMMAND 0* - `logout` +
+
+[TIP]
+After the logout, please login again with the credentials: +
+Username - `SampleData` +
+Password - The password you used to register. +
+
+=== Delete Command
+
+*COMMAND 0* - `delete 1` +
+
+* *Result* +
+Deleted Person: John Doe Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Date of birth: 11.11.1995 Remark:  FilePath:  Facebook Username: john.doe Tags: [friends] +
+*Follow up with undo* +
+* *Result* +
+Undo success! +
+
+*COMMAND 1* - `delete 0` +
+
+* *Result* +
+Invalid command format!
+delete: Deletes the person identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer)
+Example: delete 1 +
+
+=== Reminders panel Commands
+
+=== Add a reminder
+
+*COMMAND 0* - `reminder g/CS2102 Assignment p/High d/12.05.2017` +
+
+* *Result* +
+New reminder added: CS2102 Assignment Details: Priority Level: High Priority: 12.05.2017 DueDate:
+* Follow up with undo.   +
+* *Result* +
+Reminder is removed . +
+* Follow up with redo  +
+* *Result* +
+Reminder is added back. +
+
+*COMMAND 1* - `reminder g/CS2103T Assignment p/Okayish d/12.05.2017` +
+
+* *Result* +
+Priority must have one of the three values which are - High, Low, and Medium +
+
+*COMMAND 2* - `reminder g/CS2103T Assignment p/high d/32.01.2018` +
+
+* *Result* +
+Due Date must be a Valid Date and in the following format:
+'.' and '-' can be used as separators. +
+
+*COMMAND 3* - `reminder g/CS2105.Assignment p/high d/11.01.2018` +
+
+* *Result* +
+Reminders should only contain alphanumeric characters and spaces, and it should not be blank
+
+=== Delete a reminder
+
+*COMMAND 0* - `remove 1` +
+
+* *Result* +
+Deleted Reminder: CS2103T Assignment Details: Priority Level: High Priority: 12.05.2017 DueDate: +
+Hence successful deletion. +
+
+* Follow up with undo  +
+* *Result  +
+Undo success. +
+
+*COMMAND 1* - `remove 0` +
+
+* *Result* +
+Invalid command format is displayed. +
+
+=== Change a reminder
+
+*COMMAND 0* - `change 1 d/12.11.2017` +
+
+* *Result* +
+Changed Reminder: CS2103T Assignment Details: Priority Level: High Priority: 12.11.2017 DueDate: +
+
+*COMMAND 1* - `change 0 d/12.11.2017` +
+
+* *Result* +
+Invalid Command Format message displayed. +
+
+*COMMAND 2* - `change 1` +
+
+* *Result* +
+At least one field to change must be provided. +
+
+*COMMAND 3* - `change 50 p/medium` +
+
+* *Result* +
+The reminder index provided is invalid. +
+
+*COMMAND 4* - `change 50 p/error` +
+
+* *Result* +
+Priority must have one of the three values which are - High, Low, and Medium. +
+
+
+=== Clear Command
+
+*COMMAND 0* - `cls` +
+
+* *Result* +
+Weaver has been cleared. Clears the person list and reminder list panel.Also clears the browser panel. +
+
+* Follow up with undo  +
+
+* *Result*  +
+Undo success. +
+
+
+=== Find Command
+
+*COMMAND 0* - `find ronak` +
+
+* *Result* +
+2 persons listed!. +
+
+
+=== Search Command
+*COMMAND 0* - `search n/random b/13.10.1997` +
+
+* *Result* +
+0 persons listed!. +
+
+*COMMAND 1* - `search n/ronak`
+
+* *Result* +
+Invalid command format message displayed. +
+
+*COMMAND 2* - `search b/12.10.1997`
+
+* *Result* +
+Invalid command format message displayed. +
+
+*COMMAND 3* - `search n/Ronak b/11.11.1998`
+
+* *Result* +
+1 persons listed! +
+
+*COMMAND 4* - `search n/Ronak b/16.09.1997`
+
+* *Result* +
+0 persons listed! +
+
+*COMMAND 4* - `search n/Ronak b/13.10.1997`
+
+* *Result* +
+1 persons listed! +
+
+
+=== List Command
+
+*COMMAND 0* = `list` +
+
+* *Result* +
+Displays the list of people. +
+
+=== Photo Command
+
+*COMMAND 0* = `photo 0` +
+
+* *Result* +
+Invalid command format displayed. +
+
+*COMMAND 1* = `photo 1 dummy.png` +
+
+* *Result* +
+Enter correct path, the path you entered may not be correct!
+You may have entered the incorrect name of the file! +
+
+*COMMAND 2* = `photo 1 /Users/ronaklakhotia/Desktop/Ronak.jpeg` +
+Now /Users/ronaklakhotia/Desktop/Ronak.jpeg is a valid path on my PC, you must enter a valid path in your pc. +
+
+* *Result* +
+Added Photo to Person: John Doe Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Date of birth: 11.11.1995 Remark:  FilePath: /Users/ronaklakhotia/Desktop/Ronak.jpeg Facebook Username: john.doe Tags: [friends] +
+Photo appears next to person. +
+
+*COMMAND 2* = `photo 1 delete`. +
+
+* 2 Results Possible +
+
+* *Result1* +
+If the person at index one has no photo to be deleted an error message will be displayed. +
+The person has no Photo to be deleted. +
+
+* *Result2* +
+If the person at index one has photo to be deleted an error message will be displayed. +
+Success message displayed. +
+
+=== FaceBook Command
+
+*COMMAND 0* = `facebook 0` +
+
+* *Result* +
+Invalid command format displayed. +
+
+*COMMAND 1* = `facebook 1` +
+
+* *Result* +
+If the person at index one a username. (John has a username)  +
+Success message displayed. +
+Facebook login page shows up on the browser panel. +
+After successful login you will be directed to the profile page of the person. +
+
+*COMMAND 2* = `facebook 4` +
+
+* *Result* +
+This Person has no Facebook username! +
+
+
+*COMMAND 3* = `facebook 99` +
+
+* *Result* +
+Person index provided is invalid. +
+
+=== Email Command
+
+*COMMAND 0* = `email t/friends s/birthday party` +
+
+* *Result* +
+Opens up the default browser (Chrome or safari) on your pc, and directs you to your Gmail account. +
+If you are already signed in , you will see the Gmail compose message box, with the email id of the persons specified by the tag already filled in. Furthermore, the subject body will also be filled in with the subject specified. +
+
+*COMMAND 1* = `email t/notAValidTag s/party` +
+
+* *Result* +
+The tag provided is invalid. Please check again. +
+
+*COMMAND 2* = `email t/friends s/party.birthday` +
+
+* *Result* +
+Subject lines should only contain alphanumeric characters and spaces, and it should not be blank. +
+
+*COMMAND 3* = `email t/friends t/colleagues s/party` +
+
+* *Result* +
+Multiple tags cannot be entered
+
+*COMMAND 4* = `email t/friends` +
+
+* *Result* +
+Invalid command format displayed. +
+
+
+=== history
+
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `history`
+
+
+
+=== Customize tag color command
+
+*COMMAND 0* - `color` +
+
+* *Result* +
+Invalid command format!
+color: Edits the color of a tag or list of tags. Existing color will be overwritten by the input. +
+Parameters: color t/[TAG] c/[COLOR] +
+Example: color t/friend c/red
+
+*COMMAND 1* - `color t/friends c/ red`
+
+* *Result* +
+Change tag color of 【friends】 to red
+
+
+*COMMAND 2* - `color t/friends t/family c/teal`
+
+* *Result* +
+Change tag color of 【【family】, 【friends】】 to teal
+
+*COMMAND 3* - `color t/friends t/family c/notAColor`
+
+* *Result* +
+Valid colors are: [red, blue, green, teal, aqua, black, gray, lime, maroon, navy, orange, purple, silver, olive, white, yellow, transparent]
+
+*COMMAND 4* - `color t/notATag t/family c/teal`
+
+* *Result* +
+Cannot change color of not existing tags: 【【notATag】】.
+
+*COMMAND 5* - `undo`
+
+* *Result* +
+undo success
+
+*COMMAND 6* - `redo`
+
+* *Result* +
+redo success
+
+*Close the app and open again*
+
+[TIP]
+After the closing, please login again with the credentials: +
+Username - `SampleData` +
+Password - The password you used to register. +
+
+* *Result* +
+The tag color of tags "friends" and "family" remain in color teal
+
+=== Customize font size command
+
+*COMMAND 0* - `fs` +
+
+* *Result* +
+Font size can only be either "xs", "s", "m", "l",  or "xl"
+
+*COMMAND 1* - `fs l` +
+
+* *Result* +
+Changed font size to l.
+
+*COMMAND 2* - `fs +` +
+
+* *Result* +
+Changed font size to xl.
+
+*COMMAND 3* - `fs +` +
+
+* *Result* +
+The current font size is the largest one.
+
+*COMMAND 4* - `fs s` +
+
+* *Result* +
+Changed font size to s.
+
+*COMMAND 5* - `fs -` +
+
+* *Result* +
+Changed font size to xs.
+
+*COMMAND 6* - `fs -` +
+
+* *Result* +
+The current font size is the smallest one.
+
+*COMMAND 6* - `fs notAFontSize` +
+
+* *Result* +
+Font size can only be either "xs", "s", "m", "l",  or "xl"
+
+*Press the "+" button on the left corner*
+
+* *Result* +
+Changed font size to s.
+
+*Press the "-" button on the left corner*
+
+* *Result* +
+Changed font size to xs.
+
+*COMMAND 7* - `undo`
+
+* *Result* +
+undo success
+
+*COMMAND 8* - `redo`
+
+* *Result* +
+redo success
+
+*Close the app and open again*
+
+* *Result* +
+
+The font size remains in xs.
+
+=== Change theme command
+
+*COMMAND 0* - `theme` +
+
+* *Result* +
+Invalid command format!
+theme: Change the theme of the application. Parameters: theme [THEME]
+Example: theme bright
+
+*COMMAND 1* - `theme dark` +
+
+* *Result* +
+Changed theme to dark.
+
+*COMMAND 2* - `undo`
+
+* *Result* +
+undo success
+
+*COMMAND 3* - `redo`
+
+* *Result* +
+redo success
+
+*Press the theme button "bright"*
+
+* *Result* +
+Changed theme to bright.
+
+*Press the theme button "dark"*
+
+* *Result* +
+Changed theme to dark.
+
+*Close the app and open again*
+
+* *Result* +
+
+The theme remains dark theme.
+
+=== Map command
+
+*COMMAND 0* - `map` +
+
+* *Result* +
+Invalid command format!
+map: Shows the address of the person identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer)
+Example: map 1
+
+*COMMAND 1* - `map 1` +
+
+* *Result* +
+Showing the address of Person: John Doe
+
+*COMMAND 2* - `map 0` +
+
+* *Result* +
+Invalid command format!
+map: Shows the address of the person identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer)
+Example: map 1
+
+*COMMAND 3* - `map 100` +
+
+* *Result* +
+The person index provided is invalid
+
+*Click on the address field of a person in the person card panel*
+
+* *Result* +
+Shows address of that person
+
+=== Feature: Check command formats’ validity while the user is typing +
+[NOTE]
+For all the following command, you need to type in the command without pressing enter key.
+And then you can check the result displayed.
+
+
+*COMMAND 1* - `map 1` +
+
+* *Result* +
+Command format is valid
+
+*COMMAND 2* - `abc` +
+
+* *Result* +
+Unknown command
+
+*COMMAND 3* - `theme` +
+
+* *Result* +
+Invalid command format!
+theme: Change the theme of the application. Parameters: theme [THEME]
+Example: theme bright
+
+*COMMAND 3* - `color t/friends c/` +
+
+* *Result* +
+Valid colors are: [red, blue, green, teal, aqua, black, gray, lime, maroon, navy, orange, purple, silver, olive, white, yellow, transparent]
+
+*COMMAND 4* - `add n/Damith p/123456 e/abc` +
+
+* *Result* +
+Person emails should be 2 alphanumeric/period strings separated by '@'
+
+*COMMAND 5* - `add n/Damith p/abc e/abc@gamil.com` +
+
+* *Result* +
+Phone numbers can only contain numbers, and should be at least 3 digits long
+
+*COMMAND 6* - `edit 1` +
+
+* *Result* +
+At least one field to edit must be provided.
+
+=== Find by Tag command
+
+*COMMAND 0* - `findtag` +
+
+* *Result* +
+Invalid command format!
+findtag: Finds all persons whose tag(s) contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers.
+Parameters: KEYWORD [MORE_KEYWORDS]...
+Example: findtag friends colleagues
+
+*COMMAND 1* - `findtag friends` +
+
+* *Result* +
+6 persons listed!
+
+*COMMAND 2* - `findtag friend` +
+
+* *Result* +
+0 persons listed!
+
+*COMMAND 3* - `findtag 1` +
+
+* *Result* +
+0 persons listed!
+
+*COMMAND 4* - `findtag FRIENDS` +
+
+* *Result* +
+6 persons listed!
+
+=== Delete person tag command
+
+*COMMAND 0* - `deletetag` +
+
+* *Result* +
+Invalid command format!
+deletetag: Deletes the tag identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer) t/TAG (must match tag)
+Example: deletetag 1 t/friends
+
+*COMMAND 1* - `deletetag 1 t/friends` +
+
+* *Result* +
+Deleted Tag: \[[friends]]
+
+*COMMAND 2* - `deletetag 1` +
+
+* *Result* +
+At least one field to delete must be provided.
+
+*COMMAND 3* - `deletetag t/friends` +
+
+* *Result* +
+Invalid command format!
+deletetag: Deletes the tag identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer) t/TAG (must match tag)
+Example: deletetag 1 t/friends
+
+*COMMAND 3* - `deletetag 2 t/colleagues t/friends` +
+
+* *Result* +
+Deleted Tag: [[colleagues], [friends]]
+
+*COMMAND 4* - `deletetag 1 friends` +
+
+* *Result* +
+Invalid command format!
+deletetag: Deletes the tag identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer) t/TAG (must match tag)
+Example: deletetag 1 t/friends
+
+=== Backup command
+
+[NOTE]
+
+In your root directory, under data/ you should have a SampleData.xml file, and
+entering the backup command, will create a SampleData-backup.xml file.
+
+*COMMAND 0* - `backup` +
+
+* *Result* +
+A backup of Weaver has been created! +
+If you close the app and open the data folder, you will notice, a `SampleData-backup.xml` is created. +
+
+
+=== Autocompletion feature
+[NOTE]
+For all the following command, you need to type in the command without pressing enter key.
+And then you can check the suggested words displayed. To cancel the suggested words, press the `ESC` key.
+If you press `Enter`, you will see the auto-completed word on the command line.
+
+*COMMAND 0* - `del` +
+
+* *Suggested words* +
+delete +
+deletetag
+
+*COMMAND 1* - `ete` +
+
+* *Suggested words* +
+delete +
+deletetag
+
+*COMMAND 2* - `delete` +
+
+* *Suggested words* +
+deletetag
+
+*COMMAND 3* - `del` + press `Enter`
+
+* *Suggested words* +
+delete +
+deletetag
+
+* *Result* +
+Command Line: delete
+
+*COMMAND 4* - `delete` + press `Enter`
+
+* *Suggested words* +
+deletetag
+
+* *Result* +
+Command Line: deletetag
+
+*COMMAND 5* - `delete` + press `ESC`
+
+* *Result* +
+Command Line: delete
+
+*COMMAND 6* - `del` + press `DOWN arrow` + press `Enter`
+
+* *Suggested words* +
+delete +
+deletetag
+
+* *Result* +
+Command Line: deletetag
+
+=== Clear Popup command
+
+*COMMAND 0* - `clear` + press `ENTER`
+
+* *Result* +
+A clear confirmation dialog would appear.
+Click on the app again to see it. +
+
+*COMMAND 1* - `clear 1` + press `ESC`
+
+* *Result* +
+A clear confirmation dialog would appear.
+
+*COMMAND 2* - `clear` + click `OK` / press `Enter`
+
+* *Result* +
+Weaver has been cleared!
+
+*COMMAND 3* - `clear` +  click `Cancel` /
+
+* *Result* +
+Weaver has not been cleared!
+

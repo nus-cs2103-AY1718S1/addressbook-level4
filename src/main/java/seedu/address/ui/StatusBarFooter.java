@@ -13,6 +13,8 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
+import seedu.address.model.font.FontSize;
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.
@@ -24,7 +26,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     /**
      * Used to generate time stamps.
-     *
+     * <p>
      * TODO: change clock to an instance variable.
      * We leave it as a static variable because manual dependency injection
      * will require passing down the clock reference all the way from MainApp,
@@ -40,13 +42,16 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar totalPersons;
 
 
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(String saveLocation, int numberOfTotalPersons) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
+        setTotalPerson(numberOfTotalPersons);
     }
 
     /**
@@ -71,11 +76,47 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    /**
+     * Get the display text in status bar totalPersons for a given number
+     *
+     * @param numberOfTotalPersons
+     * @return string of display text
+     */
+    public static String getDisplayTextTotalPerson(int numberOfTotalPersons) {
+        String displayText = "";
+
+        if (numberOfTotalPersons > 1) {
+            displayText = numberOfTotalPersons + " persons total.";
+        } else {
+            displayText = numberOfTotalPersons + " person total.";
+        }
+        return displayText;
+    }
+
+    private void setTotalPerson(int numberOfTotalPersons) {
+        this.totalPersons.setText(getDisplayTextTotalPerson(numberOfTotalPersons));
+    }
+
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
-        logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
+        logger.info(LogsCenter.getEventHandlingLogMessage(abce,
+                "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setTotalPerson(abce.data.getPersonList().size());
+    }
+
+    //@@author ChenXiaoman
+    @Subscribe
+    private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
+        setFontSize(event.getFontSize());
+    }
+
+    private void setFontSize(String fontSize) {
+        String fxFomatString = FontSize.getAssociateFxFontSizeString(fontSize);
+        syncStatus.setStyle(fxFomatString);
+        saveLocationStatus.setStyle(fxFomatString);
+        totalPersons.setStyle(fxFomatString);
     }
 }

@@ -1,0 +1,220 @@
+= Pei Jun Wei - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+This portfolio highlights my projects taken whilst studying in School of
+Computing, National University of Singapore.
+
+== Project: Weaver
+Weaver is a desktop address book application used by university students to
+ manage their contacts and school life. +
+The user interacts with it using a Command-Line Interface (CLI), and it has
+a Graphical User Interface (GUI) created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: +
+ [https://github.com/CS2103AUG2017-W13-B2/main/blob/master/collated/main/pjunwei95.md[Functional code]] +
+ [https://github.com/CS2103AUG2017-W13-B2/main/blob/master/collated/test/pjunwei95.md[Test code]]
+
+This section includes: +
+
+* Enhancement Added (External Behaviour, Implementation, Justification)
+* Enhancement Proposed
+* Other contributions
+* Other Projects
+
+<<<
+
+=== Enhancement Added: Deleting a person's tag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletetag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Currently, the existing tags are unable to be deleted. It can only be done through
+the `Edit` command which is repetitive and exhaustive to re-enter the existing tags and
+omit the tag that is to be deleted. Through this function, the user can delete the tag
+with ease.
+
+<<<
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletepersontag]
+
+#End of Extract#
+
+---
+
+<<<
+
+=== Enhancement Added: Locating persons by tag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+While Weaver is able to list the addresses, it is unable to allow the user to view
+based on the tags they created. By locating a person by tag, the user can sort the list
+and find the tags as a result. This also remove the need for a favourite contact
+as the user just need to tag the address as "favourite" and find that tag.
+
+---
+
+<<<
+
+=== Enhancement Added: Auto-completion
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=autocompletion]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Typing all the commands out can be a hassle, so this implementation of the auto-complete
+function allows the user to select frequently used commands with convenience.
+
+---
+
+<<<
+
+=== Enhancement Added: Clearing all entries
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=clear]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Initially, the clear command can be done in one step. However, new users might not be
+accustomed to the application. Also, they probably skipped the user guide as well, so
+are unsure of the undo and redo features. Therefore, they may be alarmed when they
+clear their contacts. This seeks to remedy this problem by providing a confirmation
+popup to allow the user the option to consider before clearing their contacts.
+
+---
+
+<<<
+
+=== Enhancement Added: Backing up your Weaver
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+While the address book data in Weaver is saved automatically after each changes, a
+user may want to back up his/her copy just in case. This feature allows the additional
+functionality to backup in a file that is identifiable to the user.
+
+---
+
+<<<
+
+
+=== Enhancement Proposed: Future Implementations
+
+* These are the enhancements proposed for the future Weaver v2.0 release.
+* It is written
+as user stories.
+They are sorted by priorities and arranged in a table below:
+
+Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
+
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Priority |As a ... |I want to ... |So that I can...
+|`*`|user |be notified of birthdays |send them well wishes
+
+|`*`|user |log in |access privately
+
+|`*`|user |customise the display |view the list to my preference
+
+|`*`|user |delete people with a specific tag |clean up my list
+
+|`* *`|user with frequent contacts | mark a contact as favourite |find them easily
+
+|`* *`|user |see a history bar |keep track of my previous searches
+
+|`* *`|user |see random people on the front page |get in touch with old friends
+
+|`* * *`|user |confirm before clearing |not clear the contents accidentally
+
+|`* * *`|user |edit a person |modify an address conveniently
+
+|=======================================================================
+
+
+=== Other contributions
+
+* Suggested features to be implemented in the future in the user stories.
+(Pull request: +
+ https://github.com/pjunwei95/addressbook-level4/commit/e50666704484046e231e1c2a33f1eadffd0b51ae[#13])
+
+* Helped in reporting bugs for a team's [CS2103AUG2017-W09-B2] open-sourced software.
+    (Issues: +
+    https://github.com/CS2103AUG2017-W09-B2/main/issues/119[#119], +
+    https://github.com/CS2103AUG2017-W09-B2/main/issues/120[#120], +
+    https://github.com/CS2103AUG2017-W09-B2/main/issues/122[#122]), +
+    https://github.com/CS2103AUG2017-W09-B2/main/issues/124[#124])
+
+* Updated new colors to be included in tags.
+(Pull request: +
+ https://github.com/pjunwei95/addressbook-level4/commit/e9a411bc29b1154e7b5012850e44329371da5dfa[#64])
+
+
+* Fixed global bug for help window. (Issue: +
+ https://github.com/se-edu/addressbook-level4/issues/727[#727])
+
+* Wrote additional tests to increase coverage to 85% (Pull request: +
+https://github.com/CS2103AUG2017-W13-B2/main/pull/141[#141])
+
+== Project: NUSeekers
+
+A software project in developing an inclusive community
+within the National University of Singapore. +
+It is written in with Meteor, using JavaScript, HTML5, CSS, JSON, and MongoDB.
+

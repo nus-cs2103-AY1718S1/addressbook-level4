@@ -126,7 +126,6 @@ public class UniqueTagList implements Iterable<Tag> {
 
     @Override
     public int hashCode() {
-        assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
     }
 

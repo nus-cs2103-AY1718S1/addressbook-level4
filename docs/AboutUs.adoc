@@ -4,53 +4,58 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+We are a team consisting of four members based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore]. +
+We are currently Computer Science students pursuing an undergraduate degree here at NUS.
+Our TeamID is `W13-B2`.
+
+The `Weaver` application was developed by our team for our Software Engineering project mainly meant for NUS students.
+It is adapted from the AddressBook - Level 4 that was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
+We have renamed the application as such so that it evokes a positive appeal among others. +
+Weaver symbolises the weaving of out contacts in order to stay connected. +
 {empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Ronak Lakhotia
+image::ronaklakhotia.png[width="150", align="left"]
+{empty}[https://github.com/RonakLakhotia[github]][https://cs2103aug2017-w13-b2.github.io/main/team/RonakLakhotia.html[portfolio html]][https://github.com/CS2103AUG2017-W13-B2/main/blob/master/docs/team/RonakLakhotia.adoc[portfolio adoc]]
 
-Role: Project Advisor
+Role: Co-ordination and Testing +
 
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Responsibilities: Overall co-ordination of the project is taken care of.
+Ensures that any code pushed to the team repository is tested and passes all test cases.
+Also suggests modifications to be made in the features. Also in charge of Logic Component of the project.
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Chen Xiaoman
+image::chenxiaoman.png[width="150", align="left"]
+{empty}[https://github.com/ChenXiaoman[github]][https://cs2103aug2017-w13-b2.github.io/main/team/ChenXiaoman.html[portfolio]]
 
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Scheduling and Tracking +
+Responsibilities: Ensure that all deadlines and Deliverables are met on time.
+Send out timely reminders to the other team members to finish the assigned task.
+Make sure that all work is done in the correct format.In addition, in charge of the Model Component of project.
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Yang Minxing
+image::yangminxing.png[width="150", align="left"]
+{empty}[https://github.com/yangminxingnus[github]][https://cs2103aug2017-w13-b2.github.io/main/team/yangminxing.html[portfolio]]
 
-Role: Developer +
-Responsibilities: UI
+Role: In charge of Storage and UI +
+Responsibilities: Ensure that the interface of the Application is of good quality.
+Ensures competency with JAVAFX. As for main components, is in charge of storage by overlooking the changes made to storage component.
+
+'''
+
+=== Pei Junwei
+image::pjunwei.png[width="150", align="left"]
+{empty}[https://github.com/pjunwei95[github]][https://cs2103aug2017-w13-b2.github.io/main/team/peijunwei.html[portfolio]]
+
+Role: Code Quality, Integration and Documentation +
+Responsibilities: Ensure the code quality of the SUT is maintained at all times.
+Ensure that the code is not broken at any given time.
+In charge of documentation and the storage component as well. Makes sure that the User Guide and Developer Guide are updated from time to time.
 
 '''

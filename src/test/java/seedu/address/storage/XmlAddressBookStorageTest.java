@@ -124,5 +124,44 @@ public class XmlAddressBookStorageTest {
         saveAddressBook(new AddressBook(), null);
     }
 
+    //@@author RonakLakhotia
 
+    /**
+     * Backups {@code addressBook} at the specified {@code filePath}.
+     */
+    private void backUpAddressBook(ReadOnlyAddressBook addressBook, String filepath) {
+        try {
+            new XmlAddressBookStorage(filepath).backupAddressBook(addressBook);
+        } catch (IOException ioe) {
+            throw new AssertionError("There should not be an error writing to the file.", ioe);
+        }
+    }
+
+    @Test
+    public void backUpAddressBook_nullFilePath_throwsNullPointerException() throws IOException {
+        thrown.expect(NullPointerException.class);
+        backUpAddressBook(new AddressBook(), null);
+    }
+
+    @Test
+    public void backUpAddressBook_nullAddressBook_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        backUpAddressBook(null, "SomeFile.xml");
+    }
+
+    @Test
+    public void readAndbackUpAddressBook_allInOrder_success() throws Exception {
+        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
+        AddressBook original = getTypicalAddressBook();
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+
+        //Save in new file and read back
+        xmlAddressBookStorage.backupAddressBook(original);
+        String trimmedFilePath = filePath.substring(0, filePath.length() - 4) + "-backup.xml";
+        ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(trimmedFilePath).get();
+        assertEquals(original, new AddressBook(readBack));
+
+
+    }
 }
+

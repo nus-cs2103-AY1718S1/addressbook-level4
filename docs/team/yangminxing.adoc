@@ -1,0 +1,161 @@
+= Yang Minxing - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+This portfolio highlights my contributions to the project when studying in School of Computing, National University of Singapore.
+
+== Project: Weaver
+Weaver is a desktop address book application meant for NUS students. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B2/main/blob/master/collated/main/yangminxingnus.md[Code contributed]] [https://github.com/CS2103AUG2017-W13-B2/main/blob/master/collated/test/yangminxingnus.md[Test code]]
+
+=== Enhancement Added: Remark
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature will be frequently used by most of the NUS students. And it's the pre-resquisite for the nusmods integration.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../DeveloperGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: nusmods
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=nusmods]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It is convenient for users to shedule their time using this feature.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=nusmods]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Register
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=register]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With the register feature, user can create new accounts and login to use seperate files.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=register]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added but not used: Encryption/Decryption
+
+
+include::../DeveloperGuide.adoc[tag=encrypt]
+
+
+---
+
+=== Enhancement Proposed: Future Implementations
+
+* These are the enhancements proposed for the future Weaver v2.0 release.
+* It is written
+as user stories.
+They are sorted by priorities and arranged in a table below:
+
+Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
+
+[width="59%",cols="22%,<23%,<25%,<30%",options="header"]
+|=======================================================================
+|Priority |As a ... |I want to ... |So that I can...
+|`*`|user |be notified of birthdays |send them well wishes
+
+|`*`|user |log in |access privately
+
+|`*`|user |customise the display |view the list to my preference
+
+|`*`|user |delete people with a specific tag |clean up my list
+
+|`* *`|user with frequent contacts |have a favourites list |find them easily
+
+|`* *`|user |see a history bar |keep track of my previous searches
+
+|`* *`|user |see random people on the front page |get in touch with old friends
+
+|`* * *`|user |confirm before clearing |not clear the contents accidentally
+
+|`* * *`|user |edit a person |modify an address conveniently
+
+|`* * *`|user |encrypt / decrypt my file |keep my file secure yet editable
+
+|=======================================================================
+
+---
+
+=== Other contributions
+
+* Wrote additional tests to increase coverage. +
+(pull request:
+https://github.com/CS2103AUG2017-W13-B2/main/pull/115[#115]
+https://github.com/CS2103AUG2017-W13-B2/main/pull/133[#133])
+* Suggestion on addressbook software. +
+(issue: https://github.com/nus-cs2103-AY1718S1/forum/issues/217[#217])
+* Bug reported to other teams.
+(issues: https://github.com/CS2103AUG2017-T14-B3/main/issues/82[#82])
+* Made enhancements on coding styles: javadoc, uppercase / lowercase, refactoring of static variables,
+optional fields in add commands, remove of redundant testcase and unused codes.
+(pull request:
+https://github.com/CS2103AUG2017-W13-B2/main/pull/78[#78],
+https://github.com/CS2103AUG2017-W13-B2/main/pull/83[#83])
+* Made optimization on UI, mainly on login page and register page.
+(pull request:
+https://github.com/CS2103AUG2017-W13-B2/main/pull/41[#41],
+https://github.com/CS2103AUG2017-W13-B2/main/pull/78[#78]
+)

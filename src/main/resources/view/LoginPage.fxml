@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @@author yangminxingnus -->
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox minHeight="400.0" minWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+
+      <StackPane VBox.vgrow="ALWAYS" styleClass="pane-with-border">
+
+         <children>
+            <TextField fx:id="username" alignment="CENTER" onKeyPressed="#handleKeyPress" promptText="username" StackPane.alignment="CENTER">
+               <StackPane.margin>
+                  <Insets bottom="100.0" left="300.0" right="300.0" />
+               </StackPane.margin>
+            </TextField>
+            <PasswordField fx:id="password" alignment="CENTER" onKeyPressed="#handleKeyPress" prefHeight="33.0" prefWidth="300.0" promptText="password" StackPane.alignment="BOTTOM_CENTER">
+               <StackPane.margin>
+                  <Insets bottom="80.0" left="300.0" right="300.0" />
+               </StackPane.margin>
+            </PasswordField>
+         </children>
+      </StackPane>
+      <StackPane styleClass="pane-with-border" VBox.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="registerButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#handleRegisterEvent" prefHeight="70.0" prefWidth="159.0" text="Register" textAlignment="CENTER">
+            <StackPane.margin>
+               <Insets left="200.0" />
+            </StackPane.margin></Button>
+         <Button fx:id="loginButton1" alignment="CENTER" layoutX="382.0" layoutY="60.0" mnemonicParsing="false" onMouseClicked="#handleLoginEvent" prefHeight="70.0" prefWidth="159.0" text="Login" textAlignment="CENTER">
+            <StackPane.margin>
+               <Insets right="200.0" />
+            </StackPane.margin>
+         </Button>
+         </children>
+      </StackPane>
+</VBox>
+<!-- @@author -->

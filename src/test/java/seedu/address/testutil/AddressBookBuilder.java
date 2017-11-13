@@ -4,6 +4,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,6 +33,17 @@ public class AddressBookBuilder {
             addressBook.addPerson(person);
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("person is expected to be unique.");
+        }
+        return this;
+    }
+    /**
+     * Adds a new {@code reminder} to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withReminder(ReadOnlyReminder reminder) {
+        try {
+            addressBook.addReminder(reminder);
+        } catch (DuplicateReminderException dre) {
+            throw new IllegalArgumentException("reminder is expected to be unique.");
         }
         return this;
     }
