@@ -1,0 +1,63 @@
+= Ark - Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-T16-B1/main/tree/master
+
+By: `Team T16-B1`      Since: `Sept 2017`      Licence: `MIT`
+
+== Introduction
+Ark is a parcel delivery management system to help delivery companies manage their parcels and their
+deliveries. This test script is used help testers perform manual testing of Ark.
+
+== Quick Start
+
+
+
+== Commands
+
+=== Import Command
+
+Command format: `import (FILE_NAME)`. e.g. `import ark_save` +
+Description: This command allows you to add multiple parcels from a valid Ark storage file that is stored
+ in the `./data/import/` directory. e.g. `import ark_save` will import `./data/import/ark_save.xml`. +
+Presently, Ark only supports `.xml` storage files in format. +
+
+Before you use test command, copy the following sample `.xml` files into Ark: +
+
+* [T16-B1][Ark]ark_save.xml
+* [T16-B1][Ark]empty.xml
+* [T16-B1][Ark]notXmlFormatAddressBook.xml
+
+==== Manual Testing
+
+*Description:* Regular import. +
+*Input:* `import ark_save` +
+*Expected output:* Ark should add the new parcels into the running instance of Ark. Duplicate parcels are ignored.
+Duplicate parcels are parcels with the same details (every detail except Status and Tag is used for comparison).
+Non-duplicate parcels are added. Ark should display of parcels added and parcels that are not added in the results box. +
+
+*Description:*  Import the save file (will contain duplicate parcels now). +
+*Input:* `import ark_save` +
+*Expected output:* Ark should warn you that all parcels in the save file are duplicate parcels. Nothing happens. +
+
+*Description:* Importing an empty save file +
+*Input:* `import empty` +
+*Expected output:* Ark should warn you that the file you want to import is empty.
+
+*Description:* Importing an empty save file +
+*Input:* `import empty` +
+*Expected output:* Ark should warn you that the file you want to import is empty.
+
+
+
+
+
