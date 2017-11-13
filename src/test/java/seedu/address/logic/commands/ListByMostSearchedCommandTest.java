@@ -1,4 +1,3 @@
-//@@author Sri-vatsa
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertTrue;
@@ -14,6 +13,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
 
+//@@author Sri-vatsa
 /***
  * Class of tests for ListByMostSearchedCommandTest
  */

@@ -18,7 +18,7 @@ public interface Model {
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyAddressBook newData, ReadOnlyMeetingList newMeetingData);
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
@@ -33,8 +33,6 @@ public interface Model {
     boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
     /** Adds the given person */
     void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException;
-    /** Add accessToken to meetingsList*/
-    //void addAccessToken(String accessToken);
     //@@author
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;

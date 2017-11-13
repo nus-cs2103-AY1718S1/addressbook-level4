@@ -7,6 +7,9 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -20,6 +23,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.InternalId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -38,6 +42,22 @@ public class ParserUtilTest {
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
+    //@@author Sri-vatsa
+    private static final String INVALID_DATE = "22/12/198";
+    private static final String INVALID_TIME = "+5";
+    private static final String INVALID_LOCATION = " ";
+    private static final String INVALID_NOTES = " ";
+    private static final String INVALID_PERSON = "#1";
+    private static final String INVALID_FORMAT_ACCESSCODE = "Gibberish";
+
+    private static final String VALID_DATE = "27/11/2020";
+    private static final String VALID_TIME = "1800";
+    private static final String VALID_LOCATION = "UTown";
+    private static final String VALID_NOTES = "Meeting";
+    private static final String VALID_PERSON = "1";
+    private static final String VALID_FORMAT_ACCESSCODE = "0/1g23j765kl985";
+
+    //@@author
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
@@ -187,4 +207,154 @@ public class ParserUtilTest {
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+    //@@author Sri-vatsa
+    @Test
+    public void parseLocation_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseLocation(null);
+    }
+
+    @Test
+    public void parseLocation_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseLocation(Optional.of(INVALID_LOCATION));
+    }
+
+    @Test
+    public void parseLocation_validValue_returnsLocation() throws Exception {
+
+        Optional<String> actualLocation = ParserUtil.parseLocation(Optional.of(VALID_LOCATION));
+
+        assertEquals(VALID_LOCATION, actualLocation.get());
+    }
+
+    @Test
+    public void parseNotes_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseNotes(null);
+    }
+
+    @Test
+    public void parseNotes_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseNotes(Optional.of(INVALID_NOTES));
+    }
+
+    @Test
+    public void parseNotes_validValue_returnsEmail() throws Exception {
+
+        Optional<String> actualNotes = ParserUtil.parseLocation(Optional.of(VALID_NOTES));
+
+        assertEquals(VALID_NOTES, actualNotes.get());
+    }
+
+    @Test
+    public void parseDate_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDate(null);
+    }
+
+    @Test
+    public void parseDate_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDate(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDate_validValue_returnsDate() throws Exception {
+
+        Optional<String> actualDate = ParserUtil.parseDate(Optional.of(VALID_DATE));
+
+        assertEquals(VALID_DATE, actualDate.get());
+    }
+    @Test
+    public void parseTime_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTime(null);
+    }
+
+    @Test
+    public void parseTime_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTime(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseTime_validValue_returnsTime() throws Exception {
+
+        Optional<String> actualTime = ParserUtil.parseTime(Optional.of(VALID_TIME));
+
+        assertEquals(VALID_TIME, actualTime.get());
+    }
+
+    @Test
+    public void parseDateTime_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDateTime(null, null);
+    }
+
+    @Test
+    public void parseDateTime_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseDateTime(INVALID_DATE, INVALID_TIME);
+    }
+
+    @Test
+    public void parseDateTime_validValue_returnsDateTime() throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HHmm");
+        String dateTime = VALID_DATE + " " + VALID_TIME;
+        LocalDateTime localDateTimeExpected = LocalDateTime.parse(dateTime, formatter);
+
+        LocalDateTime localDateTimeActual = ParserUtil.parseDateTime(VALID_DATE, VALID_TIME);
+
+        assertEquals(localDateTimeExpected, localDateTimeActual);
+    }
+
+    @Test
+    public void parseIds_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseIds(null);
+    }
+
+    @Test
+    public void parseIds_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ArrayList<String> ids = new ArrayList<>();
+        ids.add(INVALID_PERSON);
+        ParserUtil.parseIds(ids);
+    }
+
+    @Test
+    public void parseIds_validValue_returnsIds() throws Exception {
+        //expected data
+        ArrayList<InternalId> idsExpected = new ArrayList<>();
+        idsExpected.add(new InternalId(Integer.parseInt(VALID_PERSON)));
+
+        //actual data
+        ArrayList<String> idsActual = new ArrayList<>();
+        idsActual.add(VALID_PERSON);
+
+        ArrayList<InternalId> actualIds = ParserUtil.parseIds(idsActual);
+
+        assertEquals(idsExpected, actualIds);
+    }
+
+    @Test
+    public void parseAccessCode_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseAccessCode(null);
+    }
+
+    @Test
+    public void parseAccessCode_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseAccessCode(INVALID_FORMAT_ACCESSCODE);
+    }
+
+    @Test
+    public void parseAccessCode_validValue_returnsAccessCode() throws Exception {
+
+        String actualAccessCode = ParserUtil.parseAccessCode(VALID_FORMAT_ACCESSCODE);
+
+        assertEquals(VALID_FORMAT_ACCESSCODE, actualAccessCode);
+    }
+
 }

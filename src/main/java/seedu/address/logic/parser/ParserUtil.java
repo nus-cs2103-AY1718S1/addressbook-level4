@@ -37,6 +37,9 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_ARGUMENT = "Argument contains special characters";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    private static final int FIRST_ENTRY = 0;
+    private static final int LOWER_LIMIT = 0;
+    private static final int UPPER_LIMIT = 9;
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -124,10 +127,13 @@ public class ParserUtil {
      */
     public static Optional<String> parseLocation(Optional<String> location) throws IllegalValueException {
         requireNonNull(location);
+        String userInput = location.get().trim();
+        if (userInput.isEmpty()) {
+            throw new IllegalValueException("Location cannot be empty.");
+        }
         return location.isPresent() ? Optional.of(location.get()) : Optional.empty();
     }
 
-    //@@author Sri-vatsa
     /**
      * Parses a {@code Optional<String> date} into an {@code Optional<String>} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -137,7 +143,6 @@ public class ParserUtil {
         return date.isPresent() ? Optional.of(date.get()) : Optional.empty();
     }
 
-    //@@author Sri-vatsa
     /**
      * Parses a {@code Optional<String> time} into an {@code Optional<String>} if {@code time} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -147,7 +152,6 @@ public class ParserUtil {
         return time.isPresent() ? Optional.of(time.get()) : Optional.empty();
     }
 
-    //@@author Sri-vatsa
     /**
      * Parses {@code String date} & {@code String time} if {@code date} & {@code time} are present.
      */
@@ -160,34 +164,91 @@ public class ParserUtil {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HHmm");
             String dateTime = date + " " + time;
             LocalDateTime localDateTime = LocalDateTime.parse(dateTime, formatter);
+            if (localDateTime.isBefore(LocalDateTime.now())) {
+                throw new IllegalValueException("Please enter a date & time that is in the future.");
+            }
             return localDateTime;
         } catch (DateTimeParseException dtpe) {
             throw new IllegalValueException("Please enter a date & time in the format dd/mm/yyyy & hhmm respectively!");
         }
     }
 
-
-
-    //@@author Sri-vatsa
     /**
      * Parses a {@code Optional<String> notes} into an {@code Optional<String>} if {@code notes} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<String> parseNotes(Optional<String> notes) throws IllegalValueException {
         requireNonNull(notes);
+        String userInput = notes.get().trim();
+        if (userInput.isEmpty()) {
+            throw new IllegalValueException("Location cannot be empty.");
+        }
         return notes.isPresent() ? Optional.of(notes.get()) : Optional.empty();
     }
 
-    //@@author Sri-vatsa
     /**
-     * Parses {@code Collection<String> ids} into a {@code Set<>}.
+     * Parses {@code Collection<String> ids} into a {@code Set<InternalIds>}.
      */
     public static ArrayList<InternalId> parseIds(Collection<String> ids) throws IllegalValueException {
         requireNonNull(ids);
         final ArrayList<InternalId> idSet = new ArrayList<>();
-        for (String id : ids) {
-            idSet.add(new InternalId(Integer.parseInt(id)));
+
+        try {
+            for (String id : ids) {
+                idSet.add(new InternalId(Integer.parseInt(id)));
+            }
+        } catch (NumberFormatException nfe) {
+            throw new IllegalValueException("Please make sure teh person id is a valid number");
         }
+
+        if (idSet.isEmpty()) {
+            throw new IllegalValueException("Invalid command format! \n"
+                    + "addMeeting: Adds a meeting to the address book. Parameters: on DATE from TIME at LOCATION about "
+                    + "NOTES with PERSON 1 with PERSON 2 ...\n"
+                    + "Example: addMeeting on 20/11/2017 from 1800 at UTown Starbucks about Project Meeting with 1");
+        }
+
         return idSet;
+    }
+
+    /**
+     * Parses {@code String userInput} into {@code String accessCode}.
+     */
+    public static String parseAccessCode(String userInput) throws IllegalValueException {
+        requireNonNull(userInput);
+        String trimmedInput = userInput.trim();
+        String [] code = trimmedInput.split(" ");
+
+        if (!isAccessCodeValid(code[FIRST_ENTRY])) {
+            throw new IllegalValueException("Please make sure the access code you have copied follows the format:\n"
+                    + "DIGIT/ALPHANUMERICS");
+        }
+
+        return code[FIRST_ENTRY];
+    }
+
+    /**
+     * check if access code is of a valid format
+     * @param accessCode
+     * @return isAccessCodeValid True if accessCode is of valid format
+     */
+    private static boolean isAccessCodeValid(String accessCode) {
+        boolean isAccessCodeValid = true;
+
+        String [] splitAccessCode = accessCode.split("/");
+
+        try {
+
+            int firstPartOfAccessCode = Integer.parseInt(splitAccessCode[FIRST_ENTRY]);
+
+            if (!accessCode.contains("/") || firstPartOfAccessCode < LOWER_LIMIT
+                    || firstPartOfAccessCode > UPPER_LIMIT) {
+                isAccessCodeValid = false;
+            }
+        } catch (Exception e) {
+            isAccessCodeValid = false;
+        }
+
+        return isAccessCodeValid;
     }
 }

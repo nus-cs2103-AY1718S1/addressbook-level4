@@ -1,13 +1,4 @@
 # Sri-vatsa
-###### /IllegalTimeException.java
-``` java
-//No longer required as DatetimeException handles both exceptions in date and time
-
-public class IllegalTimeException extends IllegalValueException {
-
-    public IllegalTimeException(String message) {super (message);}
-}
-```
 ###### /DateTimeConverter.java
 ``` java
 //this code is no longer used because it has been condensed into parseUtil & revised to use java lcoaldatetime class
@@ -98,5 +89,14 @@ public class DateTimeConverter{
         return localDateTime;
     }
 
+}
+```
+###### /IllegalTimeException.java
+``` java
+//No longer required as DatetimeException handles both exceptions in date and time
+
+public class IllegalTimeException extends IllegalValueException {
+
+    public IllegalTimeException(String message) {super (message);}
 }
 ```

@@ -15,7 +15,6 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListByMostSearchedCommand;
@@ -26,6 +25,8 @@ import seedu.address.logic.commands.PrefCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetUniqueKeyCommand;
+import seedu.address.logic.commands.SetupAsanaCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -83,9 +84,9 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
-        case FindCommand.COMMAND_ALIAS:
-            return new FindCommandParser().parse(arguments);
+        //case FindCommand.COMMAND_WORD:
+        //case FindCommand.COMMAND_ALIAS:
+            //return new FindCommandParser().parse(arguments);
 
         case ListByMostSearchedCommand.COMMAND_WORD:
         case ListByMostSearchedCommand.COMMAND_ALIAS:
@@ -131,6 +132,14 @@ public class AddressBookParser {
         case SearchCommand.COMMAND_WORD:
         case SearchCommand.COMMAND_ALIAS:
             return new SearchCommandParser().parse(arguments);
+
+        case SetupAsanaCommand.COMMAND_WORD:
+        case SetupAsanaCommand.COMMAND_ALIAS:
+            return new SetupAsanaCommand();
+
+        case SetUniqueKeyCommand.COMMAND_WORD:
+        case SetUniqueKeyCommand.COMMAND_ALIAS:
+            return new SetUniqueKeyCommandParser().parse(arguments);
 
         default:
 

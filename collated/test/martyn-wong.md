@@ -17,6 +17,12 @@ public class MapCommandTest {
     }
 
     @Test
+    public void execute_validArgs_success() {
+        Selection.setPersonSelected();
+        assertExecutionSuccess(INDEX_FIRST_PERSON);
+    }
+
+    @Test
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
 
@@ -32,6 +38,13 @@ public class MapCommandTest {
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidPersonSelectionFailure() {
+        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
+        Selection.setPersonNotSelected();
+        assertExecutionFailure(indexLastPerson, Messages.MESSAGE_PERSON_NOT_SELECTED);
     }
 
     @Test
@@ -54,6 +67,23 @@ public class MapCommandTest {
 
         // different person -> returns false
         assertFalse(mapFirstCommand.equals(mapSecondCommand));
+    }
+
+    /**
+     * Executes a {@code MapCommand} with the given {@code arguments},
+     * @param index
+     */
+    private void assertExecutionSuccess(Index index) {
+        MapCommand mapCommand = prepareCommand(index);
+        ReadOnlyPerson personToMap = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        String expectedMessage = String.format(MapCommand.MESSAGE_MAP_SHOWN_SUCCESS, personToMap);
+
+        try {
+            CommandResult commandResult = mapCommand.execute();
+            assertEquals(expectedMessage, commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Assert Execution Failed: ", ce);
+        }
     }
 
     /**
@@ -103,26 +133,69 @@ public class SearchCommandTest {
         PersonContainsKeywordsPredicate secondPredicate =
                 new PersonContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        SearchCommand findFirstCommand = new SearchCommand(firstPredicate);
-        SearchCommand findSecondCommand = new SearchCommand(secondPredicate);
+        SearchCommand searchFirstCommand = new SearchCommand(firstPredicate);
+        SearchCommand searchSecondCommand = new SearchCommand(secondPredicate);
 
         // same object -> returns true
-        assertTrue(findFirstCommand.equals(findFirstCommand));
+        assertTrue(searchFirstCommand.equals(searchFirstCommand));
 
         // same values -> returns true
-        SearchCommand findFirstCommandCopy = new SearchCommand(firstPredicate);
-        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+        SearchCommand searchFirstCommandCopy = new SearchCommand(firstPredicate);
+        assertTrue(searchFirstCommand.equals(searchFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(findFirstCommand.equals(1));
+        assertFalse(searchFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(findFirstCommand.equals(null));
+        assertFalse(searchFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(findFirstCommand.equals(findSecondCommand));
+        assertFalse(searchFirstCommand.equals(searchSecondCommand));
     }
 
+    @Test
+    public void execute_zeroKeywords_noPersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        SearchCommand command = prepareCommand(" ");
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    @Test
+    public void execute_multipleKeywords_multiplePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        SearchCommand command = prepareCommand("Kurz Elle Kunz");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code SearchCommand}.
+     */
+    private SearchCommand prepareCommand(String userInput) {
+        SearchCommand command =
+                new SearchCommand(new PersonContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     *     - the command feedback is equal to {@code expectedMessage}<br>
+     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
+     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     */
+    private void assertCommandSuccess(SearchCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        CommandResult commandResult = null;
+        try {
+            commandResult = command.execute();
+        } catch (CommandException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
+    }
 
 }
 ```

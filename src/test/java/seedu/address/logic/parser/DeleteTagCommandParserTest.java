@@ -1,4 +1,3 @@
-//@@author Sri-vatsa
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -9,6 +8,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.DeleteTagCommand;
 
+//@@author Sri-vatsa
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
  * outside of the DeleteTagCommand code. For example, inputs "1" and "1 abc" take the

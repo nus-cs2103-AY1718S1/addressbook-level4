@@ -160,10 +160,10 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return maxIndex;
     }
-
     //@@author
-    //sorting methods
+
     //@@author Sri-vatsa
+    //sorting methods
     /***
      * sort addressbook persons by number of times they were searched for
      */

@@ -42,13 +42,17 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
+    //@@author Sri-vatsa
     public static final String VALID_DATE = "31/10/2020";
     public static final String VALID_TIME = "1800";
     public static final String VALID_LOCATION = "Computing";
     public static final String VALID_NOTES = "Project meeting";
     public static final String VALID_PERSON = "2";
 
+    public static final String PAST_DATE = "31/10/1995";
+    public static final String INVALID_DATE = "12/11/198";
 
+    //@@author
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -61,14 +65,23 @@ public class CommandTestUtil {
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
-    public static final String DATE_1 = " " + PREFIX_DATE + VALID_DATE;
-    public static final String TIME_1 = " " + PREFIX_TIME + VALID_TIME;
+    //@@author Sri-vatsa
+    public static final String DATE_VALID = " " + PREFIX_DATE + VALID_DATE;
+    public static final String TIME_VALID = " " + PREFIX_TIME + VALID_TIME;
     public static final String LOCATION_1 = " " + PREFIX_LOCATION + VALID_LOCATION;
     public static final String NOTES_1 = " " + PREFIX_NOTES + VALID_NOTES;
     public static final String PERSON_1 = " " + PREFIX_PERSON + VALID_PERSON;
 
+    public static final String DATE_PAST = " " + PREFIX_DATE + PAST_DATE;
+    public static final String DATE_INVALID = " " + PREFIX_DATE + INVALID_DATE;
+
+    public static final String ADD_MEETING_INVALID_FORMAT = "Invalid command format! \n"
+            + "addMeeting: Adds a meeting to the address book. Parameters: on DATE from TIME at LOCATION about NOTES "
+            + "with PERSON 1 with PERSON 2 ...\n"
+            + "Example: addMeeting on 20/11/2017 from 1800 at UTown Starbucks about Project Meeting with 1";
 
 
+    //@@author
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones

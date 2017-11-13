@@ -4,6 +4,7 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.core.index.Selection;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -20,7 +21,7 @@ public class MapCommand extends UndoableCommand {
     public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " INDEX";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the address of person on Google Maps "
             + "identified by the index number used in the last person listing. "
-            + "Parameters: INDEX"
+            + "Parameters: INDEX "
             + "Example: " + COMMAND_WORD + " 1 ";
     public static final String MESSAGE_MAP_SHOWN_SUCCESS = "Map Display Successful! Address of: %1$s";
 
@@ -32,7 +33,12 @@ public class MapCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (Selection.getSelectionStatus() == false && index.getOneBased() <= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_PERSON_NOT_SELECTED);
+        }
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
