@@ -11,7 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.MrtMapDisplay;
 
-//@@author Yew Onn
+//@@author YewOnn
 /**
  * Display a list of mrt stations that minimises the accumulated travelling time
  * of every specified individual

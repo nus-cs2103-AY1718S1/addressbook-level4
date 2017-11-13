@@ -16,5 +16,6 @@ public class Messages {
                                                              "visualize", "arrange", "list", "locateMrt", "edit",
                                                              "find", "findByAddress", "findByPhone", "findByEmail",
                                                              "findByTags", "delete", "locate", "select", "history",
-                                                             "sort", "undo", "clear", "exit", "schedule", };
+                                                             "sort", "undo", "clear", "exit", "schedule",
+                                                             "meetingLocation" };
 }

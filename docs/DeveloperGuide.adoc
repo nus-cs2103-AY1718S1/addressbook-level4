@@ -303,9 +303,10 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
+// tag::meetingLocation[]
+=======
 
 // tag::locate[]
-
 === Best Meeting Location Mechanism
 image::mrtMapImage.png[width="800"]
 TheBest Meeting Location Mechanism is an algorithm to compute the best mrt
@@ -336,7 +337,8 @@ As shown in the image, the mrt map is roughtly similar with that found in that
 standard Singapore map. This is made possible with some of the coordinate of the
 mrt station within the canvass itself being hard coded.
 
->>>>>>> 107d96a8e9057ac320b9aec5aa02a6d9ebdb4883
+// end::meetingLocation[]
+=======
 
 === Locate mechanism
 

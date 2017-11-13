@@ -205,6 +205,7 @@ Arranges a meeting for person 1, person 2 and person 3 based on their free time 
 
 // end::arrange[]
 
+// tag::meetingLocation[]
 === Arrange a meeting location for a list of person : `meetingLocation`
 
 Arrange a meeting location for a list of person in the address book.
@@ -242,6 +243,8 @@ Example:
 
 Show the meeting location for person 1, person2 and person 3 based on their
 nearest mrt station.
+
+// end::meetingLocation[]
 
 === Listing all persons : `list`
 
@@ -344,6 +347,7 @@ Returns any person having addresses containing `stadium` or `pier`
 
 // end::findByAddress[]
 
+// tag::findByPhone[]
 === Locating persons by phone: `findByPhone`
 
 Finds persons whose phone contain any of the given keywords. +
@@ -354,6 +358,8 @@ Examples:
 
 * `findByPhone 12345678` +
 Returns `john` and `John Doe` whose phone number is '12345678'.
+
+// end::findByPhone[]
 
 // tag::find2[]
 === Locating persons by email: `findByEmail`
