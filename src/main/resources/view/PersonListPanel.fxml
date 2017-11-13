@@ -3,6 +3,8 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<!-- // @@author pwenzhe -->
+<VBox styleClass="listPanel" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <!-- // @@author -->
   <ListView fx:id="personListView" VBox.vgrow="ALWAYS" />
 </VBox>

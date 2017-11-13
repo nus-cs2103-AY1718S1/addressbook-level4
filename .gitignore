@@ -7,10 +7,10 @@ lib/*
 *.iml
 *.log
 *.log.*
-*.csv
 config.json
 src/test/data/sandbox/
 preferences.json
+Bevy.csv
 .DS_Store
 ./screenshot*.png
 classes/

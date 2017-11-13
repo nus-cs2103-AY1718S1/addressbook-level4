@@ -1,0 +1,93 @@
+= Yue Pei Er Valerie - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Bevy
+Bevy is a desktop address book application for user to store their contacts.
+The user interacts with it using a Command Line Interface, and it has a Graphical User Interface created with JavaFX.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T16-B3/main/blob/master/collated/main/Valerieyue.md[Functional code]] [https://github.com/CS2103AUG2017-T16-B3/main/blob/master/collated/test/Valerieyue.md[Test code]]
+
+== Enhancement Added: Birthday Field/ Find Month
+User can add in their contacts' birthday date when adding a person on to Bevy.
+They can also find the people who have their birthday in the same month.
+
+---
+
+=== External behavior
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Justification
+
+The main purpose of Bevy is to help users to remember as many details about their friends as possible.
+Their contacts' birthday will be one of the information that we feel that is important for users to remember.
+
+Bevy's find command for month will further add convenience for user to keep track of their contact's birthdays.
+
+---
+
+=== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=birthdayfield]
+
+#End of Extract#
+
+== Enhancement Added: Statistics
+User can view 2 different statistics - Birthday and Tag statistics. +
+Birthday statistics allow user to view the number of people having their birthday in a particular month. +
+Tag statistics allow user to view the number of people having the same tag.
+
+---
+
+=== External behavior
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=statistics]
+
+#End of Extract#
+
+---
+
+=== Justification
+
+These statistics will give users more information about their contacts.
+It will be more convenient for users to be able to view these information at a glance.
+This feature will also make the two fields, tag and birthday more useful.
+
+---
+=== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=statistics]
+
+#End of Extract#
+
+== Other contributions
+
+=== 1. Make Fields Optional
+Make fields optional when adding a new contact. +
+(Pull request https://github.com/CS2103AUG2017-T16-B3/main/pull/28[#28])
+
+=== 2. Sorting
+Added sort function such that the list will always be sorted according to alphabetical order without the need of an additional command. +
+(Pull requests https://github.com/CS2103AUG2017-T16-B3/main/pull/6[#6])
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#

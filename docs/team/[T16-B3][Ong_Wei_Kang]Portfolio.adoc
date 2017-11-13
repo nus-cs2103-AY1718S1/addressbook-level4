@@ -1,0 +1,186 @@
+= Ong Wei Kang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Bevy
+Bevy is a powerful app that helps you to remember your friends again. It simplifies your friends' information in a
+single place and provide more. Bevy is smart to know what your friends are up to in their social media, gives
+you a sneak peek into their location and even provides statistics analysis for you.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T16-B3/main/blob/master/collated/main/johnweikangong.md[Functional code]] [https://github.com/CS2103AUG2017-T16-B3/main/blob/master/collated/test/johnweikangong.md[Test code]] [https://github.com/CS2103AUG2017-T16-B3/main/blob/master/collated/main/johnweikangong-reused.md[Reused Code]]
+
+=== Enhancement Added: Instagram/Google Maps Browser Panel
+
+==== Justification
+
+Instagram and Google Map provides more information about a person to users. This lets the users about what is happening in their lives.
+
+==== Implementation
+
+---
+Start of Extract [from: Developer Guide] written by Ong Wei Kang
+
+include::../DeveloperGuide.adoc[tag=instagramGoogleMapBrowserPanel]
+
+End of Extract
+
+---
+
+=== Enhancement Added: Delete Multiple Persons
+
+==== External behavior
+
+---
+Start of Extract [from: User Guide] written by Ong Wei Kang
+
+include::../UserGuide.adoc[tag=deleteMultiplePersons]
+
+End of Extract
+
+---
+
+==== Justification
+
+Deleting multiple persons helps to reduce the hassle of typing many lines of command just to delete a few persons.
+This greatly improves user experience.
+
+==== Implementation
+
+---
+Start of Extract [from: Developer Guide] written by Ong Wei Kang
+
+include::../DeveloperGuide.adoc[tag=deleteMultiplePersons]
+
+End of Extract
+
+---
+
+=== Enhancement Added: Home/Help Command
+
+==== External behavior
+
+---
+Start of Extract [from: User Guide] written by Ong Wei Kang
+
+include::../UserGuide.adoc[tag=home]
+
+include::../UserGuide.adoc[tag=help]
+
+End of Extract
+
+---
+
+==== Justification
+The home command displays the home panel which gives users an overview of the app, providing important
+information such as the total number of people and tags. It also provides randomised tips and advices to empower
+users with the features of the app.
+
+The help command displays the help panel which gives users a concise, summarised table of commands for quick reference.
+This is useful for users to do a quick lookup when they need help.
+
+==== Implementation
+
+---
+Start of Extract [from: Developer Guide] written by Ong Wei Kang
+
+include::../DeveloperGuide.adoc[tag=homeHelpCommand]
+
+End of Extract
+
+---
+
+=== Enhancement Added: Dynamic Information Panel
+
+==== External behavior
+
+---
+Start of Extract [from: User Guide] written by Ong Wei Kang
+
+include::../UserGuide.adoc[tag=home]
+
+include::../UserGuide.adoc[tag=help]
+
+End of Extract
+
+---
+
+==== Justification
+
+UI is cleaner and dynamic. There is no need to put all UI elements onto a static information panel, instead the information panel
+can be changed according to user's command.
+
+==== Implementation
+
+---
+Start of Extract [from: Developer Guide] written by Ong Wei Kang
+
+include::../DeveloperGuide.adoc[tag=dynamicInformationPanel]
+
+End of Extract
+
+---
+
+=== Enhancement Added: Suggestions Popup Menu
+
+==== External behavior
+
+---
+Start of Extract [from: User Guide] written by Ong Wei Kang
+
+include::../UserGuide.adoc[tag=suggestionsPopupMenu]
+
+End of Extract
+
+---
+
+==== Justification
+
+Users can use the suggestions to complete the words they are trying to type, this helps to speed up
+the typing and provides a better user experience.
+
+==== Implementation
+
+---
+Start of Extract [from: Developer Guide] written by Ong Wei Kang
+
+include::../DeveloperGuide.adoc[tag=suggestionsPopupMenu]
+
+End of Extract
+
+---
+
+=== Enhancement Added: Export Address Book Data
+
+==== External behavior
+
+---
+Start of Extract [from: User Guide] written by Ong Wei Kang
+
+include::../UserGuide.adoc[tag=export]
+
+End of Extract
+
+---
+
+==== Justification
+
+Users can quickly export the address book data into a .csv file which is used by thousands of applications
+out there. Users can easily integrate into other applications which support importing of .csv files. Users will also
+save many hours of manually typing into an excel sheet.
+
+==== Implementation
+
+---
+Start of Extract [from: Developer Guide] written by Ong Wei Kang
+
+include::../DeveloperGuide.adoc[tag=export]
+
+End of Extract
+
+---
+
+=== Other contributions
+
+* Wrote additional tests to increase coverage from 91% to 92.2% (Pull requests https://github.com/CS2103AUG2017-T16-B3/main/pull/51[#51], https://github.com/CS2103AUG2017-T16-B3/main/pull/65[#65])
+

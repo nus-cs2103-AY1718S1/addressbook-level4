@@ -30,8 +30,11 @@ public class EditPersonDescriptorBuilder {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
+        descriptor.setBirthday(person.getBirthday());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setPostalCode(person.getPostalCode());
+        descriptor.setFavourite(person.getFavourite());
         descriptor.setTags(person.getTags());
     }
 
@@ -60,6 +63,18 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
      * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withEmail(String email) {
@@ -79,6 +94,30 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseAddress(Optional.of(address)).ifPresent(descriptor::setAddress);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Postal Code} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withPostalCode(String postalCode) {
+        try {
+            ParserUtil.parsePostalCode(Optional.of(postalCode)).ifPresent(descriptor::setPostalCode);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("postal code is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Favourite} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withFavourite(String favourite) {
+        try {
+            ParserUtil.parseFavourite(Optional.of(favourite)).ifPresent(descriptor::setFavourite);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("favourite is expected to be unique.");
         }
         return this;
     }

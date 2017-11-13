@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Bevy - Developer Guide `v1.5`
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,67 +10,91 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T16-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team Bevy`      Since: `Aug 2017`      Licence: `MIT`
+
+== Introduction
+
+Bevy is an application that stores and displays the user's friends.
+It is a one stop location for users to view more information about their friends. +
+
+This developer guide provides important technical information and explanations to help you get started as a Bevy contributor.
+It will be useful even if you are an experienced developer.
 
 == Setting up
 
 === Prerequisites
 
+It is important that you have downloaded required software to support Bevy.
+If not, you will not be able to run or make changes to it.
+
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+Having any Java 8 version will not be sufficient. +
+Bevy will not work with earlier versions of Java 8.
 +
 
 . *IntelliJ* IDE
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+By default, IntelliJ has Gradle and JavaFx plugins installed. +
+To ensure that you have enabled them, go to `File` > `Settings` > `Plugins`.
 
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+. Fork this repository from Bevy's github page, and clone the fork to your computer to create a local repository.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.address.MainApp` and try a few commands.
 . link:#testing[Run the tests] to ensure they all pass.
+. If you encounter any issues, please refork the repository and ensure that you have the relevant software required.
 
 === Configurations to do before writing code
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards].
+IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify:
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`:
+Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`, follow this order:
+** import static all other imports
+** import java.\*
+** import javax.*
+** import org.\*
+** import com.*
+** import all other imports
+** Add a `<blank line>` between each import.
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document
+to configure IntelliJ to check style-compliance as you write code.
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repository, links in the documentation will still point to the `CS2103AUG2017-T16-B3/main` repository.
+If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103AUG2017-T16-B3/main`),
+you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
-==== Setting up CI
+==== Setting up Continuous Integration
 
 Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
@@ -83,25 +107,28 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 When you are ready to start coding,
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+1. Read the link:#architecture[Architecture] section to get a better understanding of how to code using the API.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
 
 === Architecture
 
+The architecture section shows how Bevy is designed and will explain the reasons needed for this structure.
+
 image::Architecture.png[width="600"]
 _Figure 2.1.1 : Architecture Diagram_
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+The *_Architecture Diagram_* given above explains the high-level design of the application. The following is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* App launch: Initializes the components and connects them in the correct sequence.
+* Changing theme: Changes the active theme of the app.
+* Shut down: Shuts down the components and invokes cleanup method where necessary.
 
 link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
@@ -153,7 +180,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `InstagramBrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -165,43 +192,54 @@ The `UI` component,
 
 === Logic component
 
+The logic component executes the commands. This is the component that parses and filter the information required for Model.
+
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
+.  `CommandParser` parses the input for execution by `Command`
+.  The fixed variable names are stored separately as indicated by the faded blue boxes that will be used by `Command` and `CommandParser`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
-image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+image::DeletePersons1SequenceDiagram.png[width="800"]
+_Figure 3.3.4 : Interactions Inside the Logic Component for the `delete 1` Command_
+
+.  Following the flow of the diagram, the command `delete 1` will be sent to `LogicManager`.
+.  `AddressBookParser` will parse the `delete` command and will call the `DeleteCommandParser`.
+.  `DeleteCommandParser` will parse the remaining command, in this case `1` and call `DeleteCommand`.
+.  `DeleteCommand` will execute the functions in the class and delete the information in `Model`.
+.  After the end of execution, `DeleteCommand` will return the result to `LogicManager`.
+.  `LogicManager` will then return result.
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores the Address Book data.
+* Exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* Does not depend on any of the other three components.
 
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -226,6 +264,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Structure of the Logic Command Component_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -265,10 +304,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.2 : Starting Stack of Undo/Redo_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.1.3 : Stack of Undo/Redo after user inputs_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -278,6 +319,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.1.4 : Stack of Undo/Redo changes according to command_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -285,6 +327,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.1.5 : Sequence Diagram of undo command_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -294,14 +337,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.1.6 : Stack of Undo/Redo after clear command_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.1.7 : Stack of Undo/Redo after list command_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.1.8 : Activity diagram of Undo/Redo_
 
 ==== Design Considerations
 
@@ -363,6 +409,344 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::sort[]
+// tag::favourite[]
+=== Favourite & Sorting
+
+The list will be sorted whenever a new person is added or when a person is edited. The list will be sorted alphabetically while keeping the favourite persons at the top of the list.
+
+image::SortSequenceDiagram.png[width="300"]
+_Figure 4.4.1: Sorting Sequence Diagram using addPerson_
+
+image::SortSequenceDiagram2.png[width="300"]
+_Figure 4.4.2: Sorting Sequence Diagram using updatePerson_
+
+. Following the flow of the diagram, when a person is added or edited, the addPerson or updatePerson method will be respectively called in `AddressBook`.
+. `UniquePersonList` will sort the added person by comparing the favourite status and then the names in the current list and insert the persons at the correct slot.
+. The sorted contact list will then be returned.
+
+==== Design Consideration
+
+**Aspect:** Type of implementation to sort contact list. +
+**Alternative 1 (current choice):** Sort the list while new persons are added or when persons are edited. +
+**Pros:** More convenient for users as the list will be sorted after either input. +
+**Cons:** Users have no option not to sort the list, and future implemented commands might mess up the order. +
+**Alternative 2:** Creating a separate sort command to sort list. +
+**Pros:** A command that will always allow the list to be sorted in order. +
+**Cons:** It will cause inconvenience as user have to manually type in the command to sort the list whenever they add a new person or change their favourite status. +
+// end::sort[]
+// end::favourite[]
+
+// tag::birthdayfield[]
+=== Birthday/ Find Month
+
+The birthday feature allows user to store their friends' birthdays.
+Restrictions are set to ensure that the date entered is valid.
+There are a few format that the user can enter the date.
+The birthday class will reformat the birthday entered to ensure that the birthday saved in the contact list is standardised.
+This will make it easier for users to view. The converted format can also assist in executing `find` command for month.
+
+After adding the birthday, users can search for a particular month and the list will show the people who were born in the same month, sorted according to the day.
+
+The following sequence diagram shows how find works when searching for a month.
+
+image::FindMonthSequenceDiagram.png[width="800"]
+_Figure 4.5.1: Find Month Sequence Diagram_
+
+. Following the flow of the diagram, the command `find m/Jan` will be sent to the `LogicManager`.
+. `AddressBookParser` will parse the `find` command and call the `FindCommandParser`.
+. `FindCommandParser` will parse the remaining command, in this case `m/Jan` and call `PersonContainsKeywordsPredicate`.
+. `PersonContainsKeywordsPredicate` will filter the list and return to `FindCommandPaser`.
+. `FindCommandParser` will then call `FindCommand` and execute the command.
+. The list will then be returned to `LogicManager`.
+
+==== Design Consideration
+
+**Aspect:** Type of implementation to find the month. +
+**Alternative 1 (current choice):** Use the current find command that is currently used for finding name and phone number. +
+**Pros:** Easy to implement, since we only need to add a method to the class. +
+**Cons:** It may make the code for find command more complicated. +
+**Alternative 2:** Creating a separate find command only for searching month. +
+**Pros:** Makes the code simpler and more direct as there is a command reserved for each of the command. +
+**Cons:** This would make it more complicated for the user to use as there is a different command used for different search. +
+// end::birthdayfield[]
+
+// tag::statistics[]
+=== Birthday/Tag Statistics Command
+
+image::BirthdayStatistics.JPG[width="800"]
+_Figure 4.6.1: Birthday Statistics_
+
+The birthday statistics will show users a table of the number of people having their birthday in each month,
+while the tag statistics will show user a table of the number of people who has the same tag.
+
+image::BirthdayTagStatisticsPanelClassDiagram.png[width="400"]
+_Figure 4.6.2: Birthday/Tag Statistics Panel Class Diagram_
+
+As shown from the class diagram, both panels extends the UiParts.
+The birthday/tag statistics panel will display the information depending on the command word, `birthdaystatistics` or `tagstatistics`.
+
+The following sequence diagram shows how the birthday/tag statistics command is executed to display the respective panels,
+using birthday statistics command as an example.
+
+image::BirthdayStatisticsCommandSequenceDiagram.png[width="400"]
+_Figure 4.6.3: Birthday Statistics Command Sequence Diagram_
+
+. Following the flow of the diagram, the `LogicManager` will execute  the `birthdaystatistics` command.
+. `BirthdayStatisticsCommand` will request for an event change by posting to the events center the event `ChangeInformationPanelRequestEvent`, with `BIRTHDAY_STATISTICS_PANEL_REQUEST_EVENT`
+as the parameter of the event.
+. `MainApp` will handle the new event and push to the `Ui`, which will push to the `MainWindow`.
+. In `MainWindow`, `changeInformationPanel()` will perform the panel change depending on the
+parameter in the event.
+. `BirthdayStatistics` will then return `CommandResult` with `MESSAGE_SUCCESS` as the parameter back to the `LogicManager`.
+
+==== Design Consideration
+
+**Aspect:** Command style for statistics +
+**Alternative 1 (current choice):** Use a separate command for each statistics. +
+**Pros:** Easy to implement. Straight forward for users as each statistics has it's own command. The command alias makes it easy for users. +
+**Alternative 2:** Combine both statistics as a single command and create a parse function for user to choose which statistics they would like to view. +
+**Pros:** User can choose the statistics that they want to use using a single command. +
+**Cons:** An additional parse function has to be written to parse the command entered. +
+
+// end::statistics[]
+
+// tag::instagramGoogleMapBrowserPanel[]
+=== Instagram/Google Map Browser Panel
+
+image::BrowserPanels.png[width="800"]
+_Figure 4.7.1: Browser Panels UI_
+
+The browser panels display visual information about the selected person.
+
+image::BrowserPanelsClassDiagram.png[width="400"]
+_Figure 4.7.2: Browser Panels Class Diagram_
+
+As shown from the class diagram, both browser panels extends the UiParts. The browser panels are responsible for displaying information on the selected
+person based on the person details.
+
+The following sequence diagram shows how the browser operation works, using InstagramBrowserPanel as an exmaple:
+
+image::InstagramBrowserPanelSequenceDiagram.png[width="400"]
+_Figure 4.7.3: InstagramBrowserPanel Sequence Diagram_
+
+As shown from the sequence diagram, when a user selects a new person, the InstagramBrowserPanel handles the new selection event and display the selected
+person's Instagram based on the name in the details. For example, if the selected person's name is `Alex Yeoh`, InstagramBrowserPanel will use `AlexYeoh` as part of the URL parameter to display the person's
+Instagram page.
+
+Similarly, the GoogleMapBrowserPanel will display the map of the selected person's home location using either the postal code or the address in the person details.
+For example, if the postal code is `150159`, GoogleMapBrowserPanel will use this value to display the person's location. If the postal code is not available, address will be used. For example,
+if the address is `ABC 123 Street`, GoogleMapBrowserPanel will use `ABC+123+Street` as part of the URL parameter to display
+the person's location.
+
+[NOTE]
+If the address contains `#` characters, GoogleMapBrowserPanel will ignore any substring after this character
+
+==== Design Considerations
+
+**Aspect:** Type of implementation for Instagram +
+**Alternative 1 (current choice):** Use browser to display selected person's instagram page. +
+**Pros:** Easy to implement, since the components needed is the JavaFX scene and instagram URL parameter. The user interaction
+ is fully managed by the browser and instagram page itself. +
+**Cons:** Some user's instagram page cannot be found using just their name. +
+**Alternative 2:** Use Instagram API to construct an intergrated Instagram component +
+**Pros:** Integrates well, as users can use one-time login authentication to sync with Instagram and we can find users with similar names from user's followers. +
+**Cons:** Difficult to implement, as there is a steep learning curve to master Instagram API. +
+
+
+**Aspect:** Type of implementation for Google Map +
+**Alternative 1 (current choice):** Use browser to display selected person's location. +
+**Pros:** Easy to implement, since the componenets needed is the JavaFX scene and Google Map URL parameter. The user interaction
+is fully managed by the browser and Google Map page itself. +
+**Cons:** We can not customise the visual display of Google Map. +
+**Alternative 2:** Use Google Map API to construct an intergrated Google Map component +
+**Pros:** Integrates well, as we can simplify the experience for users. +
+**Cons:** Difficult to implement, as there is a steep learning curve to master Google Map API. +
+// end::instagramGoogleMapBrowserPanel[]
+
+// tag::deleteMultiplePersons[]
+=== Delete Multiple Persons
+
+The Delete mechanism has been extended to support deleting multiple persons.
+
+The following sequence diagram shows how the delete operation works:
+
+image::DeletePersons1-3SequenceDiagram.png[width="800"]
+_Figure 4.8.1 : Interactions Inside the Logic Component for the `delete 1-3` Command_
+
+Below is a detailed explanation of the extension.
+
+. Following the flow of the diagram, the command `delete 1-3` will be sent to the `LogicManager`.
+. `AddressBookParser` will parse the `delete` command and call the `DeleteCommandParser`.
+. `DeleteCommandParser` will parse the index ranges into a list of `IndexRange` class using the `ParserUtil`, where each `IndexRange`
+object contains the start and end index of each range.
+. This list will then be converted into a `HashSet` of indexes, which
+will be used to construct a `DeleteCommand`. `HashSet` prevents the duplicates of indexes.
+. `DeleteCommand` will execute and a sub list of person to delete will be produced to delete the person information in `Model`.
+. `DeleteCommand` will generate the result and return it.
+
+==== Design Consideration
+
+**Aspect:** Type of implementation for storing index range +
+**Alternative 1 (current choice):** Use a `IndexRange` class to store the start and end index of index range. +
+**Pros:** Easy to implement, a list of `IndexRange` can be constructed to store each index range +
+**Cons:** Some index may not be a range, therefore does not need the `IndexRange` class +
+**Alternative 2:** Directly parse the index ranges into a list of integers +
+**Pros:** Index that are not a range can be directly passed into this list. +
+**Cons:** Difficult to implement, duplicates of index will occur and requires iterating through the list and adding into a `HashSet`
+ to remove duplicates +
+// end::deleteMultiplePersons[]
+
+// tag::homeHelpCommand[]
+=== Home/Help Command
+
+image::Home.JPG[width="800"]
+_Figure 4.9.1: Home Panel_
+
+The home command show users the home panel of the app. This panel displays the total number of
+people and tags. It will also display randomised tips and advices below the welcome text.
+
+image::ViewingHelp.JPG[width="800"]
+_Figure 4.9.2: Help Panel_
+
+The help command show users the help panel of the app. This panel displays a summarised table of
+commands for quick reference.
+
+image::HomeHelpPanelClassDiagram.png[width="400"]
+_Figure 4.9.3: Home/Help Panel Class Diagram_
+
+As shown from the class diagram, both panels extends the UiParts. The panels are responsible for displaying
+information depending on the command entered.
+
+The following sequence diagram shows how the home/help command is executed to display the respective panels, using the home command as an exmaple.
+
+image::HomeCommandSequenceDiagram.png[width="400"]
+_Figure 4.9.4: Home Command Sequence Diagram_
+
+. Following the flow of the diagram, the `LogicManager` will execute  the `Home` command.
+. `HomeCommand` will request for an event change by posting to the events center the event `ChangeInformationPanelRequestEvent`, with `HOME_PANEL_REQUEST_EVENT`
+as the parameter of the event.
+. `MainApp` will handle the new event and push to the `Ui`, which will push to the `MainWindow`.
+. In `MainWindow` class, `changeInformationPanel()` will perform the panel change depending on the
+parameter in the event.
+. `Home` will then return `CommandResult` with `MESSAGE_SUCCESS` as the parameter back to the `LogicManager`.
+// end::homeHelpCommand[]
+
+// tag::dynamicInformationPanel[]
+=== Dynamic Information Panel
+
+image::DynamicInformationPanel.png[width="800"]
+_Figure 4.10.1: Change Information Panel Sequence Diagram_
+
+The information panel, seen above has the capability of changing panel depending on the command entered. Home, help, select,
+birthday statistics and tag statistics command are the current commands
+that will post new `ChangeInformationPanelRequestEvent(panel)` event.
+
+Below are the respective commands and their requested panel.
+
+. *Home Command*: Home panel.
+. *Help Command*: Help panel.
+. *Select Command*: Selected person's information panel.
+. *Birthday Statistics Command*: Birthday statistics panel.
+. *Tag Statistics Command*: Tag statistics panel.
+
+The sequence diagram below shows how the panel are changed after the respective commands post events to the events center.
+
+image::ChangeInformationPanelSequenceDiagram.png[width="800"]
+_Figure 4.10.2: Change Information Panel Sequence Diagram_
+
+. Following the flow of the diagram, `MainApp` will handle the new event and push to the `Ui`, which will push to the `MainWindow`.
+. In `MainWindow` class, `changeInformationPanel()` will perform the panel change depending on the
+parameter in the event.
+
+Refer to the respective command implementation for more in-depth explanation of how the commands change the
+information panel.
+
+==== Design Consideration
+
+**Aspect:** Type of Information Panel +
+**Alternative 1 (current choice):** Use a dynamic information panel that will change depending on the commands. +
+**Pros:** Provides a much cleaner, clutter-free UI experience, as there is no need to put all UI element into a static
+display. +
+**Cons:** Extra implementation required for individual commands that will require changing of the panel. +
+**Alternative 2:** Use a static information panel with all UI elements preloaded. +
+**Pros:** Easier implementation, as everything is loaded on start and displayed. No need for extra implementation for
+ individual commands. +
+**Cons:** Creates a cluttered UI experience that may confuse users. +
+// end::dynamicInformationPanel[]
+
+// tag::suggestionsPopupMenu[]
+=== Suggestions Popup menu
+
+image::Suggestions.png[width="800"]
+_Figure 4.11.1: Suggestions Popup menu_
+
+As shown above, Bevy can suggests words based on the current text input on the command box.
+The suggestions are preloaded using keywords from the features in Bevy.
+
+==== Design Consideration
+
+**Aspect:** Type of suggestions popup menu +
+**Alternative 1 (current choice):** Use JavaFX UI elements to create own suggestions popup menu method. +
+**Pros:** Provides a faster response time when users type in the command box. +
+**Cons:** Extra implementation required in writing the methods required to perform this feature. +
+**Alternative 2:** Use a pre-defined JavaFX suggestions popup menu method: `TextFields.bindAutoCompletion()`. +
+**Pros:** Easier implementation, as the pre-defined JavaFX method reduce the implementation drastically. +
+**Cons:** Provides a slower response time when users type in the command box, affecting user experience. +
+//end::suggestionsPopupMenu[]
+
+// tag::export[]
+=== Export Address Book Data
+
+image::ExportData.png[width="800"]
+_Figure 4.12.1: Exporting your data out of Bevy_
+
+Bevy can export address book data out onto a .csv file when users enter the export command. Seen in the figure above is the actual file Bevy exports the data to.
+
+image::ExportCommandSequenceDiagram.png[width="400"]
+_Figure 4.12.2: Export Command Sequence Diagram_
+
+image::SaveToCsvFileSequenceDiagram.png[width="400"]
+_Figure 4.12.3: Save to CSV File Sequence Diagram_
+
+. Following the flow of the diagrams, the `LogicManager` will execute  the `export` command.
+. `ExportCommand` will request for an event change, as seen in figure 4.12.2 by posting to the events center the event `ExportToFileRequestEvent`.
+. `MainApp` will handle the new event, as seen in figure 4.12.3 and save the current address book data using `StorageManager`.
+. `ExportCommand` will then return `CommandResult` with `MESSAGE_SUCCESS` as the parameter back to the `LogicManager`.
+
+// end::export[]
+
+// tag::changetheme[]
+=== Changing Themes
+
+The theme of the application can be changed via a request event. The `changetheme` command raises the `ChangeThemeRequestEvent()`. There are two themes, namely dark and bright. +
+
+The sequence diagram below shows how the theme is changed.
+
+image::ThemeSequenceDiagram.png[width="800"]
+_Figure 4.13.1 ThemeCommand Sequence Diagram_
+
+From the sequence diagram, this operation extends into the Model and UI components.
+
+Below is a detailed explanation of the extension.
+
+. The `changetheme` command is sent to the `AddressBookParser` which then calls on the `ThemeCommand`.
+. `ThemeCommand` posts a `ChangeThemeRequestEvent()` which will be received by the `MainApp`.
+. `MainApp` then calls the `changeTheme()` from `UiManager`.
+. `UiManager` invokes the `MainWindow` to change the CSS files active accordingly.
+. `UiManager` then updates the `UserPref` with the theme preference.
+
+==== Design Consideration
+
+**Aspect:** Type of implementation to change and store theme. +
+**Alternative 1 (current choice):** Make a new command that changes and stores the theme. +
+**Pros:** Lets the user change the theme and automatically saves it under preferences. +
+**Cons:** Code for the theme command involves 3 different components and can be messy.  +
+**Alternative 2:** Creating a separate command for changing theme and saving the theme. +
+**Pros:** Makes the code simpler with different commands using lesser components. +
+**Cons:** It is less convenient for the user as it requires an additional input for saving the theme. +
+// end::changetheme[]
 
 == Documentation
 
@@ -451,7 +835,9 @@ See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build auto
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI], https://www.appveyor.com/[AppVeyor], https://coveralls.io/[Coveralls] and https://www.codacy.com/[Codacy] to perform _Continuous Integration_ on Bevy. +
+
+See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Making a Release
 
@@ -718,28 +1104,173 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="99%",cols="2%,10%,<13%,<27%,<38%",options="header",]
 |=======================================================================
-|Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|No. |Priority |As a ... |I want to ... |So that I can...
+|1 |`* * *` |new user |see user usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|2 |`* * *` |user |add a new person | store the information about that person
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|3 |`* * *` |user |delete a person |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|4 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|5 |`* * *` |user |find my friends through their initials |find my friend’s details easily
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|6 |`* * *` |user |undo and redo my commands |undo and redo my recent errors
+
+|7 |`* * *` |user |edit my addressBook |make changes to the addressBook
+
+|8 |`* * *` |user |view my contact list in alphabetical order |scroll through the list easily
+
+|9 |`* * *` |user |use alias for commands |use the commands conveniently
+
+|10 |`* * *` |user |find person using tags |find persons based on the different categories
+
+|11 |`* * *` |user |save my person's birthday |track persons' birthdays
+
+|12 |`* * *` |user |find persons by birthday month |find who is having birthdays
+
+|13 |`* * *` |user |add persons with minimal details |have a choice on the amount of details I want to include about a person
+
+|14 |`* * *` |user |view the total number of persons  |know how many persons in AddressBook
+
+|15 |`* * *` |user |pin contacts at the top |find my favourite contacts more easily
+
+|16 |`* *` |user |sort my list in many different ways |organise according to my preference
+
+|17 |`* *` |user |have an AddressBook that can auto capitalise the name |Add new person with more convenience
+
+|18 |`* *` |user |be able to have a choice of viewing less details on persons |view a cleaner list
+
+|19 |`* *` |user |be able to view more details about persons only after selection |view more information about that person with a cleaner list
+
+|20 |`* *` |user |be able to sync my AddressBook with social media |import persons’ details
+
+|21 |`* *` |user |view selected person’s social media |find out more about what is going on in that person's life
+
+|22 |`* *` |user |see invalid commands with a different colour |so that I can identify them easily
+
+|23 |`* *` |user |find persons using emails |find them without knowing their names
+
+|24 |`* *` |user |view selected person’s address visually |have a better idea of where they are at
+
+|25 |`* *` |user |close the help UI with a command |close the help UI without going back to it while on the main window
+
+|26 | `* *` |user |delete persons that contain a certain tag |delete a group with convenience
+
+|27 |`* *` |user |have confirmation before deleting a person |ensure that I am deleting the correct person
+
+|28 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|29 |`*` |user |open one help window at any time |I do not have the problem of many opened windows
+
+|30 |`*` |user |add new persons using first name and last name |easily differentiate a name
+
+|31 |`*` |user |see the time |keep track of the time
+
+|32 |`*` |user |apply different themes |customise it according to my preference
+
+|33 |`*` |user |be able to change the colours of the tags | customise it according to my preference
+
+|34 |`*` |user |be able to add and view money lent to my friends |keep track of money lending
+
+|35 |`*` |user |filter and sort my friends based on how much money is on loan |see the amount of money loaned to each person in decreasing order
 |=======================================================================
-
-{More to be added}
-
 [appendix]
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: View help
+
+*MSS*
+
+1.  User requests to view the help information
+2.  AddressBook opens a new window containing the help information
++
+Use case ends.
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User adds new person
+2.  AddressBook saves new person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given command is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: List all persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User edits a specific person in the list
+4. AddressBook saves edited person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given command is invalid
+[none]
+** 3a1. AddressBook shows an error message
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find persons
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to find specific persons in the list
+4. AddressBook shows a list of matched persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given keywords are invalid.
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: Delete person
@@ -767,7 +1298,131 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Select person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to select a specific person in list
+4. AddressBook shows selected person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given index is invalid.
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: View history
+
+*MSS*
+
+1. User requests to view history of commands
+2. AddressBook shows a list of history
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. History is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo
+
+*MSS*
+
+1. User requests to undo commands
+2. AddressBook retrieve previous state of AddressBook
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No command to undo.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo
+
+*MSS*
+
+1. User requests to redo commands
+2. AddressBook retrieve previous state of AddressBook
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No command to redo.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear
+
+*MSS*
+
+1. User requests to clear persons
+2. AddressBook clear all persons
++
+Use case ends.
+
+[discrete]
+=== Use case: Exit
+
+*MSS*
+
+1. User requests to exit AddressBook
+2. AddressBook closes and exit window
++
+Use case ends.
+
+[discrete]
+=== Use case: Rename Tag
+
+*MSS*
+
+1. User requests to list all existing tags
+2. AddressBook shows a list of tags
+3. User requests to rename a tag in the list
+4. AddressBook renames the tag
+5. AddressBook updates the tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. Updated name already exist in the list of existing tags
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -775,6 +1430,11 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user should be able to fully understand and use the AddressBook by following the User Guide and Help UI.
+.  The GUI should be easily readable.
+.  It is open source.
+.  It is completely free for use.
+.  Should be able to function properly with and without an Internet connection.
 
 {More to be added}
 
@@ -798,16 +1458,22 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+*contactzilla*
 
-Author: ...
+Author: contactzilla
 
 Pros:
 
-* ...
-* ...
+* Offers many integration features
+* Unlimited address books
+* Helps to remove duplicates
+* Shows detailed information on birthday.
+* Command alias to allow ease of use.
 
 Cons:
 
-* ...
-* ...
+* Expansive, cost $5 per month
+* Complicated user interface and features
+* Commands are restricted to CLI. It would be better if there are more GUI commands.
+* No feature to view person's social media directly
+

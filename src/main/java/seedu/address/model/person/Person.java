@@ -20,20 +20,26 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
+    private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
+    private ObjectProperty<PostalCode> postalCode;
+    private ObjectProperty<Favourite> favourite;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Birthday birthday, Email email, Address address,
+                  PostalCode postalCode, Favourite favourite, Set<Tag> tags) {
+        requireAllNonNull(name, phone, birthday, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
+        this.birthday = new SimpleObjectProperty<>(birthday);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.postalCode = new SimpleObjectProperty<>(postalCode);
+        this.favourite = new SimpleObjectProperty<>(favourite);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -42,8 +48,8 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+        this(source.getName(), source.getPhone(), source.getBirthday(), source.getEmail(), source.getAddress(),
+                source.getPostalCode(), source.getFavourite(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -74,6 +80,20 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() {
+        return birthday.get();
+    }
+
     public void setEmail(Email email) {
         this.email.set(requireNonNull(email));
     }
@@ -100,6 +120,34 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Address getAddress() {
         return address.get();
+    }
+
+    public void setPostalCode(PostalCode postalCode) {
+        this.postalCode.set(requireNonNull(postalCode));
+    }
+
+    @Override
+    public ObjectProperty<PostalCode> postalCodeProperty() {
+        return postalCode;
+    }
+
+    @Override
+    public PostalCode getPostalCode() {
+        return postalCode.get();
+    }
+
+    public void setFavourite(Favourite favourite) {
+        this.favourite.set(favourite);
+    }
+
+    @Override
+    public ObjectProperty<Favourite> favProperty() {
+        return favourite;
+    }
+
+    @Override
+    public Favourite getFavourite() {
+        return favourite.get();
     }
 
     /**

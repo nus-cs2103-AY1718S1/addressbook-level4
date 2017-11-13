@@ -14,6 +14,9 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
+import seedu.address.commons.events.storage.ExportToFileRequestEvent;
+import seedu.address.commons.events.ui.ChangeInformationPanelRequestEvent;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
@@ -27,6 +30,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.CsvFileStorage;
+import seedu.address.storage.FileStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
@@ -40,7 +45,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 4, 0, false);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -50,7 +55,6 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-
 
     @Override
     public void init() throws Exception {
@@ -62,7 +66,8 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        FileStorage csvFileStorage = new CsvFileStorage(config.getCsvFilePath());
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, csvFileStorage);
 
         initLogging(config);
 
@@ -183,7 +188,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting Bevy " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
@@ -199,6 +204,27 @@ public class MainApp extends Application {
         Platform.exit();
         System.exit(0);
     }
+
+    // @@author johnweikangong
+    @Subscribe
+    public void handleChangeInformationPanelRequestEvent(ChangeInformationPanelRequestEvent event) {
+        ui.changeInformationPanel(event);
+    }
+    // @@author
+
+    // @@author pwenzhe
+    @Subscribe
+    public void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+        ui.changeTheme();
+    }
+    // @@author
+
+    // @@author johnweikangong
+    @Subscribe
+    public void handleExportToFileRequestEvent(ExportToFileRequestEvent event) throws IOException {
+        storage.saveToCsvFile(logic.getAddressBook());
+    }
+    // @@author
 
     @Subscribe
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {

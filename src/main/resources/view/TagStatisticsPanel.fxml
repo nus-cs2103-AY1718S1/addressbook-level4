@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--author Valerieyue-->
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.StackPane?>
+
+
+<StackPane fx:id="tagStatisticsPanel" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BarChart fx:id="barChart" title="Tag Statistics">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" fx:id="xAxis"/>
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </BarChart>
+   </children>
+</StackPane>

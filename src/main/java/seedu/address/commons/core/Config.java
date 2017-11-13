@@ -11,9 +11,10 @@ public class Config {
     public static final String DEFAULT_CONFIG_FILE = "config.json";
 
     // Config values customizable through config file
-    private String appTitle = "Address App";
+    private String appTitle = "Bevy";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
+    private String csvFilePath = "Bevy.csv";
 
     public String getAppTitle() {
         return appTitle;
@@ -33,6 +34,10 @@ public class Config {
 
     public String getUserPrefsFilePath() {
         return userPrefsFilePath;
+    }
+
+    public String getCsvFilePath() {
+        return csvFilePath;
     }
 
     public void setUserPrefsFilePath(String userPrefsFilePath) {

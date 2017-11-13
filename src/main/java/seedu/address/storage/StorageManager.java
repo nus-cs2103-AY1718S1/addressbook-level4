@@ -13,7 +13,6 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
-
 /**
  * Manages storage of AddressBook data in local storage.
  */
@@ -22,12 +21,14 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private FileStorage csvFileStorage;
 
-
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage,
+                          FileStorage csvFileStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.csvFileStorage = csvFileStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -62,7 +63,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException {
-        logger.fine("Attempting to read data from file: " + filePath);
+        logger.fine("Attempting to read data from XML file: " + filePath);
         return addressBookStorage.readAddressBook(filePath);
     }
 
@@ -73,15 +74,35 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
-        logger.fine("Attempting to write to data file: " + filePath);
+        logger.fine("Attempting to write data to XML file: " + filePath);
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    // @@author johnweikangong
+    // ================ File methods ==============================
+
+    @Override
+    public String getCsvFilePath() {
+        return csvFileStorage.getCsvFilePath();
+    }
+
+    @Override
+    public void saveToCsvFile(ReadOnlyAddressBook addressBook) throws IOException {
+        logger.fine("Attempting to write data to CSV file.");
+        csvFileStorage.saveToCsvFile(addressBook, csvFileStorage.getCsvFilePath());
+    }
+
+    @Override
+    public void saveToCsvFile(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+        logger.fine("Attempting to write data to CSV file.");
+        csvFileStorage.saveToCsvFile(addressBook, filePath);
+    }
+    // @@author
 
     @Override
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, " Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
         } catch (IOException e) {

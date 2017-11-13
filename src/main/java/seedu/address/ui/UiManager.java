@@ -14,6 +14,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.ChangeInformationPanelRequestEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -56,11 +57,43 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
+            // @@author pwenzhe
+            mainWindow.initTheme(prefs.getAddressBookTheme());
+            // @@author
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
+    }
+
+    // @@author johnweikangong
+    @Override
+    public void changeInformationPanel(ChangeInformationPanelRequestEvent event) {
+        mainWindow.changeInformationPanel(event);
+    }
+
+    // @@author pwenzhe
+    @Override
+    public void changeTheme() {
+        mainWindow.changeTheme();
+        this.prefs.setAddressBookTheme();
+    }
+    // @@author
+
+    @Override
+    public MainWindow getMainWindow() {
+        return mainWindow;
+    }
+
+    @Override
+    public String getCurrentInformationPanel() {
+        return mainWindow.getCurrentInformationPanel();
+    }
+
+    @Override
+    public String getCurrentStyleSheets() {
+        return mainWindow.getCurrentStyleSheets();
     }
 
     @Override
@@ -90,7 +123,7 @@ public class UiManager extends ComponentManager implements Ui {
     private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
                                                String contentText) {
         final Alert alert = new Alert(type);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        alert.getDialogPane().getStylesheets().add("view/BrightTheme.css");
         alert.initOwner(owner);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -110,7 +143,7 @@ public class UiManager extends ComponentManager implements Ui {
         System.exit(1);
     }
 
-    //==================== Event Handling Code ===============================================================
+    //============================ Event Handling Code =================================//
 
     @Subscribe
     private void handleDataSavingExceptionEvent(DataSavingExceptionEvent event) {

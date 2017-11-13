@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -113,7 +114,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        public void deletePersons(List<ReadOnlyPerson> targets) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 

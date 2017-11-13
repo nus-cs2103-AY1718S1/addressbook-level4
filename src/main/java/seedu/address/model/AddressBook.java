@@ -90,6 +90,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.add(newPerson);
+        persons.sort();
     }
 
     /**
@@ -107,11 +108,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
-        syncMasterTagListWith(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
         persons.setPerson(target, editedPerson);
+        persons.sort();
+        syncMasterTagListWith(editedPerson);
     }
 
     /**
@@ -145,11 +144,15 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * Removes {@code keys} from this {@code AddressBook}.
+     * The {@code tags} will reset and sync again with {@code persons}
+     * to update the tags after removing persons.
+     * @throws PersonNotFoundException if the {@code keys} is not in this {@code AddressBook}.
      */
-    public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
+    public boolean removePersons(List<ReadOnlyPerson> keys) throws PersonNotFoundException {
+        if (persons.removeAll(keys)) {
+            setTags(new HashSet<>()); // Resets the existing data of tags
+            syncMasterTagListWith(persons);
             return true;
         } else {
             throw new PersonNotFoundException();

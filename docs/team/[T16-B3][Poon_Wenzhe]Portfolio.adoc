@@ -1,0 +1,88 @@
+= Poon Wenzhe - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Bevy
+Bevy is a desktop address book application for user to store their contacts.
+The user interacts with it using a Command Line Interface, and it has a Graphical User Interface created with JavaFX.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T16-B3/main/blob/master/collated/main/pwenzhe.md[Functional code]] [https://github.com/CS2103AUG2017-T16-B3/main/blob/master/collated/test/pwenzhe.md[Test code]]
+
+=== Enhancement Added: Favourite Persons
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=editfav]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Bevy aims to help users remember their friends.
+With the favourite feature, users can pin their favourite persons to the top.
+This allows them to easily access these persons at the top of the list
+as the list is sorted when a person is added or edited.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=favourite]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Changing Theme
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=changetheme]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To allow users to change the theme based on their preference.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=changetheme]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Improving Find command to all details
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To allow users to easily find persons based on any detail provided.
+
+=== Other contributions
+
+* Updated some shared diagrams (such as UiClassDiagram.png).

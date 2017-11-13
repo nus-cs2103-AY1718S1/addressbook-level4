@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Valerie Yue</name>
+        <phone isPrivate="false">9400424</phone>
+        <birthday isPrivate="false">05 03 95</birthday>
+        <email isPrivate="false">valerie@gmail.com</email>
+        <address isPrivate="false">Blk 433, Bedok Street 21</address>
+        <postalCode>730433</postalCode>
+        <favourite>yes</favourite>
+        <tagged>friendly</tagged>
+    </persons>
+    <persons>
+        <name>Poon Wenzhe</name>
+        <phone isPrivate="false">9408824</phone>
+        <birthday isPrivate="false">13 04 95</birthday>
+        <email isPrivate="false">wenzhe@gmail.com</email>
+        <address isPrivate="false">Blk 893, Bugis Street 2</address>
+        <postalCode>432893</postalCode>
+        <favourite>yes</favourite>
+        <tagged>friendly</tagged>
+    </persons>
+    <persons>
+        <name>Ong Wei Kang</name>
+        <phone isPrivate="false">9400774</phone>
+        <birthday isPrivate="false">01 01 95</birthday>
+        <email isPrivate="false">weikang@gmail.com</email>
+        <address isPrivate="false">Blk 123, Tampines Drive 9</address>
+        <postalCode>409123</postalCode>
+        <favourite>yes</favourite>
+        <tagged>colleague</tagged>
+        <tagged>friendly</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Chiang</name>
+        <phone isPrivate="false">8800424</phone>
+        <birthday isPrivate="false">05 9 88</birthday>
+        <email isPrivate="false">bernice@gmail.com</email>
+        <address isPrivate="false">Blk 12, Chua Chu Kang Street 1</address>
+        <postalCode>730012</postalCode>
+        <favourite>no</favourite>
+        <tagged>friendly</tagged>
+        <tagged>sister</tagged>
+    </persons>
+    <persons>
+        <name>William Wee</name>
+        <phone isPrivate="false">9400904</phone>
+        <birthday isPrivate="false">14 04 88</birthday>
+        <email isPrivate="false">william@gmail.com</email>
+        <address isPrivate="false">Blk 67, Ubi Street 3</address>
+        <postalCode>430067</postalCode>
+        <favourite>no</favourite>
+        <tagged>colleague</tagged>
+        <tagged>handsome</tagged>
+    </persons>
+    <persons>
+        <name>Samuel Teo</name>
+        <phone isPrivate="false">9400455</phone>
+        <birthday isPrivate="false">07 05 34</birthday>
+        <email isPrivate="false">samuel@gmail.com</email>
+        <address isPrivate="false">Blk 789, Simei Street 9</address>
+        <postalCode>234789</postalCode>
+        <favourite>no</favourite>
+        <tagged>friend</tagged>
+        <tagged>owemoney</tagged>
+    </persons>
+    <persons>
+        <name>Ryan Tiong</name>
+        <phone isPrivate="false">9403324</phone>
+        <birthday isPrivate="false">6 12 95</birthday>
+        <email isPrivate="false">ryan@gmail.com</email>
+        <address isPrivate="false">Blk 73, Boon Lay Drive 6</address>
+        <postalCode>730073</postalCode>
+        <favourite>no</favourite>
+        <tagged>student</tagged>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Sandy Lim</name>
+        <phone isPrivate="false">9402103</phone>
+        <birthday isPrivate="false">6 10 06</birthday>
+        <email isPrivate="false">sandy@gmail.com</email>
+        <address isPrivate="false">Blk 56, Clementi Street 12</address>
+        <postalCode>412056</postalCode>
+        <favourite>no</favourite>
+        <tagged>student</tagged>
+        <tagged>needy</tagged>
+    </persons>
+    <persons>
+        <name>Nicholas Tay</name>
+        <phone isPrivate="false">9402003</phone>
+        <birthday isPrivate="false">9 2 45</birthday>
+        <email isPrivate="false">nicholas@gmail.com</email>
+        <address isPrivate="false">Blk 34, Kallang Street 3</address>
+        <postalCode>510034</postalCode>
+        <favourite>no</favourite>
+        <tagged>friendly</tagged>
+        <tagged>computing</tagged>
+    </persons>
+    <persons>
+        <name>Cindy Lin</name>
+        <phone isPrivate="false">8802103</phone>
+        <birthday isPrivate="false">6 9 65</birthday>
+        <email isPrivate="false">cindy@gmail.com</email>
+        <address isPrivate="false">Blk 157, Dover Street 8</address>
+        <postalCode>413157</postalCode>
+        <favourite>no</favourite>
+        <tagged>pretty</tagged>
+        <tagged>auntie</tagged>
+    </persons>
+    <persons>
+        <name>Michelle Ong</name>
+        <phone isPrivate="false">9402833</phone>
+        <birthday isPrivate="false">6 11 06</birthday>
+        <email isPrivate="false">michelle@gmail.com</email>
+        <address isPrivate="false">Blk 567, Bedok Street 12</address>
+        <postalCode>434567</postalCode>
+        <favourite>no</favourite>
+        <tagged>family</tagged>
+        <tagged>cousin</tagged>
+    </persons>
+    <persons>
+        <name>Hans Muster</name>
+        <phone isPrivate="false">9482424</phone>
+        <birthday isPrivate="false">09 08 87</birthday>
+        <email isPrivate="false">hans@example.com</email>
+        <address isPrivate="false">Bedok Street 4</address>
+        <postalCode>730643</postalCode>
+        <favourite>no</favourite>
+        <tagged>handsome</tagged>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Ruth Mueller</name>
+        <phone isPrivate="false">87249245</phone>
+        <birthday isPrivate="false">23 04 77</birthday>
+        <email isPrivate="false">ruth@example.com</email>
+        <address isPrivate="false">Bedok Drive 8</address>
+        <postalCode>159675</postalCode>
+        <favourite>no</favourite>
+        <tagged>owemoney</tagged>
+    </persons>
+    <persons>
+        <name>Heinz Kurz</name>
+        <phone isPrivate="false">95352563</phone>
+        <birthday isPrivate="false">06 01 83</birthday>
+        <email isPrivate="false">heinz@example.com</email>
+        <address isPrivate="false">Bedok Street 11</address>
+        <postalCode>119077</postalCode>
+        <favourite>no</favourite>
+        <tagged>family</tagged>
+        <tagged>cousin</tagged>
+    </persons>
+    <persons>
+        <name>Cornelia Meier</name>
+        <phone isPrivate="false">87652533</phone>
+        <birthday isPrivate="false">04 05 88</birthday>
+        <email isPrivate="false">cornelia@example.com</email>
+        <address isPrivate="false">Clementi Drive 5</address>
+        <postalCode>122910</postalCode>
+        <favourite>no</favourite>
+        <tagged>family</tagged>
+        <tagged>auntie</tagged>
+    </persons>
+    <persons>
+        <name>Werner Meyer</name>
+        <phone isPrivate="false">9482224</phone>
+        <birthday isPrivate="false">09 08 87</birthday>
+        <email isPrivate="false">werner@example.com</email>
+        <address isPrivate="false">Ang Mo Kio Drive 9</address>
+        <postalCode>139130</postalCode>
+        <favourite>no</favourite>
+        <tagged>friend</tagged>
+        <tagged>owemoney</tagged>
+    </persons>
+    <persons>
+        <name>Lydia Kunz</name>
+        <phone isPrivate="false">9482427</phone>
+        <birthday isPrivate="false">09 05 77</birthday>
+        <email isPrivate="false">lydia@example.com</email>
+        <address isPrivate="false">Little India</address>
+        <postalCode>569120</postalCode>
+        <favourite>no</favourite>
+        <tagged>pretty</tagged>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Anna Best</name>
+        <phone isPrivate="false">9482442</phone>
+        <birthday isPrivate="false">10 08 87</birthday>
+        <email isPrivate="false">anna@example.com</email>
+        <address isPrivate="false">Red Hill</address>
+        <postalCode>450922</postalCode>
+        <favourite>no</favourite>
+        <tagged>computing</tagged>
+        <tagged>friendly</tagged>
+    </persons>
+    <persons>
+        <name>Stefan Meier</name>
+        <phone isPrivate="false">8482424</phone>
+        <birthday isPrivate="false">08 08 90</birthday>
+        <email isPrivate="false">stefan@example.com</email>
+        <address isPrivate="false">little india</address>
+        <postalCode>235092</postalCode>
+        <favourite>no</favourite>
+        <tagged>family</tagged>
+        <tagged>pretty</tagged>
+        <tagged>computing</tagged>
+    </persons>
+    <persons>
+        <name>Martin Mueller</name>
+        <phone isPrivate="false">8482131</phone>
+        <birthday isPrivate="false">09 10 87</birthday>
+        <email isPrivate="false">hans@example.com</email>
+        <address isPrivate="false">Dover</address>
+        <postalCode>790125</postalCode>
+        <favourite>no</favourite>
+        <tagged>friendly</tagged>
+        <tagged>cousin</tagged>
+    </persons>
+</addressbook>

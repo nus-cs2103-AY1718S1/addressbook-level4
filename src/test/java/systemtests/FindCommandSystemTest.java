@@ -2,9 +2,13 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import java.util.ArrayList;
@@ -111,24 +115,42 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find phone number of person in address book -> 0 persons found */
+        /* Case: find phone number of person in address book -> 1 person found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find address of person in address book -> 0 persons found */
+
+        /* Case: find address of person in address book -> 3 persos found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
+        ModelHelper.setFilteredList(expectedModel, CARL, DANIEL, GEORGE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find email of person in address book -> 0 persons found */
+        /* Case: find email of person in address book -> 1 person found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find tags of person in address book -> 0 persons found */
+        /* Case: find postal code of person in address book -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getPostalCode().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        // @@author pwenzhe
+        /* Case: find favourite persons in address book -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " " + "favourite";
+        ModelHelper.setFilteredList(expectedModel, ALICE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+        // @@author
+
+        /* Case: find tags of person in address book -> 6 persons found */
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
+        ModelHelper.setFilteredList(expectedModel, ALICE, CARL, DANIEL, ELLE, FIONA, GEORGE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -150,7 +172,9 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: mixed case command word -> rejected */
+        /* Case:
+
+        mixed case command word -> rejected */
         command = "FiNd Meier";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
@@ -159,7 +183,9 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
      * box displays {@code Messages#MESSAGE_PERSONS_LISTED_OVERVIEW} with the number of people in the filtered list,
      * and the model related components equal to {@code expectedModel}.
+
      * These verifications are done by
+
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
      * selected card updated accordingly, depending on {@code cardStatus}.

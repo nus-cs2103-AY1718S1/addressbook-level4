@@ -2,9 +2,8 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -14,11 +13,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeInformationPanelRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -31,8 +31,13 @@ public class MainWindow extends UiPart<Region> {
 
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
-    private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final String HOME_PANEL = "HomePanel";
+    private static final String BIRTHDAY_STATISTICS_PANEL = "BirthdayStatisticsPanel";
+    private static final String PERSON_INFORMATION_PANEL = "PersonInformationPanel";
+    private static final String HELP_PANEL = "HelpPanel";
+    private static final String TAG_STATISTICS_PANEL = "TagStatisticsPanel";
+    private static final int MIN_HEIGHT = 800;
+    private static final int MIN_WIDTH = 1500;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -40,16 +45,30 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private HomePanel homePanel;
+    private PersonInformationPanel personInformationPanel;
+    private HelpPanel helpPanel;
+    private BirthdayStatisticsPanel birthdayStatisticsPanel;
+    private TagStatisticsPanel tagStatisticsPanel;
     private Config config;
     private UserPrefs prefs;
+    private String currentInformationPanel;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane informationPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
+
+    @FXML
+    private MenuItem homeMenuItem;
+
+    @FXML
+    private MenuItem birthdayStatisticsMenuItem;
+
+    @FXML
+    private MenuItem tagStatisticsMenuItem;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -90,11 +109,14 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(homeMenuItem, KeyCombination.valueOf("F2"));
+        setAccelerator(birthdayStatisticsMenuItem, KeyCombination.valueOf("F3"));
+        setAccelerator(tagStatisticsMenuItem, KeyCombination.valueOf("F4"));
     }
 
     /**
      * Sets the accelerator of a MenuItem.
-     * @param keyCombination the KeyCombination value of the accelerator
+     * @param keyCombination the KeyCombination value of the accelerator.
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
         menuItem.setAccelerator(keyCombination);
@@ -122,13 +144,11 @@ public class MainWindow extends UiPart<Region> {
         });
     }
 
+    // @@author johnweikangong
     /**
      * Fills up all the placeholders of this window.
      */
-    void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
+    public void fillInnerParts() {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -140,9 +160,82 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        /** At start, Initalise all dynamic information panels for MainWindowHandle
+         * to be able to initalise these panel in its respective handles for testing. */
+        personInformationPanel = new PersonInformationPanel();
+        informationPanelPlaceholder.getChildren().add(personInformationPanel.getRoot());
+
+        helpPanel = new HelpPanel();
+        informationPanelPlaceholder.getChildren().add(helpPanel.getRoot());
+
+        birthdayStatisticsPanel = new BirthdayStatisticsPanel(logic.getAddressBook());
+        informationPanelPlaceholder.getChildren().add(birthdayStatisticsPanel.getRoot());
+
+        tagStatisticsPanel = new TagStatisticsPanel(logic.getAddressBook());
+        informationPanelPlaceholder.getChildren().add(tagStatisticsPanel.getRoot());
+
+        homePanel = new HomePanel(logic.getAddressBook());
+        informationPanelPlaceholder.getChildren().add(homePanel.getRoot());
     }
 
-    void hide() {
+    /** Changes the information panel based on request event. */
+    public void changeInformationPanel(ChangeInformationPanelRequestEvent event) {
+        if (event.getPanelRequestEvent().equals(currentInformationPanel)) {
+            return; // Short circuit if the current information panel is the same as the requested information panel
+        } else {
+            informationPanelPlaceholder.getChildren().removeAll(homePanel.getRoot(), personInformationPanel.getRoot(),
+                    helpPanel.getRoot(), birthdayStatisticsPanel.getRoot(), tagStatisticsPanel.getRoot());
+
+            if (event.getPanelRequestEvent().equals(PERSON_INFORMATION_PANEL)) {
+                informationPanelPlaceholder.getChildren().add(personInformationPanel.getRoot());
+            } else if (event.getPanelRequestEvent().equals(HOME_PANEL)) {
+                informationPanelPlaceholder.getChildren().add(homePanel.getRoot());
+            } else if (event.getPanelRequestEvent().equals(HELP_PANEL)) {
+                informationPanelPlaceholder.getChildren().add(helpPanel.getRoot());
+            } else if (event.getPanelRequestEvent().equals(BIRTHDAY_STATISTICS_PANEL)) {
+                informationPanelPlaceholder.getChildren().add(birthdayStatisticsPanel.getRoot());
+            } else if (event.getPanelRequestEvent().equals(TAG_STATISTICS_PANEL)) {
+                informationPanelPlaceholder.getChildren().add(tagStatisticsPanel.getRoot());
+            }
+        }
+
+        currentInformationPanel = event.getPanelRequestEvent();
+    }
+
+    /**
+     * Changes the stylesheet used by UI when change theme command is executed.
+     */
+    public void changeTheme() {
+        String brightThemePath = MainApp.class.getResource(FXML_FILE_FOLDER + "BrightTheme.css").toString();
+        String darkThemePath = MainApp.class.getResource(FXML_FILE_FOLDER + "DarkTheme.css").toString();
+        String extensionsPath = MainApp.class.getResource(FXML_FILE_FOLDER + "Extensions.css").toString();
+
+        String brightThemeAllPaths = "[" + extensionsPath + ", " + brightThemePath + "]";
+
+        if (getRoot().getStylesheets().toString().equals(brightThemeAllPaths)) {
+            getRoot().getStylesheets().remove(brightThemePath);
+            getRoot().getStylesheets().add(darkThemePath);
+        } else {
+            getRoot().getStylesheets().remove(darkThemePath);
+            getRoot().getStylesheets().add(brightThemePath);
+        }
+    }
+    // @@author
+
+    // @@author pwenzhe
+    /**
+     * Initializes the theme on startup to the user preferred theme.
+     * @param theme
+     */
+    public void initTheme(String theme) {
+        String initThemePath = MainApp.class.getResource(FXML_FILE_FOLDER + theme + "Theme.css").toString();
+
+        getRoot().getStylesheets().add(initThemePath);
+    }
+    // @@author
+
+    public void hide() {
         primaryStage.hide();
     }
 
@@ -178,19 +271,60 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Returns the current size and the position of the main Window.
      */
-    GuiSettings getCurrentGuiSetting() {
+    public GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
     /**
-     * Opens the help window.
+     * Returns an unmodifiable child of the information panel currently displayed.
+     */
+    public String getCurrentInformationPanel() {
+        return informationPanelPlaceholder.getChildrenUnmodifiable().toString();
+    }
+
+    /**
+     * Returns the current stylesheets.
+     */
+    public String getCurrentStyleSheets() {
+        return getRoot().getStylesheets().toString();
+    }
+
+    // @@author johnweikangong
+    /**
+     * Opens the home panel.
+     */
+    @FXML
+    public void handleHome() {
+        changeInformationPanel(new ChangeInformationPanelRequestEvent(HOME_PANEL));
+    }
+
+    //@@author Valerieyue
+    /**
+     * Opens the birthday statistics panel.
+     */
+    @FXML
+    public void handleBirthdayStatistics() {
+        changeInformationPanel(new ChangeInformationPanelRequestEvent(BIRTHDAY_STATISTICS_PANEL));
+    }
+
+    /**
+     * Opens the tag statistics panel.
+     */
+    @FXML
+    public void handleTagStatistics() {
+        changeInformationPanel(new ChangeInformationPanelRequestEvent(TAG_STATISTICS_PANEL));
+    }
+    //@@author Valerieyue
+
+    /**
+     * Opens the help panel.
      */
     @FXML
     public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
-        helpWindow.show();
+        changeInformationPanel(new ChangeInformationPanelRequestEvent(HELP_PANEL));
     }
+    // @@author
 
     void show() {
         primaryStage.show();
@@ -200,21 +334,13 @@ public class MainWindow extends UiPart<Region> {
      * Closes the application.
      */
     @FXML
-    private void handleExit() {
+    public void handleExit() {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
-    }
-
+    // @@author johnweikangong
     void releaseResources() {
-        browserPanel.freeResources();
+        personInformationPanel.releaseResources();
     }
-
-    @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleHelp();
-    }
+    // @@author
 }
