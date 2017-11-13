@@ -36,7 +36,7 @@ endif::[]
 * This application was built based on https://github.com/se-edu/addressbook-level4[Address Book (Level 4)], an initiative
 of the https://se-edu.github.io/[SE-EDU team].
 * Some parts of this application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial]
-by _Marco Jakob_.
+provided by _Marco Jakob_.
 * Some features benefit from the dedicated work of https://nusmods.com/[NUSMods] team.
 * Natural language datetime parsing is developed based on the awesome library http://natty.joestelmach.com/[Natty]
 generously provided by http://www.joestelmach.com/[Joe Stelmach].

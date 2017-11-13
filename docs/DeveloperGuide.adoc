@@ -434,21 +434,21 @@ _Figure 4.3.2.1 : Class Diagram for_ `PropertyManager`
 
 ==== Implementation Outline
 
-1. Create a more general class to capture the common patterns among all columns (all different fields/properties): according to
+. Create a more general class to capture the common patterns among all columns (all different fields/properties): according to
 the basic OOP concept, a more generic class should become the superclass `Property`; then, other more specific classes
 (like `Name`, `Email`, `Phone`, etc.) can inherit from it. It is shown that such design decreases code duplicate a lot.
 
-2. Find a way to store the metadata of all columns (fields/properties): in popular SQL database implementation, they
+. Find a way to store the metadata of all columns (fields/properties): in popular SQL database implementation, they
 usually have a separate database reserved for the database server system itself. We must store similar information somewhere
 as well. Thus, we create a `PropertyManager` to store these "metadata", including short names, full names, constraint
 messages and regular expressions used for input validation. They are all `static` variables because there should only be
 one copy of these "metadata". We will waste a lot of resources if we store these "metadata" with each instance of the
 `Property` class.
 
-3. _Pre-loaded properties_: Things like `Name`, `Email` and `Phone` are widely used. They should ship with the application
+. _Pre-loaded properties_: Things like `Name`, `Email` and `Phone` are widely used. They should ship with the application
 and users do not need any additional setup steps to use them.
 
-4. Add new customize properties: advanced users should be provided with a command (`config --add-property`) to add their
+. Add new customize properties: advanced users should be provided with a command (`config --add-property`) to add their
 own customize fields (as shown in Figure 4.3.3.1). They should have the freedom to arbitrarily choose things like short
 name, full name, etc. They can easily add/edit these properties of each contact stored in the application, just like the
 _pre-loaded_ ones.
@@ -750,10 +750,23 @@ _(Similar strategy has been adopted in `ConfigCommand`)_
 **Alternative 1 (current choice):** Let users copy-paste the URL as a parameter of `ImportNusmodsCommand`. +
 **Pros:** Simple to use and easy to implement as well +
 **Cons:** Need to check whether the URL is valid and from NUSMods (currently using regular expression). +
-**Alternative 2:** Implement a built-in browser +
-**Pros:** East to implement and similar to other commands. +
+**Alternative 2:** Implement a built-in browser and render the NUSMods page +
+**Pros:** Need much extra work to implement the built-in browser. The page may not be rendered well since the built-in
+browser is typically smaller than OS browser and NUSMods does not fully adopt link:#mainstream-os[responsive UI framework]
+and may not work well on a small browser window. +
 **Cons:** Our users may not be used to it. The command word will become longer. It is not a good OOP practice as well
 because common details are not abstracted into a parent class and this produces duplicate codes.
+
+==== Implementation Outline
+
+. Create an `ImportCommand` abstract class and let `ImportXmlCommand` and `ImportNusmodsCommand` inherit from it (as in
+Figure 4.7.3.1). It is also a good practice to use an enumeration `ImportType` because the possible types of the import
+are within a fixed set of values. This leads to better modularity in `ImportCommandParser` as well.
+
+image::ImportNusmodsClassDiagram.png[width="600"]
+_Figure 4.7.3.1 : Class Diagram for Related Import Commands_
+
+. Implement utility method to validate a given URL and parse the `GET` parameters 
 
 === Contacts/event listing order by name/date time mechanism
 
@@ -1228,7 +1241,7 @@ Use case resumes at step 2.
 .  Test coverage should reach 85% at any time.
 .  Should always favour security over efficiency in development.
 .  Any user who understands English should be able to use the application with the help of the <<UserGuide#, User Guide>>.
-.  Internet connection is required if users want to sync their contacts/events in all devices and store in the cloud.
+.  Internet connection is required if users want to sync their contacts/events in all devices and import timetable from NUSMods.
 
 [appendix]
 == Glossary
@@ -1238,6 +1251,13 @@ Mainstream OS
 
 ....
 Windows, Linux, Unix, OS-X
+....
+
+[[responsive-ui-framework]]
+Responsive UI Framework
+
+....
+A front-end framework for web design that makes your web page looks good and easy to use regardless of the size of the browser window, like Bootstrap.
 ....
 
 [[private-contact-detail]]
