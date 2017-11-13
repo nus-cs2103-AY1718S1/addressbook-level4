@@ -1,4 +1,4 @@
-= H.M.U v1.4
+= H.M.U
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -13,26 +13,36 @@ endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * It is a Java sample application intended for users to schedule meetings with friends easily.
-* This is done by allowing the user to see common timeslots that the user and friends are free. Using an algorithm, users will be able to find the most convenient meeting spot.
-* What's different from H.M.U v1.1 (As of 20th October 2017)
-** Password feature
-** More test cases
-** Search by Address
-** Search by Phone Number
-** Add Closest MRT Station to Contacts
+* This is done by allowing the user to see common time slots where the user and friends are free. Using an algorithm, users will be able to find the most convenient meeting spot.
 
-* What's different from H.M.U v1.2 (As of 27th October 2017)
-** Search by Phone Number
-** Search by Email
-** Scheduling
-** More User-Friendly Login
+=== What's new in v1.1 (As of 13th October 2017)
+* Google Maps Support
+* Sort Command
 
-* What's different from H.M.U v1.3 (As of 3rd November 2017)
-** Search Contact's Location on Google Maps
-** Create Default Login Account
-** Remove Login Account
-** Visualize Schedule
-** Arrange Schedule
+=== What's new in v1.2 (As of 20th October 2017)
+* Password Support
+* Change Password
+* Search by Address
+* Add Closest MRT to Contacts
+* Search by Phone Number
+
+=== What's new in v1.3 (As of 27th October 2017)
+* User-Friendly Login
+* Search by Email
+* Search by Phone Number
+
+=== What's new in v1.4 (As of 3rd November 2017)
+* Search Contact's Location on Google Maps
+* Create Default Login Account
+* Remove Login Account
+* Arrange Schedule
+* Visualize Schedule
+
+=== What's new in v1.5 rc (As of 10th November 2017)
+* New UI to show contact's details
+* Select search contacts on Facebook
+* Improve Find Command
+* Autocompletion for commands
 
 == Site Map
 
