@@ -145,10 +145,10 @@ When you are ready to start coding,
 This section will provide an overview of the high level architecture system used to design and implement the application , mainly
 `Model` , `Logic` , `Storage` and `UI`.
 
-The *_Architecture Diagram_* shown in _Figure 2.1.1_ below explains the high-level design of the App. Given below is a quick overview of each component.
+The *_Architecture Diagram_* shown in _Figure 3.1.1_ below explains the high-level design of the App. Given below is a quick overview of each component.
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
@@ -175,26 +175,26 @@ Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see _Figure 2.1.2_ below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see _Figure 3.1.2_ below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
 
-_Figure 2.1.3a_ below shows the _Sequence Diagram_ for how the components interact in the scenario where the user issues the command `delete 1`.
+_Figure 3.1.3a_ below shows the _Sequence Diagram_ for how the components interact in the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-_Figure 2.1.3b_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+_Figure 3.1.3b_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -203,10 +203,10 @@ The sections below give more details of each component.
 
 === UI Component
 
-As seen from _Figure 2.2.1_ below, the UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+As seen from _Figure 3.2.1_ below, the UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 image::UiComponentClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -220,7 +220,7 @@ The `UI` component,
 
 === Logic Component
 
-_Figure 2.3.1_ below shows the structure of the `Logic` component.
+_Figure 3.3.1_ below shows the structure of the `Logic` component.
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
@@ -228,12 +228,12 @@ _Figure 2.3.1_ below shows the structure of the `Logic` component.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1_ : Structure of the Logic Component
+_Figure 3.3.1_ : Structure of the Logic Component
 
-_Figure 2.3.2_ shows finer details concerning `XYZCommand` and `Command` in _Figure 2.3.1_.
+_Figure 3.3.2_ shows finer details concerning `XYZCommand` and `Command` in _Figure 3.3.1_.
 
 image::NewCommandClassDiagram.PNG[width="800"]
-_Figure 2.3.2_ : Structure of Commands in the Logic Component.
+_Figure 3.3.2_ : Structure of Commands in the Logic Component.
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -245,14 +245,14 @@ The following is a brief explanation on how the API is implemented:
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-_Figure 2.3.3_ below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+_Figure 3.3.3_ below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model Component
 
-The structure of the `Model` component can be seen in _Figure 2.4.1_ below.
+The structure of the `Model` component can be seen in _Figure 3.4.1_ below.
 
 The `Model`,
 
@@ -262,13 +262,13 @@ The `Model`,
 * does not depend on any of the other three components.
 
 image::ModelComponentClassDiagram.PNG[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 === Storage Component
 
-The structure of the `Storage` component can be seen in _Figure 2.5.1_ below.
+The structure of the `Storage` component can be seen in _Figure 3.5.1_ below.
 
 The `Storage` component,
 
@@ -276,7 +276,7 @@ The `Storage` component,
 * can save the Address Book data in xml format and read it back.
 
 image::NewStorageClassDiagram.PNG[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -662,7 +662,7 @@ _Figure 4.3.3: Enhanced `HelpCommand` execution_
 
 This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
 
-The sequence diagram in _Figure 4.3.1_ below shows how the locate command is executed in the logic component:
+The sequence diagram in _Figure 4.4.1_ below shows how the locate command is executed in the logic component:
 
 image::LogicComponentSequenceDiagramLocate.png[width="800"]
 _Figure 4.4.1 : Sequence Diagram for locating address in logic component_
