@@ -297,7 +297,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. _Figure 4.1.1_ below shows the inheritance diagram for commands:
 
 image::NewCommandClassDiagram.PNG[width="800"]
-_Figure 4.1.1 : Inheritance Diagram for Commands_
+_Figure 4.1.1 : Inheritance diagram for commands_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -339,12 +339,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 As depicted in _Figure 4.1.4_: The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 4.1.4 : UndoRedoStack Diagram 1_
+_Figure 4.1.4 : UndoRedoStack diagram 1_
 
 As depicted in _Figure 4.1.5_: As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 4.1.5 : UndoRedoStack Diagram 2_
+_Figure 4.1.5 : UndoRedoStack diagram 2_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -354,7 +354,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 As depicted in _Figure 4.1.6_: We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 4.1.6 : UndoRedoStack Diagram 3_
+_Figure 4.1.6 : UndoRedoStack diagram 3_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -372,17 +372,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 As depicted in _Figure 4.1.8_: The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 4.1.8 : UndoRedoStack Diagram 4_
+_Figure 4.1.8 : UndoRedoStack diagram 4_
 
 As depicted in _Figure 4.1.9_: Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution.
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 4.1.9 : UndoRedoStack Diagram 5_
+_Figure 4.1.9 : UndoRedoStack diagram 5_
 
 The following activity diagram in _Figure 4.1.10_ below summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 4.1.10 : UndoRedoStack Activity Diagram_
+_Figure 4.1.10 : UndoRedoStack activity diagram_
 
 ==== Design Considerations
 
@@ -1327,18 +1327,18 @@ _Figure 4.10.1: UI Display of a Successful Enhanced `ScheduleCommand` Execution_
 ==== Design Considerations
 
 **Aspect:** Data structure to support multiple `Index` +
-**Alternative 1 (current choice)**: Use Set to store indices input +
-**Pros:** The application becomes smart enough to eliminate duplicate indices input and speed up the execution of `ScheduleCommand` +
-**Alternative 2:** Use ArrayList to store indices input  +
+**Alternative 1 (current choice)**: Use Set to store indices input. +
+**Pros:** The application becomes smart enough to eliminate duplicate indices input and speed up the execution of `ScheduleCommand`. +
+**Alternative 2:** Use ArrayList to store indices input.  +
 **Cons:** Users receive an error message if they input non-unique indices.
 
 ---
 
 **Aspect:** Data structure to support scheduling multiple activities with a contact +
-**Alternative 1 (current choice)**: Use ArrayList to store multiple schedules +
+**Alternative 1 (current choice)**: Use ArrayList to store multiple schedules. +
 **Pros:** This makes it possible to arrange the schedules based on dates. +
 **Cons:** There is a need to check for duplicate schedules so that all the schedules attached to a person are unique. +
-**Alternative 2:** Use Set to store multiple schedules  +
+**Alternative 2:** Use Set to store multiple schedules.  +
 **Pros:** There is no need to specially check for duplicate schedules.  +
 **Cons:** The arrangement of the schedules will appear at random.
 //end::scheduleMultiple[]
