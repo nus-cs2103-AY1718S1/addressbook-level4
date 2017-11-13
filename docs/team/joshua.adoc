@@ -1,0 +1,130 @@
+= Joshua Ng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F11-B2/main/blob/master/collated/main/bladerail.md[Functional code]]
+ [https://github.com/CS2103AUG2017-F11-B2/main/blob/master/collated/test/bladerail.md[Test code]]
+
+=== Enhancement Added: Remark Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The remark command allows additional information to be displayed on a person's card.
+
+=== Enhancement Added: Sort Command
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=SortCommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Sorting is important to the viewability of lists as it helps one to find the relevant information more easily as
+opposed to scanning through the entire list for their desired information. The current sort command implementation
+only supports sorting by name, but further enhancements will allow it to sort in ascending and descending orders
+by name, email, address, phone numbers, etc.
+
+Further enhancements to be implemented: Sort by tag and weblink
+
+=== Enhancement Added: UserPerson/User Profile
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=updateUserPerson]
+
+include::../UserGuide.adoc[tag=userProfileUI]
+
+#End of Extract#
+
+---
+
+The UserProfile is an object that contains the UserPerson details. It can later be extended to include additional data.
+A GUI will allow the user to view their current User Person details, and allow editing of the User Person information.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=UserProfile]
+
+#End of Extract#
+
+---
+
+=== Justification
+
+The User Profile will contain the user's contact card, which sets up for a later feature where contact cards can be shared.
+The user would then be able to share their contact instead of requiring others to key in the add command. This could also
+be extended to implementation of multiple users of one address book app. Each user profile would contain their own address
+book and user contact card. A GUI will allow ease of user profile editing as well as viewing of the user profile.
+
+---
+
+=== Enhancement Added: Share Command
+
+==== External Behaviour
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=shareCommand]
+
+#End of Extract#
+
+---
+
+=== Justification
+
+The User Profile was set up as a means of sharing the user's contact easily, by allowing the user to edit their own contact
+details and share it with others so that they would not have to repeat the information each time. The share command
+generates an add command that will be copied to the clipboard and thus can be copied and sent to another person immediately.
+
+Further enhancements to be implemented: Share other contacts in the addressbook as well.
+
+---
+
+=== Other contributions
+
+* Minor changes to improve readability of code and maintain consistency (https://github.com/CS2103AUG2017-F11-B2/main/pull/121/files[CommandTestUtil #121])
+* Fixed typecasting errors that were causing -Xlint warnings to appear upon compilation. (https://github.com/CS2103AUG2017-F11-B2/main/pull/97/files[SampleDataUtil #97], https://github.com/CS2103AUG2017-F11-B2/main/pull/141/files[ModelManager #141])
+* Participated in 1.4 bug tracking (Issues https://github.com/CS2103AUG2017-T10-B2/main/issues/82[#82], https://github.com/CS2103AUG2017-T10-B2/main/issues/83[#83], https://github.com/CS2103AUG2017-W14-B4/main/issues/109[#109], https://github.com/CS2103AUG2017-W14-B4/main/issues/112[#112])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

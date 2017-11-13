@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F11-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F11-B2`      Since: `Aug 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -22,7 +22,7 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `SocialBook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -33,7 +33,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 w/https://facebook.com/johndoe` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -47,6 +47,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+This is applicable to email and weblinks as well.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
@@ -54,54 +55,113 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+// tag::add[]
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL... a/ADDRESS [t/TAG] [w/WebLink]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags, email and weblinks (including 0)
+email, phone number, address, tags and weblinks are optional when adding a new contact
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com e/betsy@workemail.com a/Newgate Prison p/1234567 t/criminal w/facebook.com`
+* `add n/LeBron James
+// end::add[]
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the address book, in the last sorted order. +
 Format: `list`
+
+// tag::sort[]
+=== Listing current persons in order: `sort`
+
+Sorts the entire list of persons in the addressbook by the indicated format. Maintains
+the list of persons displayed, but sorted by the indicated format as well.
++ If no argument is indicated, sorts by default (currently name).
++ Available FILTERTYPES: 'name', 'email', 'phone', 'address', 'default'
++ Aliases for each FILTERTYPE: 'n', 'e', 'p', 'a'
++ Format: `sort FILTERTYPE`
+
+Examples:
+
+* 'sort name'
+* 'sort n'
+
+Proposed further enhancements: Sort by tag, weblinks
+Sort in ascending or descending order.
+Push nil entries to the back of the list.
+// end::sort[]
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [+t/TAG] [-t/TAG] or [clearTag/]... [w/WEBLINK]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, emails or weblinks, the existing valus of each component of the person will be removed i.e adding of these components is not cumulative.
+* You can remove all the person's tags by typing `clearTag/` without specifying any tags after it. Similarly, you can use `e/` and `w/` for emails and weblinks respectively.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
+* `edit 2 n/Betsy Crower clearTag/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+For more about editing tags, read `Edit Individual Tag` below.
 
-=== Locating persons by name: `find`
+// tag::editIndividualTag[]
+==== Edit individual Tag
 
-Finds persons whose names contain any of the given keywords. +
+Use `+t/` or `-t/` in edit command to add or remove tag to specific person with corresponding index.
+Use `cleartag/` to clear all existing tags under the person.
+
+Examples:
+*`edit 1 +t/happy` adds a `happy` tag to the 1st person with his/her existing tags.
+*`edit 1 -/sad` removes the `sad` tag from the list of tags tagged to the 1st person.
+*`edit 1 clearTag/` clears all the tags under the 1st person.
+// end::editIndividualTag[]
+
+// tag::tagDelete[]
+=== Delete tag form all persons: `tagDelete`
+
+Deletes a tag inputted by the user from all existing person in the address book. +
+Format: `tagDelete [tag name]`
+
+****
+* the matching of tag is case sensitive.
+* Tags that matches the tag inputted by the user will be deleted.
+* only the tag set attached to each person will be searched.
+****
+
+Examples:
+
+* `tagDelete friends` +
+the tag friends will be deleted from any person in the addressbook that has this tag.
+* `tagDelete noSuchTag` +
+Nothing will happen if no such tag is present in any person in the address book
+
+// end::tagDelete[]
+
+// tag::find[]
+=== searches for person that matches any of the keywords: `find`
+
+Finds persons whose attributes contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
+* The search is case insensitive. e.g `hans` will match `Hans`, `878787` will match `8787879`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Everything will be searched. (Name, phone, email, address, tag & webLinks)
+* Sub words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
@@ -111,6 +171,30 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+* `find John Clementi` +
+returns any person that has either `John` as the name, or address is `Clementi`. Need not be both.
+// end::find[]
+
+// tag::filtercommand[]
+=== searches for person that matches all of the keywords: `filter`
+
+Finds persons whose name, phone, email, tags and address contain all of the given keywords. +
+Format: `filter KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `FrIendS`
+* The order of the keywords does not matter. e.g. `Amy Friends owesmoney` will match ` amy owesmoney friends`
+* Persons with attributes(namely name, phone, email, tags and address) matching all of the keywrods will be returned . e.g. `friends owesmoney, Hans` will return any person with name `Hans` that also `owesMoney`.
+****
+
+Examples:
+
+* `filter friends Clementi` +
+Returns a person with address at `Clementi` and with a tags `[friends]`.
+* `filter John, facebook +
+Returns any person having name `John`, with a webLink that contains `facebook`.
+// end::filtercommand[]
 
 === Deleting a person : `delete`
 
@@ -212,6 +296,57 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::remark[]
+=== Adding Remark to a person : `remark`
+
+Adds a remark to a person. +
+Format: 'remark INDEX [r/REMARK]'
+
+Examples:
+
+* `list` +
+`remark 1 r/Eats a lot` +
+Adds a 'remark' to the 1st person in the list. +
+
+A new remark added to the same person will overwrite the previous remark.
+// end::remark[]
+
+// tag::updateUserPerson[]
+=== Updating User Profile: `update`
+
+Edits the User Profile contact card similar to edit command, but does not take in any index parameter. +
+Only the name, email, address and phone number of the User Person can be updated. +
+The user profile is stored in data/userProfile.xml by default. +
+
+Format: 'update [n/Name] [p/Phone] [e/Email]... [a/Address]'
+
+Examples:
+
+* `update n/Drake p/93236353` +
+Updates the name and phone number of the User Person, saved to userProfile.xml. +
+
+Any new information added will overwrite previous data.
+
+The User Profile can also be edited via the User Interface by clicking on "File" -> "User Profile".
+More information
+// end::updateUserPerson[]
+
+// tag::shareCommand[]
+=== Generate an add command for your contact: `share`
+
+Generates an add command for the User Person in the AddressBook. The User Person is modified via the `update`
+command or via the User Profile Window (Press F2 in the main window). +
+
+The generated add command is displayed on the result display, as well as copied to your clipboard automatically. +
+
+image::ShareCommand.png[width="370" height="105"]
+
+Format: 'share'
+
+Proposed enhancements: Allow share to take in parameters to share a particular contact from the addressbook so that
+it works for all contacts and not just the userPerson.
+// end::shareCommand[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -222,9 +357,89 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+// tag::viewAddress[]
+=== Viewing address in Google Maps : `web maps`
+
+Changes the internal browser to the maps view of the address of a selected contact.
+Format `web facebook||instagram||linkedin||personal||maps`
+
+[NOTE]
+====
+Contact must be selected before selecting the buttons.
+
+====
+// end::viewAddress[]
+
+// tag::viewSocialMedia[]
+=== Viewing Social Media Links : `web`
+
+Changes the internal browser to the maps view of the address of a selected contact.
+Format `web facebook||instagram||linkedin||personal`
+
+[NOTE]
+====
+Contact must be selected before selecting the buttons.
+
+====
+// end::viewSocialMedia[]
+
+// tag::changeTheme[]
+=== Changing Theme
+
+Allows the user to switch between 1-dark, 2-darker, 3-light and 4-lighter theme.
+Format: `changeToTheme Index`
+
+Example:
+*`changeToTheme 2`
+The socialbook should change to a darker theme.
+
+****
+* The index refers to the corresponding number of the theme as shown above.
+* The valid index includes 1, 2, 3, 4
+****
+// end::changeTheme[]
+
+// tag::userProfileUI[]
+=== User Profile in the UI
+
+The User Profile Window can be accessed by clicking on "File" -> "User Profile". Pressing "F2" will also bring up the User
+ Profile window. +
+
+image::UserProfileMenuItem.png[width="208" height="315"]
+
+You can edit the User Profile directly from here. Changes, if any, are only saved when the "OK" button is clicked. +
+Invalid values will not be accepted, and changes will not be saved. For multiple emails, add emails with a comma followed
+by a space, then the next email address.
+
+Pressing "Enter" has the same action as clicking the "Ok" button. +
+Pressing "Escape" has the same action as clicking the "Cancel" button. +
+
+Note: If you experience issues with opening up the User Profile Window, delete the UserProfile.xml file in your data folder
+,then try again. A new User Profile will be created.
+// end::userProfileUI[]
+
+// tag::futureUpdates[]
+=== Dedicated Twitter/Facebook/Instagram Updates `Coming V2.0`
+
+The dedicated social media status updates would be added in `V2.0` as part of SocialBook's focus on the User's need to be informed of any latest updates.
+
+As it is currently tough to keep track of each and every update on all the possible social media platforms, only the very latest few updates would be included from all the social media links in this window.
+
+This window will take up a small amount of space on the right of the current browser window in SocialBook, and display the updates in a chronological order.
+
+=== Automatic update of contact information `Coming V2.0`
+
+The User will be able to expect SocialBook to update the Contact information as they are updated on various Social Media platforms, mainly Facebook.
+
+Each time the User loads the information of the current contact, the User will be prompted of updates available to the User's contact should they be different on the Social Media Platform.
+
+The User will then be given the option to update the fields available.
+
+// end::futureUpdates[]
+
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Address book data and user profile data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 == FAQ
@@ -234,19 +449,48 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER [e/EMAIL]... a/ADDRESS [t/TAG]... [w/WEBLINK]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague w/google.com`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *tagDelete* : `tagDelete TAG` +
+e.g. `tagDelete friend`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [+t/TAG] [-t/TAG]...` +
+e.g. `edit 2 n/James Lee e/jameslee@example.com +t/friend`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+e.g. `find James 123`
+* *Filter* : `find KEYWORD [MORE_KEYWORDS]` +
+e.g. `Filter James 123`
 * *List* : `list`
+* *Sort* : `sort phone`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
+* *Update* : `update`
+e.g `update n/James Leong p/92334311 e/james@gmail.com w/https://www.facebook.com/james`
+* *Share* : `share`
 * *Redo* : `redo`
+* *Web* : `web facebook`
+* *Change Theme* : `changeToTheme 1, 2, 3, or 4`
+
+// tag::commandaliases[]
+=== Alternative Command Aliases
+
+* *Add* `add` or `a`
+* *Clear* : `clear` or `c`
+* *Delete* : `delete` or `d`
+* *Edit* : `edit` or `e`
+* *Find* : `find` or `f`
+* *List* : `list` or `l`
+* *Help* : `help` or `h`
+* *Select* : `select` or `s`
+* *History* : `history` or `his`
+* *Undo* : `undo` or `u`
+* *Redo* : `redo` or `r`
+* *Web* : `web` or `w`
+* *ChangeTheme*: `changeToTheme` or `ct`
+
+// end::commandaliases[]

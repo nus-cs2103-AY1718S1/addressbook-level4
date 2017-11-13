@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= SocialBook - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F11-B2/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F11-B2`      Since: `Aug 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -163,6 +163,63 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
+// tag::styling[]
+=== Styling and Themes
+
+image::StyleSheetColorNames.png[width="800"]
+_Figure 2.2.2 : Important variable names of the Stylesheet_
+
+The Stylesheets loaded are mainly controlled with the following global stylesheet variables
+
+```
+* {
+    -fx-base-background-color-0: #181b1d;
+    -fx-base-background-color-1: #2e3138;
+    -fx-base-text-fill-color: white;
+    -fx-base-text-fill-color-alt: black;
+    -fx-base-text-fill-color-labels: white;
+    -fx-label-text-fill-color: #010505;
+    -fx-list-cell-even: #3c3e3f;
+    -fx-list-cell-odd: #4a4f58;
+    -fx-list-cell-selected: #36435f;
+    -fx-list-cell-selected-border: #3e7b91;
+    -fx-list-cell-empty: #383838;
+}
+```
+
+Any new components added to the themes or stylesheets should utilise these base colors or variables to ensure the ease of creation and importation into other themes.
+
+// end::styling[]
+
+// tag::defaultPage[]
+=== Default.html
+
+image::defaultPage.png[width="600"]
+_Figure 2.4.1 : Default Landing page of the SocialBook App_
+
+The first page that the User sees is the landing page of the application. This landing page resides in the `default.html` file and the corresponding default theme along with it `DarkTheme.css`.
+
+This landing page is to present the first time users with some form of feedback when they are first introduced to the application.
+
+Additional Ui help such as arrows and pointers that can be implemented in the HTML with simple CSS stylings will be coming in `V2.0`.
+
+// end::defaultPage[]
+
+// tag::userInterface[]
+=== DetailedPersonCard and PersonCard
+
+image::detailedPersonCard.png[width="600"]
+_Figure 2.5.1 : Majority of contact information is to be shown in the DetailedPersonCard_
+
+image::personCard.png[width="400"]
+_Figure 2.5.2 : Condensed information to be shown in PersonCard_
+
+The main design principles used here is to focus on the Social Aspect of the User's contacts.
+
+In order to do so, the main bulk of the real estate given to the User has to be the Browser.
+
+// end::userInterface[]
+
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
@@ -184,6 +241,8 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
+// tag::model[]
+
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
@@ -195,8 +254,11 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
+* stores the UserPerson object that represents the user's own contact card.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+
+// end::model[]
 
 === Storage component
 
@@ -209,6 +271,7 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save `UserPerson` objects in xml format and read it back.
 
 === Common classes
 
@@ -345,6 +408,513 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::weblink[]
+=== WebLink
+image::ModelClassDiagram.png[width="800"]
+The `Weblink` class creates objects to store  social website URL information of each person in the addressBook. The information will be assessed by `Web` command to display the website in Social Book.
+
+==== Categorizing of WebLinks
+One of the unique aspect of the WebLink class is that weblinks being inputted by the user will automatically be assigned into one of the 4 default categories: Facebook,
+Instagram, Linkedin and Others. Each weblink objects has a attributed `weblinkTag` to indicate the category. Also only `one` weblink will be accepted for each category.
+For example, if user `add n/jiasheng w/https://www.facebook.com/rand w/https://facebook.com/rand2, this will not be accepted. Only 1 website for each category will be loaded in Social Book.
+
+**WebLink**
+----
+public WebLink(String name) throws IllegalValueException {
+
+        requireNonNull(name);
+        this.webLinkInput = name.trim();
+        if (!isValidWebLink(webLinkInput)) {
+            throw new IllegalValueException(MESSAGE_WEB_LINK_CONSTRAINTS);
+        }
+        this.webLinkTag = DEFAULT_TAG;
+
+        HashMap<String, String> webLinkTagMap = new WebLinkUtil().getMatchingWebsites();
+        Iterator<String> keySetIterator = webLinkTagMap.keySet().iterator();
+
+        while (keySetIterator.hasNext()) {
+            String webLinkMatchingRegex = keySetIterator.next();
+            if (webLinkInput.matches(webLinkMatchingRegex)) {
+                this.webLinkTag = webLinkTagMap.get(webLinkMatchingRegex);
+                break;
+            }
+        }
+    }
+----
+
+**WebLinkUtil**
+----
+    /*tag names for the categorized web links*/
+    public static final String FACEBOOK_TAG = "facebook";
+    public static final String TWITTER_TAG = "twitter";
+    public static final String INSTAGRAM_TAG = "instagram";
+
+    /*Keywords that can be used to match website to certain categories. */
+    private static final String INSTAGRAM_MATCH_REGEX = "(?i)^^.*(instagram.com|instagram|insta).*$";
+    private static final String FACEBOOK_MATCH_REGEX = "(?i)^^.*(facebook.com|fb.com/|facebook).*$";
+    private static final String TWITTER_MATCH_REGEX = "(?i)^^.*(twitter.com|t.co|twitter).*$";
+
+    private HashMap<String, String> matchingWebsites = new HashMap<>();
+
+
+    public WebLinkUtil() {
+        matchingWebsites.put(FACEBOOK_MATCH_REGEX, FACEBOOK_TAG);
+        matchingWebsites.put(INSTAGRAM_MATCH_REGEX, INSTAGRAM_TAG);
+        matchingWebsites.put(TWITTER_MATCH_REGEX, TWITTER_TAG);
+    }
+
+    public HashMap<String, String> getMatchingWebsites() {
+        return matchingWebsites;
+    }
+----
+
+In the while loop, if the webLink input matches a regex in the Hashmap `MatchingWebsites` in `WebLinkUtil`, the "tag" that matches the regex key
+will be assigned to `this.webLinkTag`. For example, if the link matches `INSTAGRAM_MATCH_REGEX`, `INSTAGRAM_TAG` will be retrieved from the MatchingWebsites
+and assigned to `WebLinkTag`.
+
+
+**ParserUtil**
+----
+   public static Set<WebLink> parseWebLink(Collection<String> webLinks) throws IllegalValueException {
+        requireNonNull(webLinks);
+        final Set<WebLink> webLinkSet = new HashSet<>();
+        for (String inputWebLinkString : webLinks) {
+            if (checkRepeatedWebLinkInCategory(webLinkSet, inputWebLinkString)) {
+                webLinkSet.add(new WebLink(inputWebLinkString));
+            } else {
+                throw new IllegalValueException("Only one link per category: facebook ,"
+                        + "instagram or twitter");
+            }
+        }
+        return webLinkSet;
+    }
+
+    /**
+     * Checks whether webLinkSet to be passed contains weblinks from the same category.
+     */
+    public static boolean checkRepeatedWebLinkInCategory (Set<WebLink> webLinkSet, String inputWebLinkString)
+            throws IllegalValueException {
+        boolean duplicateCheck = TRUE;
+        WebLink inputWebLink = new WebLink(inputWebLinkString);
+        String inputWebLinkTag = inputWebLink.toStringWebLinkTag();
+        if (webLinkSet.isEmpty()) {
+            return duplicateCheck;
+        } else {
+
+            for (Iterator<WebLink> iterateInternalList = webLinkSet.iterator(); iterateInternalList.hasNext(); ) {
+                WebLink webLinkForChecking = iterateInternalList.next();
+                String webLinkTagForChecking = webLinkForChecking.toStringWebLinkTag();
+                if (inputWebLinkTag.equals(webLinkTagForChecking)) {
+                    duplicateCheck = FALSE;
+                    break;
+                }
+            }
+            return duplicateCheck;
+        }
+    }
+----
+The constraint of allowing one WebLink per category allowed is implemented in the method checkRepeatedWebLinkInCategory.
+If this boolean method returns false, parseWebLink will throw an IllegalValueException. In the CheckRepeatedWebLinkCategory,
+a WebLink object will be created using the parameter `inputWebLinkString`, and the webLinkTag of the object will be check against
+the webLinkTag of the given webLinkSet.
+
+==== Design consideration
+**Aspect:** Matching of tags to different URLs in when creating WebLink object
+**Alternative:** An alternative to using the current regex HashMap implementation is to simply list out the String constants in WeblinkUtil class, the matching
+ will be done through the String API `contains` at the WebLink Class. +
+**Justification:** However, the current implementation was kept. Firstly, regex offers more flexibility and control over what kind of URL we want to
+match to each website category, compared to `contains` String API. In addition, with the HashMap implementation, if new category were to be added,
+only WebLinkUtil needs to be updated. With the alternative implementation, `WebLink` class and possibly `ParserUtil` CheckRepeatedWebLinkInCategory
+method will need to be updated as well. This can be very messy and prone to bugs.
+
+==== Future Implementation
+Can consider creating a master UniqueWebLinkList in Address Class. List class can be enhanced to create a complied list of all websites
+to the user that is tracked by this master UniqueWebLinkList.
+
+// end::weblink[]
+
+// tag::websiteselectionevent[]
+=== Web command for Social Links
+
+The web selection commmand mechanism is executed with the use of a `WebsiteSelectionRequestEvent`, which resides inside `commons.events.ui`. This allows for the event to be handled by the UI component required.
+
+image::WebsiteSelectionEvent.png[width="800"]
+
+As you can see from the diagram, the link between the `Logic` and the `Ui` exists in the `EventsCenter`. Other commands that utilise this mechanism includes `Select`.
+
+This mechanism allows for the addition of other Ui components, such as buttons or tabs to replace the trigger event.
+
+[NOTE]
+If web command is executed before the selection of a `PersonCard`, the event trigger would simply load a default page.
+
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of URL loadings +
+**Alternative 1 (current choice):** Implement URL loadings within the `BrowserPanel` +
+**Pros:** We will not have a separation of classes, or the need to update any data values within any dynamically generated objects. `BrowserPanel` handles all URLs, URL parsings, and had the necessary information to process or execute these commands. +
+**Cons:** `BrowserPanel` has to be pre-loaded with website URLs, if not the `Websites` within the `Person` class has to be a full URL +
+// end::websiteselectionevent[]
+
+
+// tag::websitebuttonbar[]
+=== Button Bar for Social Links
+
+The button bar implemented within the UI is operated by the use of an event trigger `ButtonSelectionPressedEvent`, which resides inside the commons classes. The actual implementation of the web page loading is done within the `BrowserPanel` class.
+
+The buttons residing within the button bar raises `ButtonSelectionPressedEvent` that parses its own button FX.id to the `BrowserPanel`, which then triggers the internal functions that calls the URL to be loaded.
+
+image::UiClassDiagram.png[width="800"]
+
+As you can see from the diagram, `WebsiteButtonBar` resides within the `MainWindow`, despite not having any interactions with the BrowserPanel directly.
+
+
+Suppose that the user has just launched the application. The `BrowserPanel` will not be loaded.
+
+Once the User selects a person from the `PersonListPanel`, which is a `PersonCard`, the `SelectedPerson` is updated through the use of an event trigger. The `BrowserPanel` then stores this `SelectedPerson` until it is updated through listening for the event trigger.
+
+Residing in BrowserPanel, the available social WebLinks are loaded and dynamically created. Supposed a person does not have any social links, only a simple google search and address search button will be displayed as a result.
+
+The User then clicks on a button within the `WebsiteButtonBar`. The buttons that exist within the `ButtonBar` is dynamically created through the list of websites that exists within the `Person` object `coming in v1.3`.
+
+
+[NOTE]
+If a button is pressed before the selection of a `PersonCard`, the event trigger would simply load a default page.
+
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of URL loadings +
+**Alternative 1 (current choice):** Implement URL loadings within the `BrowserPanel` via event handlers +
+**Pros:** We will not have a seperation of classes, or the need to update any data values within any dynamically generated objects. `BrowserPanel` handles all URLs, URL parsings, and had the necessary information to process or execute these commands. +
+**Alternative 2:** Create different `BrowserPanel` s for each new Website +
+**Pros:** Swaps each Panel using tabs and allows for various design elements to be made for each URL loaded +
+**Cons:** Increases the number of `Tabs` to be created with each person website, and increases the complexities at the UI level.
+// end::websitebuttonbar[]
+
+// tag::SortCommand[]
+=== Sort Command
+The `SortCommand` modifies the listing in the AddressBook data. It will permanently sort the list of contacts
+by the `filterType` indicated, which has to be one of the following: Name, Email, Phone, Address or Default. The default sorting will sort the list by name.
++ The command parameters are 'sort FILTERTYPE'. Simply entering 'sort' will set FILTERTYPE to default. Aliases are available
+for each of the sorting methods for convenience. The aliases are simply the first letter in each filter.
+
+The Sort Command will first remember the current filteredList's predicate, call the method sortFilteredList in the model's `AddressBook`,
+modify the `PersonList` via the sort method in `UniquePersonList`, then indicate that the AddressBook has been changed,
+which then calls a method that saves the data locally. The old predicate is reapplied to the new filteredList. Thus, the list is permanently modified and overwritten.
+The original list is lost permanently, unless it is one of the other sorted lists, whereby the Sort Command
+can be used to obtain the required list again by passing in the relevant filter as a parameter.
+
+The sort method implementation is displayed below. A switch case excerpt is used to determine the type of comparison that the
+anonymously declared comparator will use to order 2 persons. If more types of filters are desired, they simply have
+to be added to the list of cases below. Default currenlty sorts by name as there is no way to sort by the original
+listing, which is date added.
+----
+    public void sortPersons(String filterType) {
+
+        Comparator<ReadOnlyPerson> personComparator = (ReadOnlyPerson person1,
+                                                   ReadOnlyPerson person2) -> {
+
+            String arg1;
+            String arg2;
+            switch (filterType) {
+            case ARG_NAME:
+                arg1 = person1.getName().toString().toLowerCase();
+                arg2 = person2.getName().toString().toLowerCase();
+                break;
+            case ARG_PHONE:
+                arg1 = person1.getPhone().toString();
+                arg2 = person2.getPhone().toString();
+                break;
+            case ARG_EMAIL:
+                arg1 = person1.getEmail().toString();
+                arg2 = person2.getEmail().toString();
+                break;
+            case ARG_ADDRESS:
+                arg1 = person1.getAddress().toString();
+                arg2 = person2.getAddress().toString();
+                break;
+            default:
+                arg1 = person1.getName().toString();
+                arg2 = person2.getName().toString();
+                break;
+            }
+            return arg1.compareTo(arg2);
+        };
+
+        FXCollections.sort(internalList, personComparator);
+    }
+----
+
+Sorting by name will display the list with names in ascending alphabetical order, regardless of capitalisation. +
+Sorting by phone will display the list with phone numbers in ascending order. +
+Sorting by email will display the list with emails in ascending alphabetical order, with priority given to the first
+email entered for a person. This means that the primary email for a person should be entered first. +
+Sorting by address will display the list with addresses in ascending alphabetical order. +
+Sorting by default will do the same as sorting by name currently. +
+
+==== Design Considerations
+**Aspect:** Implementation of sorting. +
+**Alternative 1 (current choice):** Modify list internally and permanently. +
+**Pros:** Easier to implement, allows for greater flexibility as the internal list can be modified. +
+**Cons:** Unable to re-obtain original list of persons, which is sorted by date added, without changing Person. +
+**Alternative 2:** Modify displayed list, only for visual purposes. +
+**Pros:** Able to preserve original listing of date added. +
+**Cons:** Unable to implement without massive changes as Model's filteredPersonList is immutable and thus cannot
+be sorted easily. +
+
+==== Design Considerations
+**Aspect:** Sort Command vs List Command +
+**Pros:** A user might only want to enter sort once, but does not want to have to enter the entire command again
+to obtain the same listing. Thus, Sort Command will sort the list while List Command will redisplay the last sorted list. +
+**Cons:** Multiple commands might confuse the user. +
+
+==== Design Considerations
+**Aspect:** Display entire list vs Display filtered list +
+**Current choice:** Display filtered list
+**Pros:** Good for those who want to see the filtered list sorted. Gives list command more value. +
+**Cons:** Extra code to remember previous predicate. +
+
+==== Design Considerations
+**Aspect:** FilterType aliases +
+**Pros:** Greater flexibility and convenience for the user +
+**Cons:** Extra code and variables to maintain +
+
+==== Further enhancements
+Sorting by date added by adding a "date added" attribute to each person in the address book. +
+Sorting in descending order. +
+// end::SortCommand[]
+
+// tag::UserProfile[]
+=== AddressBook and UserProfile Storage
+The AddressBook and UserProfile data is stored in data/AddressBook.xml and data/UserProfile.x
+ml.
+The AddressBook converts all `Persons`, `Tags` and `WebLinks` into XML format, which is then saved to the xml file.
+Upon initialising the app, the AddressBook will read the xml file and convert it back to Persons, Tags and Weblink
+respectively before setting the data.
+
+Similarly for UserProfile, the UserPerson is stored as an `XMLAdaptedPerson`, saved as an xml file and then retrived
+upon initialisation of the app. Whenever the UserPerson is edited using the `Update Command`, the userProfile is saved
+to the file.
+
+A UserProfile Window was added as a UI Component to display the User Profile information. Additionally, the User Profile
+can be modified from the textfields in the UI directly. The UserProfile is only saved when "OK" is clicked. Invalid values will be detected and changes will not be saved.
+The "Enter" key is added as an accelerator for the OK button and the "Escape" key is added as an accelerator for
+the cancel button. The UserProfile can be found under "File" --> "User Profile" and has an accelerator
+key "F2".
+
+image::UserProfileWindow.png[width="400" height="300"]
+
+image::UserProfileWindowInvalidEntry.png[width="400" height="300"]
+
+==== Design Considerations
+**Aspect:** Choice of location for storing UserProfile Data +
+**Alternative 1 (current choice)**: Separately from AddressBook. +
+**Justification:** This path was chosen taking into consideration the two following cases:
+A User can have multiple AddressBooks, or multiple users can share one AddressBook. +
+In the former case, the User would not have to modify his UserProfile for each AddressBook. +
+In the latter case, an AddressBook should not be tied to only one UserPerson in particular. +
+**Pros:** Greater flexibility, portability +
+**Cons:** More code and java classes to maintain, changes the structure of `Model` to support multiple
+variables. +
+**Alternative 2:** Together with AddressBook +
+**Pros:** Easier to manage, with only one Storage file and fewer classes to maintain +
+**Cons:** Reduced flexibility as now, both AddressBook data and UserProfile cannot be separated
+
+==== Further enhancements
++ Modify settings and userPrefs in the UserProfile
+
+// end::UserProfile[]
+
+
+// tag::FindFilter[]
+=== Find Command and & Filter Command
+The `find` and `filter` command controls the person panels to be displayed to the user by modifying the filteredPerson FilteredList in model. The `find` & `filter` command
+will updated filteredPerson by calling the updateFilterPersonList to change the predicate. The main enhancement done is to allow `find` and `filter` command to be able to match keywords with
+all the attributes of a Person object (`Name`, `Phone`, `Address`, `Email`, `Tag` & `WebLink`) instead of just `Name` for `find command` and `Tag` for `filter` command(Our team's initial implementation).
+
+==== Find Command
+`Find` command displays the a list of person in the address book with attributes that matches `any` of the keywords entered by the user.
+`Find` command creates a new ContainKeywordsPredicate object to be be used a parameter for the updateFilterPersonList method.
+----
+public class ContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    private final List<String> keywords;
+
+    public ContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return (containsKeyWordInName(person) || containsKeyWordInAddress(person)
+                || containsKeyWordInPhone(person) || containsKeyWordInTag(person)
+                || containsKeyWordInWebLink(person) || containsKeyWordInEmail(person));
+    }
+
+    private boolean containsKeyWordInName(ReadOnlyPerson person) {
+        return keywords.stream().anyMatch(keyword
+            -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+    }
+
+    private boolean containsKeyWordInPhone(ReadOnlyPerson person) {
+        return keywords.stream().anyMatch(keyword
+            -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
+    }
+
+    private boolean containsKeyWordInAddress(ReadOnlyPerson person) {
+        return keywords.stream().anyMatch(keyword
+            -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
+    }
+
+    private boolean containsKeyWordInTag(ReadOnlyPerson person) {
+        return person.getTags().stream().anyMatch(s -> keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(s.toStringFilter(), keyword)));
+    }
+
+    private boolean containsKeyWordInWebLink(ReadOnlyPerson person) {
+        return person.getWebLinks().stream().anyMatch(s -> keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(s.toStringWebLink(), keyword)));
+    }
+
+    private boolean containsKeyWordInEmail(ReadOnlyPerson person) {
+        return person.getEmail().stream().anyMatch(s -> keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(s.toString(), keyword)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((ContainsKeywordsPredicate) other).keywords)); // state check
+    }
+
+}
+----
+There are 6 boolean methods to check whether any of the given keywords is contained in each of a `Person`'s attributed, using Java Stream API anyMatch.
+The test method will return true for the ReadOnlyperson if either of these methods return true, indicating that at least one keyword matches with one of
+the 6 attributes.
+
+==== Filter Command
+`Filter` command displays the a list of person in the address book with attributes that matches `all` of the keywords entered by the user,
+just like an actual filter function we find on certain websites.
+`Filter` Command's implementation is fairly similar to `Find`. Main difference is that a `FilterKeywordsPredicate` predicate object is created instead.
+----
+    public FilterKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+
+        String combinedReferenceList = person.getAsOneString();
+
+        return !keywords.isEmpty() && keywords.stream().allMatch(keyword
+            -> StringUtil.containsWordIgnoreCase(combinedReferenceList, keyword) && !keyword.contains("[")
+                && !keyword.contains("]"));
+----
+Below is the getAsOneString method implementation in the `ReadOnlyPerson` API that is being called by the test method in `FilterKeywordsPredicate`.
+----
+default String getAsOneString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" ")
+                .append(getPhone())
+                .append(" ")
+                .append(getEmail())
+                .append(" ")
+                .append(getAddress())
+                .append(" ")
+                .append(getRemark())
+                .append(" ");
+        getTags().forEach(builder::append);
+        builder.append(" ");
+        getWebLinks().forEach(builder::append);
+        return builder.toString();
+    }
+----
+getAsOneString method appends all the attributes into one complete string delimited by space. In test method in `FilterKeywordsPredicate`, test method uses the Java
+Stream API allMatch to ensure that all combinedReferenceList contains all the keywords entered by the user. The `keyword.contains("[")&& !keyword.contains("]")` portion
+in the test method is to catch for instances when user enters "[" or "]". This is because toString method in `Tag`, `WebLink` and `email` being called by StringBuilder
+in getAsOneString method contains a bracket by default.
+
+==== Design Consideration
+**Aspect1:** Cleaner implementation for ContainKeywordsPredicate? Why have 6 boolean methods for ContainKeywordsPredicate? +
+**Alternative:** For the test method, use GetAsOneString() method for part 1 as well, with anyMatch Java Stream API. +
+**Justification:** However, the current implementation was kept, as it opens possibility for future enhancements, suchs as `Find n/` or `Find e/` to search
+in specific attributes. The separate boolean methods for each attribute in ContainKeywordsPredicate allows for easier implementation. +
+
+**Aspect2:** A flexible search approach
+**Alternative:** `Find` & `Filter` command's current implementation uses a more flexible search approach. It means that if the keyword is a substring in the string
+of the attribute that is checked, it is considered a match. For example, `Pan` will match with `Pang`.
+
+**StringUtil**
+----
+    public static boolean containsWordIgnoreCase(String sentence, String word) {
+        requireNonNull(sentence);
+        requireNonNull(word);
+
+        String preppedWord = word.trim();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        String preppedSentence = sentence.trim();
+        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+
+        for (String wordInSentence : wordsInPreppedSentence) {
+            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+----
+The alternative implementation would be to replace `contains` with a more constraining check (Example. equals() implementation) in the containsWordIgnorecase
+method. +
+**Justification:** However, from a UX perspective, a more flexible search method will be more useful for a user, for example when the user searches `Gwen` to find
+a person called `Gwendolyn`.
+
+==== Future enhancements
+Find Command is able to search under specific attributes with prefix. Example, `Find e/` to search under email.
+
+// end::FindFilter[]
+
+// tag::tagdelete[]
+=== tagDelete
+The `tagDelete` command allows users to delete a `Tag` from all person in the addressbook that has the `Tag`.
+
+**Implementation for DeleteTag method in Model API**
+----
+    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        Boolean checkTagExistence = false;
+
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = newPerson.getTags();
+            if (newTags.contains(tag)) {
+                checkTagExistence = true;
+            }
+            newTags.remove(tag);
+            newPerson.setTags(newTags);
+
+            addressBook.updatePerson(oldPerson, newPerson);
+        }
+
+        if (!checkTagExistence) {
+            throw new ParserException("Tag does not exist.");
+        }
+    }
+----
+DeleteTag Command implements Undoable command. It overrides the execute method and calls on the DeleteTag method in Model API to execute the command. DeleteTag method iterates
+through the ObservableList of ReadOnlyPerson and checks whether it contains `tag` in the method parameter.
+if checkTagExistence boolean is false, deleteTag will throw ParserException to indicate that the tag does not exist.
+
+==== Future Enhancement
+deleteTag can be extended to other attributes of a person as well. For example, a method can be implemented to iterate through all the address of the person in the address book,
+and delete every that stays in a certain location.
+
+// end::tagdelete[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -469,251 +1039,6 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
@@ -729,9 +1054,35 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |find a person by phone number or email |locate details of person without knowing their name
+
+|`* * *` |user |add a multiple phone numbers to a person |
+
+|`* * *` |user |add a multiple email addresss to a person |
+
+|`* * *` |user |see the Social Media links of a contact in the browser |see the latest updates of the person
+
+|`* * *` |user |share contacts with other people |easily share contact information
+
+|`* * *` |user |have my own contact on the addressbook |see how my information is displayed
+
+|`* * *` |user |display contacts with either First or Last name first |
+
+|`* * *` |user |add todo tasks to the front page of the app |see a list of tasks to do
+
+|`* *` |user |share my default contact with another person |friend does not need to enter the entire add command manually
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user with many persons in the address book |list persons as favourites |see most important contacts at a glance
+
+|`* *` |user |assign a todo task to a contact |remember a task that is associated to a person
+
+|`* *` |user |filter todo list by contacts |see the list of actions to take associated to the person
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user with many persons in the address book |create custom lists of persons |see a group of pre-defined persons
 |=======================================================================
 
 {More to be added}
@@ -767,6 +1118,64 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Batch-add person
+
+*MSS*
+
+1.  User requests to batch-add persons
+2.  AddressBook asks for a file or command to add
+3.  AddressBook adds all persons added
+4.  AddressBook lists all new persons added
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User requests to upload file
+[none]
+** 2a1. AddressBook requests .csv file location
+** 2a2. User uploads .csv file
++
+Use case resumes at step 3.
+
+* 2b. User requests to input command
++
+[none]
+** 2b1. User inputs multiple persons details
++
+Use case resumes at step 3.
+
+
+[discrete]
+=== Use case: Share Contact
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to share a specific person in the list
+4.  AddressBook generates add command for the person in a new window
+5.  User copies generated command
+6.  User closes window
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
@@ -775,6 +1184,10 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user should open the application with the previous entries in a addressbook pre-loaded.
+.  Should not experience visible lag or delays when running any command within the addressbook.
+.  Should display a pleasing image when working in offline mode.
+.  Regardless of the availability of internet access, the core functionality should not be affected.
 
 {More to be added}
 
@@ -793,6 +1206,27 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[contact-list]]
+Contact List
+
+....
+A list that displays contacts that were added to it, a contact can exist on multiple lists
+....
+
+[[default-contact]]
+Default Contact
+
+....
+A contact that is persistent to you. A self-contact such that you can see how you look like in the addressbook of others
+....
+
+[[contact-history]]
+Contact History
+
+....
+Past interactions made with the contact person (e.g. email on 01-10-2017, CS2103 Updates)
 ....
 
 [appendix]

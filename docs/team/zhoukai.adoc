@@ -1,0 +1,77 @@
+= Zhou Kai - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F11-B2/main/blob/master/collated/main/zhoukai07.md[Functional code]]
+ [https://github.com/CS2103AUG2017-F11-B2/main/blob/master/collated/test/zhoukai07.md[Test code]]
+
+=== Enhancement Added: Making fields optional
+
+==== Justification
+User should be able to add contact with contact name only.
+
+=== Enhancement Added: Edit individual fields [for now: tag only]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=editIndividualTag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users should be able to edit individual fields without altering existing data
+
+=== Enhancement Added: theme change setting
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=changeTheme]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A simple modification for aesthetic purpose. User is able to change theme both on the UI and using command line.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../UserGuide.adoc[tag=changeTheme]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Allow multiple emails in one contact
+
+==== Justification
+
+Many people have multiple emails for different purposes and the addressbook should allow multiple entries under the same field.
+
+=== Enhancement Proposed: Allow user to classify different contacts in the same group.
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* Participated in 1.4 bug tracking (https://github.com/CS2103AUG2017-T17-B3/main/issues/59, https://github.com/CS2103AUG2017-W14-B4/main/issues/115)
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

@@ -10,7 +10,6 @@ public class AddressTest {
     @Test
     public void isValidAddress() {
         // invalid addresses
-        assertFalse(Address.isValidAddress("")); // empty string
         assertFalse(Address.isValidAddress(" ")); // spaces only
 
         // valid addresses

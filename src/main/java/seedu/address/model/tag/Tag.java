@@ -55,4 +55,11 @@ public class Tag {
         return '[' + tagName + ']';
     }
 
+    /**
+     * Format state as text for viewing.
+     */
+    public String toStringFilter() {
+        return tagName;
+    }
+
 }

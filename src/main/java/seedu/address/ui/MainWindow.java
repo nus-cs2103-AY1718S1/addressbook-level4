@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -38,6 +40,7 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Scene scene2;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -52,7 +55,13 @@ public class MainWindow extends UiPart<Region> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
+    private StackPane detailedPersonCardPlaceholder;
+
+    @FXML
     private MenuItem helpMenuItem;
+
+    @FXML
+    private MenuItem userProfileMenuItem;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -62,6 +71,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane websiteButtonbarPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -77,8 +89,13 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
+        //@@author zhoukai07
         Scene scene = new Scene(getRoot());
+        String original = getClass().getResource("/view/DarkTheme.css").toExternalForm();
+        scene.getStylesheets().add(original);
+        this.scene2 = scene;
         primaryStage.setScene(scene);
+        //@@author
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -90,15 +107,18 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        //@@author bladerail
+        setAccelerator(userProfileMenuItem, KeyCombination.valueOf("F2"));
+        //@@author
     }
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
         menuItem.setAccelerator(keyCombination);
-
         /*
          * TODO: the code below can be removed once the bug reported here
          * https://bugs.openjdk.java.net/browse/JDK-8131666
@@ -116,6 +136,13 @@ public class MainWindow extends UiPart<Region> {
          */
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
+                logger.fine(String.format("Matching key combination: %1$s", keyCombination));
+                menuItem.getOnAction().handle(new ActionEvent());
+                event.consume();
+            } else if (keyCombination.getName().equals("F2") && keyCombination.match(event)
+                    && event.getTarget() instanceof Region) {
+                //Special case for "F2" key, which seems to be the only problem with this
+                logger.fine("F2 pressed");
                 menuItem.getOnAction().handle(new ActionEvent());
                 event.consume();
             }
@@ -135,6 +162,12 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
+        WebsiteButtonBar websiteButtonBar = new WebsiteButtonBar();
+        websiteButtonbarPlaceholder.getChildren().add(websiteButtonBar.getRoot());
+
+        DetailedPersonCard detailedPersonCard = new DetailedPersonCard(personListPanel.getTagColors());
+        detailedPersonCardPlaceholder.getChildren().add(detailedPersonCard.getRoot());
+
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
@@ -152,6 +185,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -196,6 +230,18 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    //@@author bladerail
+    /**
+     * Displays the user profile to the user
+     */
+    @FXML
+    private void handleUserProfile() {
+        logger.info("Opening User Profile Window");
+        UserProfileWindow userProfileWindow = new UserProfileWindow(logic.getUserPerson());
+        userProfileWindow.show();
+    }
+
+    //@@author
     /**
      * Closes the application.
      */
@@ -203,6 +249,37 @@ public class MainWindow extends UiPart<Region> {
     private void handleExit() {
         raise(new ExitAppRequestEvent());
     }
+
+    //@@author zhoukai07
+    /**
+     * Allows for theme changes
+     */
+    @FXML
+    private void handleDarkTheme() {
+        String themeUrl = getClass().getResource("/view/DarkTheme.css").toExternalForm();
+        setTheme(themeUrl);
+    }
+    @FXML
+    private void handleDarkTheme2() {
+        String themeUrl = getClass().getResource("/view/DarkTheme2.css").toExternalForm();
+        setTheme(themeUrl);
+    }
+    @FXML
+    private void handleLightTheme() {
+        String themeUrl = getClass().getResource("/view/LightTheme.css").toExternalForm();
+        setTheme(themeUrl);
+    }
+    @FXML
+    private void handleLightTheme2() {
+        String themeUrl = getClass().getResource("/view/LightTheme2.css").toExternalForm();
+        setTheme(themeUrl);
+    }
+    public void setTheme(String themeUrl) {
+        scene2.getStylesheets().clear();
+        scene2.getStylesheets().add(themeUrl);
+        primaryStage.setScene(scene2);
+    }
+    //@@author
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
@@ -217,4 +294,19 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+    //@@author zhoukai07
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setTheme(event.getThemeUrl());
+    }
+
+    //@@author bladerail
+    //Update the filteredPersonList when addressBook is changed, mainly for sort
+    @Subscribe
+    void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        personListPanel.setConnections(logic.getFilteredPersonList());
+    }
+    //@@author
 }

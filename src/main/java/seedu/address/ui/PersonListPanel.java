@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -33,7 +35,7 @@ public class PersonListPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
+    protected void setConnections(ObservableList<ReadOnlyPerson> personList) {
         ObservableList<PersonCard> mappedList = EasyBind.map(
                 personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
         personListView.setItems(mappedList);
@@ -61,6 +63,13 @@ public class PersonListPanel extends UiPart<Region> {
         });
     }
 
+    public Optional<HashMap<String, String>> getTagColors() {
+        if (personListView.getItems().isEmpty()) {
+            return Optional.empty();
+        }
+        return personListView.getItems().get(1).getTagColors();
+    }
+
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -84,5 +93,4 @@ public class PersonListPanel extends UiPart<Region> {
             }
         }
     }
-
 }

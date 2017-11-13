@@ -11,7 +11,8 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String userProfileFilePath = "data/userprofile.xml";
+    private String addressBookName = "MySocialBook";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -37,6 +38,16 @@ public class UserPrefs {
         this.addressBookFilePath = addressBookFilePath;
     }
 
+    //@@author bladerail
+    public String getUserProfileFilePath() {
+        return userProfileFilePath;
+    }
+
+    public void setUserProfileFilePath(String newProfileFilePath) {
+        this.userProfileFilePath = newProfileFilePath;
+    }
+
+    //@@author
     public String getAddressBookName() {
         return addressBookName;
     }
@@ -71,6 +82,7 @@ public class UserPrefs {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
+        sb.append("\nLocal user Profile location: " + userProfileFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
         return sb.toString();
     }

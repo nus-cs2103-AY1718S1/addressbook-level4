@@ -24,6 +24,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedWebLink> webLinks;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -32,6 +34,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        webLinks = new ArrayList<>();
     }
 
     /**

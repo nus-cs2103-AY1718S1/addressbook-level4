@@ -64,7 +64,7 @@ public abstract class AddressBookGuiTest {
      * Return null to use the data in the file specified in {@link #getDataFileLocation()}
      */
     protected AddressBook getInitialData() {
-        return TypicalPersons.getTypicalAddressBook();
+        return TypicalPersons.getSortedTypicalAddressBook();
     }
 
     protected CommandBoxHandle getCommandBox() {
@@ -103,7 +103,7 @@ public abstract class AddressBookGuiTest {
      * Override this in child classes to set the data file location.
      */
     protected String getDataFileLocation() {
-        return TestApp.SAVE_LOCATION_FOR_TESTING;
+        return TestApp.SAVE_LOCATION_FOR_TESTING_ADDRESSBOOK;
     }
 
     @After

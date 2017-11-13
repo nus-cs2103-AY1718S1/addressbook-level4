@@ -2,12 +2,18 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLEAR_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REM_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEB_LINK;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,8 +28,10 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,6 +40,7 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_ALIAS = "e";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -41,11 +50,25 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            //@@author zhoukai07
+            + "[" + PREFIX_ADD_TAG + "TAG]..."
+            + "[" + PREFIX_REM_TAG + "TAG]..."
+            //@@author
+            + PREFIX_CLEAR_TAG + "\n"
+            + "[" + PREFIX_WEB_LINK + "WEB LINK]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
-
+            + PREFIX_EMAIL + "johndoe@example.com "
+            + PREFIX_TAG + "owesMoney "
+            + PREFIX_WEB_LINK + "https://www.facebook.com/jiasheng.an"
+            + PREFIX_CLEAR_TAG;
+    //@@author hansiang93
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD + " {Index} "
+            + PREFIX_PHONE + "{phone} "
+            + PREFIX_EMAIL + "{email} "
+            + PREFIX_TAG + "{tag} "
+            + PREFIX_WEB_LINK + "{weblink}";
+    //@@author
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
@@ -54,7 +77,7 @@ public class EditCommand extends UndoableCommand {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -87,21 +110,32 @@ public class EditCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
+    public EditPersonDescriptor getEditPersonDescriptor() {
+        return editPersonDescriptor;
+    }
+
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
+    public static Person createEditedPerson(ReadOnlyPerson personToEdit,
+                                            EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        ArrayList<Email> updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        Remark updatedRemark = personToEdit.getRemark();
+        Set<WebLink> updatedWebLinks = editPersonDescriptor.getWebLinks().orElse(personToEdit.getWebLinks());
+        final Set<Tag> updatedTags = new HashSet<>();
+        if (!editPersonDescriptor.shouldClear()) {
+            updatedTags.addAll(personToEdit.getTags());
+        }
+        editPersonDescriptor.getToAdd().ifPresent(updatedTags::addAll);
+        editPersonDescriptor.getToRemove().ifPresent(updatedTags::removeAll);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedRemark, updatedTags, updatedWebLinks);
     }
 
     @Override
@@ -129,25 +163,35 @@ public class EditCommand extends UndoableCommand {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
-        private Email email;
+        private ArrayList<Email> email;
         private Address address;
-        private Set<Tag> tags;
+        //@@author zhoukai07
+        private boolean clearTags = false;
+        private Set<Tag> toAdd;
+        private Set<Tag> toRemove;
+        //@@author
+        private Set<WebLink> webLinks;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
-            this.tags = toCopy.tags;
+            this.clearTags = toCopy.clearTags;
+            this.toAdd = toCopy.toAdd;
+            this.toRemove = toCopy.toRemove;
+            this.webLinks = toCopy.webLinks;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
+                    this.toAdd, this.toRemove, this.webLinks) || this.clearTags;
         }
 
         public void setName(Name name) {
@@ -166,11 +210,11 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(phone);
         }
 
-        public void setEmail(Email email) {
+        public void setEmail(ArrayList<Email> email) {
             this.email = email;
         }
 
-        public Optional<Email> getEmail() {
+        public Optional<ArrayList<Email>> getEmail() {
             return Optional.ofNullable(email);
         }
 
@@ -182,12 +226,33 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
-        public void setTags(Set<Tag> tags) {
-            this.tags = tags;
+        //@@author zhoukai07
+        public void setToAdd(Set<Tag> toAdd) {
+            this.toAdd = toAdd;
+        }
+        public void setToRemove(Set<Tag> toRemove) {
+            this.toRemove = toRemove;
+        }
+        public void setClearTags(boolean clearTags) {
+            this.clearTags = clearTags;
+        }
+        //@@author
+        public void setWebLinks(Set<WebLink> webLinks) {
+            this.webLinks = webLinks;
         }
 
-        public Optional<Set<Tag>> getTags() {
-            return Optional.ofNullable(tags);
+        public Optional<Set<Tag>> getToAdd() {
+            return Optional.ofNullable(toAdd);
+        }
+        public Optional<Set<Tag>> getToRemove() {
+            return Optional.ofNullable(toRemove);
+        }
+        public boolean shouldClear() {
+            return clearTags;
+        }
+
+        public Optional<Set<WebLink>> getWebLinks() {
+            return Optional.ofNullable(webLinks);
         }
 
         @Override
@@ -209,7 +274,10 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
+                    && getToAdd().equals(e.getToAdd())
+                    && getToRemove().equals(e.getToRemove())
+                    && clearTags == e.clearTags
+                    && getWebLinks().equals(e.getWebLinks());
         }
     }
 }

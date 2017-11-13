@@ -3,18 +3,26 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+
+import jdk.nashorn.internal.runtime.ParserException;
+
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.UserPersonChangedEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.UserPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -24,12 +32,13 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
-    private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private FilteredList<ReadOnlyPerson> filteredPersons;
+    private final UserPerson userPerson;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, UserPerson userPerson) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
@@ -37,10 +46,11 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.userPerson = userPerson;
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UserPrefs(), new UserPerson());
     }
 
     @Override
@@ -54,6 +64,13 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    //@@author bladerail
+    @Override
+    public UserPerson getUserPerson() {
+        return userPerson;
+    }
+
+    //@@author
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
@@ -81,6 +98,28 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        Boolean checkTagExistence = false;
+
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = newPerson.getTags();
+            if (newTags.contains(tag)) {
+                checkTagExistence = true;
+            }
+            newTags.remove(tag);
+            newPerson.setTags(newTags);
+
+            addressBook.updatePerson(oldPerson, newPerson);
+        }
+
+        if (!checkTagExistence) {
+            throw new ParserException("Tag does not exist.");
+        }
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -92,12 +131,42 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author bladerail
+    @Override
+    public void sortFilteredPersonList(String filterType) {
+        Predicate<? super ReadOnlyPerson> currPredicate = filteredPersons.getPredicate();
+        if (currPredicate == null) {
+            currPredicate = PREDICATE_SHOW_ALL_PERSONS;
+        }
+        addressBook.sortPersons(filterType);
+        ObservableList<ReadOnlyPerson> sortedList = this.addressBook.getPersonList();
+        this.filteredPersons = new FilteredList<>(sortedList);
+        filteredPersons.setPredicate(currPredicate);
+        indicateAddressBookChanged();
+    }
+
+    //@@author
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author bladerail
+    @Override
+    public void updateUserPerson(ReadOnlyPerson editedPerson) {
+        requireAllNonNull(editedPerson);
+        userPerson.update(editedPerson);
+        indicateUserPersonChanged();
+    }
+
+    /** Raises an event to indicate the model has changed */
+    private void indicateUserPersonChanged() {
+        raise(new UserPersonChangedEvent(userPerson));
+        logger.info("Updated User Person: " + userPerson);
+    }
+
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -113,7 +182,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && userPerson.equals(other.userPerson);
     }
 
 }

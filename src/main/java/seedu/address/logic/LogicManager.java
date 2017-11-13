@@ -12,6 +12,7 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.UserPerson;
 
 /**
  * The main LogicManager of the app.
@@ -54,4 +55,11 @@ public class LogicManager extends ComponentManager implements Logic {
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
     }
+
+    //@@author bladerail
+    @Override
+    public UserPerson getUserPerson() {
+        return model.getUserPerson();
+    }
+    //@@author
 }

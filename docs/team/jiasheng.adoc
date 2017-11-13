@@ -1,0 +1,111 @@
+= Jiasheng An - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F11-B2/main/blob/master/collated/main/AngularJiaSheng.md[Functional code]]
+ [https://github.com/CS2103AUG2017-F11-B2/main/blob/master/collated/test/AngularJiaSheng.md[Test code]]
+
+
+=== Enhancement Added: tagDelete
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tagDelete]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It can be too much of a hassle for user to delete tags individually using the edit command. tagDelete allows users to delete the same tag from all user.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tagdelete]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `webLink`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+Allows user to save multiple weblinks for their contacts, allows for future implementation on displaying website on the UI side.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=weblink]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `Improvement on existing find command`
+
+==== External behaviour
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+==== Justification
+
+The existing version of find command can only search under name of users.
+In addition, if name contains the search keyword, it is not accepted, which is not useful for users.
+
+=== Enhancement Added" `Improvement on Filter command`
+
+==== External behaviour
+
+---#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=filtercommand]
+
+#End of Extract#
+
+==== Justification
+
+This is an extension to Han Siang's initial implementation of only filtering tags. The new implementation will make the
+command  more useful for the users that wants to search information under all attributes of a person.
+
+==== Implementation for Find & Filter Command
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=FindFilter]
+
+#End of Extract#
+
+---
+
+

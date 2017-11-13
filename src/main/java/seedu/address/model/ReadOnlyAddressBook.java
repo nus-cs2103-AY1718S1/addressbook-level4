@@ -18,6 +18,7 @@ public interface ReadOnlyAddressBook {
     /**
      * Returns an unmodifiable view of the tags list.
      * This list will not contain any duplicate tags.
+     * This List will not contain any duplicate web links.
      */
     ObservableList<Tag> getTagList();
 
