@@ -124,7 +124,7 @@ public class AddressBookParser {
         case UpdatePhotoCommand.COMMAND_WORD:
             return new UpdatePhotoCommandParser().parse(arguments);
 
-         case RepeatCommand.COMMAND_WORD:
+        case RepeatCommand.COMMAND_WORD:
             return new RepeatCommandParser().parse(arguments);
 
         case ToggleTimetableCommand.COMMAND_WORD:

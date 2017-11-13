@@ -2,16 +2,11 @@
 package seedu.address.logic.parser.event;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PERIOD;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PERIOD_SOCCER;
-import static seedu.address.logic.commands.CommandTestUtil.PERIOD_MIDTERM;
-import static seedu.address.logic.commands.CommandTestUtil.PERIOD_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PERIOD_MIDTERM;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PERIOD_SOCCER;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
 
 import java.util.Optional;
 

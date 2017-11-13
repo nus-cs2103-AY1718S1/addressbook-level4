@@ -39,11 +39,17 @@ public class Period {
 
     /**
      * Returns true if a given string is a valid event period.
+     * @param test string
      */
     public static boolean isValidPeriod(String test) {
         return !test.equals("") && test.matches(PERIOD_VALIDATION_REGEX);
     }
 
+    /**
+     * Generate an Optional Period object based on given string.
+     * @param periodString
+     * @return an Optional Period object
+     */
     public static Optional<Period> generatePeriod(String periodString) {
         Optional<Period> period;
         try {

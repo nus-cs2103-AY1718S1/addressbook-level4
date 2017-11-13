@@ -394,9 +394,6 @@ public class CalendarView extends UiPart<Region> {
      * @return the stack pane created
      */
     private StackPane createPane(ReadOnlyEvent event) {
-        String[] colors = {"#81C7D4", "#FEDFE1", "#D7C4BB", "#D7B98E"};
-        int randomColor = (int) (Math.random() * 4);
-
         //Create the label
         Label eventTitle = new Label();
         eventTitle.setWrapText(true);
@@ -406,7 +403,7 @@ public class CalendarView extends UiPart<Region> {
         //Create the pane
         StackPane eventPane = new StackPane();
         eventPane.setMaxWidth(135.0);
-        eventPane.setStyle("-fx-background-color: " + colors[randomColor] + "; -fx-alignment: CENTER; "
+        eventPane.setStyle("-fx-background-color: #81C7D4; -fx-alignment: CENTER; "
                 + "-fx-border-color: " + "white");
 
         //Add listener to mouse-click event to show detail of the event
