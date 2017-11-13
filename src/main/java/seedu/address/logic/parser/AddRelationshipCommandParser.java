@@ -34,6 +34,12 @@ public class AddRelationshipCommandParser implements Parser<AddRelationshipComma
                 ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_CONFIDENCE_ESTIMATE);
 
         List<String> listOfArgs = Arrays.asList(trimmedArgs.split(" "));
+
+        if (listOfArgs.size() < 3) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRelationshipCommand.MESSAGE_USAGE));
+        }
+
         String firstIndexString = listOfArgs.get(0);
         String secondIndexString = listOfArgs.get(1);
 

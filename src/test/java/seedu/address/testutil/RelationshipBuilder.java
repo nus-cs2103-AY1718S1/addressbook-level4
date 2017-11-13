@@ -14,7 +14,7 @@ import seedu.address.model.relationship.RelationshipDirection;
 public class RelationshipBuilder {
 
     private static final Person DEFAULT_FROM_PERSON = new PersonBuilder().build();
-    private static final Person DEFAULT_TO_PERSON = new PersonBuilder().build();
+    private static final Person DEFAULT_TO_PERSON = new PersonBuilder().withName("Intelli").build();
     private static final RelationshipDirection DEFAULT_DIRECTION = RelationshipDirection.UNDIRECTED;
 
     private Relationship relationship;
