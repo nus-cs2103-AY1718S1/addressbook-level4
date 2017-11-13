@@ -1,0 +1,87 @@
+== Test Script ==
+
+=== Loading Sample Data ===
+
+1. Run `PEERSONAL.jar` to generate required files.
+2. There should be 20 contacts in PEERSONAL upon launching. If the sample data is missing, please copy the data from
+`[T10-B2][PEERSONAL]SampleData.xml` and replace the data in `addressbook.xml`.
+3. If `addressbook.xml` is missing, modify PEERSONAL and exit the application to generate `addressbook.xml`. A simple modification can be adding a new contact e.g.
+`add n/Jane a/Singapore e/jane@email.com p/9000`.
+
+=== Steps ===
+
+1. Launch the User Guide by typing `help`. +
+Expected Result: A separate window for the User Guide would be opened.
+2. Close the User Guide window before proceeding with the test.
+3. Add a new contact with `add n/Bruce e/bruce@gmail.com a/Lorong 8 Toa Payoh p/90123456` +
+Expected Result: A new contact would be added into PEERSONAL and would be at the bottom of the list.
+4. Select the new contact with `select 21` to see the newly added contact.
+Expected Result: The newly added contact would be selected and the contact's details would appear in the central bottom panel
+as well. The Google Maps would show the contact's address too.
+5. Add a profile picture to the contact with `addphoto 21 f/FILEPATH`. The `FILEPATH` can be any photo in your computer and should be of `jpg`, `png` or `jpeg` format.
+Select any other contact and `select 21` again to update the contact. +
+Expected Results: A profile picture would be added to the contact. The picture would be saved in a separate folder called `displaypictures` which is generated when `PEERSONAL.jar`
+is opened for the first time.
+6. Remove a profile picture with `addphoto 21 f/`. +
+Expected Results: The contact's profile picture would revert to the default profile picture. Select any other contact and `select 21` again to update the contact.
+7. This can be undone with `undo`. +
+Expected Results: The profile picture would be added back. `select 21` to update the contact.
+8. Add a birthday to the contact with `birthday 21 b/19-03-1988`. +
+Expected Results: A birthday would be added to the contact. An `Age` field would appear as well, showing the age of the contact.
+9. Remove a birthday with `birthday 21 b/`. +
+Expected Results: The birthday and age field will be removed from the contact.
+10. This can be undone with `undo`. +
+Expected Results: The birthday and age field will be added back.
+11. View all upcoming birthdays with `upcomingbirthday`. +
+Expected Result: The list would be sorted from the nearest upcoming birthday to the furthest. Contacts without birthdays would be pushed
+to the bottom of the list and sorted according to alphabetical order.
+13. Add a remark to a contact with `remark 11 r/Short hair`. +
+Expected Results: A remark `Short hair` would be added to the contact.
+14. Remove a remark with `remark 11 r/`. +
+Expected Results: The remark will be removed from the contact.
+15. This can be undone with `undo`. +
+Expected Results: The remark would be added back.
+16. Edit a contact with `edit 11 t/BestFriend`. +
+Expected Results: A tag `Best friend` would be added to the contact.
+17. Sort PEERSONAL with `sort`. +
+Expected Results: PEERSONAL would be sorted according to name in alphabetical order.
+18. Sort PEERSONAL with `sort n/`. +
+Expected Results: PEERSONAL would be sorted according to name in alphabetical order.
+19. Sort PEERSONAL with `sort a/`. +
+Expected Results: PEERSONAL would be sorted according to address in alphabetical order.
+20. Sort PEERSONAL with `sort e/`. +
+Expected Results: PEERSONAL would be sorted according to email in alphabetical order.
+21. Sort PEERSONAL with `sort p/`. +
+Expected Results: PEERSONAL would be sorted according to phone number in ascending order.
+22. Sort PEERSONAL with `sort o/`. +
+Expected Results: PEERSONAL would be sorted according to age in ascending order.
+23. Find contacts in PEERSONAL with `find n/Bruce`. +
+Expected Results: Contacts with the name `Bruce` would be listed.
+24. Find contacts in PEERSONAL with `find e/bruce@gmail.com`. +
+Expected Results: Contacts with the string `bruce@gmail.com` in their emails would be listed.
+25. Find contacts in PEERSONAL with `find a/toa payoh`. +
+Expected Results: Contacts with the string `toa payoh` in their addresses would be listed.
+26. Find contacts in PEERSONAL with `find p/90123456`. +
+Expected Results: Contacts with the phone number `90123456` would be listed.
+27. Find contacts in PEERSONAL with `find b/19-03-1988`. +
+Expected Results: Contacts with the birthday `19-03-1988` would be listed.
+28. Find contacts in PEERSONAL with `find r/Short hair`. +
+Expected Results: Contacts with the remark `Short hair` would be listed.
+29. Find contacts in PEERSONAL with `find t/[BestFriend]`. +
+Expected Results: Contacts with the tag `[BestFriend]` would be listed.
+12. List all the contacts with `list`. +
+Expected Results: The panel would return to its original state.
+30. Delete contacts in PEERSONAL with `delete 1 2`. +
+Expected Results: The first and second contacts in PEERSONAL would be deleted.
+31. This can be undone with `undo`. +
+Expected Results: The deleted contacts would be added back.
+32. This undo-ing can be redone with `redo`. +
+Expected Results: The first and second contacts in PEERSONAL would be deleted once more.
+33. To clear PEERSONAL, type `clear`. +
+Expected Results: All of PEERSONAL's contacts would be removed.
+34. This can be undone with `undo`. +
+Expected Results: All of PEERSONAL's contacts would be added back.
+35. View the history of inputs with `history`. +
+Expected Results: The inputs would be listed in reverse chronological order.
+36. Exit the program with `exit`. +
+Expected Results: PEERSONAL would close.
