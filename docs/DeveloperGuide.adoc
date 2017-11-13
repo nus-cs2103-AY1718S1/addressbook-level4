@@ -466,7 +466,6 @@ public CommandResult executeUndoableCommand() throws CommandException {
 // end::group[]
 
 // tag::locate[]
-
 === Locate: Navigate to a person's address
 
 Locate function allows the user to find the route from the address entered to a person's address, and the route displayed is the recommended by the Google Maps. The parameters to be entered by the user are the index of the person to be located, and the starting address with the address prefix in the front.

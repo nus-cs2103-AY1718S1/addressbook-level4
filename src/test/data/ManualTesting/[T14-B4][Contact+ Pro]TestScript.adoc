@@ -13,7 +13,11 @@ Run the programme and the list of sample data should be loaded into the app.
 
 ==== Locate Command
 
-etc
+To navigate from a starting address to the address of the first person in the list: +
+Type `locate 1 a/nus`
+
+The first person in the list is Alex Yeoh, so the browser panel should display the recommended route
+from `nus` to Alex's address, which is `Blk 30 Geylang Street 29, #06-40` on Google Maps.
 
 ==== Favorite Command
 
@@ -44,10 +48,63 @@ Type `find m/Computer Science`
 The programme should now list 8 people in total who have major that contains the subtring
 `Computer Science`.
 
+To search for favorite persons only: +
+Type `find favorite`. +
+
+The programme should list out the persons who are favorite.
+
+To search for unfavorite persons: +
+Type `find unfavorite`. +
+
+The programme should list out the remaining persons who are not favorite.
+
 To return to all persons view: +
 Type `list`.
 
-{Add more test cases here}
+==== Listalp Command
+
+Listalp command allows user to search for persons whose names start with a certain alphabet. +
+Type `listalp a`.
+
+Persons whose names start with 'a' should be displayed in the list.
+
+To return to all persons view: +
+Type `list`.
+
+==== Sort Command
+
+Sort command allows user to sort the list of persons based on `name`, `phone`, `email` and `address`.
+The default order of sorting is ascending. +
+
+To sort the list of persons based on `name`: +
+Type `sort name`.
+
+To sort the list of persons based on `phone`: +
+Type `sort phone`.
+
+To sort the list of persons based on `email`: +
+Type `sort email`.
+
+To sort the list of persons based on `address`: +
+Type `sort address`.
+
+[NOTE]
+====
+Only four attributes are allowed for sort command. an error message will be prompted if the inputs are different.
+====
+
+[NOTE]
+====
+After sorting, the favorite contacts will still be on the top of the list followed by unfavorite contacts.
+The order within favorite contacts and unfavorite contacts will be sorted based on the attribute inputed.
+====
+
+==== DeleteTag Command
+
+DeleteTag command allows user to delete a certain tag from all contacts.
+
+To delete `colleagues` tag: +
+Type `deleteTag colleagues`.
 
 ---
 
