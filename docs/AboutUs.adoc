@@ -36,7 +36,7 @@ Role: Developer +
 Responsibilities: Logic
 
 * Features Implemented : +
-** Bloodtype Class related
+** Bloodtype Class related +
 https://github.com/CS2103AUG2017-T17-B2/main/pull/41[Bloodtype Class] +
 https://github.com/CS2103AUG2017-T17-B2/main/pull/113[Bloodtype Class Regex Enhancement] +
 https://github.com/CS2103AUG2017-T17-B2/main/pull/145[Bloodtype consistency] +
