@@ -6,8 +6,12 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_IMPORT_PATH;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_IMPORT_TYPE;
 import static seedu.address.logic.commands.CommandTestUtil.NOT_FROM_NUSMODS_IMPORT;
 import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_INVALID_IMPORT;
+import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_MALFORMED_URL;
 import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_VALID_IMPORT;
 import static seedu.address.logic.commands.CommandTestUtil.NUSMODS_VALID_URL;
+import static seedu.address.logic.commands.CommandTestUtil.SCRIPT_VALID_IMPORT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_IMPORT_XML_PATH;
+import static seedu.address.logic.commands.CommandTestUtil.XML_VALID_IMPORT;
 import static seedu.address.logic.commands.imports.ImportNusmodsCommand.INVALID_URL;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -19,6 +23,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.imports.ImportCommand;
 import seedu.address.logic.commands.imports.ImportNusmodsCommand;
+import seedu.address.logic.commands.imports.ImportXmlCommand;
 
 //@@author yunpengn
 public class ImportCommandParserTest {
@@ -28,6 +33,18 @@ public class ImportCommandParserTest {
     public void parse_allFieldsPresent_success() throws Exception {
         ImportCommand expected = new ImportNusmodsCommand(new URL(NUSMODS_VALID_URL));
         assertParseSuccess(parser, NUSMODS_VALID_IMPORT, expected);
+
+        expected = new ImportXmlCommand(VALID_IMPORT_XML_PATH.trim());
+        assertParseSuccess(parser, XML_VALID_IMPORT, expected);
+
+        // This is because ImportScriptCommand has not been implemented, coming in v2.0
+        assertParseSuccess(parser, SCRIPT_VALID_IMPORT, null);
+    }
+
+    @Test
+    public void parse_noDoubleHyphen_expectXmlCommand() {
+        ImportCommand expected = new ImportXmlCommand(VALID_IMPORT_XML_PATH.trim());
+        assertParseSuccess(parser, VALID_IMPORT_XML_PATH, expected);
     }
 
     @Test
@@ -43,10 +60,13 @@ public class ImportCommandParserTest {
     }
 
     @Test
-    public void parse_invalidUrlForNusMods_expectException() {
+    public void  checkNusmodsImport_invalidUrlForNusMods_expectException() {
         assertParseFailure(parser, NOT_FROM_NUSMODS_IMPORT,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportNusmodsCommand.MESSAGE_USAGE));
 
         assertParseFailure(parser, NUSMODS_INVALID_IMPORT, String.format(INVALID_URL, ""));
+
+        assertParseFailure(parser, NUSMODS_MALFORMED_URL, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ImportNusmodsCommand.MESSAGE_USAGE));
     }
 }
