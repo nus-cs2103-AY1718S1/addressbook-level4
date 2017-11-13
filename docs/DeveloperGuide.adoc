@@ -176,8 +176,12 @@ These are the details of each component.
 
 The user interface has a structure that can be demonstrated in the following figure.
 
+// tag::shaocong5[]
+
 image::UiClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
+
+// end::shaocong5[]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -218,8 +222,12 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 The model component has the following structure.
 
+// tag::shaocong3[]
+
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
+
+// end::shaocong3[]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -234,8 +242,12 @@ The `Model`,
 
 The storage component interacts with the main application and the hard disk storage file. Its structure is shown below.
 
+// tag::shaocong4[]
+
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
+
+// end::shaocong4[]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
