@@ -409,7 +409,7 @@ Smartphone with QRScanner Application Installed.
 
 === QRCode to save a person's contact to phone
 [NOTE]
-Currently supported devices are only Android
+Currently supported devices are: Android
 
 1. Copy the following command onto the command line input: +
 `qrsave 1`
