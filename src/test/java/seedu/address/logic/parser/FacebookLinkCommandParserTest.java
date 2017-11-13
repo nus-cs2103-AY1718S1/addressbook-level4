@@ -1,11 +1,12 @@
 package seedu.address.logic.parser;
 
-import org.junit.Test;
-import seedu.address.logic.commands.FacebookLinkCommand;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_URL;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.FacebookLinkCommand;
 
 //@@author alexfoodw
 public class FacebookLinkCommandParserTest {
