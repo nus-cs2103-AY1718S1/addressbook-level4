@@ -1184,22 +1184,22 @@ the idea of allowing custom user-defined input, concurrent to a default country 
 //tag::scheduleSingle[]
 === Scheduling an Activity with a Single Person [Since v1.3]
 
-The `ScheduleCommand` allows users to schedule and activity with one person in the contact list. It is one of the commands that extend `UndoableCommand`. This allows users to `undo` their scheduling. `UndoableCommand`, in turn, inherits from `Command` as shown in _Figure4.3.1_ below.
+The `ScheduleCommand` allows the user to schedule and activity with one person in the contact list per execution. It is one of the commands that extend `UndoableCommand`. This allows users to `undo` their scheduling. `UndoableCommand`, in turn, inherits from `Command` as shown in _Figure 4.9.1_ below.
 
 image::ScheduleCommandLogicCommandClassDiagram.png[width="800"]
 
-_Figure 4.3.1: `ScheduleCommand` inherits from `UndoableCommand`
+_Figure 4.9.1 : Inheritance diagram for commands_
 
 
-The diagram in _Figure 4.3.2_ below shows the sequence of the schedule operation.
+The diagram in _Figure 4.9.2_ below shows the sequence of the schedule operation.
 
 image::ScheduleCommandLogic.png[width="800"]
 
-_Figure 4.3.2: Interactions Inside the Logic Component for the `schedule 1 d/15-12-2017 act/Meeting` Command_
+_Figure 4.9.2 : Interactions inside the `Logic` component for the `schedule 1 d/15-12-2017 act/Meeting` command execution_
 
-The `ScheduleCommand` takes in `Index`, which is already available in the original application, as well as `ScheduleDate` and `Activity`. The Model component of the application has been extended to include these two new classes.
+The `ScheduleCommand` takes in `Index`, which is already available in the v1.0 code, as well as `ScheduleDate` and `Activity`. The Model component of the application has been extended to include the two new classes.
 
-`DateUtil` has also been created to make sure that users enter a valid data which follows DD-MM-YYYY format. The code snippet below shows how `DateUtil` checks the validity of an input date.
+`DateUtil` has also been created to make sure that users enter a valid data which follows DD-MM-YYYY format. The code snippet in _Figure 4.9.3_ below shows how `DateUtil` checks the validity of an input date.
 
 [source, java]
 ----
@@ -1221,51 +1221,50 @@ private static boolean isActualDate (String date) {
 }
 ----
 
-The activity scheduled will be displayed together with the other components of a `Person` in the `PersonCard` as shown in _Figure 4.3.3_ below.
+_Figure 4.9.3 : Code section from DateUtil.java_
+
+The activity scheduled will be displayed together with the other components of a contact as shown in _Figure 4.9.4_ below.
 
 image::ScheduleCommandSingleScreenShot.png[width="400"]
 
-_Figure 4.3.3: UI display of a successful `ScheduleCommand` execution_
+_Figure 4.9.4 : UI display of a successful `ScheduleCommand` execution_
 
 ==== Design Considerations
 
-**Aspect:** Valid date format +
-**Alternative 1 (current choice)**: DD-MM-YYYY is the only valid date format +
-**Pros:** It is now possible to arrange the schedules based on which date comes first. +
-**Cons:** Users have lesser flexibility in inputting dates. +
-**Alternative 2:** Allowing users to key in dates in DD-MM format in addition to DD-MM-YYYY format  +
-**Pros:** This gives users a greater flexibility when keying in dates.  +
-**Cons:** This creates ambiguity when arranging the schedules based on dates.
-
----
-
 **Aspect:** Creation of master schedule list +
-**Alternative 1 (current choice)**: Creation of a master schedule list that stores all the unique activities scheduled +
-**Pros:** It is possible to display the unique activities scheduled. +
-**Cons:** Master schedule list has to be synchronised with all the schedules attached to persons every time a schedule is added. +
-**Alternative 2:** Absence of master schedule list  +
+**Alternative 1 (current choice)**: A master schedule list is created to store all the unique activities scheduled. +
+**Pros:** It is possible to utilise the master schedule list to display all the unique schedules that the user has scheduled. +
+**Cons:** The master schedule list has to be synchronised with all the schedules attached to all persons in the contact list every time a new schedule is added. +
+**Alternative 2:** A master schedule list is not created.  +
 **Pros:** It is easier to implement.  +
-**Cons:** Users can only search for an activity scheduled by searching the person they have scheduled the activity with.
-
----
-
-Both current choices above facilitate the creation of link:#viewing-of-user-s-agenda-since-v1-4[My Agenda] panel.
-
-Initially, the application can take in both DD-MM and DD-MM-YYYY date formats. After further considerations, DD-MM format is removed and is no longer accepted by the application owing to 2 reasons:
-
-* DD-MM date format introduces ambiguity when schedules need to be arranged according to dates.
-* It is impossible for users not to know the exact year in which an activity is scheduled.
+**Cons:** The user can only search for an activity scheduled by searching for the person he has scheduled the activity with.
 
 [NOTE]
-Since v1.4, schedules in both the `AgendaPanel` and the `PersonCard` are arranged based on dates.
+This choice facilitates the creation of the link:#viewing-of-user-s-agenda-since-v1-4[agenda panel].
+
+---
+
+**Aspect:** The choice of valid date format +
+**Alternative 1 (current choice)**: DD-MM-YYYY is the only valid date format. +
+**Pros:** It is possible to determine which date comes first and which comes later. +
+**Cons:** The user has lesser flexibility in inputting dates. +
+**Alternative 2:** Both DD-MM and DD-MM-YYYY are acceptable date format.  +
+**Pros:** This gives the user more flexibility when inputting dates.  +
+**Cons:** This creates ambiguity when arranging the schedules based on dates.
+
+[NOTE]
+Since v1.4, schedules in both the agenda panel and the person cards are arranged based on dates.
+
 //end::scheduleSingle[]
 
 //tag::scheduleMultiple[]
 === Scheduling an Activity with Multiple Persons [Since v1.4]
 
-This enhancement builds upon the schedule feature developed in v1.3, which allows users to schedule an activity with one person. Users can now input multiple indices to schedule an activity with multiple persons at the same time.
+This enhancement builds upon the schedule feature developed in v1.3, which allows the user to schedule an activity with only one person. With this enhancement, the user can now input multiple indices to schedule an activity with multiple persons at the same time.
 
-The implementation of `Comparable` interface for `Schedule` allows the activities scheduled with a person to be displayed from the smallest date value. The code extract below shows how the `compareTo()` function is being defined in the `Schedule`.
+The schedule attached to a contact is stored inside a `List`, and is sorted based on the `ScheduleDate` every time a new `Schedule` is added.
+
+The implementation of `Comparable` interface for `Schedule` allows the activities scheduled with a person to be displayed from the earliest date to the latest date. The code section in _Figure 4.10.1_ below shows how the `compareTo()` function is being defined in the `Schedule` class.
 
 [source, java]
 ----
@@ -1295,29 +1294,33 @@ public class Schedule implements Comparable<Schedule> {
 }
 ----
 
-The outcome of schedule multiple command execution is shown in _Figure 4.4.1_ below.
+_Figure 4.10.1 : Code section from Schedule.java_
+
+The outcome of schedule multiple command execution is shown in _Figure 4.10.2_ below.
 
 image::ScheduleCommandMultipleScreenShot.png[width="400"]
 
-_Figure 4.4.1: UI display of a successful enhanced `ScheduleCommand` execution_
+_Figure 4.10.2 : UI display of a successful enhanced `ScheduleCommand` execution_
 
 ==== Design Considerations
 
-**Aspect:** Data structure to support multiple `Index` +
-**Alternative 1 (current choice)**: Use Set to store indices input +
-**Pros:** The application becomes smart enough to eliminate duplicate indices input and speed up the execution of `ScheduleCommand` +
-**Alternative 2:** Use ArrayList to store indices input  +
-**Cons:** Users receive an error message if they input non-unique indices.
+**Aspect:** Data structure to support multiple indices input +
+**Alternative 1 (current choice)**: `Set` is used to store indices input. +
+**Pros:** The application becomes smart enough to eliminate duplicate indices input and speed up the `ScheduleCommand` execution. +
+**Cons:** There is a need to override the `hashCode()` and `equals()` methods in the `Index` for the `Set` implementation to work correctly. +
+**Alternative 2:** `ArrayList` is used to store indices input. +
+**Pros:** `List` implementation allows the indices input to be stored in order; and hence, easier to manipulate if required.  +
+**Cons:** The user receive an error message if they input non-unique indices.
 
 ---
 
 **Aspect:** Data structure to support scheduling multiple activities with a contact +
-**Alternative 1 (current choice)**: Use ArrayList to store multiple schedules +
+**Alternative 1 (current choice)**: `ArrayList` is used to store multiple schedules. +
 **Pros:** This makes it possible to arrange the schedules based on dates. +
 **Cons:** There is a need to check for duplicate schedules so that all the schedules attached to a person are unique. +
-**Alternative 2:** Use Set to store multiple schedules  +
-**Pros:** There is no need to specially check for duplicate schedules.  +
-**Cons:** The arrangement of the schedules will appear at random.
+**Alternative 2:** `Set` is used to store multiple schedules  +
+**Pros:** There is no need to specially check for duplicate schedules. +
+**Cons:** `Set` does not provide any ordering guarantees for the schedules.
 //end::scheduleMultiple[]
 
 //tag::find[]
@@ -1482,16 +1485,16 @@ _Figure 4.8.4: UI display for user's agenda_
 //tag::welcomeScreen[]
 === Welcome Screen Display [Since v1.5]
 
-If enabled, the `WelcomeScreen` will be loaded before the `MainWindow`. The information regarding the enabling or disabling of `WelcomeScreen` is stored inside `preferences.json` file, which is accessed and modified by `UserPrefs` class.
+If enabled, the welcome screen will be launched before the main window is displayed. The information regarding the enabling or disabling of welcome screen is stored inside `preferences.json` file, which is accessed and modified by `UserPrefs` class.
 
-`UserPrefs` contains boolean variable `isWelcomeScreenEnabled`, which is initially set to false. This means that the `WelcomeScreen` is disabled by default.
+`UserPrefs` contains boolean variable `isWelcomeScreenEnabled`, which is initially set to false. This means that the welcome screen is disabled by default.
 
-To facilitate the enabling and disabling of `WelcomeScreen`, `WelcomeCommand`, which takes in `EnablingKeyword` argument, is created.
+To facilitate the enabling and disabling of welcome screen, `WelcomeCommand`, which takes in `EnablingKeyword` argument, is created.
 
 [NOTE]
-`EnablingKeyword` allows two possible values: `enable` and `disable`.
+`EnablingKeyword` guarantees two possible values: `enable` and `disable`.
 
-Depending on the value of `EnablingKeyword`, `WelcomeCommand` will call one of the following two methods in `UserPrefs` to change the `isWelcomeScreenEnabled` value in `preferences.json`.
+Depending on the value of `EnablingKeyword`, `WelcomeCommand` will call one of the following two methods in `UserPrefs`, as shown by the code section in _Figure 4.13.1_, to change the `isWelcomeScreenEnabled` value in `preferences.json`.
 
 [source, java]
 ----
@@ -1510,7 +1513,9 @@ public class UserPrefs {
 }
 ----
 
-Every time the application is run, `UiManager` will call `getWelcomeScreenEnabledInfo()` in `UserPrefs` to check whether the `WelcomeScreen` is enabled. The code snippet below shows how this is implemented.
+_Figure 4.13.1 : Code section from UserPrefs.java_
+
+Every time the application is run, `UiManager` will call `getWelcomeScreenEnabledInfo()` in `UserPrefs` to check whether the welcome screen is enabled. The code section in _Figure 4.13.2_ below shows how this is implemented.
 
 [source, java]
 ----
@@ -1532,36 +1537,36 @@ public void start(Stage primaryStage) {
 }
 ----
 
-_Figure 4.5.1_ below shows the UI display of the `WelcomeScreen`. The welcome screen displays the ConTag logo and 1 out of the default 15 productivity quotes at random.
+_Figure 4.13.2 : Code section from UiManager.java_
+
+_Figure 4.13.3_ below shows the UI display of the as implemented in the `WelcomeScreen`. The welcome screen displays the ConTag logo and 1 out of the default 15 productivity quotes at random.
 
 image::WelcomeScreen.png[width="400"]
 
-_Figure 4.5.1: The welcome screen_
+_Figure 4.13.3 : The welcome screen_
 
-When the `Continue` button is pressed, `WelcomeScreen` will pass the `MainWindow` scene into the `primaryStage`, replacing `WelcomScreen` with `MainWindow`.
+When the `Continue` button is pressed, `WelcomeScreen` will pass the `MainWindow` scene into the `primaryStage`, replacing `WelcomeScreen` with `MainWindow`.
 
 ==== Design Considerations
 
 **Aspect:** Nature of `WelcomeScreen` +
-**Alternative 1 (current choice)**: Users' action is required to close the welcome screen. +
-**Pros:** Users will have enough time to read the text on the welcome screen. +
+**Alternative 1 (current choice)**: The users' action is required to close the welcome screen. +
+**Pros:** This enables the developer to customise the text on the welcome screen as required, such as tips or important notice. This is because the user will have enough time to read the text on the welcome screen. +
 **Cons:** A button is required to handle the passing of scenes into the `primaryStage`. +
 **Alternative 2:** Welcome screen closes by itself after a fixed period of time.  +
-**Pros:** It does not require additional button; and hence is more straightforward to implement.  +
-**Cons:** Welcome screen can only display logo and minimum text as it is not guaranteed that users can read the text within the period the welcome screen is displayed.
+**Pros:** It does not require additional button; and hence, is more straightforward to implement.  +
+**Cons:** Welcome screen can only display logo and minimum text as it is not guaranteed that the user can read the text within the period the welcome screen is displayed.
 
 ---
 
-**Aspect:** Disabling welcome screen +
-**Alternative 1 (current choice)**: Users have the choice to enable or disable welcome screen. +
-**Pros:** Users who want the welcome screen to be displayed can save time by skipping the welcome screen.
+**Aspect:** Disabling of the welcome screen +
+**Alternative 1 (current choice)**: The user has the choice to enable or disable the welcome screen. +
+**Pros:** Some users who do not want the welcome screen to be displayed can save time by skipping the welcome screen. +
 **Cons:** A new command must be created to cater to this purpose. +
 **Alternative 2:** Welcome screen is always displayed when the application is run.  +
 **Pros:** This does not require additional command to be implemented.  +
-**Cons:** Users who think that welcome screen is unnecessary cannot skip the welcome screen.
+**Cons:** All users are forced to wait for the the welcome screen to launch before the main window. Some users may not be contented.
 //end::welcomeScreen[]
-
-
 
 // tag::reminder[]
 === Pop-up reminder window [Since v1.5]
