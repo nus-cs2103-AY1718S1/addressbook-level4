@@ -27,6 +27,16 @@ include::../UserGuide.adoc[tag=tagDelete]
 
 It can be too much of a hassle for user to delete tags individually using the edit command. tagDelete allows users to delete the same tag from all user.
 
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tagdelete]
+
+#End of Extract#
+
+---
 
 === Enhancement Added: `webLink`
 
@@ -49,7 +59,7 @@ Allows user to save multiple weblinks for their contacts, allows for future impl
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=model]
+include::../DeveloperGuide.adoc[tag=weblink]
 
 #End of Extract#
 
@@ -59,7 +69,9 @@ include::../DeveloperGuide.adoc[tag=model]
 
 ==== External behaviour
 
----#Start of Extract [from: User Guide]#
+---
+
+#Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=find]
 
@@ -84,5 +96,16 @@ include::../UserGuide.adoc[tag=filtercommand]
 
 This is an extension to Han Siang's initial implementation of only filtering tags. The new implementation will make the
 command  more useful for the users that wants to search information under all attributes of a person.
+
+==== Implementation for Find & Filter Command
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=FindFilter]
+
+#End of Extract#
+
+---
 
 

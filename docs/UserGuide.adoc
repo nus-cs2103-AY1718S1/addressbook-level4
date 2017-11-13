@@ -152,17 +152,16 @@ Nothing will happen if no such tag is present in any person in the address book
 // end::tagDelete[]
 
 // tag::find[]
-=== Locating persons by name: `find`
+=== searches for person that matches any of the keywords: `find`
 
 Finds persons whose attributes contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
+* The search is case insensitive. e.g `hans` will match `Hans`, `878787` will match `8787879`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Everything will be searched. (Name, phone, email, address, tag & webLinks)
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Conversely, `Ha`
+* Sub words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
@@ -178,14 +177,14 @@ returns any person that has either `John` as the name, or address is `Clementi`.
 // end::find[]
 
 // tag::filtercommand[]
-=== Locating persons by tags: `filter`
+=== searches for person that matches all of the keywords: `filter`
 
 Finds persons whose name, phone, email, tags and address contain all of the given keywords. +
 Format: `filter KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `friends` will match `FrIendS`
-* The order of the keywords does not matter. e.g. `Friends owesmoney` will match `owesmoney friends`
+* The order of the keywords does not matter. e.g. `Amy Friends owesmoney` will match ` amy owesmoney friends`
 * Persons with attributes(namely name, phone, email, tags and address) matching all of the keywrods will be returned . e.g. `friends owesmoney, Hans` will return any person with name `Hans` that also `owesMoney`.
 ****
 
@@ -460,7 +459,9 @@ e.g. `tagDelete friend`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [+t/TAG] [-t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com +t/friend`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+e.g. `find James 123`
+* *Filter* : `find KEYWORD [MORE_KEYWORDS]` +
+e.g. `Filter James 123`
 * *List* : `list`
 * *Sort* : `sort phone`
 * *Help* : `help`

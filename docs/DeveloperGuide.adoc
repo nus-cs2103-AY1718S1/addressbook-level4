@@ -408,6 +408,131 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::weblink[]
+=== WebLink
+image::ModelClassDiagram.png[width="800"]
+The `Weblink` class creates objects to store  social website URL information of each person in the addressBook. The information will be assessed by `Web` command to display the website in Social Book.
+
+==== Categorizing of WebLinks
+One of the unique aspect of the WebLink class is that weblinks being inputted by the user will automatically be assigned into one of the 4 default categories: Facebook,
+Instagram, Linkedin and Others. Each weblink objects has a attributed `weblinkTag` to indicate the category. Also only `one` weblink will be accepted for each category.
+For example, if user `add n/jiasheng w/https://www.facebook.com/rand w/https://facebook.com/rand2, this will not be accepted. Only 1 website for each category will be loaded in Social Book.
+
+**WebLink**
+----
+public WebLink(String name) throws IllegalValueException {
+
+        requireNonNull(name);
+        this.webLinkInput = name.trim();
+        if (!isValidWebLink(webLinkInput)) {
+            throw new IllegalValueException(MESSAGE_WEB_LINK_CONSTRAINTS);
+        }
+        this.webLinkTag = DEFAULT_TAG;
+
+        HashMap<String, String> webLinkTagMap = new WebLinkUtil().getMatchingWebsites();
+        Iterator<String> keySetIterator = webLinkTagMap.keySet().iterator();
+
+        while (keySetIterator.hasNext()) {
+            String webLinkMatchingRegex = keySetIterator.next();
+            if (webLinkInput.matches(webLinkMatchingRegex)) {
+                this.webLinkTag = webLinkTagMap.get(webLinkMatchingRegex);
+                break;
+            }
+        }
+    }
+----
+
+**WebLinkUtil**
+----
+    /*tag names for the categorized web links*/
+    public static final String FACEBOOK_TAG = "facebook";
+    public static final String TWITTER_TAG = "twitter";
+    public static final String INSTAGRAM_TAG = "instagram";
+
+    /*Keywords that can be used to match website to certain categories. */
+    private static final String INSTAGRAM_MATCH_REGEX = "(?i)^^.*(instagram.com|instagram|insta).*$";
+    private static final String FACEBOOK_MATCH_REGEX = "(?i)^^.*(facebook.com|fb.com/|facebook).*$";
+    private static final String TWITTER_MATCH_REGEX = "(?i)^^.*(twitter.com|t.co|twitter).*$";
+
+    private HashMap<String, String> matchingWebsites = new HashMap<>();
+
+
+    public WebLinkUtil() {
+        matchingWebsites.put(FACEBOOK_MATCH_REGEX, FACEBOOK_TAG);
+        matchingWebsites.put(INSTAGRAM_MATCH_REGEX, INSTAGRAM_TAG);
+        matchingWebsites.put(TWITTER_MATCH_REGEX, TWITTER_TAG);
+    }
+
+    public HashMap<String, String> getMatchingWebsites() {
+        return matchingWebsites;
+    }
+----
+
+In the while loop, if the webLink input matches a regex in the Hashmap `MatchingWebsites` in `WebLinkUtil`, the "tag" that matches the regex key
+will be assigned to `this.webLinkTag`. For example, if the link matches `INSTAGRAM_MATCH_REGEX`, `INSTAGRAM_TAG` will be retrieved from the MatchingWebsites
+and assigned to `WebLinkTag`.
+
+
+**ParserUtil**
+----
+   public static Set<WebLink> parseWebLink(Collection<String> webLinks) throws IllegalValueException {
+        requireNonNull(webLinks);
+        final Set<WebLink> webLinkSet = new HashSet<>();
+        for (String inputWebLinkString : webLinks) {
+            if (checkRepeatedWebLinkInCategory(webLinkSet, inputWebLinkString)) {
+                webLinkSet.add(new WebLink(inputWebLinkString));
+            } else {
+                throw new IllegalValueException("Only one link per category: facebook ,"
+                        + "instagram or twitter");
+            }
+        }
+        return webLinkSet;
+    }
+
+    /**
+     * Checks whether webLinkSet to be passed contains weblinks from the same category.
+     */
+    public static boolean checkRepeatedWebLinkInCategory (Set<WebLink> webLinkSet, String inputWebLinkString)
+            throws IllegalValueException {
+        boolean duplicateCheck = TRUE;
+        WebLink inputWebLink = new WebLink(inputWebLinkString);
+        String inputWebLinkTag = inputWebLink.toStringWebLinkTag();
+        if (webLinkSet.isEmpty()) {
+            return duplicateCheck;
+        } else {
+
+            for (Iterator<WebLink> iterateInternalList = webLinkSet.iterator(); iterateInternalList.hasNext(); ) {
+                WebLink webLinkForChecking = iterateInternalList.next();
+                String webLinkTagForChecking = webLinkForChecking.toStringWebLinkTag();
+                if (inputWebLinkTag.equals(webLinkTagForChecking)) {
+                    duplicateCheck = FALSE;
+                    break;
+                }
+            }
+            return duplicateCheck;
+        }
+    }
+----
+The constraint of allowing one WebLink per category allowed is implemented in the method checkRepeatedWebLinkInCategory.
+If this boolean method returns false, parseWebLink will throw an IllegalValueException. In the CheckRepeatedWebLinkCategory,
+a WebLink object will be created using the parameter `inputWebLinkString`, and the webLinkTag of the object will be check against
+the webLinkTag of the given webLinkSet.
+
+==== Design consideration
+**Aspect:** Matching of tags to different URLs in when creating WebLink object
+**Alternative:** An alternative to using the current regex HashMap implementation is to simply list out the String constants in WeblinkUtil class, the matching
+ will be done through the String API `contains` at the WebLink Class. +
+**Justification:** However, the current implementation was kept. Firstly, regex offers more flexibility and control over what kind of URL we want to
+match to each website category, compared to `contains` String API. In addition, with the HashMap implementation, if new category were to be added,
+only WebLinkUtil needs to be updated. With the alternative implementation, `WebLink` class and possibly `ParserUtil` CheckRepeatedWebLinkInCategory
+method will need to be updated as well. This can be very messy and prone to bugs.
+
+==== Future Implementation
+Can consider creating a master UniqueWebLinkList in Address Class. List class can be enhanced to create a complied list of all websites
+to the user that is tracked by this master UniqueWebLinkList.
+
+// end::weblink[]
+
 // tag::websiteselectionevent[]
 === Web command for Social Links
 
@@ -564,8 +689,8 @@ Sorting in descending order. +
 
 // tag::UserProfile[]
 === AddressBook and UserProfile Storage
-The AddressBook and UserProfile data is stored in data/AddressBook.xml and data/UserProfile.xml.
-
+The AddressBook and UserProfile data is stored in data/AddressBook.xml and data/UserProfile.x
+ml.
 The AddressBook converts all `Persons`, `Tags` and `WebLinks` into XML format, which is then saved to the xml file.
 Upon initialising the app, the AddressBook will read the xml file and convert it back to Persons, Tags and Weblink
 respectively before setting the data.
@@ -602,6 +727,193 @@ variables. +
 + Modify settings and userPrefs in the UserProfile
 
 // end::UserProfile[]
+
+
+// tag::FindFilter[]
+=== Find Command and & Filter Command
+The `find` and `filter` command controls the person panels to be displayed to the user by modifying the filteredPerson FilteredList in model. The `find` & `filter` command
+will updated filteredPerson by calling the updateFilterPersonList to change the predicate. The main enhancement done is to allow `find` and `filter` command to be able to match keywords with
+all the attributes of a Person object (`Name`, `Phone`, `Address`, `Email`, `Tag` & `WebLink`) instead of just `Name` for `find command` and `Tag` for `filter` command(Our team's initial implementation).
+
+==== Find Command
+`Find` command displays the a list of person in the address book with attributes that matches `any` of the keywords entered by the user.
+`Find` command creates a new ContainKeywordsPredicate object to be be used a parameter for the updateFilterPersonList method.
+----
+public class ContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    private final List<String> keywords;
+
+    public ContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return (containsKeyWordInName(person) || containsKeyWordInAddress(person)
+                || containsKeyWordInPhone(person) || containsKeyWordInTag(person)
+                || containsKeyWordInWebLink(person) || containsKeyWordInEmail(person));
+    }
+
+    private boolean containsKeyWordInName(ReadOnlyPerson person) {
+        return keywords.stream().anyMatch(keyword
+            -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+    }
+
+    private boolean containsKeyWordInPhone(ReadOnlyPerson person) {
+        return keywords.stream().anyMatch(keyword
+            -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
+    }
+
+    private boolean containsKeyWordInAddress(ReadOnlyPerson person) {
+        return keywords.stream().anyMatch(keyword
+            -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
+    }
+
+    private boolean containsKeyWordInTag(ReadOnlyPerson person) {
+        return person.getTags().stream().anyMatch(s -> keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(s.toStringFilter(), keyword)));
+    }
+
+    private boolean containsKeyWordInWebLink(ReadOnlyPerson person) {
+        return person.getWebLinks().stream().anyMatch(s -> keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(s.toStringWebLink(), keyword)));
+    }
+
+    private boolean containsKeyWordInEmail(ReadOnlyPerson person) {
+        return person.getEmail().stream().anyMatch(s -> keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(s.toString(), keyword)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((ContainsKeywordsPredicate) other).keywords)); // state check
+    }
+
+}
+----
+There are 6 boolean methods to check whether any of the given keywords is contained in each of a `Person`'s attributed, using Java Stream API anyMatch.
+The test method will return true for the ReadOnlyperson if either of these methods return true, indicating that at least one keyword matches with one of
+the 6 attributes.
+
+==== Filter Command
+`Filter` command displays the a list of person in the address book with attributes that matches `all` of the keywords entered by the user,
+just like an actual filter function we find on certain websites.
+`Filter` Command's implementation is fairly similar to `Find`. Main difference is that a `FilterKeywordsPredicate` predicate object is created instead.
+----
+    public FilterKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+
+        String combinedReferenceList = person.getAsOneString();
+
+        return !keywords.isEmpty() && keywords.stream().allMatch(keyword
+            -> StringUtil.containsWordIgnoreCase(combinedReferenceList, keyword) && !keyword.contains("[")
+                && !keyword.contains("]"));
+----
+Below is the getAsOneString method implementation in the `ReadOnlyPerson` API that is being called by the test method in `FilterKeywordsPredicate`.
+----
+default String getAsOneString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" ")
+                .append(getPhone())
+                .append(" ")
+                .append(getEmail())
+                .append(" ")
+                .append(getAddress())
+                .append(" ")
+                .append(getRemark())
+                .append(" ");
+        getTags().forEach(builder::append);
+        builder.append(" ");
+        getWebLinks().forEach(builder::append);
+        return builder.toString();
+    }
+----
+getAsOneString method appends all the attributes into one complete string delimited by space. In test method in `FilterKeywordsPredicate`, test method uses the Java
+Stream API allMatch to ensure that all combinedReferenceList contains all the keywords entered by the user. The `keyword.contains("[")&& !keyword.contains("]")` portion
+in the test method is to catch for instances when user enters "[" or "]". This is because toString method in `Tag`, `WebLink` and `email` being called by StringBuilder
+in getAsOneString method contains a bracket by default.
+
+==== Design Consideration
+**Aspect1:** Cleaner implementation for ContainKeywordsPredicate? Why have 6 boolean methods for ContainKeywordsPredicate? +
+**Alternative:** For the test method, use GetAsOneString() method for part 1 as well, with anyMatch Java Stream API. +
+**Justification:** However, the current implementation was kept, as it opens possibility for future enhancements, suchs as `Find n/` or `Find e/` to search
+in specific attributes. The separate boolean methods for each attribute in ContainKeywordsPredicate allows for easier implementation. +
+
+**Aspect2:** A flexible search approach
+**Alternative:** `Find` & `Filter` command's current implementation uses a more flexible search approach. It means that if the keyword is a substring in the string
+of the attribute that is checked, it is considered a match. For example, `Pan` will match with `Pang`.
+
+**StringUtil**
+----
+    public static boolean containsWordIgnoreCase(String sentence, String word) {
+        requireNonNull(sentence);
+        requireNonNull(word);
+
+        String preppedWord = word.trim();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        String preppedSentence = sentence.trim();
+        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+
+        for (String wordInSentence : wordsInPreppedSentence) {
+            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+----
+The alternative implementation would be to replace `contains` with a more constraining check (Example. equals() implementation) in the containsWordIgnorecase
+method. +
+**Justification:** However, from a UX perspective, a more flexible search method will be more useful for a user, for example when the user searches `Gwen` to find
+a person called `Gwendolyn`.
+
+==== Future enhancements
+Find Command is able to search under specific attributes with prefix. Example, `Find e/` to search under email. Also
+
+// end::FindFilter[]
+
+// tag::tagdelete[]
+=== tagDelete
+The `tagDelete` command allows users to delete a `Tag` from all person in the addressbook that has the `Tag`.
+
+**Implementation for DeleteTag method in Model API**
+----
+    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        Boolean checkTagExistence = false;
+
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = newPerson.getTags();
+            if (newTags.contains(tag)) {
+                checkTagExistence = true;
+            }
+            newTags.remove(tag);
+            newPerson.setTags(newTags);
+
+            addressBook.updatePerson(oldPerson, newPerson);
+        }
+
+        if (!checkTagExistence) {
+            throw new ParserException("Tag does not exist.");
+        }
+    }
+----
+DeleteTag Command implements Undoable command. It overrides the execute method and calls on the DeleteTag method in Model API to execute the command. DeleteTag method iterates
+through the ObservableList of ReadOnlyPerson and checks whether it contains `tag` in the method parameter.
+if checkTagExistence boolean is false, deleteTag will throw ParserException to indicate that the tag does not exist.
+
+==== Future Enhancement
+deleteTag can be extended to other attributes of a person as well. For example, a method can be implemented to iterate through all the address of the person in the address book,
+and delete every that stays in a certain location.
+
+// end::tagdelete[]
 
 === Logging
 
