@@ -499,7 +499,7 @@ You can keep a backup of your contact details to the given path.
 Format: `export PATH`
 
 ****
-* Export all the information of contacts to the given local address.
+* Exports all the information of contacts to the given local address.
 ****
 // end::export[]
 
@@ -803,7 +803,7 @@ e.g. `bin-fresh`
 * *Font* : `font` +
 e.g. `font +` ,`font -`
 * *Select* : `select INDEX` +
-e.g.`select 2`
+e.g. `select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
