@@ -1,5 +1,5 @@
 # LuLechuan
-###### /java/seedu/address/logic/commands/CustomCommandTest.java
+###### \java\seedu\address\logic\commands\CustomCommandTest.java
 ``` java
 public class CustomCommandTest {
 
@@ -34,7 +34,7 @@ public class CustomCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteByNameCommandTest.java
+###### \java\seedu\address\logic\commands\DeleteByNameCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -112,7 +112,7 @@ public class DeleteByNameCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UploadPhotoCommandTest.java
+###### \java\seedu\address\logic\commands\UploadPhotoCommandTest.java
 ``` java
 public class UploadPhotoCommandTest {
 
@@ -173,7 +173,7 @@ public class UploadPhotoCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/CustomCommandParserTest.java
+###### \java\seedu\address\logic\parser\CustomCommandParserTest.java
 ``` java
 public class CustomCommandParserTest {
 
@@ -191,7 +191,19 @@ public class CustomCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/UploadPhotoCommandParserTest.java
+###### \java\seedu\address\logic\parser\DeleteByNameCommandParserTest.java
+``` java
+public class DeleteByNameCommandParserTest {
+
+    private DeleteByNameCommandParser parser = new DeleteByNameCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDeleteByNameCommand() {
+        assertParseSuccess(parser, "John Doe", new DeleteByNameCommand("John Doe"));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\UploadPhotoCommandParserTest.java
 ``` java
 public class UploadPhotoCommandParserTest {
 
@@ -207,5 +219,116 @@ public class UploadPhotoCommandParserTest {
         assertParseFailure(parser, "a", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, UploadPhotoCommand.MESSAGE_USAGE));
     }
+}
+```
+###### \java\seedu\address\model\customField\CustomFieldTest.java
+``` java
+public class CustomFieldTest {
+
+    @Test
+    public void isValidCustomField() {
+        // valid custom field
+        assertTrue(CustomField.isValidCustomField("NickName"));
+    }
+
+    @Test
+    public void isInvalidCustomField() {
+        // invalid custom fields
+        assertFalse(CustomField.isValidCustomField("")); // empty string
+        assertFalse(CustomField.isValidCustomField(" ")); // spaces only
+    }
+}
+```
+###### \java\seedu\address\model\person\PhotoTest.java
+``` java
+public class PhotoTest {
+
+    @Test
+    public void isKnownPhoto() {
+        // valid photo path
+        assertTrue(!Photo.isUnknownPath(System.getProperty("user.dir")
+                + "/docs/images/default_photo.png")); // existed path
+    }
+
+    @Test
+    public void isUnknownPhoto() {
+        // invalid photo path
+        assertFalse(!Photo.isUnknownPath("")); // empty string
+        assertFalse(!Photo.isUnknownPath("doesNotExist.jpg")); // path does not exist
+    }
+}
+```
+###### \java\seedu\address\model\person\UniqueCustomFieldListTest.java
+``` java
+public class UniqueCustomFieldListTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private final Logger logger = LogsCenter.getLogger(UniqueCustomFieldListTest.class);
+
+    @Test
+    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+        UniqueCustomFieldList uniqueCustomFieldList = new UniqueCustomFieldList();
+        thrown.expect(UnsupportedOperationException.class);
+        uniqueCustomFieldList.asObservableList().remove(0);
+    }
+
+    @Test
+    public void getCorrectSizeAfterAddition() {
+        UniqueCustomFieldList list = new UniqueCustomFieldList();
+        boolean correctSize = false;
+        try {
+            list.add(new CustomField("NickName", "Ah"));
+            list.add(new CustomField("Age", "21"));
+            list.add(new CustomField("Birthday", "29/02/1996"));
+            list.add(new CustomField("Age", "22"));
+        } catch (IllegalValueException e) {
+            logger.warning("Input value is invalid");
+        }
+        if (list.getSize() == 3) {
+            correctSize = true;
+        }
+        assertTrue("The size of the phoneList after adding numbers is correct", correctSize);
+    }
+
+    @Test
+    public void getCorrectSizeAfterRemoval() {
+        UniqueCustomFieldList list = new UniqueCustomFieldList();
+        boolean correctSize = false;
+        try {
+            list.add(new CustomField("NichName", "Ah"));
+            list.add(new CustomField("Age", "21"));
+            list.add(new CustomField("Age", ""));  // Removes custom field "Age"
+        } catch (IllegalValueException e) {
+            logger.warning("Input value are invalid");
+        }
+        if (list.getSize() == 1) {
+            correctSize = true;
+        }
+        assertTrue("The size of the custom field list after removing values is correct", correctSize);
+    }
+
+    @Test
+    public void isEqual() { //to test content in the list are equal even if the elements are added in different order
+        UniqueCustomFieldList list1 = new UniqueCustomFieldList();
+        UniqueCustomFieldList list2 = new UniqueCustomFieldList();
+        boolean isEqual;
+        try {
+            list1.add(new CustomField("NickName", "Ah"));
+            list1.add(new CustomField("Age", "21"));
+            list1.add(new CustomField("Birthday", "29/02/1996"));
+            list1.add(new CustomField("Age", ""));  // Removes custom field "Age"
+            list2.add(new CustomField("Birthday", "29/02/1996"));
+            list2.add(new CustomField("Age", "21"));
+            list2.add(new CustomField("NickName", "Ah"));
+            list2.add(new CustomField("Age", ""));  // Removes custom field "Age"
+        } catch (IllegalValueException e) {
+            logger.warning("Input value is invalid");
+        }
+        isEqual = list1.equalsOrderInsensitive(list2);
+        assertTrue("The two lists are equal", isEqual);
+    }
+
 }
 ```

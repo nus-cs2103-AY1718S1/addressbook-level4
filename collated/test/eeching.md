@@ -1,5 +1,5 @@
 # eeching
-###### /java/seedu/address/logic/commands/PhoneCommandTest.java
+###### \java\seedu\address\logic\commands\PhoneCommandTest.java
 ``` java
 public class PhoneCommandTest {
 
@@ -72,23 +72,6 @@ public class PhoneCommandTest {
         assertCommandSuccess(phoneCommand, model, expectedMessage, expectedModel);
     }
 
-    @Test
-    public void execute_personAcceptedByModel_showAllPhonesSuccessful() throws Exception {
-        Person updatedPerson = new PersonBuilder(model.getFilteredPersonList()
-                .get(INDEX_FIRST_PERSON.getZeroBased())).build();
-
-        PhoneCommand phoneCommand = prepareCommand(INDEX_FIRST_PERSON, "showAllPhones", new Phone("000"));
-
-        String expectedMessage = "The primary phone number is 85355255.\n"
-                + "The additional phone number(s) are/is \n"
-                + "1/ 24444\n"
-                + "2/ 2333\n";
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), updatedPerson);
-
-        assertCommandSuccess(phoneCommand, model, expectedMessage, expectedModel);
-    }
 
     @Test
     public void execute_personAcceptedByModel_invalidCommandSuccessful() throws Exception {
@@ -114,19 +97,25 @@ public class PhoneCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/PhoneCommandParserTest.java
+###### \java\seedu\address\logic\parser\PhoneCommandParserTest.java
 ``` java
 public class PhoneCommandParserTest {
 
     private PhoneCommandParser parser = new PhoneCommandParser();
 
     @Test
-    public void parse_validArgs_returnsPhoneCommand () throws IllegalValueException {
+    public void parse_validArgsWithIndex_returnsPhoneCommand () throws IllegalValueException {
         PhoneCommand expectedPhoneCommand = new PhoneCommand(INDEX_FIRST_PERSON, "add", new Phone("233333"));
         assertParseSuccess(parser, "1 add 233333", expectedPhoneCommand);
 
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n 1 \n \t add \n \t 233333 \t ", expectedPhoneCommand);
+    }
+
+    @Test
+    public void parse_validArgsWithName_returnsPhoneCommand () throws IllegalValueException {
+        PhoneCommand expectedPhoneCommand = new PhoneCommand("Alice Pauline", "add", new Phone("233333"));
+        assertParseSuccess(parser, "byName add 233333 Alice Pauline", expectedPhoneCommand);
     }
 
     @Test
@@ -136,7 +125,7 @@ public class PhoneCommandParserTest {
 
 }
 ```
-###### /java/seedu/address/model/person/UniquePhoneListTest.java
+###### \java\seedu\address\model\person\UniquePhoneListTest.java
 ``` java
 public class UniquePhoneListTest {
 
@@ -241,7 +230,7 @@ public class UniquePhoneListTest {
             logger.warning("phone number not found");
         }
         isEqual = list1.equals(list2);
-        assertTrue("The size of the phoneList after removing numbers is correct", isEqual);
+        assertTrue("The two lists are equal", isEqual);
     }
 
 }
