@@ -157,7 +157,7 @@ The `sendemail` command removes this process and streamlines the process by brin
 
 === Other contributions
 
-* Added Travis and Coveralls on the cherBook repository automated deployment and testing. (Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/7[#7])
+* Added Travis, AppVeyor and Coveralls on the cherBook repository automated deployment and testing. (Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/7[#7], https://github.com/CS2103AUG2017-T16-B2/main/pull/152[#152])
 * Added Grades and FormClass attributes to the Student (Pull Requests https://github.com/CS2103AUG2017-T16-B2/main/pull/39[#39], https://github.com/CS2103AUG2017-T16-B2/main/pull/41[#41])
 * Populated cherBook with a significant amount (40 student contacts) of realistic data (Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/73[#73])
 * Cleaned up unnecessary nesting in the ExtendedPersonCard UI element (Commit https://github.com/CS2103AUG2017-T16-B2/main/pull/98/commits/1a6bc459dc455d4e776e48586856734bb7574eba[1a6bc45] in Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/98[#98])
