@@ -716,8 +716,8 @@ From the diagram above, we can see that additional work is done at `ArgumentToke
 Since `ArgumentTokenizer` is only called in `AddCommandParser` and `EditCommandParser`, writing `dp/` in other command will not cause the display picture feature to be called. +
  +
 When `dp/` is present in the command, `getCurrentImgPath` will be called. This function returns the path of the image that the user want to set as his display picture. Afterwards,
-`createUniqueDisplayName` will create a unique name for the image chosen by hashing all the other fields of the person.
-
+`createUniqueDisplayName` will create a unique name for the image chosen by hashing all the other fields of the person. +
+The following is the code snippet for `createUniqueDisplayPicName`:
 [source, java]
 ---------------
 private static String createUniqueDisplayPicName(ArgumentMultimap argMultimap, String currentImgPath, Prefix... prefixes) {
@@ -768,7 +768,8 @@ private static String getFinalImgPath(String hashedDisplayPicName, String imgPat
 image::SDforDisplayPicHandling.png[width="800"]
 _Figure 5.5.2b shows the interaction between components for `edit 1 dp/` command (part 2)_
 
-When `FileChooserEvent` is posted, it will be handled by `UI` and the method `getDisplayPicPath` will be called.
+When `FileChooserEvent` is posted, it will be handled by `UI` and the method `getDisplayPicPath` will be called. +
+The following is the code snippet for `getDisplayPicPath`:
 [source, java]
 ---------------
 private String getDisplayPicPath() {
@@ -785,7 +786,8 @@ private String getDisplayPicPath() {
 ---------------
 This method will initiate a pop up in the `GUI` of HitMeUp for the user to choose the image they want to use. Afterwards, it returns the absolute path of the chosen image.
 
-Afterwards, `NewImageEvent` will be posted and handled by `Storage`, the method `copyImageFile` will be called.
+Afterwards, `NewImageEvent` will be posted and handled by `Storage`, the method `copyImageFile` will be called. +
+The following is the code snippet for `copyImage`:
 [source, java]
 ----------------
 public void copyImage(String currentImagePath, String imageName) throws IOException {
