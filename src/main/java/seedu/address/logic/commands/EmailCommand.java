@@ -34,7 +34,10 @@ public class EmailCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Email sent to :";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Email the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Only two commas should be used.\n"
+            + "Use one comma after index,one after subject message.\n"
+            + "Body Message should not be empty"
+            + "Email the person identified "
             + "by the index number used in the last person listing. "
             + "An email will be sent to the chosen person.\n"
             + "Parameters: INDEX (must be a positive integer),SUBJECT,MESSAGE "

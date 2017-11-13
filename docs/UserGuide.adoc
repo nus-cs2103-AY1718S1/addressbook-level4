@@ -282,6 +282,8 @@ Format: `email INDEX, SUBJECT, BODY`
 
 ****
 * Email the person at the specified `INDEX`.
+* Subject message can be empty, body message should not be. Spaces are considered empty.
+* There should only be 2 commas used in the entire command.
 * The index(es) refers to the index numbers shown in the most recent listing.
 * The index(es) *must be a positive integers* 1, 2, 3, ...
 * Email will be sent using our team's Gmail account.
