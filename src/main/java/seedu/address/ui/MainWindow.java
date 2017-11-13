@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.time.YearMonth;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -19,6 +20,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeWindowSizeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PopulateBirthdayEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -45,6 +47,7 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private ExtendedPersonDisplay extendedPersonDisplay;
+    private CalendarView calendarView;
     private Config config;
     private UserPrefs prefs;
 
@@ -63,6 +66,9 @@ public class MainWindow extends UiPart<Region> {
     //author @JacobLipech
     @FXML
     private StackPane extendedPersonDisplayPlaceholder;
+
+    @FXML
+    private StackPane calendarDisplayPlaceholder;
     //author
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -139,9 +145,18 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        //@@author jacoblipech
         extendedPersonDisplay = new ExtendedPersonDisplay();
         extendedPersonDisplayPlaceholder.getChildren().add(extendedPersonDisplay.getRoot());
 
+        calendarView = new CalendarView(YearMonth.now(), logic.getFilteredPersonList(), logic);
+        calendarDisplayPlaceholder.getChildren().add(calendarView.getView());
+
+        //CalendarViewPane calendarViewPane = new CalendarViewPane(logic);
+        //logic.setCalendarView
+        //calendarDisplayPlaceholder.getChildren().add(calendarViewPane.getCalendarPane().getView());
+
+        //@@author
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -277,6 +292,18 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.freeResources();
     }
 
+    //@@author jacoblipech
+    /**
+     * this method is to populate the calendar when there is an add or change in birthday.
+     * @param request
+     */
+    @Subscribe
+    private void handleBirthdayEvent(PopulateBirthdayEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        calendarView.populateUpdatedCalendar(request.contactList);
+    }
+
+    //@@author
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

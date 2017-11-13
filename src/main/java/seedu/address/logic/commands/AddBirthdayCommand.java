@@ -6,8 +6,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import java.util.List;
 import java.util.Objects;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PopulateBirthdayEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -84,6 +86,7 @@ public class AddBirthdayCommand extends UndoableCommand {
         }
         try {
             model.addBirthday(this.targetIndex, this.toAdd);
+            EventsCenter.getInstance().post(new PopulateBirthdayEvent(model.getFilteredPersonList()));
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {

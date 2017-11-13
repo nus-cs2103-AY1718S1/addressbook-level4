@@ -12,6 +12,8 @@ import static seedu.address.model.person.Email.DEFAULT_EMAIL;
 
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.PopulateBirthdayEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -106,6 +108,7 @@ public class AddCommand extends UndoableCommand {
         } else { //no duplicates found. AddCommand proceeds as normal.
             try {
                 model.addPerson(toAdd);
+                EventsCenter.getInstance().post(new PopulateBirthdayEvent(model.getFilteredPersonList()));
                 return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
             } catch (DuplicatePersonException e) {
                 throw new CommandException(MESSAGE_DUPLICATE_PERSON);
