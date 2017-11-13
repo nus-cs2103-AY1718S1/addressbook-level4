@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: iConnect
-Iconnect is a desktop address book application used for University Students to manage their contacts information and schedule event. It has many attractive features such as using time table to mark up the event, using google map to show the location and using recycle bin to hold deleted person to allow restore.
+iConnect is a desktop address book application used for University Students to manage their contacts information and schedule event. It has many attractive features such as using time table to mark up the event, using google map to show the location and using recycle bin to hold deleted person to allow restore.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/main/Pengyuz.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/test/Pengyuz.md[Test code]] {give links to collated code files}
 
@@ -30,7 +30,9 @@ include::../UserGuide.adoc[tag=bin]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The need for recycle bin commands:
+
+It is more convenient for users to find back a person they wrongly delete before instead of readding the person again. The undo/redo command can only acheive the same functionality when the delete command is conducted after the last exiting of application. However, if the delete command is conducted long time ago or before last exiting of application, it is hard or impossible for users to find the wrongly deleted person back. Therefore, we need a recycle bin to store all the perosn delted by user to facilitating restoring.
 
 ==== Implementation
 
