@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Ark
-Ark is a desktop delivery management application that my team and I built for our Software Engineering module in the
+Ark is a desktop delivery management application that my team and I had built for our Software Engineering module in the
 National University of Singapore. We built this application for delivery companies to manage their deliveries.
 The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 14kLoC.
  You may access the Ark repository link:https://github.com/CS2103AUG2017-T16-B1/main[here].
@@ -39,15 +39,15 @@ include::../UserGuide.adoc[tag=import]
 
 Parcel companies manage millions of deliveries on a daily basis. As such, they have to deal with large amounts of
 data and deliveries. Furthermore, adding parcels into Ark individually is time consuming. Hence, I built a
-feature that allows parcel companies to import parcels from same files, and add parcels into Ark more efficiently.
+feature that allows parcel companies to import parcels from storage files, and add parcels into Ark more efficiently.
 
 Moreover, parcels are usually passed from one delivery company to another (or to another shipping company). Hence, I
-wanted to make it possible for delivery companies to be able to transfer their Ark save files to each other as they
+wanted to make it possible for delivery companies to be able to transfer their Ark storage files to each other as they
 transfer stewardship of parcels. This would save delivery companies time since they do not need to re-enter data that
 the previous delivery company had already entered.
 
 I designed this feature to accept `.xml` only files since Ark stores its files in `.xml` format and I wanted the
- import command to be compatible with its save files so that it can import its save files.
+ import command to be compatible with its storage files so that it can import its storage files.
 
 ==== Implementation
 
@@ -114,6 +114,12 @@ particular instance. Hence, it is imperative that delivery companies are able to
 have a clear idea of the stage of delivery that their parcels are at. Moreover, it allows delivery customers to be
 accountable to their clients when their clients inquire about the delivery status of their parcels.
 
+In addition, this feature has an automatic `Status` update base on the delivery date of the parcel. If the delivery date has
+ been passed, the parcel `Status` updates to `OVERDUE`. Otherwise, it will update to `PENDING`. This update only works
+ for parcels that have `PENDING` or `OVERDUE` `Status`. The automatic update feature allows our users to have a more
+ intuitive description of the urgency of a parcel delivery. Rather than observing the date to determine if the parcel is
+ overdue, Ark's `Status` feature, with its automatic updates helps users visualize this information more intuitively.
+
 ==== Implementation
 
 ---
@@ -142,7 +148,10 @@ include::../UserGuide.adoc[tag=trackingNumber]
 
 ==== Justification
 
-{{to be added}}
+Delivery companies use tracking numbers to track their parcels in their possession. Tracking numbers are necessary since
+a single person can have many different items that are meant to delivered to him on a single day. Tracking numbers help
+our users and their clients differentiate between these parcels. This helps our users become more accountable to clients
+if a certain parcel has not been delivered as well.
 
 ==== Implementation
 
@@ -172,7 +181,12 @@ include::../UserGuide.adoc[tag=postalCode]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Addresses in Singapore have a postal code representation. We use this postal code feature to query Google Maps on the
+destination address of a parcel and help our users visualize this information. This feature is necessary because
+addresses in Singapore can have similar names (Type OCBC into Google Maps, and you will observe that OCBC has many
+branches) around Singapore. Hence, postal codes will help Google Maps pinpoint the exact address that we should deliver
+a parcel too. Furthermore, postal codes are short and succinct and do not require an extensive amount of effort for
+the user to input this data.
 
 ==== Implementation
 
@@ -186,8 +200,116 @@ include::../DeveloperGuide.adoc[tag=postalCode]
 
 ---
 
-=== Enhancement Proposed: Optimization of delivery scheduling based on time or distance.
+=== Enhancement Added: Tag Feature
 
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tags]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+More often than not, different parcels require different types of handling. The Tag feature is used to help users tag
+parcels with tags to describe how the parcel needs to be handled. This information helps to ensure that proper handling
+precautions are taken while handling a parcel and ensures that it reaches its intended recipient safely.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../DeveloperGuide.adoc[tag=tags]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Tooltip Feature
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tooltip]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+There are occasions where inputs to Ark are really long. To ensure that our users will be able to see the full input
+in Ark, a tooltip is added to help our users visualize this elongated data as observed in the diagram above.
+
+---
+
+=== Enhancement Added: Gui Tab Feature
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=gui-tab]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users can use this feature to segment the work (parcels) that have completed and the parcels they have to yet to deliver.
+This helps users to differentiate between the tasks they have completed and tasks that they have to do. By organising this
+data into separate lists, we can help users to visualize information about their parcels more intuitively without
+having a clunky interface.
+
+---
+
+=== Documentation Contributions
+
+Here are some of the more significant segments of documentation that I've written for the Ark project.
+
+==== User Guide
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=parcel-fields]
+
+#End of Extract#
+
+---
+
+==== Developer Guide
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=intro]
+
+#End of Extract#
+
+---
+
+**Here are some enhancements that I have proposed for my team's project:**
+
+=== Enhancement Proposed: Clustering of Parcel Deliveries
+
+Cluster parcels with `Delivering` Status according to their address locations to ensure that deliveries in a single
+cluster are delivered together.
 
 
 === Other contributions

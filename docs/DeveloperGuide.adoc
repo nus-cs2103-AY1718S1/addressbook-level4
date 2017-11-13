@@ -16,6 +16,7 @@ By: `CS2103AUG2017 Team T16-B1`      Since: `Sept 2017`      Licence: `M
 
 == Introduction
 
+//tag::intro[]
 === What is Ark?
 Ark is a Command Line Interface software that helps delivery and shipping vendors manage their parcels and deliveries.
 Ark allows these delivery companies to track the parcels that they have to deliver to their customers, and empowers
@@ -35,6 +36,7 @@ This guide contains information pertaining to issues such as: +
 * Adding documentation to document the changes you have made.
 * Running tests for the code in Ark.
 * Details on how to manage the Ark project using Version Control and Continuous Integration.
+//end::intro[]
 
 == Setting up
 
@@ -603,7 +605,7 @@ reasons such as the save file being corrupted/missing+
 //tag::import[]
 === Import Mechanism
 
-To use this command, you can type `import ` and the name of your file into the `CommandBox`. e.g. `import ark_save`
+To use this command, you can type `import` and the name of your file into the `CommandBox`. e.g. `import ark_save`
 
 The `import` mechanism allows users to import parcels from valid storage files stored in a `.xml` format. This mechanism
  allows users to add multiple parcels stored in the imported storage file into the running instance of Ark. This
@@ -912,9 +914,9 @@ their delivery dates, with the earliest on top.
 //end::deliveryDate[]
 
 //tag::tags[]
-=== Tags
+=== Tags Field
 
-`Tag`s are used to indicate how the parcel should be handled. Tags can contain one or more of the following `Tag`s:
+`Tags` are used to indicate how the parcel should be handled. The `Tags` field can contain one or more of the following `Tag`:
 
 [width="100%",cols="20%,<80%",options="header",]
 |=======================================================================
@@ -930,7 +932,7 @@ when handling.
 
 **`Implementation of Tag`**
 
-* **Alternative 1 (current choice):** Tag is implements the Enumeration class.
+* **Alternative 1 (current choice):** Tag implements the Enumeration class.
 ** **Pros:** `Tag`s has fixed values. The user should also not be allowed to create new `Tag` objects.
 ** **Cons:** Less options for the user to alter the `Tag` values +
 * **Alternative 2:** Allow the user to define any `Tag`s they wish.
@@ -940,7 +942,6 @@ use different tag names to refer to the same tag.
 //end::tags[]
 
 //tag::sortedList[]
-
 === Maintain sorted and selection mechanism
 image::AddParcelSdForLogic.png[width="890"]
 _Figure 4.14.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._

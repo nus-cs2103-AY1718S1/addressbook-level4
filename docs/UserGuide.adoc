@@ -138,7 +138,6 @@ _Figure 4.22.2 : Tooltip to show more of John's address_
 //end::tooltip[]
 
 //tag::gui-tab[]
-
 === GUI tab mechanism
 
 To help you organise between the parcels you have delivered and the parcels you have delivered, Ark provides you two
@@ -173,6 +172,7 @@ _Figure 4.4.1 : Overdue Parcels Popup Window_
 
 //end::overduePopup[]
 
+//tag::parcel-fields[]
 == Parcel Fields
 
 [#name]
@@ -344,7 +344,7 @@ Values other than the above values will be rejected. e.g. `PROCESSING`, `PROCESS
 [#tags]
 === Tags Field: Delivery Tags of Parcel
 
-`Tag`s are used to indicate how the parcel should be handled. Tags can contain one or more of the following `Tag`s:
+`Tags` are used to indicate how the parcel should be handled. Tags can contain one or more of the following `Tag`:
 
 [width="100%",cols="20%,<80%",options="header",]
 |=======================================================================
@@ -363,6 +363,7 @@ to add a `FROZEN` `Tag`.
 Values other than the above values will be rejected. e.g. `friends`, `colleagues`.
 If your use of Ark requires more tags to be made available, please contact our team and we will see to your request.
 //end::tags[]
+//end::parcel-fields[]
 
 == Features
 
