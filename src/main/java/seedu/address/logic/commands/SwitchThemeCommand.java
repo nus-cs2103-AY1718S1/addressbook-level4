@@ -7,18 +7,22 @@ import seedu.address.commons.events.ui.ChangeDefaultThemeEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 //@@author ZhangH795
+
 /**
- * Shows the location of a person on Google map identified using it's last displayed index from the address book.
+ * Changes theme to the user theme of choice.
  */
 public class SwitchThemeCommand extends Command {
 
     public static final String COMMAND_WORD = "theme";
     public static final String DARK_THEME_WORD1 = "dark";
     public static final String DARK_THEME_WORD2 = "Twilight";
+    public static final String DARK_THEME_WORD3 = "1";
     public static final String BRIGHT_THEME_WORD1 = "bright";
     public static final String BRIGHT_THEME_WORD2 = "Sunburst";
+    public static final String BRIGHT_THEME_WORD3 = "2";
     public static final String DEFAULT_THEME_WORD1 = "default";
     public static final String DEFAULT_THEME_WORD2 = "Minimalism";
+    public static final String DEFAULT_THEME_WORD3 = "3";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Change into the theme of choice of iConnect.\n"
@@ -41,11 +45,11 @@ public class SwitchThemeCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         if (userThemeInput.matches("\\d+")) {
-            if ("1".equals(userThemeInput)) {
+            if (DARK_THEME_WORD3.equals(userThemeInput)) {
                 themeChoice = DARK_THEME_WORD2;
-            } else if ("2".equals(userThemeInput)) {
+            } else if (BRIGHT_THEME_WORD3.equals(userThemeInput)) {
                 themeChoice = BRIGHT_THEME_WORD2;
-            } else if ("3".equals(userThemeInput)) {
+            } else if (DEFAULT_THEME_WORD3.equals(userThemeInput)) {
                 themeChoice = DEFAULT_THEME_WORD2;
             } else {
                 throw new CommandException(String.format(MESSAGE_INVALID_INDEX, userThemeInput));

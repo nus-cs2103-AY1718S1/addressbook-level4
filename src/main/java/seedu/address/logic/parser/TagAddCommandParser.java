@@ -16,7 +16,9 @@ import seedu.address.logic.commands.TagAddCommand;
 import seedu.address.logic.commands.TagAddCommand.TagAddDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
+
 //@@author ZhangH795
+
 /**
  * Parses input arguments and creates a new TagAddCommand object
  */
@@ -29,11 +31,17 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
      */
     public TagAddCommand parse(String args) throws ParseException {
         requireNonNull(args);
+
+        int defaultLastNumberIndex = -1;
+        int arrayIndexOffset = 1;
+        int nextArrayIndex = 1;
+        int completeNumOfArgs = 2;
         String newTag = "";
-        int lastIndex = -1;
+
+        int lastIndex = defaultLastNumberIndex;
         String[] argsArray;
         ArrayList<Index> index = new ArrayList<>();
-        if (args.isEmpty() || (argsArray = args.trim().split(" ")).length < 2) {
+        if (args.isEmpty() || (argsArray = args.trim().split(" ")).length < completeNumOfArgs) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
         }
         try {
@@ -49,11 +57,11 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
         }
 
-        if (lastIndex == -1 || lastIndex == (argsArray.length - 1)) {
+        if (lastIndex == defaultLastNumberIndex || lastIndex == (argsArray.length - arrayIndexOffset)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
         }
         HashSet<String> tagSet = new HashSet<>();
-        for (int i = lastIndex + 1; i < argsArray.length; i++) {
+        for (int i = lastIndex + nextArrayIndex; i < argsArray.length; i++) {
             newTag = newTag.concat(argsArray[i] + " ");
         }
         newTag = newTag.trim();
@@ -80,10 +88,12 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
     private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
         assert tags != null;
 
+        int singleElementArraySize = 1;
         if (tags.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
+        Collection<String> tagSet = tags.size() == singleElementArraySize && tags.contains("")
+                    ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
 

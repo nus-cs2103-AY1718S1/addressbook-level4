@@ -31,10 +31,12 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagMatchingKeywordPredicate;
+
 //@@author ZhangH795
 
 /**
  * Removes a tag from existing person(s) in the address book.
+ * If the tag does not exist for at least one of the person(s) selected, error would be thrown.
  */
 public class TagRemoveCommand extends UndoableCommand {
 
@@ -56,6 +58,10 @@ public class TagRemoveCommand extends UndoableCommand {
             + "for some person selected.";
     private ArrayList<Index> index;
     private final TagRemoveDescriptor tagRemoveDescriptor;
+    private final int firstIndex = 0;
+    private final int arrayIndexOffset = 1;
+    private final int emptyListSize = 0;
+    private final int stringSecondCharIndex = 1;
 
     /**
      * @param index               of the person in the filtered person list to edit
@@ -72,9 +78,9 @@ public class TagRemoveCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         ObservableList<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        Tag tagToRemove = (Tag) tagRemoveDescriptor.getTags().toArray()[0];
+        Tag tagToRemove = (Tag) tagRemoveDescriptor.getTags().toArray()[firstIndex];
         String tagInStringRaw = tagToRemove.toString();
-        String tagInString = tagInStringRaw.substring(1, tagInStringRaw.lastIndexOf("]"));
+        String tagInString = tagInStringRaw.substring(stringSecondCharIndex, tagInStringRaw.lastIndexOf("]"));
 
         boolean looseFind = tagInString.toLowerCase().contains(FAVOURITE_KEYWORD);
         boolean removeAll = false;
@@ -84,7 +90,7 @@ public class TagRemoveCommand extends UndoableCommand {
         checkIndexInRange(lastShownList);
 
         ArrayList<Index> indexList = index;
-        if (index.size() == 0) {
+        if (index.size() == emptyListSize) {
             removeAll = true;
             indexList = makeFullIndexList(lastShownList.size());
         }
@@ -92,7 +98,7 @@ public class TagRemoveCommand extends UndoableCommand {
         ObservableList<ReadOnlyPerson> selectedPersonList = createSelectedPersonList(indexList, lastShownList);
         FilteredList<ReadOnlyPerson> tagFilteredPersonList = new FilteredList<>(selectedPersonList);
         tagFilteredPersonList.setPredicate(tagPredicate);
-        if (tagFilteredPersonList.size() == 0) {
+        if (tagFilteredPersonList.size() == emptyListSize) {
             throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, tagInStringRaw));
         } else if (!removeAll && tagFilteredPersonList.size() < indexList.size()) {
             throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND_FOR_SOME, tagInStringRaw));
@@ -114,10 +120,10 @@ public class TagRemoveCommand extends UndoableCommand {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             editedPersonDisplay.append(createTagListDisplay(editedPerson));
 
-            Index defaultIndex = new Index(0);
+            Index defaultIndex = new Index(firstIndex);
             EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
 
-            if (i != indexList.size() - 1) {
+            if (i != indexList.size() - arrayIndexOffset) {
                 editedPersonDisplay.append("\n");
             }
         }
@@ -125,8 +131,10 @@ public class TagRemoveCommand extends UndoableCommand {
     }
 
     /**
+     * Removes a tag from the copy of existing tag list.
      * @param unmodifiable tag List
-     * @param tagToRemove  tag to be removed
+     * @param tagToRemove     tag to be removed
+     * Returns modifiable tag set.
      */
     public Set<Tag> createModifiableTagSet(Set<Tag> unmodifiable, Tag tagToRemove) {
         Set<Tag> modifiable = new HashSet<>();
@@ -141,20 +149,25 @@ public class TagRemoveCommand extends UndoableCommand {
     }
 
     /**
+     * Creates string for edited tag list.
      * @param editedPerson edited person to show tag list
+     * Returns formatted string to indicate edited tag list.
      */
     public String createTagListDisplay(Person editedPerson) {
         int tagListStringStartIndex = 1;
         int tagListStringEndIndex;
         String tagChangedDisplayRaw = editedPerson.getTags().toString();
-        tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
+        tagListStringEndIndex = tagChangedDisplayRaw.length() - arrayIndexOffset;
         String tagChangedDisplay = editedPerson.getName() + " Tag List: "
                 + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
         return String.format(MESSAGE_REMOVE_TAG_SUCCESS, tagChangedDisplay);
     }
 
     /**
+     * Creates selected person list.
+     * @param indexList selected index list
      * @param fullPersonList person list
+     * Returns selected person list.
      */
     public ObservableList<ReadOnlyPerson> createSelectedPersonList(ArrayList<Index> indexList,
                                                                    ObservableList<ReadOnlyPerson> fullPersonList) {
@@ -167,7 +180,9 @@ public class TagRemoveCommand extends UndoableCommand {
     }
 
     /**
+     * Checks whether the tag list contains tag to remove.
      * @param tagList current tag List
+     * Returns true if tag list contains the tag to be removed; false otherwise.
      */
     public boolean containsTag(List<Tag> tagList) {
         Set<Tag> tagsToRemove = tagRemoveDescriptor.getTags();
@@ -182,18 +197,22 @@ public class TagRemoveCommand extends UndoableCommand {
     }
 
     /**
+     * Creates a person index list from 1 to input list size.
      * @param personListSize current person list size
+     * Returns created person list.
      */
     public ArrayList<Index> makeFullIndexList(int personListSize) {
         ArrayList<Index> indexList = new ArrayList<>();
-        for (int i = 1; i <= personListSize; i++) {
+        int firstIndexOneBased = 1;
+        for (int i = firstIndexOneBased; i <= personListSize; i++) {
             indexList.add(Index.fromOneBased(i));
         }
         return indexList;
     }
 
     /**
-     * @param lastShownList current tag List
+     * Throws CommandException if any of the user input index is invalid.
+     * @param lastShownList current filtered person list
      */
     public void checkIndexInRange(ObservableList<ReadOnlyPerson> lastShownList) throws CommandException {
         for (int i = 0; i < index.size(); i++) {
@@ -205,7 +224,7 @@ public class TagRemoveCommand extends UndoableCommand {
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * edited with {@code tagRemoveDescriptor}.
      */
     public Person createEditedPerson(ReadOnlyPerson personToEdit,
                                      TagRemoveDescriptor tagRemoveDescriptor) {

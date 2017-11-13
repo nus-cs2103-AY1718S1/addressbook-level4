@@ -8,14 +8,17 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.SwitchThemeCommand;
 
+//@@author ZhangH795
+
 public class SwitchThemeCommandParserTest {
     private SwitchThemeCommandParser parser = new SwitchThemeCommandParser();
 
     @Test
     public void parseValidArgsReturnsSwitchThemeCommand() {
-        String themeChoice1 = "1";
-        String themeChoice2 = "dark";
-        String themeChoice3 = "Twilight";
+        String themeChoice1 = SwitchThemeCommand.DARK_THEME_WORD3;
+        String themeChoice2 = SwitchThemeCommand.DARK_THEME_WORD1;
+        String themeChoice3 = SwitchThemeCommand.DARK_THEME_WORD2;
+
         SwitchThemeCommand expectedSwitchThemeCommandOne =
                 new SwitchThemeCommand(themeChoice1);
         assertParseSuccess(parser, themeChoice1, expectedSwitchThemeCommandOne);

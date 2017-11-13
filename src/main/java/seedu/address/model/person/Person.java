@@ -164,8 +164,11 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author ZhangH795
     /**
      * Checks whether a person has favourite tag.
+     *
+     * @return true if the person has favourite tag
      */
     @Override
     public boolean isFavourite() {
@@ -176,6 +179,7 @@ public class Person implements ReadOnlyPerson {
         }
         return false;
     }
+    //@@author
 
     /**
      * Returns an immutable event set, which throws {@code UnsupportedOperationException}

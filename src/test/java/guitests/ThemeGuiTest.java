@@ -13,6 +13,9 @@ import seedu.address.commons.events.ui.ChangeDefaultThemeEvent;
 
 //@@author ZhangH795
 public class ThemeGuiTest extends AddressBookGuiTest {
+    /**
+     * Asserts that the theme after change is Dark Theme.
+     */
     @Test
     public void changeToDarkThemeTest() {
         ArrayList<String> darkTheme = new ArrayList<>();
@@ -23,6 +26,9 @@ public class ThemeGuiTest extends AddressBookGuiTest {
         assertEquals(darkTheme, stage.getScene().getStylesheets());
     }
 
+    /**
+     * Asserts that the theme after change is Bright Theme.
+     */
     @Test
     public void changeToBrightThemeTest() {
         ArrayList<String> brightTheme = new ArrayList<>();
@@ -33,6 +39,9 @@ public class ThemeGuiTest extends AddressBookGuiTest {
         assertEquals(brightTheme, stage.getScene().getStylesheets());
     }
 
+    /**
+     * Asserts that the theme after change is Default Theme.
+     */
     @Test
     public void changeToDefaultThemeTest() {
         ArrayList<String> defaultTheme = new ArrayList<>();
