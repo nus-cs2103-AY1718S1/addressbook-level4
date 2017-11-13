@@ -407,7 +407,7 @@
 }
 
 #tags .label {
-    -fx-text-fill: white;
+    -fx-text-fill: papayawhip;
     -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
@@ -527,6 +527,35 @@
 #remark {
     -fx-font-family: "Space Mono Italic";
     -fx-text-fill: gray;
+}
+
+#taskListView {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#taskListPanel {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#time {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 12px;
+    
+}
+
+#time {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 12px;
+    -fx-text-fill: gold;
+
+}
+
+#header {
+    -fx-font-size: 15px;
 }
 
 

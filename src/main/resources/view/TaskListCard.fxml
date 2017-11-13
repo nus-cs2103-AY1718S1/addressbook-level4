@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- @@author deep4k -->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -23,7 +24,7 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label fx:id="id" minWidth="40.0" styleClass="cell_big_label" stylesheets="@../../../../../sampletesta/src/main/resources/view/TasksPanel.css" text="\$ID" wrapText="true" />
+            <Label fx:id="id" alignment="TOP_RIGHT" contentDisplay="CENTER" minWidth="40.0" styleClass="cell_big_label" stylesheets="@../../../../../sampletesta/src/main/resources/view/TasksPanel.css" text="\$ID" wrapText="true" />
             <VBox fx:id="taskVbox" alignment="CENTER" styleClass="vbox" GridPane.columnIndex="1">
                <children>
                   <Label fx:id="header" styleClass="cell_big_label" stylesheets="@../../../../../sampletesta/src/main/resources/view/TasksPanel.css" text="\$task" wrapText="true">

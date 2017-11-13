@@ -12,12 +12,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import seedu.address.model.task.ReadOnlyTask;
 
 //@@author deep4k
+
 /**
  * UI component that displays information of a {@code Task}.
  */
@@ -33,12 +33,8 @@ public class TaskCard extends UiPart<Region> {
     private static final String DEADLINE_PREFIX = "by ";
     private static final String EMPTY_PREFIX = "";
     private static final String OVERDUE_STYLE = "-fx-background-color: rgba(244, 67, 54, 0.8)";
-    private static final String UPCOMING_STYLE = "-fx-background-color: rgba(170,181,46,0.8)";
-    private static final String OTHER_STYLE = "-fx-background-color: rgba(7,38,255,0.51)";
-    private static final Color NAME_COLOR_DARK = Color.web("#3a3d42");
-    private static final Color TIME_COLOR_DARK = Color.web("#4172c1");
-    private static final Color NAME_COLOR_LIGHT = Color.web("#ffffff");
-    private static final Color TIME_COLOR_LIGHT = Color.web("#fff59d");
+    private static final String UPCOMING_STYLE = "-fx-background-color: rgba(101,181,122,0.8)";
+    private static final String OTHER_STYLE = "-fx-background-color: rgba(42,47,79,0.51)";
 
     private final ReadOnlyTask task;
 
@@ -78,17 +74,10 @@ public class TaskCard extends UiPart<Region> {
 
         if (task.isOverdue()) {
             cardPane.setStyle(OVERDUE_STYLE);
-            header.setTextFill(NAME_COLOR_LIGHT);
-            time.setTextFill(TIME_COLOR_LIGHT);
-            id.setTextFill(NAME_COLOR_LIGHT);
         } else if (task.isUpcoming()) {
             cardPane.setStyle(UPCOMING_STYLE);
-            header.setTextFill(NAME_COLOR_DARK);
-            time.setTextFill(TIME_COLOR_DARK);
         } else {
             cardPane.setStyle(OTHER_STYLE);
-            header.setTextFill(NAME_COLOR_DARK);
-            time.setTextFill(TIME_COLOR_DARK);
         }
 
         StringBuilder timeDescription = new StringBuilder();
