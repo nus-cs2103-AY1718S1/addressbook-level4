@@ -27,11 +27,22 @@ deliveries. This test script is used help testers perform manual testing of Ark.
 *Input* - Action to perform i.e. if `undo` -> `import ark_save`, this means enter `undo`, then enter `import ark_save` +
 *Output* - Expected output description. +
 
-=== Startup Test
+=== Startup Tests
 
-We have implemented some features that triggered automatically on startup.
+We have implemented some features that triggered automatically on startup. +
 
 ==== Manual Testing
+
+*Description:* On startup, if there are any parcels found with the OVERDUE status in the uncompleted parcel list
+it will cause a popup window notifying the user of the number of OVERDUE parcels. +
+*Input:* - +
+*Expected output:* For the sample data xml file. A popup window with the title of "Important" will appear over the main window of the Ark application.
+The content header will read "Overdue Parcels" and the content text will show
+"You have parcels whose status are overdue\n Number of overdue parcels: 5"
+
+*Description:* No popup window should show if there are no OVERDUE parcels +
+*Input:* `clear` and close the application. Reopen the application again. +
+*Expected output:* There should be no popup window.
 
 *Description:* Startup automatically updates the status of parcels according to their date in Gui. +
 *Input:* - +
