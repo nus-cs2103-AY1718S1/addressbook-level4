@@ -12,7 +12,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.ClearPersonListEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
@@ -92,8 +92,7 @@ public class ScheduleRemoveCommand extends UndoableCommand {
         try {
             model.removeEvents(toUpdatePersons, toReplacePersons, toRemoveEvents);
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            Index defaultIndex = new Index(0);
-            EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
+            EventsCenter.getInstance().post(new ClearPersonListEvent());
 
             return new CommandResult(String.format(MESSAGE_SUCCESS, getRemovedEventsString(toRemoveEvents)));
 

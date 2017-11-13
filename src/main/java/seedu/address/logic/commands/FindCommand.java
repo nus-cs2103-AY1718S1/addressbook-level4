@@ -10,6 +10,7 @@ import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ClearPersonListEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
@@ -93,7 +94,11 @@ public class FindCommand extends Command {
         NameContainsKeywordsPredicate updatedPredicate = new NameContainsKeywordsPredicate(namesToSearch);
         model.updateFilteredPersonList(updatedPredicate);
         Index defaultIndex = new Index(0);
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
+        if (model.getFilteredPersonList().size() > 0) {
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
+        } else {
+            EventsCenter.getInstance().post(new ClearPersonListEvent());
+        }
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 

@@ -19,11 +19,14 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 
 import seedu.address.commons.events.model.RecyclebinChangeEvent;
 import seedu.address.commons.events.ui.CalendarSelectionChangedEvent;
+import seedu.address.commons.events.ui.ClearPersonListEvent;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.ScheduleUpdateEvent;
 import seedu.address.model.event.Event;
 
@@ -334,6 +337,12 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(p ->
                 event.getMemberAsArrayList().contains(p)
         );
+        if (filteredPersons.isEmpty()) {
+            EventsCenter.getInstance().post(new ClearPersonListEvent());
+        } else {
+            Index firstIndex = new Index(0);
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(firstIndex));
+        }
     }
 
     /**
