@@ -91,7 +91,7 @@ This command can help us sort the tasks in the tasklist by the priority values. 
 
 ==== setPriority command +
 `setPriority 1 c/1` +
-This command will set the priority of the first task to be `super important`. 
+This command will set the priority of the first task to be `super important`.
 
 ==== markTask command +
 `markTask 1` +
@@ -105,7 +105,7 @@ This command will help list all the tasks curently in the task list, including t
 `clearTask` +
 This command will clear all the tasks in the task list panel.
 
-=== General 
+=== General
 
 ==== undo command +
 `undo` +
