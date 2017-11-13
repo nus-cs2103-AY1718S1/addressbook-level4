@@ -538,10 +538,10 @@ illustrated diagrams to depict the interactions between the components in **BoNU
 The _Sequence Diagram_ in _Figure 4.5.1_ illustrates how the components interact for the scenario where the user issues the command
 `theme`. Also, the _Sequence Diagram_ illustrates the events-driven architectural style in **BoNUS**.
 
-image::SDforSwitchTheme.png[width="400"]
+image::SDforSwitchTheme.png[width="500", height="300"]
 _Figure 4.5.1 : Events-Driven nature of Switch Theme_
 
-image::SDforSwitchThemesEmphasis.png[width="400"]
+image::SDforSwitchThemesEmphasis.png[width="500", height="300"]
 _Figure 4.5.2 : Sequence diagram for Switch Theme mechanism_
 
 

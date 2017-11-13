@@ -56,12 +56,12 @@ include::../UserGuide.adoc[tag=themeSwitch]
 
 ==== Justification
 
-As the target audience for **BoNUS** are students, we aim to allow students to personalize their own **BoNUS**. Therefore,
+As the target audience for BoNUS are students, we aim to allow students to personalize their own BoNUS. Therefore,
 to kick start such an initiative, we decided to allow the switching of themes between Dark and Bright Themes. Also, this adds
-to the aesthetic aspect of our product, attracting more students to start using **BoNUS**.
+to the aesthetic aspect of our product, attracting more students to start using BoNUS.
 
 To further develop on this aspect of personalisation, we seek to add more themes for students to personalize their own
-**BoNUS** in future releases.
+BoNUS in future releases.
 
 ==== Realization
 
@@ -83,13 +83,13 @@ include::../UserGuide.adoc[tag=bookingNUS]
 
 ==== Justification
 
-Since NUSMods is already being integrated with **BoNUS**, what is another factor that NUS students are largely concerned with in terms of school resources?
-The idea of integrating the booking of facilities in NUS with **BoNUS** then came about.
+Since NUSMods is already being integrated with BoNUS, what is another factor that NUS students are largely concerned with in terms of school resources?
+The idea of integrating the booking of facilities in NUS with BoNUS then came about.
 
-BoNUS is an organizer for NUS students. In view of the busy schedules of students in school, **BoNUS** not only aims to make lives for students more
+BoNUS is an organizer for NUS students. In view of the busy schedules of students in school, BoNUS not only aims to make lives for students more
 convenient, but also allow students to be updated of their personal upcoming events. As such, we took into consideration the booking of facilities for consultation, group meetings or even study groups. To facilitate this
-, we decided to integrate the booking of facilities with the `Event` component from **BoNUS** such that upon successful booking of facilities,
-the `Event` list in **BoNUS** would automatically be updated with your latest booking.
+, we decided to integrate the booking of facilities with the `Event` component from BoNUS such that upon successful booking of facilities,
+the `Event` list in BoNUS would automatically be updated with your latest booking.
 
 === Enhancement proposed: Importing of contacts / events from Google
 
@@ -106,11 +106,11 @@ include::../UserGuide.adoc[tag=importGoogle]
 Since majority of students often use Google for multiple purposes, GMail, Google Docs or even Google slides. It is no wonder that
 most students have Google Accounts and have important information stored within. +
 
-Therefore, to facilitate your transition to **BoNUS**, we have decided to include the import of contacts / events from Google itself,
-making the transition to **BoNUS** a comfortable one. Furthermore, as Google acts as a back up for Contact Storage, with **BoNUS**,
+Therefore, to facilitate your transition to BoNUS, we have decided to include the import of contacts / events from Google itself,
+making the transition to BoNUS a comfortable one. Furthermore, as Google acts as a back up for Contact Storage, with BoNUS,
 it can act as a secondary storage/backup for each of your contacts and events stored in calendar.
 
-With facilitated transition towards **BoNUS**, your life can now be better organized with **BoNUS**.
+With facilitated transition towards BoNUS, your life can now be better organized with BoNUS.
 
 === Other contributions
 
