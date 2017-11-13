@@ -2,30 +2,35 @@ package seedu.address.ui;
 
 import static junit.framework.TestCase.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.ui.event.MonthDateBuilder;
 
 //@@author dennaloh
 public class EventCalendarTest {
-    private String[] monthDateArray;
-    private MonthDateBuilder monthDateBuilder;
 
-    @Before
-    public void setUp() {
-        monthDateBuilder = new MonthDateBuilder();
-        monthDateBuilder.setMonthYearArray(10, 2017);
-        monthDateArray = monthDateBuilder.getMonthDateArray();
+    @Test
+    public void testNov() throws Exception {
+        MonthDateBuilder monthDateBuilderNov = new MonthDateBuilder();
+        monthDateBuilderNov.setMonthYearArray(10, 2017);
+        String[] monthDateArrayNov = monthDateBuilderNov.getMonthDateArray();
+        assertEquals(monthDateBuilderNov.getNameOfMonth(), "November");
+        assertEquals(monthDateArrayNov[2], " ");
+        assertEquals(monthDateArrayNov[3], "1");
+        assertEquals(monthDateArrayNov[20], "18");
+        assertEquals(monthDateArrayNov[34], " ");
     }
 
     @Test
-    public void test() throws Exception {
-        assertEquals(monthDateBuilder.getNameOfMonth(), "November");
-        assertEquals(monthDateArray[2], " ");
-        assertEquals(monthDateArray[3], "1");
-        assertEquals(monthDateArray[20], "18");
-        assertEquals(monthDateArray[34], " ");
+    public void testFeb() throws Exception {
+        MonthDateBuilder monthDateBuilderFeb = new MonthDateBuilder();
+        monthDateBuilderFeb.setMonthYearArray(01, 2017);
+        String[] monthDateArrayFeb = monthDateBuilderFeb.getMonthDateArray();
+        assertEquals(monthDateBuilderFeb.getNameOfMonth(), "February");
+        assertEquals(monthDateArrayFeb[2], " ");
+        assertEquals(monthDateArrayFeb[3], "1");
+        assertEquals(monthDateArrayFeb[30], "28");
+        assertEquals(monthDateArrayFeb[34], " ");
     }
 
 }
