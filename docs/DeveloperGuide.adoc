@@ -644,7 +644,7 @@ _Figure 5.10.1 : Sequence diagram of Ui of Meeting Card_
 image::MeetingCard.png[width="250"]
 _Figure 5.10.2 : Meeting Card_
 
-To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
+To show the urgency of the meeting, as you can see from the examples below, colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
 
 * `darkRed` : Meeting is in next 24 hours.
 
