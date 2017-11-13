@@ -1,7 +1,8 @@
 = humanDEX Manual Testing
-ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:imagesDir: ../images
-:stylesDir: ../stylesheets
+:toc:
+:toc-placement: preamble
+:imagesDir: images
+:stylesDir: stylesheets
 
 == Project Configuration
 1. Create folder call *data* +
