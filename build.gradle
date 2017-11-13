@@ -20,7 +20,7 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
     apply plugin: 'checkstyle'
-
+    apply plugin: 'application'
 
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -44,6 +44,7 @@ allprojects {
         monocleVersion = '1.8.0_20'
         checkstyleVersion = '8.1'
 
+
         libDir = 'lib'
     }
 
@@ -60,11 +61,15 @@ allprojects {
     }
 
     dependencies {
+
+        compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
         compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
         compile "org.controlsfx:controlsfx:$controlsFxVersion"
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
         compile "com.google.guava:guava:$guavaVersion"
+        compile fileTree(dir: 'src/main/resources/libs', include: ['*.jar'])
+        compile group: "com.twilio.sdk", name: "twilio", version: "7.11.+"
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"
@@ -123,7 +128,7 @@ tasks.coveralls {
 }
 
 class AddressBookTest extends Test {
-    public AddressBookTest() {
+    AddressBookTest() {
     	  forkEvery = 1
         systemProperty 'testfx.setup.timeout', '60000'
 
@@ -139,7 +144,7 @@ class AddressBookTest extends Test {
         }
     }
 
-    public void setHeadless() {
+    void setHeadless() {
         systemProperty 'java.awt.robot', 'true'
         systemProperty 'testfx.robot', 'glass'
         systemProperty 'testfx.headless', 'true'

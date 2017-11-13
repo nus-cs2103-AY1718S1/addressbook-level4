@@ -1,0 +1,118 @@
+= Renee Seet - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: CYNC
+CYNC is an open-source software that helps small businesses to track and nurture relationships with customers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 8 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/main/ReneeSeet.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/test/ReneeSeet.md[Test code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/unused/ReneeSeet.md[Unused code]]
+
+=== Enhancement Added: Mass Emailing
+
+The mass emailing feature aims to help businesses reach out to their customers efficiently.
+
+==== Justification
+
+A mass emailing feature would allow businesses to send out monthly newsletters, greetings or reminders to all their customers.
+It would be more efficient if businesses can send emails to specific group of customers defined by their tags.
+By having this function, users need not go through the hassle of collating and manually typing out email addresses in other emailing platforms just to email their customers.
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=massemail]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=massemail]
+
+#End of Extract#
+
+---
+
+==== Future Improvements
+Here are some possible enhancements for the mass emailing feature:
+
+* Allow attachments to be send in emails.
+
+
+=== Enhancement Added: Add Joined Date
+Besides the details of customers, businesses especially those that uses a subscription model would want to keep track of customers' joined date as well.
+
+==== Justification
+Joined date can be useful for tracking customers' fees due date or how long customers has been supporting the business.
+
+==== External behavior
+
+When a new customer is added to CYNC, a joined date based on the current day will be generated and stored together with customers' details.
+Customer's joined date can be viewed on their respective profile page.
+
+==== Implementation
+
+Upon entering a valid `add` command, CYNC will create a new `Person` object which includes a join date object.
+The new person object will then be stored in the Storage locally. When profile page of a person is needed, it will get all its details from the storage.
+
+
+==== Future Improvements
+Here are the possible enhancements:
+
+* Allow users to edit the joined date for customers.
+* With the joined date of each customer, CYNC can calculate when customers' fees are due and send out automated reminders through email or sms to customers.
+* CYNC can also send out automated anniversary emails to customers.
+
+=== Enhancement Added: Login Page
+
+I decided not to use the Login Page after I implemented it. As I realised that it led to much coupling which is undesirable.
+I edited the test cases to go through the Login Page before every test. This cause the testcases to be dependent on the function.
+
+==== Justification
+
+Customers' information are valuable and businesses would want to protect and store them safely.
+A login page on CYNC would deter unauthorised users to gain access to customers' data.
+Furthermore, since both the Mass Emailing and the Calendar functions requires Google authentication, it can be done when logging into CYNC.
+
+==== External behavior
+
+Upon launching the application, you will be greeted with a login page as shown below.
+
+image::login.png[width="500"]
+
+You will be required to sign in with your Google email and password.
+
+==== Implementation
+
+Upon launching the application, the UI manager will load the login Panel only.
+When user click the `Login` button or pressed `enter`, if the `email:` and `password:` textboxes are correct, a `LoginRequestEvent`
+will be posted to the `EventsCenter`. This will unlock the rest of the components of `MainWindow` as well as displaying customers' informations.
+If the textboxes are empty, CYNC will prompt the user to fill them.
+
+==== Alternative Implementation
+
+In order for the login function to be less coupled with the other functions, I should have implemented the login page on a different scene.
+This will allow testing to be less coupled as we can test the login page on its own. Furthermore, it is not safe to store default password and email thus
+first time users should be prompted to login to their google account first. Then, CYNC will update with the vaild email and password.
+We can do so by integrating with Google Authentication API.
+
+
+=== Enhancement Proposed: View user's email inbox
+We should not limit users to only sending out emails. +
+A possible feature for CYNC in the future would be to view emails from CYNC. +
+A command `inbox` will list out all emails that user have and user can read and reply to them on CYNC.
+This will allow them to reply to customers quickly and efficiently.
+
+=== Other contributions
+
+* Solved bug for clear command [https://github.com/CS2103AUG2017-W15-B2/main/issues/60[Issue]][https://github.com/CS2103AUG2017-W15-B2/main/pull/80[PR]]
+* Updating User guide and Developer guide
+* Helped other team to spot bugs in application [https://github.com/CS2103AUG2017-W15-B1/Main/issues/74[Issue]]
+

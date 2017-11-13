@@ -12,9 +12,11 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
     private static final String SYNC_STATUS_ID = "#syncStatus";
     private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
+    private static final String NUMBER_OF_CONTACTS_STATUS_ID = "#numberOfContactsStatus";
 
     private final StatusBar syncStatusNode;
     private final StatusBar saveLocationNode;
+    private final StatusBar numberOfContactsNode;
 
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
@@ -24,6 +26,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
         this.syncStatusNode = getChildNode(SYNC_STATUS_ID);
         this.saveLocationNode = getChildNode(SAVE_LOCATION_STATUS_ID);
+        this.numberOfContactsNode = getChildNode(NUMBER_OF_CONTACTS_STATUS_ID);
     }
 
     /**
@@ -68,5 +71,12 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
      */
     public boolean isSaveLocationChanged() {
         return !lastRememberedSaveLocation.equals(getSaveLocation());
+    }
+
+    /**
+     * Returns the text of the 'number of contacts' portion of the status bar.
+     */
+    public String getNumberOfContacts() {
+        return numberOfContactsNode.getText();
     }
 }

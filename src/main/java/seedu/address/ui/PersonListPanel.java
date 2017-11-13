@@ -27,6 +27,10 @@ public class PersonListPanel extends UiPart<Region> {
     @FXML
     private ListView<PersonCard> personListView;
 
+    public PersonListPanel() {
+        super(FXML);
+    }
+
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
         setConnections(personList);

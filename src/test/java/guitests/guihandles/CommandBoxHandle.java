@@ -1,5 +1,6 @@
 package guitests.guihandles;
 
+import guitests.CommandPredictionPanelGuiTest;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -43,4 +44,16 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     public ObservableList<String> getStyleClass() {
         return getRootNode().getStyleClass();
     }
+
+    //@@author zameschua
+    /**
+     * Sets the text in the {@link CommandBox} to a certain text
+     * Used in {@link CommandPredictionPanelGuiTest}
+     * @param text the text to fill the CommandBox with
+     */
+    public void enterText(String text) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(text));
+    }
+    //@@author
 }

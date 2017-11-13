@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -17,11 +18,21 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+
+import seedu.address.commons.events.ui.CalendarRequestEvent;
+import seedu.address.commons.events.ui.ClearRequestEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelHideEvent;
+import seedu.address.commons.events.ui.CommandPredictionPanelShowEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.JumpToListAllTagsRequestEvent;
+import seedu.address.commons.events.ui.MassEmailRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SmsCommandRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -41,7 +52,13 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private EmailPanel emailPanel;
+    private CalendarPanel calendarPanel;
+    private SmsPanel smsPanel;
     private PersonListPanel personListPanel;
+    private PersonInfo personInfo;
+    private CommandPredictionPanel commandPredictionPanel;
+    private TagListPanel tagListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -121,7 +138,6 @@ public class MainWindow extends UiPart<Region> {
             }
         });
     }
-
     /**
      * Fills up all the placeholders of this window.
      */
@@ -135,7 +151,13 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        // Init CommandPredictionPanel
+        // Will be overlaid on ResultDisplay
+        commandPredictionPanel = new CommandPredictionPanel();
+
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
+
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -191,6 +213,54 @@ public class MainWindow extends UiPart<Region> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
+    //@@author ReneeSeet
+    /**
+     * Switch to the Email panel.
+     */
+    @FXML
+    public void handleEmail(ArrayList<String> emails) {
+        emailPanel = new EmailPanel(emails);
+        browserPlaceholder.getChildren().add(emailPanel.getRoot());
+        browserPlaceholder.getChildren().setAll(emailPanel.getRoot());
+    }
+
+    /**
+     * Clear the browser when clear command called
+     */
+    @FXML
+    public void handleClear() {
+        browserPlaceholder.getChildren().clear();
+    }
+    //@@author
+
+    /**
+     * Switch to the Calendar panel.
+     */
+    @FXML
+    public void handleCalendar() {
+        calendarPanel = new CalendarPanel();
+        browserPlaceholder.getChildren().add(calendarPanel.getRoot());
+        browserPlaceholder.getChildren().setAll(calendarPanel.getRoot());
+    }
+
+    /**
+     * Switch to the SMS panel.
+     */
+    @FXML
+    public void handleSms(ArrayList<String> phoneNumbers) {
+        smsPanel = new SmsPanel(phoneNumbers);
+        browserPlaceholder.getChildren().add(smsPanel.getRoot());
+        browserPlaceholder.getChildren().setAll(smsPanel.getRoot());
+    }
+
+    /**
+     * Switch to the Browser panel.
+     */
+
+    @FXML
+    public void handleBrowser() {
+        browserPlaceholder.getChildren().setAll(browserPanel.getRoot());
+    }
 
     void show() {
         primaryStage.show();
@@ -208,6 +278,27 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
+    //@@author pohjie
+    /**
+     * Opens the tag list panel
+     */
+    public void handleTagListPanel() {
+        tagListPanel = new TagListPanel(logic.getFilteredTagList());
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(tagListPanel.getRoot());
+    }
+
+    /**
+     * Loads the information of the person in the BrowserPanel position
+     * @param person
+     */
+    private void loadPersonInfo(ReadOnlyPerson person) {
+        personInfo = new PersonInfo(person);
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(personInfo.getRoot());
+    }
+    //@@author
+
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -217,4 +308,81 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author ReneeSeet
+    /**
+     * handle the MassEmailRequestEvent to display email panel
+     * @param event
+     */
+    @Subscribe
+    private void handleMassEmailEvent(MassEmailRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleEmail(event.getEmailList());
+    }
+    /**
+     * handle the ClearRequestEvent to clear browser placeholder
+     * @param event
+     */
+    @Subscribe
+    private void handleClearEvent(ClearRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleClear();
+    }
+    //@@author
+
+    //@@author zameschua
+    @Subscribe
+    private void handleSmsCommandEvent(SmsCommandRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleSms(event.getPhoneNumbers());
+    }
+    //@@author
+
+    //@@author yilun-zhu
+    @Subscribe
+    private void handleCalendarRequestEvent(CalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleCalendar();
+    }
+    //@@author
+
+    //@@author pohjie
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleListAllTagsEvent(JumpToListAllTagsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleTagListPanel();
+    }
+    //@@author
+
+    //@@author zameschua
+    /**
+     * Hides the {@link CommandPredictionPanel}
+     * @param event The event thrown by the {@link CommandBox}
+     */
+    @Subscribe
+    private void handleCommandPredictionPanelHideEvent(CommandPredictionPanelHideEvent event) {
+        if (resultDisplayPlaceholder.getChildren().contains(commandPredictionPanel.getRoot())) {
+            resultDisplayPlaceholder.getChildren().remove(commandPredictionPanel.getRoot());
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        }
+    }
+
+    /**
+     * Shows the {@link CommandPredictionPanel} only if it isn't visible
+     * @param event The event thrown by the {@link CommandBox}
+     */
+    @Subscribe
+    private void handleCommandPredictionPanelShowEvent(CommandPredictionPanelShowEvent event) {
+        if (!resultDisplayPlaceholder.getChildren().contains(commandPredictionPanel.getRoot())) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            resultDisplayPlaceholder.getChildren().add(commandPredictionPanel.getRoot());
+        }
+    }
+    //@@author
 }

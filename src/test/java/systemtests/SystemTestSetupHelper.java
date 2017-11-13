@@ -4,6 +4,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.testfx.api.FxToolkit;
 
+import guitests.GuiRobot;
 import guitests.guihandles.MainWindowHandle;
 import seedu.address.TestApp;
 import seedu.address.testutil.TypicalPersons;
@@ -12,6 +13,7 @@ import seedu.address.testutil.TypicalPersons;
  * Contains helper methods that system tests require.
  */
 public class SystemTestSetupHelper {
+    protected GuiRobot guiRobot = new GuiRobot();
     private TestApp testApp;
     private MainWindowHandle mainWindowHandle;
 
@@ -50,7 +52,9 @@ public class SystemTestSetupHelper {
                 mainWindowHandle = new MainWindowHandle(stage);
                 mainWindowHandle.focus();
             });
+
             FxToolkit.showStage();
+
         } catch (TimeoutException te) {
             throw new AssertionError("Stage takes too long to set up.");
         }

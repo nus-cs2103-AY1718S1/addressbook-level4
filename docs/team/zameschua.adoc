@@ -1,0 +1,140 @@
+= Zames Chua - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Introduction
+=== What is CYNC
+CYNC is an open-source software that helps small businesses to
+track and nurture relationships with customers.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 8 kLoC.
+
+*Code contributed*: [https://github.com/zameschua/addressbook-level4/blob/master/collated/main/zameschua.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B2/main/tree/master/collated/test[Test code]]
+
+=== Purpose of Portfolio
+This portfolio serves as a documentation of my contributions towards CYNC, also other contributions to this module.
+
+== Enhancements Added
+=== Command Prediction
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=commandprediction]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Because the main mode of interaction with CYNC is via a Command Line Interface,
+as a user, I often find it difficult to recall what are the exact commands that I need to type.
+
+This is where the Command Prediction helps aid the user such that they do not have to remember
+the entire command.
+
+The Command Prediction was intentionally made simple for another developer to add another
+set of predictions (extending beyond the default commands).
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=commandprediction]
+
+#End of Extract#
+
+---
+
+=== Sms Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=smscommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Because the main mode of interaction with CYNC is via a Command Line Interface,
+as a user, I often find it difficult to recall what are the exact commands that I need to type.
+
+This is where the Command Prediction helps aid the user such that they do not have to remember
+the entire command.
+
+The Command Prediction was intentionally made simple for another developer to add another
+set of predictions (extending beyond the default commands).
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=smscommand]
+
+#End of Extract#
+
+---
+
+== Enhancements Proposed (For Version 2.0)
+=== Sms Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=notifications]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+CYNC aims to make it as simple as possible for a small business owner to maintain good relations with their customers.
+
+By enabling notifications and reminders, we can ensure that the users never miss a customer's birthaday,
+ allowing them to prepare a gift card for their customers to show how much they care, or even keep track of
+ when a customer is supposed to make payments so that they never miss a payment due again.
+
+This will allow the users to focus on growing their business, while knowing well that CYNC will keep them
+notified of important events.
+
+== Other contributions
+
+=== Contributions to CYNC
+* I updated the GUI theme (Pull request https://github.com/CS2103AUG2017-W15-B2/main/pull/29[#29]) to make it
+more aesthetically pleasing.
+* I also reduced the use of 'magic number' color codes in the Stylesheets,
+ instead replacing them with constants, and overall making the CSS more reusable and less prone to bugs.
+* I made additional effort to ensure that the features being implemented by the team do not have
+conflicting functions or implementations.
+
+=== Evidence of Helping others
+
+I have made several attempts at helping my peers with technical issues
+
+image::zames-evidence-of-helping-others-1.png[width="800"]
+_https://github.com/nus-cs2103-AY1718S1/addressbook-level2/pull/458[Link to issue]_
+
+image::zames-evidence-of-helping-others-2.png[width="800"]
+_https://github.com/nus-cs2103-AY1718S1/forum/issues/32[Link to issue]_
+
+=== Evidence of Bug Reporting
+
+I have also reported any bugs that I have found while working on my projects,
+in order to help improve the course material.
+
+image::zames-bug-reporting-1.png[width="800"]
+_https://github.com/nus-cs2103/website/issues/38[Link to issue]_

@@ -70,59 +70,59 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleKeyPress_startingWithUp() {
+    public void handleKeyPress_startingWithPageUp() {
         // empty history
-        assertInputHistory(KeyCode.UP, "");
-        assertInputHistory(KeyCode.DOWN, "");
+        assertInputHistory(KeyCode.PAGE_UP, "");
+        assertInputHistory(KeyCode.PAGE_DOWN, "");
 
         // one command
         commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
-        assertInputHistory(KeyCode.DOWN, "");
+        assertInputHistory(KeyCode.PAGE_UP, COMMAND_THAT_SUCCEEDS);
+        assertInputHistory(KeyCode.PAGE_DOWN, "");
 
         // two commands (latest command is failure)
         commandBoxHandle.run(COMMAND_THAT_FAILS);
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
-        assertInputHistory(KeyCode.DOWN, COMMAND_THAT_FAILS);
-        assertInputHistory(KeyCode.DOWN, "");
-        assertInputHistory(KeyCode.DOWN, "");
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_FAILS);
+        assertInputHistory(KeyCode.PAGE_UP, COMMAND_THAT_SUCCEEDS);
+        assertInputHistory(KeyCode.PAGE_UP, COMMAND_THAT_SUCCEEDS);
+        assertInputHistory(KeyCode.PAGE_DOWN, COMMAND_THAT_FAILS);
+        assertInputHistory(KeyCode.PAGE_DOWN, "");
+        assertInputHistory(KeyCode.PAGE_DOWN, "");
+        assertInputHistory(KeyCode.PAGE_UP, COMMAND_THAT_FAILS);
 
         // insert command in the middle of retrieving previous commands
-        guiRobot.push(KeyCode.UP);
+        guiRobot.push(KeyCode.PAGE_UP);
         String thirdCommand = "list";
         commandBoxHandle.run(thirdCommand);
-        assertInputHistory(KeyCode.UP, thirdCommand);
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_FAILS);
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
-        assertInputHistory(KeyCode.DOWN, COMMAND_THAT_FAILS);
-        assertInputHistory(KeyCode.DOWN, thirdCommand);
-        assertInputHistory(KeyCode.DOWN, "");
+        assertInputHistory(KeyCode.PAGE_UP, thirdCommand);
+        assertInputHistory(KeyCode.PAGE_UP, COMMAND_THAT_FAILS);
+        assertInputHistory(KeyCode.PAGE_UP, COMMAND_THAT_SUCCEEDS);
+        assertInputHistory(KeyCode.PAGE_DOWN, COMMAND_THAT_FAILS);
+        assertInputHistory(KeyCode.PAGE_DOWN, thirdCommand);
+        assertInputHistory(KeyCode.PAGE_DOWN, "");
     }
 
     @Test
-    public void handleKeyPress_startingWithDown() {
+    public void handleKeyPress_startingWithPageDown() {
         // empty history
-        assertInputHistory(KeyCode.DOWN, "");
-        assertInputHistory(KeyCode.UP, "");
+        assertInputHistory(KeyCode.PAGE_DOWN, "");
+        assertInputHistory(KeyCode.PAGE_UP, "");
 
         // one command
         commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);
-        assertInputHistory(KeyCode.DOWN, "");
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
+        assertInputHistory(KeyCode.PAGE_DOWN, "");
+        assertInputHistory(KeyCode.PAGE_UP, COMMAND_THAT_SUCCEEDS);
 
         // two commands
         commandBoxHandle.run(COMMAND_THAT_FAILS);
-        assertInputHistory(KeyCode.DOWN, "");
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_FAILS);
+        assertInputHistory(KeyCode.PAGE_DOWN, "");
+        assertInputHistory(KeyCode.PAGE_UP, COMMAND_THAT_FAILS);
 
         // insert command in the middle of retrieving previous commands
-        guiRobot.push(KeyCode.UP);
+        guiRobot.push(KeyCode.PAGE_UP);
         String thirdCommand = "list";
         commandBoxHandle.run(thirdCommand);
-        assertInputHistory(KeyCode.DOWN, "");
-        assertInputHistory(KeyCode.UP, thirdCommand);
+        assertInputHistory(KeyCode.PAGE_DOWN, "");
+        assertInputHistory(KeyCode.PAGE_UP, thirdCommand);
     }
 
     /**

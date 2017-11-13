@@ -1,3 +1,11 @@
+.root {
+    main-background-color: #E1E2E1;
+    main-foreground-color: #F5F5F6;
+    primary-text-color: #212121;
+    secondary-text-color: #757575;
+    primary-color: #81d4fa;
+    accent-color: #4ba3c7;
+}
 
 .error {
     -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
@@ -5,7 +13,8 @@
 
 .list-cell:empty {
     /* Empty cells will not have alternating colours */
-    -fx-background: #383838;
+    -fx-background: main-foreground-color;
+    -fx-border-width: 0px;
 }
 
 .tag-selector {
@@ -16,5 +25,5 @@
 }
 
 .tooltip-text {
-    -fx-text-fill: white;
+    -fx-text-fill: primary-text-color;
 }

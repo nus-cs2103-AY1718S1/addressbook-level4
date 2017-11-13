@@ -1,0 +1,122 @@
+= Zhu Yilun - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: CYNC
+CYNC is an open-source software that helps small businesses to track and nurture relationships with customers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 8 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/main/yilun-zhu.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/test/yilun-zhu.md[Test code]]
+
+=== Enhancement Added: Find function improvements
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findfunction]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This improvement is inspired by the search function in Gmail. I felt that Gmail's search function is very intuitive
+for the user as it searches through all the fields in a single search bar. +
+The original find function can only search by `Name`. As a user, I felt that the function is rather limited
+and I wanted to filter people by other fields, such as finding people with in a
+certain district by filtering their address. However, having separate search functions to search for the respective fields may be confusing for the
+users. Therefore, I improved upon the current `find` function such that the users can use a single intuitive
+search function that filters through all the fields.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findfunction]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Calendar functions
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=calendar]
+
+include::../UserGuide.adoc[tag=addevent]
+
+
+#End of Extract#
+
+---
+
+==== Justification
+
+These functions are implemented with the aim of helping the business owners' to manage their business schedule, for example a schedule of the upcoming tuition classes. Since
+CYNC is developed as an application to help small business owners to manage their growing business, a scheduler function
+such as the `calendar` function can aid them in managing their upcoming business events. +
+As a user of the `calendar` function, I felt that it is troublesome to interact with the calendar just by clicking, as I would have
+to scroll multiple times if I want to add an event few months in advance, and then scroll all the way back for my current schedule.
+Therefore, I implemented the `addevent` function. This allows the user to directly add an event to the google calendar without any
+clicking or scrolling.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Command to clear credentials for google API related commands. E.g. `addevent`, `email`.
+
+==== External behaviour
+A command to clear the currently stored credentials for google API. This will allow users to reset the API
+and connect the application with another google account.
+
+==== Justification
+Currently, the user has to delete the credentials manually in order to reset the APIs to connect it with another google account.
+This is rather troublesome and may be confusing for the average user.
+
+=== Enhancement Proposed: Remembering user account for `Calendar`
+
+==== External behaviour
+Similar to a "remember me" function. By storing cookies permanently, users only have to log in to their google account once in the `calendar` browser, and this account will be used subsequently.
+
+==== Justification
+Currently, the cookies only last for the session. The user have to log in to the google account every time the application is restarted in the `calendar` browser.
+This may be troublesome for users, and remembering the account for them can provide a smoother experience.
+
+=== Enhancement Proposed: Delete calendar event command
+
+==== External behaviour
+Similar to the `addevent` command, a delete event command can be implemented to help user delete google calendar events from the command line.
+
+==== Justification
+Similar to the reason `addevent` is implemented. A command line operation can be more efficient than interacting with the google calendar by clicking.
+
+=== Other contributions
+
+* Wrote additional tests to increase coverage from 72% to 76% (Pull requests https://github.com/CS2103AUG2017-W15-B2/main/pull/56[#56])
+* Wrote additional troubleshooting tips for Testing in the Developer Guide.
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=testingTips]
+
+#End of Extract#
+
+---

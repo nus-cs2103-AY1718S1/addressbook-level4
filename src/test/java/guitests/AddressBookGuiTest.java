@@ -54,11 +54,9 @@ public abstract class AddressBookGuiTest {
         });
         FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
         FxToolkit.showStage();
-
         mainWindowHandle = new MainWindowHandle(stage);
         mainWindowHandle.focus();
     }
-
     /**
      * Override this in child classes to set the initial local data.
      * Return null to use the data in the file specified in {@link #getDataFileLocation()}

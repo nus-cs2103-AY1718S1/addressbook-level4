@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author ReneeSeet-->
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="LoginPanel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="605.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@../src/main/resources/view/Styles.css" />
+        <URL value="@../src/main/resources/view/Extensions.css" />
+    </stylesheets>
+    <children>
+        <PasswordField fx:id="passwordBox" layoutX="246.0" layoutY="406.0" onAction="#onEnter" />
+        <Text layoutX="158.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+        <Text layoutX="172.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+        <Text fx:id="loginText" layoutX="142.0" layoutY="536.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="373.0" />
+        <TextField fx:id="emailBox" layoutX="246.0" layoutY="341.0" onAction="#onEnter" />
+        <Button fx:id="loginButton" layoutX="273.0" layoutY="469.0" mnemonicParsing="false" text="Login" />
+        <Text layoutX="246.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CYNC">
+            <font>
+                <Font size="54.0" />
+            </font>
+        </Text>
+        <Text layoutX="222.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Manager" textAlignment="CENTER" wrappingWidth="186.13476524021826" />
+    </children>
+</Pane>

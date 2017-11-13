@@ -22,13 +22,18 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
     private ObjectProperty<UniqueTagList> tags;
+    //@@author pohjie
+    private ObjectProperty<ProfilePicture> profilePicture;
+    private ObjectProperty<Attendance> attendance;
+    //@@author ReneeSeet
+    private ObjectProperty<JoinDate> joinDate;
+    //@@author
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, JoinDate joinDate, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -36,13 +41,19 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        //@@author ReneeSeet
+        this.joinDate = new SimpleObjectProperty<>(joinDate);
+        //@@author pohjie
+        this.profilePicture = new SimpleObjectProperty<>(new ProfilePicture());
+        this.attendance = new SimpleObjectProperty<>(new Attendance());
+        //@@author
     }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getJoinDate(),
                 source.getTags());
     }
 
@@ -122,11 +133,42 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author pohjie
+    public ProfilePicture getProfilePic() {
+        return profilePicture.get();
+    }
+
+    @Override
+    public ObjectProperty<ProfilePicture> profilePictureProperty() {
+        return profilePicture;
+    }
+
+    public Attendance getAttendance() {
+        return attendance.get();
+    }
+
+    @Override
+    public ObjectProperty<Attendance> attendanceProperty() {
+        return attendance;
+    }
+
+    //@@author ReneeSeet
+    public JoinDate getJoinDate() {
+        return joinDate.get();
+    }
+
+    @Override
+    public ObjectProperty<JoinDate> joinDateProperty() {
+        return joinDate;
+    }
+    //@@author
+
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ReadOnlyPerson // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyPerson) other));
+            || (other instanceof ReadOnlyPerson // instanceof handles nulls
+            && this.isSameStateAs((ReadOnlyPerson) other));
     }
 
     @Override

@@ -40,6 +40,28 @@ public class StringUtil {
         }
         return false;
     }
+    /**
+     * Returns true if the {@code sentence} contains the {@code substring}.
+     *   Ignores case.
+     *   <br>examples:<pre>
+     *       containsWordIgnoreCase("ABc", "ab") == true
+     *       containsWordIgnoreCase("ABc def", "DEF") == true
+     *       </pre>
+     * @param sentence cannot be null
+     * @param substring cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsSubStringIgnoreCase(String sentence, String substring) {
+        requireNonNull(sentence);
+        requireNonNull(substring);
+
+        String preppedWord = substring.trim().toLowerCase();
+        checkArgument(!preppedWord.isEmpty(), "substring parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "substring parameter should be a single word");
+
+        String preppedSentence = sentence.toLowerCase();
+
+        return preppedSentence.contains(preppedWord);
+    }
 
     /**
      * Returns a detailed message of the t, including the stack trace.

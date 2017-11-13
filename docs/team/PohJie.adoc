@@ -1,0 +1,71 @@
+= Poh Jie - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/main/pohjie.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/test/pohjie.md[Test code]][https://github.com/CS2103AUG2017-W15-B2/main/blob/master/collated/unused/pohjie.md[Unused code]]
+
+=== Enhancement Added: List All Tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=listalltags]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As the number of customers in the user's CYNC database increases, it is easier for the user to lose track of the tags used so far
+and this may cause the user to input similar sounding tags for the same purpose. To ensure that the user knows all the tags that he/she
+has used so far, we came up with the `listalltags` feature.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=listalltags]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: PersonInfo
+
+==== External behavior
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=select]
+
+#End of Extract#
+
+==== Justification
+
+A small business owner is highly likely to want to view more information about his/her customers. With this feature, the business owner can do so
+by looking at the attendance and profile picture of his/her customers. In further features, we can have more features of each person to be displayed in this panel.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=personinfo]
+
+#End of Extract#
+
+---
+=== Other contributions
+
+Added prefaces in UG to commands that were already given to us at the start of this project,
+such as `add`, `delete`, `edit`.
+
+Added prefaces in DG for certain sections like introduction and testing.

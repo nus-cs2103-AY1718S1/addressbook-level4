@@ -24,13 +24,16 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListAllTagsCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MassEmailCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.FindFunctionPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.TagMatchingPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -81,7 +84,7 @@ public class AddressBookParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(new FindFunctionPredicate(keywords)), command);
     }
 
     @Test
@@ -108,6 +111,21 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
+
+    @Test
+    public void parseCommand_listAllTags() throws Exception {
+        assertTrue(parser.parseCommand(ListAllTagsCommand.COMMAND_WORD) instanceof ListAllTagsCommand);
+    }
+
+    //@@author ReneeSeet
+    @Test
+    public void parseCommand_massEmail() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        MassEmailCommand command = (MassEmailCommand) parser.parseCommand(
+                MassEmailCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new MassEmailCommand(new TagMatchingPredicate(keywords)), command);
+    }
+    //@@author
 
     @Test
     public void parseCommand_select() throws Exception {

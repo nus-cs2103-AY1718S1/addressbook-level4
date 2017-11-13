@@ -10,13 +10,24 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W15-B2/main/blob/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W15-B2`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+
+Welcome, fellow software developer! Thank you for taking interest in supporting our open-source software CYNC.
+The CYNC community prides itself on being a friendly and helpful community for new developers.
+If you ever face any issue or uncertainty in the instructions, feel free to send an email
+to pohjie@cync.com so that we can sort out the issues for you and following contributors.
 
 == Setting up
 
 === Prerequisites
+
+Before you get started, please ensure that you have the following software and Java development
+kit installed on your computer. As downloading and setting up *IntelliJ* may take up some time,
+feel free to jump ahead and read through the instructions to get a rough idea of this project.
 
 . *JDK `1.8.0_60`* or later
 +
@@ -30,9 +41,17 @@ This app will not work with earlier versions of Java 8.
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
++
+[NOTE]
+New to IntelliJ? We encourage you to head over to https://www.jetbrains.com/help/idea/meet-intellij-idea.html[IntelliJ IDEA 2017.2 Help] to fully
+understand the ins-and-outs of IntelliJ.
 
 
 === Setting up the project in your computer
+
+Now that you have both *JDK `1.8.0_60`* or later and *IntelliJ* installed, you are ready to
+set up the project.
+//what repo
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -48,12 +67,19 @@ This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+// Can put screenshot here
+
+To confirm that you've successfully set up the project, do take the time to ensure
+that your set up is correct and ready to run.
+
+. Run the `seedu.address.MainApp` and try a few commands.
 . link:#testing[Run the tests] to ensure they all pass.
 
 === Configurations to do before writing code
 
 ==== Configuring the coding style
+Before you actually write any code, you want to make sure that you're following our coding standards
+so that whatever you've written can be easily understood by fellow developers.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
@@ -72,7 +98,7 @@ After forking the repo, links in the documentation will still point to the `se-e
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+You are encouraged to set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
@@ -81,25 +107,30 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+Now that you've everything set up, you are ready to start coding! To help you along, we encourage you to
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+
+. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
 
+This section aims to give you a broad overview of the purpose of various components and our
+motivation for designing it that way.
+
 === Architecture
 
-image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+The *_Architecture Diagram_* given below (_Figure 3.1.1_) explains the high-level design of the App. Read on for a quick overview of each component.
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+// update this diagram
+image::Architecture.png[width="600"]
+_Figure 3.1.1 : Architecture Diagram_
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
-
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for: +
+// grammar error for 2 lines below
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
 
@@ -115,15 +146,15 @@ The rest of the App consists of four components.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the `UI`, `Logic`, `Model`, `Storage` components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see the class diagram given below, _Figure 3.1.2_) defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -131,7 +162,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,76 +170,102 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
 
+[#ui-component]
 === UI component
-
-image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
-
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
+Refer to _Figure 3.2.1_ below to get a better visual overview of the UI component.
+
+image::UiClassDiagram.png[width="800"]
+_Figure 3.2.1 : Structure of the UI Component_
+
+*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component,
+The `UI` component:
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
+[#logic-component]
 === Logic component
 
+The Logic Component concerns itself primarily with processing of commands and giving the relevant output.
+You may wish to look at _Figure 3.3.1_ to gain a broad overview of the Logic component,
+followed by _Figure 3.3.2_ to better understand the implementation of Commands in the Logic Component.
+
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+
+Below is a simple explanation of what happens when user enters a command.
 
 *API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+link:https://github.com/CS2103AUG2017-W15-B2/main/tree/master/src/main/java/seedu/address/logic[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+In case you are still feeling lost, we have provided a Sequence Diagram (_Figure 3.3.3_) to illustrate interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
+[#model-component]
 === Model component
 
+*API* : link:https://github.com/CS2103AUG2017-W15-B2/main/tree/master/src/main/java/seedu/address/model[`Model.java`]
+
+The `Model` component of CYNC is an independent component as it does not depend on the other four components, its functions are:
+
+* Storage of  `UserPref` object that represents the user's preferences such as the GUI settings
+* Storage of CYNC's data
+* Exposing of unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+
+Refer to _Figure 3.4.1_ below for an overview of the Model component.
+
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
-
-The `Model`,
-
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
-
+[#storage-component]
 === Storage component
 
-image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
-
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*API* : link:https://github.com/CS2103AUG2017-W15-B2/main/tree/master/src/main/java/seedu/address/storage[`storage.java`]
 
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+
+Refer to _Figure 3.5.1_ below for an overview of the Storage component.
+
+image::StorageClassDiagram.png[width="800"]
+_Figure 3.5.1 : Structure of the Storage Component_
+
+[#external-component]
+=== External component
+
+*API* : link:https://github.com/CS2103AUG2017-W15-B2/main/tree/master/src/main/java/seedu/address/external[`external.java`]
+
+The `External` component,
+
+* consist of Gmail API : Authenticate user's Google account, create and send out emails
+* consist of Google Calendar API : To authenticate Google account, edit and add events to google calendar
+* consist of twilio API:
 
 === Common classes
 
@@ -221,13 +278,20 @@ This section describes some noteworthy details on how certain features are imple
 // tag::undoredo[]
 === Undo/Redo mechanism
 
+==== Motivation
+
+The undo/redo mechanism was implemented to allow users to undo/redo a mistake in entering the commands,
+instead of having to `delete` the user and `add` a corrected entry.
+
+==== Mechanics
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following figure (_Figure 4.1.1_) shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Relevant classes in the Logic component that enable undo/redo commands_
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+From the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -265,10 +329,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.2 : Illustration of the undoStack_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.1.3 : Illustration of the undoStack with more commands_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -278,15 +344,17 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.1.4 : Illustration of the redoStack_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The following sequence diagram (_Figure 4.1.5_) shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.1.5 : Sequence diagram for the undo operation_
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The `redo` operation does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -294,14 +362,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.1.6 : Illustration of the undoStack during a clear operation_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.1.7 : Illustration of the undoStack during a list operation_
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram (_Figure 4.1.8_) summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.1.8 : Activity Diagram for undoStack upon a new command_
 
 ==== Design Considerations
 
@@ -347,6 +418,10 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 === Logging
 
+==== Motivation
+Logging can be very useful for identifying bugs / failure points in the app.
+
+==== Mechanics
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
 * The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
@@ -356,13 +431,290 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 *Logging Levels*
 
 * `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
+* `WARNING` : Can continue running the app, but would be safer to rectify the issues brought up by the warnings.
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+[#configuration]
 === Configuration
+In the event where you want to change certain properties of the application (e.g App name, logging level)
+you can do so by editing the configuration file (default: `config.json`) located in the root folder.
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+== Features Implementation
+
+// tag::commandprediction[]
+=== Command Prediction Mechanism
+
+The `CommandPredictionPanel` updates it's contents to show relevant command predictions to the user
+every time the user changes the content of the `CommandBox`. This is illustrated in the image below.
+
+image::command-prediction-1.png[width="800"]
+_Figure 4.4.1 : Screenshot of the Command Prediction Panel_
+
+The Command Prediction Mechanism's implementation is purely on the front-end,
+ie. it only interfaces with the UI component.
+
+Whenever the application detects a change in the contents of the `CommandBox` UI Component,
+it fires a `CommandBoxContentsChangedEvent` to the `EventsCenter`.
+This event is handled in the `CommandPredictionPanel` UI Component, which calls `updatePredictionPanel` internally
+and updates itself to show the new command predictions (if there are any command predictions).
+This is illustrated in the diagram below.
+
+image::command-prediction-panel-sequence-diagram.png[width="800"]
+_Figure 4.4.2 : Sequence Diagram of the Command Prediction Panel_
+
+==== Implementation
+
+Whenever the contents of the CommandBox is changed, it fires a `CommandBoxContentsChangedEvent`.
+The `CommandPredictionPanel` then handles this event by finding the commands that begin with the existing text in the Command Box.
+
+==== Design Considerations
+**Aspect**: The database of available command predictions should be open to extension +
+
+**Alternative 1 (Current implementation)**: Store all the available commands in a list to parse through +
+**Pros**: Simple to implement, reduces coupling between components +
+**Cons**: Can result in bugs if this list is not updated periodically +
+
+**Alternative 2** : A `CommandManager` will keep track of all existing commands.
+The `CommandPredictionPanel` should update it's database automatically whenever a new command is added +
+**Pros**: More automation, less prone to bugs in the `CommandPredictionPanel`. The app also becomes more open to extension +
+**Cons**: This implementation is more coupled and may cause some bugs in `Command` if it is not handled carefully +
+//end::commandprediction[]
+
+//tag::massemail[]
+=== Mass Emailing Mechanism
+
+The `email` command allows the user to send emails to all or certain groups of customers at once.
+The emailing service is being facilitated by the Gmail Java API.
+
+There are two types of mass emailing commands: +
+1. `email all` : get everyone's email in CYNC
+
+2.`email KEYWORD [MORE KEYWORDS]`: get all the required persons emails
+
+The mass emailing mechanism is event driven. When a valid `email` command is entered, it will post a `massEmailRequestEvent` to the `Events Center`
+which will be handled by the `UI Manager` by displaying the `EmailPanel`.
+
+An email array that consists of desired customers' emails will also be pass to UI to be displayed in the `To:` textbox.
+The `EmailPanel` will appear in the `MainDisplayPanel` area as seen in the diagram below.
+
+image::email.png[width="800"]
+_Figure 5.2.1: Screenshot of CYNC upon entering the email command_
+
+After the user composes an email and clicks on the `send` button, a `SendEmailRequestEvent` is fired to the
+`EmailManager`, which follows the Facade design pattern. It will interact with the
+`GmailApi` which handles the actual sending of the emails. This is demonstrated in the sequence diagram below.
+
+image::massemailmech.png[width="800"]
+_Figure 5.2.2: Sequence diagram upon clicking the `send` button on the email Panel_
+
+Once the emails are send out successfully, the `EmailManager` will fire an event `NewResultAvailableEvent` to indicate success to user.
+
+==== Design Considerations
+**Aspect:** Emailing platform to use +
+**Alternative 1 (current choice):** Gmail email service +
+**Pros:** Gmail is the must used and free email service around the globe. Since the Calender feature also requires Google account, using Gmail, will allow users to use both features with 1 account. +
+**Cons:** Limited to only sending emails through Gmail. +
+**Alternative 2:** OutLook email service +
+**Pros:** OutLook is also a common email service used by many, able to send emails through OutLook. +
+**Cons:** User must have an Outlook account and Google account to use emailing and Calender function.
+
+//end::massemail[]
+
+//tag::smscommand[]
+=== SMS mechanism
+==== Description
+The SMS command allows the user to SMS multiple customers at once.
+The SMS service is being facilitated by the Twilio Java API.
+
+==== Implementation
+There are two types of SMS commands: +
+1. `sms all` : Send an SMS to every contact being stored in CYNC +
+2.`sms <TAG> [MORE TAGS]`: Send an SMS to all persons containing the tags as specified in the command
+
+On entering an `sms` command, the `SmsPanel` will appear in the `MainDisplayPanel` area,
+with the phone numbers of the SMS targets extracted from the relevant persons and
+pre-filled, as demonstrated in the diagram below.
+
+image::SmsCommandScreenshot1.png[width="800"]
+_Figure 5.3.1: Screenshot of CYNC upon entering the SMS Command_
+
+After the user composes an SMS and clicks on the `send` button, an event is fired to the
+`SmsManager`, which follows the Facade design pattern and in turn interacts with the
+`TwilioApiHelper` which handles the actual sending of the SMS.
+
+Upon sending or failure to send the SMS, a `NewResultAvailableEvent` is fired
+to update the `ResultDisplay` and let the user know if the SMS has been successfully sent or not.
+
+This is demonstrated in the sequence diagram below.
+
+image::SmsCommandSequenceDiagram.png[width="800"]
+_Figure 5.3.1: Sequence diagram upon clicking the `send` button on the SmsPanel.
+Note that the `NewResultAvailableEvent` fired by the `TwilioApiHelper` has been omitted for clarity._
+
+
+//end::smscommand[]
+
+//tag::listalltags[]
+=== List All Tags mechanism
+
+==== Description
+
+The feature `listalltags` allows the user to view all the tags in the unique tag list.
+This helps the user to check that he/she is not adding any similar and undesired tags.
+
+==== Implementation
+
+The List All Tags mechanism is facilitated by the `EventsCenter`. `EventsCenter` posts an event from `listalltags` command
+and send the update to the `MainWindow` so that the tags can be displayed in the `browserPlaceholder`.
+
+The mechanism is illustrated in the diagram below.
+
+image::ListAllTagsUpdatedSD.png[width="800"]
+_Figure 5.4.1 List All Tags sequence diagram_
+The `listalltags` command inherits the abstract `Command` class.
+
+Suppose that the user has just launched the application. Then the set-up of the application will look like the picture below.
+
+image::CyncStartUpNew.png[width="800"]
+_Figure 5.4.2: Empty `browserPlaceholder` on startup_
+
+As we can see from the above diagram, the `BrowserPanel` is initially empty. +
+Upon calling `listalltags`, `browserPlaceholder` is filled to show the list of tags.
+
+image::CyncListAllTags.png[width="800"]
+_Figure 5.4.3 List of tags displayed to the right of person list_
+
+==== Design Considerations
+**Aspect:** Where the `Tag` list is displayed. +
+**Alternative 1 (current choice):** In the `BrowserPanel`. +
+**Pros:** User can see both the `Person` list and `Tag` list side by side, facilitating the sifting of information of his customers. +
+**Cons:** User loses functionality of the `BrowserPanel`, in which the user is unable to use the `BrowserPanel` to see the detailed information of his client. +
+**Alternative 2:** List the tags in the return message of the command, under the command box. +
+**Pros:** User retains functionality of `BrowserPanel`, whereby the user can still click on the person to find out more information. +
+**Cons:** This is less aesthetically pleasing. With many tags, it may be harder for the user to see the desired tag.
+
+// end::listalltags[]
+
+
+
+// tag::personinfo[]
+=== PersonInfo mechanism
+
+==== Description
+
+The PersonInfo feature allows the user to see more detailed information regarding a specific customer.
+In future editions, we hope to have more attributes about the customer, such as exact dates of attendance.
+
+==== Implementation
+
+Upon using the `select` command, `JumpToListRequestEvent` is posted by `EventsCenter`.
+When `MainWindow` receives this event, it will respond by clearing the `browserPlaceholder` and calling `PersonInfo`.
+`PersonInfo` will show the selected person's attributes. +
+
+Figure 5.5.1 below shows the sequence diagram. +
+
+image::PersonInfoUpdatedSD.png[width="800"]
+_Figure 5.5.1: Sequence diagram of PersonInfo implementation_
+
+This is an example of the MVC design pattern,
+whereby the user interacts with the `commandBox`, which then parses and execute the `SelectCommand`.
+It is followed by the `MainWindow` updating the `browserPlaceholder` to show the
+correct view to the user. This decouples the components involved in processing commands and showing the results
+to the user.
+
+==== Design Considerations
+
+**Aspect:** The presence of the `BrowserPanel` which is used to fill up browserPlaceholder on initialisation of application. +
+**Alternative 1 (current choice):** We keep `BrowserPanel`, and instead clear `browserPlaceholder` and fill with `PersonInfo` when needed. +
+**Pros:** By keeping the BrowserPanel, we do not have to post a `PersonPanelSelectionChangedEvent` stub on the intialisation.
+Hence the BrowserPanel is only responsible for displaying a blank page at startup, and the PersonInfo for displaying a person's detailed information
+ when needed. This follows the Separation of Concern principle. +
+**Cons:** This may be seen as a violation of the YAGNI principle, as the BrowserPanel's other functionalities are not actually used in user execution. +
+**Alternative 2:** Remove the BrowserPanel and instead initialise an empty PersonInfo at start-up. +
+**Pros:** Since `BrowserPanel` essentially only has one function that is seemingly trivial, it may make sense just to totally remove it.
+ This decreases the amount of code that we have and also reduces the possiblity of bugs. +
+**Cons:** As mentioned above, we have to post an artificial stub so that the PersonInfo will be loaded on startup.
+This may violate the single responsibility principle, since PersonInfo may have to change when the start-up conditions or
+the specifics of `PersonPanelSelectionChangedEvent` change.
+
+// end::personinfo[]
+
+
+// tag::calendar[]
+=== Calendar mechanism
+==== Description
+The calendar mechanism integrates with Google Calendar, and allows the user to view / add upcoming events.
+The calendar service is facilitated by the Google Calendar API.
+
+==== Implementation
+There are two types of calendar commands: +
+1. `calendar` : Displays the google calendar in the browser window +
+2. `addevent <EVENT DETAILS>` : Adds a event according to the given details to the google calendar
+
+==== Command `calendar`
+Upon entering the `calendar` command, the `CalendarPanel` will appear in the `MainDisplayPanel` area,
+showing the user's google calendar, or a google login page if it is first time the command is used after
+the app is restarted. As demonstrated in the two diagrams below.
+
+image::CalendarLogin.png[width="800"]
+_Figure 5.5.3.1: Upon first use of the command after every restart_
+
+image::Calendar.png[width="800"]
+_Figure 5.5.3.2: Subsequent usages of the command after logging in_
+
+After the `calendar` command is entered, an `event` is sent to the `EventsCenter`, which sends an update to the `UI`
+such that the google calendar can be displayed in the `MainDisplayPanel`. As demonstrated in the diagram below.
+
+image::calendarCommand.png[width="800"]
+_Figure 5.5.3.3: Sequence diagram for the execution of `calendar` command_
+
+==== Command `addevent`
+Upon entering the `addevent` command with the correct parameters, an `event` is sent to the `EventsCenter`, which sends
+an update to `AddEventManager`, which follows the Facade design pattern and interacts with the `CalendarApi` for
+google calendar to add the event. If the calendar event is added successfully, an `event` is
+sent to the `UI` to refresh the calendar. As demonstrated in the diagram below.
+
+image::addEvent.png[width="800"]
+_Figure 5.5.4.1: Sequence diagram for the execution of `addevent` command_
+
+==== Design Considerations
+**Aspect:** Placement of the `calendarDisplayPanel` +
+**Alternative 1 (current choice):** Replaces the `mainDisplayPanel` +
+**Pros:** Users can see the `PersonListPanel` side by side with the calendar.
+Users can use other functions involving the `PersonListPanel`, such as `add` and `find`, with the calendar open. +
+**Cons:** Calendar is open all the time unless a command changes the `mainDisplayPanel`, this results in more resources consumed as it is
+left running when not needed. +
+**Alternative 2:** An overlay that covers both the `mainDisplayPanel` and the `PersonListPanel` +
+**Pros:** Calendar is switched out when another command is entered, this saves resources when the calendar is not needed. +
+**Cons:** Users are not able to refer to the data on the `PersonListPanel` when using the calendar.
+
+// end::calendar[]
+
+// tag::findfunction[]
+=== Find Mechanism
+==== Description
+The `find` command is the filter function for this application. It will filter through all fields of the user data
+based on the given keywords.
+
+==== Implementation
+The `find` command works as such: `find KEYWORD [MORE KEYWORDS]` +
+
+After the command is entered, the keywords will be sent to the `parser` which then creates a `predicate` to filter
+the stored data. +
+The `predicate` is used by the `model`, which returns a list of filtered people based on the given `predicate`.
+
+==== Design Considerations
+**Aspect:** How to provide the user with functions to search through different fields of customer data +
+**Alternative 1 (current choice):** All-in-one search function. +
+**Pros:** Intuitive and easy to remember. Users can search through any fields of customer data with a single function. +
+**Cons:** User is unable to restrict the search to only one field in the customers' data. E.g. If the user is searching
+for people with addresses in `East Coast`, if there is someone whose name contains `East Coast`, it will show up as well. +
+**Alternative 2:** Multiple search functions. +
+**Pros:** The user can specify exactly which field he wants to search in, avoids the kind of situation described above. +
+**Cons:** Not very intuitive. It is a hassle for the users to remember many different search functions.
+
+// end::findfunction[]
 
 == Documentation
 
@@ -392,16 +744,19 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
-=== Running Tests
-
-There are three ways to run tests.
+It is highly important to build a stable and effective software system for both users and developers of CYNC.
+As such, we have dedicated a section on testing to aid you on writing and executing your test cases.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+It is recommended for you to test the software after every update you make.
+
+=== Running Tests
+
+We have three methods for you to run tests on the software.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
@@ -417,9 +772,12 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 *Method 3: Using Gradle (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+[TIP]
+The most reliable way to run tests is this method. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. This allows you to do other things on the Computer while the tests are running.
+
+* To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
 === Types of tests
 
@@ -443,7 +801,24 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+// tag::testingTips[]
+
+**Problem: Tests fail with a `GuiRobot$EventTimeoutException`. **
+
+* Reason: The tests are taking a longer time to load than the given `waitForEvent` timeout limit.
+* Solution: To give it more time, increase the `DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS` in `src\test\java\guitests\GuiRobot.java`.
+
+**Problem: GUI tests fail randomly using JUnit test runner.**
+
+* Reason: Shifting of mouse / switching tabs during the test may have interrupted with the tests.
+* Solution: Recommended to run tests in headless mode. You can do so by opening the console and running the command
+`gradlew clean headless allTests`.
+
+// end::testingTips[]
+
 == Dev Ops
+
+Here are a few things that you should take note of when making updates.
 
 === Build Automation
 
@@ -464,24 +839,30 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing.
+
+* Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives: +
+a. Include those libraries in the repo (this bloats the repo size). +
+b. Require developers to download those libraries manually (this creates extra work for developers).
 
 [appendix]
-== Suggested Programming Tasks to Get Started
+== Suggested Starting Point
 
-Suggested path for new programmers:
+Here is a suggested path for new developers:
 
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
+1. Add small link:#local-impact-enhancements[local-impact enhancements] to one component at a time. +
+Learning Outcome: To understand how each component functions. +
+Some enhancements suggestions are given in this section link:#improving-each-component[Improving each Component].
 
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
+2. Add a feature that touches multiple components. +
+ Learning Outcome: To learn how to implement an end-to-end feature across all components. +
+ The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
+[#improving-each-component]
 === Improving each component
 
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
+Exercises in this section aims to help you understand the 4 major components of CYNC. Each exercise is component-based thus you would not need to modify the other components for it to function.
 
-[discrete]
 ==== `Logic` component
 
 [TIP]
@@ -498,7 +879,7 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 ** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
 ****
 
-[discrete]
+
 ==== `Model` component
 
 [TIP]
@@ -515,7 +896,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 ** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
-[discrete]
+
 ==== `Ui` component
 
 [TIP]
@@ -579,7 +960,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
-[discrete]
+
 ==== `Storage` component
 
 [TIP]
@@ -595,6 +976,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
 
+[#creating-a-new-command-code-remark-code]
 === Creating a new command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
@@ -612,8 +994,8 @@ Removes the remark for the first person.
 
 ==== Step-by-step Instructions
 
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
+===== [Step 1] Logic: Teach the app to accept 'remark'
+Let's start by teaching the application how to parse a `remark` command. The command will only function after adding the logic of `remark` later.
 
 **Main:**
 
@@ -715,23 +1097,30 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 [appendix]
 == User Stories
+Here are the user stories that describes different types of CYNC users and their requirements.
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="100%",cols="20%,<23%,<25%,<35%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` | link:#customer-manager[Customer Manager] using the app for the first time |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |Customer Manager |add a new customer | store their data in my database
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |Customer Manager |delete a customer |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |Customer Manager |find a customer by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+| `* * *` | Customer Manager | edit information | update customer's information when they have changes.
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+| `* * *` | Customer Manager | list all my customers | get a list of all my customers
+
+| `* * *` | Customer Manager who cannot remember commands correctly | have an link:#auto-complete[auto-complete] feature while typing commands | be more efficient by reducing the time required to recall the whole command
+
+|`* *` |Customer Manager |hide customers' link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`*` |Customer Manager |sort customers by name |locate a customer easily
 |=======================================================================
 
 {More to be added}
@@ -739,17 +1128,18 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+Here are use cases that show the various interactions between users and CYNC.
 
-[discrete]
-=== Use case: Delete person
+=== Delete Customer
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  Customer Manager requests to list customers
+2.  CYNC shows a list of customers
+3.  Customers Manager requests to delete a specific customer in the list
+4.  CYNC prompts confirmation of deleting customer.
+5.  CYNC deletes the customer.
+6.  CYNC notifies Customer Manager that deletion is successful
 +
 Use case ends.
 
@@ -763,18 +1153,55 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. CYNC shows an error message.
 +
 Use case resumes at step 2.
+
+* 4a. Deletion not successful
++
+[none]
+** 4a1. CYNC shows an error messages
++
+Use case resumes at step 2
+
+=== Edit Customer's details
+
+*MSS*
+
+1. Customer Manager requests to edit customer
+2. CYNC lists out the current details of the customer
+3. Customer Manager requests to edit specific fields with new data
+4. CYNC updates the details
++
+Use case resumes at step 2.
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 2a. Customer does not exist.
++
+[none]
+** 2a1. CYNC shows the requested customer does not exist.
++
+Use case ends.
 
 {More to be added}
 
 [appendix]
 == Non Functional Requirements
+Here are the Non Functional Requirements that CYNC follows:
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+*  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+*  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Should respond within 2 seconds.
+*  Should be open source so that other developers can contribute.
+*  Should automatically backup the customers’ information in the case that the user loses his/her data.
+*  Should show a loading spinner while loading.
+*  Should be aesthetically clean so that user does not feel overwhelmed.
+*  Should be free for users.
 
 {More to be added}
 
@@ -795,19 +1222,49 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[local-impact-enhancements]]
+Local-impact enhancements
+....
+The impact of the change does not go beyond the component
+....
+
+[[customer-manager]]
+Customer Manager
+....
+A person working at a small business that uses CYNC
+....
+
+[[auto-complete]]
+Auto-complete
+....
+A dropdown toolbar that suggests words that the user may be typing as they type
+....
+
 [appendix]
 == Product Survey
 
-*Product Name*
+Products that are similar to CYNC:
 
-Author: ...
+* *Microsoft Outlook Customer Manager*
++
+Author: Microsoft
++
+[width="59%",cols="50%,<50%",options="header",]
+|=======================================================================
+| Pros | Cons
+| Tracking of customer requests | Manages customers’ requests individually
+| Clean interface | Pay-to-use software
+| An overview of To-dos on main page |
+|=======================================================================
 
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+* *Salesforce CRM*
++
+Author: Salesforce
++
+[width="59%",cols="50%,<50%",options="header",]
+|=======================================================================
+| Pros | Cons
+| Sales management | Tons of features, easy to overwhelm client
+| Marketing automation | Not free, additional cost for businesses
+| Partner relationship management |
+|=======================================================================

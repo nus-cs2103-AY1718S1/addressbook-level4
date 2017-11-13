@@ -17,12 +17,16 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Attendance;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.JoinDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonMaxAttendanceException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -46,6 +50,8 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
+    public static final String MESSAGE_ATTENDANCE_NOT_ADDED =
+            "Either invalid index or the attended sessions is already 8";
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
@@ -78,6 +84,8 @@ public class EditCommand extends UndoableCommand {
 
         try {
             model.updatePerson(personToEdit, editedPerson);
+        }   catch (PersonMaxAttendanceException pmae) {
+            throw new CommandException(MESSAGE_ATTENDANCE_NOT_ADDED);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -100,8 +108,11 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        //@@author ReneeSeet
+        JoinDate date = personToEdit.getJoinDate();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, date, updatedTags);
+        //@@author
     }
 
     @Override
@@ -133,6 +144,14 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Set<Tag> tags;
 
+        //@@author pohjie
+        private ProfilePicture profilePicture;
+        private Attendance attendance;
+
+        //@@author ReneeSeet
+        private JoinDate date;
+        //@@author
+
         public EditPersonDescriptor() {}
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
@@ -141,6 +160,12 @@ public class EditCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
+            //@@author ReneeSeet
+            this.date = toCopy.date;
+            //@@author pohjie
+            this.profilePicture = toCopy.profilePicture;
+            this.attendance = toCopy.attendance;
+            //@@author
         }
 
         /**
@@ -189,6 +214,33 @@ public class EditCommand extends UndoableCommand {
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
         }
+
+        //@@author ReneeSeet
+        public void setJoinDate(JoinDate date) {
+            this.date = date;
+        }
+
+        public JoinDate getJoinDate() {
+            return date;
+        }
+
+        //@@author pohjie
+        public void setProfilePicture(ProfilePicture profilePicture) {
+            this.profilePicture = profilePicture;
+        }
+
+        public ProfilePicture getProfilePicture() {
+            return profilePicture;
+        }
+
+        public void setAttendance(Attendance attendance) {
+            this.attendance = attendance;
+        }
+
+        public Attendance getAttendance() {
+            return attendance;
+        }
+        //@@author
 
         @Override
         public boolean equals(Object other) {
