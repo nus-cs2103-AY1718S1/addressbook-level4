@@ -22,10 +22,10 @@ The aliases/synonyms are added for all commands available in [v1.5] in the user 
 ==== Justification
 
 ---
-This feature is to allow more flexibility to the user instead of having to remember specific command names.
-The user can choose to use a different command name whenever he/she wants. This is useful when the user that needs to
-type or user is lazy fast, they can choose to use shorter command names which takes slightly lesser time. It is also
-useful for users who are forgetful.
+This feature allows more flexibility to the user instead of having to remember specific command names.
+The user can choose to use a different command name whenever they want.
+This especially useful for users who, needs to type fast, are lazy or forgetful, they can choose to use shorter
+command names which takes slightly lesser time.
 
 *Instead of typing the command _add_, the user can type _a_.*
 
@@ -121,8 +121,8 @@ include::../DeveloperGuide.adoc[tag=SettingRelationship]
 === Enhancement Proposed:
 
 ** Enhance Set Relationship command to be able to edit relationship between two persons.
-** Add specific relationship groups that groups specific relationships together to enable easier viewing for grouping
- for user
+** Add specific relationship groups that groups specific relationships together to enable easier viewing
+ for user when the person card is selected.
 
 === Issue Reported:
 

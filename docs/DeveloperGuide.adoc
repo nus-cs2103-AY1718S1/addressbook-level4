@@ -688,7 +688,9 @@ As you can see from the above, there are 5 comparators that will perform differe
 sorting type. The list of person will be rearranged after the *sortPerson()* method is executed.
 
 [NOTE]
-If sorting type is not found, an error message will to notfiy the user of an unknown sorting type.
+If sorting type is not found, an error message will to shown in the result display to notfiy the user of an unknown
+sorting
+type.
 
 Comparators for sorting *Name* and *Tag* are the same, they do not have a custom comparator.
 
@@ -706,24 +708,26 @@ Since *Company*, *Position* and *Priority* have specific way of sorting, a custo
 The *_ORDERED_ENTRIES_* indicates how should it should be sorted in both the comparator for *Company*, *Position* and
  *Priority*.
 
-The implementation of the comparator for *Company* and *Position* is as follows:
+The implementation of the comparator for *Company* and *Position* are the same. For *Position* simply change all the
+variables and data type to be *Position*.
 
+An example of the implementation for *Company* is as follows:
 
 [source, java]
 ----
 private static final String ORDERED_ENTRIES = "NIL";
 
-public int compareTo(Company companyOne) {
-    if (ORDERED_ENTRIES.contains(companyOne.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
-        return ORDERED_ENTRIES.indexOf(this.toString()) - ORDERED_ENTRIES.indexOf(companyOne.toString());
+public int compareTo(Company company) {
+    if (ORDERED_ENTRIES.contains(company.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
+        return ORDERED_ENTRIES.indexOf(this.toString()) - ORDERED_ENTRIES.indexOf(company.toString());
     }
-    if (ORDERED_ENTRIES.contains(companyOne.toString())) {
+    if (ORDERED_ENTRIES.contains(company.toString())) {
         return 1;
     }
     if (ORDERED_ENTRIES.contains(this.toString())) {
         return -1;
     }
-    return companyOne.toString().compareTo(this.toString());
+    return company.toString().compareToIgnoreCase(this.toString());
 }
 public int compare(Company companyOne, Company companyTwo) {
     return companyOne.compareTo(companyTwo);
@@ -895,7 +899,7 @@ public Optional<Set<Relationship>> getToDeleteRel(ReadOnlyPerson person) {
 After a series of method calls, the *model.updatePerson()* will eventually call the *setPerson()* method in
 UniquePersonList.
 
-The following sequence diagram shows how the sort operation works:
+The following sequence diagram shows how the set relationship operation works:
 
 image::SetRelCommandSequenceDiagram.png[width="800"]
 
@@ -917,7 +921,7 @@ image::SetRelCommandSequenceDiagram.png[width="800"]
 // end::SettingRelationship[]
 
 // tag::Aliases[]
-=== Command Aliases
+=== Command: Aliases
 
 The checking of commands mechanism is achieved by creating a new `CheckCommandsParser` class that checks if the
 command entered by the user can be found as aliases/synonyms of other commands.
