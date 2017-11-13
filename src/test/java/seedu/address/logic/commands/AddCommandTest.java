@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.TreeSet;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -14,16 +15,19 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -102,6 +106,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public UserPrefs getUserPrefs() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -131,6 +141,39 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sort() {
+            fail("This method should not be called.");
+        }
+
+
+        @Override
+        public void addScheduleToPerson(Integer index, TreeSet<Integer> span) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void clearScheduleForPerson(Integer index, TreeSet<Integer> span) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public TreeSet<Integer> generateMeetingTime(Index[] index) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public boolean checkMeetingTime(Index[] listOfIndex, int day, int start, int end) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void addEventToPerson(Integer index, Tag event) {
             fail("This method should not be called.");
         }
     }

@@ -1,11 +1,14 @@
 package seedu.address.model;
 
+import java.util.TreeSet;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -20,12 +23,23 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    //@@author derickjw
+    /** Returns the User Preferences */
+    UserPrefs getUserPrefs();
+    //@@author
+
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author YuchenHe98
+    void addScheduleToPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException;
+
+    //@@author YuchenHe98
+    void clearScheduleForPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException;
+    //@@author
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -45,4 +59,11 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    void sort();
+
+    TreeSet<Integer> generateMeetingTime(Index[] listOfIndex);
+
+    boolean checkMeetingTime(Index[] listOfIndex, int day, int start, int end);
+
+    void addEventToPerson(Integer index, Tag event);
 }
