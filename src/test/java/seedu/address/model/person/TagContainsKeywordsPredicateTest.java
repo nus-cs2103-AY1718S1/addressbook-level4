@@ -43,7 +43,8 @@ public class TagContainsKeywordsPredicateTest {
     @Test
     public void test_tagContainsKeywords_returnsTrue() {
         // One keyword
-        TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.singletonList("colleagues"));
+        TagContainsKeywordsPredicate predicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("colleagues"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("colleagues").build()));
 
         // Multiple keywords
@@ -67,6 +68,7 @@ public class TagContainsKeywordsPredicateTest {
 
         // Non-matching keyword
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("colleagues"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("neighbours", "friends").build()));
+        assertFalse(predicate.test(new PersonBuilder()
+                .withName("Alice Bob").withTags("neighbours", "friends").build()));
     }
 }
