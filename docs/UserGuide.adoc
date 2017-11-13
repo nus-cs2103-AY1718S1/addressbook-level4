@@ -302,14 +302,14 @@ To add person(s) as a favorite contact, use the `fav` command.
 Adds the 5th and 6th person as favorite contacts in the most recently displayed list.
 
 .Added 5th and 6th persons as favorite contacts
-image::favorite-multiple-command-result.png[width="500"]
+image::favorite-multiple-command-result.png[width="700"]
 
 * `[red]#find# [green]#Bernice#` +
 `[red]#fav# [green]#1#` +
 Adds the first person in the list of contacts with the name `Bernice` as a favorite contact.
 
 .Added the first person i.e. Bernice as a favorite contact
-image::favorite-after-find-command-result.png[width="750"]
+image::favorite-after-find-command-result.png[width="800"]
 
 ==== Unfavoriting a person [Since v1.2]: `unfav`
 
@@ -331,14 +331,14 @@ To remove person(s) from the list of favorite contacts, use the `unfav` command.
 Removes the 1st and 2nd person from favorite contacts in the most recently displayed list.
 
 .Removed the 1st and 2nd person from favorite contacts
-image::unfavorite-multiple-command-result.png[width="500"]
+image::unfavorite-multiple-command-result.png[width="700"]
 
 * `[red]#find# [green]#Alex#` +
 `[red]#unfav# [green]#1#` +
 Removes the first person in the list of contacts with the name `Alex`.
 
 .Removed person at first index from favorite contacts i.e. Alex
-image::unfavorite-after-find-command-result.png[width="750"]
+image::unfavorite-after-find-command-result.png[width="800"]
 // end::favoriteunfavoriteperson[]
 
 ==== Deleting a person: `delete`
@@ -383,7 +383,7 @@ To delete person(s), you have to specify their indexes.
 Deletes the 3rd and 4th persons in the address book.
 
 .Deleted persons at indexes 3 and 4
-image::delete-multiple-command-result.png[width="750"]
+image::delete-multiple-command-result.png[width="1000"]
 
 * `[red]#find# [green]#Bernice#` +
 `[red]#delete# [green]#1#` +
@@ -391,7 +391,7 @@ Deletes the 1st person in the list of contacts with the name `Bernice`.
 // end::deletebyindex[]
 
 .Deleted person at first index i.e. Bernice Yu
-image::delete-after-find-command-result.png[width="750"]
+image::delete-after-find-command-result.png[width="1000"]
 
 ===== Deleting persons by tag [Since v1.4]:
 
@@ -412,13 +412,13 @@ You can use the <<find-by-tag, find command>> to view all contacts that have the
 Deletes all persons with the tag `friends`
 
 .Deleted all persons with the "friends" tag
-image::delete-by-tag-command-result.png[width="500"]
+image::delete-by-tag-command-result.png[width="700"]
 
 * `[red]#delete# [blue]#-tag# [green]#colleagues neighbours#` +
 Deletes all persons with the tags `colleagues` or `neighbours`
 
 .Deleted all persons with the "colleagues" and "neighbours" tags
-image::delete-by-multiple-tags-command-result.png[width="500"]
+image::delete-by-multiple-tags-command-result.png[width="700"]
 
 ==== Clearing all entries: `clear`
 
