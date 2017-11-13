@@ -68,7 +68,9 @@ searched for.
 image::ListByMostSearchedDisplay.png[width="790"]
 +
 
-From this example, it can be understood that `Alex Yeoh` is the most searched person, followed by `David Li` etc.
+This list view is now undoable.
+
+From this example, it can be understood that `Bernice Yu` is the most searched person, followed by `Alex Yeoh` etc.
 
 #End of Extract#
 
