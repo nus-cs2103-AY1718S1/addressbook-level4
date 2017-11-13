@@ -19,8 +19,8 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
      */
     public ChangeThemeCommand parse(String userInput) throws ParseException {
         String trimmedArgs = userInput.trim();
-        String filepath = "C:\\repos\\addressbook-level4\\src\\main\\resources\\view\\" +  trimmedArgs + ".css";
-        File check = new File("C:/repos/addressbook-level4/src/main/resources/view/" + trimmedArgs + ".css");
+        String filepath = "\\src\\main\\resources\\view\\" +  trimmedArgs + ".css";
+        File check = new File("/src/main/resources/view/" + trimmedArgs + ".css");
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
