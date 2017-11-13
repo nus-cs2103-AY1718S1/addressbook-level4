@@ -340,6 +340,17 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_findTagCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(FindTagCommand.COMMAND_WORD + " " + "friends");
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
     public void parseCommand_sortCommandInEventsMode_throwsParseException() throws Exception {
         assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
 
