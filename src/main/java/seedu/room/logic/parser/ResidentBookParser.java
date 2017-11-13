@@ -24,6 +24,7 @@ import seedu.room.logic.commands.HighlightCommand;
 import seedu.room.logic.commands.HistoryCommand;
 import seedu.room.logic.commands.ImportCommand;
 import seedu.room.logic.commands.ListCommand;
+import seedu.room.logic.commands.PrevCommand;
 import seedu.room.logic.commands.RedoCommand;
 import seedu.room.logic.commands.RemoveTagCommand;
 import seedu.room.logic.commands.SelectCommand;
@@ -154,6 +155,9 @@ public class ResidentBookParser {
         case HelpCommand.COMMAND_WORD:
         case HelpCommand.COMMAND_ALIAS:
             return new HelpCommand();
+
+        case PrevCommand.COMMAND_WORD:
+            return new PrevCommand();
 
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
