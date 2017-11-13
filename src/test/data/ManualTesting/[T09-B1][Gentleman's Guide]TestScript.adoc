@@ -26,7 +26,7 @@ Below are all the test cases for our product - Gentleman's Guide.
 
 === Logout of account
 
-=== Add person to contact list
+=== Add person
 
 *Positive Test cases:*
 
@@ -35,16 +35,12 @@ Below are all the test cases for our product - Gentleman's Guide.
 add n/tester1 p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
 **Expected Message:** +
 New person added: tester1 Phone: 98765432 Email: johnd@example.com Address: 311, Clementi Ave 2, #02-25 Birthday:  Tags: [owesMoney][friends] +
-*Expected Output:* +
-Person tester1 added
 
 `(Tags are not compulsory)` +
 *Command:* +
 add n/tester2 p/98765422 e/jamie@example.com a/311, Clementi Ave 2, #02-26 +
 *Expected Message:* +
 New person added: tester2 Phone: 98765422 Email: jamie@example.com Address: 311, Clementi Ave 2, #02-26 Birthday:  Tags:  +
-*Expected Output:* +
-Person tester2 added with no tags
 
 *Negative Test cases:*
 
@@ -55,8 +51,6 @@ add p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owe
 Invalid command format!
 add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...
 Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
-*Expected Output:* +
-Message error
 
 `(Missing Phone)` +
 *Command:* +
@@ -65,8 +59,6 @@ add n/tester3 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owes
 Invalid command format!
 add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...
 Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
-*Expected Output:* +
-Message error
 
 `(Missing Email)` +
 *Command:* +
@@ -75,8 +67,6 @@ add n/tester4 p/98765432 a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
 Invalid command format!
 add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...
 Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
-*Expected Output:* +
-Message error
 
 `(Missing Address)` +
 *Command:* +
@@ -85,8 +75,6 @@ add n/tester5 p/98765432 e/johnd@example.com t/friends t/owesMoney +
 Invalid command format!
 add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...
 Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
-*Expected Output:* +
-Message error
 
 `(More than one parameters missing)` +
 *Command:* +
@@ -95,24 +83,18 @@ add n/tester6 +
 Invalid command format!
 add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...
 Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
-*Expected Output:* +
-Message error
 
 `(Invalid Phone Number)` +
 *Command:* +
 add n/tester7 p/AAAAAAAA e/mary@example.com a/NUS t/friends t/owesMoney +
 *Expected Message:* +
 Phone numbers can only contain numbers, and should be at least 3 digits long +
-*Expected Output:* +
-Message error
 
 `(Invalid Email, without "@")` +
 *Command:* +
 add n/tester8 p/87654326 e/maryexample.com a/NUS t/friends t/owesMoney +
 *Expected Message:* +
 Person emails should be 2 alphanumeric/period strings separated by '@' +
-*Expected Output:* +
-Message error
 
 `(Duplicate Persons)` +
 *Command:* +
@@ -122,10 +104,40 @@ Message error
 
 *Expected Message:* +
 This person already exists in the address book +
-*Expected Output:* +
-Message error
 
-=== Edit person in contact list
+=== Birthday
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+birthday 1 10/13/2017 +
+*Expected Message:* +
+Added birthday to Person: ...
+
+`(Empty birthday)` +
+*Command:* +
+birthday 1 +
+*Expected Message:* +
+Removed birthday from Person: ...
+
+*Negative Test Case*
+
+`(Invalid date)` +
+*Command:* +
+birthday 1 35/13/2017 +
+*Expected Message:* +
+Person birthdays must be either a valid date, of format DD/MM/YYYY or empty
+
+`(Invalid date)` +
+*Command:* +
+birthday +
+*Expected Message:* +
+Invalid command format! +
+birthday: Edits the birthday of the person identified by the index number used in the last person listing. Existing birthday will be overwritten by the input. +
+Parameters: INDEX (must be a positive integer) b/dd/mm/yyyy +
+Example: birthday 1 b/02/03/1994 +
+
+=== Edit person
 
 *Positive Test case*
 
@@ -134,52 +146,49 @@ Message error
 edit 1 n/tester10 p/87655678 e/johnny@example.com a/NUS t/enemies +
 *Expected Message:* +
 Edited Person: tester10 Phone: 87655678 Email: johnny@example.com Address: NUS Birthday: 01/01/1992 Tags: [enemies] +
-*Expected Output:* +
-Person's particulars updated
-
 
 *Negative test cases*
 
-`(Missing name, phone, email, address, tag)` +
+`(Missing name, phone, email, address, tag with prefix)` +
 *Command:* +
 edit 1 n/ p/ e/ a/ t/ +
 *Expected Message:* +
 Person names should only contain alphanumeric characters and spaces, and it should not be blank +
-*Expected Output:* +
-Message error
 
 `(Invalid phone)` +
-*Command:* edit 1 p/BBBBBBBB +
+*Command:* +
+edit 1 p/BBBBBBBB +
 *Expected Message:* +
 Phone numbers can only contain numbers, and should be at least 3 digits long +
-*Expected Output:* +
-Message error
 
 `(Invalid email)` +
-*Command:* edit 1 e/johnnyexample.com +
+*Command:* +
+edit 1 e/johnnyexample.com +
 *Expected Message:* +
 Person emails should be 2 alphanumeric/period strings separated by '@' +
-*Expected Output:* +
-Message error
 
 `(Edit to become duplicate persons)` +
 *Command:* +
 1. add n/tester11 p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
 2. add n/tester12 p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
-3. e "index of tester11" n/tester12
+3. edit "index of tester11" n/tester12
 
 *Expected Message:* +
 This person already exists in the address book +
-*Expected Output:* +
-Message error
 
-`(Invalid Index)` +
+`(Invalid Index: 0 or negative numbers)` +
 *Command:* +
-edit 1000 n/tester1 +
+edit 0 n/tester1 +
+*Expected Message:* +
+Invalid command format!
+edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]... +
+
+`(Invalid Index: More than number of persons in the list)` +
+*Command:* +
+edit 10000 n/tester1 +
 *Expected Message:* +
 The person index provided is invalid +
-*Expected Output:* +
-Message error
 
 === Delete person
 
@@ -190,16 +199,237 @@ Message error
 delete 1 +
 *Expected Message:* +
 Deleted Person: tester10 Phone: 87655678 Email: johnny@example.com Address: NUS Birthday: 01/01/1992 Tags: [enemies] +
-*Expected Output:* Person deleted successfully
 
 *Negative Test case*
 
-`(Invalid Index)` +
+`(Invalid Index: 0 or negative numbers)` +
 *Command:* +
-Delete 0 / Delete 10000 +
+delete 0  +
+*Expected Message:* +
+Invalid command format!
+delete: Deletes the person identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer)+
+
+`(Invalid Index: More than number of persons in the list)` +
+*Command:* +
+delete 10000 +
 *Expected Message:* +
 The person index provided is invalid +
-*Expected Output:* Message error +
+
+=== Tag persons
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+tag 1,2,3 dummyTag +
+*Expected Message:* +
+3 persons successfully tagged with [dummyTag]: ...
+
+`(Valid details)` +
+*Command:* +
+tag 1,4 dummyTag +
+*Expected Message:* +
+1 persons successfully tagged with [dummyTag]: +
+1 person(s) already have this tag: +
+
+*Negative Test Case*
+
+`(Invalid indexes)` +
+*Command:* +
+tag 40,50,60 dummyTag +
+*Expected Message:* +
+One or more person indexes provided are invalid.
+
+`(Indexes not provided)` +
+*Command:* +
+tag ,,,, dummyTag +
+*Expected Message:* +
+Please provide one or more indexes! +
+tag: Tags one or more persons identified by the index numbers used in the last person listing. +
+Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME +
+Example: tag 1,2,3 friends +
+
+`(Missing arguments)` +
+*Command:* +
+tag dummyTag
+*Expected Message:* +
+Invalid command format! +
+tag: Tags one or more persons identified by the index numbers used in the last person listing. +
+Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME +
+Example: tag 1,2,3 friends +
+
+=== Untag persons
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+untag 1,2,3 friends/enemies +
+*Expected Message:* +
+3 person(s) successfully untagged from [enemies], [friends]: ...
+
+`(Valid details)` +
+*Command:* +
+untag 1,2,3 friends/randomTag +
+*Expected Message:* +
+2 person(s) successfully untagged from [randomTag], [friends]: ...
+1 person(s) do not have any of the specified tags:...
+
+`(Valid details)` +
+*Command:* +
+untag -all friends/enemies +
+*Expected Message:* +
+[enemies], [friends] tag(s) successfully removed from person list.
+
+`(Valid details)` +
+*Command:* +
+untag -all friends/randomTag +
+*Expected Message:* +
+[randomTag], [friends] tag(s) successfully removed from person list.
+
+`(Valid details)` +
+*Command:* +
+untag 1,2,3 +
+*Expected Message:* +
+3 person(s) sucessfully untagged: ...
+
+`(Valid details)` +
+*Command:* +
+untag 1,2,3 +
+*Expected Message:* +
+3 person(s) sucessfully untagged: ...
+
+`(Valid details)` +
+*Command:* +
+untag -all +
+*Expected Message:* +
+All tags in person list successfully removed.
+
+*Negative Test Case*
+
+`(Tags not found)` +
+*Command:* +
+untag 1,2,3 randomTag1/randomTag2 +
+*Expected Message:* +
+[randomTag1], [randomTag2] tag(s) not found in person list.
+You may want to refer to the following existing tags inside the unfiltered person list: ...
+
+`(Invalid indexes)` +
+*Command:* +
+untag 40,50,60 friends/enemies +
+*Expected Message:* +
+One or more person indexes provided are invalid.
+
+`(Empty index list)` +
+*Command:* +
+untag ,,,, friends +
+*Expected Message:* +
+Please provide one or more indexes! +
+untag: Untags one or more persons in the last person listing. +
+- Untag all tags of persons identified by the index numbers used +
+Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) +
+Example: untag 1,2,3 +
+- Untag one or more tags of persons identified by the index numbers used +
+Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME +
+Example: untag 1,2,3 friends/colleagues +
+- Untag all tags of all persons in the last person listing +
+Parameters: -all +
+Example: untag -all +
+- Untag one or more tags of all persons in the last person listing +
+Parameters: -all + TAGNAME +
+Example: untag -all friends/colleagues +
+
+`(Missing arguments)` +
+*Command:* +
+untag friends/enemies +
+*Expected Message:* +
+Invalid command format! +
+untag: Untags one or more persons in the last person listing. +
+- Untag all tags of persons identified by the index numbers used +
+Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) +
+Example: untag 1,2,3 +
+- Untag one or more tags of persons identified by the index numbers used +
+Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME +
+Example: untag 1,2,3 friends/colleagues +
+- Untag all tags of all persons in the last person listing +
+Parameters: -all +
+Example: untag -all +
+- Untag one or more tags of all persons in the last person listing +
+Parameters: -all + TAGNAME +
+Example: untag -all friends/colleagues +
+
+=== Retag persons
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+retag enemies friends +
+*Expected Message:* +
+[enemies] tag in person list successfully replaced by [friends]. +
+
+*Negative Test Case*
+
+`(Tag not found)` +
+*Command:* +
+retag randomTag friends +
+*Expected Message:* +
+[randomTag] tag not found in person list.
+
+`(Invalid tag name)` +
+*Command:* +
+retag !@#$ friends +
+*Expected Message:* +
+Tags names should be alphanumeric  +
+
+`(Missing arguments)` +
+*Command:* +
+retag enemies +
+*Expected Message:* +
+Invalid command format! +
+retag: Retags all person having the old tag name to the new tag name. +
+Parameters: OLDTAGNAME + NEWTAGNAME +
+Example: retag friends enemies +
+
+=== Retrieve persons
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+retrieve friends +
+*Expected Message:* +
+... persons listed!
+
+*Negative Test Case*
+
+`(Invalid tag name)` +
+*Command:* +
+retrieve !@#$ +
+*Expected Message:* +
+Tags names should be alphanumeric
+
+`(Tag not found)` +
+*Command:* +
+retrieve randomTag +
+*Expected Message:* +
+Tag not found in person list.
+You may want to refer to the following existing tags inside the unfiltered person list: ...
+
+`(Missing arguments)` +
+*Command:* +
+retrieve +
+*Expected Message:* +
+Please provide a tag name! +
+retrieve: Retrieves all persons belonging to an existing tag and displays them as a list with index numbers. +
+Parameters: TAGNAME +
+Example: retrieve friends
+
+=== List persons
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+list +
+*Expected Message:* +
+Listed all persons
 
 === Select person
 
@@ -210,8 +440,6 @@ The person index provided is invalid +
 select 1 +
 *Expected Message:* +
 Selected Person: 1
-*Expected Output:* +
-Address of user on map +
 
 === View person
 
@@ -222,73 +450,307 @@ Address of user on map +
 view 1 +
 *Expected Message:* +
 Retrieved Profile of: testerX +
-*Expected Output:* +
-Person's details shown +
 
-=== Find person
-
-*Positive Test Case*
-
-`(Valid person)` +
-*Command:* +
-find John Doe
-*Expected Message:* +
-1 persons listed!
-*Expected Output:* +
-Person with name John Doe listed
-
-*Negative Test Case*
-
-`(Invalid person)` +
-*Command:* +
-find tester13
-*Expected Message:* +
-0 persons listed!
-*Expected Output:* +
-No one would be found
-
-=== Add reminder to reminder list
+=== Add reminder
 
 *Positive Test Case*
 
 `(Valid details)` +
 *Command:* +
-addReminder n/reminder1 submission p/Low d/25/12/2017 15:00 m/Submit to manager t/Work t/John +
+addReminder z/reminder1 submission p/Low d/25/12/2017 15:00 m/Submit to manager t/Work t/John +
 *Expected Message:* +
 New reminder added: reminder1 Priority: Low Date: 25/12/2017 15:00 Message: Submit to manager Tags: [Work][John] +
-*Expected Output:* +
-Reminder added
 
 `(Invalid priority)` +
-addReminder n/reminder2 submission p/low d/25/12/2017 15:00 m/Submit to manager t/Work t/John +
+*Command:* +
+addReminder z/reminder2 submission p/low d/25/12/2017 15:00 m/Submit to manager t/Work t/John +
 *Expected Message:* +
 Priority can only be Low / Medium / High +
-*Expected Output:* +
-Message error
 
+=== Edit reminder
+
+*Positive Test case*
+
+`(Valid task name, priority, date, message, tag)` +
+*Command:* +
+editReminder 1 z/reminder19 p/High d/10/12/2017 15:00 m/tester t/testerTag
+*Expected Message:* +
+Edited Reminder: reminder19 Priority: High Date: 10/12/2017 15:00 Message: tester Tags: [testerTag]
+
+*Negative test cases*
+
+`(Missing task name, priority, date with prefix)` +
+*Command:* +
+editReminder 1 z/ p/ d/ +
+*Expected Message:* +
+Tasks should only contain alphanumeric characters and spaces, and it should not be blank +
+
+`(Invalid priority)` +
+*Command:* +
+editReminder 1 p/medium +
+*Expected Message:* +
+Priority can only be Low / Medium / High +
+
+`(Invalid date)` +
+*Command:* +
+editReminder 1 d/10000 +
+*Expected Message:* +
+Date should conform the following format: dd/mm/yyyy hh:mm +
+
+`(Edit to become duplicate reminders)` +
+*Command:* +
+1. add z/reminder5 p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+2. add z/tester6 p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+3. editReminder "index of reminder5" z/reminder6
+
+*Expected Message:* +
+This reminder already exists in the address book. +
+
+`(Invalid Index: 0 or negative numbers)` +
+*Command:* +
+editReminder 0 z/reminder18 +
+*Expected Message:* +
+Invalid command format!
+editReminder: Edits the details of the reminder identified by the index number used in the last reminder listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [z/TASK] [p/PRIORITY] [d/DATE] [m/MESSAGE] [t/TAG]...
+
+`(Invalid Index: More than number of reminders in the list)` +
+*Command:* +
+editReminder 10000 z/reminder18 +
+*Expected Message:* +
+The reminder index provided is invalid +
+
+=== Delete reminder
 
 *Positive Test Case*
 
-`()` +
+`(Delete reminder successfully)` +
+*Command:* +
+deleteReminder 1 +
+*Expected Message:* +
+Deleted Reminder: reminder1 submission Priority: Low Date: 25/12/2017 15:00 Message: Submit to manager Tags: [Work][John]
+
+*Negative Test case*
+
+`(Invalid Index: 0 or negative numbers)` +
+*Command:* +
+deleteReminder 0 +
+*Expected Message:* +
+Invalid command format!
+deleteReminder: Deletes the reminder identified by the index number used in the last reminder listing.
+Parameters: INDEX (must be a positive integer)
+
+`(Invalid Index: More than number of reminders in the list)` +
+*Command:* +
+deleteReminder 10000 +
+*Expected Message:* +
+The reminder index provided is invalid +
+
+=== List reminders
+*Positive Test Case*
+
+`(Valid details)` +
 *Command:* +
 *Expected Message:* +
-*Expected Output:* +
+Listed all reminders
 
-
+=== Select reminders
 
 *Positive Test Case*
 
-`()` +
+`(Select reminder successfully)` +
 *Command:* +
+selectReminder 1 +
 *Expected Message:* +
-*Expected Output:* +
+Selected Reminder: 1
 
-
-
+=== Find person by name
 
 *Positive Test Case*
 
-`()` +
+`(Valid person)` +
 *Command:* +
+find John Doe +
 *Expected Message:* +
-*Expected Output:* +
+1 persons listed!
+
+*Negative Test Case*
+
+`(Invalid person)` +
+*Command:* +
+find tester13 +
+*Expected Message:* +
+0 persons listed!
+
+=== Find person by phone
+
+*Positive Test Case*
+
+`(Valid phone)` +
+*Command:* +
+findPhone 98765432 +
+*Expected Message:* +
+1 persons with phone(s) listed!
+
+`(Valid phone but no users with this phone number)` +
+*Command:* +
+findPhone 90000000 +
+*Expected Message:* +
+0 persons with phone(s) listed!
+
+`(Invalid / Insufficient phone number)` +
+*Command:* +
+findPhone 0dsd00 +
+*Expected Message:* +
+0 persons with phone(s) listed!
+
+
+=== Find person by email
+
+*Positive Test Case*
+
+`(Valid email)` +
+*Command:* +
+findEmail johnd@example.com +
+*Expected Message:* +
+1 persons with email(s) listed!
+
+`(Valid email but no users with this email)` +
+*Command:* +
+findEmail badguy@example.com +
+*Expected Message:* +
+0 persons with email(s) listed!
+
+`(Invalid email)` +
+*Command:* +
+findEmail aaaaaaaa +
+*Expected Message:* +
+0 persons with email(s) listed!
+
+=== Find reminder by task name
+
+*Positive Test case*
+`(Valid task name: case-insensitive)` +
+*Command:* +
+findReminder reminder1 +
+*Expected Message:* +
+x reminders listed! +
+
+*Negative Test case*
+
+`(Valid reminder, but no reminder with this task name)` +
+*Command:* +
+findReminder xxxxx +
+*Expected Message:* +
+0 reminders listed!
+
+=== Find reminder by priority
+
+*Positive Test case*
+
+`(Valid Priority: case-insensitive)` +
+*Command:* +
+findPriority low +
+*Expected Message:* +
+x reminders with priorities(s) listed!
+
+*Negative Test case*
+
+`(Invalid Priority)` +
+*Command:* +
+findPriority Important +
+*Expected Message:* +
+0 reminders with priorities(s) listed!
+
+=== Sort persons in alphabetical order
+
+*Positive Test case*
+
+`(sort normally)` +
+*Command:* +
+sort +
+*Expected Message:* +
+All contacts are sorted.
+
+`(sort with empty contacts)` +
+*Command:* +
+
+. clear +
+. sort +
+
+
+*Expected Message:* +
+Contact list is empty.
+
+[NOTE]
+Execute `undo` command twice to revert back to original list +
+
+=== Sort persons by age
+
+*Positive Test case*
+
+`(sort age normally)` +
+*Command:* +
+sortAge +
+*Expected Message:* +
+All contacts are sorted by age. (Oldest To Youngest)
+
+`(sort age with empty contacts)` +
+*Command:* +
+
+. clear +
+. sortAge +
+
+
+*Expected Message:* +
+Contact list is empty.
+
+[NOTE]
+Execute `undo` command twice to revert back to original list +
+
+=== Sort persons by birthday
+
+*Positive Test case*
+
+`(sort birthday normally)` +
+*Command:* +
+sortBirthday +
+*Expected Message:* +
+All contacts are sorted by birthday.
+
+`(sort birthday with empty contacts)` +
+*Command:* +
+
+. clear +
+. sortBirthday +
+
+
+*Expected Message:* +
+Contact list is empty.
+
+[NOTE]
+Execute `undo` command twice to revert back to original list +
+
+=== Sort reminders by priority
+
+*Positive Test case*
+
+`(sort reminder list normally)` +
+*Command:* +
+sortPriority +
+*Expected Message:* +
+All reminders are sorted by priority. (High -> Medium -> Low)
+
+`(sort reminder list with no reminders)` +
+*Command:* +
+
+. clear +
+. sortPriority +
+
+
+*Expected Message:* +
+Reminder list is empty.
+
+[NOTE]
+Execute `undo` command twice to revert back to original list +
+

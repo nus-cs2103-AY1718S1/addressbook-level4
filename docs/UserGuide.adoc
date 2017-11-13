@@ -189,7 +189,7 @@ Adds / Edits / Removes a birthday to an existing person in the Gentleman's Guide
 Format: `birthday INDEX [b/dd/mm/yyyy]`
 
 ****
-* Add / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Adds / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
 * For removing : Simply input nothing after " `b/` "
 ****
@@ -294,9 +294,9 @@ Format: `findReminder KEYWORD [MORE_KEYWORDS]`
 Examples:
 
 * `findReminder Proposal` +
-Returns `Proposal` and `Proposal Submission`
+Returns `Proposal submission` and `Proposal deadline`
 * `findReminder Meeting Project Work` +
-Returns any reminder having task names `Meeting`, `Proposal Submission`
+Returns any reminder having task names `Meeting`, `Project` and `Work`
 
 image::BeforeAndAfterFindReminder.png[width="600"]
 _Figure 3.12.1 Reminder list before and after the findReminder command_
