@@ -5,12 +5,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Project: Gentleman's Guide
 Gentleman's Guide is a desktop address book application modified from the Address Book - Level 4 to store person contacts and reminders.
-The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/main/cqhchan.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/test/cqhchan.md[Test code]]
 
 *Portfolio*: This portfolio is a summary of the work that I contributed to the Gentleman's Guide and a brief explanation
-of the functions and implementations of those enhancements.
+of the functions and implementations of those enhancements and my justification for those implementations.
 
 == Enhancement Added : Private Database System
 === External Behaviour
@@ -43,12 +43,12 @@ include::../DeveloperGuide.adoc[tag = PrivateDatabase]
 == Enhancement Added : Select Reminder
 
 === External Behaviour
-#Start of extract [from: User Guide]#
+#Start of extract [from: Developer Guide]#
 
 include::../UserGuide.adoc[tag = selectReminder]
 
 
-#End of extract [from: User Guide]#
+#End of extract [from: Developer Guide]#
 
 === Justification
 
@@ -61,6 +61,70 @@ include::../DeveloperGuide.adoc[tag = selectReminder]
 
 == Enhancement Proposed
 
+=== Online Database
+In addition to the private database system, future versions will include a online database and account system.
+
+==== Justification
+With an online server conatining all the database, one can view his or her Gentleman's Guide from anywhere.
+This would greatly increase the desirability of the Gentleman's Guide and its versatility.
+
+==== Implementation
+
+Implementation of the online database can be done by using a Linux, Apache, MySql and PHP (LAMP) server.
+This server could be hosted a Google machine to allow for 24 hours service. Access to this server would be through PHP scripts and
+html connection on the application side. The Php scripts on the server would interact with the MySql database and allow the user to access his
+Gentleman's Guide from around the globe.
+
+=== Mobile Application
+Building an Android/IOS application for the Gentleman's Guide.
+
+==== Justification
+In our mobile world, building a mobile application is the next step forward. Some may even argue it should have been the first step.
+Thus in our Gentleman's Guide V 2.0, I would build a mobile application to take the Gentleman's Guide to the next level.
+
+==== Implementation
+
+While building a mobile application may sound difficult, it is not. Xcode and Android studios are extremely well built IDE that provide easy building of applications.
+In android studios, to build an app, first create an activity. This will handle all the Ui interactions. Next, create a service. This will handle all the background processing,
+such as connection to server. Mobile applications can interact the above online database system seamlessly.
+
 == Other Contributions
 
+=== Wrote introduction for UG/DG
+#Start of extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag = introduction]
+
+
+#End of extract [from: User Guide]#
+
+#Start of extract [from: Developer Guide]#
+
+include::../UserGuide.adoc[tag = introduction]
+
+
+#End of extract [from: Developer Guide]#
+
+=== Designed cover page for UG/DG
+
+include::../UserGuide.adoc[tag = coverpage]
+
+=== Contributed to Reminder feature in Gentleman's Guide (UI focus)
+
+(Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/43[43])
+
+(Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/31[31])
+
+(Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/27[27])
+
+=== Added test cases to improve coverage
+
+(Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/99[99])
+
+(Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/88[88])
+
+(Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/87[87])
+
+=== Added Maps functions and Edited Ui browser display
+
+(Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/43[43])

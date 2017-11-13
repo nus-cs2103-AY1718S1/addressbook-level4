@@ -13,10 +13,11 @@ endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B1/main
 
 By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT` +
+// tag::coverpage[]
 image:CoverPage.png[width="350"]
-
+// end::coverpage[]
 == Introduction
-
+// tag::introduction[]
 Looking way of keeping track of your contacts? Unsatisfied with ugly clunky designs currently available?
 
 Look no further with the Gentleman's Guide. With a superb user interface and sleek, professional touch, Gentleman's Guide provides you with a contact book that even James Bond would love, shaken not stirred.
@@ -26,7 +27,7 @@ At the Heart of our Design is the idea that every man wants to be a Gentleman. E
 This Gentleman's Guide is built to cater to every aspiring Gentleman. Any man what wants to do better for himself can download and use the Gentleman's Guide.
 Or any Lady. Being a Gentleman is not about one's gender, it is a way of life, a desire to better one's self that make one a true Gentleman. Our Gentleman's Guide will
 help any self respecting individual transform himself, or herself, into a Gentleman.
-
+// end::introduction[]
 == Quick Start
 
 .  To use the Gentleman guide, ensure you have Java version `1.8.0_60` or later installed in your Computer.

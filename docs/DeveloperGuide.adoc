@@ -17,6 +17,8 @@ image:CoverPage.png[width="350"]
 
 == Introduction
 
+// tag::introduction[]
+
 At the Heart of our Design is the idea that every man wants to be a Gentleman.
 Encompassing that idea is a system that respects you as you respect it.
 It provides the gentleman with exactly what he needed, when he needs it.
@@ -28,6 +30,7 @@ with every aspect of it built to cater to them. The UI captures a Gentleman's ey
 With rule 18 of the Gentleman staring straight at them, they will forever remember who they are, a Gentleman.
 
 This developer guide will describe the design and implementation of Gentleman's Guide. It will help you understand how Gentleman's Guide works and how you can further contribute to its development. We have organised this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
+// end::introduction[]
 
 == Setting up
 
@@ -148,7 +151,7 @@ _Figure 3.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3 : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -156,7 +159,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.4 : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -243,6 +246,8 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.0.1 : Inheritance Diagram for Undoable Commands._
+
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -282,10 +287,13 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.0.2 : Stack Diagram for Undoable Commands 1._
+
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.1.0.3 : Stack Diagram for Undoable Commands 2._
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -295,6 +303,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.1.0.4 : Stack Diagram for Undoable Commands 3._
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -302,6 +311,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.1.0.5 : Sequence Diagram for Undoable Commands._
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -311,6 +321,7 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.1.0.6 : Stack Diagram for Undoable Commands 4._
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
@@ -319,6 +330,7 @@ image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.1.0.7 : Stack Diagram for Undoable Commands 5._
 
 ==== Design Considerations
 
@@ -407,7 +419,7 @@ Thus User can choose to Create an account if he does not already have one, but h
 
 ==== Login/Logout Function
 
-The Login and Logout function work using similar principles. The functions work by using many different components. To facilitate
+The Login and Logout function work using similar principles. The functions work using many different components. To facilitate
 its implementation there is a `LoginCommand`
 inside the `LogicManager` and `AddressBook Parser`. The `LoginCommand` works by taking the input and checking it with a
 database of accounts that are available in the separate database created as explained earlier in the Create Function.
@@ -468,7 +480,7 @@ The `BirthdayCommand` lies in the `commands` of `Logic`. and deals with `Undoabl
 be reversed.  The following diagram shows the inheritance diagram for commands:
 
 image::birthdayLogic.png[width="900"]
-_Figure 4.3.1.1a : Structure of Commands in the Logic Component._
+_Figure 4.3.1.1 : Structure of Commands in the Logic Component._
 
 You will not be able to enter the birthday parameter when adding contacts. +
 Suppose that you have a list of persons. The birthday parameters of each contact will be empty if you have not modified them before. +
@@ -481,7 +493,7 @@ To delete their birthday, simply not key in anything for his birthday. For examp
 The following sequence diagram shows how the birthday operation works:
 
 image::birthdaySD.png[width="900"]
-_Figure 4.3.1.1b : Interactions in the Birthday Command._
+_Figure 4.3.1.2 : Interactions in the Birthday Command._
 
 ==== Design Considerations
 
@@ -541,7 +553,7 @@ to all persons in filtered list or not.
 The following sequence diagram shows how the untag operation works:
 
 image::UntagSequenceDiagram.png[width="800"]
-_Figure 4.4.1.1 : Interactions in the Untag Command._
+_Figure 4.4.2.1 : Interactions in the Untag Command._
 
 Similar to tag command operation, for every person that will be untagged, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside `AddressBook` 's person list with the new person object.
 
@@ -581,7 +593,7 @@ If the filtered person list is empty, that means the tag user want to look for d
 The following sequence diagram shows how the retrieve operation works:
 
 image::RetrieveSequenceDiagram.png[width="800"]
-_Figure 4.4.1.1 : Sequence Diagram for the Retrieve Command._
+_Figure 4.4.4.1 : Sequence Diagram for the Retrieve Command._
 
 ==== Design Considerations
 
@@ -692,14 +704,14 @@ with `UndoableCommands`, thus the actions cannot be reversed. +
 The following diagram shows the inheritance diagram for `findPhone` command:
 
 image::findPhoneSD.png[width="900"]
-_Figure 4.6.1.1 Interactions in the findPhone command._
+_Figure 4.7.4.1 Interactions in the findPhone command._
 
 Suppose the user keys in the command (e.g. `findReminder Proposal`) to search for all his reminders with the keyword
 "Proposal". The application searches through the entire reminder list and displays all reminders
 with the keyword.
 
 image::BeforeAndAfterFindReminder.png[width=850"]
-_Figure 4.6.3.1 Reminder list before and after the findReminder command_
+_Figure 4.7.4.2 Reminder list before and after the findReminder command_
 
 
 [NOTE]
@@ -753,7 +765,7 @@ It inherits from `UndoableCommand` and uses the `Collection` class. +
 Given below is the Sequence Diagram for interactions within the Logic component for the execute("sort") API call.
 
 image::sortSD.png[width="800"]
-_Figure 4.7.1.1 Interactions in the sort command._
+_Figure 4.8.4.1 Interactions in the sort command._
 
 ==== Design Considerations
 
@@ -834,7 +846,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.2.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -973,6 +985,9 @@ image::getting-started-ui-tag-before.png[width="300"]
 +
 image::getting-started-ui-tag-after.png[width="300"]
 +
+_Figure A.1.1 : Before after Ui component_
+
+
 ****
 * Hints
 ** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
@@ -990,7 +1005,9 @@ image::getting-started-ui-result-before.png[width="200"]
 **After**
 +
 image::getting-started-ui-result-after.png[width="200"]
-+
+
+_Figure A.1.2 : Before after ResultDisplay_
+
 ****
 * Hints
 ** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
@@ -1011,6 +1028,8 @@ image::getting-started-ui-status-before.png[width="500"]
 +
 image::getting-started-ui-status-after.png[width="500"]
 +
+_Figure A.1.3 : Before after StatusBarFooter component_
+
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
