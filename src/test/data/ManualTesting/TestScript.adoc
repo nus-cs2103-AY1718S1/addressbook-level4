@@ -15,7 +15,7 @@ Expected result: Command failed, invalid command format, at least name, phone nu
 Input: `add n/ p/ a/ e/ t/` +
 Expected result: Command failed, person names should only contain alphanumeric characters and spaces, and it should not be blank +
 
-Input: `add n/John Doe p/98765432 a/322, Seng Kang Ave 5, #02-25  e/johnd@example.com t/friends t/owesMoney l/twitter.com`
+Input: `add n/John Doe p/98765432 a/322, Seng Kang Ave 5, #02-25  e/johnd@example.com t/friends t/owesMoney l/twitter.com` +
 Expected result: Command failed, because l/ or  r/ is not recognised in `add` command so it registers as a long tag with a whitespace and tags names should only be alphanumeric +
 
 Input: `add n/John Doe p/98765432 a/311, Clementi Ave 2, #02-25 e/johnd@example.com` +
@@ -24,7 +24,7 @@ Expected result: Command success, John Doe has been added with his details +
 Input: `undo` +
 Expected result: Command success, changes made by add command can be undone +
 
-Input:  `add n/John Doe p/98765432 a/311, Clementi Ave 2, #02-25 e/johnd@example.com t/friends t/owesMoney`
+Input:  `add n/John Doe p/98765432 a/311, Clementi Ave 2, #02-25 e/johnd@example.com t/friends t/owesMoney` +
 Expected result: Command success, John Doe has been added with his details +
 
 Input:  `add n/John Doe p/98765432 a/322, Seng Kang Ave 5, #02-25  e/johnd@example.com t/friends t/owesMoney`
