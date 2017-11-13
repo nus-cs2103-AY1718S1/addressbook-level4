@@ -88,7 +88,8 @@ Format: `login USERNAME PASSWORD`
 It is advisable to use the GUI login instead of the CLI login. +
 The current implementation for password masking in the CLI login is less sophisticated than the GUI login.
 This can lead to unexpected or incorrect behaviors such as inconsistent masking of password or being unable to log in when username and password are entered correctly. +
-The CLI login is option is available for convenience only.
+To reduce unexpected behaviors, users are advised to add or delete characters from the end of the command only. +
+*The CLI login option is available for convenience only given that we want the user to be able to accomplish tasks faster using CLI than a GUI.*
 
 Examples:
 
@@ -111,6 +112,8 @@ Format: `login`
 1) Type `login` and press kbd:[Enter] in the command box. You should see the same welcome page as shown in Figure 1.3. +
 2) Enter username and password in the respective fields. +
 3) Press kbd:[Enter] or click the `Log in` button. +
+
+To return to the command box, click the `Back to command box` button.
 
 image::loginView.PNG[width="790"]
 _Figure 1.3 : How the welcome screen looks like after `login` is entered in the command box_
@@ -173,7 +176,7 @@ Format: `whitelist`
 It should be noted that each time the user logs into `Codii`, it checks through the address book for debtors
 whose deadlines have been passed and automatically adds them into the overdue list. +
 
-shows a list of all persons with overdue debt in the address book. +
+Shows a list of all persons with overdue debt in the address book. +
 Format: `overduelist`
 // end::overduelist[]
 
@@ -183,11 +186,12 @@ Edits an existing debtor, blacklisted/whitelisted contact in the address book. +
 Format: `edit [INDEX] [n/NAME] [hp/HANDPHONE_NUMBER] [home/HOME_PHONE_NUMBER] [op/OFFICE_PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] [d/DEBT] [td/TOTAL DEBT] [dl/DEADLINE] [int/INTEREST] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* (e.g. 1, 2, 3, ...)
 * If no index is specified, the currently selected person is edited instead.
 * At least one of the optional fields, other than `INDEX`, must be provided.
 * Existing values will be updated to the input values.
 * The date of debt borrowed cannot be edited.
+* The total debt cannot be set to zero.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
@@ -226,13 +230,14 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 // tag::borrow[]
 === Increasing the debt of a debtor: `borrow`
 
-Increase the debt of a debtor by the amount entered. +
+Increases the debt of a debtor by the amount entered. +
 Format: `borrow [INDEX] AMOUNT`
 
 ****
-* Increases the debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* If no index is specified, the debt of the currently selected person is increased instead.
+* Increases the debt and total debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* (e.g. 1, 2, 3, ...)
+* If no index is specified, the debt of the currently selected person is updated instead.
 * `AMOUNT` has to be in dollars and cents. For example: `500.50` which represents $500.50.
+* This command also sets the date repaid to `NOT REPAID` if the person previously fully repaid his/her debts.
 ****
 
 Examples:
@@ -250,14 +255,15 @@ Increases the debt of the 2nd person by $234.
 // tag::payback[]
 === Decreasing the debt of a person: `payback`
 
-Decrease the debt of a person by the amount entered. +
+Decreases the debt of a person by the amount entered. +
 Format: `payback [INDEX] AMOUNT`
 
 ****
-* Decreases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* If no index is specified, the debt of the currently selected person is decreased instead.
-* `AMOUNT` has to be in dollars and cents. For example: `600` which represents $600.
-* `AMOUNT` repaid cannot be more than the debt owed by the person at the specifiec `INDEX`
+* Decreases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* (e.g. 1, 2, 3, ...)
+* If no index is specified, the debt of the currently selected person is updated instead.
+* `AMOUNT` has to be in dollars and cents. For example: `600.15` which represents $600.15.
+* `AMOUNT` repaid cannot be more than the debt owed by the person at the specifiec `INDEX`.
+* If a person fully repays his/her debts, the date repaid will be set to the day that this command was entered. Also, the person will be listed in the whitelist if he/she is not blacklisted.
 ****
 
 Examples:
@@ -279,7 +285,7 @@ Resets the debt of a person to zero and sets the date repaid field of that perso
 Format: `repaid [INDEX]`
 
 ****
-* Resets the debt of the person at the specified `INDEX` to zero. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
+* Resets the debt of the person at the specified `INDEX` to zero. The index refers to the index number shown in the last person listing. The index *must be a positive integer* (e.g. 1, 2, 3, …​)
 * If no index is specified, the debt of the currently selected person is resetted instead.
 ****
 
@@ -298,7 +304,7 @@ Deletes the specified person from the address book. +
 Format: `delete [INDEX]`
 
 ****
-* Deletes the person at the specified `INDEX`. The index refers to the index number shown in the most recent listing. The index *must be a positive integer* 1, 2, 3, ...
+* Deletes the person at the specified `INDEX`. The index refers to the index number shown in the most recent listing. The index *must be a positive integer* (e.g. 1, 2, 3, ...)
 * If no index is specified, the currently selected person is deleted instead.
 ****
 
@@ -323,7 +329,7 @@ Format: 'ban [INDEX]'
 ****
 * Bans the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
 * If no index is specified, the currently selected person is banned instead.
 ****
 
@@ -336,7 +342,7 @@ Adds the 2nd person in the address book to blacklist.
 `ban 1` +
 Adds the 1st person in the results of the `find` command to blacklist.
 * `select 3` +
-`ban`
+`ban` +
 Adds the 3rd person in the address book to blacklist.
 
 === Unbanning a blacklisted person : `unban`
@@ -347,7 +353,7 @@ Format: 'unban [INDEX]'
 ****
 * Unbans the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
 * If no index is specified, the currently selected person is unbanned instead.
 ****
 
@@ -360,7 +366,7 @@ Removes the 2nd person from blacklist.
 `unban 1` +
 Removes the 1st person in the results of the `find` command from blacklist.
 * `select 3` +
-`unban`
+`unban` +
 Removes the 3rd person in the address book from blacklist.
 
 === Selecting a person : `select`
@@ -371,7 +377,7 @@ Format: `select [INDEX]`
 ****
 * Selects the person and loads the full information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
 * If no index is specified, the next person in the last person listing is selected instead.
 * If no index is specified, and no one was selected, the first person in the last person listing is selected instead.
 ****
@@ -383,7 +389,7 @@ Examples:
 Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st person in the results of the `find` command. +
 `select` +
 Selects the first person in the last person listing.
 
@@ -393,24 +399,18 @@ Selects the first person in the last person listing.
 Selects the person identified by the index number used in the listing of nearby contacts of currently selected person, +
 Format: `nearby INDEX`
 
-[NOTE]
-If you do not see a secondary person list panel labelled "All contacts in this area" at the bottom of the information
-of the currently selected contact, you might need to change your resolution settings to view it. +
-On Windows, go to Settings -> Display -> Set "Change the size of text, apps and other items" to 125%, then restart the
-app.
-
 ****
 * A person must be selected before this command is called.
 * Selects the person and loads the full information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the nearby contacts listing.
-* The index *must be a positice integer* `1, 2, 3, ...`
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
 ****
 
 Examples:
 
 * `list` +
 `select 2` +
-* `nearby 1` +
+`nearby 1` +
 Selects the 1st person in the same `cluster` as the previously selected person.
 // end::nearby[]
 
@@ -446,11 +446,11 @@ Sorts the contacts in the address book by their postal districts.
 // tag::filter[]
 === Filter contacts by tags : `filter`
 
-Filter contacts in the address book according to the tags specified. +
+Filters contacts in the address book according to the tags specified. +
 Format: `filter TAG1 TAG2 ...`
 
 ****
-* Contacts which contain at least one of the tags specified will be shown in the list.
+* Contacts which contain *at least one* of the tags specified will be shown in the list.
 ** e.g. A person in the address book, Alex, has two tags: `friendly` and `cooperative`. When the command `filter friendly` is entered, Alex will be shown in the filtered list.
 ****
 
@@ -564,7 +564,7 @@ Format to add picture to the selected person : 'addpic [INDEX]'
 ****
 * Adds a profile picture to the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
 * If no index is specified, the command acts on the currently selected person.
 ****
 
@@ -593,7 +593,7 @@ Format: 'delpic [INDEX]'
 ****
 * Removes the profile picture of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
 * If no index is specified, the command acts on currently selected person.
 ****
 
@@ -606,7 +606,7 @@ Deletes the picture of the 2nd person in masterlist.
 `delpic 1` +
 Deletes the profile picture of the 1st person from the results of the `find` command.
 * `select 3` +
-`delpic`
+`delpic` +
 Deletes the profile picture of the 3rd person from the masterlist in the address book.
 // end::delpic[]
 
@@ -691,7 +691,7 @@ This is convenient for debts or loans with a monthly interest rate.
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous address book. +
 
 *Q*: What is the difference between `repaid` command and `payback` command? +
 *A*: `repaid` command completely clears a debtor's debt while `payback` clears a specified amount. In both cases, when the debt reaches zero, the person is
@@ -716,9 +716,10 @@ A quick summary of all available commands for your easy reference:
 * *Login* : `login USERNAME PASSWORD` +
 e.g. `login userAcc_123 pa$$_Word!@#&`
 * *Login using GUI* : `login` +
-e.g.
+e.g. See Figure 1.3:
 
-image::loginView.png[width="790"]
+image::loginView.PNG[width="790"]
+_Figure 1.3 : How the welcome screen looks like after `login` is entered in the command box_
 
 * *Logout* : `logout`
 * *Add* : `add n/NAME hp/HANDPHONE_NUMBER home/HOME_PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE d/DEBT [op/OFFICE_PHONE_NUMBER] [dl/DEADLINE] [int/INTEREST] [t/TAG]...` +
@@ -810,15 +811,16 @@ e.g `filter friendly cooperative`
 
 == Features to be included by `V2.0`
 
-* A feature to export a person's contact in another format.
+* Export a person's contact in another format.
 * `Help` command that displays screenshots of positive examples.
-* Able to view the last login time.
-* Able to impose different periods of ban on a specified person in the blacklist
-* Two FA authentication for login and every other important actions.
+* View the last login time.
+* Impose different periods of ban on a specified person in the blacklist
+* 2FA authentication for login and every other important action.
 * Validity checks on client's personal information.
-* Email notifications when the user's account in logged in from an unknown device.
+* Send an email notification to the user when the user's account is logged in from an unknown device.
 * An automated journey scheduler.
-* 'Add-log' button that generates specific date and time.
+* 'Add log' button that generates specific date and time.
 * A file uploading feature.
 * Random generation of a contact from the cleared list.
-* Feature to create a custom field.
+* Allow the creation a custom fields.
+* Have unique tag colors for each tag and synchronise tag colors in the info panel with the ones in the person card.

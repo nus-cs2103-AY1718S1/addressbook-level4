@@ -19,7 +19,8 @@ public class PersonContainsTagPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Evaluates this predicate on the given person.
+     * Evaluates this predicate on the given {@code person}. This predicate tests if a person contains at least one tag
+     * from {@code tagKeywords}.
      * @return {@code true} if the person matches the predicate,
      * otherwise {@code false}
      */

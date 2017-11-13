@@ -205,7 +205,8 @@ public interface Model {
 
     /**
      * Sets the person's display picture boolean status to false.
+     * @return true if person's picture is successfully removed.
      */
-    void removeProfilePicture(ReadOnlyPerson person);
+    boolean removeProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException;
     //@@author
 }
