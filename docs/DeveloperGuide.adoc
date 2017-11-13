@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Rubrika - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,31 +10,54 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W15-B1/Main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W15-B1`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+
+=== What is Rubrika?
+
+Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner. +
+Rubrika has a simple link:#GUI[GUI] and allows you to interact using the link:#CLI[CLI].
+
+This document will assist you in understanding the underlying mechanics of Rubrika and guide you through to making your first and subsequent contribution.
+
+=== Need help?
+
+We understand that first time contributors may face multiple problems. If you are having trouble following the documentation, please feel free to contact us at devproblem@rubrika.com directly, so we can assist you personally with any issues regarding Rubrika.
+
+[[settingup]]
 == Setting up
 
+Before you start contributing to Rubrika, please take a look below and ensure that you have met the required specification.
+
 === Prerequisites
+
+Firstly, please ensure that the following development tools are installed on your computer.
 
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+If you are missing JDK, you may download it for free [http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here]]
+
 +
 
 . *IntelliJ* IDE
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them. +
+If you are missing IntelliJ, you may download the community version for free [https://www.jetbrains.com/idea/download/#section=windows[here]]
 
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
+Now that you have the required development tools on your computer, it's time to set up Rubrika.
+
+. Fork this repository, and clone the fork on to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
 .. Click `Configure` > `Project Defaults` > `Project Structure`
@@ -47,6 +70,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
+
+Before proceeding, please take a moment to verify your project files to ensure that you have completed the previous steps correctly.
 
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
@@ -79,19 +104,23 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
-==== Getting started with coding
+=== Getting started with coding
 
-When you are ready to start coding,
+Congratulations! You are now ready to take your first step in contributing to Rubrika!
+
+Before you proceed, we advise that you take a look at the following documents.
 
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
+[[design]]
 == Design
 
+[[architecture]]
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -108,14 +137,15 @@ link:#common-classes[*`Commons`*] represents a collection of classes used by mul
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of five components.
 
 * link:#ui-component[*`UI`*] : The UI of the App.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+* link:#autocomplete-component[*`AutoCompleteLogic`*] : Completes user commands.
 
-Each of the four components
+Each of the five components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
@@ -123,7 +153,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -131,7 +161,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,7 +169,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -149,7 +179,7 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -166,10 +196,10 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 3.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -182,12 +212,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -201,7 +231,7 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -209,6 +239,18 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+
+=== AutoCompleteLogic component
+
+image::AutoCompleteLogicClassDiagram.png[width="800"]
+_Figure 3.6.1 : Structure of the AutoCompleteLogic Component_
+
+*API* : link:{repoURL}/src/main/java/seedu/address/autocomplete/AutoCompleteLogic.java[`AutoCompleteLogic.java`]
+
+The `AutoCompleteLogic` component,
+
+* can take in incomplete user input and generate a list of possible autocomplete options.
+* can store autocomplete options such that new lists need not be generated every time.
 
 === Common classes
 
@@ -226,6 +268,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Class diagram of commands inside Logic component._
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -265,10 +308,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.2 : Visualisation of the `UndoRedoStack`, on executing `delete 5`._
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.1.3 : Visualisation of the `UndoRedoStack`, on executing `add n/David ...`._
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -278,6 +323,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.1.4 : Visualisation of undoing the last command: `add n/David ...`._
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -285,6 +331,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.1.5 : Sequence diagram showing the command calls involved in an undo operation._
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -294,14 +341,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.1.6 : Visualisation of the `UndoRedoStack` when Redo stack is emptied on execution of a new Undoable command if the Redo stack is not empty._
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.1.7 : Nothing happens to the `UndoRedoStack` if the command execute is not undoable._
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.1.8 : Flow chart that explains the design of the `UndoRedoStack`._
 
 ==== Design Considerations
 
@@ -345,6 +395,119 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::autocomplete[]
+
+=== Autocomplete
+
+The autocomplete feature is activated by the autocomplete button `Tab`, and depending on the degree of completeness of user input, do one of the following:
+
+* Spell out the incomplete command the user is trying to input, as well as generate command skeleton for the user to fill in the fields;
+* Fill out the field denoted by the closest prefix for the user, based on the data present in the Model component; or
+* Fill out the command argument based on the command word that is already present, the argument is sometimes filled based on data in the Model component.
+
+The Autocomplete feature is made its own component since Autocomplete no longer just complete commands (as in version 1.1), but also depend on information in Logic and Model component.
+
+The Autocomplete is built such that while in operation, the only input is the incomplete user input 'stub' as specified in `AutoCompleteLogic` interface, and the list of possible autocomplete options will be generated from the 'stub'.
+
+The list of options is generated according to several defining characteristics of this 'stub', as follows:
+
+* Number of words (each word is defined as one segment separated by whitespace) in the 'stub';
+* Command word, if present, in the 'stub'; and
+* Closest prefix to the end of the 'stub' if the command utilises prefixes.
+
+An `AutoCompleteParser` will be chosen for the 'stub' based on the characteristics listed above, each of the specialize in fetching and matching different sets of data.
+
+image::AutoCompleteLogicSequenceDiagram.png[width="200"]
+_Figure 4.2.1 : Sequence diagram of `AutoCompleteLogic` in action._
+
+Different implementations of `AutoCompleteParser` to parse different options shall be explained below.
+
+==== `AutoCompleteCommandParser`
+
+`AutoCompleteCommandParser` takes in an incomplete user command, match it with a list of command words currently supported in the application, and parses back the corresponding command skeleton for the user to fill in. The command skeleton is specified in each `Command` class in the `COMMAND_USAGE` constant.
+
+Some commands that take in just a single argument (usually a numerical index), can simply autocomplete to the command word itself with a space behind:
+[source,java]
+----
+public class DeleteCommand extends UndoableCommand {
+	public static final String COMMAND_WORD = "delete";
+	public static final String COMMAND_USAGE = COMMAND_WORD + " ";
+}
+----
+
+Others may be a bit more complicated, and require several arguments from the user. A more complex command skeleton may be required in this case:
+[source,java]
+----
+public class AddCommand extends UndoableCommand {
+	public static final String COMMAND_WORD = "add";
+	public static final String COMMAND_USAGE = COMMAND_WORD + " "
+            + PREFIX_NAME + "<NAME> "
+            + PREFIX_PHONE + "<PHONE> "
+            + PREFIX_EMAIL + "<EMAIL> "
+            + PREFIX_ADDRESS + "<ADDRESS> "
+            + PREFIX_TAG + "[TAG]...";
+}
+----
+
+At the moment command skeletons are hardcoded and every command can only have one command skeleton, based on implementation in AutoCompleteCommandParser.java.
+
+==== `AutoCompleteByPrefixModelParser`
+
+`AutoCompleteByPrefixModelParser` (and its subclasses `AutoCompleteTagParser` and `AutoCompleteWordInNameParser`) draw existing data from the `Model` component, to match against incomplete user input.
+
+`AutoCompleteByPrefixModelParser` requires there to be a prefix in order to be able to produce a list of possible options, and the prefix is usually the prefix closest to the caret.
+
+The parser will proceed to extract only the relevant information from `Model` and match them against the input.
+
+==== `AutoCompleteTagParser`
+
+`AutoCompleteTagParser` is designed for `findtag` and `removetag` commands, and can parse tags from `Model` without the need for a tag to be present.
+
+==== `AutoCompleteWordInNameParser`
+
+`AutoCompleteWordInNameParser` is designed for `find` command, and in addition to retrieving every person's name from `Model`, the parser also split every name into keywords and flatten the resultant list.
+
+This flattened list is then matched with the incomplete user input stub, such that only keywords are matched when a user attempts to use `find` command, instead of the whole name.
+
+==== `AutoCompleteSetStringParser`
+
+`AutoCompleteSetStringParser` is designed for `sort` and `theme` command, where the parser will only match user input stub against a fixed list of String, supplied at constructor.
+
+==== `IdentityParser`
+
+`IdentityParser` does not actually match anything, and is used to catch any invalid user input autocompletion attempts. The user input is returned as it is by this parser.
+
+==== Design Considerations
+
+**Aspect:** Command skeleton for each command +
+**Alternative 1 (current choice):** Support only one command skeleton for every command +
+**Pros:** Easy to track and search for parsing in AutoCompleteCommandParser. +
+**Cons:** Less flexibility and possible patterns for some commands. (e.g. `edit` command) +
+**Alternative 2:** Able to support multiple command skeletons for every command +
+**Pros:** Opens up possibility for some commands to produce different command skeletons based on user needs. +
+**Cons:** Hard to keep track for parsing and extra overhead required to flatten the multiple command skeletons in each command class.
+
+---
+
+**Aspect:** Maintained support for command alias +
+**Alternative 1 (current choice):** No longer support command alias +
+**Pros:** Only need one extra constant in each command, cleaner code in the long run to drop support for less useful or similar features. +
+**Cons:** Changes will have to be made again to commands that were done or are still under development. +
+**Alternative 2:** Continue to support command alias +
+**Pros:** Easier to just add another constant on top of current `COMMAND_ALIAS` constant. +
+**Cons:** Code gets messy in the long term if old features are not depreciated and removed, more constants to declare for every subsequent command added.
+
+---
+
+**Aspect:** Implement dropdown menu UI for autocomplete +
+**Alternative 1 (current choice):** No dropdown menu
+**Pros:** No need for additional UI component. +
+**Cons:** May not be intuitive to users who have not worked with CLI before.
+**Alternative 2:** Include dropdown menu to list all autocomplete options +
+**Pros:** Easier access for users at a glance. +
+**Cons:** Inteferes with up and down button for command history.
+// end::autocomplete[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -364,21 +527,296 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::rmtag[]
+=== RemoveTag Function
+
+This section details the implementation of the Rubrika's `RemoveTag` feature.
+
+The remove tag function is done by calling a `removetag` function which resides in the `ModelManager` class. Currently it supports removing the tag from every individual of the addressbook as well as removing a specific tag from a specified person shown on the list.
+
+The following is the sequence diagram of how the RemoveTagCommands removes a tag from a specified person in the list after a person has entered a `removetag` command.
+
+image::RemoveOneTagSequenceDiagram.png[width="800"]
+_Figure 4.5.1 : Sequence Diagram of removeTag function_
+
+If the user inputs `all` in the `INDEX` field, instead of removing a tag based on the list displayed in `Model`, the tag is removed from everyone in the `UniquePersonList` of `AddressBook`. The `TAG` is then deleted from the `UniqueTagList` in `AddressBook`. +
+
+If the user inputs an `Integer` in the `INDEX` field, the tag is removed from the person as well as the `UniqueTagList` in the `AddressBook`. Thereafter, we re-sync the `Tag` Objects in `UniqueTagList` with all the `Tag` contained within the `Person` Object in the `UniquePersonList`. +
+
+[NOTE]
+If more than one tag is given or if `INDEX` out of the range of the shown list is given, `ParseException` will be thrown before execution of the function.
+
+==== Design Considerations
+
+**Aspect:** Which tags to remove when removing all tags. +
+
+**Alternative 1 (current):** Remove all `TAG` s from the addressbook regardless of current view. +
+**Pros:** Completely removes the specified `TAG` from the whole addressbook +
+**Cons:** User may want to remove only from list shown instead of the whole list. +
+
+**Alternative 2:** Remove all tags for the list shown to the user. +
+**Pros:** User may removetag from only the list of people shown to them.
+**Cons:** Required to sync the `UniqueTagList` of `AddressBook` as `TAGS` removed may still exist in the `AddresBook`.
+
+---
+
+**Aspect:** How to sync `tag` in `UniqueTagList` after deleting from one `Person`
+
+**Alternative 1 (current):** Deletes `TAG` from `UniqueTagList`, then re-sync with `persons` list. +
+**Pros:** Easier to implement. +
+**Cons:** If the `Tag` still exists in another contact, then it is a pointless deletion.
+
+**Alternative 2:** Checks if 'Tag` deleted is contained in another `Person`. +
+**Pros:** Not required to delete `Tag` from `UniqueTagList` if it still exist in any `Person`.
+**Cons:** Uses more resources since Rubrika will need to check check through everyone before deleting from `UniqueTagList`.
+// end::rmtag[]
+
+// tag::sort[]
+=== Sort Function
+
+This section details the implementation of the Rubrika's `Sort` feature.
+
+Rubrika's sort function allows user to display their list of contacts in a specified order.
+
+[NOTE]
+The arrangement of contacts after sorting is *not meant to be permanent*. +
+The sort function merely displays the list in a specified manner when the user requests to do so.
+
+The sort function is done by calling the `sortFilteredPersonList` method which resides in the `ModelManager` class. `Sort` currently supports sorting by name, email and phone in ascending or descending order. +
+
+Firstly, after the `FIELD` and `ORDER` of the sort command has been entered, the `sortCommandParser` fetches the appropriate `Comparator` from `ReadOnlyPerson`.
+
+Below is a code fragment detailing the selection process.
+
+----
+public SortCommand parse(String args) throws ParseException {
+        ....
+        String trimmedArgs = args.trim();
+
+        switch (trimmedArgs) {
+        case SORTBYNAMEASCENDING:
+            return new SortCommand(ReadOnlyPerson.NAMESORTASC);
+        case SORTBYEMAILASCENDING:
+            return new SortCommand(ReadOnlyPerson.EMAILSORTASC);
+        case SORTBYPHONEASCENDING:
+            return new SortCommand(ReadOnlyPerson.PHONESORTASC);
+        case SORTBYNAMEDESCENDING:
+            return new SortCommand(ReadOnlyPerson.NAMESORTDSC);
+        case SORTBYEMAILDESCENDING:
+            return new SortCommand(ReadOnlyPerson.EMAILSORTDSC);
+        case SORTBYPHONEDESCENDING:
+            return new SortCommand(ReadOnlyPerson.PHONESORTDSC);
+        ....
+        }
+}
+----
+
+For each way of sorting, a different comparator is being passed into `SortCommand`. +
+
+The following is a sequence diagram detailing the process of how `sort` instruction is handled by Rubrika after the `SortCommandParser` has been created in `AddressBookParser`. It also shows how `UI` component is able to display the sorted list. +
+
+image::SortSequenceDiagram.png[width="800"]
+_Figure 4.6.1 : Sequence Diagram of sort function_
+
+Within `Model` component, `FilteredList` is masked by a `SortedList` object.
+
+When a user wants to sort his list of contacts in Rubrika, `execute` method in `SortCommand` call `sortFilteredPersonList` method within `Model`. This sets the comparator that been parsed by `SortCommandParser` into the `SortedList`.
+
+Below is the code fragment found in `ModelManager` that changes the comparator used on the list of contacts.
+
+----
+    @Override
+    public void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator) {
+        sortedPersons.setComparator(comparator);
+    }
+----
+
+[NOTE]
+If arguments given do not comply with the correct format, ParseException will be thrown before execution of the function. +
+Sort Command is an undoable Command.
+
+==== Design Considerations
+
+**Aspect:** Whether to sort the intern list of the addressBook or just the filtered list. +
+
+**Alternative 1 (current):** Sorts the filteredList found in `ModelManager`. +
+**Pros:** A more defensive approach as `UniquePersonList` in `AddressBook` is not modified in anyway. +
+**Pros:** User may have already have a preferred way of listing users and may only want to sort once for convenience. +
+**Cons:** More difficult to implement, and requires the `SortedList` object. +
+**Cons:** Other methods within `ModelManager` must be modified since `SortedList` is the list being displayed, not FilteredList. +
+
+**Alternative 2:** Sorts the `UniquePersonList` found in `AddressBook`. +
+**Pros:** Easier to implement since `UniquePersonList` is implemented using `List`. +
+**Cons:** A sort will rearrange contacts permanently, and the previous arrangement will be lost permanently.+
+// end::sort[]
+
+// tag::importexport[]
+=== Import function
+
+This section details the implementation of the Rubrika's `Import` feature.
+
+The `import` function supports importing of vCard files (.vcf) and XML files (.xml).
+
+The diagram below details the sequence of how Rubrika handles the `import` command after the user has entered the command. Note that the diagram assumes the user has included the `FILEPATH` of the import file.
+
+image::ImportSequenceDiagram.png[width="800"]
+_Figure 4.7.1 : Sequence Diagram of import function_
+
+In the case a file path is not specified, the `ImportCommandParser` raises a `ImportFileChooseEvent` which opens up a `FileChooser` window for the user to select his import `File`. The `File` is then passed back to the `ImportCommandParser` to extract the `Person` Objects.
+
+To parse the `File` into a list of `Person`, ImportCommandParser calls a static method within XmlFileStorage or VcfImport depending on the file type to be imported. A more detailed sequence of event is shown below in Figure 4.7.2.
+
+image::ImportSequenceDiagram2.png[width="800"]
+_Figure 4.7.2 : Sequence Diagram Interaction between ImportCommandParser and XmlFileStorage and VcfImport_
+
+Finally,The list of person is then added using the `addPerson` method found in `model`.
+
+[NOTE]
+The import function merges the contacts in the export files with the ones currently in the addressbook. If duplicate persons are found, Rubrika will inform the user of the number of duplicated contacts found. +
+ +
+Also, for importing of .vcf files, due to using an inbuilt parser, only vCards created by Rubrika will work.
+
+==== Design Considerations
+
+**Aspect**: Choice of parsing XML files. +
+
+**Alternative 1 (current choice)** : Using the `loadDataFromSaveFile` static method found in `XmlFileStorage`. +
+**Pros** : Able to call static method directly from `Logic` Component, hence easier to implement. +
+**Cons** : Slightly more coupling issues as a change in either files might require a change in the other. +
+
+**Alternative 2** : Using the `readAddressBook` method in `AddressBookStorage` class. +
+**Pros** : Does not bypass `StorageManager` component and already handles `logging`. +
+**Cons** : Even more coupling between the 3 classes. Also we will need to instantiate a `StorageManager` object within Logic. +
+
+**Alternative 3** : Writing a built-in parser that parses the XML diagram directly into a `List` Object. +
+**Pros** : Less coupling as the parser will only be associated with `ImportCommandParser`. +
+**Cons** : Very intensive to implement within the given time frame.
+
+=== Export Function
+
+This section details the implementation of the Rubrika's `Export` feature.
+
+The export function is done by the `ExportCommand` class, and currently supports exporting to vCard files (.vcf) and XML files (.xml).
+
+[NOTE]
+Currently, the export function only ensures that the vCard file created is supported by Rubrika application.
+
+After input validation in the `ExportCommandParser` class, the file path is passed to the `ExportCommand` class.
+
+[NOTE]
+If the file format is not specified by the user during input, ParseException will be thrown before execution of the Command.
+
+In the `ExportCommand` class, depending on the file type requested by the user, a different method will be used to create the export file.
+
+The following Sequence Diagram will detail the events that occur after a user has entered a valid export Command for a XML file.
+
+image::ExportSequenceDiagram.png[width="800"]
+_Figure 4.8.1 : Sequence Diagram of export command._
+
+If the file defined by the user uses a XML (.xml) file extension then the addressbook is exported into a XML file by using the static method `saveDataToFile` in the `XmlFileStorage` class.
+
+If the file defined by the user uses a vCard (.vcf) file extension, then the addressbook is exported dinto a vCard file by using the static method `saveDataToFile` in the `VcfExport` class.
+
+==== Design Considerations
+
+**Aspect**: Choice of export file types. +
+
+**Alternative 1 (current choice)**: vCard and XML files are supported +
+**Pros**: Easy to implement as XML file creation is already built into Address Book 4. vCard files are also relatively easy to create. +
+**Cons**: Limited files types supported +
+
+**Alternative 2**: Include .csv file types +
+**Pros**: More file types to choose from for the users. +
+**Cons**: Relatively harder to create a csv export file.
+
+---
+
+**Aspect**: Interoperability of vCards. +
+
+**Alternative 1 (current choice)**: vCards created by Rubrika are only expected to be readable by Rubrika.
+**Pros:** Relatively easier to implement, as long as the `Import` function is able to take in the fields created by the `Export` function. +
+**Cons:** Export file might not work on other applications.
+
+**Alternative 2**: Allow vCard exported to be used universally. +
+**Pros:** More usability of vCard export. +
+**Cons:** Extremely difficult to implement as vCards have many variation of formats across different application.
+
+// end::importexport[]
+
+// tag::findtag[]
+=== FindTag Function
+
+The find tag function is done by the `TagsContainsKeywordsPredicate` class which lies under `Model`.
+
+`TagsContainsKeywordsPredicate` will iterate through each person and returns true for the person that has the tags similar to the keywords.
+
+In the method `execute()` under `FindTagCommand`, the predicate is then used to update the filtered list when it is parsed into the method `updateFilteredPersonList(Predicate)` which belongs to the `Model` class.
+
+The filtered list size is then parsed into the `getMessageForPersonListShownSummary(int)` which will return the `CommandResult` to show to the user.
+
+image::FindTagComponentSequenceDiagram.png[width="800"]
+_Figure 4.9.1 : Sequence Diagram of FindTag function_
+[NOTE]
+
+The `FindTag` command is not undoable so it will just override `execute()`.
+
+==== Design Considerations
+
+Aspect: Implementation logic of `FindTag`. +
+Alternative 1 (current choice): Keywords(case-insensitive) that are substrings or equal to the tag names will match. +
+Pros: Easy and convenient for users to search for specific tags. +
+Cons: If the user only type a common letter or substring found in all tag names, more persons will be returned which makes it difficult to search for the specific tag. +
+Alternative 2: Only keywords(case-sensitive) that are exactly equal to the tag names will match. +
+Pros: Results in an accurate filtered list. +
+Cons: Requires user to type the exact tag name which makes it inconvenient. As convenience is more important, Alternative 1 is chosen.
+// end::findtag[]
+// tag::remarks[]
+=== Remarks Function
+
+The `Remarks` function is done by calling `RemarkCommand` that take in a `Remark` and make use of `RemarkCommandParser`that parse two arguments, one index and one with prefix 'r/'.
+
+`RemarkCommand` that extends `UndoableCommand`.
+
+Three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()` in `Person`, which implements the `ReadOnlyPerson` interface.
+
+`XmlAdaptedPerson` have a `Remark` field to save `Remark`.
+
+// end::remarks[]
+// tag::theme[]
+=== Theme Function
+
+The `theme` Function is done by Calling `ChangeThemeCommand` that take in a `String` that specify the type of theme the user want to change to.
+
+`ChangeThemeEvent` is then executed which triggers `handleChangeTheme` in `MainWindow`.
+
+`handleChangeTheme` check remove all Stylesheets that are not the one specified by the user and add the Stylesheet user specified.
+
+==== Design Considerations
+
+Aspect: Implementation logic of `theme`. +
+Alternative 1: Have a dropdown menu UI for user to select the theme they want. +
+Pros: Easy and convenient for users to choose and see themes available. +
+Cons: Go against the deign principle of Command Line Interface. +
+Alternative 2: User have to input the theme style they want in the command box. +
+Pros: Follow the design principle of Command Line Interface. +
+Cons: Requires user to type more and remember which theme is available.
+// end::theme[]
 == Documentation
 
 We use asciidoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We chose to use asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
 === Editing Documentation
 
-See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
+Take a look at <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
+
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
 === Publishing Documentation
 
-See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
+Check out <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
 === Converting Documentation to PDF format
 
@@ -392,7 +830,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -406,7 +844,10 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 *Method 1: Using IntelliJ JUnit test runner*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run '<whatever tests selected>'` as shown below:
+
+image::intellij-tests.png[width="300"]
+_Figure 5.1.1 : Selecting a package of tests to run in IntelliJ_
 
 *Method 2: Using Gradle*
 
@@ -469,9 +910,13 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
+[[suggested-programming-tasks-to-get-started]]
 == Suggested Programming Tasks to Get Started
 
-Suggested path for new programmers:
+[TIP]
+Before proceeding, please ensure that you have read through the link:#settingup[Setting up] and link:#design[Design] sections of the developer guide.
+
+We recommend that new programmers:
 
 1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
 
@@ -491,11 +936,11 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 +
 ****
 * Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
+** Just like how we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you will need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
 ** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
 * Solution
 ** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
+* See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
 ****
 
 [discrete]
@@ -512,7 +957,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 **  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
 * Solution
 ** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
+* See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
 [discrete]
@@ -536,7 +981,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 ** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 * Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
+* See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
 ****
 
 . Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
@@ -556,7 +1001,7 @@ image::getting-started-ui-result-after.png[width="200"]
 * Solution
 ** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
 ** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
+* See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
 ****
 
 . Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
@@ -576,7 +1021,7 @@ image::getting-started-ui-status-after.png[width="500"]
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
 ** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
+* See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
 [discrete]
@@ -592,126 +1037,8 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
 ** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
 * Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
+* See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
 == User Stories
@@ -723,15 +1050,35 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
+|`* * *` |new user | import contacts from other sources |start using address book without having to re-enter all my current contacts
+
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |add a person without including all details |add someone into the address book without having to include all particulars
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |user |export my contacts |sync my contacts with other devices or applications
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`*` |user who sends many emails frequently |email group of people in the address book |send mass emails easily
+
+|`*` |user visiting many persons in the address book |plan easiest route to visit group of people in the address book |save travel time
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user with many persons in the address book having multiple contact number |store multiple contact numbers per person |keep track of all their numbers easily
+
+|`*` |user with colour blindness |use the colour blind option |view items with colour code properly
+
+|`*` |user |sort persons by tags|locate a group of people that belongs to the same category
+
+|`*` |user |sort persons by address|locate a group of people from living in the same area
+
+|`*` |user |find a group of people with the same tags|list all contacts with the same tag
 |=======================================================================
 
 {More to be added}
@@ -767,14 +1114,227 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Undo Command
+
+*MSS*
+
+1.  User requests to undo previous command
+2.  AddressBook shows previous command to be undone.
+3.  User confirms to undo command.
+4.  AddressBook undo command.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no previous command.
++
+Use case ends.
+
+* 3a. The previous command is undoable.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: List contacts with the same tag
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows list of persons.
+3.  User request to list all contacts with specific tag.
+4.  AddressBook shows contacts with the specific tag
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The parameter given is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Clear all
+
+*MSS*
+
+1.  User request to clear AddressBook
+2.  AddressBook prompts user for confirmation
+3.  User confirm the deletion
+4.  AddressBook clear all contact in AdressBook
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User cancels the action.
++
+Use case ends.
+
+[discrete]
+=== Use case: List all persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+
+[discrete]
+=== Use case: Show user guide
+
+*MSS*
+
+1.  User requests to show user guide
+2.  AddressBook shows user guide on a separate link:#form[form]
+3.  User closes the user guide
++
+Use case ends.
+
+[discrete]
+=== Use case: Remove tags
+
+*MSS*
+
+1.  User requests a list of name
+2.  AddressBook shows list of persons.
+3.  User requests to delete a tag from a person
+4.  AddressBook confirms the action
+5.  User confirms
+6.  AddressBook deletes tag from specified person.
++
+Use case ends.
+
+*Extention*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. TAG given is not found in the TagList.
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. User cancels his action.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Autocomplete
+
+*MSS*
+
+1.  User enters incomplete command.
+2.  User presses autocomplete button.
+3.  AddressBook searches for possible match based on incomplete user input.
+4.  AddressBook completes the command based on the command that matches the user input.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No possible commands match incomplete user input.
++
+Use case ends.
+
+* 4a. User presses autocomplete button again.
++
+Use case returns to step 3.
+
+[discrete]
+=== Use case: Sort list
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows list of persons.
+3.  User request to sort the list by a certain parameter.
+4.  AddressBook shows sorted list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The parameter given is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Import contacts
+
+*MSS*
+
+1.  User request to import contacts from external vCard file.
+2.  AddressBook asks for directory of import file.
+3.  User selects vCard file to import.
+4.  AddressBook imports contacts in the vCard file.
++
+Use case ends
+
+*Extension*
+
+[none]
+* 3a. User decides to cancel the import by not selecting a file.
++
+[none]
+** 3a1. Addressbook informs user that no file has been selected.
++
+Use case ends.
+
+* 4a. vCard file has some duplicate persons.
++
+[none]
+** 4a1. Addressbook informs user about the number of duplicated persons before proceeding.
++
+Use case ends.
+
+[discrete]
+=== Use case: Export contacts
+
+*MSS*
+
+1.  User requests to export contacts to an external vCard file.
+2.  AddressBook creates file at Desktop and exports all contacts shown on list to export.vcf.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+*  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+*  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Should be portable and can be ran from flash drives.
+*  Should be able to keep contact information secure.
+*  English should be the only language in the application.
+*  Application should not take more than 50mb of storage.
+*  A new user should be able to use the app with ease after 3 days of using it.
+*  AddressBook should continue to work offline or online.
+*  Should not use more than 100MB of link:#RAM[RAM].
+*  Should be free to download
 
 {More to be added}
 
@@ -795,19 +1355,23 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
+[[form]]
+Form
 
-*Product Name*
+....
+A panel that is also called a 'window' in Windows operating systems.
+....
 
-Author: ...
+[[RAM]]
+RAM
 
-Pros:
+....
+Random Access Memory
+....
 
-* ...
-* ...
+[[CLI]]
+CLI
 
-Cons:
-
-* ...
-* ...
+....
+Command Line Interface
+....

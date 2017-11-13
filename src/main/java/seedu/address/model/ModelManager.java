@@ -3,18 +3,28 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NoSuchTagException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,6 +35,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final SortedList<ReadOnlyPerson> sortedPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +48,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        sortedPersons = new SortedList<>(filteredPersons);
     }
 
     public ModelManager() {
@@ -54,6 +66,58 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    //@@author john19950730
+    @Override
+    public List<String> getAllNamesInAddressBook() {
+        ObservableList<ReadOnlyPerson> listOfPersons = addressBook.getPersonList();
+        return listOfPersons.stream()
+                .map(person -> person.getName().toString())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllPhonesInAddressBook() {
+        ObservableList<ReadOnlyPerson> listOfPersons = addressBook.getPersonList();
+        return listOfPersons.stream()
+                .map(person -> person.getPhone().toString())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllEmailsInAddressBook() {
+        ObservableList<ReadOnlyPerson> listOfPersons = addressBook.getPersonList();
+        return listOfPersons.stream()
+                .map(person -> person.getEmail().toString())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllAddressesInAddressBook() {
+        ObservableList<ReadOnlyPerson> listOfPersons = addressBook.getPersonList();
+        return listOfPersons.stream()
+                .map(person -> person.getAddress().toString())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllTagsInAddressBook() {
+        ObservableList<Tag> listOfTags = addressBook.getTagList();
+        // cut out the square brackets since that is redundant in CLI
+        return listOfTags.stream()
+                .map(tag -> tag.toString().substring(1, tag.toString().length() - 1))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllRemarksInAddressBook() {
+        ObservableList<ReadOnlyPerson> listOfPersons = addressBook.getPersonList();
+        return listOfPersons.stream()
+                .map(person -> person.getRemark().toString())
+                .filter(remark -> !remark.equals(""))
+                .collect(Collectors.toList());
+    }
+
+    //@@author
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
@@ -81,6 +145,51 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author freesoup
+    @Override
+    public void removeTag(Tag tag) throws NoSuchTagException {
+        if (!addressBook.getTagList().contains(tag)) {
+            throw new NoSuchTagException();
+        }
+        ObservableList<ReadOnlyPerson> list = addressBook.getPersonList();
+        for (int i = 0; i < list.size(); i++) {
+            ReadOnlyPerson person = list.get(i);
+            removeTagFromPerson(tag, person);
+        }
+        addressBook.removeTagFromUniqueList(tag);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void removeTag(Index index, Tag tag) throws NoSuchTagException {
+        List<ReadOnlyPerson> list = getFilteredPersonList();
+        ReadOnlyPerson person = list.get(index.getZeroBased());
+        if (!person.getTags().contains(tag)) {
+            throw new NoSuchTagException();
+        }
+        removeTagFromPerson(tag, person);
+        addressBook.removeTagFromUniqueList(tag);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void removeTagFromPerson(Tag tag, ReadOnlyPerson person) {
+        Person newPerson = new Person(person);
+        Set<Tag> tagList = newPerson.getTags();
+        tagList = new HashSet<>(tagList);
+        tagList.remove(tag);
+
+        newPerson.setTags(tagList);
+
+        try {
+            addressBook.updatePerson(person, newPerson);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "Person will always be found";
+        } catch (DuplicatePersonException dpe) {
+            assert false : "There will never be duplicates";
+        }
+    }
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -89,13 +198,21 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+        return FXCollections.unmodifiableObservableList(sortedPersons);
     }
+
+    //@@author freesoup
+    @Override
+    public void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator) {
+        sortedPersons.setComparator(comparator);
+    }
+    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+        sortedPersons.setComparator(null);
     }
 
     @Override
@@ -113,7 +230,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && sortedPersons.equals(other.sortedPersons);
     }
 
 }

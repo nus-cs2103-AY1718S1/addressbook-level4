@@ -10,6 +10,8 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import seedu.address.autocomplete.AutoCompleteLogic;
+import seedu.address.autocomplete.AutoCompleteManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -40,7 +42,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, false);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -48,6 +50,7 @@ public class MainApp extends Application {
     protected Logic logic;
     protected Storage storage;
     protected Model model;
+    protected AutoCompleteLogic autoCompleteLogic;
     protected Config config;
     protected UserPrefs userPrefs;
 
@@ -70,7 +73,9 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model);
 
-        ui = new UiManager(logic, config, userPrefs);
+        autoCompleteLogic = new AutoCompleteManager(model);
+
+        ui = new UiManager(logic, config, userPrefs, autoCompleteLogic);
 
         initEventsCenter();
     }

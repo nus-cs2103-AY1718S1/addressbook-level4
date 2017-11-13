@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
+import seedu.address.autocomplete.AutoCompleteLogic;
+import seedu.address.autocomplete.AutoCompleteManager;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
@@ -29,8 +31,9 @@ public class CommandBoxTest extends GuiUnitTest {
     public void setUp() {
         Model model = new ModelManager();
         Logic logic = new LogicManager(model);
+        AutoCompleteLogic autoCompleteLogic = new AutoCompleteManager(model);
 
-        CommandBox commandBox = new CommandBox(logic);
+        CommandBox commandBox = new CommandBox(autoCompleteLogic, logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
                 CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         uiPartRule.setUiPart(commandBox);

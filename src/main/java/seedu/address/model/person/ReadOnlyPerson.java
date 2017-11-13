@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.Comparator;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -12,6 +13,21 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public interface ReadOnlyPerson {
 
+    //@@author freesoup
+    Comparator<ReadOnlyPerson> NAMESORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
+        -> o1.getName().compareTo(o2.getName());
+    Comparator<ReadOnlyPerson> PHONESORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
+        -> o1.getPhone().compareTo(o2.getPhone());
+    Comparator<ReadOnlyPerson> EMAILSORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
+        -> o1.getEmail().compareTo(o2.getEmail());
+    Comparator<ReadOnlyPerson> NAMESORTDSC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
+        -> o2.getName().compareTo(o1.getName());
+    Comparator<ReadOnlyPerson> PHONESORTDSC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
+        -> o2.getPhone().compareTo(o1.getPhone());
+    Comparator<ReadOnlyPerson> EMAILSORTDSC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
+        -> o2.getEmail().compareTo(o1.getEmail());
+    //@@author
+
     ObjectProperty<Name> nameProperty();
     Name getName();
     ObjectProperty<Phone> phoneProperty();
@@ -20,8 +36,11 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Remark> remarkProperty();
+    Remark getRemark();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -32,7 +51,8 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getRemark().equals(this.getRemark()));
     }
 
     /**
@@ -47,9 +67,10 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Remark: ")
+                .append(getRemark())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }
-
 }

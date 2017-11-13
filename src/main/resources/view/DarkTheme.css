@@ -305,6 +305,15 @@
     -fx-padding: 8 1 8 1;
 }
 
+.test {
+    -fx-background-color: #383838;
+}
+
+.test:empty {
+    -fx-background: #383838;
+}
+
+
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;

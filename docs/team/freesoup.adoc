@@ -1,0 +1,123 @@
+= Jackie Tan Jin Wei - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+---
+
+== Purpose:
+
+
+== Project: Rubrika
+Rubrika is a desktop address book application targeted at Self-employed professionals and freelancers to help the manage their contacts that they use in their day to day life. +
+
+Rubrika is a java application that uses a command line interface for most interaction, and it has a simple user interface.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B1/Main/blob/master/collated/main/freesoup.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B1/Main/blob/master/collated/test/freesoup.md[Test code]]
+
+=== Enhancement Added: Import/Export
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=importexport]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The Import and Export features were added to help freelancers share their contacts with one another or across different copies of Rubrika. It is meant to help save time and reduce the need to add each and every contact from one address book to the other. +
+
+The Import and Export feature also serves as a way to backup a user's contact so that they may keep the files in a safe location. In the event that the contacts in Rubrika is lost, they can simply import the back up files.
+
+The user may choose to use a File Explorer to locate the contact file as there can be many possible download locations depending on the user's preference.
+
+The supported format for import and export features are vCard(.vcf) and XML(.xml) as they are commonly used file types amongst working professionals.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=importexport]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sort
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The sort function was added to help users find contacts in an orderly manner when they their search boundary is too wide.
+
+For e.g. Users may prefer to phone up a certain group of people under the same tag in a orderly manner. He can than sort the result after finding the list of people based on their tag.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+=== Enhancement Added: RemoveTag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=rmtag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The Remove Tag function was meant to help users manage their tags in a more efficient manner. We recognise that freelancers and self employed professionals are likely to have multiple tags for different people.
+
+Remove Tag was implemented to be able to delete all instance of a given tag that exists in the addressbook. This helps a user to save time from editing each tag away from each person.
+
+Alternatively, Remove Tag is able to remove a single tag from a specified person. This helps to save time as editing a person's tag to remove a single tag requires typing all other tags again.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=rmtag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

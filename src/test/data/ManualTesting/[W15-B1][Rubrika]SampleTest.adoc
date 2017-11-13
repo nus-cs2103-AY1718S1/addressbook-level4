@@ -1,0 +1,539 @@
+= Manual Testing Script
+
+== Testing : Sort feature
+
+=== Sorting the whole address book.
+
+_Test:_ +
+Enter `sort name asc` and then press `ENTER`.
+
+_Result_ +
+Success Message Shown : "List has been sorted". +
+AddressBook should now be sorted based on name in ascending order.
+
+=== Sorting a list of contact after a findtag command.
+
+_Test:_ +
+Enter `findtag prospective` and press `ENTER`
+Enter `sort phone dsc` and press `ENTER`
+
+_Result_ +
+Success Message Shown : "List has been sorted". +
+AddressBook should now show a list of person with prospective tags sorted based on their phone numbers in descending order.
+
+=== Sorting a list of contact after a find command
+
+_Test:_ +
+Enter `find John` and press `ENTER`
+Enter `sort email asc` and press `ENTER`
+
+_Result:_ +
+Success Message Shown : "List has been sorted." +
+AddressBook should now show a list of person named John, sorted based on their email in ascending order.
+
+=== Sorting a list does not change the original order
+
+_Test:_ +
+Enter `sort phone asd`
+Enter `list`
+
+_Result:_ +
+Success Message Shown : "Listed all persons" +
+AddressBook should now show the original ordering of the contacts in addressbook.
+
+=== Invalid sort commands
+
+_Test:_ +
+Enter `sort phone asd`
+
+_Result:_ +
+Failure Message Shown : "Invalid command format." +
+AddressBook should not change.
+
+_Test:_ +
+Enter `sort qwe asc`
+
+_Result:_ +
+Failure Message Shown : "Invalid command format." +
+AddressBook should not change.
+
+== Testing : Removetag feature
+
+=== Remove tag from specific person.
+_Test:_ +
+Enter `find Lydia` +
+Enter `removetag 1 Plan4`
+
+_Result:_ +
+Failure Message Shown : "Tag Removed" +
+Plan4 Tag has been removed from Lydia Bunz.
+
+=== Undo Remove tag from specific person.
+_Test:_ +
+Enter `undo`
+
+_Result:_ +
+Failure Message Shown : "Undo Success" +
+AddressBook shows full list again +
+Plan4 Tag has been returned to Lydia Bunz.
+
+=== Remove tag from whole addressbook.
+
+_Test:_ +
+Enter `removetag all important`
+
+_Result:_ +
+Failure Message Shown : "Tag Removed" +
+`important` tag has been removed from addressbook.
+
+=== Undo Remove tag from all person.
+_Test:_ +
+Enter `undo`
+
+_Result:_ +
+Failure Message Shown : "Undo Success" +
+AddressBook shows full list again +
+`important` tag has been returned to all its original owners.
+
+=== Incorrect RemoveTag Commands
+
+==== Invalid Index
+_Test:_ +
+Enter `removetag 99 important`
+
+_Result_ +
+Failure Message Shown : "The person index provided is invalid" +
+Addressbook unchanged.
+
+==== Negative Index
+
+_Test:_ +
+Enter `removetag -5 important`
+
+_Result_ +
+Failure Message Shown : "Invalid command format!" +
+Addressbook unchanged.
+
+==== Non-existant tags
+_Test:_ +
+Enter `list`
+Enter `removetag 1 friends`
+
+_Result_ +
+Failure Message Shown : "Index 1 does not have the given tag." +
+Addressbook unchanged.
+
+_Test:_ +
+Enter `list`
+Enter `removetag all friends`
+
+_Result_ +
+Failure Message Shown : "Tag given does not exist in address book." +
+Addressbook unchanged.
+
+==== More than one tag
+_Test:_ +
+Enter `removetag all prospective Plan4
+
+_Result_ +
+Failure Message Shown : "Invalid command format! Please type one TAG to be removed" +
+Addressbook unchanged.
+
+
+== Testing : Import/Export feature
+
+=== Export
+_Test:_ +
+Enter `export output.xml`
+
+_Result_ +
+Success Message Shown : "Successfully exported contacts." +
+`output.xml` file created a root folder containing contacts of Rubrika.
+Addressbook unchanged.
+
+_Test:_ +
+Enter `export output.vcf`
+
+_Result_ +
+Success Message Shown : "Successfully exported contacts." +
+`output.vcf` file created a root folder containing contacts of Rubrika.
+Addressbook unchanged.
+
+=== Import
+_Test:_ +
+Enter `clear` +
+Enter `import output.vcf`
+
+_Result_ +
+Success Message Shown : "Successfully imported contacts. 0 duplicates were found" +
+Addressbook contains list of contacts found in import file.
+
+_Test:_ +
+Enter `clear` +
+Enter `import output.vcf`
+
+_Result_ +
+Success Message Shown : "Successfully imported contacts. 0 duplicates were found" +
+Addressbook contains list of contacts found in import file.
+
+_Test:_ +
+Enter `clear` +
+Enter `import` +
+Select either output.xml or output.vcf created earlier in the Explorer, and select `Open`.
+
+_Result_ +
+Success Message Shown : "Successfully imported contacts. 0 duplicates were found" +
+Addressbook contains list of contacts found in import file.
+
+_Test:_ +
+Enter `delete 1` +
+Enter `delete 1` +
+Enter `delete 1` +
+Enter `delete 1` +
+Enter `delete 1` +
+Enter `import output.xml`
+
+_Result_ +
+Success Message Shown : "Successfully imported contacts. 21 duplicates were found" +
+Addressbook contains list of contacts found in import file.
+
+=== Invalid Import/Export commands
+
+==== No file type
+
+_Test:_ +
+Enter `export output`
+
+_Result_ +
+Failure Message Shown : "Export only exports .vcf and .xml file." +
+Addressbook unchanged.
+
+_Test:_ +
+Enter `import output`
+
+_Result_ +
+Failure Message Shown : "File chosen is not of .vcf or .xml type" +
+Addressbook unchanged.
+
+==== File does not exist.
+
+_Test:_ +
+Enter `import asd.xml`
+
+_Result_ +
+Failure Message Shown : "File was not found in specified directory." +
+Addressbook unchanged.
+
+==== Exporting Empty AddressBook.
+
+_Test:_ +
+Enter `clear` +
+Enter `import asd.xml`
+
+_Result_ +
+Failure Message Shown : "No contacts found in Rubrika to export." +
+Addressbook unchanged.
+
+==== Cancelling Import Window.
+
+_Test:_ +
+Enter `import` +
+Close the import window
+
+_Result_ +
+Failure Message Shown : "Import cancelled" +
+Addressbook unchanged.
+
+== Testing : ChangeTheme feature
+
+=== Theme Command
+
+==== Valid Input with success message
+
+_Test:_ +
+Enter `theme` `RedTheme` .
+
+_Result:_ +
+theme of Rubrika should change with success message "Theme Changed to RedTheme".
+
+Other available themes includes:
+****
+* DarkTheme.
+****
+
+==== Invalid Input with warning
+
+_Test:_ +
+Enter `theme` `YellowTheme`.
+
+_Result:_ +
+Nothing will change. Show warning message "Theme not found".
+
+****
+* theme command is case-sensitive, "yellowtheme" is not equals to "YellowTheme"
+****
+
+== Testing : FindTag feature
+
+=== Findtag Command
+
+==== Valid Input with success message
+
+_Test:_ +
+Enter `findtag` `important`.
+
+_Result:_ +
+9 person should be listed all with the tag `important`.
+
+Finding contacts with multiple tags is allows. Other valid tags includes:
+****
+*prospective +
+*event
+****
+
+==== Invalid command format
+
+_Test:_ +
+Enter `findtag` follow by nothing.
+
+_Result:_ +
+Warning "Invalid command format!".
+
+****
+* theme command is case-insensitive, "FRIENDS" is equals to "friends"
+****
+
+== Testing : ChangeTheme feature
+
+=== Theme Command
+
+==== Valid Input with success message
+
+_Test:_ +
+Enter `theme` `RedTheme` .
+
+_Result:_ +
+theme of Rubrika should change with success message "Theme Changed to RedTheme".
+
+Other available themes includes:
+****
+* DarkTheme.
+****
+
+==== Invalid Input with warning
+
+_Test:_ +
+Enter `theme` `YellowTheme`.
+
+_Result:_ +
+Nothing will change. Show warning message "Theme not found".
+
+****
+* theme command is case-sensitive, "yellowtheme" is not equals to "YellowTheme"
+****
+
+== Testing : Google Map feature
+
+=== Search Address On Google Map
+
+==== Show Address on Google Map
+
+_Test:_ +
+Click any person listed in contact list.
+
+_Result:_ +
+Google Map panel appear, auto input address of contact person and search it on Google Map.
+
+== Testing : Remarks feature
+
+=== Remark Command
+
+==== Valid Input with success message
+
+_Test:_ +
+Enter `remark 1 r/meeting at 3am`.
+
+_Result:_ +
+First person in the contact list should have a remark "meeting at 3am" included in the contact.
+
+Removing an existing remark can be done by:
+****
+* Enter `remark 1 r/`.
+****
+
+==== Invalid Input with warning
+
+_Test:_ +
+Enter `remark 200 r/meeting at 3am`.
+
+_Result:_ +
+Show warning message "The person index provided is invalid".
+
+****
+* Adding new remark under the same contact will remove previous remark.
+****
+
+== Testing : Help feature
+
+=== help Command
+
+==== Valid input with success call up window.
+
+_Test:_ +
+Enter `help`.
+
+_Result:_ +
+New help window appear showing User Guide.
+
+== Testing : Delete feature
+
+=== Delete Command
+
+==== Valid Input with success message
+
+_Test:_ +
+Enter `delete 1`.
+
+_Result:_ +
+First person in the contact list should be deleted with message "Deleted Person: [NAME] [PHONE] [EMAIL] [ADDRESS] [REMARKS] [TAGS]".
+
+==== Invalid Input with warning
+
+_Test:_ +
+Enter `delete 200`.
+
+_Result:_ +
+Show warning message "The person index provided is invalid".
+
+****
+* Delete the entire contact list by using the `clear` command.
+****
+
+== Testing : Clear feature
+
+=== Clear Command
+
+==== Valid Input with success message
+
+_Test:_ +
+Enter `clear`
+
+_Result:_ +
+Entire contact list is deleted with message "Address book has been cleared!".
+
+== Testing : AutoComplete feature
+
+=== AutoComplete Command
+
+==== Valid Input without Command Skeleton
+
+_Test:_ +
+Enter `de` and then press `TAB` key.
+
+_Result:_ +
+`delete` should appear in the command box, followed by a space.
+
+****
+* Commands without command skeletons in autocomplete includes:
+* `exit`, `help`, `list`, `select`, etc.
+****
+
+==== Valid Input with Command Skeleton
+
+_Test:_ +
+Enter `ed` and then press `TAB` key.
+
+_Result:_ +
+`edit` should appear in the command box, together with the fields that the user can enter.
+
+****
+* Only other commands with command skeletons are:
+* `add` and `remark`
+****
+
+==== Invalid Input (No Command)
+
+_Test:_ +
+Enter `derp` and then press `TAB` key.
+
+_Result:_ +
+Nothing should change in the command box, `derp` and only `derp` should be in the command box.
+
+=== AutoComplete By Set String
+
+==== Sort Command
+
+_Test:_ +
+Enter `sort n` and then press `TAB` key.
+
+_Result:_ +
+`sort name` should appear in the command box.
+
+_Test:_ +
+Enter `sort name a` and then press `TAB` key.
+
+_Result:_ +
+`sort name asc` should appear in the command box.
+
+==== Theme Command
+
+_Test:_ +
+Enter `theme r` and then press `TAB` key.
+
+_Result:_ +
+`theme RedTheme` should appear in the command box.
+
+=== AutoComplete By Word In Name
+
+==== Finding Multiple Words in Name
+
+_Test:_ +
+Enter `find a` and press `TAB` key four times.
+
+_Result:_ +
+`find Andy` should appear first, followed by +
+`find Alicia` and then, +
+`find Ang` and finally, +
+`find a`
+
+==== Fail to Find Words in Name
+
+_Test:_ +
+Enter `find z` and press `TAB` key.
+
+_Result:_ +
+Nothing should change in the command box, `find z` and only `find z` should be in the command box.
+
+=== AutoComplete By Tags
+
+_Test:_ +
+Enter `findtag f` and press `TAB` key.
+
+_Result:_ +
+`findtag freelancer` should appear in the command box.
+
+=== AutoComplete By Prefix
+
+==== Search for Name in Model
+
+_Test:_ +
+Enter `add n/c` and press `TAB` key.
+
+_Result:_ +
+`add n/Cosy Ko` should appear in the command box.
+
+==== Search for Email in Model
+
+_Test:_ +
+Enter `edit 2 p/91783123 e/janet` and press `TAB` key.
+
+_Result:_ +
+`edit 2 p/91783123 e/janetoh@gmail.com` should appear in the command box.
+
+=== AutoComplete in the Middle of Input
+
+_Test:_ +
+Enter `removetag e prospective`, place caret right after `removetag e` without changing anything after the caret, and press `TAB` key.
+
+_Result:_ +
+`removetag event prospective` should appear in the command box, with `vent` in `event` selected.

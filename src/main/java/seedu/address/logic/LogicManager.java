@@ -17,6 +17,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  * The main LogicManager of the app.
  */
 public class LogicManager extends ComponentManager implements Logic {
+    private static final int AUTOCOMPLETE_CACHE_SIZE = 5;
+
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
@@ -54,4 +56,5 @@ public class LogicManager extends ComponentManager implements Logic {
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
     }
+
 }

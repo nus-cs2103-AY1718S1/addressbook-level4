@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Rubrika - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,23 +10,42 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W15-B1/Main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introductio`n
+
+=== What is Rubrika?
+
+Welcome to Rubrika! +
+
+Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner.
+
+Rubrika revolutionises the way you interact with an Address Book Application. We have done away with the traditional buttons, and now allow users to interact through the Command Line Interface.
+
+This guide will familiarise you with the basic commands that you will need to start using Rubrika.
+
+
 == Quick Start
+
+Before we start, please make sure you follow the steps below to install Rubrika.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+If you are missing Java 8, you may download it for free [http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here]]
+
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
+
 +
 image::Ui.png[width="790"]
+
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -37,8 +56,29 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#Features[Features] section below for details of each command.
 
+== What's New in Version 1.4
+
+=== Enhanced Autocomplete
+
+Autocomplete should now be able to autocomplete person data based on command word given too.
+
+Example: `removetag fa` +
+Autocompletes to all tags starting with `fa`.
+
+Autocomplete should also work no matter where in the input you are currently trying to modify, unless there are no options to autocomplete.
+
+=== Import and Export Contacts : `import` and `export`
+
+You can now import and export vCard files from Rubrika, with `import` and `export` command respectively.
+
+=== Change UI Theme : `theme`
+
+You can now set the theme of the UI to suit your preference, with `theme` command.
+
+
+[[Features]]
 == Features
 
 ====
@@ -91,7 +131,19 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+// tag::remarks[]
+=== Editing a person's remark: `remark`
 
+Edits the remark of the person identified by the index number used in the last person listing. +
+Format: `remark INDEX r/REMARK`
+
+Examples:
+* `list` +
+`remark 1 r/Snores loudly` +
+Attaches `Snores loudly` as remark to first person on the list.
+* `remark 1 r/` +
+Removes the remark for the first person.
+//end::remarks[]
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -112,6 +164,26 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::findtag[]
+=== Listing persons with specific tag: `findtag`
+
+Finds persons who have any of the given tags. +
+Format: `findtag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `friends` `colleagues` will match `colleagues` `friends`
+* Only the tag is searched.
+* Only full words will be matched e.g. `friends` will not match `friend`
+* Persons matching at least one tag will be returned (i.e. `friends` `colleagues` search). e.g. `Hans Gruber` with only `friends` tag will be returned.
+****
+
+Examples:
+
+* `findtag friends` +
+Returns all the person with the tag `friends`
+
+// end::findtag[]
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -131,6 +203,235 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+// tag::rmtag[]
+
+=== Deleting a tag : `removetag`
+
+[NOTE]
+Remove Tag command available since v1.1 +
+Option to remove a tag for selected people available since V1.2
+
+If you want to remove a certain tag from the address book or from a specific person in your addressbook, you can use the removetag function to perform this action. +
+
+Format: `removetag all TAGNAME` OR `removetag INDEX TAGNAME`
+
+To do so simply follow these steps
+
+. Type `removetag` followed by the `INDEX` of the person and the `TAG` that you wish to remove.
++
+[TIP]
+If you are trying to delete a `TAG` from everybody in the list, type `all` in the `INDEX` field.
++
+An example is shown below.
++
+image::removetag.png[width="790"]
+_Figure 4.7.1 : Rubrika main page_
++
+. Upon pressing `ENTER` you should be greeted with a confirmation message.
++
+image::removetag-2.png[width="790"]
+_Figure 4.7.1 : Remove Tag Confirmation message_
+
+The `TAG` that you have given should now be removed from the addressbook or from the person corresponding to the `INDEX` in the list. +
+
+Do take note that:
+****
+* The tag *must exist* in any person.
+* `INDEX` *must be a positive integer*. e.g 1,2,3.
+* `INDEX` of the person refers to his/her `INDEX` in the list displayed.
+* `removetag` is an undoable command, and you can restore your deleted tags.
+****
+
+Examples:
+
+* `list` +
+`removetag all friends` +
+Deletes the tag `friends` from everyone in the address book.
+
+* `list` +
+`find John` +
+`removetag 1 enemy` +
+Deletes tag `enemy` from the first person in the list shown in the address book.
+
+// end::rmtag[]
+
+// tag::sort[]
+=== Sorting the list: `sort`
+
+[NOTE]
+Sort feature available since v1.3
+
+To help keep your contact list in an organise manner, you can choose to rearrange your contacts in a specified order. +
+
+Format: `sort FIELD ORDER` +
+
+Currently, Rubrika allows you to list your clients by `FIELD` (*name, email or phone*) following an `ORDER` (*[asc]* ascending, *[dsc]* descending). +
+
+To re-arrange your contact list follow these steps.
+
+. Type `sort` followed by the `FIELD` followed by the `ORDER` that you wish to list your contacts. An example is shown below.
++
+image::sort.png[width="790"]
+_Figure 4.8.1 : Rubrika main page_
++
+. Upon pressing `ENTER` you should see a confirmation message.
++
+image::sort-2.png[width="790"]
+_Figure 4.8.1 : Sort confirmation message_
+
+Your list of contacts should now be displayed in the specified order based on your choice.
+
+Do take note that:
+****
+* The available `FIELD` are *name, email or phone*.
+* The available `ORDER` are be *asc* (ascending) or *dsc* (descending)
+* Sort is not an undoable command.
+****
+
+Examples:
+
+* `list` +
+`sort name asc` +
+Sorts the list based on name in ascending order.
+
+* `findtag owesMoney` +
+`sort email dsc` +
+Sorts the people with `owesMoney` tag based on their emails in descending order.
+
+// end::sort[]
+// tag::theme[]
+
+=== Change the theme of AddressBook: `theme`
+[NOTE]
+theme feature available since v1.4.
+
+Change the theme of Rubrika to the theme specified. +
+Format: `theme` `KEYWORD`
+
+****
+* The command is case sensitive. e.g `darktheme` is different from `DarkTheme`.
+* The respective `.css` file must be added into resources before the function can work.
+****
+
+Currently available themes are:
+
+****
+* DarkTheme +
+****
+image::darktheme.png[width="800"]
+_Figure 4.9.1 : Rubrika DarkTheme_
+****
+* RedTheme +
+****
+image::redtheme.png[width="800"]
+_Figure 4.9.2 : Rubrika RedTheme_
+****
+Examples:
+
+* `theme` `DarkTheme` +
+Change the theme of the Rubrika to DarkTheme.
+
+// end::theme[]
+
+// tag::importexport[]
+
+=== Importing contacts: `import`
+
+[NOTE]
+Import feature available since v1.4.
+
+To help you add your contacts from a pre-existing list of contact, you can choose to use the import function of Rubrika to automate the process.
+
+Format: `import` or `import FILENAME`
+
+[NOTE]
+Currently the import feature *only supports* vCards and XML files exported by Rubrika. +
+To create the export file, please refer to link:#export[Exporting Contacts]
+
+. Type `import` into your command box. The following window will appear.
++
+image::import-window.png[width="790"]
+_Figure 4.10.1 : Import window_
++
+. Select the file you want to import and select `open`.
++
+image::import-window-2.png[width="790"]
+_Figure 4.10.2 : Locate the file and select `Open`_
+
++
+. If you have performed your steps correctly, you will be greeted with the following message.
++
+image::import-window-3.png[width="790"]
+_Figure 4.10.3 : Comfirmation message_
+
+Your contact list should now contain your contacts you had previously as well as the contacts that was included in the file.
+
+Do take note that:
+****
+* The function only imports contacts that do not exist in the current address book.
+* Duplicate persons in your contact list will be ignored.
+* Import function is an undoable feature, and you can undo your previous import.
+****
+
+[TIP]
+You may choose to skip the file selection process if you place the export file *directly in the same folder* as your Rubrika application. +
+You can do so by typing `import FILENAME`. +
+
+Examples:
+
+* `import` +
+Opens up a file explorer for users to choose the file.
+
+* `import sample.vcf` +
+Imports the sample.vcf file found in the root folder.
+
+* `import sample.xml` +
+Imports the sample.xml file found in the root folder.
+
+[[export]]
+=== Exporting contacts: `export`
+
+[NOTE]
+Export feature available since v1.4. +
+
+If you wish to export your contacts in your Rubrika to add to another Rubrika application, you can use the export function of Rubrika.
+
+Format: `export FILENAME` +
+
+[NOTE]
+Currently, Rubrika's export feature only support vCards or XML files. +
+The export file might not work on applications outside of Rubrika.
+
+To create your export file, simply follow these steps.
+
+. Type `export`, followed by the `FILENAME` of the file.
++
+image::export-1.png[width="790"]
+_Figure 4.11.1 : Typing the export command in the command box_
++
+. Upon pressing `ENTER`, you should be greeted with the confirmation message as seen below.
++
+image::export-2.png[width="790"]
+_Figure 4.11.2 : Export Confirmation message_
++
+. Retrieve the export file from the same directory as your `Rubrika.jar` file.
++
+image::export-3.png[width="790"]
+_Figure 4.11.2 : Save location of the export file_
+
+[TIP]
+You may use use an absolute path of a folder if you want to save your export to a separate folder. +
+For e.g `export C:\Users\(username)\Desktop\output.vcf`
+
+Examples:
+
+* `list` +
+`export sample.vcf` +
+Exports the whole list of persons in addressbook into sample.vcf in root folder.
+* `export sample.xml` +
+Exports the whole list of persons in addressbook into sample.xml in root folder.
+// end::importexport[]
 
 === Selecting a person : `select`
 
@@ -170,7 +471,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `import`, `removetag` and `clear`).
 ====
 
 Examples:
@@ -227,18 +528,63 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+// tag::autocomplete[]
+== Autocomplete
+
+The Autocomplete feature comes together with Rubrika, and further improves your experience with using CLI, shortening time required to input commands greatly. +
+Autocomplete comes in many shapes and forms, and shall be explained to you in detail as follows.
+
+=== Autocomplete Command
+
+You may use `Tab` key to automatically generate a command 'skeleton' from an incomplete command word input. +
+Long command words are no longer a hassle to type and some command syntax that are too tough to remember are also generated for you.
+
+Examples:
+
+* `c` becomes `clear` after pressing `Tab` once
+* nothing happens to `b` (no command starting with letter `b`)
+* `h` becomes `history`, and then `help` if you press `Tab` again
+
+=== Autocomplete Person Data Based on Prefix
+
+You may also use `Tab` key to automatically complete personal data, based on prefix like `n/` or `a/` given. +
+This helps with wordy addresses or long names and other person data you do not want to type out in full.
+
+* `add n/J` becomes `add n/John Hawkins` if you have a person with the name `John Hawkins` stored
+* `edit 2 t/co t/owesMoney` does not autocomplete the `t/co` because it is in the middle of the input
+* `select 2` does not autocomplete because there is no prefix present, and no person data should be involved
+
+=== Autocomplete Person Data Based on Command Word
+
+`Tab` key also automatically complete person data based on the command word given. +
+You can even find someone without executing the `find` command, but just let Autocomplete feature help you.
+
+* `find A` gets completed with all possible keywords starting with `A`
+* `removetag fa` becomes `removetag` followed by all possible tags starting with `fa`
+* `delete 1` does not autocomplete because the command does not involve person data
+
+=== Autocomplete Anywhere in the Command Input Box
+
+`Tab` key can be used almost anywhere in the command input box. +
+You can go back to complete or modify any particulars you may have missed out.
+
+// end::autocomplete[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. Alternatively, you may export your contacts into a vCard file and transfer the file to the other Computer and import the vCard file from there.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *RemoveTag* : `removetag all TAGNAME` or `removetag INDEX TAGNAME` +
+e.g `removetag all friends` +
+e.g `removetag 3 enemy`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
@@ -247,6 +593,13 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Sort* : `sort FIELD ORDER` +
+e.g. `sort name asc` +
+e.g. `sort email dsc`
+* *Import* : `ìmport FILEPATH`
+* *Export* : `export FILEPATH`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Remark* : `remark` +
+e.g. `remark 4 r/Sneezes a lot`

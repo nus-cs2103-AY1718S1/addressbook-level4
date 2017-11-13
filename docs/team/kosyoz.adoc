@@ -1,0 +1,103 @@
+= Ko Szu Yuan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Purpose
+The project portfolio acts as a documentation for the works i have contributed for this project.
+
+== Project: AddressBook - Rubrika
+AddressBook - Rubrika is a desktop address book application for small and medium enterprises or those that are self-employed. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B1/Main/blob/master/collated/main/kosyoz.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B1/Main/blob/master/collated/test/kosyoz.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Remarks
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=remarks]
+
+---
+
+==== Justification
+
+`Remark` function is needed for the user to store any information regarding the specific person. For our target audience, there is a need for the user to know his list of contacts well and these information that the user store can help him to build a closer relationship with them.
+
+`Remark` can not only store information but also act as a reminder memo for the user regarding any upcoming events with that particular contact person.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remarks]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Added: Findtag
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=findtag]
+
+---
+
+==== Justification
+
+`findtag` function is needed for the user to list down contacts with the same tags. It is important when user only want to see a specific group of contacts.
+
+without `findtag` function the `tag` function by itself is not effective as there is no way to sort the entire contact list according to tags. Therefore the tag function will not be as useful in helping with organising the contact list.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=findtag]
+
+
+---
+
+
+=== Enhancement Added: Theme
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=theme]
+
+---
+==== Justification
+
+`theme` function is needed for the user to customize the GUI and personalize Rubrika according to the preference of the user.
+
+`theme` function allow user to choose from different themes depending on the user's current emotional status and improve their user experience.
+
+=== Enhancement Proposed: Add command `Event`
+
+==== External behavior
+
+`Event` allow user to create events that are similar to tags. User will be able to add different contacts under different events and a separate window will show all the events created.
+
+User will be able to see very clearly the details of the event(Date, Time, Location) and whoever is involved.
+
+
+==== Justification
+
+`Event` is needed for the user to use it as a add on to `Remarks`. With `Event` the user can organise the user's schedule and list down all events clearly.
+
+
+=== Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com/CS2103AUG2017-W15-B1/Main/pull/57/commits/91f833d53d6413950e36db4e91f85d6a91419fec)
+* Integrated Google map into Rubrika (Pull requests https://github.com/CS2103AUG2017-W15-B1/Main/pull/42)
+* Use different colors for different tags inside person cards (Pull requests https://github.com/CS2103AUG2017-W15-B1/Main/pull/3)
+* Created UI mock up
+* Did Acceptance testing for W-13-B3 https://github.com/CS2103AUG2017-W13-B3/main/issues/100

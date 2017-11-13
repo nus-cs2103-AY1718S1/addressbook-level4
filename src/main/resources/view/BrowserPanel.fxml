@@ -3,6 +3,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.web.WebView?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1">
-  <WebView fx:id="browser"/>
+<StackPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+  <WebView fx:id="browser" prefHeight="-1.0" prefWidth="-1.0" />
 </StackPane>

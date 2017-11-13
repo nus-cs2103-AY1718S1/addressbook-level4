@@ -162,6 +162,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    /**
+     * test
+     * @param tag
+     */
+    public void removeTagFromUniqueList(Tag tag) {
+        tags.remove(tag);
+        syncMasterTagListWith(persons);
+    }
+
     //// util methods
 
     @Override
