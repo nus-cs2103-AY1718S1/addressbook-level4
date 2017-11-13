@@ -83,6 +83,7 @@ public class AddPhotoCommandTest {
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FILEPATH;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import org.junit.Test;
@@ -91,29 +92,17 @@ import seedu.address.logic.commands.AddPhotoCommand;
 
 public class AddPhotoCommandParserTest {
     private AddPhotoCommandParser parser = new AddPhotoCommandParser();
-    /*@Test
-    public void parse_indexSpecified_failure() throws Exception {
-        // Has no filepath, picture is default picture
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_FILEPATH.toString();
-        AddPhotoCommand expectedCommand = new AddPhotoCommand(INDEX_FIRST_PERSON, new Photo(""));
-        assertParseSuccess(parser, userInput, expectedCommand);
-        //Has a filepath that that is input from user
-        Index newTargetIndex = INDEX_FIRST_PERSON;
-        String newUserInput = newTargetIndex.getOneBased() + "C/Users/pictures/pic.png"
-                + PREFIX_FILEPATH.toString();
-        Photo photo = new Photo("");
-        photo.resetFilePath("C/Users/pictures/pic.png");
-        AddPhotoCommand newExpectedCommand = new AddPhotoCommand(INDEX_FIRST_PERSON, photo);
-        assertParseSuccess(parser, newUserInput, newExpectedCommand);
-    }*/
-
     @Test
-    public void parse_noFieldSpecified_failure() throws Exception {
+    public void parse_missingFields_failure() throws Exception {
+        //fails because there is no index and prefix specified
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPhotoCommand.MESSAGE_USAGE);
         assertParseFailure(parser, AddPhotoCommand.COMMAND_WORD, expectedMessage);
+        //fails because there is no index specified
+        String expectedMessageNoIndex = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPhotoCommand.MESSAGE_USAGE);
+        String userInput = AddPhotoCommand.COMMAND_WORD + " " + PREFIX_FILEPATH.toString()
+                + "src/main/resources/images/address.png";
+        assertParseFailure(parser, userInput, expectedMessageNoIndex);
     }
-
 }
 
 ```
@@ -179,34 +168,70 @@ public class PhotoTest {
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.storage.PhotoStorage.WRITE_FAILURE_MESSAGE;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
 
+import seedu.address.commons.util.ExtensionCheckerUtil;
+
 public class PhotoStorageTest {
+    private String[] allowedExt =  new String[]{"jpg", "png", "JPEG"};
     @Test
-    public void correctHash() {
-        String userFilePath = "C:/Users/pigir/Desktop/saltbae.jpg";
-        String expectedUniqueFileName = "-694293159";
-        Integer userFilePathHashed = userFilePath.hashCode();
-        assertEquals(userFilePathHashed.toString(), expectedUniqueFileName);
-    }
-    @Test
-    public void writeSuccess() {
+    public void writeSuccess() throws IOException {
         String imageSource = "src/test/resources/images/noPhoto.png";
+        PhotoStorage testStorage = new PhotoStorage(imageSource);
+        String newFilePath = testStorage.setNewFilePath();
+        File imageFile = new File(newFilePath);
+        assertTrue(imageFile.exists());
     }
     @Test
-    public void writeFailure() {
+    public void writeFailureWithNonImageType() {
         String userFilePath = "C:/Users/pigir/Desktop/addPhoto.txt";
-        int userFilePathHashed = userFilePath.hashCode();
         try {
-            PhotoStorage storage = new PhotoStorage(userFilePath, userFilePathHashed);
+            PhotoStorage storage = new PhotoStorage(userFilePath);
             storage.setNewFilePath();
         } catch (IOException e) {
             assertEquals(e.getMessage(), WRITE_FAILURE_MESSAGE);
         }
+    }
+    @Test
+    public void writeFailureWithImageType() {
+        String userFilePath = "C:/Users/pigir/Desktop/sfsf.gif";
+        try {
+            PhotoStorage storage = new PhotoStorage(userFilePath);
+            storage.setNewFilePath();
+        } catch (IOException e) {
+            assertEquals(e.getMessage(), WRITE_FAILURE_MESSAGE);
+        }
+    }
+    @Test
+    public void getExtensionSuccess() {
+        String filePathJpg = "C:/Users/pigir/Desktop/images/saltbae.jpg";
+        String extJpg = ExtensionCheckerUtil.getExtension(filePathJpg);
+        assertEquals(extJpg, "jpg");
+
+        String filePathPng = "C:/Users/pigir/Desktop/images/saltbae.png";
+        String extPng = ExtensionCheckerUtil.getExtension(filePathPng);
+        assertEquals(extPng, "png");
+
+        String filePathJpeg = "C:/Users/pigir/Desktop/images/saltbae.JPEG";
+        String extJpeg = ExtensionCheckerUtil.getExtension(filePathJpeg);
+        assertEquals(extJpeg, "JPEG");
+    }
+    @Test
+    public void checkExtension() {
+        String filePathJpg = "C:/Users/pigir/Desktop/images/saltbae.jpg";
+        String extJpg = ExtensionCheckerUtil.getExtension(filePathJpg);
+        assertTrue(ExtensionCheckerUtil.isOfType(extJpg, allowedExt));
+
+        String filePathGif = "C:/Users/pigir/Desktop/images/saltbae.gif";
+        String extGif = ExtensionCheckerUtil.getExtension(filePathGif);
+        assertFalse(ExtensionCheckerUtil.isOfType(extGif, allowedExt));
     }
 }
 ```

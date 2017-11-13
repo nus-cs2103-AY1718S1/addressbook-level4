@@ -83,7 +83,7 @@ public class AddPhotoCommand extends UndoableCommand {
         } else if (!photo.getFilePath().equals("")) {
             try {
                 //produces a new filepath and rewrites the new filepath to the photo object held by the contact
-                PhotoStorage rewrite = new PhotoStorage(photo.getFilePath(), personToEdit.getPhoto().hashCode());
+                PhotoStorage rewrite = new PhotoStorage(photo.getFilePath());
                 photo.resetFilePath(rewrite.setNewFilePath());
             } catch (IOException e) {
                 throw new CommandException(e.getMessage());
@@ -203,16 +203,13 @@ import java.io.File;
 
 public class Photo {
     public static final String URL_VALIDATION = "The filepath URL does not exist.";
-    private static final String DEFAULT_PHOTOURL = "";
     private static final String DEFAULT_FILEPATH = "";
     private String filepath;
-    private String url;
     public Photo(String filepath) throws IllegalArgumentException {
         //this is to setup the default photo for contacts after it is added.
         requireNonNull(filepath);
         if (filepath.equals(DEFAULT_FILEPATH)) {
-            this.filepath = DEFAULT_PHOTOURL;
-            this.url = DEFAULT_FILEPATH;
+            this.filepath = DEFAULT_FILEPATH;
         } else {
             File file = new File(filepath);
             if (isValidFilePath(file)) {
@@ -229,10 +226,6 @@ public class Photo {
     //the filepath of the image
     public String getFilePath() {
         return filepath;
-    }
-    //url of the image that is parsed into Image class
-    public String getUrl() {
-        return this.url;
     }
     /** It is guaranteed that the new filepath exists inside the resources folder */
     public void resetFilePath(String filepath) {
@@ -315,6 +308,7 @@ import static java.util.Objects.requireNonNull;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -334,9 +328,8 @@ public class PhotoStorage {
     private String filePath = "";
     private File fileWriter = null;
     private BufferedImage imageReader = null;
-    private int uniqueFileName;
-    public PhotoStorage(String filePath, int uniqueFileName) {
-        this.uniqueFileName = uniqueFileName;
+    private String uniqueFileName;
+    public PhotoStorage(String filePath) {
         this.filePath = filePath;
         imageReader = new BufferedImage(300, 400, BufferedImage.TYPE_INT_ARGB);
         allowedExt =  new String[]{"jpg", "png", "JPEG"};
@@ -348,6 +341,8 @@ public class PhotoStorage {
         if (!ExtensionCheckerUtil.isOfType(ext, allowedExt)) {
             throw new IOException(WRITE_FAILURE_MESSAGE);
         }
+        uniqueFileName = generateUniqueFileName();
+        requireNonNull(uniqueFileName);
         String newFilePath = "displaypictures/" + uniqueFileName + "." + ext;
         try {
             fileReader = new File(filePath);
@@ -358,6 +353,13 @@ public class PhotoStorage {
         } catch (IOException e) {
             throw new IOException(WRITE_FAILURE_MESSAGE);
         }
+    }
+
+    /** generates a unique file path that is to be saved into displaypictures */
+    private String generateUniqueFileName() {
+        UUID uuid = UUID.randomUUID();
+        String uniqueFilePath = uuid.toString();
+        return uniqueFilePath;
     }
 }
 ```
@@ -374,11 +376,26 @@ public class PhotoStorage {
 ``` java
         final Photo photo = new Photo(this.filepath);
 ```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+    /** randomises which motivational page is used from the resource images folder */
+    private void setUpMotivationPage()  {
+        Image image = new Image(getClass().getResource("/images/"
+                + motivationPages[random.nextInt(motivationPages.length)]).toExternalForm());
+        splashPage.setImage(image);
+    }
+```
 ###### \java\seedu\address\ui\ExtendedPersonDetails.java
 ``` java
     private static final String FXML = "ExtendDetailsPerson.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final String defaultPicture = "/images/PEERSONAL_icon.png";
+    private final String phoneIcon = "/images/Mobile-Phone-icon.png";
+    private final String addressIcon = "/images/address.png";
+    private final String emailIcon = "/images/email-icon.png";
+    private final String birthdayIcon = "/images/BirthdayIcon.png";
+    private final String remarkIcon = "/images/RemarkIcon.png";
+    private final String ageIcon = "/images/AgeIcon.png";
 ```
 ###### \java\seedu\address\ui\ExtendedPersonDetails.java
 ``` java
@@ -388,8 +405,7 @@ public class PhotoStorage {
     public ExtendedPersonDetails() {
         super(FXML);
         registerAsAnEventHandler(this);
-        Image image = new Image(getClass().getResource(defaultPicture).toExternalForm());
-        setCircle(image);
+        setUpUi();
     }
 ```
 ###### \java\seedu\address\ui\ExtendedPersonDetails.java
@@ -398,6 +414,22 @@ public class PhotoStorage {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonDetails(event.getNewSelection().person);
+    }
+    private void setUpUi() {
+        Image image = new Image(getClass().getResource(defaultPicture).toExternalForm());
+        setCircle(circle, image);
+        Image imagePhone = new Image(getClass().getResource(phoneIcon).toExternalForm());
+        setCircle(circlePhone, imagePhone);
+        Image imageAddress = new Image(getClass().getResource(addressIcon).toExternalForm());
+        setCircle(circleAddress, imageAddress);
+        Image imageEmail = new Image(getClass().getResource(emailIcon).toExternalForm());
+        setCircle(circleEmail, imageEmail);
+        Image imageRemark = new Image(getClass().getResource(remarkIcon).toExternalForm());
+        setCircle(circleRemark, imageRemark);
+        Image imageBirthday = new Image(getClass().getResource(birthdayIcon).toExternalForm());
+        setCircle(circleBirthday, imageBirthday);
+        Image imageAge = new Image(getClass().getResource(ageIcon).toExternalForm());
+        setCircle(circleAge, imageAge);
     }
 ```
 ###### \java\seedu\address\ui\PersonCard.java
@@ -464,57 +496,33 @@ public class PhotoStorage {
    <children>
       <Circle fx:id="circle" fill="#bfcbd7" radius="46.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="60.0" translateY="20.0" />
       <Line endX="100.0" startX="-100.0" stroke="#176fb2" strokeWidth="2.0" translateY="32.0" />
-      <Label fx:id="name" translateX="25.0" translateY="35.0" wrapText="true">
+      <Label fx:id="name" translateX="45.0" translateY="35.0" wrapText="true">
+         <font>
+            <Font size="25.0" />
+         </font></Label>
+      <Label fx:id="phone" translateX="20.0" translateY="40.0">
          <graphic>
-            <ImageView fx:id="nameIcon" fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true" />
+            <Circle fx:id="circlePhone" fill="#ffffff40" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </graphic></Label>
-      <Label fx:id="phone" translateX="20.0" translateY="35.0">
+      <Label fx:id="address" prefWidth="240.0" translateX="20.0" translateY="40.0" wrapText="true">
          <graphic>
-            <ImageView fx:id="phoneIcon" fitHeight="16.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/Mobile-Phone-icon.png" />
-               </image>
-            </ImageView>
+            <Circle fx:id="circleAddress" fill="#ffffff40" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </graphic></Label>
-      <Label fx:id="address" prefWidth="240.0" translateX="20.0" translateY="35.0" wrapText="true">
+      <Label fx:id="email" prefWidth="240.0" translateX="20.0" translateY="40.0" wrapText="true">
          <graphic>
-            <ImageView fx:id="addressIcon" fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/address.png" />
-               </image>
-            </ImageView>
+            <Circle fx:id="circleEmail" fill="#212cff3f" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </graphic></Label>
-      <Label fx:id="email" prefWidth="240.0" translateX="20.0" translateY="35.0" wrapText="true">
+      <Label fx:id="remark" prefWidth="240.0" translateX="20.0" translateY="40.0" wrapText="true">
          <graphic>
-            <ImageView fx:id="emailIcon" fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/email-icon.png" />
-               </image>
-            </ImageView>
+            <Circle fx:id="circleRemark" fill="#212cff3f" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </graphic></Label>
-      <Label fx:id="remark" prefWidth="240.0" translateX="20.0" translateY="35.0" wrapText="true">
+      <Label fx:id="birthday" prefWidth="240.0" translateX="20.0" translateY="40.0" wrapText="true">
          <graphic>
-            <ImageView fx:id="remarkIcon" fitHeight="15.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/RemarkIcon.png" />
-               </image>
-            </ImageView>
+            <Circle fx:id="circleBirthday" fill="#212cff3f" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </graphic></Label>
-      <Label fx:id="birthday" prefWidth="240.0" translateX="20.0" translateY="35.0" wrapText="true">
+      <Label fx:id="age" prefWidth="240.0" translateX="20.0" translateY="43.0">
          <graphic>
-            <ImageView fx:id="birthdayIcon" fitHeight="16.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/BirthdayIcon.png" />
-               </image>
-            </ImageView>
-         </graphic></Label>
-      <Label fx:id="age" prefWidth="240.0" translateX="20.0" translateY="40.0">
-         <graphic>
-            <ImageView fx:id="ageIcon" fitHeight="17.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/AgeIcon.png" />
-               </image>
-            </ImageView>
+            <Circle fx:id="circleAge" fill="#212cff40" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </graphic></Label>
       <ImageView fx:id="background" fitHeight="408.0" fitWidth="231.0" opacity="0.16" pickOnBounds="true" preserveRatio="true" rotate="18.4" scaleX="3.0" scaleY="5.0" translateY="-200.0">
          <image>
