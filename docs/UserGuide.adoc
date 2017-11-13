@@ -147,7 +147,8 @@ Here is an example to illustrate: +
 
 Congratulations, you now have your first contact! +
 
-
+[NOTE]
+Contacts are automatically sorted according to name.
 
 __Constraints:__
 
@@ -261,7 +262,7 @@ __Constraints__
 // tag::detag[]
 ==== Removing tags from multiple contacts : `detag`
 
-When a tag is no longer in used, you can use the detag command to remove the tag from multiple contacts. +
+When a tag is no longer in use, you can use the detag command to remove the tag from multiple contacts. +
 
 Format: `detag INDEX... [t/TAG]`
 
@@ -382,8 +383,10 @@ Use prefixes:
 . The command follows: +
 Format: `add DESCRIPTION from START DATE by/on DEADLINE t/[TAG]…`
 
-. As the task is added to a new Task Card, the Result Display shows:
+. As the task is added to a new Task Card, the Result Display shows: +
 `Task has been added: DESCRIPTION From: START DATE To: DEADLINE Tags: [TAG]`
+
+. The task added is automatically sorted according to the deadline. With expired tasks coming first, follow by tasks with deadline that are coming up next and lastly tasks without deadline.
 
 [NOTE]
 Dates can be in any format as long as the month precedes the date.
@@ -403,7 +406,7 @@ Sets the description to "recess week" start date to the next day and the deadlin
 * `add get groceries`
 Sets the description to "get groceries" leaving the other parameters blank.
 
-_Constraints_ +
+_Constraints_
 
 ****
 * Dates MUST be preceded by one of the prefixes.
@@ -636,42 +639,48 @@ Format: `exit`
 // tag::calendar[]
 === Using the calendar
 
-A calendar is useful for marking the important dates. When you have many deadlines and birthdays to take note, the calendar allows you to view all these important dates at a glance. +
+A calendar is useful for marking important dates. When you have many deadlines and birthdays to take note of, the calendar allows you to view all these important dates at a glance. +
 
 ==== Marking the dates
 
-With many contacts and tasks to manage, differentiating the birthdays and deadlines on the calendar can be done with the use of colours.
+With many contacts and tasks to manage, differentiating between birthdays and deadlines on the calendar can be done with the help of colours.
 
 [NOTE]
-The marking of date is done automatically when a contact/task is added, edited or deleted.
+Dates are marked automatically when a contact/task is added, edited or deleted.
 
 Examples:
 
-* A task has deadline on `17-07-2017`. +
+* A task has a deadline on `17 July 2017`. +
 The corresponding date on the calendar is marked *red*. +
-* A contact has birthday on `09-12-2017`. +
+* A contact has his/her birthday on `09 December 2017`. +
 The corresponding date on the calendar is marked *pink*. +
-* `17-07-2017` is a date that is a task's deadline and a contact's birthday. +
+* `17th July 2017` is both a task's deadline and a contact's birthday. +
 The corresponding date on the calendar is marked *yellow*. +
 
 __Constraints__
 
-The colour of the date on the calendar is *only updated* when next/previous button for month/year is clicked or when a date on the calendar is clicked.
+****
+* The colour of the date on the calendar is *only updated* when the next/previous button for month/year is clicked or when a date on the calendar is clicked.
+****
 
 ==== Clicking of date on the calendar
 
-When there is many deadlines or birthdays on the same date, instead of switching between `CommandMode` and using the `find` command, you can just click on the date itself.
+When there are many deadlines or birthdays on the same date, instead of switching between `CommandMode` and using the `find` command, you can just click on the date itself.
 
 Examples:
 
-* `17` on the calendar that represents `17-07-2017` is being clicked. +
-Returns task list and contacts list that contains tasks with deadline on `17-07-2017` and contacts with birthday on `17-07-2017` respectively.
+* `17` on the calendar that represents `17th July 2017` is being clicked. +
+Returns a list of tasks with deadlines on 17th July 2017 and a list of contacts with birthdays on 17th July 2017, respectively.
 
 __Constraint__
 
-When a date is clicked and it is not a deadline or not a birthday or both, an empty task list or an empty contacts list or both will be shown, which will be represented by a blank field on the application. +
+****
+* When a clicked date is not a deadline, an empty task list is shown. +
+* When a clicked date is not a task, an empty contacts list is shown. +
+* When a clicked date contains netiher birthdays nor tasks, both task list and contacts list are emptied.
+****
 
-To return back to original task list or contacts list, you can use the `list` command.
+To return to original task list or contacts list, you can use the `list` command.
 // end::calendar[]
 
 === Saving the data
