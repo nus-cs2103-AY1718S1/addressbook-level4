@@ -15,9 +15,6 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class ReloadAddressBookEvent extends BaseEvent {
 
-    public ReloadAddressBookEvent() {
-    }
-
     @Override
     public String toString() {
         return "Request to reload Address Book.";
@@ -77,9 +74,6 @@ import seedu.address.commons.events.BaseEvent;
  * Indicates a request for displaying all todoItems
  */
 public class ShowAllTodoItemsEvent extends BaseEvent {
-
-    public ShowAllTodoItemsEvent() {
-    }
 
     @Override
     public String toString() {
@@ -143,11 +137,6 @@ package seedu.address.commons.exceptions;
  * The reason can be wrong keyword.
  */
 public class EncryptOrDecryptException extends Exception {
-
-    public EncryptOrDecryptException() {
-        super();
-    }
-
 }
 ```
 ###### \java\seedu\address\logic\commands\FindCommand.java
@@ -826,7 +815,7 @@ public abstract class CommandOption<T extends Command> {
      * Checks whether {@code optionArgs} is valid.
      * @return true if {@code optionArgs} is not empty by default.
      */
-    boolean isValidOptionArgs() {
+    public boolean isValidOptionArgs() {
         return !optionArgs.isEmpty();
     }
 }
@@ -875,6 +864,7 @@ public class CommandOptionUtil {
 package seedu.address.logic.parser.optionparser;
 
 import static seedu.address.logic.parser.FindCommandParser.PARSE_EXCEPTION_MESSAGE;
+import static seedu.address.logic.parser.optionparser.CommandOptionUtil.PREFIX_OPTION_INDICATOR;
 
 import java.util.Arrays;
 
@@ -901,9 +891,8 @@ public class FindOptionByName extends CommandOption<FindCommand> {
     }
 
     @Override
-    boolean isValidOptionArgs() {
-        return super.isValidOptionArgs()
-             && !optionArgs.contains("-");
+    public boolean isValidOptionArgs() {
+        return !optionArgs.isEmpty() && !optionArgs.contains(PREFIX_OPTION_INDICATOR);
     }
 }
 ```
@@ -1088,7 +1077,7 @@ public class TodoOptionDeleteAll extends CommandOption<TodoCommand> {
      * No option parameter for this command.
      */
     @Override
-    boolean isValidOptionArgs() {
+    public boolean isValidOptionArgs() {
         return optionArgs.isEmpty();
     }
 }
@@ -1177,7 +1166,7 @@ public class TodoOptionList extends CommandOption<TodoCommand> {
      * No option parameter for this command.
      */
     @Override
-    boolean isValidOptionArgs() {
+    public boolean isValidOptionArgs() {
         return optionArgs.isEmpty();
     }
 }
@@ -1584,23 +1573,32 @@ public class DetailsContainsPredicate implements Predicate<ReadOnlyPerson> {
      * @return true if tag in {@code descriptor} present but not match tag of {@code person}
      */
     private boolean isTagNotMatchedIfPresent(ReadOnlyPerson person) {
-        if (descriptor.getTags().isPresent()) {
-            Iterator<Tag> descriptorIterator = descriptor.getTags().get().iterator();
-            Iterator<Tag> personIterator = person.getTags().iterator();
-            while (descriptorIterator.hasNext()) {
-                boolean isContainIgnoreCase = false;
-                String tagInDescriptor = descriptorIterator.next().tagName.toLowerCase();
-                while (personIterator.hasNext()) {
-                    if (personIterator.next().tagName.toLowerCase().contains(tagInDescriptor)) {
-                        isContainIgnoreCase = true;
-                    }
-                }
-                if (!isContainIgnoreCase) {
-                    return true;
-                }
+        if (!descriptor.getTags().isPresent()) {
+            return false;
+        }
+        Iterator<Tag> descriptorIterator = descriptor.getTags().get().iterator();
+        Iterator<Tag> personIterator = person.getTags().iterator();
+        while (descriptorIterator.hasNext()) {
+            String tagInDescriptor = descriptorIterator.next().tagName.toLowerCase();
+            if (isPersonContainTag(tagInDescriptor, personIterator)) {
+                return true;
             }
         }
         return false;
+    }
+
+    /**
+     * @return true if the given tag string not present in {@code personIterator}
+     */
+    private boolean isPersonContainTag(String tagInDescriptor, Iterator<Tag> personIterator) {
+        boolean isContain = false;
+        while (personIterator.hasNext()) {
+            String tagInPerson = personIterator.next().tagName.toLowerCase();
+            if (tagInPerson.contains(tagInDescriptor)) {
+                isContain = true;
+            }
+        }
+        return !isContain;
     }
 
     @Override
@@ -1706,7 +1704,7 @@ public class TodoItem implements Comparable<TodoItem> {
     public TodoItem(LocalDateTime start, LocalDateTime end, String task)
             throws IllegalValueException {
         requireNonNull(start, task);
-        if (!isValidTodoItem(start, end, task)) {
+        if (!isValidTodoItem(start, end, task.trim())) {
             throw new IllegalValueException(MESSAGE_TODOITEM_CONSTRAINTS);
         }
         this.start = start;
@@ -1718,13 +1716,7 @@ public class TodoItem implements Comparable<TodoItem> {
      * Checks whether the inputs are valid.
      */
     private boolean isValidTodoItem(LocalDateTime start, LocalDateTime end, String task) {
-        if (task.isEmpty()) {
-            return false;
-        }
-        if (end != null && end.compareTo(start) < 0) {
-            return false;
-        }
-        return true;
+        return !(task.isEmpty() || end != null && end.compareTo(start) < 0);
     }
 
     /**
@@ -1874,15 +1866,17 @@ public class SecurityManager extends ComponentManager implements Security {
     }
 
     public static Security getInstance(Storage storage) {
-        instance = new SecurityManager(storage);
+        if (instance == null) {
+            instance = new SecurityManager(storage);
+        }
         return instance;
     }
 
-    public static Security getInstance(Security security) {
-        if (security != null) {
-            instance = security;
-        }
-        return instance;
+    /**
+     * Is used for testing.
+     */
+    public static void setInstance(Security security) {
+        instance = security;
     }
 
     @Override
@@ -2349,14 +2343,11 @@ public class BrowserSearchMode {
 ``` java
 package seedu.address.ui;
 
-import java.util.logging.Logger;
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.TodoItem;
 
 /**
@@ -2364,7 +2355,6 @@ import seedu.address.model.person.TodoItem;
  */
 public class TodoCard extends UiPart<Region> {
     private static final String FXML = "TodoCard.fxml";
-    private final Logger logger = LogsCenter.getLogger(TodoCard.class);
 
     @FXML
     private Label id;

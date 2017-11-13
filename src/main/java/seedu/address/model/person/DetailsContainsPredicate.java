@@ -67,23 +67,29 @@ public class DetailsContainsPredicate implements Predicate<ReadOnlyPerson> {
      * @return true if tag in {@code descriptor} present but not match tag of {@code person}
      */
     private boolean isTagNotMatchedIfPresent(ReadOnlyPerson person) {
-        if (descriptor.getTags().isPresent()) {
-            Iterator<Tag> descriptorIterator = descriptor.getTags().get().iterator();
-            Iterator<Tag> personIterator = person.getTags().iterator();
-            while (descriptorIterator.hasNext()) {
-                boolean isContainIgnoreCase = false;
-                String tagInDescriptor = descriptorIterator.next().tagName.toLowerCase();
-                while (personIterator.hasNext()) {
-                    if (personIterator.next().tagName.toLowerCase().contains(tagInDescriptor)) {
-                        isContainIgnoreCase = true;
-                    }
-                }
-                if (!isContainIgnoreCase) {
-                    return true;
-                }
+        Iterator<Tag> descriptorIterator = descriptor.getTags().get().iterator();
+        Iterator<Tag> personIterator = person.getTags().iterator();
+        while (descriptorIterator.hasNext()) {
+            String tagInDescriptor = descriptorIterator.next().tagName.toLowerCase();
+            if (isPersonContainTag(tagInDescriptor, personIterator)) {
+                return true;
             }
         }
         return false;
+    }
+
+    /**
+     * @return true if the given tag string not present in {@code personIterator}
+     */
+    private boolean isPersonContainTag(String tagInDescriptor, Iterator<Tag> personIterator) {
+        boolean isContain = false;
+        while (personIterator.hasNext()) {
+            String tagInPerson = personIterator.next().tagName.toLowerCase();
+            if (tagInPerson.contains(tagInDescriptor)) {
+                isContain = true;
+            }
+        }
+        return !isContain;
     }
 
     @Override

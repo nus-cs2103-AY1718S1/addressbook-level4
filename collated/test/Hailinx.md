@@ -232,6 +232,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.After;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
@@ -242,6 +243,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.security.SecurityManager;
 import seedu.address.security.SecurityStubUtil;
 
 public class LockCommandTest {
@@ -287,8 +289,8 @@ public class LockCommandTest {
     }
 
     @Test
-    public void test_execute_whenIoexception() throws ParseException, CommandException {
-        new SecurityStubUtil().initialSecurityWithIoexception(false);
+    public void test_execute_whenIoException() throws ParseException, CommandException {
+        new SecurityStubUtil().initialSecurityWithIoException(false);
 
         LockCommand command = prepareCommand("1234");
         assertCommandSuccess(command, LockCommand.MESSAGE_ERROR_STORAGE_ERROR);
@@ -300,6 +302,11 @@ public class LockCommandTest {
 
         LockCommand command = prepareCommand("1234");
         assertCommandSuccess(command, LockCommand.MESSAGE_ERROR_LOCK_PASSWORD);
+    }
+
+    @After
+    public void after() {
+        SecurityManager.setInstance(null);
     }
 
     /**
@@ -615,6 +622,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.After;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
@@ -625,6 +633,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.security.SecurityManager;
 import seedu.address.security.SecurityStubUtil;
 
 public class UnlockCommandTest {
@@ -670,7 +679,7 @@ public class UnlockCommandTest {
 
     @Test
     public void test_execute_whenIoexception() throws ParseException, CommandException {
-        new SecurityStubUtil().initialSecurityWithIoexception(true);
+        new SecurityStubUtil().initialSecurityWithIoException(true);
 
         UnlockCommand command = prepareCommand("1234");
         assertCommandSuccess(command, UnlockCommand.MESSAGE_ERROR_STORAGE_ERROR);
@@ -682,6 +691,11 @@ public class UnlockCommandTest {
 
         UnlockCommand command = prepareCommand("1234");
         assertCommandSuccess(command, UnlockCommand.MESSAGE_ERROR_LOCK_PASSWORD);
+    }
+
+    @After
+    public void after() {
+        SecurityManager.setInstance(null);
     }
 
     /**
@@ -772,6 +786,11 @@ public class UnlockCommandTest {
         } catch (ParseException e) {
             assertEquals(e.getMessage(), MESSAGE_IS_ENCRYPTD);
         }
+    }
+
+    @After
+    public void after() {
+        SecurityManager.setInstance(null);
     }
 ```
 ###### \java\seedu\address\logic\parser\FindCommandParserTest.java
@@ -1809,14 +1828,16 @@ public class TimeConvertUtilTest {
 ``` java
 package seedu.address.security;
 
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 import java.util.Optional;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.EncryptOrDecryptException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -1831,8 +1852,10 @@ public class SecurityManagerTest {
     public void test_equalInstance() {
         Security instance1 = SecurityManager.getInstance(storage);
         Security instance2 = SecurityManager.getInstance();
-        Security instance3 = SecurityManager.getInstance(instance1);
-        Security instance4 = SecurityManager.getInstance(instance2);
+        SecurityManager.setInstance(instance1);
+        Security instance3 = SecurityManager.getInstance();
+        SecurityManager.setInstance(instance2);
+        Security instance4 = SecurityManager.getInstance();
 
         Assert.assertTrue(instance1 == instance2);
         Assert.assertTrue(instance2 == instance3);
@@ -1852,12 +1875,6 @@ public class SecurityManagerTest {
     }
 
     @Test
-    public void test_raise() {
-        Security security = SecurityManager.getInstance(storage);
-        security.raise(new NewResultAvailableEvent("new result"));
-    }
-
-    @Test
     public void test_isSecured() {
         Security security = SecurityManager.getInstance(storage);
         Assert.assertFalse(security.isSecured());
@@ -1870,69 +1887,89 @@ public class SecurityManagerTest {
     }
 
     @Test
-    public void test_encryptAddressBook() throws IOException, EncryptOrDecryptException {
-        Security security = SecurityManager.getInstance(storage);
-        security.encryptAddressBook("");
+    public void test_encryptAddressBook() {
+        try {
+            Security security = SecurityManager.getInstance(storage);
+            security.encryptAddressBook("");
+        } catch (IOException | EncryptOrDecryptException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw exception.");
+        }
     }
 
     @Test
-    public void test_decryptAddressBook() throws IOException, EncryptOrDecryptException {
-        Security security = SecurityManager.getInstance(storage);
-        security.decryptAddressBook("");
+    public void test_decryptAddressBook() {
+        try {
+            Security security = SecurityManager.getInstance(storage);
+            security.decryptAddressBook("");
+        } catch (IOException | EncryptOrDecryptException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw exception.");
+        }
+    }
+
+    @After
+    public void after() {
+        SecurityManager.setInstance(null);
     }
 
     private class StorageStub implements Storage {
 
         @Override
         public String getUserPrefsFilePath() {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public void saveUserPrefs(UserPrefs userPrefs) throws IOException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public String getAddressBookFilePath() {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public Optional<ReadOnlyAddressBook> readAddressBook() throws
                 DataConversionException, IOException {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public Optional<ReadOnlyAddressBook> readAddressBook(String filePath)
                 throws DataConversionException, IOException {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
-
+            fail("This method should not be called.");
         }
 
         @Override
@@ -1943,13 +1980,13 @@ public class SecurityManagerTest {
         @Override
         public void encryptAddressBook(String password)
                 throws IOException, EncryptOrDecryptException {
-
+            // simulate the execution
         }
 
         @Override
         public void decryptAddressBook(String password)
                 throws IOException, EncryptOrDecryptException {
-
+            // simulate the execution
         }
     }
 }
@@ -1958,8 +1995,11 @@ public class SecurityManagerTest {
 ``` java
 package seedu.address.security;
 
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.exceptions.EncryptOrDecryptException;
 
@@ -1982,6 +2022,7 @@ public class SecurityStubUtil {
 
         @Override
         public void configSecurity(String... permittedCommands) {
+            fail("This method should not be called.");
         }
 
         @Override
@@ -1991,6 +2032,7 @@ public class SecurityStubUtil {
 
         @Override
         public void raise(BaseEvent event) {
+            EventsCenter.getInstance().post(event);
         }
 
         @Override
@@ -2005,20 +2047,22 @@ public class SecurityStubUtil {
 
         @Override
         public void encryptAddressBook(String password) throws IOException, EncryptOrDecryptException {
+            // simulate the execution
         }
 
         @Override
         public void decryptAddressBook(String password) throws IOException, EncryptOrDecryptException {
+            // simulate the execution
         }
     }
 
     /**
      * Represents a SecurityManager which indicates that the address book is secured.
      */
-    private class SecurityStubIoexception extends BaseSecurityStub {
+    private class SecurityStubIoException extends BaseSecurityStub {
 
 
-        public SecurityStubIoexception(boolean isSecured) {
+        public SecurityStubIoException(boolean isSecured) {
             super(isSecured);
         }
 
@@ -2055,19 +2099,19 @@ public class SecurityStubUtil {
     }
 
     public void initialUnSecuredSecurity() {
-        SecurityManager.getInstance(new BaseSecurityStub(false));
+        SecurityManager.setInstance(new BaseSecurityStub(false));
     }
 
     public void initialSecuredSecurity() {
-        SecurityManager.getInstance(new BaseSecurityStub(true));
+        SecurityManager.setInstance(new BaseSecurityStub(true));
     }
 
-    public void initialSecurityWithIoexception(boolean isSecured) {
-        SecurityManager.getInstance(new SecurityStubIoexception(isSecured));
+    public void initialSecurityWithIoException(boolean isSecured) {
+        SecurityManager.setInstance(new SecurityStubIoException(isSecured));
     }
 
     public void initialSecurityWithEncryptOrDecryptException(boolean isSecured) {
-        SecurityManager.getInstance(new SecurityStubEncryptOrDecryptException(isSecured));
+        SecurityManager.setInstance(new SecurityStubEncryptOrDecryptException(isSecured));
     }
 }
 ```
@@ -2117,20 +2161,25 @@ public class SecurityUtilTest {
     }
 
     @Test
-    public void test_encrypt_noException() throws Exception {
-        String password = "tempPassword";
+    public void test_encrypt_noException() {
+        try {
+            String password = "tempPassword";
 
-        // encrypt normal file
-        write_tempXmlFile("a normal file");
-        SecurityUtil.encrypt(file, password);
+            // encrypt normal file
+            write_tempXmlFile("a normal file");
+            SecurityUtil.encrypt(file, password);
 
-        // encrypt a xml file
-        write_tempXmlFile(SecurityUtil.XML_STARTER + "<addressbook></addressbook>");
-        SecurityUtil.encrypt(file, password);
+            // encrypt a xml file
+            write_tempXmlFile(SecurityUtil.XML_STARTER + "<addressbook></addressbook>");
+            SecurityUtil.encrypt(file, password);
 
-        // encrypt file without content
-        write_tempXmlFile("");
-        SecurityUtil.encrypt(file, password);
+            // encrypt file without content
+            write_tempXmlFile("");
+            SecurityUtil.encrypt(file, password);
+        } catch (IOException | EncryptOrDecryptException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw exception.");
+        }
     }
 
     @Test
