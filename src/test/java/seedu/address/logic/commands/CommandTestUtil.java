@@ -142,6 +142,7 @@ public class CommandTestUtil {
 
     public static final String VALID_TIMESLOT_MIDTERM = "23/09/2017 1830-1930";
     public static final String VALID_TIMESLOT_SOCCER = "07/07/2016 1930-2100";
+    public static final String VALID_TIMESLOT_TENNIS = "07/07/2016 1900-2000";
 
     public static final String VALID_DESCRIPTION_MIDTERM = "MPSH-2A, Seat 727";
     public static final String VALID_DESCRIPTION_SOCCER = "Bring the ball pump and drinks";
