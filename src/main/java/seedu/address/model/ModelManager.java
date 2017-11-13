@@ -13,6 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.CalendarChangedEvent;
 import seedu.address.commons.events.model.CommandModeChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -57,6 +58,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
         indicateAddressBookChanged();
+        indicateCalendarChanged();
     }
 
     @Override
@@ -71,10 +73,22 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author tby1994
+    /**
+     * Raises an event to indicate the calendar has changed
+     */
+    private void indicateCalendarChanged() {
+        raise(new CalendarChangedEvent(addressBook));
+    }
+    //@@author
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
+        if (!target.getBirthday().isEmpty()) {
+            indicateCalendarChanged();
+        }
     }
 
     @Override
@@ -82,6 +96,9 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+        if (!person.getBirthday().isEmpty()) {
+            indicateCalendarChanged();
+        }
     }
 
     @Override
@@ -90,6 +107,9 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+        if (!target.getBirthday().equals(editedPerson.getBirthday())) {
+            indicateCalendarChanged();
+        }
     }
 
     @Override
@@ -115,6 +135,9 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         addressBook.removeTask(target);
         indicateAddressBookChanged();
+        if (!target.getDeadline().isEmpty()) {
+            indicateCalendarChanged();
+        }
     }
 
     //@@author raisa2010
@@ -123,6 +146,9 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addTask(task);
         updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         indicateAddressBookChanged();
+        if (!task.getDeadline().isEmpty()) {
+            indicateCalendarChanged();
+        }
     }
 
     @Override
@@ -132,6 +158,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updateTask(target, editedTask);
         indicateAddressBookChanged();
+        if (!target.getDeadline().equals(editedTask.getDeadline())) {
+            indicateCalendarChanged();
+        }
     }
 
     @Override
