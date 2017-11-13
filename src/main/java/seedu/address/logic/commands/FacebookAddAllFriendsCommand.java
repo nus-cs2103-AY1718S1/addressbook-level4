@@ -33,8 +33,9 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
             + "User may not be registered as 'Test User'";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_PAGING_ERROR = "Error with getting next page";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS = " valid friends added from Facebook!";
-    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED = "User not authenticated, "
-            + "log in to proceed.";
+    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATION_ERROR = "User not authenticated, "
+            + "please input 'facebookconnect' command first.";
+    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED = "Adding all friends from Facebook...";
     public static final String EXTRACT_USER_ID_REGEX = "set=a.(.*?)\\&type";
 
     private static Facebook facebookInstance;
@@ -165,10 +166,11 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         if (!FacebookConnectCommand.isAuthenticated()) {
-            BrowserPanel.setProcessType(COMMAND_WORD);
+            throw new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATION_ERROR);
+            /*BrowserPanel.setProcessType(FacebookConnectCommand.COMMAND_WORD);
             FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
             newFacebookConnect.execute();
-            return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);
+            return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);*/
         } else {
             BrowserPanel.setProcessType(COMMAND_WORD);
             addFirstFriend();
