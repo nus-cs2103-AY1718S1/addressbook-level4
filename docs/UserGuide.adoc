@@ -536,7 +536,7 @@ If you happen to realise that you committed a mistake after closing the applicat
 This command allows you to clear the logfile which you might want to do so to keep the logfile neat and organised.
 Format: 'clearlog' or 'cl'
 [WARNING]
-All important actions made by the user such as add,clear,edit,delete,import,list,redo,undo and starting of application are recorded in the ConnectUs.txt logfile. +
+All important actions made by the user such as add,clear,edit,delete,import,list,redo,undo, upload photo, delete photo, delete all photos and starting of application are recorded in the ConnectUs.txt logfile. +
 Users have the option of clearing the logfile in order to make the log more organised. +
 All information will be wipe out. So use the function with care.
 // end::connectuslog[]

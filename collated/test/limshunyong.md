@@ -1,5 +1,5 @@
 # limshunyong
-###### \java\seedu\address\logic\commands\ExportCommandTest.java
+###### /java/seedu/address/logic/commands/ExportCommandTest.java
 ``` java
 public class ExportCommandTest {
 
@@ -63,7 +63,7 @@ public class ExportCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ImportCommandTest.java
+###### /java/seedu/address/logic/commands/ImportCommandTest.java
 ``` java
 public class ImportCommandTest {
 
@@ -161,7 +161,7 @@ public class ImportCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\SortCommandTest.java
+###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
 public class SortCommandTest {
 
