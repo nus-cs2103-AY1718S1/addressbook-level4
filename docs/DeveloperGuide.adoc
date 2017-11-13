@@ -261,7 +261,7 @@ The `Model`,
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-image::ModelComponentClassDiagram.PNG[width="800"]
+image::ModelComponentClassDiagram.png[width="800"]
 _Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
@@ -275,7 +275,7 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
-image::NewStorageClassDiagram.PNG[width="800"]
+image::NewStorageClassDiagram.png[width="800"]
 _Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
@@ -1155,10 +1155,10 @@ Observe in Figure 4.8.6 below, that the contact shows `Country Unavailable` when
 is used without a country code prefix. When its phone number field is edited in Figure 4.8.7, the country
 name field automatically changes to `Singapore` upon returning the command.
 
-image::country_code demo 1.PNG[width="800"]
+image::country_code demo 1.PNG[width="00"]
 _Figure 4.8.6 : Country code shows unavailable status when no code is entered._
 
-image::country_code demo 2.PNG[width="800"]
+image::country_code demo 2.PNG[width="700"]
 _Figure 4.8.7 : Country name updated once a matching country code is added to phone number._
 
 Note that as shown in Figure 4.8.8, country codes that do not belong to any valid country or state will be
@@ -1897,13 +1897,13 @@ _Figure 4.17.2: From BackupCommand.java; Determines whether backup was successfu
 As shown in Figure 4.17.3 below, a valid file path given will be accepted and the user will be notified of a successful
 backup.
 
-image::backup demo 1.PNG[width="400"]
+image::backup demo 1.PNG[width="600"]
 _Figure 4.17.3 : Country name updated once a matching country code is added to phone number._
 
 Similarly, if a path *does not exist, is read-only, or the addressbook.xml file already exists in the directory*,
 the message shown in Figure 4.17.4 will be displayed instead.
 
-image::backup demo 2.PNG[width="400"]
+image::backup demo 2.PNG[width="600"]
 _Figure 4.17.4 : Copy from multiple contacts_
 
 ==== Design considerations for `Backup`
