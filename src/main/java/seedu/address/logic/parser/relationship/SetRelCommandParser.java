@@ -35,7 +35,7 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
         + "relationship between two persons.";
     public static final String NULL_RELATION_INPUT = "Relationship entered should not be empty.";
     public static final String SAME_INDEX_ERROR = "Index of the two persons must be different.";
-    public static final String INVALID_INDEX = "Indexes entered is invalid or there must be at least two indexes";
+    public static final String INVALID_INDEX = "There must be at least two indexes";
     private static final int size = 3;
     /**
      * Parses the given {@code String} of arguments in the context of the SetRelCommand
