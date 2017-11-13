@@ -427,7 +427,7 @@ image::EmailRequestEventSequenceDiagram.png[width="800"]
 _Figure 5.2.1 Email Request Event Sequence Diagram_
 
 With reference to the diagram above, after `EmailCommand` has executed, it will post a new `EmailRequestEvent` and allows the UI to handle this event. In the UI, we are using java `Desktop` class to
-launch the default mail application registered on users' native desktop. A `URI` instance has to be created and pass to the mail method in the `Desktop` class.
+launch the default mail application registered on users' native desktop. A `URI` instance has to be created and passed to the mail method in the `Desktop` class.
 Refer to the code example below: +
 
 * Code listing:
@@ -464,8 +464,7 @@ To construct a valid `URI` instance, the String `EMAIL_URI_PREFIX` which specifi
 followed by the String `allEmailAddresses`.
 
 Lastly, users' desktop will launch a default mail application where they can compose the subject and message body of the email.
-Moreover, users can also edit their recipients field to include carbon copy or blind carbon copy before sending out
-the email to their recipients.
+Moreover, users can also edit their recipients field or attach files before sending out the email to their recipients.
 
 *Design Considerations*:
 
@@ -625,7 +624,7 @@ image::vCardClassDiagram.png[width="400"]
 _Figure 5.4 Vcard Class Diagram_
 
 With reference to the class diagram of `Vcard` above, a `Vcard` object created is unique for every person that user wants to export. `Vcard` of each person contains a unique
-String `cardDetails` that stores all information about the person such as `Name` and `Phone`.
+string `cardDetails` that stores all information about the person such as `Name` and `Phone`.
 
 The current version of vCard used is 3.0 as shown in the code example below:
 
