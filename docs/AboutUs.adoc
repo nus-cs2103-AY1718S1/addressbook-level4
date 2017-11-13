@@ -10,9 +10,18 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
+=== Derek Nam
+image::500poundbear.png[width="150", align="left"]
+{empty}[http://github.com/500poundbear[github]] [<<dereknam#, portfolio>>]
+
+Role: Developer +
+Responsibilities: UI
+
+'''
+
 === Herbert Ilhan Tanujaya
 image::donjar.png[width="150", align="left"]
-{empty}[https://github.com/donjar[github]]
+{empty}[https://github.com/donjar[github]] [<<herbert#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model
@@ -21,25 +30,16 @@ Responsibilities: Model
 
 === Ken Lim
 image::kenpaxtonlim.png[width="150", align="left"]
-{empty}[http://github.com/kenpaxtonlim[github]]
+{empty}[http://github.com/kenpaxtonlim[github]] [<<kenpaxtonlim#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Logic
 
 '''
 
-=== Derek Nam
-image::500poundbear.png[width="150", align="left"]
-{empty}[http://github.com/500poundbear[github]]
-
-Role: Developer +
-Responsibilities: UI
-
-'''
-
 === Lawrence Li
 image::zzmobie.png[width="150", align="left"]
-{empty}[http://github.com/zzmobie[github]]
+{empty}[http://github.com/zzmobie[github]] [<<lawrence#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Storage
