@@ -190,8 +190,7 @@ and what [green]`PARAMETERS` you need to provide the command with.
 
 // tag::addperson[]
 ==== Adding a Person: `add`
-
-To add a person to KayPoh, use the `add` command.
+Met a new friend? Add him to KayPoh using the the `add` command!
 
 ====
 *Command format*: +
@@ -248,7 +247,6 @@ e.g. `add n/Michael Van Gerwen` is missing the required `PHONE_NUMBER`, `ADDRESS
 
 // tag::editperson[]
 ==== Editing a Person: `edit`
-
 To edit an existing person in KayPoh, use the `edit` command.
 
 ====
@@ -304,7 +302,7 @@ image::edit-example-3-command-result.png[width="700"]
 
 |Input an `INDEX` that is invalid. +
 e.g. `-1`, `0.1`, `abc`
-|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the contacts list*.
 
 |Input invalid parameters in the command +
 |Ensure that all required parameters are valid as specified in the <<representing-persons, Representing Persons>> section.
@@ -314,8 +312,8 @@ e.g. `-1`, `0.1`, `abc`
 
 // tag::favoriteunfavoriteperson[]
 ==== Labelling Favorite Contacts [Since v1.2]: `fav`
-
-To mark person(s) as a favorite contact, use the `fav` command.
+KayPoh helps you to keep track of the people that matter most to you. Label important people as a favorite contacts using
+the `fav` command so that you never miss out on a moment in their lives.
 
 ====
 *Command format*: `[red]#fav# [green]#INDEX [ADDITIONAL INDEXES]...#`
@@ -344,12 +342,11 @@ image::favorite-after-find-command-result.png[width="800"]
 
 |Input an `INDEX` that is invalid. +
 e.g. `-1`, `0.1`, `abc`
-|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the contacts list*.
 |===
 
 ==== Removing Favorite Contacts [Since v1.2]: `unfav`
-
-To remove person(s) from your favorite contacts, use the `unfav` command.
+To remove someone from your favorite contacts, use the `unfav` command.
 
 ====
 *Command format*: `[red]#unfav# [green]#INDEX [ADDITIONAL INDEXES]...#`
@@ -378,14 +375,13 @@ image::unfavorite-after-find-command-result.png[width="800"]
 
 |Input an `INDEX` that is invalid. +
 e.g. `-1`, `0.1`, `abc`
-|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the contacts list*.
 |===
 // end::favoriteunfavoriteperson[]
 
 // tag::deletebyindex[]
 ==== Deleting a Person: `delete`
-
-To delete person(s) from KayPoh, use the `delete` command.
+Not interested in a contact anymore? Remove him from KayPoh using the `delete` command!
 
 ====
 *Command format*:
@@ -427,12 +423,11 @@ image::delete-by-multiple-tags-command-result.png[width="700"]
 
 |Input an `INDEX` that is invalid. +
 e.g. `-1`, `0.1`, `abc`
-|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the contacts list*.
 |===
 // end::deletebyindex[]
 
 ==== Clearing All Persons: `clear`
-
 To clear all entries from KayPoh, use the `clear` command.
 
 ====
@@ -447,8 +442,7 @@ image::clear-command-result.png[width="350"]
 === Navigating KayPoh
 
 ==== Listing Persons: `list`
-
-To have all your contacts displayed in KayPoh, use the `list` command.
+To have all your contacts displayed in your contacts list, use the `list` command.
 
 ====
 *Command format*: `[red]#list#` +
@@ -460,21 +454,20 @@ To have all your contacts displayed in KayPoh, use the `list` command.
 `[red]#list# [blue]#-fav#`
 ====
 
-You should see the person list populated with all of your contacts after executing the command.
+You should see your contacts list populated with your contacts after executing the command.
 
-.Person list populated with all contacts
+.Contacts list populated with all contacts
 image::list-command-result.png[width="350"]
 
 // tag::select[]
 ==== Selecting a Person: `select`
-
-To view the social media feed of a contact, use the `select` command.
+Want to stalk someone's social media feed? Use the `select` command!
 ====
 *Command format*: `[red]#select# [green]#INDEX [SOCIAL_MEDIA_PLATFORM]#` +
 *Alias*: `[red]#s#`
 ====
 
-* The [green]`INDEX` refers to the index number of the person to be stalked in the person list.
+* The [green]`INDEX` refers to the index number of the person to be stalked in the contacts list.
 * The [green]`SOCIAL_MEDIA_PLATFORM` identifies which social media account belonging to the person you wish to view.
 * If no [green]`SOCIAL_MEDIA_PLATFORM` is specified, the feed of a random social media account associated
 with the person will be displayed in the browser window. If there is no social media account associated with
@@ -488,7 +481,7 @@ image::stalk-command-result.png[width="800"]
 *Example*:
 
 * `[red]#select# [green]#1 facebook#` +
-Displays the Facebook account of the first person in the current person list
+Displays the Facebook account of the first person in the current contacts list
 
 .Common Mistakes
 |===
@@ -496,12 +489,12 @@ Displays the Facebook account of the first person in the current person list
 
 |Input an `INDEX` that is invalid. +
 e.g. `-1`, `0.1`, `abc`
-|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the contacts list*.
 
 |Input a `SOCIAL_MEDIA_PLATFORM` that the user does not have an associated account for. +
-e.g. If the first user in the person list does not have an instagram account, and the command `stalk 1 instagram` is entered.
+e.g. If the first user in the contacts list does not have an instagram account, and the command `stalk 1 instagram` is entered.
 |Ensure that the selected user has an associated account for the `SOCIAL_MEDIA_PLATFORM` specified. The social media accounts associated with
-a user can be found in the person list.
+a user can be found in the contacts list.
 
 image:stalk-command-social-info.png[width="350"]
 |===
@@ -510,7 +503,7 @@ image:stalk-command-social-info.png[width="350"]
 // tag::find-by-tag[]
 [[find-by-tag]]
 ==== Finding Persons: `find`
-To find contacts by some criteria, use the `find` command.
+Finding the person you're looking for doesn't have to be slow and tedious. With KayPoh, you can simply use the `find` command!
 
 ====
 *Command format*:
@@ -523,24 +516,24 @@ To find contacts by some criteria, use the `find` command.
 *Alias*: `[red]#f#` +
 ====
 
-* Contacts that match *any* of the provided [green]`KEYWORDS` will be displayed in the person list.
+* Contacts that match *any* of the provided [green]`KEYWORDS` will be displayed in the contacts list.
 * The search is case insensitive. e.g `john` will match `John`.
 * The order of the [green]`KEYWORDS` does not matter. e.g. `John Doe` will match `Doe John`.
 * Only full words will be matched e.g. `Jo` will not match `John`.
 
-You should see the persons that meet the provided criteria displayed in the person list after executing the command.
+You should see the persons that meet the provided criteria displayed in the contacts list after executing the command.
 
-.Person list after finding contacts with the tag `friends`
+.Contacts list after finding contacts with the tag `friends`
 image::find-command-result.png[width="300"]
 
 *Examples*:
 
 * `[red]#find# [green]#John#` +
-Displays persons with the names `john` and `John Doe` in the person list.
+Displays persons with the names `john` and `John Doe` in the contacts list.
 * `[red]#find# [green]#Betsy Tim John#` +
-Displays persons with names `Betsy`, `Tim`, or `John` in the person list.
+Displays persons with names `Betsy`, `Tim`, or `John` in the contacts list.
 * `[red]#find# [blue]#-tag# [green]#friends colleagues#` +
-Displays persons with tags `friends` or `colleagues` in the person list.
+Displays persons with tags `friends` or `colleagues` in the contacts list.
 // end::find-by-tag[]
 
 // tag::sort[]
@@ -564,12 +557,12 @@ To sort your contacts list, use the `sort` command.
 * Sorting with the [blue]`name` option orders contacts by their `name` in lexicographic order.
 * Sorting with the [blue]`recent` option orders contacts by when they were last added, updated, or stalked.
 
-The person list should be sorted based on the specified option after executing the command.
+The contacts list should be sorted based on the specified option after executing the command.
 
-.Person list after executing a default sort
+.contacts list after executing a default sort
 image::sort-command-default-result.png[width="300"]
 
-.Person list after executing a sort by `name`
+.contacts list after executing a sort by `name`
 image::sort-command-name-result.png[width="300"]
 
 *Examples*:
@@ -628,7 +621,7 @@ been connected, you can use the other Facebook features that KayPoh offers.
 // tag::facebookpost[]
 [[facebookpost]]
 =====  Posting a Status to Facebook [Since v1.3]: `facebookpost`
-To post a status to your Facebook wall, use the `facebookpost` command.
+Have a thought you want to share with your friends on Facebook? Post it to your wall using the `facebookpost` command!
 
 ====
 *Command format*: `[red]#facebookpost# [green]#STATUS#` +
@@ -654,7 +647,7 @@ Posts the status 'hello world!' to your Facebook wall.
 // tag::facebooklink[]
 [[facebooklink]]
 =====  Sharing a Link to Facebook [Since v1.4]: `facebooklink`
-To share a link on your Facebook wall, use the `facebooklink` command.
+Have an interesting link? Share it on your Facebook wall with the `facebooklink` command.
 
 ====
 *Command format*: `[red]#facebooklink# [green]#LINK_URL#` +
@@ -716,7 +709,8 @@ Adds the Facebook user with the display name 'Barack Obama' as a contact to KayP
 // tag::facebookaddallfriends[]
 [[facebookaddallfriends]]
 ===== Adding Your Facebook Friends [Since v1.5]: `facebookaddallfriends`
-To add all of your Facebook friends as contacts in KayPoh, use the `facebookaddallfriends` command.
+To make getting started with KayPoh even easier, you can import all of your Facebook friends as contacts using the
+`facebookaddallfriends` command.
 
 ====
 *Command format*: `[red]#facebookaddallfriends#` +
@@ -819,8 +813,7 @@ To stops synchronizing your contact information with the previously configured c
 === Miscellaneous
 
 ==== Changing Themes: `theme` [Since v1.4]
-
-To change the theme of the application, use the `theme` command.
+Variety is the spice of life! To change the theme of the application, use the `theme` command.
 
 ====
 *Command format*:
@@ -841,8 +834,8 @@ image::Ui-day.png[width="800"]
 image::Ui-night.png[width="800"]
 
 ==== Listing Entered Commands: `history`
+Forgot what you just did? Use the `history` command to list all the commands that you have entered in reverse chronological order.
 
-To list all the commands that you have entered in reverse chronological order, use the `history` command. +
 ====
 *Command format*: `[red]#history#`
 ====
@@ -854,8 +847,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 // tag::undoredo[]
 ==== Undoing Previous Command: `undo`
-
-To restore KayPoh to the state before the previous _undoable_ command was executed, use the `undo` command. +
+We all make mistakes sometimes. To restore KayPoh to the state before the previous _undoable_ command was executed, use the `undo` command. +
 
 ====
 *Command format*: `[red]#undo#` +
@@ -918,7 +910,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 // end::undoredo[]
 
 ==== Exiting the Application: `exit`
-
 To exit the KayPoh, use the `exit` command.
 
 ====
@@ -929,7 +920,6 @@ To exit the KayPoh, use the `exit` command.
 The application will close upon executing of this command.
 
 ==== Viewing Help: `help`
-
 To open the help window, use the `help` command.
 
 ====
