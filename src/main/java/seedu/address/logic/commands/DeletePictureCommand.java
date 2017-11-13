@@ -24,7 +24,7 @@ public class DeletePictureCommand extends UndoableCommand {
     public static final String MESSAGE_DELETE_PICTURE_SUCCESS = "%1$s profile picture has been removed!";
     public static final String MESSAGE_DELETE_PICTURE_FAILURE = "%1$s does not have a profile picture!";
 
-    private final ReadOnlyPerson personToUpdate;
+    private ReadOnlyPerson personToUpdate;
 
     public DeletePictureCommand() throws CommandException {
         personToUpdate = selectPersonForCommand();
@@ -37,7 +37,7 @@ public class DeletePictureCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            model.removeProfilePicture(personToUpdate);
+            personToUpdate = model.removeProfilePicture(personToUpdate);
         } catch (ProfilePictureNotFoundException e) {
             throw new CommandException(String.format(MESSAGE_DELETE_PICTURE_FAILURE, personToUpdate.getName()));
         }

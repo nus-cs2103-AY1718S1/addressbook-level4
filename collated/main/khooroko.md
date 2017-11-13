@@ -40,7 +40,6 @@ public class JumpToNearbyListRequestEvent extends BaseEvent {
  */
 public class NearbyPersonNotInCurrentListEvent extends BaseEvent {
 
-
     private final PersonCard newSelection;
 
     public NearbyPersonNotInCurrentListEvent(PersonCard newSelection) {
@@ -64,7 +63,6 @@ public class NearbyPersonNotInCurrentListEvent extends BaseEvent {
  */
 public class NearbyPersonPanelSelectionChangedEvent extends BaseEvent {
 
-
     private final PersonCard newSelection;
 
     public NearbyPersonPanelSelectionChangedEvent(PersonCard newSelection) {
@@ -81,6 +79,69 @@ public class NearbyPersonPanelSelectionChangedEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\Command.java
+``` java
+    /**
+     * Retrieves a person based on the input {@code Index} for the command to be applied on.
+     * @param index must be a positive integer.
+     * @return the person in the specified index in the last shown list.
+     */
+    public ReadOnlyPerson selectPersonForCommand(Index index) throws CommandException {
+        List<ReadOnlyPerson> lastShownList = ListObserver.getCurrentFilteredList();
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        return lastShownList.get(index.getZeroBased());
+    }
+
+    /**
+     * Retrieves the current person for the command to be applied on.
+     */
+    public ReadOnlyPerson selectPersonForCommand() throws CommandException {
+        if (ListObserver.getSelectedPerson() == null) {
+            throw new CommandException(Messages.MESSAGE_NO_PERSON_SELECTED);
+        }
+        return ListObserver.getSelectedPerson();
+    }
+
+    /**
+     * Selects the specified person if he/she exists in the list. If he/she does not, a deselection is done.
+     * @param person the person to be selected.
+     */
+    public void reselectPerson(ReadOnlyPerson person) {
+        if (ListObserver.getCurrentFilteredList().contains(person)) {
+            EventsCenter.getInstance().post(new
+                    JumpToListRequestEvent(ListObserver.getIndexOfPersonInCurrentList(person)));
+        } else {
+            model.deselectPerson();
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\commands\DeleteCommand.java
+``` java
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        boolean requireJump = personToDelete.equals(model.getSelectedPerson())
+                && ListObserver.getIndexOfPersonInCurrentList(personToDelete).getOneBased()
+                != ListObserver.getCurrentFilteredList().size();
+        Index index = ListObserver.getIndexOfPersonInCurrentList(personToDelete);
+        try {
+            model.deletePerson(personToDelete);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+        }
+        ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        if (requireJump) {
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+        } else {
+            model.deselectPerson();
+        }
+
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName()));
+    }
+
+```
 ###### \java\seedu\address\logic\commands\NearbyCommand.java
 ``` java
 /**
@@ -94,19 +155,14 @@ public class NearbyCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the person identified by the index number used in the currently selected person's "
             + "nearby listing. If no index is provided, the next person in the nearby list is selected.\n"
-            + "Parameters: INDEX (optional, must be a positive integer if present)\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_NEARBY_PERSON_SUCCESS = "Selected person in same area: %1$s";
     public static final String MESSAGE_INVALID_NEARBY_INDEX = "The index provided is invalid. There are only %d "
             + "contacts in this area";
-    public static final String MESSAGE_NO_NEARBY_PERSON = "There is only one person in this area";
 
     private final Index targetIndex;
-
-    public NearbyCommand() {
-        this.targetIndex = null;
-    }
 
     public NearbyCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -117,31 +173,20 @@ public class NearbyCommand extends Command {
 
         List<ReadOnlyPerson> nearbyList = model.getNearbyPersons();
 
-        if (nearbyList == null || nearbyList.size() == 0) {
+        if (ListObserver.getSelectedPerson() == null) {
             throw new CommandException(Messages.MESSAGE_NO_PERSON_SELECTED);
         }
 
-        if (nearbyList.size() == 1) {
-            throw new CommandException(MESSAGE_NO_NEARBY_PERSON);
+        if (targetIndex.getZeroBased() >= nearbyList.size()) {
+            throw new CommandException(String.format(MESSAGE_INVALID_NEARBY_INDEX, nearbyList.size()));
         }
 
-        Index nearbyIndex;
+        model.updateSelectedPerson(nearbyList.get(targetIndex.getZeroBased()));
+        EventsCenter.getInstance().post(new JumpToNearbyListRequestEvent(targetIndex));
 
-        if (targetIndex != null) {
-            if (targetIndex.getZeroBased() >= nearbyList.size()) {
-                throw new CommandException(String.format(MESSAGE_INVALID_NEARBY_INDEX, nearbyList.size()));
-            }
-            nearbyIndex = targetIndex;
-        } else {
-            nearbyIndex = Index.fromZeroBased((nearbyList.indexOf(model.getSelectedPerson()) + 1) % nearbyList.size());
-        }
+        String currentList = ListObserver.getCurrentListName();
 
-        model.updateSelectedPerson(nearbyList.get(nearbyIndex.getZeroBased()));
-        EventsCenter.getInstance().post(new JumpToNearbyListRequestEvent(nearbyIndex));
-
-        String currentList = listObserver.getCurrentListName();
-
-        return new CommandResult(currentList + String.format(MESSAGE_NEARBY_PERSON_SUCCESS, nearbyIndex.getOneBased()));
+        return new CommandResult(currentList + String.format(MESSAGE_NEARBY_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }
 
@@ -149,25 +194,24 @@ public class NearbyCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof NearbyCommand // instanceof handles nulls
-                && ((this.targetIndex == null && ((NearbyCommand) other).targetIndex == null) // both targetIndex null
-                || this.targetIndex.equals(((NearbyCommand) other).targetIndex))); // state check
+                && this.targetIndex.equals(((NearbyCommand) other).targetIndex)); // state check
     }
 }
 ```
 ###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
- * Sorts the masterlist by the input argument (i.e. "name" or "debt").
+ * Sorts the address book by the input argument (i.e. "name" or "debt").
  */
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
-    public static final String MESSAGE_SUCCESS = "List has been sorted by %1$s!";
+    public static final String DEFAULT_ORDERING = "name";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the addressbook by specified ordering in "
             + "intuitive order. If no ordering is specified, the addressbook is sorted by name.\n"
             + "Parameters: ORDERING (i.e. \"name\", \"debt\", \"deadline\" or \"cluster\")\n"
             + "Example: " + COMMAND_WORD + " debt";
-    public static final String DEFAULT_ORDERING = "name";
+    public static final String MESSAGE_SUCCESS = "List has been sorted by %1$s!";
 
     private final String order;
 
@@ -189,9 +233,9 @@ public class SortCommand extends Command {
             throw new CommandException(ive.getMessage());
         }
 
-        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
 
-        String currentList = listObserver.getCurrentListName();
+        String currentList = ListObserver.getCurrentListName();
 
         return new CommandResult(currentList + String.format(MESSAGE_SUCCESS, order));
     }
@@ -232,7 +276,7 @@ public class ThemeCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ThemeCommand); // instanceof handles nulls
+                || (other instanceof ThemeCommand); // all ThemeCommands are the same
     }
 }
 ```
@@ -264,7 +308,7 @@ public class ThemeCommand extends Command {
 ###### \java\seedu\address\logic\parser\NearbyCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new NearbyCommand object
+ * Parses input arguments and creates a new {@code NearbyCommand} object
  */
 public class NearbyCommandParser implements Parser<NearbyCommand> {
 
@@ -275,12 +319,8 @@ public class NearbyCommandParser implements Parser<NearbyCommand> {
      */
     public NearbyCommand parse(String args) throws ParseException {
         try {
-            if (args.trim().equals("")) {
-                return new NearbyCommand();
-            } else {
-                Index index = ParserUtil.parseIndex(args);
-                return new NearbyCommand(index);
-            }
+            Index index = ParserUtil.parseIndex(args);
+            return new NearbyCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, NearbyCommand.MESSAGE_USAGE));
@@ -304,7 +344,7 @@ public class NearbyCommandParser implements Parser<NearbyCommand> {
 ###### \java\seedu\address\logic\parser\SortCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new EditCommand object
+ * Parses input arguments and creates a new {@code EditCommand} object
  */
 public class SortCommandParser implements Parser<SortCommand> {
     /**
@@ -387,7 +427,7 @@ public class SortCommandParser implements Parser<SortCommand> {
 ###### \java\seedu\address\model\person\Cluster.java
 ``` java
 /**
- * Represents a Person's cluster in the address book.
+ * Represents a Person's {@code Cluster} in the address book.
  * Guarantees: immutable; can only be declared with a valid {@code PostalCode}
  */
 public class Cluster {
@@ -587,7 +627,8 @@ public class PostalCode {
             break;
         case "deadline":
             internalList.sort((Person p1, Person p2) -> p1.getDeadline().compareTo(p2.getDeadline()));
-            internalList.sort((Person p1, Person p2) -> Boolean.compare(p1.isWhitelisted(), p2.isWhitelisted()));
+            internalList.sort((Person p1, Person p2) -> Boolean.compare(p1.getDebt().toNumber() == 0,
+                    p2.getDebt().toNumber() == 0));
             break;
         default:
             throw new IllegalArgumentException("Invalid sort ordering");
@@ -777,7 +818,7 @@ public class ClusterUtil {
     }
 
     /**
-     * @return address book data, if available and readable, or backup address book data if it is not.
+     * Returns address book data, if available and readable, or backup address book data if it is not.
      * If both are unavailable, a sample address book is returned. If backup address book is in the wrong format
      * or is unreadable, an empty address book is returned.
      */
@@ -836,11 +877,11 @@ public class InfoPanel extends UiPart<Region> {
     private static final String MESSAGE_INFO_HOME_PHONE_FIELD = "Home: ";
     private static final String MESSAGE_INFO_OFFICE_PHONE_FIELD = "Office: ";
     private static final String MESSAGE_INFO_EMAIL_FIELD = "Email: ";
-    private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
+    private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "Postal Code: ";
     private static final String MESSAGE_INFO_CLUSTER_FIELD = "General Location: ";
-    private static final String MESSAGE_INFO_DEBT_FIELD = "Current Debt: $";
-    private static final String MESSAGE_INFO_TOTAL_DEBT_FIELD = "Total Debt: $";
-    private static final String MESSAGE_INFO_INTEREST_FIELD = "Interest: ";
+    private static final String MESSAGE_INFO_DEBT_FIELD = "Current Debt ($): ";
+    private static final String MESSAGE_INFO_TOTAL_DEBT_FIELD = "Total Debt ($): ";
+    private static final String MESSAGE_INFO_INTEREST_FIELD = "Interest (%): ";
     private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date Borrowed: ";
     private static final String MESSAGE_INFO_DEADLINE_FIELD = "Deadline: ";
     private static final String MESSAGE_INFO_DATE_REPAID_FIELD = "Date Repaid: ";
@@ -856,6 +897,12 @@ public class InfoPanel extends UiPart<Region> {
 
     @FXML
     private Pane pane;
+    @FXML
+    private ScrollPane personInfoPanel;
+    @FXML
+    private SplitPane splitPane;
+    @FXML
+    private VBox content;
     @FXML
     private Label name;
     @FXML
@@ -919,13 +966,14 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private StackPane progressBarPlaceholder;
     @FXML
-    private StackPane profilePicPlaceholder;
+    private GridPane personInfoTable;
+    @FXML
+    private AnchorPane profilePicPlaceholder;
     @FXML
     private Text debtRepaymentField;
 
     public InfoPanel(Logic logic) {
         super(FXML);
-
         this.logic = logic;
         loadDefaultPage();
         registerAsAnEventHandler(this);
@@ -952,6 +1000,9 @@ public class InfoPanel extends UiPart<Region> {
         nearbyPersonField.setText(MESSAGE_INFO_NEARBY_PERSON_FIELD);
         debtRepaymentField.setText(MESSAGE_INFO_DEBT_REPAYMENT_FIELD);
         bindListeners(person);
+        if (splitPane.lookup(".split-pane-divider") != null) {
+            splitPane.lookup(".split-pane-divider").setMouseTransparent(true);
+        }
     }
 
     /**
@@ -962,6 +1013,8 @@ public class InfoPanel extends UiPart<Region> {
         nearbyPersonListPanel = new NearbyPersonListPanel(logic.getAllPersons(), person);
         nearbyPersonListPanelPlaceholder.getChildren().clear();
         nearbyPersonListPanelPlaceholder.getChildren().add(nearbyPersonListPanel.getRoot());
+        personInfoPanel.setVisible(true);
+        personInfoPanel.setContent(content);
     }
 
 ```
@@ -998,40 +1051,15 @@ public class InfoPanel extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-font-size:" + "15px");
+            tagLabel.setStyle("-fx-font-size:" + "20px");
             tags.getChildren().add(tagLabel);
         });
         logger.finest("All tags for " + person.getName().toString() + " initialized in info");
     }
 
-    /**
-     * Sets all info fields to not display anything.
-     */
-    private void loadDefaultPage() {
-        Label label;
-        Text text;
-        for (Node node: pane.getChildren()) {
-            if (node instanceof Label) {
-                label = (Label) node;
-                label.setText("");
-            } else if (node instanceof Text) {
-                text = (Text) node;
-                text.setText("");
-            } else if (node instanceof TextFlow) {
-                for (Node subNode: ((TextFlow) node).getChildren()) {
-                    if (subNode instanceof Text) {
-                        text = (Text) subNode;
-                        text.setText("");
-                    }
-                    if (subNode instanceof Label) {
-                        label = (Label) subNode;
-                        label.setText("");
-                    }
-                }
-            }
-        }
-    }
-
+```
+###### \java\seedu\address\ui\InfoPanel.java
+``` java
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -1079,6 +1107,8 @@ public class InfoPanel extends UiPart<Region> {
         resetNearbyPersonListPanel(event.getNewSelection().person);
         resetDebtRepaymentProgressBar(event.getNewSelection().person);
         resetDebtorProfilePicture(event.getNewSelection().person);
+        personInfoPanel.setVisible(true);
+        personInfoPanel.setContent(content);
     }
 
     @Subscribe
@@ -1088,10 +1118,30 @@ public class InfoPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleDeselectionEvent(DeselectionEvent event) {
-        unregisterAsAnEventHandler(this);
+        loadDefaultPage();
     }
 
 }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Changes the current theme.
+     */
+    private void changeTheme() {
+        for (String stylesheet : getRoot().getStylesheets()) {
+            if (stylesheet.endsWith("DarkTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/BrightTheme.css");
+                break;
+            } else if (stylesheet.endsWith("BrightTheme.css")) {
+                getRoot().getStylesheets().remove(stylesheet);
+                getRoot().getStylesheets().add("/view/DarkTheme.css");
+                break;
+            }
+        }
+    }
+
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
@@ -1110,30 +1160,12 @@ public class InfoPanel extends UiPart<Region> {
     }
 
     /**
-     * Ensures that the {@code InfoPanel} is cleared when the current list is empty (via {@code DeleteCommand} and
-     * {@code ClearCommand}).
-     */
-    @Subscribe
-    private void handleDeselectionEvent(DeselectionEvent event) {
-        infoPanel = new InfoPanel(logic);
-        infoPanelPlaceholder.getChildren().clear();
-        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
-    }
-
-    /**
-     * Changes theme.
+     * Handles a request to change theme.
      */
     @Subscribe
     private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
-        for (String stylesheet : getRoot().getStylesheets()) {
-            if (stylesheet.endsWith("DarkTheme.css")) {
-                getRoot().getStylesheets().remove(stylesheet);
-                getRoot().getStylesheets().add("/view/BrightTheme.css");
-            } else if (stylesheet.endsWith("BrightTheme.css")) {
-                getRoot().getStylesheets().remove(stylesheet);
-                getRoot().getStylesheets().add("/view/DarkTheme.css");
-            }
-        }
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        changeTheme();
     }
 }
 ```
@@ -1202,6 +1234,11 @@ public class NearbyPersonListPanel extends UiPart<Region> {
         unregisterAsAnEventHandler(this);
     }
 
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        unregisterAsAnEventHandler(this);
+    }
+
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */
@@ -1249,6 +1286,7 @@ public class NearbyPersonListPanel extends UiPart<Region> {
     @Subscribe
     private void handleDeselectionEvent(DeselectionEvent event) {
         personListView.getSelectionModel().clearSelection();
+        selectionDisplay.setText(ListObserver.getCurrentListName());
     }
 
     @Subscribe
@@ -1267,158 +1305,4 @@ public class NearbyPersonListPanel extends UiPart<Region> {
         EventsCenter.getInstance().unregisterHandler(handler);
     }
 
-```
-###### \resources\view\InfoPanel.fxml
-``` fxml
-<StackPane fx:id="infoPanel" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
-      <StackPane.margin>
-         <Insets />
-      </StackPane.margin>
-   <VBox fx:id="pane" prefHeight="600.0" prefWidth="800.0">
-      <children>
-         <Label fx:id="name" alignment="TOP_LEFT" prefHeight="80.0" prefWidth="360.0" styleClass="window_big_label" text="\$name" wrapText="true">
-            <VBox.margin>
-               <Insets bottom="2.0" top="5.0" />
-            </VBox.margin></Label>
-         <Text fx:id="debtRepaymentField" fill="GREY" text="Debt repayment progress" />
-         <StackPane fx:id="progressBarPlaceholder" alignment="CENTER_LEFT">
-            <VBox.margin>
-               <Insets bottom="10.0" />
-            </VBox.margin>
-         </StackPane>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="debtField" fill="gray" styleClass="window_small_label" text="Current Debt: " />
-               <Label fx:id="debt" styleClass="window_small_label" text="\$debt" />
-            </children>
-            <VBox.margin>
-               <Insets top="3.0" />
-            </VBox.margin>
-         </TextFlow>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="totalDebtField" fill="gray" styleClass="window_small_label" text="Total Debt: " />
-               <Label fx:id="totalDebt" styleClass="window_small_label" text="\$totalDebt" />
-            </children>
-            <VBox.margin>
-               <Insets top="3.0" />
-            </VBox.margin>
-         </TextFlow>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="interestField" fill="GREY" styleClass="window_small_label" text="Interest: " />
-               <Label fx:id="interest" styleClass="window_small_label" text="\$interest" />
-            </children>
-            <VBox.margin>
-               <Insets top="3.0" />
-            </VBox.margin>
-         </TextFlow>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="dateBorrowField" fill="gray" styleClass="window_small_label" text="Date borrowed: " />
-               <Label fx:id="dateBorrow" styleClass="window_small_label" text="\$dateBorrow" />
-            </children>
-            <VBox.margin>
-               <Insets top="3.0" />
-            </VBox.margin>
-         </TextFlow>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="deadlineField" fill="GREY" styleClass="window_small_label" text="Deadline: " />
-               <Label fx:id="deadline" styleClass="window_small_label" text="\$deadline" />
-            </children>
-            <VBox.margin>
-               <Insets top="3.0" />
-            </VBox.margin>
-          </TextFlow>
-          <TextFlow prefHeight="50.0" prefWidth="400.0">
-              <children>
-               <Text fx:id="dateRepaidField" fill="gray" styleClass="window_small_label" text="Date Repaid: " />
-               <Label fx:id="dateRepaid" styleClass="window_small_label" text="\$dateRepaid" />
-            </children>
-            <VBox.margin>
-               <Insets bottom="12.0" top="3.0" />
-            </VBox.margin>
-         </TextFlow>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="handphoneField" fill="gray" styleClass="window_small_label" text="HP: " />
-               <Label fx:id="handphone" styleClass="window_small_label" text="\$phone" />
-            </children>
-            <VBox.margin>
-               <Insets top="3.0" />
-            </VBox.margin>
-         </TextFlow>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="homePhoneField" fill="gray" styleClass="window_small_label" text="HP: " />
-               <Label fx:id="homePhone" styleClass="window_small_label" text="\$phone" />
-            </children>
-            <VBox.margin>
-               <Insets top="3.0" />
-            </VBox.margin>
-         </TextFlow>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="officePhoneField" fill="gray" styleClass="window_small_label" text="HP: " />
-               <Label fx:id="officePhone" styleClass="window_small_label" text="\$phone" />
-            </children>
-            <VBox.margin>
-               <Insets top="3.0" />
-            </VBox.margin>
-         </TextFlow>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="addressField" fill="gray" styleClass="window_small_label" text="Address: " />
-               <Label fx:id="address" alignment="TOP_LEFT" maxHeight="800.0" styleClass="window_small_label" text="\$address" wrapText="true" />
-            </children>
-            <VBox.margin>
-               <Insets top="3.0" />
-            </VBox.margin>
-         </TextFlow>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="postalCodeField" fill="gray" styleClass="window_small_label" text="S" />
-               <Label fx:id="postalCode" styleClass="window_small_label" text="\$postalCode" />
-            </children>
-            <VBox.margin>
-               <Insets top="3.0" />
-            </VBox.margin>
-         </TextFlow>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="clusterField" fill="gray" styleClass="window_small_label" text="General Location: " />
-               <Label fx:id="cluster" styleClass="window_small_label" text="\$cluster" />
-            </children>
-            <VBox.margin>
-               <Insets top="3.0" />
-            </VBox.margin>
-         </TextFlow>
-         <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-               <Text fx:id="emailField" fill="gray" styleClass="window_small_label" text="Email: " />
-               <Label fx:id="email" styleClass="window_small_label" text="\$email" />
-            </children>
-            <VBox.margin>
-               <Insets bottom="10.0" top="3.0" />
-            </VBox.margin>
-         </TextFlow>
-         <FlowPane fx:id="tags" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="774.0" />
-         <Text fx:id="nearbyPersonField" fill="gray" styleClass="window_small_label" text="Other contacts nearby: " />
-         <HBox fx:id="nearbyPersonList" minHeight="200" prefHeight="200" prefWidth="340">
-            <padding>
-               <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-            <StackPane fx:id="nearbyPersonListPanelPlaceholder" HBox.hgrow="ALWAYS" />
-         </HBox>
-         <StackPane fx:id="profilePicPlaceholder" prefHeight="0.0" prefWidth="774.0" translateX="200.0" translateY="-650.0" />
-      </children>
-   </VBox>
-</StackPane>
-```
-###### \resources\view\NearbyPersonListPanel.fxml
-``` fxml
-<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <ListView fx:id="nearbyPersonListView" HBox.hgrow="ALWAYS" orientation="HORIZONTAL"/>
-</HBox>
 ```

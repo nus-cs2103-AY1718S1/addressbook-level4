@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import seedu.address.commons.core.ListObserver;
 import seedu.address.model.AddressBook;
 
 /**
@@ -17,8 +19,9 @@ public class ClearCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
-        model.deselectPerson();
         model.resetData(new AddressBook());
+        ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+        model.deselectPerson();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

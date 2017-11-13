@@ -27,6 +27,7 @@ public class SetPathCommand extends UndoableCommand {
         File pathChecker = new File(path);
         if (pathChecker.exists()) {
             ProfilePicturesFolder.setPath(reformatPath(path));
+            model.setProfilePicsPath(reformatPath(path));
         } else {
             throw new CommandException(MESSAGE_FAILURE);
         }

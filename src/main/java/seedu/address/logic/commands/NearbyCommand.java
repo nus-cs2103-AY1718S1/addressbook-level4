@@ -40,7 +40,7 @@ public class NearbyCommand extends Command {
 
         List<ReadOnlyPerson> nearbyList = model.getNearbyPersons();
 
-        if (nearbyList == null || nearbyList.size() == 0) {
+        if (ListObserver.getSelectedPerson() == null) {
             throw new CommandException(Messages.MESSAGE_NO_PERSON_SELECTED);
         }
 

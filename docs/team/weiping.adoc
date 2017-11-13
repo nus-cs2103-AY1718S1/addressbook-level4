@@ -175,6 +175,8 @@ include::../DeveloperGuide.adoc[tag=theme]
 * Adding a display for current list and selected index (Pull request https://github.com/CS2103AUG2017-T17-B1/main/pull/249[#249])
 
 ==== Miscellaneous
+* Restructure commands (Pull request https://github.com/CS2103AUG2017-T17-B1/main/pull/29[#296])
+* Raise and fix https://github.com/CS2103AUG2017-T17-B1/main/issues?utf8=%E2%9C%93&q=is%3Aissue%20label%3Abug%20[bugs]
 * Assist teammates with debugging tests
 * Report bugs and raise suggestions for another team (Issues https://github.com/CS2103AUG2017-T10-B3/main/issues/78[#78], https://github.com/CS2103AUG2017-T10-B3/main/issues/76[#76], https://github.com/CS2103AUG2017-T10-B3/main/issues/82[#82])
 * Offer a bug fix for reuse (Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/196[#196])
