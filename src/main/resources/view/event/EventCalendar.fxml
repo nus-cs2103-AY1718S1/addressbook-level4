@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author dennaloh -->
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="CENTER" prefHeight="600.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+    <Label fx:id="monthName" text="January" styleClass="calender-title-property-value" GridPane.rowIndex="0" GridPane.columnSpan="7"/>
+    <VBox prefWidth="80" prefHeight="80"
+          GridPane.columnIndex="0" GridPane.rowIndex="1"
+          GridPane.columnSpan="1">
+        <Label fx:id="daySun" styleClass="calender-property1-value" text="S" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="80" prefHeight="80"
+          GridPane.columnIndex="1" GridPane.rowIndex="1"
+          GridPane.columnSpan="1">
+        <Label fx:id="dayM" styleClass="calender-property2-value" text="M" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="80" prefHeight="80"
+          GridPane.columnIndex="2" GridPane.rowIndex="1"
+          GridPane.columnSpan="1">
+        <Label fx:id="dayT" styleClass="calender-property3-value" text="T" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="80" prefHeight="80"
+          GridPane.columnIndex="3" GridPane.rowIndex="1"
+          GridPane.columnSpan="1">
+        <Label fx:id="dayW" styleClass="calender-property4-value" text="W" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="80" prefHeight="80"
+          GridPane.columnIndex="4" GridPane.rowIndex="1"
+          GridPane.columnSpan="1">
+        <Label fx:id="dayTh" styleClass="calender-property1-value" text="T" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="80" prefHeight="80"
+          GridPane.columnIndex="5" GridPane.rowIndex="1"
+          GridPane.columnSpan="1">
+        <Label fx:id="dayF" styleClass="calender-property2-value" text="F" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="80" prefHeight="80"
+          GridPane.columnIndex="6" GridPane.rowIndex="1"
+          GridPane.columnSpan="1">
+        <Label fx:id="daySat" styleClass="calender-property3-value" text="S" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="0" GridPane.rowIndex="2"
+          GridPane.columnSpan="1">
+        <Label fx:id="date1" styleClass="calender-property-value" text="1" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="1" GridPane.rowIndex="2"
+          GridPane.columnSpan="1">
+        <Label fx:id="date2" styleClass="calender-property-value" text="2" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="2" GridPane.rowIndex="2"
+          GridPane.columnSpan="1">
+        <Label fx:id="date3" styleClass="calender-property-value" text="3" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="3" GridPane.rowIndex="2"
+          GridPane.columnSpan="1">
+        <Label fx:id="date4" styleClass="calender-property-value" text="4" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="4" GridPane.rowIndex="2"
+          GridPane.columnSpan="1">
+        <Label fx:id="date5" styleClass="calender-property-value" text="5" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="5" GridPane.rowIndex="2"
+          GridPane.columnSpan="1">
+        <Label fx:id="date6" styleClass="calender-property-value" text="6" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="6" GridPane.rowIndex="2"
+          GridPane.columnSpan="1">
+        <Label fx:id="date7" styleClass="calender-property-value" text="7" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="0" GridPane.rowIndex="3"
+          GridPane.columnSpan="1">
+        <Label fx:id="date8" styleClass="calender-property-value" text="8" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="1" GridPane.rowIndex="3"
+          GridPane.columnSpan="1">
+        <Label fx:id="date9" styleClass="calender-property-value" text="9" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="2" GridPane.rowIndex="3"
+          GridPane.columnSpan="1">
+        <Label fx:id="date10" styleClass="calender-property-value" text="10" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="3" GridPane.rowIndex="3"
+          GridPane.columnSpan="1">
+        <Label fx:id="date11" styleClass="calender-property-value" text="11" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="4" GridPane.rowIndex="3"
+          GridPane.columnSpan="1">
+        <Label fx:id="date12" styleClass="calender-property-value" text="12" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="5" GridPane.rowIndex="3"
+          GridPane.columnSpan="1">
+        <Label fx:id="date13" styleClass="calender-property-value" text="13" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="6" GridPane.rowIndex="3"
+          GridPane.columnSpan="1">
+        <Label fx:id="date14" styleClass="calender-property-value" text="14" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="0" GridPane.rowIndex="4"
+          GridPane.columnSpan="1">
+        <Label fx:id="date15" styleClass="calender-property-value" text="15" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="1" GridPane.rowIndex="4"
+          GridPane.columnSpan="1">
+        <Label fx:id="date16" styleClass="calender-property-value" text="16" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="2" GridPane.rowIndex="4"
+          GridPane.columnSpan="1">
+        <Label fx:id="date17" styleClass="calender-property-value" text="17" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="3" GridPane.rowIndex="4"
+          GridPane.columnSpan="1">
+        <Label fx:id="date18" styleClass="calender-property-value" text="18" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="4" GridPane.rowIndex="4"
+          GridPane.columnSpan="1">
+        <Label fx:id="date19" styleClass="calender-property-value" text="19" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="5" GridPane.rowIndex="4"
+          GridPane.columnSpan="1">
+        <Label fx:id="date20" styleClass="calender-property-value" text="20" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="6" GridPane.rowIndex="4"
+          GridPane.columnSpan="1">
+        <Label fx:id="date21" styleClass="calender-property-value" text="21" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="0" GridPane.rowIndex="5"
+          GridPane.columnSpan="1">
+        <Label fx:id="date22" styleClass="calender-property-value" text="22" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="1" GridPane.rowIndex="5"
+          GridPane.columnSpan="1">
+        <Label fx:id="date23" styleClass="calender-property-value" text="23" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="2" GridPane.rowIndex="5"
+          GridPane.columnSpan="1">
+        <Label fx:id="date24" styleClass="calender-property-value" text="24" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="3" GridPane.rowIndex="5"
+          GridPane.columnSpan="1">
+        <Label fx:id="date25" styleClass="calender-property-value" text="25" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="4" GridPane.rowIndex="5"
+          GridPane.columnSpan="1">
+        <Label fx:id="date26" styleClass="calender-property-value" text="26" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="5" GridPane.rowIndex="5"
+          GridPane.columnSpan="1">
+        <Label fx:id="date27" styleClass="calender-property-value" text="27" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="6" GridPane.rowIndex="5"
+          GridPane.columnSpan="1">
+        <Label fx:id="date28" styleClass="calender-property-value" text="28" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="0" GridPane.rowIndex="6"
+          GridPane.columnSpan="1">
+        <Label fx:id="date29" styleClass="calender-property-value" text="29" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="1" GridPane.rowIndex="6"
+          GridPane.columnSpan="1">
+        <Label fx:id="date30" styleClass="calender-property-value" text="30" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="2" GridPane.rowIndex="6"
+          GridPane.columnSpan="1">
+        <Label fx:id="date31" styleClass="calender-property-value" text="31" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="3" GridPane.rowIndex="6"
+          GridPane.columnSpan="1">
+        <Label fx:id="date32" styleClass="calender-property-value" text="32" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="4" GridPane.rowIndex="6"
+          GridPane.columnSpan="1">
+        <Label fx:id="date33" styleClass="calender-property-value" text="33" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="5" GridPane.rowIndex="6"
+          GridPane.columnSpan="1">
+        <Label fx:id="date34" styleClass="calender-property-value" text="34" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="6" GridPane.rowIndex="6"
+          GridPane.columnSpan="1">
+        <Label fx:id="date35" styleClass="calender-property-value" text="35" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="0" GridPane.rowIndex="7"
+          GridPane.columnSpan="1">
+        <Label fx:id="date36" styleClass="calender-property-value" text="36" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="1" GridPane.rowIndex="7"
+          GridPane.columnSpan="1">
+        <Label fx:id="date37" styleClass="calender-property-value" text="37" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="2" GridPane.rowIndex="7"
+          GridPane.columnSpan="1">
+        <Label fx:id="date38" styleClass="calender-property-value" text="38" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="3" GridPane.rowIndex="7"
+          GridPane.columnSpan="1">
+        <Label fx:id="date39" styleClass="calender-property-value" text="39" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="4" GridPane.rowIndex="7"
+          GridPane.columnSpan="1">
+        <Label fx:id="date40" styleClass="calender-property-value" text="40" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="5" GridPane.rowIndex="7"
+          GridPane.columnSpan="1">
+        <Label fx:id="date41" styleClass="calender-property-value" text="41" wrapText="true">
+        </Label>
+    </VBox>
+
+    <VBox prefWidth="50" prefHeight="50"
+          GridPane.columnIndex="6" GridPane.rowIndex="7"
+          GridPane.columnSpan="1">
+        <Label fx:id="date42" styleClass="calender-property-value" text="42" wrapText="true">
+        </Label>
+    </VBox>
+
+</GridPane>

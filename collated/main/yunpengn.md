@@ -1,5 +1,5 @@
 # yunpengn
-###### \java\seedu\address\commons\events\model\TagColorChangedEvent.java
+###### /java/seedu/address/commons/events/model/TagColorChangedEvent.java
 ``` java
 /**
  * Indicates the color of some tag(s) has been changed.
@@ -19,7 +19,7 @@ public class TagColorChangedEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\util\FileUtil.java
+###### /java/seedu/address/commons/util/FileUtil.java
 ``` java
     /**
      * Checks whether the given file is an image (according to its MIME type).<br>
@@ -33,7 +33,7 @@ public class TagColorChangedEvent extends BaseEvent {
                 || type.equals("application/octet-stream");
     }
 ```
-###### \java\seedu\address\commons\util\JsonUtil.java
+###### /java/seedu/address/commons/util/JsonUtil.java
 ``` java
     /**
      * Read JSON data from a given URL and convert the data to an instance of the given class.
@@ -44,7 +44,7 @@ public class TagColorChangedEvent extends BaseEvent {
         return objectMapper.readValue(url, instanceClass);
     }
 ```
-###### \java\seedu\address\commons\util\UrlUtil.java
+###### /java/seedu/address/commons/util/UrlUtil.java
 ``` java
 /**
  * Helps with parsing a given URL and obtain GET parameters from it.
@@ -104,7 +104,7 @@ public class UrlUtil {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\configs\AddPropertyCommand.java
+###### /java/seedu/address/logic/commands/configs/AddPropertyCommand.java
 ``` java
 /**
  * Adds a new property to the application.
@@ -145,7 +145,7 @@ public class AddPropertyCommand extends ConfigCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\configs\ChangeTagColorCommand.java
+###### /java/seedu/address/logic/commands/configs/ChangeTagColorCommand.java
 ``` java
 /**
  * Changes the color of an existing tag.
@@ -182,7 +182,7 @@ public class ChangeTagColorCommand extends ConfigCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\configs\ConfigCommand.java
+###### /java/seedu/address/logic/commands/configs/ConfigCommand.java
 ``` java
 /**
  * Customizes the configuration of the application.
@@ -231,7 +231,7 @@ public abstract class ConfigCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\imports\ImportCommand.java
+###### /java/seedu/address/logic/commands/imports/ImportCommand.java
 ``` java
 /**
  * Imports data from various format to the application.
@@ -255,7 +255,7 @@ public abstract class ImportCommand extends UndoableCommand {
             + "script file (should end with .bo).";
 
 ```
-###### \java\seedu\address\logic\commands\imports\ImportCommand.java
+###### /java/seedu/address/logic/commands/imports/ImportCommand.java
 ``` java
     /**
      * Different types of sub-commands within {@link ImportCommand}.
@@ -290,7 +290,7 @@ public abstract class ImportCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\imports\ImportNusmodsCommand.java
+###### /java/seedu/address/logic/commands/imports/ImportNusmodsCommand.java
 ``` java
 /**
  * Imports data from the URL of a NUSMods timetable.
@@ -474,7 +474,7 @@ public class ImportNusmodsCommand extends ImportCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\imports\ModuleInfo.java
+###### /java/seedu/address/logic/commands/imports/ModuleInfo.java
 ``` java
 /**
  * A Java class representation of module information from NUSMods JSON API.
@@ -528,7 +528,7 @@ public class ModuleInfo {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\person\AddAvatarCommand.java
+###### /java/seedu/address/logic/commands/person/AddAvatarCommand.java
 ``` java
 /**
  * Adds an {@link Avatar} to the selected person.
@@ -575,7 +575,7 @@ public class AddAvatarCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ConfigCommandParser.java
+###### /java/seedu/address/logic/parser/ConfigCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ConfigCommand object
@@ -720,7 +720,7 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ImportCommandParser.java
+###### /java/seedu/address/logic/parser/ImportCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new sub-command of {@link ImportCommand} object.
@@ -790,7 +790,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 
 ```
-###### \java\seedu\address\logic\parser\ImportCommandParser.java
+###### /java/seedu/address/logic/parser/ImportCommandParser.java
 ``` java
     private ImportCommand checkScriptImport(String path) {
         return null;
@@ -819,7 +819,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\person\AddAvatarCommandParser.java
+###### /java/seedu/address/logic/parser/person/AddAvatarCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new {@link AddAvatarCommand} object.
@@ -854,7 +854,7 @@ public class AddAvatarCommandParser implements Parser<AddAvatarCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\person\AddCommandParser.java
+###### /java/seedu/address/logic/parser/person/AddCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -885,7 +885,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\util\ArgumentMultimap.java
+###### /java/seedu/address/logic/parser/util/ArgumentMultimap.java
 ``` java
     /**
      * Returns the mapping of {@code Prefix} and their corresponding last values for all {@code prefix}es (only if
@@ -907,7 +907,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         return values;
     }
 ```
-###### \java\seedu\address\logic\parser\util\CliSyntax.java
+###### /java/seedu/address/logic/parser/util/CliSyntax.java
 ``` java
     /* Prefix definitions for adding a new customize property. */
     public static final Prefix PREFIX_SHORT_NAME = new Prefix("s/");
@@ -915,7 +915,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public static final Prefix PREFIX_MESSAGE = new Prefix("m/");
     public static final Prefix PREFIX_REGEX = new Prefix("r/");
 ```
-###### \java\seedu\address\logic\parser\util\NaturalLanguageUtil.java
+###### /java/seedu/address/logic/parser/util/NaturalLanguageUtil.java
 ``` java
 /**
  * Utilizes the Natty library to parse datetime representation in human natural language.
@@ -938,7 +938,7 @@ public class NaturalLanguageUtil {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\util\ParserUtil.java
+###### /java/seedu/address/logic/parser/util/ParserUtil.java
 ``` java
     /**
      * Parses all properties in the given {@code HashMap}.
@@ -957,19 +957,19 @@ public class NaturalLanguageUtil {
         return properties;
     }
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /** Adds a new customize property */
     void addProperty(String shortName, String fullName, String message, String regex)
             throws DuplicatePropertyException, PatternSyntaxException;
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /** Changes the color of an existing tag (through TagColorManager) */
     void setTagColor(Tag tag, String color);
 
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     //=========== Model support for property component =============================================================
 
@@ -986,7 +986,7 @@ public class NaturalLanguageUtil {
         indicateAddressBookChanged();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void setPersonAvatar(ReadOnlyPerson target, Avatar avatar) {
@@ -995,7 +995,7 @@ public class NaturalLanguageUtil {
         indicateAddressBookChanged();
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     /**
      * Changes the displayed color of an existing tag (through {@link TagColorManager}).
@@ -1006,7 +1006,7 @@ public class NaturalLanguageUtil {
         raise(new TagColorChangedEvent(tag, color));
     }
 ```
-###### \java\seedu\address\model\person\Avatar.java
+###### /java/seedu/address/model/person/Avatar.java
 ``` java
 /**
  * Represents the {@link Avatar} image of each {@link Person}. This is a one-to-one relationship, meaning that each
@@ -1078,7 +1078,7 @@ public class Avatar {
     }
 }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     @Override
     public ObjectProperty<Avatar> avatarProperty() {
@@ -1134,7 +1134,7 @@ public class Avatar {
         properties.get().addOrUpdate(toSet);
     }
 ```
-###### \java\seedu\address\model\property\Address.java
+###### /java/seedu/address/model/property/Address.java
 ``` java
 /**
  * Represents a Person's address in the address book.
@@ -1155,7 +1155,7 @@ public class Address extends Property {
     }
 }
 ```
-###### \java\seedu\address\model\property\DateTime.java
+###### /java/seedu/address/model/property/DateTime.java
 ``` java
     // To check whether the raw input is in standard format.
     private static final String INPUT_STANDARD_FORMAT = "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}"
@@ -1218,7 +1218,7 @@ public class Address extends Property {
     }
 }
 ```
-###### \java\seedu\address\model\property\Email.java
+###### /java/seedu/address/model/property/Email.java
 ``` java
 /**
  * Represents a Person's email in the address book.
@@ -1239,7 +1239,7 @@ public class Email extends Property {
     }
 }
 ```
-###### \java\seedu\address\model\property\exceptions\DuplicatePropertyException.java
+###### /java/seedu/address/model/property/exceptions/DuplicatePropertyException.java
 ``` java
 /**
  * Signals that the property with the same short name already exists.
@@ -1250,7 +1250,7 @@ public class DuplicatePropertyException extends Exception {
     }
 }
 ```
-###### \java\seedu\address\model\property\exceptions\PropertyNotFoundException.java
+###### /java/seedu/address/model/property/exceptions/PropertyNotFoundException.java
 ``` java
 /**
  * Signals that the required property has not been defined yet.
@@ -1265,7 +1265,7 @@ public class PropertyNotFoundException extends Exception {
     }
 }
 ```
-###### \java\seedu\address\model\property\Name.java
+###### /java/seedu/address/model/property/Name.java
 ``` java
 /**
  * Represents a Person's name in the address book.
@@ -1286,7 +1286,7 @@ public class Name extends Property {
     }
 }
 ```
-###### \java\seedu\address\model\property\Phone.java
+###### /java/seedu/address/model/property/Phone.java
 ``` java
 /**
  * Represents a Person's phone number in the address book.
@@ -1307,7 +1307,7 @@ public class Phone extends Property {
     }
 }
 ```
-###### \java\seedu\address\model\property\Property.java
+###### /java/seedu/address/model/property/Property.java
 ``` java
 /**
  * A generic class that represents a property of a person. All properties of a person (including name, email, phone
@@ -1397,7 +1397,7 @@ public class Property {
     }
 }
 ```
-###### \java\seedu\address\model\property\PropertyManager.java
+###### /java/seedu/address/model/property/PropertyManager.java
 ``` java
 /**
  * Manages the different properties (both pre-loaded ones and customize ones) of all persons stored in the
@@ -1534,7 +1534,7 @@ public class PropertyManager {
     }
 }
 ```
-###### \java\seedu\address\model\property\UniquePropertyMap.java
+###### /java/seedu/address/model/property/UniquePropertyMap.java
 ``` java
 /**
  * A HashMap of properties that enforces no nulls and uniqueness between its elements.
@@ -1716,7 +1716,7 @@ public class UniquePropertyMap implements Iterable<Property> {
     }
 }
 ```
-###### \java\seedu\address\model\tag\TagColorManager.java
+###### /java/seedu/address/model/tag/TagColorManager.java
 ``` java
 /**
  * Manages the displayed color of all tags.
@@ -1774,7 +1774,7 @@ public class TagColorManager {
     }
 }
 ```
-###### \java\seedu\address\model\util\SampleDataUtil.java
+###### /java/seedu/address/model/util/SampleDataUtil.java
 ``` java
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
@@ -1913,7 +1913,7 @@ public class SampleDataUtil {
 
 }
 ```
-###### \java\seedu\address\storage\elements\XmlAdaptedPerson.java
+###### /java/seedu/address/storage/elements/XmlAdaptedPerson.java
 ``` java
 /**
  * JAXB-friendly version of the Person.
@@ -1935,7 +1935,7 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson() {}
 
 ```
-###### \java\seedu\address\storage\elements\XmlAdaptedPerson.java
+###### /java/seedu/address/storage/elements/XmlAdaptedPerson.java
 ``` java
     /**
      * Converts a given Person into this class for JAXB use.
@@ -1991,7 +1991,7 @@ public class XmlAdaptedPerson {
     }
 }
 ```
-###### \java\seedu\address\storage\elements\XmlAdaptedProperty.java
+###### /java/seedu/address/storage/elements/XmlAdaptedProperty.java
 ``` java
 /**
  * JAXB-friendly adapted version of the {@link Property}, stored within each person.
@@ -2030,7 +2030,7 @@ public class XmlAdaptedProperty {
     }
 }
 ```
-###### \java\seedu\address\storage\elements\XmlAdaptedPropertyInfo.java
+###### /java/seedu/address/storage/elements/XmlAdaptedPropertyInfo.java
 ``` java
 /**
  * JAXB-friendly adapted version of the {@link Property}, stores the general information of each property.
@@ -2063,7 +2063,7 @@ public class XmlAdaptedPropertyInfo {
     }
 }
 ```
-###### \java\seedu\address\storage\elements\XmlAdaptedPropertyManager.java
+###### /java/seedu/address/storage/elements/XmlAdaptedPropertyManager.java
 ``` java
 /**
  * JAXB-friendly adapted version of the {@link PropertyManager}.
@@ -2098,7 +2098,7 @@ public class XmlAdaptedPropertyManager {
     }
 }
 ```
-###### \java\seedu\address\storage\elements\XmlSerializableAddressBook.java
+###### /java/seedu/address/storage/elements/XmlSerializableAddressBook.java
 ``` java
     /**
      * Initialize the {@link PropertyManager} by clearing all existing properties and load information about new
@@ -2109,7 +2109,7 @@ public class XmlAdaptedPropertyManager {
         properties.initializeProperties();
     }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
      * Take note of the following two methods, which overload each other. The one without parameter is used as the
@@ -2130,18 +2130,23 @@ public class XmlAdaptedPropertyManager {
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 
+    /**
+     * Similar to methods for contacts except with EventCalendar.
+     */
     @FXML
     private void handleSwitchToEvents() {
         dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        dataDetailsPanelPlaceholder.getChildren().add(new EventCalendar().getRoot());
     }
 
     @Subscribe
     public void handleSwitchToEvents(SwitchToEventsListEvent event) {
-        dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataDetailsPanelPlaceholder.getChildren().add(new EventCalendar().getRoot());
     }
 
     @Subscribe
@@ -2153,7 +2158,7 @@ public class XmlAdaptedPropertyManager {
         dataDetailsPanelPlaceholder.getChildren().add(new PersonDetailsPanel(person).getRoot());
     }
 ```
-###### \java\seedu\address\ui\person\PersonCard.java
+###### /java/seedu/address/ui/person/PersonCard.java
 ``` java
     /**
      * Initializes all the tags of a person displayed in different random colors.
@@ -2178,7 +2183,7 @@ public class XmlAdaptedPropertyManager {
         initTags();
     }
 ```
-###### \java\seedu\address\ui\person\PersonCard.java
+###### /java/seedu/address/ui/person/PersonCard.java
 ``` java
 
     @Override
@@ -2200,7 +2205,7 @@ public class XmlAdaptedPropertyManager {
     }
 }
 ```
-###### \java\seedu\address\ui\person\PersonDetailsPanel.java
+###### /java/seedu/address/ui/person/PersonDetailsPanel.java
 ``` java
 /**
  * The panel on the right side of {@link PersonListPanel}. Used to show the details (including photo and all
@@ -2259,7 +2264,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\PropertyLabel.java
+###### /java/seedu/address/ui/PropertyLabel.java
 ``` java
 /**
  * A customize JavaFX {@link Label} class used to display the key-value pairs of all properties.
@@ -2271,7 +2276,7 @@ public class PropertyLabel extends Label {
     }
 }
 ```
-###### \resources\css\Extensions.css
+###### /resources/css/Extensions.css
 ``` css
 .sidebar-button {
     -fx-background-insets: 0,1,2;
@@ -2299,7 +2304,7 @@ public class PropertyLabel extends Label {
     -fx-text-alignment: left;
 }
 ```
-###### \resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" minWidth="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
       <VBox fx:id="sideButtonBar" alignment="CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0">
@@ -2339,7 +2344,7 @@ public class PropertyLabel extends Label {
     </StackPane>
   </SplitPane>
 ```
-###### \resources\view\person\PersonDetailsPanel.fxml
+###### /resources/view/person/PersonDetailsPanel.fxml
 ``` fxml
 
 

@@ -1,5 +1,5 @@
 # dennaloh
-###### \java\seedu\address\logic\commands\FbCommandTest.java
+###### /java/seedu/address/logic/commands/FbCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FbCommand}.
@@ -81,7 +81,7 @@ public class FbCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\person\EmailCommandTest.java
+###### /java/seedu/address/logic/commands/person/EmailCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code EmailCommand}.
@@ -90,7 +90,7 @@ public class EmailCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
 ```
-###### \java\seedu\address\logic\commands\person\EmailCommandTest.java
+###### /java/seedu/address/logic/commands/person/EmailCommandTest.java
 ``` java
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
@@ -130,7 +130,7 @@ public class EmailCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\person\FindTagCommandTest.java
+###### /java/seedu/address/logic/commands/person/FindTagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindTagCommand}.
@@ -199,7 +199,7 @@ public class FindTagCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\person\GMapCommandTest.java
+###### /java/seedu/address/logic/commands/person/GMapCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code GMapCommand}.
@@ -281,7 +281,7 @@ public class GMapCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\stub\ModelStub.java
+###### /java/seedu/address/logic/commands/stub/ModelStub.java
 ``` java
     @Override
     public String getGMapUrl(ReadOnlyPerson target)  {
@@ -300,7 +300,7 @@ public class GMapCommandTest {
         fail("This method should not be called.");
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_fb() throws Exception {
@@ -330,4 +330,90 @@ public class GMapCommandTest {
                 EmailCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new EmailCommand(INDEX_FIRST_PERSON), command);
     }
+```
+###### /java/seedu/address/ui/EventCalendarTest.java
+``` java
+public class EventCalendarTest {
+
+    @Test
+    public void testJan() throws Exception {
+        MonthDateBuilder monthDateBuilderJan = new MonthDateBuilder(0, 2018);
+        String[] monthDateArrayJan = monthDateBuilderJan.getMonthDateArray();
+        assertEquals(monthDateBuilderJan.getNameOfMonth(), "January");
+        assertEquals(monthDateBuilderJan.getFirstDayOfMonth().toString(), "1");
+        assertEquals(monthDateArrayJan[0], " ");
+        assertEquals(monthDateArrayJan[1], "1");
+        assertEquals(monthDateArrayJan[31], "31");
+        assertEquals(monthDateArrayJan[35], " ");
+    }
+
+    @Test
+    public void testFeb() throws Exception {
+        MonthDateBuilder monthDateBuilderFeb = new MonthDateBuilder(1, 2017);
+        String[] monthDateArrayFeb = monthDateBuilderFeb.getMonthDateArray();
+        assertEquals(monthDateBuilderFeb.getNameOfMonth(), "February");
+        assertEquals(monthDateBuilderFeb.getFirstDayOfMonth().toString(), "3");
+        assertEquals(monthDateArrayFeb[2], " ");
+        assertEquals(monthDateArrayFeb[3], "1");
+        assertEquals(monthDateArrayFeb[30], "28");
+        assertEquals(monthDateArrayFeb[34], " ");
+    }
+
+    @Test
+    public void testMar() throws Exception {
+        MonthDateBuilder monthDateBuilderMar = new MonthDateBuilder(2, 2018);
+        assertEquals(monthDateBuilderMar.getNameOfMonth(), "March");
+        assertEquals(monthDateBuilderMar.getFirstDayOfMonth().toString(), "4");
+    }
+
+    @Test
+    public void testApr() throws Exception {
+        MonthDateBuilder monthDateBuilderApr = new MonthDateBuilder(3, 2018);
+        String[] monthDateArrayApr = monthDateBuilderApr.getMonthDateArray();
+        assertEquals(monthDateBuilderApr.getNameOfMonth(), "April");
+        assertEquals(monthDateBuilderApr.getFirstDayOfMonth().toString(), "0");
+        assertEquals(monthDateArrayApr[0], "1");
+        assertEquals(monthDateArrayApr[29], "30");
+        assertEquals(monthDateArrayApr[34], " ");
+    }
+
+    @Test
+    public void testJune() throws Exception {
+        MonthDateBuilder monthDateBuilderJune = new MonthDateBuilder(5, 2018);
+        String[] monthDateArrayJune = monthDateBuilderJune.getMonthDateArray();
+        assertEquals(monthDateBuilderJune.getNameOfMonth(), "June");
+        assertEquals(monthDateBuilderJune.getFirstDayOfMonth().toString(), "5");
+        assertEquals(monthDateArrayJune[4], " ");
+        assertEquals(monthDateArrayJune[5], "1");
+        assertEquals(monthDateArrayJune[34], "30");
+        assertEquals(monthDateArrayJune[35], " ");
+    }
+
+    @Test
+    public void testJuly() throws Exception {
+        MonthDateBuilder monthDateBuilderJuly = new MonthDateBuilder(6, 2017);
+        assertEquals(monthDateBuilderJuly.getNameOfMonth(), "July");
+        assertEquals(monthDateBuilderJuly.getFirstDayOfMonth().toString(), "6");
+    }
+
+    @Test
+    public void testAug() throws Exception {
+        MonthDateBuilder monthDateBuilderAug = new MonthDateBuilder(7, 2017);
+        assertEquals(monthDateBuilderAug.getNameOfMonth(), "August");
+        assertEquals(monthDateBuilderAug.getFirstDayOfMonth().toString(), "2");
+    }
+
+    @Test
+    public void testNov() throws Exception {
+        MonthDateBuilder monthDateBuilderNov = new MonthDateBuilder(10, 2017);
+        String[] monthDateArrayNov = monthDateBuilderNov.getMonthDateArray();
+        assertEquals(monthDateBuilderNov.getNameOfMonth(), "November");
+        assertEquals(monthDateBuilderNov.getFirstDayOfMonth().toString(), "3");
+        assertEquals(monthDateArrayNov[2], " ");
+        assertEquals(monthDateArrayNov[3], "1");
+        assertEquals(monthDateArrayNov[20], "18");
+        assertEquals(monthDateArrayNov[34], " ");
+    }
+
+}
 ```
