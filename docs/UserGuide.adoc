@@ -319,7 +319,7 @@ Alias: `t`
 ****
 * The TYPE can be either "add" or "remove".
 * Add tag/s to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least 1 tag must be added
+* At least 1 tag must be added.
 * For adding, the command will ignore tags that already exist in that contact.
 * For removing, the command will ignore tags that do not exist in that contact.
 ****
@@ -327,7 +327,7 @@ Alias: `t`
 Examples:
 
 * `tags add 1 friends` +
-Add a tag 'friends' to the 1st person.
+Add a tag "friends" to the 1st person.
 
 * `tags remove 2 classmate CS2103` +
 Remove tags "classmate" and "CS2103" from the 2nd person.
@@ -534,8 +534,6 @@ Alias example:
 Displays four charts based on information calculated in PIMP. The information displayed includes +
 1. Number of contacts added in the past 2 years, broken down by month in a bar chart. +
 2. Number of contacts added that have their Facebook, Instagram or Twitter handle recorded in PIMP. +
-
-[Add image here]
 
 Format: `statistics` +
 Alias: `st`

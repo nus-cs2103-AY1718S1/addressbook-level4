@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+
+//@@author 500poundbear
 /**
  * Represents a Person's remark in the address book.
  */

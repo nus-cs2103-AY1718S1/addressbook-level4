@@ -383,7 +383,7 @@ public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
 // end::sort[]
 
 // tag::remark[]
-=== Remark Command
+=== Remark Command (Since v1.1)
 
 The `remark` command allows the user to edit the remark field of a contact. The field is initially empty when a new
 `Person` is instantiated.
@@ -444,7 +444,7 @@ Access display is implemented with two `PersonCard` JavaFX files, `PersonCardLis
 // end::accessdisplay[]
 
 // tag::statistics[]
-=== Statistics Command
+=== Statistics Command (Since v1.3)
 
 The `statistics` command allows the user to view information about the system. The `statistics` command does not take
 any additional parameters.
@@ -477,24 +477,27 @@ an `ArrayList<Integer>` data structure that will be displayed by the `BarChart` 
 [source,java]
 ----
 public ArrayList<Integer> getNewPersonsAddByMonth(int displayYears) {
+        int totalMonthsDisplayed = yearsToMonth(displayYears) + 1;
 
-    ArrayList<Integer> countByMonth = new ArrayList<>(Collections.nCopies(displayYears * 12 + 1, 0));
+        ArrayList<Integer> countByMonth = new ArrayList<>(
+                Collections.nCopies(totalMonthsDisplayed, 0));
 
-    personList.forEach((p) -> {
-        Date givenDate = p.getCreatedAt();
-        ZonedDateTime given = givenDate.toInstant().atZone(ZoneId.of("UTC"));
+        personList.forEach(p -> {
+            Date givenDate = p.getCreatedAt();
+            ZonedDateTime given = givenDate.toInstant().atZone(ZoneId.of(ZONE_ID));
 
-        int personAddedYear = Integer.parseInt(Year.from(given).toString());
-        int personAddedMonth = Month.from(given).getValue();
+            int personAddedYear = Integer.parseInt(Year.from(given).toString());
+            int personAddedMonth = Month.from(given).getValue();
 
-        int indOffset = calculateCountByMonthOffset(personAddedMonth, personAddedYear);
-        if (indOffset >= 0 && indOffset <= displayYears * 12) {
-            countByMonth.set(indOffset, countByMonth.get(indOffset) + 1);
-        }
-    });
+            int indOffset = calculateCountByMonthOffset(personAddedMonth, personAddedYear);
 
-    return countByMonth;
-}
+            if (isOffsetWithinDisplayRange(indOffset, totalMonthsDisplayed)) {
+                countByMonth.set(indOffset, countByMonth.get(indOffset) + 1);
+            }
+        });
+
+        return countByMonth;
+    }
 ----
 
 ==== Design Considerations
@@ -509,19 +512,18 @@ shown appropriately (based on the command that is given).
 * **Alternative 2:** Utilise the browser class to display the statistics
 ** **Pros:** Developer does not have to manage the swapping UI parts.
 ** **Cons:** Information has to be passed from the Java system into a format that can be rendered
-by the browser engine. It is tricker to test and more likely to break.
+by the browser engine. There is a higher chance that this will break in the future.
 
 **Aspect:** Displaying of key information in `StatisticsPanel`
 
 * **Alternative 1 (current choice):** A bar chart breakdown by month in the last 2 years of newly created users
-** **Pros:** Developer does not have to manage the swapping UI parts.
-** **Cons:** Information has to be passed from the Java system into a format that can be rendered
-by the browser engine. It is tricker to test and more likely to break.
+** **Pros:** A month by month comparison of the number of people added can be seen
+** **Cons:** The user cannot quickly tell the total number of people added in other intervals.
 
 * **Alternative 2:** A pie chart breakdown by year in the last 5 years of newly created users
 ** **Pros:** User will be able to tell quickly the portion of Persons added in the year as compared to the past years.
 ** **Cons:** A breakdown by year might not allow the user to answer a more important question easily: how has the number
-of people added changed in a more manageable timeframe (such as a month)?
+of people added changed in a more manageable timeframe (such as a month).
 // end::statistics[]
 
 // tag::findregex[]
@@ -549,6 +551,7 @@ Since this search function involves iterating searching through all tags of all 
 However, since these other commands are more commonly used, we decided not to slow down these commands for the performance of the `FingTagCommand` function. Instead, we simply allowed the `FindTagCommand` to search through all possibilities each time it is called.
 
 // end::findtag[]
+
 // tag::addremovetags[]
 === Add/Remove Tags Command (Since v1.2)
 
@@ -561,15 +564,11 @@ In the backend, `AddRemoveTagsCommand` actually uses the same mechanics as `Edit
 [source,java]
 ----
 ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-Person editedPerson;
+Person editedPerson = prepareEditedPerson(personToEdit);
 
-if (isAdd) {
-    editedPerson = addTagsToPerson(personToEdit, tags);
-} else {
-    editedPerson = removeTagsFromPerson(personToEdit, tags);
+try {
+    model.updatePerson(personToEdit, editedPerson);
 }
-
-model.updatePerson(personToEdit, editedPerson);
 ----
 
 For `AddRemoveTagsParser`, the first whitespace in the argument is removed, then being split with the regex " " to remove all whitespaces. The split array now has the individual arguments. The first argument is the TYPE, which can be either "add" or "remove". The second argument is the INDEX, and the third onwards are the tags to be added or removed.
@@ -592,8 +591,8 @@ After parsing, the TYPE, INDEX, and set of tags is passed to the `AddRemoveTagsC
 ** **Pros:** Easy to implement as code already exist.
 ** **Cons:** Have to touch on other details (e.g. phone, address, etc.) apart from tags.
 
-* **Alternative 2:** Update the `Set<Tag>` directly by exposing it with a getter and setter
-** **Pros:** Isolate to only touch on tags
+* **Alternative 2:** Update the `Set<Tag>` directly by exposing it with a getter and setter.
+** **Pros:** Isolate to only touch on tags.
 ** **Cons:** Breaks the idea that each person in PIMP is read-only.
 
 **Aspect:** Commands to add and remove tags.
@@ -614,7 +613,7 @@ Since v1.3, users can add social media account details to their contacts. They a
 Users can use the command `socialmedia TYPE INDEX` to load the contact's social media page to the browser panel.
 
 A new event `ChangeBrowserPanelUrlEvent` is created for the purpose when the browser panel URL needs to be changed. Previously, the URL was completely handled within the BrowserPanel UI and not exposed to the other components.
-With this event, other components will be able to call it and change the url of the browser. In the case of `SocialMediaCommand`, the URL will be changed to Facebook, Twitter, or Instagram according to the TYPE that the user indicated in the command.
+With this event, other components will be able to call it and change the URL of the browser. In the case of `SocialMediaCommand`, the URL will be changed to Facebook, Twitter, or Instagram according to the TYPE that the user indicated in the command.
 
 Subsequently, the `BrowserPanel` UI will handle the event and change the URL accordingly.
 
@@ -634,7 +633,7 @@ EventsCenter.getInstance().post(new ChangeBrowserPanelUrlEvent(url));
 ----
 
 ==== Design considerations
-*Aspect:* Commands to show different social media pages
+*Aspect:* Commands to show different social media pages.
 
 * **Alternative 1 (current choice):** 1 unified command `SocialMediaCommand` that parse arguments to determine which social media page to show.
 ** **Pros:** Cleaner implementation and easier for additional social medias to be added.
