@@ -27,7 +27,7 @@ knowledge about command line interfaces will be helpful.
 
 Have you ever been curious about what your friends, family, or maybe even
 that old classmate you haven’t spoke to in years have been up to? Perhaps you don’t really
-want to talk to them right now. so the next best option is to stalk their social media accounts!
+want to talk to them right now, so the next best option is to stalk their social media accounts!
 
 KayPoh is a desktop contact management application designed specifically for social users.
 You can use KayPoh to store contact and social information information about people,
@@ -48,7 +48,7 @@ Download the latest Java version link:https://www.java.com/en/download/manual.js
 .  Store the `KayPoh.jar` file into a folder of your choice. This will be the `home` folder for the application.
 .  Double-click the file to start the application.
 
-=== Using KayPoh for the First Time
+=== Exploring KayPoh
 
 .  After starting up KayPoh, you should see a user interface similar to that in Figure 1.
 
@@ -106,7 +106,7 @@ Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]
 // end::command-syntax[]
 
 [[representing-persons]]
-=== Representing a Person as a Parameter
+=== Representing Persons as Parameters
 
 When using commands that involve managing contact information, you may be required to enter information about a person as a `[blue]#PARAMETER#`.
 
@@ -164,7 +164,7 @@ represents a person who has:
 
 == Features
 
-=== Understanding command formats
+=== Understanding Command Formats
 In this user guide, you will find information about how commands are to be used explained in the form of *command formats*.
 
 These *command formats* will tell you what the [red]`COMMAND_WORD` for the command is, whether [blue]`OPTIONS` are available for the command,
@@ -189,7 +189,7 @@ and what [green]`PARAMETERS` you need to provide the command with.
 === Managing Contacts
 
 // tag::addperson[]
-==== Adding a person: `add`
+==== Adding a Person: `add`
 
 To add a person to KayPoh, use the `add` command.
 
@@ -247,7 +247,7 @@ e.g. `add n/Michael Van Gerwen` is missing the required `PHONE_NUMBER`, `ADDRESS
 // end::addperson[]
 
 // tag::editperson[]
-==== Editing a person: `edit`
+==== Editing a Person: `edit`
 
 To edit an existing person in KayPoh, use the `edit` command.
 
@@ -313,7 +313,7 @@ e.g. `-1`, `0.1`, `abc`
 // end::editperson[]
 
 // tag::favoriteunfavoriteperson[]
-==== Labelling a Person as a Favorite Contact [Since v1.2]: `fav`
+==== Labelling Favorite Contacts [Since v1.2]: `fav`
 
 To mark person(s) as a favorite contact, use the `fav` command.
 
@@ -347,7 +347,7 @@ e.g. `-1`, `0.1`, `abc`
 |Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
 |===
 
-==== Removing a person from your favorite contacts [Since v1.2]: `unfav`
+==== Removing Favorite Contacts [Since v1.2]: `unfav`
 
 To remove person(s) from your favorite contacts, use the `unfav` command.
 
@@ -383,7 +383,7 @@ e.g. `-1`, `0.1`, `abc`
 // end::favoriteunfavoriteperson[]
 
 // tag::deletebyindex[]
-==== Deleting a person: `delete`
+==== Deleting a Person: `delete`
 
 To delete person(s) from KayPoh, use the `delete` command.
 
@@ -431,7 +431,7 @@ e.g. `-1`, `0.1`, `abc`
 |===
 // end::deletebyindex[]
 
-==== Clearing all entries: `clear`
+==== Clearing All Persons: `clear`
 
 To clear all entries from KayPoh, use the `clear` command.
 
@@ -446,7 +446,7 @@ image::clear-command-result.png[width="350"]
 
 === Navigating KayPoh
 
-==== Listing persons: `list`
+==== Listing Persons: `list`
 
 To have all your contacts displayed in KayPoh, use the `list` command.
 
@@ -466,7 +466,7 @@ You should see the person list populated with all of your contacts after executi
 image::list-command-result.png[width="350"]
 
 // tag::select[]
-==== Selecting a person: `select`
+==== Selecting a Person: `select`
 
 To view the social media feed of a contact, use the `select` command.
 ====
@@ -509,7 +509,7 @@ image:stalk-command-social-info.png[width="350"]
 
 // tag::find-by-tag[]
 [[find-by-tag]]
-==== Finding persons: `find`
+==== Finding Persons: `find`
 To find contacts by some criteria, use the `find` command.
 
 ====
@@ -544,9 +544,8 @@ Displays persons with tags `friends` or `colleagues` in the person list.
 // end::find-by-tag[]
 
 // tag::sort[]
-==== Sorting the displayed list [Since v1.4]: `sort`
-
-To sort the person list, use the `sort` command.
+==== Sorting the Contacts List [Since v1.4]: `sort`
+To sort your contacts list, use the `sort` command.
 
 ====
 *Command format*:
@@ -628,7 +627,7 @@ been connected, you can use the other Facebook features that KayPoh offers.
 
 // tag::facebookpost[]
 [[facebookpost]]
-=====  Posting a status to Facebook [Since v1.3]: `facebookpost`
+=====  Posting a Status to Facebook [Since v1.3]: `facebookpost`
 To post a status to your Facebook wall, use the `facebookpost` command.
 
 ====
@@ -690,7 +689,7 @@ e.g. `some.invalid.link`
 
 // tag::facebookadd[]
 [[facebookadd]]
-=====  Adding a contact from Facebook [Since v1.5]: `facebookadd`
+=====  Adding a Contact from Facebook [Since v1.5]: `facebookadd`
 To add a contact to KayPoh using information on their Facebook account, use the `facebookadd` command.
 
 ====
@@ -716,7 +715,7 @@ Adds the Facebook user with the display name 'Barack Obama' as a contact to KayP
 
 // tag::facebookaddallfriends[]
 [[facebookaddallfriends]]
-===== Adding all your Facebook friends [Since v1.5]: `facebookaddallfriends`
+===== Adding Your Facebook Friends [Since v1.5]: `facebookaddallfriends`
 To add all of your Facebook friends as contacts in KayPoh, use the `facebookaddallfriends` command.
 
 ====
@@ -737,7 +736,7 @@ Please ensure that you have <<facebook-connect, connected to your Facebook accou
 ==== Sharing Contacts
 
 [[export-command]]
-===== Exporting contact data: `export`
+===== Exporting Contacts: `export`
 To share your contacts with your friends, you can use the `export` command to save your contact information to a file
 and send the file to your friend.
 
@@ -768,7 +767,7 @@ Exports contact data to the file `exportData.xml` in the folder `/Users/KayPoh/D
 |===
 
 [[import-command]]
-===== Importing contact data: `import`
+===== Importing Contacts: `import`
 To import contacts from an external file, use the `import` command.
 
 ====
@@ -795,21 +794,21 @@ Imports contact data from file `importData.xml` in the folder `/Users/KayPoh/Doc
 
 |===
 
-==== Synchronizing with the cloud [Coming in v2.0]:
+==== Synchronizing with the Cloud [Coming in v2.0]:
 
-===== Configuring your cloud account: `sync`
+===== Configuring Your Cloud Account: `sync`
 To configure KayPoh to synchronize your contact information with the cloud, use the `sync` command.
 
 ====
 *Command format*: `[red]#sync# [green]#u/USERNAME p/PASSWORD#` +
 ====
 
-===== Synchronizing with the cloud
+===== Synchronizing with the Cloud
 
 KayPoh's contact data is automatically synchronized with cloud when an internet connection is available.
 There is no need to synchronize your contacts manually.
 
-===== Removing your cloud account: `unsync`
+===== Removing Your Cloud Account: `unsync`
 
 To stops synchronizing your contact information with the previously configured cloud account, use the `unsync` command.
 
@@ -819,7 +818,7 @@ To stops synchronizing your contact information with the previously configured c
 
 === Miscellaneous
 
-==== Changing themes: `theme` [Since v1.4]
+==== Changing Themes: `theme` [Since v1.4]
 
 To change the theme of the application, use the `theme` command.
 
@@ -841,7 +840,7 @@ image::Ui-day.png[width="800"]
 .User interface after applying the night theme
 image::Ui-night.png[width="800"]
 
-==== Listing entered commands: `history`
+==== Listing Entered Commands: `history`
 
 To list all the commands that you have entered in reverse chronological order, use the `history` command. +
 ====
@@ -854,7 +853,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-==== Undoing previous command: `undo`
+==== Undoing Previous Command: `undo`
 
 To restore KayPoh to the state before the previous _undoable_ command was executed, use the `undo` command. +
 
@@ -892,7 +891,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `[red]#undo#` (reverses the `clear` command) +
 `[red]#undo#` (reverses the `delete 1` command) +
 
-==== Redoing the previously undone command: `redo`
+==== Redoing the Previously Undone Command: `redo`
 
 To reverse the most recent `undo` command, use the `redo` command. +
 ====
@@ -918,7 +917,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `[red]#redo#` (reapplies the `clear` command) +
 // end::undoredo[]
 
-==== Exiting the application: `exit`
+==== Exiting the Application: `exit`
 
 To exit the KayPoh, use the `exit` command.
 
@@ -929,7 +928,7 @@ To exit the KayPoh, use the `exit` command.
 
 The application will close upon executing of this command.
 
-==== Viewing help: `help`
+==== Viewing Help: `help`
 
 To open the help window, use the `help` command.
 
