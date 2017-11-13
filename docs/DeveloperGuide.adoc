@@ -1179,6 +1179,7 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
 === Use case: Undo/Redo multiple commands
 
 *MSS*
