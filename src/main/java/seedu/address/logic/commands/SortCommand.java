@@ -24,7 +24,7 @@ public class SortCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         try {
-            model.sortPerson(type);
+            model.sortPersonList(type);
             return new CommandResult(MESSAGE_SUCCESS + type);
         } catch (InvalidSortTypeException iste) {
             return new CommandResult(MESSAGE_UNKNOWN_SORT_TYPE);

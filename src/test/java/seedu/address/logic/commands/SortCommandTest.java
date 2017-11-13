@@ -32,11 +32,17 @@ public class SortCommandTest {
     private Model expectedModel;
     private String name;
     private String tag;
+    private String position;
+    private String priority;
+    private String company;
 
     @Before
     public void setUp() {
         name = "name";
         tag = "tag";
+        position = "position";
+        priority = "priority";
+        company = "company";
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
     }
@@ -52,15 +58,41 @@ public class SortCommandTest {
     public void execute_nameValue_listSorted() {
         SortCommand command = prepareCommand(name);
         assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + name, Arrays.asList(ALICE, BENSON, CARL,
-                DANIEL, ELLE, FIONA, GEORGE));
+            DANIEL, ELLE, FIONA, GEORGE));
     }
 
     @Test
     public void execute_tagValue_listSorted() {
         SortCommand command = prepareCommand(tag);
         assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + tag, Arrays.asList(ALICE, CARL, DANIEL,
-                ELLE, FIONA, GEORGE, BENSON));
+            ELLE, FIONA, GEORGE, BENSON));
     }
+
+    @Test
+    public void execute_positionValue_listSorted() {
+        SortCommand command = prepareCommand(position);
+        assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + position, Arrays.asList(ALICE, BENSON, GEORGE,
+            ELLE, CARL, DANIEL, FIONA));
+    }
+
+    @Test
+    public void execute_priorityValue_listSorted() {
+        SortCommand command = prepareCommand(priority);
+        assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + priority, Arrays.asList(BENSON, ELLE,
+            ALICE, CARL, DANIEL, FIONA, GEORGE));
+    }
+
+    @Test
+    public void execute_companyValue_listSorted() {
+        SortCommand command = prepareCommand(company);
+        assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + company, Arrays.asList(GEORGE, ELLE, DANIEL, ALICE,
+            BENSON, CARL, FIONA));
+    }
+
+
+
+
+
 
     @Test
     public void equals() {
