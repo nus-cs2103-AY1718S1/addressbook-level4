@@ -17,7 +17,7 @@ public class ChangeThemeCommand extends Command {
 
     private final String theme;
 
-    public ChangeThemeCommand( String theme) {
+    public ChangeThemeCommand(String theme) {
         this.theme = theme;
     }
     @Override
