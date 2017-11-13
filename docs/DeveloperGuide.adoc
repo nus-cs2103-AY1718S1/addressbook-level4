@@ -1047,7 +1047,7 @@ The toggle mechanism is an event-driven mechanism. The following diagram _(Figur
 image::DG_ToggleComponents.png[]
 _Figure 4.13.1 Toggle mechanism component interactions_
 
-The following sequence diagram _(Figure 4.13.2)_ below show how the first half of the toggle mechanism works up till the posting of the event:
+The following sequence diagram _(Figure 4.13.2)_ below shows how the first half of the toggle mechanism works up till the posting of the event:
 
 image::DG_Toggle1.png[]
 _Figure 4.13.2 Toggle mechanism sequence 1_
