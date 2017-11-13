@@ -460,7 +460,12 @@ public class MrtMapLogic {
         }
     }
 
-    //Only used by populateAdjList() method
+    /**
+     * addEdgeList is only used by populateAdjList() method
+     * it fills up the information for all the edges of one particular
+     * mrt station (vertex)
+     * @param mrtStationIndex
+     */
     private void addEdgeList(int mrtStationIndex) {
         MrtStation mrtStation = mrtStations.get(mrtStationIndex);
         int numInterchange = mrtStation.getNumInterchange();
@@ -475,8 +480,12 @@ public class MrtMapLogic {
         adjList.add(edgeList);
     }
 
-    //Only used by addEdgeList.
-    //Note: addEdgeList is only used by populateAdjList() method
+    /**
+     * Only used by addEdgeList
+     * Not: addEdgeList is only used by populateAdjList() method
+     * @param edgeList
+     * @param stationIndex
+     */
     private void addNeighbourDetails(ArrayList<IntPair> edgeList, int stationIndex) {
 
         //add neighbour whose index is lower if neighbour exist.
@@ -666,6 +675,13 @@ public class MrtMapLogic {
         return removeDuplicateMrt(sortedMrtStations);
     }
 
+    /**
+     * Take in the index of two mrt station. Return true if they belong
+     * to the same line.
+     * @param mrtIndexOne
+     * @param mrtIndexTwo
+     * @return
+     */
     private boolean isSameLine(int mrtIndexOne, int mrtIndexTwo) {
         if (mrtIndexOne == -1 || mrtIndexTwo == -1) {
             return true;
@@ -696,9 +712,9 @@ public class MrtMapLogic {
     private ArrayList<String> removeDuplicateMrt(ArrayList<String> mrtStations) {
         HashMap<String, Boolean> mrtList = new HashMap<String, Boolean>();
         ArrayList<String> noDuplicateMrtList = new ArrayList<String>();
-        for (int i = 0; i < mrtStations.size(); i++){
+        for (int i = 0; i < mrtStations.size(); i++) {
             String mrtName = mrtStations.get(i);
-            if (!mrtList.containsKey(mrtName)){
+            if (!mrtList.containsKey(mrtName)) {
                 mrtList.put(mrtName, true);
                 noDuplicateMrtList.add(mrtName);
             }
@@ -706,9 +722,14 @@ public class MrtMapLogic {
         return noDuplicateMrtList;
     }
 
-    private ArrayList<String> removeInvalidMrtStation(ArrayList<String> mrtStations){
+    /**
+     * Iterate through the array, remove duplicated mrt stationName from list
+     * @param mrtStations
+     * @return
+     */
+    private ArrayList<String> removeInvalidMrtStation(ArrayList<String> mrtStations) {
         ArrayList<String> validMrtStations = new ArrayList<String>();
-        for(int i = 0; i < mrtStations.size(); i++){
+        for (int i = 0; i < mrtStations.size(); i++) {
             if (nameToIndex.containsKey(mrtStations.get(i))) {
                 validMrtStations.add(mrtStations.get(i));
             }
@@ -724,7 +745,9 @@ public class MrtMapLogic {
         return travelTime;
     }
 
-    //For debugging purpose only.
+    /**
+     * For debugging only, will be deleted before final product
+     */
     private void printAdjList() {
         for (int i = 0; i < adjList.size(); i++) {
             MrtStation mrt = mrtStations.get(i);
@@ -737,12 +760,16 @@ public class MrtMapLogic {
                 int travelInterval = adjRow.get(j).travelDuration;
                 String neighbourCode = mrtStations.get(neighbourIndex).getStationCode(0);
                 String neighbourName = mrtStations.get(neighbourIndex).getName();
-                System.out.print("("+neighbourName+" [" + neighbourCode + "], " + travelInterval + ") ");
+                System.out.print("(" + neighbourName+" [" + neighbourCode + "], " + travelInterval + ") ");
             }
             System.out.println();
         }
     }
 
+    /**
+     * will be deleted before final product
+     * @param sourceIndex
+     */
     private void printSingleMrtTiming(int sourceIndex) {
         int[] minTable = getMinTime(sourceIndex);
         for (int i = 0; i < minTable.length; i++) {
@@ -752,9 +779,13 @@ public class MrtMapLogic {
         }
     }
 
+    /**
+     * Will be deleted before final product
+     * @param stationNames
+     */
     private void printSortedMrt(ArrayList<String> stationNames) {
         ArrayList<String> sortedList = getSortedMrtList(stationNames);
-        for (int i = 0; i < sortedList.size(); i++){
+        for (int i = 0; i < sortedList.size(); i++) {
             System.out.println(i + " = " + sortedList.get(i));
         }
     }
@@ -769,7 +800,7 @@ public class MrtMapLogic {
     public ArrayList<String> getSortedMrtList(ArrayList<String> mrtStationNames) {
         ArrayList<String> validStationList = removeInvalidMrtStation(mrtStationNames);
         String[] mrtStations = new String[validStationList.size()];
-        for (int i = 0; i < mrtStations.length; i++){
+        for (int i = 0; i < mrtStations.length; i++) {
             mrtStations[i] = validStationList.get(i);
         }
         return getSortedMrtList(mrtStations);
@@ -796,7 +827,7 @@ public class MrtMapLogic {
         for (int i = 0; i < mrtStations.size(); i++) {
             MrtStation mrtStation = mrtStations.get(i);
             ArrayList<String> singleStationLines = new ArrayList<String>();
-            for (int j = 0; j < mrtStation.getNumInterchange(); j++){
+            for (int j = 0; j < mrtStation.getNumInterchange(); j++) {
                 singleStationLines.add(mrtStation.getMrtLine(j));
             }
             stationLineNames.add(singleStationLines);
@@ -806,7 +837,7 @@ public class MrtMapLogic {
 
     public ArrayList<ArrayList<Integer>> getMrtLineNumbers() {
         ArrayList<ArrayList<Integer>> stationLineNumbers = new ArrayList<ArrayList<Integer>>();
-        for (int i = 0; i < mrtStations.size(); i++){
+        for (int i = 0; i < mrtStations.size(); i++) {
             MrtStation mrtStation = mrtStations.get(i);
             ArrayList<Integer> singleStationLineNumbers = new ArrayList<Integer>();
             for (int j = 0; j < mrtStation.getNumInterchange(); j++) {
@@ -823,7 +854,7 @@ public class MrtMapLogic {
 
     //return the least travelling time between the two station in minutes
     public int getTravelTime(String sourceMrt, String destMrt) {
-        if(!isValidMrt(sourceMrt) || !isValidMrt(destMrt)) {
+        if (!isValidMrt(sourceMrt) || !isValidMrt(destMrt)) {
             return -1;
         }
         int sourceIndex = nameToIndex.get(sourceMrt);
