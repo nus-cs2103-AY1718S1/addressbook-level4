@@ -725,7 +725,7 @@ An in-built calendar is added to the panel beside the list of events. This calen
 current month.
 
 image::Calendar.png[width="600"]
-_Figure 4.9.1 : Calendar view`_
+_Figure 4.9.1 : Calendar for month of November 2017_
 
 This is useful for users to be able to compare their list of events in the calendar. It can help users to check what
 day of the week their event is happening on. This is especially useful for NUS students as there is a fixed daily
@@ -743,7 +743,7 @@ allows individual objects to be created for individual cells. This could allow u
 as showing number of events per day to dynamic colour changes in the future. The `monthDateBuilder` method provides an
 accurate graphical representation of the days in a monthly calendar. +
 *Cons:* The 42 cell design is fairly cumbersome, requiring the initialization of at least 42 cells. The class is limited
-in a way that it must have 42 cells, thus sometimes many cells are left unused, and there is a wastage of memory.
+in a way that it must have 42 cells, thus sometimes many cells are left unused, and there is a wastage of memory. +
 *Alternative 2:* Use JTable to display individual dates. +
 *Pros:* A ready to use API that can allow  easy building of table showing dates. It is also a powerful tool with many
 functions. +
