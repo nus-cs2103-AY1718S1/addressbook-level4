@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +15,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyPersonListException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -115,6 +117,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Sorts persons in AddressBook
+     */
+    public void sortPerson(Comparator<ReadOnlyPerson> comparator, boolean isReversed) throws EmptyPersonListException {
+        persons.sort(comparator, isReversed);
+    }
+
+    /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
@@ -160,6 +169,17 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    /**
+     * Removes the given Tag from all Persons stored in the address book, and from the UniqueTagList.
+     * @param tag to be removed
+     */
+    public void deleteTag(Tag tag) {
+        // TODO: remove tags from UniqueTagList and from all Persons
+        tags.removeTag(tag);
+        persons.removeTag(tag);
+
     }
 
     //// util methods

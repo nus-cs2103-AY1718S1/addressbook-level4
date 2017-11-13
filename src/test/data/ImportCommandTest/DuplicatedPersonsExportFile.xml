@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--@@author HanYaodong -->
+<personList>
+    <persons>
+        <name>Hoon Meier</name>
+        <phone>8482424</phone>
+        <email>stefan@example.com</email>
+        <address>little india</address>
+        <birthday>2000/01/01</birthday>
+        <facebook>11</facebook>
+        <remark></remark>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Hoon Meier</name>
+        <phone>8482424</phone>
+        <email>stefan@example.com</email>
+        <address>little india</address>
+        <birthday>2000/01/01</birthday>
+        <facebook>11</facebook>
+        <remark></remark>
+        <tagged>friend</tagged>
+    </persons>
+</personList>

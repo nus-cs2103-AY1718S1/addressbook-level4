@@ -12,7 +12,8 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.UserPrefs;
+import seedu.address.model.user.UserCreds;
+import seedu.address.model.user.UserPrefs;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -22,6 +23,7 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private UserCredsStorage userCredsStorage;
 
 
     public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
@@ -46,6 +48,27 @@ public class StorageManager extends ComponentManager implements Storage {
     public void saveUserPrefs(UserPrefs userPrefs) throws IOException {
         userPrefsStorage.saveUserPrefs(userPrefs);
     }
+
+    // ================ UserCreds methods ==============================
+
+    //@@author zenghou
+    @Override
+    public String getUserCredsFilePath() {
+        return userCredsStorage.getUserCredsFilePath();
+    }
+
+    //@@author zenghou
+    @Override
+    public Optional<UserCreds> readUserCreds() throws DataConversionException, IOException {
+        return userCredsStorage.readUserCreds();
+    }
+
+    //@@author zenghou
+    @Override
+    public void saveUserCreds(UserCreds userCreds) throws IOException {
+        userCredsStorage.saveUserCreds(userCreds);
+    }
+    //@@author
 
 
     // ================ AddressBook methods ==============================

@@ -7,6 +7,7 @@ import java.util.List;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 
 /**
@@ -19,7 +20,7 @@ public class HistoryCommand extends Command {
     public static final String MESSAGE_NO_HISTORY = "You have not yet entered any commands.";
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         List<String> previousCommands = history.getHistory();
 
         if (previousCommands.isEmpty()) {
@@ -33,6 +34,7 @@ public class HistoryCommand extends Command {
     @Override
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         requireNonNull(history);
+        this.model = model;
         this.history = history;
     }
 }

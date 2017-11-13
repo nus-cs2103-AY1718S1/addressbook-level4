@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -19,11 +21,15 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.user.UserCreds;
+import seedu.address.model.user.UserPrefs;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -36,6 +42,24 @@ public class AddCommandTest {
         thrown.expect(NullPointerException.class);
         new AddCommand(null);
     }
+
+    //@@author zenghou-unused
+    /** Initially used to test for invalid login since the check was done by command. However, this check will be
+     * conducted by LogicManager now. As such, all commands will be executed.
+     */
+    public void execute_invalidUser_failure() throws Exception {
+        Model model = new ModelManager();
+        Person validPerson = new PersonBuilder().build();
+
+        String userNotLoggedInMessage = "Invalid session! Please log in first! \n"
+                + LoginCommand.MESSAGE_USAGE;
+
+        Model userCredsNotValidatedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new UserCreds());
+        Command cmd = new AddCommand(validPerson);
+        cmd.setData(userCredsNotValidatedModel, new CommandHistory(), new UndoRedoStack());
+        assertCommandFailure(cmd, userCredsNotValidatedModel, userNotLoggedInMessage);
+    }
+    //@@author
 
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
@@ -93,9 +117,11 @@ public class AddCommandTest {
     }
 
     /**
-     * A default model stub that have all of the methods failing.
+     * A default model stub that have all of the methods except getUserCreds() failing
+     * #getUserCreds() must work because session must be validated before Command is executed.
      */
     private class ModelStub implements Model {
+
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -133,6 +159,31 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void sortPersonList(Comparator<ReadOnlyPerson> comparator, boolean isReversed) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removeTag(Tag tag) {
+            fail("This method should not be called.");
+        }
+
+        //@@author zenghou
+        @Override
+        public void updateUserCreds() {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public UserCreds getUserCreds() {
+            // returns validated userCreds
+            UserCreds userCreds = new UserCreds();
+            userCreds.validateCurrentSession();
+            return userCreds;
+        }
+        //@@author
     }
 
     /**

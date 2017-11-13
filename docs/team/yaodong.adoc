@@ -1,0 +1,73 @@
+= Yaodong Han - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F11-B4/main/blob/master/collated/main/HanYaodong.md[Functional code]] [https://github.com/CS2103AUG2017-F11-B4/main/blob/master/collated/test/HanYaodong.md[Test code]]
+
+=== Enhancement Added: Export/Import command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=exportimport]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+User may want to transport part of their address book contacts to another location, or to share with their friends of their common friends. An export and import command can be useful in this situation, so that users do not need to pick the ones they want to share in a big .xml file and risk of breaking it. +
+
+Currently, the export command can accept a list of indexes to refer to the persons, and a file path to store the person list. The file then can be imported into another address book, and manuel editing is also feasible for advanced users.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../UserGuide.adoc[tag=exportimport]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Auto-complete
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Command can be complicated for a CLT system while more and more functions are introduced. Entering a long command just to do a simple thing can be boring, so auto-complete is necessary in most places.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../UserGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Update the user stories (Pull request https://github.com/CS2103AUG2017-F11-B4/main/pull/1[#1], https://github.com/CS2103AUG2017-F11-B4/main/pull/13[#13])
+* Change all fields except name, phone and email to be optional (Pull request https://github.com/CS2103AUG2017-F11-B4/main/pull42/[#42])
+* Add Facebook field (Pull request https://github.com/CS2103AUG2017-F11-B4/main/pull/58[#58])

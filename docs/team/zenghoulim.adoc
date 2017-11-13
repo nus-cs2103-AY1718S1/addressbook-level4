@@ -1,0 +1,135 @@
+= Zeng Hou LIM - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F11-B4/main/blob/master/collated/main/zenghou.md[Functional code]] [https://github.com/CS2103AUG2017-F11-B4/main/blob/master/collated/test/zenghou.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: `remark` Command
+==== External behavior
+
+---
+
+Adds a `remark` to a person in the address book
+Format: `remark INDEX [r/REMARK]`
+
+
+#Start of Extract [from: UserGuide]#
+
+include::../UserGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+While a `remark` field is similar in nature to `tag` field, they serve different purpose. The former is used to store short phrase about a person (e.g. Likes to drink coffee and has good sense of humor) whereas the latter is suited for classifying persons in the address book.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `search` Command
+==== External behavior
+
+---
+
+Similar to the `find` command.
+This comand searches for persons whose details contain the given keyphrase
+Format: `search [keyphrase]`
+
+
+#Start of Extract [from: UserGuide]#
+
+include::../UserGuide.adoc[tag=search]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+`Search` is similar to `find`, but is more extensive. Instead of looking only at the name of the person in the addressbook, every other detail is checked. This might be useful when users are trying to search for persons who live in a particular location (e.g. search Clementi Road), or for persons who have gmail accounts (e.g. search @gmail.com). From a user experience perspective, there is high degree of consistency between this search command and the search command users would expect of web browsers, word processors and the likes.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=search]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `login` Command
+==== External behavior
+
+---
+
+Authenticates the current user before giving read or write access.
+Format: `login [usr/username] [pwd/password]`
+
+
+#Start of Extract [from: UserGuide]#
+
+include::../UserGuide.adoc[tag=login]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since this address book stores personal information about people, there should be some degree of security and privacy protection when it comes to using this address book. Therefore, without logging in, a user may not see or modify the contents of the address book.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=login]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Profile picture for contact
+==== External behavior
+
+---
+
+Contacts in the address book will now be assigned to their profile pictures used on Facebook, if any. Otherwise, a default image would be used. The contact's Facebook id has to be saved before the retrieval is possible.
+
+---
+
+==== Justification
+
+As this address book is meant for University students to store their contacts, it is expected to store a significant number of contacts. As such, it might be difficult to visually recognize and identify contacts solely by the words and their contact information. Moreover, this visual search may be demanding especially when contacts share the same first names. Therefore, by having a contact image, the user would be able to quickly identify their target contact.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=facebookProfilePicture]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Add non-functional requirements (Pull requests https://github.com/CS2103AUG2017-F11-B4/main/pull/4)
+* Designed UI mockup (Pull requests https://github.com/CS2103AUG2017-F11-B4/main/pull/19)

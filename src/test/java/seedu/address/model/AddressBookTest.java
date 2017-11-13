@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -16,9 +17,12 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
+import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class AddressBookTest {
 
@@ -69,6 +73,24 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    @Test
+    public void deleteTag_withoutValidTag() {
+        addressBook.deleteTag(new TagStub().getStub());
+        AddressBook addressBookNew = new AddressBook();
+        assertEquals(addressBook, addressBookNew);
+    }
+
+    @Test
+    public void deleteTag_withValidTag() {
+        AddressBook withDefaultTag = new AddressBookBuilder().withPerson(new PersonBuilder().build()).build();
+        withDefaultTag.deleteTag(new TagStub().getStub());
+        // both Person and UniqueTagList should not contain "friend" tag
+        assertTrue(withDefaultTag.getTagList().isEmpty());
+        // check the tag of the only person in address book
+        assertTrue(withDefaultTag.getPersonList().get(0).getTags().isEmpty());
+
+    }
+
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */
@@ -90,6 +112,24 @@ public class AddressBookTest {
         public ObservableList<Tag> getTagList() {
             return tags;
         }
+    }
+
+    /**
+     * A stub Tag that does definitely does not throw any error.
+     */
+    private static class TagStub {
+        private Tag tagStub;
+        public TagStub() {
+            try {
+                tagStub = new Tag("friends");
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+            }
+        }
+        public Tag getStub() {
+            return tagStub;
+        }
+
     }
 
 }

@@ -1,0 +1,59 @@
+= Denny Sunarjo - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F11-B4/main/blob/master/collated/main/sunarjo-denny.md[Functional code]] [https://github.com/CS2103AUG2017-F11-B4/main/blob/master/collated/main/sunarjo-denny-reused.md[Reused code]] [https://github.com/CS2103AUG2017-F11-B4/main/blob/master/collated/test/sunarjo-denny.md[Test code]]
+
+=== Enhancement Added: Sort
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It is one of the basic necessity of most tools to be able to sort their values according to the attribute the user are interested in.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Birthday Attribute
+
+==== Justification
+
+As our main targeted user consist of millenials, storing birthday (for celebration purposes) is just as important as storing address.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Add command aliases (Pull requests https://github.com/CS2103AUG2017-F11-B4/main/pull/11[#11])
+* Update AddressBook Pro UI to a cleaner and more modern look (Pull requests https://github.com/CS2103AUG2017-F11-B4/main/pull/45[#45], https://github.com/CS2103AUG2017-F11-B4/main/pull/61[#61])

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -22,7 +23,8 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
+import seedu.address.model.user.UserCreds;
+import seedu.address.model.user.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -36,11 +38,29 @@ public class SelectCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new UserCreds());
     }
+
+    //@@author zenghou-unused
+    /** Initially used to test for invalid login since the check was done by command. However, this check will be
+     * conducted by LogicManager now. As such, all commands will be executed.
+     */
+    public void execute_invalidUser_failure() throws Exception {
+        String userNotLoggedInMessage = "Invalid session! Please log in first! \n"
+                + LoginCommand.MESSAGE_USAGE;
+
+        Model userCredsNotValidatedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), new UserCreds());
+        SelectCommand selectCommand = new SelectCommand(INDEX_FIRST_PERSON);
+
+        selectCommand.setData(userCredsNotValidatedModel, new CommandHistory(), new UndoRedoStack());
+        assertCommandFailure(selectCommand, userCredsNotValidatedModel,
+                userNotLoggedInMessage);
+    }
+    //@@author
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
+        model.getUserCreds().validateCurrentSession(); // validate user
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
         assertExecutionSuccess(INDEX_FIRST_PERSON);
@@ -50,6 +70,7 @@ public class SelectCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
+        model.getUserCreds().validateCurrentSession(); // validate user
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -57,6 +78,7 @@ public class SelectCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
+        model.getUserCreds().validateCurrentSession(); // validate user
         showFirstPersonOnly(model);
 
         assertExecutionSuccess(INDEX_FIRST_PERSON);
@@ -64,6 +86,7 @@ public class SelectCommandTest {
 
     @Test
     public void execute_invalidIndexFilteredList_failure() {
+        model.getUserCreds().validateCurrentSession(); // validate user
         showFirstPersonOnly(model);
 
         Index outOfBoundsIndex = INDEX_SECOND_PERSON;
@@ -119,6 +142,7 @@ public class SelectCommandTest {
      * is thrown with the {@code expectedMessage}.
      */
     private void assertExecutionFailure(Index index, String expectedMessage) {
+        model.getUserCreds().validateCurrentSession(); // validate user
         SelectCommand selectCommand = prepareCommand(index);
 
         try {
@@ -134,6 +158,7 @@ public class SelectCommandTest {
      * Returns a {@code SelectCommand} with parameters {@code index}.
      */
     private SelectCommand prepareCommand(Index index) {
+        model.getUserCreds().validateCurrentSession(); // validate user
         SelectCommand selectCommand = new SelectCommand(index);
         selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return selectCommand;

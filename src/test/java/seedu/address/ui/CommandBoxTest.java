@@ -28,6 +28,7 @@ public class CommandBoxTest extends GuiUnitTest {
     @Before
     public void setUp() {
         Model model = new ModelManager();
+        model.getUserCreds().validateCurrentSession(); // validate user
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);
@@ -124,6 +125,17 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
+
+    //@@author HanYaodong
+    @Test
+    public void handleKeyPress_startingWithTab() {
+        commandBoxHandle.runAutoComplete("ed");
+        assertEquals(commandBoxHandle.getInput(), "edit ");
+
+        commandBoxHandle.runAutoComplete("edit 1a");
+        assertEquals(commandBoxHandle.getInput(), "edit 1 ");
+    }
+    //@@author
 
     /**
      * Runs a command that fails, then verifies that <br>

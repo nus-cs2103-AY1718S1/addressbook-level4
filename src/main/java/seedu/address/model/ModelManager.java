@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,9 +13,14 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.UserCredsChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyPersonListException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.user.UserCreds;
+import seedu.address.model.user.UserPrefs;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -24,23 +30,26 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final UserCreds userCreds;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given addressBook, userPrefs and userCreds.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, UserCreds userCreds) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook + ", user prefs " + userPrefs
+                + " and user creds " + userCreds);
 
         this.addressBook = new AddressBook(addressBook);
+        this.userCreds = userCreds;
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UserPrefs(), new UserCreds());
     }
 
     @Override
@@ -66,6 +75,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void removeTag(Tag tag) {
+        addressBook.deleteTag(tag);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -81,6 +96,35 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //=========== User Credentials Accessors =================================================================
+
+    //@@author zenghou
+    /**
+     * Returns userCreds to be used by Logic component for user verification
+     */
+    @Override
+    public synchronized UserCreds getUserCreds() {
+        return userCreds;
+    }
+
+    //@@author zenghou
+    @Override
+    public synchronized void updateUserCreds() {
+        indicateUserCredsChanged();
+    }
+
+    //@@author zenghou
+    /** Raises an event to indicate the UserCreds has changed */
+    private synchronized void indicateUserCredsChanged() {
+        raise(new UserCredsChangedEvent());
+    }
+    //@@author
+
+    @Override
+    public void sortPersonList(Comparator<ReadOnlyPerson> comparator, boolean isReversed)
+            throws EmptyPersonListException {
+        addressBook.sortPerson(comparator, isReversed);
+    }
     //=========== Filtered Person List Accessors =============================================================
 
     /**

@@ -11,6 +11,11 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public interface Logic {
     /**
+     * Tries to auto-complete the error command and returns it.
+     */
+    String autoCompleteCommand(String command);
+
+    /**
      * Executes the command and returns the result.
      * @param commandText The command as entered by the user.
      * @return the result of the command execution.

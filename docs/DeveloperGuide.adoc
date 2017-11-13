@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `PersonProfile` `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -344,6 +344,196 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::search[]
+=== Search mechanism
+
+The search mechanism is very similar to find and relies on the predicate `DetailsContainKeyphrasePredicate`. This function allows users to search for persons whose details matches the keyphrase, case-insensitive. In other words, if any aspect of a person's details (i.e. Name, Phone, Email, Address, Remark or Tag) contains exactly the keyphrase (inclusive of spaces and special characters) as a subsequence, the person(s) will be listed.
+
+image::SearchCommandSequenceDiagram.png[width="800"]
+_Figure 3.2.1 : Sequence Diagram of the Search Command_
+
+When the `search` command (or alias: `sh`) is being entered, followed by a non-empty keyphrase, `AddressBookParser` in `LogicManager` will return a `SearchCommandParser`, which will parse the keyphrase. The keyphrase will have trailing and preceding white spaces removed, and be ensured that it is not empty String. The parser will return a `SearchCommand` object, with a `DetailsContainKeyphrasePredicate` as its argument.
+
+`DetailsContainKeyphrasePredicate` implements a `Predicate <ReadOnlyPerson>` interface. `DetailsContainKeyphrasePredicate#test(ReadOnlyPerson person)` will be use to test if a Person's details contain the keyphrase. Within `DetailsContainKeyphrasePredicate#test(ReadOnlyPerson person), a private method would be used to check each aspect of a Person (e.g. Name, Phone, Address etc.) to ensure readability. Since `String#contain` is case-sensitive, a case-insensitive method to check is required. `StringUtil#caseInsensitiveContains(Person person, String keyphrase)` converts both the Person's attribute value and keyphrase to lowercase, and proceeds to use `String#contain` to ensure case-insensitivity.
+
+After a `SearchCommand` is returned to the `LogicManager`, it will be executed. The method will call the model's `updateFileredPersonList` method, which will list every Person that passes `DetailsContainKeyphrasePredicate#test`, and update the model accordingly. A successful command message will be returned if there are no errors thrown and the UI will update accordingly.
+
+==== Design Considerations
+
+**Aspect:** What to be searched for +
+**Alternative 1 (current choice):** Include all aspects of Persons to be searched for +
+**Pros:** Users can search for users by other fields instead of name +
+**Cons:** The search result may be too much for user to process, especially when common sequence of alphabets are entered (e.g. ".com") +
+**Alternative 2:** Search only for selected fields +
+**Pros:** Reduces the amount of search results for the user +
+**Cons:** There is no consistency (design principle) with the mental concept of search that is currently used by applications such as Microsoft Word and Internet Browsers.
+
+---
+
+**Aspect:** How to search +
+**Alternative 1 (current choice):** Use `DetailsContainKeyphrasePredicate` +
+**Pros:** `DetailsContainKeyphrasePredicate` is similar to `NameContainsKeywordsPredicate` used by FindCommand and therefore easier to implement +
+**Cons:** Polymorphism may be employed instead of using separate classes for functions that are similar +
+**Alternative 2:** Let `DetailsContainKeyphrasePredicate` inherit `NameContainsKeywordsPredicate` +
+**Pros:** Easier for developers to override and add methods +
+**Cons:** Internal attributes are of different types and it might be more cumbersome to manipulate the data type.
+// end::search[]
+
+// tag::sort[]
+=== Sort mechanism
+
+The sort mechanism is similar to that of list command. The sort mechanism is to sort and list the person(s) in the addressbook according to the attribute enetered by the user.
+
+// need to add
+image::SearchCommandSequenceDiagram.png[width="800"]
+_Figure 3.3.1 : Sequence Diagram of the Sort Command_
+
+When the `sort` command is being entered, followed by a non-empty keyphrase, `AddressBookParser` in `LogicManager` will return a `SortCommandParser`, which will parse the keyphrase. The keyphrase will have trailing and preceding white spaces removed, and be ensured that it is not empty String. The parser will return a `SortCommand` object.
+
+After a `SortCommand` is returned to the `LogicManager`, it will be executed. The method will call `sortComparatorByPrefix` method, which will sort the Persons in ascending or descending order depending on the attribute entered, and update the model accordingly. A successful command message will be returned if there are no errors thrown and the UI will be updated accordingly.
+
+==== Design Considerations
+
+**Aspect:** Attribute +
+**Alternative 1:** Can only sort by name +
+**Pros:** Users can sort in alphabetical order (A-Z or Z-A) +
+**Cons:** Sorted command is still not able to sort a filtered list. Instead it will list all contacts +
+**Alternative 2:** Allow filtered sort +
+**Pros:** User can sort the Persons in the Address Book after they filter them through search +
+
+---
+
+**Aspect:** Order +
+**Alternative 1:** use comparator `sortComparatorByPrefix`  to sort +
+**Pros:** User can sort the address book both ascending and descending order +
+**Cons:** Not able to stable sort +
+**Alternative 2:** Input more than one attribute for sorting +
+**Pros:** Sort according to the first attribute and when encounter same value of the first attribute, will the sort person according to second attribute +
+**Cons:** Unable to know the optimum number of attribute to stable sort the Persons in the AddressBook.
+// end::sort[]
+
+// tag::exportimport[]
+=== Export/Import mechanism
+
+We are using XML file to export and import data in address book. Export and Import are designed to allow users to share contacts with each other or synchronize their data in different devices. A list of persons with all information will be written into a specified file in XML format in `export` command. And `import` command will be able to read the file generate, and add the person list into the address book.
+
+`export` command accepts a list of indexes and a file path. (e.g. `export INDEXES;FILE_PATH`) The arguments will be passed to `ExportCommandParser#parse()` method, which will parse two parameters and create a `ExportCommand` object. Then `execute()` will be called by `LogicManager` after setting the address book data.
+
+A `List<ReadOnlyPerson>` is created by mapping the indexes and `filteredPersonList` in `Model`, and then saved using `PersonListStorage#savePersonList()`. The `PersonListStorage` interface is implemented by `XmlPersonListStorage`, where the `Person` is mapped to `XmlAdaptedPerson` and stored in `XmlSerializablePersonList`. Then the XML `Marshaller` writes all data into the file specified.
+
+The following sequence diagram shows how the export operation works:
+
+image::ExportCommandSequenceDiagram.png[width="800"]
+
+When `import` command is entered, the XML `Unmarshaller` will read the file and return a `XmlSerializablePersonList` object that contains the Person List. The the List is internally converted to a `UniquePersonList` by `XmlSerializablePersonList#getPersons()`, and returned to `ImportCommand`. Then the `Person`s are added to the address book sequentially by `Model#addPerson(Person)`.
+
+The following sequence diagram shows how the import operation works:
+
+image::ImportCommandSequenceDiagram.png[width="800"]
+
+==== Design Consideration
+
+**Aspect** Format of export file +
+**Alternative 1 (current choice):** Use XML format +
+**Pros:** XML format are currently used for saving the address book, so the save method has already been implemented +
+**Cons:** Person list need to be transformed to a XML root class while saving and transformed back while reading file +
+**Alternative 2:** Save add command as plan text +
+**Pros:** Generating command is easy and can be directly used +
+**Cons:** Needs to implement new file writer and reader +
+
+---
+
+**Aspect** The return type of `XmlPersonListStorage#readPersonList()` +
+**Alternative 1 (current choice):** Use `UniquePersonList` +
+**Pros:** The persons are unique when adding to address book +
+**Cons:** Needs to handle exception when encounter duplicated persons in the file +
+**Alternative 2:** Use `List<ReadOnlyPerson>` +
+**Pros:** Has no need to worry about reading the file +
+**Cons:** Cannot tell the `DuplicatedPersonException` is caused by persons in file or in address book +
+// end::exportimport[]
+
+=== User Login
+
+We are currently using a simple authenticating method to validate users. In summary, the user's username and password would be compared to the username and password stored in a file called `credentials.json`. More precisely, the password is stored as a hash value, using Java's `String#hashCode()` method to prevent the password from being openly stored.
+
+Before the user is logged in, the user would not be able to execute any commands. In this version, the user is still able to view the loaded list of contacts. In V1.5, the addressbook will not be loaded until the user is logged in.
+
+*Mechanism*
+
+A `LoginCommandParser` parses a user's username and password, and returns a `LoginCommand`. The username and password entered by the user would be encapsulated in a class `UserCreds`, which is a private attribute in the `LoginCommand`. When the `execute` method is called, the `UserCreds` attribute in the `LoginCommand` would be compared against the `UserCreds` in the model. The model gets `UserCreds` attribute by reading the JSON file `credentials.json`.
+
+Upon successful authentication, the attribute `isValidated` in the model's `UserCreds` would be flagged to true. This change of attribute in `UserCreds` would be raised as an event called `indicateUserCredsChanged`. In version V1.4, this event would be transmitted using Google's Event Bus to the UiManager, which will have a handler to make the necessary adjustments to the UI in response to the event.
+
+Once the user is logged in, every `Command` will check if the current user is validated using `model#getUserCreds()#isValidatedSession()`. If the result is true, the `Command` will be executed. Otherwise, a `CommandException` will be thrown.
+
+==== Design Consideration
+
+**Aspect:** Using an external library for more secure authentication +
+**Alternative 1 (current choice):**: Validate a user by checking username and password (hasCode) stored in json file. +
+**Alternative 2:**: Use an external library such as Apache Shiro. +
+**Pros:** Simple authentication without external libraries. Allows for quick iteration. +
+**Cons: **Primitive authentication which does not provide good security. Password hash can be cracked to reveal original password. JSON file is also susceptible to manipulations, which may alter the user's saved username and password. +
+
+---
+
+**Aspect** Changes to the GUI +
+**Alternative 1 (current choice):** Allows users to view addressbook as it automatically loads. +
+**Alternative 2:** Hides all panels except for CommandBox and ResultDisplay. Reveal other panels (e.g. PersonList) once user is logged in. +
+**Alternative 3:** Show all panles, but only load addressbook once user is logged in. +
+**Pros:** No changes needed for GUI +
+**Cons:** Unauthorized users are still able to view the contact list, which may not be desirable
+
+// tag::facebookProfilePicture[]
+=== Contact Profile Picture
+
+We are using `facebook4j` package as a wrapper to access Facebook's Graph API. The `Facebook` class is used as an API to access the methods.
+
+This class is used only in `PersonProfile` class, where there is a need to retrieve a contact's profile picture from Facebook to use as a contact profile picture. The method `facebook#getPictureURL(String userId, PictureSize size)` is used to retrieve a larger image from Facebook.
+
+[Note] The application is currently authorized with an application token that will expire in 2 months.
+
+In the event that an image cannot be retrieved from Facebook, a default image stored locally would be used as the contact's profile picture.
+
+**Aspect** Retrieving a user's Facebook profile picture +
+**Alternative 1 (temporary fix)**: Hard code a Facebook userId, which will be used to retrieve a profile picture from the user. +
+**Alternative 2**: Figure out how to retrieve userId from a Facebook user's username or url. +
+**Alternative 3**: Introduce another 3rd party library that returns a userId from a username +
+**Pros**: Able to quickly prototype with the temporary fix +
+**Cons**: The profile picture does not match the actual contact
+
+**Aspect** Facebook Authentication +
+**Alternative 1 (current choice)**: Create a Facebook application and store the app id, app secret and token in the `PersonProfile` class. +
+**Alternative 2**: Get users to log in with their own Facebook accounts and grant permission +
+**Pros**: Hassle free for users +
+**Cons**: The app id, app secret and token are stored in the open, which may pose security issues.
+// end::facebookProfilePicture[]
+
+// tag::autocomplete[]
+=== Auto-Complete
+
+All auto-complete functions are implemented in one class, `AutoComplete`, including command fill-in and command word guess. +
+
+When user hits `TAB` in the CommandBox, or when a `ParserException` or `CommandException` is thrown, `CommandBox` will call `LogicManager#autoComplete` and set text to the return String. `LogicManager#autoComplete` will call `AutoComplete` class, which will return auto-completed command, with current `filteredPersonList`. +
+
+Inside `AutoComplete` class, a parser will split the command into command word and arguments. The command word will be matched to the existing commands, if it can be matched, corresponding autoComplete method will be called with arguments. (e. g. if the command is "add n/", `addCommandAutoComplete()` will be called) If the command word is invalid, we will try to do a prefix match, and return the suggested command. If the prefix cannot match, a fuzzy search method will be called. +
+
+The fuzzy search calculates levenshtein distance to represent the similarity of two String. If the distance is smaller than half of the length of the correct command word, it will be considered as a hit. For example, if the input command is "port", the levenshtein distance between "port" and "export" will be 2, which is smaller than half of the length of "export" which is 3. So it will be considered as a hit. +
+
+If the command word of the input command is correct, corresponding auto-complete method will be called with argument. These methods do similar things including trimming unnecessary whitespaces, removing non-digit chars when an index is expected, generating all the prefixes that a command needs, filling in fields of a person in filteredPersonList when editing. +
+
+The final return String will be the auto-completed command or a suggestion of possible commands, and will be shown in the CommandBox for further editing.
+
+==== Design Consideration
+
+**Aspect** Method of approximate string matching +
+**Alternative 1 (current choice):** Levenshtein distance. +
+**Pros:** Easy to implement and acceptable performance in a small system (18 available commands). +
+**Cons:** Could run slow in a larger system and the matching acurrate is low. +
+**Alternative 2:** More advanced matching methods (e. g. Bitap algorithm). +
+**Pros:** More accurate search with better performance. +
+**Cons:** Much more difficult to implement. +
+// end::autocomplete[]
 
 === Logging
 
@@ -595,6 +785,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
 
+//tag::remark[]
 === Creating a new command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
@@ -712,6 +903,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 ==== Full Solution
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
+//tag::remark[]
 
 [appendix]
 == User Stories
@@ -729,17 +921,193 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |edit their contact details |I do not have to delete and create a new contact
+
+|`* * *` |user |edit my own contact details |I can make changes/correct my errors
+
+|`* * *` |user |add/edit a tag pegged to my contact |I can update the tags if necessary
+
+|`* * *` |user |undo and redo my last action |I can recover from my mistakes
+
+|`* * *` |user |create groups |I can sort my contacts according to social context
+
+|`* * *` |user |sort and find according to tags/social groups/name/dob |I can conveniently look out for specific tags/identify categories
+
+|`* * *` |user |log in to access the addressbook |only I can access the addressbook
+
+|`* * *` |user |list the names only in my addresbook |I don't have to see all the details of every person I am not interested in
+
+|`* * *` |user |search for users by other fields (e.g. email/address/contact number) |I can quickly access contact by other identifiable attributes
+
+|`* * *` |user |open a save file in another directory |I can have multiple addressbooks and share with other users
+
+|`* * *` |user |change the color scheme/UI elements of the addressbook |I can select a color/font that suits my preference
+
+|`* * *` |user |export and import my contact details |I can share the contact details
+
+|`* * *` |user |share a contact card (that is exported) with another user |I can easily share with a click of a button and avoid manual sharing
+
+|`* * *` |user |add my contact's birthday details |I can keep track of my contact's birthdays
+
+|`* * *` |user |be reminded of my contact's birthday |I can remember their birthdays easily
+
+|`* * *` |user |add social media links for me and my contacts |We can connect socially
+
+|`* * *` |user |view my contact's social media profiles link |I can easily connect with them if I have not already done so
+
+|`* * *` |user |use alias for shorthand for commands |I don't have to type all the commands every time I use it
+
+|`* * *` |user |auto-complete the commands |I can be efficient and not worry about entering wrong commands
+
+|`* *` |user |edit their details without including prefix |I can conveniently edit a person without having to include tags every time
+
+|`* *` |user |share a contact with another user |I can easily share with a share file and avoid manual sharing
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user |know how to get to my contact's address from my current location on Google maps |I know which route to take to get there
 
-{More to be added}
+|`* *` |user |message/create online groups (e.g. Google Doc/Telegram) for contacts in my list |I do not have to copy/paste/manually enter their details
+
+|`* *` |user |log in with my Facebook/Google account |I do not have to enter my username/password
+
+|`* *` |user |send feedback to the developer |I can give suggestion on how to improve the current app
+
+|`* *` |user |add an event to the addressbook |I can easily save appointments to the addressbook's calendar
+
+|`* *` |user |store my addressbook in the cloud |I can access my addressbook from any device
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |see how my friends are interconnected |I can know who are our mutual friends
+
+|`*` |user |see my contact's social media updates |I keep up with their activities
+
+|`*` |user |execute commands with my voice |I can search for contacts without having to touch the keyboard
+
+|`*` |user |interact with the GUI in natural language |I do not have to remember the commands
+
+|`*` |user |have the option to customize my addressbook |I can have the flexibility of deciding which features I need
+|=======================================================================
 
 [appendix]
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Help
+
+*MSS*
+
+1.  User requests for help guide
+2.  AddressBook shows list of commands (help page) on a new window
++
+Use case ends.
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a person with the person’s name, phone, email, address , and (optional) tags
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The person already exists
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2b. The added person has missing details
++
+[none]
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2c. The added person has wrong entry format
++
+[none]
+** 2c1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: List
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list
+4.  AddressBook edits the person and shows the updated list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. No field is edited or input format is wrong.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find a person by name
+2.  AddressBook shows a list of persons having the same name entered by user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook doesn't have the entered name.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
 
 [discrete]
 === Use case: Delete person
@@ -767,7 +1135,101 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Select person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to select a specific person in the list
+4.  AddressBook selects the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: History
+
+*MSS*
+
+1.  User requests show history of previous commands
+2.  AddressBook shows history of previous commands since the programme started
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo
+
+*MSS*
+
+1.  User requests to undo previous command
+2.  AddressBook undo previous command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no undoable command.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo
+
+*MSS*
+
+1.  User requests to redo previous undid command
+2.  AddressBook redo previous command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no redoable undid command.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear
+
+*MSS*
+
+1.  User requests to delete all existing persons
+2.  AddressBook delete all persons
++
+Use case ends.
+
+[discrete]
+=== Use case: Exit
+
+*MSS*
+
+1.  User requests to exit the programme
+2.  AddressBook exits
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
@@ -775,8 +1237,12 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  The UI color scheme should be color-blind friendly.
+.  The UI must abide by the 5 design principles - Visibility, Feedback, Constraints, Mapping, Consistency and Affordance.
+.  The documentation should be well maintained, and written in plain and simple to understand English such that other developers can easily read and understand.
+.  The system should not take longer than 3 seconds to execute a command.
+.  The project is expected to adhere to a schedule that delivers at least an improvement (size of improvement does not matter) on a weekly basis.
+.  Every additional feature/improvement should have comprehensive tests written to ensure error-free code.
 
 [appendix]
 == Glossary

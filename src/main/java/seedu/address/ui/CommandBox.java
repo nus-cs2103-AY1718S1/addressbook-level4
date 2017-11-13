@@ -55,6 +55,10 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case TAB:
+            keyEvent.consume();
+            autoComplete();
+            break;
         default:
             // let JavaFx handle the keypress
         }
@@ -86,6 +90,15 @@ public class CommandBox extends UiPart<Region> {
         replaceText(historySnapshot.next());
     }
 
+    //@@author HanYaodong
+    /**
+     * Auto-completes the command in the command box.
+     */
+    private void autoComplete() {
+        replaceText(logic.autoCompleteCommand(commandTextField.getText()));
+    }
+    //@@author
+
     /**
      * Sets {@code CommandBox}'s text field with {@code text} and
      * positions the caret to the end of the {@code text}.
@@ -112,8 +125,9 @@ public class CommandBox extends UiPart<Region> {
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
-            setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
+            autoComplete();
+            setStyleToIndicateCommandFailure();
             raise(new NewResultAvailableEvent(e.getMessage()));
         }
     }

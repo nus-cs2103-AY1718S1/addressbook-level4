@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--@@author HanYaodong -->
+<personList>
+    <persons>
+        <name>Amy Bee</name>
+        <phone>11111111</phone>
+        <email>amy@example.com</email>
+        <address>Block 312, Amy Street 1</address>
+        <birthday>2000/10/10</birthday>
+        <facebook>21</facebook>
+        <remark></remark>
+        <tagged>friend</tagged>
+    </persons>
+</personList>

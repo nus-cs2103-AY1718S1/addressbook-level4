@@ -14,7 +14,6 @@ import seedu.address.logic.commands.SelectCommand;
  * @see DeleteCommandParserTest
  */
 public class SelectCommandParserTest {
-
     private SelectCommandParser parser = new SelectCommandParser();
 
     @Test

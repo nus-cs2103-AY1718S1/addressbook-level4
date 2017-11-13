@@ -15,6 +15,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
+    public static final String COMMAND_ALIAS = "s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the person identified by the index number used in the last person listing.\n"
@@ -31,7 +32,6 @@ public class SelectCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {

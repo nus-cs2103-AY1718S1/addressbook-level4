@@ -155,5 +155,29 @@ public class StringUtilTest {
         StringUtil.getDetails(null);
     }
 
+    //---------------- Tests for caseInsensitiveContains --------------------------------------
 
+    @Test
+    public void insensitiveContainsMatchingInput_returnTrue() {
+        // same case, matches partially
+        assertTrue(StringUtil.caseInsensitiveContains("Geylang", "eyla"));
+
+        // different case, matches partially
+        assertTrue(StringUtil.caseInsensitiveContains("Geylang", "eYlA"));
+
+        // same case, matches in full
+        assertTrue(StringUtil.caseInsensitiveContains("GeYLang", "GeYLang"));
+
+        // same case, matches partially
+        assertTrue(StringUtil.caseInsensitiveContains("GeYLang", "eYLa"));
+    }
+
+    @Test
+    public void insensitiveContainsNonMatchingInput_returnsFalse() {
+        // same case, does not match
+        assertFalse(StringUtil.caseInsensitiveContains("Geylang", "Tampines"));
+
+        // same case, extra alphabet
+        assertFalse(StringUtil.caseInsensitiveContains("Geylang", "Geylangd"));
+    }
 }

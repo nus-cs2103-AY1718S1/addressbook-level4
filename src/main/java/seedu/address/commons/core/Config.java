@@ -14,6 +14,7 @@ public class Config {
     private String appTitle = "Address App";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
+    private String userCredsFilePath = "credentials.json";
 
     public String getAppTitle() {
         return appTitle;
@@ -38,6 +39,16 @@ public class Config {
     public void setUserPrefsFilePath(String userPrefsFilePath) {
         this.userPrefsFilePath = userPrefsFilePath;
     }
+
+    //@@author zenghou
+    public String getUserCredsFilePath() {
+        return userCredsFilePath;
+    }
+
+    public void setUserCredsFilePath(String userCredsFilePath) {
+        this.userCredsFilePath = userCredsFilePath;
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

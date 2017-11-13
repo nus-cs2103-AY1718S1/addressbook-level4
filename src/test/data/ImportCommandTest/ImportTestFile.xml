@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--@@author HanYaodong -->
+<personList>
+    <persons>
+        <name>Hoon Meier</name>
+        <phone>8482424</phone>
+        <email>stefan@example.com</email>
+        <address>little india</address>
+        <birthday>2000/08/08</birthday>
+        <facebook>11</facebook>
+        <remark></remark>
+    </persons>
+</personList>

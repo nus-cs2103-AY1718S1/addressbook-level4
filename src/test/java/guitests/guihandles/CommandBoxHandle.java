@@ -43,4 +43,15 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     public ObservableList<String> getStyleClass() {
         return getRootNode().getStyleClass();
     }
+
+    /**
+     * Enters the command in the Command Box and press TAB.
+     */
+    public void runAutoComplete(String command) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(command));
+        guiRobot.pauseForHuman();
+
+        guiRobot.type(KeyCode.TAB);
+    }
 }

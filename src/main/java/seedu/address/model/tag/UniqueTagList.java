@@ -58,6 +58,14 @@ public class UniqueTagList implements Iterable<Tag> {
     }
 
     /**
+     * Removes the specified Tag in this list
+     */
+    public void removeTag(Tag t) {
+        internalList.removeAll(t);
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
      * Ensures every tag in the argument list exists in this object.
      */
     public void mergeFrom(UniqueTagList from) {

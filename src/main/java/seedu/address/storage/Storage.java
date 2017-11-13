@@ -7,18 +7,28 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.UserPrefs;
+import seedu.address.model.user.UserCreds;
+import seedu.address.model.user.UserPrefs;
 
 /**
  * API of the Storage component
  */
-public interface Storage extends AddressBookStorage, UserPrefsStorage {
+public interface Storage extends AddressBookStorage, UserPrefsStorage, UserCredsStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
 
     @Override
     void saveUserPrefs(UserPrefs userPrefs) throws IOException;
+
+    //@@author zenghou
+    @Override
+    Optional<UserCreds> readUserCreds() throws DataConversionException, IOException;
+
+    //@@author zenghou
+    @Override
+    void saveUserCreds(UserCreds userCreds) throws IOException;
+    //@@author
 
     @Override
     String getAddressBookFilePath();

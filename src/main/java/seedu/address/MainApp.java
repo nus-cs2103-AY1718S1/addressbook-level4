@@ -24,12 +24,15 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.UserPrefs;
+import seedu.address.model.user.UserCreds;
+import seedu.address.model.user.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.JsonUserCredsStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
+import seedu.address.storage.UserCredsStorage;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.ui.Ui;
@@ -50,6 +53,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    protected UserCreds userCreds;
 
 
     @Override
@@ -61,6 +65,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
+        UserCredsStorage userCredsStorage = new JsonUserCredsStorage(config.getUserCredsFilePath());
+        userCreds = initCreds(userCredsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
@@ -70,7 +76,7 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model);
 
-        ui = new UiManager(logic, config, userPrefs);
+        ui = new UiManager(logic, config, userPrefs, userCreds);
 
         initEventsCenter();
     }
@@ -102,7 +108,7 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, userPrefs, userCreds);
     }
 
     private void initLogging(Config config) {
@@ -175,6 +181,38 @@ public class MainApp extends Application {
         }
 
         return initializedPrefs;
+    }
+
+    /**
+     * Returns a {@code UserCreds} using the file at {@code storage}'s user creds file path,
+     * or a new {@code UserCreds} with default configuration if errors occur when
+     * reading from the file.
+     */
+    protected UserCreds initCreds(UserCredsStorage storage) {
+        String credsFilePath = storage.getUserCredsFilePath();
+        logger.info("Using creds file : " + credsFilePath);
+
+        UserCreds initializedCreds;
+        try {
+            Optional<UserCreds> credsOptional = storage.readUserCreds();
+            initializedCreds = credsOptional.orElse(new UserCreds());
+        } catch (DataConversionException e) {
+            logger.warning("UserCreds file at " + credsFilePath + " is not in the correct format. "
+                    + "Using default user creds");
+            initializedCreds = new UserCreds();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            initializedCreds = new UserCreds();
+        }
+
+        //Update creds file in case it was missing to begin with or there are new/unused fields
+        try {
+            storage.saveUserCreds(initializedCreds);
+        } catch (IOException e) {
+            logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
+        }
+
+        return initializedCreds;
     }
 
     private void initEventsCenter() {

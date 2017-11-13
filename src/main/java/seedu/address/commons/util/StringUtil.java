@@ -6,6 +6,25 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ImportCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.SearchCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.UndoCommand;
+
 /**
  * Helper functions for handling strings.
  */
@@ -67,5 +86,39 @@ public class StringUtil {
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    /**
+     * Returns true if {@code detail} contains {@code keyphrase}, case insensitive.
+     * @param detail to be checked against
+     * @param keyphrase to be checked
+     */
+    public static boolean caseInsensitiveContains(String detail, String keyphrase) {
+        return detail.toLowerCase().contains(keyphrase.toLowerCase());
+    }
+
+    //@@author HanYaodong
+    /**
+     * Returns the command words in the program as an Array.
+     */
+    public static String[] getSystemCommandWords() {
+        return new String[]{AddCommand.COMMAND_WORD,
+                            ClearCommand.COMMAND_WORD,
+                            DeleteCommand.COMMAND_WORD,
+                            EditCommand.COMMAND_WORD,
+                            ExitCommand.COMMAND_WORD,
+                            ExportCommand.COMMAND_WORD,
+                            FindCommand.COMMAND_WORD,
+                            HelpCommand.COMMAND_WORD,
+                            HistoryCommand.COMMAND_WORD,
+                            ImportCommand.COMMAND_WORD,
+                            ListCommand.COMMAND_WORD,
+                            LoginCommand.COMMAND_WORD,
+                            RedoCommand.COMMAND_WORD,
+                            RemarkCommand.COMMAND_WORD,
+                            SearchCommand.COMMAND_WORD,
+                            SelectCommand.COMMAND_WORD,
+                            SortCommand.COMMAND_WORD,
+                            UndoCommand.COMMAND_WORD};
     }
 }

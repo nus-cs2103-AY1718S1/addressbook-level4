@@ -24,7 +24,11 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Open a terminal and run the command to start the app: `$ java -jar addressbook.jar`. The GUI should appear in a few seconds.
++
+[NOTE]
+Double-click to open address book may work, but there will be unexpected errors. +
+So run the program through terminal is much preferred.
 +
 image::Ui.png[width="790"]
 +
@@ -54,28 +58,74 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+// tag::login[]
+=== Logging in : `login`
+
+Validates the current user before executing commands. +
+Format: `login`
+
+[NOTE]
+Default username: admin
+Default password: password
+
+[NOTE]
+User must be logged in before executing commands.
+
+Format:
+
+* `login usr/[enter username] pwd/[enter password]
+
+Since v1.3.
+
+// end::login[]
+
+// tag::add[]
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [a/ADDRESS] [r/REMARK] [b/BIRTHDAY] [f/FACEBOOK] [t/TAG]...` +
+Shorthand for add: `a`
+
+[NOTE]
+Facebook represents a person's Facebook ID (a long number), rather than the Facebook username.
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/2000/10/10`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 f/153080620724s t/criminal`
+
+// end::add[]
 
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` +
+Shorthand for list: `l`
+
+// tag::sort[]
+=== Sorting persons list : `sort`
+
+Sorts the persons list according to the attribute specified in ascending or descending order. +
+Format: `sort attribute [reverse]` +
+
+[TIP]
+Sort function will sort the attribute in ascending order by default
+
+Examples:
+
+* `sort name reverse`
+* `sort name`
+
+// end::sort[]
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [f/FACEBOOK] [t/TAG]...` +
+Shorthand for edit: `e`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -95,7 +145,8 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS]` +
+Shorthand for find: `f`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -112,10 +163,40 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::search[]
+=== Locating persons by details: `search`
+
+Finds persons whose details contain any of the given keywords. +
+Format: `search KEYPHRASE` +
+Shorthand for search: `sh`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* Keyphrase can be separated by spaces.
+* The order of the keyphrase matters. e.g. `Hans Bo` will match `Hans Bo`
+* Name, Phone, Email, Address, Remark, Tag are all searched.
+* Full or partial words will be matched e.g. `Han` will match `Hans Solo`
+* Persons matching the keyphrase will be returned. e.g. `@gmail.com` will return `HansGruber@gmail.com`, `BoYang@gmail.com`
+****
+
+Examples:
+
+* `search John` +
+Returns `john` and `John Doe`
+* `search joHn dOe` +
+Returns any person having names `John Doe`
+* `search mate` +
+Returns any person with details that matches `mate` such as `classmate` in tags.
+
+Since v1.2.
+
+// end::search[]
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX` +
+Shorthand for delete: `d`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -135,10 +216,11 @@ Deletes the 1st person in the results of the `find` command.
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select INDEX` +
+Shorthand for select: `s`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the Person Profile at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -151,6 +233,52 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+// tag::exportimport[]
+=== Exporting a list of persons : `export`
+
+Exports persons identified by the index numbers used in the last person listing to a specified save file. +
+Format: `export INDEXES ; FILE_PATH` +
+
+****
+* The indexes must be positive numbers or two indexes linked by "-" (e. g. "1-4"), and they should be separated by whitespaces or commas (e.g. 1-3, 4 6).
+* The indexes refers to the index number shown in the most recent listing.
+* `INDEXES` and `FILE_PATH` must be separated by ";".
+* If the given file exsits, it will be overwritten without warning.
+* The persons are exported to a XML format file, so a `.xml` extension will be automatically added, if the given file does not have one.
+* The `FILE_PATH` can be in relative path or absolute path.
+****
+
+Examples:
+
+* `list` +
+`export 1-3, 5; Persons.xml` +
+Exports 1st, 2nd, 3rd and 5th person in the address book to `Persons.xml` in the current working directory.
+
+Since v1.1.
+
+=== Import persons from a file : `import`
+
+Imports a list of persons from a save file to the address book. +
+Format: `import FILE_PATH` +
+
+****
+* This command is designed to work with file generated by `export` command.
+* If you want to edit the file yourself, please make sure that it is in XML format and contains all required information.
+* The save file cannot contain identical persons; otherwise, import command will be cancelled.
+* `FILE_PATH` can be relative path or absolute path.
+****
+
+Examples:
+
+* `import ../MyContacts.xml` +
+Imports MyContacts.xml relative to your working directory.
+* `import C:\Users\User_name\Documents\Persons.xml` +
+`import /Users/User_name/Documents/Persons/xml` +
+Import command supports different platforms and corresponding style.
+
+Since v1.2.
+// end::exportimport[]
 
 === Listing entered commands : `history`
 
@@ -166,11 +294,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` +
+Shorthand for undo: `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `import` and `clear`).
 ====
 
 Examples:
@@ -192,7 +321,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` +
+Shorthand for redo: `r`
 
 Examples:
 
@@ -216,11 +346,29 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Clears all entries from the address book. +
 Format: `clear`
+Shorthand for clear: `c`
 
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
+
+// tag::autocomplete[]
+=== Auto-complete commands
+
+Address book has auto-complete function for the commands. If you hit `TAB` in the command box or if you try to execute an error command, the command box will show the auto-completed command and suggestions. +
+
+The auto-complete function will work in the following ways:
+
+* fill in fields that is not been inputed by the user. (add, edit)
+* remove non-digit characters when an index is expected. (delete, export, select)
+* try to find the position of the delimiter when it cannot be found. (export)
+* trim unnecessary white spaces.
+* complete the command when the prefix of a certain command is inputted.
+* try to guess what command is being inputting when the command word is invalid.
+
+Since v1.3.
+// end::autocomplete[]
 
 === Saving the data
 
@@ -232,21 +380,54 @@ There is no need to save manually.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+// tag::remark[]
+=== Adding a remark : `remark`
+
+Adds a remark to a specified person from the address book. +
+Format: `remark INDEX [r/REMARK]` +
+Shorthand for delete: `r`
+
+****
+* Adds a remark to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`remark 2 r/Likes to drink coffee and has a good sense of humor` +
+Adds the remark "Likes to drink coffee and has a good sense of humor" +
+to the 2nd person in the address book.
+
+Since v1.1.
+
+// end::remark[]
+
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/2010/10/01 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Login* : `login [usr/username] [pwd/password]`
 * *List* : `list`
+* *Sort* : `sort attribute [reverse]` +
+e.g. `sort name`
 * *Help* : `help`
+* *Remark* : `remark INDEX [r/REMARK]`
+* *Search* : `search [keyphrase]`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Export* : `export INDEXES ; FILE_PATH` +
+e.g.`export 1,2 3 4 ; Persons.xml`
+* *Import* : `import FILE_PATH` +
+e.g. `import persons.xml`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
