@@ -249,7 +249,9 @@ public class TypicalImportFile {
     public static final ReadOnlyPerson DANIELLE = new PersonBuilder().withName("Danielle Chua").withPhone("82252533")
             .withEmail("chua_jj_danielle@example.com").withRoom("06-120").build();
 
-    public static final String TYPICAL_IMPORT_SUCCESS_MESSAGE = ImportCommand.MESSAGE_SUCCESS + " Added: Amy Parker, Bernard Maddison, Carlo Henn, Danielle Chua";
+    public static final String TYPICAL_IMPORT_SUCCESS_MESSAGE = ImportCommand.MESSAGE_SUCCESS
+            + " Added: Amy Parker, Bernard Maddison, Carlo Henn, Danielle Chua";
+
     private TypicalImportFile() {
     } // prevents instantiation
 

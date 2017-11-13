@@ -75,11 +75,11 @@ public class ImportCommand extends UndoableCommand {
 
             return new CommandResult(String.format(MESSAGE_SUCCESS + " Added: " + namesFeedback));
         } catch (NullPointerException e) {
-            throw new CommandException(MESSAGE_ERROR + " NULL ");
+            throw new CommandException(MESSAGE_ERROR);
         } catch (DataConversionException e) {
-            throw new CommandException(MESSAGE_ERROR + " DATA ");
+            throw new CommandException(MESSAGE_ERROR);
         } catch (IOException e) {
-            throw new CommandException(MESSAGE_ERROR + " IO ");
+            throw new CommandException(MESSAGE_ERROR);
         } catch (NoUniqueImport noUniqueImport) {
             throw new CommandException(MESSAGE_FILE_NOT_UNIQUE);
         }
@@ -176,6 +176,9 @@ public class RemoveTagCommand extends UndoableCommand {
 
     /**
      * Update the tag list of person and refresh on model.
+     * @param lastShownList the last updated list
+     * @param i index of the person to edit
+     * @throws CommandException raise error when there is problem in removing tag from model
      */
     private void updateTagList(List<ReadOnlyPerson> lastShownList, int i) throws CommandException {
         ReadOnlyPerson personToEdit = lastShownList.get(i);
@@ -191,7 +194,9 @@ public class RemoveTagCommand extends UndoableCommand {
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit} without @tagName
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * @param personToEdit
+     * @return
      */
     private Person removedTagFromPerson(ReadOnlyPerson personToEdit) {
         assert personToEdit != null;
