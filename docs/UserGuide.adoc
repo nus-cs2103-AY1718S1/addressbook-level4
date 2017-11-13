@@ -1,4 +1,4 @@
-= Gentleman's Guide (V1.5rc) - User Guide
+= Gentleman's Guide (V1.5) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -36,7 +36,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Gentleman's Guide.jpeg[width="790"]
+image::Ui.png[width="790"]
 _Figure 2.1 : Interactions in the Login Command._
 +
 .  To use the Gentleman's Guide, type the command in the command box and press kbd:[Enter] to execute it. +
@@ -68,7 +68,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 Format: `help`
 
 This will open the help windows as shown below, solving any problems you may have.
-+
+
 image::helpwindow.jpeg[width="790"]
 _Figure 3.1.1 : Help Window._
 
@@ -82,7 +82,7 @@ Adds a person to the Gentleman's Guide +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 The Lady will be instantly added to the Gentleman's Guide, for the you to call another day.
-+
+
 image::addperson.jpeg[width="790"]
 _Figure 3.2.1 : John Doe added to Gentleman's Guide._
 
@@ -101,7 +101,7 @@ Thus, as a Gentleman, you add a reminder to the Gentleman's Guide.*
 
 Adds a reminder to the Gentleman's Guide +
 Format `addReminder z/TASK p/PRIORITY d/DATE and TIME m/MESSAGE [t/TAG]...`
-+
+
 image::addreminder.jpeg[width="790"]
 _Figure 3.3.1 : Reminder added to Gentleman's Guide._
 

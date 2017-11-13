@@ -77,4 +77,11 @@ include::../DeveloperGuide.adoc[tag = listReminder]
 
 ---
 
+=== Enhancement Proposed:
+
+- Link birthdays to real time and implement pop-ups to inform users of upcoming birthdays.
+
 === Other Contributions
+
+- Added test cases to help improve code coverage (Pull Requests https://github.com/CS2103AUG2017-T09-B1/main/pull/77[#77],
+  https://github.com/CS2103AUG2017-T09-B1/main/pull/85[#85], https://github.com/CS2103AUG2017-T09-B1/main/pull/89[89] )
