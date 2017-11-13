@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_ID;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,13 +23,15 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.UniqueScheduleList;
+import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Adds a schedule to a person.
+ * Pulls Google Calendar events of a person.
  */
-public class AddScheduleCommand extends UndoableCommand {
+public class AddCalendarCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "cadd";
     public static final String COMMAND_ALT = "ca";
@@ -38,20 +41,22 @@ public class AddScheduleCommand extends UndoableCommand {
             + "p/PERSON INDEX "
             + PREFIX_CALENDAR_ID + "GOOGLE_CALENDAR_ID" + "\n"
             + "Example: " + COMMAND_WORD + " "
-            + "p/2 " + PREFIX_CALENDAR_ID + "b8dkov028k71krea20qbbc8f3s";
+            + "p/2 " + PREFIX_CALENDAR_ID + "xderek105243x@gmail.com";
 
-    public static final String MESSAGE_GCALENDAR_PULL_SUCCESS = "Added Google Calendar Events to %1$s.";
+    public static final String MESSAGE_CALENDAR_PULL_SUCCESS = "Added %1$s Google Calendar Event(s) to %2$s.";
     public static final String MESSAGE_INVALID_CALENDAR_ID = "Google Calendar ID is invalid.";
+    public static final String MESSAGE_CALENDAR_PULL_FAIL = "Unable to pull events from Google Calendar.";
     public static final String MESSAGE_DATETIME_ERROR = "Error parsing datetime.";
-    public static final String MESSAGE_DUPLICATE_SCHEDULE = "Schedule already exists in the schedule list.";
+    public static final String MESSAGE_NO_UPDATE = "%1$s's schedule list is up-to-date.";
 
     private final Index personIndex;
     private final String calendarId;
 
+    private int addedEvents;
     /**
      * Creates an CreateGroupCommand to add the specified {@code ReadOnlyGroup}
      */
-    public AddScheduleCommand(Index personIndex, String calendarId) {
+    public AddCalendarCommand(Index personIndex, String calendarId) {
         this.personIndex = personIndex;
         this.calendarId = calendarId;
     }
@@ -73,7 +78,7 @@ public class AddScheduleCommand extends UndoableCommand {
         try {
             editedPerson = addCalendarToPerson(toEdit);
         } catch (ParseException e) {
-            throw new AssertionError("Calendar ID should be valid");
+            throw new CommandException(MESSAGE_CALENDAR_PULL_FAIL);
         }
 
         try {
@@ -83,40 +88,59 @@ public class AddScheduleCommand extends UndoableCommand {
         } catch (PersonNotFoundException e) {
             throw new AssertionError("The target person cannot be missing");
         }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(String.format(MESSAGE_GCALENDAR_PULL_SUCCESS, personName));
+        if (addedEvents == 0) {
+            return new CommandResult(String.format(MESSAGE_NO_UPDATE, personName));
+        } else {
+            return new CommandResult(String.format(MESSAGE_CALENDAR_PULL_SUCCESS, addedEvents, personName));
+        }
 
     }
 
     /**
-     * Creates and returns a {@code Person} with the the Favourite attribute set to true.
+     * Creates and returns a {@code Person} with a schedule list.
      */
-    private Person addCalendarToPerson(ReadOnlyPerson personToEdit) throws ParseException {
+    private Person addCalendarToPerson(ReadOnlyPerson personToEdit) throws ParseException, CommandException {
         Name updatedName = personToEdit.getName();
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();
         Address updatedAddress = personToEdit.getAddress();
         Favourite updatedFavourite = personToEdit.getFavourite();
         Set<Tag> updatedTags = personToEdit.getTags();
-        UniqueScheduleList scheduleList;
+        UniqueScheduleList updatedScheduleList = personToEdit.scheduleProperty().get();
 
         try {
-            scheduleList = EventParserUtil.getScheduleList(this.calendarId);
+            UniqueScheduleList scheduleList = EventParserUtil.getScheduleList(this.calendarId);
+
+            for (Schedule s: scheduleList) {
+                try {
+                    updatedScheduleList.add(s);
+                    addedEvents++;
+                } catch (DuplicateScheduleException dse) {
+                    continue;
+                }
+            }
+
+            if (addedEvents > 0) {
+                updatedScheduleList.sort();
+            }
+
         } catch (IOException e) {
-            throw new ParseException(MESSAGE_INVALID_CALENDAR_ID);
+            throw new CommandException(MESSAGE_INVALID_CALENDAR_ID);
         } catch (IllegalValueException e) {
-            throw new ParseException(MESSAGE_DATETIME_ERROR);
+            throw new CommandException(MESSAGE_DATETIME_ERROR);
         }
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedFavourite, updatedTags, scheduleList.toSet());
+                updatedFavourite, updatedTags, updatedScheduleList.toSet());
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddScheduleCommand // instanceof handles nulls
-                && personIndex.equals(((AddScheduleCommand) other).personIndex));
+                || (other instanceof AddCalendarCommand // instanceof handles nulls
+                && personIndex.equals(((AddCalendarCommand) other).personIndex));
 
     }
 }

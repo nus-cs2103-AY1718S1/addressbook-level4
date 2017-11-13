@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GOOGLEPLUS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TWITTER;
 
 import java.util.List;
 import java.util.Set;
@@ -32,10 +35,13 @@ public class AddSocialMediaCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sadd";
     public static final String COMMAND_ALT = "sa";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds social media URLs to a person."
-            + "Parameters: "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a Social Media URL to a person."
+            + "Parameters: \n"
             + "p/PERSON INDEX "
-            + PREFIX_FACEBOOK + "FACEBOOK_URL" + "\n"
+            + "[" + PREFIX_FACEBOOK + "FACEBOOK_URL] "
+            + "[" + PREFIX_TWITTER + "TWITTER_URL] "
+            + "[" + PREFIX_INSTAGRAM + "INSTAGRAM_URL] "
+            + "[" + PREFIX_GOOGLEPLUS + "GOOGLE PLUS_URL] \n"
             + "Example: " + COMMAND_WORD + " "
             + "p/2 " + PREFIX_FACEBOOK + "https://www.facebook.com/derek";
 

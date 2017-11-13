@@ -18,7 +18,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.group.Group;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -76,21 +75,6 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
-    }
-
-    /**
-     * Parses {@code Collection<String> groups} into a {@code Set<Group>} if {@code groups} is non-empty.
-     * If {@code groups} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<groups>} containing zero groups.
-     */
-    private Optional<Set<Group>> parseGroupsForEdit(Collection<String> groups) throws IllegalValueException {
-        assert groups != null;
-
-        if (groups.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> groupSet = groups.size() == 1 && groups.contains("") ? Collections.emptySet() : groups;
-        return Optional.of(ParserUtil.parseGroups(groupSet));
     }
 
 }

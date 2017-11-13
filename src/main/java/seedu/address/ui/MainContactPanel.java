@@ -110,6 +110,7 @@ public class MainContactPanel extends UiPart<Region> {
                 throw new MalformedURLException("URL is malformed in setContactImage()");
             }
         }
+
         contactImageCircle.setVisible(true);
         contactImageCircle.setFill(new ImagePattern(img));
         easeIn(contactImageCircle);
@@ -257,6 +258,10 @@ public class MainContactPanel extends UiPart<Region> {
 
     private void setSchedule(ReadOnlyPerson person) {
         schedulePlaceholder.setVisible(true);
+        ScheduleListPanel scheduleList = new ScheduleListPanel(person.scheduleProperty().get().asObservableList());
+        schedulePlaceholder.getChildren().add(scheduleList.getRoot());
+        //scheduleListView.setStyle("-fx-alignment: center-left; -fx-padding: 0 0 0 10;");
+        //easeIn(schedulePlaceholder);
         easeIn(schedulePlaceholder);
         currentPerson = person;
     }

@@ -39,7 +39,7 @@ public class XmlAdaptedSchedule {
         scheduleName = source.getName().toString();
         startDateTime = source.getStartDateTime().toString();
         endDateTime = source.getEndDateTime().toString();
-        scheduleDuration = source.getSheduleDuration();
+        scheduleDuration = source.getScheduleDuration();
         scheduleDetails = source.getScheduleDetails();
 
     }

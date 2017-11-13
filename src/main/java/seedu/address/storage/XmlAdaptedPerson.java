@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -126,7 +127,7 @@ public class XmlAdaptedPerson {
         final ProfPic profPic = new ProfPic(this.profPic);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<Group> groups = new HashSet<>(personGroups);
-        final Set<Schedule> schedules = new HashSet<>(personSchedule);
+        final Set<Schedule> schedules = new LinkedHashSet<>(personSchedule);
         final Set<SocialMedia> socialMediaUrls = new HashSet<>(personSocialMedia);
         return new Person(name, phone, email, address, favourite, profPic, tags, groups, schedules, socialMediaUrls);
 

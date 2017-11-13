@@ -30,7 +30,7 @@ public class AddFavouriteCommandTest {
                 .withEmail("alice@example.com").build();
         AddFavouriteCommand addFavouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(AddFavouriteCommand.MESSAGE_FAVE_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = String.format(AddFavouriteCommand.MESSAGE_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);

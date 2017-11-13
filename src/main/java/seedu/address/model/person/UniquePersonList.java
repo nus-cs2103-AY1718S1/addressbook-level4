@@ -95,7 +95,6 @@ public class UniquePersonList implements Iterable<Person> {
 
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
-     *
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
@@ -112,6 +111,27 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
 
+        internalList.set(index, new Person(editedPerson));
+    }
+
+    /**
+     * Replaces the person {@code target} in the list with {@code favouritePerson}.
+     * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
+    public void setFavourite(ReadOnlyPerson target, ReadOnlyPerson favouritePerson)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireNonNull(favouritePerson);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+
+        if (!target.equals(favouritePerson) && internalList.contains(favouritePerson)) {
+            throw new DuplicatePersonException();
+        }
+
         int targetIndex;
 
         /** Main favourite (fadd) logic
@@ -124,20 +144,21 @@ public class UniquePersonList implements Iterable<Person> {
          * Insert at the new position
          */
 
-        if (editedPerson.getFavourite().getStatus()) {
+        if (favouritePerson.getFavourite().getStatus()) {
             targetIndex = 0;
             ReadOnlyPerson currentPerson;
             for (int i = 0; i < internalList.size(); i++) {
                 currentPerson = internalList.get(i);
                 if (currentPerson.getFavourite().getStatus()) {
-                    if (currentPerson.getName().fullName.compareTo(editedPerson.getName().fullName) < 0) {
+                    if (currentPerson.getName().fullName.compareTo(favouritePerson.getName().fullName) < 0) {
                         targetIndex++;
                     }
                 }
             }
 
             internalList.remove(index);
-            internalList.add(targetIndex, new Person(editedPerson));
+            internalList.add(targetIndex, new Person(favouritePerson));
+
 
         } else {
 
@@ -160,15 +181,14 @@ public class UniquePersonList implements Iterable<Person> {
              */
             if (targetIndex != index) {
                 internalList.remove(index);
-                internalList.add(targetIndex, new Person(editedPerson));
+                internalList.add(targetIndex, new Person(favouritePerson));
             } else {
-                internalList.set(index, new Person(editedPerson));
+                internalList.set(index, new Person(favouritePerson));
             }
-
         }
-
-
     }
+
+
 
     /**
      * Removes the equivalent person from the list.
