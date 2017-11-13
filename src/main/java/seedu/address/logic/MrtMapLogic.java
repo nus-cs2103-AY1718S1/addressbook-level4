@@ -624,26 +624,43 @@ public class MrtMapLogic {
         return minTotalTimeList;
     }
 
-    public String[] getSortedMrtList(String[] mrtStationNames){
-        return getSortedMrtList(getMinTotalTime(mrtStationNames));
+    //Duplicates no longer in mrt string
+    private ArrayList<String> getSortedMrtList(String[] mrtStationNames){
+        return getSortedMrtListFromTotalTimeList(getMinTotalTime(mrtStationNames));
     }
 
-    private String[] getSortedMrtList(int[] minMrtTimes) {
-        String[] minMrtTimeList = new String[minMrtTimes.length];
+    /**
+     * The only public method in this entire code apart from the constructor
+     * Return a list of sorted mrt stations base on total travelling time
+     * from stations indicated in mrtStationNames.
+     * @param mrtStationNames
+     * @return
+     */
+    public ArrayList<String> getSortedMrtList(ArrayList<String> mrtStationNames){
+        ArrayList<String> validStationList = removeInvalidMrtStation(mrtStationNames);
+        String[] mrtStations = new String[validStationList.size()];
+        for(int i = 0; i < mrtStations.length; i++){
+            mrtStations[i] = validStationList.get(i);
+        }
+        return getSortedMrtList(mrtStations);
+    }
+
+    //Return a sorted list of mrt Stations base on minMrtTimes array
+    private ArrayList<String> getSortedMrtListFromTotalTimeList(int[] minMrtTimes) {
+        ArrayList<String> sortedMrtStations = new ArrayList<String>();
 
         PriorityQueue<IntPair> minHeap = new PriorityQueue<IntPair>(1, new IntPair(0, 0));
         for(int i = 0; i < minMrtTimes.length; i++) {
             minHeap.add(new IntPair(i, minMrtTimes[i]));
         }
-        int count = 0;
+
         while(minHeap.size() != 0) {
             IntPair intPair = minHeap.poll();
             int stationIndex = intPair.mrtIndex;
             MrtStation mrt = mrtStations.get(stationIndex);
-            minMrtTimeList[count] = mrt.getName();
-            count++;
+            sortedMrtStations.add(mrt.getName());
         }
-        return minMrtTimeList;
+        return removeDuplicateMrt(sortedMrtStations);
     }
 
     private boolean isSameLine(int mrtIndexOne, int mrtIndexTwo) {
