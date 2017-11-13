@@ -1,5 +1,5 @@
 # YewOnn
-###### /java/seedu/address/commons/events/ui/LocateMrtCommandEvent.java
+###### \java\seedu\address\commons\events\ui\LocateMrtCommandEvent.java
 ``` java
 public class LocateMrtCommandEvent extends BaseEvent {
 
@@ -19,7 +19,7 @@ public class LocateMrtCommandEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindByPhoneCommand.java
+###### \java\seedu\address\logic\commands\FindByPhoneCommand.java
 ``` java
 public class FindByPhoneCommand extends Command {
 
@@ -51,7 +51,7 @@ public class FindByPhoneCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/model/person/PhoneContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\PhoneContainsKeywordsPredicate.java
 ``` java
 public class PhoneContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
