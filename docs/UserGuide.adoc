@@ -172,7 +172,7 @@ Format: `whitelist`
 // tag::overduelist[]
 === Listing all persons with overdue debt: `overduelist`
 
-shows a list of all persons with overdue debt in the address book. +
+Shows a list of all persons with overdue debt in the address book. +
 Format: `overduelist`
 // end::overduelist[]
 
@@ -182,7 +182,7 @@ Edits an existing debtor, blacklisted/whitelisted contact in the address book. +
 Format: `edit [INDEX] [n/NAME] [hp/HANDPHONE_NUMBER] [home/HOME_PHONE_NUMBER] [op/OFFICE_PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] [d/DEBT] [td/TOTAL DEBT] [dl/DEADLINE] [int/INTEREST] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* (e.g. (e.g. 1, 2, 3, ...))
 * If no index is specified, the currently selected person is edited instead.
 * At least one of the optional fields, other than `INDEX`, must be provided.
 * Existing values will be updated to the input values.
@@ -230,7 +230,7 @@ Increases the debt of a debtor by the amount entered. +
 Format: `borrow [INDEX] AMOUNT`
 
 ****
-* Increases the debt and total debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Increases the debt and total debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* (e.g. (e.g. 1, 2, 3, ...))
 * If no index is specified, the debt of the currently selected person is updated instead.
 * `AMOUNT` has to be in dollars and cents. For example: `500.50` which represents $500.50.
 * This command also sets the date repaid to `NOT REPAID` if the person previously fully repaid his/her debts.
@@ -255,7 +255,7 @@ Decreases the debt of a person by the amount entered. +
 Format: `payback [INDEX] AMOUNT`
 
 ****
-* Decreases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Decreases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* (e.g. (e.g. 1, 2, 3, ...))
 * If no index is specified, the debt of the currently selected person is updated instead.
 * `AMOUNT` has to be in dollars and cents. For example: `600.15` which represents $600.15.
 * `AMOUNT` repaid cannot be more than the debt owed by the person at the specifiec `INDEX`.
@@ -300,7 +300,7 @@ Deletes the specified person from the address book. +
 Format: `delete [INDEX]`
 
 ****
-* Deletes the person at the specified `INDEX`. The index refers to the index number shown in the most recent listing. The index *must be a positive integer* 1, 2, 3, ...
+* Deletes the person at the specified `INDEX`. The index refers to the index number shown in the most recent listing. The index *must be a positive integer* (e.g. (e.g. 1, 2, 3, ...))
 * If no index is specified, the currently selected person is deleted instead.
 ****
 
@@ -325,7 +325,7 @@ Format: 'ban [INDEX]'
 ****
 * Bans the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* (e.g. (e.g. 1, 2, 3, ...))
 * If no index is specified, the currently selected person is banned instead.
 ****
 
@@ -338,7 +338,7 @@ Adds the 2nd person in the address book to blacklist.
 `ban 1` +
 Adds the 1st person in the results of the `find` command to blacklist.
 * `select 3` +
-`ban`
+`ban` +
 Adds the 3rd person in the address book to blacklist.
 
 === Unbanning a blacklisted person : `unban`
@@ -349,7 +349,7 @@ Format: 'unban [INDEX]'
 ****
 * Unbans the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* (e.g. (e.g. 1, 2, 3, ...))
 * If no index is specified, the currently selected person is unbanned instead.
 ****
 
@@ -362,7 +362,7 @@ Removes the 2nd person from blacklist.
 `unban 1` +
 Removes the 1st person in the results of the `find` command from blacklist.
 * `select 3` +
-`unban`
+`unban` +
 Removes the 3rd person in the address book from blacklist.
 
 === Selecting a person : `select`
@@ -373,7 +373,7 @@ Format: `select [INDEX]`
 ****
 * Selects the person and loads the full information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* (e.g. (e.g. 1, 2, 3, ...))
 * If no index is specified, the next person in the last person listing is selected instead.
 * If no index is specified, and no one was selected, the first person in the last person listing is selected instead.
 ****
@@ -385,7 +385,7 @@ Examples:
 Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st person in the results of the `find` command. +
 `select` +
 Selects the first person in the last person listing.
 
@@ -406,7 +406,7 @@ Examples:
 
 * `list` +
 `select 2` +
-* `nearby 1` +
+`nearby 1` +
 Selects the 1st person in the same `cluster` as the previously selected person.
 // end::nearby[]
 
@@ -517,7 +517,7 @@ Format: 'addpic [INDEX]'
 ****
 * Adds a profile picture to the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* (e.g. (e.g. 1, 2, 3, ...))
 * If no index is specified, the command acts on the currently selected person.
 ****
 
@@ -530,7 +530,7 @@ Adds a picture to the 2nd person in masterlist.
 `addpic 1` +
 Adds a profile picture to the 1st person from the results of the `find` command.
 * `select 3` +
-`addpic`
+`addpic` +
 Adds a profile picture to the 3rd person from the masterlist in the address book.
 // end::addpic[]
 
@@ -543,7 +543,7 @@ Format: 'delpic [INDEX]'
 ****
 * Removes the profile picture of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* (e.g. (e.g. 1, 2, 3, ...))
 * If no index is specified, the command acts on currently selected person.
 ****
 
@@ -556,7 +556,7 @@ Deletes the picture of the 2nd person in masterlist.
 `delpic 1` +
 Deletes the profile picture of the 1st person from the results of the `find` command.
 * `select 3` +
-`delpic`
+`delpic` +
 Deletes the profile picture of the 3rd person from the masterlist in the address book.
 // end::delpic[]
 
