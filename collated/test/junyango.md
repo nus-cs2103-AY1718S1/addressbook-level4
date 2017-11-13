@@ -1,5 +1,5 @@
 # junyango
-###### /java/guitests/guihandles/event/EventCardHandle.java
+###### \java\guitests\guihandles\event\EventCardHandle.java
 ``` java
 /**
  * Provides a handle to an event card in the {@code EventListPanel}.
@@ -43,7 +43,7 @@ public class EventCardHandle extends NodeHandle<Node> {
 
 }
 ```
-###### /java/guitests/guihandles/event/EventListPanelHandle.java
+###### \java\guitests\guihandles\event\EventListPanelHandle.java
 ``` java
 /**
  * Provides a handle for {@code EventListPanel} containing the list of {@code EventCard}.
@@ -171,7 +171,7 @@ public class EventListPanelHandle extends NodeHandle<ListView<EventCard>> {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/SwitchThemeEventTest.java
+###### \java\seedu\address\commons\events\ui\SwitchThemeEventTest.java
 ``` java
 public class SwitchThemeEventTest {
     @Test
@@ -181,7 +181,7 @@ public class SwitchThemeEventTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/CommandTestUtil.java
+###### \java\seedu\address\logic\commands\CommandTestUtil.java
 ``` java
     /**
      * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
@@ -194,7 +194,7 @@ public class SwitchThemeEventTest {
         assert model.getFilteredEventList().size() == 1;
     }
 ```
-###### /java/seedu/address/logic/commands/event/AddEventCommandTest.java
+###### \java\seedu\address\logic\commands\event\AddEventCommandTest.java
 ``` java
 
 public class AddEventCommandTest {
@@ -296,7 +296,7 @@ public class AddEventCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/event/DeleteEventCommandTest.java
+###### \java\seedu\address\logic\commands\event\DeleteEventCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteEventCommand}.
@@ -385,7 +385,7 @@ public class DeleteEventCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/event/EditEventCommandTest.java
+###### \java\seedu\address\logic\commands\event\EditEventCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditEventCommand.
@@ -541,7 +541,7 @@ public class EditEventCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/event/EditEventDescriptorTest.java
+###### \java\seedu\address\logic\commands\event\EditEventDescriptorTest.java
 ``` java
 public class EditEventDescriptorTest {
     @Test
@@ -579,7 +579,7 @@ public class EditEventDescriptorTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/event/ListEventCommandTest.java
+###### \java\seedu\address\logic\commands\event\ListEventCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -610,7 +610,7 @@ public class ListEventCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SwitchThemeTest.java
+###### \java\seedu\address\logic\commands\SwitchThemeTest.java
 ``` java
 
 public class SwitchThemeTest {
@@ -629,7 +629,7 @@ public class SwitchThemeTest {
 
 
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_addEvent() throws Exception {
@@ -652,7 +652,7 @@ public class SwitchThemeTest {
         assertEquals(new EditEventCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_theme() throws Exception {
@@ -660,7 +660,7 @@ public class SwitchThemeTest {
         assertTrue(parser.parseCommand(SwitchThemeCommand.COMMAND_WORD + " 3") instanceof SwitchThemeCommand);
     }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_listEvents() throws Exception {
@@ -668,7 +668,7 @@ public class SwitchThemeTest {
         assertTrue(parser.parseCommand(ListEventCommand.COMMAND_WORD + " 3") instanceof ListEventCommand);
     }
 ```
-###### /java/seedu/address/logic/parser/event/DeleteEventCommandParserTest.java
+###### \java\seedu\address\logic\parser\event\DeleteEventCommandParserTest.java
 ``` java
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -693,7 +693,7 @@ public class DeleteEventCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/event/EditEventCommandParserTest.java
+###### \java\seedu\address\logic\parser\event\EditEventCommandParserTest.java
 ``` java
 public class EditEventCommandParserTest {
 
@@ -791,7 +791,7 @@ public class EditEventCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/person/FbCommandParserTest.java
+###### \java\seedu\address\logic\parser\person\FbCommandParserTest.java
 ``` java
 public class FbCommandParserTest {
     private final FbCommandParser parser = new FbCommandParser();
@@ -809,7 +809,7 @@ public class FbCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/person/GMapCommandParserTest.java
+###### \java\seedu\address\logic\parser\person\GMapCommandParserTest.java
 ``` java
 public class GMapCommandParserTest {
     private final GMapCommandParser parser = new GMapCommandParser();
@@ -827,7 +827,7 @@ public class GMapCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBookTest.java
+###### \java\seedu\address\model\AddressBookTest.java
 ``` java
     @Test
     public void getEventList_modifyList_throwsUnsupportedOperationException() {
@@ -881,7 +881,7 @@ public class GMapCommandParserTest {
 
 }
 ```
-###### /java/seedu/address/model/event/EventTest.java
+###### \java\seedu\address\model\event\EventTest.java
 ``` java
 public class EventTest {
     private static Name name;
@@ -919,7 +919,7 @@ public class EventTest {
     }
 
 ```
-###### /java/seedu/address/model/event/EventTest.java
+###### \java\seedu\address\model\event\EventTest.java
 ``` java
     @Test
     public void equal_twoSameStateEvent_checkCorrectness() throws Exception {
@@ -932,7 +932,7 @@ public class EventTest {
     }
 
 ```
-###### /java/seedu/address/model/event/UniqueEventListTest.java
+###### \java\seedu\address\model\event\UniqueEventListTest.java
 ``` java
 public class UniqueEventListTest {
     @Rule
@@ -946,7 +946,7 @@ public class UniqueEventListTest {
     }
 }
 ```
-###### /java/seedu/address/model/ModelManagerTest.java
+###### \java\seedu\address\model\ModelManagerTest.java
 ``` java
     @Test
     public void getFilteredEventList_modifyList_throwsUnsupportedOperationException() {
@@ -955,7 +955,7 @@ public class UniqueEventListTest {
         modelManager.getFilteredEventList().remove(0);
     }
 ```
-###### /java/seedu/address/model/ModelManagerTest.java
+###### \java\seedu\address\model\ModelManagerTest.java
 ``` java
     @Test
     public void addPerson_successfullyAddEvent() throws Exception {
@@ -1035,7 +1035,7 @@ public class UniqueEventListTest {
     }
 
 ```
-###### /java/seedu/address/model/person/PersonTest.java
+###### \java\seedu\address\model\person\PersonTest.java
 ``` java
     @Test
     public void hashCode_checkCorrectness() {
@@ -1047,7 +1047,7 @@ public class UniqueEventListTest {
     }
 }
 ```
-###### /java/seedu/address/model/property/DateTimeTest.java
+###### \java\seedu\address\model\property\DateTimeTest.java
 ``` java
 public class DateTimeTest {
     @BeforeClass
@@ -1068,7 +1068,7 @@ public class DateTimeTest {
     }
 
 ```
-###### /java/seedu/address/model/property/EventNameContainsKeywordsPredicateTest.java
+###### \java\seedu\address\model\property\EventNameContainsKeywordsPredicateTest.java
 ``` java
 public class EventNameContainsKeywordsPredicateTest {
 
@@ -1132,7 +1132,7 @@ public class EventNameContainsKeywordsPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/reminder/ReminderTest.java
+###### \java\seedu\address\model\reminder\ReminderTest.java
 ``` java
 public class ReminderTest {
     private static Event event;
@@ -1173,7 +1173,7 @@ public class ReminderTest {
     }
 
 ```
-###### /java/seedu/address/testutil/EditEventDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditEventDescriptorBuilder.java
 ``` java
 import java.util.Optional;
 
@@ -1249,7 +1249,7 @@ public class EditEventDescriptorBuilder {
     }
 }
 ```
-###### /java/seedu/address/testutil/EventBuilder.java
+###### \java\seedu\address\testutil\EventBuilder.java
 ``` java
 
 
@@ -1337,7 +1337,7 @@ public class EventBuilder {
 
 }
 ```
-###### /java/seedu/address/testutil/EventUtil.java
+###### \java\seedu\address\testutil\EventUtil.java
 ``` java
 /**
  * A utility class for Event.
@@ -1363,7 +1363,7 @@ public class EventUtil {
     }
 }
 ```
-###### /java/seedu/address/testutil/TypicalEvents.java
+###### \java\seedu\address\testutil\TypicalEvents.java
 ``` java
 
 /**
@@ -1418,7 +1418,7 @@ public class TypicalEvents {
     }
 }
 ```
-###### /java/systemtests/AddEventCommandSystemTest.java
+###### \java\systemtests\AddEventCommandSystemTest.java
 ``` java
 
 public class AddEventCommandSystemTest extends AddressBookSystemTest {
@@ -1566,7 +1566,7 @@ public class AddEventCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### /java/systemtests/util/ModelHelper.java
+###### \java\systemtests\util\ModelHelper.java
 ``` java
 
     /**

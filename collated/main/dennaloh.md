@@ -1,5 +1,5 @@
 # dennaloh
-###### /java/seedu/address/logic/commands/person/EmailCommand.java
+###### \java\seedu\address\logic\commands\person\EmailCommand.java
 ``` java
 /**
  * Emails a contact from the address book.
@@ -58,7 +58,7 @@ public class EmailCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/person/FbCommand.java
+###### \java\seedu\address\logic\commands\person\FbCommand.java
 ``` java
 /**
  * Searches for your contact on Facebook
@@ -108,7 +108,7 @@ public class FbCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/person/FindTagCommand.java
+###### \java\seedu\address\logic\commands\person\FindTagCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book who has tags which contains any of the argument keywords.
@@ -144,7 +144,7 @@ public class FindTagCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/person/GMapCommand.java
+###### \java\seedu\address\logic\commands\person\GMapCommand.java
 ``` java
 /**
  * Opens Google Maps in browser with address of person identified using it's last displayed index from the address book
@@ -195,7 +195,7 @@ public class GMapCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case FindTagCommand.COMMAND_WORD:
         case FindTagCommand.COMMAND_ALIAS:
@@ -213,7 +213,7 @@ public class GMapCommand extends Command {
         case FbCommand.COMMAND_ALIAS:
             return new FbCommandParser().parse(arguments);
 ```
-###### /java/seedu/address/logic/parser/person/EmailCommandParser.java
+###### \java\seedu\address\logic\parser\person\EmailCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new EmailCommand object
@@ -236,7 +236,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/person/FbCommandParser.java
+###### \java\seedu\address\logic\parser\person\FbCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FbCommand object
@@ -260,7 +260,7 @@ public class FbCommandParser implements Parser<FbCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/person/FindTagCommandParser.java
+###### \java\seedu\address\logic\parser\person\FindTagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindTagCommand object
@@ -286,7 +286,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/person/GMapCommandParser.java
+###### \java\seedu\address\logic\parser\person\GMapCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new GMapCommand object
@@ -310,7 +310,7 @@ public class GMapCommandParser implements Parser<GMapCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Returns URL for google maps using the person's address
@@ -346,7 +346,7 @@ public class GMapCommandParser implements Parser<GMapCommand> {
         return fbUrl;
     }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Gets URL for google maps. */
     String getGMapUrl(ReadOnlyPerson target);
@@ -357,7 +357,7 @@ public class GMapCommandParser implements Parser<GMapCommand> {
     /** Opens URL in default browser. */
     void openUrl (String url);
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public synchronized String getGMapUrl(ReadOnlyPerson target) {
@@ -388,7 +388,7 @@ public class GMapCommandParser implements Parser<GMapCommand> {
         }
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     /**
      * Returns the set of tags joined into a string
@@ -404,7 +404,7 @@ public class GMapCommandParser implements Parser<GMapCommand> {
         return sb.toString();
     }
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
      * Sorts the persons based on name
@@ -414,7 +414,7 @@ public class GMapCommandParser implements Parser<GMapCommand> {
         internalList.sort((e1, e2) -> e1.getName().toString().compareToIgnoreCase(e2.getName().toString()));
     }
 ```
-###### /java/seedu/address/model/property/TagContainsKeywordsPredicate.java
+###### \java\seedu\address\model\property\TagContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
@@ -441,7 +441,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### /java/seedu/address/ui/event/EventCalendar.java
+###### \java\seedu\address\ui\event\EventCalendar.java
 ``` java
 /**
  * The panel on the right side of {@link EventListPanel}. Used to show a calendar.
@@ -608,7 +608,7 @@ public class EventCalendar extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/event/MonthDateBuilder.java
+###### \java\seedu\address\ui\event\MonthDateBuilder.java
 ``` java
 /**
  * Creates the dates in the month and name of month
@@ -768,7 +768,7 @@ public class MonthDateBuilder {
 
 }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @FXML
     private void handleEventCalendar() {
@@ -776,7 +776,7 @@ public class MonthDateBuilder {
         dataDetailsPanelPlaceholder.getChildren().add(new EventCalendar().getRoot());
     }
 ```
-###### /resources/css/Extensions.css
+###### \resources\css\Extensions.css
 ``` css
 .calender-title-property-value {
     -fx-font-family: "Bradley Hand";
@@ -820,7 +820,7 @@ public class MonthDateBuilder {
     -fx-text-alignment: right;
 }
 ```
-###### /resources/view/event/EventCalendar.fxml
+###### \resources\view\event\EventCalendar.fxml
 ``` fxml
 
 
