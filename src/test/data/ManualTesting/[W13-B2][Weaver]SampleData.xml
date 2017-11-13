@@ -61,7 +61,7 @@
         <image></image>
     </persons>
     <persons>
-        <name>ChangeIt</name>
+        <name>Mary</name>
         <phone>92492021</phone>
         <email>email@gmail.com</email>
         <address>Blk 47 Tampines Street 20, #17-35</address>
@@ -75,9 +75,9 @@
         <image></image>
     </persons>
     <persons>
-        <name>another</name>
+        <name>Damith</name>
         <phone>91234567</phone>
-        <email>another@example.com</email>
+        <email>damith@example.com</email>
         <address>PGP</address>
         <date>17.08.1993</date>
         <remark>CS2105/LEC/1</remark>
