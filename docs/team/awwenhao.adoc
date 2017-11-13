@@ -3,6 +3,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+== About Portfolio
+
+This portfolio shows the contributions Aw Wen Hao has done for the development of ConTag.
+
 == ConTag
 ConTag is an efficient and feature-packed desktop address book application for the most demanding business users and busiest frequent travellers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
 
@@ -120,7 +124,7 @@ include::../DeveloperGuide.adoc[tag=deletemultiple]
 
 ---
 
-=== Enhancement of existing feature: Adding a person with multiple emails
+=== Enhancement of existing feature: Adding or editing a person's details with multiple emails
 
 ==== External behavior (enhancement added in v1.3 update)
 
@@ -137,7 +141,7 @@ include::../UserGuide.adoc[tag=multipleemails]
 
 People in the workplace usually have an email for work and another for informal purposes, hence the implementation of allowing the adding of more than 1 email for a person. The introduced restrictions for adding a person's address is an attempt to prevent the user from inputting characters that do not usually appear in addresses. This also ensures that the google maps in the locate feature will not attempt to locate invalid addresses which contain unorthodox characters.
 
-==== Implementation: Adding a person with multiple emails
+==== Implementation: Adding or editing a person's details with multiple emails
 
 ---
 #Start of Extract [from: Developer Guide]#
@@ -152,5 +156,6 @@ include::../DeveloperGuide.adoc[tag=multipleemails]
 
 * Set up TravisCI and Coveralls for the team repo
 * Set the styles for the user agenda and reminder window.
-* Impose new restriction for address field by splitting it into block, street, unit and postal code. (Pull request https://github.com/CS2103AUG2017-T15-B2/main/pull/68[#68]) This is an attempt to prevent the user from inputting characters that do not usually appear in addresses.
+* Prepared the team's sample data and test script for manual testing.
+* Imposed new restriction for address field by splitting it into block, street, unit and postal code. (Pull request https://github.com/CS2103AUG2017-T15-B2/main/pull/68[#68]) This is an attempt to prevent the user from inputting characters that do not usually appear in addresses.
 * Provided support for scheduling an activity for multiple contacts to appear as one schedule in user agenda. (Pull request https://github.com/CS2103AUG2017-T15-B2/main/pull/123[#123])
