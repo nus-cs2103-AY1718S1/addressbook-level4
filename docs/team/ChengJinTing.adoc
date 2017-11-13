@@ -95,12 +95,6 @@ include::../DeveloperGuide.adoc[tag=email]
 
 ---
 
-=== Enhancement Proposed: Auto suggestion of contact's attributes when using FindCommand
-
-==== Justification
-
-To allow a faster way for user to find their contacts without having to ensuring full word match
-
 === Other contributions
 
 * Updated the UI of ConTag
