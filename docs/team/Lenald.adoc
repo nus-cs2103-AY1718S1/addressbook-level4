@@ -1,12 +1,20 @@
-= Lenald Ng Wai Jun - Project Portfolio
+= Lenald Ng Wai Jun - cherBook Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: cherBook
-cherBook is an address book application used by teachers to monitor students' academic progress.
-The user interacts with it using a CLI, and it has a GUI created with JavaFX.
-It is written in Java, and has about 8 kLoC.
+== Introduction
+In this project portfolio, the `external` and `internal` behavior of the various features of `cherBook`, along with the `motivations`
+behind implementing them, will be explained thoroughly.
+
+`cherBook` is an address book application that combines `statistical analysis` with the ease of `communication`.
+It is targeted at `teachers` as it offers various features that can improve their lives.
+
+image::LenPortfolioIntroduction.png[width="800"]
+_Figure 1.1 : Illustration of cherBook_
+
+The user can interact with it using a `command line interface`, and it has a `graphical user interface` created with `JavaFX`.
+The application is written in `Java`.
 
 *Code contributed*: [https://github.com/Lenaldnwj/main/blob/master/collated/main/Lenaldnwj.md[Functional code]] [https://github.com/Lenaldnwj/main/blob/master/collated/test/Lenaldnwj.md[Test code]]
 
@@ -18,12 +26,7 @@ It is written in Java, and has about 8 kLoC.
 
 #Start of Extract [from: Developer Guide]#
 
-For the convenience of the user, the assignment of colors will be automated by cherBook.
-
-Whenever the user access the cherBook, a new range of random colors will be assigned to the background of the tags.
-
-Modifications were made to the range of possible colors. It is to ensure that the background color's saturation and brightness is at an optimal level
-to match with the white font of the tag description.
+include::../UserGuide.adoc[tag=randomisedUniqueTagColors]
 
 #End of Extract#
 
@@ -32,7 +35,7 @@ to match with the white font of the tag description.
 ==== Justification
 
 In this day and age, educators have many classes of students to teach. They will have difficulty differentiating between
-tags of different descriptions if they are to tag many of their students.
+tags of different descriptions, if they are to tag many of their students.
 
 This feature will assign tags of the same descriptions with a unique color. With the implementation of this feature,
  educators will be able to distinguish between the different tags easily.
@@ -82,16 +85,34 @@ include::../DeveloperGuide.adoc[tag=optionalInput]
 
 ---
 
-=== Enhancement Added: Multiple Numbers (Parent and Student number)
+=== Removed Enhancement: Multiple Numbers (Parent and Student number)
 
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=optionalinputtagstwo]
+Note that this is not an extract from the userguide as this particular section is removed from the userguide.
 
-#End of Extract#
+=== Adding multiple numbers to a person: `add` `Since v1.3`
+
+[NOTE]
+====
+Adding of student or/and parent's number must be preceded by the phone prefix `p/`. +
+Input of `student phone number` is optional. +
+Fields that enclosed in `square brackets` are optional fields.
+====
+
+You can add `multiple numbers` to a person by adhering to the format below. +
+
+Format: add n/NAME `p/student/ STUDENTNUMBER parent/ PARENTNUMBER` [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]... +
+Shorthand: a n/NAME `p/student/ STUDENTNUMBER parent/ PARENTNUMBER` [e/EMAIL] [a/ADDRESS] f/FORMCLASS g/GRADES [c/POSTALCODE] [t/TAG]...
+
+Example:
+
+* add n/Alex Yeoh `p/student/97272031 parent/97979797` e/alexyeoh@example.com a/Blk 30 Geylang Street 29, #06-40 f/6E1 g/123.0
+
+image::PhoneDisplay.png[width="400"]
+_Figure 4.5.2 : Valid Displayed Person Card Phone Information_
 
 ---
 
@@ -102,9 +123,9 @@ We decided to come out with multiple numbers (Parent and Student number)
 as many educators believe that there needs to be good communication between not only the students, but their parents too.
 
 This enhancement is especially useful for those who are in charge of younger students
-in primary school. Educators in institution with younger students
-will find having parents numbers more important than the student's number as there tends to be more communication
-between the teachers and the parent of the students.
+in primary school. Educators in institutions with younger students
+will find having parents numbers more important than the student's number, as there tends to be more communication
+between the teachers and the parents of the students.
 
 ==== Implementation
 
@@ -117,15 +138,18 @@ include::../DeveloperGuide.adoc[tag=studentparentcontact]
 
 ---
 
-=== Enhancement Proposed: Add command `Study Buddy`
-
-{Explain similar to the feature above.}
-
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Included ParentPhone attribute (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/116[#116])
+* Included icons in PersonListCard (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/116[#116])
+* Icon text descriptors in ExtendedPersonCard on startup of cherBook (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/121[#121])
+* Improved sample data (Pull requests https://github.com/CS2103AUG2017-T16-B2/main/pull/79[#79], https://github.com/CS2103AUG2017-T16-B2/main/pull/120[#120])
+* Improved test quality of several features (Pull requests https://github.com/CS2103AUG2017-T16-B2/main/pull/88[#88]
+, https://github.com/CS2103AUG2017-T16-B2/main/pull/113[#113], https://github.com/CS2103AUG2017-T16-B2/main/pull/121[#121])
+* Removed unused codes to improve coveralls (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/129[#129])
+* Updated AboutUs section (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/25[#25])
+* Created Glossary section in DeveloperGuide (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/16[#16])
 
-== Project: NUS Interactive Food Map
+== Other Projects: NUS Interactive Food Map
 
-It is an interactive food map of the NUS campus that shows information of major food places in the nus map.
+It is an interactive food https://github.com/Lenaldnwj/Orbital-NUS-Interactive-Food-Map[map] of the NUS campus that shows information of major food places in the NUS map.
