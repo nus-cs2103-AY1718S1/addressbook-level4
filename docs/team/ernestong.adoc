@@ -113,7 +113,7 @@ There is almost always a need to find a way to contact people close to a patient
 
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=relation]
+include::../DeveloperGuide.adoc[tag=relationship]
 
 #End of Extract#
 
@@ -122,6 +122,11 @@ include::../DeveloperGuide.adoc[tag=relation]
 <<<
 
 === Enhancement Proposed for Version 2.0
+
+* Command to store specific details of a condition tag (fracture, cancer) associated with a patient.
+* This is to know specifically what condition is associated with a patient instead of a general condition.
+* A medication field to know what a medication or treatment a patient currently have.
+* This is to keep track if the current medication or treatment is effective for a patient.
 
 === Other contributions
 
