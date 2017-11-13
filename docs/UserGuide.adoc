@@ -640,18 +640,18 @@ A calendar is useful for marking important dates. When you have many deadlines a
 
 ==== Marking the dates
 
-With many contacts and tasks to manage, differentiating birthdays and deadlines on the calendar can be done with the help of colours.
+With many contacts and tasks to manage, differentiating between birthdays and deadlines on the calendar can be done with the help of colours.
 
 [NOTE]
 Dates are marked automatically when a contact/task is added, edited or deleted.
 
 Examples:
 
-* A task has a deadline on `17-07-2017`. +
+* A task has a deadline on `17 July 2017`. +
 The corresponding date on the calendar is marked *red*. +
-* A contact has his/her birthday on `09-12-2017`. +
+* A contact has his/her birthday on `09 December 2017`. +
 The corresponding date on the calendar is marked *pink*. +
-* `17-07-2017` that is both a task's deadline and a contact's birthday. +
+* `17th July 2017` is both a task's deadline and a contact's birthday. +
 The corresponding date on the calendar is marked *yellow*. +
 
 __Constraints__

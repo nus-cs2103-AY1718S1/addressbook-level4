@@ -559,7 +559,7 @@ Suppose the address book is modified (e.g. using `add`, `edit`, `addtask`, `dele
 
 After the modification of Mobilize's address book (i.e. saving of data to the `addressbook.xml` file), `ObservableList` of `Person` and `Task` classes stored in the address book are passed into the `CalendarPanel` Ui through `Model`.
 
-Next, `getDayCellFactory` will format the `DateCell` of the `DatePicker`. The formatting is done with `Birthday` and `Deadline` as conditions and colour and tooltip of `DateCell` as variables to be change by the formatter.
+Next, `getDayCellFactory` will format the `DateCell` of the `DatePicker`. The formatting is done with birthday and deadline as conditions and colour and tooltip of `DateCell` as variables to be change by the formatter.
 
 By selecting the date on the calendar, the date value from the `DatePicker` will be captured and be parsed as a string. The string is then passed to `Logic` to execute the `FindCommand` which will show all contacts and tasks having `Birthday` and `Deadline` on that specific date.
 
