@@ -113,15 +113,15 @@ _Figure 4.2.3: Orange Meeting Card_
 image::Reminder.png[width="600"]
 _Figure 4.3.1: Pop-up Notification_
 
-. Upon opening up the application, if there is a meeting(s) on the same day, you will be reminded via a pop-up message
-. As shown to you in the figure 2, the information regarding the next upcoming meeting is displayed in the message
+. Upon opening up the application, if there is a meeting(s) on the same day, you will be reminded via a pop-up message.
+. As shown to you in the figure above, the information regarding the next upcoming meeting is displayed in the message.
 // end::popUp[]
 
 // tag::autodelete[]
 === Auto Deletion of Meeting Cards
 
-Upon start up of the application, meetings which have already passed the current time of log in will be deleted and no
-longer be shown
+Upon start up of the application, your meetings which have already passed the current time of your log in date and time will be deleted and no
+longer be shown.
 // end::autodelete[]
 
 // tag::googlemaps[]
@@ -283,6 +283,7 @@ Input format for `IMPORTANCE` is 0-2.
 ** Most important : 2
 ** Normal :1
 ** Least important: 0
+// tag::groupmeeting[]
 * Creation of group meetings
 ** You can create meetings with different people with their individual index from the contact list. `Meeting Card` like _Figure 6A_  will be created. This meeting card consists of the `Name` and `Phone` of the person you are meeting with. You just have to scroll on the `Person` information on the card.
 +
@@ -290,6 +291,7 @@ image::MeetingGroup.png[width="200"]
 +
 _Figure 5.8.1: Meeting Cards for Group Meeting_
 +
+// end::groupmeeting[]
 * When you are attempting to add a meeting with the same date and time as a pre-existing one in ScheduBook, the following
 error will be shown, preventing you from having 2 different meetings with exactly the same date and time
 +
