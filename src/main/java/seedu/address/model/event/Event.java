@@ -25,7 +25,7 @@ import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.UniqueReminderList;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
-//@@junyang junyango
+//@@author junyango
 
 /**
  * Represents an Event in the address book.

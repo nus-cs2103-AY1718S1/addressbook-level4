@@ -18,6 +18,8 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.ui.event.EventListPanel;
 
+//@@author junyango
+
 public class EventListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyEvent> TYPICAL_EVENTS =
             FXCollections.observableList(getTypicalEvents());

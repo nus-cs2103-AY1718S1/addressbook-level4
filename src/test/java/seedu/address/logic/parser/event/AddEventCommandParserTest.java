@@ -22,6 +22,8 @@ import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.model.event.Event;
 import seedu.address.testutil.EventBuilder;
 
+//@@author junyango
+
 public class AddEventCommandParserTest {
     private final AddEventParser parser = new AddEventParser();
 

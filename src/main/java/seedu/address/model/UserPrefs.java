@@ -47,6 +47,7 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
+    //@@author junyango
 
     public String getAddressBookTheme() {
         return addressBookTheme;
@@ -76,6 +77,8 @@ public class UserPrefs {
     public int hashCode() {
         return Objects.hash(guiSettings, addressBookFilePath, addressBookName, addressBookTheme);
     }
+
+    //@@author
 
     @Override
     public String toString() {
