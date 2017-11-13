@@ -1,5 +1,5 @@
 # cctdaniel
-###### /java/seedu/address/commons/events/ui/ChangeFontSizeEvent.java
+###### \java\seedu\address\commons\events\ui\ChangeFontSizeEvent.java
 ``` java
 /**
  * Indicates a request to change the font size of the application
@@ -19,7 +19,7 @@ public class ChangeFontSizeEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/commons/events/ui/SwitchThemeRequestEvent.java
+###### \java\seedu\address\commons\events\ui\SwitchThemeRequestEvent.java
 ``` java
 /**
  * An event requesting to switch current theme.
@@ -39,7 +39,7 @@ public class SwitchThemeRequestEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/logic/commands/CustomiseCommand.java
+###### \java\seedu\address\logic\commands\CustomiseCommand.java
 ``` java
 /**
  * Customise the look of the Address Book application.
@@ -107,7 +107,7 @@ public class CustomiseCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ThemeCommand.java
+###### \java\seedu\address\logic\commands\ThemeCommand.java
 ``` java
 /**
  * Switch between light and dark theme
@@ -178,7 +178,7 @@ public class ThemeCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case CustomiseCommand.COMMAND_WORD:
             return new CustomiseCommandParser().parse(arguments);
@@ -186,7 +186,7 @@ public class ThemeCommand extends Command {
         case ThemeCommand.COMMAND_WORD:
             return new ThemeCommandParser().parse(arguments);
 ```
-###### /java/seedu/address/logic/parser/CustomiseCommandParser.java
+###### \java\seedu\address\logic\parser\CustomiseCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new CustomiseCommand object
@@ -225,7 +225,7 @@ public class CustomiseCommandParser implements Parser<CustomiseCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> fontSize} into an {@code Optional<FontSize>} if {@code fontSize} is present.
@@ -236,7 +236,7 @@ public class CustomiseCommandParser implements Parser<CustomiseCommand> {
         return fontSize.isPresent() ? Optional.of(new FontSize(fontSize.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/logic/parser/ThemeCommandParser.java
+###### \java\seedu\address\logic\parser\ThemeCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ThemeCommand object
@@ -266,7 +266,7 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/font/FontSize.java
+###### \java\seedu\address\model\font\FontSize.java
 ``` java
 /**
  * Represents the font size of the AddressBook.
@@ -325,7 +325,7 @@ public class FontSize {
 
 }
 ```
-###### /java/seedu/address/model/FontSizeUnit.java
+###### \java\seedu\address\model\FontSizeUnit.java
 ``` java
 /**
  * A Enumeration class that consists of all possible FontSize
@@ -347,7 +347,7 @@ public enum FontSizeUnit {
     }
 }
 ```
-###### /java/seedu/address/model/ThemeUnit.java
+###### \java\seedu\address\model\ThemeUnit.java
 ``` java
 /**
  * A Enumeration class that consists of all possible Theme
@@ -369,7 +369,7 @@ public enum ThemeUnit {
     }
 }
 ```
-###### /java/seedu/address/ui/CombinePanel.java
+###### \java\seedu\address\ui\CombinePanel.java
 ``` java
     /**
      * Sets the remark style to user preferred font size.
@@ -452,14 +452,14 @@ public enum ThemeUnit {
         }
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
      * Sets the command box style to user preferred font size.
@@ -501,7 +501,7 @@ public enum ThemeUnit {
         }
     }
 ```
-###### /java/seedu/address/ui/LessonListCard.java
+###### \java\seedu\address\ui\LessonListCard.java
 ``` java
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
@@ -573,7 +573,7 @@ public enum ThemeUnit {
     }
 }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
     private void handleSwitchThemeRequestEvent(SwitchThemeRequestEvent event) {
@@ -600,7 +600,7 @@ public enum ThemeUnit {
 
 }
 ```
-###### /java/seedu/address/ui/ResultDisplay.java
+###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
@@ -636,7 +636,7 @@ public enum ThemeUnit {
 
 }
 ```
-###### /resources/view/DarkExtensions.css
+###### \resources\view\DarkExtensions.css
 ``` css
 .error {
     -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
@@ -658,7 +658,7 @@ public enum ThemeUnit {
     -fx-text-fill: white;
 }
 ```
-###### /resources/view/DarkTheme.css
+###### \resources\view\DarkTheme.css
 ``` css
 .background {
     -fx-background-color: yellow;
@@ -1013,7 +1013,7 @@ public enum ThemeUnit {
 }
 
 ```
-###### /resources/view/LightExtensions.css
+###### \resources\view\LightExtensions.css
 ``` css
 .error {
     -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
@@ -1036,7 +1036,7 @@ public enum ThemeUnit {
 }
 
 ```
-###### /resources/view/LightTheme.css
+###### \resources\view\LightTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#d4cbb3, 50%);

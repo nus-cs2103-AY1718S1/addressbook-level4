@@ -1,5 +1,5 @@
 # angtianlannus
-###### /java/seedu/address/logic/commands/FindCommand.java
+###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
     @Override
     public CommandResult execute() {
@@ -33,7 +33,7 @@
         return new CommandResult(MESSAGE_SUCCESS);
     }
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 public class SortCommand extends Command {
 
@@ -49,7 +49,7 @@ public class SortCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
@@ -57,7 +57,7 @@ public class SortCommand extends Command {
         case SortCommand.COMMAND_WORD:
             return new SortCommand();
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Sort the filtered lesson/module/location list regarding different listing unit.
@@ -66,7 +66,7 @@ public class SortCommand extends Command {
         lessons.sortLessons();
     }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
      * update the set of BookedList
@@ -93,7 +93,7 @@ public class SortCommand extends Command {
      */
     void unbookAllSlot();
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
      * Sort the filtered lesson/module/location list regarding different listing unit.
@@ -112,7 +112,7 @@ public class SortCommand extends Command {
     /** Get the current viewing panel attribute **/
     String getCurrentViewingAttribute();
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * This method initialize the booked slot
@@ -171,7 +171,7 @@ public class SortCommand extends Command {
         bookedList.clear();
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void sortLessons() {
@@ -198,7 +198,7 @@ public class SortCommand extends Command {
         return this.currentViewingAttribute;
     }
 ```
-###### /java/seedu/address/model/module/BookedSlot.java
+###### \java\seedu\address\model\module\BookedSlot.java
 ``` java
 /**
  * Represents a Booked time slot of a venue
@@ -248,7 +248,7 @@ public class BookedSlot {
     }
 }
 ```
-###### /java/seedu/address/model/module/exceptions/DuplicateBookedSlotException.java
+###### \java\seedu\address\model\module\exceptions\DuplicateBookedSlotException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate BookedSlot objects.
@@ -262,7 +262,7 @@ public class DuplicateBookedSlotException extends DuplicateDataException {
 }
 
 ```
-###### /java/seedu/address/model/module/predicates/ContainsKeywordsPredicate.java
+###### \java\seedu\address\model\module\predicates\ContainsKeywordsPredicate.java
 ``` java
 
 /**
@@ -274,7 +274,7 @@ public interface ContainsKeywordsPredicate extends Predicate<ReadOnlyLesson> {
 
 }
 ```
-###### /java/seedu/address/model/module/predicates/LessonContainsKeywordsPredicate.java
+###### \java\seedu\address\model\module\predicates\LessonContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
@@ -367,7 +367,7 @@ public class LessonContainsKeywordsPredicate implements ContainsKeywordsPredicat
 
 }
 ```
-###### /java/seedu/address/model/module/predicates/LocationContainsKeywordsPredicate.java
+###### \java\seedu\address\model\module\predicates\LocationContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
@@ -413,7 +413,7 @@ public class LocationContainsKeywordsPredicate implements ContainsKeywordsPredic
 
 }
 ```
-###### /java/seedu/address/model/module/predicates/MarkedLessonContainsKeywordsPredicate.java
+###### \java\seedu\address\model\module\predicates\MarkedLessonContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
@@ -470,7 +470,7 @@ public class MarkedLessonContainsKeywordsPredicate implements ContainsKeywordsPr
 
 }
 ```
-###### /java/seedu/address/model/module/predicates/ModuleContainsKeywordsPredicate.java
+###### \java\seedu\address\model\module\predicates\ModuleContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
@@ -514,7 +514,7 @@ public class ModuleContainsKeywordsPredicate implements ContainsKeywordsPredicat
 
 }
 ```
-###### /java/seedu/address/model/module/UniqueLessonList.java
+###### \java\seedu\address\model\module\UniqueLessonList.java
 ``` java
     /**
      * This method will sort the lessons
@@ -550,7 +550,7 @@ public class ModuleContainsKeywordsPredicate implements ContainsKeywordsPredicat
         }
     }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
 /**
  * An Immutable AddressBook that is serializable to XML format
