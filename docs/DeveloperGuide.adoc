@@ -628,7 +628,7 @@ public SortCommand parse(String args) throws ParseException {
 
 For each way of sorting, a different comparator is being passed into `SortCommand`. +
 
-The following is a sequence diagram detailing the process of how `sort` instruction is handled by Rubrika after the `SortCommandParser` has been created. And how `UI` component is able to display the sorted list. +
+The following is a sequence diagram detailing the process of how `sort` instruction is handled by Rubrika after the `SortCommandParser` has been created in `AddressBookParser`. It also shows how `UI` component is able to display the sorted list. +
 
 image::SortSequenceDiagram.png[width="800"]
 _Figure 4.6.1 : Sequence Diagram of sort function_
