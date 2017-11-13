@@ -79,7 +79,9 @@ public class CommandBoxHelper extends UiPart<Region> {
      * Called when user presses down key on command helper
      */
     public void selectDownHelperBox() {
-        if (commandBoxHelperList.getSelectionModel().getSelectedItem() == null) {
+        if (commandBoxHelperList.getSelectionModel().getSelectedItem() == null
+                || commandBoxHelperList.getSelectionModel().getSelectedIndex()
+                == commandBoxHelperList.getItems().size() -1) {
             commandBoxHelperList.getSelectionModel().selectFirst();
         } else {
             commandBoxHelperList.getSelectionModel().select(
@@ -93,6 +95,8 @@ public class CommandBoxHelper extends UiPart<Region> {
     public void selectUpHelperBox() {
         if (commandBoxHelperList.getSelectionModel().getSelectedItem() == null) {
             commandBoxHelperList.getSelectionModel().selectFirst();
+        } else if (commandBoxHelperList.getSelectionModel().getSelectedIndex() == 0) {
+            commandBoxHelperList.getSelectionModel().selectLast();
         } else {
             commandBoxHelperList.getSelectionModel().select(
                     commandBoxHelperList.getSelectionModel().getSelectedIndex() - 1);

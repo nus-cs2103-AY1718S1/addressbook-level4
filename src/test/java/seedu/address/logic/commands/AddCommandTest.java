@@ -224,7 +224,9 @@ public class AddCommandTest {
             return new AddressBook();
         }
         @Override
-        public ReadOnlyMeetingList getMeetingList() { return new UniqueMeetingList(); }
+        public ReadOnlyMeetingList getMeetingList() {
+            return new UniqueMeetingList();
+        }
     }
 
 }
