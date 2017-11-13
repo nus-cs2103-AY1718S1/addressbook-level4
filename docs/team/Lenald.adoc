@@ -85,12 +85,13 @@ include::../DeveloperGuide.adoc[tag=optionalInput]
 
 ---
 
-=== Enhancement Added: Multiple Numbers (Parent and Student number)
+=== Removed Enhancement: Multiple Numbers (Parent and Student number)
 
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
+
+Note that this is not an extract from the userguide as this particular section is removed from the userguide.
 
 === Adding multiple numbers to a person: `add` `Since v1.3`
 
@@ -112,8 +113,6 @@ Example:
 
 image::PhoneDisplay.png[width="400"]
 _Figure 4.5.2 : Valid Displayed Person Card Phone Information_
-
-#End of Extract#
 
 ---
 
