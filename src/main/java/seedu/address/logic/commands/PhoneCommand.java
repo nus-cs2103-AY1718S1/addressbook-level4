@@ -38,16 +38,16 @@ public class PhoneCommand extends UndoableCommand {
             + "if index is used to identify the person\n"
             + "Parameters: \n"
             + "INDEX (must be a positive integer) "
-            + "ACTION "
-            + "PHONE\n"
+            + "ACTION (either add or remove) "
+            + "PHONE (must be at least 3 positive digits.)\n"
             + "Example: " + COMMAND_WORD + " 1" + " add" + " 6583609887\n"
             + "if name is used to identify the person\n"
             + "Parameters: \n"
             + "byName "
             + "ACTION "
             + "PHONE "
-            + "NAME\n"
-            + "Example: " + COMMAND_WORD + " byName" + " add" + " 6583609887" + "Alex Yeoh";
+            + "NAME (must be the full name saved in the Contact Book)\n"
+            + "Example: " + COMMAND_WORD + " byName" + " add" + " 6583609887 " + "Alex Yeoh";
 
     private static final String COMMAND_ADD = "add";
     private static final String COMMAND_REMOVE = "remove";
@@ -86,7 +86,7 @@ public class PhoneCommand extends UndoableCommand {
         this.name = name;
         this.action = action;
         this.phone = phone;
-        this.targetIndex = new Index(99999);
+        this.targetIndex = new Index(999999999); //indicating invalid index
     }
 
     /**
