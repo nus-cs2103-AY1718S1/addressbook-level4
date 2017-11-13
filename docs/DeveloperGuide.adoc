@@ -211,7 +211,7 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
-
+// tag::lock[]
 === Security component
 
 image::SecurityClassDiagram.png[width="800"]
@@ -223,6 +223,7 @@ The `Security` component,
 
 * can encrypt address book and decrypt by a given password.
 * can prevent user from executing commands if address book is secured.
+// end::lock[]
 
 === Common classes
 
