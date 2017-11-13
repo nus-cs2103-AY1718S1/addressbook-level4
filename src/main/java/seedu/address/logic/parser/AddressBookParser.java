@@ -76,11 +76,8 @@ public class AddressBookParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
-<<<<<<< HEAD
-         //@@author yuzu1209
-=======
-        //@@author KongjiaQi
->>>>>>> cec236a2bc16e112bde01523f66ddb85b75a09eb
+
+        //@@author yuzu1209
         case EditTaskCommand.COMMAND_WORD:
         case EditTaskCommand.COMMAND_ALIAS:
             return new EditTaskCommandParser().parse(arguments);

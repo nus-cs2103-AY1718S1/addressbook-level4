@@ -188,8 +188,14 @@
     -fx-background-color: derive(background_color, 30%);
 }
 
+.image {
+    -fx-background-image:url('.src/main/resources/view/www.png');
+}
+
 .context-menu {
     -fx-background-color: derive(background_color, 50%);
+    -fx-border-color: derive(background_color, 20%);
+    -fx-border-width: 1px;
 }
 
 .context-menu .label {
@@ -313,7 +319,7 @@
 
 #cardPane {
     -fx-background-color: transparent;
-    -fx-border-width: 0;
+    -fx-border-width: 10;
 }
 
 #commandTypeLabel {
@@ -322,9 +328,9 @@
 }
 
 #commandTextField {
-    -fx-background-color: transparent background_color transparent background_color;
+    -fx-background-color: transparent background_color;
     -fx-background-insets: 0;
-    -fx-border-color: #383838 #383838 #ffffff #383838;
+    -fx-border-color: #0f4063 #0f4063 #2b78af #0f4063;
     -fx-border-insets: 0;
     -fx-border-width: 1;
     -fx-font-family: "Segoe UI Light";
