@@ -552,8 +552,8 @@ However, if a `Person` is modified by a command, the modification will be reflec
 ==== Design Considerations:
 
 **Aspect:** Syncing of lists +
-**Alternative 1 (current choice):** Use tedious syncing methods to ensure lists are in sync +
-**Pros:** Easy to build on for future implementations. +
+**Alternative 1 (current choice):** Use manual syncing methods to ensure lists are in sync +
+**Pros:** Easy to extend for future implementations. +
 **Cons:** Methods used for syncing are less intuitive and difficult to comprehend. +
 **Alternative 2:** Create new `persons` variable for each list in `Addressbook` class +
 **Pros:** Implemenation is easier to comprehend. +
