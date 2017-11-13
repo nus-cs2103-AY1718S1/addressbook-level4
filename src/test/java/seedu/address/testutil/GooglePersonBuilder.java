@@ -92,7 +92,6 @@ public class GooglePersonBuilder {
         this.person.setEmailAddresses(emails);
         return this;
     }
-
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
@@ -104,6 +103,45 @@ public class GooglePersonBuilder {
         return this;
     }
 
+    /**
+     * Empties the list of {@code Email} of the {@code Person} that we are building.
+     */
+    public GooglePersonBuilder noEmail() {
+        this.person.setEmailAddresses(new ArrayList<>());
+        return this;
+    }
+
+    /**
+     * Empties the list of {@code PhoneNumber} of the {@code Person} that we are building.
+     */
+    public GooglePersonBuilder noPhone() {
+        this.person.setPhoneNumbers(new ArrayList<>());
+        return this;
+    }
+
+    /**
+     * Empties the list of {@code Name} of the {@code Person} that we are building.
+     */
+    public GooglePersonBuilder noName() {
+        this.person.setNames(new ArrayList<>());
+        return this;
+    }
+
+    /**
+     * Empties the list of {@code Address} of the {@code Person} that we are building.
+     */
+    public GooglePersonBuilder noAddress() {
+        this.person.setAddresses(new ArrayList<>());
+        return this;
+    }
+
+    /**
+     * Empties the list of {@code Birthday} of the {@code Person} that we are building.
+     */
+    public GooglePersonBuilder noBirthday() {
+        this.person.setBirthdays(new ArrayList<>());
+        return this;
+    }
     public com.google.api.services.people.v1.model.Person build() {
         return this.person;
     }
