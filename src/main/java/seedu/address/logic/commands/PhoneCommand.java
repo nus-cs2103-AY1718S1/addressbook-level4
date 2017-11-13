@@ -48,21 +48,21 @@ public class PhoneCommand extends UndoableCommand {
             + "PHONE "
             + "NAME (must be the full name saved in the Contact Book)\n"
             + "Example: " + COMMAND_WORD + " byName" + " add" + " 6583609887 " + "Alex Yeoh";
+    public static final String PERSON_NOT_FOUND_EXCEPTION_MESSAGE = "The target person cannot be missing.\n";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.\n";
+    public static final String PHONE_NOT_FOUND_EXCEPTION_MESSAGE = "Phone number to be removed is not found in"
+            + " the list.\n";
+    public static final String DUPLICATE_PHONE_EXCEPTION_MESSAGE = "Phone number to be added already exists in"
+            + " the list.\n";
+    public static final String INVALID_COMMAND_MESSAGE = "Command is invalid, please check again.\n";
+    public static final String PRIMARY_PHONE_MESSAGE = "The primary phone number is %s.\n";
+    public static final String ADD_PHONE_SUCCESS_MESSAGE = "Phone number %s has been added.\n";
+    public static final String REMOVE_PHONE_SUCCESS_MESSAGE = "Phone number %s has been removed.\n";
+    public static final String TOTAL_NUMBER_OF_PHONES = "The updated phone list now has %s phone numbers.\n";
+    public static final String UNSPECIFIED_NAME = "unspecified";
 
     private static final String COMMAND_ADD = "add";
     private static final String COMMAND_REMOVE = "remove";
-    private static final String PERSON_NOT_FOUND_EXCEPTION_MESSAGE = "The target person cannot be missing.\n";
-    private static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.\n";
-    private static final String PHONE_NOT_FOUND_EXCEPTION_MESSAGE = "Phone number to be removed is not found in"
-            + " the list.\n";
-    private static final String DUPLICATE_PHONE_EXCEPTION_MESSAGE = "Phone number to be added already exists in"
-            + " the list.\n";
-    private static final String INVALID_COMMAND_MESSAGE = "Command is invalid, please check again.\n";
-    private static final String PRIMARY_PHONE_MESSAGE = "The primary phone number is %s.\n";
-    private static final String ADD_PHONE_SUCCESS_MESSAGE = "Phone number %s has been added.\n";
-    private static final String REMOVE_PHONE_SUCCESS_MESSAGE = "Phone number %s has been removed.\n";
-    private static final String TOTAL_NUMBER_OF_PHONES = "The updated phone list now has %s phone numbers.\n";
-    private static final String UNSPECIFIED_NAME = "unspecified";
 
     private final Logger logger = LogsCenter.getLogger(PhoneCommand.class);
 
@@ -106,7 +106,11 @@ public class PhoneCommand extends UndoableCommand {
         if (action.equals(COMMAND_REMOVE)) {
             uniquePhoneList.remove(phone);
         } else if (action.equals(COMMAND_ADD)) {
-            uniquePhoneList.add(phone);
+            if (!phone.equals(primaryPhone)) {
+                uniquePhoneList.add(phone);
+            } else {
+                throw new DuplicatePhoneException();
+            }
         }
 
         Person personUpdated = new Person(name, primaryPhone, email, address,

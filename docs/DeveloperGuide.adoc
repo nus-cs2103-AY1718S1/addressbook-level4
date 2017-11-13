@@ -623,9 +623,8 @@ Primary number is saved directly as an attribute in Person while additional numb
 Primary phone number must not be null.
 
 
-image::UniquePhoneList_classDiagram1.jpg[width="800"]
+image::UniquePhoneListClassDiagram.JPG[width="800"]
 
-image::UniquePhoneList_classDiagram2.jpg[width="800"]
 
 ==== Logic
 `PhoneCommand` is created to add/remove additional phone numbers.
@@ -651,7 +650,7 @@ For `remove`, we will loop through the uniquePhoneList and remove this phone and
 
 **Sequence Diagram**
 
-image::PhoneCommandSequenceDiagram.jpg[width="800"]
+image::PhoneCommandSequenceDiagram.JPG[width="800"]
 
 ==== Storage
 
@@ -660,24 +659,24 @@ New XML element for UniquePhoneList and new XmlAdaptedPhone class with XML value
 ==== Ui
 All the additional phone numbers in the UniquePhoneList will be displayed on the PersonalInformationPanel.
 
-image::afterAdd.jpg[width="800"]
+image::afterAdd.jpg[width="500"]
 After each command, the result will be show in the `ResultDisplay` box. +
 
 * If `add` is successful, the following message will be on the `ResultDisplay` box.
 
-image::addSuccess.jpg[width="800"]
+image::addSuccess.jpg[width="500"]
 
 * If `add` fails due to duplicate number, the following error message will be shown to users.
 
-image::addFailed.jpg[width="800"]
+image::addFailed.jpg[width="500"]
 
 * If `remove` is successful, the following message will be on the `ResultDisplay` box.
 
-image::removeSuccess.jpg[width="800"]
+image::removeSuccess.jpg[width="500"]
 
 * If `remove` fails due to number cannot be found, the following error message will be shown to users.
 
-image::removeFailed.jpg[width="800"]
+image::removeFailed.jpg[width="500"]
 
 ==== Design Consideration
 
@@ -688,7 +687,7 @@ image::removeFailed.jpg[width="800"]
 the list. As such, we can manage the additional phone numbers in a more systematic and easier way. By using the existing methods, we also
 reduce the duplication of code, hence the program can be more succinct. +
 **Cons:** More works involved to code for the extra method. Using ObservableList increase coupling, which can lead to more problems if not properly managed. +
-**Alternative 2:** keep all additional phone numbers as attributes of the person directly.
+**Alternative 2:** keep all additional phone numbers as attributes of the person directly. +
 **Pros:** No extra effort in coding. No issue raised from coupling. +
 **Cons:** Very messy when person have too many attributes. Potentially hard to maintain when too many additional phone numbers are added, leading to scalability issue.
 
@@ -700,9 +699,10 @@ reduce the duplication of code, hence the program can be more succinct. +
 **Alternative 2:** only support `INDEX`. +
 **Pros:** Easier to code. +
 **Cons:** Less convenient for the users.
+// end::additionalPhoneList[]
 
 
-
+// tag::weatherReport[]
 === Weather Forecast Display Mechanism
 
 ==== Motivation
@@ -730,14 +730,17 @@ Then we parse the weather report, retaining only the relevant information to mak
 **Pros:** Able to extract the weather report directly from Yahoo using this externally library. Less code to write. +
 **Cons:** This feature is highly dependent on the Yahoo Weather server. Increased coupling. This show weather report will not work if the Yahoo Weather Server is down or there
 is simply no internet connection.
+
 ---
 **Aspect:** UI +
 **Alternative 1 (current choice):** Display the weather information on the statusBarFooter. +
 **Pros:** Users can see the weather report instantly when they open the Contact Book, without having to go through the trouble to use command to search or click open a new window. +
-**Cons:** Unable to show a detailed weather report due to the limited space on the statusBarFooter.+
+**Cons:** Unable to show a detailed weather report due to the limited space on the statusBarFooter. +
 **Alternative 2:** Display on a new window when search for command word/click open the window. +
 **Pros:** More detailed report available. +
 **Cons:** Inconvenient and slow.
+
+// end::weatherReport[]
 
 == Documentation
 We use asciidoc for writing documentation.

@@ -4,23 +4,89 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: AddressBook - Level 4
-Our addressbook is an addressbook that strives to serve all the NUS students body.
-Other than some standard operations, it also support some operations that going to be handy for NUS students.
+NUS Contact is a command-line based contact-managing application that is especially tailored to the NUS students. Our Contact Book
+appreciates the idea of minimalism and pragmatism, hence we have carefully designed our Contact Book and only included those features necessary for a
+students to manage his/her contact. We strive to design a professional Contact Book that focuses on managing contact only. +
+
+The user interacts with this application using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 9 kLoC.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/main/eeching.md[Functional code]]
  [https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/test/eeching.md[Test code]]
  [https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/unused/eeching.md[Unused code]]
 
-=== Enhancement Added: Additional phone list
+=== Enhancement Added: Managing additional phones
 
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=additionalPhoneList]
+Before adding any additional phone number, the `personalInformationPanel` will only display the primary phone number.
+See the image below for illustration.
 
-#End of Extract#
+image::beforeAdd.jpg[width="600"]
+
+To add an additional phone number to the person, we can use PhoneCommand in two different formats.
+
+* **Format 1 : using index to locate target person** `updatePhone INDEX add NUMBER` +
+This INDEX is the index of the target person in the Contact Book. A Sample command is illustrated below.
+
+image::addByIndex.jpg[width="600"]
+
+After press `Enter`, the command result will be shown in the `resultDisplay` box as below.
+
+image::addByIndexResult.jpg[width="600"]
+
+The `personalInformationPanel` will also be updated and display this additional phone number as illustrated below.
+
+image::addFirstPhone.jpg[width="600"]
+
+* **Format 2 : using name to locate target person** `updatePhone byName add NUMBER NAME` +
+This NAME must be the full name of the target person in the Contact Book. A Sample command is illustrated below.
+
+image::addByName.jpg[width="600"]
+
+After press `Enter`, the command result will be shown in the `resultDisplay` box as below.
+
+image::addByNameResult.jpg[width="600"]
+
+The `personalInformationPanel` will also be updated and display this additional phone number as illustrated below.
+
+image::afterAdd.jpg[width="600"]
+
+* ** Note :** if the user try to add an existing phone number to the additional phone list again, an error message will be shown.
+
+image::duplicatePhone.jpg[width="600"]
+
+To remove an additional phone number to the person, PhoneCommand also support two different formats.
+
+* **Format 1 : using index to locate target person** `updatePhone INDEX remove NUMBER` +
+This INDEX is the index of the target person in the Contact Book. A Sample command is illustrated below.
+
+image::removeByIndex.jpg[width="600"]
+
+After press `Enter`, the command result will be shown in the `resultDisplay` box as below.
+
+image::removeByIndexResult.jpg[width="600"]
+
+The `personalInformationPanel` will also be updated and remove this additional phone number.
+
+* **Format 2 : using name to locate target person** `updatePhone byName remove NUMBER NAME` +
+This NAME must be the full name of the target person in the Contact Book. A Sample command is illustrated below.
+
+image::removeByName.jpg[width="600"]
+
+After press `Enter`, the command result will be shown in the `resultDisplay` box as below.
+
+image::removeByNameResult.jpg[width="600"]
+
+The `personalInformationPanel` will also be updated and remove this additional phone number as illustrated below.
+
+image::afterDelete.jpg[width="600"]
+
+* ** Note :** if the user try to remove a phone number that does not exist in the additional phone list, an error message will be shown.
+
+image::phoneNotFound.jpg[width="600"]
+
 
 ---
 
@@ -42,10 +108,27 @@ include::../DeveloperGuide.adoc[tag=additionalPhoneList]
 
 === Enhancement added: weather forecast window
 
----
-#Start of Extract [from: User Guide]#
+==== External Behavior
 
-include::../UserGuide.adoc[tag=weatherWindow]
+---
+Once open the Contact book, the weather forecast will be shown on the statusBarFooter.
+
+* If there is internet connection to the device, then the weather forecast of the current day will be shown in the format of
+`WEATHER TEMPERATURE DATE LOCATION`. A example is attached below.
+
+image::weatherReport.jpg[width="600"]
+
+* If there is currently no internet connection, then we will show a default message shown as below.
+
+image::weatherNoInternet.jpg[width="500"]
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=weatherReport]
 
 #End of Extract#
 
@@ -54,7 +137,13 @@ include::../UserGuide.adoc[tag=weatherWindow]
 === Other contributions
 
 * Updated the GUI and change the layout(Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/61[#61])
-* Wrote additional tests for phone command
-[https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/test/eeching.md[PhoneCommandTest]]
+* show the `total number of person(s)` on the `statusBarFooter` as illustrated below (Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/78[#78])
+
+image::totalPerson.jpg[width="500"]
+
+* Wrote additional tests for PhoneCommand, PhoneCommandParser, UniquePhoneList
+(Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/53[#53])
+(Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/109[#109])
+(Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/117[#117])
 
 
