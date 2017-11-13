@@ -650,7 +650,7 @@ _Figure 9.2.3 Populating of Calendar_
 // tag::brighttheme[]
 === Bright Theme
 
-UI that is of a bright colour scheme as compared to the default `Dark Theme`. +
+`Bright Theme` is a bright colour scheme as compared to the default `Dark Theme`. +
 You will be able to switch between `Bright Theme` and `Dark Theme` through the command `switch`.
 
 image::BrightTheme.png[width="800"]
@@ -658,6 +658,22 @@ _Figure 9.3.1 Bright Theme_
 
 link:#the-myths-book---user-guide[Back To Top]
 // end::brighttheme[]
+
+=== Enhanced Command Box
+
+The border of the command box now responds to valid and invalid commands.
+
+When there is an error, for example, an invalid command, you should see the border of the command box turn red as seen in Figure 9.4.1,
+along with the error message in the result display box in red.
+
+image::invalidCommandBox.png[width="800"]
+_Figure 9.4.1 Command Box for Invalid Command_
+
+When you type a valid command, you should see the border of the command box turn green as seen in Figure 9.4.2,
+along with a success message in the result display box.
+
+image::validCommandBox.png[width="800"]
+_Figure 9.4.2 Command Box for Valid Command_
 
 == FAQ
 
