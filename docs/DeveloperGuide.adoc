@@ -32,7 +32,7 @@ as well as the structure of various components in the Bamboo application.
 
 == Setting up
 
-This section provides developers with the steps required to set up everything before beginning development
+This section provides you with the steps required to set up everything before beginning development
 on Bamboo.
 
 === Prerequisites
@@ -167,8 +167,8 @@ The sections below give more details of each component.
 
 === UI component
 
-The `UI` component, or user interface, houses all the different front-end components that users see upon running
-Bamboo. It allows users to interact with Bamboo through its components, such as buttons and input boxes.
+The `UI` component, or user interface, houses all the different front-end components that you see upon running
+Bamboo. It allows you to interact with Bamboo through its components, such as buttons and input boxes.
 
 image::UiClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
@@ -186,7 +186,8 @@ The `.fxml` files may not immediately reflect all the UI parts that are seen in 
 The `UI` component does the following things:
 
 * Uses `.fxml` and resource files (e.g. images, fonts) in `src\main\resources` that gives the application its look.
-* Executes user commands using the `Logic` component.
+
+* Executes your commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can automatically update when data in the `Model` component changes.
 * Responds to events raised from various parts of the application (through event subscribers such as `handlePersonPanelSelectionChangedEvent` in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetailsPanel.java[`ContactDetailsPanel.java`]) and updates the UI accordingly.
 * Animates certain parts of the application, mostly in the contact details panel.
@@ -453,7 +454,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 // tag::faveSystem[]
 === Favourite Contact System
 
-The commands related to the Favourite system rely on the `Favourite` attribute class which is a `model` component.
+The commands related to the Favourite system rely on the `Favourite` attribute class which is a `Person` component.
 
 ==== Add & Remove contact from Favourites (since V1.2)
 **Adding a Favourite:** This feature's functions are mainly contained in the command class `AddFavouriteCommand` with its
@@ -480,8 +481,9 @@ retreived from the parsed index has their `Favourite` attribute updated to false
 
 ==== Listing of only Favourite contacts (since V1.3)
 
-**List command option:** The **list** command can now list only contacts marked as favourites with "list /f".
-This feature works by updating the model's `filteredList` of `Person` objects with the predicate **isFavourite()** in `ListCommand`.
+**List command option:** The **list** command now has an option to list only contacts marked as favourites with
+"list /f". This feature works by updating the model's `filteredList` of `Person` objects with the predicate
+**isFavourite()** in `ListCommand`.
 
 ==== Other modifications to existing components to handle favourites (since V1.4)
 
@@ -493,6 +495,17 @@ reinserted at the top of the list among the other favourites in lexicographical 
 
 * If the **Favourite**'s value has been changed to false, the modified **Person** is moved from its position among the favourites
 and inserted into the position after the last favourite person in the internal model list.
+
+==== Design Considerations
+
+**Aspect:** Storage of `Favourite` status +
+**Alternative 1 (current choice):** Add a new attribute class to Person, `Favourite` +
+**Pros:** No need for additional overhead from maintaining a second list of Persons in model. +
+**Cons:** Have to manually arrange contacts when they are added/removed from favourite status as favourite
+ contacts must be at top of normal listings +
+**Alternative 2:** Create and maintain a list in `model` containing favourite contacts +
+**Pros:** No need to organise favourite contacts in original list, just present favourite list before normal contact list when executing `list` +
+**Cons:** Tedious to manage secondary list of Persons, additional overhead when searching favourite list for specific contact
 // end::faveSystem[]
 
 // tag::profPicSystem[]
@@ -512,12 +525,12 @@ and provided filepath, then passes the parsed index and filepath into an initial
 the set picture command in this class. +
 The current implementation takes in the parsed index and filepath and stores them. Then,
 
-** The given filepath is checked to see if there exists a .png image file with **Files.probeContentType(filepath)**
+** The given filepath is checked to see if there exists a .png or .jpg image file with **Files.probeContentType(filepath)**
 
-** The verified .png is then copied to the local folder **images** of the application and stored under the contact name of the
- provided index as **images\contactName.png**
+** The verified .png/.jpg is then copied to the local folder **images** of the application and stored under the contact name of the
+ provided index as **images\contactName.png** or **images\contactName.jpg** if the set file is a .jpg
 
-** The **Person** provided by the index has its `ProfPic` attribute's path var modified to **contactName.png** and
+** The **Person** provided by the index has its `ProfPic` attribute's path var modified to **contactName.png/.jpg** and
 the modified **Person** saved to the in-memory model list of **Persons**
 
 ==== Resetting profile picture (since V1.4)
@@ -554,15 +567,16 @@ The main contact panel (MainContactPanel.fxml) uses a 2x2 `GridPane` to show the
 
 The (0, 0) and (1, 0) cells of the main contact panel contain nested `BorderPane` objects. These `BorderPanes` then create `Circle` objects.
 
-These `Circle` objects are created when the `setContactImage()` and `setIcons()` methods are run. These two methods run inside `handlePersonPanelSelectionChangedEvent()` when the user selects a person in the person list panel.
+These `Circle` objects are created when the `setContactImage()` and `setIcons()` methods are run. These two methods run inside `handlePersonPanelSelectionChangedEvent()` when you select a person in the person list panel.
 
-The reason for using `BorderPane` objects is to allow centering and resizing of the `Circle` objects. Using a `Pane` will not allow for positioning of objects, while using a `StackPane` will not allow for resizing of objects inside of it.
+The reason for using `BorderPane` objects is to allow centering and resizing of the `Circle` objects. Using a `Pane` will not allow positioning of objects, while using a `StackPane` will not allow resizing of objects inside of it.
 A `BorderPane` supports both positioning and resizing of objects inside of it.
 
 ==== Layout of the contact's details (since V1.2)
 
 The (1,0) cell of the main contact panel contains a `VBox` object that creates four empty `Label` objects in `setupContactDetailsBox()`.
-The values of these `Label` objects are updated in `setContactDetails()` when a person is selected in the person list panel.
+
+The values of these `Label` objects are updated in `setContactDetails()` when you select a person in the person list panel.
 
 The `setContactDetails()` method takes in a `ReadOnlyPerson` object as an argument, which holds the values of a person's contact details that are used to update the `Label` objects.
 
@@ -570,7 +584,7 @@ The `setContactDetails()` method takes in a `ReadOnlyPerson` object as an argume
 
 UI parts (nodes) in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetailsPanel.java[`ContactDetailsPanel.java`] are passed into a method called `easeIn` in the same file. This method takes in `Node` objects and animates them through the use of various `Transitions` objects.
 
-`ParallelTransition` is used to play multiple `Transition` objects simultaneously. In this case, it plays `FadeTransition` and `TranslateTransition` together, resulting in what looks like text and images fading in from nothing.
+`ParallelTransition` is used to play multiple `Transition` objects simultaneously. In this case, it plays `FadeTransition` and `TranslateTransition` together, resulting in what you see - text and images fading in from nothing.
 
 == Documentation
 

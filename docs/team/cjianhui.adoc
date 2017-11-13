@@ -4,11 +4,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Bamboo
-Bamboo is a desktop address book application developed as part of a Software Engineering module requirement. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+Bamboo is a command-line interface (CLI) based address book application. It is a one-stop solution to help you manage your contacts in an efficient and convenient manner. Using Bamboo, you can organize contacts into groups, find common schedules and get connected to your contacts’ social media platforms.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W09-B4/main/blob/collate/collated/main/cjianhui.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B4/main/blob/collate/collated/test/cjianhui.md[Test code]]
 
-=== Enhancement Added: Sort, Group Functions, Add Events from Google Calendar
+=== Enhancement Added: Sort, Group Functions, Event Functions
 
 ==== External behavior
 

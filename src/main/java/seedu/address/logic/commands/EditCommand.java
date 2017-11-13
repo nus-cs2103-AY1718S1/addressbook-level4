@@ -27,6 +27,8 @@ import seedu.address.model.person.ProfPic;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
 
@@ -107,9 +109,12 @@ public class EditCommand extends UndoableCommand {
         Favourite updatedFavourite = personToEdit.getFavourite();
         ProfPic updatedProfPic = personToEdit.getProfPic();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Group> updatedGroups = editPersonDescriptor.getGroups().orElse(personToEdit.getGroups());
+        Set<Schedule> updatedSchedule =  personToEdit.getSchedule();
+        Set<SocialMedia> updatedSocialMediaList = personToEdit.getSocialMedia();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
-                updatedProfPic, updatedTags);
+                updatedProfPic, updatedTags, updatedGroups, updatedSchedule, updatedSocialMediaList);
     }
 
     @Override

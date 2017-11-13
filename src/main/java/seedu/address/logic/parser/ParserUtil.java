@@ -17,6 +17,8 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ProfPic;
+import seedu.address.model.schedule.ScheduleDate;
+import seedu.address.model.schedule.ScheduleName;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -66,9 +68,41 @@ public class ParserUtil {
     }
 
     /**
-            * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
-            * Used for edit command
-            * See header comment of this class regarding the use of {@code Optional} parameters.
+     * Parses a {@code Optional<String> scheduleName} into an {@code Optional<GroupName>}
+     * if {@code scheduleName} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ScheduleName> parseScheduleName(Optional<String> scheduleName) throws IllegalValueException {
+        requireNonNull(scheduleName);
+        return scheduleName.isPresent() ? Optional.of(new ScheduleName((scheduleName.get()))) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> scheduleDate} into an {@code Optional<GroupName>}
+     * if {@code scheduleDate} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ScheduleDate> parseDate(Optional<String> scheduleDate) throws IllegalValueException {
+        requireNonNull(scheduleDate);
+        return scheduleDate.isPresent() ? Optional.of(new ScheduleDate((scheduleDate.get()))) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> scheduleDetails} into an {@code Optional<GroupName>}
+     * if {@code scheduleDate} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseScheduleDetails(Optional<String> scheduleDetails) throws IllegalValueException {
+        requireNonNull(scheduleDetails);
+        return scheduleDetails.isPresent() ? Optional.of((scheduleDetails.get())) : Optional.empty();
+    }
+
+
+
+    /**
+     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * Used for edit command
+     * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
         requireNonNull(phone);

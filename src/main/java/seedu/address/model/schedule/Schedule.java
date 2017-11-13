@@ -44,14 +44,16 @@ public class Schedule implements ReadOnlySchedule {
      */
     public Schedule(ReadOnlySchedule source) {
         this(source.getName(), source.getStartDateTime(), source.getEndDateTime(),
-                source.getSheduleDuration(), source.getScheduleDetails());
+                source.getScheduleDuration(), source.getScheduleDetails());
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Schedule // instanceof handles nulls
-                && this.scheduleName.toString().equals(((Schedule) other).scheduleName.toString())); // state check
+                && this.scheduleName.toString().equals(((Schedule) other).scheduleName.toString())
+                && this.startDateTime.toString().equals(((Schedule) other).startDateTime.toString())
+                && this.endDateTime.toString().equals(((Schedule) other).endDateTime.toString())); // state check
     }
 
     @Override
@@ -102,7 +104,7 @@ public class Schedule implements ReadOnlySchedule {
     }
 
     @Override
-    public String getSheduleDuration() {
+    public String getScheduleDuration() {
         return scheduleDuration.get();
     }
 

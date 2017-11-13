@@ -6,15 +6,17 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.logic.commands.AddCalendarCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.AddFavouriteCommand;
 import seedu.address.logic.commands.AddPersonToGroupCommand;
-import seedu.address.logic.commands.AddScheduleCommand;
 import seedu.address.logic.commands.AddSocialMediaCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CreateGroupCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.DeleteGroupCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -133,9 +135,17 @@ public class AddressBookParser {
         case RemoveFavouriteCommand.COMMAND_ALT:
             return new RemoveFavouriteCommandParser().parse(arguments);
 
-        case AddScheduleCommand.COMMAND_WORD:
-        case AddScheduleCommand.COMMAND_ALT:
+        case AddCalendarCommand.COMMAND_WORD:
+        case AddCalendarCommand.COMMAND_ALT:
             return new AddScheduleCommandParser().parse(arguments);
+
+        case AddEventCommand.COMMAND_WORD:
+        case AddEventCommand.COMMAND_ALT:
+            return new AddEventCommandParser().parse(arguments);
+
+        case DeleteEventCommand.COMMAND_WORD:
+        case DeleteEventCommand.COMMAND_ALT:
+            return new DeleteEventCommandParser().parse(arguments);
 
         case AddSocialMediaCommand.COMMAND_WORD:
         case AddSocialMediaCommand.COMMAND_ALT:

@@ -84,7 +84,6 @@ public class UniqueSocialMediaList implements Iterable<SocialMedia> {
 
     /**
      * Adds a SocialMedia to the list.
-     *
      * throws seedu.address.model.socialmedia.exceptions.DuplicateSocialMediaException
      * if the SocialMedia to add is a duplicate of an existing SocialMedia in the list.
      */
@@ -143,8 +142,8 @@ public class UniqueSocialMediaList implements Iterable<SocialMedia> {
     public boolean equals(Object other) {
         assert CollectionUtil.elementsAreUnique(internalList);
         return other == this // short circuit if same object
-                || (other instanceof seedu.address.model.socialmedia.UniqueSocialMediaList // instanceof handles nulls
-                && this.internalList.equals(((seedu.address.model.socialmedia.UniqueSocialMediaList) other).internalList
+                || (other instanceof UniqueSocialMediaList // instanceof handles nulls
+                && this.internalList.equals(((UniqueSocialMediaList) other).internalList
         ));
     }
 
@@ -152,7 +151,7 @@ public class UniqueSocialMediaList implements Iterable<SocialMedia> {
      * Returns true if the element in this list is equal to the elements in {@code other}.
      * The elements do not have to be in the same order.
      */
-    public boolean equalsOrderInsensitive(seedu.address.model.socialmedia.UniqueSocialMediaList other) {
+    public boolean equalsOrderInsensitive(UniqueSocialMediaList other) {
         assert CollectionUtil.elementsAreUnique(internalList);
         assert CollectionUtil.elementsAreUnique(other.internalList);
         return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));

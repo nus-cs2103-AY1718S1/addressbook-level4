@@ -7,14 +7,14 @@ import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddScheduleCommand;
+import seedu.address.logic.commands.AddCalendarCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 
 /**
  * Parses input arguments and creates a new AddScheduleCommand object
  */
-public class AddScheduleCommandParser implements Parser<AddScheduleCommand> {
+public class AddScheduleCommandParser implements Parser<AddCalendarCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddScheduleCommand
@@ -25,19 +25,19 @@ public class AddScheduleCommandParser implements Parser<AddScheduleCommand> {
     public static final Prefix PREFIX_PERSON = new Prefix("p/");
 
     /** Parse AddSchedueCommand Arguments */
-    public AddScheduleCommand parse(String args) throws ParseException {
+    public AddCalendarCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PERSON, PREFIX_CALENDAR_ID);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_PERSON, PREFIX_CALENDAR_ID)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddScheduleCommand.MESSAGE_USAGE));
+                    AddCalendarCommand.MESSAGE_USAGE));
         }
 
         try {
             Index personIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_PERSON).get());
             String calendarId = argMultimap.getValue(PREFIX_CALENDAR_ID).get();
-            return new AddScheduleCommand(personIndex, calendarId);
+            return new AddCalendarCommand(personIndex, calendarId);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
