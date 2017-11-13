@@ -194,8 +194,8 @@ public class CommandTestUtil {
      */
     public static void showFirstTaskOnly(Model model) {
         ReadOnlyTask task = model.getTaskBook().getTaskList().get(0);
-        final String[] name = task.getName().toString().split("\\s+");
-        model.updateFilteredTaskList(new TaskNameContainsKeywordsPredicate(Arrays.asList(name[0])));
+        List<String> name = Arrays.asList(task.getName().toString());
+        model.updateFilteredTaskList(new TaskNameContainsKeywordsPredicate(name));
 
         assert model.getFilteredTaskList().size() == 1;
     }
