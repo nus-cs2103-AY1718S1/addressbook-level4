@@ -560,12 +560,12 @@ Both creating and deleting groups result in a change in the model of the address
 changes are saved to storage as well.
 The following sequence diagram captures the program flow when a user creates a group:
 
-image::CreateGroupSdForLogic[width="800"]
+image::CreateGroupSdForLogic.png[width="800"]
 _Figure 4.3.2a : Interactions Inside the Logic Component for the `gcreate n/Bamboo` Command__
 
 Similarly, the following sequence diagram captures the program flow when a user deletes a group:
 
-image::DeleteGroupSdForLogic[width="800"]
+image::DeleteGroupSdForLogic.png[width="800"]
 _Figure 4.3.2b : Interactions Inside the Logic Component for the `gdelete 1` Command__
 
 ==== Adding and removing a person from a Group
@@ -611,12 +611,12 @@ changes are saved to storage as well.
 
 The following sequence diagram captures the program flow when a user adds a person to a group:
 
-image::AddPersonToGroupSdForLogic[width="800"]
+image::AddPersonToGroupSdForLogic.png[width="800"]
 _Figure 4.3.3a : Interactions Inside the Logic Component for the `gadd p/1 g/1` Command__
 
 The following sequence diagram captures the program flow when a user removes a person from a group:
 
-image::AddPersonToGroupSdForLogic[width="800"]
+image::AddPersonToGroupSdForLogic.png[width="800"]
 _Figure 4.3.3a : Interactions Inside the Logic Component for the `gremove p/1 g/1` Command__
 
 ==== Design Considerations
