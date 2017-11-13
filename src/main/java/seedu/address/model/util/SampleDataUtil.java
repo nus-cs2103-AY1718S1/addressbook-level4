@@ -72,11 +72,11 @@ public class SampleDataUtil {
                     new Address("Ridge View Residences"),
                     getTagSet("classmates"), new ExpiryDate(""), new Remark(""),
                     new Group("none"), new Image("")),
-                new Person(new Name("Ali"), new Phone("7573463"), new Email("slm@example.com"),
+                new Person(new Name("Ahmed Ali"), new Phone("7573463"), new Email("slm@example.com"),
                     new Address("UTown"),
                     getTagSet("classmates"), new ExpiryDate(""), new Remark(""),
                     new Group("none"), new Image("")),
-                new Person(new Name("Joey"), new Phone("7573463"), new Email("slm@example.com"),
+                new Person(new Name("Joey Lau"), new Phone("7573463"), new Email("slm@example.com"),
                     new Address("UTown"),
                     getTagSet("classmates"), new ExpiryDate(""), new Remark(""),
                     new Group("none"), new Image(""))
