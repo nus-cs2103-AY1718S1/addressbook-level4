@@ -52,7 +52,8 @@ include::../DeveloperGuide.adoc[tag=sortimplementation]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=studentdetailspanel]
+image::ExtendedPersonCard.png[width="400"]
+This figure shows how the Extended Person Card looks like in cherBook. It contains all the information of a student.
 
 #End of Extract#
 

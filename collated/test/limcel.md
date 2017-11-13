@@ -1,5 +1,5 @@
 # limcel
-###### \java\guitests\guihandles\ExtendedPersonCardHandle.java
+###### /java/guitests/guihandles/ExtendedPersonCardHandle.java
 ``` java
 /**
  * Provides a handle to a person card in the person list panel.
@@ -72,7 +72,27 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddCommandTest.java
+###### /java/seedu/address/commons/core/MessagesTest.java
+``` java
+public class MessagesTest {
+
+    @Test
+    public void testMessageClass() {
+        Messages messageClass = new Messages();
+
+        assertTrue("Unknown command".equals(messageClass.MESSAGE_UNKNOWN_COMMAND));
+        assertTrue("Invalid command format! \n%1$s".equals(messageClass.MESSAGE_INVALID_COMMAND_FORMAT));
+        assertTrue("The person index provided is invalid"
+                .equals(messageClass.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX));
+        assertTrue("The schedule index provided is invalid"
+                .equals(messageClass.MESSAGE_INVALID_SCHEDULE_DISPLAYED_INDEX));
+        assertTrue("%1$d persons listed!".equals(messageClass.MESSAGE_PERSONS_LISTED_OVERVIEW));
+        assertTrue("Add or edit command do not accept/change remarks."
+                .equals(messageClass.MESSAGE_ADDEDITCOMMANDREMARK_INVALID));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
         @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
@@ -101,7 +121,96 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
             return getScheduleList();
         }
 ```
-###### \java\seedu\address\logic\commands\ScheduleCommandTest.java
+###### /java/seedu/address/logic/commands/DeleteScheduleCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteScheduleCommand}.
+ */
+public class DeleteScheduleCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_validIndexScheduleList_success() throws Exception {
+
+        model = createAndAddScheduleToModel(model);
+        Schedule scheduleToDelete = model.getScheduleList().get(INDEX_FIRST_SCHEDULE.getZeroBased());
+        DeleteScheduleCommand deleteScheduleCommand = prepareCommand(INDEX_FIRST_SCHEDULE);
+
+        String expectedMessage = String.format(DeleteScheduleCommand.MESSAGE_DELETE_SCHEDULE_SUCCESS,
+                scheduleToDelete);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.removeSchedule(scheduleToDelete);
+
+        assertCommandSuccess(deleteScheduleCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexScheduleList_throwsCommandException() {
+
+        Index outOfBoundIndex = INDEX_SECOND_SCHEDULE;
+        // ensures that outOfBoundIndex is not in bounds of address book list, because
+        // schedule list contains zero schedules by default
+        assertFalse(outOfBoundIndex.getZeroBased() < model.getAddressBook().getScheduleList().size());
+
+        DeleteScheduleCommand deleteScheduleCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteScheduleCommand, model, Messages.MESSAGE_INVALID_SCHEDULE_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        DeleteScheduleCommand deleteFirstScheduleCommand = new DeleteScheduleCommand(INDEX_FIRST_SCHEDULE);
+        DeleteScheduleCommand deleteSecondScheduleCommand = new DeleteScheduleCommand(INDEX_SECOND_SCHEDULE);
+
+        // same object -> returns true
+        assertTrue(deleteFirstScheduleCommand.equals(deleteFirstScheduleCommand));
+
+        // same values -> returns true
+        DeleteScheduleCommand deleteFirstCommandCopy = new DeleteScheduleCommand(INDEX_FIRST_SCHEDULE);
+        assertTrue(deleteFirstScheduleCommand.equals(deleteFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(deleteFirstScheduleCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(deleteFirstScheduleCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(deleteFirstScheduleCommand.equals(deleteSecondScheduleCommand));
+    }
+
+    //======================================= HELPER METHODS ==========================================
+    /**
+     * Returns a {@code DeleteScheduleCommand} with the parameter {@code index}.
+     */
+    private DeleteScheduleCommand prepareCommand(Index index) {
+        DeleteScheduleCommand deleteScheduleCommand = new DeleteScheduleCommand(index);
+        deleteScheduleCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteScheduleCommand;
+    }
+
+    /**
+     * Updates {@code model}'s list to show no schedule.
+     */
+    private void showNoSchedule(Model model) {
+        assert model.getScheduleList().isEmpty();
+    }
+
+    /**
+     * Creates and add schedule to the model.
+     */
+    private Model createAndAddScheduleToModel(Model model) throws PersonNotFoundException {
+        Calendar calendar = Calendar.getInstance();
+        Schedule newSchedule = new Schedule(ALICE.getName().toString(), calendar);
+        model.addSchedule(newSchedule);
+        return model;
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/ScheduleCommandTest.java
 ``` java
 public class ScheduleCommandTest {
     @Rule
@@ -143,8 +252,7 @@ public class ScheduleCommandTest {
     @Test
     public void executeScheduleCommand_targetIndexExceededListSize() throws CommandException, DuplicatePersonException {
         Index targetIndex = Index.fromOneBased(1000);
-        Calendar date = Calendar.getInstance();
-        ScheduleCommand scheduleCommand = new ScheduleCommand(targetIndex, date);
+        ScheduleCommand scheduleCommand = createNewScheduleCommand(targetIndex);
         Model model = createAndSetModel(scheduleCommand);
         model.addPerson(TypicalPersons.ALICE);
         thrown.expect(CommandException.class);
@@ -159,7 +267,7 @@ public class ScheduleCommandTest {
         newList.add(newSchedule);
 
         String expectedPersonName = "Alice Pauline";
-        String personName = newSchedule.getPersonName().toString();
+        String personName = newSchedule.getPersonName();
         assertEquals(expectedPersonName, personName);
 
         String expectedDate = date.getTime().toString();
@@ -173,13 +281,23 @@ public class ScheduleCommandTest {
     /**
      * Returns a model that is set
      */
-    public Model createAndSetModel(ScheduleCommand scheduleCommand) {
+    private Model createAndSetModel(ScheduleCommand scheduleCommand) {
         Model model = new ModelManager();
         scheduleCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return model;
     }
+
+    /**
+     * Creates a new ScheduleCommand
+     */
+    private ScheduleCommand createNewScheduleCommand(Index index) {
+        Calendar date = Calendar.getInstance();
+        ScheduleCommand scheduleCommand = new ScheduleCommand(index, date);
+        return scheduleCommand;
+    }
+}
 ```
-###### \java\seedu\address\logic\commands\SortCommandTest.java
+###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
 public class SortCommandTest {
 
@@ -191,19 +309,18 @@ public class SortCommandTest {
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        sortCommand = new SortCommand();
-        sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        sortCommand = prepareCommand(model);
     }
 
     @Test
     public void execute_sortingList_success() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        SortCommand command = new SortCommand();
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        CommandResult result = command.execute();
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        sortCommand = prepareCommand(model);
+        CommandResult result = sortCommand.execute();
         assertEquals(result.feedbackToUser, SortCommand.MESSAGE_SUCCESS);
     }
 
+    //======================================== HELPER METHODS ==========================================
     /**
      * Generates a new {@code SortCommand} which upon execution, sorts the contacts by name in {@code model}.
      */
@@ -214,7 +331,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ViewScheduleCommandTest.java
+###### /java/seedu/address/logic/commands/ViewScheduleCommandTest.java
 ``` java
 public class ViewScheduleCommandTest {
     @Rule
@@ -248,7 +365,7 @@ public class ViewScheduleCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_sort() throws Exception {
@@ -293,8 +410,22 @@ public class ViewScheduleCommandTest {
         assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_ALIAS) instanceof ViewScheduleCommand);
         assertTrue(parser.parseCommand(ViewScheduleCommand.COMMAND_ALIAS + " 3") instanceof ViewScheduleCommand);
     }
+
+    @Test
+    public void parseCommand_deleteSchedule() throws Exception {
+        DeleteScheduleCommand command = (DeleteScheduleCommand) parser.parseCommand(
+                DeleteScheduleCommand.COMMAND_WORD + " " + INDEX_FIRST_SCHEDULE.getOneBased());
+        assertEquals(new DeleteScheduleCommand(INDEX_FIRST_SCHEDULE), command);
+    }
+
+    @Test
+    public void parseCommand_alias_deleteSchedule() throws Exception {
+        DeleteScheduleCommand command = (DeleteScheduleCommand) parser.parseCommand(
+                DeleteScheduleCommand.COMMAND_ALIAS + " " + INDEX_FIRST_SCHEDULE.getOneBased());
+        assertEquals(new DeleteScheduleCommand(INDEX_FIRST_SCHEDULE), command);
+    }
 ```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
 ``` java
     @Test
     public void parseSchedule_null_throwsNullPointerException() throws Exception {
@@ -307,7 +438,7 @@ public class ViewScheduleCommandTest {
         assertFalse(ParserUtil.parseSchedule(Optional.empty()).isPresent());
     }
 ```
-###### \java\seedu\address\logic\parser\ScheduleCommandParserTest.java
+###### /java/seedu/address/logic/parser/ScheduleCommandParserTest.java
 ``` java
 public class ScheduleCommandParserTest {
 
@@ -346,7 +477,7 @@ public class ScheduleCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\model\AddressBookTest.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
     @Test
     public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
@@ -354,14 +485,14 @@ public class ScheduleCommandParserTest {
         addressBook.getScheduleList().remove(0);
     }
 ```
-###### \java\seedu\address\model\AddressBookTest.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
         @Override
         public ObservableList<Schedule> getScheduleList() {
             return schedules;
         }
 ```
-###### \java\seedu\address\model\ModelManagerTest.java
+###### /java/seedu/address/model/ModelManagerTest.java
 ``` java
     @Test
     public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
@@ -397,11 +528,100 @@ public class ScheduleCommandParserTest {
         assertFalse(addressBook.getPersonList().equals(oldAddressBook));
     }
 ```
-###### \java\seedu\address\model\UniqueScheduleListTest.java
+###### /java/seedu/address/model/person/PostalCodeTest.java
 ``` java
-public class UniqueScheduleListTest {
+public class PostalCodeTest {
+    @Test
+    public void isValidPostalCode() {
+        // invalid PostalCodes
+        assertFalse(PostalCode.isValidPostalCode("")); // empty string
+        assertFalse(PostalCode.isValidPostalCode(" ")); // spaces only
+        assertFalse(PostalCode.isValidPostalCode("6239029")); // numbers that are not exactly 6 digits
+        assertFalse(PostalCode.isValidPostalCode("!@@#$#@$#")); // contains random symbols
+        assertFalse(PostalCode.isValidPostalCode("97jhb9")); // contains alphanumeric numbers
+        assertFalse(PostalCode.isValidPostalCode("gfxgfx")); // contains purely alphabets
+
+        // valid PostalCodes
+        assertTrue(PostalCode.isValidPostalCode("672943")); // PostalCode number is exactly 6 numbers
+    }
+}
+```
+###### /java/seedu/address/model/UniquePersonListTest.java
+``` java
+public class UniquePersonListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+        UniquePersonList uniquePersonList = new UniquePersonList();
+        thrown.expect(UnsupportedOperationException.class);
+        uniquePersonList.asObservableList().remove(0);
+    }
+
+    @Test
+    public void test_sortedList() throws DuplicatePersonException {
+        UniquePersonList uniquePersonList = new UniquePersonList();
+
+        uniquePersonList.add(ALICE);
+        uniquePersonList.add(ELLE);
+        uniquePersonList.add(BENSON);
+
+        assertFalse(isSorted(uniquePersonList));
+
+        ObservableList<ReadOnlyPerson> sortedList = uniquePersonList.asObservableListSortedByName();
+        assertTrue(isSorted(sortedList));
+    }
+
+    //======================================== HELPER METHODS ============================================
+
+    /**
+     * @param e
+     * @return boolean of value true if the list is not sorted, false otherwise.
+     */
+    private boolean isSorted(UniquePersonList e) {
+        Iterator<Person> iterator = e.iterator();
+        while (iterator.hasNext()) {
+            Person person1 = iterator.next();
+            Person person2 = iterator.hasNext() ? iterator.next() : null;
+            if (person2 != null) {
+                if (person1.getName().toString().toLowerCase().compareTo(person2.getName().toString().toLowerCase())
+                        < 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @param e
+     * @return boolean of value true if the list is sorted, false otherwise.
+     */
+    private boolean isSorted(ObservableList<ReadOnlyPerson> e) {
+        Iterator<ReadOnlyPerson> iterator = e.iterator();
+        while (iterator.hasNext()) {
+            ReadOnlyPerson person1 = iterator.next();
+            ReadOnlyPerson person2 = iterator.hasNext() ? iterator.next() : null;
+            if (person2 != null) {
+                if (person1.getName().toString().toLowerCase().compareTo(person2.getName().toString().toLowerCase())
+                        > 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+```
+###### /java/seedu/address/model/UniqueScheduleListTest.java
+``` java
+public class UniqueScheduleListTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+    private Schedule scheduleOne;
+    private Schedule scheduleTwo;
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
@@ -412,30 +632,25 @@ public class UniqueScheduleListTest {
 
     @Test
     public void compareScheduleTest() throws ParseException {
-        Calendar date = Calendar.getInstance();
-        Schedule scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), date);
-        Schedule scheduleTwo = new Schedule(TypicalPersons.BENSON.getName().toString(), date);
-        if (scheduleOne.equals(scheduleTwo)) {
-            assert false;
-        }
+        scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), getDate());
+        scheduleTwo = new Schedule(TypicalPersons.BENSON.getName().toString(), getDate());
+        assert !scheduleOne.equals(scheduleTwo);
     }
 
     // Check whether schedule set is non-null
     @Test
     public void scheduleSetUnitTest() {
-        Calendar date = Calendar.getInstance();
         Set<Schedule> scheduleSet = new HashSet<Schedule>();
-        Schedule scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), date);
-        Schedule scheduleTwo = new Schedule(TypicalPersons.BENSON.getName().toString(), date);
+        scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), getDate());
+        scheduleTwo = new Schedule(TypicalPersons.BENSON.getName().toString(), getDate());
         UniqueScheduleList uniqueList = new UniqueScheduleList(scheduleSet);
         scheduleSet.add(scheduleOne);
     }
 
     @Test
     public void ifScheduleListContainsScheduleTest() throws ScheduleNotFoundException {
-        Calendar date = Calendar.getInstance();
         UniqueScheduleList scheduleList = new UniqueScheduleList();
-        Schedule scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), date);
+        scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), getDate());
         scheduleList.add(scheduleOne);
         assertTrue(scheduleList.contains(scheduleOne));
         scheduleList.remove(scheduleOne);
@@ -445,12 +660,12 @@ public class UniqueScheduleListTest {
     @Test
     public void test_chronologicallySortedList() throws ParseException {
         UniqueScheduleList uniqueScheduleList = new UniqueScheduleList();
-        Calendar dateOne = Calendar.getInstance();
-        Calendar dateTwo = Calendar.getInstance();
+        Calendar dateOne = getDate();
+        Calendar dateTwo = getDate();
         dateOne.setTime(ScheduleCommandParser.DATE_FORMAT.parse("2019-12-25 10:00:00"));
         dateTwo.setTime(ScheduleCommandParser.DATE_FORMAT.parse("2018-12-25 10:00:00"));
-        Schedule scheduleOne = new Schedule(ALICE.getName().toString(), dateOne);
-        Schedule scheduleTwo = new Schedule(ELLE.getName().toString(), dateTwo);
+        scheduleOne = new Schedule(ALICE.getName().toString(), dateOne);
+        scheduleTwo = new Schedule(ELLE.getName().toString(), dateTwo);
 
         uniqueScheduleList.add(scheduleOne);
         uniqueScheduleList.add(scheduleTwo);
@@ -497,8 +712,16 @@ public class UniqueScheduleListTest {
         }
         return true;
     }
+
+    /**
+     * @return the instance of date
+     */
+    private Calendar getDate() {
+        Calendar date = Calendar.getInstance();
+        return date;
+    }
 ```
-###### \java\seedu\address\model\UniqueTagListTest.java
+###### /java/seedu/address/model/UniqueTagListTest.java
 ``` java
     @Test
     public void testForDuplicateTags() {
@@ -509,7 +732,7 @@ public class UniqueScheduleListTest {
         }
     }
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
+###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
 ``` java
     @Test
     public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
@@ -518,7 +741,7 @@ public class UniqueScheduleListTest {
         addressBook.getScheduleList().remove(0);
     }
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
+###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
 ``` java
     @Test
     public void createNewXmlAdaptedScheduleTest() throws IllegalValueException {
@@ -541,13 +764,10 @@ public class UniqueScheduleListTest {
      * Checks if the expectedSchedule is equals to the schedule in the storage
      */
     private boolean assertTrue(Schedule expectedSchedule, Schedule schedule) {
-        if (expectedSchedule.equals(schedule)) {
-            return true;
-        }
-        return false;
+        return expectedSchedule.equals(schedule);
     }
 ```
-###### \java\seedu\address\ui\ExtendedPersonCardTest.java
+###### /java/seedu/address/ui/ExtendedPersonCardTest.java
 ``` java
 public class ExtendedPersonCardTest extends GuiUnitTest {
     private ExtendedPersonCard extendedPersonCard;
@@ -571,22 +791,6 @@ public class ExtendedPersonCardTest extends GuiUnitTest {
         // select BOB
         postNow(new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1)));
         assertPersonIsDisplayed(BOB, extendedPersonCardHandle);
-    }
-    //======================== Helper methods ===============================
-    /**
-     * Asserts that {@code extended person card} displays details of {@code expectedPerson} correctly
-     */
-    private void assertPersonIsDisplayed(ReadOnlyPerson expectedPerson, ExtendedPersonCardHandle
-            extendedPersonCardHandle) {
-        guiRobot.pauseForHuman();
-        assertEquals(expectedPerson.getName().toString(), extendedPersonCardHandle.getName());
-        assertEquals(expectedPerson.getPhone().toString(), extendedPersonCardHandle.getPhone());
-        assertEquals(expectedPerson.getAddress().toString(), extendedPersonCardHandle.getAddress());
-        assertEquals(expectedPerson.getFormClass().toString(), extendedPersonCardHandle.getFormclass());
-        assertEquals(expectedPerson.getGrades().toString(), extendedPersonCardHandle.getGrades());
-        assertEquals(expectedPerson.getPostalCode().toString(), extendedPersonCardHandle.getPostalCode());
-        assertEquals(expectedPerson.getEmail().toString(), extendedPersonCardHandle.getEmail());
-        assertEquals(expectedPerson.getRemark().toString(), extendedPersonCardHandle.getRemark());
     }
 
     @Test
@@ -613,6 +817,23 @@ public class ExtendedPersonCardTest extends GuiUnitTest {
 
         // same person, different index -> returns false
         assertFalse(personCard.equals(new PersonCard(person, 1)));
+    }
+
+    //======================================== HELPER METHODS ==========================================
+    /**
+     * Asserts that {@code extended person card} displays details of {@code expectedPerson} correctly
+     */
+    private void assertPersonIsDisplayed(ReadOnlyPerson expectedPerson, ExtendedPersonCardHandle
+            extendedPersonCardHandle) {
+        guiRobot.pauseForHuman();
+        assertEquals(expectedPerson.getName().toString(), extendedPersonCardHandle.getName());
+        assertEquals(expectedPerson.getPhone().toString(), extendedPersonCardHandle.getPhone());
+        assertEquals(expectedPerson.getAddress().toString(), extendedPersonCardHandle.getAddress());
+        assertEquals(expectedPerson.getFormClass().toString(), extendedPersonCardHandle.getFormclass());
+        assertEquals(expectedPerson.getGrades().toString(), extendedPersonCardHandle.getGrades());
+        assertEquals(expectedPerson.getPostalCode().toString(), extendedPersonCardHandle.getPostalCode());
+        assertEquals(expectedPerson.getEmail().toString(), extendedPersonCardHandle.getEmail());
+        assertEquals(expectedPerson.getRemark().toString(), extendedPersonCardHandle.getRemark());
     }
 
     /**
