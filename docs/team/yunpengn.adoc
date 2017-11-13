@@ -92,8 +92,6 @@ With the support for scripting file, advance users (or system administers if **B
 can generate a scripting file and import it into **BoNUS**. Data management and frequent operations can be done easily in
 one step. Otherwise, they have to type one command each time in the GUI interface, which becomes a very tedious work.
 
-The scripting file should consist of one or multiple valid **BoNUS** commands and each line can have **at most one** command.
-
 === Enhancement Proposed: Export Data to Microsoft Excel^TM^ Worksheet
 
 ==== External behavior

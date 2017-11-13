@@ -726,7 +726,7 @@ Even worse, it is very likely they are already using NUSMods and thus are not wi
 end up not using the event feature at all.
 
 However, users may find it very useful if they can import their NUSMods timetable using a simple command. Eventually, they
-would choose *BoNUS* because they can manage both contacts and events in one application conveniently. and the migration
+would choose *BoNUS* because they can manage both contacts and events in one application conveniently and the migration
 from NUSMods to *BoNUS* is not troublesome.
 
 ==== Design Considerations
@@ -735,11 +735,11 @@ from NUSMods to *BoNUS* is not troublesome.
 **Alternative 1 (current choice):** Add a new abstract `ImportCommand` class and let both of them become its sub-commands
 (inherit from it). +
 **Pros:** This is inspired by many popular command-line tools (like Git). `import` is called the actual command, while
-`--xml` and `--script` is called the options. More Unix/Linux users would be used to this approach. This is important for
-us because we assume our users are typists and they are very likely to frequently use tools like Git. +
+`--xml` and `--script` is called the options. Most Unix/Linux users would be used to this approach. This is important for
+us because we assume our users are typists and they are very likely to frequently use these command-line tools. +
 **Cons:** Need to write extra codes and parsing also becomes more complicated. +
 **Alternative 2:** Implement these two commands separately. +
-**Pros:** East to implement and similar to other commands. +
+**Pros:** Easy to implement and similar to other commands. +
 **Cons:** Our users may not be used to it. The command word will become longer. It is not a good OOP practice as well
 because common details are not abstracted into a parent class and this produces duplicate codes.
 
@@ -752,11 +752,10 @@ _(Similar strategy has been adopted in `ConfigCommand`)_
 **Pros:** Simple to use and easy to implement as well +
 **Cons:** Need to check whether the URL is valid and from NUSMods (currently using regular expression). +
 **Alternative 2:** Implement a built-in browser and render the NUSMods page +
-**Pros:** Need much extra work to implement the built-in browser. The page may not be rendered well since the built-in
+**Pros:** Users are more used to this interface. +
+**Cons:** Need much extra work to implement the built-in browser. The page may not be rendered well since the built-in
 browser is typically smaller than OS browser and NUSMods does not fully adopt link:#mainstream-os[responsive UI framework]
-and may not work well on a small browser window. +
-**Cons:** Our users may not be used to it. The command word will become longer. It is not a good OOP practice as well
-because common details are not abstracted into a parent class and this produces duplicate codes.
+and may not work well on a small browser window.
 
 ==== Implementation Outline
 
@@ -814,8 +813,8 @@ public static <T> T fromJsonUrl(URL url, Class<T> instanceClass) throws IOExcept
 
 ===== Add upcoming events
 
-After obtaining all the information we need, we can simply use the `addEvent` method `ModelManager` class to add the final
-examinations as upcoming events into *BoNUS*. This should be a similar process as `AddEventCommand`.
+After obtaining all the information we need, we can simply use the `addEvent` method in `ModelManager` class to add the
+final examinations as upcoming events into *BoNUS*. This should be a similar process as `AddEventCommand`.
 // end::importNusmods[]
 
 === Contacts/event listing order by name/date time mechanism
