@@ -44,12 +44,12 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. You will see the GUI as seen in `Figure 3.1` below.
+.  Double-click the file to start the app. You will see the GUI as seen in Figure 3.1 below.
 .  The GUI contains the Command Box, Command Result Display, Contact and Event List Panel, Details Panel, Calendar and the
    Browser Panel.
 +
 image::applicationdetails.png[width="790"]
-Figure 3.1 Starting page of The Myth's Book
+_Figure 3.1 Starting Page of The Myth's Book_
 +
 .  You can type a command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -78,7 +78,7 @@ There is no need for you to save the data manually.
 By default, whenever you first open `The Myth's Book`, you should be in `Persons` mode, which should look like Figure 5.1.
 
 image::Ui.png[width="800"]
-Figure 5.1 Default Page
+_Figure 5.1 Default Page_
 
 The link:#6-general-command-features[General Command Features] section lists the commands that can be used in both `Persons` and `Events` modes. +
 
@@ -167,7 +167,7 @@ Format: `themes`
 You should see the result of using `themes` as seen in Figure 6.5.1.
 
 image::themeslist.png[width="800"]
-Figure 6.5.1 `themes` Result for Themes List Command
+_Figure 6.5.1 `themes` Result for Themes List Command_
 // end::themes[]
 
 // tag::switch[]
@@ -192,7 +192,7 @@ Examples:
 You should see the result of using `switch 2` as seen in Figure 6.6.1.
 
 image::Switch.png[width="800"]
-Figure 6.6.1 `switch 2` Result for Switch Command
+_Figure 6.6.1 `switch 2` Result for Switch Command_
 // end::switch[]
 
 === Clearing all entries : `clear`
@@ -352,7 +352,7 @@ displays the information details of the 1st person in the graphical user interfa
 You should see the displayed result of `select 3` as seen in Figure 7.6.1 below.
 
 image::SelectCommandFinalResult.PNG[width="790"]
-Figure 7.6.1 `select 3` Result for Select Command
+_Figure 7.6.1 `select 3` Result for Select Command_
 
 // tag::find[]
 === Finding persons by name: `find`
@@ -370,10 +370,10 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
-If you followed the command format, you should see a list similar to the Figure 5.7.1 shown below.
+If you followed the command format, you should see a list similar to the Figure 7.7.1 shown below.
 
 image::Find.png[width="400"]
-Figure 5.16.1
+_Figure 7.7.1 `find` Result for Find Command_
 
 Examples:
 
@@ -415,10 +415,10 @@ This command shows you a list of all the contacts who have their birthdays today
 
 Format: `birthdays`
 
-After typing in the command, you should see a list similar to Figure 5.16.1 shown below.
+After typing in the command, you should see a list similar to Figure 7.9.1 shown below.
 
 image::BirthdaysMechanism2.png[width="200"]
-Figure 5.16.1
+_Figure 7.9.1 `birthdays` Result for Birthdays Command_
 
 // end::reminder[]
 
@@ -456,7 +456,7 @@ Examples:
 You should see the displayed result of `access 6` as seen in Figure 7.10.1 below.
 
 image::AccessCommandFinalResult.PNG[width="790"]
-Figure 7.10.1 `access 6` Result for Access Command
+_Figure 7.10.1 `access 6` Result for Access Command_
 // end::access[]
 
 // tag::locate[]
@@ -490,7 +490,7 @@ the generated list which is then loaded into the browser with a Google Maps Sear
 4. You should see the displayed result of the person's address in a Google Maps Search as seen in Figure 7.11.1 below.
 
 image::LocationCommandFinalResult.PNG[width="790"]
-Figure 7.11.1 `locate 6` Location Command Result
+_Figure 7.11.1 `locate 6` Result for Locate Command_
 // end::locate[]
 
 // tag::favouriteunfavourite[]
@@ -560,7 +560,7 @@ Format: `events`
 You should see the result of using `events` as seen in Figure 8.1.1.
 
 image::events.png[width="800"]
-Figure 8.1.1 `events` Result for Events Command
+_Figure 8.1.1 `events` Result for Events Command_
 // end::events[]
 
 // tag::addevent[]
@@ -583,7 +583,7 @@ If input is correct, you will be able to see the event being added successfully 
 The date of the event on the Calendar will be populated with a different shade of color to signify that there is an event on that date.
 
 image::eventresult.PNG[width="700"]
-Figure 8.2.1 `addevent` Result for Add Event Command
+_Figure 8.2.1 `addevent` Result for Add Event Command_
 
 A `Invalid Command Format` will appear if you have keyed in invalid fields for the event.
 
@@ -619,10 +619,10 @@ By typing `deleteevent 2`, you will be able to delete the 2nd event in the most 
 // tag::details[]
 === Details Panel
 
-This `Details Panel` is a graphical user interface that shows you all the `hidden` details of a person that is not shown in the person list. If a person card is clicked on or the select command is used, you should see the details of the person as shown below in Figure 7.1.1 .
+This `Details Panel` is a graphical user interface that shows you all the `hidden` details of a person that is not shown in the person list. If a person card is clicked on or the select command is used, you should see the details of the person as shown below in Figure 9.1.1 .
 
 image::DetailsPanel.png[width="600"]
-Figure 7.1.1
+_Figure 9.1.1 Details Panel_
 // end::details[]
 
 // tag::calendar[]
@@ -632,18 +632,18 @@ The Calendar is a graphical user interface that displays a calendar for the user
 You will be able to navigate through different months to view the events on different dates in different months.
 
 image::calendar.PNG[width="700"]
-Figure 9.2.1 Calendar
+_Figure 9.2.1 Calendar_
 
-Furthermore, you can add events after clicking on the specific date. A pop up window (Figure 7.2.2) will appear prompting you to fill up the details of the event (NAME and ADDRESS of the event).
+Furthermore, you can add events after clicking on the specific date. A pop up window (Figure 9.2.2) will appear prompting you to fill up the details of the event (NAME and ADDRESS of the event).
 
 image::popupwindow.PNG[width="300"]
-Figure 9.2.2 Pop-up Window to Add Event
+_Figure 9.2.2 Pop-up Window to Add Event_
 
 After adding an event, the Calendar will be populated with a colour over the chosen date of the Event. The day that has an event will be shown as seen in Figure 7.2.3 below.
 The calendar will also be populated after adding an event through the link:#adding-an-event-code-addevent-code[Add Event Command].
 
 image::populatecalendar.PNG[width="700"]
-Figure 9.2.3 Populating of Calendar
+_Figure 9.2.3 Populating of Calendar_
 
 // end::calendar[]
 
@@ -654,7 +654,7 @@ UI that is of a bright colour scheme as compared to the default `Dark Theme`. +
 You will be able to switch between `Bright Theme` and `Dark Theme` through the command `switch`.
 
 image::BrightTheme.png[width="800"]
-Figure 9.3.1 Bright Theme
+_Figure 9.3.1 Bright Theme_
 
 link:#the-myths-book---user-guide[Back To Top]
 // end::brighttheme[]

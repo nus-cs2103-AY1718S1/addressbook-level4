@@ -1338,7 +1338,7 @@ _Figure 5.11.2 FindTagCommand Logic Sequence Diagram_
 **Cons:** Difficult to implement. Not exactly a big improvement to `FindTagCommand`. +
 // end::findtag[]
 
-// tag::favouriteunfavourite
+// tag::favouriteunfavourite[]
 === Favourite/Unfavourite mechanism
 
 The favourite/unfavourite mechanism is facilitated by the `Favourite` field that resides in `Person`. These commands will inherit from `UndoableCommand`.
@@ -1503,7 +1503,7 @@ _Figure 5.13.2 FavouriteListCommand Logic Sequence Diagram_
 **Alternative 2:** Extends to `UndoableCommand` +
 **Pros:** Users can undo `FavouriteListCommand` when they mistype the command. +
 **Cons:** Developers need to learn the implementation of `UndoableCommand`. Unnecessary to extend to `UndoableCommand` since users can type `ListCommand` to go back to the list of all persons. +
-// end::favouriteunfavourite
+// end::favouriteunfavourite[]
 
 //tag::birthday[]
 === Birthdays mechanism
