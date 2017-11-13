@@ -229,8 +229,7 @@ Successfully bookmarked the first place in the list.
 `bookmark 5`
 
 ** *Expected output* +
-Successfully bookmarked the first place in the list.
-
+Error message will be display as `INDEX 5` has already been bookmarked.
 . `list` +
 `bookmark 45`
 
@@ -293,6 +292,16 @@ Format: `clear_bookmark`
 === Positive Test Cases
 . `list` +
 `show_bookmark` +
+`clear_bookmark` +
+
+** *Expected output* +
+It will clear all the bookmarked places and list all the places. +
+When type `show_bookmark` it will list an empty page.
+
+. `list` +
+`bookmark 1` +
+`bookmark 2` +
+`bookmark 3` +
 `clear_bookmark` +
 
 ** *Expected output* +

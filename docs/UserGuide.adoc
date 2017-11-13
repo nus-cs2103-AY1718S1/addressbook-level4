@@ -47,13 +47,18 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/Marina Bay Sands t/attractions` or as `n/Marina Bay Sands`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/attractions`, `t/onestar t/twostars` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME a/ADDRESS`, `a/ADDRESS n/NAME` is also acceptable.
+* All the commands are case-sensitive.
 ====
 
 === Viewing help : `help` or `h`
 
 Format: `help` or `h`
 
-*Note: The Help window should be closed before continuing to execute other commands.
+[WARNING]
+====
+Please close the `help` window once check. The application cannot perform other tasks when `help` window is still running.
+This is a bug that is found in the base https://github.com/se-edu/addressbook-level4/issues/727[Addressbook-level 4].
+====
 
 === Adding a place: `add` or `a`
 
@@ -72,6 +77,11 @@ A place can have null for Address, Website, Tag and Phone fields.
 
 [TIP]
 It is compulsory for a place to have Name and Postalcode.
+
+* The command will reject if following requirement does not meet -
+** Phone numbers can only contain numbers, and should be at least `3` digits long +
+** Postal codes need to be exactly `6` digits.
+** Websites need to include `http://www` or `https://www` in front.
 
 Examples:
 
@@ -282,13 +292,25 @@ Format: `mrt`
 or
 
 Using the shortcut key `F3`
+
+
+[NOTE]
+====
+* The browser window must be closed before proceeding with any other command. This is a bug that is found in +
+the base https://github.com/se-edu/addressbook-level4/issues/727[Addressbook-level 4].
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
+====
 // end::mrtmap[]
 
 //tag::usefulContacts[]
 === Useful contact numbers in Singapore
 
 Display a list of useful contact numbers by clicking on `Help -> Useful Contacts` +
+
 or
+
 Display a list of useful contact numbers by using the CLI. +
 Format: `emergency` or `sos` +
 
@@ -336,7 +358,6 @@ Format: `weather`
 // end::weather[]
 
 == Changes in v1.3
-
 // tag::goto[]
 === Display the location of the place
 
@@ -391,6 +412,13 @@ Populated a default list of places for the user with 38 places.
 // tag::aung1.5[]
 Displays the current PSI levels in Singapore. +
 Format: `psi`
+
+[NOTE]
+====
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
+====
 // end::aung1.5[]
 
 //tag::export[]
@@ -424,6 +452,14 @@ align our product with the user needs.
 //tag::sort[]
 Sort command allows you to sort the places in alphabetical order. +
 Format: `sort`
+
+[NOTE]
+====
+* The sort command is temporary and does not permanently sort the places by alphabetical order. +
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+====
+
 //end::sort[]
 
 == Coming in v2.0
