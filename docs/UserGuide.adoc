@@ -82,7 +82,7 @@ Shows the usage of command `add`
 Shows this User Guide in the opened Help Window.
 // end::help[]
 
-=== Adding a person: `add` _[Since v1.1]_
+=== Adding a person : `add` _[Since v1.1]_
 
 _Alias:_ `create` `put`
 
@@ -136,7 +136,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively
 
 // tag::find[]
-=== Locating persons by different attributes: `find` _[Since v1.2]_
+=== Locating persons by different attributes : `find` _[Since v1.2]_
 
 _Alias:_ `search` `get`
 
@@ -167,7 +167,7 @@ Returns any person having names `Betsy`, `Tim`, `John` or living at `Clementi St
 // end::find[]
 
 // tag::sort[]
-=== Sorting list of persons: `sort` _[Since v1.2]_
+=== Sorting list of persons : `sort` _[Since v1.2]_
 
 Suppose you wish to have your list of persons ordered by a specific attribute, you may use the `sort` command to do so. Be it name, email, phone, address or even the time it was first added. You can also choose to specify whether the attribute should be sorted in ascending or descending order, allowing you to have control over how your person panel should appear. +
 
@@ -234,7 +234,7 @@ Deletes the 1st person in the results of the `find` command
 // end::delete[]
 
 // tag::tagadd[]
-=== Adding a tag to a person(s) : `t-add` _[Since v1.1]_
+=== Adding a tag to person(s) : `t-add` _[Since v1.1]_
 
 You can add a tag to specified person(s) in the address book current listing.
 
@@ -333,7 +333,7 @@ This command removes the tag `fav` from all person(s) with the the tag `fav` in 
 // end::tagremovefav[]
 
 // tag::tagfind[]
-=== Finding the person(s) with given tags: `t-find` _[Since v1.3]_
+=== Finding the person(s) with given tag : `t-find` _[Since v1.3]_
 
 You can find all persons with the given tag.
 
@@ -355,7 +355,7 @@ This command could also list all the people with tag `friend` if any
 // end::tagfind[]
 
 // tag::changetheme[]
-=== Changing the theme according to user input `theme` _[Since v1.5]_
+=== Changing the theme according to user input : `theme` _[Since v1.5]_
 
 You can change the current theme into your preferred one.
 
@@ -389,7 +389,7 @@ This command changed to current theme to Twilight
 // end::changetheme[]
 
 // tag::map[]
-=== Finding the location of a person using Google Map: `m-show` _[Since v1.3]_
+=== Finding the location of a person using Google Map : `m-show` _[Since v1.3]_
 
 You might find it not very convenient to only show the contact's location as text. Therefore, iConnect allows you to see the location! By using this command, without typing in the person's address, you can easily find the location of your friend in Google Map, which will show in the centre browser.
 
@@ -410,7 +410,7 @@ Examples:
 * `m-show 1` +
 Shows the address of person with index 1 on the google map
 
-=== Finding the route from user's current location to the person selected: `m-route` _[Since v1.3]_
+=== Finding the route from user's current location to the person selected : `m-route` _[Since v1.3]_
 
 Not only can iConnect show the location, it can also show you how to go there! Simply by adding your current location, it will show you the shortest path from your current address to your friend's home in the Google map.
 
@@ -435,7 +435,7 @@ Shows the route from `Clementi Street` to the address of person with index numbe
 Shows the route from `John street, block 123, #01-01` to the address of person with index number `7`
 // end::map[]
 
-=== Adding an Event to Schedule: `s-add` _[Since v1.4]_
+=== Adding an Event to Schedule : `s-add` _[Since v1.4]_
 
 With many commitments at hand, it is easy to overlook an event in your schedule. `s-add` allows you to add an event to your calendar and include persons from your addressbook as members of the event.
 
@@ -467,7 +467,7 @@ Adds a two-hour long event called ‘Exam Date’ on 4th of December 2017 at 2:3
 * `s-add n/Email Reminder t/2017-12-04 14:30` +
 Adds an event called ‘Email Reminder’ on 4th of December 2017 at 2:30PM into the addressbook calendar.
 
-=== Removing an Event from Schedule: `s-remove` _[Since v1.4]_
+=== Removing an Event from Schedule : `s-remove` _[Since v1.4]_
 
 Suppose you want to remove multiple events from your calendar, you can use the `s-remove` command with the indexes of events to be deleted.
 
@@ -490,7 +490,7 @@ Removes a single event with the index 1.
 Removes 3 events with the index 1, 2 and 3.
 
 // tag::export[]
-=== Making a backup address book: `export` _[Since v1.4]_
+=== Making a backup address book : `export` _[Since v1.4]_
 
 If you want to keep your address book clean and worry about how to get the contacts back, just export the information.
 
@@ -592,7 +592,7 @@ The `redo` command fails as there are no `undo` commands executed previously
 // end::undoredo[]
 
 // tag::bin[]
-=== Restoring person(s) from recycle bin: `bin-restore` _[Since v1.5]_
+=== Restoring person(s) from recycle bin : `bin-restore` _[Since v1.5]_
 
 You find that people you wrongly deleted from address book in recycle bin, you can restore them back now.
 
@@ -698,7 +698,7 @@ Removes the birthday from the 6th person in the most recent listing, and shows a
 // end::birthday[]
 
 // tag::link[]
-=== Adding a social media URL to a person: `l-add` _[Coming in v2.0]_
+=== Adding a social media URL to a person : `l-add` _[Coming in v2.0]_
 
 You will find it very convenient to add some social media URLs to your friends so that you are able to see their posts and recent activities simply by clicking those social media icons in the centre person details panel. In this way, you do not need to open each social media app and search for the person before you can see their posts.
 
@@ -789,15 +789,9 @@ e.g. `m-show 1`
 * *MapRoute* : `m-route INDEX a/ADDRESS` +
 e.g. `m-show 1 a/NUS`
 * *ScheduleAdd* : `s-add [m/INDEX INDEX…] n/NAME t/TIME d/DURATION` +
-<<<<<<< HEAD
 e.g. `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/2h`
 * *ScheduleRemove* : `s-remove I/INDEX INDEX...` +
 e.g. `s-remove I/1 2 3`
-=======
-e.g. `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/120`
-* *ScheduleRemove* : `s-remove I/INDEX INDEX...` +
-e.g. `s-remove e/1 2 3`
->>>>>>> 7ac5b5a6695fda6dac2b79791e93c571f7479043
 * *Export* : `export PATH` +
 e.g. `export /desktop/new_folder`
 * *Bindelete* : `bin-delete INDEX INDEX...` +

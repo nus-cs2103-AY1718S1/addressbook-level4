@@ -35,9 +35,11 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
+
 //@@author ZhangH795
+
 /**
- * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for TagAddCommand.
  */
 public class TagAddCommandTest {
 
@@ -64,21 +66,13 @@ public class TagAddCommandTest {
                 new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
-        String tagChangedDisplayRaw = editedPerson.getTags().toString();
-        int tagListStringStartIndex = 1;
-        int tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
-        String tagChangedDisplay = editedPerson.getName() + " Tag List: "
-                + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
-        String expectedMessage = String.format(TagAddCommand.MESSAGE_ADD_TAG_SUCCESS, tagChangedDisplay);
-
-        assertCommandSuccess(tagAddCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(tagAddCommand, model, createTagListDisplay(editedPerson), expectedModel);
 
         tagAddCommand = prepareCommand(singlePersonIndexList,
                 new TagAddDescriptor(new PersonBuilder().withATags(VALID_TAG_HUSBAND).build()));
         assertCommandFailure(tagAddCommand, model, String.format(TagAddCommand.MESSAGE_TAG_ALREADY_EXISTS,
                 "[" + VALID_TAG_HUSBAND + "]"));
     }
-
 
     @Test
     public void executeInvalidPersonIndexUnfilteredListFailure() {
@@ -92,7 +86,7 @@ public class TagAddCommandTest {
     }
 
     /**
-     * Add tag to a person in a filtered list where index is larger than size of filtered list,
+     * Adds tag to a person in a filtered list where index is larger than size of filtered list,
      * but smaller than size of address book
      */
     @Test
@@ -119,10 +113,10 @@ public class TagAddCommandTest {
         singlePersonIndexList2.add(INDEX_SECOND_PERSON);
         final TagAddCommand standardCommand = new TagAddCommand(singlePersonIndexList1, DESC_JAMES);
 
-        // same values -> returns true
         TagAddDescriptor copyDescriptor = new TagAddDescriptor(DESC_JAMES);
         TagAddDescriptor copyDescriptor1 = new TagAddDescriptor(DESC_LUCY);
         TagAddCommand commandWithSameValues = new TagAddCommand(singlePersonIndexList1, copyDescriptor);
+        // same values -> returns true
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -148,7 +142,6 @@ public class TagAddCommandTest {
 
         // different descriptor -> returns false
         assertFalse(copyDescriptor.equals(copyDescriptor1));
-
     }
 
     @Test
@@ -175,6 +168,21 @@ public class TagAddCommandTest {
         assertTrue(tagAddDescriptor.getEmail().equals(toCopy.getEmail()));
 
         assertTrue(tagAddDescriptor.getTags().equals(toCopy.getTags()));
+    }
+
+    /**
+     * Creates string for edited tag list.
+     * @param editedPerson edited person to show tag list
+     * Returns formatted string to indicate edited tag list.
+     */
+    public String createTagListDisplay(Person editedPerson) {
+        int tagListStringStartIndex = 1;
+        int tagListStringEndIndex;
+        String tagChangedDisplayRaw = editedPerson.getTags().toString();
+        tagListStringEndIndex = tagChangedDisplayRaw.length() - 1;
+        String tagChangedDisplay = editedPerson.getName() + " Tag List: "
+                + tagChangedDisplayRaw.substring(tagListStringStartIndex, tagListStringEndIndex);
+        return String.format(TagAddCommand.MESSAGE_ADD_TAG_SUCCESS, tagChangedDisplay);
     }
 
     /**
