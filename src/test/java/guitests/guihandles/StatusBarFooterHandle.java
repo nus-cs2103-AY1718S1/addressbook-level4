@@ -13,14 +13,17 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     private static final String SYNC_STATUS_ID = "#syncStatus";
     private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
     private static final String TOTAL_PERSONS_STATUS_ID = "#totalPersons";
+    private static final String TOTAL_GROUPS_STATUS_ID = "#totalGroups";
 
     private final StatusBar syncStatusNode;
     private final StatusBar saveLocationNode;
     private final StatusBar totalPersonsNode;
+    private final StatusBar totalGroupsNode;
 
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
     private String lastRememberedTotalPersons;
+    private String lastRememberedTotalGroups;
 
     public StatusBarFooterHandle(Node statusBarFooterNode) {
         super(statusBarFooterNode);
@@ -28,6 +31,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         this.syncStatusNode = getChildNode(SYNC_STATUS_ID);
         this.saveLocationNode = getChildNode(SAVE_LOCATION_STATUS_ID);
         this.totalPersonsNode = getChildNode(TOTAL_PERSONS_STATUS_ID);
+        this.totalGroupsNode = getChildNode(TOTAL_GROUPS_STATUS_ID);
     }
 
     /**
@@ -44,6 +48,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         return saveLocationNode.getText();
     }
 
+    //@@author heiseish
     /**
      * Returns the text of the total number of people
      */
@@ -51,6 +56,46 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         return totalPersonsNode.getText();
     }
 
+    /**
+     * Returns the text of the total number of group
+     */
+    public String getTotalGroups() {
+        return totalGroupsNode.getText();
+    }
+
+    /**
+     * Remembers the content of the 'total number of person' portion of the status bar.
+     */
+    public void rememberTotalPersons() {
+        lastRememberedTotalPersons = getTotalPersons();
+    }
+
+    /**
+     * Returns true if the current content of the 'total persons' is different from the value remembered by the most
+     * recent {@code rememberTotalPersons()} call.
+     */
+    public boolean isTotalPersonsChanged() {
+        return !lastRememberedTotalPersons.equals(getTotalPersons());
+    }
+
+    /**
+     * Remembers the content of the 'total number of group' portion of the status bar.
+     */
+    public void rememberTotalGroups() {
+        lastRememberedTotalGroups = getTotalGroups();
+    }
+
+    /**
+     * Returns true if the current content of the 'total groups' is different from the value remembered by the most
+     * recent {@code rememberTotalPersons()} call.
+     */
+    public boolean isTotalGroupsChanged() {
+        return !lastRememberedTotalGroups.equals(getTotalPersons());
+    }
+
+
+
+    //@@author
     /**
      * Remembers the content of the sync status portion of the status bar.
      */
@@ -73,12 +118,6 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         lastRememberedSaveLocation = getSaveLocation();
     }
 
-    /**
-     * Remembers the content of the 'total number' portion of the status bar.
-     */
-    public void rememberTotalPersons() {
-        lastRememberedTotalPersons = getTotalPersons();
-    }
 
     /**
      * Returns true if the current content of the 'save location' is different from the value remembered by the most
@@ -88,11 +127,4 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         return !lastRememberedSaveLocation.equals(getSaveLocation());
     }
 
-    /**
-     * Returns true if the current content of the 'total persons' is different from the value remembered by the most
-     * recent {@code rememberTotalPersons()} call.
-     */
-    public boolean isTotalPersonsChanged() {
-        return !lastRememberedTotalPersons.equals(getTotalPersons());
-    }
 }

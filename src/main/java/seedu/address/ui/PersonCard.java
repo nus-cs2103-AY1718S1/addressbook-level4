@@ -6,7 +6,6 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -26,10 +25,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static final String ICON = "/images/heart.png";
-    private static final String ICON_OUTLINE = "/images/heartOutline.png";
-    private static final String DEFAULT = "/images/default.png";
-    private static final String FACEBOOK = "/images/facebook.png";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -69,36 +64,27 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    private final ImageView heart;
-    private final ImageView heartOutline;
-    private final ImageView fbicon;
-    private final Image personHolder;
-
-
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
-        super(FXML);
-        personHolder = new Image(getClass().getResourceAsStream(DEFAULT));
-        Circle circle = new Circle(25);
-        circle.setFill(new ImagePattern(personHolder));
-        picture.setGraphic(circle);
-        heart = new ImageView(new Image(getClass().getResourceAsStream(ICON), 25, 25, false, false));
-        heartOutline = new ImageView(new Image(getClass().getResourceAsStream(ICON_OUTLINE), 20, 20, false, false));
-        fbicon = new ImageView(new Image(getClass().getResourceAsStream(FACEBOOK), 25, 25, false, false));
+        this(person, displayedIndex, new IconImage());
+    }
 
+    public PersonCard(ReadOnlyPerson person, int displayedIndex, IconImage image) {
+        super(FXML);
         initLabelColor();
         this.person = person;
         id.setText(displayedIndex + ". ");
-        initFavorite(person);
-        initFbIcon(person);
+        picture.setGraphic(new Circle(25, new ImagePattern(image.getCirclePerson())));
+        initFavorite(person, image);
+        initFbIcon(person, image);
         initTags(person);
-        bindListeners(person);
+        bindListeners(person, image);
     }
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
-    private void bindListeners(ReadOnlyPerson person) {
+    private void bindListeners(ReadOnlyPerson person, IconImage image) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
@@ -107,8 +93,8 @@ public class PersonCard extends UiPart<Region> {
         //@@author heiseish
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         major.textProperty().bind(Bindings.convert(person.majorProperty()));
-        person.favoriteProperty().addListener((observable, oldValue, newValue) -> initFavorite(person));
-        person.facebookProperty().addListener((observable, oldValue, newValue) -> initFbIcon(person));
+        person.favoriteProperty().addListener((observable, oldValue, newValue) -> initFavorite(person, image));
+        person.facebookProperty().addListener((observable, oldValue, newValue) -> initFbIcon(person, image));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
@@ -150,15 +136,17 @@ public class PersonCard extends UiPart<Region> {
     /**
      * Instantiate favorite label
      */
-    private void initFavorite(ReadOnlyPerson person) {
-        favorite.setGraphic(person.getFavorite().favorite ? heart : heartOutline);
+    private void initFavorite(ReadOnlyPerson person, IconImage image) {
+        favorite.setGraphic(person.getFavorite().favorite
+                ? new ImageView(image.getHeart())
+                : new ImageView(image.getHeartOutline()));
     }
 
     /**
      * Instantiate the facebook icon if a facebook account is linked with the person
      */
-    private void initFbIcon(ReadOnlyPerson person) {
-        facebookPage.setGraphic(fbicon);
+    private void initFbIcon(ReadOnlyPerson person, IconImage image) {
+        facebookPage.setGraphic(new ImageView(image.getFbicon()));
         facebookPage.setVisible(!person.getFacebook().value.equals(""));
     }
 

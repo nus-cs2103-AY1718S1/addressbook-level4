@@ -41,14 +41,19 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar totalPersons;
     @FXML
+    private StatusBar totalGroups;
+    @FXML
     private StatusBar saveLocationStatus;
 
 
-    public StatusBarFooter(String saveLocation, int totalNumber) {
+    public StatusBarFooter(String saveLocation, int totalNumber, int totalGroup) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
+        //@@author heiseish
         setTotalPersons(totalNumber);
+        setTotalGroups(totalGroup);
+        //@@author
         registerAsAnEventHandler(this);
     }
 
@@ -73,6 +78,10 @@ public class StatusBarFooter extends UiPart<Region> {
     //@@author heiseish
     private void setTotalPersons(int numberOfPeople) {
         Platform.runLater(() -> this.totalPersons.setText(numberOfPeople + " person(s) total"));
+    }
+
+    private void setTotalGroups(int numberOfGroup) {
+        Platform.runLater(() -> this.totalGroups.setText(numberOfGroup + " group(s) total"));
     }
     //@@author
 

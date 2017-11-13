@@ -29,14 +29,18 @@ public class PersonListPanel extends UiPart<Region> {
     private ListView<PersonCard> personListView;
 
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
+        this(personList, new IconImage());
+    }
+
+    public PersonListPanel(ObservableList<ReadOnlyPerson> personList, IconImage image) {
         super(FXML);
-        setConnections(personList);
+        setConnections(personList, image);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
+    private void setConnections(ObservableList<ReadOnlyPerson> personList, IconImage image) {
         ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1, image));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
         personListView.setStyle("-fx-background-color: white;");

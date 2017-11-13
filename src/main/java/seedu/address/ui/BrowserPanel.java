@@ -78,7 +78,7 @@ public class BrowserPanel extends UiPart<Region> {
     //@@author heiseish
 
     private void loadFacebookPage(ReadOnlyPerson person) {
-        loadPage(FACEBOOK_PREFIX + person.getFacebook().value);
+        loadPage(FACEBOOK_PREFIX + StringUtil.partiallyEncode(person.getFacebook().value));
     }
 
     /**
@@ -89,7 +89,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     public void googleSearch(String url) {
-        loadPage(GOOGLE_URL_PREFIX + url + GOOGLE_URL_SUFFIX);
+        loadPage(GOOGLE_URL_PREFIX + StringUtil.partiallyEncode(url) + GOOGLE_URL_SUFFIX);
     }
     //@@author
     /**
@@ -121,13 +121,13 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleSearchNameEvent(SearchNameEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        googleSearch(event.getName());
+        googleSearch(StringUtil.partiallyEncode(event.getName()));
     }
 
     @Subscribe
     private void handleSearchMajorEvent(SearchMajorEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        googleSearch("NUS " + event.getMajor());
+        googleSearch(StringUtil.partiallyEncode("NUS " + event.getMajor()));
     }
     //@@author
 

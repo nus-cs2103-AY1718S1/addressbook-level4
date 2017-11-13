@@ -50,6 +50,7 @@ public class MainWindow extends UiPart<Region> {
     private GroupListPanel groupListPanel;
     private Config config;
     private UserPrefs prefs;
+    private IconImage image = new IconImage();
 
     @FXML
     private StackPane browserPlaceholder;
@@ -138,17 +139,18 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), image);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        groupListPanel = new GroupListPanel(logic.getFilteredGroupList());
+        groupListPanel = new GroupListPanel(logic.getFilteredGroupList(), image);
         groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
-                logic.getFilteredPersonList().size());
+                logic.getFilteredPersonList().size(),
+                logic.getFilteredGroupList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
