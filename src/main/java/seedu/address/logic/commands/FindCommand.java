@@ -19,7 +19,7 @@ public class FindCommand extends Command {
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " " +COMMAND_WORD_NAME_PREFIX + "Marina Bay Sands"
-            + " or " + "Example: " + COMMAND_WORD + " " +COMMAND_WORD_TAG_PREFIX + "[bookmark] [attractions]";
+            + " or " + "Example: " + COMMAND_WORD + " " + COMMAND_WORD_TAG_PREFIX + "[bookmark] [attractions]";
     //@@author
     private final Predicate predicate;
 
