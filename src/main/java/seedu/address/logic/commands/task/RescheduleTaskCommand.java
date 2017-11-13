@@ -40,9 +40,6 @@ public class RescheduleTaskCommand extends UndoableCommand {
     private Optional<LocalDateTime> newStartDateTime = Optional.empty();
     private Optional<LocalDateTime> newEndDateTime = Optional.empty();
 
-    /**
-     * Empty Constructor
-     */
     public RescheduleTaskCommand() {
     }
 

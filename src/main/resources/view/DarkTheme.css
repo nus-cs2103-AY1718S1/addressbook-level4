@@ -1,4 +1,5 @@
-
+/* @@author deep4k */
+/* refer to BluebirdTheme.css for clearer separation between regions*/
 @font-face {
     font-family: Space Mono;
     src: url("/fonts/SpaceMono-Regular.ttf");
@@ -12,19 +13,6 @@
 @font-face {
     font-family: Space Mono Italic;
     src: url("/fonts/SpaceMono-Italic.ttf");
-}
-
-/**
-    -fx-my-background: #242b51;
-    -fx-my-foreground: #222646;
- */
-
-
-
-.root {
-    -fx-background-color: #141572;
-    -fx-accent: derive(#141572, -10%);
-    -fx-focus-color: derive(#f7f5f4, -10%);
 }
 
 .label {
@@ -445,8 +433,6 @@
     -fx-background-color:  #71ffa0;
 }
 
-
-
 #sortMenuBox .label {
     -fx-font-size: 12pt;
     -fx-font-family: "Old Standard TT";
@@ -590,6 +576,26 @@
     -fx-font-size: 15px;
 }
 
+#overlayGrid {
+    -fx-background-color: derive(#1a1e37, 20%); 
+    -fx-border-color: transparent;
+}
+
+#helpOverlay {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-border-color: transparent;
+}
+
+#overlayGrid .label {
+    -fx-font-family: "Space Mono";
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+
+#overlayGrid .text-field {
+    -fx-font-family: "Space Mono";
+    -fx-font-size: 12px;
+}
 
 
 

@@ -55,7 +55,7 @@ public class SortFindPanel extends UiPart<Region> {
 
     @FXML
     private MenuItem addressItem;
-    
+
     @FXML
     private ImageView findIcon;
 
@@ -204,7 +204,6 @@ public class SortFindPanel extends UiPart<Region> {
         searchBox.setVisible(false);
         sortMenu.setVisible(false);
         findIcon.setVisible(false);
-        
     }
 
     /**
