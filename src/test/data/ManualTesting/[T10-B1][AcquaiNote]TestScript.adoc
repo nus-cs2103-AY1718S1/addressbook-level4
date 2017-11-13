@@ -15,7 +15,7 @@ endif::[]
 == Import data
 
 . Download the latest `AcquaiNote.jar` link:{repoURL}/releases[here].
-. Download the `SampleData.xml` link:{repoURL}/tree/master/src/test/data/ManualTesting[here].
+. Download the `SampleData.xml` link:{repoURL}/releases[here].
 . Create a folder named `data` and put `SampleData.xml` inside.
 . Rename `SampleData.xml` to `acquainote.xml`.
 . Put `AcquaiNote.jar` and `data` folder at the same root directory.
@@ -173,6 +173,17 @@ Successful unlock, correct password.
 If you forget the password, please delete the file and repeat import step.
 ====
 
+== Test command: `undo` or `u`
+
+. Enter 'd 7' +
+Enter `undo` +
+Successful undo, restore the deleted person.
+. Enter `d 7` +
+Enter `d 7` +
+Enter `d 7` +
+Enter `undo 3` +
+Successful undo, restore 3 deleted contacts.
+
 == Test command: `redo` or `r`
 
 . Enter `d 7` +
@@ -180,6 +191,12 @@ Enter `undo` +
 Undo deletion. +
 Enter `redo` +
 Successful redo, 7th person deleted.
+. Enter `d 7` +
+Enter `d 7` +
+Enter `clear` +
+Enter `undo 3` +
+Enter `redo 2` +
+Successful redo, redo the first 2 commands (`d 7` and `d 7`).
 
 == Test command: `switch` or `sw`
 

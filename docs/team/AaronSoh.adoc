@@ -92,8 +92,6 @@ include::../DeveloperGuide.adoc[tag=unredo]
 
 ---
 
-===
-
 === Enhancement Proposed: Add command `Delete multiple contacts`
 
 This will allow users to delete more than 1 contacts at the same time. Users will not need to type the delete command multiple times.
