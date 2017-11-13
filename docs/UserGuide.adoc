@@ -143,13 +143,13 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL]... a/ADDRESS [t/TAG]
 [TIP]
 A person can have any number of tags (including 0).
 
-[TIP]
+[NOTE]
 A person must have at least 1 email. *[v1.3 update]*
 
-[TIP]
+[NOTE]
 ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
 // tag::country_code[]
-[TIP]
+[NOTE]
 Phone numbers may optionally include country codes, beginning with '+' and with a white space between the code and the rest of the phone number.
 
 
@@ -167,13 +167,15 @@ Examples:
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [t/TAG]...`
 
-[TIP]
+[NOTE]
 Ensure that you have input the correct prefix [n/NAME] , [p/PHONE] , [e/EMAIL]  , [a/ADDRESS] ,  [t/TAG]
 
-[TIP]
+[NOTE]
 ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
+
 // tag::country_code2[]
-[TIP]
+
+[NOTE]
 Can't figure how to change a contact's country?
 Country name is automatically inferred from any country code input in the phone number.
 // end::country_code2[]
@@ -301,7 +303,8 @@ Format: `locate INDEX`
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
-Examples:
+[NOTE]
+Web page may show garbled characters for Mac OS users.
 
 * `list` +
 `locate 2` +
