@@ -13,6 +13,6 @@ public class Messages {
     public static final String[] AUTOCOMPLETE_FIELD = {"addTask", "add", "deleteTask", "delete",
         "list", "listTask", "edit", "editTask", "export", "exportTask", "select", "selectTask",
         "setPriority", "taskByEnd", "taskByPriority", "find", "markTask", "remark", "help",
-        "undo", "redo", "clear", "exit"};
-
+        "link", "markTask", "setPriority", "taskByEnd", "taskByPriority", "undo", "redo",
+        "history", "clear", "exit"};
 }
