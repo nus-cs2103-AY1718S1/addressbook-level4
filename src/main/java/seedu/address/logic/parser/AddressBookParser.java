@@ -76,7 +76,7 @@ public class AddressBookParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
-         //@@author KongjiaQi
+         //@@author yuzu1209
         case EditTaskCommand.COMMAND_WORD:
         case EditTaskCommand.COMMAND_ALIAS:
             return new EditTaskCommandParser().parse(arguments);
@@ -100,14 +100,16 @@ public class AddressBookParser {
         case LinkCommand.COMMAND_WORD:
         case LinkCommand.COMMAND_ALIAS:
             return new LinkCommandParser().parse(arguments);
+
         case LinkedTasksCommand.COMMAND_WORD:
         case LinkedTasksCommand.COMMAND_ALIAS:
             return new LinkedTasksCommandParser().parse(arguments);
+
         case LinkedPersonsCommand.COMMAND_WORD:
         case LinkedPersonsCommand.COMMAND_ALIAS:
             return new LinkedPersonsCommandParser().parse(arguments);
 
-        //@@author KongjiaQi
+        //@@author yuzu1209
         case MarkTaskCommand.COMMAND_WORD:
         case MarkTaskCommand.COMMAND_ALIAS:
             return new MarkTaskCommandParser().parse(arguments);
@@ -135,7 +137,7 @@ public class AddressBookParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
-        //@@author KongjiaQi
+        //@@author yuzu1209
         case ListTaskCommand.COMMAND_WORD:
         case ListTaskCommand.COMMAND_ALIAS:
             return new ListTaskCommand();

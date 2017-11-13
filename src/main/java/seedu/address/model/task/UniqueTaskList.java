@@ -45,7 +45,7 @@ public class UniqueTaskList implements Iterable<Task> {
         internalList.add(new Task(toAdd));
     }
 
-    //@@author KongjiaQi
+    //@@author yuzu1209
     /**
      * Replaces the task {@code target} in the list with {@code editedTask}.
      *

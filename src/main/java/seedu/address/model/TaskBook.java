@@ -94,7 +94,7 @@ public class TaskBook implements ReadOnlyTaskBook {
         tasks.add(newTask);
     }
 
-    //@@author KongjiaQi
+    //@@author yuzu1209
     /**
      * Marks an existing task to be completed.
      * @throws TaskNotFoundException if the task could not be found in the list..

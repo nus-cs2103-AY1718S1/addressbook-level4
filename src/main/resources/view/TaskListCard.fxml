@@ -34,8 +34,10 @@
                   <Font name="Courier Bold" size="18.0" />
                </font>
             </Label>
-        <!-- @@author KongjiaQi -->
+        <!-- @@author yuzu1209 -->
         <ImageView fx:id="mark" />
+
+      <!-- @@author ShaocongDong -->
       </HBox>
       <FlowPane fx:id="tags" />
       <Label fx:id="description" styleClass="cell_small_label" text="\$description" />

@@ -144,7 +144,7 @@ public class ParserUtilTest {
         assertEquals(expectedAddress, actualAddress.get());
     }
 
-    //@@author KongjiaQi
+    //@@author yuzu1209
     @Test
     public void parseDescription_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);

@@ -128,7 +128,7 @@ public class TaskCard extends UiPart<Region> {
         });
     }
 
-    //@@author KongjiaQi
+    //@@author yuzu1209
     /**
      * Initialize mark for task card
      * @param task
@@ -138,8 +138,9 @@ public class TaskCard extends UiPart<Region> {
         if (task.getComplete()) {
             mark.setImage(markIcon);
         }
-
     }
+
+    //@@author ShaocongDong
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

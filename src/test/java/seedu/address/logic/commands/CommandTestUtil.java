@@ -99,7 +99,7 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HOTPOT = " " + PREFIX_TAG + VALID_TAG_HOTPOT;
     public static final String TAG_DESC_DEMO = " " + PREFIX_TAG + VALID_TAG_DEMO;
 
-    //@@author KongjiaQi
+    //@@author yuzu1209
     //public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "Hotpot&"; // '&' not allowed in names
     public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION + " "; // ' ' blank space not allowed
     public static final String INVALID_START_DESC = " " + PREFIX_START_DATE_TIME + "19981209"; // not the correct style
@@ -155,7 +155,7 @@ public class CommandTestUtil {
         }
     }
 
-    //@@author KongjiaQi
+    //@@author yuzu1209
     /**
      * Executes the given {@code taskCommand}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
