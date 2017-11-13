@@ -513,6 +513,7 @@ any future changes to these classes may be more contrived and difficult.
 **Cons:** `Favourite` person(s) will not remain at the top of the list after a user sorts the address book.
 // end::sort[]
 
+// tag::group[]
 === Groups
 The `Group` suite of features are implemented by creating a new `Group` model with its constituent components as shown in the class
 diagram below:
@@ -521,15 +522,15 @@ image::GroupClassDiagram.png[width="800"]
 _Figure 4.3.1 : Class Diagram for `Group`_
 
 A `Group` is composed of a `GroupName` and `UniquePersonList` which is responsible for storing group members.
-The Groups in address book are contained in `UniqueGroupList`, which exposes itself through a 
+The Groups in address book are contained in `UniqueGroupList`, which exposes itself through a
 `FilteredGroupList` in the `Model`. All groups commands are performed through the `Model` where the
-`UniqueGroupList` is accessed to either create groups, delete groups, add person(s) to groups or remove 
+`UniqueGroupList` is accessed to either create groups, delete groups, add person(s) to groups or remove
 person(s) from groups.
 
 ==== Creating and Deleting Groups
 The create and delete group mechanism is facilitated by `CreateGroupCommand` and `DeleteGroupCommand` respectively, which extends `UndoableCommand`.
-The `CreateGroupCommand` allows a user to create a group with a desired `GroupName` specified by the 
-`n/` flag while the 
+The `CreateGroupCommand` allows a user to create a group with a desired `GroupName` specified by the
+`n/` flag while the
 `DeleteGroupCommand` allows a user to delete a group at the specified `INDEX`.
 
 The `CreateGroupCommand` interfaces with `ModelManager`, which exposes the `UniqueGroupList` and is implemented in this manner:
@@ -553,7 +554,7 @@ Similarly, the `DeleteGroupCommand` interfaces with `ModelManager`, which expose
     }
 ----
 
-A `GroupNotFoundException` is thrown if the `Group` speicfied by the `INDEX` is not found in 
+A `GroupNotFoundException` is thrown if the `Group` speicfied by the `INDEX` is not found in
 `UniqueGroupList`.
 
 Both creating and deleting groups result in a change in the model of the address book, and these
@@ -561,21 +562,21 @@ changes are saved to storage as well.
 The following sequence diagram captures the program flow when a user creates a group:
 
 image::CreateGroupSdForLogic.png[width="800"]
-_Figure 4.3.2a : Interactions Inside the Logic Component for the `gcreate n/Bamboo` Command__
+_Figure 4.3.2a : Interactions Inside the Logic Component for the `gcreate n/Bamboo` Command_
 
 Similarly, the following sequence diagram captures the program flow when a user deletes a group:
 
 image::DeleteGroupSdForLogic.png[width="800"]
-_Figure 4.3.2b : Interactions Inside the Logic Component for the `gdelete 1` Command__
+_Figure 4.3.2b : Interactions Inside the Logic Component for the `gdelete 1` Command_
 
 ==== Adding and removing a person from a Group
-The `AddPersonToGroupCommand` and `RemovePersonFromGroupCommand`, which extends `UndoableCommand`, is 
-responsible for adding and removing a person from a group. 
-Both commands allow a user to add or remove a person from a group by specifying a `PERSON INDEX` through the 
+The `AddPersonToGroupCommand` and `RemovePersonFromGroupCommand`, which extends `UndoableCommand`, is
+responsible for adding and removing a person from a group.
+Both commands allow a user to add or remove a person from a group by specifying a `PERSON INDEX` through the
 `p/` flag and a `GROUP INDEX` through a `g/` flag.
 
 Both `AddPersonToGroupCommand` and `RemovePersonFromGroupCommand` both interfaces with `ModelManager`,
-which exposes `UniqueGroupList` and its corresponding `UniquePersonList` and 
+which exposes `UniqueGroupList` and its corresponding `UniquePersonList` and
 they are implemented in the following manner:
 [source,java]
 ----
@@ -603,7 +604,7 @@ if a duplicate `Person` exists in the `UniquePersonList` in the group.
     }
 ----
 `GroupNotFoundException`, `PersonNotFoundException` and `NoPersonsException` are thrown
-in the event the `Group` specified does not exist, or if `Person` specified is not found, or 
+in the event the `Group` specified does not exist, or if `Person` specified is not found, or
 if the `UniquePersonList` in the `Group` specified is empty.
 
 Both adding and removing a person from a group will result in a change in the model of the address book, and these
@@ -612,28 +613,186 @@ changes are saved to storage as well.
 The following sequence diagram captures the program flow when a user adds a person to a group:
 
 image::AddPersonToGroupSdForLogic.png[width="800"]
-_Figure 4.3.3a : Interactions Inside the Logic Component for the `gadd p/1 g/1` Command__
+_Figure 4.3.3a : Interactions Inside the Logic Component for the `gadd p/1 g/1` Command_
 
 The following sequence diagram captures the program flow when a user removes a person from a group:
 
 image::AddPersonToGroupSdForLogic.png[width="800"]
-_Figure 4.3.3a : Interactions Inside the Logic Component for the `gremove p/1 g/1` Command__
+_Figure 4.3.3b : Interactions Inside the Logic Component for the `gremove p/1 g/1` Command_
 
 ==== Design Considerations
 
 **Aspect:** Implementation of `Group` +
 **Alternative 1 (current choice):** Implement a completely new `Group` model. +
-**Pros:** Creating a completely new `Group` Model gives the developer fine-grained control 
-over a `Group` and logically separates `Group` from a `Tag`, which makes implementation 
-of `Group` commands distinct from `Tag` commands. This allows a developer to freely extend 
-and add new `Group` commands without affect or being confined by the `Tag` model. +
+**Pros:** Creating a completely new `Group` Model gives the developer fine-grained control
+over a `Group` and logically separates `Group` from a `Tag`, which makes implementation
+of `Group` commands distinct from `Tag` commands. This allows a developer to freely extend
+and add new `Group` commands without affecting or being confined by the `Tag` model. +
 **Cons:** It takes alot of time to create and integrate a new `Group` model. +
 **Alternative 2:** Modify the `Tag` model to perform 'Group-like` functions.  +
 **Pros:** Less time is needed to modify `Tag` and integration of new commands will be simple. +
-**Cons:** The `Tag` model does not provide a clear and logical separation of duties for 
-`Group` functions and is limited in its structure to allow fine-grained control over 
+**Cons:** The `Tag` model does not provide a clear and logical separation of duties for
+`Group` functions and is limited in its structure to allow fine-grained control over
 the addition and removal of 'members'.
+// end::group[]
 
+// start::schedule[]
+=== Schedule 
+To allow a user to pull events from Google Calendar, add and remove events, a `Schedule` model is created with its constituent components as shown in the class diagram below:
+
+image::ScheduleClassDiagram.png[width="800"]
+_Figure 4.4.1 : Schedule Class Diagram_
+
+A `Schedule` is composed of a `ScheduleName` and a `ScheduleDate`. Every `Person` in address book
+has a `UniqueScheduleList`, which contains a list of `Schedule` objects. A `Schedule` is accessed
+by accessing the `UniqueScheduleList` of a person through the `UniquePersonList` maintained in
+`ModelManager`.
+
+A `googlecalendarutil` package is created and it contains helper methods to query the 
+Google Calendar API, parse `JSON` reponses and the corresponding datetime strings. 
+
+==== Adding events from a person's Google Calendar
+To obtain events from a person's Google Calendar, `EventParserUtil` and `ServiceHandlerUtil` are used.
+`EventParserUtil` queries `https://www.googleapis.com/calendar/v3/calendars/` with a user's specified
+`CALENDAR_ID` and parses the corresponding `JSON` response as shown in the code snippet below:
+[source,java]
+----
+public static UniqueScheduleList getScheduleList(String calendarId) throws IOException, IllegalValueException {
+        UniqueScheduleList scheduleList = new UniqueScheduleList();
+        String apiUrl = API + calendarId + QUERY + KEY;
+        String response = ServiceHandlerUtil.makeCall(apiUrl);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(response);
+        JsonNode events = root.at(EVENTS);
+        for (JsonNode event: events) {
+            scheduleList.add(getSingleSchedule(event));
+        }
+        return scheduleList;
+
+    }
+----
+If the `CALENDAR_ID` is valid, Google responds with a `JSON` response that is subsequently parsed and used
+to construct a `UniqueScheduleList` comprising of `Schedule` objects.
+
+The Google Calendar API is accessed by a `HTTP GET` which is implemented in `ServiceHandlerUtil` as shown
+below:
+----
+public static String makeCall(String url) throws IOException {
+
+        URL obj = new URL(url);
+
+        HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+        connection.setRequestMethod("GET");
+
+        return getResponseString(connection);
+
+    }
+----
+
+After obtaining a `UniqueScheduleList` from `EventParserUtil`, a call to updatePerson is made 
+with a new `UniqueSheduleList` inserted into the edited person. 
+The sequence diagram below captures the program flow when an add calendar command is executed:
+
+image::AddCalendarSdForLogic.png[width="800"]
+_Figure 4.4.2 : Interactions Inside the Logic Component for the `cadd` Command_
+
+==== Adding and removing events 
+The add and remove event mechanism is facilitated by `AddEventCommand` and `DeleteEventCommand` respectively.
+A helper method is called in these commands to add or remove an event and is implemented as such:
+----
+    private Person addEventToPerson(ReadOnlyPerson personToEdit, String personName) throws ParseException {
+        Name updatedName = personToEdit.getName();
+        Phone updatedPhone = personToEdit.getPhone();
+        Email updatedEmail = personToEdit.getEmail();
+        Address updatedAddress = personToEdit.getAddress();
+        ProfPic updatedProfPic = personToEdit.getProfPic();
+        Favourite updatedFavourite = personToEdit.getFavourite();
+        Set<Tag> updatedTags = personToEdit.getTags();
+        Set<Group> updatedGroups = personToEdit.getGroups();
+        UniqueScheduleList updatedScheduleList = personToEdit.scheduleProperty().get();
+        Set<SocialMedia> updatedSocialMediaList = personToEdit.getSocialMedia();
+
+        try {
+            updatedScheduleList.add(this.schedule);
+        } catch (DuplicateScheduleException e) {
+            throw new ParseException(String.format(MESSAGE_DUPLICATE_SCHEDULE, personName));
+        }
+
+        /** Ensure scheduleList is in order **/
+        updatedScheduleList.sort();
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
+                updatedProfPic, updatedTags, updatedGroups, updatedScheduleList.toSet(), updatedSocialMediaList);
+    }
+----
+A `DuplicateScheduleException` is thrown if an identical `Schedule` is present in the 
+person's `UniqueScheduleList`. Afterwhich, `updatePerson` in `ModelManager` is invoked to update
+the person with the updated `UniqueScheduleList`.
+
+Similarly, a helper method is called to remove event(s) from a person in `DeleteEventCommand` as such:
+----
+private Person removeEventFromPerson(ReadOnlyPerson personToEdit) throws ParseException {
+        Name updatedName = personToEdit.getName();
+        Phone updatedPhone = personToEdit.getPhone();
+        Email updatedEmail = personToEdit.getEmail();
+        Address updatedAddress = personToEdit.getAddress();
+        Favourite updatedFavourite = personToEdit.getFavourite();
+        ProfPic updatedProfPic = personToEdit.getProfPic();
+        Set<Tag> updatedTags = personToEdit.getTags();
+        Set<Group> updatedGroups = personToEdit.getGroups();
+        UniqueScheduleList updatedScheduleList = personToEdit.scheduleProperty().get();
+        Set<SocialMedia> updatedSocialMediaList = personToEdit.getSocialMedia();
+
+        if (updatedScheduleList.asObservableList().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_NO_EVENTS, updatedName.fullName));
+        }
+
+        ReadOnlySchedule[] schedulesToDelete = new ReadOnlySchedule[eventIndexes.length];
+        for (int i = 0; i < eventIndexes.length; i++) {
+            try {
+                schedulesToDelete[i] = updatedScheduleList.asObservableList().get(eventIndexes[i].getZeroBased());
+            } catch (IndexOutOfBoundsException e) {
+                throw new ParseException(MESSAGE_NO_SUCH_EVENT);
+            }
+        }
+
+        for (int i = 0; i < eventIndexes.length; i++) {
+            try {
+                updatedScheduleList.remove(schedulesToDelete[i]);
+            } catch (ScheduleNotFoundException e) {
+                throw new ParseException(MESSAGE_NO_SUCH_EVENT);
+            }
+        }
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedFavourite, updatedProfPic, updatedTags, updatedGroups,
+                updatedScheduleList.toSet(), updatedSocialMediaList);
+    }
+----
+A `ScheduleNotFoundException` is thrown if a specified `Schedule` is not present in the 
+person's `UniqueScheduleList`. Afterwhich, `updatePerson` in `ModelManager` is invoked to update
+the person with the updated `UniqueScheduleList`.
+
+The follow sequence diagrams capture the program flow during the execution of add event and delete event
+respectively:
+
+image::AddEventSdForLogic.png[width="800"]
+_Figure 4.4.3a : Interactions Inside the Logic Component for the `eadd` Command_
+
+image::DeleteEventSdForLogic.png[width="800"]
+_Figure 4.4.3b : Interactions Inside the Logic Component for the `edelete` Command_
+
+==== Design Considerations
+
+**Aspect:** Implementation of pulling events from Google Calendar +
+**Alternative 1 (current choice):** Access Google Calendar API with an `API KEY` +
+**Pros:** The developer's `API KEY` can be used to obtain events for every user without +
+the user having to log in. +
+**Cons:** Using an `API KEY` only allows for limited Google Calendar functionality
+and there is no way to add or remove events to a user securely or easily. +
+**Alternative 2:** Log in to Google and access an oAuth token to access Google Calendar API.  +
+**Pros:** Functionality such as adding or removing events from a user securely can be implemented. +
+**Cons:** Coding the login function to Google is highly involved and tedious. +
+// end::schedule[]
 
 === Finding
 The finding mechanism is facilitated by `FindCommand`, which extends `Command`.
