@@ -41,6 +41,8 @@ import seedu.address.logic.commands.PortraitCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ShowParticipantsCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SortEventCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
@@ -153,6 +155,18 @@ public class AddressBookParserTest {
         ShowParticipantsCommand command = (ShowParticipantsCommand) parser.parseCommand(
                 ShowParticipantsCommand.COMMAND_WORD + " " + INDEX_FIRST_EVENT.getOneBased());
         assertEquals(new ShowParticipantsCommand(INDEX_FIRST_EVENT), command);
+    }
+
+    @Test
+    public void parseCommandSort() throws Exception {
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD) instanceof SortCommand);
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " 3") instanceof SortCommand);
+    }
+
+    @Test
+    public void parseCommandSortE() throws Exception {
+        assertTrue(parser.parseCommand(SortEventCommand.COMMAND_WORD) instanceof SortEventCommand);
+        assertTrue(parser.parseCommand(SortEventCommand.COMMAND_WORD + " 3") instanceof SortEventCommand);
     }
 
     // @@author

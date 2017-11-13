@@ -15,7 +15,7 @@ import seedu.address.model.event.EventTime;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Person;
 
-//@@author leonchowwenhao
+//@@author LeonChowWenHao
 /**
  * JAXB-friendly version of the Event.
  */

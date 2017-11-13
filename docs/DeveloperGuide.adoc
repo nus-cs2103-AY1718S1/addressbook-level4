@@ -566,7 +566,7 @@ so that the persons with the tag `friends` is displayed.
 // tag::sort[]
 === Sort mechanism
 
-The sort command is facilitated by the `LogicManager` class. It supports sorting contact list and makes it easier for users to find contacts according to alphabetical order of their names. Moreover, it can also help users to sort the event list in the meantime according to their dates so that users can decide to process which event first.
+The sort command is facilitated by the `LogicManager` class. It supports sorting contact list and makes it easier for users to find contacts according to alphabetical order of their names.
 
 The following *_sequence diagram_* _(Figure 4.3)_ shows how the sort command works:
 
@@ -575,31 +575,26 @@ _Figure 4.3: sequence diagram for sort command_
 
 When user enters a sort command, it will be received by `LogicManager`.Then, `LogicManager` calls `AddressBookParser` to parse the command. And `AddressBookParser` will create `SortCommand` command object and returns it.When `LogicManager` receives the command object, it will execute it.
 
-The `SortCommand` object calls `sortPersons()` and `sortEvents()` in the `Model`as follow:
+The `SortCommand` object calls `sortPersons()` in the `Model`as follow:
 [source, java]
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
-    public static final String MESSAGE_SUCCESS = "Sorted all persons and events";
+    public static final String MESSAGE_SUCCESS = "Sorted all persons";
     @Override
     public CommandResult execute() {
         model.sortPersons();
-        model.sortEvents();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
 
-And This is how `Model` update the person list and event list using `sortPersons()` and `sortEvents()` :
+And This is how `Model` update the person list using `sortPersons()`:
 [source, java]
     public synchronized void sortPersons() {
         addressBook.sortPersons();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
-    public synchronized void sortEvents() {
-        eventList.sortEvents();
-        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-    }
 
-In the address book, we will sort contacts according to alphabetical order of their names:
+In the person list, we will sort contacts according to alphabetical order of their names:
 [source, java]
     public void sort() {
         Collections.sort(internalList, new Comparator<Person>() {
@@ -607,15 +602,7 @@ In the address book, we will sort contacts according to alphabetical order of th
                 return p1.getName().toString().compareToIgnoreCase(p2.getName().toString()); } });
     }
 
-In the event list, we will sort events according to their dates;
-[source, java]
-    public void sort() {
-        Collections.sort(internalList, new Comparator<Event>() {
-            public int compare (Event p1, Event p2) {
-                return p1.getEventTime().orderForSort().compareTo(p2.getEventTime().orderForSort()); } });
-    }
-
-After sorting the person list and the event list, `SortCommand` will create `CommandResult` object and return it. And `LogicManager` receives `CommandResult` and shows related message through `UI`.
+After sorting the person list, `SortCommand` will create `CommandResult` object and return it. And `LogicManager` receives `CommandResult` and shows related message through `UI`.
 
 [discrete]
 ==== Design considerations
@@ -1200,6 +1187,71 @@ After `Model` updates the event list which will be shown in the GUI, the `FindEv
 **Cons:** Sometimes it is hard for users to remember the full name of an event. +
 
 // end::findE[]
+
+// tag::sortE[]
+=== Sort Event mechanism
+
+The sort event command is facilitated by the `LogicManager` class. It supports sorting the event list according to their dates so that users can decide to process which event first.
+
+The following *_sequence diagram_* _(Figure 4.15)_ shows how the sort event command works:
+
+image::SortEventSequenceDiagram.png[width="800"]
+_Figure 4.15: sequence diagram for sort event command_
+
+When user enters a sort event command, it will be received by `LogicManager`.Then, `LogicManager` calls `AddressBookParser` to parse the command. And `AddressBookParser` will create `SortEventCommand` command object and returns it.When `LogicManager` receives the command object, it will execute it.
+
+The `SortEventCommand` object calls `sortEvents()` in the `Model`as follow:
+[source, java]
+public class SortEventCommand extends Command {
+    public static final String COMMAND_WORD = "sortE";
+    public static final String MESSAGE_SUCCESS = "Sorted all events";
+    @Override
+    public CommandResult execute() {
+        model.sortEvents();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+
+And This is how `Model` update the event list using `sortEvents()` :
+[source, java]
+    public synchronized void sortEvents() {
+        eventList.sortEvents();
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+    }
+
+In the event list, we will sort events according to their dates;
+[source, java]
+    public void sort() {
+        Collections.sort(internalList, new Comparator<Event>() {
+            public int compare (Event p1, Event p2) {
+                return p1.getEventTime().orderForSort().compareTo(p2.getEventTime().orderForSort()); } });
+    }
+
+After sorting event list, `SortEventCommand` will create `CommandResult` object and return it. And `LogicManager` receives `CommandResult` and shows related message through `UI`.
+
+[discrete]
+==== Design considerations
+
+**Aspect:** How sort event command affects the data in the event list +
+**Alternative 1 (current choice):** Sort the copy of event list and return it +
+**Pros:** It is more defensive and keeps the data unchanged. +
+**Cons:** Users have to sort the list every time when they open the application. +
+**Alternative 2:** Sort the actual event list and return it +
+**Pros:** Users do not need to type the command every time. +
+**Cons:** Sort event command is not undoable which means that the order of list cannot change anymore after you call it. It is also less defensive because you can frequently change the original data. +
+
+---
+
+**Aspect:** How sort event command executes for the event list+
+**Alternative 1 (current choice):** Sort the event list according to ascending order of their dates +
+**Pros:** It is easy to implement. +
+**Cons:** Users do not have other choices to sort the event list. +
+**Alternative 2:** Sort the event list according to different order (ascending order or descending order) +
+**Pros:** Users will have more choices. +
+**Cons:** It will be more complex for developers to maintain and test. +
+
+// end::sortE[]
+
 
 === Logging
 

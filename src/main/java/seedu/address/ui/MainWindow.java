@@ -140,7 +140,7 @@ public class MainWindow extends UiPart<Region> {
         // @@author HouDenghao
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
 
-        //@@author leonchowwenhao
+        //@@author LeonChowWenHao
         TogglePanel togglePanel = new TogglePanel(browserPanel, informationBoard, eventListPanel);
         togglePlaceHolder.getChildren().add(togglePanel.getRoot());
 

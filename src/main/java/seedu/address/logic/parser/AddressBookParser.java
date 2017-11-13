@@ -30,6 +30,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectJoinedEventsCommand;
 import seedu.address.logic.commands.ShowParticipantsCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SortEventCommand;
 import seedu.address.logic.commands.ToggleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -82,8 +83,7 @@ public class AddressBookParser {
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
-
-        //@@author leonchowwenhao
+        //@@author LeonChowWenHao
         case SelectJoinedEventsCommand.COMMAND_WORD:
             return new SelectJoinedEventsCommandParser().parse(arguments);
 
@@ -91,7 +91,7 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
-        //@@author leonchowwenhao
+        //@@author LeonChowWenHao
         case DeleteEventCommand.COMMAND_WORD:
             return new DeleteEventCommandParser().parse(arguments);
 
@@ -103,7 +103,7 @@ public class AddressBookParser {
         case JoinCommand.COMMAND_WORD:
             return new JoinCommandParser().parse(arguments);
 
-        //@@author leonchowwenhao
+        //@@author
         case DisplayCommand.COMMAND_WORD:
             return new DisplayCommandParser().parse(arguments);
 
@@ -132,7 +132,10 @@ public class AddressBookParser {
         case SortCommand.COMMAND_WORD:
             return new SortCommand();
 
-        // @@author leonchowwenhao
+        case SortEventCommand.COMMAND_WORD:
+            return new SortEventCommand();
+
+        // @@author LeonChowWenhao
         case ToggleCommand.COMMAND_WORD:
             return new ToggleCommand();
 

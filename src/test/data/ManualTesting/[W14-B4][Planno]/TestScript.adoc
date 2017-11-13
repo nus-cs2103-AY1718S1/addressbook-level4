@@ -1,0 +1,295 @@
+:toc:
+:toc-title:
+:toc-placement: macro
+:imagesDir: images\
+:sectnums:
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-W14-B4/main
+= Planno - Manual Test Script
+
+By: `Team W14-B4`      Since: `Sep 2017`      Licence: `NUS`
+
+toc::[]
+
+== About
+
+This test script contains step by step instructions for the manual testing of Planno.
+It is segmented into sections, the first of which contains instructions on how to load the sample data.
+Each section that follows contains step by step instructions on how to proceed with testing the command.
+
+== Setting up the sample data
+
+.  Download the latest `Planno.jar` link:{repoURL}/releases[here].
+.  Move the jar file to an empty folder.
+.  Double-click the file to start the app.
+.  Type `clear` to remove all data.
+.  Close the app.
+.  Open the data folder - You will notice there are 2 files:
+`addressbook.xml` and `eventstorage.xml`.
+.  Open the xml files (including `sampledata.xml`) with notepad or any other text editing tool.
+.  `sampledata.xml` contains comments indicating the start and end of the sampledata for both files in step 6.
+Copy and paste the sample data into its respective file.
+.  Save the changes.
+.  Start the app. The sample data will be loaded and reflected in the GUI.
+
+== Commands
+
+[NOTE]
+The expected results for the commands in this test script assumes that the commands are tested from a freshly loaded and clean sample data (No modification from base sample data).
+Any changes may cause differences between the expected and actual result. +
+The tests will be CLI only. This means that all commands are entered through the command box.
+
+=== Add Commands
+
+==== Adding a person
+
+.  Type `add n/Jane Doe p/98765432 e/janed@example.com a/311, Clementi Ave 2, #02-25 b/01/01/1990 t/friends t/owesMoney`.
+.  A new person will be created and displayed in the person list on the left at index 11.
+.  Type the same command given in step 1.
+.  A new person will not be created. The result will display that the person already exists.
+
+==== Adding an event
+
+.  Type `addE en/Project Meeting ed/Discuss how to conduct software demo et/10/12/2017`.
+.  A new event will be created and displayed in the event list on the right at index 14.
+.  Type the same command given in step 1.
+.  A new event will not be created. The result will display that the event already exists.
+
+=== Delete Commands
+
+==== Deleting a person
+
+.  Type `delete 10`.
+.  The person "John Doe" will be deleted from the person list on the left, leaving 9 persons.
+.  Type `delete 3`.
+.  The person "Charlie Poh" will not be deleted. The result will display that the person is participating in an event/s.
+
+==== Deleting an event
+
+.  Type `deleteE 9`.
+.  The event "Final exams first paper" will be deleted from the event list on the right, leaving 12 events.
+.  Type `deleteE 4`.
+.  The event "CS2101 CA3 group meeting" will not be deleted. The result will display that the event has participating persons.
+
+=== Edit Commands
+
+==== Editing a person
+
+.  Type `edit 10 n/Jane Doe e/Janed@gmail.com`.
+.  The person "John Doe" will be edited to "Jane Doe".
+
+==== Editing an event
+
+.  Type `edit 5 en/GER1000 midterm ed/GER1000 midterm`.
+.  The event "MA1101 miterm" will be edited to "GER1000 midterm".
+
+=== Join Command
+
+.  Type `join p/1 e/1`.
+.  The person "Alex Lee" will join event "CS2010" as a participant. The display will show accordingly.
+.  Type the same command given in step 1.
+.  The result will display that the person is already a participant of the event.
+
+=== Disjoin Command
+
+.  Type `disjoin p/2 e/7`.
+.  The person "Byran Koh" will no longer be a participant of event "Lunch with Byran". The display will show accordingly.
+.  Type the same command given in step 1.
+.  The result will display that the person is not a participant of the event.
+
+=== Portrait Command
+
+[NOTE]
+For this command, there will not be a image provided.
+For the `FILEPATH` displayed in the command, please use a file path to one of your own images.
+
+.  Type `portrait 1 FILEPATH`.
+.  The person "Alex Lee" will have an updated portrait with the image indicated in `FILEPATH`.
+
+=== List Commands
+
+==== Listing all persons
+
+.  Type `list`.
+.  The app will display all 10 persons in the person list at the left.
+
+==== Listing all events
+
+.  Type `listE`.
+.  The app will display all 13 events in the event list at the right.
+
+=== Sort Command
+
+.  Type `sort`.
+.  The person list on the left will display 10 persons sorted in alphabetical lexicographical order. The order is as follows:
+.. "Alex Lee"
+.. "Byran Koh"
+.. "Charlie Poh"
+.. "Debbie Yeo"
+.. "Eddie Wong"
+.. "Fiona Goh"
+.. "Gavin Oh"
+.. "Helena Lee"
+.. "Ireta Chow"
+.. "John Doe"
+
+. The event list on the right will display 13 events sorted in descending order with the earliest event at the top. The order is as follows:
+.. "CS2010 midterm"
+.. "MA1101 midterm"
+.. "CS2103T project meeting 1"
+.. "CS2103T project meeting 2"
+.. "CS2103T project meeting 3"
+.. "CS2101 CA3 group meeting"
+.. "Lunch with Byran"
+.. "Meet up with Gavin"
+.. "Financial consultation"
+.. "Final exams first paper"
+.. "Music lesson"
+.. "Cindy wedding"
+.. "Family dinner"
+
+=== Find Commands
+
+==== Finding person/s by name
+
+.  Type `find gavin`.
+.  The person "Gavin Oh" will be displayed in index 1 in the person list at the left.
+.  Type `find lee`.
+.  The persons "Alex Lee" and "Helena Lee" will be displayed in index 1 and 2 of the person list respectively.
+.  Type `find gav`.
+.  No person will be displayed in the person list.
+
+==== Finding person/s by tag
+
+.  Type `find t/cousin`.
+.  The person "Fiona Goh" will be displayed in the person list at index 1.
+.  Type `find t/friends`.
+.  5 persons will be displayed in the person list at the left in this order:
+.. "Alex Lee"
+.. "Byran Koh"
+.. "Charlie Poh"
+.. "Debbie Yeo"
+.. "Gavin Oh"
+
+==== Finding person/s by name and tag
+
+.  Type `find Alex t/cousin`.
+.  The persons "Alex Lee" and "Fiona Goh" will be displayed at index 1 and 2 of the person list on the left respectively.
+
+==== Finding event/s by name
+
+.  Type `findE music`.
+.  The event "Music lesson" will be displayed in the event list on the right at index 1.
+.  Type `findE midterm`.
+.  The events "CS2010 midterm" and "MA1101 midterm" will be displayed at index 1 and 2 of the event list respectively.
+
+=== ShowP Command
+
+. Type `showP 2`.
+. No person will be displayed as no one is a participant of event `MA1101 midterm`. The person list on the left be blank.
+. Type `showP 3`.
+. 3 persons who are participating in event "CS2103T project meeting 1" will be displayed in the person list. The order is as follows:
+.. "Alex Lee"
+.. "Charlie Poh"
+.. "Debbie Yeo"
+
+=== SelectE Command
+
+.  Type `selectE 10`.
+.  No event will be displayed as person "John Doe" is not a participant of any event. The event list on the right will be blank.
+.  Type `selectE 4`.
+.  4 events which person "Debbie Yeo" is participating in will be displayed in the event list. The order is as follows:
+.. "CS2103T Project Meeting 1"
+.. "CS2103T Project Meeting 2"
+.. "CS2103T Project Meeting 3"
+.. "CS2101 CA3 group meeting"
+
+=== Display Commands
+
+==== Displaying emails of every participant of an event
+
+.  Type `display 1 email`.
+.  The result will display that no one has joined the event.
+.  Type `display 12 email`.
+.  The information board in the middle will display the email of person "Eddie Wong", `Eddiew@gmail.com`.
+.  Type `display 13 email`.
+.  The information board in the middle will display the emails of persons "Fiona Goh" and "Eddie Wong", `Fionag@gmail.com`, `Eddiew@gmail.com`.
+
+==== Displaying phone numbers of every participant of an event
+
+.  Type `display 1 phone`.
+.  The result will display that no one has joined the event.
+.  Type `display 12 phone`.
+.  The information board in the middle will display the phone number of person "Eddie Wong", `92891021`.
+.  Type `display 13 phone`.
+.  The information board in the middle will display the phone numbers of persons "Fiona Goh" and "Eddie Wong", `94618211`, `92891021`.
+
+==== Displaying addresses of every participant of an event
+
+.  Type `display 1 address`.
+.  The result will display that no one has joined the event.
+.  Type `display 12 address`.
+.  The information board in the middle will display the address of person "Eddie Wong", `Blk 399, Yishun Ave 2, #06-178`.
+.  Type `display 13 address`.
+.  The information board in the middle will display the addresses of persons "Fiona Goh" and "Eddie Wong", `Blk 88, Bukit Batok Ave 1, #03-72`, `Blk 399, Yishun Ave 2, #06-178`.
+
+=== Select Command
+
+.  Type `select 10`.
+.  A browser with a Google search page of person "John Doe" will appear in front of the information board (middle) and the event list (right).
+
+=== Toggle Command
+
+.  Type `select 10`.
+.  A browser with a Google search page of person "John Doe" will appear in front of the information board (middle) and the event list (right).
+.  Type `toggle`.
+.  The app will remove the browser and display the information board and event list.
+
+=== Help Command
+
+.  Type `help`.
+.  The help window will popup, displaying Planno's user guide.
+.  Close the help window.
+.  The result will display that the help window has been opened.
+
+=== History Command
+
+.  Close the app.
+.  Reopen the app.
+.  Type `history`.
+.  The result will display that no commands have been entered.
+.  Type the same command given in step 3.
+.  The result will display a list of entered commands from most recent to the earliest. The result should only have a "history" command.
+
+=== Clear Command
+
+.  Type `clear`.
+.  The app will be cleared of both person and event data. The person list and event list on the left and right respectively will be blank.
+
+=== Undo Command
+
+.  Type `clear`.
+.  The app will be cleared of both person and event data. The person list and event list on the left and right respectively will be blank.
+.  Type `list`.
+.  The person and event list will both still be blank.
+.  Type `undo`.
+.  The person and event data will be restored. The person list will display 10 persons and the event list will display 13 events.
+
+=== Undo Command
+
+.  Type `clear`.
+.  The app will be cleared of both person and event data. The person list and event list on the left and right respectively will be blank.
+.  Type `undo`.
+.  The person and event data will be restored. The person list will display 10 persons and the event list will display 13 events.
+.  Type `redo`.
+.  The app will be cleared of both person and event data. The person list and event list on the left and right respectively will be blank.
+
+=== Exit Command
+
+.  Type `exit`.
+.  The app will close/exit.
