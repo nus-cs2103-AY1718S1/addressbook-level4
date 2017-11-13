@@ -39,7 +39,7 @@ public class QrButton extends UiPart<Region> {
      */
     @FXML
     private void handleQrButtonPressed() throws CommandException, ParseException, IOException {
-        if ( person != null) {
+        if (person != null) {
             bp.loadQrCode(person);
             logger.info("QR Code displayed");
         } else {
@@ -52,7 +52,7 @@ public class QrButton extends UiPart<Region> {
         this.person = event.getNewSelection().person;
     }
     @Subscribe
-    private void clickButton(QrEvent event ) {
+    private void clickButton(QrEvent event) {
         bp.loadQrCode((ReadOnlyPerson) event.getPerson());
     }
 }
