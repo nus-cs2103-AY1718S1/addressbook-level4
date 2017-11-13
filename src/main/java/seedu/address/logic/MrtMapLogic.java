@@ -600,7 +600,7 @@ public class MrtMapLogic {
 
         return minDurations;
     }
-    
+
     private int[] getMinTotalTime(int[] sourceIndexes) {
         int[] minTotalTimeList = new int[mrtStations.size()];
         for(int i = 0; i < sourceIndexes.length; i++) {
@@ -624,7 +624,7 @@ public class MrtMapLogic {
         return minTotalTimeList;
     }
 
-    private String[] getSortedMrtList(String[] mrtStationNames){
+    public String[] getSortedMrtList(String[] mrtStationNames){
         return getSortedMrtList(getMinTotalTime(mrtStationNames));
     }
 
