@@ -205,13 +205,13 @@ public class FavouriteCommand extends UndoableCommand {
      */
     private static String initialiseEmptyFields(String args) {
         if (!args.contains("a/")) {
-            args = args + " a/ -";
+            args = args.concat(" a/ -");
         }
         if (!args.contains("e/")) {
-            args = args + " e/ -";
+            args = args.concat(" e/ -");
         }
         if (!args.contains("p/")) {
-            args = args + " p/ -";
+            args = args.concat(" p/ -");
         }
         return args;
     }

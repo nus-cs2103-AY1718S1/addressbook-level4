@@ -37,6 +37,7 @@ public class Email {
     public static boolean isValidEmail(String test) {
         return test.matches(EMAIL_VALIDATION_REGEX)
                 || test.matches(BLANK_EMAIL);
+
     }
 
     @Override

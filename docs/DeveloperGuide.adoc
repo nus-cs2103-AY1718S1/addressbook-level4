@@ -511,13 +511,14 @@ image::LockSequenceDiagram.png[width="800"]
 
 The favourite mechanism is very similar to the one used in edit command. The feature follows the sequence of steps:
 
-. `AddressBookParser` calls upon `FavouriteCommandParser`, which in turn calls upon `FavouriteCommand` and parses the argument as an index.
-. The person identified by the index in `AddressBook` is replaced with a new person that has its `favourite` instance inverted to either `true` or `false`.
+. `AddressBookParser` calls upon `FavouriteCommandParser`, which parses the argument as an index and creates a FavouriteCommand object.
+. The person identified by the index (personToFavourite) in `AddressBook` is replaced with a new person (favouritedPerson) that has its `favourite` instance inverted to either `true` or `false`.
 . The `favouritePerson` method in AddressBook then creates two `UniquePersonList` to implement the sorting. Persons with `favourite` = `true` will be sorted into the `favouriteList`. Persons with `favourite` = `false` will be sorted into the `notFavouriteList`.
 . The two lists will then be merged into the `persons` list in `AddressBook`, with `favouriteList` being at the top.
 
-The following sequence diagram shows how FavouriteCommand works: +
-![](src/Main/resources/imagesFavouriteCommandSequenceDiagram.png)
+The following diagram illustrates the sequence described above:
+
+image::FavouriteCommandSequenceDiagram.png[width="800"]
 
 The code below shows how FavouriteCommand is implemented:
 
@@ -532,25 +533,72 @@ public class FavouriteCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        // ... Favourite logic
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToFavourite = lastShownList.get(index.getZeroBased());
+
+        Person favouritedPerson = createFavouritedPerson(personToFavourite);
+
+        try {
+            model.favouritePerson(personToFavourite, favouritedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        if (!favouritedPerson.getFavourite()) {
+            return new CommandResult(String.format(MESSAGE_UNFAVOURITE_PERSON_SUCCESS, favouritedPerson));
+        } else {
+            return new CommandResult(String.format(MESSAGE_FAVOURITE_PERSON_SUCCESS, favouritedPerson));
+        }
     }
 
     @Override
     private static Person createFavouritePerson(ReadOnlyPerson personToFavourite) {
-        // ... update status of personToFavourite
+        assert personToFavourite != null;
+
+        Name originalName = personToFavourite.getName();
+        Phone originalPhone = personToFavourite.getPhone();
+        Email originalEmail = personToFavourite.getEmail();
+        Address originalAddress = personToFavourite.getAddress();
+        Set<Tag> originalTags = personToFavourite.getTags();
+        List<TodoItem> originalTodoItems = personToFavourite.getTodoItems();
+        boolean newFavourite = !personToFavourite.getFavourite();
+
+        return new Person(originalName, originalPhone, originalEmail, originalAddress,
+                originalTags, originalTodoItems, newFavourite);
     }
 }
 ----
 
-==== Design Consideration
+==== Design Considerations
 
 **Aspect:** Sorting of contact list with favourites +
-**Alternative 1 (current choice):** Create two lists to overwrite original order. +
+**Alternative 1 (current choice):** Favourited contacts are sorted separately. +
+**Pros:** Favourite contact remains at the top of the list. +
+**Cons:** Does not preserve the original order of the favourite contacts list. +
+**Alternative 2:** All contacts sorted in order +
 **Pros:** Easy to implement. +
-**Cons:** Does not preserve the original order of the contact list. +
-**Alternative 2:** Save the favourite contacts in a separate list without overwriting the original contact list +
-**Pros:** Does not mess up the original order. +
-**Cons:** Will use more memory (significant if favourite/contact list is large).
+**Cons:** Favourite contacts are no longer at the top of the list after sorting. +
+**Alternative 3:** Favourite contacts are not included in sorting +
+**Pros:** Preserves original order of favourites. Favourite contacts remain at the top of the list. +
+**Cons:** User may want to sort favourites if list is large. +
+
+---
+
+**Aspect:** Unfavouriting contacts in a sorted list +
+**Alternative 1 (current choice):** Contact removed from favourites is pushed to bottom of favourite list. +
+**Pros:** Easy to implement. +
+**Cons:** Does not follow the order of the sorting. User have to re-enter desired sort command after unfavouriting to get the correct order. +
+**Alternative 2:** Unfavourited contact automatically sorted according to last used sort command +
+**Pros:** Automatically sorts the list without having to type another command. +
+**Cons:** User may not want the unfavourited contact to be sorted. +
 // end::favourite[]
 
 // tag::tdo[]
@@ -709,21 +757,21 @@ try {
 // tag::add[]
 === Enhance Add command
 
-The add command is enhanced to allow empty fields for phone, address and email. Mechanism of the command is exactly the same as previous, with the addition of a `initialiseEmptyFields` method in `AddCommandParser`. The `initialiseEmptyFields` method appends the prefix of each empty field followed by a '-' instead of throwing a `ParseException` if fields are empty.
+The add command is enhanced to allow user to leave certain fields empty (phone, address and email). Mechanism of the command is exactly the same as before, with the addition of a `initialiseEmptyFields` method in `AddCommandParser`. The `initialiseEmptyFields` method appends the prefix of each empty field followed by a '-' instead of throwing a `ParseException` if the fields are empty. Appending an empty field is done using the String.concat() method in the java.lang.String package. The method then returns a new string with the empty fields.
 
-The code below shows how the `initiliseEmptyFields` method is implemented:
+The code below shows how the `initialiseEmptyFields` method is implemented:
 
 [source,java]
 ----
 private static String initialiseEmptyFields(String args) {
     if (!args.contains("a/")) {
-        args = args + " a/ -";
+        args = args.concat(" a/ -");
     }
     if (!args.contains("e/")) {
-        args = args + " e/ -";
+        args = args.concat(" e/ -");
     }
     if (!args.contains("p/")) {
-        args = args + " p/ -";
+        args = args.concat(" p/ -");
     }
     return args;
 }
@@ -734,9 +782,9 @@ private static String initialiseEmptyFields(String args) {
 === Enhance Undo/Redo command
 
 The new `undo` and `redo` commands allows the user to specify how many commands to undo or redo (eg. `undo 5`, `redo 5`).
-The sequence of commands to be undone for `undo 5` is exactly the same as executing `undo` 5 times. Similarly for `redo`, the number specified simply runs the `redo` command the same number of times. `UndoCommandParser` and `RedoCommandParser` have been added in order to take in the index and `AddressBookParser` now calls upon `UndoCommandParser` and `RedoCommandParser` instead.
+The sequence of commands to be undone for `undo 5` is the same as executing `undo` 5 times (refer to Section 3.2) . Similarly for `redo`, the number specified simply runs the `redo` command the same number of times. If no index is specified, the `undo` or `redo` command will only execute 1 time. `UndoCommandParser` and `RedoCommandParser` have been added in order to take in the index and `AddressBookParser` now calls upon `UndoCommandParser` and `RedoCommandParser` first instead of `UndoCommand` and `RedoCommand` directly.
 
-The code below shows how the a command parser differentiate the index:
+The code below shows how the RedoCommandParser differentiate the index:
 
 [source,java]
 ----
@@ -754,6 +802,8 @@ public RedoCommand parse(String args) throws ParseException {
     }
 }
 ----
+[NOTE]
+The UndoCommandParser uses the same code. The only difference is that it returns an UndoCommand object instead.
 // end::unredo[]
 
 === Logging
@@ -1129,6 +1179,7 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
 === Use case: Undo/Redo multiple commands
 
 *MSS*
