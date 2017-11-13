@@ -171,7 +171,7 @@ The sections below give more details of each component.
 
 === UI component
 
-image::UiComponentClassDiagram.png[width="800"]
+image::UiClassDiagram.png[width="800"]
 _Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
