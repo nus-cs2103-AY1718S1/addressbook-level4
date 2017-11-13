@@ -18,7 +18,6 @@ import seedu.address.ui.BrowserPanel;
 //@@author alexfoodw
 /**
  * Adds all available friends from a personal Facebook account.
- * Current Maximum friends is set at 30.
  */
 
 public class FacebookAddAllFriendsCommand extends Command {
