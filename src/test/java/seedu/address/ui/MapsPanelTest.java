@@ -4,11 +4,12 @@ import static guitests.guihandles.WebViewUtil.waitUntilMapLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
-import static seedu.address.ui.MapsPanel.DEFAULT_PAGE;
 import static seedu.address.ui.MapsPanel.MAPS_DEFAULT_ORIGIN;
 import static seedu.address.ui.MapsPanel.MAPS_DEST_PREFIX;
 import static seedu.address.ui.MapsPanel.MAPS_DIR_URL_PREFIX;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
+import static seedu.address.ui.MapsPanel.MAPS_SEARCH_ORIGIN;
+import static seedu.address.ui.MapsPanel.MAPS_SEARCH_URL_PREFIX;
+import static seedu.address.ui.MapsPanel.MAPS_SEARCH_URL_SUFFIX;
 
 import java.net.URL;
 
@@ -16,12 +17,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.MapsPanelHandle;
-import seedu.address.MainApp;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 
 public class MapsPanelTest extends GuiUnitTest {
-
-    private static final String MAPS_END_OF_URL_PREFIX = "&dg=dbrw&newdg=1";
 
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
 
@@ -41,13 +39,13 @@ public class MapsPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         // default web page
-        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        URL expectedDefaultPageUrl = new URL(MAPS_SEARCH_URL_PREFIX + MAPS_SEARCH_ORIGIN + MAPS_SEARCH_URL_SUFFIX);
         assertEquals(expectedDefaultPageUrl, mapsPanelHandle.getLoadedUrl());
 
         // associated web page of a person
         postNow(selectionChangedEventStub);
         URL expectedPersonUrl = new URL(MAPS_DIR_URL_PREFIX + MAPS_DEFAULT_ORIGIN + MAPS_DEST_PREFIX
-                + DANIEL.getAddress().toString().replaceAll(" ", "+") + MAPS_END_OF_URL_PREFIX);
+                + DANIEL.getAddress().toString().replaceAll(" ", "+") + MAPS_SEARCH_URL_SUFFIX);
 
         waitUntilMapLoaded(mapsPanelHandle);
         //assertEquals(expectedPersonUrl, mapsPanelHandle.getLoadedUrl());

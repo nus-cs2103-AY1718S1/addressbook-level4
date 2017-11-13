@@ -3,13 +3,14 @@ package systemtests;
 import static guitests.guihandles.WebViewUtil.waitUntilMapLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.ui.MapsPanel.DEFAULT_PAGE;
 import static seedu.address.ui.MapsPanel.MAPS_DEFAULT_ORIGIN;
 import static seedu.address.ui.MapsPanel.MAPS_DEST_PREFIX;
 import static seedu.address.ui.MapsPanel.MAPS_DIR_URL_PREFIX;
+import static seedu.address.ui.MapsPanel.MAPS_SEARCH_ORIGIN;
+import static seedu.address.ui.MapsPanel.MAPS_SEARCH_URL_PREFIX;
+import static seedu.address.ui.MapsPanel.MAPS_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.net.MalformedURLException;
@@ -30,7 +31,6 @@ import guitests.guihandles.MapsPanelHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
@@ -197,7 +197,7 @@ public abstract class AddressBookSystemTest {
         URL expectedUrl;
         try {
             expectedUrl = new URL(MAPS_DIR_URL_PREFIX + MAPS_DEFAULT_ORIGIN + MAPS_DEST_PREFIX
-                    + selectCardAddress.replaceAll(" ", "+"));
+                    + selectCardAddress.replaceAll(" ", "+") + MAPS_SEARCH_URL_SUFFIX);
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
@@ -258,7 +258,8 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getMapsPanel().getLoadedUrl());
+            assertEquals(new URL(MAPS_SEARCH_URL_PREFIX + MAPS_SEARCH_ORIGIN + MAPS_SEARCH_URL_SUFFIX),
+                    getMapsPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {
