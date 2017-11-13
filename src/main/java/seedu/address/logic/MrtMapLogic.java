@@ -138,7 +138,7 @@ public class MrtMapLogic {
     /**
      * Split to three parts to reduce length of code for each metohd...
      */
-    private void populateMrtStationsPartOne(){
+    private void populateMrtStationsPartOne() {
         mrtStations.add(new MrtStation("Jurong East", "JUR", new String[] {"NS1", "EW24"}));
         mrtStations.add(new MrtStation("Bukit Batok", "BBT", new String[] {"NS2"}));
         mrtStations.add(new MrtStation("Bukit Gombak", "BGB", new String[] {"NS3"}));
@@ -173,7 +173,7 @@ public class MrtMapLogic {
     /**
      * Split to three parts to reduce length of code for each metohd...
      */
-    private void populateMrtStationsPartTwo(){
+    private void populateMrtStationsPartTwo() {
         mrtStations.add(new MrtStation("Tanah Merah", "TNM", new String[] {"EW4", "CG0"}));
         mrtStations.add(new MrtStation("Bedok", "BDK", new String[] {"EW5"}));
         mrtStations.add(new MrtStation("Kembangan", "KEM", new String[] {"EW6"}));
@@ -263,7 +263,7 @@ public class MrtMapLogic {
     /**
      * Split to three parts to reduce length of code for each metohd...
      */
-    private void populateMrtStationsPartThree(){
+    private void populateMrtStationsPartThree() {
         mrtStations.add(new MrtStation("King Albert Park", "KAP", new String[] {"DT6"}));
         mrtStations.add(new MrtStation("Sixth Avenue", "SAV", new String[] {"DT7"}));
         mrtStations.add(new MrtStation("Tan Kah Kee", "TKK", new String[] {"DT8"}));
@@ -673,6 +673,23 @@ public class MrtMapLogic {
         return getMinTotalTime(mrtStationIndexes);
     }
 
+
+    /**
+     * The only public method in this entire code apart from the constructor
+     * Return a list of sorted mrt stations base on total travelling time
+     * from stations indicated in mrtStationNames.
+     * @param mrtStationNames
+     * @return
+     */
+    public ArrayList<String> getSortedMrtList(ArrayList<String> mrtStationNames) {
+        ArrayList<String> validStationList = removeInvalidMrtStation(mrtStationNames);
+        String[] mrtStations = new String[validStationList.size()];
+        for (int i = 0; i < mrtStations.length; i++) {
+            mrtStations[i] = validStationList.get(i);
+        }
+        return getSortedMrtList(mrtStations);
+    }
+
     //Duplicates no longer in mrt string
     private ArrayList<String> getSortedMrtList(String[] mrtStationNames) {
         return getSortedMrtListFromTotalTimeList(getMinTotalTime(mrtStationNames));
@@ -766,6 +783,16 @@ public class MrtMapLogic {
         return travelTime;
     }
 
+    //return the least travelling time between the two station in minutes
+    public int getTravelTime(String sourceMrt, String destMrt) {
+        if (!isValidMrt(sourceMrt) || !isValidMrt(destMrt)) {
+            return -1;
+        }
+        int sourceIndex = nameToIndex.get(sourceMrt);
+        int destIndex = nameToIndex.get(destMrt);
+        return getTravelTime(sourceIndex, destIndex);
+    }
+
     /**
      * For debugging only, will be deleted before final product
      */
@@ -781,7 +808,7 @@ public class MrtMapLogic {
                 int travelInterval = adjRow.get(j).travelDuration;
                 String neighbourCode = mrtStations.get(neighbourIndex).getStationCode(0);
                 String neighbourName = mrtStations.get(neighbourIndex).getName();
-                System.out.print("(" + neighbourName+" [" + neighbourCode + "], " + travelInterval + ") ");
+                System.out.print("(" + neighbourName +" [" + neighbourCode + "], " + travelInterval + ") ");
             }
             System.out.println();
         }
@@ -812,21 +839,9 @@ public class MrtMapLogic {
     }
 
     /**
-     * The only public method in this entire code apart from the constructor
-     * Return a list of sorted mrt stations base on total travelling time
-     * from stations indicated in mrtStationNames.
-     * @param mrtStationNames
-     * @return
+     *
+     * @return the station names of all the mrt stations
      */
-    public ArrayList<String> getSortedMrtList(ArrayList<String> mrtStationNames) {
-        ArrayList<String> validStationList = removeInvalidMrtStation(mrtStationNames);
-        String[] mrtStations = new String[validStationList.size()];
-        for (int i = 0; i < mrtStations.length; i++) {
-            mrtStations[i] = validStationList.get(i);
-        }
-        return getSortedMrtList(mrtStations);
-    }
-
     public ArrayList<String> getMrtStationNames () {
         ArrayList<String> stationNames = new ArrayList<String>();
         for (int i = 0; i < mrtStations.size(); i++) {
@@ -835,6 +850,10 @@ public class MrtMapLogic {
         return stationNames;
     }
 
+    /**
+     *
+     * @return the abbreviated name of all the mrt station
+     */
     public ArrayList<String> getMrtStationShortNames () {
         ArrayList<String> stationShortNames = new ArrayList<String>();
         for (int i = 0; i < mrtStations.size(); i++) {
@@ -843,6 +862,10 @@ public class MrtMapLogic {
         return stationShortNames;
     }
 
+    /**
+     *
+     * @return the line names of all the stations
+     */
     public ArrayList<ArrayList<String>> getMrtLineNames() {
         ArrayList<ArrayList<String>> stationLineNames = new ArrayList<ArrayList<String>>();
         for (int i = 0; i < mrtStations.size(); i++) {
@@ -856,6 +879,10 @@ public class MrtMapLogic {
         return stationLineNames;
     }
 
+    /**
+     *
+     * @return the lineNumber of all the stations
+     */
     public ArrayList<ArrayList<Integer>> getMrtLineNumbers() {
         ArrayList<ArrayList<Integer>> stationLineNumbers = new ArrayList<ArrayList<Integer>>();
         for (int i = 0; i < mrtStations.size(); i++) {
@@ -869,17 +896,12 @@ public class MrtMapLogic {
         return stationLineNumbers;
     }
 
+    /**
+     * Return true if mrtName is a valid mrt station, false otherwise
+     * @param mrtName
+     * @return
+     */
     public boolean isValidMrt(String mrtName) {
         return nameToIndex.containsKey(mrtName);
-    }
-
-    //return the least travelling time between the two station in minutes
-    public int getTravelTime(String sourceMrt, String destMrt) {
-        if (!isValidMrt(sourceMrt) || !isValidMrt(destMrt)) {
-            return -1;
-        }
-        int sourceIndex = nameToIndex.get(sourceMrt);
-        int destIndex = nameToIndex.get(destMrt);
-        return getTravelTime(sourceIndex, destIndex);
     }
 }

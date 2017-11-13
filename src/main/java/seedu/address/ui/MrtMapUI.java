@@ -8,10 +8,15 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+//@@author Yew Onn
+/**
+ * The java class displays the UI.
+ */
 public class MrtMapUI {
     //radius of circle use to visualise mrt stations in the graph
-    private int DEFAULT_CIRCLE_RADIUS = 4;
-    private int MAX_CIRCLE_RADIUS = 35;
+    private static int DEFAULT_CIRCLE_RADIUS = 4;
+    private static int MAX_CIRCLE_RADIUS = 35;
 
     private HashMap<String, Point> mrtToPoint = new HashMap<String, Point>();
 
@@ -45,6 +50,9 @@ public class MrtMapUI {
         }
     }
 
+    /**
+     * Initialise all relevant informations required for the running of the UI.
+     */
     public MrtMapUI(){
         initialise();
     }

@@ -724,11 +724,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
             keysDown.remove(e.getKeyCode());
         }
     }
-
-
-
-
-
 }
 
 

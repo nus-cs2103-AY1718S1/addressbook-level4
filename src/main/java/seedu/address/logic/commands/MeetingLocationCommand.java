@@ -7,9 +7,9 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.ui.MrtMapUI;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.logic.MrtMapLogic;
+import seedu.address.ui.MrtMapUI;
 
 //@@author Yew Onn
 /**
@@ -50,10 +50,10 @@ public class MeetingLocationCommand extends Command {
         ArrayList<String> mrtStations = new ArrayList<String>();
         ArrayList<String> peopleNameList = new ArrayList<String>();
         for (int i = 0; i < listOfIndex.length; i++) {
-            String mrtStation = model.getAddressBook().getPersonList().
-                    get(listOfIndex[i].getZeroBased()).getMrt().value;
-            String peopleName = model.getAddressBook().getPersonList().
-                    get(listOfIndex[i].getZeroBased()).getName().fullName;
+            String mrtStation = model.getAddressBook().getPersonList()
+                    .get(listOfIndex[i].getZeroBased()).getMrt().value;
+            String peopleName = model.getAddressBook().getPersonList()
+                    .get(listOfIndex[i].getZeroBased()).getName().fullName;
             mrtStations.add(mrtStation);
             peopleNameList.add(peopleName);
         }
@@ -62,8 +62,8 @@ public class MeetingLocationCommand extends Command {
         ArrayList<String> sortedStationNames = mrtMapLogic.getSortedMrtList(mrtStations);
         //the first element in the sorted list contains the best meeting location.
         String meetStation = sortedStationNames.get(0);
-        MrtMapUI mrtMapUI = new MrtMapUI();
-        mrtMapUI.displayUserInfo(meetStation, mrtStations);
+        MrtMapUI mrtMapUi = new MrtMapUI();
+        mrtMapUi.displayUserInfo(meetStation, mrtStations);
         String userInfo = getMrtInfo(peopleNameList, mrtStations, meetStation);
         return new CommandResult(String.format(MESSAGE_MEETING_LOCATION_SUCCESS)
                 + userInfo);
@@ -91,15 +91,15 @@ public class MeetingLocationCommand extends Command {
 
         MrtMapLogic mrtMapLogic = new MrtMapLogic();
 
-        String toShow = "\nTop Meeting Location: " +meetStation;
+        String toShow = "\nTop Meeting Location: " + meetStation;
         for (int i = 0; i < peopleNames.size() && i < mrtStations.size(); i++) {
             toShow += "\n";
             String mrtStationName = mrtStations.get(i);
             int travelTime = mrtMapLogic.getTravelTime(mrtStationName, meetStation);
             String stringTime = Integer.toString(travelTime);
             String personName = peopleNames.get(i);
-            String currLine = personName +" (from "+mrtStationName+") requires "
-                    + stringTime +" minutes.";
+            String currLine = personName + " (from " + mrtStationName + ") requires "
+                    + stringTime + " minutes.";
             toShow += currLine;
         }
         return toShow;
