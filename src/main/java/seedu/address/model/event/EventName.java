@@ -17,7 +17,7 @@ public class EventName {
     public final String fullName;
 
     /**
-     * Validates given name.
+     * Creates EventName with a validated name.
      *
      * @throws IllegalValueException if given name string is invalid.
      */
@@ -32,6 +32,9 @@ public class EventName {
 
     /**
      * Returns true if a given string is a valid event name.
+     *
+     * @param test String to be tested
+     * @return true if valid
      */
     public static boolean isValidName(String test) {
         return test.matches(EVENTNAME_VALIDATION_REGEX);

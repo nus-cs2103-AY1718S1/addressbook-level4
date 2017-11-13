@@ -27,7 +27,7 @@ public class EventTime {
     }
 
     /**
-     * Check the value of isUpcoming by checking current time against start time
+     * Returns true if the Event is an upcoming event.
      *
      * @return boolean value of isUpcoming
      */

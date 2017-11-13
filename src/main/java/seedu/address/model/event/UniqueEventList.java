@@ -160,6 +160,7 @@ public class UniqueEventList implements Iterable<Event> {
      * namely selected date, upcoming events and past events, the events will
      * be sorted by their starting time in ascending order, and suppose Events
      * share same starting time shorter events will appear first.
+     * 
      */
     public void sort(LocalDate selectedDate) {
         requireNonNull(selectedDate);
