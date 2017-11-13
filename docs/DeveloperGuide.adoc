@@ -183,7 +183,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
 
 Figure 3.3.3 below shows the interactions within the `Logic` component for the `execute("delete 1")` API call.
 
@@ -344,7 +344,7 @@ _Figure 4.1.2g: `UndoRedoStack` activity diagram_
 ---
 
 **Aspect:** Type of commands that can be undone/redone +
-**Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`) +
+**Alternative 1 (current choice):** Only include commands that modifies the address book (e.g. `add`, `clear`, `edit`) +
 **Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
 **Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
 **Alternative 2:** Include all commands +
@@ -369,7 +369,7 @@ _Figure 4.1.2g: `UndoRedoStack` activity diagram_
 The `borrow` command allows users to increase the debt of a person should he/she borrow more money. On the other hand, when a debtor repays a specified amount, the `payback` command is used to deduct that amount from his/her current debt. The `BorrowCommand` and `PaybackCommand` classes, which handle the updating of the `Debt` fields in a `Person` object, extend `UndoableCommand` so that both of these commands can be undone or redone if necessary.
 
 These two commands require one compulsory argument which is the amount that is borrowed/paid back. Indicating the index (as listed in the person list panel on the left side of the application window) of the person who borrowed or paid back money is optional. If no index is specified, the command will be executed for the person that is currently selected in the person list.
-The arguments (index and amount borrowed/paid back) are separated by a whitespace instead of special prefixes (e.g. prefix `p/` used for phone number). Hence, the `String#split` method is used to tokenize the input using a single whitespace as the delimiter. As seen in Figure 4.2.1, the tokenized inputs (index and amount borrowed) are then converted to their appropriate `Object` types and supplied as arguments to the `BorrowCommand` constructor. Input for the `payback` command is tokenized and supplied to the `PaybackCommand` constructor in the same manner.
+The arguments (index and amount borrowed/paid back) are separated by a whitespace instead of special prefixes (e.g. prefix `n/` used for name). Hence, the `String#split` method is used to tokenize the input using a single whitespace as the delimiter. As seen in Figure 4.2.1, the tokenized inputs (index and amount borrowed) are then converted to their appropriate `Object` types and supplied as arguments to the `BorrowCommand` constructor. Input for the `payback` command is tokenized and supplied to the `PaybackCommand` constructor in the same manner.
 
 The `BorrowCommand` and `PaybackCommand` are executed in `LogicManager`.
 `BorrowCommand` updates the `debt`, `totalDebt` and `dateRepaid` attributes in the target `Person` object through the `ModelManager#addDebtToPerson()` which calls `AddressBook#addDebtToPerson()`. A new `Person` object is then created with the updated `debt` and `totalDebt` amount. Also, the `dateRepaid` field is set to `NOT REPAID`.  The target `Person` object is then replaced with this new `Person` object.
@@ -620,7 +620,7 @@ public class ClusterUtil {
 ==== Design Considerations
 
 **Aspect:** Grouping of contacts +
-**Alternative 1 (current choice):** Create a field that contains the name and district number of the postal districts, based on postal code.\ +
+**Alternative 1 (current choice):** Create a field that contains the name and district number of the postal districts, based on postal code +
 **Pros:** Easy to implement and extend, requires minimal user input. +
 **Cons:** Requires developer to update `ClusterUtil` whenever a new postal district is drawn by the government, and
 requires users to reset their contacts' `cluster` via deletion and addition or via editing their `postal codes`. +
@@ -710,7 +710,7 @@ if (numOfSpaces >= 2 && currentInput.charAt(currentInput.length() - 1) != ' '
     maskPasswordInput(currentInput);
 }
 ----
-**Cons:** Although '\*' is an invalid password character, the user may still use it while entering the password. hence, if the user types '*', the cursor will remain at its original position. The user will be under the impression that the command box is not registering what was typed.
+**Cons:** Although '\*' is an invalid password character, the user may still use it while entering the password. Hence, if the user types '*', the cursor will remain at its original position. The user will be under the impression that the command box is not registering what was typed.
 // end::loginLogout[]
 
 // tag::sort[]
@@ -847,7 +847,7 @@ public ReadOnlyPerson selectPersonForCommand(Index index) throws CommandExceptio
 ==== Design Considerations
 
 **Aspect:** Executing index-based commands without index +
-**Alternative 1 (current choice):** These person to apply the commands on are determined in the constructors +
+**Alternative 1 (current choice):** The person to apply the commands on are determined in the constructors +
 **Pros:** Allows for proper `redo`. +
 **Cons:** Hard to test as Command Exceptions are being thrown from the constructors. +
 **Alternative 2:** Calling a constructor of the `command` without an `Index` initialises its `targetIndex`
