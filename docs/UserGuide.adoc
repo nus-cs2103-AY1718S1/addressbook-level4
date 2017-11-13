@@ -625,9 +625,9 @@ image::SuggestionSelect.png[width="700"]
 
 image::SuggestionRemark.png[width="700"]
 
-* `add Linda Jean 410 Madison Avenue NY 10029 friends neighbours ab@de.fg 98437653` will be suggested as the formatted command,
+* `add Hansel Black 410 Madison Avenue NY 10029 friends neighbours ab@de.fg 98437653` will be suggested as the formatted command,
 `add n/Hansel Black p/98437653 e/ab@de.fg a/410 Madison Avenue NY 10029 t/friends t/neighbours`.
-`y` or `yes` or `k` or `ok` or `yea` or `yeah` executes the `add` command as normal and _Linda Jean_ with appropriate fields will be added to the Rolodex:
+`y` or `yes` or `k` or `ok` or `yea` or `yeah` executes the `add` command as normal and _Hansel Black_ with appropriate fields will be added to the Rolodex:
 
 image::SuggestionAdd.png[width="700"]
 // end::suggestion[]

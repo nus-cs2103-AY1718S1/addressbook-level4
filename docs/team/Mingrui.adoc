@@ -28,7 +28,7 @@ manually type out the command word in full.
 
 ==== Implementation
 
-include::../DeveloperGuide.adoc[leveloffset=1,tag=dropdownlist]
+include::../DeveloperGuide.adoc[leveloffset=2,tag=dropdownlist]
 
 === Enhancement Added: Auto-completion
 
@@ -43,7 +43,7 @@ Auto-selection of the placeholder improves the user experience, because the user
 
 ==== Implementation
 
-include::../DeveloperGuide.adoc[leveloffset=1,tag=auto-completion]
+include::../DeveloperGuide.adoc[leveloffset=2,tag=auto-completion]
 
 === Enhancement Added: Opening Email Composer
 
@@ -58,7 +58,7 @@ or website and pasting the email address there. All these can be done with a sho
 
 ==== Implementation
 
-include::../DeveloperGuide.adoc[leveloffset=1,tag=email]
+include::../DeveloperGuide.adoc[leveloffset=2,tag=email]
 
 === Enhancement Added: Keyboard Shortcuts for Commands with Auto-complete Function
 
@@ -73,7 +73,7 @@ Users can simply activate auto-completion with a key press without the need to t
 
 ==== Implementation
 
-include::../DeveloperGuide.adoc[leveloffset=1,tag=auto-complete-shortcut]
+include::../DeveloperGuide.adoc[leveloffset=2,tag=auto-complete-shortcut]
 
 === Enhancement Proposed: Integration of Social Media
 
