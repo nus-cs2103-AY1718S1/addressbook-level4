@@ -77,9 +77,10 @@ public class CheckCommandsParserTest {
     @Test
     public void checkCommand_list() {
         // Check if the synonyms  is equals to list
-        assertEquals(parser.matchCommand("display"), "list");
-        assertEquals(parser.matchCommand("show"), "list");
-        assertNotEquals(parser.matchCommand("showme"), "list");
+        assertEquals(parser.matchCommand("display all"), "listall");
+        assertEquals(parser.matchCommand("listall"), "listall");
+        assertEquals(parser.matchCommand("show all"), "listall");
+        assertNotEquals(parser.matchCommand("showme"), "listall");
     }
 
     @Test

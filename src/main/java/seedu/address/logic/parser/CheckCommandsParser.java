@@ -41,7 +41,7 @@ public class CheckCommandsParser {
         final String[] subFindCommands = new String[] { "find", "f", "look", "search", "check" };
         final String[] subHelpCommands = new String[] { "help", "info" };
         final String[] subHistoryCommands = new String[] { "history", "h", "past" };
-        final String[] subListCommands = new String[] { "list", "l", "show", "display" };
+        final String[] subListCommands = new String[] { "listall", "l", "show all", "display all" };
         final String[] subRedoCommands = new String[] { "redo", "r" };
         final String[] subSelectCommands = new String[] { "select", "s", "choose", "pick" };
         final String[] subSortCommands = new String[] { "sort", "arrange", "organise" };
@@ -104,7 +104,7 @@ public class CheckCommandsParser {
         } else if (!Collections.disjoint(userInputCommand, commandsForHistory)) {
             finalUserCommand = "history";
         } else if (!Collections.disjoint(userInputCommand, commandsForList)) {
-            finalUserCommand = "list";
+            finalUserCommand = "listall";
         } else if (!Collections.disjoint(userInputCommand, commandsForRedo)) {
             finalUserCommand = "redo";
         } else if (!Collections.disjoint(userInputCommand, commandsForSelect)) {
