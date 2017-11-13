@@ -6,16 +6,16 @@
 
 ==== Valid Input without Command Skeleton
 
-*Test: *+
+*Test:* +
 Enter `de` and then press `TAB` key.
 
-*Result: *+
+*Result:* +
 `delete` should appear in the command box, followed by a space.
 
 ==== Valid Input with Command Skeleton
 
-*Test: *+
+*Test:* +
 Enter `ed` and then press `TAB` key.
 
-*Result: *+
+*Result:* +
 `edit` should appear in the command box, together with the fields that the user can enter.
