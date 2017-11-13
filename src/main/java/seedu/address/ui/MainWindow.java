@@ -20,6 +20,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeWindowSizeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PopulateBirthdayEvent;
 import seedu.address.commons.events.ui.ShowFacebookRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -149,7 +150,7 @@ public class MainWindow extends UiPart<Region> {
         extendedPersonDisplay = new ExtendedPersonDisplay();
         extendedPersonDisplayPlaceholder.getChildren().add(extendedPersonDisplay.getRoot());
 
-        calendarView = new CalendarView(YearMonth.now());
+        calendarView = new CalendarView(YearMonth.now(), logic.getFilteredPersonList(), logic);
         calendarDisplayPlaceholder.getChildren().add(calendarView.getView());
 
         //CalendarViewPane calendarViewPane = new CalendarViewPane(logic);
@@ -302,6 +303,18 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.freeResources();
     }
 
+    //@@author jacoblipech
+    /**
+     * this method is to populate the calendar when there is an add or change in birthday.
+     * @param request
+     */
+    @Subscribe
+    private void handleBirthdayEvent(PopulateBirthdayEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        calendarView.populateUpdatedCalendar(request.contactList);
+    }
+
+    //@@author
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
