@@ -30,10 +30,12 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagMatchingKeywordPredicate;
+
 //@@author ZhangH795
 
 /**
  * Adds a tag to existing person(s) in the address book.
+ * If the tag already exists for at least one of the person(s) selected, error would be thrown.
  */
 public class TagAddCommand extends UndoableCommand {
 
@@ -50,10 +52,13 @@ public class TagAddCommand extends UndoableCommand {
     public static final String MESSAGE_ADD_TAG_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_TAG_ALREADY_EXISTS = "The %1$s tag entered already exists "
-            + "in some person selected.";
+    public static final String MESSAGE_TAG_ALREADY_EXISTS = "The %1$s tag already exists "
+            + "in person(s) selected.";
     private final ArrayList<Index> index;
     private final TagAddDescriptor tagAddDescriptor;
+    private final int zeroBasedFirstIndex = 0;
+    private final int stringSecondCharIndex = 1;
+    private final int emptyListSize = 0;
 
     /**
      * @param index            of the person in the filtered person list to edit
@@ -72,9 +77,9 @@ public class TagAddCommand extends UndoableCommand {
         ObservableList<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         boolean looseFind = false;
 
-        Tag tagToAdd = (Tag) tagAddDescriptor.getTags().toArray()[0];
+        Tag tagToAdd = (Tag) tagAddDescriptor.getTags().toArray()[zeroBasedFirstIndex];
         String tagInStringRaw = tagToAdd.toString();
-        String tagInString = tagInStringRaw.substring(1, tagInStringRaw.lastIndexOf("]"));
+        String tagInString = tagInStringRaw.substring(stringSecondCharIndex, tagInStringRaw.lastIndexOf("]"));
 
         StringBuilder editedPersonDisplay = new StringBuilder();
         checkIndexInRange(lastShownList);
@@ -83,7 +88,7 @@ public class TagAddCommand extends UndoableCommand {
         ObservableList<ReadOnlyPerson> selectedPersonList = createSelectedPersonList(lastShownList);
         FilteredList<ReadOnlyPerson> tagFilteredPersonList = new FilteredList<>(selectedPersonList);
         tagFilteredPersonList.setPredicate(tagPredicate);
-        if (tagFilteredPersonList.size() > 0) {
+        if (tagFilteredPersonList.size() > emptyListSize) {
             throw new CommandException(String.format(MESSAGE_TAG_ALREADY_EXISTS, tagInStringRaw));
         }
 
@@ -106,10 +111,10 @@ public class TagAddCommand extends UndoableCommand {
             editedPersonDisplay.append(createTagListDisplay(editedPerson));
 
             if (tagInString.toLowerCase().contains("fav")) {
-                Index firstIndex = new Index(0);
+                Index firstIndex = new Index(zeroBasedFirstIndex);
                 EventsCenter.getInstance().post(new JumpToListRequestEvent(firstIndex));
             } else {
-                EventsCenter.getInstance().post(new JumpToListRequestEvent(index.get(0)));
+                EventsCenter.getInstance().post(new JumpToListRequestEvent(index.get(zeroBasedFirstIndex)));
             }
 
             if (i != index.size() - 1) {
@@ -120,7 +125,8 @@ public class TagAddCommand extends UndoableCommand {
     }
 
     /**
-     * @param lastShownList current tag List
+     * Throws CommandException if any of the user input index is invalid.
+     * @param lastShownList current filtered person list
      */
     public void checkIndexInRange(ObservableList<ReadOnlyPerson> lastShownList) throws CommandException {
         for (int i = 0; i < index.size(); i++) {
@@ -131,7 +137,9 @@ public class TagAddCommand extends UndoableCommand {
     }
 
     /**
+     * Creates string for edited tag list.
      * @param editedPerson edited person to show tag list
+     * Returns formatted string to indicate edited tag list.
      */
     public String createTagListDisplay(Person editedPerson) {
         int tagListStringStartIndex = 1;
@@ -144,8 +152,10 @@ public class TagAddCommand extends UndoableCommand {
     }
 
     /**
+     * Adds new tag to the copy of existing tag list.
      * @param unmodifiable tag List
      * @param tagToAdd     tag to be added
+     * Returns modifiable tag set.
      */
     public Set<Tag> createModifiableTagSet(Set<Tag> unmodifiable, Tag tagToAdd) {
         Set<Tag> modifiable = new HashSet<>();
@@ -157,7 +167,9 @@ public class TagAddCommand extends UndoableCommand {
     }
 
     /**
+     * Creates selected person list.
      * @param fullPersonList person list
+     * Returns selected person list.
      */
     public ObservableList<ReadOnlyPerson> createSelectedPersonList(ObservableList<ReadOnlyPerson> fullPersonList) {
         ArrayList<ReadOnlyPerson> selectedPersonList = new ArrayList<>();
@@ -170,7 +182,7 @@ public class TagAddCommand extends UndoableCommand {
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * edited with {@code tagAddDescriptor}.
      */
     private static Person createEditedPerson(ReadOnlyPerson personToEdit,
                                              TagAddDescriptor tagAddDescriptor) {

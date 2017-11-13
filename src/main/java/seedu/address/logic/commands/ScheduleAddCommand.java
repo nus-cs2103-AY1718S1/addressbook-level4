@@ -14,7 +14,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.ClearPersonListEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventDuration;
@@ -105,8 +105,7 @@ public class ScheduleAddCommand extends UndoableCommand {
 
             commandResultString += String.format(MESSAGE_SUCCESS, event.toString());
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            Index defaultIndex = new Index(0);
-            EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
+            EventsCenter.getInstance().post(new ClearPersonListEvent());
 
             return new CommandResult(commandResultString);
         } catch (DuplicateEventException e) {

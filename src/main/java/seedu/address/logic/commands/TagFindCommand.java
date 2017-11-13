@@ -5,10 +5,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ClearPersonListEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.tag.TagMatchingKeywordPredicate;
+
 //@@author ZhangH795
+
 /**
- * Finds and lists all persons in address book whose name contains a certain tag.
- * Keyword matching is case insensitive.
+ * Finds and lists all persons whose tag list contains the given tag.
+ * Keyword matching is case insensitive, substring matching is also allowed.
  */
 public class TagFindCommand extends Command {
 
@@ -20,6 +22,7 @@ public class TagFindCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + "friends";
 
     private final TagMatchingKeywordPredicate predicate;
+    private final int firstIndex = 0;
 
     public TagFindCommand(TagMatchingKeywordPredicate keywordPredicate) {
         this.predicate = keywordPredicate;
@@ -29,7 +32,7 @@ public class TagFindCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
         if (model.getFilteredPersonList().size() > 0) {
-            Index defaultIndex = new Index(0);
+            Index defaultIndex = new Index(firstIndex);
             EventsCenter.getInstance().post(new JumpToListRequestEvent(defaultIndex));
         } else {
             EventsCenter.getInstance().post(new ClearPersonListEvent());

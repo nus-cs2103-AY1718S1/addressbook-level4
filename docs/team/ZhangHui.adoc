@@ -4,11 +4,15 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: iConnect
-iConnect is an one-stop student networking application. We aim to provide solution for students to keep track of various school commitments while maintaining relationships with peers.
+Introducing iConnect, our one-stop address book application built for students. We aim to serve as your personal secretary to ease your job as a student. Due to the ever-increasing workload, it has become a challenge to keep track of various school commitments while maintaining relationships with peers.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+With iConnect, missing schedules and losing contact with friends will be a thing of the past.
+Let’s get connected now!
 
-=== Enhancement Added: TagAdd/TagRemove/TagFind/Theme
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/main/ZhangH795.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/test/ZhangH795.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added:
+TagAdd / TagRemove / TagFind / Theme
 
 ==== External behavior
 
@@ -31,7 +35,7 @@ include::../UserGuide.adoc[tag=changetheme]
 
 ==== Justification
 
-{Enable the user to modify the tags more freely, as in our application, tag is used to identify modules each student takes.}
+Enables the user to manipulate tags more conveniently, as in our application, tags can be used to identify modules that some of the contacts take.
 
 ==== Implementation
 
@@ -50,9 +54,9 @@ include::../DeveloperGuide.adoc[tag=changetheme]
 
 === Enhancement Proposed: Add command `sync`
 
-{Synchronize the application with the phone contact list.}
+Synchronize the application with phone's contact list.
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Updated the GUI color scheme [https://github.com/CS2103AUG2017-W09-B3/main/commit/61d64d21d0991f7cbb04fc3975168f51920fd055[Pull request #126]]
+* Wrote additional tests to increase coverage

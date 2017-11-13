@@ -240,6 +240,7 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    //@@author ZhangH795
     /**
      * Change to dark theme.
      */
@@ -272,6 +273,7 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setScene(scene);
         show();
     }
+    //@@author
 
     void show() {
         primaryStage.show();
@@ -299,6 +301,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author ZhangH795
     @Subscribe
     private void handleDarkThemeEvent(ChangeDarkThemeEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -316,4 +319,5 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         changeToDefaultTheme();
     }
+    //@@author
 }

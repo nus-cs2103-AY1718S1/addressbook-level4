@@ -782,19 +782,19 @@ public class TagAddCommand extends UndoableCommand {
 
 For example, the user input might be `t-add 1 2 3 college friend`. +
 
-After the command word `t-add` is parsed at the `AddresBookParser`, the remaining user input(indices in the list, tag to add), in the example `1 2 3 college friend`, will be passed to and parsed by `TagAddCommandParser`.
+After the command word `t-add` is parsed at the `AddresBookParser`, the remaining user input( indices in the list, tag to add), in the example `1 2 3 college friend`, will be passed to and parsed by `TagAddCommandParser`.
 
 Different from the previous limitation on the choice of word for `tag`, which is `Alnum`, we allow multiple words `tagName` as well, such as `college friend`.
 
 The change of `tagName` format requires a new algorithm for parsing in the `TagAddCommandParser`.
 The key is to differentiate between indices and `tagName`. The parser algorithm would first split the input string into parts by space as delimiter. +
 It would then determine whether each part is a word or a number, the parser keeps track of the last recognized number.
-After processing the entire user input, the parser would treat all parts before the last recognized number as indices and those after it as `tagName`.
-In this case, as `3` is the last part that is numeric, `1 2 3` is treated as indices and `college friend` is treated as `tagName`. +
+After processing the entire user input, the parser would treat all parts until the last recognized number as indices and those after it as `tagName`.
+In this case, as `3` is the last part that is numeric, `1 2 3` are treated as indices and `college friend` is treated as `tagName`. +
 
 The command `t-add` is also used to add in `favourite` tag, for example `t-add 1 2 3 favourite`. +
-Person(s) with `favourite` tag will have a small coral circle next to the person's name. And person(s) with `favourite` tag would always be pinned to top of the person list. +
-We also allow other words containing `fav` as `favourite`, such as `favo`. +
+Person(s) with `favourite` tag will have a small coral circle next to the person's name in the left person list panel. And person(s) with `favourite` tag would always be pinned to top of the person list. +
+We also recognize other words containing `fav` as `favourite`, such as `favo`. +
 
 The `TagAddCommandParser` returns `TagAddCommand` after execution, which will be further processed by `logic` component.
 
@@ -805,6 +805,29 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 
     public TagAddCommand parse(String args) throws ParseException {
         // ... TagAddCommandParser logic ...
+        int defaultLastNumberIndex = -1;
+        int completeNumOfArgs = 2;
+        String newTag = "";
+
+        int lastIndex = defaultLastNumberIndex;
+        String[] argsArray;
+        ArrayList<Index> index = new ArrayList<>();
+        if (args.isEmpty() || (argsArray = args.trim().split(" ")).length < completeNumOfArgs) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
+        }
+        try {
+            for (int i = 0; i < argsArray.length; i++) {
+                if (argsArray[i].matches("\\d+")) {
+                    index.add(ParserUtil.parseIndex(argsArray[i]));
+                    lastIndex = i;
+                } else {
+                    break;
+                }
+            }
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
+        }
+        // ... Other TagAddCommandParser logic ...
     }
 }
 ----
@@ -812,41 +835,41 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 ==== Design Considerations
 
 **Aspect:** Implementation of adding a tag to person(s) by indices +
-**Alternative 1 (current choice):** Add a new Command class `TagAddCommand` +
-**Pros:** Having a separate command for adding a tag is consistent with a series of tag related operations we designed to have. We can implements `UndoableCommand` Abstract Class, so that we have undo/redo functionality +
-**Cons:** Have to add in a new Command class and the corresponding parser class +
-**Alternative 2:** Rewrite EditCommand class +
-**Pros:** We only need to change a small part of code and the undo/redo functionality can be preserved +
+**Alternative 1 (current choice):** Add a new Command `TagAddCommand` +
+**Pros:** Having a separate command for adding a tag is consistent with a series of tag related operations we designed to have. We can implements `UndoableCommand` Abstract Class, so that we have undo/redo functionality. +
+**Cons:** Have to add in a new Command class and the corresponding parser class. +
+**Alternative 2:** Modify current EditCommand +
+**Pros:** Only need to change a small part of code and the undo/redo functionality can be preserved. +
 **Cons:** The current `EditCommand` only enables the user to edit one person at a time, which makes adding a tag to multiple contacts tedious.
 
 ---
 
-**Aspect:** Implementation of parsing a TagAddCommand +
+**Aspect:** Implementation of parsing a `TagAddCommand` +
 **Alternative 1 (current choice):** Add a new Parser class `TagAddCommandParser` +
-**Pros:** We can design the input format for TagAddCommand and customize the parser +
-**Cons:** Have to add in a new Parser class +
-**Alternative 2:** Rewrite EditCommandParser class +
-**Pros:** We only need to change a small part of code +
+**Pros:** The input format can be customized for `TagAddCommand`. +
+**Cons:** Have to add in a new Parser class. +
+**Alternative 2:** Make use of `EditCommandParser` +
+**Pros:** We only need to change a small part of code. +
 **Cons:** User input is restricted by the EditCommand input format.
 
 ---
 
 **Aspect:** Whether to accept user input that has partially invalid indices +
 **Alternative 1 (current choice):** Do not accept +
-**Pros:** Easy to implement +
-**Cons:** User have to type in the valid indices again +
+**Pros:** Easy to implement. +
+**Cons:** User has to type in the valid indices again. +
 **Alternative 2:** Ignore the invalid indices +
-**Pros:** It is efficient for the user +
+**Pros:** Efficient for the user. +
 **Cons:** Difficult to implement.
 
 ---
 
 **Aspect:** Whether to have another command to set person(s) as `favourite` +
-**Alternative 1 (current choice):** Setting `favourite` utilize the current `t-add` command +
-**Pros:** User does not need to remember extra commands and treating `favourite` as `tag` is intuitive. Other tag-related operations such as `t-remove` and `t-find` can also be used to manipulate `favourite` tag +
-**Cons:** Computational costly to determine whether person(s) are set as `favourite`, as the entire `tagList` needs to be iterated +
+**Alternative 1 (current choice):** No, setting `favourite` utilizes the current `t-add` command +
+**Pros:** User does not need to remember extra commands and treating `favourite` as `tag` is intuitive. Other tag-related operations such as `t-remove` and `t-find` can also be used to manipulate `favourite` tag. +
+**Cons:** Computationally costly to determine whether person(s) are set as `favourite`, as the entire `tagList` needs to be iterated. +
 **Alternative 2:** Have a separate set of commands for `favourite` +
-**Pros:** Have a clear separation of functions +
+**Pros:** Have a clear separation of functions. +
 **Cons:** Not user friendly.
 // end::tagadd[]
 
@@ -872,15 +895,15 @@ public class TagRemoveCommand extends UndoableCommand {
 ----
 
 For example, the user input might be `t-remove 1 2 3 college friend`. +
-After the command word `t-remove` is parsed at the `AddresBookParser`, the remaining user input(indices in the list, tag to remove), in the example `1 2 3 college friend`, will be passed to and parsed by `TagRemoveCommandParser`.
+After the command word `t-remove` is parsed at the `AddresBookParser`, the remaining user input( indices in the list, tag to remove), in the example `1 2 3 college friend`, will be passed to and parsed by `TagRemoveCommandParser`.
 
 We also support multiple words as `tagName`, as long as the first word in `tagName` is not a number. +
-This is because the key is to differentiate between indices and `tagName` is by identifying the last recognized number. If a `tagName` has its first word as a number, that word would be treated as index instead. +
+This is because the key is to differentiate between indices and `tagName` is by identifying the last recognized number. If a `tagName` has its first word as a number, that word would be treated as an index instead. +
 In this case, as `3` is the last part that is numeric, `1 2 3` is treated as indices and `college friend` is treated as `tagName`. +
 
 `tagName` keyed in by the user must be of the exact match with the actual `tagName` in order for that `tag` to be removed successfully except for `favourite` tag. +
-As `tagName` for `favourite` is not shown explicitly to the user other than a coral circle next to the person(s) name, and user can key in any words containing `fav` to indicate `favourite`, +
-It would unpractical to still look for exact match for `tagName`, thus, additional checks need to be done to determine whether the user wants to remove a `favourite` and whether the person(s) selected has `favourite` tag.
+As `tagName` for `favourite` is not shown explicitly to the user other than a coral circle next to the person name, and user can key in any words containing `fav` to indicate `favourite`, +
+It would be impractical to still look for exact match for `tagName`, thus, additional checks need to be done to determine whether the user wants to remove a `favourite` tag and whether the person(s) selected has `favourite` tag.
 
 The `TagRemoveCommandParser` returns `TagRemoveCommand` after execution, which will be further processed by `logic` component.
 
@@ -899,40 +922,40 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
 
 **Aspect:** Whether to accept user input that has partially invalid indices +
 **Alternative 1 (current choice):** Do not accept +
-**Pros:** Easy to implement +
-**Cons:** User have to type in the valid indices again +
+**Pros:** Easy to implement. +
+**Cons:** User have to type in the valid indices again. +
 **Alternative 2:** Ignore the invalid indices +
-**Pros:** It is efficient for the user +
+**Pros:** Efficient for the user. +
 **Cons:** Difficult to implement.
 
-**Aspect:** Whether to accept user input that includes someone without the given tag to remove +
+**Aspect:** Whether to accept removing a tag from multiple persons if someone does not hava the given tag to remove +
 **Alternative 1 (current choice):** Do not accept +
-**Pros:** Easy to implement +
-**Cons:** User have to type in the valid indices again +
+**Pros:** Easy to implement. +
+**Cons:** User have to type in the valid indices again. +
 **Alternative 2:** Ignore the invalid indices +
-**Pros:** It is efficient for the user +
+**Pros:** Efficient for the user. +
 **Cons:** Difficult to implement and might be an issue for undo/redo operation.
 
 **Aspect:** Whether to accept user to key in only substring of `tagName` to remove that tag +
 **Alternative 1 (current choice):** Do not accept except for `favourite` tag +
-**Pros:** Prevent the user from removing extra `tags` +
-**Cons:** User have to type in multiple times to remove similar `tag`s such as `friend` and `college friend` +
+**Pros:** Prevent the user from removing extra `tag`. +
+**Cons:** User have to type in multiple times to remove similar `tag`s such as `friend` and `college friend`. +
 **Alternative 2:** Remove all `tag`s containing the given substring +
-**Pros:** Efficient for the user +
+**Pros:** Efficient for the user. +
 **Cons:** The user might not want to remove all tags containing the substring.
 // end::tagremove[]
 
 // tag::tagfind[]
 === Listing person(s) with the given tagName
 
-You can find out person(s) with the given `tagName`. This is realized using `TagFindCommand`.
+You can get a list of person(s) with the given `tagName`. This is realized using `TagFindCommand`.
 
 The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
 
 image::TagFindCommandSequenceDiagram.png[width="800"]
 _Figure 4.8.1 : Interactions Inside the Logic Component for the `t-find CS2103` Command_
 
-`t-find` command shows all person(s) with tag containing or contained in the given `tagName`. TagFindCommandParser passes a TagMatchingKeywordPredicate to TagFindCommand to update filteredPersonList.
+`t-find` command shows all person(s) with tag containing or contained in the given `tagName`. `TagFindCommandParser` passes a `TagMatchingKeywordPredicate` to `TagFindCommand` to update filteredPersonList.
 //end::tagfind[]
 
 // tag::changetheme[]
@@ -943,23 +966,23 @@ You can change to your theme of choice. There are 3 themes currently, `Twilight`
 SwitchThemeCommand is implemented in this way:
 
 For example, the user input might be `theme Twilight`. +
-After the command word `theme` is parsed at the `AddresBookParser`, the remaining user input(theme of choice), in the example `Twilight`, will be passed to and parsed by `SwitchThemeCommandParser`.
+After the command word `theme` is parsed at the `AddresBookParser`, the remaining user input( theme of choice), in the example, `Twilight`, will be passed to and parsed by `SwitchThemeCommandParser`.
 We also support other words other than the actual theme name for theme of choice, it might also be `dark` for `Twilight`; `bright` for `Sunburst` and `default` for `Minimalism`. +
 If you only key in `theme`, an error message suggesting the use of this command will be shown in the `result box`. +
 You can just key in the index of your theme of choice instead of the words. +
 
 image::SwitchThemeCommandErrorMessage.png[width="500"]
-_Figure 4.9.1a : Theme Command Typing Valid Index Number_
+_Figure 4.9.1a : Theme Command Typing Command Word Only_
 
-If you key in an invalid index, an error message suggesting invalid index will be shown in the `result box`.
+If you key in an invalid index, an error message will be shown in the `result box`.
 
 image::SwitchThemeCommandInvalidIndex.png[width="300"]
 _Figure 4.9.1b : Theme Command Typing Invalid Index Number_
 
-If you key in an unknown theme word, an error message suggesting unknown theme word will be shown in the `result box`.
+If you key in an unknown theme word, an error message will be shown in the `result box`.
 
 image::SwitchThemeCommandInvalidWord.png[width="300"]
-_Figure 4.9.1c : Theme Command Typing Invalid Theme Name_
+_Figure 4.9.1c : Theme Command Typing Invalid Theme Word_
 
 The `SwitchThemeParser` returns `SwitchThemeCommand` after execution, which will be further processed by `logic` component.
 
@@ -967,10 +990,10 @@ The `SwitchThemeParser` returns `SwitchThemeCommand` after execution, which will
 
 **Aspect:** How to make the command more intuitive +
 **Alternative 1 (current choice):** Accept more aliases for theme of choice +
-**Pros:** The user does not need to type the full theme name +
-**Cons:** Difficult to implement +
+**Pros:** The user does not need to type the full theme name. +
+**Cons:** Difficult to implement. +
 **Alternative 2:** Accept only the official theme names +
-**Pros:** Easy to implement +
+**Pros:** Easy to implement. +
 **Cons:** Not user friendly.
 // end::changetheme[]
 
@@ -1106,18 +1129,18 @@ If the input command word after 'help' can not be identified, then you will see 
 
 We design a recycle bin in the iConnect to store the person removed from address book. In this way, users can restore the people they wrongly deleted. You may think that it can be done by udno/redo command. Actually, if users want to restore a person they deleted long time ago, then the undo/redo command would not hlep.
 
-The users can interact with bin using four commands:'bin-list', 'bin-delete', 'bin-clear', 'bin-restore';
+The users can interact with bin using four commands: 'bin-delete', 'bin-fresh', 'bin-restore';
 
 The way we deal with recycle bin storage is the same as we deal with addressbook storage. We store the recycle bin as a xml file and read and save it in the same way as address book storage. Then we put the addressbook and recycleibn into model.
 
 *Bin commands*
 
-* `bin-delete` : Delete the people in the recycle bin by index as shown in the list.
-* `bin-fresh` : Delete all the peopel in the recycle bin.
-* `bin-restore` : Restore the people in the recycle bin to address book by index.
+* `bin-delete` : Deletes the people in the recycle bin by index as shown in the list.
+* `bin-fresh` : Deletes all the peopel in the recycle bin.
+* `bin-restore` : Restores the people in the recycle bin to address book by given index.
 
 [NOTE]
-If we find duplicate people when moving a person to recyclebin or moving a person to addressbook, then this person will be omitted and directly remove.
+If we find duplicate people (A') when deleting a person (A) to recyclebin or restoring a person (A) to addressbook, then this person (A') will be omitted and directly removed and the person (A) will remain.
 
 ==== Design Considerations
 

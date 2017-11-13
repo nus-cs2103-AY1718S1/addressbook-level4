@@ -82,7 +82,7 @@ Shows the usage of command `add`
 Shows this User Guide in the opened Help Window.
 // end::help[]
 
-=== Adding a person: `add` _[Since v1.1]_
+=== Adding a person : `add` _[Since v1.1]_
 
 _Alias:_ `create` `put`
 
@@ -136,7 +136,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively
 
 // tag::find[]
-=== Locating persons by different attributes: `find` _[Since v1.2]_
+=== Locating persons by different attributes : `find` _[Since v1.2]_
 
 _Alias:_ `search` `get`
 
@@ -167,7 +167,7 @@ Returns any person having names `Betsy`, `Tim`, `John` or living at `Clementi St
 // end::find[]
 
 // tag::sort[]
-=== Sorting list of persons: `sort` _[Since v1.2]_
+=== Sorting list of persons : `sort` _[Since v1.2]_
 
 Suppose you wish to have your list of persons ordered by a specific attribute, you may use the `sort` command to do so. Be it name, email, phone, address or even the time it was first added. You can also choose to specify whether the attribute should be sorted in ascending or descending order, allowing you to have control over how your person panel should appear. +
 
@@ -234,9 +234,9 @@ Deletes the 1st person in the results of the `find` command
 // end::delete[]
 
 // tag::tagadd[]
-=== Adding a tag to a person(s) : `t-add` _[Since v1.1]_
+=== Adding a tag to person(s) : `t-add` _[Since v1.1]_
 
-You can add a tag to specified person(s) in the address book current listing.
+You can add a tag to multiple persons specified by the indices in the current person listing. When you have a new project group, you can tag your group members in the contact list to differentiate from the rest of the contacts.
 
 Format: `t-add INDEX... TAG`
 
@@ -250,13 +250,13 @@ Examples:
 
 * `list` +
 `t-add 2 3 friends` +
-This command adds the tag friends to the 2nd and 3rd person in the address book
+This command adds the tag `friends` to the 2nd and 3rd person in the contact list
 // end::tagadd[]
 
 // tag::tagaddfav[]
 === Setting person(s) as favourite : `t-add` _[Since v1.3]_
 
-You can mark specified person(s) from the address book as favourite.
+You can mark specified person(s) from your contact list as `favourite`. Contacts marked as `favourite` will always be pinned to top of the contact list.
 
 image::tAddCommand.png[width="500"]
 _Figure 3.9.1 : Tagging multiple person as favourite_
@@ -264,7 +264,7 @@ _Figure 3.9.1 : Tagging multiple person as favourite_
 Format: `t-add INDEX... favourite`
 
 ****
-* All person(s) tagged as `favourite` by you will be shown as a coral shaped circle in front of the tag list.
+* All person(s) tagged as `favourite` by you will be identified by a coral shaped circle after the person name.
 * You can also use `fav`, and words containing `fav` interchangeably with `favourite`.
 * The index refers to the index number shown in the most recent listing, multiple indices are allowed.
 * The index *must be a positive integer* 1, 2, 3, ...
@@ -290,8 +290,8 @@ Format: `t-remove INDEX... TAG`
 ****
 * The index refers to the index number shown in the most recent listing, multiple indices are allowed.
 * The index *must be a positive integer* 1, 2, 3, ...
-* If you wish to remove a tag from all person(s) in the list, simply leave out the INDEX part.
-* The [TAG] *must not have its first word as a number*.
+* If you wish to remove a tag from all person(s) in the list, simply leave out the INDEX.
+* The TAG *must not have its first word as a number*, for example `1 friend`.
 ****
 
 image::tRemoveCommand-noIndex.png[width="500"]
@@ -307,7 +307,7 @@ This command removes the tag `friends` from all person(s) with the tag `friends`
 // tag::tagremove[]
 
 // tag::tagremovefav[]
-=== Removing a person(s) from favourite : `t-remove` _[Since v1.2]_
+=== Removing person(s) from favourite : `t-remove` _[Since v1.2]_
 
 You can remove specified person(s) in the address book from your `favourite` list.
 
@@ -318,7 +318,7 @@ Format: `t-remove INDEX... favourite`
 
 ****
 * You can also use `fav`, and words containing `fav` interchangeably with `favourite`.
-* If you wish to clear your favourite list, simply leave out the INDEX part.
+* If you wish to clear your favourite list, simply leave out the INDEX.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -327,13 +327,10 @@ Examples:
 * `list` +
 `t-remove 2 3 fav` +
 This command removes the tag `favourite` from the 2nd and 3rd person in the address book
-
-* `t-remove fav` +
-This command removes the tag `fav` from all person(s) with the the tag `fav` in the address book
 // end::tagremovefav[]
 
 // tag::tagfind[]
-=== Finding the person(s) with given tags: `t-find` _[Since v1.3]_
+=== Finding the person(s) with given tag : `t-find` _[Since v1.3]_
 
 You can find all persons with the given tag.
 
@@ -343,30 +340,30 @@ _Figure 3.12.1 : Finding all persons tagged 'fav'_
 Format: `t-find TAG`
 
 ****
-* The results show a list of person(s) who has their `tagName` matching exactly; also those with `tagName` containing in `TAG` or the other way round.
+* Person list panel shows a list of person(s) who have their `tagName` matching exactly; and those with `tagName` containing or contained in `TAG`.
 ****
 
 Examples:
 
-* `t-find friend`
+* `t-find friend` +
 This command lists all the people with tag `friend`
-* `t-find frien`
+* `t-find frien` +
 This command could also list all the people with tag `friend` if any
 // end::tagfind[]
 
 // tag::changetheme[]
-=== Changing the theme according to user input `theme` _[Since v1.5]_
+=== Changing the theme according to user input : `theme` _[Since v1.5]_
 
 You can change the current theme into your preferred one.
 
 image::twilightTheme.png[width="790"]
 _Figure 3.13.1 : Twilight Theme_
 
-image::minimalismTheme.png[width="790"]
-_Figure 3.13.2 : Minimalism Theme_
-
 image::sunburstTheme.png[width="790"]
-_Figure 3.13.3 : Sunburst Theme_
+_Figure 3.13.2 : Sunburst Theme_
+
+image::minimalismTheme.png[width="790"]
+_Figure 3.13.3 : Minimalism Theme_
 
 Format: `theme [THEME] OR [INDEX]`
 
@@ -375,21 +372,21 @@ Format: `theme [THEME] OR [INDEX]`
 * `Twilight` is dark in color; `Sunburst` is bright and lively; `Minimalism` is basic and is the default.
 * You can key in `Twilight` or `dark` or `1` to change into dark theme; `Sunburst` or `bright` or `2` to bright theme and `Minimalism` or `default` or `3` to default theme.
 * When you only key in `theme`, the result box would display `1.Twilight 2.Sunburst 3.Minimalism`, you can simply key in the index to change into the specific theme.
-* The result indicates that you have successfully changed into your theme of choice.
+* The result in result box indicates that you have successfully changed into your theme of choice.
 ****
 
 Examples:
 
-* `theme dark`
-This command changed to current theme to Twilight
-* `theme Twilight`
-This command changed to current theme to Twilight
-* `theme 1`
-This command changed to current theme to Twilight
+* `theme dark` +
+This command changes current theme to Twilight
+* `theme Twilight` +
+This command changes current theme to Twilight
+* `theme 1` +
+This command changes current theme to Twilight
 // end::changetheme[]
 
 // tag::map[]
-=== Finding the location of a person using Google Map: `m-show` _[Since v1.3]_
+=== Finding the location of a person using Google Map : `m-show` _[Since v1.3]_
 
 You might find it not very convenient to only show the contact's location as text. Therefore, iConnect allows you to see the location! By using this command, without typing in the person's address, you can easily find the location of your friend in Google Map, which will show in the centre browser.
 
@@ -410,7 +407,7 @@ Examples:
 * `m-show 1` +
 Shows the address of person with index 1 on the google map
 
-=== Finding the route from user's current location to the person selected: `m-route` _[Since v1.3]_
+=== Finding the route from user's current location to the person selected : `m-route` _[Since v1.3]_
 
 Not only can iConnect show the location, it can also show you how to go there! Simply by adding your current location, it will show you the shortest path from your current address to your friend's home in the Google map.
 
@@ -435,8 +432,9 @@ Shows the route from `Clementi Street` to the address of person with index numbe
 Shows the route from `John street, block 123, #01-01` to the address of person with index number `7`
 // end::map[]
 
+
 // tag::sadd[]
-=== Adding an Event to Schedule: `s-add` _[Since v1.4]_
+=== Adding an Event to Schedule : `s-add` _[Since v1.4]_
 
 With many commitments at hand, it is easy to overlook an event in your schedule. `s-add` allows you to add an event to your calendar and include persons from your addressbook as members of the event.
 
@@ -470,7 +468,7 @@ Adds an event called ‘Email Reminder’ on 4th of December 2017 at 2:30PM into
 // end::sadd[]
 
 // tag::sremove[]
-=== Removing an Event from Schedule: `s-remove` _[Since v1.4]_
+=== Removing an Event from Schedule : `s-remove` _[Since v1.4]_
 
 Suppose you want to remove multiple events from your calendar, you can use the `s-remove` command with the indexes of events to be deleted.
 
@@ -495,7 +493,7 @@ Removes 3 events with the index 1, 2 and 3.
 
 
 // tag::export[]
-=== Making a backup address book: `export` _[Since v1.4]_
+=== Making a backup address book : `export` _[Since v1.4]_
 
 If you want to keep your address book clean and worry about how to get the contacts back, just export the information.
 
@@ -504,7 +502,7 @@ You can keep a backup of your contact details to the given path.
 Format: `export PATH`
 
 ****
-* Export all the information of contacts to the given local address.
+* Exports all the information of contacts to the given local address.
 ****
 // end::export[]
 
@@ -597,7 +595,7 @@ The `redo` command fails as there are no `undo` commands executed previously
 // end::undoredo[]
 
 // tag::bin[]
-=== Restoring person(s) from recycle bin: `bin-restore` _[Since v1.5]_
+=== Restoring person(s) from recycle bin : `bin-restore` _[Since v1.5]_
 
 You find that people you wrongly deleted from address book in recycle bin, you can restore them back now.
 
@@ -703,7 +701,7 @@ Removes the birthday from the 6th person in the most recent listing, and shows a
 // end::birthday[]
 
 // tag::link[]
-=== Adding a social media URL to a person: `l-add` _[Coming in v2.0]_
+=== Adding a social media URL to a person : `l-add` _[Coming in v2.0]_
 
 You will find it very convenient to add some social media URLs to your friends so that you are able to see their posts and recent activities simply by clicking those social media icons in the centre person details panel. In this way, you do not need to open each social media app and search for the person before you can see their posts.
 
@@ -802,15 +800,9 @@ e.g. `m-show 1`
 * *MapRoute* : `m-route INDEX a/ADDRESS` +
 e.g. `m-show 1 a/NUS`
 * *ScheduleAdd* : `s-add [m/INDEX INDEX…] n/NAME t/TIME d/DURATION` +
-<<<<<<< HEAD
 e.g. `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/2h`
 * *ScheduleRemove* : `s-remove I/INDEX INDEX...` +
 e.g. `s-remove I/1 2 3`
-=======
-e.g. `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/120`
-* *ScheduleRemove* : `s-remove I/INDEX INDEX...` +
-e.g. `s-remove e/1 2 3`
->>>>>>> 7ac5b5a6695fda6dac2b79791e93c571f7479043
 * *Export* : `export PATH` +
 e.g. `export /desktop/new_folder`
 * *Bindelete* : `bin-delete INDEX INDEX...` +
@@ -822,7 +814,7 @@ e.g. `bin-fresh`
 * *Font* : `font` +
 e.g. `font +` ,`font -`
 * *Select* : `select INDEX` +
-e.g.`select 2`
+e.g. `select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
