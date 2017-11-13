@@ -64,7 +64,9 @@ public class TestApp extends MainApp {
         UserPrefs userPrefs = super.initPrefs(storage);
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
+        //@@author Procrastinatus
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(1000.0, 600.0, (int) x, (int) y));
+        //@@author
         userPrefs.setAddressBookFilePath(saveFileLocation);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
         return userPrefs;

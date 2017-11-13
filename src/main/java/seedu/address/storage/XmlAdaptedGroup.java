@@ -14,7 +14,7 @@ import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
-
+//@@author cjianhui
 /**
  * JAXB-friendly adapted version of the Tag.
  */

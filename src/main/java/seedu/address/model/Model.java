@@ -42,6 +42,7 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    //@@author cjianhui
     /** Sorts address book list */
     void sortPerson(Comparator<ReadOnlyPerson> sortComparator, boolean isReverseOrder) throws NoPersonsException;
 
@@ -58,6 +59,7 @@ public interface Model {
     void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toRemove) throws
             GroupNotFoundException, PersonNotFoundException, NoPersonsException;
 
+    //@@author
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -68,6 +70,7 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author cjianhui
     /**
      * Replaces the given person {@code target} with {@code favouritePerson}.
      *
@@ -78,6 +81,7 @@ public interface Model {
     void updateFavouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritePerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 

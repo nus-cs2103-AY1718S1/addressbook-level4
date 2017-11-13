@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToGroupListRequestEvent;
 import seedu.address.model.group.ReadOnlyGroup;
 
+//@@author Procrastinatus
 public class GroupListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyGroup> TYPICAL_GROUPS =
             FXCollections.observableList(getTypicalGroups());

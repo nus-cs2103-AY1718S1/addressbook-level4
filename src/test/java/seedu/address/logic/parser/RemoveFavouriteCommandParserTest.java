@@ -10,7 +10,6 @@ import org.junit.Test;
 import seedu.address.logic.commands.RemoveFavouriteCommand;
 
 //@@author nassy93
-
 public class RemoveFavouriteCommandParserTest {
     private RemoveFavouriteCommandParser parser = new RemoveFavouriteCommandParser();
 

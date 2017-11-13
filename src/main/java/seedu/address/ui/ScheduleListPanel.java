@@ -17,8 +17,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.SchedulePanelSelectionChangedEvent;
 import seedu.address.model.schedule.ReadOnlySchedule;
 
-
-
+//@@author Procrastinatus
 /**
  * Panel containing the list of schedules.
  */

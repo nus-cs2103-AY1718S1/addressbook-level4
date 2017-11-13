@@ -8,6 +8,7 @@ import java.util.Date;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author cjianhui
 /**
  * Represents a Schedule's date string in the address book.
  * Guarantees: immutable; Valid schedule date

@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author cjianhui
 /**
  * Represents a Schedule in an address book.
  * Guarantees: details are present and not null, field values are validated.

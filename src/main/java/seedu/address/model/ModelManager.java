@@ -76,6 +76,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Procrastinatus
     @Override
     public synchronized void deletePersons(ReadOnlyPerson[] targets) throws PersonNotFoundException {
         for (ReadOnlyPerson target : targets) {
@@ -84,6 +85,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
@@ -100,6 +102,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author cjianhui
     @Override
     public void updateFavouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritePerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -145,6 +148,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
 
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -174,6 +178,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredGroups.setPredicate(predicate);
     }
 
+    //@@author cjianhui
     /** Returns predicate that returns true if group member list contains a person */
     /** Used to update FilteredPersonList whenever there is a need to display group members */
     public Predicate<ReadOnlyPerson> getGroupMembersPredicate(ObservableList<ReadOnlyPerson> personList) {
@@ -188,7 +193,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         updateFilteredPersonList(getGroupMembersPredicate(personList));
     }
-
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

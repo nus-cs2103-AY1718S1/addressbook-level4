@@ -41,6 +41,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author Procrastinatus
 /**
  * The Browser Panel of the App.
  */
@@ -94,6 +95,7 @@ public class MainContactPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author nassy93
     private void setContactImage(ReadOnlyPerson person) throws MalformedURLException {
         Image img;
         if ("maleIcon.png".equals(person.getProfPic().getPath())) {
@@ -116,6 +118,7 @@ public class MainContactPanel extends UiPart<Region> {
         easeIn(contactImageCircle);
         currentPerson = person;
     }
+    //@@author Procrastinatus
 
     private void setupContactImageCircle() {
         contactImageCircle = new Circle(250, 250, 90);

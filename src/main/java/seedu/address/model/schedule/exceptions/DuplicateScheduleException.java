@@ -2,6 +2,7 @@ package seedu.address.model.schedule.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
 
+//@@author Procrastinatus
 /**
  * Signals that the operation will result in duplicate Schedule objects.
  */

@@ -10,7 +10,6 @@ import org.junit.Test;
 import seedu.address.logic.commands.AddFavouriteCommand;
 
 //@@author nassy93
-
 public class AddFavouriteCommandParserTest {
     private AddFavouriteCommandParser parser = new AddFavouriteCommandParser();
 

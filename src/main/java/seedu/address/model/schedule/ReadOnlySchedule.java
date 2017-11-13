@@ -3,6 +3,7 @@ package seedu.address.model.schedule;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+//@@author cjianhui
 /**
  * A read-only immutable interface for a Schedule in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.

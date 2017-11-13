@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.UniquePersonList;
 
+//@@author jianglingshuo
 public class GroupTest {
 
     private static final String groupName = "Bamboo";

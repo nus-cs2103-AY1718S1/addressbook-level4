@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.model.schedule.ReadOnlySchedule;
 
-
+//@@author Procrastinatus
 /**
  * An UI component that displays information of a {@code Schedule}.
  */

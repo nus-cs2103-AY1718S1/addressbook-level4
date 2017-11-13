@@ -2,6 +2,7 @@ package seedu.address.model.schedule;
 
 import static java.util.Objects.requireNonNull;
 
+//@@author cjianhui
 /**
  * Represents a Schedule's name in the address book.
  */

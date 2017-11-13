@@ -17,7 +17,7 @@ import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToGroupListRequestEvent;
 import seedu.address.model.group.ReadOnlyGroup;
 
-
+//@@author Procrastinatus
 /**
  * Panel containing the list of persons.
  */

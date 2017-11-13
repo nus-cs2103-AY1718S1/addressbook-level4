@@ -14,7 +14,7 @@ import seedu.address.model.group.Group;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.testutil.GroupBuilder;
 
-
+//@@author Procrastinatus
 public class GroupCardTest extends GuiUnitTest {
 
     @Test

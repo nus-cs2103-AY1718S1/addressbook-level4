@@ -71,6 +71,7 @@ public class UniquePersonList implements Iterable<Person> {
 
     }
 
+    //@@author cjianhui
     /**
      * Sorts persons in address book by field and in order specified.
      * @param sortComparator
@@ -93,6 +94,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
     }
 
+    //@@author
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
@@ -114,6 +116,7 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.set(index, new Person(editedPerson));
     }
 
+    //@@author cjianhui
     /**
      * Replaces the person {@code target} in the list with {@code favouritePerson}.
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.

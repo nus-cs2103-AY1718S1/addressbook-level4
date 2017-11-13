@@ -64,8 +64,9 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
+        //@@author cjianhui
         favicon.visibleProperty().bind(Bindings.createBooleanBinding(() -> person.getFavourite().value));
-
+        //@@author
     }
 
     private static String setTagColour(String tagName) {
@@ -76,6 +77,7 @@ public class PersonCard extends UiPart<Region> {
 
         return tagColourSet.get(tagName);
     }
+    //@@author
 
     /**
      * Initialise every contact's tag with its randomly assigned colours

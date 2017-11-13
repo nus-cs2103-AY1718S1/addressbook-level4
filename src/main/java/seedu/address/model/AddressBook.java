@@ -138,6 +138,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    //@@author cjianhui
     /**
      * Replaces the given person {@code target} in the list with {@code editedFavouritePerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedFavouritePerson}.
@@ -167,6 +168,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.sort(sortComparator, isReverseOrder);
     }
 
+    //@@author
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
@@ -245,6 +247,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    //@@author cjianhui
     //// group-level operations
 
     /**
@@ -298,6 +301,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author
     //// util methods
     @Override
     public String toString() {

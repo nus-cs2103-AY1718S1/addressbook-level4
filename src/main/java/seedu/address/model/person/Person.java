@@ -71,6 +71,7 @@ public class Person implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
 
+    //@@author nassy93
     /**
      * Every field must be present and not null.
      * Constructor for Favourite feature
@@ -87,6 +88,8 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
+
+    //@@author cjianhui
     /**
      * Every field must be present and not null.
      * Constructor for Schedule feature
@@ -103,6 +106,7 @@ public class Person implements ReadOnlyPerson {
         this.schedule = new SimpleObjectProperty<>(new UniqueScheduleList(schedule));
     }
 
+    //@@author Procrastinatus
     /**
      * Every field must be present and not null.
      * Constructor for Social Media feature
@@ -120,6 +124,7 @@ public class Person implements ReadOnlyPerson {
         this.socialMedia = new SimpleObjectProperty<>(new UniqueSocialMediaList(socialMedias));
     }
 
+    //@@author cjianhui
     /**
      * Every field must be present and not null.
      * Constructor for Group feature
@@ -136,7 +141,7 @@ public class Person implements ReadOnlyPerson {
         this.groups = new SimpleObjectProperty<>(new UniqueGroupList(groups));
     }
 
-
+    //@@author
     /**
      * Every field must be present and not null.
      * Constructor for XMLAdaptedPerson

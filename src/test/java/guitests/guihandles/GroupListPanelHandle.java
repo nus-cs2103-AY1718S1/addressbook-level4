@@ -7,6 +7,7 @@ import javafx.scene.control.ListView;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.ui.GroupCard;
 
+//@@author Procrastinatus
 /**
  * Provides a handle for {@code GroupListPanel} containing the list of {@code GroupCard}.
  */

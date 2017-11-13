@@ -20,7 +20,6 @@ import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
 //@@author nassy93
-
 public class AddFavouriteCommandTest {
     private Model model = new ModelManager(getAltAddressBook(), new UserPrefs());
 

@@ -12,6 +12,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.SortCommand;
 
+//@@author cjianhui
 public class SortCommandParserTest {
 
     @Rule

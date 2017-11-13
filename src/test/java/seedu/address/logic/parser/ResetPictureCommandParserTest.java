@@ -10,7 +10,6 @@ import org.junit.Test;
 import seedu.address.logic.commands.ResetPictureCommand;
 
 //@@author nassy93
-
 public class ResetPictureCommandParserTest {
     private ResetPictureCommandParser parser = new ResetPictureCommandParser();
 

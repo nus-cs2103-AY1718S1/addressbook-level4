@@ -18,7 +18,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
 import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
-
+//@@author Procrastinatus
 /**
  * A list of schedules that enforces no nulls and uniqueness between its elements.
  *
@@ -159,6 +159,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
     }
 
+    //@@author cjianhui
     /** Sorts scheduleList by schedule end dateTime **/
     public void sort() {
         Collections.sort(internalList, (s1, s2) -> {
@@ -173,6 +174,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
 
     }
 
+    //@@author
     @Override
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);
