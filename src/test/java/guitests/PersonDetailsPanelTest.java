@@ -9,10 +9,10 @@ import static seedu.address.ui.PersonDetailsPanel.INSTAGRAM_DEFAULT_URL;
 import static seedu.address.ui.PersonDetailsPanel.NUSMODS_DEFAULT_URL;
 import static seedu.address.ui.PersonDetailsPanel.TWITTER_DEFAULT_URL;
 
-import org.junit.Test;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import org.junit.Test;
 
 import seedu.address.commons.events.ui.OpenFaceBookWebViewEvent;
 import seedu.address.commons.events.ui.OpenGithubWebViewEvent;
