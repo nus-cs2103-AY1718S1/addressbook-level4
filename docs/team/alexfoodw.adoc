@@ -4,11 +4,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: KayPoh!
-KayPoh! is a desktop address book application used for __. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+KayPoh! is a desktop address book application with social media integrations.
+The user interacts with the application using a command line interface, and it has a GUI created with JavaFX.
+It is written in Java and has about 14k LoC.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W10-B2/main/blob/master/collated/main/alexfoodw.md[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W10-B2/main/blob/master/collated/main/alexfoodw.md[Functional code]] [https://github.com/CS2103AUG2017-W10-B2/main/blob/master/collated/test/alexfoodw.md[Test code]] {give links to collated code files}
 
-=== Enhancement Added: `facebookconnect`
+=== Enhancement Added: Connect Address Book to Facebook Account
 
 ==== External behavior
 
@@ -21,7 +23,11 @@ include::../UserGuide.adoc[tag=facebookconnect]
 
 ---
 
-=== Enhancement Added: `facebookpost`
+==== Justification
+
+Allowing users to sync their personal Facebook account with Kaypoh makes the application even more integrated with the user's life.
+
+=== Enhancement Added: Post Status to Facebook Account
 
 ==== External behavior
 
@@ -34,6 +40,10 @@ include::../UserGuide.adoc[tag=facebookpost]
 
 ---
 
+==== Justification
+
+Allowing users to post a status directly to their Facebook account makes Kaypoh a one-stop application for all of the user's social media needs.
+
 ==== Implementation
 
 ---
@@ -45,7 +55,7 @@ include::../DeveloperGuide.adoc[tag=facebook]
 
 ---
 
-=== Enhancement Added: `facebooklink`
+=== Enhancement Added: Share a Link to Facebook Account
 
 ==== External behavior
 
@@ -58,7 +68,12 @@ include::../UserGuide.adoc[tag=facebooklink]
 
 ---
 
-=== Enhancement Added: `facebookadd`
+==== Justification
+
+Allowing users to share a link directly to their Facebook account makes Kaypoh a one-stop application for all of the user's social media needs.
+
+
+=== Enhancement Added: Add a Contact Directly from Facebook
 
 ==== External behavior
 
@@ -71,7 +86,11 @@ include::../UserGuide.adoc[tag=facebookadd]
 
 ---
 
-=== Enhancement Added: `facebookaddallfriends`
+==== Justification
+
+Allowing users to import contacts directly from the Facebook user-base makes the process of adding contacts much more efficient and intuitive.
+
+=== Enhancement Added: Import all Facebook Friends as Contacts
 
 ==== External behavior
 
@@ -83,6 +102,10 @@ include::../UserGuide.adoc[tag=facebookaddallfriends]
 #End of Extract#
 
 ---
+
+==== Justification
+
+Allowing users to import all their current Facebook friends directly makes the process of setting up their address book simple, efficient and intuitive.
 
 === Enhancement Proposed: Add command `twitterpost`
 * Allows the user to directly post to twitter from within Kaypoh!

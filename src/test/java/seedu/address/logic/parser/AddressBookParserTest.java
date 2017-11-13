@@ -23,6 +23,11 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FacebookAddAllFriendsCommand;
+import seedu.address.logic.commands.FacebookAddCommand;
+import seedu.address.logic.commands.FacebookConnectCommand;
+import seedu.address.logic.commands.FacebookLinkCommand;
+import seedu.address.logic.commands.FacebookPostCommand;
 import seedu.address.logic.commands.FavoriteCommand;
 import seedu.address.logic.commands.FindByNameCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -115,6 +120,41 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_ALIAS) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_ALIAS + " 3") instanceof ExitCommand);
     }
+
+    //@@author alexfoodw
+    @Test
+    public void parseCommand_facebookAddAllFriends() throws Exception {
+        FacebookAddAllFriendsCommand command = (FacebookAddAllFriendsCommand) parser.parseCommand(
+                FacebookAddAllFriendsCommand.COMMAND_WORD);
+        assertEquals(new FacebookAddAllFriendsCommand(), command);
+    }
+
+    @Test
+    public void parseCommand_facebookAdd() throws Exception {
+        FacebookAddCommand command = (FacebookAddCommand) parser.parseCommand(
+                FacebookAddCommand.COMMAND_WORD + " " + FacebookAddCommand.EXAMPLE_NAME);
+        assertEquals(new FacebookAddCommand(FacebookAddCommand.EXAMPLE_NAME), command);
+    }
+
+    @Test
+    public void parseCommand_facebookConnect() throws Exception {
+        FacebookConnectCommand command = (FacebookConnectCommand) parser.parseCommand(
+                FacebookConnectCommand.COMMAND_WORD);
+        assertEquals(new FacebookConnectCommand(), command);
+    }
+    @Test
+    public void parseCommand_facebookLink() throws Exception {
+        FacebookLinkCommand command = (FacebookLinkCommand) parser.parseCommand(
+                FacebookLinkCommand.COMMAND_WORD + " " + FacebookLinkCommand.EXAMPLE_LINK);
+        assertEquals(new FacebookLinkCommand(FacebookLinkCommand.EXAMPLE_LINK), command);
+    }
+    @Test
+    public void parseCommand_facebookPost() throws Exception {
+        FacebookPostCommand command = (FacebookPostCommand) parser.parseCommand(
+                FacebookPostCommand.COMMAND_WORD + " " + FacebookPostCommand.EXAMPLE_POST);
+        assertEquals(new FacebookPostCommand(FacebookPostCommand.EXAMPLE_POST), command);
+    }
+    //@@author
 
     //@@author keithsoc
     @Test

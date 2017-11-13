@@ -138,4 +138,11 @@ public class FacebookConnectCommand extends Command {
             throw new CommandException("Error in Facebook Authorisation");
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FacebookConnectCommand); // instanceof handles null
+    }
 }
+//@@author
