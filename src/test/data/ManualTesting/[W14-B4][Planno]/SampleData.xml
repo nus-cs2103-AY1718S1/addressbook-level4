@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
 <!-- Start of addressbook.xml sample data ->
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
     <persons>
         <name>Alex Lee</name>
         <phone>98292241</phone>
@@ -203,9 +206,12 @@
     <tags>uncle</tags>
     <tags>cousin</tags>
     <tags>financialAdvisor</tags>
+</addressbook>
 <!- End of addressbook.xml sample data -->
 
 <!-- Start of eventstorage.xml sample data ->
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<eventstorage>
     <events>
         <eventName>CS2010 midterm</eventName>
         <eventDesc>CS2010 written quiz and online quiz 1</eventDesc>
@@ -443,5 +449,6 @@
             <tagged>cousin</tagged>
         </participants>
     </events>
+</eventstorage>
 <!- End of eventstorage.xml sample data -->
 <SampleData/>
