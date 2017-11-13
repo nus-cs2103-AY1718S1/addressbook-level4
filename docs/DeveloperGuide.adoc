@@ -528,20 +528,20 @@ _Figure 4.4.2.3 : Sequence Diagram for Adding an event (reminders are automatica
 //tag::themeSwitch[]
 === Switch Themes mechanism
 
-As **BoNUS** is targeted at students, we want to allow students to personalise **BoNUS**. To open up such a
+As BoNUS is targeted at students, we want to allow students to personalise BoNUS. To open up such a
 possibility, we decided to introduce the `SwitchThemeCommand` to support bright and dark
 themes.
 
 In the following sections below, the Switch Themes mechanism will be elaborated with the aid of
-illustrated diagrams to depict the interactions between the components in **BoNUS**.
+illustrated diagrams to depict the interactions between the components in BoNUS.
 
 The _Sequence Diagram_ in _Figure 4.5.1_ illustrates how the components interact for the scenario where the user issues the command
-`theme`. Also, the _Sequence Diagram_ illustrates the events-driven architectural style in **BoNUS**.
+`theme`. Also, the _Sequence Diagram_ illustrates the events-driven architectural style in BoNUS.
 
-image::SDforSwitchTheme.png[width="400"]
+image::SDforSwitchTheme.png[width="500", height="300"]
 _Figure 4.5.1 : Events-Driven nature of Switch Theme_
 
-image::SDforSwitchThemesEmphasis.png[width="400"]
+image::SDforSwitchThemesEmphasis.png[width="500", height="300"]
 _Figure 4.5.2 : Sequence diagram for Switch Theme mechanism_
 
 
@@ -609,7 +609,7 @@ from `SwitchThemeCommand` under the `Logic` component. +
 accordingly whenever `SwitchThemeCommand` is executed.
 
 2. Create a CSS file for BrightTheme which include its main CSS file as well as its extension files. Remove the default
-CSS styles from the `FXML` files in **BoNUS**.
+CSS styles from the `FXML` files in BoNUS.
 
 3. Implement the switching of themes in `MainWindow`. Create a method in `MainWindow` to subscribe it to the event change.
 Raise the event whenever `SwitchThemeCommand` is executed such that the theme will change accordingly in `MainWindow`.
@@ -618,7 +618,7 @@ Raise the event whenever `SwitchThemeCommand` is executed such that the theme wi
 // tag::importExportXml[]
 === Import & Export mechanism
 
-In order to open up more possibilities to **BoNUS**, we have introduced the `import` and `export` commands. We are using
+In order to open up more possibilities to BoNUS, we have introduced the `import` and `export` commands. We are using
 `ImportXmlCommand` and `ExportCommand` to support importing and exporting of address book data through XML files.
 
 In the following sections, we will focus on how these commands depend on the `Storage` component to retrieve external

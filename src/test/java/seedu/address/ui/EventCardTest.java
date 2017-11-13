@@ -13,6 +13,8 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.testutil.EventBuilder;
 import seedu.address.ui.event.EventCard;
 
+//@@author junyango
+
 public class EventCardTest extends GuiUnitTest {
     @Test
     public void equals() {

@@ -7,6 +7,8 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.event.exceptions.EventNotFoundException;
 
+//@@author junyango
+
 public class EventNotFoundExceptionTest {
     private ExpectedException thrown = ExpectedException.none();
 

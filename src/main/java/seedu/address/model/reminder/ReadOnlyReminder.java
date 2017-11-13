@@ -3,6 +3,8 @@ package seedu.address.model.reminder;
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author junyango
+
 /**
  * A read-only immutable interface for a Reminder in the addressBook.
  * Implementations should guarantee: details are present and not null, field values are validated.

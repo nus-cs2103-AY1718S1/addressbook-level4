@@ -1,5 +1,5 @@
 # dennaloh
-###### /java/seedu/address/logic/commands/FbCommandTest.java
+###### \java\seedu\address\logic\commands\FbCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FbCommand}.
@@ -81,7 +81,7 @@ public class FbCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/person/EmailCommandTest.java
+###### \java\seedu\address\logic\commands\person\EmailCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code EmailCommand}.
@@ -90,7 +90,7 @@ public class EmailCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
 ```
-###### /java/seedu/address/logic/commands/person/EmailCommandTest.java
+###### \java\seedu\address\logic\commands\person\EmailCommandTest.java
 ``` java
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
@@ -130,7 +130,7 @@ public class EmailCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/person/FindTagCommandTest.java
+###### \java\seedu\address\logic\commands\person\FindTagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindTagCommand}.
@@ -199,7 +199,7 @@ public class FindTagCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/person/GMapCommandTest.java
+###### \java\seedu\address\logic\commands\person\GMapCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code GMapCommand}.
@@ -281,7 +281,7 @@ public class GMapCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/stub/ModelStub.java
+###### \java\seedu\address\logic\commands\stub\ModelStub.java
 ``` java
     @Override
     public String getGMapUrl(ReadOnlyPerson target)  {
@@ -300,7 +300,7 @@ public class GMapCommandTest {
         fail("This method should not be called.");
     }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_fb() throws Exception {
@@ -331,7 +331,7 @@ public class GMapCommandTest {
         assertEquals(new EmailCommand(INDEX_FIRST_PERSON), command);
     }
 ```
-###### /java/seedu/address/ui/EventCalendarTest.java
+###### \java\seedu\address\ui\EventCalendarTest.java
 ``` java
 public class EventCalendarTest {
 

@@ -1,5 +1,5 @@
 # junyango
-###### /java/seedu/address/commons/events/ui/EventPanelSelectionChangedEvent.java
+###### \java\seedu\address\commons\events\ui\EventPanelSelectionChangedEvent.java
 ``` java
 /**
  * Represents a selection change in the Event List Panel
@@ -21,7 +21,7 @@ public class EventPanelSelectionChangedEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/SwitchThemeEvent.java
+###### \java\seedu\address\commons\events\ui\SwitchThemeEvent.java
 ``` java
 
 /**
@@ -34,7 +34,7 @@ public class SwitchThemeEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/SwitchToEventsListEvent.java
+###### \java\seedu\address\commons\events\ui\SwitchToEventsListEvent.java
 ``` java
 /**
  * Represents a change that invokes list switching
@@ -47,7 +47,7 @@ public class SwitchToEventsListEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/event/AddEventCommand.java
+###### \java\seedu\address\logic\commands\event\AddEventCommand.java
 ``` java
 /**
  * Adds an event to the address book.
@@ -106,7 +106,7 @@ public class AddEventCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/event/DeleteEventCommand.java
+###### \java\seedu\address\logic\commands\event\DeleteEventCommand.java
 ``` java
 
 
@@ -161,7 +161,7 @@ public class DeleteEventCommand extends UndoableCommand {
 }
 
 ```
-###### /java/seedu/address/logic/commands/event/EditEventCommand.java
+###### \java\seedu\address\logic\commands\event\EditEventCommand.java
 ``` java
 
 /**
@@ -333,7 +333,7 @@ public class EditEventCommand extends UndoableCommand {
 }
 
 ```
-###### /java/seedu/address/logic/commands/event/ListEventCommand.java
+###### \java\seedu\address\logic\commands\event\ListEventCommand.java
 ``` java
 /**
  * Lists all events in the address book to the user.
@@ -357,7 +357,7 @@ public class ListEventCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SwitchThemeCommand.java
+###### \java\seedu\address\logic\commands\SwitchThemeCommand.java
 ``` java
 
 /**
@@ -380,7 +380,7 @@ public class SwitchThemeCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case AddEventCommand.COMMAND_WORD:
         case AddEventCommand.COMMAND_ALIAS:
@@ -402,7 +402,7 @@ public class SwitchThemeCommand extends Command {
         case ListEventCommand.COMMAND_ALIAS:
             return new ListEventCommand();
 ```
-###### /java/seedu/address/logic/parser/event/AddEventParser.java
+###### \java\seedu\address\logic\parser\event\AddEventParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddEventCommand object
@@ -439,7 +439,7 @@ public class AddEventParser implements Parser<AddEventCommand> {
 }
 
 ```
-###### /java/seedu/address/logic/parser/event/DeleteEventParser.java
+###### \java\seedu\address\logic\parser\event\DeleteEventParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteEventCommand object
@@ -464,7 +464,7 @@ public class DeleteEventParser implements Parser<DeleteEventCommand> {
 }
 
 ```
-###### /java/seedu/address/logic/parser/event/EditEventParser.java
+###### \java\seedu\address\logic\parser\event\EditEventParser.java
 ``` java
 /**
  * Parses input arguments and creates a new EditEventCommand object
@@ -506,7 +506,7 @@ public class EditEventParser implements Parser<EditEventCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Replaces all events in this list with those in the argument event list.
@@ -516,7 +516,7 @@ public class EditEventParser implements Parser<EditEventCommand> {
     }
 
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /*****************************************************
      * Event-level operations
@@ -569,7 +569,7 @@ public class EditEventParser implements Parser<EditEventCommand> {
         events.sortEvents();
     }
 ```
-###### /java/seedu/address/model/event/exceptions/DuplicateEventException.java
+###### \java\seedu\address\model\event\exceptions\DuplicateEventException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Event objects.
@@ -580,7 +580,7 @@ public class DuplicateEventException extends DuplicateDataException {
     }
 }
 ```
-###### /java/seedu/address/model/event/exceptions/EventNotFoundException.java
+###### \java\seedu\address\model\event\exceptions\EventNotFoundException.java
 ``` java
 
 /**
@@ -598,7 +598,7 @@ public class EventNotFoundException extends Exception {
 }
 
 ```
-###### /java/seedu/address/model/event/ReadOnlyEvent.java
+###### \java\seedu\address\model\event\ReadOnlyEvent.java
 ``` java
 /**
  * A read-only immutable interface for an Event in the addressbook.
@@ -650,7 +650,7 @@ public interface ReadOnlyEvent {
 }
 
 ```
-###### /java/seedu/address/model/event/UniqueEventList.java
+###### \java\seedu\address\model\event\UniqueEventList.java
 ``` java
 /**
  * A list of events that enforces uniqueness between its elements and does not allow nulls.
@@ -737,7 +737,7 @@ public class UniqueEventList implements Iterable<Event> {
     }
 
 ```
-###### /java/seedu/address/model/event/UniqueEventList.java
+###### \java\seedu\address\model\event\UniqueEventList.java
 ``` java
     public void setEvents(UniqueEventList replacement) {
         this.internalList.setAll(replacement.internalList);
@@ -778,7 +778,7 @@ public class UniqueEventList implements Iterable<Event> {
 
 
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     //=========== Model support for activity component =============================================================
 
@@ -794,7 +794,7 @@ public class UniqueEventList implements Iterable<Event> {
 
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     //=========== Model support for activity component =============================================================
 
@@ -822,7 +822,7 @@ public class UniqueEventList implements Iterable<Event> {
         indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     //=========== Filtered Activity List Accessors =============================================================
 
@@ -842,7 +842,7 @@ public class UniqueEventList implements Iterable<Event> {
         filteredEvents.setPredicate(predicate);
     }
 ```
-###### /java/seedu/address/model/property/DateTime.java
+###### \java\seedu\address\model\property\DateTime.java
 ``` java
 /**
  * Represents an event's date/time in the address book.
@@ -852,7 +852,7 @@ public class DateTime extends Property {
     private static final String PROPERTY_SHORT_NAME = "dt";
 
 ```
-###### /java/seedu/address/model/property/EventNameContainsKeywordsPredicate.java
+###### \java\seedu\address\model\property\EventNameContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyEvent}'s {@code Name} matches any of the keywords given.
@@ -879,7 +879,7 @@ public class EventNameContainsKeywordsPredicate implements Predicate<ReadOnlyEve
 
 }
 ```
-###### /java/seedu/address/storage/elements/XmlAdaptedEvent.java
+###### \java\seedu\address\storage\elements\XmlAdaptedEvent.java
 ``` java
 
 
@@ -945,7 +945,7 @@ public class XmlAdaptedEvent {
     }
 }
 ```
-###### /java/seedu/address/storage/elements/XmlAdaptedReminder.java
+###### \java\seedu\address\storage\elements\XmlAdaptedReminder.java
 ``` java
 /**
  * JAXB-friendly version of the Reminder.
@@ -975,7 +975,7 @@ public class XmlAdaptedReminder {
     }
 }
 ```
-###### /java/seedu/address/storage/elements/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\elements\XmlSerializableAddressBook.java
 ``` java
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
@@ -1006,7 +1006,7 @@ public class XmlAdaptedReminder {
     }
 
 ```
-###### /java/seedu/address/storage/JsonUserPrefsStorage.java
+###### \java\seedu\address\storage\JsonUserPrefsStorage.java
 ``` java
 /**
  * A class to access UserPrefs stored in the hard disk as a json file
@@ -1055,14 +1055,14 @@ public class JsonUserPrefsStorage implements UserPrefsStorage {
 
 }
 ```
-###### /java/seedu/address/storage/UserPrefsStorage.java
+###### \java\seedu\address\storage\UserPrefsStorage.java
 ``` java
     /**
      * Returns address book theme
      */
     String getAddressBookTheme();
 ```
-###### /java/seedu/address/ui/event/EventCard.java
+###### \java\seedu\address\ui\event\EventCard.java
 ``` java
 /**
  * An UI component that displays information of a {@code Event}.
@@ -1152,7 +1152,7 @@ public class EventCard extends UiPart<Region> {
 
 }
 ```
-###### /java/seedu/address/ui/event/EventListPanel.java
+###### \java\seedu\address\ui\event\EventListPanel.java
 ``` java
 /**
  * Panel containing the list of events.
@@ -1223,7 +1223,7 @@ public class EventListPanel extends UiPart<Region> {
 
 }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     /**
      * Initializes theme upon start up according to preferences.json file (last saved)
@@ -1260,7 +1260,7 @@ public class EventListPanel extends UiPart<Region> {
         }
     }
 ```
-###### /resources/view/event/EventListCard.fxml
+###### \resources\view\event\EventListCard.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -1304,7 +1304,7 @@ public class EventListPanel extends UiPart<Region> {
     </GridPane>
 </HBox>
 ```
-###### /resources/view/event/EventListPanel.fxml
+###### \resources\view\event\EventListPanel.fxml
 ``` fxml
 
 <?import javafx.scene.control.ListView?>

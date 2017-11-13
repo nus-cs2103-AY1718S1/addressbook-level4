@@ -9,6 +9,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author junyango
+
 /**
  * Represents an Reminder in the address book.
  * Guarantees: details are present and not null, field values are validated.

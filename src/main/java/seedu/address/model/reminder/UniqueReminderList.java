@@ -12,6 +12,8 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
+//@@author junyango
+
 /**
  * A list of reminders that enforces uniqueness between its elements and does not allow nulls.
  *
