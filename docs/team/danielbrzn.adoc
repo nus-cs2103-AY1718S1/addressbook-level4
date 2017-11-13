@@ -75,7 +75,7 @@ include::../DeveloperGuide.adoc[tag=location]
 
 ---
 
-=== Enhancement Proposed: iCloud Import
+=== Enhancement Proposed: iCloud Contacts Import
 
 ==== External behavior
 
@@ -102,6 +102,11 @@ provided by Apple for usage, the import would have to be facilitated using HTTP 
 
 A HTTP request would be sent to Apple's servers with the user's credentials for authentication. Once authenticated, another request containing parameters to access the contacts
 of the authenticated user would be sent, and the returned data would be parsed into a `Person` and added to the application if the fields are valid.
+
+The following activity diagram summarizes the flow of the iCloud import:
+
+image::../images/iCloudImportActivityDIagram.png[width="800"]
+
 
 The user's credentials will never be stored in the application.
 
