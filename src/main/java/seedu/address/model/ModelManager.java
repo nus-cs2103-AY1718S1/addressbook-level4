@@ -178,7 +178,9 @@ public class ModelManager extends ComponentManager implements Model {
             addressBook.updateReminder(oldReminder, newReminder);
         }
     }
+    //@@author
 
+    //@@author cqhchan
     @Override
     public synchronized void deleteAccount(ReadOnlyAccount target) throws PersonNotFoundException {
         database.removeAccount(target);
@@ -232,8 +234,6 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-
-    //@@author
 
     //=========== Filtered Account List Accessors =============================================================
 
