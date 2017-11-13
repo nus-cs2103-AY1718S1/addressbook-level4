@@ -13,8 +13,8 @@ public class Messages {
     //@@author derickjw
     public static final String[] AUTOCOMPLETE_SUGGESTIONS = {"createDefaultAcc", "removeLogin", "changepw",
                                                              "changeuser", "convenientStation",
-                                                             "visualize", "arrange", "list", "locateMrt", "edit", "find",
-                                                             "findByAddress", "findByPhone", "findByEmail",
+                                                             "visualize", "arrange", "list", "locateMrt", "edit",
+                                                             "find", "findByAddress", "findByPhone", "findByEmail",
                                                              "findByTags", "delete", "locate", "select", "history",
                                                              "sort", "undo", "clear", "exit", "schedule", };
 }
