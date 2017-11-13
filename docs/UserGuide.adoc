@@ -63,6 +63,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Refer to the link:#features[Features] section below for more details of each command.
 
 == Features
+
+// tag::splash[]
+=== Home Page
+When you open ScheduBook, you are greeted with a background image which is your home page.
+
+image::splash.jpg[width="800"]
+_Figure 4.1: Home Page_
+
+// end::splash[]
+
 // tag::meetingCard[]
 === Meeting Card
 The meeting card provides you the information of the meetings that you have scheduled. As you can see from the Figure 2, the `NameMeeting`, `DateTime`, `PersonToMeet`, `PhoneNum` and `Location` are all shown to remind you of your certain meeting.
