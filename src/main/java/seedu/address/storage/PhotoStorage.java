@@ -40,6 +40,7 @@ public class PhotoStorage {
             throw new IOException(WRITE_FAILURE_MESSAGE);
         }
         uniqueFileName = generateUniqueFileName();
+        requireNonNull(uniqueFileName);
         String newFilePath = "displaypictures/" + uniqueFileName + "." + ext;
         try {
             fileReader = new File(filePath);

@@ -11,15 +11,13 @@ import java.io.File;
 
 public class Photo {
     public static final String URL_VALIDATION = "The filepath URL does not exist.";
-    private static final String DEFAULT_PHOTOURL = "";
     private static final String DEFAULT_FILEPATH = "";
     private String filepath;
-    private String url;
     public Photo(String filepath) throws IllegalArgumentException {
         //this is to setup the default photo for contacts after it is added.
         requireNonNull(filepath);
         if (filepath.equals(DEFAULT_FILEPATH)) {
-            this.filepath = DEFAULT_PHOTOURL;
+            this.filepath = DEFAULT_FILEPATH;
         } else {
             File file = new File(filepath);
             if (isValidFilePath(file)) {

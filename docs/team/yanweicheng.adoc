@@ -38,6 +38,35 @@ include::../DeveloperGuide.adoc[tag=findcommand]
 
 ---
 
+=== Enhancement Added: RemarkCommand
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=remarkcommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This command would be useful for users to keep track of attributes unique to different contacts. This command allows any format of input -
+for example `String`, `Integer`, which provides flexibility and convenience for users to enter different remarks for different contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remarkcommand]
+
+#End of Extract#
+
+---
+
 === Enhancement Proposed: Add command `emailall`
 
 ==== External behavior
@@ -53,6 +82,14 @@ include::../UserGuide.adoc[tag=emailall]
 
 ==== Justification
 
-This feature would be useful and convenient for university as they do not have to send individual
+This feature would be useful and convenient for university students as they do not have to send individual
 emails to different contacts. The user can put desired contacts with the same tag and then use `emailall`
 to send mass emails - making this process much faster and more efficient.
+
+---
+
+=== Other contributions
+
+* Edited documentations for teammates
+* Contributed to the UI layout
+* Wrote additional tests to increase coverage (Pull requests #39, #91)

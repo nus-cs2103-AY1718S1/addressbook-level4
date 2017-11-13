@@ -162,6 +162,7 @@ Deletes the 1st, 3rd and 4th person in PEERSONAL.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
 //end::deletecommand[]
 
 // tag::addphoto[]
@@ -179,7 +180,9 @@ Removes the current photo from the first person of PEERSONAL.
 
 [NOTE]
 ====
-Only images in `.jpg` and `.png` are supported.
+* Only images in `.jpg` and `.png` are supported.
+
+* Do not delete files in the `displaypictures` folder!
 ====
 
 // end::addphoto[]
@@ -263,6 +266,8 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::remarkcommand[]
+
 === Adding a remark : `remark` (Since v1.1)
 
 Edits the remark for a person specified in the `INDEX`. +
@@ -274,6 +279,8 @@ Examples:
 Edits the remark for the first person to `Likes to drink coffee.` +
 * `remark 1 r/` +
 Removes the remark for the first person.
+
+// end::remarkcommand[]
 
 // tag::birthday[]
 

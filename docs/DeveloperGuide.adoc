@@ -252,33 +252,43 @@ image::NewUML.png[width="800]
 
 ==== Design considerations
 
-**Aspect:** Implementation of AddPhotoCommand +
+**Aspect:** Implementation of AddPhotoCommand. +
 **Alternative 1(current choice):** Have `AddPhotoCommand` implement `UndoableCommand` +
 **Pros:** Retains the logic flow of how commands are executed. This option increases code reusability of the UndoableCommand interface. +
 **Cons:** Increases coupling between the AddPhotoCommand class and the UndoableCommand interface. In addition, logic flow is embedded in multiple layers. New developers might find it hard to understand the complicated logic flow. +
-**Alternative 2:** Have `AddPhotoCommand` implement `Command` +
+**Alternative 2:** Have `AddPhotoCommand` implement `Command`. +
 **Pros:** Retains the logic flow of how commands are executed. This option increases code reusability of the Command interface. +
 **Cons:** Increases coupling between the AddPhotoCommand class and the UndoableCommand interface. In addition, users will not have the convenient option to execute `undo` immediately if an incorrect photo is added.
 
 ---
 
-**Aspect:** Choice of data type to represent the added contact image in `Photo` class +
+**Aspect:** Usage of data type to represent the added contact image in `Photo` class. +
 **Alternative 1(current choice):** Using a String to represent the data or value of the image. +
-**Pros:** Works well with JavaFx SceneBuilder as `String` class can be passed into ImageView using `File` class to load the image.+
-**Cons:** Works in a very cumbersome way due to the two step conversion. +
+**Pros:** Works well with JavaFx SceneBuilder as `String` class can be passed into ImageView using `File` class to load the image. +
+**Cons:** Works in a cumbersome way due to the two step conversion. +
 **Alternative 2:** Using Image to represent the data or value of the image. +
 **Pros:** Works well with JavaFx SceneBuilder as Image class can be passed into ImageView class to load the image using only a single step conversion process. +
-**Cons:** Might present a problem if our team chooses to use alternative GUI generators that does not utilise Javafx scripting language. Image class might not be applicable to generate an Image.
+**Cons:** Presents a potential problem if our team chooses to use alternative GUI generators that does not utilise Javafx scripting language. Image class might not be applicable to generate an Image.
 
 ---
 
-**Aspect:** Choice of how the images are stored and accessed +
+**Aspect:** Storing and accessing of the images. +
 **Alternative 1(current choice):** Creating a new folder `displaypictures` upon first execution of PEERSONAL.jar to use as an image storage folder. +
-**Pros:** Image filepaths are now independent of the source filepath. Therefore users do not have to worry about shifting the specific image that is tied to a specified contact in PEERSONAL. +
+**Pros:** Shifting the image that is being used as display photo for a contact is possible and will not cause any technical issues. Image filepaths are now independent of the source filepath. +
 **Cons:** Saving photos into `displaypictures` folder size may cause the folder to occupy unnecessary large memory space if user adds too many photos. +
-**Alternative 2:** Directly obtains the local filepath of the image on the user's hard drive without writing the image into a new image storage folder `displaypicture` for PEERSONAL. +
+**Alternative 2:** Obtains the local filepath of the image on the user's hard drive without writing the image into a new image storage folder `displaypicture` for PEERSONAL. +
 **Pros:** Do not have deal with write issues to `displaypictures` and memory size of `displaypictures` if it gets too big. +
-**Cons:** Users might forget that a specific image file is tied to a contact in PEERSONAL. Shifting the image file will cause PEERSONAL to be unable to find the image file. +
+**Cons:** Shifting the an image that is being used as display photo for a contact will result in PEERSONAL not able to find the file path of the image.
+
+---
+
+**Aspect:** Generation of the unique filepath for images rewritten to `displaypictures` folder. +
+**Alternative 1(current choice): ** Using UUID class to generate a unique file path of the image that is to be written into `displaypictures`. +
+**Pros:** Generated filepath is unqiue. If the user wishes to overwrite the current image with a new image, the new image does not overwrite the old image. It allows `undo` command to be performed correctly which will revert the display picture of the specified contact to its previous image. +
+**Cons:** Causes the file size of `displaypictures` folder to get too large too quickly if user has alot of contacts that he wishes to add a display photo to or if user adds photos at a rapid rate or both. +
+**Alternative 2:** Using hashcode of the contact's email to generate the unique file path of the image that is to be written into `displaypictures`. +
+**Pros:** Overwrites the previous photo of the contact as the hashcode is the same due to having the same email. Optimal for saving memory space and preventing the file size of `displaypictures` folder to get too large. +
+**Cons:** Overwriting the previous photo of the specified contact means that `undo` command for `addphoto` will not be executed correctly, as the previous image of that contact has already been overwritten and deleted.
 // end::addphoto[]
 
 // tag::undoredo[]
@@ -488,10 +498,10 @@ image::FindCommandSequenceDiagram.png[width="800"]
 **Aspect:** Accepting different types of user input. +
 **Alternative 1 (current choice):** Using a `commandWord` and `arguments` regex to distinguish user inputs. +
 **Pros:** It is easy to add new parameters and debug. +
-**Cons:** Inconvenient for users as they have to use a specific `commandWord` for a specific parameter.  +
+**Cons:** However, it is inconvenient for users as they have to use a specific `commandWord` for a specific parameter.  +
 **Alternative 2:** Accept any type of user input after `find`. +
-**Pros:** More user-friendly as there are fewer requirements for user input. +
-**Cons:** Difficult to implement because it is tedious to distinguish the user input as several parameters are `String` parameters.
+**Pros:** It is more user-friendly as there are fewer requirements for user input. +
+**Cons:** It would be difficult to implement because it is tedious to distinguish the user input as several parameters are `String` parameters.
 // end::findcommand[]
 
 // tag::deletecommand[]
@@ -550,6 +560,8 @@ to be stored in an `ArrayList <Index>`.
 **Pros:** It allows for most of the base code of `DeleteCommand` to be reused. +
 **Cons:** Have to be thorough and change `Index` to `ArrayList<Index>` in all occurrences within all relevant
 `DeleteCommand` classes and methods.
+
+// end::deletecommand[]
 
 // tag::birthday[]
 === BirthdayCommand mechanism
@@ -672,6 +684,41 @@ display of the entire list in an easier to see manner. +
 
 ---
 //end::sortcommand[]
+
+//tag::remarkcommand[]
+=== RemarkCommand mechanism
+
+`RemarkCommand` implements from `UndoableCommand` and supports undoing and redoing. It is facilitated by the `LogicManager`, where most the
+process is executed. This command allows user to input `REMARK` field to a contact using the command format `remark INDEX r/[REMARK]`. If the `[REMARK]` is an
+empty string, the command removes the existing `remark` on the contact at that `INDEX` . +
+
+A `RemarkCommandParser` class is also created for user inputs. When user inputs the command for `remark`, the `AddressBookParser` would call `RemarkCommandParser` to
+create a new instance `RemarkCommand`. `RemarkCommandParser` implements the `Parser` class. The code snippet below shows the logic of `RemarkCommandParser`:
+----
+public class RemarkCommandParser implements Parser<RemarkCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the RemarkCommand
+     * and returns an RemarkCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public RemarkCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_REMARK);
+        Index index;
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
+        }
+        String remark = argMultimap.getValue(PREFIX_REMARK).orElse("");
+        return new RemarkCommand(index, new Remark(remark));
+    }
+}
+----
+
+//end::remarkcommand[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
