@@ -35,7 +35,7 @@ public class AddEventCommand extends UndoableCommand {
     private final Event toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     * Creates an AddEventCommand to add the specified {@code ReadOnlyEvent}
      */
     public AddEventCommand(ReadOnlyEvent event) {
         toAdd = new Event(event);
@@ -55,7 +55,7 @@ public class AddEventCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddCommand // instanceof handles nulls
+                || (other instanceof AddEventCommand // instanceof handles nulls
                 && toAdd.equals(((AddEventCommand) other).toAdd));
     }
 }
