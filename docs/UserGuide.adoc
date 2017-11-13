@@ -395,7 +395,7 @@ Examples:
 Sets the priority of this task to be `Super Important`.
 
 * `setPriority 1 c/6` +
-An Exception is thrown: A priority value is defined within integer range of 1 to 5.
+A warning message is shown: A priority value is defined within integer range of 1 to 5.
 
 ==== Sorting tasks by their priority : `taskByPriority`
 Sorts the task currently present in the taskBook by priority. +
