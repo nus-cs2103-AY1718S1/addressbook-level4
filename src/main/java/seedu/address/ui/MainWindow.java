@@ -7,16 +7,20 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.ThemeSettings;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -29,14 +33,21 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/kaypoh_icon_32.png";
     private static final String FXML = "MainWindow.fxml";
-    private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    //@@author keithsoc
+    private static final int MIN_HEIGHT = 700;
+    private static final int MIN_WIDTH = 600;
+    //@@author
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
+    //@@author keithsoc
+    private Scene scene;
+    //@@author
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
@@ -45,21 +56,24 @@ public class MainWindow extends UiPart<Region> {
     private Config config;
     private UserPrefs prefs;
 
+    //@@author keithsoc
     @FXML
-    private StackPane browserPlaceholder;
-
-    @FXML
-    private StackPane commandBoxPlaceholder;
-
+    private MenuBar menuBar;
     @FXML
     private MenuItem helpMenuItem;
-
+    @FXML
+    private Button minimiseButton;
+    @FXML
+    private Button maximiseButton;
+    //@@author
+    @FXML
+    private StackPane browserPlaceholder;
+    @FXML
+    private StackPane commandBoxPlaceholder;
     @FXML
     private StackPane personListPanelPlaceholder;
-
     @FXML
     private StackPane resultDisplayPlaceholder;
-
     @FXML
     private StackPane statusbarPlaceholder;
 
@@ -77,8 +91,23 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
-        Scene scene = new Scene(getRoot());
+
+        // Set theme
+        scene = new Scene(getRoot());
+        //@@author keithsoc
+        scene.setFill(Color.TRANSPARENT);
+        setDefaultTheme(prefs, scene);
+        UiTheme.getInstance().setScene(scene);
+        //@@author
         primaryStage.setScene(scene);
+
+        //@@author keithsoc
+        // Enable window navigation
+        enableMovableWindow();
+        enableMinimiseWindow();
+        enableMaximiseWindow();
+        UiResize.enableResizableWindow(primaryStage, MIN_WIDTH, MIN_HEIGHT, Double.MAX_VALUE, Double.MAX_VALUE);
+        //@@author
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -126,7 +155,9 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
+        browserPanel = new BrowserPanel(scene);
+        browserPanel.setLogic(logic);
+        UiTheme.getInstance().setBrowserPanel(browserPanel);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -135,7 +166,8 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -174,6 +206,25 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setMinHeight(MIN_HEIGHT);
         primaryStage.setMinWidth(MIN_WIDTH);
     }
+
+    //@@author keithsoc
+    /**
+     * Sets the default theme based on user preferences.
+     */
+    private void setDefaultTheme(UserPrefs prefs, Scene scene) {
+        scene.getStylesheets().addAll(prefs.getThemeSettings().getTheme(),
+                prefs.getThemeSettings().getThemeExtensions());
+    }
+
+    /**
+     * Returns the current theme applied.
+     */
+    ThemeSettings getCurrentThemeSetting() {
+        String cssMain = scene.getStylesheets().get(0);
+        String cssExtensions = scene.getStylesheets().get(1);
+        return new ThemeSettings(cssMain, cssExtensions);
+    }
+    //@@author
 
     /**
      * Returns the current size and the position of the main Window.
@@ -217,4 +268,46 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author keithsoc
+    /**
+     * Enable movable window.
+     */
+    private void enableMovableWindow() {
+        menuBar.setOnMousePressed((event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        menuBar.setOnMouseDragged((event) -> {
+            primaryStage.setX(event.getScreenX() - xOffset);
+            primaryStage.setY(event.getScreenY() - yOffset);
+        });
+    }
+
+    /**
+     * Enable minimising of window.
+     */
+    private void enableMinimiseWindow() {
+        minimiseButton.setOnMouseClicked((event) ->
+                primaryStage.setIconified(true)
+        );
+    }
+
+    /**
+     * Enable maximising and restoring pre-maximised state of window.
+     * Change button images respectively via css.
+     */
+    private void enableMaximiseWindow() {
+        maximiseButton.setOnMouseClicked((event) -> {
+            primaryStage.setMaximized(true);
+            maximiseButton.setId("restoreButton");
+        });
+
+        maximiseButton.setOnMousePressed((event) -> {
+            primaryStage.setMaximized(false);
+            maximiseButton.setId("maximiseButton");
+        });
+    }
+    //@@author
 }

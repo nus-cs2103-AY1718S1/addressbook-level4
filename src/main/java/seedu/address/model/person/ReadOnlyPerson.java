@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.social.SocialInfo;
+import seedu.address.model.social.UniqueSocialInfoList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,8 +22,18 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    //@@author keithsoc
+    ObjectProperty<Favorite> favoriteProperty();
+    Favorite getFavorite();
+    ObjectProperty<DisplayPhoto> displayPhotoProperty();
+    DisplayPhoto getDisplayPhoto();
+    //@@author
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<UniqueSocialInfoList> socialInfoProperty();
+    Set<SocialInfo> getSocialInfos();
+    ObjectProperty<LastAccessDate> lastAccessDateProperty();
+    LastAccessDate getLastAccessDate();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -41,14 +53,21 @@ public interface ReadOnlyPerson {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" Phone: ")
+                .append(" | Phone: ")
                 .append(getPhone())
-                .append(" Email: ")
+                .append(" | Email: ")
                 .append(getEmail())
-                .append(" Address: ")
+                .append(" | Address: ")
                 .append(getAddress())
-                .append(" Tags: ");
+                .append(" | Favorite: ")
+                .append(getFavorite())
+                .append(" | Display Photo: ")
+                .append(getDisplayPhoto())
+                .append(" | Tags: ");
         getTags().forEach(builder::append);
+        builder.append(" | Social Infos: ");
+        getSocialInfos().forEach(builder::append);
+        // omit last access date as it doesn't provide much useful information to the user
         return builder.toString();
     }
 

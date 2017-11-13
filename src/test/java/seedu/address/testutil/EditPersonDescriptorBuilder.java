@@ -6,6 +6,7 @@ import java.util.Optional;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.ParserUtil;
+import seedu.address.model.person.Favorite;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -32,7 +33,9 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setFavorite(person.getFavorite());
         descriptor.setTags(person.getTags());
+        descriptor.setSocialInfos(person.getSocialInfos());
     }
 
     /**
@@ -82,6 +85,16 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+
+    //@@author keithsoc
+    /**
+     * Sets the {@code Favorite} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withFavorite(boolean favorite) {
+        descriptor.setFavorite(new Favorite(favorite));
+        return this;
+    }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}

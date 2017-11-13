@@ -1,19 +1,36 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.SocialInfoMapping.FACEBOOK_IDENTIFIER;
+import static seedu.address.logic.parser.SocialInfoMapping.FACEBOOK_IDENTIFIER_ALIAS;
+import static seedu.address.logic.parser.SocialInfoMapping.INSTAGRAM_IDENTIFIER;
+import static seedu.address.logic.parser.SocialInfoMapping.INSTAGRAM_IDENTIFIER_ALIAS;
+import static seedu.address.logic.parser.SocialInfoMapping.getSocialType;
+import static seedu.address.logic.parser.SocialInfoMapping.parseSocialInfo;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DisplayPhoto;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.social.SocialInfo;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,6 +46,19 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_SOCIAL_TYPE = "Social type is not valid. Social type"
+            + " should be facebook or instagram.";
+
+    //@@author marvinchin
+    /**
+     * Returns the input {@code String} splitted by whitespace.
+     */
+    public static List<String> parseWhitespaceSeparatedStrings(String args) {
+        requireNonNull(args);
+        String[] splitArgs = args.split("\\s+");
+        return Arrays.asList(splitArgs);
+    }
+    //@@author
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -42,6 +72,24 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
+
+    //@@author keithsoc
+    /**
+     * Parses {@code args} into an {@code List<Index>} and returns it.
+     * Used for commands that need to parse multiple indexes
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static List<Index> parseMultipleIndexes(String args) throws IllegalValueException {
+        // Example of proper args: " 1 2 3" (has a space in front) -> Hence apply trim() first then split
+        List<String> argsList = Arrays.asList(args.trim().split("\\s+")); // split by one or more whitespaces
+        List<Index> indexList = new ArrayList<>();
+
+        for (String index : argsList) {
+            indexList.add(parseIndex(index)); // Add each valid index into indexList
+        }
+        return indexList;
+    }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
@@ -79,6 +127,61 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author keithsoc
+    /**
+     * Checks if favorite and unfavorite prefixes are present in {@code ArgumentMultimap argMultimap}
+     * Catered for both AddCommandParser and EditCommandParser usage
+     */
+    public static Optional<Favorite> parseFavorite(ArgumentMultimap argMultimap,
+                                         Prefix prefixFav,
+                                         Prefix prefixUnFav) throws ParseException {
+
+        // Disallow both f/ and uf/ to be present in the same instance of user input when editing
+        if (argMultimap.isPrefixPresent(prefixFav) && argMultimap.isPrefixPresent(prefixUnFav)) {
+            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditCommand.MESSAGE_USAGE));
+        } else if (argMultimap.isPrefixPresent(prefixFav)) { // Allow favoriting simply by supplying prefix
+            if (!argMultimap.getValue(prefixFav).get().isEmpty()) { // Disallow text after prefix
+                throw new ParseException(Favorite.MESSAGE_FAVORITE_CONSTRAINTS);
+            } else {
+                return Optional.of(new Favorite(true));
+            }
+        } else if (argMultimap.isPrefixPresent(prefixUnFav)) { // Allow unfavoriting simply by supplying prefix
+            if (!argMultimap.getValue(prefixUnFav).get().isEmpty()) { // Disallow text after prefix
+                throw new ParseException(Favorite.MESSAGE_FAVORITE_CONSTRAINTS);
+            } else {
+                return Optional.of(new Favorite(false));
+            }
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * Parses a {@code Optional<String> displayPhoto} into an {@code Optional<DisplayPhoto>}
+     * if {@code displayPhoto} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DisplayPhoto> parseDisplayPhoto(Optional<String> displayPhoto) throws IllegalValueException {
+        return displayPhoto.isPresent()
+                ? Optional.of(new DisplayPhoto(displayPhoto.get())) : Optional.empty();
+    }
+    //@@author
+
+    //@@author sarahnzx
+    /**
+     * Checks if the specified social type is valid.
+     */
+    public static Optional<String> parseSelect(String arg) throws IllegalValueException {
+        requireNonNull(arg);
+        if (!(arg.equals(FACEBOOK_IDENTIFIER) || arg.equals(INSTAGRAM_IDENTIFIER)
+                || arg.equals(FACEBOOK_IDENTIFIER_ALIAS) || arg.equals(INSTAGRAM_IDENTIFIER_ALIAS))) {
+            throw new IllegalValueException(MESSAGE_INVALID_SOCIAL_TYPE);
+        }
+        return Optional.of(getSocialType(arg));
+    }
+    //@@author
+
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
@@ -90,4 +193,29 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    //@@author marvinchin
+    /**
+     * Parses {@code Collection<String> rawSocialInfos} into {@code Set<SocialInfo}.
+     */
+    public static Set<SocialInfo> parseSocialInfos(Collection<String> rawSocialInfos) throws IllegalValueException {
+        requireNonNull(rawSocialInfos);
+        final Set<SocialInfo> socialInfoSet = new HashSet<>();
+        for (String rawSocialInfo : rawSocialInfos) {
+            socialInfoSet.add(parseSocialInfo(rawSocialInfo));
+        }
+        return socialInfoSet;
+    }
+    //@@author
+
+    //@@author alexfoodw
+    /**
+     * Validates if url is valid
+     */
+    public static boolean isValidUrl(String url) {
+        Pattern p = Pattern.compile("(http|https):\\/\\/[A-Za-z\\.]*\\.(com|org|net)[^\\s]*");
+        Matcher m = p.matcher(url);
+        return m.matches();
+    }
+    //@@author
 }
