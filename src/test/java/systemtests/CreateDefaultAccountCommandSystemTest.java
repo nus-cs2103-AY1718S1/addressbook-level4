@@ -1,6 +1,7 @@
 package systemtests;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.CreateDefaultAccountCommand;
 import seedu.address.model.Model;
 
@@ -22,7 +23,7 @@ public class CreateDefaultAccountCommandSystemTest extends AddressBookSystemTest
          */
 
         expectedModel = getModel();
-        assertCommandFailure(command,expectedModel);
+        assertCommandFailure(command, expectedModel);
 
     }
 
