@@ -370,6 +370,17 @@ must be from the address book.
 
 ---
 
+==== Asana Configuration
+
+===== Implementation of Setup Asana
+
+===== Design Considerations
+
+===== Implementation of Set unique key
+
+===== Design Considerations
+
+
 ==== Add Meeting Command
 
 ===== Implementation
@@ -377,16 +388,22 @@ must be from the address book.
 When the command is called, the user input is parsed as shown in the sequence diagram below.
 
 image::AddMeetingCommandLogic.png[width="800"]
+_Figure 3.2.3.a : Add Meeting Command Parser_
 
-In the model, there are two primary methods that are called:
+Depending on some conditions:
 
-1. To add unique meetings (ensured by `DuplicateMeetingException`) associated with valid people in +
+image::
+_Figure 3.2.3.a : Conditions for adding local or online meeting_
+
+There are two primary methods that will be executed:
+
+a. To add unique meetings (ensured by `DuplicateMeetingException`) associated with valid people in +
 addressbook (ensured by `IllegalIdException`).
 
 [source, java]
 ----
     try {
-        model.addMeeting(toAdd);
+        //..Add local meeting logic..
     } catch (DuplicateMeetingException e) {
         throw new CommandException(MESSAGE_DUPLICATE_MEETING);
     } catch (IllegalIdException ive) {
@@ -394,10 +411,10 @@ addressbook (ensured by `IllegalIdException`).
     }
 ----
 
-2. To post a task on Asana
+b. To post a task on Asana
 [source, java]
 ----
-    newAsanaTask = new PostTask(toAdd.getNotes(), toAdd.getDate());
+    newAsanaTask = new PostTask(..notes.., ..due date..);
     newAsanaTask.execute();
 ----
 
@@ -543,7 +560,7 @@ the address book storage and then displayed on `PersonListPanel` on the GUI.
 Sorts and the lists everyone in the address book based on decreasing number of searches.
 
 ==== Implementation
-Each successful `Find` command execution with non-zero search results, activates an update of search count for everyone in search results.+
+Each successful `Search` command execution with non-zero search results, activates an update of search count for everyone in search results.+
 [source,java]
 ----
 if (searchResultsCount != NO_RESULTS) {
@@ -621,6 +638,8 @@ image::SettingsPaneInOut.png[width="700"]
 
 When the choose command is called, another event is called to hide the other views that are not "chosen" by the user. For example, if the user types in the command `choose meeting`, the root view of the current display page, e.g linkedin, will be removed
 from the placeholder in the MainWindow, then the root view of the meeting display is placed in its stead.
+
+image::ChooseSequenceDiagram.png[width="700"]
 
 ==== Design Considerations
 

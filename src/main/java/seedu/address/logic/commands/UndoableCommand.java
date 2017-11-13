@@ -7,12 +7,15 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyMeetingList;
+import seedu.address.model.UniqueMeetingList;
 
 /**
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
+    private ReadOnlyMeetingList previousMeetingList;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -24,6 +27,16 @@ public abstract class UndoableCommand extends Command {
         this.previousAddressBook = new AddressBook(model.getAddressBook());
     }
 
+    //@@author liuhang0213
+    /**
+     * Stores the current state of {@code model#meetingList}.
+     */
+    private void saveMeetingListSnapshot() {
+        requireNonNull(model);
+        this.previousMeetingList = new UniqueMeetingList(model.getMeetingList());
+    }
+
+    //@@author liuhang0213
     /**
      * Reverts the AddressBook to the state before this command
      * was executed and updates the filtered person list to
@@ -31,7 +44,7 @@ public abstract class UndoableCommand extends Command {
      */
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
-        model.resetData(previousAddressBook);
+        model.resetData(previousAddressBook, previousMeetingList);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
@@ -53,6 +66,7 @@ public abstract class UndoableCommand extends Command {
     @Override
     public final CommandResult execute() throws CommandException {
         saveAddressBookSnapshot();
+        saveMeetingListSnapshot();
         return executeUndoableCommand();
     }
 }

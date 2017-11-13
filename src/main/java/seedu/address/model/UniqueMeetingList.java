@@ -73,6 +73,15 @@ public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMee
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+
+    /**
+     * Resets the existing data of this {@code UniqueMeetingList} with {@code newData}.
+     */
+    public void resetData(ReadOnlyMeetingList newData) {
+        requireNonNull(newData);
+        setMeetings(newData.getMeetingList());
+    }
+
     /**
      * Ensures every meeting in the argument list exists in this object.
      */
@@ -132,7 +141,7 @@ public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMee
         }
     }
 
-    //@@liuhang0213
+    //@@author liuhang0213
     /**
      * Returns the meeting with earliest date in the internal list
      * Currently not checking if it is happening in the future
