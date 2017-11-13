@@ -74,7 +74,7 @@ public class SortCommandTest {
         assertTrue(userCommand.equals(firstSortCommand));
 
         // different types -> returns false
-        assertFalse(userCommand.equals(new ListCommand()));
+        assertFalse(userCommand.equals(new ListCommand(ListCommand.Option.PERSONS)));
 
         // null -> returns false
         assertFalse(userCommand.equals(null));
