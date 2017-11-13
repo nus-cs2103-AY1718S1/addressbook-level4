@@ -907,6 +907,9 @@ an input and an array of strings, and returns the first command that contains in
 `autocompleteCommand`, which takes in a command word and compares it with a list of all commands and
 aliases, and autocompletes the command.
 
+The following activity diagram summarises what happens when a user presses `Tab`:
+
+image::AutocompleteActivityDiagram.png[width="400"]
 
 ==== Design Considerations
 
