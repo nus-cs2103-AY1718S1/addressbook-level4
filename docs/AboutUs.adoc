@@ -12,7 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Pan Haozhe
 image::Haozhe.png[width="150", align="left"]
-{empty}[http://github.com/Haozhe321[github]] [<<haozhe#, portfolio>>]
+{empty}[http://github.com/Haozhe321[github]] [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/docs/team/Pan%20Haozhe.adoc[portfolio]]
 
 Role: Developer +
 Responsibilities: Software Development
@@ -21,7 +21,7 @@ Responsibilities: Software Development
 
 === Glenice Tan
 image::blackroxs.jpg[width="150", align="left"]
-{empty}[http://github.com/blackroxs[github]] [<<glenicetan#, portfolio>>]
+{empty}[http://github.com/blackroxs[github]] [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/docs/team/glenicetan.adoc[portfolio]]
 
 Role: Developer +
 Responsibilities: Software Development
@@ -30,7 +30,7 @@ Responsibilities: Software Development
 
 === Suyash Shekhar
 image::suyash.jpg[width="150", align="left"]
-{empty}[http://github.com/sushinoya[github]] [<<suyash#, portfolio>>]
+{empty}[http://github.com/sushinoya[github]] [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/docs/team/suyashshekhar.adoc[portfolio]]
 
 Role: Developer +
 Responsibilities: Software Development
@@ -39,7 +39,7 @@ Responsibilities: Software Development
 
 === Shi Tian
 image::shitian.jpg[width="150", align="left"]
-{empty}[http://github.com/shitian[github]] [<<shitian#, portfolio>>]
+{empty}[http://github.com/shitian[github]] [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/docs/team/ShiTian.adoc[portfolio]]
 
 Role: Developer +
 Responsibilities: Software Development
