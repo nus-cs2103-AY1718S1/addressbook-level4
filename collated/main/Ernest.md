@@ -61,9 +61,9 @@ public class RelationshipCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_RELATIONSHIP + "[RELATIONSHIP]\n"
             + "Example 1: " + COMMAND_WORD + " 1 "
-            + PREFIX_RELATIONSHIP + "John Doe"
+            + PREFIX_RELATIONSHIP + "John Doe\n"
             + "Example 2: " + COMMAND_ALIAS + " 1 "
-            + PREFIX_RELATIONSHIP + "Mary Jane"
+            + PREFIX_RELATIONSHIP + "Mary Jane\n"
             + "Example 3: " + COMMAND_WORD + " 1 "
             + PREFIX_RELATIONSHIP;
 
@@ -226,6 +226,30 @@ public class RelationshipCommandParser implements Parser<RelationshipCommand> {
         return relation.isPresent() ? Optional.of(new Relationship(relation.get())) : Optional.empty();
     }
 ```
+###### \java\seedu\address\model\person\Address.java
+``` java
+    /**
+     * Validates given address.
+     *
+     * @throws IllegalValueException if given address string is invalid.
+     */
+    public Address(String address) throws IllegalValueException {
+        requireNonNull(address);
+        if (!isValidAddress(address)) {
+            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        }
+
+        // To make the first letter of each word capital letter and the rest lower case
+        String[] arr = address.toLowerCase().split(" ");
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < arr.length; i++) {
+            sb.append(Character.toUpperCase(arr[i].charAt(0)))
+                    .append(arr[i].substring(1)).append(" ");
+        }
+        this.value = sb.toString().trim();
+    }
+```
 ###### \java\seedu\address\model\person\Bloodtype.java
 ``` java
 /**
@@ -315,6 +339,47 @@ public class BloodtypeContainsKeywordPredicate implements Predicate<ReadOnlyPers
     }
 
 }
+```
+###### \java\seedu\address\model\person\Email.java
+``` java
+    /**
+     * Validates given email.
+     *
+     * @throws IllegalValueException if given email address string is invalid.
+     */
+    public Email(String email) throws IllegalValueException {
+        requireNonNull(email);
+        String trimmedEmail = email.trim();
+        if (!isValidEmail(trimmedEmail)) {
+            throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
+        }
+        this.value = trimmedEmail.toLowerCase();
+    }
+```
+###### \java\seedu\address\model\person\Name.java
+``` java
+    /**
+     * Validates given name.
+     *
+     * @throws IllegalValueException if given name string is invalid.
+     */
+    public Name(String name) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!isValidName(trimmedName)) {
+            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+        }
+
+        // To make the first letter of each word capital letter and the rest lower case
+        String[] arr = trimmedName.toLowerCase().split(" ");
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < arr.length; i++) {
+            sb.append(Character.toUpperCase(arr[i].charAt(0)))
+                    .append(arr[i].substring(1)).append(" ");
+        }
+        this.fullName = sb.toString().trim();
+    }
 ```
 ###### \java\seedu\address\model\person\Person.java
 ``` java

@@ -91,15 +91,19 @@ The following features of MedNus are tested in this section.
 
 |`add n/Sue Yoo  p/80000000 e/SY@gmail.com a/170 Bishan Street b/AB r/Allergic to Honey d/lunch, tomorrow 3pm to 4pm t/Fever` |`New person added: Sue Yoo Phone: 80000000 Email: sy@gmail.com Address: 170 Bishan Street BloodType: AB Remark: Allergic to Honey Relationship:  Tags: [Fever]` |New contact added to the end of Contacts panel.
 
+|`A n/wiLsOn loW e/WIlsOnLoW@gmail.com a/361 jUrOng wESt b/aB+` |`New person added: Wilson Low Phone: - Email: wilsonlow@gmail.com Address: 361 Jurong West BloodType: AB+ Remark:  Relationship:  Tags:` |New contact added to the end of Contacts panel.
+
 |`list reverse` |`Displayed list reverse` |Contacts list in contacts panel reversed.
 
-|`list ascending` |`Listed persons by name in ascending order`. |Contacts list in contacts panel sorted by name in ascending order.
+|`list ascending` |`Listed persons by name in ascending order` |Contacts list in contacts panel sorted by name in ascending order.
 
 |`list descending` |`Listed persons by name in descending order` |Contacts list in contacts panel sorted by name in descending order.
 
 |`list tag xraycentre and brokenfeet or fracture and xraycentre` |`Listed all persons with specified tags` |Contacts list in contacts panel filters Zeypher Lee and Thomas Lee.
 
 |`bloodtype a` |`2 persons listed!` |Contacts list in contacts panel filters Irfan Ibrahim and Alex Yeoh.
+
+|`bLoOdTyPe aB` |`4 persons listed!` |Contacts list in contacts panel filters Sue Yoo, Charlotte Oliveiro, Charles Goh and Amanda Lee.
 
 |`list` |`Listed all persons` |All contacts listed in contacts panel.
 
@@ -111,7 +115,9 @@ The following features of MedNus are tested in this section.
 
 |`undo` |`Undo success!` |All previously deleted contacts are added back.
 
-|`edit 1 p/81000000 e/ZLee@gmail.com r/Feverish 3 days after accident ` |`Edited Person: Zeypher Lee Phone: 81000000 Email: zlee@gmail.com Address: 121 Thomson Road BloodType: B Remark: Feverish 3 days after accident Relationship:  Tags: [XRayCentre][BrokenFeet]` |Zeypher Lee's information edited and reflected on contacts panel.
+|`edit 1 p/81000000 e/ZLee@gmail.com r/Feverish 3 days after accident` |`Edited Person: Zeypher Lee Phone: 81000000 Email: zlee@gmail.com Address: 121 Thomson Road BloodType: B Remark: Feverish 3 days after accident Relationship:  Tags: [XRayCentre][BrokenFeet]` |Zeypher Lee's information edited and reflected on contacts panel.
+
+|`E 1 a/435 clEmENTI aVe 3 e/zEyPHerLeE@HOTmAil.com b/b+` |`Edited Person: Zeypher Lee Phone: 81000000 Email: zeypherlee@hotmail.com Address: 435 Clementi Ave 3 BloodType: B+ Remark: Feverish 3 days after accident Relationship:  Tags: [XRayCentre][BrokenFeet]` |Zeypher Lee's information edited and reflected on contacts panel.
 
 |`find peter` |`2 persons listed!` |Peter Thomas Lee and Peter Griffin listed on contacts panel
 
@@ -137,9 +143,9 @@ The following features of MedNus are tested in this section.
 
 |`remark 1 r/Waiting for XRay result` |`Remark successfully added` |Added a remark to Zeypher Lee
 
-|`relation 1 rel/Son of Thomas Lee`|`Added relationship to Person: Zeypher Lee Phone: 81000000 Email: zlee@gmail.com Address: 121 Thomson Road BloodType: B Remark: Waiting for XRay result Relationship: Son of Thomas Lee Tags: [XRayCentre][BrokenFeet]` |Added a relationship field to Zeypher Lee
+|`relation 1 rel/Son of Thomas Lee`|`Added relationship to Person: Zeypher Lee Phone: 81000000 Email: zeypherlee@hotmail.com Address: 435 Clementi Ave 3 BloodType: B+ Remark: Waiting for XRay result Relationship: Son of Thomas Lee Tags: [XRayCentre][BrokenFeet]` |Added a relationship field to Zeypher Lee
 
-|`relation 1 rel/`|`Removed relationship from Person: Zeypher Lee Phone: 81000000 Email: zlee@gmail.com Address: 121 Thomson Road BloodType: B Remark: Waiting for XRay result Relationship:  Tags: [XRayCentre][BrokenFeet]` |Removed existing relationship field from Zeypher Lee
+|`relation 1 rel/`|`Removed relationship from Person: Zeypher Lee Phone: 81000000 Email: zeypherlee@hotmail.com Address: 435 Clementi Ave 3 BloodType: B+ Remark: Waiting for XRay result Relationship:  Tags: [XRayCentre][BrokenFeet]` |Removed existing relationship field from Zeypher Lee
 
 |=======================================================================
 
@@ -150,10 +156,9 @@ This section shows you commands related to appointments and calendar views. +
 |=======================================================================
 |Command To Enter |Expected Output |Remarks
 
+|`appt 1 d/Dinner, tomorrow 7pm` |`New appointment added.` |Appointment added for 1 hour (default) at the next day 7pm
 
-|`appt 1 d/Dinner, tomorrow 7pm` |`New appointment added. ` |Appointment added for 1 hour (default) at the next day 7pm
-
-|`appt 2 d/Lunch, tomorrow 12pm to 2pm` | `New appointment added. ` |Appointment added accordingly, next day 12pm to 2pm.
+|`appt 2 d/Lunch, tomorrow 12pm to 2pm` | `New appointment added.` |Appointment added accordingly, next day 12pm to 2pm.
 
 |`calendar w` |`View changed.` |Calendar view changed to week view
 
@@ -165,8 +170,125 @@ This section shows you commands related to appointments and calendar views. +
 
 |`cancel dinner with zeypher lee`| `Appointment canceled.` | Appointment with Zeypher cancelled
 
-|`cancel lunch with thomas lee`|`Appointment canceled.` | Appointment with Thomas cancelled
+|`cancel lunch with wilson low`|`Appointment canceled.` | Appointment with Wilson cancelled
 
+|=======================================================================
+
+== Negative Test Cases
+This section shows you the result message when commands are invalid or when only the commmand word is entered. +
+
+[cols=3,width="100%",options="header"]
+|=======================================================================
+|Command To Enter |Result display panel message |Problem
+
+|`appointment 1 Dinner, tomorrow 7pm`|`Invalid command format! +
+                                       appointment: Adds an appointment to a person in address book. +
+                                       appt: Shorthand equivalent for add. +
+                                       Parameters: appointment INDEX d/DESCRIPTION, TIME +
+                                       Example 1:appointment 1 d/Lunch, Next Monday 3pm` |Adding without date prefix
+
+|`add Massimo Alioto`|`Invalid command format! +
+        add: Adds a person to the address book. +
+        a: Shorthand equivalent for add. +
+        Parameters: n/NAME [p/PHONE][e/EMAIL][a/ADDRESS][b/BLOODTYPE][r/REMARK][d/DATE][t/TAG]... +
+        Example 1: a n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/O r/Broke his foot during soccer practice t/friends t/owesMoney d/2020/10/10 00:00 +
+        Example 2: add n/Mary Jane p/87678977 e/maryj@example.com a/170, Bugis Ave 3, #01-05 b/A r/Healthy t/wife` |Adding without prefix
+
+|`add n/!?`|`Person names should only contain alphanumeric characters and spaces, and it should not be blank` |Invalid name
+
+|`add n/Test p/test`|`Phone numbers can only contain numbers, and should be at least 3 digits long` |Invalid phone
+
+|`add n/Test e/test`|`Person emails should be 2 alphanumeric/period strings separated by '@'` |Invalid email
+
+|`add n/Test b/C`|`Person blood type should not be blank.
+                   Valid inputs are: A, A+, A-, B, B+, B-, O, O+, O-, AB, AB+, AB-.
+                   Both capital letters and small letters are allowed.` |Invalid bloodtype
+
+|`batch test`|`One of the tags is not in use. Remove it and try again.` |Tag does not exist
+
+|`bloodtype`|`Invalid command format! +
+              bloodtype: Finds all persons of a blood type  and displays them as a list with index numbers. +
+              Example: bloodtype AB+ +
+              Example: bt O` |Missing trailing argument
+
+|`calendar s`|`Invalid command format! +
+             calendar: Changes calendar view. +
+             cal: Short hand equivalent for calendar. +
+             Parameter: +
+             Day view: d +
+             Week view: w +
+             Month view: m +
+             Year view: y` |Invalid trailing argument
+
+|`cancel dinner`|`Invalid command format! +
+           cancel: Cancels an appointment from a person. +
+           Parameters: DESCRIPTION with PERSON NAME +
+           Example 1:cancel Lunch with John Doe` |Incomplete command input
+
+|`cancel dinner with massimo alioto` |`No such appointment found +
+                                       Please refer to the appointment description.` |Appointment does not exist
+
+|`copy Wilson Low`|`Invalid command format! +
+         copy: Copies email address of the person identified by index numbers used in the last person listing. +
+         c: Shorthand equivalent for Copy. +
+         Parameters: INDEX (must be a positive integer) +
+         Example 1: c 1 +
+         Example 2: copy 1` |Invalid argument type
+
+|`delete Wilson Low`|`Invalid command format! +
+           delete: Deletes the person identified by the index number used in the last person listing. +
+           d: Shorthand equivalent for Delete. +
+           Parameters: INDEX (must be a positive integer) +
+           Example 1: d 1 +
+           Example 2: delete 1` |Message on how to use `delete` is shown
+
+|`delete 100`|`The person index provided is invalid` |Input value larger than number of contacts in MedNus
+
+|`edit 1 Wilson Low 81007890`|`Invalid command format! +
+         edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values. +
+         e: Shorthand equivalent for Edit. +
+         Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK]...[d/DATE][t/TAG]... +
+         Example 1: e 1 p/91234567 e/johndoe@example.com r/Broke his foot during soccer practice +
+         Example 2: edit 2 p/92873847 e/maryjane@example.com t/student` |Missing Prefixes
+
+|`find`|`Invalid command format!
+         find: Finds all persons whose names contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers.
+         f: Shorthand equivalent for Find.
+         Parameters: KEYWORD [MORE_KEYWORDS]...
+         Example 1: f alice bob charlie
+         Example 2: find alice bob charlie` |Message on how to use `find` is shown
+
+|`list tag brokenfeet and or xraycentre`|`Invalid command format! +
+             list tag: Finds all persons whose names contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers. +
+             Parameters: KEYWORD [AND/OR] [KEYWORD]... +
+             Example: list tag colleague and family` |Incorrect use of "and" and "or"
+
+|`list x`|`Invalid input detected. Valid list variations: +
+           list +
+           list tag [TAG/s] +
+           list asc +
+           list ascending +
+           list dsc +
+           list descending +
+           list rev +
+           list reverse` |Message on the valid `list` commands is shown
+
+|`relation`|`Invalid command format! +
+             relation: Edits the relationship of the person identified by the index number used in the last person listing. Existing relationship will be overwritten by the input. +
+             Parameters: INDEX (must be a positive integer) rel/[RELATIONSHIP] +
+             Example 1: relation 1 rel/John Doe +
+             Example 2: rel 1 rel/Mary Jane +
+             Example 3: relation 1` |Message on how to use `relation` is shown
+
+|`relation wilson low rel/Father of Thomas Lee` |`Index is not a non-zero unsigned integer.` |Index required instead of name
+
+|`remark 1`|`Invalid command format! +
+           remark: Adds a person to the address book. +
+           Parameters: INDEX r/Likes to drink coffee +
+           Example 1: remark 1 r/Likes to drink coffee +
+           Removing Remarks: remark 1 r/` |Missing trailing arguments
+
+|`tagcolor helper green`|`No such tag` |Tag does not exist.
 
 |=======================================================================
 

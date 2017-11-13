@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.Calendar;
 import java.util.List;
@@ -26,10 +25,9 @@ public class AddAppointmentCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment to a person in address book. \n"
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
-            + "Parameters: " + PREFIX_NAME + "PERSON "
+            + "Parameters: " + COMMAND_WORD + " INDEX "
             + PREFIX_DATE + "DESCRIPTION, TIME" + "\n"
-            + "Example 1:" + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
+            + "Example 1:" + COMMAND_WORD + " 1 "
             + PREFIX_DATE + "Lunch, Next Monday 3pm";
 
     public static final String MESSAGE_SUCCESS = "New appointment added. ";

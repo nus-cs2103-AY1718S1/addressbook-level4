@@ -18,6 +18,7 @@ public class Email {
 
     public final String value;
 
+    //@@author Ernest
     /**
      * Validates given email.
      *
@@ -31,6 +32,7 @@ public class Email {
         }
         this.value = trimmedEmail.toLowerCase();
     }
+    //@@author
 
     /**
      * Returns if a given string is a valid person email.

@@ -29,9 +29,9 @@ public class RelationshipCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_RELATIONSHIP + "[RELATIONSHIP]\n"
             + "Example 1: " + COMMAND_WORD + " 1 "
-            + PREFIX_RELATIONSHIP + "John Doe"
+            + PREFIX_RELATIONSHIP + "John Doe\n"
             + "Example 2: " + COMMAND_ALIAS + " 1 "
-            + PREFIX_RELATIONSHIP + "Mary Jane"
+            + PREFIX_RELATIONSHIP + "Mary Jane\n"
             + "Example 3: " + COMMAND_WORD + " 1 "
             + PREFIX_RELATIONSHIP;
 

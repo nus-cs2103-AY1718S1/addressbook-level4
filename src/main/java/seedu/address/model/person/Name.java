@@ -21,6 +21,7 @@ public class Name {
 
     public final String fullName;
 
+    //@@author Ernest
     /**
      * Validates given name.
      *
@@ -43,6 +44,7 @@ public class Name {
         }
         this.fullName = sb.toString().trim();
     }
+    //@@author
 
     /**
      * Returns true if a given string is a valid person name.

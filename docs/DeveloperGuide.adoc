@@ -363,8 +363,8 @@ A Bloodtype class is created with one constructor. +
 new Bloodtype("AB+")
 ....
 
-The constructor requires a string input with one to three character limit. "+" and "-" are allowed as Bloodtype +
-has a ascii regex. +
+The constructor requires a string input that accepts only 12 inputs that are case insentive. +
+Valid inputs are: A, A+, A-, B, B+, B-, O, O+, O-, AB, AB+, AB-. +
 
 As of version 1.1, Person constructor includes Bloodtype.
 
