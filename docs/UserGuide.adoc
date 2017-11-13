@@ -335,14 +335,14 @@ Person name will be highlighted upon hover to indicate it is a link
 === Finding insurance from insurance panel list on the right
 `since v1.4`
 
-image::insurancePanel.PNG[width="380"]
+image::insurancePanel.png[width="380"]
 
 Specific insurance contract can be displayed directly by selecting them on this panel
 
 === Tracing all insurance file the current person selected is involved in
 `since v1.4`
 
-image::linkToInsurance.PNG[width="380"]
+image::linkToInsurance.png[width="380"]
 List of all related insurance contracts are now displayed on person profile page. These entries can be clicked on which will switch up the selected insurance page
 // end::linkAllProfileAndInsurance[]
 
