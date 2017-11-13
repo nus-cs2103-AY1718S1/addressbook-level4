@@ -11,6 +11,7 @@ import seedu.address.logic.commands.AddEventTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.schedule.Day;
 import seedu.address.model.schedule.Time;
+import seedu.address.model.tag.Tag;
 
 import java.util.stream.Stream;
 
@@ -23,13 +24,6 @@ public class AddEventTagCommandParser {
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DAY, PREFIX_START_TIME,
                 PREFIX_END_TIME, PREFIX_LOC, PREFIX_PERSONS);
-        Index index;
-
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventTagCommand.MESSAGE_USAGE));
-        }
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DAY, PREFIX_START_TIME, PREFIX_END_TIME, PREFIX_LOC, PREFIX_PERSONS)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventTagCommand.MESSAGE_USAGE));
@@ -41,8 +35,11 @@ public class AddEventTagCommandParser {
             Day day = ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY)).get();
             Time startTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_START_TIME)).get();
             Time endTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_END_TIME)).get();
-            Index[] listIndex = ParserUtil.parseIndexArr(argMultimap.getValue(PREFIX_PERSONS).get());
-            return new AddEventTagCommand(name, day, startTime, endTime, location, listIndex);
+            String indices = argMultimap.getValue(PREFIX_PERSONS).get();
+            Index[] listIndex = ParserUtil.parseIndexArr(indices);
+            String eventStr = name + "on" + day.toString() + "at" + location;
+            Tag event = new Tag(eventStr);
+            return new AddEventTagCommand(day, startTime, endTime, listIndex, event);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

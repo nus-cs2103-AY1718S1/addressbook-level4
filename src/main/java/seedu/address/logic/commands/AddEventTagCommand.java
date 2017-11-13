@@ -13,6 +13,7 @@ import seedu.address.model.schedule.Day;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Slot;
 import seedu.address.model.schedule.Time;
+import seedu.address.model.tag.Tag;
 
 //@@author YuchenHe98
 /**
@@ -34,32 +35,27 @@ public class AddEventTagCommand extends Command {
             + "try using the 'arrange' command to look for common timings";
 
     private final Index[] listOfIndex;
-    private final String eventName;
     private final Day day;
     private final Time startTime;
     private final Time endTime;
-    private final String location;
     private TreeSet<Integer> timeToClear;
-    private final String eventStr;
+    private final Tag event;
 
-    public AddEventTagCommand(String eventName, Day day, Time startTime, Time endTime,
-                                String location, Index[] listOfIndex) throws IllegalValueException {
+    public AddEventTagCommand(Day day, Time startTime, Time endTime,
+                              Index[] listOfIndex, Tag event) throws IllegalValueException {
         this.listOfIndex = listOfIndex;
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
         Slot slot = new Slot(day, startTime, endTime);
-        this.location = location;
         timeToClear = slot.getBusyTime();
-        this.eventName = eventName;
-        this.eventStr = eventName + "on" + day.toString() + "at" + location;
+        this.event = event;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
         boolean check = model.checkMeetingTime(listOfIndex, day.getDay(), startTime.getTime(), endTime.getTime());
         if (!check) {
             return new CommandResult(MESSAGE_ARRANGE_PERSON_FAILURE);
@@ -67,7 +63,7 @@ public class AddEventTagCommand extends Command {
             try {
                 for (int i = 0; i < listOfIndex.length; i++) {
                     model.clearScheduleForPerson(listOfIndex[i].getZeroBased(), timeToClear);
-                    model.addEventToPerson(listOfIndex[i].getZeroBased(), eventStr);
+                    model.addEventToPerson(listOfIndex[i].getZeroBased(), event);
                 }
             } catch (PersonNotFoundException pnfe) {
                 assert false : "The target person cannot be missing";
@@ -75,8 +71,6 @@ public class AddEventTagCommand extends Command {
             return new CommandResult(MESSAGE_ARRANGE_PERSON_SUCCESS);
 
         }
-        return new CommandResult(MESSAGE_ARRANGE_PERSON_SUCCESS);
-
     }
 }
 

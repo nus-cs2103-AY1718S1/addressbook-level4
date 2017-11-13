@@ -159,8 +159,7 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
-    public void addEventTag(String eventStr) throws IllegalValueException {
-        Tag event = new Tag(eventStr);
+    public void addEventTag(Tag event) {
         Set<Tag> tagSet = getTags();
         tagSet.add(event);
         setTags(tagSet);

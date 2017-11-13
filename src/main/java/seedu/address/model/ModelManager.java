@@ -18,6 +18,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 
 /**
@@ -91,8 +92,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    public void addEventToPerson(Integer index, String eventStr) throws IllegalValueException {
-        addressBook.addEventToPerson(index, eventStr);
+    public void addEventToPerson(Integer index, Tag event) {
+        addressBook.addEventToPerson(index, event);
     }
 
     //@@author YuchenHe98

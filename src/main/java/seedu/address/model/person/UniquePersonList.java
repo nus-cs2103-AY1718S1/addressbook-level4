@@ -186,7 +186,7 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.get(toClear).clearSpanForSchedule(timeSpan);
     }
 
-    public void addEventTag(Integer toAdd, String eventStr) throws IllegalValueException{
-        internalList.get(toAdd).addEventTag(eventStr);
+    public void addEventTag(Integer toAdd, Tag event) {
+        internalList.get(toAdd).addEventTag(event);
     }
 }

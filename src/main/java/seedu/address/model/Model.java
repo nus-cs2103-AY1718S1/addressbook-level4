@@ -9,6 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -65,5 +66,5 @@ public interface Model {
 
     boolean checkMeetingTime(Index[] listOfIndex, int day, int start, int end);
 
-    void addEventToPerson(Integer index, String eventStr) throws IllegalValueException;
+    void addEventToPerson(Integer index, Tag event);
 }

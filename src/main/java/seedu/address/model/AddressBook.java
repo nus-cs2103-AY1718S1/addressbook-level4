@@ -295,8 +295,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         return res;
     }
 
-    public void addEventToPerson(Integer index, String eventStr) throws IllegalValueException {
-        persons.addEventTag(index,eventStr);
+    public void addEventToPerson(Integer index, Tag event) {
+        persons.addEventTag(index,event);
     }
 
  }
