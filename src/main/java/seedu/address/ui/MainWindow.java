@@ -67,7 +67,7 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
-    //@@author qihao
+    //@@author qihao27
     @FXML
     private Button todoButton;
 
