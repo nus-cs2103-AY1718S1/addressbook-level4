@@ -54,13 +54,13 @@ Download the latest Java version link:https://www.java.com/en/download/manual.js
 
 +
 .User Interface of KayPoh!
-image::Ui.png[width="790"]
+image::Ui.png[width="800"]
 +
 
 .  Figure 2 below introduces the key panels of the application.
 +
 .User Interface of KayPoh!
-image::UiWithMarkings.png[width="790"]
+image::UiWithMarkings.png[width="800"]
 +
 .  Try it yourself! Type some of these commands in the command input box and press kbd:[Enter] to execute it:
 
@@ -76,7 +76,7 @@ image::UiWithMarkings.png[width="790"]
 To perform actions in KayPoh!, you will need to type a command into the command input box, followed by the kbd:[enter] key. +
 
 .Command box
-image::command-box.png[width="790"]
+image::command-box.png[width="800"]
 
 // tag::command-syntax[]
 === Breaking down the command syntax
@@ -92,7 +92,7 @@ Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]
 * [green]`PARAMETERS` are the last segment of the command
 ** They provide the *information required to execute the action*
 
-Example:
+*Example*:
 
 * `[red]#find# [blue]#-tag# [green]#friends#` can be understood as "[red]#find contacts# [blue]#with the tag# [green]#friends#"
 
@@ -141,7 +141,7 @@ Each person stored in the address book has the following attributes:
 ** The specified image must be less than 1MB in size
 ** If no image is specified, the default image will be used instead
 
-Example:
+*Example*:
 
 * The parameter `n/John Doe p/81234567 a/123 Clementi Road, Blk 32, #01-01 e/johndoe@example.com t/friends t/school s/facebook john.doe10 s/instagram jdoe f/ dp//images/display.png`
 represents a person who has:
@@ -170,7 +170,7 @@ and what [green]`PARAMETERS` you need to provide the command with.
 * Some commands have an alternative shorter alias that can be used in place of the [red]`COMMAND_WORD`
 ====
 
-Example:
+*Example*:
 
 * `[red]#delete# [blue]#[-OPTION]# [green]#INDEX [ADDITIONAL_INDEXES]...#` means that:
 ** The [red]`COMMAND_WORD` is `delete`
@@ -183,197 +183,282 @@ Example:
 // tag::addperson[]
 ==== Adding a person: `add`
 
-Adds a person to the address book. +
-Command format: `add n/NAME p/PHONE_NUMBER [p/ADDITIONAL_PHONE_NUMBERS]... e/EMAIL a/ADDRESS [f/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...` +
-Alias: `a`
+To add a person to the address book, use the `add` command.
+
+====
+*Command format*: +
+`[red]#add# [green]#n/NAME p/PHONE_NUMBER [p/ADDITIONAL_PHONE_NUMBERS]... e/EMAIL a/ADDRESS [f/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...#` +
+
+*Alias*: `a`
+====
 
 ****
 * A person can have more than one phone number (at least one). [Since v1.2] +
 Invalid phone numbers will not be added to the contact,
 and there must be at least one valid phone number entered. +
-* A person can be favorited by including the parameter `f/` +
-* A person can have a display photo imported from the location specified by `DISPLAY_PHOTO_FILE_PATH` [Since v1.5rc]
 * A person can have any number of tags (including zero) +
 * A person can have any number of social media accounts (including zero). [Since v1.2] +
-More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
+* More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
+* *To mark a person as a favorite contact*:
+** A person can be favorited by including the parameter `f/` +
+* *To add a display photo for a person*:
+** A person can have a display photo imported from the location specified by `DISPLAY_PHOTO_FILE_PATH` [Since v1.5rc]
 ****
 
-Examples:
+*Examples*:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
-Adds a contact with the name `John Doe`, phone number `98765432`, email address `johnd@example.com`,
-address `John street, block 123, #01-01`.
-* `add n/Rob Cross p/92456877 p/64123456 e/rob@example.com a/Kent Ridge Drive 23 t/husband f/ s/facebook r.cross10 dp/C:/Users/Seedu/Pictures/batman.png` +
-Adds a `favorite` contact with the name `Rob Cross`, phone numbers `92456877` and `64123456`, email address `rob@example.com`,
-address `Kent Ridge Drive 23`, tag `husband`, a `Facebook` account with the username `r.cross10`, and adds a `display photo` imported from the location `C:/Users/Seedu/Pictures/batman.png`.
+* `[red]#add# [green]#n/Uwuwe Osas p/98765432 e/osas@africanhunks.org a/497 Jacob Mare Street, #01-01#` +
++
+Adds a contact with the name `Uwuwe Osas`, phone number `98765432`, email address `osas@africanhunks.org`,
+address `a/497 Jacob Mare Street, #01-01`.
+
+.Added a contact with name, phone number, email address and address specified
+image::add-example-1-command-result.png[width="700"]
+
+* `[red]#add# [green]#n/Michael Van Gerwen p/92456877 p/64123456 e/mike@darts.com a/William Hill Drive 180 t/husband f/ s/facebook mvgofficial dp/C:/Users/Keith/Pictures/michael.png[green]#` +
++
+Adds a `favorite` contact with the name `Michael Van Gerwen`, phone numbers `92456877` and `64123456`, email address `mike@darts.com`,
+address `William Hill Drive 180`, tag `husband`, a `Facebook` account with the username `mvgofficial`, and adds a `display photo` imported from the location `C:/Users/Keith/Pictures/michael.png`.
+
+.Added a contact with name, two phone numbers, email address, address, tag, social media account (Facebook) and display photo specified
+image::add-example-2-command-result.png[width="700"]
+
 // end::addperson[]
 
 // tag::editperson[]
 ==== Editing a person: `edit`
 
-Edits an existing person in the address book. +
-Command format: `edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...` +
-Alias: `e`
+To edit an existing person in the address book, use the `edit` command.
+
+====
+*Command format*: +
+`[red]#edit# [green]#INDEX [n/NAME] [p/PHONE]... [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...#` +
+
+*Alias*: `e`
+====
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* You can favorite a person by including the parameter `f/`, or unfavorite by including the parameter `uf/`. [Since v1.2] +
-* You can remove a person's display photo by including the parameter `dp/` without specifying any file path after it. [Since v1.5rc]
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by including the parameter `t/` without specifying any tags after it.
-* When editing social media accounts, the existing social media accounts will be removed i.e. adding social media accounts is not cumulative. [Since v1.2]
-* You can remove all the person's social media accounts by including the parameter `s/` without specifying any social media accounts after it.
-* More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
+* *To change a favorite status of a person*:
+** You can favorite a person by including the parameter `f/`, or unfavorite by including the parameter `uf/`. [Since v1.2] +
+* *To remove a display photo from a person*:
+** You can remove a person's display photo by including the parameter `dp/` without specifying any file path after it. [Since v1.5rc]
+* *To change the tags of a person*:
+** When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+** You can remove all the person's tags by including the parameter `t/` without specifying any tags after it.
+* *When editing social media accounts of a person*:
+** The existing social media accounts will be removed i.e. adding social media accounts is not cumulative. [Since v1.2]
+** You can remove all the person's social media accounts by including the parameter `s/` without specifying any social media accounts after it.
+** More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
 ****
 
-Examples:
+*Examples*:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 f/ dp/C:/Users/Seedu/Pictures/superman.png s/instagram janedoe123 s/facebook jane.doe` +
-Marks the 2nd person a `favorite` contact, changes the existing display photo to the new file specified by `C:/Users/Seedu/Pictures/superman.png` and edits the social media accounts to be
-a `Facebook` account with the username `jane.doe`,
-and an Instagram account with the username `janedoe123`.
-* `edit 3 n/Betsy Crower dp/ t/` +
-Edits the name of the 3rd person to be `Betsy Crower`, removes existing display photo and clears all existing tags.
+* `[red]#edit# [green]#1 p/91234567 e/alex_yeoh@u.nus.edu.sg#` +
++
+Edits the phone number and email address of the 1st person to be `91234567` and `alex_yeoh@u.nus.edu.sg` respectively.
+
+.Edited the phone number and email address of the 1st person
+image::edit-example-1-command-result.png[width="700"]
+
+* `[red]#edit# [green]#3 f/ dp/C:/Users/Keith/Pictures/superman.jpg s/facebook clark.kent s/instagram clarkent#` +
++
+Marks the 3rd person a `favorite` contact, changes the existing display photo to the new file specified by `C:/Users/Keith/Pictures/superman.jpg` and edits the social media accounts to be
+a `Facebook` account with the username `clark.kent`,
+and an Instagram account with the username `clarkent`.
+
+.Edited the favorite status, display photo, and social media accounts (facebook and instagram) of the 3rd person
+image::edit-example-2-command-result.png[width="700"]
+
+* `[red]#edit# [green]#2 n/Clark Kent dp/ t/#` +
++
+Edits the name of the 2nd person to be `Clark Kent`, removes existing display photo and clears all existing tags.
+
+.Edited the name, and removed display photo and tags from the 2nd person
+image::edit-example-3-command-result.png[width="700"]
+
 // end::editperson[]
 
+// tag::favoriteunfavoriteperson[]
 ==== Favoriting a person [Since v1.2]: `fav`
 
-Labels the specified person(s) as a favorite contact. +
-Command format: `fav INDEX [ADDITIONAL INDEXES]`
+To add person(s) as a favorite contact, use the `fav` command.
+
+====
+*Command format*: `[red]#fav# [green]#INDEX [ADDITIONAL INDEXES]...#`
+====
 
 ****
 * Adds the person(s) as a favorite contact at the specified `INDEX` or `INDEXES`.
 * The index refers to the index number shown in the most recently displayed list.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index must be a positive integer 1, 2, 3, ...
 ****
 
-Examples:
+*Examples*:
 
-* `fav 1 3` +
-Favorites the 1st and 3rd person in the most recently displayed list.
-* `find Betsy` +
-`unfav 1` +
-Favorites the first person in the list of contacts with the name `Betsy`.
+* `[red]#fav# [green]#5 6#` +
+Adds the 5th and 6th person as favorite contacts in the most recently displayed list.
+
+.Added 5th and 6th persons as favorite contacts
+image::favorite-multiple-command-result.png[width="500"]
+
+* `[red]#find# [green]#Bernice#` +
+`[red]#fav# [green]#1#` +
+Adds the first person in the list of contacts with the name `Bernice` as a favorite contact.
+
+.Added the first person i.e. Bernice as a favorite contact
+image::favorite-after-find-command-result.png[width="750"]
 
 ==== Unfavoriting a person [Since v1.2]: `unfav`
 
-Removes the the `favorite` label from the specified person(s). +
-Command format: `unfav INDEX [ADDITIONAL INDEXES]`
+To remove person(s) from the list of favorite contacts, use the `unfav` command.
+
+====
+*Command format*: `[red]#unfav# [green]#INDEX [ADDITIONAL INDEXES]...#`
+====
 
 ****
 * Removes the person(s) from the list of favorite contacts at the specified `INDEX` or `INDEXES`.
 * The index refers to the index number shown in the most recently displayed list.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index must be a positive integer 1, 2, 3, ...
 ****
 
-Examples:
+*Examples*:
 
-* `unfav 2 4` +
-Unfavorites the 2nd and 4th person in the most recently displayed list.
-* `find Betsy` +
-`unfav 1` +
-Unfavorites the first person in the list of contacts with the name `Betsy`.
+* `[red]#unfav# [green]#1 2#` +
+Removes the 1st and 2nd person from favorite contacts in the most recently displayed list.
 
+.Removed the 1st and 2nd person from favorite contacts
+image::unfavorite-multiple-command-result.png[width="500"]
+
+* `[red]#find# [green]#Alex#` +
+`[red]#unfav# [green]#1#` +
+Removes the first person in the list of contacts with the name `Alex`.
+
+.Removed person at first index from favorite contacts i.e. Alex
+image::unfavorite-after-find-command-result.png[width="750"]
+// end::favoriteunfavoriteperson[]
 
 ==== Deleting a person: `delete`
 
-Deletes the specified person(s) from the address book. +
-Command format: `delete [OPTION] KEYWORD [MORE_KEYWORDS]...` +
-Alias: `d`
+To delete person(s) from the address book, use the `delete` command.
+
+====
+*Command format*: `[red]#delete# [blue]#[OPTION]# [green]#KEYWORD [MORE_KEYWORDS]...#` +
+
+*Alias*: `d`
+====
 
 [NOTE]
 The `KEYWORD` for `delete` command depends on which options are used.
 
-Options: +
+*Options*: +
 
 * Default (no option specified) +
 Deletes persons based on their indexes in the last displayed list.
-* `tag` +
+* `[blue]#-tag#` +
 Deletes persons that have the input tags.
 
 // tag::deletebyindex[]
 ===== Deleting persons by index (default):
-Deletes person(s) specified by their indexes in the last displayed list.
-Command format: `delete INDEX [ADDITIONAL_INDEXES]...`
+To delete person(s), you have to specify their indexes.
+
+====
+*Command format*: `[red]#delete# [green]#INDEX [ADDITIONAL_INDEXES]...#`
+====
 
 ****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index must be a positive integer 1, 2, 3, ...
 * More than one person can be deleted in the same command by specifying additional indexes. [Since v1.2]
 ****
 
-Examples:
+*Examples*:
 
-* `list` +
-`delete 2 3` +
-Deletes the 2nd and 3rd persons in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+* `[red]#list#` +
+`[red]#delete# [green]#3 4#` +
+Deletes the 3rd and 4th persons in the address book.
+
+.Deleted persons at indexes 3 and 4
+image::delete-multiple-command-result.png[width="750"]
+
+* `[red]#find# [green]#Bernice#` +
+`[red]#delete# [green]#1#` +
+Deletes the 1st person in the list of contacts with the name `Bernice`.
 // end::deletebyindex[]
 
-.Deleted person at first index i.e. Alex Yeoh
-image::delete-by-index-command-result.png[width="800"]
+.Deleted person at first index i.e. Bernice Yu
+image::delete-after-find-command-result.png[width="750"]
 
 ===== Deleting persons by tag [Since v1.4]:
 
-Deletes person(s) that have a the input tags. +
-Command format: `delete -tag TAG [ADDITIONAL_TAGS]...`
+To delete person(s) by tags, use the option `[blue]#-tag#`.
+
+====
+*Command format*: `[red]#delete# [blue]#-tag# [green]#TAG [ADDITIONAL_TAGS]...#`
+====
 
 [NOTE]
 All contacts with the input tag will be deleted.
 Make sure that none of the contacts that you do not intend to delete have the input tag.
 You can use the <<find-by-tag, find command>> to view all contacts that have the tag.
 
-Examples:
-* `delete -tag temp`
-Deletes all persons with the tag `temp`
-* `delete -tag school work`
-Deletes all persons with the tags `school` or `work`
+*Examples*:
+
+* `[red]#delete# [blue]#-tag# [green]#friends#` +
+Deletes all persons with the tag `friends`
+
+.Deleted all persons with the "friends" tag
+image::delete-by-tag-command-result.png[width="500"]
+
+* `[red]#delete# [blue]#-tag# [green]#colleagues neighbours#` +
+Deletes all persons with the tags `colleagues` or `neighbours`
+
+.Deleted all persons with the "colleagues" and "neighbours" tags
+image::delete-by-multiple-tags-command-result.png[width="500"]
 
 ==== Clearing all entries: `clear`
 
-Clears all entries from the address book. +
-Command format: `clear`
+To clear all entries from the address book, use the `clear` comand.
 
-.Cleared all entries
+====
+*Command format*: `[red]#clear#`
+====
+
+.Cleared all entries in the address book
 image::clear-command-result.png[width="350"]
 
 === Navigating KayPoh!
 
 ==== Listing persons: `list`
 
-To have all your contacts displayed in the person list, use the `list` command.
+To have all your contacts displayed in the address book, use the `list` command.
 
 ====
-
-Command format: `[red]#list#` +
+*Command format*: `[red]#list#` +
+*Alias*: `[red]#l#`
 
 * Listing all persons:
 `[red]#list#`
 * Listing all favorite persons [Since v1.2]:
 `[red]#list# [blue]#-fav#`
-
-Alias: `[red]#l#`
 ====
 
 You should see the person list populated with all of your contacts after executing the command.
 
 .Person list populated with all contacts
-image::list-command-result.png[width="790"]
+image::list-command-result.png[width="350"]
 
 // tag::select[]
 ==== Selecting a person: `select`
 
 To view the social media feed of a contact, use the `select` command.
 ====
-Command format: `[red]#select# [green]#INDEX [SOCIAL_MEDIA_PLATFORM]#` +
-Alias: `[red]#s#`
+*Command format*: `[red]#select# [green]#INDEX [SOCIAL_MEDIA_PLATFORM]#` +
+*Alias*: `[red]#s#`
 ====
 
 * The [green]`INDEX` refers to the index number of the person to be stalked in the person list.
@@ -385,9 +470,9 @@ the person, a Google search of the person's name will be displayed instead.
 You should see the person's social media feed displayed in the browser window.
 
 .Social media feed displayed in browser window
-image::stalk-command-result.png[width="790"]
+image::stalk-command-result.png[width="800"]
 
-Example:
+*Example*:
 
 * `[red]#select# [green]#1 facebook#` +
 Displays the Facebook account of the first person in the current person list
@@ -405,7 +490,7 @@ e.g. If the first user in the person list does not have an instagram account, an
 |Ensure that the selected user has an associated account for the `SOCIAL_MEDIA_PLATFORM` specified. The social media accounts associated with
 a user can be found in the person list.
 
-image:stalk-command-social-info.png[width="300"]
+image:stalk-command-social-info.png[width="350"]
 |===
 // end::select[]
 
@@ -415,7 +500,7 @@ image:stalk-command-social-info.png[width="300"]
 To find contacts by some criteria, use the `find` command.
 
 ====
-Command format:
+*Command format*:
 
 * Finding by `name`:
 `[red]#find# [green]#KEYWORD [ADDITIONAL_KEYWORDS]...#`
@@ -424,20 +509,22 @@ Command format:
 * Finding `favorite` contacts [Coming in v2.0]:
 `[red]#find# [blue]#-fav#`
 
-Alias: `[red]#f#` +
+*Alias*: `[red]#f#` +
 ====
 
+****
 * Contacts that match *any* of the provided [green]`KEYWORDS` will be displayed in the person list.
 * The search is case insensitive. e.g `john` will match `John`.
 * The order of the [green]`KEYWORDS` does not matter. e.g. `John Doe` will match `Doe John`.
 * Only full words will be matched e.g. `Jo` will not match `John`.
+****
 
 You should see the persons that meet the provided criteria displayed in the person list after executing the command.
 
 .Person list after finding contacts with the tag `friends`
 image::find-command-result.png[width="300"]
 
-Examples:
+*Examples*:
 
 * `[red]#find# [green]#John#` +
 Displays persons with the names `john` and `John Doe` in the person list.
@@ -455,7 +542,7 @@ Displays `favorite` contacts in the person list.
 To sort the person list, use the `sort` command.
 
 ====
-Command format:
+*Command format*:
 
 * Default sort:
 `[red]#sort#`
@@ -464,12 +551,14 @@ Command format:
 * Sorting by `last access date` [Since v1.5]:
 `[red]#sort# [blue]#-recent#`
 
-Alias: `[red]#sr#` +
+*Alias*: `[red]#sr#` +
 ====
 
+****
 * The default sort orders contacts first by their `favorite` status, then by their `name` in lexicographic order.
 * Sorting with the [blue]`name` option orders contacts by their `name` in lexicographic order.
 * Sorting with the [blue]`recent` option orders contacts by when they were last added, updated, or stalked.
+****
 
 The person list should be sorted based on the specified option after executing the command.
 
@@ -479,7 +568,7 @@ image::sort-command-default-result.png[width="300"]
 .Person list after executing a sort by `name`
 image::sort-command-name-result.png[width="300"]
 
-Examples:
+*Examples*:
 
 * `[red]#list#` +
 `[red]#sort#` +
@@ -623,7 +712,7 @@ Command format: `[red]#export# [green]#FILE_PATH#` +
 You should see the confirmation message in the result display. +
 
 .Confirmation message after exporting contacts
-image::export-contacts.png[width="790"]
+image::export-contacts.png[width="800"]
 
 Examples:
 
@@ -647,7 +736,7 @@ Command format: `[red]#import# [green]#FILE_PATH#`
 You should see the confirmation message in the result display. +
 
 .Confirmation message after importing contacts
-image::import-contacts.png[width="790"]
+image::import-contacts.png[width="800"]
 
 Examples:
 
@@ -676,25 +765,35 @@ Command format: `[red]#unsync#`
 
 ==== Changing themes: `theme` [Since v1.4]
 
-Changes the color theme of the application. +
-Format: `theme [OPTION]`
+To change the theme of the application, use the `theme` command.
 
-Options:
+====
+*Command format*: `[red]#theme# [blue]#[OPTION]#`
+====
 
-* `day` +
+*Options*:
+
+* `[blue]#-day#` +
 Changes the application theme to a light color scheme.
-* `night` +
+* `[blue]#-night#` +
 Changes the application theme to a dark color scheme.
 
-Example:
+*Examples*:
 
 * `theme -day`
+
+image::Ui-day.png[width="800"]
+
 * `theme -night`
+
+image::Ui-night.png[width="800"]
 
 ==== Listing entered commands: `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+To list all the commands that you have entered in reverse chronological order, use the `history` command. +
+====
+*Command format*: `[red]#history#`
+====
 
 [NOTE]
 ====
@@ -704,64 +803,77 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 ==== Undoing previous command: `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo` +
-Alias: `u`
+To restore the address book to the state before the previous _undoable_ command was executed, use the `undo` command. +
+
+====
+*Command format*: `undo` +
+*Alias*: `u`
+====
 
 [NOTE]
 ====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
-Examples:
+*Examples*:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+* `[red]#delete# [green]#1#` +
+`[red]#list#` +
+`[red]#undo#` +
+Reverses the `delete 1` command
 
-* `select 1` +
-`list` +
-`undo` +
+* `[red]#select# [green]#1#` +
+`[red]#list#` +
+`[red]#undo#` +
 The `undo` command fails as there are no undoable commands executed previously.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+* `[red]#delete# [green]#1#` +
+`[red]#clear#` +
+`[red]#undo#` (reverses the `clear` command) +
+`[red]#undo#` (reverses the `delete 1` command) +
 
 ==== Redoing the previously undone command: `redo`
 
-Reverses the most recent `undo` command. +
-Format: `redo` +
-Alias: `r`
+To reverse the most recent `undo` command, use the `redo` command. +
+====
+*Command format*: `redo` +
+*Alias*: `r`
+====
 
-Examples:
+*Examples*:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `[red]#delete# [green]#1#` +
+`[red]#undo#` (reverses the `delete 1` command) +
+`[red]#redo#` (reapplies the `delete 1` command) +
 
-* `delete 1` +
-`redo` +
+* `[red]#delete# [green]#1#` +
+`[red]#redo#` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+* `[red]#delete# [green]#1#` +
+`[red]#clear#` +
+`[red]#undo#` (reverses the `clear` command) +
+`[red]#undo#` (reverses the `delete 1` command) +
+`[red]#redo#` (reapplies the `delete 1` command) +
+`[red]#redo#` (reapplies the `clear` command) +
 // end::undoredo[]
 
-==== Exiting the program: `exit`
+==== Exiting the application: `exit`
 
-Exits the program. +
-Format: `exit` +
-Alias: `x`
+To exit the application, use the `exit` command.
+
+====
+*Command format*: `exit` +
+*Alias*: `x`
+====
 
 ==== Viewing help: `help`
 
-Format: `help`
+To open the help window, use the `help` command.
+
+====
+*Command format*: `help`
+====
 
 == FAQ
 
