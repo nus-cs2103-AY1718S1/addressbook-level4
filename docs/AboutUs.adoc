@@ -10,12 +10,13 @@ We are a 5-man team based in the http://www.comp.nus.edu.sg[School of Computing,
 
 == Project Team
 
-=== WANG CHIH-HAO aka Oscar
+=== WANG CHIH-HAO aka Oscar Wang
 image::oscarwang.jpg[width="150", align="left"]
 image:githubicon.png[Github Icon, 40, 40, link="https://github.com/OscarWang114"] image:portfolio.png[Portfolio Icon, 40, 40, link="team/oscarwang.adoc"]
 
-Role: Developer +
-Responsibilities:
+Role: Scheduling and tracking, In charge of `LifeInsurance` related components, Git expert +
+Responsibilities: Maintain the team repository and assign issues to members.
+Manage the overall progress and documentation of components related to `LifeInsurance`.  Assist team members with matters related to Git. Review most pull requests and help resolve merge conflicts.
 
 === Pujitha Desiraju
 image::PujithaDesiraju.jpg[width="150", align="left"]

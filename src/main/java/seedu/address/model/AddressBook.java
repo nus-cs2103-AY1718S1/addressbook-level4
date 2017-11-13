@@ -165,12 +165,16 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //@@author OscarWang114
     /**
-     *Adds an insurance to the address book.
+     *Adds a life insurance to LISA.
+     *@throws DuplicateInsuranceException if there is a another equivalent life insurance in the map.
+     *@throws DuplicateContractFileNameException if the {@code contractFileName} field of {@code toAdd} equals to
+     * another life insurance in the map.
      */
-    public void addInsurance(ReadOnlyInsurance i)
+    public void addLifeInsurance(ReadOnlyInsurance toAdd)
             throws DuplicateInsuranceException, DuplicateContractFileNameException {
-        LifeInsurance lifeInsurance = new LifeInsurance(i);
-        lifeInsuranceMap.put(lifeInsurance.getId(), lifeInsurance);
+        LifeInsurance lifeInsurance = new LifeInsurance(toAdd);
+        UUID id = lifeInsurance.getId();
+        lifeInsuranceMap.put(id, lifeInsurance);
         syncWithUpdate();
     }
     //@@author
