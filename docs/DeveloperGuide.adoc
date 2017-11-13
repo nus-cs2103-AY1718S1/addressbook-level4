@@ -589,80 +589,44 @@ image::ExportCommandClassDiagram.png[width="800"]
 _Figure 3.9A - Class Diagram of ExportCommand_
 
 From _Figure 3.9A_, the ExportCommand depends on `java.io` to carry out the file IO operations to create the CSV file.
- It also depends on the `Model` class and `Place` package in order to extract the required information to export.
+It also depends on the `Model` class and `Place` package in order to extract the required information to export.
 
- The sequence diagram of the command is shown below:
+The sequence diagram of the command is shown below:
 
- image::ExportCommandSequenceDiagram.png[width="800"]
- _Figure 3.9B - Sequence Diagram of ExportCommand_
+image::ExportCommandSequenceDiagram.png[width="800"]
+_Figure 3.9B - Sequence Diagram of ExportCommand_
 
- Explanation of _Figure 3.9B_:
+Explanation of _Figure 3.9B_:
 
- 1. The `execute("export")` command is called on the `LogicManager`.
+1. The `execute("export")` command is called on the `LogicManager`.
+2. `LogicManager` calls the `parse` method on `AddressBookParser`.
+3. The `parse` method creates a new `ExportCommand` which returns an `ExportCommand`, `e`,
+all the way back to `LogicManager`.
+4. `LogicManager` calls the `execute()` method on `e`, an `ExportCommand`.
+5. `ExportCommand` obtains the `PlaceList` from the `Model`.
+6. `ExportCommand` checks if an exported file exists. If the file exists, it will delete the file.
+7. `ExportCommand` generates the exported file through a series of self calls and generates a new `CommandResult`, `result`.
+8. The `result` is returned to the `LogicManager` which returns it back to the `UI`.
 
- 2. `LogicManager` calls the `parse` method on `AddressBookParser`.
+==== Design Considerations
 
- 3. The `parse` method creates a new `ExportCommand` which returns an `ExportCommand`, `e`,
- all the way back to `LogicManager`.
+**Aspect:** Construction of Strings
+**Alternative 1 (current choice):** Using `StringBuilder`
+**Pros:** Able to easily construct the `String` due to the mutability of `StringBuilder`.
+**Cons:** Dependency on the `StringBuilder` class.
+**Alternative 2:** Using `String` only.
+**Pros:** Reduced dependency on additional classes.
+**Cons:** Constant re-assignment of resultant `String` is required as it is not mutable.
 
- 4. `LogicManager` calls the `execute()` method on `e`, an `ExportCommand`.
+---
 
- 5. `ExportCommand` obtains the `PlaceList` from the `Model`.
-
- 6. `ExportCommand` checks if an exported file exists. If the file exists, it will delete the file.
-
- 7. `ExportCommand` generates the exported file through a series of self calls and generates a new `CommandResult`, `result`.
-
- 8. The `result` is returned to the `LogicManager` which returns it back to the `UI`.
-
- ==== Design Considerations
- **Aspect:** Construction of Strings
-
- *Alternative 1 (current choice):* Using `StringBuilder`
-
- *Pros:*
-
- * Able to easily construct the `String` due to the mutability of `StringBuilder`.
-
- *Cons:*
-
- * Dependency on the `StringBuilder` class.
-
- *Alternative 2:* Using `String` only.
-
- *Pros:*
-
- * Reduced dependency on additional classes.
-
- *Cons:*
-
- * Constant re-assignment of resultant `String` is required as it is not mutable.
-
- **Aspect:** Generating Place Data
-
- *Alternative 1 (current choice):* "Hard-code" the data to obtain from a `ReadOnlyPlace`.
-
- *Pros:*
-
- * Code is executed at a faster rate.
-
- *Cons:*
-
- * Coupling is increased with `ReadOnlyPlace`.
-
- * Code is not adaptable should new fields be added to `ReadOnlyPlace`.
-
- *Alternative 2:* Generate place data according to the fields present in `ReadOnlyPlace`.
-
- *Pros:*
-
- * Code is adaptable should new fields be added to `ReadOnlyPlace`.
-
- *Cons:*
-
- * Additional processing overhead.
-
- * Difficult and time-consuming to implement.
+**Aspect:** Generating Place Data
+**Alternative 1 (current choice):** "Hard-code" the data to obtain from a `ReadOnlyPlace`.
+**Pros:** Code is executed at a faster rate.
+**Cons:** Coupling is increased with `ReadOnlyPlace` / Code is not adaptable if new fields are added to `ReadOnlyPlace`.
+**Alternative 2:** Generate place data according to the fields present in `ReadOnlyPlace`.
+**Pros:** Code is adaptable should new fields be added to `ReadOnlyPlace`.
+**Cons:** Additional processing overhead / Difficult and time-consuming to implement.
 
 The implementation of the method is credited to link:https://github.com/AceCentury[Ryan Teo] and +
 link:https://github.com/nus-cs2103-AY1718S1/forum/issues/158[this issue].

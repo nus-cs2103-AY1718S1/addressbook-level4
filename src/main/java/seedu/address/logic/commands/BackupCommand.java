@@ -10,13 +10,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
  * A command to create a backup of user's Tourist Book data.
  */
 //@@author huyuanrong
-public class BackupCommand extends UndoableCommand {
+public class BackupCommand extends Command {
 
     public static final String COMMAND_WORD = "backup";
     public static final String MESSAGE_SUCCESS = "A Tourist Book backup has been created!";
 
     @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         EventsCenter.getInstance().post(new BackupEvent(model.getAddressBook()));
         return new CommandResult(String.format(MESSAGE_SUCCESS));
