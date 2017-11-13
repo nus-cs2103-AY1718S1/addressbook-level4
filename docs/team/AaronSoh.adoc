@@ -98,5 +98,9 @@ This will allow users to delete more than 1 contacts at the same time. Users wil
 
 === Other contributions
 
-* Contributed to the UI layout
-* Edited team mates' documentations
+* Changed tag colour in PersonCard (Pull request #85)
+* Added JUnit tests to improve test coverage (Pull request #57)
+* Changed result display panel to print every field in a new line (Pull request #57)
+* Removed redundant code (Pull request #57)
+* Recfitifed language error in team mate's documentation (Pull request #27)
+* Added boolean instance `favourite` to Person (Pull request #27)
