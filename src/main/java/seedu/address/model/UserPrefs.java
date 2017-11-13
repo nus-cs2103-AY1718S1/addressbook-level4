@@ -15,6 +15,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
+    private String profilePicturesFolderPath = "images/profilePics/";
     private String addressBookName = "Codii";
     private String adminUsername = "loanShark97";
     private String adminPassword = "89a6a0f1d74b471f96018a84ab9b5562a39e0d09e3f48872a5fca8fb8b01c404a993e47ce384495196d"
@@ -59,6 +60,14 @@ public class UserPrefs {
 
     public String getAdminUsername() {
         return adminUsername;
+    }
+
+    public String getProfilePicturesFolderPath() {
+        return profilePicturesFolderPath;
+    }
+
+    public void setProfilePicturesFolderPath(String path) {
+        this.profilePicturesFolderPath = path;
     }
 
     public void setAdminPassword(String adminPassword) {
