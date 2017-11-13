@@ -364,6 +364,8 @@ When an `AddCommandParser` or `EditCommandParser` is used to parse a command, an
 
 The `ArgumentMultimap` class has a `getValue` method and a `getMultipleValues` method. If there are multiple strings passed as arguments to the prefix, the `getValue` method returns only the last string in the list, while the `getMultipleValues` returns a concatenation of all the strings in the list.
 
+image::multipleFieldsSequenceDiagram.png[width="800"]
+
 The `ParserUtil` class has various parsing methods, such as `parseName` and `parsePhone`. The method `parseName` returns a `Name` object wrapped in the `Optional` class and the method returns a `Phone` object wrapped in the `Optional` class.
 
 The `parsePhone` method in the `ParserUtil` class calls the `getMultipleValues` method of the `ArgumentMultimap` class instead of the `getValue` method called by the other parsers. This allows multiple phone numbers to be stored in a `Phone` object.
