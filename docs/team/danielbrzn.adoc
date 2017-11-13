@@ -60,7 +60,7 @@ include::../UserGuide.adoc[tag=location]
 
 ---
 
-While having the location of a contact is useful, it is an inconvenience to the user to copy the address into Google Maps
+While having the location of a contact is useful, it is inconvenient for the user to copy the address into Google Maps
 manually in order to figure out the directions to a friend's place. As such, the location command allows the user to directly view the location of a contact
 in HitMeUp without having to switch to a browser.
 
