@@ -22,7 +22,7 @@ In Charge of: Logic and Model
 
 '''
 
-=== http://github.com/aali195[Ahmed Ali]
+=== https://cs2103aug2017-t12-b4.github.io/main/team/AhmedAli.html[Ahmed Ali]
 image::aali195.jpg[width="150", align="left"]
 
 Role: Scheduling and tracking, Documentation
