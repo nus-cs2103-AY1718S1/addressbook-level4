@@ -83,7 +83,9 @@ public class CommandBoxHelper extends UiPart<Region> {
                 || commandBoxHelperList.getSelectionModel().getSelectedIndex()
                 == commandBoxHelperList.getItems().size() - 1) {
             commandBoxHelperList.getSelectionModel().selectFirst();
+            commandBoxHelperList.scrollTo(0);
         } else {
+            commandBoxHelperList.scrollTo(commandBoxHelperList.getSelectionModel().getSelectedIndex() + 1);
             commandBoxHelperList.getSelectionModel().select(
                     commandBoxHelperList.getSelectionModel().getSelectedIndex() + 1);
         }
@@ -95,9 +97,16 @@ public class CommandBoxHelper extends UiPart<Region> {
     public void selectUpHelperBox() {
         if (commandBoxHelperList.getSelectionModel().getSelectedItem() == null) {
             commandBoxHelperList.getSelectionModel().selectFirst();
+            commandBoxHelperList.scrollTo(0);
         } else if (commandBoxHelperList.getSelectionModel().getSelectedIndex() == 0) {
             commandBoxHelperList.getSelectionModel().selectLast();
+            commandBoxHelperList.scrollTo(
+                    commandBoxHelperList.getItems().size() - 1
+            );
         } else {
+            commandBoxHelperList.scrollTo(
+                    commandBoxHelperList.getSelectionModel().getSelectedIndex() - 1
+            );
             commandBoxHelperList.getSelectionModel().select(
                     commandBoxHelperList.getSelectionModel().getSelectedIndex() - 1);
         }
