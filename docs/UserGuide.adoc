@@ -1016,11 +1016,22 @@ image::UG_header_audiblefeedback.png[width="500"]
 Unify knows that speed is essential to you, hence audible feedback is an another key component in giving you that extra confirmation
 that your actions have been executed.
 
-* Unify plays an audible typing sound whenever you are typing.
-* Unify also plays an audible confirmation feedback to your executed commands. Giving you the audible feedback that your command is executed successfully.
-* Unify has an built-in text-to-speech
-technology that is able to read your friend's name when you click on their details. Giving you that extra confirmation feedback you needed.
+* An audible typing sound will be played whenever you are typing in the command box.
+* An audible confirmation feedback to your executed commands. Giving you the audible feedback that your command is executed successfully.
+* Unify has a built-in text-to-speech
+feature that is able to read your friend's name when you click on their details. Giving you that extra confirmation feedback you needed.
 // end::audiblefeedback[]
+
+== Upcoming Features in Future Releases
+image::UG_mainheader_upcomingfeatures.png[width="900"]
+//-
+{sp}
+
+image::UG_header_v2features.png[width="500"]
+
+* Speech-To-Text feature, to give users another way of input as well as executing commands hands free. This will be greatly beneficial to those who want to multitask, as it ables to execute multiple commands. +
++
+For example, when the user is editing a contact, he/she is able to say "music play pop" to play some music without moving away from his/her current task.
 
 == FAQ
 image::UG_mainheader_faq.png[width="900"]
