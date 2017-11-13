@@ -94,7 +94,7 @@ public class AddMeetingCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyAddressBook newData, ReadOnlyMeetingList newMeetingData) {
             fail("This method should not be called.");
         }
 
