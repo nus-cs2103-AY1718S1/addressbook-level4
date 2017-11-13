@@ -111,7 +111,7 @@ Adds a person to DeathNote +
 
   Shorthand: a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
 
-  Evil Format: curse n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
+  Alias: curse n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
 
 * Only `NAME` field is compulsory +
 //end::add[]
@@ -153,7 +153,7 @@ Edits an existing person in DeathNote. +
 
   Shorthand: e INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
 
-  Evil Format: mutate INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
+  Alias: mutate INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
@@ -182,7 +182,7 @@ Deletes the specified person from DeathNote.
 
   Shorthand: d INDEX
 
-  Evil Format: destroy INDEX
+  Alias: destroy INDEX
 
 
 * Deletes the person at the specified `INDEX`.
@@ -209,7 +209,7 @@ Finds persons who matches the given attributes. +
 
   Shorthand: f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...
 
-  Evil Format: summon [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...
+  Alias: summon [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...
 
 * Searches based on the input and prefix.
 * The search is case insensitive for NAME. e.g `hans` will match `Hans`
@@ -321,7 +321,7 @@ Clears all entries from DeathNote.
 
   Shorthand: c
 
-  Evil Format: purge
+  Alias: purge
 
 // tag::undoredo[]
 === Undo previous command : `undo` / `u`
