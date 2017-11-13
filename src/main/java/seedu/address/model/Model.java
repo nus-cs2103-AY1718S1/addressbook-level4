@@ -198,15 +198,20 @@ public interface Model {
 
     //@@author jaivigneshvenugopal
     /**
-     * Adds the picture of the person into app database and sets the person's display picture boolean status to true
-     * @return true if person's picture is successfully added.
+     * Sets the path to the specified profile pictures folder in {@code userPrefs}
      */
-    boolean addProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException;
+    void setProfilePicsPath(String path);
+
+    /**
+     * Adds the picture of the person into app database and sets the person's display picture boolean status to true
+     * @return updated {@code ReadOnlyPerson}.
+     */
+    ReadOnlyPerson addProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException;
 
     /**
      * Sets the person's display picture boolean status to false.
-     * @return true if person's picture is successfully removed.
+     * @return updated {@code ReadOnlyPerson}.
      */
-    boolean removeProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException;
+    ReadOnlyPerson removeProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException;
     //@@author
 }

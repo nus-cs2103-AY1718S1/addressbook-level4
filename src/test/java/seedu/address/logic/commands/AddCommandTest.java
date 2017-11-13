@@ -309,15 +309,20 @@ public class AddCommandTest extends CommandTest {
         }
 
         @Override
-        public boolean addProfilePicture(ReadOnlyPerson person) {
+        public void setProfilePicsPath(String path) {
             fail("This method should not be called");
-            return false;
         }
 
         @Override
-        public boolean removeProfilePicture(ReadOnlyPerson person) {
+        public ReadOnlyPerson addProfilePicture(ReadOnlyPerson person) {
             fail("This method should not be called");
-            return false;
+            return null;
+        }
+
+        @Override
+        public ReadOnlyPerson removeProfilePicture(ReadOnlyPerson person) {
+            fail("This method should not be called");
+            return null;
         }
 
     }
