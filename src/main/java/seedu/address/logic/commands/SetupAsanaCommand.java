@@ -8,8 +8,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 
 import seedu.address.model.asana.AuthenticateAsanaUser;
 
-import seedu.address.storage.asana.storage.AsanaCredentials;
-
 //@@author Sri-vatsa
 /**
  * Initiates Authorisation with Asana on Asana's website
@@ -32,9 +30,6 @@ public class SetupAsanaCommand extends Command {
         try {
 
             new AuthenticateAsanaUser();
-
-            AsanaCredentials asanaCredentials = new AsanaCredentials();
-            asanaCredentials.setIsAsanaConfigured(CONFIGURED);
 
         } catch (URISyntaxException e) {
             throw new CommandException("Failed to redirect to Asana's page. Please try again later!");

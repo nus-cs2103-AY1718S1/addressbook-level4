@@ -1,5 +1,7 @@
 package seedu.address.model.asana;
 
+import static seedu.address.logic.commands.SetupAsanaCommand.CONFIGURED;
+
 import java.awt.Desktop;
 
 import java.io.IOException;
@@ -32,6 +34,6 @@ public class AuthenticateAsanaUser {
 
         //open browser on desktop for authentication purpose --> Asana to show authorisation key
         Desktop.getDesktop().browse(new URI(url));
-
+        asanaCredentials.setIsAsanaConfigured(CONFIGURED);
     }
 }
