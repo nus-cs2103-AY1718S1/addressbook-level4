@@ -12,6 +12,8 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 #Start of Extract [from: Developer Guide]#
 
+*Intro to DG*
+
 include::../DeveloperGuide.adoc[tag=dgintro]
 
 #End of Extract#
@@ -32,6 +34,14 @@ include::../UserGuide.adoc[tag=sremove]
 #End of Extract#
 
 ---
+
+==== Justification
+
+* Having the `sort` command allows users to fine tune how their person list panel should appear.
+
+* Having the `s-add` command allows users to add events to their address book to better manage their schedule.
+
+* Having the `s-remove` command allows users to remove events from the address book.
 
 ==== Implementation
 
