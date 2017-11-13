@@ -62,7 +62,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         if (expectedPersonUrl.equals(browserPanelHandle.getLoadedUrl())) {
             assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
         } else {
-            assertTrue(browserPanelHandle.toString().contains("http://ipv4.google.com/sorry/"));
+            assertTrue(browserPanelHandle.toString().contains("https://ipv4.google.com/sorry/"));
         }
     }
 
