@@ -15,10 +15,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 By: `Team W09-B03`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
-
+// tag::dgintro[]
 iConnect is a command-line interface (CLI) based application which allows students to manage their contacts and keep track of their schedule. This documentation aims to guide you through the development process of iConnect, getting you started as an iConnect contributor. iConnect is written in Java and the editor of choice is IntelliJ IDE.
 
 Due its sizable codebase, you may want to get familiarise with the different architectural components to have a better understanding of each component works together.
+// end::dgintro[]
 
 == Setting up
 

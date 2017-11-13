@@ -223,7 +223,7 @@ public class ScheduleAddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-            assertTrue(true);
+            fail("This method should not be called.");
         }
 
         public void updateFilteredBinList(Predicate<ReadOnlyPerson> predicate) {
@@ -304,6 +304,12 @@ public class ScheduleAddCommandTest {
         @Override
         public boolean hasEvenClashes(Event event) {
             return false;
+        }
+
+        //Overwrite default model stub as filtered list is updated during execution
+        @Override
+        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+
         }
     }
 }
