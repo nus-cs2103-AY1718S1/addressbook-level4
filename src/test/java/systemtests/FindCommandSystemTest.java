@@ -180,7 +180,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple persons in address book by name field, name is not complete
+        /* Case: find multiple persons in address book by name, name is not complete
          * -> 3 persons found
          */
         command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_NAME + "me";
