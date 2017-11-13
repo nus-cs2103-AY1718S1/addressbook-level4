@@ -111,8 +111,6 @@ Thus, it becomes essential for us to natively support exporting data to a format
 data stored in **BoNUS** can be considered as _tables_. Naturally, it comes to my mind that Microsoft Excel^TM^ would
 be a perfect format to present data to users.
 
-Users can type `--excel` as the additional option to specify Microsoft Excel^TM^ as the output format when they use `ExportCommand`.
-
 === Other contributions
 
 * Repository setup, CI setup and Slack automatic notification using WebHook (Pull requests https://github.com/CS2103AUG2017-T09-B3/main/pull/1[#1],
