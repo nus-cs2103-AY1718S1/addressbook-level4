@@ -1,0 +1,44 @@
+= Test Script for Bluebird
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:repoURL: https://github.com/CS2103AUG2017-T15-B4/main/tree/master
+
+By: `Team T15-B4`      Since: `Sep 2017`      Licence: `MIT`
+
+== Setting up Bluebird
+
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
++
+[NOTE]
+Having any Java 8 version is not enough. +
+This app will not work with earlier versions of Java 8.
++
+.  Download from IVLE all files submitted by our team
+(i.e. jar file, user guide, developer guide, sample data, test script, project portfolio pages)into an empty folder.
+
+== Loading up SampleData.xml
+
+. There is no need to load the SampleData.xml as Bluebird already has a preset sample data when you first launch it.
+. If there are any errors loading up Bluebird without the SampleData.xml, simply create a new folder called
+"data" in the folder Bluebird.jar is in, rename the SampleData.xml to "addressbook.xml" and place it in the "data" folder.
+
+== Launching Bluebird for the first time
+
+If there were no "addressbook.xml" detected when you launch Bluebird, a quick start tutorial will be launched as shown in
+the user guide section 2. This tutorial will guide you on Bluebird's UI and Parent Mode(IMPORTANT).
+
+== Important step to enable all commands
+
+By default, when Bluebird is launched it is set to limit the number of commands available.
+In order to enable all the commands, please type "parent" into the command box and press enter.
+
+== Test Cases
