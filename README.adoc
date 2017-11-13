@@ -21,7 +21,7 @@ endif::[]
 ** Automatic debt update based on interests
 ** Whitelist / Blacklist / Overdue list
 ** Export data in other formats
-** Debt repayment progress bar which indicates the progress of debt repayment and the debt repayment status
+** Debt repayment progress bar and debt repayment status (overdue/completed/time left before payment deadline)
 ** Nearby persons panel (show contacts that live near a selected person)
 
 == Site Map
