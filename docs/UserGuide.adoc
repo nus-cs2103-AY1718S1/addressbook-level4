@@ -482,6 +482,7 @@ image::ViewScheduleImage.png[width="800"]
 _Figure 5.2.2.1 : View all your schedules in cherBook as shown in the box_
 // end::viewschedule[]
 
+// tag::deleteschedule[]
 ==== Deleting a schedule : `deleteschedule` `Since v1.5`
 
 Deletes the specified schedule from cherBook. +
@@ -507,6 +508,7 @@ Example:
 
 image::DeleteScheduleImage.png[width="800"]
 _Figure 5.2.3.1 : Deletes the schedule in your cherBook with the specified index_
+// end::deleteschedule[]
 
 === User Interface Features
 // tag::homepanel[]
