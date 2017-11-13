@@ -27,10 +27,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.awt.image.*;
-import java.io.*;
 import java.util.LinkedList;
 import java.util.TreeSet;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -42,7 +40,7 @@ import javax.swing.*;
  *  For additional documentation, see <a href="http://introcs.cs.princeton.edu/15inout">Section 1.5</a> of
  *  <i>Introduction to Programming in Java: An Interdisciplinary Approach</i> by Robert Sedgewick and Kevin Wayne.
  */
-public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
+public final class StdDraw {
 
     // pre-defined colors
     public static final Color BLACK      = Color.BLACK;
@@ -193,11 +191,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         ImageIcon icon = new ImageIcon(onscreenImage);
         JLabel draw = new JLabel(icon);
 
-        draw.addMouseListener(std);
-        draw.addMouseMotionListener(std);
-
         frame.setContentPane(draw);
-        frame.addKeyListener(std);    // JLabel cannot get keyboard focus
         frame.setResizable(false);
         frame.setDefaultCloseOperation(frame.HIDE_ON_CLOSE);      // closes only current window
         frame.setTitle("GetPath2");
@@ -216,7 +210,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         JMenu menu = new JMenu("File");
         menuBar.add(menu);
         JMenuItem menuItem1 = new JMenuItem(" Save...   ");
-        menuItem1.addActionListener(std);
+
         menuItem1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
                                 Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         menu.add(menuItem1);
@@ -566,232 +560,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         frame.repaint();
     }
 
-
-    /*************************************************************************
-    *  Save drawing to a file.
-    *************************************************************************/
-
-    /**
-     * Save onscreen image to file - suffix must be png, jpg, or gif.
-     * @param filename the name of the file with one of the required suffixes
-     */
-    public static void save(String filename) {
-        File file = new File(filename);
-        String suffix = filename.substring(filename.lastIndexOf('.') + 1);
-
-        // png files
-        if (suffix.equalsIgnoreCase("png")) {
-            try {
-                ImageIO.write(onscreenImage, suffix, file);
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        // need to change from ARGB to RGB for jpeg
-        // reference: http://archives.java.sun.com/cgi-bin/wa?A2=ind0404&L=java2d-interest&D=0&P=2727
-        else if (suffix.equalsIgnoreCase("jpg")) {
-            WritableRaster raster = onscreenImage.getRaster();
-            WritableRaster newRaster;
-            newRaster = raster.createWritableChild(0, 0, width, height, 0, 0, new int[] {0, 1, 2});
-            DirectColorModel cm = (DirectColorModel) onscreenImage.getColorModel();
-            DirectColorModel newColourModel = new DirectColorModel(cm.getPixelSize(),
-                                                          cm.getRedMask(),
-                                                          cm.getGreenMask(),
-                                                          cm.getBlueMask());
-            BufferedImage rgbBuffer = new BufferedImage(newColourModel, newRaster, false,  null);
-            try {
-                ImageIO.write(rgbBuffer, suffix, file);
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Invalid image file type: " + suffix);
-        }
-    }
-
-
-    /**
-     * This method cannot be called directly.
-     */
-    public void actionPerformed(ActionEvent e) {
-        FileDialog chooser = new FileDialog(StdDraw.frame, "Use a .png or .jpg extension", FileDialog.SAVE);
-        chooser.setVisible(true);
-        String filename = chooser.getFile();
-        if (filename != null) {
-            StdDraw.save(chooser.getDirectory() + File.separator + chooser.getFile());
-        }
-    }
-
-
-    /*************************************************************************
-    *  Mouse interactions.
-    *************************************************************************/
-
-    /**
-     * Is the mouse being pressed?
-     * @return true or false
-     */
-    public static boolean mousePressed() {
-        synchronized (mouseLock) {
-            return mousePressed;
-        }
-    }
-
-    /**
-     * This method cannot be called directly.
-     */
-    public void mousePressed(MouseEvent e) {
-        synchronized (mouseLock) {
-            mouseX = StdDraw.userX(e.getX());
-            mouseY = StdDraw.userY(e.getY());
-            mousePressed = true;
-        }
-    }
-
-    /**
-     * What is the x-coordinate of the mouse?
-     * @return the value of the x-coordinate of the mouse
-     */
-    public static double mouseX() {
-        synchronized (mouseLock) {
-            return mouseX;
-        }
-    }
-
-    /**
-     * What is the y-coordinate of the mouse?
-     * @return the value of the y-coordinate of the mouse
-     */
-    public static double mouseY() {
-        synchronized (mouseLock) {
-            return mouseY;
-        }
-    }
-
-
-    /**
-     * This method cannot be called directly.
-     */
-    public void mouseClicked(MouseEvent e) {
-        System.out.print("");
-    }
-
-    /**
-     * This method cannot be called directly.
-     */
-    public void mouseEntered(MouseEvent e) {
-        return;
-    }
-
-    /**
-     * This method cannot be called directly.
-     */
-    public void mouseExited(MouseEvent e) {
-        return;
-    }
-
-
-    /**
-     * This method cannot be called directly.
-     */
-    public void mouseReleased(MouseEvent e) {
-        synchronized (mouseLock) {
-            mousePressed = false;
-        }
-    }
-
-    /**
-     * This method cannot be called directly.
-     */
-    public void mouseDragged(MouseEvent e)  {
-        synchronized (mouseLock) {
-            mouseX = StdDraw.userX(e.getX());
-            mouseY = StdDraw.userY(e.getY());
-        }
-    }
-
-    /**
-     * This method cannot be called directly.
-     */
-    public void mouseMoved(MouseEvent e) {
-        synchronized (mouseLock) {
-            mouseX = StdDraw.userX(e.getX());
-            mouseY = StdDraw.userY(e.getY());
-        }
-    }
-
-
-    /*************************************************************************
-    *  Keyboard interactions.
-    *************************************************************************/
-
-    /**
-     * Has the user typed a key?
-     * @return true if the user has typed a key, false otherwise
-     */
-    public static boolean hasNextKeyTyped() {
-        synchronized (keyLock) {
-            return !keysTyped.isEmpty();
-        }
-    }
-
-    /**
-     * What is the next key that was typed by the user? This method returns
-     * a Unicode character corresponding to the key typed (such as 'a' or 'A').
-     * It cannot identify action keys (such as F1
-     * and arrow keys) or modifier keys (such as control).
-     * @return the next Unicode key typed
-     */
-    public static char nextKeyTyped() {
-        synchronized (keyLock) {
-            return keysTyped.removeLast();
-        }
-    }
-
-    /**
-     * Is the keycode currently being pressed? This method takes as an argument
-     * the keycode (corresponding to a physical key). It can handle action keys
-     * (such as F1 and arrow keys) and modifier keys (such as shift and control).
-     * See <a href = "http://download.oracle.com/javase/6/docs/api/java/awt/event/KeyEvent.html">KeyEvent.java</a>
-     * for a description of key codes.
-     * @return true if keycode is currently being pressed, false otherwise
-     */
-    public static boolean isKeyPressed(int keycode) {
-        synchronized (keyLock) {
-            return keysDown.contains(keycode);
-        }
-    }
-
-
-    /**
-     * This method cannot be called directly.
-     */
-    public void keyTyped(KeyEvent e) {
-        synchronized (keyLock) {
-            keysTyped.addFirst(e.getKeyChar());
-        }
-    }
-
-    /**
-     * This method cannot be called directly.
-     */
-    public void keyPressed(KeyEvent e) {
-        synchronized (keyLock) {
-            keysDown.add(e.getKeyCode());
-        }
-    }
-
-    /**
-     * This method cannot be called directly.
-     */
-    public void keyReleased(KeyEvent e) {
-        synchronized (keyLock) {
-            keysDown.remove(e.getKeyCode());
-        }
-    }
 }
 
 
