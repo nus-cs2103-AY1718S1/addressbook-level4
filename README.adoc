@@ -1,3 +1,11 @@
+ifdef::env-github[]
+image::docs/images/singapore_day.jpg[width="800"]
+endif::[]
+
+ifndef::env-github[]
+image::images/singapore_day.jpg[width="800"]
+endif::[]
+
 = Tourist Book
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
@@ -45,11 +53,11 @@ starred restaurants without the need to juggle multiple tabs on your web browser
 
 
 ifdef::env-github[]
-image::docs/images/Singapore_Image.jpg[width="800"]
+image::docs/images/singapore_night.jpg[width="800"]
 endif::[]
 
 ifndef::env-github[]
-image::images/Singapore_Image.jpg[width="800"]
+image::images/singapore_night.jpg[width="800"]
 endif::[]
 
 

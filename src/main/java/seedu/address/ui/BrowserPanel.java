@@ -18,7 +18,7 @@ import seedu.address.model.place.ReadOnlyPlace;
  */
 public class BrowserPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE = "http://www.visitsingapore.com/en/";
+    public static final String DEFAULT_PAGE = "https://cs2103aug2017-f09-b2.github.io/main/";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 

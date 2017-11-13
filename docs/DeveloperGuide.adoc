@@ -649,7 +649,7 @@ of bounds, it will throw a `CommandExceptionError` during execute().
 
 The following is the sequence diagram for `dir` command +
 
-image::DirectionSequenceDiagram.PNG[width="800"]
+image::DirectionSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 **Aspect:** Implementation of `dir`.  +
