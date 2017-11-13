@@ -431,6 +431,7 @@ image::backup.png[width='800']
 
 // end::backup[]
 
+// tag::import[]
 === Import data : `import` (Since v1.2)
 
 Add contact details from external xml file into current resident book. This can be done through typing commands or selecting from the UI.+
@@ -447,7 +448,9 @@ Examples:
 Imports colleagues.xml into current resident book.
 
 Through the UI:
-image::ui_import.png[width="400"]
+image::import_file_Ui.png[width="800"]
+
+// end::import[]
 
 // tag::removeTag[]
 === Remove all Tags with specified name : `rm` (Since v1.3)

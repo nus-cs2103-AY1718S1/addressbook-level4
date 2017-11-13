@@ -659,6 +659,7 @@ The following activity diagram summarize what happens inside the `ImportCommand`
 
 image::ImportCommandActivityDiagram.png[width="500"]
 
+// end::import
 
 // tag::backup
 === Backup Command
@@ -765,6 +766,8 @@ public RemoveTagCommand(String tagName) {
 
 [NOTE]
 If the tagName is invalid, the TagNotFoundException will be raised.
+
+// end::removeTag[]
 
 // tag::deletebytag[]
 === Deletebytag Command
