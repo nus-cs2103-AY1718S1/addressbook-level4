@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.testutil.MeetingBuilder;
 //@@author Melvin-leo
 public class MeetingContainsFullwordPredicateTest {
@@ -46,19 +47,23 @@ public class MeetingContainsFullwordPredicateTest {
         // One keyword
         MeetingContainsKeywordsPredicate predicate =
                 new MeetingContainsKeywordsPredicate(Collections.singletonList("Alice"));
-        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
+        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date")
+                .withIndex(Index.fromOneBased(1)).build()));
 
         // Multiple keywords
-        predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
-        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
+        predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Alice", "Shopping"));
+        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date")
+                .withIndex(Index.fromOneBased(1)).build()));
 
         // Only one matching keyword
-        predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Date", "Alice"));
-        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Date Study").build()));
+        predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Date", "Benson"));
+        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Date Study")
+                .withIndex(Index.fromOneBased(1)).build()));
 
         // Mixed-case keywords
         predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("AliCe", "DaTe"));
-        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
+        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date")
+                .withIndex(Index.fromOneBased(1)).build()));
     }
 
     @Test
@@ -69,7 +74,8 @@ public class MeetingContainsFullwordPredicateTest {
 
         // Non-matching keyword
         predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Melvin"));
-        assertFalse(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
+        assertFalse(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date")
+                .withIndex(Index.fromOneBased(1)).build()));
 
         // Keywords match DateTime, Place, but does not match name
         predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("30-10-2018", "NUS"));

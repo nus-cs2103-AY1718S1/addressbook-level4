@@ -1,6 +1,9 @@
 package seedu.address.model.meeting;
 
+import java.util.List;
+
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author Melvin-leo
 /**
@@ -14,10 +17,8 @@ public interface ReadOnlyMeeting {
     DateTime getDate();
     ObjectProperty<Place> placeProperty();
     Place getPlace();
-    ObjectProperty<PersonToMeet> personMeetProperty();
-    PersonToMeet getPersonName();
-    ObjectProperty<PhoneNum> phoneMeetProperty();
-    PhoneNum getPersonPhone();
+    ObjectProperty<List<ReadOnlyPerson>> personsMeetProperty();
+    List<ReadOnlyPerson> getPersonsMeet();
     ObjectProperty<MeetingTag> meetTagProperty();
     MeetingTag getMeetTag();
 
@@ -29,21 +30,33 @@ public interface ReadOnlyMeeting {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getDate().equals(this.getDate())
-                && other.getPersonName().equals(this.getPersonName())
-                && other.getPersonPhone().equals(this.getPersonPhone())
                 && other.getPlace().equals(this.getPlace()));
     }
 
     /**
-     * Formats the person as text, showing all contact details.
+     * Formats the meeting as text, showing all meeting details.
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
                 .append("\nMeeting with: ")
-                .append(getPersonName())
+                .append(getPersonsMeet().get(0).getName())
                 .append("\nContact Number: ")
-                .append(getPersonPhone())
+                .append(getPersonsMeet().get(0).getPhone())
+                .append("\nDate and Time: ")
+                .append(getDate())
+                .append("\nLocation: ")
+                .append(getPlace());
+        return builder.toString();
+    }
+
+    /**
+     * Formats the meeting as text, showing all meeting details.
+     */
+    default String getGroupText() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append("\nMeeting with: Group")
                 .append("\nDate and Time: ")
                 .append(getDate())
                 .append("\nLocation: ")

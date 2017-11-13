@@ -5,10 +5,12 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author Melvin-leo
 /**
@@ -19,18 +21,15 @@ public class Meeting implements ReadOnlyMeeting {
     private ObjectProperty<NameMeeting> name;
     private ObjectProperty<DateTime> date;
     private ObjectProperty<Place> place;
-    private ObjectProperty<PersonToMeet> personMeet;
-    private ObjectProperty<PhoneNum> phoneMeet;
+    private ObjectProperty<List<ReadOnlyPerson>> personsMeet;
     private ObjectProperty<MeetingTag> tag;
 
-    public Meeting (NameMeeting name, DateTime date, Place place, PersonToMeet personMeet,
-                   PhoneNum phoneMeet, MeetingTag tag) {
+    public Meeting (NameMeeting name, DateTime date, Place place, List<ReadOnlyPerson> listPerson, MeetingTag tag) {
         requireAllNonNull(name, date, place);
         this.name = new SimpleObjectProperty<>(name);
         this.date = new SimpleObjectProperty<>(date);
         this.place = new SimpleObjectProperty<>(place);
-        this.personMeet = new SimpleObjectProperty<>(personMeet);
-        this.phoneMeet = new SimpleObjectProperty<>(phoneMeet);
+        this.personsMeet = new SimpleObjectProperty<>(listPerson);
         this.tag = new SimpleObjectProperty<>(tag);
     }
 
@@ -38,7 +37,7 @@ public class Meeting implements ReadOnlyMeeting {
      * Creates a copy of the given ReadOnlyMeeting.
      */
     public Meeting(ReadOnlyMeeting source) {
-        this(source.getName(), source.getDate(), source.getPlace(), source.getPersonName(), source.getPersonPhone(),
+        this(source.getName(), source.getDate(), source.getPlace(), source.getPersonsMeet(),
                 source.getMeetTag());
     }
 
@@ -81,6 +80,9 @@ public class Meeting implements ReadOnlyMeeting {
         this.place.set(requireNonNull(place));
     }
 
+    public void setPersonsMeet(List<ReadOnlyPerson> personsMeet) {
+        this.personsMeet.set(personsMeet); }
+
     @Override
     public ObjectProperty<Place> placeProperty() {
         return place;
@@ -91,32 +93,14 @@ public class Meeting implements ReadOnlyMeeting {
         return place.get();
     }
 
-    public void setPersonName(PersonToMeet person) {
-        this.personMeet.set(requireNonNull(person));
+    @Override
+    public ObjectProperty<List<ReadOnlyPerson>> personsMeetProperty() {
+        return personsMeet;
     }
 
     @Override
-    public ObjectProperty<PersonToMeet> personMeetProperty() {
-        return personMeet;
-    }
-
-    @Override
-    public PersonToMeet getPersonName() {
-        return personMeet.get();
-    }
-
-    public void setPhoneNum(PhoneNum num) {
-        this.phoneMeet.set(requireNonNull(num));
-    }
-
-    @Override
-    public ObjectProperty<PhoneNum> phoneMeetProperty() {
-        return phoneMeet;
-    }
-
-    @Override
-    public PhoneNum getPersonPhone() {
-        return phoneMeet.get();
+    public List<ReadOnlyPerson> getPersonsMeet() {
+        return personsMeet.get();
     }
 
     @Override
@@ -143,6 +127,9 @@ public class Meeting implements ReadOnlyMeeting {
 
     @Override
     public String toString() {
+        if (personsMeet.get().size() > 1) {
+            return getGroupText();
+        }
         return getAsText();
     }
 

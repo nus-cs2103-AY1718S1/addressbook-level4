@@ -31,8 +31,7 @@ public class EditMeetingDescriptorBuilder {
         descriptor.setNameMeeting(meeting.getName());
         descriptor.setDate(meeting.getDate());
         descriptor.setPlace(meeting.getPlace());
-        descriptor.setPhoneNum(meeting.getPersonPhone());
-        descriptor.setPersonToMeet(meeting.getPersonName());
+        descriptor.setPersonsMeet(meeting.getPersonsMeet());
     }
 
     /**
@@ -60,18 +59,6 @@ public class EditMeetingDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code PersonToMeet} of the {@code EditMeetingDescriptor} that we are building.
-     */
-    public EditMeetingDescriptorBuilder withPersonToMeet(String personToMeet) {
-        try {
-            ParserUtil.parsePersonToMeet(Optional.of(personToMeet)).ifPresent(descriptor::setPersonToMeet);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("person name is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
      * Sets the {@code Place} of the {@code EditMeetingDescriptor} that we are building.
      */
     public EditMeetingDescriptorBuilder withPlace(String place) {
@@ -84,16 +71,19 @@ public class EditMeetingDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code PhoneNum} of the {@code EditMeetingDescriptor} that we are building.
+     * Sets the {@code Place} of the {@code EditMeetingDescriptor} that we are building.
      */
-    public EditMeetingDescriptorBuilder withPhoneNum(String phoneNum) {
+    /**
+    public EditMeetingDescriptorBuilder withPersons(String index) {
         try {
-            ParserUtil.parsePhoneNum(Optional.of(phoneNum)).ifPresent(descriptor::setPhoneNum);
+            ParserUtil.parse(Optional.of(index)).ifPresent(descriptor::setPersonsMeet);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("phone number is expected to be unique.");
+            throw new IllegalArgumentException("place is expected to be unique.");
         }
         return this;
     }
+     */
+
 
 
 

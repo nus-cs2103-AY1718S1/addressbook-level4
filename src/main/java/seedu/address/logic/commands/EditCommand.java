@@ -1,41 +1,21 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddMeetingCommand.MESSAGE_MEETING_CLASH;
-import static seedu.address.logic.commands.AddMeetingCommand.MESSAGE_OVERDUE_MEETING;
-import static seedu.address.logic.commands.EditMeetingCommand.MESSAGE_DUPLICATE_MEETING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.ParserUtil;
-import seedu.address.model.meeting.DateTime;
-import seedu.address.model.meeting.Meeting;
-import seedu.address.model.meeting.MeetingContainsFullWordPredicate;
-import seedu.address.model.meeting.MeetingTag;
-import seedu.address.model.meeting.NameMeeting;
-import seedu.address.model.meeting.PersonToMeet;
-import seedu.address.model.meeting.PhoneNum;
-import seedu.address.model.meeting.Place;
-import seedu.address.model.meeting.ReadOnlyMeeting;
-import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
-import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
-import seedu.address.model.meeting.exceptions.MeetingClashException;
-import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -105,64 +85,66 @@ public class EditCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
 
+        /**
         //@@author kyngyi
-        String personToEditName = personToEdit.getName().toString();
-        String[] nameArray = {personToEditName};
-        model.updateFilteredMeetingList(new MeetingContainsFullWordPredicate(Arrays.asList(nameArray)));
-        List<ReadOnlyMeeting> lastShownMeetingList = model.getFilteredMeetingList();
-
-        PersonToMeet editedPersonName = new PersonToMeet(editedPerson.getName().toString());
-        PhoneNum editedPhoneNum = new PhoneNum(editedPerson.getPhone().toString());
-
-        if (!editedPerson.getName().toString().equalsIgnoreCase(personToEditName)) {
-            while (!lastShownMeetingList.isEmpty()) {
-                EditMeetingCommand.EditMeetingDescriptor editedMeetingDescriptor =
-                        new EditMeetingCommand.EditMeetingDescriptor();
-
-                try {
-                    Index firstIndex = ParserUtil.parseIndex("1");
-                    ReadOnlyMeeting meetingToEdit = lastShownMeetingList.get(firstIndex.getZeroBased());
-
-                    Meeting editedMeeting = createEditedMeeting(meetingToEdit, editedMeetingDescriptor,
-                            editedPersonName, editedPhoneNum);
-
-                    model.updateMeeting(meetingToEdit, editedMeeting);
-                } catch (DuplicateMeetingException dpe) {
-                    throw new CommandException(MESSAGE_DUPLICATE_MEETING);
-                } catch (MeetingNotFoundException pnfe) {
-                    throw new AssertionError("The target meeting cannot be missing");
-                } catch (MeetingBeforeCurrDateException mde) {
-                    throw new CommandException(MESSAGE_OVERDUE_MEETING);
-                } catch (MeetingClashException mce) {
-                    throw new CommandException(MESSAGE_MEETING_CLASH);
-                } catch (IllegalValueException ive) {
-                    assert false : "Error in deleting first item";
-                }
-            }
-        } else {
-            for (ReadOnlyMeeting meeting : lastShownMeetingList) {
-                EditMeetingCommand.EditMeetingDescriptor editedMeetingDescriptor =
-                        new EditMeetingCommand.EditMeetingDescriptor();
-
-                Meeting editedMeeting = createEditedMeeting(meeting, editedMeetingDescriptor,
-                        editedPersonName, editedPhoneNum);
-
-                try {
-                    model.updateMeeting(meeting, editedMeeting);
-                } catch (DuplicateMeetingException dpe) {
-                    throw new CommandException(MESSAGE_DUPLICATE_MEETING);
-                } catch (MeetingNotFoundException pnfe) {
-                    throw new AssertionError("The target meeting cannot be missing");
-                } catch (MeetingBeforeCurrDateException mde) {
-                    throw new CommandException(MESSAGE_OVERDUE_MEETING);
-                } catch (MeetingClashException mce) {
-                    throw new CommandException(MESSAGE_MEETING_CLASH);
-                }
-            }
-        }
-
-        model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+//        String personToEditName = personToEdit.getName().toString();
+//        String[] nameArray = {personToEditName};
+//        model.updateFilteredMeetingList(new MeetingContainsFullWordPredicate(Arrays.asList(nameArray)));
+//        List<ReadOnlyMeeting> lastShownMeetingList = model.getFilteredMeetingList();
+//
+//        PersonToMeet editedPersonName = new PersonToMeet(editedPerson.getName().toString());
+//        PhoneNum editedPhoneNum = new PhoneNum(editedPerson.getPhone().toString());
+//
+//        if (!editedPerson.getName().toString().equalsIgnoreCase(personToEditName)) {
+//            while (!lastShownMeetingList.isEmpty()) {
+//                EditMeetingCommand.EditMeetingDescriptor editedMeetingDescriptor =
+//                        new EditMeetingCommand.EditMeetingDescriptor();
+//
+//                try {
+//                    Index firstIndex = ParserUtil.parseIndex("1");
+//                    ReadOnlyMeeting meetingToEdit = lastShownMeetingList.get(firstIndex.getZeroBased());
+//
+//                    Meeting editedMeeting = createEditedMeeting(meetingToEdit, editedMeetingDescriptor,
+//                            editedPersonName, editedPhoneNum);
+//
+//                    model.updateMeeting(meetingToEdit, editedMeeting);
+//                } catch (DuplicateMeetingException dpe) {
+//                    throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+//                } catch (MeetingNotFoundException pnfe) {
+//                    throw new AssertionError("The target meeting cannot be missing");
+//                } catch (MeetingBeforeCurrDateException mde) {
+//                    throw new CommandException(MESSAGE_OVERDUE_MEETING);
+//                } catch (MeetingClashException mce) {
+//                    throw new CommandException(MESSAGE_MEETING_CLASH);
+//                } catch (IllegalValueException ive) {
+//                    assert false : "Error in deleting first item";
+//                }
+//            }
+//        } else {
+//            for (ReadOnlyMeeting meeting : lastShownMeetingList) {
+//                EditMeetingCommand.EditMeetingDescriptor editedMeetingDescriptor =
+//                        new EditMeetingCommand.EditMeetingDescriptor();
+//
+//                Meeting editedMeeting = createEditedMeeting(meeting, editedMeetingDescriptor,
+//                        editedPersonName, editedPhoneNum);
+//
+//                try {
+//                    model.updateMeeting(meeting, editedMeeting);
+//                } catch (DuplicateMeetingException dpe) {
+//                    throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+//                } catch (MeetingNotFoundException pnfe) {
+//                    throw new AssertionError("The target meeting cannot be missing");
+//                } catch (MeetingBeforeCurrDateException mde) {
+//                    throw new CommandException(MESSAGE_OVERDUE_MEETING);
+//                } catch (MeetingClashException mce) {
+//                    throw new CommandException(MESSAGE_MEETING_CLASH);
+//                }
+//            }
+//        }
+//
+//        model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
         //@@author
+         */
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
@@ -188,6 +170,7 @@ public class EditCommand extends UndoableCommand {
      * Creates and returns a {@code Meeting} with the details of {@code meetingToEdit}
      * edited with {@code editMeetingDescriptor}.
      */
+    /*
     private static Meeting createEditedMeeting(ReadOnlyMeeting meetingToEdit,
                                                EditMeetingCommand.EditMeetingDescriptor editMeetingDescriptor,
                                                PersonToMeet person, PhoneNum phone) {
@@ -197,9 +180,9 @@ public class EditCommand extends UndoableCommand {
         DateTime updatedDate = editMeetingDescriptor.getDate().orElse(meetingToEdit.getDate());
         Place updatedPlace = editMeetingDescriptor.getPlace().orElse(meetingToEdit.getPlace());
         MeetingTag updatedTag = editMeetingDescriptor.getMeetTag().orElse(meetingToEdit.getMeetTag());
-
         return new Meeting(updatedName, updatedDate, updatedPlace, person, phone, updatedTag);
     }
+    */
 
     @Override
     public boolean equals(Object other) {

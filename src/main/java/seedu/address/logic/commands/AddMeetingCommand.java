@@ -2,10 +2,12 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -16,8 +18,6 @@ import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.MeetingTag;
 import seedu.address.model.meeting.NameMeeting;
-import seedu.address.model.meeting.PersonToMeet;
-import seedu.address.model.meeting.PhoneNum;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
@@ -34,7 +34,8 @@ public class AddMeetingCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "am";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the address book. \n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: "
+            + PREFIX_INDEX + "INDEX (must be a positive integer) "
             + PREFIX_NAME + "NAME_OF_MEETING "
             + PREFIX_DATE + "DATE_TIME "
             + PREFIX_LOCATION + "LOCATION "
@@ -50,7 +51,7 @@ public class AddMeetingCommand extends UndoableCommand {
     public static final String MESSAGE_OVERDUE_MEETING = "Meeting's date and time is before log in date and time";
     public static final String MESSAGE_MEETING_CLASH = "Meeting Clashes! Please choose another date and time.";
 
-    private final Index index;
+    private List<Index> indexes;
     private Meeting toAdd;
     private final NameMeeting name;
     private final DateTime date;
@@ -61,8 +62,9 @@ public class AddMeetingCommand extends UndoableCommand {
     /**
      * Creates an AddMeetingCommand to add the specified {@code ReadOnlyMeeting}
      */
-    public AddMeetingCommand (NameMeeting name, DateTime date, Place location, Index index, MeetingTag meetTag) {
-        this.index = index;
+    public AddMeetingCommand (NameMeeting name, DateTime date, Place location,
+                              List<Index> indexes, MeetingTag meetTag) {
+        this.indexes = indexes;
         this.name = name;
         this.date = date;
         this.location = location;
@@ -73,16 +75,20 @@ public class AddMeetingCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> personsMeet = new ArrayList<>();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        for (Index index: indexes) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            ReadOnlyPerson personToAdd = lastShownList.get(index.getZeroBased());
+            if (!personsMeet.contains(personToAdd)) {
+                personsMeet.add(personToAdd);
+            }
         }
 
-        ReadOnlyPerson personToAdd = lastShownList.get(index.getZeroBased());
-        PersonToMeet personName = new PersonToMeet(personToAdd.getName().toString());
-        PhoneNum phoneNum = new PhoneNum(personToAdd.getPhone().toString());
-
-        toAdd = new Meeting(name, date, location, personName, phoneNum, meetTag);
+        toAdd = new Meeting(name, date, location, personsMeet, meetTag);
         try {
             model.addMeeting(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
@@ -94,6 +100,8 @@ public class AddMeetingCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_MEETING_CLASH);
         }
     }
+
+
     //@@author nelsonqyj
     @Override
     public boolean equals(Object other) {
@@ -101,7 +109,5 @@ public class AddMeetingCommand extends UndoableCommand {
                 || (other instanceof AddMeetingCommand // instanceof handles nulls
                 && toAdd.equals(((AddMeetingCommand) other).toAdd));
     }
-
-
 
 }
