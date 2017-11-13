@@ -372,7 +372,7 @@ These two commands require one compulsory argument which is the amount that is b
 The arguments (index and amount borrowed/paid back) are separated by a whitespace instead of special prefixes (e.g. prefix `p/` used for phone number). Hence, the `String#split` method is used to tokenize the input using a single whitespace as the delimiter. As seen in Figure 4.2.1, the tokenized inputs (index and amount borrowed) are then converted to their appropriate `Object` types and supplied as arguments to the `BorrowCommand` constructor. Input for the `payback` command is tokenized and supplied to the `PaybackCommand` constructor in the same manner.
 
 The `BorrowCommand` and `PaybackCommand` are executed in `LogicManager`.
-`BorrowCommand` updates the `debt`, `totalDebt` and `dateRepaid` attributes in the target `Person` object through the `Model#addDebtToPerson()` which calls `AddressBook#addDebtToPerson()`. A new `Person` object is then created with the updated `debt` and `totalDebt` amount. Also, the `dateRepaid` field is set to `NOT REPAID`.  The target `Person` object is then replaced with this new `Person` object.
+`BorrowCommand` updates the `debt`, `totalDebt` and `dateRepaid` attributes in the target `Person` object through the `ModelManager#addDebtToPerson()` which calls `AddressBook#addDebtToPerson()`. A new `Person` object is then created with the updated `debt` and `totalDebt` amount. Also, the `dateRepaid` field is set to `NOT REPAID`.  The target `Person` object is then replaced with this new `Person` object.
 
 `PaybackCommand` updates the target person's debt in the same manner as the `BorrowCommand`. However, only the `debt` attribute is updated. If the person has fully repaid his/her debts, the `PaybackCommand` will set the date repaid to the day the `PaybackCommand` was executed. The person will also be listed in the whitelist.
 
@@ -676,7 +676,7 @@ The list is filtered and updated through `ListObserver#updateCurrentFilteredList
 // tag::loginLogout[]
 === Login/logout mechanism
 
-Although there are two versions for login, the Graphic User Interface(GUI) version and the Command Line Interface(CLI) version, they both use the same login mechanism. The GUI login is recommended over the CLI login because it has better password masking capabilities.
+Although there are two versions for login, the Graphic User Interface(GUI) version and the Command Line Interface(CLI) version, they both use the same login mechanism (see Figure 4.8.1 below). The GUI login is recommended over the CLI login because it has better password masking capabilities.
 This is because the password field in the GUI login is implemented using JavaFX 8's `PasswordField`. The CLI login exists, despite the inconsistent password masking, to allow the user to log into the app faster since using a one-shot command is faster than a multi-step command.
 The bugs in the CLI login could be resolved by removing password masking. However, this would have security implications because the password is not concealed.
 
@@ -686,8 +686,11 @@ The password is stored as a SHA-512 hash to conceal the actual password. The sal
 
 After verifying that the username and password matches the information stored in `preferences.json`, an event is raised to notify the `UI` component of the user authentication result. If the user has successfully logged in, the `UI` component will display the person list, info panel and allow other commands (such as `list`, `edit, `add`, etc.) to be executed from the command box.
 
-When a user enters the `logout` command, the `LogoutCommand` class in the `Logic` component will raise an even to notify the `UI` component to go back to the welcome page.
+The activity diagram below, Figure 4.8.1, shows the overall flow of the command execution for both GUI and CLI login:
+image::LoginActivityDiagram.PNG[width="800"]
+_Figure 4.8.1 : Activity diagram of how the `login` command works for both CLI and GUI version_
 
+When a user enters the `logout` command, the `LogoutCommand` class in the `Logic` component will call the `ModelManager#logout()` method. Two events will be raised: `LoginAppRequestEvent` and `LogoutAppRequestEvent`. `LoginAppRequestEvent` is to set the `isLoggedIn` variable in `LoginCommand` to `false` and `LogoutAppRequestEvent` is to set the `isLoggedOut` variable in `LogoutCommand` to `true`. Both events need to be raised to notify the `UI` component to go back to the welcome page and restrict the commands that are allowed to be executed.
 
 ==== Design Considerations
 
