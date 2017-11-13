@@ -71,7 +71,6 @@ public class MapCommandTest {
 
     /**
      * Executes a {@code MapCommand} with the given {@code arguments},
-     * @param index
      */
     private void assertExecutionSuccess(Index index) {
         MapCommand mapCommand = prepareCommand(index);
@@ -178,12 +177,13 @@ public class SearchCommandTest {
     }
 
     /**
-     * Asserts that {@code command} is successfully executed, and<br>
-     *     - the command feedback is equal to {@code expectedMessage}<br>
-     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
-     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     * Asserts that Search command is successfully executed, and
+     * the command feedback is equal to expectedMessage
+     * the FilteredList is equal to expectedList
+     * the AddressBook in model remains the same after executing the Search command
      */
-    private void assertCommandSuccess(SearchCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    private void assertCommandSuccess(SearchCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = null;
         try {
@@ -196,7 +196,6 @@ public class SearchCommandTest {
         assertEquals(expectedList, model.getFilteredPersonList());
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
-
 }
 ```
 ###### \java\seedu\address\logic\parser\MapCommandParserTest.java

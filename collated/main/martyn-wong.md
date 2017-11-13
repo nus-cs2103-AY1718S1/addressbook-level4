@@ -7,6 +7,7 @@
 public class Selection {
 
     private static boolean isPersonSelected = false;
+    private static boolean isMeetingChosen = false;
 
     public static void setPersonSelected() {
         isPersonSelected = true;
@@ -16,8 +17,20 @@ public class Selection {
         isPersonSelected = false;
     }
 
+    public static void setMeetingChosen() {
+        isMeetingChosen = true;
+    }
+
+    public static void setMeetingNotChosen() {
+        isMeetingChosen = false;
+    }
+
     public static boolean getSelectionStatus() {
         return isPersonSelected;
+    }
+
+    public static boolean getMeetingStatus() {
+        return isMeetingChosen;
     }
 }
 ```
@@ -74,6 +87,10 @@ public class MapCommand extends UndoableCommand {
 
         if (Selection.getSelectionStatus() == false && index.getOneBased() <= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_PERSON_NOT_SELECTED);
+        }
+
+        if (Selection.getMeetingStatus() == true) {
+            throw new CommandException(Messages.MESSAGE_WRONG_DISPLAY_MODE);
         }
 
         if (index.getZeroBased() >= lastShownList.size()) {
