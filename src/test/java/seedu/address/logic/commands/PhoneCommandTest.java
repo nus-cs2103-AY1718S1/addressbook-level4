@@ -34,7 +34,7 @@ public class PhoneCommandTest {
         PhoneCommand phoneCommand = prepareCommand(INDEX_FIRST_PERSON, "add", new Phone("2333"));
 
         String expectedMessage = "Phone number 2333 has been added.\n"
-                + "The updated phone list now has 3 phone numbers.\n"
+                + "The updated phone list now has 4 phone numbers.\n"
                 + "The primary phone number is 85355255.\n";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
