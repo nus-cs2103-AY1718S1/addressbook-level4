@@ -5,7 +5,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-W14-B3/main
 
 == Project: HitMeUp
-include::../../README.adoc[tag=intro]
+image::../images/Ui.png[width="800"]
+
+include::../../README.adoc[tag=introduction]
+
+include::../../README.adoc[tag=features]
+
 
 *Code contributed*: [{repoURL}/tree/master/collated/main/danielbrzn.md[Functional code]] [{repoURL}/tree/master/collated/test/danielbrzn.md[Test code]]
 

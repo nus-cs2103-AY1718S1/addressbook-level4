@@ -10,14 +10,14 @@ ifdef::env-github[]
 image::docs/images/Ui.png[width="800"]
 endif::[]
 
-// tag::intro[]ga
+// tag::introduction[]
 * HitMeUp is an address book application designed with the sociable user in mind.
 * It aims to be a one-stop center for managing and interacting with contacts.
 * A Command Line Interface (CLI) is primarily used for input
 * This project has been forked from the https://github.com/nus-cs2103-AY1718S1/addressbook-level4[AddressBook-Level4] repository
+// end::introduction[]
 
-// end::intro[]
-
+// tag::features[]
 
 == Features
 
@@ -33,6 +33,7 @@ Email, Address, Birthday, Twitter, Instagram, Display Picture, Tag
 * Keep up with your contacts through the social command
 * View your contacts' addresses quickly in Google Maps
 ====
+// tag::features[]
 
 == Site Map
 
