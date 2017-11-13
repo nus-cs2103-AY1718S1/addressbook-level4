@@ -135,7 +135,7 @@ image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when the address book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -195,7 +195,7 @@ _Figure 2.4.1 : Structure of the Model Component_
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
+* stores the address book data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -209,20 +209,21 @@ _Figure 2.5.1 : Structure of the Storage Component_
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the address book data in xml format and read it back.
 
-
+// tag::lock[]
 === Security component
 
 image::SecurityClassDiagram.png[width="800"]
 _Figure 2.6.1 : Structure of the Security Component_
-
+// end::lock[]
 *API* : link:{repoURL}/src/main/java/seedu/address/security/Security.java[`Security.java`]
-
+// tag::lock[]
 The `Security` component,
 
 * can encrypt address book and decrypt by a given password.
 * can prevent user from executing commands if address book is secured.
+// end::lock[]
 
 === Common classes
 
@@ -558,7 +559,26 @@ public class FavouriteCommand extends UndoableCommand {
 Todo mechanism uses `CommandOptionUtil` to parse its options. The model class for each todo item is `TodoItem`, which has three fields including start, end, task to describe an item. +
 
 According to the option, todo command sends different events to `UI`.  Todo mechanism sends `JumpToListRequestEvent` to both `PersonListPanel` and `TodoPanel` to select one person and load his/her todo list. Meanwhile todo mechanism uses `ClearListSelectionEvent` to clear the selection in `PersonListPanel` and `ShowAllTodoItemsEvent` to show all todo items of all contacts.
-When todo command need to add or delete some items, todo mechanism will call methods in `Model` to add, delete, list and access to storage
+When todo command need to add or delete some items, todo mechanism will call methods in `Model` to add, delete, list and access to storage.
+
+Codes below show how to parse base on options.
+[source,java]
+----
+// returns TodoCommand by parsing {@code optionPrefix}
+        switch (optionPrefix) {
+        case TodoCommand.PREFIX_TODO_ADD:
+            return new TodoOptionAdd(optionArgs, index).parse();
+        case TodoCommand.PREFIX_TODO_DELETE_ONE:
+            return new TodoOptionDeleteOne(optionArgs, index).parse();
+        case TodoCommand.PREFIX_TODO_DELETE_ALL:
+            return new TodoOptionDeleteAll(optionArgs, index).parse();
+        case TodoCommand.PREFIX_TODO_LIST:
+            return new TodoOptionList(optionArgs, index).parse();
+        default:
+            throw new ParseException(PARSE_EXCEPTION_MESSAGE);
+        }
+----
+
 // end::tdo[]
 
 // tag::switch[]
@@ -585,6 +605,16 @@ private void switchPlaceholderDisplay(int mode) {
         }
     }
 ----
+
+==== Design Consideration
+
+**Aspect:** Handle different mode +
+**Alternative 1 (current choice):** Use one command followed by mode string +
+**Pros:** Easy to implement. +
+**Cons:** Hard to remember. +
+**Alternative 2:** Use two commands +
+**Pros:** East to use and remember. +
+**Cons:** More complicated to implement. Become hard to extend if there are more than two modes.
 
 // end::switch[]
 
@@ -845,7 +875,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, AcquaiNote depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
