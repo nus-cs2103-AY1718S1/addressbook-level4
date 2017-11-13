@@ -60,7 +60,8 @@ public class DeletePictureCommandTest extends CommandTest {
             ReadOnlyPerson personToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
             DeletePictureCommand deletePictureCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-            String expectedMessage = String.format(DeletePictureCommand.MESSAGE_DELETE_PICTURE_FAILURE, personToUpdate.getName());
+            String expectedMessage = String.format(DeletePictureCommand
+                    .MESSAGE_DELETE_PICTURE_FAILURE, personToUpdate.getName());
 
             assertCommandFailure(deletePictureCommand, model, expectedMessage);
             assertTrue(personToUpdate.getAsText().equals(model.getFilteredPersonList()
