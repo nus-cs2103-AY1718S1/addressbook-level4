@@ -21,7 +21,7 @@ public class RepeatEventTimerTask extends TimerTask {
 
     /**
      * @param event event to edit
-     * @param int period of repetition
+     * @param period period of repetition
      */
     public RepeatEventTimerTask(Model model, ReadOnlyEvent event, int period) {
         requireNonNull(event);
@@ -29,6 +29,7 @@ public class RepeatEventTimerTask extends TimerTask {
         this.model = model;
         this.targetEvent = event;
         this.period = period;
+        System.out.println("New timer task created");
     }
 
     /**
@@ -39,7 +40,7 @@ public class RepeatEventTimerTask extends TimerTask {
         Event event = new Event(eventToEdit);
         Timeslot currentTimeslot = event.getTimeslot();
 
-        // If the eventToEdit is far in the past, only add the repeated event in the next week to avoid adding too
+        // If the eventToEdit is far in the past, only add the repeated event in the next period to avoid adding too
         // many event at the same time
         while (currentTimeslot.isBefore(Timeslot.getNow())) {
             currentTimeslot = currentTimeslot.plusDays(period);
@@ -58,7 +59,9 @@ public class RepeatEventTimerTask extends TimerTask {
                 try {
                     model.addEvent(editedEvent);
                 } catch (EventTimeClashException etce) {
-                    model.scheduleRepeatedEvent(editedEvent);
+                    editedEvent.plusDays(period);
+                    RepeatEventTimerTask newTask = new RepeatEventTimerTask(model, editedEvent, period);
+                    newTask.run();
                 }
             }
         });

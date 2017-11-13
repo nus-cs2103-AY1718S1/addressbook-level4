@@ -57,6 +57,9 @@ public interface ReadOnlyEvent {
     LocalTime getStartTime();
 
     java.util.Date getEndDateTime();
+
+    void plusDays(int days);
+
     //@@author
 
     /**

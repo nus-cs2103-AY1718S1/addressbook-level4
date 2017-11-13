@@ -336,6 +336,9 @@ public class MainWindow extends UiPart<Region> {
         if (browserPlaceholder.getChildren().contains(personPanel.getRoot())) {
             browserPlaceholder.getChildren().remove(personPanel.getRoot());
         }
+        if (browserPlaceholder.getChildren().contains(eventPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(eventPanel.getRoot());
+        }
         if (browserPlaceholder.getChildren().contains(calendarView.getRoot())) {
             browserPlaceholder.getChildren().remove(calendarView.getRoot());
         }

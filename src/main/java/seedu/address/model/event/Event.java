@@ -4,6 +4,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -226,6 +227,16 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Adds a given number of days to the timeslot of the event
+     * @param days number of days to add
+     */
+
+    public void plusDays(int days) {
+        Timeslot newSlot = this.getTimeslot().plusDays(days);
+        this.setTimeslot(newSlot);
     }
 
     @Override

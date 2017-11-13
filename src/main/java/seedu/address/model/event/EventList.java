@@ -15,7 +15,9 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.EventTimeClashException;
@@ -157,6 +159,7 @@ public class EventList implements Iterable<Event> {
      * Returns the backing tree map as an {@code ObservableList}.
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
+        //logger.info("====== Current eventlist has " + mappedList.size() + " events.");
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
