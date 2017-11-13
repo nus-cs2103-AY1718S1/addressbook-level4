@@ -1,7 +1,6 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -11,6 +10,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+
 
 /**
  * Represents a Person in the address book.
@@ -22,18 +22,26 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
+    private ObjectProperty<Birthday> birthday;
+    private ObjectProperty<Remark> remark;
+    private ObjectProperty<Website> website;
+    private ObjectProperty<Picture> picture;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
-     * Every field must be present and not null.
+     * Every field must be present and name must not be null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Birthday birthday, Remark remark, Website website, Picture picture, Set<Tag> tags) {
+        requireNonNull(name);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
+        this.birthday = new SimpleObjectProperty<>(birthday);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.remark = new SimpleObjectProperty<>(remark);
+        this.website = new SimpleObjectProperty<>(website);
+        this.picture = new SimpleObjectProperty<>(picture);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -43,7 +51,8 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+            source.getBirthday(), source.getRemark(), source.getWebsite(),
+                source.getPicture(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -87,7 +96,21 @@ public class Person implements ReadOnlyPerson {
     public Email getEmail() {
         return email.get();
     }
+    //@@author chilipadiboy
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
 
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() {
+        return birthday.get();
+    }
+    //@@author
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
     }
@@ -101,7 +124,49 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address.get();
     }
+    //@@author chilipadiboy
+    public void setRemark(Remark remark) {
+        this.remark.set(requireNonNull(remark));
+    }
 
+    @Override
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
+
+    @Override
+    public Remark getRemark() {
+        return remark.get();
+    }
+    //@@author Jemereny
+    public void setWebsite(Website website) {
+        this.website.set(requireNonNull(website));
+    }
+
+    @Override
+    public ObjectProperty<Website> websiteProperty() {
+        return website;
+    }
+
+    @Override
+    public Website getWebsite() {
+        return website.get();
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture.set(requireNonNull(picture));
+    }
+
+    @Override
+    public ObjectProperty<Picture> pictureProperty() {
+        return picture;
+    }
+
+    @Override
+    public Picture getPicture() {
+        return picture.get();
+    }
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -116,28 +181,45 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Replaces this person's tags with the tags in the argument tag set.
+     * Replaces  this person's tags with the tags in the argument tag set.
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
 
+    /**
+     * Updates this person with the details of {@code replacement}.
+     */
+    //@@author chilipadiboy
+    public void resetData(ReadOnlyPerson replacement) {
+        requireNonNull(replacement);
+
+        this.setName(replacement.getName());
+        this.setPhone(replacement.getPhone());
+        this.setEmail(replacement.getEmail());
+        this.setAddress(replacement.getAddress());
+        this.setRemark(replacement.getRemark());
+        this.setWebsite(replacement.getWebsite());
+        this.setPicture(replacement.getPicture());
+        this.setTags(replacement.getTags());
+    }
+    //@@author chilipadiboy
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ReadOnlyPerson // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyPerson) other));
+            || (other instanceof ReadOnlyPerson // instanceof handles nulls
+            && this.isSameStateAs((ReadOnlyPerson) other));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, remark, website, picture, tags);
     }
 
     @Override
     public String toString() {
         return getAsText();
     }
-
 }

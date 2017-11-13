@@ -8,9 +8,12 @@ import seedu.address.commons.core.GuiSettings;
  * Represents User's preferences.
  */
 public class UserPrefs {
+    //@@author Jemereny
+    public static final String FOLDER_LOCATION = "data/";
+    //@@author
 
     private GuiSettings guiSettings;
-    private String addressBookFilePath = "data/addressbook.xml";
+    private String addressBookFilePath = FOLDER_LOCATION + "addressbook.xml";
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
@@ -57,8 +60,8 @@ public class UserPrefs {
         UserPrefs o = (UserPrefs) other;
 
         return Objects.equals(guiSettings, o.guiSettings)
-                && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+            && Objects.equals(addressBookFilePath, o.addressBookFilePath)
+            && Objects.equals(addressBookName, o.addressBookName);
     }
 
     @Override

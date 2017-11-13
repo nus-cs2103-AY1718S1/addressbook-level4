@@ -1,34 +1,40 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FindCommand;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.logic.commands.FindCommand.FindPersonDescriptor;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
 
 public class FindCommandParserTest {
 
     private FindCommandParser parser = new FindCommandParser();
 
+    //@@author chrisboo
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ", FindCommand.MESSAGE_NO_FIELD_PROVIDED);
     }
 
     @Test
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
-        FindCommand expectedFindCommand =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
-        assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
+        FindPersonDescriptor person = new FindPersonDescriptor();
 
-        // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+        try {
+            person.setName(new Name("Alice"));
+            person.setPhone(new Phone("123456"));
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
+
+        FindCommand expectedFindCommand = new FindCommand(person);
+        assertParseSuccess(parser, " n/Alice p/123456", expectedFindCommand);
     }
-
+    //@@author
 }

@@ -6,8 +6,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 /**
- * Writes and reads files
+ * Handle files
  */
 public class FileUtil {
 
@@ -17,8 +20,28 @@ public class FileUtil {
         return file.exists() && file.isFile();
     }
 
+    //@@author chrisboo
+    /**
+     * Return a file from FileChooser.
+     * If {@code isNewFile} is true, opens a FileChooser that creates/overwrite file.
+     * Otherwise, opens a FileChooser that selects existing file.
+     */
+    public static File getFileFromChooser(boolean isNewFile) {
+        FileChooser fileChooser = new FileChooser();
+
+        // Set and add extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+            "XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        return isNewFile ? fileChooser.showSaveDialog(new Stage())
+                         : fileChooser.showOpenDialog(new Stage());
+    }
+    //@@author
+
     /**
      * Creates a file if it does not exist along with its missing parent directories.
+     *
      * @throws IOException if the file or directory cannot be created.
      */
     public static void createIfMissing(File file) throws IOException {
@@ -82,6 +105,7 @@ public class FileUtil {
 
     /**
      * Converts a string to a platform-specific file path
+     *
      * @param pathWithForwardSlash A String representing a file path but using '/' as the separator
      * @return {@code pathWithForwardSlash} but '/' replaced with {@code File.separator}
      */
@@ -90,4 +114,10 @@ public class FileUtil {
         return pathWithForwardSlash.replace("/", File.separator);
     }
 
+    public static String getExtension(File file) {
+        String fileName = file.getName();
+
+        int index = fileName.lastIndexOf('.');
+        return index == -1 ? "" : fileName.substring(fileName.lastIndexOf('.'));
+    }
 }

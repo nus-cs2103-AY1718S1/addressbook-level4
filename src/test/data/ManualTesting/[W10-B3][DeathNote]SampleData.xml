@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>47261490</phone>
+        <email>alexyeoh@gmail.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <birthday>13/01/1970</birthday>
+        <remark>Taking CS2103T</remark>
+        <picture>default_alex.png</picture>
+        <tagged>classmates</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Beatrix Lauryn</name>
+        <phone>98415482</phone>
+        <email>beatrixl@u.nus.edu.sg</email>
+        <address>Blk 1090 Lower Delta Road 03-01</address>
+        <birthday>21/10/1977</birthday>
+        <remark>Owes me 50 dollar</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>classmates</tagged>
+        <tagged>roommates</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>96632044</phone>
+        <email>berniceyu@yahoo.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <birthday>06/12/1975</birthday>
+        <remark>Likes to swim.</remark>
+        <picture>default_bernice.png</picture>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>29085937</phone>
+        <email>charlotte@hotmail.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <birthday>17/04/1976</birthday>
+        <remark>CAP 5.0</remark>
+        <picture>default_charlotte.png</picture>
+        <tagged>classmates</tagged>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>43379440</phone>
+        <email>lidavid@yahoo.com.sg</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <birthday>02/12/1976</birthday>
+        <remark>As quick as a leopard.</remark>
+        <picture>default_david.png</picture>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Dijana Domitianus</name>
+        <phone>28278063</phone>
+        <email>dijana@hotmail.com</email>
+        <address>85 Science Park Drive #03-01/04</address>
+        <birthday>15/05/1990</birthday>
+        <remark>Love Char Kuey Teow</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Hisham Vasileios</name>
+        <phone>30408853</phone>
+        <email>hisham@yahoo.com</email>
+        <address>110A Killiney Road TAI WAH BUILDING</address>
+        <birthday>02/02/1995</birthday>
+        <remark>Hiker</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>60248065</phone>
+        <email>irfan@gmail.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <birthday>12/02/1977</birthday>
+        <remark>Plays the piano</remark>
+        <picture>default_irfan.png</picture>
+        <tagged>colleagues</tagged>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Keshia Deloris</name>
+        <phone>21038401</phone>
+        <email>keshia@hotmail.com</email>
+        <address>7500A Beach Road #05-312 The Plaza</address>
+        <birthday>08/06/1995</birthday>
+        <remark>Likes watermelon</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>classmates</tagged>
+        <tagged>roommates</tagged>
+    </persons>
+    <persons>
+        <name>Kumar Louisa</name>
+        <phone>63774380</phone>
+        <email>kumar@yahoo.com</email>
+        <address>71 Sultan Gate</address>
+        <birthday>29/04/1989</birthday>
+        <remark>Got A in CS2103T last year</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>classmates</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Leto Thulile</name>
+        <phone>34853934</phone>
+        <email>letot@yahoo.com</email>
+        <address>100 Gul Circle, 629586</address>
+        <birthday>07/05/1987</birthday>
+        <remark>Googler</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>roommates</tagged>
+    </persons>
+    <persons>
+        <name>Lise Puja</name>
+        <phone>61653993</phone>
+        <email>lisa@google.com</email>
+        <address>77 High Street 179433</address>
+        <birthday>08/12/1985</birthday>
+        <remark>NUS Wind Symphony</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>colleagues</tagged>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>Ljube Shun</name>
+        <phone>16047567</phone>
+        <email>ljube@gmail.com</email>
+        <address>23 Defu Lane 4</address>
+        <birthday>16/08/1989</birthday>
+        <remark>Prospective doctor</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>colleagues</tagged>
+        <tagged>roommates</tagged>
+    </persons>
+    <persons>
+        <name>Mikulas Larisa</name>
+        <phone>56737480</phone>
+        <email>mikulasl@facebook.com</email>
+        <address>62 Tannery Lane, 347804, Singapore</address>
+        <birthday>08/10/1980</birthday>
+        <remark>Exchange student from Poland</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>98259530</phone>
+        <email>royb@hotmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <birthday>29/03/1977</birthday>
+        <remark>Speaks 6 languages</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Shila Siguro</name>
+        <phone>85577250</phone>
+        <email>shila@hotmail.com</email>
+        <address>12 Prince Edward Rd #04-06</address>
+        <birthday>20/09/1990</birthday>
+        <remark>Make delicious tacos</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>classmates</tagged>
+        <tagged>roommates</tagged>
+    </persons>
+    <persons>
+        <name>Tim Bone</name>
+        <phone>67894650</phone>
+        <email>tim@gmail.com</email>
+        <address>1003 Bukit Merah Central #04-16 Entrepreneur Centre</address>
+        <birthday>25/09/1993</birthday>
+        <remark>Math nerd</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>colleagues</tagged>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>Vasu Drust</name>
+        <phone>80280434</phone>
+        <email>me@vasu.com</email>
+        <address>177 River Valley Rd #03-40</address>
+        <birthday>06/08/1992</birthday>
+        <remark>Stand up comedian</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Viktoras Theodore</name>
+        <phone>55046009</phone>
+        <email>vik@vk.com</email>
+        <address>7 Orange Grove Road Singapore 258355</address>
+        <birthday>24/07/1985</birthday>
+        <remark>Footballer</remark>
+        <picture>default_balakrishnan.png</picture>
+        <tagged>neighbours</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>NewDeathNote</name>
+        <remark></remark>
+    </persons>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+    <tags>roommates</tags>
+</addressbook>

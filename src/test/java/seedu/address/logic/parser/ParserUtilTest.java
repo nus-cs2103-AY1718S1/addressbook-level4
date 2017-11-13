@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -102,7 +101,7 @@ public class ParserUtilTest {
 
     @Test
     public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+        assertTrue(ParserUtil.parsePhone(Optional.empty()).isPresent());
     }
 
     @Test
@@ -127,7 +126,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
+        assertTrue(ParserUtil.parseAddress(Optional.empty()).isPresent());
     }
 
     @Test
@@ -152,7 +151,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
+        assertTrue(ParserUtil.parseEmail(Optional.empty()).isPresent());
     }
 
     @Test

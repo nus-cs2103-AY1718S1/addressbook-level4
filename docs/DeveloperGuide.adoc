@@ -10,9 +10,31 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W10-B3/main/tree/master/
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+
+=== Overview
+This developer guide provides general information about how is this application managed explaining both architectural and coding styles.
+
+=== Skills needed to further develop the application
+The following skills and experience are useful in helping to further develop the application. +
+You do not need to have an advanced understanding of the skills to get started but these are the skills you can build over time as you gain experience while working on the application.
+
+* Knowledge of _Object Orientated Programming (OOP)_
+* Basic to Intermediate programming skills (Java), and understanding of its API.
+* Basic understanding of Web development skills (HTML, CSS)
+* Basic understanding and knowledge of XML
+* Understanding the usage of IDEs (IntelliJ)
+* Understanding what is automated testing (gradle)
+
+=== Where to find specific information
+
+* This application uses Java 8. Full set of documentation on Java 8 is available at: https://docs.oracle.com/javase/8/docs/api/ +
+* This application uses CSS for its visual appeal for the interface. For basic usage, https://www.w3schools.com/css/ is a good place to start +
+
 
 == Setting up
 
@@ -30,10 +52,16 @@ This app will not work with earlier versions of Java 8.
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
++
 
+. *SceneBuilder (OPTIONAL)*  Visual tool
++
+[NOTE]
+Currently using Scenebuilder for Java 8. SceneBuilder 8.4.0.
 
-=== Setting up the project in your computer
+=== Setting up the project
 
+==== Setting up the project into your computer
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
@@ -45,6 +73,14 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Click `OK` to accept the default settings
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
+
+==== Setting up SceneBuilder
+
+This application uses an external library called "controlsfx-8.40.11"
+
+. Open Scenebuilder (You do not need to load any projects)
+. Open `JAR/FXML Manager`
+. Import controlsfx-8.40.11.jar (By default it will be in _C:\Users\USERPROFILE\.gradle\caches\modules-2\files-2.1\org.controlsfx\controlsfx\8.40.11\61694ec2668cc69116e970c7513aa3501179bc00_)
 
 === Verifying the setup
 
@@ -66,10 +102,6 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
-==== Updating documentation to match your fork
-
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
-
 ==== Setting up CI
 
 Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
@@ -86,12 +118,16 @@ When you are ready to start coding,
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
+=== Contribute to the project
+
+
+
 == Design
 
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -123,7 +159,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -131,7 +167,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,7 +175,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -149,7 +185,7 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -166,10 +202,10 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -182,12 +218,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -201,7 +237,7 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -226,6 +262,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Logic Command Class Diagram_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -265,10 +302,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.2 : Starting Stack Diagram_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.1.3 : New Command Stack Diagram_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -278,6 +317,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.1.4 : Execute Undo Stack Diagram_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -285,6 +325,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.1.5 : Undo Redo Sequence Diagram_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -294,21 +335,26 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.1.6 : New Command Stack Diagram_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.1.6 : New Command Stack Diagram_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.1.7 : Undo Redo Activity Diagram_
 
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
+
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
 **Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
 **Cons:** Hard for new developers to understand the template pattern. +
+
 **Alternative 2:** Just override `execute()` +
 **Pros:** Does not involve the template pattern, easier for new developers to understand. +
 **Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
@@ -316,9 +362,11 @@ image::UndoRedoActivityDiagram.png[width="200"]
 ---
 
 **Aspect:** How undo & redo executes +
+
 **Alternative 1 (current choice):** Saves the entire address book. +
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
+
 **Alternative 2:** Individual command knows how to undo/redo by itself. +
 **Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
@@ -326,24 +374,488 @@ image::UndoRedoActivityDiagram.png[width="200"]
 ---
 
 **Aspect:** Type of commands that can be undone/redone +
+
 **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
 **Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
 **Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
+
 **Alternative 2:** Include all commands. +
 **Pros:** Might be more intuitive for the user. +
 **Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
+
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 ---
 
 **Aspect:** Data structure to support the undo/redo commands +
+
 **Alternative 1 (current choice):** Use separate stack for undo and redo +
 **Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project. +
 **Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`. +
+
 **Alternative 2:** Use `HistoryManager` for undo/redo +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
-// end::undoredo[]
+//end::undoredo[]
+
+//tag::opennew[]
+
+=== `open` and `new` command mechanism
+
+image::OpenCommandSequenceDiagram.PNG[width="800"]
+_Figure 4.2.1 : Open Existing Address Book Sequence Diagram_
+
+image::NewCommandSequenceDiagram.PNG[width="800"]
+_Figure 4.2.2 : Create New Address Book Sequence Diagram_
+
+From the sequence diagram, we can see that the workflow is very similar. One thing to note is that even though the
+preprocessing is different, in the end they will post the same `SwitchAddressBookRequestEvent` to the `EventsCenter`.
+
+==== Design considerations
+
+**Aspect:** Similarity of implementation for Open and New command.
+
+**Alternative 1 (current choice):** Separate the two commands until the final `post` event. +
+**Pros:** Middle ground between Alternative 2 and Alternative 3. Merge similar actions together while separating classes
+ that are doing different operations. In this case, the similar part is to finally open a new DeathNote (reset, initialize, restart...).
+ Therefore, we use the same RequestEvent for both commands. The preprocessing is different, since one check for existing file and one
+ check for the other way round, we separate both of them. +
+**Cons:** Slightly harder for developers to get understand how `SwitchAddressBookRequestEvent` works. +
+
+**Alternative 2:** Separate the two commands totally. +
+**Pros:** Easier for new developers to understand the underlying mechanism because they can treat them as different operations. +
+**Cons:** Hard to maintain. Since two commands are very similar. If a bug is found in one of them, the other one is
+likely to be affected as well. Hence twice amount of work for the same outcome. +
+
+**Alternative 3:** Combine the two commands totally. +
+**Pros:** Easier to maintain because everything is within the same class. +
+**Cons:** Confusing to understand. NewCommand checks that `Path` is not an existing file but OpenCommand checks that `Path`
+ is an existing file. The implementation is likely to have many conditional statements. Changing one class affects both commands. +
+
+//end::opennew[]
+
+//tag::add[]
+
+=== Making parameters optional
+
+Adding a new person into DeathNote requires only `Name`. All other fields are optional. This is
+achieved by allowing field objects to be instantiated with `null` parameter.
+
+Problems arise when field objects are instantiated with a `null` parameter. Necessary changes are mostly about additional
+checks of `null` in its respective class:
+
+----
+    public Phone(String phone) throws IllegalValueException {
+        String trimmedPhone = phone == null ? null : phone.trim();
+        if (!isValidPhone(trimmedPhone)) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+        this.value = trimmedPhone;
+    }
+----
+
+----
+    public static boolean isValidPhone(String test) {
+        return test == null || test.matches(PHONE_VALIDATION_REGEX);
+    }
+----
+
+----
+    public boolean equals(Object other) {
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Phone)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Phone) other).value) {
+            return true;
+        } else if (this.value != null && this.value.equals(((Phone) other).value)) { // state check
+            return true;
+        }
+
+        return false;
+    }
+----
+
+==== Design considerations
+
+**Aspect:** Which component is responsible for `null`. +
+
+**Alternative 1 (current choice):** Parameters can be instantiated with `null` parameter, but the object itself cannot be `null`. +
+**Pros:** Only parameter classes that are within `Model` component need to be modified. Other components are still functioning
+correctly. This improves coherent within `Model` component. +
+**Cons:** Potentially confusing for new developers. This design is equivalent to "having a phone with `null` number" rather
+than the more intuitive "doesn't have a phone". +
+
+**Alternative 2:** Parameter objects can be `null`. +
+**Pros:** More intuitive for a new developer. Easier modification on `Model` component. +
+**Cons:** Many components rely on the assumption that parameter objects are non-null. Hence, this design will fail the other components.
+More verification is needed outside the `Model` component when interacting with these parameter objects. This increases coupling. +
+
+//end::add[]
+
+//tag::parameter[]
+
+=== Adding new parameters to person
+
+The general Steps to take are as follows: +
+
+. Create your new Parameter in a unique java file (e.g. Birthday.java) +
+. Add your parameter in the the person model +
+. Add code to "teach" the application how to parse your parameter.Be sure to include examples +
+. Ensure that your parameter can be save +
+. Create test to ensure that there are no corner cases that can cause crashes or bugs
+
+Adding a new parameter to a person requires updates in multiple files as well as the inclusion
+of new tests. The existing files that need to be modified are as follows: +
+
+*Main:*
+
+. Userguide.adoc (for usage instructions)
+.<yournewparameter>.java (Creation of your new parameter)
+. CliSyntax.java (add the prefix your would like your parameter to use here)
+. ParserUtil.java (Teach the application how to interprete your new parameter)
+. AddCommand.java (if there is a need for the new parameter to be used upon adding a new person)
+. AddCommandParser.java (Ensure your parameter is present in the parser)
+. EditCommand.java (if the parameter can be editted)
+. EditCommandParser.java (ensure your parameter is present in the parser)
+. RemarkCommand.java (ensure your parameter is compatible with the Remark command)
+. Person.java (add your parameter to the model)
+. ReadOnlyPerson.java (add instructions on how to read your parameter from saved file)
+. XMLAdaptedPerson.java (Ensure the XML file the application keeps data in can recognise your parameter)
+. SampleData.util (modify this if you want to have initial sample data shown upon load)
+. PersonCard.java (Modify this so that your parameter will be displayed in the GUI if needed)
+. PersonCardHandle.java (Teaches the program how to read off the xml file and what to do)
+. PersonListCard.fxml (Modify this so that your parameter will be displayed in the GUI if needed)
+
+*Tests:*
+
+. <yourparametername>test.java (To check if your parameter accepts illegal values)
+. CommandTestUtil.java (Add your parameter to the test case builder)
+. PersonBuilder.java (Add your parameter to the test person model)
+. PersonUtil.java (Add your Parameter to this test)
+. TypicalPersons.java (Sample test people)
+. PersonCardTest.java (Add your Parameter to this test)
+. GuiTestAssert.java (Add your Parameter to this test)
+. EditCommandSystemTest.java (Add new tests to check for odd behaviour)
+. EditPersonDescriptorTest.java (Add your parameter to this test)
+. EditPersonDescriptorBuilder.java (Add your Parameter to this test)
+. AddCommandSystemTest.java (Add new tests to check for odd behaviour)
+. AddCommandParserTest (Add your Parameter to this test)
+
+You may need to create a new java file in logic/commands if your parameter requires a command to use (e.g. remarks.java) +
+
+Please refer to the following links to get an idea on how to add a new parameter: +
+https://github.com/CS2103AUG2017-W10-B3/main/pull/16/files[Adding website parameter] +
+https://github.com/CS2103AUG2017-W10-B3/main/pull/8/files[Adding birthday parameter]
+
+==== Design considerations
+
+**Aspect:** Implementation of a new variable. +
+
+**Alternative 1 (current choice):** Add the variable into person and make it be able to be initialised at the constructor with all other existing variables. +
+**Pros:** Consistent with code and how the commands work. +
+**Cons:** Requires a lot of work as many classes depend on using the `Person` constructor; mostly tests. +
+
+**Alternative 2:** Adding the variable into person but not initialising it at `Person` constructor. +
+**Pros:** Implementation is much easier and it does not affect tests in any way. +
+**Cons:** It is not consistent with the variables in `Person` +
+
+//end::parameter[]
+
+//tag::find[]
+
+=== Find Command
+
+The implementation of `find` is very similar to `edit`. After the command, both requires the user to describe the target.
+
+The matching algorithm is implemented as follows:
+
+----
+        /**
+         * Check {@code Person} in DeathNote against {@code this} finder target.
+         *
+         * @param person in DeathNote to check
+         * @return true if other all fields matches
+         */
+        public boolean match(ReadOnlyPerson person) {
+            if (this.name != null && !matchName(this.name, person.getName())) {
+                return false;
+            }
+            if (this.phone != null && !matchPhone(this.phone, person.getPhone())) {
+                return false;
+            }
+            if (this.email != null && !this.email.equals(person.getEmail())) {
+                return false;
+            }
+            if (this.address != null && !this.address.equals(person.getAddress())) {
+                return false;
+            }
+            if (this.website != null && !this.website.equals(person.getWebsite())) {
+                return false;
+            }
+            if (this.birthday != null && !this.birthday.equals(person.getBirthday())) {
+                return false;
+            }
+            if (this.tags != null && !matchTag(this.tags, person.getTags())) {
+                return false;
+            }
+
+            return true;
+        }
+----
+
+==== Design considerations
+
+**Aspect:** Component that is responsible for `matchName`, `matchPhone`.
+
+**Alternative 1 (current choice):** Implement under `FindCommand` in `Logic` component. +
+**Pros:** More specific, because only `FindCommand` uses it and not any other methods. +
+**Cons:** Harder to integrate if other components want to use these methods. +
+
+**Alternative 2:** Implement under respective `Name` and `Phone` class in `Model` component. +
+**Pros:** Easier to integrate into other components. +
+**Cons:** Redundant as the only method that is currently using it is the find command. +
+
+//end::find[]
+
+//tag::website[]
+
+=== Website
+
+The website variable in `Person` is a one of the new parameters in Person which stores a website of the `Person` +
+
+Browser is reloaded with the `Person` ' s website if the `Person` selected has a website. If not we google search the
+`Person` 's name.
+
+==== Design considerations
+
+**Aspect:** Implementation of profile picture +
+
+**Alternative 1 (current choice):** Copy image file into data folder and use the image from there +
+**Pros:** Application and data folder can be transferred to different computers and still work +
+**Cons:** May have to take note of size of files added into folder as transferring the data folder may take
+time if the file is too big+
+
+**Alternative 2:** Saving the path of the image +
+**Pros:** No extra work in resizing or copying the file +
+**Cons:** Application and data folder cannot be transferred to different computers and be expected to work +
+
+//end::website[]
+
+//tag::profilepicture[]
+
+=== Profile Picture
+
+The picture variable in `Person` is a normal variable in `Person` which only stores strings with ".png" suffix. +
+The data that we save in our xml file will be "pictureName.png" plus the picture of the person in our data folder in
+.png format. +
+
+image::PersonClassDiagram.png[width="300"]
+_Figure 4.6.1 : Person Class Diagram_
+
+The `Picture` class checks for existence of the file using `File` class. +
+
+[source, java]
+----
+public static boolean isValidPicture(String fileLocation) {
+...
+    File file = new File(fileLocation);
+    if (file.exists() && (fileLocation.endsWith(PICTURE_SUFFIX))) {
+        return true;
+    } else {
+        file = new File(PICTURE_SAVE_LOCATION + fileLocation);
+        if (file.exists()) {
+            return true;
+        }
+        return false;
+    }
+}
+----
+
+Once the existence of the file is checked, we check the size of the file so that we do not save very large files
+as we do not want our data file to be too large. +
+We resize the files if they are too large by shrinking it into a shorter width and height. +
+We also rename the file with a unique ID so that picture names will not collide and be overwritten.
+
+[source, java]
+----
+public Picture(String fileLocation) {
+...
+    String newFileName = UUID.randomUUID().toString() + PICTURE_SUFFIX;
+
+    File src = new File(trimmedFileLocation);
+    File dest = new File(PICTURE_SAVE_LOCATION + newFileName);
+
+    // If file is too big, resize it.
+    if (src.length() > PICTURE_MAX_SIZE) {
+        resizeAndSaveImage(src, newFileName);
+    } else {
+        copyImage(src, dest);
+    }
+    this.value = newFileName;
+...
+}
+----
+
+After resizing the file or that if the file does not exceed our limit, we save/copy the file into our data folder
+so that we can reuse it next time if we move the application around. +
+
+[source, java]
+----
+public static void resizeAndSaveImage(File file, String newFileName) throws IllegalValueException {
+    try {
+        BufferedImage resizedImage = resizeImage(ImageIO.read(file));
+
+        // Saving of image into data folder
+        ImageIO.write(resizedImage, "png", new File(PICTURE_SAVE_LOCATION + newFileName));
+    } catch (IOException e) {
+        throw new IllegalValueException(MESSAGE_PROFILEPICTURE_ERROR);
+    }
+}
+----
+
+[source, java]
+----
+public static void copyImage(File src, File dest) throws IllegalValueException {
+    try {
+        FileUtils.copyFile(src, dest);
+    } catch (IOException e) {
+        throw new IllegalValueException(MESSAGE_PROFILEPICTURE_ERROR);
+    }
+}
+----
+
+To show the picture in the application, `PersonCard` is updated and we clip the picture with a circle so it looks nice.
+
+[source, java]
+----
+private void initPicture(ReadOnlyPerson person) {
+    picture.setImage(new Image(person.getPicture().getPictureLocation()));
+
+    Circle circle = new Circle(32.0, 32.0, 30.0);
+    picture.setClip(circle);
+}
+----
+
+==== Design considerations
+
+**Aspect:** Implementation of profile picture +
+
+**Alternative 1 (current choice):** Copy image file into data folder and use the image from there +
+**Pros:** Application and data folder can be transferred to different computers and still work +
+**Cons:** May have to take note of size of files added into folder as transferring the data folder may take
+time if the file is too big+
+
+**Alternative 2:** Saving the path of the image +
+**Pros:** No extra work in resizing or copying the file +
+**Cons:** Application and data folder cannot be transferred to different computers and be expected to work +
+
+//end::profilepicture[]
+
+//tag::theme[]
+
+=== Theme mechanism
+
+Theme mechanism uses a singleton class called `UiStyle` which stores the scene of the application in it. +
+This allows the modification of the scene's css at runtime.
+
+The class `UiStyle` requires the scene to be set at `MainWindow` class for it to be used to edit themes.
+
+[source,java]
+----
+public class UiStyle {
+...
+    private static Scene scene = null;
+
+     public static void setScene(Scene s) {
+        scene = s;
+        setToDarkTheme(); // Default theme
+    }
+
+    public static void setToLightTheme() {
+        scene.getStylesheets().remove(DARK_THEME_STYLE);
+        scene.getStylesheets().add(LIGHT_THEME_STYLE);
+    }
+
+    public static void setToDarkTheme() {
+        scene.getStylesheets().remove(LIGHT_THEME_STYLE);
+        scene.getStylesheets().add(DARK_THEME_STYLE);
+    }
+}
+----
+
+Example of calling the application to change to light theme:
+
+----
+UiStyle.getInstance().setToLightTheme();
+----
+
+image::ThemeSequenceDiagram.png[width="800"]
+_Figure 4.7.1 : Theme Sequence Diagram_
+
+Although this function can be called anywhere, it should only be called when `ThemeCommand` is issued.
+
+==== Design considerations
+
+**Aspect:** Implementation of theme +
+
+**Alternative 1 (current choice):** Pass the scene of the application into a singleton class dedicated for UI usage only +
+**Pros:** Changing the theme can be called easily +
+**Cons:** Changing of the theme can be called anywhere by any class +
+
+**Alternative 2:** Passing the scene down from `MainApp` class to `ThemeCommand` class +
+**Pros:** Only `ThemeCommand` class will be able to modify the theme +
+**Cons:** Very tedious as `ThemeCommand` class is very far down the architecture +
+
+//end::theme[]
+//tag::tagcolor[]
+
+=== Tag colors
+
+The colors for tags are randomed upon start up of the application.
+Tags has been modified to use hexadecimal colors instead of having an array of colors
+(e.g. red,blue,green) and selecting from the array of colors. +
+This increases the number of colors we can have for tags tremendously. +
+
+==== Design considerations
+
+**Aspect:** Implementation of color for tags +
+
+**Alternative 1 (current choice):** Have tags to be colored using hex instead of defined words +
+**Pros:** The number of colors for tags are limited to the number of hex values there are +
+**Cons:** Colors are decided by random, the color differences may not be different. (e.g #FFFFFF, #FFFFFE) +
+
+**Alternative 2:** Have tag colors to be in an array and randomly choose from them +
+**Pros:** Colors of tags are defined and the difference between any two colors can be seen easily +
+**Cons:** Limited number of colors codes +
+
+//end::tagcolor[]
+//tag::sortlist[]
+
+=== Sorted list
+
+The list is sorted by names automatically when shown by using java's list.sort.
+
+[source, java]
+----
+public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+    return FXCollections.unmodifiableObservableList(filteredPersons.sorted());
+}
+----
+
+==== Design considerations
+
+**Aspect:** Sorting list of contacts +
+
+**Alternative 1 (current choice):** Return a sorted list when display needs to update +
+**Pros:** Very easy to implement, +
+**Cons:** Only can sort by name +
+
+**Alternative 2:** Have a sort command to sort contacts +
+**Pros:** Contacts can be sorted according to different variables +
+**Cons:** New command has to be added. +
+
+//end::sortlist[]
 
 === Logging
 
@@ -398,28 +910,32 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 === Running Tests
 
-There are three ways to run tests.
+We highly recommend using Gradle in _headless_ mode with the https://github.com/TestFX/TestFX[TestFX] library such that
+GUI tests do not show up on the screen. That means the developer can do other things on the computer while the tests
+are running in the background.
 
-[TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+To run tests in headless mode, open a console and run the following command
 
-*Method 1: Using IntelliJ JUnit test runner*
-
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
-
-*Method 2: Using Gradle*
-
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+  Windows  :   gradlew clean headless allTests
+  Mac/Linux: ./gradlew clean headless allTests
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
 
-*Method 3: Using Gradle (headless)*
+We provide two alternative methods, but these might fail some GUI tests due to platform/resolution-specific
+idiosyncrasies.
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+*Alternative Method 1: Using IntelliJ JUnit test runner*
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
+* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run`
+
+*Alternative Method 2: Using Gradle (non-headless)*
+
+Open a console and run the following command
+
+  Windows  :   gradlew clean allTests
+  Mac/Linux: ./gradlew clean allTests
 
 === Types of tests
 
@@ -469,251 +985,6 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
@@ -721,20 +992,62 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |find person by name |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |redo my last undo if that was a mistake |
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |undo my last action if I made a mistake |
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |new user |view help |learn to use the program
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |add a person |
+
+|`* * *` |user |delete a person |
+
+|`* * *` |user |edit a person | update my contacts
+
+|`* * *` |user |view my contact information |
+
+|`* * *` |user |clear my addressbook |
+
+|`* * *` |user |add more than one contact number for a person |
+
+|`* * *` |user |find contacts by addresses |find who live around a specific area
+
+|`* * *` |user |set password to my addressbook |my addressbook will be secure
+
+|`* * *` |user |see tags in different colors |easily identify which persons has the same tags
+
+|`* * *` |user with many persons in addressbook |sort my contacts by name |easily view my contacts
+
+|`* * *` |user with many persons in addressbook |find user based on tags |find group of contacts easily
+
+|`* * *` |user |add birthdays to my contacts |remember their birthdays
+
+|`* * *` |user |find users by birthday |know whose birthday is on that month
+
+|`* * *` |user |export my contacts |port it to another addressbook app
+
+|`* * *` |user |import my contacts from other addressbook |see my contacts from another addressbook app
+
+|`* *` |user |associate contacts with social platform |
+
+|`* *` |user |autocomplete |be more productive
+
+|`* *` |user |find a person without typing his exact name |
+
+|`* *` |user |back up my addressbook on the cloud |
+
+|`* *` |user |customize the theme of my addressbook |
+
+|`* *` |user |view the google map of the person's address |
+
+|`* *` |user |add events to a person and have a reminder show up when its due |
+
+|`* *` |user |attach photos to my contacts |remember their faces
+
 |=======================================================================
-
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -794,20 +1107,3 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

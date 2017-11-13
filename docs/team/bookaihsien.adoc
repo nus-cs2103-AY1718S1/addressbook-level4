@@ -1,0 +1,115 @@
+= Boo Kai Hsien - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: DeathNote
+
+*Code contributed*:
+https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/main/chrisboo.md[Functional code]
+https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/test/chrisboo.md[Test code]
+
+DeathNote is a desktop address book application to remember the people you hate. The user interacts with the application
+mainly using a command line interface, and minimal GUI interface created with JavaFX. The project is written in Java.
+
+=== Enhancement Added: Improve flexibility of `add` command
+
+==== External behavior
+
+---
+
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Most of the time we don't have the full contact information about a person. This feature allows them to use DeathNote just as well.
+
+==== Implementation
+
+---
+
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Working with Multiple DeathNote
+
+==== External behavior
+
+---
+
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
+
+include::../UserGuide.adoc[tag=opennew]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature allows multiple users to use the same application on the same device but accessing their own version of DeathNote.
+
+==== Implementation
+
+---
+
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=opennew]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Improve `find` command
+
+==== External behavior
+
+---
+
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+User sometimes need to lookup whose phone number or email etc. is that. With this feature, they can query any information
+and get the relevant contact. `NAME` is the most flexible - no order, case insensitive. The reason is that we might not
+know the order we insert the user's first and last name. For example, both `Boo Kai Hsien` and `Kai Hsien Boo` is equally
+likely to appear in DeathNote. For the case of `PHONE`, user might not know if they have input the country code or not.
+Both `6593759662` and `93759662` refers to the same phone. Hence taking substring is a feasible option. Finally, the design
+rationale is that user are often looking for a specific person or group of persons. Hence, typing `n/Amy Wong p/12345`
+intuitively means a person named Amy with phone number 12345.
+
+==== Implementation
+
+---
+
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+. Set up project website.
+. Add shorthand to commands.
+. Add Appveyor, Coveralls and Codeacy to the project for efficient integrations.

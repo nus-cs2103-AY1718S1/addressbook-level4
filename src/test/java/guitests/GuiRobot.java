@@ -8,6 +8,8 @@ import org.testfx.api.FxRobot;
 import guitests.guihandles.exceptions.StageNotFoundException;
 import javafx.stage.Stage;
 
+
+
 /**
  * Robot used to simulate user actions on the GUI.
  * Extends {@link FxRobot} by adding some customized functionality and workarounds.
@@ -15,7 +17,7 @@ import javafx.stage.Stage;
 public class GuiRobot extends FxRobot {
 
     private static final int PAUSE_FOR_HUMAN_DELAY_MILLISECONDS = 250;
-    private static final int DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS = 5000;
+    private static final int DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS = 50000;
 
     private static final String PROPERTY_TESTFX_HEADLESS = "testfx.headless";
 

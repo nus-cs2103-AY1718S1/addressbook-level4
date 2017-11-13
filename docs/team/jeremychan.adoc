@@ -1,0 +1,170 @@
+= Chan Liang Fei Jeremy - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:toc:
+:toc-title:
+:sect-num:
+:sectnums:
+:toc-section:
+
+== Project: DeathNote
+
+DeathNote is a Command-line Interface (CLI) desktop address book application which is able to manage contacts easily.
+The user interacts with the application using a CLI, using commands to manage contacts; adding, deleting or editing contacts.
+
+The aim of DeathNote, besides managing contacts, is to be able to bring entertainment to the user.
+DeathNote has a small twist on being an address book application as it has aliases for its commands
+and the amount of entertainment can only be determined by the user's creativity.
+
+It has a GUI created with JavaFX. It is written in Java, and has about 6k Lines of Code (LoC).
+
+*Code contributed*: [https://github.com/Jemereny/addressbook-level4/blob/master/collated/main/Jemereny.md[Functional code]] [https://github.com/Jemereny/addressbook-level4/blob/master/collated/test/Jemereny.md[Test code]]
+
+== Enhancement Added: Profile Picture
+
+=== External behavior
+
+---
+
+Profile picture shows the face of contact.
+
+image::personCard.png[]
+
+Profile picture can be added using `add` command while adding a contact or `edit` command if the contact already exists.
+
+include::../UserGuide.adoc[tag=profilepictureadd]
+
+include::../UserGuide.adoc[tag=profilepictureedit]
+
+=== Justification
+
+---
+
+Adding picture to a contact reminds you who and how your contact looks.
+
+=== Implementation
+
+---
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide] written by Jeremy Chan#
+
+include::../DeveloperGuide.adoc[tag=profilepicture]
+
+#End of Extract#
+
+== Enhancement Added: Themes
+
+=== External behavior
+
+---
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide] written by Jeremy Chan#
+
+include::../UserGuide.adoc[tag=theme]
+
+#End of Extract#
+
+=== Justification
+
+---
+
+Theme is added so that we can disguise our Death Note (gamification of our application).
+
+=== Implementation
+
+---
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide] written by Jeremy Chan#
+
+include::../DeveloperGuide.adoc[tag=theme]
+
+#End of Extract#
+
+== Enhancement Added: Website
+
+=== External behavior
+
+---
+
+Using the `select` command on a contact will load the browser to the contact's website. If the contact has no website,
+the browser will google the contact's name.
+
+=== Justification
+
+---
+
+Having a website so that we can see our contact's website if he or she is a professional contact.
+
+=== Implementation
+
+---
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide] written by Jeremy Chan#
+
+include::../DeveloperGuide.adoc[tag=website]
+
+#End of Extract#
+
+---
+
+== Enhancement Added: Colors for tags
+
+=== External behavior
+
+---
+
+Tags are shown in different colors
+
+image::tagcolor.png[]
+
+Tags can be added using `add` command while adding a contact or `edit` command if the contact already exists.
+
+* `add n/Dwayne Johnson t/friend` +
+Adds Dwayne Johnson as a contact and adds a "friend" tag to the contact
+* `edit 1 t/colleague` +
+Edits the tag of the 1st person to be "colleague"
+* `edit 1 t/` +
+Removes all tag from the 1st person
+
+=== Justification
+
+---
+
+We have colors for tags so it is easier to distinguish different tags.
+
+=== Implementation
+
+---
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide] written by Jeremy Chan#
+
+include::../DeveloperGuide.adoc[tag=tagcolor]
+
+#End of Extract#
+
+== Enhancement Added: Shown list to be sorted
+
+=== External behavior
+
+---
+
+List is sorted by name alphabetically automatically.
+
+image::personList.png[]
+
+=== Justification
+
+---
+
+It is easier to look for contacts when the contacts are sorted.
+
+=== Implementation
+
+---
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide] written by Jeremy Chan#
+
+include::../Developerguide.adoc[tag=sortlist]
+
+#End of Extract#
+
+== Other contributions
+
+. Added travis to group repo
+. Increased test coverage from 87% to 88% (Pull request: https://github.com/CS2103AUG2017-W10-B3/main/pull/83[#86])
+. Reported bug on (Pull requests: https://github.com/CS2103AUG2017-T15-B4/main/issues/234[T15-B4 #234], https://github.com/CS2103AUG2017-T15-B4/main/issues/236[T15-B4 #236])

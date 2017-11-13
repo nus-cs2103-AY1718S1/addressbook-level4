@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Boo Kai Hsien - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Boo Kai Hsien - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-deathnote"><a class="link" href="#project-deathnote">Project: DeathNote</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Code contributed</strong>:
+<a href="https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/main/chrisboo.md">Functional code</a>
+<a href="https://github.com/CS2103AUG2017-W10-B3/main/blob/master/collated/test/chrisboo.md">Test code</a></p>
+</div>
+<div class="paragraph">
+<p>DeathNote is a desktop address book application to remember the people you hate. The user interacts with the application
+mainly using a command line interface, and minimal GUI interface created with JavaFX. The project is written in Java.</p>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-improve-flexibility-of-code-add-code-command"><a class="link" href="#enhancement-added-improve-flexibility-of-code-add-code-command">Enhancement Added: Improve flexibility of <code>add</code> command</a></h3>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc">from: User Guide</a></mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="add-a-person-code-add-code-code-a-code-code-curse-code-kbd-v2-0-kbd"><a class="link" href="#add-a-person-code-add-code-code-a-code-code-curse-code-kbd-v2-0-kbd">Add a person: <code>add</code> / <code>a</code> / <code>curse</code> <kbd>V2.0</kbd></a></h3>
+<div class="paragraph">
+<p>Adds a person to DeathNote<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Alias: curse n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Only <code>NAME</code> field is compulsory<br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>Most of the time we don&#8217;t have the full contact information about a person. This feature allows them to use DeathNote just as well.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc">from: Developer Guide</a></mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="making-parameters-optional"><a class="link" href="#making-parameters-optional">Making parameters optional</a></h3>
+<div class="paragraph">
+<p>Adding a new person into DeathNote requires only <code>Name</code>. All other fields are optional. This is
+achieved by allowing field objects to be instantiated with <code>null</code> parameter.</p>
+</div>
+<div class="paragraph">
+<p>Problems arise when field objects are instantiated with a <code>null</code> parameter. Necessary changes are mostly about additional
+checks of <code>null</code> in its respective class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public Phone(String phone) throws IllegalValueException {
+        String trimmedPhone = phone == null ? null : phone.trim();
+        if (!isValidPhone(trimmedPhone)) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+        this.value = trimmedPhone;
+    }</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public static boolean isValidPhone(String test) {
+        return test == null || test.matches(PHONE_VALIDATION_REGEX);
+    }</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public boolean equals(Object other) {
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Phone)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Phone) other).value) {
+            return true;
+        } else if (this.value != null &amp;&amp; this.value.equals(((Phone) other).value)) { // state check
+            return true;
+        }
+
+        return false;
+    }</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Which component is responsible for <code>null</code>.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Parameters can be instantiated with <code>null</code> parameter, but the object itself cannot be <code>null</code>.<br>
+<strong>Pros:</strong> Only parameter classes that are within <code>Model</code> component need to be modified. Other components are still functioning
+correctly. This improves coherent within <code>Model</code> component.<br>
+<strong>Cons:</strong> Potentially confusing for new developers. This design is equivalent to "having a phone with <code>null</code> number" rather
+than the more intuitive "doesn&#8217;t have a phone".<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Parameter objects can be <code>null</code>.<br>
+<strong>Pros:</strong> More intuitive for a new developer. Easier modification on <code>Model</code> component.<br>
+<strong>Cons:</strong> Many components rely on the assumption that parameter objects are non-null. Hence, this design will fail the other components.
+More verification is needed outside the <code>Model</code> component when interacting with these parameter objects. This increases coupling.<br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-working-with-multiple-deathnote"><a class="link" href="#enhancement-added-working-with-multiple-deathnote">Enhancement Added: Working with Multiple DeathNote</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc">from: User Guide</a></mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="create-new-deathnote-code-new-code-code-n-code-kbd-v2-0-kbd"><a class="link" href="#create-new-deathnote-code-new-code-code-n-code-kbd-v2-0-kbd">Create new DeathNote : <code>new</code> / <code>n</code> <kbd>V2.0</kbd></a></h3>
+<div class="paragraph">
+<p>Opens a new instance of DeathNote.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: new PATH</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: n PATH</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>New</code> On GUI:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to the top menu and click File &gt; New.</p>
+</li>
+<li>
+<p>Locate your desired DeathNote data file on the pop-up window. The file will be in an xml format.</p>
+</li>
+<li>
+<p>Select the file and click Save</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="open-existing-deathnote-code-open-code-code-o-code-kbd-v2-0-kbd"><a class="link" href="#open-existing-deathnote-code-open-code-code-o-code-kbd-v2-0-kbd">Open existing DeathNote : <code>open</code> / <code>o</code> <kbd>V2.0</kbd></a></h3>
+<div class="paragraph">
+<p>Opens another existing instance of DeathNote.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: open PATH</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: o PATH</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>Open</code> On GUI:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to the top menu and click File &gt; Open.</p>
+</li>
+<li>
+<p>Locate your desired DeathNote data file on the pop-up window. The file will be in an xml format.</p>
+</li>
+<li>
+<p>Select the file and click Open</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>This feature allows multiple users to use the same application on the same device but accessing their own version of DeathNote.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc">from: Developer Guide</a></mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="code-open-code-and-code-new-code-command-mechanism"><a class="link" href="#code-open-code-and-code-new-code-command-mechanism"><code>open</code> and <code>new</code> command mechanism</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="../images/OpenCommandSequenceDiagram.PNG" alt="OpenCommandSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.2.1 : Open Existing Address Book Sequence Diagram</em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/NewCommandSequenceDiagram.PNG" alt="NewCommandSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.2.2 : Create New Address Book Sequence Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>From the sequence diagram, we can see that the workflow is very similar. One thing to note is that even though the
+preprocessing is different, in the end they will post the same <code>SwitchAddressBookRequestEvent</code> to the <code>EventsCenter</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Similarity of implementation for Open and New command.</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Separate the two commands until the final <code>post</code> event.<br>
+<strong>Pros:</strong> Middle ground between Alternative 2 and Alternative 3. Merge similar actions together while separating classes
+ that are doing different operations. In this case, the similar part is to finally open a new DeathNote (reset, initialize, restart&#8230;&#8203;).
+ Therefore, we use the same RequestEvent for both commands. The preprocessing is different, since one check for existing file and one
+ check for the other way round, we separate both of them.<br>
+<strong>Cons:</strong> Slightly harder for developers to get understand how <code>SwitchAddressBookRequestEvent</code> works.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Separate the two commands totally.<br>
+<strong>Pros:</strong> Easier for new developers to understand the underlying mechanism because they can treat them as different operations.<br>
+<strong>Cons:</strong> Hard to maintain. Since two commands are very similar. If a bug is found in one of them, the other one is
+likely to be affected as well. Hence twice amount of work for the same outcome.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 3:</strong> Combine the two commands totally.<br>
+<strong>Pros:</strong> Easier to maintain because everything is within the same class.<br>
+<strong>Cons:</strong> Confusing to understand. NewCommand checks that <code>Path</code> is not an existing file but OpenCommand checks that <code>Path</code>
+ is an existing file. The implementation is likely to have many conditional statements. Changing one class affects both commands.<br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-improve-code-find-code-command"><a class="link" href="#enhancement-added-improve-code-find-code-command">Enhancement Added: Improve <code>find</code> command</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc">from: User Guide</a></mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="find-a-person-code-find-code-code-f-code-code-summon-code-kbd-v2-0-kbd"><a class="link" href="#find-a-person-code-find-code-code-f-code-code-summon-code-kbd-v2-0-kbd">Find a person: <code>find</code> / <code>f</code> / <code>summon</code> <kbd>V2.0</kbd></a></h3>
+<div class="paragraph">
+<p>Finds persons who matches the given attributes.<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Format: find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Shorthand: f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Alias: summon [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The search is case insensitive for <code>NAME</code>. If you want to look for <code>Hans</code>, you can also type <code>hans</code>.</p>
+</li>
+<li>
+<p>The order of the words in <code>NAME</code> does not matter. If you want to look for <code>Hans Bo</code>, you can also type <code>Bo Hans</code>.</p>
+</li>
+<li>
+<p>Person must match contains all word in <code>NAME</code> to be returned. If you want type <code>Bo Hans</code>, <code>Hans</code> and <code>Bo</code> will not show up, but <code>Bo Yang Hans</code> will.</p>
+</li>
+<li>
+<p><code>Phone</code> requires to be a substring of the person. If you want to look for <code>6593759662</code> you can also type <code>93759662</code>.</p>
+</li>
+<li>
+<p><code>TAG</code> is case sensitive. You cannot find person with tag <code>FRIEND</code> if you search for <code>t/friend</code>.</p>
+</li>
+<li>
+<p>Person must match all <code>TAG</code>. If you type <code>t/friends t/colleague</code>, <code>t/friends</code> and <code>t/colleague</code> will not show up, but <code>t/friends t/colleague</code> and
+<code>t/friends t/colleague t/neighbor</code> will.</p>
+</li>
+<li>
+<p>Person must match all fields to be returned. If you type <code>n/Hans p/93759662</code>, <code>n/Hans p/111222</code> will not show up.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>User sometimes need to lookup whose phone number or email etc. is that. With this feature, they can query any information
+and get the relevant contact. <code>NAME</code> is the most flexible - no order, case insensitive. The reason is that we might not
+know the order we insert the user&#8217;s first and last name. For example, both <code>Boo Kai Hsien</code> and <code>Kai Hsien Boo</code> is equally
+likely to appear in DeathNote. For the case of <code>PHONE</code>, user might not know if they have input the country code or not.
+Both <code>6593759662</code> and <code>93759662</code> refers to the same phone. Hence taking substring is a feasible option. Finally, the design
+rationale is that user are often looking for a specific person or group of persons. Hence, typing <code>n/Amy Wong p/12345</code>
+intuitively means a person named Amy with phone number 12345.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract <a href="https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/DeveloperGuide.adoc">from: Developer Guide</a></mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="find-command"><a class="link" href="#find-command">Find Command</a></h3>
+<div class="paragraph">
+<p>The implementation of <code>find</code> is very similar to <code>edit</code>. After the command, both requires the user to describe the target.</p>
+</div>
+<div class="paragraph">
+<p>The matching algorithm is implemented as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>        /**
+         * Check {@code Person} in DeathNote against {@code this} finder target.
+         *
+         * @param person in DeathNote to check
+         * @return true if other all fields matches
+         */
+        public boolean match(ReadOnlyPerson person) {
+            if (this.name != null &amp;&amp; !matchName(this.name, person.getName())) {
+                return false;
+            }
+            if (this.phone != null &amp;&amp; !matchPhone(this.phone, person.getPhone())) {
+                return false;
+            }
+            if (this.email != null &amp;&amp; !this.email.equals(person.getEmail())) {
+                return false;
+            }
+            if (this.address != null &amp;&amp; !this.address.equals(person.getAddress())) {
+                return false;
+            }
+            if (this.website != null &amp;&amp; !this.website.equals(person.getWebsite())) {
+                return false;
+            }
+            if (this.birthday != null &amp;&amp; !this.birthday.equals(person.getBirthday())) {
+                return false;
+            }
+            if (this.tags != null &amp;&amp; !matchTag(this.tags, person.getTags())) {
+                return false;
+            }
+
+            return true;
+        }</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Component that is responsible for <code>matchName</code>, <code>matchPhone</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Implement under <code>FindCommand</code> in <code>Logic</code> component.<br>
+<strong>Pros:</strong> More specific, because only <code>FindCommand</code> uses it and not any other methods.<br>
+<strong>Cons:</strong> Harder to integrate if other components want to use these methods.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Implement under respective <code>Name</code> and <code>Phone</code> class in <code>Model</code> component.<br>
+<strong>Pros:</strong> Easier to integrate into other components.<br>
+<strong>Cons:</strong> Redundant as the only method that is currently using it is the find command.<br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Set up project website.</p>
+</li>
+<li>
+<p>Add shorthand to commands.</p>
+</li>
+<li>
+<p>Add Appveyor, Coveralls and Codeacy to the project for efficient integrations.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-13 17:01:44 +08:00
+</div>
+</div>
+</body>
+</html>

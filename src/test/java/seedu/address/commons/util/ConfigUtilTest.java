@@ -2,6 +2,7 @@ package seedu.address.commons.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.commons.util.ConfigUtil.updateConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,10 +43,6 @@ public class ConfigUtilTest {
 
         thrown.expect(DataConversionException.class);
         read("NotJsonFormatConfig.json");
-
-        /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
-         * That means you should not have more than one exception test in one method
-         */
     }
 
     @Test
@@ -114,6 +111,23 @@ public class ConfigUtilTest {
         readBack = ConfigUtil.readConfig(configFilePath).get();
         assertEquals(original, readBack);
     }
+
+    //@@author chrisboo
+    @Test
+    public void updateConfigTest() throws DataConversionException, IOException {
+        Config original = getTypicalConfig();
+
+        String configFilePath = testFolder.getRoot() + File.separator + "TempConfig.json";
+        ConfigUtil.saveConfig(original, configFilePath);
+
+        String updatedTitle = "Updated Title";
+        original.setAppTitle(updatedTitle);
+        updateConfig(configFilePath, updatedTitle);
+        Config readBack = ConfigUtil.readConfig(configFilePath).get();
+
+        assertEquals(readBack, original);
+    }
+    //@@author
 
     private void save(Config config, String configFileInTestDataFolder) throws IOException {
         String configFilePath = addToTestDataPathIfNotNull(configFileInTestDataFolder);

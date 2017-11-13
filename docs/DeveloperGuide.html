@@ -1,0 +1,2079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>AddressBook Level 4 - Developer Guide</title>
+<link rel="stylesheet" href="stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>AddressBook Level 4 - Developer Guide</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>By: <code>Team SE-EDU</code>      Since: <code>Jun 2016</code>      Licence: <code>MIT</code></p>
+</div>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle"></div>
+<ul class="sectlevel1">
+<li><a href="#introduction">1. Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#overview">1.1. Overview</a></li>
+<li><a href="#skills-needed-to-further-develop-the-application">1.2. Skills needed to further develop the application</a></li>
+<li><a href="#where-to-find-specific-information">1.3. Where to find specific information</a></li>
+</ul>
+</li>
+<li><a href="#setting-up">2. Setting up</a>
+<ul class="sectlevel2">
+<li><a href="#prerequisites">2.1. Prerequisites</a></li>
+<li><a href="#setting-up-the-project">2.2. Setting up the project</a></li>
+<li><a href="#verifying-the-setup">2.3. Verifying the setup</a></li>
+<li><a href="#configurations-to-do-before-writing-code">2.4. Configurations to do before writing code</a></li>
+<li><a href="#contribute-to-the-project">2.5. Contribute to the project</a></li>
+</ul>
+</li>
+<li><a href="#design">3. Design</a>
+<ul class="sectlevel2">
+<li><a href="#architecture">3.1. Architecture</a></li>
+<li><a href="#ui-component">3.2. UI component</a></li>
+<li><a href="#logic-component">3.3. Logic component</a></li>
+<li><a href="#model-component">3.4. Model component</a></li>
+<li><a href="#storage-component">3.5. Storage component</a></li>
+<li><a href="#common-classes">3.6. Common classes</a></li>
+</ul>
+</li>
+<li><a href="#implementation">4. Implementation</a>
+<ul class="sectlevel2">
+<li><a href="#undo-redo-mechanism">4.1. Undo/Redo mechanism</a></li>
+<li><a href="#code-open-code-and-code-new-code-command-mechanism">4.2. <code>open</code> and <code>new</code> command mechanism</a></li>
+<li><a href="#making-parameters-optional">4.3. Making parameters optional</a></li>
+<li><a href="#adding-new-parameters-to-person">4.4. Adding new parameters to person</a></li>
+<li><a href="#find-command">4.5. Find Command</a></li>
+<li><a href="#website">4.6. Website</a></li>
+<li><a href="#profile-picture">4.7. Profile Picture</a></li>
+<li><a href="#theme-mechanism">4.8. Theme mechanism</a></li>
+<li><a href="#tag-colors">4.9. Tag colors</a></li>
+<li><a href="#sorted-list">4.10. Sorted list</a></li>
+<li><a href="#logging">4.11. Logging</a></li>
+<li><a href="#configuration">4.12. Configuration</a></li>
+</ul>
+</li>
+<li><a href="#documentation">5. Documentation</a>
+<ul class="sectlevel2">
+<li><a href="#editing-documentation">5.1. Editing Documentation</a></li>
+<li><a href="#publishing-documentation">5.2. Publishing Documentation</a></li>
+<li><a href="#converting-documentation-to-pdf-format">5.3. Converting Documentation to PDF format</a></li>
+</ul>
+</li>
+<li><a href="#testing">6. Testing</a>
+<ul class="sectlevel2">
+<li><a href="#running-tests">6.1. Running Tests</a></li>
+<li><a href="#types-of-tests">6.2. Types of tests</a></li>
+<li><a href="#troubleshooting-testing">6.3. Troubleshooting Testing</a></li>
+</ul>
+</li>
+<li><a href="#dev-ops">7. Dev Ops</a>
+<ul class="sectlevel2">
+<li><a href="#build-automation">7.1. Build Automation</a></li>
+<li><a href="#continuous-integration">7.2. Continuous Integration</a></li>
+<li><a href="#making-a-release">7.3. Making a Release</a></li>
+<li><a href="#managing-dependencies">7.4. Managing Dependencies</a></li>
+</ul>
+</li>
+<li><a href="#user-stories">Appendix A: User Stories</a></li>
+<li><a href="#use-cases">Appendix B: Use Cases</a></li>
+<li><a href="#non-functional-requirements">Appendix C: Non Functional Requirements</a></li>
+<li><a href="#glossary">Appendix D: Glossary</a></li>
+</ul>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="link" href="#introduction">1. Introduction</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="overview"><a class="link" href="#overview">1.1. Overview</a></h3>
+<div class="paragraph">
+<p>This developer guide provides general information about how is this application managed explaining both architectural and coding styles.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="skills-needed-to-further-develop-the-application"><a class="link" href="#skills-needed-to-further-develop-the-application">1.2. Skills needed to further develop the application</a></h3>
+<div class="paragraph">
+<p>The following skills and experience are useful in helping to further develop the application.<br>
+You do not need to have an advanced understanding of the skills to get started but these are the skills you can build over time as you gain experience while working on the application.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Knowledge of <em>Object Orientated Programming (OOP)</em></p>
+</li>
+<li>
+<p>Basic to Intermediate programming skills (Java), and understanding of its API.</p>
+</li>
+<li>
+<p>Basic understanding of Web development skills (HTML, CSS)</p>
+</li>
+<li>
+<p>Basic understanding and knowledge of XML</p>
+</li>
+<li>
+<p>Understanding the usage of IDEs (IntelliJ)</p>
+</li>
+<li>
+<p>Understanding what is automated testing (gradle)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="where-to-find-specific-information"><a class="link" href="#where-to-find-specific-information">1.3. Where to find specific information</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>This application uses Java 8. Full set of documentation on Java 8 is available at: <a href="https://docs.oracle.com/javase/8/docs/api/" class="bare">https://docs.oracle.com/javase/8/docs/api/</a><br></p>
+</li>
+<li>
+<p>This application uses CSS for its visual appeal for the interface. For basic usage, <a href="https://www.w3schools.com/css/" class="bare">https://www.w3schools.com/css/</a> is a good place to start<br></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="setting-up"><a class="link" href="#setting-up">2. Setting up</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="prerequisites"><a class="link" href="#prerequisites">2.1. Prerequisites</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>JDK <code>1.8.0_60</code></strong> or later</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Having any Java 8 version is not enough.<br>
+This app will not work with earlier versions of Java 8.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p><strong>IntelliJ</strong> IDE</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+IntelliJ by default has Gradle and JavaFx plugins installed.<br>
+Do not disable them. If you have disabled them, go to <code>File</code> &gt; <code>Settings</code> &gt; <code>Plugins</code> to re-enable them.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p><strong>SceneBuilder (OPTIONAL)</strong>  Visual tool</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Currently using Scenebuilder for Java 8. SceneBuilder 8.4.0.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="setting-up-the-project"><a class="link" href="#setting-up-the-project">2.2. Setting up the project</a></h3>
+<div class="sect3">
+<h4 id="setting-up-the-project-into-your-computer"><a class="link" href="#setting-up-the-project-into-your-computer">2.2.1. Setting up the project into your computer</a></h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Fork this repo, and clone the fork to your computer</p>
+</li>
+<li>
+<p>Open IntelliJ (if you are not in the welcome screen, click <code>File</code> &gt; <code>Close Project</code> to close the existing project dialog first)</p>
+</li>
+<li>
+<p>Set up the correct JDK version for Gradle</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Click <code>Configure</code> &gt; <code>Project Defaults</code> &gt; <code>Project Structure</code></p>
+</li>
+<li>
+<p>Click <code>New&#8230;&#8203;</code> and find the directory of the JDK</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click <code>Import Project</code></p>
+</li>
+<li>
+<p>Locate the <code>build.gradle</code> file and select it. Click <code>OK</code></p>
+</li>
+<li>
+<p>Click <code>Open as Project</code></p>
+</li>
+<li>
+<p>Click <code>OK</code> to accept the default settings</p>
+</li>
+<li>
+<p>Open a console and run the command <code>gradlew processResources</code> (Mac/Linux: <code>./gradlew processResources</code>). It should finish with the <code>BUILD SUCCESSFUL</code> message.<br>
+This will generate all resources required by the application and tests.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="setting-up-scenebuilder"><a class="link" href="#setting-up-scenebuilder">2.2.2. Setting up SceneBuilder</a></h4>
+<div class="paragraph">
+<p>This application uses an external library called "controlsfx-8.40.11"</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open Scenebuilder (You do not need to load any projects)</p>
+</li>
+<li>
+<p>Open <code>JAR/FXML Manager</code></p>
+</li>
+<li>
+<p>Import controlsfx-8.40.11.jar (By default it will be in <em>C:\Users\USERPROFILE\.gradle\caches\modules-2\files-2.1\org.controlsfx\controlsfx\8.40.11\61694ec2668cc69116e970c7513aa3501179bc00</em>)</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="verifying-the-setup"><a class="link" href="#verifying-the-setup">2.3. Verifying the setup</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Run the <code>seedu.address.MainApp</code> and try a few commands</p>
+</li>
+<li>
+<p><a href="#testing">Run the tests</a> to ensure they all pass.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configurations-to-do-before-writing-code"><a class="link" href="#configurations-to-do-before-writing-code">2.4. Configurations to do before writing code</a></h3>
+<div class="sect3">
+<h4 id="configuring-the-coding-style"><a class="link" href="#configuring-the-coding-style">2.4.1. Configuring the coding style</a></h4>
+<div class="paragraph">
+<p>This project follows <a href="https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md">oss-generic coding standards</a>. IntelliJ&#8217;s default style is mostly compliant with ours but it uses a different import order from ours. To rectify,</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to <code>File</code> &gt; <code>Settings&#8230;&#8203;</code> (Windows/Linux), or <code>IntelliJ IDEA</code> &gt; <code>Preferences&#8230;&#8203;</code> (macOS)</p>
+</li>
+<li>
+<p>Select <code>Editor</code> &gt; <code>Code Style</code> &gt; <code>Java</code></p>
+</li>
+<li>
+<p>Click on the <code>Imports</code> tab to set the order</p>
+<div class="ulist">
+<ul>
+<li>
+<p>For <code>Class count to use import with '*'</code> and <code>Names count to use static import with '*'</code>: Set to <code>999</code> to prevent IntelliJ from contracting the import statements</p>
+</li>
+<li>
+<p>For <code>Import Layout</code>: The order is <code>import static all other imports</code>, <code>import java.*</code>, <code>import javax.*</code>, <code>import org.*</code>, <code>import com.*</code>, <code>import all other imports</code>. Add a <code>&lt;blank line&gt;</code> between each <code>import</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Optionally, you can follow the <a href="UsingCheckstyle.html">UsingCheckstyle.adoc</a> document to configure Intellij to check style-compliance as you write code.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="setting-up-ci"><a class="link" href="#setting-up-ci">2.4.2. Setting up CI</a></h4>
+<div class="paragraph">
+<p>Set up Travis to perform Continuous Integration (CI) for your fork. See <a href="UsingTravis.html">UsingTravis.adoc</a> to learn how to set it up.</p>
+</div>
+<div class="paragraph">
+<p>Optionally, you can set up AppVeyor as a second CI (see <a href="UsingAppVeyor.html">UsingAppVeyor.adoc</a>).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="getting-started-with-coding"><a class="link" href="#getting-started-with-coding">2.4.3. Getting started with coding</a></h4>
+<div class="paragraph">
+<p>When you are ready to start coding,</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Get some sense of the overall design by reading the <a href="#architecture">Architecture</a> section.</p>
+</li>
+<li>
+<p>Take a look at the section <a href="#suggested-programming-tasks-to-get-started">Suggested Programming Tasks to Get Started</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="contribute-to-the-project"><a class="link" href="#contribute-to-the-project">2.5. Contribute to the project</a></h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="design"><a class="link" href="#design">3. Design</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="architecture"><a class="link" href="#architecture">3.1. Architecture</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/Architecture.png" alt="Architecture" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.1.1 : Architecture Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>The <strong><em>Architecture Diagram</em></strong> given above explains the high-level design of the App. Given below is a quick overview of each component.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The <code>.pptx</code> files used to create diagrams in this document can be found in the <a href="https://github.com/CS2103AUG2017-W10-B3/main/tree/master//docs/diagrams/">diagrams</a> folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose <code>Save as picture</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>Main</code> has only one class called <a href="https://github.com/CS2103AUG2017-W10-B3/main/tree/master//src/main/java/seedu/address/MainApp.java"><code>MainApp</code></a>. It is responsible for,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>At app launch: Initializes the components in the correct sequence, and connects them up with each other.</p>
+</li>
+<li>
+<p>At shut down: Shuts down the components and invokes cleanup method where necessary.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><a href="#common-classes"><strong><code>Commons</code></strong></a> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>EventsCenter</code> : This class (written using <a href="https://github.com/google/guava/wiki/EventBusExplained">Google&#8217;s Event Bus library</a>) is used by components to communicate with other components using events (i.e. a form of <em>Event Driven</em> design)</p>
+</li>
+<li>
+<p><code>LogsCenter</code> : Used by many classes to write log messages to the App&#8217;s log file.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The rest of the App consists of four components.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#ui-component"><strong><code>UI</code></strong></a> : The UI of the App.</p>
+</li>
+<li>
+<p><a href="#logic-component"><strong><code>Logic</code></strong></a> : The command executor.</p>
+</li>
+<li>
+<p><a href="#model-component"><strong><code>Model</code></strong></a> : Holds the data of the App in-memory.</p>
+</li>
+<li>
+<p><a href="#storage-component"><strong><code>Storage</code></strong></a> : Reads data from, and writes data to, the hard disk.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each of the four components</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Defines its <em>API</em> in an <code>interface</code> with the same name as the Component.</p>
+</li>
+<li>
+<p>Exposes its functionality using a <code>{Component Name}Manager</code> class.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, the <code>Logic</code> component (see the class diagram given below) defines it&#8217;s API in the <code>Logic.java</code> interface and exposes its functionality using the <code>LogicManager.java</code> class.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/LogicClassDiagram.png" alt="LogicClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.1.2 : Class Diagram of the Logic Component</em></p>
+</div>
+<h4 id="events-driven-nature-of-the-design" class="discrete">Events-Driven nature of the design</h4>
+<div class="paragraph">
+<p>The <em>Sequence Diagram</em> below shows how the components interact for the scenario where the user issues the command <code>delete 1</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SDforDeletePerson.png" alt="SDforDeletePerson" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.1.3a : Component interactions for <code>delete 1</code> command (part 1)</em></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Note how the <code>Model</code> simply raises a <code>AddressBookChangedEvent</code> when the Address Book data are changed, instead of asking the <code>Storage</code> to save the updates to the hard disk.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The diagram below shows how the <code>EventsCenter</code> reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SDforDeletePersonEventHandling.png" alt="SDforDeletePersonEventHandling" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.1.3b : Component interactions for <code>delete 1</code> command (part 2)</em></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Note how the event is propagated through the <code>EventsCenter</code> to the <code>Storage</code> and <code>UI</code> without <code>Model</code> having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The sections below give more details of each component.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ui-component"><a class="link" href="#ui-component">3.2. UI component</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/UiClassDiagram.png" alt="UiClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.2.1 : Structure of the UI Component</em></p>
+</div>
+<div class="paragraph">
+<p><strong>API</strong> : <a href="https://github.com/CS2103AUG2017-W10-B3/main/tree/master//src/main/java/seedu/address/ui/Ui.java"><code>Ui.java</code></a></p>
+</div>
+<div class="paragraph">
+<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>StatusBarFooter</code>, <code>BrowserPanel</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
+</div>
+<div class="paragraph">
+<p>The <code>UI</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/CS2103AUG2017-W10-B3/main/tree/master//src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/CS2103AUG2017-W10-B3/main/tree/master//src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
+</div>
+<div class="paragraph">
+<p>The <code>UI</code> component,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Executes user commands using the <code>Logic</code> component.</p>
+</li>
+<li>
+<p>Binds itself to some data in the <code>Model</code> so that the UI can auto-update when data in the <code>Model</code> change.</p>
+</li>
+<li>
+<p>Responds to events raised from various parts of the App and updates the UI accordingly.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logic-component"><a class="link" href="#logic-component">3.3. Logic component</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/LogicClassDiagram.png" alt="LogicClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.3.1 : Structure of the Logic Component</em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning <code>XYZCommand</code> and <code>Command</code> in Figure 2.3.1</em></p>
+</div>
+<div class="paragraph">
+<p><strong>API</strong> :
+<a href="https://github.com/CS2103AUG2017-W10-B3/main/tree/master//src/main/java/seedu/address/logic/Logic.java"><code>Logic.java</code></a></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>Logic</code> uses the <code>AddressBookParser</code> class to parse the user command.</p>
+</li>
+<li>
+<p>This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.</p>
+</li>
+<li>
+<p>The command execution can affect the <code>Model</code> (e.g. adding a person) and/or raise events.</p>
+</li>
+<li>
+<p>The result of the command execution is encapsulated as a <code>CommandResult</code> object which is passed back to the <code>Ui</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/DeletePersonSdForLogic.png" alt="DeletePersonSdForLogic" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.3.1 : Interactions Inside the Logic Component for the <code>delete 1</code> Command</em></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="model-component"><a class="link" href="#model-component">3.4. Model component</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/ModelClassDiagram.png" alt="ModelClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.4.1 : Structure of the Model Component</em></p>
+</div>
+<div class="paragraph">
+<p><strong>API</strong> : <a href="https://github.com/CS2103AUG2017-W10-B3/main/tree/master//src/main/java/seedu/address/model/Model.java"><code>Model.java</code></a></p>
+</div>
+<div class="paragraph">
+<p>The <code>Model</code>,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>stores a <code>UserPref</code> object that represents the user&#8217;s preferences.</p>
+</li>
+<li>
+<p>stores the Address Book data.</p>
+</li>
+<li>
+<p>exposes an unmodifiable <code>ObservableList&lt;ReadOnlyPerson&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
+</li>
+<li>
+<p>does not depend on any of the other three components.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="storage-component"><a class="link" href="#storage-component">3.5. Storage component</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/StorageClassDiagram.png" alt="StorageClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.5.1 : Structure of the Storage Component</em></p>
+</div>
+<div class="paragraph">
+<p><strong>API</strong> : <a href="https://github.com/CS2103AUG2017-W10-B3/main/tree/master//src/main/java/seedu/address/storage/Storage.java"><code>Storage.java</code></a></p>
+</div>
+<div class="paragraph">
+<p>The <code>Storage</code> component,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>can save <code>UserPref</code> objects in json format and read it back.</p>
+</li>
+<li>
+<p>can save the Address Book data in xml format and read it back.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="common-classes"><a class="link" href="#common-classes">3.6. Common classes</a></h3>
+<div class="paragraph">
+<p>Classes used by multiple components are in the <code>seedu.addressbook.commons</code> package.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="implementation"><a class="link" href="#implementation">4. Implementation</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section describes some noteworthy details on how certain features are implemented.</p>
+</div>
+<div class="sect2">
+<h3 id="undo-redo-mechanism"><a class="link" href="#undo-redo-mechanism">4.1. Undo/Redo mechanism</a></h3>
+<div class="paragraph">
+<p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>UndoRedoStack</code> only deals with <code>UndoableCommands</code>. Commands that cannot be undone will inherit from <code>Command</code> instead. The following diagram shows the inheritance diagram for commands:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.1.1 : Logic Command Class Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>As you can see from the diagram, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
+</div>
+<div class="paragraph">
+<p>Commands that are not undoable are implemented this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">ListCommand</span> <span class="directive">extends</span> Command {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> CommandResult execute() {
+        <span class="comment">// ... list logic ...</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With the extra layer, the commands that are undoable are implemented this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">abstract</span> <span class="type">class</span> <span class="class">UndoableCommand</span> <span class="directive">extends</span> Command {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> CommandResult execute() {
+        <span class="comment">// ... undo logic ...</span>
+
+        executeUndoableCommand();
+    }
+}
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DeleteCommand</span> <span class="directive">extends</span> UndoableCommand {
+    <span class="annotation">@Override</span>
+    <span class="directive">public</span> CommandResult executeUndoableCommand() {
+        <span class="comment">// ... delete logic ...</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Suppose that the user has just launched the application. The <code>UndoRedoStack</code> will be empty at the beginning.</p>
+</div>
+<div class="paragraph">
+<p>The user executes a new <code>UndoableCommand</code>, <code>delete 5</code>, to delete the 5th person in the address book. The current state of the address book is saved before the <code>delete 5</code> command executes. The <code>delete 5</code> command will then be pushed onto the <code>undoStack</code> (the current state is saved together with the command).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoStartingStackDiagram.png" alt="UndoRedoStartingStackDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.1.2 : Starting Stack Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>As the user continues to use the program, more commands are added into the <code>undoStack</code>. For example, the user may execute <code>add n/David &#8230;&#8203;</code> to add a new person.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoNewCommand1StackDiagram.png" alt="UndoRedoNewCommand1StackDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.1.3 : New Command Stack Diagram</em></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If a command fails its execution, it will not be pushed to the <code>UndoRedoStack</code> at all.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The user now decides that adding the person was a mistake, and decides to undo that action using <code>undo</code>.</p>
+</div>
+<div class="paragraph">
+<p>We will pop the most recent command out of the <code>undoStack</code> and push it back to the <code>redoStack</code>. We will restore the address book to the state before the <code>add</code> command executed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoExecuteUndoStackDiagram.png" alt="UndoRedoExecuteUndoStackDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.1.4 : Execute Undo Stack Diagram</em></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the <code>undoStack</code> is empty, then there are no other commands left to be undone, and an <code>Exception</code> will be thrown when popping the <code>undoStack</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the undo operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.1.5 : Undo Redo Sequence Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>The redo does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the <code>redoStack</code> is empty, then there are no other commands left to be redone, and an <code>Exception</code> will be thrown when popping the <code>redoStack</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The user now decides to execute a new command, <code>clear</code>. As before, <code>clear</code> will be pushed into the <code>undoStack</code>. This time the <code>redoStack</code> is no longer empty. It will be purged as it no longer make sense to redo the <code>add n/David</code> command (this is the behavior that most modern desktop applications follow).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoNewCommand2StackDiagram.png" alt="UndoRedoNewCommand2StackDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.1.6 : New Command Stack Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>Commands that are not undoable are not added into the <code>undoStack</code>. For example, <code>list</code>, which inherits from <code>Command</code> rather than <code>UndoableCommand</code>, will not be added after execution:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoNewCommand3StackDiagram.png" alt="UndoRedoNewCommand3StackDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.1.6 : New Command Stack Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarize what happens inside the <code>UndoRedoStack</code> when a user executes a new command:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="200">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.1.7 : Undo Redo Activity Diagram</em></p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">4.1.1. Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of <code>UndoableCommand</code><br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Add a new abstract method <code>executeUndoableCommand()</code><br>
+<strong>Pros:</strong> We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with <code>Command</code> do not have to know that <code>executeUndoableCommand()</code> exist.<br>
+<strong>Cons:</strong> Hard for new developers to understand the template pattern.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Just override <code>execute()</code><br>
+<strong>Pros:</strong> Does not involve the template pattern, easier for new developers to understand.<br>
+<strong>Cons:</strong> Classes that inherit from <code>UndoableCommand</code> must remember to call <code>super.execute()</code>, or lose the ability to undo/redo.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> How undo &amp; redo executes<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Saves the entire address book.<br>
+<strong>Pros:</strong> Easy to implement.<br>
+<strong>Cons:</strong> May have performance issues in terms of memory usage.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Individual command knows how to undo/redo by itself.<br>
+<strong>Pros:</strong> Will use less memory (e.g. for <code>delete</code>, just save the person being deleted).<br>
+<strong>Cons:</strong> We must ensure that the implementation of each individual command are correct.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Type of commands that can be undone/redone<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Only include commands that modifies the address book (<code>add</code>, <code>clear</code>, <code>edit</code>).<br>
+<strong>Pros:</strong> We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost).<br>
+<strong>Cons:</strong> User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing <code>undo</code>.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Include all commands.<br>
+<strong>Pros:</strong> Might be more intuitive for the user.<br>
+<strong>Cons:</strong> User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Additional Info:</strong> See our discussion  <a href="https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672">here</a>.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Data structure to support the undo/redo commands<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Use separate stack for undo and redo<br>
+<strong>Pros:</strong> Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.<br>
+<strong>Cons:</strong> Logic is duplicated twice. For example, when a new command is executed, we must remember to update both <code>HistoryManager</code> and <code>UndoRedoStack</code>.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Use <code>HistoryManager</code> for undo/redo<br>
+<strong>Pros:</strong> We do not need to maintain a separate stack, and just reuse what is already in the codebase.<br>
+<strong>Cons:</strong> Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as <code>HistoryManager</code> now needs to do two different things.<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="code-open-code-and-code-new-code-command-mechanism"><a class="link" href="#code-open-code-and-code-new-code-command-mechanism">4.2. <code>open</code> and <code>new</code> command mechanism</a></h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/OpenCommandSequenceDiagram.PNG" alt="OpenCommandSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.2.1 : Open Existing Address Book Sequence Diagram</em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/NewCommandSequenceDiagram.PNG" alt="NewCommandSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.2.2 : Create New Address Book Sequence Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>From the sequence diagram, we can see that the workflow is very similar. One thing to note is that even though the
+preprocessing is different, in the end they will post the same <code>SwitchAddressBookRequestEvent</code> to the <code>EventsCenter</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">4.2.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Similarity of implementation for Open and New command.</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Separate the two commands until the final <code>post</code> event.<br>
+<strong>Pros:</strong> Middle ground between Alternative 2 and Alternative 3. Merge similar actions together while separating classes
+ that are doing different operations. In this case, the similar part is to finally open a new DeathNote (reset, initialize, restart&#8230;&#8203;).
+ Therefore, we use the same RequestEvent for both commands. The preprocessing is different, since one check for existing file and one
+ check for the other way round, we separate both of them.<br>
+<strong>Cons:</strong> Slightly harder for developers to get understand how <code>SwitchAddressBookRequestEvent</code> works.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Separate the two commands totally.<br>
+<strong>Pros:</strong> Easier for new developers to understand the underlying mechanism because they can treat them as different operations.<br>
+<strong>Cons:</strong> Hard to maintain. Since two commands are very similar. If a bug is found in one of them, the other one is
+likely to be affected as well. Hence twice amount of work for the same outcome.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 3:</strong> Combine the two commands totally.<br>
+<strong>Pros:</strong> Easier to maintain because everything is within the same class.<br>
+<strong>Cons:</strong> Confusing to understand. NewCommand checks that <code>Path</code> is not an existing file but OpenCommand checks that <code>Path</code>
+ is an existing file. The implementation is likely to have many conditional statements. Changing one class affects both commands.<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="making-parameters-optional"><a class="link" href="#making-parameters-optional">4.3. Making parameters optional</a></h3>
+<div class="paragraph">
+<p>Adding a new person into DeathNote requires only <code>Name</code>. All other fields are optional. This is
+achieved by allowing field objects to be instantiated with <code>null</code> parameter.</p>
+</div>
+<div class="paragraph">
+<p>Problems arise when field objects are instantiated with a <code>null</code> parameter. Necessary changes are mostly about additional
+checks of <code>null</code> in its respective class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public Phone(String phone) throws IllegalValueException {
+        String trimmedPhone = phone == null ? null : phone.trim();
+        if (!isValidPhone(trimmedPhone)) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+        this.value = trimmedPhone;
+    }</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public static boolean isValidPhone(String test) {
+        return test == null || test.matches(PHONE_VALIDATION_REGEX);
+    }</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public boolean equals(Object other) {
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Phone)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Phone) other).value) {
+            return true;
+        } else if (this.value != null &amp;&amp; this.value.equals(((Phone) other).value)) { // state check
+            return true;
+        }
+
+        return false;
+    }</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">4.3.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Which component is responsible for <code>null</code>.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Parameters can be instantiated with <code>null</code> parameter, but the object itself cannot be <code>null</code>.<br>
+<strong>Pros:</strong> Only parameter classes that are within <code>Model</code> component need to be modified. Other components are still functioning
+correctly. This improves coherent within <code>Model</code> component.<br>
+<strong>Cons:</strong> Potentially confusing for new developers. This design is equivalent to "having a phone with <code>null</code> number" rather
+than the more intuitive "doesn&#8217;t have a phone".<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Parameter objects can be <code>null</code>.<br>
+<strong>Pros:</strong> More intuitive for a new developer. Easier modification on <code>Model</code> component.<br>
+<strong>Cons:</strong> Many components rely on the assumption that parameter objects are non-null. Hence, this design will fail the other components.
+More verification is needed outside the <code>Model</code> component when interacting with these parameter objects. This increases coupling.<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-new-parameters-to-person"><a class="link" href="#adding-new-parameters-to-person">4.4. Adding new parameters to person</a></h3>
+<div class="paragraph">
+<p>The general Steps to take are as follows:<br></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create your new Parameter in a unique java file (e.g. Birthday.java)<br></p>
+</li>
+<li>
+<p>Add your parameter in the the person model<br></p>
+</li>
+<li>
+<p>Add code to "teach" the application how to parse your parameter.Be sure to include examples<br></p>
+</li>
+<li>
+<p>Ensure that your parameter can be save<br></p>
+</li>
+<li>
+<p>Create test to ensure that there are no corner cases that can cause crashes or bugs</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Adding a new parameter to a person requires updates in multiple files as well as the inclusion
+of new tests. The existing files that need to be modified are as follows:<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Main:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Userguide.adoc (for usage instructions)
+.&lt;yournewparameter&gt;.java (Creation of your new parameter)</p>
+</li>
+<li>
+<p>CliSyntax.java (add the prefix your would like your parameter to use here)</p>
+</li>
+<li>
+<p>ParserUtil.java (Teach the application how to interprete your new parameter)</p>
+</li>
+<li>
+<p>AddCommand.java (if there is a need for the new parameter to be used upon adding a new person)</p>
+</li>
+<li>
+<p>AddCommandParser.java (Ensure your parameter is present in the parser)</p>
+</li>
+<li>
+<p>EditCommand.java (if the parameter can be editted)</p>
+</li>
+<li>
+<p>EditCommandParser.java (ensure your parameter is present in the parser)</p>
+</li>
+<li>
+<p>RemarkCommand.java (ensure your parameter is compatible with the Remark command)</p>
+</li>
+<li>
+<p>Person.java (add your parameter to the model)</p>
+</li>
+<li>
+<p>ReadOnlyPerson.java (add instructions on how to read your parameter from saved file)</p>
+</li>
+<li>
+<p>XMLAdaptedPerson.java (Ensure the XML file the application keeps data in can recognise your parameter)</p>
+</li>
+<li>
+<p>SampleData.util (modify this if you want to have initial sample data shown upon load)</p>
+</li>
+<li>
+<p>PersonCard.java (Modify this so that your parameter will be displayed in the GUI if needed)</p>
+</li>
+<li>
+<p>PersonCardHandle.java (Teaches the program how to read off the xml file and what to do)</p>
+</li>
+<li>
+<p>PersonListCard.fxml (Modify this so that your parameter will be displayed in the GUI if needed)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Tests:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>&lt;yourparametername&gt;test.java (To check if your parameter accepts illegal values)</p>
+</li>
+<li>
+<p>CommandTestUtil.java (Add your parameter to the test case builder)</p>
+</li>
+<li>
+<p>PersonBuilder.java (Add your parameter to the test person model)</p>
+</li>
+<li>
+<p>PersonUtil.java (Add your Parameter to this test)</p>
+</li>
+<li>
+<p>TypicalPersons.java (Sample test people)</p>
+</li>
+<li>
+<p>PersonCardTest.java (Add your Parameter to this test)</p>
+</li>
+<li>
+<p>GuiTestAssert.java (Add your Parameter to this test)</p>
+</li>
+<li>
+<p>EditCommandSystemTest.java (Add new tests to check for odd behaviour)</p>
+</li>
+<li>
+<p>EditPersonDescriptorTest.java (Add your parameter to this test)</p>
+</li>
+<li>
+<p>EditPersonDescriptorBuilder.java (Add your Parameter to this test)</p>
+</li>
+<li>
+<p>AddCommandSystemTest.java (Add new tests to check for odd behaviour)</p>
+</li>
+<li>
+<p>AddCommandParserTest (Add your Parameter to this test)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You may need to create a new java file in logic/commands if your parameter requires a command to use (e.g. remarks.java)<br></p>
+</div>
+<div class="paragraph">
+<p>Please refer to the following links to get an idea on how to add a new parameter:<br>
+<a href="https://github.com/CS2103AUG2017-W10-B3/main/pull/16/files">Adding website parameter</a><br>
+<a href="https://github.com/CS2103AUG2017-W10-B3/main/pull/8/files">Adding birthday parameter</a></p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">4.4.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of a new variable.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Add the variable into person and make it be able to be initialised at the constructor with all other existing variables.<br>
+<strong>Pros:</strong> Consistent with code and how the commands work.<br>
+<strong>Cons:</strong> Requires a lot of work as many classes depend on using the <code>Person</code> constructor; mostly tests.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Adding the variable into person but not initialising it at <code>Person</code> constructor.<br>
+<strong>Pros:</strong> Implementation is much easier and it does not affect tests in any way.<br>
+<strong>Cons:</strong> It is not consistent with the variables in <code>Person</code><br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="find-command"><a class="link" href="#find-command">4.5. Find Command</a></h3>
+<div class="paragraph">
+<p>The implementation of <code>find</code> is very similar to <code>edit</code>. After the command, both requires the user to describe the target.</p>
+</div>
+<div class="paragraph">
+<p>The matching algorithm is implemented as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>        /**
+         * Check {@code Person} in DeathNote against {@code this} finder target.
+         *
+         * @param person in DeathNote to check
+         * @return true if other all fields matches
+         */
+        public boolean match(ReadOnlyPerson person) {
+            if (this.name != null &amp;&amp; !matchName(this.name, person.getName())) {
+                return false;
+            }
+            if (this.phone != null &amp;&amp; !matchPhone(this.phone, person.getPhone())) {
+                return false;
+            }
+            if (this.email != null &amp;&amp; !this.email.equals(person.getEmail())) {
+                return false;
+            }
+            if (this.address != null &amp;&amp; !this.address.equals(person.getAddress())) {
+                return false;
+            }
+            if (this.website != null &amp;&amp; !this.website.equals(person.getWebsite())) {
+                return false;
+            }
+            if (this.birthday != null &amp;&amp; !this.birthday.equals(person.getBirthday())) {
+                return false;
+            }
+            if (this.tags != null &amp;&amp; !matchTag(this.tags, person.getTags())) {
+                return false;
+            }
+
+            return true;
+        }</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">4.5.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Component that is responsible for <code>matchName</code>, <code>matchPhone</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Implement under <code>FindCommand</code> in <code>Logic</code> component.<br>
+<strong>Pros:</strong> More specific, because only <code>FindCommand</code> uses it and not any other methods.<br>
+<strong>Cons:</strong> Harder to integrate if other components want to use these methods.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Implement under respective <code>Name</code> and <code>Phone</code> class in <code>Model</code> component.<br>
+<strong>Pros:</strong> Easier to integrate into other components.<br>
+<strong>Cons:</strong> Redundant as the only method that is currently using it is the find command.<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="website"><a class="link" href="#website">4.6. Website</a></h3>
+<div class="paragraph">
+<p>The website variable in <code>Person</code> is a one of the new parameters in Person which stores a website of the <code>Person</code><br></p>
+</div>
+<div class="paragraph">
+<p>Browser is reloaded with the <code>Person</code> ' s website if the <code>Person</code> selected has a website. If not we google search the
+<code>Person</code> 's name.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">4.6.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of profile picture<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Copy image file into data folder and use the image from there<br>
+<strong>Pros:</strong> Application and data folder can be transferred to different computers and still work<br>
+<strong>Cons:</strong> May have to take note of size of files added into folder as transferring the data folder may take
+time if the file is too big+</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Saving the path of the image<br>
+<strong>Pros:</strong> No extra work in resizing or copying the file<br>
+<strong>Cons:</strong> Application and data folder cannot be transferred to different computers and be expected to work<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="profile-picture"><a class="link" href="#profile-picture">4.7. Profile Picture</a></h3>
+<div class="paragraph">
+<p>The picture variable in <code>Person</code> is a normal variable in <code>Person</code> which only stores strings with ".png" suffix.<br>
+The data that we save in our xml file will be "pictureName.png" plus the picture of the person in our data folder in
+.png format.<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/PersonClassDiagram.png" alt="PersonClassDiagram" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.6.1 : Person Class Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>The <code>Picture</code> class checks for existence of the file using <code>File</code> class.<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">boolean</span> isValidPicture(<span class="predefined-type">String</span> fileLocation) {
+...
+    File file = <span class="keyword">new</span> <span class="predefined-type">File</span>(fileLocation);
+    <span class="keyword">if</span> (file.exists() &amp;&amp; (fileLocation.endsWith(PICTURE_SUFFIX))) {
+        <span class="keyword">return</span> <span class="predefined-constant">true</span>;
+    } <span class="keyword">else</span> {
+        file = <span class="keyword">new</span> <span class="predefined-type">File</span>(PICTURE_SAVE_LOCATION + fileLocation);
+        <span class="keyword">if</span> (file.exists()) {
+            <span class="keyword">return</span> <span class="predefined-constant">true</span>;
+        }
+        <span class="keyword">return</span> <span class="predefined-constant">false</span>;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the existence of the file is checked, we check the size of the file so that we do not save very large files
+as we do not want our data file to be too large.<br>
+We resize the files if they are too large by shrinking it into a shorter width and height.<br>
+We also rename the file with a unique ID so that picture names will not collide and be overwritten.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Picture(<span class="predefined-type">String</span> fileLocation) {
+...
+    String newFileName = <span class="predefined-type">UUID</span>.randomUUID().toString() + PICTURE_SUFFIX;
+
+    <span class="predefined-type">File</span> src = <span class="keyword">new</span> <span class="predefined-type">File</span>(trimmedFileLocation);
+    <span class="predefined-type">File</span> dest = <span class="keyword">new</span> <span class="predefined-type">File</span>(PICTURE_SAVE_LOCATION + newFileName);
+
+    <span class="comment">// If file is too big, resize it.</span>
+    <span class="keyword">if</span> (src.length() &gt; PICTURE_MAX_SIZE) {
+        resizeAndSaveImage(src, newFileName);
+    } <span class="keyword">else</span> {
+        copyImage(src, dest);
+    }
+    <span class="local-variable">this</span>.value = newFileName;
+...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After resizing the file or that if the file does not exceed our limit, we save/copy the file into our data folder
+so that we can reuse it next time if we move the application around.<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> resizeAndSaveImage(<span class="predefined-type">File</span> file, <span class="predefined-type">String</span> newFileName) <span class="directive">throws</span> IllegalValueException {
+    <span class="keyword">try</span> {
+        <span class="predefined-type">BufferedImage</span> resizedImage = resizeImage(<span class="predefined-type">ImageIO</span>.read(file));
+
+        <span class="comment">// Saving of image into data folder</span>
+        <span class="predefined-type">ImageIO</span>.write(resizedImage, <span class="string"><span class="delimiter">&quot;</span><span class="content">png</span><span class="delimiter">&quot;</span></span>, <span class="keyword">new</span> <span class="predefined-type">File</span>(PICTURE_SAVE_LOCATION + newFileName));
+    } <span class="keyword">catch</span> (<span class="exception">IOException</span> e) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalValueException(MESSAGE_PROFILEPICTURE_ERROR);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> copyImage(<span class="predefined-type">File</span> src, <span class="predefined-type">File</span> dest) <span class="directive">throws</span> IllegalValueException {
+    <span class="keyword">try</span> {
+        FileUtils.copyFile(src, dest);
+    } <span class="keyword">catch</span> (<span class="exception">IOException</span> e) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalValueException(MESSAGE_PROFILEPICTURE_ERROR);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To show the picture in the application, <code>PersonCard</code> is updated and we clip the picture with a circle so it looks nice.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="type">void</span> initPicture(ReadOnlyPerson person) {
+    picture.setImage(<span class="keyword">new</span> <span class="predefined-type">Image</span>(person.getPicture().getPictureLocation()));
+
+    Circle circle = <span class="keyword">new</span> Circle(<span class="float">32.0</span>, <span class="float">32.0</span>, <span class="float">30.0</span>);
+    picture.setClip(circle);
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">4.7.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of profile picture<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Copy image file into data folder and use the image from there<br>
+<strong>Pros:</strong> Application and data folder can be transferred to different computers and still work<br>
+<strong>Cons:</strong> May have to take note of size of files added into folder as transferring the data folder may take
+time if the file is too big+</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Saving the path of the image<br>
+<strong>Pros:</strong> No extra work in resizing or copying the file<br>
+<strong>Cons:</strong> Application and data folder cannot be transferred to different computers and be expected to work<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="theme-mechanism"><a class="link" href="#theme-mechanism">4.8. Theme mechanism</a></h3>
+<div class="paragraph">
+<p>Theme mechanism uses a singleton class called <code>UiStyle</code> which stores the scene of the application in it.<br>
+This allows the modification of the scene&#8217;s css at runtime.</p>
+</div>
+<div class="paragraph">
+<p>The class <code>UiStyle</code> requires the scene to be set at <code>MainWindow</code> class for it to be used to edit themes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">UiStyle</span> {
+...
+    private <span class="directive">static</span> Scene scene = <span class="predefined-constant">null</span>;
+
+     <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> setScene(Scene s) {
+        scene = s;
+        setToDarkTheme(); <span class="comment">// Default theme</span>
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> setToLightTheme() {
+        scene.getStylesheets().remove(DARK_THEME_STYLE);
+        scene.getStylesheets().add(LIGHT_THEME_STYLE);
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> setToDarkTheme() {
+        scene.getStylesheets().remove(LIGHT_THEME_STYLE);
+        scene.getStylesheets().add(DARK_THEME_STYLE);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example of calling the application to change to light theme:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>UiStyle.getInstance().setToLightTheme();</pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ThemeSequenceDiagram.png" alt="ThemeSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 4.7.1 : Theme Sequence Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>Although this function can be called anywhere, it should only be called when <code>ThemeCommand</code> is issued.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">4.8.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of theme<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Pass the scene of the application into a singleton class dedicated for UI usage only<br>
+<strong>Pros:</strong> Changing the theme can be called easily<br>
+<strong>Cons:</strong> Changing of the theme can be called anywhere by any class<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Passing the scene down from <code>MainApp</code> class to <code>ThemeCommand</code> class<br>
+<strong>Pros:</strong> Only <code>ThemeCommand</code> class will be able to modify the theme<br>
+<strong>Cons:</strong> Very tedious as <code>ThemeCommand</code> class is very far down the architecture<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tag-colors"><a class="link" href="#tag-colors">4.9. Tag colors</a></h3>
+<div class="paragraph">
+<p>The colors for tags are randomed upon start up of the application.
+Tags has been modified to use hexadecimal colors instead of having an array of colors
+(e.g. red,blue,green) and selecting from the array of colors.<br>
+This increases the number of colors we can have for tags tremendously.<br></p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-9"><a class="link" href="#design-considerations-9">4.9.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of color for tags<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Have tags to be colored using hex instead of defined words<br>
+<strong>Pros:</strong> The number of colors for tags are limited to the number of hex values there are<br>
+<strong>Cons:</strong> Colors are decided by random, the color differences may not be different. (e.g #FFFFFF, #FFFFFE)<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Have tag colors to be in an array and randomly choose from them<br>
+<strong>Pros:</strong> Colors of tags are defined and the difference between any two colors can be seen easily<br>
+<strong>Cons:</strong> Limited number of colors codes<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sorted-list"><a class="link" href="#sorted-list">4.10. Sorted list</a></h3>
+<div class="paragraph">
+<p>The list is sorted by names automatically when shown by using java&#8217;s list.sort.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> ObservableList&lt;ReadOnlyPerson&gt; getFilteredPersonList() {
+    <span class="keyword">return</span> FXCollections.unmodifiableObservableList(filteredPersons.sorted());
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-10"><a class="link" href="#design-considerations-10">4.10.1. Design considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Sorting list of contacts<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Return a sorted list when display needs to update<br>
+<strong>Pros:</strong> Very easy to implement,<br>
+<strong>Cons:</strong> Only can sort by name<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Have a sort command to sort contacts<br>
+<strong>Pros:</strong> Contacts can be sorted according to different variables<br>
+<strong>Cons:</strong> New command has to be added.<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">4.11. Logging</a></h3>
+<div class="paragraph">
+<p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#configuration">Configuration</a>)</p>
+</li>
+<li>
+<p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
+</li>
+<li>
+<p>Currently log messages are output through: <code>Console</code> and to a <code>.log</code> file.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Logging Levels</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SEVERE</code> : Critical problem detected which may possibly cause the termination of the application</p>
+</li>
+<li>
+<p><code>WARNING</code> : Can continue, but with caution</p>
+</li>
+<li>
+<p><code>INFO</code> : Information showing the noteworthy actions by the App</p>
+</li>
+<li>
+<p><code>FINE</code> : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuration"><a class="link" href="#configuration">4.12. Configuration</a></h3>
+<div class="paragraph">
+<p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="documentation"><a class="link" href="#documentation">5. Documentation</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We use asciidoc for writing documentation.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="editing-documentation"><a class="link" href="#editing-documentation">5.1. Editing Documentation</a></h3>
+<div class="paragraph">
+<p>See <a href="UsingGradle.html#rendering-asciidoc-files">UsingGradle.adoc</a> to learn how to render <code>.adoc</code> files locally to preview the end result of your edits.
+Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your <code>.adoc</code> files in real-time.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="publishing-documentation"><a class="link" href="#publishing-documentation">5.2. Publishing Documentation</a></h3>
+<div class="paragraph">
+<p>See <a href="UsingTravis.html#deploying-github-pages">UsingTravis.adoc</a> to learn how to deploy GitHub Pages using Travis.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="converting-documentation-to-pdf-format"><a class="link" href="#converting-documentation-to-pdf-format">5.3. Converting Documentation to PDF format</a></h3>
+<div class="paragraph">
+<p>We use <a href="https://www.google.com/chrome/browser/desktop/">Google Chrome</a> for converting documentation to PDF format, as Chrome&#8217;s PDF engine preserves hyperlinks used in webpages.</p>
+</div>
+<div class="paragraph">
+<p>Here are the steps to convert the project documentation files to PDF format.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Follow the instructions in <a href="UsingGradle.html#rendering-asciidoc-files">UsingGradle.adoc</a> to convert the AsciiDoc files in the <code>docs/</code> directory to HTML format.</p>
+</li>
+<li>
+<p>Go to your generated HTML files in the <code>build/docs</code> folder, right click on them and select <code>Open with</code> &#8594; <code>Google Chrome</code>.</p>
+</li>
+<li>
+<p>Within Chrome, click on the <code>Print</code> option in Chrome&#8217;s menu.</p>
+</li>
+<li>
+<p>Set the destination to <code>Save as PDF</code>, then click <code>Save</code> to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.6.1 : Saving documentation as PDF files in Chrome</em></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="testing"><a class="link" href="#testing">6. Testing</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="running-tests"><a class="link" href="#running-tests">6.1. Running Tests</a></h3>
+<div class="paragraph">
+<p>We highly recommend using Gradle in <em>headless</em> mode with the <a href="https://github.com/TestFX/TestFX">TestFX</a> library such that
+GUI tests do not show up on the screen. That means the developer can do other things on the computer while the tests
+are running in the background.</p>
+</div>
+<div class="paragraph">
+<p>To run tests in headless mode, open a console and run the following command</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Windows  :   gradlew clean headless allTests
+Mac/Linux: ./gradlew clean headless allTests</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+See <a href="UsingGradle.html">UsingGradle.adoc</a> for more info on how to run tests using Gradle.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We provide two alternative methods, but these might fail some GUI tests due to platform/resolution-specific
+idiosyncrasies.</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative Method 1: Using IntelliJ JUnit test runner</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To run all tests, right-click on the <code>src/test/java</code> folder and choose <code>Run 'All Tests'</code></p>
+</li>
+<li>
+<p>To run a subset of tests, you can right-click on a test package, test class, or a test and choose <code>Run</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Alternative Method 2: Using Gradle (non-headless)</strong></p>
+</div>
+<div class="paragraph">
+<p>Open a console and run the following command</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Windows  :   gradlew clean allTests
+Mac/Linux: ./gradlew clean allTests</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="types-of-tests"><a class="link" href="#types-of-tests">6.2. Types of tests</a></h3>
+<div class="paragraph">
+<p>We have two types of tests:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>GUI Tests</strong> - These are tests involving the GUI. They include,</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><em>System Tests</em> that test the entire App by simulating user actions on the GUI. These are in the <code>systemtests</code> package.</p>
+</li>
+<li>
+<p><em>Unit tests</em> that test the individual components. These are in <code>seedu.address.ui</code> package.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>Non-GUI Tests</strong> - These are tests not involving the GUI. They include,</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><em>Unit tests</em> targeting the lowest level methods/classes.<br>
+e.g. <code>seedu.address.commons.StringUtilTest</code></p>
+</li>
+<li>
+<p><em>Integration tests</em> that are checking the integration of multiple code units (those code units are assumed to be working).<br>
+e.g. <code>seedu.address.storage.StorageManagerTest</code></p>
+</li>
+<li>
+<p>Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together.<br>
+e.g. <code>seedu.address.logic.LogicManagerTest</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="troubleshooting-testing"><a class="link" href="#troubleshooting-testing">6.3. Troubleshooting Testing</a></h3>
+<div class="paragraph">
+<p><strong>Problem: <code>HelpWindowTest</code> fails with a <code>NullPointerException</code>.</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Reason: One of its dependencies, <code>UserGuide.html</code> in <code>src/main/resources/docs</code> is missing.</p>
+</li>
+<li>
+<p>Solution: Execute Gradle task <code>processResources</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dev-ops"><a class="link" href="#dev-ops">7. Dev Ops</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="build-automation"><a class="link" href="#build-automation">7.1. Build Automation</a></h3>
+<div class="paragraph">
+<p>See <a href="UsingGradle.html">UsingGradle.adoc</a> to learn how to use Gradle for build automation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="continuous-integration"><a class="link" href="#continuous-integration">7.2. Continuous Integration</a></h3>
+<div class="paragraph">
+<p>We use <a href="https://travis-ci.org/">Travis CI</a> and <a href="https://www.appveyor.com/">AppVeyor</a> to perform <em>Continuous Integration</em> on our projects. See <a href="UsingTravis.html">UsingTravis.adoc</a> and <a href="UsingAppVeyor.html">UsingAppVeyor.adoc</a> for more details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="making-a-release"><a class="link" href="#making-a-release">7.3. Making a Release</a></h3>
+<div class="paragraph">
+<p>Here are the steps to create a new release.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Update the version number in <a href="https://github.com/CS2103AUG2017-W10-B3/main/tree/master//src/main/java/seedu/address/MainApp.java"><code>MainApp.java</code></a>.</p>
+</li>
+<li>
+<p>Generate a JAR file <a href="UsingGradle.html#creating-the-jar-file">using Gradle</a>.</p>
+</li>
+<li>
+<p>Tag the repo with the version number. e.g. <code>v0.1</code></p>
+</li>
+<li>
+<p><a href="https://help.github.com/articles/creating-releases/">Create a new release using GitHub</a> and upload the JAR file you created.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="managing-dependencies"><a class="link" href="#managing-dependencies">7.4. Managing Dependencies</a></h3>
+<div class="paragraph">
+<p>A project often depends on third-party libraries. For example, Address Book depends on the <a href="http://wiki.fasterxml.com/JacksonHome">Jackson library</a> for XML parsing. Managing these <em>dependencies</em> can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives.<br>
+a. Include those libraries in the repo (this bloats the repo size)<br>
+b. Require developers to download those libraries manually (this creates extra work for developers)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="user-stories"><a class="link" href="#user-stories">Appendix A: User Stories</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Priorities: High (must have) - <code>* * *</code>, Medium (nice to have) - <code>* *</code>, Low (unlikely to have) - <code>*</code></p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 59%;">
+<colgroup>
+<col style="width: 22%;">
+<col style="width: 23%;">
+<col style="width: 25%;">
+<col style="width: 30%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Priority</th>
+<th class="tableblock halign-left valign-top">As a &#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">I want to &#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">So that I can&#8230;&#8203;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find person by name</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">redo my last undo if that was a mistake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">undo my last action if I made a mistake</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">new user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">view help</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">learn to use the program</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add a person</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete a person</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">edit a person</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">update my contacts</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">view my contact information</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">clear my addressbook</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add more than one contact number for a person</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find contacts by addresses</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find who live around a specific area</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">set password to my addressbook</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">my addressbook will be secure</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see tags in different colors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">easily identify which persons has the same tags</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with many persons in addressbook</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sort my contacts by name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">easily view my contacts</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with many persons in addressbook</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find user based on tags</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find group of contacts easily</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add birthdays to my contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">remember their birthdays</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find users by birthday</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">know whose birthday is on that month</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">export my contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">port it to another addressbook app</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">import my contacts from other addressbook</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see my contacts from another addressbook app</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">associate contacts with social platform</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">autocomplete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">be more productive</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find a person without typing his exact name</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">back up my addressbook on the cloud</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">customize the theme of my addressbook</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">view the google map of the person&#8217;s address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add events to a person and have a reminder show up when its due</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">attach photos to my contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">remember their faces</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="use-cases"><a class="link" href="#use-cases">Appendix B: Use Cases</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>(For all use cases below, the <strong>System</strong> is the <code>AddressBook</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
+</div>
+<h3 id="use-case-delete-person" class="discrete">Use case: Delete person</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list persons</p>
+</li>
+<li>
+<p>AddressBook shows a list of persons</p>
+</li>
+<li>
+<p>User requests to delete a specific person in the list</p>
+</li>
+<li>
+<p>AddressBook deletes the person</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. AddressBook shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>{More to be added}</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="non-functional-requirements"><a class="link" href="#non-functional-requirements">Appendix C: Non Functional Requirements</a></h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java <code>1.8.0_60</code> or higher installed.</p>
+</li>
+<li>
+<p>Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.</p>
+</li>
+<li>
+<p>A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>{More to be added}</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="glossary"><a class="link" href="#glossary">Appendix D: Glossary</a></h2>
+<div class="sectionbody">
+<div id="mainstream-os" class="paragraph">
+<p>Mainstream OS</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Windows, Linux, Unix, OS-X</pre>
+</div>
+</div>
+<div id="private-contact-detail" class="paragraph">
+<p>Private contact detail</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>A contact detail that is not meant to be shared with others</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-13 17:08:50 +08:00
+</div>
+</div>
+</body>
+</html>

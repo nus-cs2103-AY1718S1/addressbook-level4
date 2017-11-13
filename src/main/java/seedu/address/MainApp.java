@@ -1,5 +1,8 @@
 package seedu.address;
 
+import static seedu.address.commons.util.ConfigUtil.updateConfig;
+import static seedu.address.storage.JsonUserPrefsStorage.updateUserPrefs;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -15,6 +18,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.SwitchAddressBookRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
@@ -50,16 +54,20 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    protected JsonUserPrefsStorage userPrefsStorage;
 
+    protected Stage primaryStage;
 
     @Override
     public void init() throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");
         super.init();
 
+        EventsCenter.clearSubscribers();
+
         config = initConfig(getApplicationParameter("config"));
 
-        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
@@ -132,7 +140,7 @@ public class MainApp extends Application {
             initializedConfig = configOptional.orElse(new Config());
         } catch (DataConversionException e) {
             logger.warning("Config file at " + configFilePathUsed + " is not in the correct format. "
-                    + "Using default config properties");
+                + "Using default config properties");
             initializedConfig = new Config();
         }
 
@@ -160,7 +168,7 @@ public class MainApp extends Application {
             initializedPrefs = prefsOptional.orElse(new UserPrefs());
         } catch (DataConversionException e) {
             logger.warning("UserPrefs file at " + prefsFilePath + " is not in the correct format. "
-                    + "Using default user prefs");
+                + "Using default user prefs");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
@@ -181,8 +189,15 @@ public class MainApp extends Application {
         EventsCenter.getInstance().registerHandler(this);
     }
 
+    private void restart() throws Exception {
+        init();
+        start(this.primaryStage);
+    }
+
     @Override
     public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("");
         logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }
@@ -199,6 +214,22 @@ public class MainApp extends Application {
         Platform.exit();
         System.exit(0);
     }
+
+    //@@author chrisboo
+    @Subscribe
+    public void handleSwitchAddressBookRequestEvent(SwitchAddressBookRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        try {
+            updateConfig("config.json", event.getFileName());
+            updateUserPrefs("preferences.json", event.getFilePath(), event.getFileName());
+
+            restart();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //@@author
 
     @Subscribe
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
