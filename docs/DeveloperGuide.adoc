@@ -325,7 +325,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
-_Figure 4.1.3 : Interactions Inside the Logic Component for the `undo` Command
+_Figure 4.1.3 : Interactions Inside the Logic Component for the `undo` Command_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -471,6 +471,7 @@ public void sort(Comparator sortComparator, Boolean isReverseOrder) throws NoPer
 ----
 
 The following sequence diagram shows the flow of program execution when a `SortCommand` is executed by the user:
+
 image::SortPersonSdForLogic.png[width="800"]
 _Figure 4.2.1 : Interactions Inside the Logic Component for the `sort n/r` Command_
 
@@ -511,6 +512,128 @@ any future changes to these classes may be more contrived and difficult.
 **Pros:** A user is able to sort every person according to the `PREFIX` specified, regardless of the `Favourite` status. +
 **Cons:** `Favourite` person(s) will not remain at the top of the list after a user sorts the address book.
 // end::sort[]
+
+=== Groups
+The `Group` suite of features are implemented by creating a new `Group` model with its constituent components as shown in the class
+diagram below:
+
+image::GroupClassDiagram.png[width="800"]
+_Figure 4.3.1 : Class Diagram for `Group`_
+
+A `Group` is composed of a `GroupName` and `UniquePersonList` which is responsible for storing group members.
+The Groups in address book are contained in `UniqueGroupList`, which exposes itself through a 
+`FilteredGroupList` in the `Model`. All groups commands are performed through the `Model` where the
+`UniqueGroupList` is accessed to either create groups, delete groups, add person(s) to groups or remove 
+person(s) from groups.
+
+==== Creating and Deleting Groups
+The create and delete group mechanism is facilitated by `CreateGroupCommand` and `DeleteGroupCommand` respectively, which extends `UndoableCommand`.
+The `CreateGroupCommand` allows a user to create a group with a desired `GroupName` specified by the 
+`n/` flag while the 
+`DeleteGroupCommand` allows a user to delete a group at the specified `INDEX`.
+
+The `CreateGroupCommand` interfaces with `ModelManager`, which exposes the `UniqueGroupList` and is implemented in this manner:
+[source,java]
+----
+public void addGroup(ReadOnlyGroup group) throws DuplicateGroupException {
+        addressBook.addGroup(group);
+        updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
+        indicateAddressBookChanged();
+    }
+----
+
+A `DuplicateGroupException` is thrown if a duplicate `Group` is added to `UniqueGroupList`.
+
+Similarly, the `DeleteGroupCommand` interfaces with `ModelManager`, which exposes the `UniqueGroupList` and is implemented in the following manner:
+[source,java]
+----
+    public void deleteGroup(ReadOnlyGroup target) throws GroupNotFoundException {
+        addressBook.removeGroup(target);
+        indicateAddressBookChanged();
+    }
+----
+
+A `GroupNotFoundException` is thrown if the `Group` speicfied by the `INDEX` is not found in 
+`UniqueGroupList`.
+
+Both creating and deleting groups result in a change in the model of the address book, and these
+changes are saved to storage as well.
+The following sequence diagram captures the program flow when a user creates a group:
+
+image::CreateGroupSdForLogic[width="800"]
+_Figure 4.3.2a : Interactions Inside the Logic Component for the `gcreate n/Bamboo` Command__
+
+Similarly, the following sequence diagram captures the program flow when a user deletes a group:
+
+image::DeleteGroupSdForLogic[width="800"]
+_Figure 4.3.2b : Interactions Inside the Logic Component for the `gdelete 1` Command__
+
+==== Adding and removing a person from a Group
+The `AddPersonToGroupCommand` and `RemovePersonFromGroupCommand`, which extends `UndoableCommand`, is 
+responsible for adding and removing a person from a group. 
+Both commands allow a user to add or remove a person from a group by specifying a `PERSON INDEX` through the 
+`p/` flag and a `GROUP INDEX` through a `g/` flag.
+
+Both `AddPersonToGroupCommand` and `RemovePersonFromGroupCommand` both interfaces with `ModelManager`,
+which exposes `UniqueGroupList` and its corresponding `UniquePersonList` and 
+they are implemented in the following manner:
+[source,java]
+----
+public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
+            throws GroupNotFoundException, PersonNotFoundException, DuplicatePersonException {
+        addressBook.addPersonToGroup(targetGroup, toAdd);
+        indicateAddressBookChanged();
+    }
+----
+`GroupNotFoundException`, `PersonNotFoundException` and `DuplicatePersonException` are thrown
+in the event the `Group` specified does not exist, or if `Person` specified is not found, or 
+if a duplicate `Person` exists in the `UniquePersonList` in the group.
+
+[source,java]
+----
+    public void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toRemove)
+            throws GroupNotFoundException, PersonNotFoundException, NoPersonsException {
+        addressBook.deletePersonFromGroup(targetGroup, toRemove);
+        /** Update filtered list with predicate for current group members in group after removing a person */
+        ObservableList<ReadOnlyPerson> personList = addressBook.getGroupList()
+                .get(targetGroup.getZeroBased()).groupMembersProperty().get().asObservableList();
+        updateFilteredPersonList(getGroupMembersPredicate(personList));
+        indicateAddressBookChanged();
+
+    }
+----
+`GroupNotFoundException`, `PersonNotFoundException` and `NoPersonsException` are thrown
+in the event the `Group` specified does not exist, or if `Person` specified is not found, or 
+if the `UniquePersonList` in the `Group` specified is empty.
+
+Both adding and removing a person from a group will result in a change in the model of the address book, and these
+changes are saved to storage as well.
+
+The following sequence diagram captures the program flow when a user adds a person to a group:
+
+image::AddPersonToGroupSdForLogic[width="800"]
+_Figure 4.3.3a : Interactions Inside the Logic Component for the `gadd p/1 g/1` Command__
+
+The following sequence diagram captures the program flow when a user removes a person from a group:
+
+image::AddPersonToGroupSdForLogic[width="800"]
+_Figure 4.3.3a : Interactions Inside the Logic Component for the `gremove p/1 g/1` Command__
+
+==== Design Considerations
+
+**Aspect:** Implementation of `Group` +
+**Alternative 1 (current choice):** Implement a completely new `Group` model. +
+**Pros:** Creating a completely new `Group` Model gives the developer fine-grained control 
+over a `Group` and logically separates `Group` from a `Tag`, which makes implementation 
+of `Group` commands distinct from `Tag` commands. This allows a developer to freely extend 
+and add new `Group` commands without affect or being confined by the `Tag` model. +
+**Cons:** It takes alot of time to create and integrate a new `Group` model. +
+**Alternative 2:** Modify the `Tag` model to perform 'Group-like` functions.  +
+**Pros:** Less time is needed to modify `Tag` and integration of new commands will be simple. +
+**Cons:** The `Tag` model does not provide a clear and logical separation of duties for 
+`Group` functions and is limited in its structure to allow fine-grained control over 
+the addition and removal of 'members'.
+
 
 === Finding
 The finding mechanism is facilitated by `FindCommand`, which extends `Command`.
