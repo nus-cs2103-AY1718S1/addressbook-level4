@@ -80,30 +80,42 @@ image::autocomplete.png[width="400"]
 
 // end::autocomplete[]
 
-// tag::addevent[]
+// tag::addEvent[]
 === Adding a event: `addEvent`
 
 Adds a event to the event book +
 Format: `addEvent ti/TITLE des/DESCRIPTION loc/LOCATION time/DATETIME`
 
+[TIP]
+The event cannot be longer than one day
+
 Examples:
 
-* addevent ti/End of Sem Dinner des/Organised by USC loc/Cinnamon College time/25/11/2017 2030 2
-* addevent ti/USPolymath des/Intellectual Talks loc/Chatterbox time/25/11/17 2030 to 2230
-* ae ti/End of Sem Dinner des/Organised by USC loc/Cinnamon College time/25/11/17 2030 2
-// end::addevent[]
+* `addevent ti/End of Sem Dinner des/Organised by USC loc/Cinnamon College time/25/11/2017 1630 2`
+* `addevent ti/USPolymath des/Intellectual Talks loc/Chatterbox time/27/09/2017 1830 to 2230`
+* `ae ti/Orientation Day 1 des/Games loc/MBS time/30/12/2017 0830 10`
 
-// tag::deleteevent[]
+// end::addEvent[]
+
+
+// tag::deleteEvent[]
 === Deleting a event: `deleteEvent`
 
 Deletes an event from the event book +
 Format: `deleteEvent <index>`
 
+****
+* Deletes the event at the specified `INDEX`.
+* The index refers to the index number shown in the most recent event list.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
 Examples:
 
-* deleteEvent 5
-* de 10
-// end::deleteevent[]
+* `deleteEvent 5`
+* `de 10`
+
+// end::deleteEvent[]
 
 
 === Adding a person: `add`
@@ -113,6 +125,9 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ROOM [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
+
+[TIP]
+Only the name field is mandatory
 
 Examples:
 
@@ -143,7 +158,7 @@ image::TempPersonMessage.png[width="800"]
 // end::temporaryperson[]
 
 // tag::picture[]
-=== Adding a picture: addImage
+=== Adding a picture: `addImage`
 
 Adds an image to a resident in the resident book as specified by the current index +
 Format: `addImage INDEX url/IMAGE_URL`
@@ -164,7 +179,7 @@ Examples:
 
 image::add_person.png[width="400"]
 
-=== Deleting a picture: deleteImage
+=== Deleting a picture: `deleteImage`
 
 Deletes an image to a resident in the resident book as specified by the current index +
 Format: `deleteImage INDEX`
@@ -207,6 +222,7 @@ Only `highlight -` will remove highlighting, highlighting invalid tags would onl
 error message in the message box
 
 Examples:
+
 * `highlight owesmoney`
 * `highlight -` - Clears current highlighting
 // end::highlight[]
@@ -221,9 +237,31 @@ Format: `swaproom `index` `index``
 The command `swaproom 1 2` and `swaproom 2 1` are equivalent
 
 Examples:
+
 * `swaproom 1 2`
 * `swaproom 3 5`
 // end::swaproom[]
+
+
+// tag::switchtab[]
+=== Switch. Tab: `switch`
+
+Switches between Residents List and Events List
+Format: `switch `tab-number``
+
+****
+* Switches to the tab that `tab-number` corresponds to.
+* The `tab-number` 1 refers to Residents List and 2 refers to Events List
+* The `tab-number` *must be a either 1 or 2*
+****
+
+Examples:
+
+* `switch 1`
+* `switch 2`
+* `sw 1`
+
+// end::switchtab[]
 
 === Listing all persons : `list`
 
@@ -236,6 +274,11 @@ Format: `list`
 Sorts the resident book +
 Format: `sort `sorting-criteria``
 
+****
+* Sorts the residents list by the `sorting-criteria`.
+* The `sorting-criteria` *must be one of the following: `name`, `room`, `phone` and `email`*
+****
+
 
 Examples:
 
@@ -243,6 +286,7 @@ Examples:
 * `sort room`
 * `sort phone`
 * `sort email`
+
 // end::sort[]
 
 === Editing a person : `edit`
@@ -557,9 +601,13 @@ Events can be managed through the Resident book. It supports add and delete func
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL r/ROOM [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com r/12-100 t/friend t/colleague`
+* *Add Event* `addevent ti/TITLE des/DESCRIPTION loc/LOCATION time/STARTTIME TO ENDTIME` +
+e.g. `addevent ti/End of Sem Dinner des/Organised by USC loc/Cinnamon College time/25/11/2017 2030 to 2359`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete Event* : `deleteEvent INDEX` +
+e.g. `deleteEvent 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [r/ROOM] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
@@ -578,6 +626,9 @@ e.g. `import C:\Documents\exchangeStudent.xml`
 e.g. `removeTag RA`
 * *Delete by tag*: `deletebytag TAG` +
 e.g. `deletebytag RA`
-* *Switch panel* : `switch`
+* *Switch Tab* : `switch `tab-number`` +
+e.g. `switch 1`
+* *Swap Rooms* : `swaproom INDEX INDEX` +
+e.g. `swaproom 3 2`
 * *Previous Month*: `prev`
 * *Next Month*: `next`
