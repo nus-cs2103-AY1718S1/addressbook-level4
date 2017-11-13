@@ -499,7 +499,7 @@ Reverses the N most recent `undo` commands, where N refers to the number entered
 the number of `undo` commands, all the `undo` commands will be reversed. If no number is given, only the most recent `undo` +
 command will be reversed.
 
-Format: `redo 2`
+Format: `redo 2` or `redo`
 
 ****
 The index *must be a positive integer* `1, 2, 3, ...`
