@@ -1,3 +1,4 @@
+//@@author fustilio
 package seedu.address.bot;
 
 import static org.telegram.abilitybots.api.objects.Flag.PHOTO;
@@ -170,7 +171,6 @@ public class ArkBot extends AbilityBot {
                 .privacy(PRIVACY_SETTING)
                 .action((MessageContext ctx) -> Platform.runLater(() -> {
                     try {
-                        model.setActiveList(false);
                         logic.execute(DeleteCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
                         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();
@@ -458,6 +458,7 @@ public class ArkBot extends AbilityBot {
     private java.io.File getPictureFileFromUpdate(Update update) {
         return downloadPhotoByFilePath(getFilePath(getPhoto(update)));
     }
+    //@@author
 
     /* The following three methods are from https://github.com/rubenlagus/TelegramBots/wiki/FAQ#how_to_get_picture */
 
@@ -520,6 +521,7 @@ public class ArkBot extends AbilityBot {
         return null;
     }
 
+    //@@author fustilio
     /**
      * Returns true if a given string contains all numbers.
      */
@@ -537,5 +539,5 @@ public class ArkBot extends AbilityBot {
     boolean getWaitingForImageFlag() {
         return this.waitingForImage;
     }
-
 }
+//@@author

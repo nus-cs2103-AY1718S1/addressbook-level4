@@ -1,3 +1,4 @@
+//@@author fustilio
 package seedu.address.bot.qrcode;
 
 import static org.junit.Assert.assertEquals;
@@ -41,3 +42,4 @@ public class QRcodeAnalyserTest {
     }
 
 }
+//@@author

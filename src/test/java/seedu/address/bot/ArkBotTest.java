@@ -1,3 +1,4 @@
+//@@author fustilio
 package seedu.address.bot;
 
 import static org.junit.Assert.assertEquals;
@@ -295,4 +296,4 @@ public class ArkBotTest {
         db.clear();
     }
 }
-
+//@@author

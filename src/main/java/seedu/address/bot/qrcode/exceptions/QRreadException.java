@@ -1,3 +1,4 @@
+//@@author fustilio
 package seedu.address.bot.qrcode.exceptions;
 
 /**
@@ -5,3 +6,4 @@ package seedu.address.bot.qrcode.exceptions;
  */
 public class QRreadException extends Exception {
 }
+//@@author
