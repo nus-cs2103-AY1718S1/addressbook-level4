@@ -29,7 +29,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/PEERSONAL_icon.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -44,6 +44,7 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private ExtendedPersonDetails extendedPersonDetails;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -56,6 +57,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane personDetailsPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -75,10 +79,9 @@ public class MainWindow extends UiPart<Region> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setIcon(ICON);
-        setWindowMinSize();
-        setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -132,10 +135,14 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        extendedPersonDetails = new ExtendedPersonDetails();
+        personDetailsPlaceholder.getChildren().add(extendedPersonDetails.getRoot());
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);

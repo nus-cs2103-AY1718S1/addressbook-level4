@@ -1,0 +1,61 @@
+= Yap Zuo Xuan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: PEERSONAL
+PEERSONAL is a desktop address book application. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/collated/main/wishingmaid.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/collated/test/wishingmaid.md[Test code]]
+
+=== Enhancement Added: AddPhotoCommand
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addphoto]
+
+#End of Extract#
+
+---
+
+==== Justification
+The option to add a photo to a contact is a much needed feature that gives users more details pertaining to that individual contact. In addition to a chunk of words, users are more visually impacted from visual cues like photos and it gives a more wholesome description of a contact inside PEERSONAL.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addphoto]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=import]
+
+#End of Extract#
+
+**Justification:** Allows more flexibility in the case of adding a large number of contacts. Users do not have to painstakingly add each contact repeatedly.
+
+---
+
+=== Other contributions
+
+* Updated the GUI color scheme and appearance (Pull requests https://github.com/CS2103AUG2017-T10-B2/main/pull/76[#76], https://github.com/CS2103AUG2017-T10-B2/main/pull/87[#87])
+* Designed the PEERSONAL icon (Pull request https://github.com/CS2103AUG2017-T10-B2/main/pull/44/files[#44])
+* Added test cases for addphoto enchancement (Pull request https://github.com/CS2103AUG2017-T10-B2/main/pull/75/files[#75])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

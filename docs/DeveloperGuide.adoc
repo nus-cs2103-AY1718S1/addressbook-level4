@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= PEERSONAL - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -210,13 +210,86 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
-=== Common classes
-
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
-
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::addphoto[]
+=== Adding a profile picture mechanism
+
+The `addphoto` feature is facilitated mainly by the `Logic` component where most of the process is executed.
+It adds an image to the contact indicated by the user using `AddPhotoCommand`. `AddPhotoCommand` inherits from `UndoableCommand` and is therefore undoable using the `undo` function.
+The diagram below shows the inheritance diagram for commands:
+
+image::inheritCommandUML.png[width="800]
+
+AddPhotoCommand is undoable and is implemented this way:
+[source,java]
+----
+public class AddPhotoCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... addphoto logic ...
+    }
+}
+----
+
+Suppose that the user wishes to append an image to a desired contact. The user will execute `addphoto 1 f/C:/Users/PhotoBook/myFace.png` to add a photo to the first person in Peersonal. Peersonal will parse the user input into their proper parameters in `AddPhotoCommandParser`.
+`AddPhotoCommandParser` will then return a `AddPhotoCommand` to be executed in the `LogicManager`. Upon the `execute()` method of `AddPhotoCommand`, a new `Person` object, `editedPerson` is created with all the same field as the `personToEdit` with the addition of the new different `Photo` field as shown below:
+[source,java]
+----
+Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getBirthday(),
+                personToEdit.getAge(), photo,
+                personToEdit.getTags());
+----
+
+`PhotoStorage` is then called to rewrite the filepath of the image to the local folder `displaypictures` and return the new filepath to be set in `Photo` class. An error message will be thrown if PEERSONAL is unable to write the new image to the `displaypictures` folder. The `editedPerson` will take the new filepath of the image instead of the local filepath from the user input. +
+The `editedPerson` will replace `personToEdit` using the `updatePerson()` in the `Model` class. A success message will be generated if the photo addition is successful. +
+The sequence diagram below shows how the `addphoto` process is carried out:
+
+image::NewUML.png[width="800]
+
+==== Design considerations
+
+**Aspect:** Implementation of AddPhotoCommand. +
+**Alternative 1(current choice):** Have `AddPhotoCommand` implement `UndoableCommand` +
+**Pros:** Retains the logic flow of how commands are executed. This option increases code reusability of the UndoableCommand interface. +
+**Cons:** Increases coupling between the AddPhotoCommand class and the UndoableCommand interface. In addition, logic flow is embedded in multiple layers. New developers might find it hard to understand the complicated logic flow. +
+**Alternative 2:** Have `AddPhotoCommand` implement `Command`. +
+**Pros:** Retains the logic flow of how commands are executed. This option increases code reusability of the Command interface. +
+**Cons:** Increases coupling between the AddPhotoCommand class and the UndoableCommand interface. In addition, users will not have the convenient option to execute `undo` immediately if an incorrect photo is added.
+
+---
+
+**Aspect:** Usage of data type to represent the added contact image in `Photo` class. +
+**Alternative 1(current choice):** Using a String to represent the data or value of the image. +
+**Pros:** Works well with JavaFx SceneBuilder as `String` class can be passed into ImageView using `File` class to load the image. +
+**Cons:** Works in a cumbersome way due to the two step conversion. +
+**Alternative 2:** Using Image to represent the data or value of the image. +
+**Pros:** Works well with JavaFx SceneBuilder as Image class can be passed into ImageView class to load the image using only a single step conversion process. +
+**Cons:** Presents a potential problem if our team chooses to use alternative GUI generators that does not utilise Javafx scripting language. Image class might not be applicable to generate an Image.
+
+---
+
+**Aspect:** Storing and accessing of the images. +
+**Alternative 1(current choice):** Creating a new folder `displaypictures` upon first execution of PEERSONAL.jar to use as an image storage folder. +
+**Pros:** Shifting the image that is being used as display photo for a contact is possible and will not cause any technical issues. Image filepaths are now independent of the source filepath. +
+**Cons:** Saving photos into `displaypictures` folder size may cause the folder to occupy unnecessary large memory space if user adds too many photos. +
+**Alternative 2:** Obtains the local filepath of the image on the user's hard drive without writing the image into a new image storage folder `displaypicture` for PEERSONAL. +
+**Pros:** Do not have deal with write issues to `displaypictures` and memory size of `displaypictures` if it gets too big. +
+**Cons:** Shifting the an image that is being used as display photo for a contact will result in PEERSONAL not able to find the file path of the image.
+
+---
+
+**Aspect:** Generation of the unique filepath for images rewritten to `displaypictures` folder. +
+**Alternative 1(current choice): ** Using UUID class to generate a unique file path of the image that is to be written into `displaypictures`. +
+**Pros:** Generated filepath is unqiue. If the user wishes to overwrite the current image with a new image, the new image does not overwrite the old image. It allows `undo` command to be performed correctly which will revert the display picture of the specified contact to its previous image. +
+**Cons:** Causes the file size of `displaypictures` folder to get too large too quickly if user has alot of contacts that he wishes to add a display photo to or if user adds photos at a rapid rate or both. +
+**Alternative 2:** Using hashcode of the contact's email to generate the unique file path of the image that is to be written into `displaypictures`. +
+**Pros:** Overwrites the previous photo of the contact as the hashcode is the same due to having the same email. Optimal for saving memory space and preventing the file size of `displaypictures` folder to get too large. +
+**Cons:** Overwriting the previous photo of the specified contact means that `undo` command for `addphoto` will not be executed correctly, as the previous image of that contact has already been overwritten and deleted.
+// end::addphoto[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -344,6 +417,307 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::findcommand[]
+=== Enhancing FindCommand mechanism
+
+Before any enhancement, the `FindCommand` class can only search the Address Book by the names of the contacts.
+With this enhancement, it is now able to search through the Address Book for all the parameters tied to a contact. +
+
+The first change is for the `FindCommand` class to accept all `Predicate` and not only the `NameContainsKeywordsPredicate`.
+In addition, six more classes were created for the rest of the parameters, e.g. `AddressContainsKeywordsPredicate`,
+`EmailContainsKeywordsPredicate` etc. +
+
+The `FindCommandParser` has to be updated to be able to accept all these new parameters. The user input would be separated into two variables using
+the regex: `"(?<commandWord>\\w/)(?<arguments>.*)"`. The `commandWord` refers to either `n/`, `p/`, `e/` etc. and the `arguments` refers to the rest
+of the user input. The `FindCommandParser` would use the `commandWord` and return the correct `Predicate`. If the user input is invalid, a `ParseException`
+would be thrown. The code snippet below shows the logic of `FindCommandParser`:
+
+[source,java]
+----
+public FindCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        //@@author Affalen
+        /**
+         * Used for initial separation of command word and args.
+         */
+        final Pattern commandFormat = Pattern.compile("(?<commandWord>\\w/)(?<arguments>.*)");
+        final Matcher matcher = commandFormat.matcher(args.trim());
+        //@@author
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+        //@@author Affalen
+        if (!matcher.matches()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        String commandWord = matcher.group("commandWord");
+        String arguments = matcher.group("arguments");
+
+        String[] keywords = arguments.split("\\s", 0);
+
+        switch(commandWord) {
+
+        case ("n/"):
+            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+
+        case ("p/"):
+            return new FindCommand(new NumberContainsKeywordsPredicate(Arrays.asList(keywords)));
+
+        case ("e/"):
+            return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
+
+        case ("t/"):
+            return new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList(keywords)));
+
+        case("a/"):
+            return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
+
+        case("r/"):
+            return new FindCommand(new RemarkContainsKeywordsPredicate(Arrays.asList(keywords)));
+
+        case("b/"):
+            return new FindCommand(new BirthdayContainsKeywordsPredicate(Arrays.asList(keywords)));
+
+        default:
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+    }
+----
+
+The following sequence diagram shows an example when `find n/...` command is executed:
+
+image::FindCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Accepting different types of user input. +
+**Alternative 1 (current choice):** Using a `commandWord` and `arguments` regex to distinguish user inputs. +
+**Pros:** It is easy to add new parameters and debug. +
+**Cons:** However, it is inconvenient for users as they have to use a specific `commandWord` for a specific parameter.  +
+**Alternative 2:** Accept any type of user input after `find`. +
+**Pros:** It is more user-friendly as there are fewer requirements for user input. +
+**Cons:** It would be difficult to implement because it is tedious to distinguish the user input as several parameters are `String` parameters.
+// end::findcommand[]
+
+// tag::deletecommand[]
+=== Enhancing DeleteCommand mechanism
+
+Prior to enhancement, the `DeleteCommand` class can only delete one entry at a time from the current visible
+list on the model. With this enhancement, it is now able to accept multiple parameters to delete more than one
+entry at a time.
+
+This enhancement was done by changing the `Index` input for the original `DeleteCommand` class to an `ArrayList`,
+allowing it to store more than one `Index` from the user's input. Once it is able to accept more than one `Index`
+for its parameters, the original `DeleteCommand` was modified such that it would run through all the validity checks
+for the given indices. The `DeleteCommand` class would then delete these indicated entries upon success of the
+validity check. The following code is a brief example of what has been modified from the original code:
+[source, java]
+----
+@Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        for (int x = 0; x < targetIndex.size(); x++) {
+            if (targetIndex.get(x).getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+        }
+
+        ArrayList<ReadOnlyPerson> personToDelete = new ArrayList<>();
+        for (int x = 0; x < targetIndex.size(); x++) {
+            personToDelete.add(lastShownList.get(targetIndex.get(x).getZeroBased()));
+        }
+        try {
+            for (int x = 0; x < personToDelete.size(); x++) {
+                model.deletePerson(personToDelete.get(x));
+            }
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+        }
+        String outputResult = MESSAGE_DELETE_PERSON_SUCCESS;
+        outputResult = String.format(outputResult, personToDelete.get(0));
+        for (int x = 1; x < personToDelete.size(); x++) {
+            outputResult = outputResult + "\n";
+            String temp = personToDelete.get(x).toString();
+            outputResult += temp;
+        }
+        return new CommandResult(outputResult);
+    }
+----
+
+The `DeleteCommandParser` also has to be updated to allow for multiple indices to be accepted. This is done in a similar
+fashion to the above, where the entries for `Index` are changed to that of `ArrayList`, causing the user's entries
+to be stored in an `ArrayList <Index>`.
+
+==== Design Considerations
+
+**Aspect:** Accepting multiple inputs from the user. +
+**Alternative 1 (current choice):** Change the given input from `Index` to `ArrayList<Index>` +
+**Pros:** It allows for most of the base code of `DeleteCommand` to be reused. +
+**Cons:** Have to be thorough and change `Index` to `ArrayList<Index>` in all occurrences within all relevant
+`DeleteCommand` classes and methods.
+
+// end::deletecommand[]
+
+// tag::birthday[]
+=== BirthdayCommand mechanism
+
+image::BirthdayUMLClass.png[width="800]
+
+The `BirthdayCommand` inherits from `Undoable Command` and supports undoing and redoing. When the user inputs the birthday
+, the `UI` calls the `execute()` method in the `LogicManager` Class. The `Logic` will then call for the `parseCommand()`
+in `AddressBookParser` Class and an instance of `BirthdayCommand` will be created. It is then returned and the command
+will be executed. An instance of `Person` will be created to be updated with the birthday and updated age and returned to the `BirthdayCommand`.
+The command will then call the `updatedFilteredPersonList()` method in the `Model` Class. In the end, the command will
+generate a success message. The following sequence diagram summarises what happens when the `BirthdayCommand` is implemented:
+
+image::UMLforBirthday.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `BirthdayCommand`. +
+**Alternative 1 (current choice):** Editing(adding and removing) of Birthdays using a separate command from the edit
+command. Further enhancements are needed to catch more invalid cases. +
+**Pros:** Easy for debugging and implementation. +
+**Cons:** Inconvenient for users as they have many commands to use. +
+**Alternative 2 (current choice):** Incorporate the birthday into the add, edit, and delete commands. +
+**Pros:** Convenient for users as they have to only remember a few key commands. +
+**Cons:** Difficult to implement and maintain. Testing can be more tedious as well.
+// end::birthday[]
+---
+
+// tag::upbirthday[]
+=== upcomingbirthdayCommand mechanism
+
+image::UpBirthday.png[width="800]
+
+The `upcomingbirthdayCommand` inherits from `Command` and does not supports undoing and redoing. When the user inputs the upcomingbirthday
+, the `UI` calls the `execute()` method in the `LogicManager` Class. The `Logic` will then call for the `parseCommand()`
+in `AddressBookParser` Class and an instance of `upcomingbirthdayCommand` will be created. It is then returned and the command
+will be executed. The list will then be checked if it is empty. If it is, it will throw an empty list exception. Else it will be sorted
+according to the chronological order of birthdays in the format DD-MM from the local date in the clock and generate a success message.
+The following sequence diagram summarises what happens when the `upcomingbirthdayCommand` is implemented:
+
+image::UpBirthday2.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `UpcomingBirthdayCommand`. +
+**Alternative 1 (current choice): List all the people with Birthdays entries first in chronological order compared to the local date,
+then the people without birthdays in lexicographical order of their names.
+**Pros:** Easy for debugging and implementation. +
+**Cons:** Inconvenient for users as they have many commands to use. +
+**Alternative 2 (current choice):** Incorporate the birthday into the add, edit, and delete commands. +
+**Pros:** Convenient for users as they have to only remember a few key commands. +
+**Cons:** Difficult to implement and maintain. Testing can be more tedious as well.
+// end::upbirthday[]
+
+//tag::sortcommand[]
+=== SortCommand mechanism
+
+`SortCommand` inherits from `UndoableCommand` and supports undoing and redoing.
+It is facilitated by the Logic component, where most of the process is executed.
+The command sorts the persons within the list by the given prefix, which defaults to `NAME` if the prefix is left blank.
+
+
+The `SortCommand` class takes in the given prefix and determines the Comparator for the sort to occur.
+It will then pass the Comparator to the Model component and executes the sort based on the Comparator using the inbuilt function
+of `Collections.sort()`. The Comparator is obtained through the following code:
+[source, java]
+----
+private Comparator<ReadOnlyPerson> getSortComparator(String parameter) {
+        switch (parameter) {
+        case PREFIX_NAME:
+            this.sortParam = "name";
+            return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString());
+
+        case PREFIX_EMAIL:
+            this.sortParam = "email";
+            return (o1, o2) -> o1.getEmail().toString().compareToIgnoreCase(o2.getEmail().toString());
+
+        case PREFIX_PHONE:
+            this.sortParam = "phone";
+            return (o1, o2) -> o1.getPhone().toString().compareToIgnoreCase(o2.getPhone().toString());
+
+        case PREFIX_ADDRESS:
+            this.sortParam = "address";
+            return (o1, o2) -> o1.getAddress().toString().compareToIgnoreCase(o2.getAddress().toString());
+
+        case PREFIX_TAG:
+            this.sortParam = "tag";
+            return (o1, o2) -> o1.getTags().toString().compareToIgnoreCase(o2.getTags().toString());
+
+        case PREFIX_AGE:
+            this.sortParam = "age";
+            return (o1, o2) -> o1.getAge().toString().compareToIgnoreCase(o2.getAge().toString());
+
+        default:
+            return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString());
+        }
+    }
+----
+
+It will then call the `updatedFilteredPersonList()` method in the `Model` class and display
+a Success message upon successful completion of the command.
+
+
+==== Design Considerations
+**Aspect:** Implementation of `SortCommand`. +
+**Alternative 1 (current choice):** Sorting of the list instead of solely using the `FindCommand` so as to allow
+display of the entire list in an easier to see manner. +
+**Pros:** Can easily see the full list and spot contacts which may be missed out due to spelling errors. +
+**Cons:** List may be excessively long, making it harder to access the contacts you are trying to find. +
+**Alternative 2:** Enhancement of `FindCommand` such that it can display all names starting with a certain letter. +
+**Pros:** Can view a list of people whose name starts with the given letter +
+**Cons:** Will still miss out erroneously added names. Only applicable for names and not other fields.
+
+---
+
+**Aspect:** Sort parameters of `SortCommand`. +
+**Alternative 1 (current choice):** Allow sorting based on name, phone, email, address or age +
+**Pros:** Gives the option to sort based on whichever option the user wants.  +
+**Cons:** Unable to make it inbuilt due to the presence of multiple sort parameters. Contacts are not sorted upon addition to Peersonal.  +
+
+---
+//end::sortcommand[]
+
+//tag::remarkcommand[]
+=== RemarkCommand mechanism
+
+`RemarkCommand` implements from `UndoableCommand` and supports undoing and redoing. It is facilitated by the `LogicManager`, where most the
+process is executed. This command allows user to input `REMARK` field to a contact using the command format `remark INDEX r/[REMARK]`. If the `[REMARK]` is an
+empty string, the command removes the existing `remark` on the contact at that `INDEX` . +
+
+A `RemarkCommandParser` class is also created for user inputs. When user inputs the command for `remark`, the `AddressBookParser` would call `RemarkCommandParser` to
+create a new instance `RemarkCommand`. `RemarkCommandParser` implements the `Parser` class. The code snippet below shows the logic of `RemarkCommandParser`:
+----
+public class RemarkCommandParser implements Parser<RemarkCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the RemarkCommand
+     * and returns an RemarkCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public RemarkCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_REMARK);
+        Index index;
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
+        }
+        String remark = argMultimap.getValue(PREFIX_REMARK).orElse("");
+        return new RemarkCommand(index, new Remark(remark));
+    }
+}
+----
+
+//end::remarkcommand[]
 
 === Logging
 
@@ -725,13 +1099,72 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
+|`* * *` |user |add description to my contacts |make my contacts feel unique
+
 |`* * *` |user |delete a person |remove entries that I no longer need
+
+|`* * *` |user |find a person by email |locate details of persons without having to go through the entire list
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |clear the storage in the address book |restart and empty the address book
+
+|`* * *` |user |find a person by phone number |locate details of persons without having to go through the entire list
+
+|`* * *` |user |find a person by tag |locate details of persons without having to go through the entire list
+
+|`* * *` |user |list my contacts by their tags |locate my contact more easily
+
+|`* * *` |user |list recently added contacts |locate details of a persons without having to go through the entire list
+
+|`* *` |user |rename tag function |rename a specified tag from all contacts with that tag
+
+|`* *` |user |remove tag function |remove a specified tag from all contacts with that tag
+
+|`* *` |user |have an edit contact function |do not have to delete the contact and recreate contact when changing a person's particulars
+
+|`* *` |user |add multiple phone numbers to one contact |do not have to create another contact to add a person's secondary number(s)
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |create favourite lists of contacts |find my most important contacts easily
+
+|`* *` |user |adjust the font size of the display contacts |not squint my eyes when looking at the contacts
+
+|`* *` |user with many contacts |group my contacts |find a contact easier by searching for the group name
+
+|`* *` |user |see my log history |retrieve information if I need to
+
+|`* *` |user |add a event note to any contact |remind myself about events I have with this contact
+
+|`*` |user |store my contact's birthdays |keep track of my contact's birthdays
+
+|`*` |user |be notified of upcoming birthdays of my contacts |will not forget my contact's birthday
+
+|`*` |user with other address books |import data from address books |merge their data
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user with many persons in the address book |add profile pictures to contacts |identify my contacts easily
+
+|`*` |user who loves social media |like a integration of social media platforms with address book |browse social media while using address book
+
+|`*` |user who loves forums |Like a forum feature |post any questions so that my contacts can answer
+
+|`*` |user who loves going out |have a 'HangOut' feature |tell my contacts that I am available to hang out
+
+|`* ` |user |send out mass email to people with the same tags |disseminate information effectively
+
+|`* ` |user |link me and my friends to our social media accounts |update and view others social media accounts easily
+
+|`* ` |user who is an employer |add notes to certain contacts with timers |keep track of tasks that I assign people to do
+
+|`* ` |user |have a synced task list with people with the same tags |keep track of each persons work progress
+
+|`* ` |user |integrate my address book with my phone contacts |easily add contacts to either address book or my phone contacts and have them be synced
+
+|`*` |user with many persons in the address book |view list of persons by first or last name |locate a person easily
+
 |=======================================================================
 
 {More to be added}
@@ -767,6 +1200,43 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1. User requests to add person
+2. AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The input parameters are invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: List persons
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
++
 {More to be added}
 
 [appendix]
@@ -775,6 +1245,9 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to run in 32bit or 64bit Windows/Linux/Mac Systems.
+.  Default program should not take up more than 1GB of space.
+.  Program should be easy for a non-tech savvy person to install without having to declare classpaths and change environmental variables
 
 {More to be added}
 
@@ -796,18 +1269,3 @@ A contact detail that is not meant to be shared with others
 ....
 
 [appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

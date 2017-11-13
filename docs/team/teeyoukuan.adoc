@@ -1,0 +1,68 @@
+= Tee You Kuan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: PEERSONAL
+PEERSONAL is a desktop address book application. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/collated/main/Estois.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/collated/test/Estois.md[Test code]]
+
+=== Enhancement Added: SortCommand
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sortcommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+I have added in a Sort Command to allow for easier filtering of the contact lists. This allows the user
+to sort his or her contacts by alphanumeric order. One such application of this Sort Command could be sorting
+people by their names after using the Find Command to find people with similar tags.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sortcommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Enhanced command `DeleteCommand`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletecommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature allows for easy and efficient deleting of multiple contacts without requiring the user
+to manually delete them one by one. This would make it more convenient for the user to delete unwanted contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletecommand]
+
+#End of Extract#
+
+---

@@ -1,0 +1,95 @@
+= Yan Wei Cheng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: PEERSONAL
+PEERSONAL is a desktop address book application. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/collated/main/Affalen.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/collated/test/Affalen.md[Test code]]
+
+=== Enhancement Added: FindCommand
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findcommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+I have enhanced the `FindCommand` to be able to take in more parameters to make it more convenient for users to search for
+the contacts they want. Now, the `FindCommand` can find all attributes that is related to a contact - `NAME`, `PHONE`, `ADDRESS`,
+`EMAIL`, `TAG`, `REMARK` and `BIRTHDAY`.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findcommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: RemarkCommand
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=remarkcommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This command would be useful for users to keep track of attributes unique to different contacts. This command allows any format of input -
+for example `String`, `Integer`, which provides flexibility and convenience for users to enter different remarks for different contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remarkcommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `emailall`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=emailall]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature would be useful and convenient for university students as they do not have to send individual
+emails to different contacts. The user can put desired contacts with the same tag and then use `emailall`
+to send mass emails - making this process much faster and more efficient.
+
+---
+
+=== Other contributions
+
+* Edited documentations for teammates
+* Contributed to the UI layout
+* Wrote additional tests to increase coverage (Pull requests #39, #91)

@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -42,6 +43,33 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
+
+    //@@author Estois
+    /**
+     * Parses multiple {@code oneBasedIndex} into a {@code Index} ArrayList and returns it. Leading
+     * and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static ArrayList<Index> parseMultiIndex(String multiBasedIndex) throws IllegalValueException {
+        ArrayList<Index> parsedIndexes = new ArrayList <> ();
+        multiBasedIndex = multiBasedIndex.trim();
+        String[] splitString = multiBasedIndex.split(" ");
+        ArrayList<String> splitParse = new ArrayList<>();
+        for (int x = 0; x < splitString.length; x++) {
+            splitParse.add(splitString[x]);
+        }
+        for (int x = 0; x < splitParse.size(); x++) {
+            splitParse.set(x, splitParse.get(x).trim());
+            if (!StringUtil.isNonZeroUnsignedInteger(splitParse.get(x))) {
+                throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            }
+        }
+        for (int x = 0; x < splitParse.size(); x++) {
+            parsedIndexes.add(Index.fromOneBased(Integer.parseInt(splitParse.get(x))));
+        }
+        return parsedIndexes;
+    }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.

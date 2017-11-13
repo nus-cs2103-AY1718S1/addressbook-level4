@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -23,6 +24,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyBookException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
@@ -102,6 +104,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void sortPerson(Comparator<ReadOnlyPerson> sortComparator)
+                throws EmptyBookException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -131,6 +139,16 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        public Boolean ifListIsEmpty(ArrayList<ReadOnlyPerson> contactList) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void sortListByUpcomingBirthday(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
             fail("This method should not be called.");
         }
     }

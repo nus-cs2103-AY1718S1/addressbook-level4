@@ -5,6 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.MULTI_INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -24,13 +25,15 @@ public class UndoCommandTest {
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
-    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+    private final DeleteCommand deleteCommandOne = new DeleteCommand(MULTI_INDEX_FIRST_PERSON);
+    private final DeleteCommand deleteCommandTwo = new DeleteCommand(MULTI_INDEX_FIRST_PERSON);
 
     @Before
     public void setUp() {
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        MULTI_INDEX_FIRST_PERSON.clear();
+        MULTI_INDEX_FIRST_PERSON.add(INDEX_FIRST_PERSON);
     }
 
     @Test
@@ -41,6 +44,7 @@ public class UndoCommandTest {
         undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
         deleteCommandOne.execute();
         deleteCommandTwo.execute();
+
 
         // multiple commands in undoStack
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());

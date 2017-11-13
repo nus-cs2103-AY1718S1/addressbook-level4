@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +15,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyBookException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -91,6 +93,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         // in the person list.
         persons.add(newPerson);
     }
+
+    //@@author Estois
+    public void sortPerson(Comparator<ReadOnlyPerson> sortBy) throws EmptyBookException {
+        persons.sort(sortBy);
+    }
+    //@@author
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.

@@ -1,0 +1,219 @@
+<?xml version="1.5" encoding="UTF-8" standalone="yes"?>
+<PEERSONAL>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <remark></remark>
+        <birthday>09-10-1988</birthday>
+        <age>(29 years old)</age>
+        <filepath>images/alexyeoh.jpeg</filepath>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Alice Childs</name>
+        <phone>98167306</phone>
+        <email>alicechilds@hotmail.com</email>
+        <address>Blk 99 Ang Mo Kio #13-14</address>
+        <remark></remark>
+        <birthday>01-12-1976</birthday>
+        <age>(41 years old)</age>
+        <filepath>images/alicechilds.jpg</filepath>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remark>Likes to swim.</remark>
+        <birthday>17-11-1993</birthday>
+        <age>(24 years old)</age>
+        <filepath>images/berniceyu.jpg</filepath>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <remark></remark>
+        <birthday>12-04-1969</birthday>
+        <age>(48 years old)</age>
+        <filepath>images/charlotteoliver.jpg</filepath>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>Cheryl Brand</name>
+        <phone>85042184</phone>
+        <email>cherylbrand@yahoo.com</email>
+        <address>Blk 1 Toa Payoh #31-58</address>
+        <remark></remark>
+        <birthday>12-09-1977</birthday>
+        <age>(40 years old)</age>
+        <filepath>images/cherylbrand.jpg</filepath>
+    </persons>
+    <persons>
+        <name>Claire Williams</name>
+        <phone>83093908</phone>
+        <email>clairewilliams@sia.com</email>
+        <address>22 Changi Road</address>
+        <remark></remark>
+        <birthday>22-12-1972</birthday>
+        <age>(45 years old)</age>
+        <filepath>images/clairewilliams.jpg</filepath>
+    </persons>
+    <persons>
+        <name>Dale Brown</name>
+        <phone>82073764</phone>
+        <email>dalebrown@m1.biz</email>
+        <address>12 Geyland Lorong 18</address>
+        <remark></remark>
+        <birthday>03-02-1966</birthday>
+        <age>(51 years old)</age>
+        <filepath>images/dalebrown.jpg</filepath>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <remark>As quick as a leopard.</remark>
+        <birthday>22-07-1960</birthday>
+        <age>(57 years old)</age>
+        <filepath>images/davidli.jpg</filepath>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Edna Jewell</name>
+        <phone>96018291</phone>
+        <email>ednajewell@xiaomi.net</email>
+        <address>11 Jurong Point</address>
+        <remark></remark>
+        <birthday>09-07-1931</birthday>
+        <age>(86 years old)</age>
+        <filepath>images/ednajewell.jpg</filepath>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <birthday>19-11-1972</birthday>
+        <age>(45 years old)</age>
+        <filepath>images/irfanibrahim.jpg</filepath>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Karen Murphy</name>
+        <phone>94147773</phone>
+        <email>karenmurph@interstellar.com</email>
+        <address>33 Woodlawn Drive</address>
+        <remark></remark>
+        <birthday>18-02-1965</birthday>
+        <age>(52 years old)</age>
+        <filepath>images/karenmurphy.jpg</filepath>
+    </persons>
+    <persons>
+        <name>Kathy Hagan</name>
+        <phone>98306318</phone>
+        <email>kathyhagan@realemail.com</email>
+        <address>11 Crestview Terrace</address>
+        <remark></remark>
+        <birthday>15-03-1965</birthday>
+        <age>(52 years old)</age>
+        <filepath>images/kathyhagan.jpg</filepath>
+    </persons>
+    <persons>
+        <name>Leo Fraizer</name>
+        <phone>88164476</phone>
+        <email>leofraizer@singtel.com</email>
+        <address>8 Traders Alley</address>
+        <remark></remark>
+        <birthday>04-10-1960</birthday>
+        <age>(57 years old)</age>
+        <filepath>images/leofrazier.jpg</filepath>
+    </persons>
+    <persons>
+        <name>Linda Briley</name>
+        <phone>98107605</phone>
+        <email>lindabriley@hotmail.com</email>
+        <address>99 East Coast Road</address>
+        <remark></remark>
+        <birthday>09-09-1968</birthday>
+        <age>(49 years old)</age>
+        <filepath>images/lindabriley.jpg</filepath>
+    </persons>
+    <persons>
+        <name>Mae Beckner</name>
+        <phone>94082380</phone>
+        <email>mae@gmail.com</email>
+        <address>Blk 309 Toa Payoh #03-22</address>
+        <remark></remark>
+        <birthday>27-02-1986</birthday>
+        <age>(31 years old)</age>
+        <filepath>images/maebeckner.jpg</filepath>
+    </persons>
+    <persons>
+        <name>Miguel Gardener</name>
+        <phone>82032473</phone>
+        <email>migueltgardener@hotmail.com</email>
+        <address>2103 Colony Street</address>
+        <remark></remark>
+        <birthday>10-08-1966</birthday>
+        <age>(51 years old)</age>
+        <filepath>images/miguel.jpg</filepath>
+        <tagged>Mexican</tagged>
+    </persons>
+    <persons>
+        <name>Noreen Perry</name>
+        <phone>99288102</phone>
+        <email>noreenperry@starhub.com</email>
+        <address>3284 Farm Meadow Drive</address>
+        <remark></remark>
+        <birthday>10-01-1955</birthday>
+        <age>(62 years old)</age>
+        <filepath>images/noreenperry.jpg</filepath>
+    </persons>
+    <persons>
+        <name>Robert Gast</name>
+        <phone>94198034</phone>
+        <email>robertgast@gmail.com</email>
+        <address>33 Hill Street</address>
+        <remark></remark>
+        <birthday>04-04-1989</birthday>
+        <age>(28 years old)</age>
+        <filepath>images/robertgast.jpg</filepath>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark></remark>
+        <birthday>29-01-1979</birthday>
+        <age>(38 years old)</age>
+        <filepath>images/roy.jpg</filepath>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Tony Valdez</name>
+        <phone>95076366</phone>
+        <email>tonyvaldez@myrepublic.com</email>
+        <address>17 Tekong Drive</address>
+        <remark></remark>
+        <birthday>21-08-1944</birthday>
+        <age>(73 years old)</age>
+        <filepath>images/tonyvaldez.jpg</filepath>
+    </persons>
+    <tags>Superhero</tags>
+    <tags>Mexican</tags>
+    <tags>colleagues</tags>
+    <tags>superhero</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+</PEERSONAL>

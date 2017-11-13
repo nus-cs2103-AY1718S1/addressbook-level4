@@ -1,0 +1,84 @@
+= Zeng Feng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: PEERSONAL
+PEERSONAL is a desktop address book application. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/collated/main/zengfengw.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B2/main/blob/master/collated/test/zengfengw.md[Test code]]
+
+=== Enhancement Added: BirthdayCommand
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As we are targeting university students as users for this application, birthdays are an important field when we record
+down our peers' information.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: UpcomingBirthdayCommand
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=upbirthday]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To be able to see the upcoming birthdays is a useful feature in a real world situation and an enhancement to having the DOB of people.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=upbirthday]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: calendar
+
+Displays birthdays of contacts according to months in a calendar GUI. +
+Format: `calendar`
+
+=== Justification
+
+Allows the user to better visualise the birthdays compared to when it is in a list form.
+
+---
+
+=== Other contributions
+
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}
