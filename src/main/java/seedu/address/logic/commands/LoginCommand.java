@@ -35,19 +35,15 @@ public class LoginCommand extends Command {
     @Override
     public CommandResult execute() {
 
-        for (ReadOnlyAccount tempaccount : model.getFilteredAccountList()) {
-            if (account.getUsername().fullName.equals(tempaccount.getUsername().fullName)
-                    && account.getPassword().value.equals(tempaccount.getPassword().value)) {
-                logger.info("Credentials Accepted");
-                try {
-                    MainApp.getUi().restart(account.getUsername().fullName);
-                } catch (Exception e) {
-
-                    logger.info("Exception caught" + e.toString());
-                }
-                return new CommandResult(MESSAGE_SUCCESS);
+        if (model.checkAccount(account)) {
+            try {
+                MainApp.getUi().restart(account.getUsername().fullName);
+            } catch (Exception e) {
+                logger.info("Exception caught" + e.toString());
             }
+            return new CommandResult(MESSAGE_SUCCESS);
         }
+
         return new CommandResult(MESSAGE_FAILURE);
 
     }

@@ -97,6 +97,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
     //@@author
 
+    //@@author duyson98
     /**
      * @param person
      */
@@ -126,6 +127,7 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonProfile(event.person);
     }
+    //@@author
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {

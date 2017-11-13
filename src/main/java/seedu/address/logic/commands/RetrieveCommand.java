@@ -2,8 +2,11 @@
 
 package seedu.address.logic.commands;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.StringJoiner;
 
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagContainsKeywordPredicate;
 
@@ -22,7 +25,8 @@ public class RetrieveCommand extends Command {
 
     public static final String MESSAGE_EMPTY_ARGS = "Please provide a tag name! \n%1$s";
 
-    public static final String MESSAGE_NOT_FOUND = "Tag not found in person list.";
+    public static final String MESSAGE_NOT_FOUND = "Tag not found in person list." + "\n"
+            + "You may want to refer to the following existing tags inside the unfiltered person list: %s";
 
     private final TagContainsKeywordPredicate predicate;
 
@@ -35,13 +39,15 @@ public class RetrieveCommand extends Command {
         model.updateFilteredPersonList(predicate);
         final int personListSize = model.getFilteredPersonList().size();
         if (personListSize == 0) {
+            Set<Tag> uniqueTags = new HashSet<>();
+            for (ReadOnlyPerson person : model.getAddressBook().getPersonList()) {
+                uniqueTags.addAll(person.getTags());
+            }
             StringJoiner joiner = new StringJoiner(", ");
-            for (Tag tag: model.getAddressBook().getTagList()) {
+            for (Tag tag: uniqueTags) {
                 joiner.add(tag.toString());
             }
-            return new CommandResult(MESSAGE_NOT_FOUND + "\n"
-                    + "You may want to refer to the following existing tags: "
-                    + joiner.toString());
+            return new CommandResult(String.format(MESSAGE_NOT_FOUND, joiner.toString()));
         }
         return new CommandResult(getMessageForPersonListShownSummary(personListSize));
     }

@@ -63,9 +63,7 @@ public class RetrieveCommandTest {
         for (Tag tag: model.getAddressBook().getTagList()) {
             joiner.add(tag.toString());
         }
-        String expectedMessage = (MESSAGE_NOT_FOUND + "\n"
-                + "You may want to refer to the following existing tags: "
-                + joiner.toString());
+        String expectedMessage = String.format(MESSAGE_NOT_FOUND, joiner.toString());
         RetrieveCommand command = prepareCommand("thisTag");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }

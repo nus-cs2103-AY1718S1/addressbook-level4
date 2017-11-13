@@ -28,6 +28,20 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
+    //@@author duyson98
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertReminderCardEquals(ReminderCardHandle expectedCard, ReminderCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getTask(), actualCard.getTask());
+        assertEquals(expectedCard.getPriority(), actualCard.getPriority());
+        assertEquals(expectedCard.getDate(), actualCard.getDate());
+        assertEquals(expectedCard.getMessage(), actualCard.getMessage());
+        assertEquals(expectedCard.getTags(), actualCard.getTags());
+    }
+    //@@author
+
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
@@ -41,6 +55,7 @@ public class GuiTestAssert {
                 actualCard.getTags());
     }
 
+    //@@author duyson98
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedReminder}.
      */
@@ -52,6 +67,7 @@ public class GuiTestAssert {
         assertEquals(expectedReminder.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and

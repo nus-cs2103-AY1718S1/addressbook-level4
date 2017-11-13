@@ -1,3 +1,5 @@
+//@@author duyson98
+
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -93,8 +95,10 @@ public class RetagCommand extends UndoableCommand {
     /**
      * Checks whether a tag is used inside person list
      */
-    public boolean tagUsedInPersonList(List<ReadOnlyPerson> pesonList, Tag tag) {
-        for (ReadOnlyPerson person : pesonList) {
+    private boolean tagUsedInPersonList(List<ReadOnlyPerson> personList, Tag tag) {
+        assert personList != null && tag != null;
+
+        for (ReadOnlyPerson person : personList) {
             if (person.getTags().contains(tag)) {
                 return true;
             }
