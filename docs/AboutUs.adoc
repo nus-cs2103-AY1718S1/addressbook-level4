@@ -36,7 +36,7 @@ Responsibilities: Data
 
 === Qi Kongjia
 image::qikongjia.png[width="150", align="left"]
-{empty}[https://github.com/yuzu1209[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/yuzu1209[github]] [<<kongjiaqi#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Dev Ops + Threading
