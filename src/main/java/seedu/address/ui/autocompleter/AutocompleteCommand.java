@@ -16,7 +16,6 @@ import java.util.Arrays;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -39,7 +38,6 @@ public enum AutocompleteCommand {
     ADD,
     CLEAR,
     DELETE,
-    DELETE_TAG,
     EDIT,
     EXIT,
     FIND,
@@ -53,7 +51,7 @@ public enum AutocompleteCommand {
     TAB,
     UNDO;
 
-    public static final String[] ALL_COMMANDS = {"add", "clear", "delete", "deleteTag", "edit", "exit", "find", "help",
+    public static final String[] ALL_COMMANDS = {"add", "clear", "delete", "edit", "exit", "find", "help",
         "history", "import", "list", "redo", "select", "tab", "undo"};
 
     public static final Prefix[] ALL_PREFIXES = {PREFIX_TRACKING_NUMBER, PREFIX_NAME, PREFIX_ADDRESS,
@@ -74,9 +72,6 @@ public enum AutocompleteCommand {
 
         case DeleteCommand.COMMAND_WORD:
             return DELETE;
-
-        case DeleteTagCommand.COMMAND_WORD:
-            return DELETE_TAG;
 
         case EditCommand.COMMAND_WORD:
             return EDIT;

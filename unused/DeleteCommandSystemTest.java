@@ -1,3 +1,4 @@
+//@@author fustilio
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
@@ -21,6 +22,10 @@ import seedu.address.model.Model;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 
+/**
+ * Deprecated in Ark v1.5
+ * See {@link DeleteTagCommand}
+ */
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =

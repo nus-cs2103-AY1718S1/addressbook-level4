@@ -24,6 +24,10 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagInternalErrorException;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
+/**
+ * Deprecated in Ark v1.5
+ * See {@link DeleteTagCommand}
+ */
 public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
 
     @Test
