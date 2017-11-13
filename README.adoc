@@ -33,7 +33,7 @@ Email, Address, Birthday, Twitter, Instagram, Display Picture, Tag
 * Keep up with your contacts through the social command
 * View your contacts' addresses quickly in Google Maps
 ====
-// tag::features[]
+// end::features[]
 
 == Site Map
 
