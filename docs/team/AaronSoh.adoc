@@ -106,9 +106,9 @@ This enhancement will allow users to type `undo all` and `redo all`, which will 
 
 === Other contributions
 
-* Changed tag colour in PersonCard (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/49[#85])
-* Added JUnit tests to improve test coverage (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/49[#57])
-* Changed result display panel to print every field in a new line (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/49[#57])
-* Removed redundant code (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/49[#57])
-* Recfitifed language error in team mate's documentation (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/49[#27])
-* Added boolean instance `favourite` to Person (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/49[#27])
+* Changed tag colour in PersonCard (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/85[#85])
+* Added JUnit tests to improve test coverage (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/57[#57])
+* Changed result display panel to print every field in a new line (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/57[#57])
+* Removed redundant code (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/57[#57])
+* Recfitifed language error in team mate's documentation (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/27[#27])
+* Added boolean instance `favourite` to Person (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/27[#27])
