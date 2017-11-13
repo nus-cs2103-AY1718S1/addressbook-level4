@@ -1,0 +1,463 @@
+= Testscript
+
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+
+== Loading the sample data
+
+*Instructions*
+
+1. Create a folder called `data` in the same folder as the `TABCC.jar` file.
+2. Move the `SampleData.xml` file into the `data` folder and rename it as `addressbook.xml`.
+2. Open the `TABCC.jar` file and the GUI should load the sample data.
+
+== Commands
+
+=== Help command
+
+*Command:* `help`
+
+*Result:*
+
+****
+* Help Window opens
+* Result display box shows: Opened help window.
+****
+
+*Command:* Press kbd:[F1] key
+
+*Result:*
+
+****
+* Help Window opens
+* Result display box shows: Opened help window.
+****
+
+=== Change Password command
+Assume that the user does not have any password set +
+*Command:* `changepwd password1`
+
+*Result:*
+
+****
+* Password is now set to password1
+****
+
+Assume that the password is set to password1 +
+*Command:* `changepwd password2 password1`
+****
+* Password is now set to password2
+****
+
+Assume that the password is set to password2 +
+*Command:* `changepwd password3 password1`
+****
+* Result display shows: Wrong password.
+****
+
+[NOTE]
+====
+Restarting the app now requires you to input the password set.
+====
+
+=== Add command
+
+*Command:* `add n/Ryan Higa p/98765432 e/ryanhiga@example.com a/2009 Terrace Dr Sacramento, CA 95825 USA c/UCSAUGyc_xA8uYzaIVG6MESQ t/Comedy`
+
+*Result:*
+
+****
+* Result display box shows: New person added: Ryan Higa Phone: 98765432 Email: ryanhiga@example.com Address: 2009 Terrace Dr Sacramento, CA 95825 USA ChannelId: UCSAUGyc_xA8uYzaIVG6MESQ Tags: [Comedy]
+* Ryan Higa person card added to the bottom of the person list
+****
+
+*Command:* `undo`
+
+*Result:*
+
+****
+* Result display box shows: Undo success!
+* Ryan Higa person card is removed from the bottom of the person list
+****
+
+*Command:* `add n/Ryan Higa p/98765432 e/ryanhiga@example.com a/2009 Terrace Dr Sacramento, CA 95825 USA c/UCSAUGyc_xA8uYzaIVG6MBSq t/Comedy`
+(last letter 'Q' is changed to 'q')
+
+*Result:*
+
+****
+* Result display box shows: Person's Channel ID is invalid.
+* Command box shows: Typed command in red.
+
+****
+
+*Command:* `add n/Juan Mata p/90463851 e/juanmata@example.com a/20 Dalton Ave Stretford Manchester M32 9TN UK c/ t/Sports` (Channel ID is blank)
+
+*Result:*
+
+****
+* Result display box shows: Person's Channel ID is invalid.
+* Command box shows: Typed command in red.
+
+****
+
+*Command:* `add n/Juan Mata e/juanmata@example.com a/20 Dalton Ave Stretford Manchester M32 9TN UK c/UC_WoyWJ6cx9LEhGohfPi-3g t/Sports` (Phone number is missing)
+
+*Result:*
+
+****
+* Result display box shows: +
+  Invalid command format! +
+  add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS c/CHANNEL ID [t/TAG]...
+  Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 c/UC-lHJZR3Gqxm24_Vd_AJ5Yw t/friends t/owesMoney
+* Command box shows: Typed command in red.
+
+****
+
+*Command:* `add n/Juan Mata p/90463851 e/juanmata@example.com a/20 Dalton Ave Stretford Manchester M32 9TN UK c/UC_WoyWJ6cx9LEhGohfPi-3g t/Sports` (Correct command)
+
+*Result:*
+
+****
+* Result display box shows: New person added: Juan Mata Phone: 90463851 Email: juanmata@example.com Address: 20 Dalton Ave Stretford Manchester M32 9TN UK ChannelId: UC_WoyWJ6cx9LEhGohfPi-3g Tags: [Sports]
+* Juan Mata person card is added to the bottom of the person list
+****
+
+=== List command
+
+*Command:* `list`
+
+*Result:*
+****
+* Result display box shows: Listed all persons
+* All persons are displayed in the person list.
+****
+
+=== Edit command
+
+*Command:* `edit 1 p/9123456`
+
+*Result:*
+
+****
+* Result display box shows: Edited Person: Felix Arvid Ulf Kjellberg Phone: 9123456 Email: pewdiepie@example.com Address: 5 Bedford Pl, Brighton BN1 2PT, UK ChannelId: UC-lHJZR3Gqxm24_Vd_AJ5Yw Tags: [Comedy][Gaming]
+****
+
+=== Delete command
+
+*Command:* `delete 3`
+
+*Result:*
+****
+* Result display box shows: 1 person deleted!
+* `Naomi Neo` is removed from the person list, her contact will no longer be available.
+****
+
+*Command:* `undo`
+
+*Result:*
+****
+* Result display box shows: Undo success!
+* `Naomi Neo` is added back to the address book and the contact detail can be viewed the person list.
+****
+
+*Command:* `delete 21` (assuming only 20 contacts in the person list)
+
+*Result:*
+****
+* Result display box shows: The person index provided is invalid.
+****
+
+*Command:* `delete -1` (negative index)
+
+*Result:*
+****
+* Result display box shows: Invalid command format.
+* Parameter has to be a positive integer.
+****
+
+=== Favourite command
+
+*Command:* `fave 3 true`
+
+*Result:*
+****
+* Result display box shows: Added Person to Favourites: [Naomi's details]
+* `Naomi Neo` is marked as a favourite.
+****
+
+*Command:* `ffav`
+
+*Result:*
+****
+* Result display box shows: 1 persons listed!
+* `Naomi Neo` is listed in the person list.
+****
+
+*Command:* `fave 3 false`
+
+*Result:*
+****
+* Result display box shows: The person index provided is invalid
+****
+
+*Command:* `undo`
+
+*Result:*
+****
+* Result display box shows: Undo success!
+* `Naomi Neo` is removed from favourite.
+****
+
+*Command:* `ffav`
+
+*Result:*
+****
+* Result display box shows: 0 persons listed!
+* Person list is empty.
+****
+
+*Command:* `fave 3`
+
+*Result:*
+****
+* Result display box shows: Invalid command format! [Favourites command help]
+****
+
+=== Find Favourites Command
+
+*Command:* `findfav`
+
+*Result:*
+****
+* Result display box shows: Listed favourite persons
+* Person list shows all persons marked as favourites.
+****
+
+*Command:* `ffav`
+
+*Result:*
+****
+* Result display box shows: Listed favourite persons
+* Person list shows all persons marked as favourites.
+****
+
+=== Find Command
+
+*Command:* `find naomi`
+
+*Result:*
+****
+* Result display box shows: 1 person listed!
+* Person list shows Naomi Neo.
+****
+
+*Command:* `find Jay Chou` (Assuming Jay Chou is not in the person list).
+
+*Result:*
+****
+* Result display box shows: 0 person listed!
+****
+
+*Command:* `find 1` (Entering integer parameter).
+
+*Result:*
+****
+* Result display box shows: 0 person listed!
+****
+
+=== Find email command
+
+*Command:* `findemail namewee@example.com`
+
+*Result:*
+****
+* Result display box shows: 1 person listed!
+* Person list shows NameWee.
+****
+
+*Command:* `findemail jaychou@email.com` (Assuming no person with such email exist in TABCC).
+
+*Result:*
+****
+* Result display box shows: 0 person listed!
+****
+
+=== Find tag command
+
+*Command:* `findtag NUS` (assuming no such tag exist in TABCC).
+
+*Result:*
+****
+* Result display box shows: 0 person listed!
+****
+
+*Command:* `findtag music`
+
+*Result:*
+****
+* Result display box shows: 4 persons listed!
+* Person list shows `Kurt Hugo Schneider`, `Rob Chapman`, `Paul Davids` and `NameWee`.
+****
+
+=== Select command
+
+*Command:* `select 1` then press the kbd:[Backspace] key
+
+*Result:*
+
+****
+* Result display box shows: Selected Person: 1
+* Person card for Kurt Hugo Schneider selected on the person list panel on the left
+* Profile GUI for Kurt Hugo Schneider appears on the profile panel on the right
+****
+
+*Command:* `select 5`
+
+*Result:*
+
+****
+* Result display box shows: The person index provided is invalid
+* Command box shows: Typed command in red.
+* Person card selected and profile GUI shown is unchanged (still shows Kurt Hugo Schneider)
+****
+
+=== Send command
+
+*Command:* `send 0`
+
+*Result:*
+
+****
+* Result display box shows: +
+Invalid command format!
+send: Opens up third-party communication application with the information of the person identified by the index number used in the last person listing.
+
+* Command box shows: Typed command in red.
+
+****
+
+*Command:* `send 1`
+
+*Result:*
+
+****
+* Windows Mail App should open up
+* Email typed in "To:" field should be "kurtschneider@example.com"
+* Result display box shows: Opened Mail App...
+****
+
+[NOTE]
+Don't close Mail App yet, switch back to TABCC
+
+*Command:* `send 2`
+
+*Result:*
+
+****
+* Windows Mail App should open up again
+* Email typed in "To:" field should be changed to "robchapman@example.com"
+* Result display box shows: Opened Mail App...
+****
+
+[NOTE]
+Can close mail app.
+
+=== Sort by name(ascending) command
+
+*Command:* `sortAscend`
+
+*Result:*
+****
+* Result display box shows: List is now arranged in ascending order!
+* Person list is now arrange in lexicographical order according to the person's name, starting from Z all the way to A.
+* Person list will show: +
+  [Rob Chapman's Details] +
+  [Paul Davids's Details] +
+  [Namewee's Details] +
+  [Kurt Hugo Schneider's Details]
+****
+
+=== Clear command
+*Command:* `clear`
+
+*Result:*
+****
+* Address book has been cleared!
+* Person list is now empty.
+****
+
+*Command:* `undo`
+
+*Result:*
+****
+* Undo success!
+* Person list is now filled with contacts again.
+****
+
+*Command:* `redo`
+
+*Result:*
+****
+* Redo success!
+* Person list is now empty.
+****
+
+*Command:* `undo`
+
+*Result:*
+****
+* Undo success!
+* Person list is now filled with contacts again.
+****
+
+=== Undo command
+*Command:* `undo` +
+This command has been demonstrated throughout the TestScript.
+
+=== Redo command
+*Command:* `redo` +
+This command has been demonstrated throughout the TestScript.
+
+=== Change Theme command
+*Command:* `theme light`
+
+*Result:*
+
+****
+* The theme is now set to light
+****
+
+*Command:* `theme dark`
+
+*Result:*
+
+****
+* The theme is now set to dark
+****
+
+*Command:* `theme youtube`
+
+*Result:*
+
+****
+* The theme is now set to youtube
+****
+
+*Command:* `theme nosuchtheme`
+
+*Result:*
+
+****
+* Result display shows: +
+Invalid theme. +
+theme: Changes theme. +
+theme <dark/light/youtube>
+****
+
+[NOTE]
+====
+The theme settings will be saved even if you restart the app.
+====

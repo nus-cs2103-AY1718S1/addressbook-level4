@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author moomeowroar -->
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" styleClass="background" fx:id="vBox">
+  <stylesheets>
+    <URL value="@DarkTheme.css" />
+    <URL value="@Extensions.css" />
+  </stylesheets>
+
+  <StackPane VBox.vgrow="NEVER" fx:id="pwdBoxPlaceholder" styleClass="pwd-field">
+    <padding>
+      <Insets top="5" right="10" bottom="5" left="10" />
+    </padding>
+  </StackPane>
+
+  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+</VBox>

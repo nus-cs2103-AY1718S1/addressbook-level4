@@ -5,7 +5,8 @@
     "windowCoordinates" : {
       "x" : 300,
       "y" : 100
-    }
+    },
+    "theme" : "LightTheme"
   },
   "addressBookFilePath" : "addressbook.xml",
   "addressBookName" : "TypicalAddressBookName"

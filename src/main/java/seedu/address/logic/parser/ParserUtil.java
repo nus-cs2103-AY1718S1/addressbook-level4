@@ -6,11 +6,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.ChannelId;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -71,6 +73,15 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> channel} into an {@code Optional<ChannelId>} if {@code channel} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ChannelId> parseChannelId (Optional<String> channelId) throws IllegalValueException {
+        requireNonNull(channelId);
+        return channelId.isPresent() ? Optional.of(new ChannelId(channelId.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
@@ -89,5 +100,9 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    public static String[] parseByDelimiter(String args, String delimiter) throws IllegalValueException {
+        return args.split(Pattern.quote(delimiter));
     }
 }

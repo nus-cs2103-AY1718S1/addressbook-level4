@@ -5,6 +5,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Collection;
+
+import seedu.address.model.tag.Tag;
 
 /**
  * Helper functions for handling strings.
@@ -36,6 +39,37 @@ public class StringUtil {
         for (String wordInSentence: wordsInPreppedSentence) {
             if (wordInSentence.equalsIgnoreCase(preppedWord)) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the {@code tags} contains the {@code word}.
+     *   Ignores case, but a full word match is required.
+     *   <br>examples:<pre>
+     *       containsTagIgnoreCase("ABc def", "abc") == true
+     *       containsTagIgnoreCase("ABc def", "DEF") == true
+     *       containsTagIgnoreCase("ABc def", "AB") == false //not a full word match
+     *       </pre>
+     * @param tags cannot be null
+     * @param word cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsTagIgnoreCase(Collection<Tag> tags, String word) {
+        requireNonNull(tags);
+        requireNonNull(word);
+
+        String preppedTag = word.trim();
+        checkArgument(!preppedTag.isEmpty(), "Tag parameter cannot be empty");
+        checkArgument(preppedTag.split("\\s+").length == 1, "Tag parameter should be a single word");
+
+        String[] temp = word.split("\\s+");
+
+        for (Tag tag : tags) { //iterate through the set of tags
+            for (String tagName : temp) {
+                if (tagName.equalsIgnoreCase(tag.tagName)) {
+                    return true;
+                }
             }
         }
         return false;

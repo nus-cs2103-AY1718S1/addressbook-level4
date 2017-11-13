@@ -1,0 +1,52 @@
+= Anton Chua - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: TABCC
+TABCC is a desktop address book application for YouTubers to keep track of, and connect with other YouTubers for easy collaboration. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B1/main/blob/master/collated/main/six3oo.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B1/main/blob/master/collated/test/six3oo.md[Test code]]
+
+=== Enhancement Added: Favourites mechanism
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=favcommand]
+
+include::../UserGuide.adoc[tag=findfavcommand]
+
+=======
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature enables our users to quickly access and identify a subset of their contacts, known as Favourites, enhancing the usability of our application for people with a large number of contacts. The command format is unified, increasing ease of use by decreasing the number of commands the user has to remember to use the feature.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=FavCommand]
+
+include::../DeveloperGuide.adoc[tag=FindFavCommand]
+
+=======
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add favourites starring
+
+A star will be displayed next to the contact's name if he/she is a Favourite contact, and he/she will always appear at the top of the main contact list. This will further ease identification of the user's most-used contacts.
+
+=== Other contributions
+
+* Non-functional requirements in the Developer Guide link:https://github.com/CS2103AUG2017-T15-B1/main/pull/35[Link]
+* Add implementation of deleteTag(Tag) in ModelManager link:https://github.com/CS2103AUG2017-T15-B1/main/pull/39[Link]

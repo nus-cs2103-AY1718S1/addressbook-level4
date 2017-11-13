@@ -1,0 +1,111 @@
+= Chia Jiahua - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: TABCC (The Address Book for Content Creators)
+TABCC (The Address Book for Content Creators) is an address book application for YouTubers to store contact information of other YouTubers. TABCC makes those contact information accessible and easy to refer to. +
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B1/main/blob/master/collated/main/jhchia7.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B1/main/blob/master/collated/test/jhchia7.md[Test code]]
+
+=== Purpose of portfolio
+The purpose of this portfolio is to showcase the work I contributed to my team's TABCC software in the CS2103T and CS2101 twin modules.
+
+=== Enhancement Added: Select Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+
+include::../UserGuide.adoc[tag=selectcommand]
+
+
+#End of Extract#
+
+---
+
+==== Justification
+
+In its initial form, the select command shows the Google results of the contact’s name. With the application targeting a more specific group of users namely Youtubers, the team believes that the select command can be better used to display the profile of the YouTuber instead. The select command opens the profile which displays various dynamic information obtained using the YouTube Data API. The dynamic information is updated every time the contact is selected.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=selectcommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added:  `send` command
+
+==== External behavior
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sendcommand]
+
+#End of Extract#
+
+==== Justification
+As most email services are equipped with powerful spam filters, they are the first choice mode of communication for most YouTubers with regards to business communication.
+Therefore, the send command is implemented to allow users to easily send mail through the Windows Mail App. +
+
+The Windows Mail App is chosen due to its support for many email services such as Gmail, Yahoo Mail and Outlook.
+
+=== Enhancement Proposed: Channel model
+
+A future addition to the profile would be the inclusion of information of other YouTubers of the channel (if channel is maintained by more than 1 YouTuber). This could be done by the implementation of a new Channel Model as seen below.
+
+image::class-diagram-channel.png[width="500"]
+_Figure 1: Class diagram with new Channel model_
+
+=== Enhancement Proposed: Integration with other and messaging services
+
+The ability for users to easily send messages with multiple messaging services will be added in future versions of the software as support for its corresponding content creation platform are added.
+
+Additional messaging services include but are not limited to:
+
+. WhatsApp
+. Twitch Whisper
+. Facebook direct message
+. Twitter direct message
+. Instagram Direct
+
+=== Enhancement Proposed: Ability for user to choose which data to grab from Youtube
+
+The current version of the software grabs only the channel thumbnail, title, description, subscriber count, view count and video count from the YouTube servers.
+
+The ability for the user to choose which data to display for their contacts would be implemented in future updates to increase customizability.
+
+
+=== Other contributions
+
+==== Contributed to FAQs for user guide
+
+---
+
+#Start of Extract [from: User Guide]#
+include::../UserGuide.adoc[tag=channelidfaq]
+
+#End of Extract#
+
+---
+
+==== Helped test the software of another team
+
+*Issues raised for team T17-B1:* +
+Unable to register account: link:https://github.com/CS2103AUG2017-T17-B1/main/issues/217[Link] +
+Bugs in select command: link:https://github.com/CS2103AUG2017-T17-B1/main/issues/225[Link] +
+Missing methods to move contact to/from whitelist: link:https://github.com/CS2103AUG2017-T17-B1/main/issues/228[Link] +
+
+==== Miscellaneous contributions
+* Added Channel ID class
+* Added placeholder profile command, YouTube Data API and fixed dependency conflicts (Pull request link:https://github.com/CS2103AUG2017-T15-B1/main/pull/66[#66])
+* Populated some of Sample Data with real YouTubers and make-believe information (Commits: link:https://github.com/CS2103AUG2017-T15-B1/main/commits/master/src/main/java/seedu/address/model/util/SampleDataUtil.java[Link])
+* Created GUI for profile
+* Set up Travis CI and Coveralls for team (Pull request link:https://github.com/CS2103AUG2017-T15-B1/main/pull/88[#88])

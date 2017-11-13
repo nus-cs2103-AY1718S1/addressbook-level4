@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="248.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FavouriteList">
+   <children>
+      <ListView layoutX="14.0" layoutY="36.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ButtonBar layoutY="360.0" prefHeight="40.0" prefWidth="248.0">
+        <buttons>
+          <Button mnemonicParsing="false" text="Back" />
+        </buttons>
+      </ButtonBar>
+   </children>
+</AnchorPane>

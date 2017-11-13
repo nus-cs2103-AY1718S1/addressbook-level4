@@ -1,6 +1,7 @@
 package seedu.address.logic;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -19,9 +20,17 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
+    String liveHelp(String commandText) throws IllegalValueException;
+
+    String getCommandWord(String commandText) throws IllegalValueException;
+
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
+
+    boolean isPassword(String password);
+
+    boolean isAddressBookLock();
 }

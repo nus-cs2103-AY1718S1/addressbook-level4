@@ -1,0 +1,78 @@
+= Cheng Wei Hong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: TABCC
+The Address Book for Content Creators (TABCC) is a desktop address book application targeted at content creators. This software aims to help content creators efficiently manage their network of contacts. In the first version, our application specifically targets YouTubers, providing YouTube integration through YouTube's API.
+In future versions we plan to integrate other social media services like Twitch and Facebook. The user interacts with it using a CLI, and it has a GUI created with JavaFX. This software is written in Java, and has about 9 kLoC. +
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B1/main/blob/master/collated/main/moomeowroar.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B1/main/blob/master/collated/test/moomeowroar.md[Test code]]
+
+=== Enhancement Added: Lock Screen
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=lock]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To protect the user's data from unauthorized access.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=lock]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Live Help
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=liveHelp]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To help the user remember command usage by showing possible a list of possible commands and their respective help message as the user types. +
+Reduces the need to refer to the help window or user guide.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=liveHelp]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* Added change theme command (Pull requests https://github.com/CS2103AUG2017-T15-B1/main/pull/89[#89])
+* Added and updated GUI color schemes (Pull requests https://github.com/CS2103AUG2017-T15-B1/main/pull/89[#89], https://github.com/CS2103AUG2017-T15-B1/main/pull/125[#125])
+* Wrote additional tests to increase coverage (+1.1%) to 82.359% (Pull requests https://github.com/CS2103AUG2017-T15-B1/main/pull/117[#117])
+* Wrote additional tests to increase coverage (+1.2%) to 84.329% (Pull requests https://github.com/CS2103AUG2017-T15-B1/main/pull/147[#147])
+* Added a new UI feature which changes the color of the command word upon verification that the command exist. (Pull requests https://github.com/CS2103AUG2017-T15-B1/main/pull/125[#125])

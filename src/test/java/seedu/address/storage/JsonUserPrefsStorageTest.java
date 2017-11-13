@@ -81,7 +81,7 @@ public class JsonUserPrefsStorageTest {
 
     private UserPrefs getTypicalUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setGuiSettings(1000, 500, 300, 100);
+        userPrefs.setGuiSettings(1000, 500, 300, 100, "LightTheme");
         userPrefs.setAddressBookFilePath("addressbook.xml");
         userPrefs.setAddressBookName("TypicalAddressBookName");
         return userPrefs;
@@ -115,7 +115,7 @@ public class JsonUserPrefsStorageTest {
     public void saveUserPrefs_allInOrder_success() throws DataConversionException, IOException {
 
         UserPrefs original = new UserPrefs();
-        original.setGuiSettings(1200, 200, 0, 2);
+        original.setGuiSettings(1200, 200, 0, 2, "LightTheme");
 
         String pefsFilePath = testFolder.getRoot() + File.separator + "TempPrefs.json";
         JsonUserPrefsStorage jsonUserPrefsStorage = new JsonUserPrefsStorage(pefsFilePath);
@@ -126,7 +126,7 @@ public class JsonUserPrefsStorageTest {
         assertEquals(original, readBack);
 
         //Try saving when the file exists
-        original.setGuiSettings(5, 5, 5, 5);
+        original.setGuiSettings(5, 5, 5, 5, "LightTheme");
         jsonUserPrefsStorage.saveUserPrefs(original);
         readBack = jsonUserPrefsStorage.readUserPrefs().get();
         assertEquals(original, readBack);

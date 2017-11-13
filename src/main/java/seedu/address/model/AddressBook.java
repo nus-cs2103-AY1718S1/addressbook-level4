@@ -175,6 +175,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
+    public ObservableList<ReadOnlyPerson> getPersonListNameSortAscend() {
+        return persons.getSortedNameAscend();
+    }
+
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();

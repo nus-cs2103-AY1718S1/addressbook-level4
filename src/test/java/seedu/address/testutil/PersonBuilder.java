@@ -4,7 +4,9 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.ChannelId;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Favourite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -21,7 +23,9 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_CHANNEL_ID = "UC-lHJZR3Gqxm24_Vd_AJ5Yw";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_FAVE = "false";
 
     private Person person;
 
@@ -31,8 +35,11 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
+            ChannelId defaultChannelId = new ChannelId(DEFAULT_CHANNEL_ID);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            Favourite defaultFave = new Favourite(DEFAULT_FAVE);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultChannelId,
+                                        defaultTags, defaultFave);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -82,6 +89,18 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code ChannelId} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withChannelId(String channelId) {
+        try {
+            this.person.setChannelId(new ChannelId(channelId));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("channel ID is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
      * Sets the {@code Phone} of the {@code Person} that we are building.
      */
     public PersonBuilder withPhone(String phone) {
@@ -101,6 +120,17 @@ public class PersonBuilder {
             this.person.setEmail(new Email(email));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Favourite} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withFave (String favourite) {
+        try {
+            this.person.setFavourite(new Favourite(favourite));
+        } finally {
         }
         return this;
     }

@@ -1,7 +1,8 @@
 .background {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #383838;
     background-color: #383838; /* Used in the default.html file */
 }
+
 
 .label {
     -fx-font-size: 11pt;
@@ -119,6 +120,10 @@
     -fx-text-fill: white;
 }
 
+.list-cell:empty {
+    -fx-border-width: 0px;
+}
+
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 16px;
@@ -141,16 +146,29 @@
      -fx-border-top-width: 1px;
 }
 
+.pane-transparent {
+     -fx-background-color: transparent;
+}
+
+.pwd-field {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-padding: 20px;
+}
+
 .status-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
     -fx-text-fill: black;
 }
 
 .result-display {
-    -fx-background-color: transparent;
+    -fx-background-color: #383838;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
-    -fx-text-fill: white;
+    -fx-text-fill: #98999a;
+    -fx-border-color: derive(#1d1d1d, 20%);
+    -fx-border-width: 2px;
+    -fx-border-insets: 10px;
+    -fx-background-radius: 0px;
 }
 
 .result-display .label {
@@ -319,10 +337,10 @@
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;
     -fx-border-color: #383838 #383838 #ffffff #383838;
-    -fx-border-insets: 0;
+    -fx-border-insets: 0 10px 0 10px ;
     -fx-border-width: 1;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 14pt;
     -fx-text-fill: white;
 }
 
@@ -331,8 +349,8 @@
 }
 
 #resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
-    -fx-background-radius: 0;
+    -fx-background-color: #2e2e2e;
+    -fx-background-radius: 0px;
 }
 
 #tags {
@@ -347,4 +365,35 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+#profile {
+    -fx-background: #383838;
+}
+
+/* @@author moomeowroar */
+#commandWord {
+    -fx-background-color: #383838;
+    -fx-padding: 0 0 0 22px;
+    -fx-background-insets: 2px 0 2px 0;
+    -fx-background-radius: 3px;
+    -fx-border-insets: 0 0px 0 0px;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: #d0d0d0;
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #699cff;
+}
+
+#personListView {
+    -fx-background-color: #383838;
+}
+
+#resultDisplayPlaceholder {
+    -fx-effect: dropshadow(three-pass-box, #282a38, 5, 0, 0, 2);
+}
+
+#bottomPlaceholder {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
 }

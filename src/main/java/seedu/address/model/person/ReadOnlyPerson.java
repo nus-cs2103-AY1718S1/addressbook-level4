@@ -20,8 +20,12 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<ChannelId> channelIdProperty();
+    ChannelId getChannelId();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Favourite> faveProperty();
+    Favourite getFavourite();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -32,7 +36,8 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getChannelId().equals(this.getChannelId()));
     }
 
     /**
@@ -47,6 +52,8 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" ChannelId: ")
+                .append(getChannelId())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

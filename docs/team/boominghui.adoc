@@ -1,0 +1,132 @@
+
+
+Ming Hui Project Portfolio
+---------------------------
+`Project: TABCC`
+-----------------
+TABCC is an desktop address book application designed mainly for YouTubers. The user interacts with it +
+using CLI, and it has a GUI created using JavaFX. +
+ +
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B1/main/blob/master/collated/main/Minghui94.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B1/main/blob/master/collated/test/Minghui94.md[Test code]]
+ +
+
+`Find Email Command`
+-------------------
+---
+#Start of Extract [from: User Guide]#
+
+
+include::../UserGuide.adoc[tag=findemail]
+
+
+#End of Extract#
+
+---
+
+`Find Tag Command`
+-----------------
+---
+#Start of Extract [from: User Guide]#
+
+
+include::../UserGuide.adoc[tag=findtag]
+
+
+#End of Extract#
+
+---
+
+`Sort by Name Command (Ascending)`
+---------------------------------
+---
+#Start of Extract [from: User Guide]#
+
+
+include::../UserGuide.adoc[tag=sortascend]
+
+
+#End of Extract#
+
+---
+
+`Justification`
+--------------
+`Find Email Command`: Some user may have very special email but their name may be difficult for a user to remember. +
+
+For example, an English speaking user wants to collaborate with a Japanese YouTuber named Yukiko Ogawa, the name may be difficult for him to remember as Japanese is not be his/her native language. However, the Japanese YouTuber has the email catiscute@example.com, which is a lot easier for the user to remember.
+ +
+ +
+ +
+`Find Tag Command`: This makes the user's life easier as it brings out a list of YouTubers in the same genre range.
+ +
+ +
+For example, a musician wants to collaborate with another musician to make music. However, his/her TABCC contact list +
+has more than a 100 contacts. Rather than spending time looking at each contact, he/she could use the find tag command +
+to look for all the musicians on his/her contact list.
+ +
+ +
+ +
+`Sort Command (ascending)`: Another command to make the user life easier.
+ +
+ +
+For example, a user wants to look for his/her friend in the contact list, but the list is in order of when the user added the contact. +
+He/she may spend a long time just to look for his friend's information. By sorting the name, the user would be
+able to know exactly where the contact is located in the list.
+
+'''
+`Implementation`
+----------------
+// tag::FindEmailCommand[]
+#Start of Extract [from: Developer Guide]#
+
+
+include::../DeveloperGuide.adoc[tag=FindEmailCommand]
+
+
+#End of Extract#
+
+'''
+`Enhancement Proposed: Collab Command`
+-------------------------------------
+==== Automatically send an pre-wrote email to a person in the contact list: `collab`. +
+This command allows a user to automatically send a pre-crafted email to a person in the contact list. +
+Format: `collab [contact's name]`. +
+Example: +
+****
+* `collab pewdiepie`
+* The email page will open and a message will already be crafted, user just need to click the send button.
+* Sample email: Good day to you [contact's name], this is [user's name] and I would like to do a collaboration with you, +
+please reply to this email if you are interested, thank you.
+* Sample email can be edit by the user.
+****
+
+'''
+`Other contributions`
+---------------------
+**1)** Created the team's organization on GitHub. +
+**2)** Help with correcting some checkstyle error brought up by CI Travis.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

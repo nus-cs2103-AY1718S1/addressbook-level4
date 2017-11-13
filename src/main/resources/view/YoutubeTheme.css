@@ -1,0 +1,409 @@
+/* @@author moomeowroar */
+.background {
+    -fx-background-color: #FFFFFF;
+    background-color: #FFFFFF; /* Used in the default.html file */
+}
+
+
+.label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #555555;
+    -fx-opacity: 0.9;
+}
+
+.label-bright {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.label-header {
+    -fx-font-size: 32pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.text-field {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.tab-pane {
+    -fx-padding: 0 0 0 1;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}
+
+.table-view {
+    -fx-base: #FFFFFF;
+    -fx-control-inner-background: #FFFFFF;
+    -fx-background-color: #FFFFFF;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color:
+        transparent
+        transparent
+        derive(-fx-base, 80%)
+        transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #666666;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
+.split-pane:horizontal .split-pane-divider {
+    -fx-background-color: #FFFFFF;
+}
+
+.split-pane {
+    -fx-border-radius: 1;
+    -fx-border-width: 0;
+    -fx-background-color: #FFFFFF;
+}
+
+.list-view {
+    -fx-background-color: #FFFFFF;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.cell_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 20px;
+    -fx-text-fill: #656f77;
+}
+
+.cell_small_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-text-fill: #656f77;
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+    -fx-border-color: #c3c3c3 transparent transparent transparent;
+    -fx-border-top-width: 1px;
+    -fx-background-color: #FFFFFF;
+}
+
+.list-cell .label {
+    -fx-text-fill: #595a5b;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #FFFFFF;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #FFFFFF;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #b8c975;
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 0;
+}
+
+.list-cell:filled:selected .cell_big_label {
+    -fx-text-fill: #FFFFFF;
+}
+
+.list-cell:empty {
+    -fx-border-width: 0px;
+}
+
+.anchor-pane {
+     -fx-background-color: #FFFFFF;
+}
+
+.pane-with-border {
+     -fx-background-color: #FFFFFF;
+     -fx-border-color: #FFFFFF;
+     -fx-border-top-width: 1px;
+}
+
+.pane-transparent {
+     -fx-background-color: transparent;
+}
+
+.pwd-field {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 20px;
+}
+
+.status-bar {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: black;
+}
+
+.result-display {
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 12pt;
+    -fx-text-fill: #595a5b;
+    -fx-border-color: #FFFFFF;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #dadada;
+    -fx-padding: 0 10 0 10;
+    -fx-background-radius: 0px;
+}
+
+.result-display .label {
+    -fx-text-fill: black !important;
+}
+
+.status-bar .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #2e2e2e;
+}
+
+.status-bar-with-border {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #deded8;
+    -fx-border-width: 0px;
+}
+
+.status-bar-with-border .label {
+    -fx-text-fill: #61594a;
+}
+
+.grid-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #FFFFFF;
+    -fx-border-width: 0px;
+}
+
+.grid-pane .anchor-pane {
+    -fx-background-color: #FFFFFF;
+}
+
+.context-menu {
+    -fx-background-color: #6c6454;
+}
+
+.context-menu .label {
+    -fx-text-fill: #2e2e2e;
+}
+
+.menu-bar {
+    -fx-background-color: #FFFFFF;
+}
+
+.menu-bar .label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #333333;
+    -fx-opacity: 0.9;
+}
+
+.menu .left-container {
+    -fx-background-color: black;
+}
+
+/*
+ * Metro style Push Button
+ * Author: Pedro Duque Vieira
+ * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
+ */
+.button {
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #e2e2e2;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-background-color: #1d1d1d;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.button:hover {
+    -fx-background-color: #b8c975;
+}
+
+.button:pressed, .button:default:hover:pressed {
+  -fx-background-color: white;
+  -fx-text-fill: #1d1d1d;
+}
+
+.button:focused {
+    -fx-border-color: white, white;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid, segments(1, 1);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.button:disabled, .button:default:disabled {
+    -fx-opacity: 0.4;
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: white;
+}
+
+.button:default {
+    -fx-background-color: -fx-focus-color;
+    -fx-text-fill: #ffffff;
+}
+
+.button:default:hover {
+    -fx-background-color: derive(-fx-focus-color, 30%);
+}
+
+.dialog-pane {
+    -fx-background-color: #FFFFFF;
+}
+
+.dialog-pane > *.button-bar > *.container {
+    -fx-background-color: #FFFFFF;
+}
+
+.dialog-pane > *.label.content {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;;
+}
+
+.dialog-pane:header *.header-panel {
+    -fx-background-color: #FFFFFF;
+}
+
+.dialog-pane:header *.header-panel *.label {
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-fill: #FFFFFF;;
+    -fx-text-fill: #FFFFFF;;
+}
+
+.scroll-bar {
+    -fx-background-color: #FFFFFF;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #FFFFFF;
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1  8 1;
+}
+
+#cardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#commandTypeLabel {
+    -fx-font-size: 11px;
+    -fx-text-fill: #FFFFFF;
+}
+
+#commandBoxPlaceholder {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #e8e5ea;
+}
+
+#commandTextField {
+    -fx-background-color: #FFFFFF;
+    -fx-background-insets: 0;
+    -fx-border-color: #d0d0d0;
+    -fx-border-radius: 3px;
+    -fx-border-insets: 0 10px 0 10px ;
+    -fx-border-width: 0 0 1px 0;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 14pt;
+    -fx-text-fill: #2e2e2e;
+}
+
+#filterField, #personListPanel, #personWebpage {
+    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+}
+
+#resultDisplay .content {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 3px;
+}
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 3 5 3 5;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+}
+
+/* @@author moomeowroar */
+#commandWord {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 0 0 2px 21px;
+    -fx-background-radius: 3px;
+    -fx-background-insets: 2px 0px 2px 0px;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: #d0d0d0;
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #4f7df6;
+}
+
+#resultDisplayPlaceholder {
+    -fx-effect: dropshadow(three-pass-box, #dadada, 5, 0, 0, 2);
+}
+
+#personListView {
+    -fx-background-color: #FFFFFF;
+}
+
+#bottomPlaceholder {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}

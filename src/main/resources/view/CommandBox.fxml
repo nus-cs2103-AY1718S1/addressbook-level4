@@ -2,8 +2,12 @@
 
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Button?>
 
 <StackPane styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" promptText="Enter command here..."/>
+  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyReleased="#handleKeyReleased" promptText="Enter command here..." minHeight="50" maxHeight="50"/>
+  <!-- @@author moomeowroar -->
+  <Button fx:id="commandWord" mnemonicParsing="false" text="Find" textAlignment="right" StackPane.alignment="CENTER_LEFT" mouseTransparent="true" visible="false" minHeight="50" maxHeight="50"/>
+  <!-- @@author -->
 </StackPane>
 
