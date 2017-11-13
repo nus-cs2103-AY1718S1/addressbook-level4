@@ -31,48 +31,47 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author HouDenghao
 /**
- * Contains integration tests (interaction with the Model) and unit tests for SortCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for SortEventCommand.
  */
-public class SortCommandTest {
+public class SortEventCommandTest {
 
     private Model filledModel;
     private Model emptyModel;
-    private Model personModel;
-
+    private Model eventModel;
 
     @Before
     public void setUp() {
         filledModel = new ModelManager(getUnsortedAddressBook(), getUnsortedEventList(), new UserPrefs());
         emptyModel = new ModelManager(getEmptyAddressBook(), getEmptyEventList(), new UserPrefs());
-        personModel = new ModelManager(getUnsortedAddressBook(), getEmptyEventList(), new UserPrefs());
+        eventModel = new ModelManager(getEmptyAddressBook(), getUnsortedEventList(), new UserPrefs());
     }
 
     @Test
     public void executeEmptyListShowEmptylist() {
-        SortCommand command = prepareCommand(emptyModel);
-        assertSuccess(command, SortCommand.MESSAGE_SUCCESS, Collections.emptyList(),
+        SortEventCommand command = prepareCommand(emptyModel);
+        assertSuccess(command, SortEventCommand.MESSAGE_SUCCESS, Collections.emptyList(),
                 Collections.emptyList(), emptyModel);
     }
 
     @Test
     public void executeAllFilledListShowSortedList() {
-        SortCommand command = prepareCommand(filledModel);
-        assertSuccess(command, SortCommand.MESSAGE_SUCCESS, Arrays.asList(ALICE, BENSON, CARL, DANIEL),
-                Arrays.asList(FOURTH, SECOND, FIRST, THIRD), filledModel);
+        SortEventCommand command = prepareCommand(filledModel);
+        assertSuccess(command, SortEventCommand.MESSAGE_SUCCESS, Arrays.asList(CARL, ALICE, BENSON, DANIEL),
+                Arrays.asList(FIRST, SECOND, THIRD, FOURTH), filledModel);
     }
 
     @Test
     public void executeOnlyOneFilledListShowOneSortedList() {
-        SortCommand commandOne = prepareCommand(personModel);
-        assertSuccess(commandOne, SortCommand.MESSAGE_SUCCESS, Arrays.asList(ALICE, BENSON, CARL, DANIEL),
-                Collections.emptyList(), personModel);
+        SortEventCommand commandTwo = prepareCommand(eventModel);
+        assertSuccess(commandTwo, SortEventCommand.MESSAGE_SUCCESS, Collections.emptyList(),
+                Arrays.asList(FIRST, SECOND, THIRD, FOURTH), eventModel);
     }
 
     /**
-     * Prepares for {@code SortCommand} .
+     * Prepares for {@code SortEventCommand} .
      */
-    private SortCommand prepareCommand(Model model) {
-        SortCommand command = new SortCommand();
+    private SortEventCommand prepareCommand(Model model) {
+        SortEventCommand command = new SortEventCommand();
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -83,7 +82,7 @@ public class SortCommandTest {
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code p}<br>
      *     - the {@code FilteredList<ReadOnlyEvent>} is equal to {@code e}<br>
      */
-    private void assertSuccess(SortCommand c, String msg, List<ReadOnlyPerson> p, List<ReadOnlyEvent> e, Model m) {
+    private void assertSuccess(SortEventCommand c, String msg, List<ReadOnlyPerson> p, List<ReadOnlyEvent> e, Model m) {
         CommandResult commandResult = c.execute();
         assertEquals(msg, commandResult.feedbackToUser);
         assertEquals(p, m.getFilteredPersonList());
