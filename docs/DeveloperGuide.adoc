@@ -2162,14 +2162,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `Contag` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Add remark
-=== Use case: Add remark
+=== Use case: Schedule an activity
 *MSS*
 
 1.  User requests to list persons
 2.  ConTag shows a list of persons
-3.  User requests to add remark to a specific person in the list
-4.  ConTag successfully adds remark to contact
+3.  User requests to schedule an activity to a specific person in the list
+4.  ConTag successfully schedules activity to contact
 +
 Use case ends.
 
@@ -2183,7 +2182,7 @@ Use case ends.
 * 3a. The given index or format is invalid.
 +
 [none]
-** 3a1. ConTagshows an error message.
+** 3a1. ConTag shows an error message.
 +
 Use case resumes at step 2.
 
@@ -2324,20 +2323,3 @@ xml
 ....
 XML is a file extension for an Extensible Markup Language (XML) file format.
 ....
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
