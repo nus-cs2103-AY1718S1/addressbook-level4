@@ -233,9 +233,11 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
      * @param days number of days to add
      */
 
-    public void plusDays(int days) {
+    public Event plusDays(int days) {
         Timeslot newSlot = this.getTimeslot().plusDays(days);
-        this.setTimeslot(newSlot);
+        Event newEvent = this;
+        newEvent.setTimeslot(newSlot);
+        return newEvent;
     }
 
     @Override
