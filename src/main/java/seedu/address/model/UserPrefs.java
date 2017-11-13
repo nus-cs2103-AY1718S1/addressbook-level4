@@ -62,13 +62,23 @@ public class UserPrefs {
         return adminUsername;
     }
 
+    //@@author jaivigneshvenugopal
+    /**
+     * @return path of the profile pictures folder that resides in user's workspace
+     */
     public String getProfilePicturesFolderPath() {
         return profilePicturesFolderPath;
     }
 
+    /**
+     * Sets the path of the profile pictures folder indicated by user
+     * @param path points to the folder that resides in user's workspace
+     */
     public void setProfilePicturesFolderPath(String path) {
         this.profilePicturesFolderPath = path;
     }
+
+    //@@author
 
     public void setAdminPassword(String adminPassword) {
         byte[] salt = getSalt();
