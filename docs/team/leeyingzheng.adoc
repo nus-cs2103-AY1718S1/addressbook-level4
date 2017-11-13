@@ -60,6 +60,7 @@ and including links to social media accounts for each contacts.
 ---
 
 include::../DeveloperGuide.adoc[tag=facebook]
+include::../DeveloperGuide.adoc[tag=facebookcont]
 
 ---
 
@@ -75,7 +76,7 @@ include::../UserGuide.adoc[tag=reply]
 
 ==== Justification
 
-Users may accidentally add a duplicate contact or edit a contact to share similar information with another contact in UniCity. This may cause unneccessary confusion
+Users may accidentally add a contact with duplicate fields existing in their contacts list. This may cause unnecessary confusion
 when users try to differentiate among similar contacts in UniCity. Hence, we needed the mechanism to check for duplicates to address this issue.
 The add and edit command will inform users if they have used a similar name, phone number, email address or home address to register a contact before.
 
@@ -83,6 +84,7 @@ The add and edit command will inform users if they have used a similar name, pho
 
 ---
 
+include::../DeveloperGuide.adoc[tag=reply]
 
 ---
 

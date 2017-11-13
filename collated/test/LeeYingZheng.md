@@ -1,83 +1,104 @@
 # LeeYingZheng
-###### /java/seedu/address/model/TagContainsKeywordsPredicateTest.java
+###### \java\seedu\address\commons\util\StringUtilTest.java
 ``` java
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+    //---------------- Tests for containsTag ------------------------------------------
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+    /*
+     * Invalid equivalence partitions for word: null, empty
+     * Invalid equivalence partitions for sentence: null
+     * The four test cases below test one invalid input at a time.
+     */
 
-import org.junit.Test;
+    //overload for taglist, a set of tags
+    private void assertExceptionThrown(Class<? extends Throwable> exceptionClass, Set<Tag> tagList, String word,
+                                       Optional<String> errorMessage) {
+        thrown.expect(exceptionClass);
+        errorMessage.ifPresent(message -> thrown.expectMessage(message));
+        StringUtil.containsTag(tagList, word);
+    }
 
-import seedu.address.model.tag.TagContainsKeywordsPredicate;
-import seedu.address.testutil.PersonBuilder;
+    public Set<Tag> setupTestTag() {
+        try {
 
-public class TagContainsKeywordsPredicateTest {
+            Set<Tag> testTag = new HashSet<Tag>();
+
+            Tag friend = new Tag("friend");
+            Tag colleague = new Tag("colleague");
+            Tag neighbour = new Tag("neighbour");
+            Tag family = new Tag("family");
+            testTag.add(friend);
+            testTag.add(colleague);
+            testTag.add(neighbour);
+            testTag.add(family);
+
+            return testTag;
+        } catch (IllegalValueException e) {
+            return null;
+        }
+    }
+
 
     @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("first");
-        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+    public void containsTag_nullWord_throwsNullPointerException() {
+        Set<Tag> testTag = setupTestTag();
+        assertExceptionThrown(NullPointerException.class, testTag, null, Optional.empty());
+    }
 
-        TagContainsKeywordsPredicate firstPredicate =
-                new TagContainsKeywordsPredicate(firstPredicateKeywordList);
-        TagContainsKeywordsPredicate secondPredicate =
-                new TagContainsKeywordsPredicate(secondPredicateKeywordList);
 
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        TagContainsKeywordsPredicate firstPredicateCopy =
-                new TagContainsKeywordsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
+    @Test
+    public void containsTag_emptyWord_throwsIllegalArgumentException() {
+        Set<Tag> testTag = setupTestTag();
+        assertExceptionThrown(IllegalArgumentException.class, testTag, "  ",
+                Optional.of("Word parameter cannot be empty"));
     }
 
     @Test
-    public void test_tagContainsKeywords_returnsTrue() {
-        // One keyword
-        TagContainsKeywordsPredicate predicate =
-                new TagContainsKeywordsPredicate(Collections.singletonList("girlfriend"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("hallmate", "girlfriend").build()));
-
-        // Multiple keywords
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friend", "hallmate"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("friend").build()));
-
-        // Only one matching keyword
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friend", "projectmate"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("projectmate", "senior").build()));
-
-        // Mixed-case keywords
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("FRIEND", "HALLMATE"));
-        assertFalse(predicate.test(new PersonBuilder().withTags("friend").build()));
+    public void containsTag_nullTags_throwsNullPointerException() {
+        assertExceptionThrown(NullPointerException.class, null, "abc", Optional.empty());
     }
+
+    /*
+     * Valid equivalence partitions for word:
+     *   - any word
+     *   - word containing symbols/numbers
+     *   - word with leading/trailing spaces
+     *
+     * Possible scenarios returning true:
+     *   - matches any tags of a person, regardless of number of spaces behind the query words
+     *   - if there are multiple words, any words that match any tags of a person
+     *
+     * Possible scenarios returning false:
+     *   - query word does not follow case of the tag word
+     *   - query word matches part of a tag word
+     *   - tags match part of the query word
+     *   - word(s) does not match any of the tags of a person
+     *
+     * The test method below tries to verify all above with a reasonably low number of test cases.
+     */
 
     @Test
-    public void test_tagDoesNotContainKeywords_returnsFalse() {
-        // Zero keywords
-        TagContainsKeywordsPredicate predicate =
-                new TagContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withTags("girlfriend").build()));
+    public void containsTag_validInputs_correctResult() {
 
-        // Non-matching keyword
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friend"));
-        assertFalse(predicate.test(new PersonBuilder().withTags("tutor", "professor").build()));
+        Set<Tag> testTag = setupTestTag();
+        // Unmatched Tags
+        assertFalse(StringUtil.containsTag(testTag, "abc")); // Boundary case
+        assertFalse(StringUtil.containsTag(testTag, "123"));
 
+        // Matches a partial word only
+        assertFalse(StringUtil.containsTag(testTag, "famil")); // Tag word bigger than query word
+        assertFalse(StringUtil.containsTag(testTag, "neighbours")); // Query word bigger than tag word
+
+        // Matches word in the tags, different upper/lower case letters
+        assertFalse(StringUtil.containsTag(testTag, "Friend")); // incorrect case of query word
+        assertTrue(StringUtil.containsTag(testTag, "family")); // correct case of query word
+        assertTrue(StringUtil.containsTag(testTag, " colleague  ")); // query word contains spaces at its boundaries
+
+        // Matches multiple words in Tags
+        assertTrue(StringUtil.containsTag(testTag , "friend colleague")); // query contains multiple words
+        assertTrue(StringUtil.containsTag(testTag , "family tutor")); //query contains a matched and unmatched word
     }
-}
 ```
-###### /java/seedu/address/logic/commands/FacebookCommandTest.java
+###### \java\seedu\address\logic\commands\FacebookCommandTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -102,7 +123,7 @@ public class FacebookCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FilterCommandTest.java
+###### \java\seedu\address\logic\commands\FilterCommandTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -203,45 +224,7 @@ public class FilterCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddCommandIntegrationTest.java
-``` java
-    private Model model;
-
-    @Before
-    public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    }
-
-    @Test
-    public void execute_newPerson_success() throws Exception {
-        Person validPerson = new PersonBuilder().build();
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addPerson(validPerson);
-
-        assertCommandSuccess(prepareCommand(validPerson, model), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, validPerson), expectedModel);
-    }
-
-    @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Person personInList = new Person(model.getAddressBook().getPersonList().get(0));
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        assertCommandSuccess(prepareCommand(personInList, model), model,
-                String.format(MESSAGE_DUPLICATE_FIELD, NAME_FIELD), expectedModel);
-    }
-
-    /**
-     * Generates a new {@code AddCommand} which upon execution, adds {@code person} into the {@code model}.
-     */
-    private AddCommand prepareCommand(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
-    }
-}
-```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_clear() throws Exception {
@@ -272,7 +255,7 @@ public class FilterCommandTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/FilterCommandParserTest.java
+###### \java\seedu\address\logic\parser\FilterCommandParserTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -308,106 +291,85 @@ public class FilterCommandParserTest {
 
 }
 ```
-###### /java/seedu/address/commons/util/StringUtilTest.java
+###### \java\seedu\address\model\TagContainsKeywordsPredicateTest.java
 ``` java
-    //---------------- Tests for containsTag ------------------------------------------
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-    /*
-     * Invalid equivalence partitions for word: null, empty
-     * Invalid equivalence partitions for sentence: null
-     * The four test cases below test one invalid input at a time.
-     */
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-    //overload for taglist, a set of tags
-    private void assertExceptionThrown(Class<? extends Throwable> exceptionClass, Set<Tag> tagList, String word,
-                                       Optional<String> errorMessage) {
-        thrown.expect(exceptionClass);
-        errorMessage.ifPresent(message -> thrown.expectMessage(message));
-        StringUtil.containsTag(tagList, word);
-    }
+import org.junit.Test;
 
-    public Set<Tag> setupTestTag() {
-        try {
+import seedu.address.model.tag.TagContainsKeywordsPredicate;
+import seedu.address.testutil.PersonBuilder;
 
-            Set<Tag> testTag = new HashSet<Tag>();
-
-            Tag friend = new Tag("friend");
-            Tag colleague = new Tag("colleague");
-            Tag neighbour = new Tag("neighbour");
-            Tag family = new Tag("family");
-            testTag.add(friend);
-            testTag.add(colleague);
-            testTag.add(neighbour);
-            testTag.add(family);
-
-            return testTag;
-        } catch (IllegalValueException e) {
-            return null;
-        }
-    }
-
+public class TagContainsKeywordsPredicateTest {
 
     @Test
-    public void containsTag_nullWord_throwsNullPointerException() {
-        Set<Tag> testTag = setupTestTag();
-        assertExceptionThrown(NullPointerException.class, testTag, null, Optional.empty());
-    }
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("first");
+        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
 
+        TagContainsKeywordsPredicate firstPredicate =
+                new TagContainsKeywordsPredicate(firstPredicateKeywordList);
+        TagContainsKeywordsPredicate secondPredicate =
+                new TagContainsKeywordsPredicate(secondPredicateKeywordList);
 
-    @Test
-    public void containsTag_emptyWord_throwsIllegalArgumentException() {
-        Set<Tag> testTag = setupTestTag();
-        assertExceptionThrown(IllegalArgumentException.class, testTag, "  ",
-                Optional.of("Word parameter cannot be empty"));
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        TagContainsKeywordsPredicate firstPredicateCopy =
+                new TagContainsKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
     }
 
     @Test
-    public void containsTag_nullTags_throwsNullPointerException() {
-        assertExceptionThrown(NullPointerException.class, null, "abc", Optional.empty());
-    }
+    public void test_tagContainsKeywords_returnsTrue() {
+        // One keyword
+        TagContainsKeywordsPredicate predicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("girlfriend"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("hallmate", "girlfriend").build()));
 
-    /*
-     * Valid equivalence partitions for word:
-     *   - any word
-     *   - word containing symbols/numbers
-     *   - word with leading/trailing spaces
-     *
-     * Possible scenarios returning true:
-     *   - matches any tags of a person, regardless of number of spaces behind the query words
-     *   - if there are multiple words, any words that match any tags of a person
-     *
-     * Possible scenarios returning false:
-     *   - query word does not follow case of the tag word
-     *   - query word matches part of a tag word
-     *   - tags match part of the query word
-     *   - word(s) does not match any of the tags of a person
-     *
-     * The test method below tries to verify all above with a reasonably low number of test cases.
-     */
+        // Multiple keywords
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friend", "hallmate"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friend").build()));
+
+        // Only one matching keyword
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friend", "projectmate"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("projectmate", "senior").build()));
+
+        // Mixed-case keywords
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("FRIEND", "HALLMATE"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("friend").build()));
+    }
 
     @Test
-    public void containsTag_validInputs_correctResult() {
+    public void test_tagDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        TagContainsKeywordsPredicate predicate =
+                new TagContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withTags("girlfriend").build()));
 
-        Set<Tag> testTag = setupTestTag();
-        // Unmatched Tags
-        assertFalse(StringUtil.containsTag(testTag, "abc")); // Boundary case
-        assertFalse(StringUtil.containsTag(testTag, "123"));
+        // Non-matching keyword
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friend"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("tutor", "professor").build()));
 
-        // Matches a partial word only
-        assertFalse(StringUtil.containsTag(testTag, "famil")); // Tag word bigger than query word
-        assertFalse(StringUtil.containsTag(testTag, "neighbours")); // Query word bigger than tag word
-
-        // Matches word in the tags, different upper/lower case letters
-        assertFalse(StringUtil.containsTag(testTag, "Friend")); // incorrect case of query word
-        assertTrue(StringUtil.containsTag(testTag, "family")); // correct case of query word
-        assertTrue(StringUtil.containsTag(testTag, " colleague  ")); // query word contains spaces at its boundaries
-
-        // Matches multiple words in Tags
-        assertTrue(StringUtil.containsTag(testTag , "friend colleague")); // query contains multiple words
-        assertTrue(StringUtil.containsTag(testTag , "family tutor")); //query contains a matched and unmatched word
     }
+}
 ```
-###### /java/systemtests/AddCommandSystemTest.java
+###### \java\systemtests\AddCommandSystemTest.java
 ``` java
         /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
@@ -434,9 +396,7 @@ public class FilterCommandParserTest {
         /* Case: add a duplicate person -> rejected */
         command = AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        expectedModel = getModel();
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different tags -> Prompt Message */
         // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
@@ -444,26 +404,26 @@ public class FilterCommandParserTest {
         // AddressBook#addPerson(ReadOnlyPerson)
         command = AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + " " + PREFIX_TAG.getPrefix() + "friends";
-        expectedModel = getModel();
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a person with all fields same as another person in the address book except name
-         * -> Duplicate Phone Message Prompt
+         * -> Duplicate Fields Message Prompt
          */
         command = AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
         expectedModel = getModel();
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.PHONE_FIELD));
+        assertCommandSuccess(command, expectedModel, String.format(AddCommand.MESSAGE_DUPLICATE_FIELD,
+                AddCommand.PHONE_FIELD + FIELD_SEPERATOR + AddCommand.ADDRESS_FIELD + FIELD_SEPERATOR
+                        + AddCommand.EMAIL_FIELD));
 
         /* Case: add a person with all fields same as another person in the address book except phone
-         *  -> Duplicate Name Message Prompt*/
+         *  -> Duplicate Fields Message Prompt*/
         command = AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
         expectedModel = getModel();
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
+        assertCommandSuccess(command, expectedModel, String.format(AddCommand.MESSAGE_DUPLICATE_FIELD,
+                AddCommand.NAME_FIELD + FIELD_SEPERATOR + AddCommand.ADDRESS_FIELD + FIELD_SEPERATOR
+                        + AddCommand.EMAIL_FIELD));
 
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORDVAR_2 + " " + KEYWORD_MATCHING_MEIER);
@@ -571,7 +531,7 @@ public class FilterCommandParserTest {
         assertApplicationDisplaysExpected("" , expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
-        //assertStatusBarUnchangedExceptSyncStatus();
+        assertStatusBarUnchangedExceptSyncStatus();
     }
 
     /**
@@ -608,7 +568,7 @@ public class FilterCommandParserTest {
     }
 }
 ```
-###### /java/systemtests/FilterCommandSystemTest.java
+###### \java\systemtests\FilterCommandSystemTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -786,195 +746,6 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
 
-        executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
-    }
-}
-```
-###### /java/systemtests/EditCommandSystemTest.java
-``` java
-        /* Case: edit a person with new values same as existing values -> edited */
-        command = EditCommand.COMMAND_WORDVAR_1 + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        Model expectedModel = getModel();
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
-
-        /* Case: edit some fields -> edited */
-        index = INDEX_FIRST_PERSON;
-        command = EditCommand.COMMAND_WORDVAR_2 + " " + index.getOneBased() + TAG_DESC_FRIEND;
-        ReadOnlyPerson personToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
-
-        /* Case: clear tags -> cleared */
-        index = INDEX_FIRST_PERSON;
-        command = EditCommand.COMMAND_WORDVAR_2.toUpperCase() + " " + index.getOneBased() + " "
-                + PREFIX_TAG.getPrefix();
-        assertCommandSuccess(command, expectedModel, String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
-
-
-        /* --------------------- Performing edit operation while a person card is selected -------------------------- */
-
-        /* Case: selects first card in the person list, edit a person -> edited, card selection remains unchanged but
-         * browser url changes
-         */
-        showAllPersons();
-        index = INDEX_FIRST_PERSON;
-        selectPerson(index);
-        command = EditCommand.COMMAND_WORDVAR_1 + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-        // this can be misleading: card selection actually remains unchanged but the
-        // browser's url is updated to reflect the new person's name
-        assertCommandSuccess(command, index, AMY, index);
-
-        /* --------------------------------- Performing invalid edit operation -------------------------------------- */
-
-        /* Case: invalid index (0) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_2.toUpperCase() + " 0" + NAME_DESC_BOB, getModel(),
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
-
-        /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " -1" + NAME_DESC_BOB, getModel(),
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
-
-        /* Case: invalid index (size + 1) -> rejected */
-        int invalidIndex = getModel().getFilteredPersonList().size() + 1;
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " " + invalidIndex + NAME_DESC_BOB, getModel(),
-                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-
-        /* Case: missing index -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + NAME_DESC_BOB, getModel(),
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
-
-        /* Case: missing all fields -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_2 + " " + INDEX_FIRST_PERSON.getOneBased(), getModel(),
-                EditCommand.MESSAGE_NOT_EDITED);
-
-        /* Case: invalid name -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + INVALID_NAME_DESC, getModel(), Name.MESSAGE_NAME_CONSTRAINTS);
-
-        /* Case: invalid phone -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_2 + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + INVALID_PHONE_DESC, getModel(), Phone.MESSAGE_PHONE_CONSTRAINTS);
-
-        /* Case: invalid email -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + INVALID_EMAIL_DESC, getModel(), Email.MESSAGE_EMAIL_CONSTRAINTS);
-
-        /* Case: invalid address -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_2 + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + INVALID_ADDRESS_DESC, getModel(), Address.MESSAGE_ADDRESS_CONSTRAINTS);
-
-        /* Case: invalid tag -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORDVAR_1 + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + INVALID_TAG_DESC, getModel(), Tag.MESSAGE_TAG_CONSTRAINTS);
-
-        /* Case: edit a person with new values same as another person's values -> rejected */
-        executeCommand(PersonUtil.getAddCommand(BOB));
-        assertTrue(getModel().getAddressBook().getPersonList().contains(BOB));
-        index = INDEX_FIRST_PERSON;
-        assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORDVAR_1 + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandSuccess(command, getModel(), String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
-
-        /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORDVAR_1 + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + TAG_DESC_HUSBAND;
-        assertCommandSuccess(command, getModel(), String.format(UndoableCommand.MESSAGE_DUPLICATE_FIELD,
-                UndoableCommand.NAME_FIELD));
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Index, ReadOnlyPerson, Index)} except that
-     * the browser url and selected card remain unchanged.
-     * @param toEdit the index of the current model's filtered list
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Index, ReadOnlyPerson, Index)
-     */
-    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyPerson editedPerson) {
-        assertCommandSuccess(command, toEdit, editedPerson, null);
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
-     * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
-     * 2. Asserts that the model related components are updated to reflect the person at index {@code toEdit} being
-     * updated to values specified {@code editedPerson}.<br>
-     * @param toEdit the index of the current model's filtered list.
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
-     */
-    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyPerson editedPerson,
-            Index expectedSelectedCardIndex) {
-        Model expectedModel = getModel();
-        try {
-            expectedModel.updatePerson(
-                    expectedModel.getFilteredPersonList().get(toEdit.getZeroBased()), editedPerson);
-            expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        } catch (DuplicatePersonException | PersonNotFoundException e) {
-            throw new IllegalArgumentException(
-                    "editedPerson is a duplicate in expectedModel, or it isn't found in the model.");
-        }
-
-        assertCommandSuccess(command, expectedModel,
-                String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson), expectedSelectedCardIndex);
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} except that the
-     * browser url and selected card remain unchanged.
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
-        assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
-    }
-
-    /**
-     * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays an empty string.<br>
-     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
-     * 4. Asserts that the browser url and selected card update accordingly depending on the card at
-     * {@code expectedSelectedCardIndex}.<br>
-     * 5. Asserts that the status bar's sync status changes.<br>
-     * 6. Asserts that the command box has the default style class.<br>
-     * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
-            Index expectedSelectedCardIndex) {
-        executeCommand(command);
-        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertCommandBoxShowsDefaultStyle();
-        if (expectedSelectedCardIndex != null) {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            assertSelectedCardUnchanged();
-        }
-        //assertStatusBarUnchangedExceptSyncStatus();
-    }
-
-    /**
-     * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays {@code command}.<br>
-     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the model related components equal to the current model.<br>
-     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
-     * 5. Asserts that the command box has the error style.<br>
-     * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandFailure(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();

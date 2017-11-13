@@ -1,5 +1,267 @@
 # jacoblipech
-###### /java/seedu/address/model/person/BirthdayTest.java
+###### \java\guitests\AddressBookGuiTest.java
+``` java
+    protected ExtendedPersonDisplayHandle getExtendedPersonDisplay() {
+
+        return mainWindowHandle.getExtendedPersonDisplay();
+    }
+
+```
+###### \java\guitests\guihandles\ExtendedPersonDisplayHandle.java
+``` java
+
+/**
+ * Provides a handle for the information shown in the Extended Person Display.
+ */
+public class ExtendedPersonDisplayHandle extends NodeHandle<Node> {
+
+    public static final String EXTENDED_PERSON_VIEW_ID = "#extendedPersonDisplayPlaceholder";
+
+    private static final String NAME_FIELD_ID = "#name";
+    private static final String PHONE_FIELD_ID = "#phone";
+    private static final String EMAIL_FIELD_ID = "#email";
+    private static final String ADDRESS_FIELD_ID = "#address";
+    private static final String BIRTHDAY_FIELD_ID = "#birthday";
+
+    private final Label nameLabel;
+    private final Label phoneLabel;
+    private final Label emailLabel;
+    private final Label addressLabel;
+    private final Label birthdayLabel;
+
+    public ExtendedPersonDisplayHandle(Node cardNode) {
+        super(cardNode);
+
+        this.nameLabel = getChildNode(NAME_FIELD_ID);
+        this.phoneLabel = getChildNode(PHONE_FIELD_ID);
+        this.emailLabel = getChildNode(EMAIL_FIELD_ID);
+        this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
+        this.birthdayLabel = getChildNode(BIRTHDAY_FIELD_ID);
+
+    }
+
+    public String getName() {
+        return nameLabel.getText();
+    }
+
+    public String getPhone() {
+        return phoneLabel.getText();
+    }
+
+    public String getEmail() {
+        return emailLabel.getText();
+    }
+
+    public String getAddress() {
+        return addressLabel.getText();
+    }
+
+    public String getBirthday() {
+        return birthdayLabel.getText();
+    }
+
+}
+```
+###### \java\guitests\guihandles\StatusBarFooterHandle.java
+``` java
+    /**
+     * Returns the text of 'total number of people' in contacts of the status bar
+     */
+    public String getTotalPeople() {
+        return totalPeople.getText();
+    }
+
+```
+###### \java\guitests\HelpWindowTest.java
+``` java
+        getExtendedPersonDisplay().click();
+        getMainMenu().openHelpWindowUsingAccelerator();
+        assertHelpWindowOpen();
+
+```
+###### \java\seedu\address\logic\commands\AddBirthdayCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for AddBirthdayCommand.
+ */
+
+public class AddBirthdayCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_addBirthday_success() throws PersonNotFoundException, IllegalValueException {
+        //actual model
+        Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
+                .withBirthday(VALID_BIRTHDAY_AMY).build();
+        Birthday toAdd = new Birthday (VALID_BIRTHDAY_AMY);
+
+        AddBirthdayCommand addBirthdayCommand = prepareCommand(INDEX_FIRST_PERSON, toAdd);
+        String expectedMessage = String.format(AddBirthdayCommand.MESSAGE_ADD_BIRTHDAY_SUCCESS, toAdd);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        assertCommandSuccess(addBirthdayCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Returns an {@code AddBirthdayCommand} with parameter {@code index}
+     */
+    private AddBirthdayCommand prepareCommand (Index index, Birthday toAdd) {
+        AddBirthdayCommand addBirthdayCommand = new AddBirthdayCommand(index, toAdd);
+        addBirthdayCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        return addBirthdayCommand;
+    }
+}
+```
+###### \java\seedu\address\logic\commands\AddCommandTest.java
+``` java
+        @Override
+        public void addBirthday (Index targetIndex, Birthday toAdd) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
+            fail("This method should not be called.");
+            return false;
+        }
+    }
+
+```
+###### \java\seedu\address\logic\commands\SortCommandTest.java
+``` java
+public class SortCommandTest {
+
+    private Model model;
+
+    @Test
+    public void execute_sortEmptyAddressBook_success() {
+        model = new ModelManager();
+        model.getFilteredPersonList();
+        assertCommandSuccess(prepareCommand(model), model, SortCommand.MESSAGE_EMPTY_LIST, model);
+    }
+
+    @Test
+    public void execute_sortAddressBookByName_success() throws DuplicatePersonException {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model.addPerson(new PersonBuilder().withName("Alex").build());;
+        assertCommandSuccess(prepareCommand(model), model, SortCommand.MESSAGE_SUCCESS, model);
+    }
+
+    @Test
+    public void execute_alreadySortedAddressBookByName_success() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        assertCommandSuccess(prepareCommand(model), model, SortCommand.MESSAGE_ALREADY_SORTED, model);
+    }
+
+    /**
+     * Generates a new {@code SortCommand} which upon execution, sorts the contacts by name in {@code model}.
+     */
+    private SortCommand prepareCommand(Model model) {
+        SortCommand command = new SortCommand();
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+}
+```
+###### \java\seedu\address\logic\parser\AddBirthdayCommandParserTest.java
+``` java
+public class AddBirthdayCommandParserTest {
+
+    private AddBirthdayCommandParser parser = new AddBirthdayCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsBirthdayCommand() throws IllegalValueException {
+
+        Birthday toAdd = new Birthday(VALID_BIRTHDAY_AMY);
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_BIRTHDAY.toString() + VALID_BIRTHDAY_AMY;
+        assertParseSuccess(parser, userInput, new AddBirthdayCommand(INDEX_FIRST_PERSON, toAdd));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddBirthdayCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_sort() throws Exception {
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORDVAR_1.toUpperCase()) instanceof SortCommand);
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORDVAR_2.toUpperCase() + " 3") instanceof SortCommand);
+    }
+
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_birthday() throws Exception {
+        final String birthdayName = "24/07/95";
+        Birthday toAdd = new Birthday(birthdayName);
+
+        AddBirthdayCommand command = (AddBirthdayCommand) parser.parseCommand(
+                AddBirthdayCommand.COMMAND_WORDVAR_1 + " " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + PREFIX_BIRTHDAY + birthdayName);
+        AddBirthdayCommand shortCommand = (AddBirthdayCommand) parser.parseCommand(
+                AddBirthdayCommand.COMMAND_WORDVAR_2 + " " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + PREFIX_BIRTHDAY + birthdayName);
+
+        assertEquals(new AddBirthdayCommand(INDEX_FIRST_PERSON, toAdd), command);
+        assertEquals(new AddBirthdayCommand(INDEX_FIRST_PERSON, toAdd), shortCommand);
+    }
+
+```
+###### \java\seedu\address\model\ModelManagerTest.java
+``` java
+    /**
+     * Tests if sortPersonByName can return a list of sorted names from an input
+     * of names with random orders.
+     * @throws Exception
+     */
+    @Test
+    public void sortPersonByName_validSort_success() throws Exception {
+        Person inputPerson1 = new PersonBuilder().withName("YING ZHENG").build();
+        Person inputPerson2 = new PersonBuilder().withName("JACOB").build();
+        Person inputPerson3 = new PersonBuilder().withName("VIVEK").build();
+        Person inputPerson4 = new PersonBuilder().withName("JIA SHU").build();
+
+        ArrayList<ReadOnlyPerson> inputPersonList = new ArrayList<>();
+
+        inputPersonList.add(inputPerson1);
+        inputPersonList.add(inputPerson2);
+        inputPersonList.add(inputPerson3);
+        inputPersonList.add(inputPerson4);
+
+        AddressBook inputAddressBook = new AddressBook();
+        inputAddressBook.setPersons(inputPersonList);
+
+        ModelManager expectedModel = new ModelManager(inputAddressBook, new UserPrefs());
+        inputPersonList.clear();
+        expectedModel.sortPersonByName(inputPersonList);
+        inputAddressBook.setPersons(inputPersonList);
+
+        ArrayList<ReadOnlyPerson> sortedInputPersonList = new ArrayList<>();
+
+        sortedInputPersonList.add(inputPerson2);
+        sortedInputPersonList.add(inputPerson4);
+        sortedInputPersonList.add(inputPerson3);
+        sortedInputPersonList.add(inputPerson1);
+
+        AddressBook sortedAddressBook = new AddressBook();
+        sortedAddressBook.setPersons(sortedInputPersonList);
+
+        ModelManager actualModel = new ModelManager(sortedAddressBook, new UserPrefs());
+        assertEquals(expectedModel.getAddressBook().getPersonList(), actualModel.getAddressBook().getPersonList());
+    }
+
+```
+###### \java\seedu\address\model\person\BirthdayTest.java
 ``` java
 public class BirthdayTest {
 
@@ -63,189 +325,43 @@ public class BirthdayTest {
 
 }
 ```
-###### /java/seedu/address/model/ModelManagerTest.java
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
-     * Tests if sortPersonByName can return a list of sorted names from an input
-     * of names with random orders.
-     * @throws Exception
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
      */
-    @Test
-    public void sortPersonByName_validSort_success() throws Exception {
-        Person inputPerson1 = new PersonBuilder().withName("YING ZHENG").build();
-        Person inputPerson2 = new PersonBuilder().withName("JACOB").build();
-        Person inputPerson3 = new PersonBuilder().withName("VIVEK").build();
-        Person inputPerson4 = new PersonBuilder().withName("JIA SHU").build();
-
-        ArrayList<ReadOnlyPerson> inputPersonList = new ArrayList<>();
-
-        inputPersonList.add(inputPerson1);
-        inputPersonList.add(inputPerson2);
-        inputPersonList.add(inputPerson3);
-        inputPersonList.add(inputPerson4);
-
-        AddressBook inputAddressBook = new AddressBook();
-        inputAddressBook.setPersons(inputPersonList);
-
-        ModelManager expectedModel = new ModelManager(inputAddressBook, new UserPrefs());
-        inputPersonList.clear();
-        expectedModel.sortPersonByName(inputPersonList);
-        inputAddressBook.setPersons(inputPersonList);
-
-        ArrayList<ReadOnlyPerson> sortedInputPersonList = new ArrayList<>();
-
-        sortedInputPersonList.add(inputPerson2);
-        sortedInputPersonList.add(inputPerson4);
-        sortedInputPersonList.add(inputPerson3);
-        sortedInputPersonList.add(inputPerson1);
-
-        AddressBook sortedAddressBook = new AddressBook();
-        sortedAddressBook.setPersons(sortedInputPersonList);
-
-        ModelManager actualModel = new ModelManager(sortedAddressBook, new UserPrefs());
-        assertEquals(expectedModel.getAddressBook().getPersonList(), actualModel.getAddressBook().getPersonList());
-    }
-
-```
-###### /java/seedu/address/logic/commands/SortCommandTest.java
-``` java
-public class SortCommandTest {
-
-    private Model model;
-
-    @Test
-    public void execute_sortEmptyAddressBook_success() {
-        model = new ModelManager();
-        model.getFilteredPersonList();
-        assertCommandSuccess(prepareCommand(model), model, SortCommand.MESSAGE_EMPTY_LIST, model);
-    }
-
-    @Test
-    public void execute_sortAddressBookByName_success() throws DuplicatePersonException {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        model.addPerson(new PersonBuilder().withName("Alex").build());;
-        assertCommandSuccess(prepareCommand(model), model, SortCommand.MESSAGE_SUCCESS, model);
-    }
-
-    @Test
-    public void execute_alreadySortedAddressBookByName_success() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        assertCommandSuccess(prepareCommand(model), model, SortCommand.MESSAGE_ALREADY_SORTED, model);
-    }
-
-    /**
-     * Generates a new {@code SortCommand} which upon execution, sorts the contacts by name in {@code model}.
-     */
-    private SortCommand prepareCommand(Model model) {
-        SortCommand command = new SortCommand();
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
-    }
-}
-```
-###### /java/seedu/address/logic/commands/AddBirthdayCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for AddBirthdayCommand.
- */
-
-public class AddBirthdayCommandTest {
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void execute_addBirthday_success() throws PersonNotFoundException, IllegalValueException {
-        //actual model
-        Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withBirthday(VALID_BIRTHDAY_AMY).build();
-        Birthday toAdd = new Birthday (VALID_BIRTHDAY_AMY);
-
-        AddBirthdayCommand addBirthdayCommand = prepareCommand(INDEX_FIRST_PERSON, toAdd);
-        String expectedMessage = String.format(AddBirthdayCommand.MESSAGE_ADD_BIRTHDAY_SUCCESS, toAdd);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        assertCommandSuccess(addBirthdayCommand, model, expectedMessage, expectedModel);
-    }
-
-    /**
-     * Returns an {@code AddBirthdayCommand} with parameter {@code index}
-     */
-    private AddBirthdayCommand prepareCommand (Index index, Birthday toAdd) {
-        AddBirthdayCommand addBirthdayCommand = new AddBirthdayCommand(index, toAdd);
-        addBirthdayCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-
-        return addBirthdayCommand;
-    }
-}
-```
-###### /java/seedu/address/logic/commands/AddCommandTest.java
-``` java
-        @Override
-        public void addBirthday (Index targetIndex, Birthday toAdd) throws PersonNotFoundException {
-            fail("This method should not be called.");
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
         }
-
-        @Override
-        public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
-            fail("This method should not be called.");
-            return false;
-        }
+        return this;
     }
 
 ```
-###### /java/seedu/address/logic/parser/AddBirthdayCommandParserTest.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
-public class AddBirthdayCommandParserTest {
-
-    private AddBirthdayCommandParser parser = new AddBirthdayCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsBirthdayCommand() throws IllegalValueException {
-
-        Birthday toAdd = new Birthday(VALID_BIRTHDAY_AMY);
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_BIRTHDAY.toString() + VALID_BIRTHDAY_AMY;
-        assertParseSuccess(parser, userInput, new AddBirthdayCommand(INDEX_FIRST_PERSON, toAdd));
+    /**
+     * Sets the {@code Birthday} of the {@code Person} that we are building.
+     */
+    //havent add withBirthday function to the typical persons class being built
+    public PersonBuilder withBirthday(String birthday) {
+        try {
+            this.person.setBirthday(new Birthday(birthday));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
     }
 
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                AddBirthdayCommand.MESSAGE_USAGE));
+    public Person build() {
+        return this.person;
     }
+
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_sort() throws Exception {
-        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORDVAR_1.toUpperCase()) instanceof SortCommand);
-        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORDVAR_2.toUpperCase() + " 3") instanceof SortCommand);
-    }
-
-```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_birthday() throws Exception {
-        final String birthdayName = "24/07/95";
-        Birthday toAdd = new Birthday(birthdayName);
-
-        AddBirthdayCommand command = (AddBirthdayCommand) parser.parseCommand(
-                AddBirthdayCommand.COMMAND_WORDVAR_1 + " " + INDEX_FIRST_PERSON.getOneBased() + " "
-                        + PREFIX_BIRTHDAY + birthdayName);
-        AddBirthdayCommand shortCommand = (AddBirthdayCommand) parser.parseCommand(
-                AddBirthdayCommand.COMMAND_WORDVAR_2 + " " + INDEX_FIRST_PERSON.getOneBased() + " "
-                        + PREFIX_BIRTHDAY + birthdayName);
-
-        assertEquals(new AddBirthdayCommand(INDEX_FIRST_PERSON, toAdd), command);
-        assertEquals(new AddBirthdayCommand(INDEX_FIRST_PERSON, toAdd), shortCommand);
-    }
-
-```
-###### /java/seedu/address/ui/ExtendedPersonDisplayTest.java
+###### \java\seedu\address\ui\ExtendedPersonDisplayTest.java
 ``` java
 public class ExtendedPersonDisplayTest extends GuiUnitTest {
 
@@ -311,7 +427,7 @@ public class ExtendedPersonDisplayTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/address/ui/StatusBarFooterTest.java
+###### \java\seedu\address\ui\StatusBarFooterTest.java
 ``` java
     @Before
     public void setUp() {
@@ -347,7 +463,7 @@ public class ExtendedPersonDisplayTest extends GuiUnitTest {
 
 }
 ```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
     /**
      * Asserts that {@code extendedCard} displays the details of {@code expectedPerson}.
@@ -362,123 +478,7 @@ public class ExtendedPersonDisplayTest extends GuiUnitTest {
     }
 
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
-``` java
-    /**
-     * Sets the {@code Birthday} of the {@code Person} that we are building.
-     */
-    //havent add withBirthday function to the typical persons class being built
-    public PersonBuilder withBirthday(String birthday) {
-        try {
-            this.person.setBirthday(new Birthday(birthday));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("birthday is expected to be unique.");
-        }
-        return this;
-    }
-
-    public Person build() {
-        return this.person;
-    }
-
-}
-```
-###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
-``` java
-    /**
-     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withBirthday(String birthday) {
-        try {
-            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("birthday is expected to be unique.");
-        }
-        return this;
-    }
-
-```
-###### /java/guitests/AddressBookGuiTest.java
-``` java
-    protected ExtendedPersonDisplayHandle getExtendedPersonDisplay() {
-
-        return mainWindowHandle.getExtendedPersonDisplay();
-    }
-
-```
-###### /java/guitests/guihandles/ExtendedPersonDisplayHandle.java
-``` java
-
-/**
- * Provides a handle for the information shown in the Extended Person Display.
- */
-public class ExtendedPersonDisplayHandle extends NodeHandle<Node> {
-
-    public static final String EXTENDED_PERSON_VIEW_ID = "#extendedPersonDisplayPlaceholder";
-
-    private static final String NAME_FIELD_ID = "#name";
-    private static final String PHONE_FIELD_ID = "#phone";
-    private static final String EMAIL_FIELD_ID = "#email";
-    private static final String ADDRESS_FIELD_ID = "#address";
-    private static final String BIRTHDAY_FIELD_ID = "#birthday";
-
-    private final Label nameLabel;
-    private final Label phoneLabel;
-    private final Label emailLabel;
-    private final Label addressLabel;
-    private final Label birthdayLabel;
-
-    public ExtendedPersonDisplayHandle(Node cardNode) {
-        super(cardNode);
-
-        this.nameLabel = getChildNode(NAME_FIELD_ID);
-        this.phoneLabel = getChildNode(PHONE_FIELD_ID);
-        this.emailLabel = getChildNode(EMAIL_FIELD_ID);
-        this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
-        this.birthdayLabel = getChildNode(BIRTHDAY_FIELD_ID);
-
-    }
-
-    public String getName() {
-        return nameLabel.getText();
-    }
-
-    public String getPhone() {
-        return phoneLabel.getText();
-    }
-
-    public String getEmail() {
-        return emailLabel.getText();
-    }
-
-    public String getAddress() {
-        return addressLabel.getText();
-    }
-
-    public String getBirthday() {
-        return birthdayLabel.getText();
-    }
-
-}
-```
-###### /java/guitests/guihandles/StatusBarFooterHandle.java
-``` java
-    /**
-     * Returns the text of 'total number of people' in contacts of the status bar
-     */
-    public String getTotalPeople() {
-        return totalPeople.getText();
-    }
-
-```
-###### /java/guitests/HelpWindowTest.java
-``` java
-        getExtendedPersonDisplay().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowOpen();
-
-```
-###### /java/systemtests/AddressBookSystemTest.java
+###### \java\systemtests\AddressBookSystemTest.java
 ``` java
     public ExtendedPersonDisplayHandle getExtendedPersonDisplay() {
 

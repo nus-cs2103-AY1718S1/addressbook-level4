@@ -105,6 +105,18 @@ public class AddressBookParserTest {
                 (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD_2 + " "
                 + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
+        assertEquals(command, abbreviatedCommand);
+    }
+
+    @Test
+    public void parseCommand_facebook() throws Exception {
+        FacebookCommand command = (FacebookCommand) parser.parseCommand(FacebookCommand.COMMAND_WORDVAR_1 + " "
+                + INDEX_FIRST_PERSON.getOneBased());
+        FacebookCommand abbreviatedCommand =
+                (FacebookCommand) parser.parseCommand(FacebookCommand.COMMAND_WORDVAR_2 + " "
+                + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new FacebookCommand(INDEX_FIRST_PERSON), command);
+        assertEquals(command, abbreviatedCommand);
     }
     //@@author
 
@@ -154,11 +166,6 @@ public class AddressBookParserTest {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORDVAR_1 + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
-    }
-
-    @Test
-    public void parseCommand_facebook() throws Exception {
-        assertTrue(parser.parseCommand(FacebookCommand.COMMAND_WORDVAR_1) instanceof FacebookCommand);
     }
 
     //@@author jacoblipech

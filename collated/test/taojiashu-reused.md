@@ -1,5 +1,5 @@
 # taojiashu-reused
-###### /java/seedu/address/logic/commands/ExitCommandTest.java
+###### \java\seedu\address\logic\commands\ExitCommandTest.java
 ``` java
     /**
      * Asserts that the result message from the execution of {@code historyCommand} equals to {@code expectedMessage}
@@ -9,7 +9,7 @@
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ShowFavouriteCommandTest.java
+###### \java\seedu\address\logic\commands\ShowFavouriteCommandTest.java
 ``` java
     /**
      * Asserts that {@code command} is successfully executed, and<br>

@@ -652,31 +652,28 @@ The sorting process is case insensitive.
 
 The facebook mechanism is facilitated by `FacebookCommand`, which resides inside the commands folder of the logic component.
 
-The facebook mechanism displays the Facebook login page when the `facebook` command is entered.
-
+The facebook mechanism displays the Facebook search page of the person specified by the index number inputted.
+// end::facebook[]
 image::facebook-command-ui.png[width="800"]
+// tag::facebookcont[]
+Upon execution, the `FacebookCommand` posts a `ShowFacebookRequestEvent` event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load Facebook page. The `ShowFacebookRequestEvent` takes the name of the person specified by the index number as an argument.
 
-Upon execution, the `FacebookCommand` posts a `ShowFacebookRequestEvent` event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load Facebook page.
+As part of the UI component, the `BrowserPanel` class loads the facebook page using a method called `loadFacebookPage`. It handles the dispatched `ShowFacebookRequestEvent` event and calls the `loadFacebookPage` to mount the Facebook Page on the user interface.
 
-As part of the UI component, the `BrowserPanel` class loads the facebook page using a method called `loadFacebookPage`.
-
-The `MainWindow` class sets up the browser panel by calling the `BrowserPanel`'s constructor.
-
-This class handles the dispatched `ShowFacebookRequestEvent` event and calls the browser panel's `loadFacebookPage` to mount the Facebook Page on the user interface.
-
+The Facebook search page is the mobile version of it. This is because the desktop version of Facebook search page cannot be displayed properly in the BrowsePanel due to some formatting issues.
 [NOTE]
 The user has to ensure that an internet connection is established to succeed in the command.
 
 ==== Design Considerations
 
 **Aspect:** Logging in to Facebook through CLI or GUI +
-**Alternative 1 (current choice):** User enters the command `facebook` in the command box without his username and password; once the log in page is loaded he will enter his username and password in the page itself.  +
+**Alternative 1 (current choice):** User enters the command `facebook INDEX` in the command box without his username and password; once the log in page is loaded he will enter his username and password in the page itself.  +
 **Pros:** Easy to implement and hassle-free. No need to import Facebook API, just load the page by parsing its URL into the relevant methods. +
 **Cons:** Defeats the purpose of a CLI application. User needs to navigate the log in page. +
-**Alternative 2:** User enters the command `facebook`, followed by his username and password in the command box. He is automatically logged into Facebook and is directed to Facebook's newsfeed page.  +
+**Alternative 2:** User enters the command `facebook INDEX`, followed by his username and password in the command box. He is automatically logged into Facebook and is directed to Facebook's newsfeed page.  +
 **Pros:** Saves users the trouble of navigating the facebook log in page. Adheres to the purpose of the application having a CLI. +
 **Cons:** More difficult to implement. May require the use of Facebook API which may cause unexpected regressions that developers may not know how to solve.
-// end::facebook[]
+// end::facebookcont[]
 
 // tag::addremovetag[]
 
@@ -821,6 +818,7 @@ priority.
 
 // end::find[]
 
+
 // tag::windowsize[]
 
 === Change window size command mechanism
@@ -867,6 +865,96 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::reply[]
+=== Duplicate-checking and reply mechanism for add command
+
+The duplicate-checking mechanism is facilitated by `AddCommand` features which resides inside the commands folder of the logic component.
+This mechanism checks the user's contacts list for any existing fields that corresponds to the contact information that the user has keyed in when he/she wishes to add a contact.
+The algorithm used to find duplicates are supported by the `checkDuplicateField` method in the `AddCommand` class.++
+
+`checkDuplicateField` method relies on the mutable `duplicateFields` and `MESSAGE_DUPLICATE_FIELD` String attribute to check for duplicates and inform the user of any duplicate fields;
+it checks if `duplicateFields` contains any of the predetermined fields such as name, phone, address and email fields before proceeding to check for any of such duplicate field.
+`duplicateFields` only checks a single occurence of the name, phone, address and email duplicate fields. `checkDuplicateField` will stop checking for duplicates for a particular field once
+`duplicateFields` already contains that field. The code snippet below further illustrates this point:
+[source,java]
+----
+    private void checkDuplicateField(Person toAdd) throws DuplicatePersonException {
+
+    //some code here..
+
+    if (duplicateFields.contains(NAME_FIELD) && duplicateFields.contains(PHONE_FIELD) &&
+        duplicateFields.contains(EMAIL_FIELD) && duplicateFields.contains(ADDRESS_FIELD)) {
+            //method found duplicates for all fields, no further concatenation of message. break from loop.
+            break;
+        }
+
+    /* The following conditional statements checks if duplicateFields already covers, or have yet to cover, any
+     * of the fields. It will keep checking the fields which have not been listed as a duplicate until it hits
+     * one or the loop ends.
+     */
+
+    if (!duplicateFields.contains(NAME_FIELD)) {
+        checkDuplicateName(toAdd, contact);
+    }
+
+    if (!duplicateFields.contains(PHONE_FIELD)) {
+        checkDuplicatePhone(toAdd, contact);
+
+    }
+
+    if (!duplicateFields.contains(ADDRESS_FIELD)) {
+        checkDuplicateAddress(toAdd, contact);
+    }
+
+    if (!duplicateFields.contains(EMAIL_FIELD)) {
+        checkDuplicateEmail(toAdd, contact);
+    }
+
+    some code here..
+
+}
+
+----
+
+`checkDuplicateField` is further dissected into methods that check for duplicates for a particular field. A code snippet below is a method to check for duplicate emails:
+
+[source,java]
+----
+    private void checkDuplicateEmail(Person toAdd, ReadOnlyPerson contact) {
+        if ((toAdd.getEmail().toString().trim().equalsIgnoreCase(contact.getEmail().toString().trim()))
+                && (!toAdd.getEmail().toString().trim().equals(DEFAULT_EMAIL))) {
+            isWaitingforReply = true;
+            if (duplicateFields.equals("")) {
+                duplicateFields = EMAIL_FIELD;
+            } else {
+                duplicateFields += ", " + EMAIL_FIELD;
+            }
+        }
+    }
+----
+A boolean attribute `isWaitingforReply` will be used to check if a `ReplyCommand` is required for this operation. The duplicate-checking methods will set this attribute to true once a duplicate field has been found.
+`AddCommand` then returns a prompt for a user reply when it finds that `isWaitingforReply` is set to true. As it prompts the user, `ReplyCommand` holds the `Person` class to be added until the user replys. ++
+
+The user will reply with a `yes` or `no`. This reply is wrapped in the aforementioned `ReplyCommand` class and handles the add feature for duplicate fields. If the user replies with `yes`, `ReplyCommand` will retrieve
+the `Person` class it has stored as an attribute and proceed with add command's execution. Should the user reply with `no`, the add command will be discarded.
+
+[NOTE]
+The check for duplicate fields are case-insensitve. ie `David Li` will match with `david li` under the name field.
+
+==== Design Considerations
+
+**Aspect:** Integration of the reply mechanism +
+**Alternative 1 (current choice):** Create a class solely for reply itself, called the `ReplyCommand` +
+**Pros:**  `ReplyCommand` is abstracted away from `AddCommand` class and could potentially be used for other undoable commands such as `EditCommand` without breaking any abstraction barriers. +
+**Cons:** Developers have to make more considerations when planning and implementing the code.
+Having a reply command may be insignificant and thus contradicts the actual definition of `Command`; while each commands execute complex, unique actions
+and have unique purposes, the reply command merely pauses and repeats the add command according the user's wish. +
+**Alternative 2:** Fix the reply mechanism into `AddCommand` +
+**Pros:**  This makes it easier for developers to code as all the duplicate-checking and reply mechanism will be in one class. +
+**Cons:** This makes it difficult for developers to implement if they decide to include a duplicate-checking and reply mechanism without repeating codes for other commands, such as `EditCommand`.
+Also, that would not be ideal in the context of abstraction layers as it could potentially lead to other commands having to penetrate the `AddCommand` abstraction barrier to retrieve the reply mechanism.+
+
+// end::reply[]
 
 == Documentation
 
@@ -1234,9 +1322,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |edit my friends' contact on Addressbook |
+|`* * *` |user |edit my friends' contact on UniCity |
 
-|`* * *` |user |exit Addressbook |continue using other functions in my operating system
+|`* * *` |user |exit UniCity |continue using other functions in my operating system
 
 |`* * *` |forgetful user |I want a suggestion of the closest matching person when I type his name incorrectly |so that I can find that person quickly
 
@@ -1278,7 +1366,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |fancy user |set a background wallpaper to my address book | personalise and beautify my address book
 
-|`*` |fancy user |change the color scheme and theme of my address book to my preference | personalise and beautify my Addressbook
+|`*` |fancy user |change the color scheme and theme of my address book to my preference | personalise and beautify UniCity
 |=======================================================================
 
 
@@ -1417,6 +1505,36 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Find the Facebook profile of a person
+
+*MSS*
+
+1. User requests to view the Facebook profile of a person specified by an index number.
+2. UniCity loads the Facebook search page with the person's name.
++
+Use case ends.
+
+[discrete]
+=== Use case: Display a person's address on Google Maps
+
+*MSS*
+
+1. User requests to view the address of a person specified by an index number on Google Maps.
+2. UniCity displays the address on Google Maps.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The person's address is not entered.
++
+[none]
+** 2a1. UniCity displays an error message.
++
+Use case ends.
+
+[discrete]
 === Use case: List all persons
 
 *MSS*
@@ -1430,6 +1548,46 @@ Use case ends.
 
 [none]
 * 2a. The list is empty.
++
+[none]
+** 2a1. UniCity displays an empty list.
++
+Use case ends.
+
+discrete]
+=== Use case: Favourite a person
+
+*MSS*
+
+1. User requests to favourite a person specified by an index number.
+2. UniCity locates the person and marks this person as a favourite contact.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The index number is out of bound.
++
+[none]
+** 2a1. UniCity throws an exception.
++
+Use case ends.
+
+[discrete]
+=== Use case: List all favourite persons
+
+*MSS*
+
+1. User requests to view all favourite persons in the list.
+2. UniCity displays a list of all favourite contacts.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no favourite contacts in UniCity.
 +
 [none]
 ** 2a1. UniCity displays an empty list.
@@ -1679,10 +1837,10 @@ Use case ends.
 *Extensions*
 
 [none]
-* 3a. User decides not to proceed to exit UniCity.
+* 3a. User decides not to proceed to exit UniCity by typing another command.
 +
 [none]
-** 3a1. UniCity displays exit aborted.
+** 3a1. UniCity aborts exiting and executes the new command.
 +
 Use case ends.
 
