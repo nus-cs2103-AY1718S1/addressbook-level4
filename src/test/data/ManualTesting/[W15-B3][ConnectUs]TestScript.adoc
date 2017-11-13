@@ -365,7 +365,7 @@ endif::[]
 ****
 *Result:* +
 
-* The tag `family` and `owesMoney` should disappear in the person list panel where person number 12 and 14 would noticeably have no more tags.+
+* The tag `family` and `owesMoney` should disappear in the person list panel where person number 12 and 14 would noticeably have no more tags. +
 * The result display should show the message `Removed tag(s)`
 
 ****
@@ -585,7 +585,7 @@ Example: theme white`
 
 . To see the full effect of the function, upload an image to person with index 3 first.
 . Copy the following commands onto the command line input in sequence: +
-`photo 3 ./SampleImages/beautiful.jpg`
+`photo 3 ./SampleImages/beautiful.jpg` +
 `daphotos`
 
 ****
