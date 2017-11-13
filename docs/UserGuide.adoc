@@ -91,6 +91,7 @@ Examples:
 * addevent ti/End of Sem Dinner des/Organised by USC loc/Cinnamon College time/25/11/2017 2030 2
 * addevent ti/USPolymath des/Intellectual Talks loc/Chatterbox time/25/11/17 2030 to 2230
 * ae ti/End of Sem Dinner des/Organised by USC loc/Cinnamon College time/25/11/17 2030 2
+// end::addevent[]
 
 // tag::deleteevent[]
 === Deleting a event: `deleteEvent`
@@ -102,6 +103,7 @@ Examples:
 
 * deleteEvent 5
 * de 10
+// end::deleteevent[]
 
 
 === Adding a person: `add`
@@ -221,6 +223,7 @@ The command `swaproom 1 2` and `swaproom 2 1` are equivalent
 Examples:
 * `swaproom 1 2`
 * `swaproom 3 5`
+// end::swaproom[]
 
 === Listing all persons : `list`
 
@@ -240,6 +243,7 @@ Examples:
 * `sort room`
 * `sort phone`
 * `sort email`
+// end::sort[]
 
 === Editing a person : `edit`
 
@@ -474,12 +478,12 @@ Remove all "pending" tags from list of residents.
 * If Amy has tags "RA" and "CollegeMaster", `removeTag RA` will remove tag from Amy, retaining her other details in the ResidentBook.
 
 
-
 image::removeTagCommand_error.png[width='800']
 
 // end::removeTag[]
 
 // tag::personPanel[]
+
 === Person Panel (since v1.4)
 
 Person Panel has been introduced to allow additional information of residents to be displayed.
@@ -542,7 +546,7 @@ image::PrevCommand.png[width="800"]
 
 === Events (Since v1.4)
 
-Events can be managed through the Resident book. It supports add, remove and edit functions.
+Events can be managed through the Resident book. It supports add and delete functions.
 
 == FAQ
 

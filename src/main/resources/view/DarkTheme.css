@@ -440,7 +440,7 @@
 #personDetailsBox {
     -fx-padding: 20 20 20 20;
     -fx-background-color: #404040;
-    -fx-text-color: white !important;
+    -fx-text-color: white;
 }
 
 #personDetailsBox #name {
@@ -448,7 +448,7 @@
 }
 
 #name, #phone, #address, #email {
-    -fx-text-fill: white !important;
+    -fx-text-fill: white;
 }
 
 .label {

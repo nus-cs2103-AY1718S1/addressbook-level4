@@ -451,9 +451,9 @@ The autocomplete list is obtained from the creation of an AutoComplete object an
 // end::autocomplete[]
 
 // tag::swaproom[]
-=== Swap Rooms Command
+=== Swap Room Command
 
-The swaproom command swaps the rooms of two residents specified with indexes.
+The `swaproom` command swaps the rooms of two residents specified with indexes.
 [source,java]
 ----
 public boolean equals(Object other) {
@@ -467,11 +467,18 @@ public boolean equals(Object other) {
 }
 ----
 
-In the method above is defined in `SwaproomCommand.java`. It is important to notw that two swaproom commands with their residents' indexes swapped are still equal to each other. For example the following commands are equal:
+The method above is defined in `SwaproomCommand.java`. It is important to note that two swaproom commands with their residents' indexes swapped are still equal to each other. For example the following commands are equal:
+
 * `swaproom 3 4`
 * `swaproom 4 3`
 
-Illegal arguments will raise a CommandException which will be displayed to the user in the command output box.
+The command has a alias `sr`. So, the following commands are equivalent:
+
+* `swaproom 3 4`
+* `sr 3 4`
+
+Illegal arguments such as non-integer arguments or integers bigger than the size of the last shown list will raise a `CommandException` which will be displayed to the user in the command output box.
+// end::swaproom[]
 
 // tag::highlight[]
 === Highlight Command
@@ -790,6 +797,127 @@ For future enhancement, developers may consider allowing user to specify backup 
 
 // end::backup[]
 
+// tag::addEvent[]
+=== Add Event Command
+
+The `addevent` command adds an `Event` to the `EventBook`. The format for the current command is:
+
+`addevent ti/TITLE des/DESCRIPTION loc/LOCATION [time/STARTTIME TO ENDTIME or STARTTIME DURATION (in hours)]`
+
+If the event being added already exists in the EventBook, executing the `add event` command raises a `DuplicateEventException`:
+
+[source, java]
+----
+@Override
+public CommandResult executeUndoableCommand() throws CommandException {
+    requireNonNull(model);
+    try {
+        model.addEvent(toAdd);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+    } catch (DuplicateEventException e) {
+        throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+    }
+}
+----
+
+
+Possible Future Implementations:
+
+* Allow tentative events for which the `Location` or `Datetime have not yet been finalised.
+* Allow adding events which span more than one day.
+
+// end::addEvent[]
+
+
+// tag::deleteEvent[]
+=== Delete Event Command
+
+The `deleteEvent` command deletes an `Event` from the `EventBook`. The format for the current command is:
+`deleteEvent INDEX (must be a positive integer)`
+
+If the index passed to the deleteEvent command as argument is greater than the number of events in the EventBook, a CommandException is raised on execution (in DeleteEventCommand.executeUndoableCommand()):
+
+[source, java]
+----
+    List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
+
+    if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+    }
+----
+
+Possible Future Implementations:
+
+* Allow deleting events by `Title` or `Datetime`.
+* Allow batch deleting of events to clear old events with a single command.
+
+// end::deleteEvent[]
+
+
+// tag::switchtab[]
+=== Switch Tab Command
+
+The `switch tab` command allows users to switch between the Residents List and the Events lists from the Command Line Interface.
+
+The two possible commands are `switch 1` which switches to Residents List and `switch 2` switches to the Events List
+
+If an invalid argument such as `a` or `5` is passed with the switch command, a `ParseException` is raised:
+
+[source, java]
+----
+public SwitchTabCommand parse(String args) throws ParseException {
+    try {
+        int index = ParserUtil.parseIndex(args).getOneBased();
+
+        if (index > 2 || index < 1) {
+            throw new IllegalValueException(MESSAGE_INVALID_COMMAND_FORMAT);
+        }
+        return new SwitchTabCommand(index);
+    } catch (IllegalValueException ive) {
+        throw new ParseException(
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwitchTabCommand.MESSAGE_USAGE));
+    }
+}
+----
+
+Furthermore, if a `SwitchTabCommand` command is successfully made with invalid arguments by another class (such as when running tests), a `CommandException` will be raised when the command is executed:
+
+[source, java]
+----
+@Override
+public CommandResult execute() throws CommandException {
+
+    if (targetIndex > 2 || targetIndex < 1) {
+        throw new CommandException(MESSAGE_USAGE);
+    }
+
+    EventsCenter.getInstance().post(new SwitchTabRequestEvent(targetIndex));
+    return new CommandResult(String.format(MESSAGE_SWITCH_TAB_SUCCESS, tabName));
+}
+----
+
+If successfully executed, the command posts a new `SwitchTabRequestEvent`. This event is later handled in the `UI:MainWindow`:
+
+[source, java]
+----
+public void switchTab(int index) {
+    tabPane.getSelectionModel().select(index);
+}
+
+@Subscribe
+private void handleSwitchTabEvent(SwitchTabRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    switchTab(event.targetIndex);
+}
+----
+
+Possible Future Implementations:
+
+* `switch` should be able to detect the current tab and switch without taking in any arguments.
+
+// end::switchtab[]
+
+
 // tag::sort[]
 === Sort Command
 
@@ -799,9 +927,9 @@ The sort command is implemented to sort the current Resident book according to t
 * room
 * email
 
-It is important to note that after every other command such as `add`, `edit` or `delete`, the sort is run again to maintain the order of the list.
+By default, the list is sorted by name. It is important to note that after every other command such as `add`, `edit` or `delete`, the sort is run again to maintain the order of the list.
 
-If the list is already sorted by a particular field, trying to sort it by the same field will raise an exception:
+If the list is already sorted by a particular field, trying to sort it by the same field will raise an `AlreadySortedException`:
 [source,java]
 ----
 public void sortBy(String sortCriteria) throws AlreadySortedException {
@@ -814,7 +942,7 @@ public void sortBy(String sortCriteria) throws AlreadySortedException {
 }
 ----
 
-This exception is later caught higher up the execution stack and the user receives a message that the list is already sorted by the field.
+This exception is later caught higher up the execution stack and a CommandException is thrown. The user receives a message that the list is already sorted by the field.
 
 To enable the sorting, standard `FXCollections.sort` is used. To enable this, ReadOnlyPerson interface extends Comparable.
 The person Class which implements this interface defines compareTo to compare two fields. The following is a snippet from the compareTo method:
@@ -838,8 +966,8 @@ public int compareTo(Object otherPerson) {
 }
 ----
 
-The main things to note in this method is that the value "Not Set" will always be sorted away to the bottom of the list.
-Also, by default, the list is sorted by name.
+This compareTo method gives `Not Set` the least priority and hence if a list is sorted by a field (say `room`), the residents with rooms `Not Set` will appear at the bottom of the list.
+// end::sort[]
 
 // tag::removeTag[]
 === RemoveTag Command
@@ -918,8 +1046,8 @@ If the tagName is invalid, the TagNotFoundException will be raised.
 // end::removeTag[]
 
 // tag::deletebytag[]
-=== Deletebytag Command
 
+=== Deletebytag Command
 The deletebybtag command allows users to delete residents in the addressbook that has a certain tag supplied. This command is implemented to enable the deletion of persons who have a particular tag.
 The motivation for implementing such a command is so that hostel/hotel administrators can mass delete a certain
 group of residents without going through the trouble of deleting them one by one.
@@ -1024,13 +1152,14 @@ public void handleCalenderBoxPanelChange(EventBookChangedEvent event) {
 
 
 For navigation to the previous or next month in the calendar, a click on the "PREV" or "NEXT" button will trigger a method to repopulate the calendar with dates
- and events of the appropriate month. This can also be done through the CLI by typing `prev` or `next` at the command bar.
+and events of the appropriate month. This can also be done through the CLI by typing `prev` or `next` at the command bar.
 The sequence diagram for `prev` command is shown below. `next` works in a similar way.
 
 image::PrevCommandSD.png[width="800"]
 
 
 The implementation of `previousMonth()` is illustrated here. `nextMonth()` works in a similar way.
+
 [source, java]
 private void previousMonth() {
     currentYearMonth = currentYearMonth.minusMonths(1);
@@ -1049,6 +1178,173 @@ private void previousMonth() {
 the username and password.
 
 // end::Calendar[]
+
+
+// tag::styling[]
+=== UI Styling
+
+The main styling for the `UI` can be found in `DarkTheme.css`. The document has been divided into the following sections:
+
+* `Base Styling`
+* `Tab and Tab Pane Styling`
+* `Split Pane and list CSS`
+* `Button Styling`
+* `Button Styling in Person Panel`
+* `Dialog Pane Styling`
+* `Scroll bar Styling`
+* `Card Pane Styling`
+* `Command Pane Styling`
+* `Person Panel Styling`
+
+Here, we look at a specific section of `DarkTheme.css`:
+
+[source,css]
+----
+/*PERSON PANEL STYLING*/
+#personPanel {
+    -fx-background-color: #232A34;
+    -fx-padding: 61 35 50 35;
+}
+
+#personDetailsBox {
+    -fx-padding: 20 20 20 20;
+    -fx-background-color: #404040;
+    -fx-text-color: white;
+}
+
+#personDetailsBox #name {
+    -fx-padding: 7, 0, 0, 0;
+}
+
+#name, #phone, #address, #email {
+    -fx-text-fill: white;
+}
+----
+
+We prefer modifying individual ids instead of an entire class of elements to keep the CSS modular. However, do note that for `.tab` and `.button`, class selectors have been used instead of id selectors to enforce a uniform looks for all buttons and tabs throughout the application.
+
+It is important to note that not all the styling properties are defined in `DarkTheme.css`. For example, the colors for the tags are defined in `PersonCard.java`:
+[source,java]
+----
+private static ArrayList<String> colors = new ArrayList<String>(Arrays.asList(
+        "#cc6600", "#cc0000", "#d11141", "#00b159", "#00aedb",
+        "#f37735", "#ffc425", "#a200ff", "#742323", "#757a25", "#237629",
+        "#2c2972", "#732474"));
+
+private static String getColorForTag(String tag) {
+    if (!tagColor.containsKey(tag)) {
+        String chosenColor = colors.get(random.nextInt(colors.size()));
+        tagColor.put(tag, chosenColor);
+    }
+    return tagColor.get(tag);
+}
+----
+
+==== Notes on changing styling:
+* Please refrain from using `!important` because it induces ambiguity and reduces modularity in the codebase
+* Use `ids` instead of `classes` as css selectors.
+* If the new UI Styling is drastically different from the current version, consider putting it in a new file and changing the loaded css to that instead of the current `DarkTheme.css`
+* Do not use `element.setStyle()` unless there is no way using CSS to achieve the same. Using such methods induces difficulty in tracking the source of the styling making it cumbersome to edit later.
+// end::styling[]
+
+
+// tag::eventsbook[]
+=== Events and EventBook
+In version 1.4 and above, the application has been expanded to allow not only list of `Residents` but also of `Events`. The rationale behind is to allow the hostel management staff be aware of the events taking place in the hostel and make necessary preparations for the same. This section breifly explains the implementation of `Events` and the `EventBook` at four different levels: `Model` `Logic` `UI` and `Storage`
+
+==== Model
+At the model level, the `Event` class describes the behavior of an `Event` object. It has the following fields:
+
+* `Title`
+* `Location`
+* `Datetime`
+* `Description`
+
+Each of these fields have a class of their own within `seedu/room/model/event` and these classes contain the definitions and validations for each field. For example lets look at a snippet from `Datetime.java`:
+
+[source,java]
+----
+/**
+ * Returns true if a given string is a valid datetime in the format dd/mm/yyyy hhmm k or dd/mm/yyyy hhmm to hhmm.
+ */
+public static boolean isValidDatetime(String test) {
+    String[] components = test.split(" ");
+    String date = components[0];
+    String startTime = components[1];
+
+    //If the format is dd/mm/yyyy hhmm k
+    if (components.length == 3) {
+        String duration = components[2];
+        return isValidDate(date) && isValidTime(startTime) && isValidDuration(duration);
+    //If the format is dd/mm/yyyy hhmm to hhmm
+    } else if (components.length == 4) {
+        String endtime = components[3];
+        return isValidDate(date) && isValidTime(startTime) && isValidTime(endtime);
+    } else {
+        return false;
+    }
+}
+----
+
+This snippet shows how the application checks for invalid an `Datetime` when a user tries to add an event to the EventBook. Note that currently, the current implementation of `Datetime` disallows multi-day Events.
+
+It is important to note that two Event objects are considered equivalent (i.e .equals returns true) if their `Title`, `Location` and `Datetime` are the equivalent irregardless of whether the `Description` is the same or not. This is because a user may try to add an Event again if he/see forgets that it has already been added before. In such a senario, it is very unlikely that the `Description` for both the attempts to add the events will be the same but the `Title`, `Location` and `Datetime` would probably be the same.
+
+If an event is being added to the `EventBook` when an equivalent event already exists, a `DuplicateEventException` will be thrown by the `Model`
+
+
+`EventBook` implements a `ReadOnlyEventBook` and is responsible for maintaining the list of Events for the Logic and UI to query and update. The notable methods defined for `EventBook` are:
+
+* `setEvents(List<? extends ReadOnlyEvent> events)`
+* `resetData(ReadOnlyEventBook newData)`
+* `addEvent(ReadOnlyEvent e)`
+* `updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedReadOnlyEvent)`
+* `removeEvent(ReadOnlyEvent key)`
+* `sortBy(String sortCriteria)`
+* `getEventList()`
+
+Some important things to note about `EventBook`:
+
+* By default, the events are sorted by `Title`
+* Querying for events may throw a `EventNotFoundException` and adding events may throw a `DuplicateEventException`
+
+Possible Future Implementations:
+
+* Implement a better sort for `Events`. Although they can be sorted by * `Title`, `Location`, `Datetime` and `Description`, a user would like to see upcoming events first. So, a possible sort criteria would be `Number of days until the Event`. So, the upcoming events would be at the top of the list and the past ones and others much later in the future would be further down.
+
+
+==== Logic
+At the logic level, there are two commands which allow addition and deletion of events:
+
+* Add Event Command: `addevent` or `ae`
+* Delete Event Command: `deleteevent` or `de`
+
+Both these commands follow the general implementations of an `Undoable Command`. For more details look at their respective sections in the Developer Guide: link:DeveloperGuide.adoc[addEvent] link:DeveloperGuide.adoc[deleteEvent]
+
+==== Storage
+The implementation of EventBook storage follows the ResidentBook storage closely. The main methods defined by the `EventBookStorage` interface are:
+
+* `getEventBookFilePath()`
+* `readEventBook()`
+* `readEventBook(String filePath)`
+* `saveEventBook(ReadOnlyEventBook eventBook)`
+* `saveEventBook(ReadOnlyEventBook eventBook, String filePath)`
+* `backupEventBook(ReadOnlyEventBook eventBook)`
+
+The EventBook is stored in an xml file at `data/eventbook.xml` using a `XmlSerializableEventBook` object. When the application is started, the contents of this xml file are read and passed to the Model. If there is no such file found, sample data is read from `SampleDataUtil` and the xml file is only created if any events are added or deleted from this sample data.
+
+==== UI
+The `EventBook` is displayed to the user as an `EventCard` in an `EventListPanel`. The `EventCard` displays all the necessary information about the event such as the title, date, time, location and description.
+
+To display this data in presentable manner and not clutter the UI of the application, a `TabPane` is used. A `TabPane` allows users to switch between the Residents List and the Events List. To switch between the tabs, a user can either use the `Switch Tab` command or a mouse click on either of the `Tabs`
+
+Possible Future Implementations:
+
+* Remove unnecessary details such as `Description` from the `EventCard`.
+* Allow `EventCards` to be selectable so that when selected, a Panel with all the details about the events is displayed
+* Allow the Calendar to be clickable and selectable so that when a day is selected, the Events for the day are displayed.
+
+// end::eventsbook[]
 
 == Documentation
 
