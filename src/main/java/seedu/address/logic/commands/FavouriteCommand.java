@@ -16,7 +16,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author taojiashu
 /**
- * Mark a person in the contact as favourite
+ * Marks a person with the given index number in UniCity as favourite.
  */
 public class FavouriteCommand extends Command {
 

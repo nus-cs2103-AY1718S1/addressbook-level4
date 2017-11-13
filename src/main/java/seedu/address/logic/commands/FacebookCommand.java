@@ -10,7 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Displays Facebook Log In page.
+ * Displays the Facebook search page.
  */
 public class FacebookCommand extends Command {
 
@@ -22,8 +22,8 @@ public class FacebookCommand extends Command {
 
     //author taojiashu
     public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
-            + ": Searches the name of the person specified by the index number in Facebook. "
-            + "The login page will pop up if it is the first time this command is invoked.\n"
+            + ": Searches the name of the person specified by the index number in Facebook.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: "
             + COMMAND_WORDVAR_1 + " 1 "
             + "OR "

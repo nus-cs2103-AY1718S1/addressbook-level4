@@ -4,7 +4,7 @@ import seedu.address.model.person.IsFavouritePredicate;
 
 //@@author taojiashu
 /**
- * List all favourite persons
+ * Lists all favourite persons in UniCity to the user upon execution.
  */
 public class ShowFavouriteCommand extends Command {
 
