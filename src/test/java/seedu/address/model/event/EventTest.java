@@ -9,6 +9,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_EVENT1;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.BeforeClass;
@@ -19,6 +21,7 @@ import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyManager;
+import seedu.address.model.reminder.Reminder;
 
 //@@author junyango
 public class EventTest {
@@ -26,6 +29,7 @@ public class EventTest {
     private static DateTime dateTime;
     private static Address address;
     private static Set<Property> properties;
+    private static List<Reminder> reminders;
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -39,6 +43,8 @@ public class EventTest {
         properties.add(name);
         properties.add(dateTime);
         properties.add(address);
+
+        reminders = new ArrayList<>();
     }
 
     @Test
@@ -86,5 +92,13 @@ public class EventTest {
 
         assertEquals(expected, event.toString());
         assertEquals(expected, event.getAsText());
+    }
+    @Test
+    public void hashCode_checkCorrectness() {
+        Event event = new Event(name, dateTime, address, reminders);
+        assertNotNull(event);
+
+        assertEquals(Objects.hash(event.nameProperty(), event.timeProperty(), event.addressProperty(),
+                event.reminderProperty()), event.hashCode());
     }
 }

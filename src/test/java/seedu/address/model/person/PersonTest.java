@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -57,5 +58,15 @@ public class PersonTest {
 
         Person copied = new Person(person);
         assertEquals(person, copied);
+    }
+
+    //@@author junyango
+    @Test
+    public void hashCode_checkCorrectness() {
+        Person person = new Person(name, phone, email, address, Collections.emptySet());
+        assertNotNull(person);
+
+        assertEquals(Objects.hash(person.nameProperty(), person.phoneProperty(), person.emailProperty(),
+                person.addressProperty(), person.tagProperty()), person.hashCode());
     }
 }
