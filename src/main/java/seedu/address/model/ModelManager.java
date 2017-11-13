@@ -60,7 +60,6 @@ public class ModelManager extends ComponentManager implements Model {
         completedParcels = filteredParcels.filtered(deliveredPredicate);
         uncompletedParcels = filteredParcels.filtered(deliveredPredicate.negate());
         activeParcels = uncompletedParcels;
-        this.maintainSorted();
         ModelListener modelListener = new ModelListener(this);
     }
 
