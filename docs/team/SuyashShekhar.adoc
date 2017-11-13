@@ -3,14 +3,26 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: ResidentBook
-ResidentBook is a newly conceptualised administrative tool catered for staffs handling hostel and college operations.. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+== Project: Resident Book
+ResidentBook is a newly conceptualised administrative tool catered for staffs handling hostel and college operations. Universities such as NUS, has numerous hostels and colleges. Administrative staff has to handle all the matters regarding check in, check out , and ensuring
+that all Residents have paid for their fees during their stay. However, while the school employs a system with database of Resident details, common administrative staff are unable to read the information due to policies such as PDPA.
+
+Simple day to day operations can be carried out with minimal critical and private data. For example, Residents' NRIC is unnecessary when checking in, as the matriculation card is sufficient in proving his identity.
+
+Also, while the University welcomes exchange students and guests during the semester, some data cannot be found in the school's database if the guests approaches the college or hall directly. The temporary person feature is implemented, where the details will be automatically deleted after the timing specified by the staff.
+The feature also help to prevent storing redundant and unnecessary details in the ResidentBook. Additionally, for exchange students, the staff can easily import and export the details into the current ResidentBook.
+
+Colleges and Halls are famous for their vibrant community life. CCAs, dance classes and interest groups are just some example of weekly events Residents can participate in. Administrators are required to keep a calendar of upcoming events when queries by Professors or Guests who are interested in the events.
+However, with so many events happening every week, it will be hard to keep track without a calendar that shows the overview of events during the month. This also helps administrators in finding clashes of events.
+
+Keeping these in mind, ResidentBook is developed to ease the overhead and trouble of handling hostel or college administration matters. Showing only necessary details such as Room number and Contact number, administrators are able to perform day-to-day operations.
+ResidentBook uses Command line interface (CLI) as the primary source of input. Accompanied with features such as auto-complete, ResidenkBook aim to increase the efficiency and effectiveness of Hostel and College life.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/collated/main/sushinoya.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/collated/test/sushinoya.md[Test code]]
 
 == Commands Added:
 
-=== `Swap Room Command`
+=== 1. `Swap Room Command`
 
 ==== External behavior
 
@@ -39,7 +51,7 @@ include::../DeveloperGuide.adoc[tag=swaproom]
 ---
 
 
-=== `Sort Command`
+=== 2. `Sort Command`
 
 ==== External behavior
 
@@ -71,7 +83,7 @@ include::../DeveloperGuide.adoc[tag=sort]
 ---
 
 
-=== `Add Event Command`
+=== 3. `Add Event Command`
 
 ==== External behavior
 
@@ -100,7 +112,7 @@ include::../DeveloperGuide.adoc[tag=addEvent]
 
 ---
 
-=== `Delete Event Command`
+=== 4. `Delete Event Command`
 
 ==== External behavior
 
@@ -129,7 +141,7 @@ include::../DeveloperGuide.adoc[tag=deleteEvent]
 ---
 
 
-=== `Switch Tab Command`
+=== 5. `Switch Tab Command`
 
 ==== External behavior
 
