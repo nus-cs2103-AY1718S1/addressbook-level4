@@ -67,20 +67,27 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleSearchFieldChanged() {
         raise(new NewResultAvailableEvent(""));
+        CommandResult result;
         try {
             if (searchBox.getPromptText().contains("Person") || searchBox.getPromptText().contains("Task")) {
                 if (searchBox.getText().trim().isEmpty()) {
-                    logic.execute(ListCommand.COMMAND_WORD);
-                } else {
-                    logic.execute(FindCommand.COMMAND_WORD + " " + searchBox.getText());
+                    result = logic.execute(ListCommand.COMMAND_WORD);
                     raise(new ValidResultDisplayEvent(FindCommand.COMMAND_WORD));
+                    raise(new NewResultAvailableEvent(result.feedbackToUser));
+                } else {
+                    result = logic.execute(FindCommand.COMMAND_WORD + " " + searchBox.getText());
+                    raise(new ValidResultDisplayEvent(FindCommand.COMMAND_WORD));
+                    raise(new NewResultAvailableEvent(result.feedbackToUser));
                 }
             } else if (searchBox.getPromptText().contains("Pinned")) {
                 if (searchBox.getText().trim().isEmpty()) {
-                    logic.execute(ListPinCommand.COMMAND_WORD);
-                } else {
-                    logic.execute(FindPinnedCommand.COMMAND_WORD + " " + searchBox.getText());
+                    result = logic.execute(ListPinCommand.COMMAND_WORD);
                     raise(new ValidResultDisplayEvent(FindPinnedCommand.COMMAND_WORD));
+                    raise(new NewResultAvailableEvent(result.feedbackToUser));
+                } else {
+                    result = logic.execute(FindPinnedCommand.COMMAND_WORD + " " + searchBox.getText());
+                    raise(new ValidResultDisplayEvent(FindPinnedCommand.COMMAND_WORD));
+                    raise(new NewResultAvailableEvent(result.feedbackToUser));
                 }
             }
         } catch (CommandException | ParseException e1) {
