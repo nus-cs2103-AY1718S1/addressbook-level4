@@ -11,11 +11,9 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
@@ -35,6 +33,8 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     private static final String PDFFOLDERPATH = "data/";
     private static final Double GOLD_INSURANCE_PREMIUM = 2500.0;
     private static final Double SILVER_INSURANCE_PREMIUM = 1500.0;
+    private static final String PDF_FOLDER_PATH = "data/";
+    private static final String PDF_EXTENSION = ".pdf";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
 
@@ -60,7 +60,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     @FXML
     private Label expiryDate;
     @FXML
-    private Label contractName;
+    private Label contractFileName;
 
     public InsuranceProfilePanel() {
         super(FXML);
@@ -78,9 +78,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         this.insurance = insurance;
 
         initializeContractFile(insurance);
-
         enableNameToProfileLink(insurance);
-
         bindListeners(insurance);
         setPremiumLevel(insurance.getPremium().toDouble());
     }
@@ -103,7 +101,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         owner.setText(null);
         insured.setText(null);
         beneficiary.setText(null);
-        contractName.setText(null);
+        contractFileName.setText(null);
         premium.setText(null);
         signingDate.setText(null);
         expiryDate.setText(null);
@@ -115,30 +113,29 @@ public class InsuranceProfilePanel extends UiPart<Region> {
      * @param insurance
      */
     private void initializeContractFile(ReadOnlyInsurance insurance) {
-        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractFileName());
+        insuranceFile =  new File(PDF_FOLDER_PATH + insurance.getContractFileName()
+                + (insurance.getContractFileName().toString().endsWith(PDF_EXTENSION) ? "" : PDF_EXTENSION));
+
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
         } else {
-            contractName.getStyleClass().clear();
-            contractName.getStyleClass().add("missing-file");
-            contractName.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    FileChooser.ExtensionFilter extFilter =
-                            new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-                    FileChooser chooser = new FileChooser();
-                    chooser.getExtensionFilters().add(extFilter);
-                    File openedFile = chooser.showOpenDialog(null);
+            contractFileName.getStyleClass().clear();
+            contractFileName.getStyleClass().add("missing-file");
+            contractFileName.setOnMouseClicked(event -> {
+                FileChooser.ExtensionFilter extensionFilter =
+                        new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+                FileChooser chooser = new FileChooser();
+                chooser.getExtensionFilters().add(extensionFilter);
+                File openedFile = chooser.showOpenDialog(null);
 
-                    if (isFileExists(openedFile)) {
-                        try {
-                            Files.copy(openedFile.toPath(), insuranceFile.toPath());
-                            if (isFileExists(insuranceFile)) {
-                                activateLinkToInsuranceFile();
-                            }
-                        } catch (IOException ex) {
-                            logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
+                if (isFileExists(openedFile)) {
+                    try {
+                        Files.copy(openedFile.toPath(), insuranceFile.toPath());
+                        if (isFileExists(insuranceFile)) {
+                            activateLinkToInsuranceFile();
                         }
+                    } catch (IOException ex) {
+                        logger.info("Unable to open file at path: " + openedFile.getAbsolutePath());
                     }
                 }
             });
@@ -149,13 +146,13 @@ public class InsuranceProfilePanel extends UiPart<Region> {
      *  Enable the link to open contract pdf file and adjusting the text hover highlight
      */
     private void activateLinkToInsuranceFile() {
-        contractName.getStyleClass().clear();
-        contractName.getStyleClass().add("valid-file");
-        contractName.setOnMouseClicked(event -> {
+        contractFileName.getStyleClass().clear();
+        contractFileName.getStyleClass().add("valid-file");
+        contractFileName.setOnMouseClicked(event -> {
             try {
                 Desktop.getDesktop().open(insuranceFile);
             } catch (IOException ee) {
-                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractFileName());
+                logger.info("File do not exist: " + PDF_FOLDER_PATH + insurance.getContractFileName());
             }
         });
     }
@@ -171,7 +168,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
         insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
-        contractName.textProperty().bind(Bindings.convert(insurance.contractFileNameProperty()));
+        contractFileName.textProperty().bind(Bindings.convert(insurance.contractFileNameProperty()));
         premium.textProperty().bind(Bindings.convert(insurance.premiumProperty()));
         signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
         expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));

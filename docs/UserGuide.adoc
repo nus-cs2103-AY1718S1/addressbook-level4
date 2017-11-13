@@ -117,9 +117,9 @@ Examples:
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower dt/all t/cute` +
-Edits the name of the 2nd person to be `Betsy Crower`, clears all existing tags and add the cute tag.
+Edits the name of the 2nd person to be `Betsy Crower`, clears all existing tags and adds the cute tag.
 * `edit 1 n/` +
-Triggers the programme to autofill the name into the prefix becoming `edit 1 n/Betsy Crower`
+Triggers the programme to autofill the name after the prefix is entered, becoming `edit 1 n/Betsy Crower`
 // end::edit[]
 
 === Locating persons by name: `find`
@@ -156,19 +156,19 @@ Format: `pfind PARTIALNAME [MORE_PARTIALNAMES]`
 
 ****
 * The search is case insensitive. e.g `ha` will match `Hans`
-* Only search for given name.
+* Searches anywhere within the name. eg `ar` will match `Jaryl`
 * Both partial or full name will be matched. e.g. A or Alice will both return `Alice`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Ha B` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
-* `pfind Jo` +
-Returns any name starting with Jo, eg: `John`, `Joe` or `Joy`
+* `pfind li` +
+Returns any name containing li anywhere within the name, eg: `Alice Syn`, `Charlotte Oliveiro`, `David Li`
 
 Alternatively, this command can perform by directly inputting `PARTIALNAME` into the search box right above the contact panel.
 
-image::searchbox.png[width="380"]
+image::searchBox.png[width="380"]
 
 // end::pfind[]
 === Deleting a person : `delete`
@@ -335,14 +335,14 @@ Person name will be highlighted upon hover to indicate it is a link
 === Finding insurance from insurance panel list on the right
 `since v1.4`
 
-image::insurancePanel.PNG[width="380"]
+image::insurancePanel.png[width="380"]
 
 Specific insurance contract can be displayed directly by selecting them on this panel
 
-=== Tracing all insurance file the current person selected is involved in
+=== Tracing all insurance files the current person selected is involved in
 `since v1.4`
 
-image::linkToInsurance.PNG[width="380"]
+image::linkToInsurance.png[width="380"]
 List of all related insurance contracts are now displayed on person profile page. These entries can be clicked on which will switch up the selected insurance page
 // end::linkAllProfileAndInsurance[]
 
@@ -350,7 +350,7 @@ List of all related insurance contracts are now displayed on person profile page
 === Add/View contract pdf file
 `since v1.4`
 
-The pdf file for contract can now be added by clicking on file name beside "Contract Path:"  which will bring up the filechooser. Afterwards, clicking on the same entry will directly open the file for viewing
+The pdf file for contract can now be added by clicking on file name beside "Contract Path:"  which will bring up the file directory. Afterwards, clicking on the same entry will directly open the file for viewing
 
 image::contractPdf.png[width="380"]
 // end::pdfSaveLoad[]
@@ -371,9 +371,31 @@ Command words: `print`
 
 Saves the entire address book into a printable .txt file. +
 Format: `print FILENAME`
+
+After executing the command, the user can find the saved file as FILENAME.txt in the same directory where the project/.jar
+file is saved.
+
+For example: the user intends to print the address book as FILEPATH.txt
+
+image::PrintCommandSuccess.png[width="800"]
+
+Now, he can find his FILEPATH.txt file along side the .jar file directory.
+
+image::TextFilePath.png[width="600"]
+
+* Note: The file name cannot contain illegal file path characters, which includes the following: /:*?"<>|
+
+
+The result of the created .txt file is illustrated in the figure below
+
+image::PrintedTxtFile.png[width="800"]
+
+Examples:
+
+* `print FILENAME` +
+Prints the entire addressbook by listing all the contacts, and the associated insurance policies with each contact.
 //end::print[]
 
-After executing the command, the user can find the saved file in the docs/books folder as FILENAME.txt
 
 // tag::why[]
 === Easter egg : `why`
@@ -381,11 +403,17 @@ After executing the command, the user can find the saved file in the docs/books 
 
 Command words: `why`
 
-Prints out a line telling the user a reason why for a particular person
+Prints out a line telling the user "why" for a particular person
 Format: `why INDEX`
 
 After executing, the user will be presented with a feedback which looks something like this:
-"Because John Joe lives in 123 Clementi Ave 2"
+"Because John Doe lives in 123 Clementi Ave 2"
+
+Examples:
+
+* `list` +
+`why 1` +
+Returns "Because Kelvin Liew appreciates you"
 // end::why[]
 
 === Exiting the program : `exit`
@@ -416,7 +444,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *Partial Find* : `pfind PARTIALNAME [MORE_PARTIALNAMES]` +
-e.g. `pfind Ja Carl Al`
+e.g. `pfind Ja arl Al`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -424,3 +452,6 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Print* : `print`
+* *Why* : `why`
+

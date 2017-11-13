@@ -40,6 +40,7 @@ import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.AMY_NO_ADDRESS;
 import static seedu.address.testutil.TypicalPersons.AMY_NO_DOB;
 import static seedu.address.testutil.TypicalPersons.AMY_NO_EMAIL;
+import static seedu.address.testutil.TypicalPersons.AMY_NO_GENDER;
 import static seedu.address.testutil.TypicalPersons.AMY_NO_PHONE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.CARL;
@@ -212,6 +213,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + GENDER_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, AMY_NO_DOB);
+        /* Case: missing gender -> added */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + DOB_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, AMY_NO_GENDER);
         //@@author
         //@@author OscarWang114
         /* Case: missing name -> rejected */

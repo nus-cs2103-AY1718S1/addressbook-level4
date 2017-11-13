@@ -28,13 +28,14 @@ the success message.
 To enhance the user's sense of control over LISA, the Undo/Redo commands will also
 return the undone/redone message to the user as a feedback so that the user knows for sure what
 command is being undone/redone. This will be especially useful if he undoes or redoes the
-command accidentally, or after returning to LISA after a break.
+command accidentally, or after returning to LISA after a break. This is to prevent unintentional changes
+to LISA, which may be accidental.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
-
+include::../DeveloperGuide.adoc[tag=undoredoEnhance]
 #End of Extract#
 
 ---
@@ -56,7 +57,8 @@ include::../UserGuide.adoc[tag=print]
 ==== Justification
 
 The user may need to export the entire address book in LISA in some sort of text document for
-printing or for reference.
+printing or for reference. Print function allows the user to have a hardcopy or softcopy contact list document
+for convenient reference whenever he/she is off the application.
 
 ==== Implementation
 
@@ -75,7 +77,8 @@ include::../DeveloperGuide.adoc[tag=print]
 
 ---
 #Start of Extract [from: User Guide]#
-The contact list in LISA is arranged in alphabetical order
+The contact list in LISA is arranged in alphabetical order. Newly added people are also well placed in alphabetical
+order in LISA
 
 #End of Extract#
 
@@ -91,9 +94,8 @@ sorting.
 
 ---
 #Start of Extract [from: Developer Guide]#
-Initially implemented in addressbook-level2, this sort command was implemented successfully in
-LISA with help from Jaryl Tan (@Juxarius).
-
+Implemented into LISA with help from Jaryl Tan (@Juxarius).
+include::../DeveloperGuide.adoc[tag=sortFunction]
 #End of Extract#
 
 ---
@@ -130,9 +132,17 @@ include::../DeveloperGuide.adoc[tag=why]
 ---
 
 === Enhancement Proposed:
-
+A log in/log out page for enhanced security
+Email function to automatically load .txt or .xml file into Outlook or other Desktop email applications
+Ability to change ui theme on command: `change` function
 
 === Other contributions
+All the features listed above
+Performed Acceptance Testing on other group's applications and highlighted bugs
+https://github.com/CS2103AUG2017-T12-B1/main/issues/73[#73],
+https://github.com/CS2103AUG2017-T12-B1/main/issues/64[#64]
+Helped review team member's PRs
+Improved certain commands in LISA
 
 === Additional Information
 Initially switched to addressbook-level2 without the group; was unable to cope with the depth of addressbook-level4.

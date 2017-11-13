@@ -7,7 +7,7 @@ import static seedu.address.testutil.TypicalPersons.CARL;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.Person;
 
-//@@atuhor RSJunior37
+//@@author RSJunior37
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */

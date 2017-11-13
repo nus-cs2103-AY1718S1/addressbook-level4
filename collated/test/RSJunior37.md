@@ -16,7 +16,7 @@ public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
     private static final String OWNER_FIELD_ID = "#owner";
     private static final String INSURED_FIELD_ID = "#insured";
     private static final String BENEFICIARY_FIELD_ID = "#beneficiary";
-    private static final String CONTRACT_NAME_ID = "#contractName";
+    private static final String CONTRACT_NAME_ID = "#contractFileName";
     private static final String PREMIUM_FIELD_ID = "#premium";
     private static final String SIGNING_DATE_ID = "#signingDate";
     private static final String EXPIRY_DATE_ID = "#expiryDate";
@@ -24,7 +24,7 @@ public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
     private final Label ownerLabel;
     private final Label insuredLabel;
     private final Label beneficiaryLabel;
-    private final Label contractNameLabel;
+    private final Label contractFileNameLabel;
     private final Label premiumLabel;
     private final Label signingDateLabel;
     private final Label expiryDateLabel;
@@ -35,7 +35,7 @@ public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
         this.ownerLabel = getChildNode(OWNER_FIELD_ID);
         this.insuredLabel = getChildNode(INSURED_FIELD_ID);
         this.beneficiaryLabel = getChildNode(BENEFICIARY_FIELD_ID);
-        this.contractNameLabel = getChildNode(CONTRACT_NAME_ID);
+        this.contractFileNameLabel = getChildNode(CONTRACT_NAME_ID);
         this.premiumLabel = getChildNode(PREMIUM_FIELD_ID);
         this.signingDateLabel = getChildNode(SIGNING_DATE_ID);
         this.expiryDateLabel = getChildNode(EXPIRY_DATE_ID);
@@ -55,7 +55,7 @@ public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
     }
 
     public String getContractPathId() {
-        return contractNameLabel.getText();
+        return contractFileNameLabel.getText();
     }
 
     public String getPremium() {
@@ -138,10 +138,10 @@ public class PartialFindCommandTest {
 
     @Test
     public void equals() {
-        NameStartsWithKeywordsPredicate firstPredicate =
-                new NameStartsWithKeywordsPredicate(Collections.singletonList("first"));
-        NameStartsWithKeywordsPredicate secondPredicate =
-                new NameStartsWithKeywordsPredicate(Collections.singletonList("second"));
+        NameContainsPartialKeywordsPredicate firstPredicate =
+                new NameContainsPartialKeywordsPredicate(Collections.singletonList("first"));
+        NameContainsPartialKeywordsPredicate secondPredicate =
+                new NameContainsPartialKeywordsPredicate(Collections.singletonList("second"));
 
         PartialFindCommand findFirstCommand = new PartialFindCommand(firstPredicate);
         PartialFindCommand findSecondCommand = new PartialFindCommand(secondPredicate);
@@ -171,17 +171,17 @@ public class PartialFindCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
+    public void execute_multiplePartialKeywords_allPersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        PartialFindCommand command = prepareCommand("Ca Ell Fio");
+        PartialFindCommand command = prepareCommand("Ca ll Fio");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
     @Test
-    public void execute_multipleKeywords_onlyReturnFirstNameMatch() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        PartialFindCommand command = prepareCommand("Ku Mey Fi");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(FIONA));
+    public void execute_multipleFullKeywords_allPersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        PartialFindCommand command = prepareCommand("Kurz Fiona");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA));
     }
 
 
@@ -191,7 +191,8 @@ public class PartialFindCommandTest {
      */
     private PartialFindCommand prepareCommand(String userInput) {
         PartialFindCommand command =
-                new PartialFindCommand(new NameStartsWithKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new PartialFindCommand(new NameContainsPartialKeywordsPredicate(
+                        Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -212,8 +213,10 @@ public class PartialFindCommandTest {
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }
+
 ```
-###### \java\seedu\address\testutil\InsuranceBuilder.java
+
+###### \java\seedu\address\testutil\InsuranceBuilder.java : Obsolete, some adjustment made to fit changes in final version and renamed into LifeInsuranceBuilder by OscarWang114
 ``` java
 /**
  * A utility class to help with building LifeInsurance objects.
@@ -293,8 +296,8 @@ public class InsuranceBuilder {
     /**
      * Sets the Contract Path of the {@code LifeInsurance} that we are building.
      */
-    public InsuranceBuilder withContractName(String contractName) {
-        this.insurance.setContractName(contractName);
+    public InsuranceBuilder withContractName(String contractFileName) {
+        this.insurance.setContractName(contractFileName);
         return this;
     }
 
@@ -328,6 +331,25 @@ public class InsuranceBuilder {
 
 }
 ```
+###### \java\seedu\address\testutil\TypicalInsurances.java
+``` java
+/**
+ * A utility class containing a list of {@code Person} objects to be used in tests.
+ */
+public class TypicalInsurances {
+    public static final ReadOnlyInsurance COMMON_INSURANCE =
+            new LifeInsuranceBuilder().withInsuranceName("Common Insurance")
+            .withOwner(new Person(ALICE))
+            .withBeneficiary(new Person(BENSON))
+            .withInsured(new Person(CARL))
+            .withPremium("123.45")
+            .withContractFileName("common.pdf")
+            .withSigningDate("01 Jan 2017")
+            .withExpiryDate("31 Dec 2020").build();
+
+    private TypicalInsurances() {} // prevents instantiation
+}
+```
 ###### \java\seedu\address\ui\InsuranceProfilePanelTest.java
 ``` java
 public class InsuranceProfilePanelTest extends GuiUnitTest {
@@ -338,7 +360,7 @@ public class InsuranceProfilePanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        ReadOnlyInsurance insurance = COMMONINSURANCE;
+        ReadOnlyInsurance insurance = COMMON_INSURANCE;
         insuranceClickedEventStub = new InsurancePanelSelectionChangedEvent(insurance);
 
         guiRobot.interact(() -> insuranceProfilePanel = new InsuranceProfilePanel());

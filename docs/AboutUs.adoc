@@ -24,6 +24,8 @@ image::PujithaDesiraju.jpg[width="150", align="left"]
 
 Role: Developer +
 Responsibilities:
+In charge of providing ideas and creative ways of forwarding the project.
+Responsible for including more details regarding the entry.
 
 === Jaryl Tan aka Juxarius
 image::jaryltan.jpg[width="150", align="left"]
@@ -37,7 +39,7 @@ PR review, system tester and bug searching/debugging.
 image::rsjunior37.jpg[width="150", align="left"]
 image:githubicon.png[Github Icon, 40, 40, link="https://github.com/RSJunior37"] image:portfolio.png[Portfolio Icon, 40, 40, link="team/rattaninsiripornpitak.adoc"]
 
-Role: Developer +
+Role: In charge of `Ui` component and documentation +
 Responsibilities:
 Oversees features related to Ui Component, providing skeletons, giving suggestions and ensuring all the different parts fit together, including guitest handlers. Also updates Ui-related images and diagrams regularly.
 
@@ -47,5 +49,10 @@ image:githubicon.png[Github Icon, 40, 40, link="https://github.com/arnollim"] im
 
 Role: Developer +
 Responsibilities:
+In charge of exporting address book as a printable document file.
+In charge of improving the user experience with Easter Egg features.
+Responsible for adding miscellaneous enhancements and improvements to existing commands to LISA.
+Responsible for documentation language style review.
+
 
 '''

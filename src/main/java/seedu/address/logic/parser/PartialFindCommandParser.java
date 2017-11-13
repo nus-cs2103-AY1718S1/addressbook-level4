@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import seedu.address.logic.commands.PartialFindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameStartsWithKeywordsPredicate;
+import seedu.address.model.person.NameContainsPartialKeywordsPredicate;
 
 //@@author RSJunior37
 /**
@@ -28,7 +28,7 @@ public class PartialFindCommandParser implements Parser<PartialFindCommand> {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new PartialFindCommand(new NameStartsWithKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new PartialFindCommand(new NameContainsPartialKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }
