@@ -30,4 +30,18 @@ public class GoogleUtilTest {
         assertEquals(typicalAddressBookPerson, GoogleUtil.convertPerson(typicalPerson));
 
     }
+
+    @Test
+    public void convertFromGooglePersonWithInvalidPhone_returnsNull() throws IllegalValueException {
+        Person typicalPerson = new GooglePersonBuilder().withPhone("").build();
+        assertEquals(null, GoogleUtil.convertPerson(typicalPerson));
+
+    }
+
+    @Test
+    public void convertFromGooglePersonWithInvalidName_returnsNull() throws IllegalValueException {
+        Person typicalPerson = new GooglePersonBuilder().withName("").build();
+        assertEquals(null, GoogleUtil.convertPerson(typicalPerson));
+
+    }
 }

@@ -10,7 +10,7 @@ ifdef::env-github[]
 image::docs/images/Ui.png[width="800"]
 endif::[]
 
-// tag::intro[]
+// tag::intro[]ga
 * HitMeUp is an address book application designed with the sociable user in mind.
 * It aims to be a one-stop center for managing and interacting with contacts.
 * A Command Line Interface (CLI) is primarily used for input
