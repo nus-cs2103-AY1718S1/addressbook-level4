@@ -366,7 +366,7 @@ To avoid confusion and an overly complicated `UI`, only one `remark` per person 
 
 The following sequence diagram shows how the `remark` operation works:
 
-image::RemarkSequenceDiagramForLogic.PNG[width="800"]
+image::RemarkSequenceDiagramForLogic.png[width="800"]
 _Figure 4.3.1 : Sequence Diagram of `Remark` Operation_
 
 `Remark` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
