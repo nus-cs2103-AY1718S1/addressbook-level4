@@ -225,11 +225,11 @@
     -fx-text-fill: #fffefd;
 }
 
-.menu:showing{
+.menu:showing {
     -fx-background-color: transparent;
 }
 
-.menu:hover{
+.menu:hover {
     -fx-background-color: transparent;
 }
 
@@ -252,7 +252,6 @@
 .menu-item:focused .label {
     -fx-text-fill: #71ffa0;
 }
-
 
 /*
  * Metro style Push Button
@@ -377,7 +376,7 @@
     -fx-border-width: 1;
     -fx-font-family: "Old Standard TT";
     -fx-font-size: 13pt;
-    -fx-text-fill: derive(#71ffa0,-20%);
+    -fx-text-fill: derive(#71ffa0, -20%);
 }
 
 #resultDisplay {
@@ -403,8 +402,6 @@
     -fx-font-size: 11;
 }
 
-
-
 #sortMenuBox .context.menu {
     -fx-background-color: #1a1e37;
 }
@@ -426,11 +423,11 @@
 }
 
 .menu-button:hover .arrow {
-    -fx-background-color:  #71ffa0;
+    -fx-background-color: #71ffa0;
 }
 
 .menu-button:showing .arrow {
-    -fx-background-color:  #71ffa0;
+    -fx-background-color: #71ffa0;
 }
 
 #sortMenuBox .label {
@@ -443,15 +440,15 @@
 }
 
 #sortMenuBox .text-field {
-    -fx-background-color:#1a1e37;
+    -fx-background-color: #1a1e37;
     -fx-font-size: 12pt;
     -fx-font-family: "Old Standard TT";
-    -fx-text-fill: derive(#71ffa0,-20%);
-    
+    -fx-text-fill: derive(#71ffa0, -20%);
+
 }
 
 #personList {
-    -fx-background-color:#1a1e37;
+    -fx-background-color: #1a1e37;
     -fx-border-color: transparent;
 }
 
@@ -530,14 +527,13 @@
 #time {
     -fx-font-family: "Space Mono Italic";
     -fx-font-size: 12px;
-    
+
 }
 
 #time {
     -fx-font-family: "Space Mono Italic";
     -fx-font-size: 12px;
     -fx-text-fill: gold;
-
 }
 
 #header {
@@ -577,7 +573,7 @@
 }
 
 #overlayGrid {
-    -fx-background-color: derive(#1a1e37, 20%); 
+    -fx-background-color: derive(#1a1e37, 20%);
     -fx-border-color: transparent;
 }
 
