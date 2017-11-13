@@ -46,7 +46,7 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The user interface shown below should appear in a few seconds.
 +
 image::Ui.png[width="790"]
-_Figure 1. HitMeUp User Interface_
+_Figure 3. HitMeUp User Interface_
 
 .  Type a command (we recommend trying the `import` command first) into the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -326,23 +326,23 @@ Format: `import SERVICE_NAME`
 . Opens the Google authentication page (as shown below) in HitMeUp to grant the app access to your contacts.
 +
 image::HitMeUpImportStep1.png[width="790"]
-_Figure 3.11.1 Google Authentication Page_
+_Figure 5.11a. Google Authentication Page_
 +
 .  Once you have logged in with your credentials, the consent page below will be loaded:
 +
 image::HitMeUpImportStep2.png[width="790"]
-_Figure 3.11.2 Google Consent Page_
+_Figure 5.11b. Google Consent Page_
 +
 .  After granting access, HitMeUp will display a progress bar (as shown below) to indicate the progress of import.
 +
 image::HitMeUpImportStep3.png[width="790"]
-_Figure 3.11.3 HitMeUp Import Progress_
+_Figure 5.11c. HitMeUp Import Progress_
 +
 .  After import has completed, the application will show the number of contacts successfully imported and the names of contacts that were
 unable to be imported.
 +
 image::HitMeUpImportStep4.png[width="790"]
-_Figure 3.11.4 Import Result Display_
+_Figure 5.11d. Import Result Display_
 //end::import[]
 
 // tag::export[]
