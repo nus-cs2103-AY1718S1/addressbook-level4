@@ -45,6 +45,36 @@ include::../DeveloperGuide.adoc[tag=search]
 
 ---
 
+=== Enhancement added: powerful `edit`
+
+==== External behaviour
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=gedit]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+See first paragraph of `Implementation`.
+
+==== Implementation
+
+---
+*full PR here (Pull request https://github.com/CS2103AUG2017-T14-B1/main/pull/131/files[#131])*
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=edit]
+
+#End of Extract#
+
+---
+
 === Enhancement Proposed: Add support for foreign languages
 
 NUS has a lot of international students. It is important to allow CRUD in languages other than English to cater to these students'
@@ -61,7 +91,7 @@ for example `work` phone and `home` phone.
 
 === Other contributions
 
-* Allow for empty values in email and address (Pull request https://github.com/CS2103AUG2017-T14-B1/main/pull/20[#20])
-* Suggest the allowance for empty values in other fields implemented thereafter
+* beautify UI with CSS (PR https://github.com/CS2103AUG2017-T14-B1/main/pull/106/files[#106])
+* Allow for empty values in email and address (PR https://github.com/CS2103AUG2017-T14-B1/main/pull/20[#20])
 * Suggest enhancements of custom fields and multiple phone numbers which were later implemented by teammates
 * Point out an issue in the original developer guide's sample enhancement about Storage (issue https://github.com/se-edu/addressbook-level4/issues/708[#708])
