@@ -322,7 +322,8 @@ endif::[]
 == Clear logfile
 
 === Valid Clear Logfile
-[NOTE}
+[NOTE]
+
 Action is irreversible
 
 1. Copy the following command onto the command line input: +
@@ -348,6 +349,7 @@ Action is irreversible
 ****
 
 == Genering QR Code
+
 [NOTE]
 Internet Access is required for this feature. +
 Smartphone with QRScanner Application Installed.
