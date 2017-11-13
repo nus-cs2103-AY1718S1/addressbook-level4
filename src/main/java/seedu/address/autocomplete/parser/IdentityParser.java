@@ -8,7 +8,7 @@ import java.util.List;
 public class IdentityParser implements AutoCompleteParser {
 
     public List<String> parseForPossibilities(String stub) {
-        return Arrays.asList(new String[] {stub});
+        return Arrays.asList(stub);
     }
 
 }
