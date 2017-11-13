@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 
+//@@author aver0214
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone} matches any of the keywords given.
  */
@@ -15,13 +16,12 @@ public class PhoneContainsSpecifiedKeywordsPredicate implements Predicate<ReadOn
         this.keywords = keywords;
     }
 
-    //@@author aver0214
+
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
     }
-    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -30,4 +30,4 @@ public class PhoneContainsSpecifiedKeywordsPredicate implements Predicate<ReadOn
                 && this.keywords.equals(((PhoneContainsSpecifiedKeywordsPredicate) other).keywords)); // state check
     }
 
-}
+} //@@author

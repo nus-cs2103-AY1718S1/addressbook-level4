@@ -378,6 +378,18 @@ The user can use this command with only ONE of the following prefixes
 * `e/` : To search by email(s)
 * `t/` : To search by tag(s)
 
+The following sequence diagram shows how the find operation work:
+
+image::FindSequenceDiagram.png[width="800"]
+
+[NOTE]
+The `predicate` used depends on which type of detail the user is using to find. +
+The 4 predicates are as follow: +
+* if search by `name` then `NameContainsKeywordsPredicate` is used
+* if search by `phone number` then `PhoneContainsSpecifiedKeywordsPredicate` is used
+* if search by `email` then `EmailContainsSpecifiedKeywordsPredicate` is used
+* if search by `tag` then `TagContainsSpecifiedKeywordsPredicate` is used
+
 ==== Design Considerations
 
 It is implemented to search with one type of detail only so that the returned results will be relevant to that type of detail used only. i.e. if a user search for a person with phone number then only the phone numbers of the returned contacts are relevant, and other details are irrelevant to the input phone number during the search.
