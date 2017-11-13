@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+//@@author nassy93
 /**
  * Stores a person's current "Favourite" status
  *

@@ -12,6 +12,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
+//@@author jianglingshuo
 /**
  * Adds a person to the address book.
  */
@@ -40,6 +41,7 @@ public class AddCommand extends UndoableCommand {
 
     private final Person toAdd;
 
+    //@@author
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */

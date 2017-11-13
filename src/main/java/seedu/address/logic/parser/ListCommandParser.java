@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new SelectCommand object
  */
 public class ListCommandParser implements Parser<ListCommand> {
-
+    //@@author cjianhui
     private Boolean isFavourite = false;
 
     /**

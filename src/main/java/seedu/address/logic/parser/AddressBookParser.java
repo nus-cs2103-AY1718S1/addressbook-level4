@@ -88,7 +88,7 @@ public class AddressBookParser {
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALT:
             return new ListCommandParser().parse(arguments);
-
+        //@@author cjianhui
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALT:
             return new SortCommandParser().parse(arguments);
@@ -108,6 +108,7 @@ public class AddressBookParser {
         case RemovePersonFromGroupCommand.COMMAND_WORD:
         case RemovePersonFromGroupCommand.COMMAND_ALT:
             return new RemovePersonFromGroupCommandParser().parse(arguments);
+        //@@author
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALT:
@@ -126,7 +127,7 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALT:
             return new RedoCommand();
-
+        //@@author nassy93
         case AddFavouriteCommand.COMMAND_WORD:
         case AddFavouriteCommand.COMMAND_ALT:
             return new AddFavouriteCommandParser().parse(arguments);
@@ -134,7 +135,7 @@ public class AddressBookParser {
         case RemoveFavouriteCommand.COMMAND_WORD:
         case RemoveFavouriteCommand.COMMAND_ALT:
             return new RemoveFavouriteCommandParser().parse(arguments);
-
+        //@@author cjianhui
         case AddCalendarCommand.COMMAND_WORD:
         case AddCalendarCommand.COMMAND_ALT:
             return new AddScheduleCommandParser().parse(arguments);
@@ -147,10 +148,11 @@ public class AddressBookParser {
         case DeleteEventCommand.COMMAND_ALT:
             return new DeleteEventCommandParser().parse(arguments);
 
+        //@@author Procrastinatus
         case AddSocialMediaCommand.COMMAND_WORD:
         case AddSocialMediaCommand.COMMAND_ALT:
             return new AddSocialMediaCommandParser().parse(arguments);
-
+        //@@author nassy93
         case ResetPictureCommand.COMMAND_WORD:
         case ResetPictureCommand.COMMAND_ALT:
             return new ResetPictureCommandParser().parse(arguments);

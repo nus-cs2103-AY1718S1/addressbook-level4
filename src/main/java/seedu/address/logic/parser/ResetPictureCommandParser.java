@@ -8,7 +8,6 @@ import seedu.address.logic.commands.ResetPictureCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author nassy93
-
 /**
  * Parses input arguments and creates a new ResetPictureCommand object
  */

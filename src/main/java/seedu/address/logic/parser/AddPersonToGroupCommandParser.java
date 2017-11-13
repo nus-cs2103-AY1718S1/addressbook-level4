@@ -10,8 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddPersonToGroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-
-
+//@@author cjianhui
 /**
  * Parses input arguments and creates a new CreateGroupCommand object
  */

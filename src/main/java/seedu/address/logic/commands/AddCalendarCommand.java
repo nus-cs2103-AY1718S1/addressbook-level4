@@ -28,6 +28,7 @@ import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
 import seedu.address.model.tag.Tag;
 
+//@@author cjianhui
 /**
  * Pulls Google Calendar events of a person.
  */

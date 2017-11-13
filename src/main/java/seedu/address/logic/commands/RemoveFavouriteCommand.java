@@ -24,6 +24,7 @@ import seedu.address.model.schedule.Schedule;
 import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
+//@@author nassy93
 /**
  * Sets Favourite attribute of Indexed person as false in the address book. (remove from favourites)
  */

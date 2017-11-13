@@ -12,7 +12,7 @@ import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
 import seedu.address.model.group.ReadOnlyGroup;
 
-
+//@@author cjianhui
 /**
  * Parses input arguments and creates a new CreateGroupCommand object
  */

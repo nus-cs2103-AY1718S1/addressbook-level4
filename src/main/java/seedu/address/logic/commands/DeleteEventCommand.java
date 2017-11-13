@@ -27,6 +27,7 @@ import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
+//@@author cjianhui
 /**
  * Removes an event from a person's schedule.
  */

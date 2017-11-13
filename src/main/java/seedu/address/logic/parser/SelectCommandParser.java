@@ -16,6 +16,7 @@ public class SelectCommandParser implements Parser<SelectCommand> {
     private Index index;
     private Boolean isGroup = false;
 
+    //@@author cjianhui
     /**
      * Parses the given {@code String} of arguments in the context of the SelectCommand
      * and returns an SelectCommand object for execution.

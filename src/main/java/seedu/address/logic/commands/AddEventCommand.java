@@ -31,6 +31,7 @@ import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
 import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
+//@@author cjianhui
 /**
  * Adds a person to the address book.
  */

@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import java.util.function.Predicate;
 
-
+//@@author jianglingshuo
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.

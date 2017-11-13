@@ -22,7 +22,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-
+//@@author cjianhui
 /**
  * A list of groups that enforces no nulls and uniqueness between its elements.
  *

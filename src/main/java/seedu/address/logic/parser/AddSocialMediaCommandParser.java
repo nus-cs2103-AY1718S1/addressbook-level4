@@ -14,6 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddSocialMediaCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author cjianhui
 /**
  * Parses input arguments and creates a new AddScheduleCommand object
  */
@@ -63,7 +64,6 @@ public class AddSocialMediaCommandParser implements Parser<AddSocialMediaCommand
 
     private Consumer<String> getUrl(ArgumentMultimap argMultimap, Prefix prefix) {
         return s -> {
-
             this.socialMediaUrl = argMultimap.getValue(prefix).get();
         };
 

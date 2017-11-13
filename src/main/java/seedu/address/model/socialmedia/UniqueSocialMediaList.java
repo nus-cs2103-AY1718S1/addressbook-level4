@@ -3,19 +3,11 @@ package seedu.address.model.socialmedia;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Set;
 
-import org.fxmisc.easybind.EasyBind;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.socialmedia.exceptions.DuplicateSocialMediaException;
 import seedu.address.model.socialmedia.exceptions.SocialMediaNotFoundException;
-
 
 /**
  * A list of socialMediaUrlss that enforces no nulls and uniqueness between its elements.
@@ -26,12 +18,9 @@ import seedu.address.model.socialmedia.exceptions.SocialMediaNotFoundException;
  */
 
 
-public class UniqueSocialMediaList implements Iterable<SocialMedia> {
+public class UniqueSocialMediaList {
 
-    private final ObservableList<SocialMedia> internalList = FXCollections.observableArrayList();
-    // used by asObservableList()
-    private final ObservableList<ReadOnlySocialMedia> mappedList =
-            EasyBind.map(internalList, (socialMediaUrls) -> socialMediaUrls);
+    private HashMap<String, String> internalHashMap;
 
     /**
      * Creates a UniqueSocialMediaList using given SocialMedias.
@@ -39,9 +28,20 @@ public class UniqueSocialMediaList implements Iterable<SocialMedia> {
      */
     public UniqueSocialMediaList(Set<SocialMedia> socialMediaUrls) {
         requireAllNonNull(socialMediaUrls);
-        internalList.addAll(socialMediaUrls);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
+        internalHashMap = new HashMap<>();
+        for ( SocialMedia sm : socialMediaUrls) {
+            if ( sm.getName().url.contains("facebook")) {
+                internalHashMap.put("FB", sm.getName().url);
+            } else if ( sm.getName().url.contains("twitter")) {
+                internalHashMap.put("TW", sm.getName().url);
+            } else if ( sm.getName().url.contains("instagram")) {
+                internalHashMap.put("IN", sm.getName().url);
+            } else if ( sm.getName().url.contains("plus.google.com")) {
+                internalHashMap.put("GP", sm.getName().url);
+            } else {
+                throw new AssertionError("Invalid URL for social media");
+            }
+        }
     }
 
     /**
@@ -59,27 +59,7 @@ public class UniqueSocialMediaList implements Iterable<SocialMedia> {
      */
     public boolean contains(ReadOnlySocialMedia toCheck) {
         requireNonNull(toCheck);
-        return internalList.contains(toCheck);
-    }
-
-    /**
-     * Returns a set representation of the socialMediaUrls.
-     */
-    public Set<SocialMedia> toSet() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return new HashSet<>(internalList);
-    }
-
-    /**
-     * Ensures every socialMediaUrls in the argument list exists in this object.
-     */
-    public void mergeFrom(UniqueSocialMediaList from) {
-        final Set<SocialMedia> alreadyInside = this.toSet();
-        from.internalList.stream()
-                .filter(socialMediaUrls -> !alreadyInside.contains(socialMediaUrls))
-                .forEach(internalList::add);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
+        return internalHashMap.containsValue(toCheck.getName().url);
     }
 
     /**
@@ -87,80 +67,49 @@ public class UniqueSocialMediaList implements Iterable<SocialMedia> {
      * throws seedu.address.model.socialmedia.exceptions.DuplicateSocialMediaException
      * if the SocialMedia to add is a duplicate of an existing SocialMedia in the list.
      */
-    public void add(ReadOnlySocialMedia toAdd) throws DuplicateSocialMediaException {
-        requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new DuplicateSocialMediaException();
+    public void add(ReadOnlySocialMedia sm) throws DuplicateSocialMediaException {
+        requireNonNull(sm);
+        if ( sm.getName().url.contains("facebook")) {
+            internalHashMap.put("FB", sm.getName().url);
+        } else if ( sm.getName().url.contains("twitter")) {
+            internalHashMap.put("TW", sm.getName().url);
+        } else if ( sm.getName().url.contains("instagram")) {
+            internalHashMap.put("IN", sm.getName().url);
+        } else if ( sm.getName().url.contains("plus.google.com")) {
+            internalHashMap.put("GP", sm.getName().url);
+        } else {
+            throw new AssertionError("Invalid URL for social media");
         }
-        internalList.add(new SocialMedia(toAdd));
-
-        assert CollectionUtil.elementsAreUnique(internalList);
     }
 
     /**
-     * Removes the equivalent socialMediaUrls from the list.
+     * Removes the equivalent socialMediaUrls from the hashmap.
      *
      * @throws SocialMediaNotFoundException if no such socialMediaUrls could be found in the list.
      */
-    public boolean remove(ReadOnlySocialMedia toRemove) throws SocialMediaNotFoundException {
-        requireNonNull(toRemove);
-        final boolean socialMediaUrlsFoundAndDeleted = internalList.remove(toRemove);
-        if (!socialMediaUrlsFoundAndDeleted) {
-            throw new SocialMediaNotFoundException();
+    public boolean remove(ReadOnlySocialMedia sm) throws SocialMediaNotFoundException {
+        requireNonNull(sm);
+        String toFind = sm.getName().url;
+        //Replace with default URLs
+        if ( internalHashMap.containsValue(toFind)) {
+            if (toFind.contains("facebook")) {
+                internalHashMap.put("FB", "https://www.facebook.com");
+                return true;
+            } else if ( toFind.contains("twitter")) {
+                internalHashMap.put("TW", "https://www.twitter.com");
+                return true;
+            } else if ( toFind.contains("instagram")) {
+                internalHashMap.put("IN", "https://www.instagram.com");
+                return true;
+            } else if ( toFind.contains("plus.google.com")) {
+                internalHashMap.put("GP", "https://www.plus.google.com");
+                return true;
+            } else {
+                throw new AssertionError("Invalid URL for social media");
+            }
         }
-        return socialMediaUrlsFoundAndDeleted;
-    }
-
-    @Override
-    public Iterator<SocialMedia> iterator() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return internalList.iterator();
-    }
-
-    public void setSocialMedias(UniqueSocialMediaList replacement) {
-        this.internalList.setAll(replacement.internalList);
-    }
-
-    public void setSocialMedias(List<? extends ReadOnlySocialMedia> socialMediaUrls)
-            throws DuplicateSocialMediaException {
-        final UniqueSocialMediaList replacement = new UniqueSocialMediaList();
-        for (final ReadOnlySocialMedia socialMediaUrl: socialMediaUrls) {
-            replacement.add(new SocialMedia(socialMediaUrl));
-        }
-        setSocialMedias(replacement);
-    }
-
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<ReadOnlySocialMedia> asObservableList() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return FXCollections.unmodifiableObservableList(mappedList);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return other == this // short circuit if same object
-                || (other instanceof UniqueSocialMediaList // instanceof handles nulls
-                && this.internalList.equals(((UniqueSocialMediaList) other).internalList
-        ));
-    }
-
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueSocialMediaList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
-    }
-
-    @Override
-    public int hashCode() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return internalList.hashCode();
+        //Should not reach here as last case throws an assertion error
+        return false;
     }
 
 }

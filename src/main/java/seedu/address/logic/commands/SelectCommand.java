@@ -18,7 +18,7 @@ public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
     public static final String COMMAND_ALT = "sel";
-
+    //@@author cjianhui
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the person identified by the index number used in the last person listing.\n"
             + ": Specify prefix g/ to select a group by its index number.\n"
@@ -57,7 +57,7 @@ public class SelectCommand extends Command {
         }
 
     }
-
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

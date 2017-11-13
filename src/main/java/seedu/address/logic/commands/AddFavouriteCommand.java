@@ -24,6 +24,7 @@ import seedu.address.model.schedule.Schedule;
 import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
+//@@author nassy93
 /**
  * Marks an indexed person as a favourite in the address book.
  */

@@ -1,7 +1,6 @@
 package seedu.address.model.person;
 
 //@@author nassy93
-
 /**
  * Stores the filepath to a person's current profile picture
  *

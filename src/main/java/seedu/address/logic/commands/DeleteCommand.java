@@ -15,7 +15,7 @@ public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
     public static final String COMMAND_ALT = "d";
-
+    //@@author Procrastinatus
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number(s) used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
@@ -69,6 +69,7 @@ public class DeleteCommand extends UndoableCommand {
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
+    //@@author Procrastinatus
 
     @Override
     public boolean equals(Object other) {

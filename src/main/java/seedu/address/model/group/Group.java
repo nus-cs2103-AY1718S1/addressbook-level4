@@ -14,6 +14,7 @@ import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author cjianhui
 /**
  * Represents a Group in an address book.
  * Guarantees: details are present and not null, field values are validated.

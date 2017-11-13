@@ -8,6 +8,7 @@ import seedu.address.model.group.Group;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 
+//@@author cjianhui
 /**
  * Adds a person to the address book.
  */

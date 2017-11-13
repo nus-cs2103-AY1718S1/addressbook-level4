@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+//@@author jianglingshuo
 /** Helper functions to  produce for name examination predicates*/
 public class PartialSearchUtil {
 

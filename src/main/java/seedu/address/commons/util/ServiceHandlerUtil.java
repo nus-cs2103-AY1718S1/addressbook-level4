@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+//@@author cjianhui
 /** Class to make requests to API */
 public class ServiceHandlerUtil {
 

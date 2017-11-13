@@ -27,6 +27,7 @@ import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.socialmedia.UniqueSocialMediaList;
 import seedu.address.model.tag.Tag;
 
+//@@author Procrastinatus
 /**
  * Adds a social media URL to a person.
  */

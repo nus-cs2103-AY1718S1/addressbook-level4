@@ -18,7 +18,7 @@ import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.ScheduleDate;
 import seedu.address.model.schedule.ScheduleName;
 
-
+//@@author cjianhui
 /**
  * Parses input arguments and creates a new AddEventCommand object
  */

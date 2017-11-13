@@ -25,7 +25,6 @@ import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
 //@@author nassy93
-
 /**
  * Resets ProfPic attribute of Indexed person back to default profile picture in the address book.
  */

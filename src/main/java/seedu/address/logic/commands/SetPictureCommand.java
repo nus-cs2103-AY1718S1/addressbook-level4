@@ -31,7 +31,6 @@ import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
 //@@author nassy93
-
 /**
  * Sets the profile picture for an indexed person.
  */

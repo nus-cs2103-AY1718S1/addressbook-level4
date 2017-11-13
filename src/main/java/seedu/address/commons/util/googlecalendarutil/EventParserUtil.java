@@ -12,7 +12,7 @@ import seedu.address.model.schedule.ScheduleDate;
 import seedu.address.model.schedule.ScheduleName;
 import seedu.address.model.schedule.UniqueScheduleList;
 
-
+//@@author cjianhui
 /** Class to query Google's calendar API to obtain events */
 public class EventParserUtil {
 

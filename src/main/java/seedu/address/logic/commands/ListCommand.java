@@ -12,7 +12,7 @@ public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
     public static final String COMMAND_ALT = "l";
-
+    //@@author cjianhui
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Lists all persons in the address book.\n"
             + ": Specify prefix f/ to list all person(s) marked as 'Favourite'.\n"
