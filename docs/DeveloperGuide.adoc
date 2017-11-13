@@ -23,13 +23,14 @@ through the use of diagrams and explanations. +
 ConnectUs consists of the following features: +
 
 * Adding new contacts
-* Editing, deleting, and emailing existing contacts
-* Importing contacts from phone
+* Editing, deleting, sorting, and emailing existing contacts
+* Importing contacts from phone and exporting contacts to phone
 * Filtering and removing tags of contacts
 * Providing a view of the location in Google Maps by the contact's address
-* Login feature
+* Generating QR code for calling, messaging and saving contacts
 * Changing colour theme
-* Uploading photos for each contact
+* Uploading and deleting photos of contacts
+* Logging of user's actions
 
 == Setting up
 
