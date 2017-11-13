@@ -7,6 +7,7 @@ package seedu.address.commons.core.index;
 public class Selection {
 
     private static boolean isPersonSelected = false;
+    private static boolean isMeetingChosen = false;
 
     public static void setPersonSelected() {
         isPersonSelected = true;
@@ -16,7 +17,19 @@ public class Selection {
         isPersonSelected = false;
     }
 
+    public static void setMeetingChosen() {
+        isMeetingChosen = true;
+    }
+
+    public static void setMeetingNotChosen() {
+        isMeetingChosen = false;
+    }
+
     public static boolean getSelectionStatus() {
         return isPersonSelected;
+    }
+
+    public static boolean getMeetingStatus() {
+        return isMeetingChosen;
     }
 }

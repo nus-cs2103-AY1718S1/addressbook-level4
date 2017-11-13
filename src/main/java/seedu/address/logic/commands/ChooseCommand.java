@@ -42,11 +42,12 @@ public class ChooseCommand extends Command {
         if (targetDisplay.equals("meeting")) {
             EventsCenter.getInstance().post(new ShowMeetingEvent());
             EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
-
+            Selection.setMeetingChosen();
 
         } else if (targetDisplay.equals("linkedin") || targetDisplay.equals("google") || targetDisplay.equals("maps")) {
             EventsCenter.getInstance().post(new ShowBrowserEvent());
             EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
+            Selection.setMeetingNotChosen();
 
         } else {
             throw new CommandException(Messages.MESSAGE_INVALID_BROWSER_INDEX);

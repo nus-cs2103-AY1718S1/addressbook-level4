@@ -40,6 +40,10 @@ public class MapCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_PERSON_NOT_SELECTED);
         }
 
+        if (Selection.getMeetingStatus() == true) {
+            throw new CommandException(Messages.MESSAGE_WRONG_DISPLAY_MODE);
+        }
+
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
