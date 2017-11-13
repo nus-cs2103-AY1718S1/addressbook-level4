@@ -908,7 +908,7 @@ The immplementation involves two main segments Logic and Model. +
 
 The sequence diagram of the Relationship Command is shown in Figure 29 below. +
 
-image::SDforRelationshipCommand.png[width="800"]
+image::SDforRelationshipCommand.png[width="1200"]
     Figure 22: Sequence Diagram for Relationship Command
 
 * Firstly, the AddressBookParser checks if there is anything after `relation`. +
