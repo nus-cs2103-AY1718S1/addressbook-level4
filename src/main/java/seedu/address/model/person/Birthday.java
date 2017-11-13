@@ -41,7 +41,7 @@ public class Birthday {
 
         String trimmedBirthday = birthday.trim();
 
-        if(trimmedBirthday.equals("")) {
+        if (trimmedBirthday.equals("")) {
             return true;
         }
 
