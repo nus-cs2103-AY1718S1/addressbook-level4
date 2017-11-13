@@ -60,7 +60,7 @@ The feature will be extremely helpful if the event involve a large number of peo
 ---
 #Start of Extract [from: Developer Guide] written by Adoby7#
 
-include::../DeveloperGuide.adoc[tag=interaction]
+include::../DeveloperGuide.adoc[tag=join]
 
 #End of Extract#
 
@@ -78,6 +78,34 @@ a name, description, date and a participant list.
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=model]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: addE
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addE]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For the event list, the basic operations: adding, deleting, listing and editing is necessary. Each of the team member did one part of the four operations above.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide] written by Adoby7#
+
+include::../DeveloperGuide.adoc[tag=addE]
 
 #End of Extract#
 
