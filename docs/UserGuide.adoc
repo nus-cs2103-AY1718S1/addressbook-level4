@@ -178,6 +178,14 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+[NOTE]
+====
+Editing a person's name or phone number also updates the details of the person in meetings with people of the same name.
+====
+====
+Undo-ing an edit command *WILL NOT* undo changes made to meetings
+====
+
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -217,6 +225,11 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+[NOTE]
+====
+Deleting a person also deletes all the meetings**(Including group meetings)** with people of the same name as the person deleted
+====
 
 === Selecting a person : `select`
 

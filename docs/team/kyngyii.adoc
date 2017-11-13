@@ -78,11 +78,37 @@ include::../DeveloperGuide.adoc[tag=findexactmeeting]
 
 ---
 
-=== Enhancement Proposed
-* Integration of Google Calendar(Allowing import and export of meetings)
-* Notifcation of meetings even when application is closed
+=== Enhancements Proposed
+
+==== _Integration of Google Calendar(Allowing import and export of meetings)_
+
+=====  External Behavior
+Upon typing in the command `import`, the application reads all the current meetings that the user has in the current
+logged in google account and adds them to the meeting list of the application. Any invalid fields such as clashes in
+timing will not be added and instead an error will be shown to the user.
+
+Similarly, the exporting of meeting is the opposite and uses the command `export`. When the command is entered,
+meetings in the application are transferred and added to the user's google account.
+
+==== Implementation
+When the command is given, the application parses the details of the user's events and creates a `Meeting` object in
+Schedubook. Whilst adding the `Meeting` objects into the meetings list, the application checks whether the meetings
+that are added are valid and throws any relevant errors.
+
+Conversely, for the exporting of meetings, the details in the meeting cards are parsed and then provided to events in
+Google calendar for adding.
+
+==== Opening of application on PC startup
+
+==== External Behavior
+Schedubook opens on startup of the PC, helping to remind users of the meetings that are available that day
+
+==== Implementation
+Creation of a batch file to start the java file. Adding the batch file to the `Startup` folder for all users.
 
 === Other contributions
 
 * Updated undo command to apply to commands related to Meetings (Pull request https://github.com/CS2103AUG2017-T09-B2/main/commit/4dc2249ca6c45d4c4f104cc649226f14673d7379[#63])
 * Modified delete command to delete Meetings with deleted person (Pull request https://github.com/CS2103AUG2017-T09-B2/main/commit/b9db535b31628dca385586b6d69454aeb5d805be[#109])
+* Creation of MeetingContainsFullWordPredicate (Pull request https://github.com/CS2103AUG2017-T09-B2/main/commit/2d00ea6a15c06e3a9f4e88c1f2e6f37bbb908f3c[#149])
+* Addition of Junit tests for editMeetingCommand (Pull request https://github.com/CS2103AUG2017-T09-B2/main/commit/10e045790e0f608cda77973806e4f5f09f3dd8f7[#126])
