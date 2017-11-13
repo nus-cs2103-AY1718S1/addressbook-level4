@@ -16,7 +16,7 @@ in the application itself without having to switch to a browser or check their p
 
 === Enhancement Added: Developed the Graphic User Interface
 
-Change to graphic user interface of HitMeUp (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/88[#88])
+Change the Graphic User Interface (GUI) of HitMeUp
 
 image::Ui.png[width="800"]
 
@@ -25,6 +25,8 @@ image::Ui.png[width="800"]
 An user interface based on material design will allow a good user experience as it is aesthetically pleasing.
 
 === Enhancement Added: Display Picture for contacts
+
+==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
@@ -55,7 +57,22 @@ include::../DeveloperGuide.adoc[tag=displayPic]
 
 Delete the picture in display picture storage directory when the image is not used anymore.
 
+==== External behavior
+
+When the display picture of the person is edited or when the person is deleted, the image that is no longer in used should be deleted as well.
+
+==== Justification
+
+Images that are no longer in used will not use up space in the storage.
+
+==== Implementation
+
+When editing the display picture of a person or deleting a person, we can check the display picture path that is stored as the `DisplayPic` field and delete the image. +
+However, this will cause the image to not render properly if we undo the `Edit` the `Delete` command. +
+Possible solution is to store images that are no longer in use in a back up folder. Whenever the application closes, delete all the images in the back up folder.
+
 === Other contributions
+* Added DisplayPic field for person (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/59[#59])
 * Made UI MockUp based on material design using Adobe PhotoShop (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/60[#60])
 +
 image::AddressBookUi.png[width="800']
@@ -66,6 +83,5 @@ _Picture above shows mock up UI for HitMeUp_
 image::PersonDescriptionPanel.png[width="800"]
 _Figure above shows the GUI of HitMeUp, PersonDescriptionPanel is outlined in red_
 
-* Added Instagram and Twitter Icons for person with Instagram and Twitter account in person card (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/140[#140])
-* Added DisplayPic field for person (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/59[#59])
 * Wrote test cases for all features that were implemented by me (Pull requests https://github.com/CS2103AUG2017-W14-B3/main/pull/128[#128], https://github.com/CS2103AUG2017-W14-B3/main/pull/129[#129])
+* Added Instagram and Twitter Icons for person with Instagram and Twitter account in person card (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/140[#140])

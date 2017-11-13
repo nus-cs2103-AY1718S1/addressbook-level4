@@ -1,5 +1,5 @@
 # tbhbhbh
-###### \java\seedu\address\commons\events\ui\SocialRequestEvent.java
+###### /java/seedu/address/commons/events/ui/SocialRequestEvent.java
 ``` java
 package seedu.address.commons.events.ui;
 
@@ -33,7 +33,7 @@ public class SocialRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindCommand.java
+###### /java/seedu/address/logic/commands/FindCommand.java
 ``` java
     public static final String COMMAND_WORD = "find";
 
@@ -57,7 +57,7 @@ public class SocialRequestEvent extends BaseEvent {
         this.searchPredicate = searchPredicate;
     }
 ```
-###### \java\seedu\address\logic\commands\FindCommand.java
+###### /java/seedu/address/logic/commands/FindCommand.java
 ``` java
     @Override
     public CommandResult execute() {
@@ -73,7 +73,7 @@ public class SocialRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SocialCommand.java
+###### /java/seedu/address/logic/commands/SocialCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -178,7 +178,7 @@ public class SocialCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\commands\TagDeleteCommand.java
+###### /java/seedu/address/logic/commands/TagDeleteCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -243,7 +243,7 @@ public class TagDeleteCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TagEditCommand.java
+###### /java/seedu/address/logic/commands/TagEditCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -325,7 +325,7 @@ public class TagEditCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FindCommandParser.java
+###### /java/seedu/address/logic/parser/FindCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -377,7 +377,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\SocialCommandParser.java
+###### /java/seedu/address/logic/parser/SocialCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -421,7 +421,7 @@ public class SocialCommandParser implements Parser<SocialCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\TagDeleteCommandParser.java
+###### /java/seedu/address/logic/parser/TagDeleteCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -452,7 +452,7 @@ public class TagDeleteCommandParser implements Parser<TagDeleteCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\TagEditCommandParser.java
+###### /java/seedu/address/logic/parser/TagEditCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -491,7 +491,7 @@ public class TagEditCommandParser {
     }
 }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
@@ -523,7 +523,7 @@ public class TagEditCommandParser {
         }
     }
 ```
-###### \java\seedu\address\model\person\PersonContainsKeywordsPredicate.java
+###### /java/seedu/address/model/person/PersonContainsKeywordsPredicate.java
 ``` java
 package seedu.address.model.person;
 
@@ -655,7 +655,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 }
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Sorts AddressBook by name.
@@ -664,7 +664,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
         FXCollections.sort(internalList, comparator);
     }
 ```
-###### \java\seedu\address\ui\BrowserPanel.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
     /**
      * Loads the person's Instagram or Twitter depending on if the person has his/her social media fields filled in.
@@ -677,7 +677,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
         }
     }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
      * This method will use the built-in browser to open the selected index's social media profile (either Twitter

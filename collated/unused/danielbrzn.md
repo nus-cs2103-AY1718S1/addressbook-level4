@@ -1,5 +1,5 @@
 # danielbrzn
-###### \BrowserWindow.java
+###### /BrowserWindow.java
 ``` java
 package seedu.address.ui;
 

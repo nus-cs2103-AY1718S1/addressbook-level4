@@ -124,7 +124,7 @@ Example:
 +
 image::AddDP1.png[width"800]
 2. Adds a person called *John Doe* with a phone number of *98765432*, an email address of *johnd@example.com*, an address of *John street,
-block 123, #01-01*, a Twitter username of *john_doe*.
+block 123, #01-01* and a Twitter username of *john_doe*.
 John Doe is also added with the image chosen as his display picture.
 +
 image::AddDP2.png[width"800]
