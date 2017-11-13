@@ -116,6 +116,8 @@ Your inputs for NAME and ADDRESS will have the +
 first letter of each word capitalized and the rest small letters. +
 Your inputs for EMAIL will have all words in lower case.
 
+// tag::bloodtype[]
+
 [NOTE]
 You can only use the following twelve inputs for BLOODTYPE. +
 A, A+, A-, B, B+, B-, AB, AB+, AB-, O, O+, O-. +
@@ -124,6 +126,8 @@ Your inputs for BLOODTYPE will always be shown in capital letters as shown below
 
 image::bloodtypestored.png[width="800"]
     Figure 4: Mixed case BLOODTYPE input
+
+// end::bloodtype[]
 
 <<<
 
@@ -172,7 +176,7 @@ You can use `list descending` to show a list of contacts sorted by name in desce
 *Shorthand Format:* `l dsc`
 // end::list[]
 
-// tag::bloodtype[]
+// tag::listbloodtype[]
 === Listing persons by blood type : `bloodtype` [Since v1.2]
 
 You can use `bloodtype` to show a list of people with that specific blood type. +
@@ -186,7 +190,7 @@ image::btexample.png[width="800"]
 
 [NOTE]
 BLOODTYPE is case insensitive.
-// end::bloodtype[]
+// end::listbloodtype[]
 
 // tag::dups[]
 === Showing duplicate persons: `duplicates` [Since v1.3]
@@ -399,6 +403,8 @@ image::aptexamplecancel.png[width="800"]
 
 // end::appointment[]
 
+
+// tag::calendar[]
 === Changing Calendar View: `calendar`
 
 You can change the calendar view to daily, monthly, weekly, or yearly mode.
@@ -441,6 +447,8 @@ Year View +
 
 image::calendaryexample.PNG[width="800"]
     Figure 17: Appointment Calendar Year View
+
+// end::calendar[]
 
 // tag::remark[]
 === Adding/Removing Remarks to a person : `remark`
@@ -504,14 +512,21 @@ image::copyexample.png[width="800"]
 
 You can add relationships to a person's details +
 *Format:* `relation INDEX rel/RELATIONSHIP` +
-*Shorthand Format:* `rel INDEX rel/RELATIONSHIP` +
-*Example:* `rel 1 rel/Husband: John Doe` +
-The person at the top of the list has a relationship +
-of "Husband: John Doe" added. +
-+
+*Shorthand Format:* `rel INDEX rel/RELATIONSHIP`
+
+*Example:*
+
+image::addrelationship.png[width="800"]
+    Figure 21: Add Relationship Example
+
 You can remove a relationship by adding nothing after rel/ +
 *Format:* `relation INDEX rel/` +
-*Shorthand Format:* `rel INDEX rel/` +
+*Shorthand Format:* `rel INDEX rel/`
+
+*Example:*
+
+image::removerelationship.png[width="800"]
+    Figure 22: Remove Relationship Example
 
 [WARNING]
 Existing relationships of the person will be removed
@@ -534,7 +549,7 @@ You can also exit MedNus by clicking on `File` in the top left corner +
 and clicking on `Exit`.
 
 image::exitUI.png[width="800"]
-    Figure 21: Methods to access `exit` command
+    Figure 23: Methods to access `exit` command
 
 === Adding/Deleting a Tag to a Person : [Coming in v2.0]
 ****

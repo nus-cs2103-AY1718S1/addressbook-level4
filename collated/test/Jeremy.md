@@ -1,1007 +1,49 @@
 # Jeremy
-###### \java\seedu\address\commons\core\GuiSettingsTest.java
+###### /java/systemtests/AddCommandSystemTest.java
 ``` java
-public class GuiSettingsTest {
+        /* Case: missing remark -> success */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + TAG_DESC_FRIEND
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
+        assertCommandSuccess(command, toAdd);
 
-    @Test
-    public void testGuiSettingsEquals() {
+        /* Case: missing phone -> success */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
+                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
+                + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
+        assertCommandSuccess(command, toAdd);
 
-        GuiSettings guiSettingOne = new GuiSettings();
-        GuiSettings guiSettingTwo = new GuiSettings(13.6, 13.6, 0, 0);
+        /* Case: missing email -> success */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
+                .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND
+                + BLOODTYPE_DESC_AMY;
+        assertCommandSuccess(command, toAdd);
 
-        // Same object -> Returns True
-        assertTrue(guiSettingOne.equals(guiSettingOne));
+        /* Case: missing address -> success */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
+                .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(NON_COMPULSORY_ADDRESS_AMY)
+                .withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + BLOODTYPE_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
 
-        // Same instance different values -> Returns False
-        assertFalse(guiSettingOne.equals(guiSettingTwo));
-
-        // Different type -> Returns False
-        assertNotNull(guiSettingOne);
-        assertFalse(guiSettingOne.equals(1));
-
-    }
-
-}
+        /* Case: missing bloodtype -> success */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
+                .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(NON_COMPULSORY_ADDRESS_AMY)
+                .withBloodType(NON_COMPULSORY_BLOODTYPE).withRemark(NON_COMPULSORY_REMARK)
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
 ```
-###### \java\seedu\address\commons\core\MessageTest.java
-``` java
-public class MessageTest {
-
-    @Test
-    public void testMessageClass() {
-        Messages messageClass = new Messages();
-
-        assertTrue("Unknown command".equals(messageClass.MESSAGE_UNKNOWN_COMMAND));
-        assertTrue("Invalid command format! \n%1$s".equals(messageClass.MESSAGE_INVALID_COMMAND_FORMAT));
-        assertTrue("The person index provided is invalid".equals(messageClass.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX));
-        assertTrue("%1$d persons listed!".equals(messageClass.MESSAGE_PERSONS_LISTED_OVERVIEW));
-    }
-}
-```
-###### \java\seedu\address\logic\commands\ListAscendingNameCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for ListAscendingNameCommand.
- */
-public class ListAscendingNameCommandTest {
-    private Model model;
-    private Model expectedModel;
-    private ListAscendingNameCommand listUnderTestCommand;
-
-    @Before
-    public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-
-        listUnderTestCommand = new ListAscendingNameCommand();
-        listUnderTestCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-    }
-
-    @Test
-    public void executeFilterList() {
-        expectedModel.listNameAscending();
-        assertCommandSuccess(listUnderTestCommand, model, ListAscendingNameCommand.MESSAGE_SUCCESS, expectedModel);
-    }
-}
-```
-###### \java\seedu\address\logic\commands\ListByTagCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) for {@code ListByTagCommand}.
- */
-public class ListByTagCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void equals() {
-        TagContainsKeywordsPredicate firstPredicate =
-                new TagContainsKeywordsPredicate(Collections.singletonList("Family"));
-        TagContainsKeywordsPredicate secondPredicate =
-                new TagContainsKeywordsPredicate(Collections.singletonList("Friends"));
-
-        ListByTagCommand findFirstCommand = new ListByTagCommand(firstPredicate);
-        ListByTagCommand findSecondCommand = new ListByTagCommand(secondPredicate);
-
-        // same object -> returns true
-        assertTrue(findFirstCommand.equals(findFirstCommand));
-
-        // same values -> returns true
-        ListByTagCommand findFirstCommandCopy = new ListByTagCommand(firstPredicate);
-        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
-
-        // different types -> returns false
-        assertFalse(findFirstCommand.equals(1));
-
-        // null
-        assertNotNull(findFirstCommand);
-
-        // different person -> returns false
-        assertFalse(findFirstCommand.equals(findSecondCommand));
-    }
-
-    /**
-     * Parses {@code userInput} into a {@code FindCommand}.
-     */
-    private ListByTagCommand prepareCommand(String userInput) {
-        ListByTagCommand command =
-                new ListByTagCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
-    }
-
-
-
-    /**
-     * Asserts that {@code command} is successfully executed, and<br>
-     * - the command feedback is equal to {@code expectedMessage}<br>
-     * - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
-     * - the {@code AddressBook} in model remains the same after executing the {@code command}
-     */
-    private void assertCommandSuccess(ListByTagCommand command, String expectedMessage,
-                                      List<ReadOnlyPerson> expectedList) {
-        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
-        CommandResult commandResult = command.execute();
-
-        assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList, model.getFilteredPersonList());
-        assertEquals(expectedAddressBook, model.getAddressBook());
-    }
-
-}
-```
-###### \java\seedu\address\logic\commands\ListDescendingNameCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for ListDescendingNameCommand.
- */
-public class ListDescendingNameCommandTest {
-    private Model model;
-    private Model expectedModel;
-    private ListDescendingNameCommand listUnderTestCommand;
-
-    @Before
-    public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-
-        listUnderTestCommand = new ListDescendingNameCommand();
-        listUnderTestCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-    }
-
-    @Test
-    public void executeFilterList() {
-        expectedModel.listNameDescending();
-        assertCommandSuccess(listUnderTestCommand, model, ListDescendingNameCommand.MESSAGE_SUCCESS, expectedModel);
-    }
-
-}
-```
-###### \java\seedu\address\logic\commands\ListIntegrationTest.java
-``` java
-public class ListIntegrationTest {
-    private Model model;
-    private Model expectedModel;
-
-    @Test
-    public void executeIntegrationTest() {
-
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        Name expectedFirstName;
-        Name expectedLastName;
-        Name actualFirstName;
-        Name actualLastName;
-        int listLength;
-
-        //Ascending Reverse
-        expectedModel.listNameDescending();
-        model.listNameAscending();
-        model.listNameReversed();
-        expectedFirstName = expectedModel.getFilteredPersonList().get(0).getName();
-        actualFirstName = model.getFilteredPersonList().get(0).getName();
-        listLength = expectedModel.getFilteredPersonList().size();
-        expectedLastName = expectedModel.getFilteredPersonList().get(listLength - 1).getName();
-        assertEquals(expectedFirstName, actualFirstName);
-        assertTrue(expectedFirstName.equals(actualFirstName));
-        assertNotNull(actualFirstName);
-        assertNotNull(expectedFirstName);
-        assertFalse(actualFirstName.equals(expectedLastName));
-
-        //Descending Reverse
-        expectedModel.listNameAscending();
-        model.listNameDescending();
-        model.listNameReversed();
-        expectedFirstName = expectedModel.getFilteredPersonList().get(0).getName();
-        actualFirstName = model.getFilteredPersonList().get(0).getName();
-        listLength = expectedModel.getFilteredPersonList().size();
-        expectedLastName = expectedModel.getFilteredPersonList().get(listLength - 1).getName();
-        assertEquals(expectedFirstName, actualFirstName);
-        assertTrue(expectedFirstName.equals(actualFirstName));
-        assertNotNull(actualFirstName);
-        assertNotNull(expectedFirstName);
-        assertFalse(actualFirstName.equals(expectedLastName));
-
-        // (Descending vs Ascending) w Reverse
-        expectedModel.listNameDescending();
-        expectedModel.listNameReversed();
-        expectedModel.listNameReversed();
-        model.listNameAscending();
-        model.listNameReversed();
-        model.listNameReversed();
-        listLength = expectedModel.getFilteredPersonList().size();
-        actualFirstName = model.getFilteredPersonList().get(0).getName();
-        actualLastName = model.getFilteredPersonList().get(listLength - 1).getName();
-        expectedLastName = expectedModel.getFilteredPersonList().get(listLength - 1).getName();
-        expectedFirstName = expectedModel.getFilteredPersonList().get(0).getName();
-        assertFalse(actualFirstName.equals(expectedFirstName));
-        assertFalse(actualLastName.equals(expectedLastName));
-        assertEquals(actualFirstName, expectedLastName);
-        assertEquals(actualLastName, expectedFirstName);
-        model.listNameReversed();
-        actualFirstName = model.getFilteredPersonList().get(0).getName();
-        expectedLastName = expectedModel.getFilteredPersonList().get(listLength - 1).getName();
-        expectedFirstName = expectedModel.getFilteredPersonList().get(0).getName();
-        assertEquals(expectedFirstName, actualFirstName);
-        assertTrue(expectedFirstName.equals(actualFirstName));
-        assertNotNull(actualFirstName);
-        assertNotNull(expectedFirstName);
-        assertFalse(actualFirstName.equals(expectedLastName));
-
-    }
-
-}
-```
-###### \java\seedu\address\logic\commands\ListReverseCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for ListReverseCommand.
- */
-public class ListReverseCommandTest {
-    private Model model;
-    private Model expectedModel;
-    private ListReverseCommand listUnderTestCommand;
-
-    @Before
-    public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-
-        listUnderTestCommand = new ListReverseCommand();
-        listUnderTestCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-    }
-
-    @Test
-    public void executeFilterList() {
-        expectedModel.listNameReversed();
-        assertCommandSuccess(listUnderTestCommand, model, ListReverseCommand.MESSAGE_SUCCESS, expectedModel);
-    }
-}
-```
-###### \java\seedu\address\logic\commands\RemarkCommandTest.java
-``` java
-public class RemarkCommandTest {
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void executeValidRemarkAddSuccess() throws Exception {
-
-        Person personToRemark = new PersonBuilder(model.getFilteredPersonList()
-                .get(INDEX_FIRST_PERSON.getZeroBased())).withRemark("Remark To Add").build();
-
-        RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON, personToRemark.getRemark().value);
-
-        String expectedMessage = String.format(remarkCommand.MESSAGE_REMARK_PERSON_SUCCESS, personToRemark);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personToRemark);
-
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void executeValidRemarkDeleteSuccess() throws Exception {
-
-        Person personToRemark = new PersonBuilder(model.getFilteredPersonList()
-                .get(INDEX_FIRST_PERSON.getZeroBased())).withRemark("").build();
-
-        RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON, personToRemark.getRemark().value);
-
-        String expectedMessage = String.format(remarkCommand.MESSAGE_REMOVE_REMARK_SUCCESS, personToRemark);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personToRemark);
-
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void executeValidIndexFilteredListEditRemarksSuccess() throws Exception {
-        showFirstPersonOnly(model);
-
-        ReadOnlyPerson personToRemark = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(personToRemark).withRemark("Test").build();
-        RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON,
-                editedPerson.getRemark().toString());
-
-        String expectedMessage = String.format(RemarkCommand.MESSAGE_REMARK_PERSON_SUCCESS, personToRemark);
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        showFirstPersonOnly(expectedModel);
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personToRemark);
-
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void executeValidIndexFilteredListDeleteRemarksSuccess() throws Exception {
-        showFirstPersonOnly(model);
-
-        ReadOnlyPerson personToRemark = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(personToRemark).withRemark("").build();
-        RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON,
-                editedPerson.getRemark().toString());
-
-        String expectedMessage = String.format(RemarkCommand.MESSAGE_REMOVE_REMARK_SUCCESS, personToRemark);
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        showFirstPersonOnly(expectedModel);
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personToRemark);
-
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void executeInvalidIndexUnfilteredListThrowsCommandException() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RemarkCommand remarkCommand = getRemarkCommandForPerson(outOfBoundIndex, VALID_REMARK_AMY);
-
-        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void executeInvalidIndexFilteredListThrowsCommandException() {
-        showFirstPersonOnly(model);
-
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-
-        RemarkCommand remarkCommand = getRemarkCommandForPerson(outOfBoundIndex, VALID_REMARK_AMY);
-
-        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void equals() {
-
-        // Create RemarkCommand for testing
-        // Amy used to test for empty remarks
-        // Bob used to test for filled remarks
-        RemarkCommand testCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
-        RemarkCommand testCommandTwo = new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_BOB));
-
-        //Test for same object
-        assertTrue(testCommand.equals(testCommand));
-        assertTrue(testCommandTwo.equals(testCommandTwo));
-
-        //Test for same values
-        assertTrue(testCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY))));
-        assertTrue(testCommandTwo.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_BOB))));
-
-        //Test to ensure command is strictly a RemarkCommand
-        assertFalse(testCommand.equals(new AddCommand(CARL)));
-        assertFalse(testCommand.equals(new ClearCommand()));
-        assertFalse(testCommand.equals(new DeleteCommand(INDEX_FIRST_PERSON)));
-        assertFalse(testCommand.equals(new HistoryCommand()));
-        assertFalse(testCommand.equals(new HelpCommand()));
-        assertFalse(testCommand.equals(new RedoCommand()));
-        assertFalse(testCommand.equals(new UndoCommand()));
-        assertFalse(testCommand.equals(new ListCommand()));
-        assertFalse(testCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_AMY)));
-
-        //Test to check for null
-        assertFalse(testCommand == null);
-        assertFalse(testCommandTwo == null);
-
-        //Test to check different Index returns false
-        assertFalse(testCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_AMY))));
-        assertFalse(testCommandTwo.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_BOB))));
-
-        //Test to check different remarks returns false
-        assertFalse(testCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_BOB))));
-        assertFalse(testCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_AMY))));
-
-    }
-
-
-    /**
-     * Generates a new RemarkCommand with the remarks of the given person.
-     *
-     * @param index  of person in list
-     * @param remark new remark to record
-     */
-    private RemarkCommand getRemarkCommandForPerson(Index index, String remark) {
-        RemarkCommand command = new RemarkCommand(index, new Remark(remark));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
-    }
-
-}
-```
-###### \java\seedu\address\logic\LogicManagerTest.java
-``` java
-    @Test
-    public void executeValidListByTagTest() {
-        String listByTagCommand = ListByTagCommand.COMMAND_WORD + " colleagues";
-        assertCommandSuccess(listByTagCommand, ListByTagCommand.MESSAGE_SUCCESS, model);
-        assertHistoryCorrect(listByTagCommand);
-
-
-        //Existing feature do not check if tag is present or not.
-        // Potential enhancement to account for this
-        listByTagCommand = ListByTagCommand.COMMAND_WORD + " invalidTag";
-        assertCommandSuccess(listByTagCommand, ListByTagCommand.MESSAGE_SUCCESS, model);
-
-    }
-
-    @Test
-    public void executeInvalidListByTagTest() {
-        String listByTagCommand = ListCommand.COMMAND_ALIAS + " t";
-        assertCommandSuccess(listByTagCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        assertHistoryCorrect(listByTagCommand);
-        listByTagCommand = ListCommand.COMMAND_ALIAS + " colleagues";
-        assertCommandSuccess(listByTagCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        listByTagCommand = ListCommand.COMMAND_WORD + " colleagues tag";
-        assertCommandSuccess(listByTagCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        listByTagCommand = ListCommand.COMMAND_ALIAS + " tags";
-        assertCommandSuccess(listByTagCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        listByTagCommand = ListCommand.COMMAND_ALIAS + " t/colleagues";
-        assertCommandSuccess(listByTagCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-    }
-
-    @Test
-    public void executeValidAscendingListTest() {
-        String listAscendingCommand = ListAscendingNameCommand.COMPILED_COMMAND;
-        assertCommandSuccess(listAscendingCommand, ListAscendingNameCommand.MESSAGE_SUCCESS, model);
-        assertHistoryCorrect(listAscendingCommand);
-        listAscendingCommand = ListAscendingNameCommand.COMPILED_SHORTHAND_COMMAND;
-        assertCommandSuccess(listAscendingCommand, ListAscendingNameCommand.MESSAGE_SUCCESS, model);
-        listAscendingCommand = ListCommand.COMMAND_ALIAS + " " + ListAscendingNameCommand.COMMAND_ALIAS;
-        assertCommandSuccess(listAscendingCommand, ListAscendingNameCommand.MESSAGE_SUCCESS, model);
-        listAscendingCommand = ListCommand.COMMAND_ALIAS + " " + ListAscendingNameCommand.COMMAND_WORD;
-        assertCommandSuccess(listAscendingCommand, ListAscendingNameCommand.MESSAGE_SUCCESS, model);
-    }
-
-    @Test
-    public void executeInvalidAscendingListTest() {
-        String listAscendingCommand = ListAscendingNameCommand.COMPILED_COMMAND + " test";
-        assertCommandSuccess(listAscendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        assertHistoryCorrect(listAscendingCommand);
-        listAscendingCommand = ListAscendingNameCommand.COMPILED_SHORTHAND_COMMAND + " test";
-        assertCommandSuccess(listAscendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        listAscendingCommand = ListCommand.COMMAND_ALIAS + " " + ListAscendingNameCommand.COMMAND_ALIAS + " test";
-        assertCommandSuccess(listAscendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        listAscendingCommand = ListCommand.COMMAND_ALIAS + " " + ListAscendingNameCommand.COMMAND_WORD + " test";
-        assertCommandSuccess(listAscendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-    }
-
-    @Test
-    public void executeValidDescendingListTest() {
-        String listDescendingCommand = ListDescendingNameCommand.COMPILED_COMMAND;
-        assertCommandSuccess(listDescendingCommand, ListDescendingNameCommand.MESSAGE_SUCCESS, model);
-        assertHistoryCorrect(listDescendingCommand);
-        listDescendingCommand = ListDescendingNameCommand.COMPILED_SHORTHAND_COMMAND;
-        assertCommandSuccess(listDescendingCommand, ListDescendingNameCommand.MESSAGE_SUCCESS, model);
-        listDescendingCommand = ListCommand.COMMAND_ALIAS + " " + ListDescendingNameCommand.COMMAND_ALIAS;
-        assertCommandSuccess(listDescendingCommand, ListDescendingNameCommand.MESSAGE_SUCCESS, model);
-        listDescendingCommand = ListCommand.COMMAND_ALIAS + " " + ListDescendingNameCommand.COMMAND_WORD;
-        assertCommandSuccess(listDescendingCommand, ListDescendingNameCommand.MESSAGE_SUCCESS, model);
-    }
-
-    @Test
-    public void executeInvalidDescendingListTest() {
-        String listDescendingCommand = ListDescendingNameCommand.COMPILED_COMMAND + " test";
-        assertCommandSuccess(listDescendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        assertHistoryCorrect(listDescendingCommand);
-        listDescendingCommand = ListDescendingNameCommand.COMPILED_SHORTHAND_COMMAND + " test";
-        assertCommandSuccess(listDescendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        listDescendingCommand = ListCommand.COMMAND_ALIAS + " " + ListDescendingNameCommand.COMMAND_ALIAS + " test";
-        assertCommandSuccess(listDescendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        listDescendingCommand = ListCommand.COMMAND_ALIAS + " " + ListDescendingNameCommand.COMMAND_WORD + " test";
-        assertCommandSuccess(listDescendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-    }
-
-    @Test
-    public void executeValidReverseListTest() {
-        String reverseCommand = ListReverseCommand.COMPILED_COMMAND;
-        assertCommandSuccess(reverseCommand, ListReverseCommand.MESSAGE_SUCCESS, model);
-        assertHistoryCorrect(reverseCommand);
-        reverseCommand = ListReverseCommand.COMPILED_SHORTHAND_COMMAND;
-        assertCommandSuccess(reverseCommand, ListReverseCommand.MESSAGE_SUCCESS, model);
-        reverseCommand = ListCommand.COMMAND_ALIAS + " " + ListReverseCommand.COMMAND_ALIAS;
-        assertCommandSuccess(reverseCommand, ListReverseCommand.MESSAGE_SUCCESS, model);
-        reverseCommand = ListCommand.COMMAND_ALIAS + " " + ListReverseCommand.COMMAND_WORD;
-        assertCommandSuccess(reverseCommand, ListReverseCommand.MESSAGE_SUCCESS, model);
-    }
-
-    @Test
-    public void executeInvalidReverseListTest() {
-        String reverseCommand = ListReverseCommand.COMPILED_COMMAND + " test";
-        assertCommandSuccess(reverseCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        assertHistoryCorrect(reverseCommand);
-        reverseCommand = ListReverseCommand.COMPILED_SHORTHAND_COMMAND + " test";
-        assertCommandSuccess(reverseCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        reverseCommand = ListCommand.COMMAND_ALIAS + " " + ListReverseCommand.COMMAND_ALIAS + " test";
-        assertCommandSuccess(reverseCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-        reverseCommand = ListCommand.COMMAND_ALIAS + " " + ListReverseCommand.COMMAND_WORD + " test";
-        assertCommandSuccess(reverseCommand, ListFailureCommand.MESSAGE_FAILURE, model);
-    }
-```
-###### \java\seedu\address\logic\parser\AddCommandParserTest.java
-``` java
-        //missing phone
-        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withBloodType(VALID_BLOODTYPE_AMY)
-                .withPhone(NON_COMPULSORY_PHONE_AMY).withRemark(VALID_REMARK_AMY).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
-                        + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY + REMARK_DESC_AMY,
-                new AddCommand(expectedPerson));
-
-        //missing remark
-        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withBloodType(VALID_BLOODTYPE_AMY)
-                .withPhone(NON_COMPULSORY_PHONE_AMY).withRemark(NON_COMPULSORY_REMARK).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
-                        + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY,
-                new AddCommand(expectedPerson));
-
-        //missing bloodtype
-        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withBloodType(NON_COMPULSORY_BLOODTYPE)
-                .withPhone(NON_COMPULSORY_PHONE_AMY).withRemark(NON_COMPULSORY_REMARK).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
-
-        //missing address
-        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(NON_COMPULSORY_ADDRESS_AMY).withBloodType(NON_COMPULSORY_BLOODTYPE)
-                .withPhone(NON_COMPULSORY_PHONE_AMY).withRemark(NON_COMPULSORY_REMARK).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
-                + EMAIL_DESC_AMY, new AddCommand(expectedPerson));
-
-        //missing email
-        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withEmail(NON_COMPULSORY_EMAIL_AMY)
-                .withAddress(NON_COMPULSORY_ADDRESS_AMY).withBloodType(NON_COMPULSORY_BLOODTYPE)
-                .withPhone(NON_COMPULSORY_PHONE_AMY).withRemark(NON_COMPULSORY_REMARK).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY, new AddCommand(expectedPerson));
-```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommandRemarkCommandWordReturnsRemarkCommand() throws Exception {
-        //Create RemarkCommand up for testing
-        String remark = "Dummy";
-        Index index = INDEX_FIRST_PERSON;
-
-        RemarkCommand testRemarkCommand = (RemarkCommand) parser.parseCommand(
-                RemarkCommand.COMMAND_WORD + " "
-                        + index.getOneBased() + " " + PREFIX_REMARK + remark);
-
-        assertTrue(testRemarkCommand instanceof RemarkCommand);
-        assertEquals(new RemarkCommand(index, new Remark(remark)), testRemarkCommand);
-        assertNotEquals(new RemarkCommand(index, new Remark("")), testRemarkCommand);
-    }
-```
-###### \java\seedu\address\logic\parser\ListByBloodtypeCommandParserTest.java
-``` java
-public class ListByBloodtypeCommandParserTest {
-
-    private ListByBloodtypeCommandParser parser = new ListByBloodtypeCommandParser();
-
-    @Test
-    public void parseEmptyArgThrowsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                ListByBloodtypeCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parseValidArgsReturnsListByBloodtypeCommand() {
-        // no leading and trailing whitespaces
-        ListByBloodtypeCommand expectedListByBloodtypeCommand =
-                new ListByBloodtypeCommand(new BloodtypeContainsKeywordPredicate(Arrays.asList("AB", "O-")));
-        assertParseSuccess(parser, "AB O-", expectedListByBloodtypeCommand);
-
-        // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n AB \n \t O-  \t", expectedListByBloodtypeCommand);
-    }
-
-}
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
-    @Test
-    public void parseRemarkNullThrowsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseRemark(null);
-    }
-
-    @Test
-    public void parseRemarkOptionalEmptyReturnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseRemark(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseRemarkValidValueReturnsRemark() throws Exception {
-        Remark expectedRemark = new Remark(VALID_REMARK);
-        Optional<Remark> actualRemark = ParserUtil.parseRemark(Optional.of(VALID_REMARK));
-
-        assertEquals(expectedRemark, actualRemark.get());
-    }
-```
-###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
-``` java
-public class RemarkCommandParserTest {
-    private RemarkCommandParser parser = new RemarkCommandParser();
-
-    @Test
-    public void parseEmptyStringInputSuccess() {
-
-
-        //Define user inputs
-        final String emptyRemark = "";
-        Index thisIndex = INDEX_FIRST_PERSON;
-
-
-        String userInput = thisIndex.getOneBased() + " " + PREFIX_REMARK.toString() + emptyRemark;
-        RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(emptyRemark));
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-
-        // no remarks
-        userInput = thisIndex.getOneBased() + " " + PREFIX_REMARK.toString();
-        expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(""));
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parseFilledStringInputSuccess() {
-
-
-        //Define user inputs
-        final String emptyRemark = "I love Coffee";
-        Index thisIndex = INDEX_FIRST_PERSON;
-
-
-        String userInput = thisIndex.getOneBased() + " " + PREFIX_REMARK.toString() + emptyRemark;
-        RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(emptyRemark));
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-
-        // no remarks
-        userInput = thisIndex.getOneBased() + " " + PREFIX_REMARK.toString();
-        expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(""));
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parseNoIndexInputFailure() {
-
-        final String emptyRemark = "I love Coffee";
-        String userInput = PREFIX_REMARK.toString() + emptyRemark;
-
-        String expectedCommand = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, userInput, expectedCommand);
-
-    }
-
-    @Test
-    public void parseNoPrefixInputFailure() {
-
-        Index thisIndex = INDEX_FIRST_PERSON;
-        String userInput = thisIndex.getOneBased() + " ";
-
-        String expectedCommand = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE);
-        assertParseFailure(parser, userInput, expectedCommand);
-
-    }
-}
-```
-###### \java\seedu\address\logic\parser\ToggleTagColorParserTest.java
-``` java
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void parseTestInputs() throws Exception {
-
-        ToggleTagColorParser parser = new ToggleTagColorParser();
-
-        ToggleTagColorCommand expectedRandom = new ToggleTagColorCommand("random", null);
-        ToggleTagColorCommand expectedOff = new ToggleTagColorCommand("off", null);
-        ToggleTagColorCommand expectedDefault = new ToggleTagColorCommand("Test", "Test2");
-
-
-        // Random keyword produces ToggleTagColorCommand(true, "", "")
-        assertTrue(parser.parse(parser.getRandomKeyWord()).equals(expectedRandom));
-
-        // Off keyword produces ToggleTagColorCommand (false, "", "")
-        assertTrue(parser.parse(parser.getOffKeyWord()).equals(expectedOff));
-
-        // Default case produces ToggleTagColorCommand (true, "args[0]", "args[1]")
-        assertTrue(parser.parse("Test Test2").equals(expectedDefault));
-
-        // Throw Parse error
-        thrown.expect(ParseException.class);
-        parser.parse("Test");
-    }
-```
-###### \java\seedu\address\model\person\PersonTest.java
-``` java
-public class PersonTest {
-
-    @Test
-    public void testTagProperty() {
-        Person personOne = new PersonBuilder().withName("Tester").withTags("Friend").build();
-        Person personTwo = new PersonBuilder().withName("Jane").withTags("Family").build();
-
-        //Same UniqueTagList -> Returns True
-        assertTrue(personOne.tagProperty().equals(personOne.tagProperty()));
-
-        //Different UniqueTagList -> Returns False
-        assertFalse(personOne.tagProperty().equals(personTwo.tagProperty()));
-    }
-
-    @Test
-    public void testPersonHash() {
-        Person personOne = new PersonBuilder().withName("Tester").build();
-        Person personTwo = new PersonBuilder().withName("Jane").build();
-
-        int firstPersonHash = personOne.hashCode();
-        int secondPersonHash = personTwo.hashCode();
-
-        // Same person object has same hash
-        assertTrue(firstPersonHash == firstPersonHash);
-
-        // Different person object has different hash
-        assertFalse(firstPersonHash == secondPersonHash);
-    }
-
-
-}
-```
-###### \java\seedu\address\model\person\RemarkTest.java
-``` java
-public class RemarkTest {
-
-    @Test
-    public void testRemark() {
-        Remark emptyRemark = new Remark("");
-        Remark emptyRemarkCopy = new Remark(emptyRemark.toString());
-        Remark filledRemark = new Remark("Filled Remark");
-        Remark filledRemarkCopy = new Remark(filledRemark.toString());
-
-        assertTrue(emptyRemark.equals(emptyRemarkCopy));
-        assertTrue(filledRemark.equals(filledRemarkCopy));
-        assertFalse(emptyRemark.equals(filledRemark));
-        assertFalse(emptyRemarkCopy.equals(filledRemarkCopy));
-
-        assertTrue("".equals(emptyRemark.toString()));
-        assertFalse(emptyRemark.toString().equals(0));
-        assertFalse(emptyRemark.toString() == null);
-        assertFalse("".equals(emptyRemark));
-
-        assertTrue(filledRemark.toString().equals("Filled Remark"));
-        assertFalse(filledRemark.toString().equals(0));
-        assertFalse(filledRemark.toString() == null);
-        assertFalse("".equals(filledRemark));
-
-        int filledRemarkHash = filledRemarkCopy.hashCode();
-        int filledRemarkCopyHash = filledRemark.hashCode();
-        assertEquals(filledRemarkCopyHash, filledRemarkHash);
-    }
-}
-```
-###### \java\seedu\address\model\person\TagContainsKeywordsPredicateTest.java
-``` java
-public class TagContainsKeywordsPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("Patient");
-        List<String> secondPredicateKeywordList = Arrays.asList("Patient", "Colleague");
-
-        TagContainsKeywordsPredicate firstPredicate = new TagContainsKeywordsPredicate(firstPredicateKeywordList);
-        TagContainsKeywordsPredicate secondPredicate = new TagContainsKeywordsPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        TagContainsKeywordsPredicate firstPredicateCopy = new TagContainsKeywordsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertNotNull(firstPredicate);
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void testTagIsPresentReturnsTrue() {
-        // One Tag
-        TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.singletonList("Patient"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Patient").build()));
-
-        // Multiple tags
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague", "Family").build()));
-
-        // Mixed-case keywords
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("FaMiLy"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("family").build()));
-
-        // Individual keywords follow "AND" logic
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague", "Family", "Female").build()));
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Male"));
-        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague", "Family", "Female").build()));
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family", "Male"));
-        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague", "Family").build()));
-    }
-
-    @Test
-    public void testTagIsNotValidReturnsFalse() {
-        TagContainsKeywordsPredicate predicate;
-        // Non-matching keyword
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Family"));
-        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague").build()));
-
-        // Keywords match phone, email and address, but does not match tag
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street", ""));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").withTags("Family").build()));
-
-        // Only one matching tag -> False
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family"));
-        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague").build()));
-        assertFalse(predicate.test(new PersonBuilder().withTags("Family").build()));
-    }
-
-    @Test
-    public void testValidArgsWithAndOr() {
-        //And included
-        TagContainsKeywordsPredicate predicate =
-                new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "and", "Family"));
-        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague").build()));
-        assertFalse(predicate.test(new PersonBuilder().withTags("Family").build()));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague", "Family").build()));
-
-        //Or included
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "or", "Family"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague").build()));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Family").build()));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague", "Family").build()));
-
-        //Complex combination
-        // [a,[b,c],d,[e,f,g],h]
-        // a or (b and c) or d or (e and f and g) or h
-        // Equivalence Partition:
-        // 1. Contains None
-        // 2. Contains At least one
-        List<String> myStringArray = Arrays.asList("a", "or", "b", "and", "c", "or", "d",
-                "or", "e", "and", "f", "and", "g", "or", "h");
-        predicate = new TagContainsKeywordsPredicate(myStringArray);
-        assertFalse(predicate.test(new PersonBuilder().withTags("i").build()));
-        assertTrue(predicate.test(new PersonBuilder().withTags("e", "f", "g").build()));
-
-        //Additional Cases for Boundary cases
-        assertFalse(predicate.test(new PersonBuilder().withTags("e", "f", "b").build()));
-        assertTrue(predicate.test(new PersonBuilder().withTags("a", "b", "c", "d", "e", "f", "g", "h", "i").build()));
-
-        //Case sensitive
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("COLLEAGUE", "and", "family"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("colleague", "FAMILY").build()));
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("COLLEAGUE", "aNd", "family"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("colleague", "FAMILY").build()));
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("COLLEAGUE", "AnD", "family"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("colleague", "FAMILY").build()));
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("colleague", "OR", "FAMILY"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("COLLEAGUE", "family").build()));
-
-    }
-
-}
-```
-###### \java\seedu\address\model\UniqueTagListTest.java
-``` java
-    @Test
-    public void testThrowDuplicateTagError() throws Exception {
-        UniqueTagList uniqueTagList = new UniqueTagList();
-        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
-        thrown.expect(UniqueTagList.DuplicateTagException.class);
-
-        Iterator myIterator = TypicalPersons.ALICE.getTags().iterator();
-        uniqueTagList.add((Tag) myIterator.next());
-
-    }
-```
-###### \java\seedu\address\model\UniqueTagListTest.java
-``` java
-    @Test
-    public void testEquals() {
-        UniqueTagList uniqueTagList = new UniqueTagList();
-        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
-
-        UniqueTagList uniqueTagListTwo = new UniqueTagList();
-        uniqueTagListTwo.setTags(TypicalPersons.ALICE.getTags());
-
-        UniqueTagList uniqueTagListThree = new UniqueTagList();
-        uniqueTagListThree.setTags(TypicalPersons.BOB.getTags());
-
-        // same object -> returns true
-        assertTrue(uniqueTagList.equals(uniqueTagList));
-
-        // copy of object -> returns true
-        assertTrue(uniqueTagList.equals(uniqueTagListTwo));
-
-        // different types -> returns false
-        assertFalse(uniqueTagList.equals(1));
-
-        // null -> returns false
-        assertNotNull(uniqueTagList);
-
-        // different sets -> returns false
-        assertFalse(uniqueTagList.equals(uniqueTagListThree));
-    }
-```
-###### \java\seedu\address\storage\JsonUserPrefsStorageTest.java
-``` java
-    @Test
-    public void testUserPrefsGetAddressBookName() {
-        UserPrefs upUnderTest = getTypicalUserPrefs();
-        assertTrue("TypicalAddressBookName".equals(upUnderTest.getAddressBookName()));
-    }
-
-    @Test
-    public void testUserPrefsEquals() {
-        UserPrefs upUnderTest = getTypicalUserPrefs();
-        UserPrefs copyOfUpUnderTest = getTypicalUserPrefs();
-
-        //Return true if same object
-        assertTrue(upUnderTest.equals(upUnderTest));
-
-        //Return true if same instance
-        assertTrue(upUnderTest.equals(copyOfUpUnderTest));
-
-        // different types -> returns false
-        assertFalse(upUnderTest.equals(1));
-
-        // null -> returns false
-        assertNotNull(upUnderTest);
-
-    }
-
-    @Test
-    public void testUserPrefsHashCode() {
-        UserPrefs upUnderTest = getTypicalUserPrefs();
-        int firstHashCode = upUnderTest.hashCode();
-
-        UserPrefs upUnderTestTwo = new UserPrefs();
-        upUnderTestTwo.setGuiSettings(5000, 300, 200, 100);
-        upUnderTestTwo.setAddressBookFilePath("addressbookDIFF.xml");
-        upUnderTestTwo.setAddressBookName("TypicalAddressBookNameDIFF");
-        int secondHashCode = upUnderTestTwo.hashCode();
-
-        UserPrefs upUnderTestThree = getTypicalUserPrefs();
-        int thirdHashCode = upUnderTestThree.hashCode();
-
-        // Different user pref generates different hash
-        assertFalse(firstHashCode == secondHashCode);
-
-        // Same user pref generates same hash
-        assertTrue(firstHashCode == thirdHashCode);
-    }
-```
-###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
-``` java
-    /**
-     * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withRemark(String remark) {
-        try {
-            ParserUtil.parseRemark(Optional.of(remark)).ifPresent(descriptor::setRemark);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("bloodtype is expected to be unique.");
-        }
-        return this;
-    }
-```
-###### \java\seedu\address\ui\CommandBoxTest.java
+###### /java/seedu/address/ui/CommandBoxTest.java
 ``` java
     @Test
     public void handleKeyPressEscape() {
@@ -2044,47 +1086,1005 @@ public class TagContainsKeywordsPredicateTest {
 
     }
 ```
-###### \java\systemtests\AddCommandSystemTest.java
+###### /java/seedu/address/commons/core/MessageTest.java
 ``` java
-        /* Case: missing remark -> success */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
-                .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + TAG_DESC_FRIEND
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
-        assertCommandSuccess(command, toAdd);
+public class MessageTest {
 
-        /* Case: missing phone -> success */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
-                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
-                .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
-                + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
-        assertCommandSuccess(command, toAdd);
+    @Test
+    public void testMessageClass() {
+        Messages messageClass = new Messages();
 
-        /* Case: missing email -> success */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
-                .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
-                .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND
-                + BLOODTYPE_DESC_AMY;
-        assertCommandSuccess(command, toAdd);
+        assertTrue("Unknown command".equals(messageClass.MESSAGE_UNKNOWN_COMMAND));
+        assertTrue("Invalid command format! \n%1$s".equals(messageClass.MESSAGE_INVALID_COMMAND_FORMAT));
+        assertTrue("The person index provided is invalid".equals(messageClass.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX));
+        assertTrue("%1$d persons listed!".equals(messageClass.MESSAGE_PERSONS_LISTED_OVERVIEW));
+    }
+}
+```
+###### /java/seedu/address/commons/core/GuiSettingsTest.java
+``` java
+public class GuiSettingsTest {
 
-        /* Case: missing address -> success */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
-                .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(NON_COMPULSORY_ADDRESS_AMY)
-                .withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
-                .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + BLOODTYPE_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
+    @Test
+    public void testGuiSettingsEquals() {
 
-        /* Case: missing bloodtype -> success */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
-                .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(NON_COMPULSORY_ADDRESS_AMY)
-                .withBloodType(NON_COMPULSORY_BLOODTYPE).withRemark(NON_COMPULSORY_REMARK)
-                .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
+        GuiSettings guiSettingOne = new GuiSettings();
+        GuiSettings guiSettingTwo = new GuiSettings(13.6, 13.6, 0, 0);
+
+        // Same object -> Returns True
+        assertTrue(guiSettingOne.equals(guiSettingOne));
+
+        // Same instance different values -> Returns False
+        assertFalse(guiSettingOne.equals(guiSettingTwo));
+
+        // Different type -> Returns False
+        assertNotNull(guiSettingOne);
+        assertFalse(guiSettingOne.equals(1));
+
+    }
+
+}
+```
+###### /java/seedu/address/logic/LogicManagerTest.java
+``` java
+    @Test
+    public void executeValidListByTagTest() {
+        String listByTagCommand = ListByTagCommand.COMMAND_WORD + " colleagues";
+        assertCommandSuccess(listByTagCommand, ListByTagCommand.MESSAGE_SUCCESS, model);
+        assertHistoryCorrect(listByTagCommand);
+
+
+        //Existing feature do not check if tag is present or not.
+        // Potential enhancement to account for this
+        listByTagCommand = ListByTagCommand.COMMAND_WORD + " invalidTag";
+        assertCommandSuccess(listByTagCommand, ListByTagCommand.MESSAGE_SUCCESS, model);
+
+    }
+
+    @Test
+    public void executeInvalidListByTagTest() {
+        String listByTagCommand = ListCommand.COMMAND_ALIAS + " t";
+        assertCommandSuccess(listByTagCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        assertHistoryCorrect(listByTagCommand);
+        listByTagCommand = ListCommand.COMMAND_ALIAS + " colleagues";
+        assertCommandSuccess(listByTagCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        listByTagCommand = ListCommand.COMMAND_WORD + " colleagues tag";
+        assertCommandSuccess(listByTagCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        listByTagCommand = ListCommand.COMMAND_ALIAS + " tags";
+        assertCommandSuccess(listByTagCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        listByTagCommand = ListCommand.COMMAND_ALIAS + " t/colleagues";
+        assertCommandSuccess(listByTagCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+    }
+
+    @Test
+    public void executeValidAscendingListTest() {
+        String listAscendingCommand = ListAscendingNameCommand.COMPILED_COMMAND;
+        assertCommandSuccess(listAscendingCommand, ListAscendingNameCommand.MESSAGE_SUCCESS, model);
+        assertHistoryCorrect(listAscendingCommand);
+        listAscendingCommand = ListAscendingNameCommand.COMPILED_SHORTHAND_COMMAND;
+        assertCommandSuccess(listAscendingCommand, ListAscendingNameCommand.MESSAGE_SUCCESS, model);
+        listAscendingCommand = ListCommand.COMMAND_ALIAS + " " + ListAscendingNameCommand.COMMAND_ALIAS;
+        assertCommandSuccess(listAscendingCommand, ListAscendingNameCommand.MESSAGE_SUCCESS, model);
+        listAscendingCommand = ListCommand.COMMAND_ALIAS + " " + ListAscendingNameCommand.COMMAND_WORD;
+        assertCommandSuccess(listAscendingCommand, ListAscendingNameCommand.MESSAGE_SUCCESS, model);
+    }
+
+    @Test
+    public void executeInvalidAscendingListTest() {
+        String listAscendingCommand = ListAscendingNameCommand.COMPILED_COMMAND + " test";
+        assertCommandSuccess(listAscendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        assertHistoryCorrect(listAscendingCommand);
+        listAscendingCommand = ListAscendingNameCommand.COMPILED_SHORTHAND_COMMAND + " test";
+        assertCommandSuccess(listAscendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        listAscendingCommand = ListCommand.COMMAND_ALIAS + " " + ListAscendingNameCommand.COMMAND_ALIAS + " test";
+        assertCommandSuccess(listAscendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        listAscendingCommand = ListCommand.COMMAND_ALIAS + " " + ListAscendingNameCommand.COMMAND_WORD + " test";
+        assertCommandSuccess(listAscendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+    }
+
+    @Test
+    public void executeValidDescendingListTest() {
+        String listDescendingCommand = ListDescendingNameCommand.COMPILED_COMMAND;
+        assertCommandSuccess(listDescendingCommand, ListDescendingNameCommand.MESSAGE_SUCCESS, model);
+        assertHistoryCorrect(listDescendingCommand);
+        listDescendingCommand = ListDescendingNameCommand.COMPILED_SHORTHAND_COMMAND;
+        assertCommandSuccess(listDescendingCommand, ListDescendingNameCommand.MESSAGE_SUCCESS, model);
+        listDescendingCommand = ListCommand.COMMAND_ALIAS + " " + ListDescendingNameCommand.COMMAND_ALIAS;
+        assertCommandSuccess(listDescendingCommand, ListDescendingNameCommand.MESSAGE_SUCCESS, model);
+        listDescendingCommand = ListCommand.COMMAND_ALIAS + " " + ListDescendingNameCommand.COMMAND_WORD;
+        assertCommandSuccess(listDescendingCommand, ListDescendingNameCommand.MESSAGE_SUCCESS, model);
+    }
+
+    @Test
+    public void executeInvalidDescendingListTest() {
+        String listDescendingCommand = ListDescendingNameCommand.COMPILED_COMMAND + " test";
+        assertCommandSuccess(listDescendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        assertHistoryCorrect(listDescendingCommand);
+        listDescendingCommand = ListDescendingNameCommand.COMPILED_SHORTHAND_COMMAND + " test";
+        assertCommandSuccess(listDescendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        listDescendingCommand = ListCommand.COMMAND_ALIAS + " " + ListDescendingNameCommand.COMMAND_ALIAS + " test";
+        assertCommandSuccess(listDescendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        listDescendingCommand = ListCommand.COMMAND_ALIAS + " " + ListDescendingNameCommand.COMMAND_WORD + " test";
+        assertCommandSuccess(listDescendingCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+    }
+
+    @Test
+    public void executeValidReverseListTest() {
+        String reverseCommand = ListReverseCommand.COMPILED_COMMAND;
+        assertCommandSuccess(reverseCommand, ListReverseCommand.MESSAGE_SUCCESS, model);
+        assertHistoryCorrect(reverseCommand);
+        reverseCommand = ListReverseCommand.COMPILED_SHORTHAND_COMMAND;
+        assertCommandSuccess(reverseCommand, ListReverseCommand.MESSAGE_SUCCESS, model);
+        reverseCommand = ListCommand.COMMAND_ALIAS + " " + ListReverseCommand.COMMAND_ALIAS;
+        assertCommandSuccess(reverseCommand, ListReverseCommand.MESSAGE_SUCCESS, model);
+        reverseCommand = ListCommand.COMMAND_ALIAS + " " + ListReverseCommand.COMMAND_WORD;
+        assertCommandSuccess(reverseCommand, ListReverseCommand.MESSAGE_SUCCESS, model);
+    }
+
+    @Test
+    public void executeInvalidReverseListTest() {
+        String reverseCommand = ListReverseCommand.COMPILED_COMMAND + " test";
+        assertCommandSuccess(reverseCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        assertHistoryCorrect(reverseCommand);
+        reverseCommand = ListReverseCommand.COMPILED_SHORTHAND_COMMAND + " test";
+        assertCommandSuccess(reverseCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        reverseCommand = ListCommand.COMMAND_ALIAS + " " + ListReverseCommand.COMMAND_ALIAS + " test";
+        assertCommandSuccess(reverseCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+        reverseCommand = ListCommand.COMMAND_ALIAS + " " + ListReverseCommand.COMMAND_WORD + " test";
+        assertCommandSuccess(reverseCommand, ListFailureCommand.MESSAGE_FAILURE, model);
+    }
+```
+###### /java/seedu/address/logic/parser/ListByBloodtypeCommandParserTest.java
+``` java
+public class ListByBloodtypeCommandParserTest {
+
+    private ListByBloodtypeCommandParser parser = new ListByBloodtypeCommandParser();
+
+    @Test
+    public void parseEmptyArgThrowsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ListByBloodtypeCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parseValidArgsReturnsListByBloodtypeCommand() {
+        // no leading and trailing whitespaces
+        ListByBloodtypeCommand expectedListByBloodtypeCommand =
+                new ListByBloodtypeCommand(new BloodtypeContainsKeywordPredicate(Arrays.asList("AB", "O-")));
+        assertParseSuccess(parser, "AB O-", expectedListByBloodtypeCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " \n AB \n \t O-  \t", expectedListByBloodtypeCommand);
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandRemarkCommandWordReturnsRemarkCommand() throws Exception {
+        //Create RemarkCommand up for testing
+        String remark = "Dummy";
+        Index index = INDEX_FIRST_PERSON;
+
+        RemarkCommand testRemarkCommand = (RemarkCommand) parser.parseCommand(
+                RemarkCommand.COMMAND_WORD + " "
+                        + index.getOneBased() + " " + PREFIX_REMARK + remark);
+
+        assertTrue(testRemarkCommand instanceof RemarkCommand);
+        assertEquals(new RemarkCommand(index, new Remark(remark)), testRemarkCommand);
+        assertNotEquals(new RemarkCommand(index, new Remark("")), testRemarkCommand);
+    }
+```
+###### /java/seedu/address/logic/parser/ToggleTagColorParserTest.java
+``` java
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void parseTestInputs() throws Exception {
+
+        ToggleTagColorParser parser = new ToggleTagColorParser();
+
+        ToggleTagColorCommand expectedRandom = new ToggleTagColorCommand("random", null);
+        ToggleTagColorCommand expectedOff = new ToggleTagColorCommand("off", null);
+        ToggleTagColorCommand expectedDefault = new ToggleTagColorCommand("Test", "Test2");
+
+
+        // Random keyword produces ToggleTagColorCommand(true, "", "")
+        assertTrue(parser.parse(parser.getRandomKeyWord()).equals(expectedRandom));
+
+        // Off keyword produces ToggleTagColorCommand (false, "", "")
+        assertTrue(parser.parse(parser.getOffKeyWord()).equals(expectedOff));
+
+        // Default case produces ToggleTagColorCommand (true, "args[0]", "args[1]")
+        assertTrue(parser.parse("Test Test2").equals(expectedDefault));
+
+        // Throw Parse error
+        thrown.expect(ParseException.class);
+        parser.parse("Test");
+    }
+```
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
+``` java
+    @Test
+    public void parseRemarkNullThrowsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseRemark(null);
+    }
+
+    @Test
+    public void parseRemarkOptionalEmptyReturnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseRemark(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseRemarkValidValueReturnsRemark() throws Exception {
+        Remark expectedRemark = new Remark(VALID_REMARK);
+        Optional<Remark> actualRemark = ParserUtil.parseRemark(Optional.of(VALID_REMARK));
+
+        assertEquals(expectedRemark, actualRemark.get());
+    }
+```
+###### /java/seedu/address/logic/parser/AddCommandParserTest.java
+``` java
+        //missing phone
+        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withBloodType(VALID_BLOODTYPE_AMY)
+                .withPhone(NON_COMPULSORY_PHONE_AMY).withRemark(VALID_REMARK_AMY).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
+                        + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY + REMARK_DESC_AMY,
+                new AddCommand(expectedPerson));
+
+        //missing remark
+        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withBloodType(VALID_BLOODTYPE_AMY)
+                .withPhone(NON_COMPULSORY_PHONE_AMY).withRemark(NON_COMPULSORY_REMARK).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
+                        + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY,
+                new AddCommand(expectedPerson));
+
+        //missing bloodtype
+        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withBloodType(NON_COMPULSORY_BLOODTYPE)
+                .withPhone(NON_COMPULSORY_PHONE_AMY).withRemark(NON_COMPULSORY_REMARK).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
+
+        //missing address
+        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(NON_COMPULSORY_ADDRESS_AMY).withBloodType(NON_COMPULSORY_BLOODTYPE)
+                .withPhone(NON_COMPULSORY_PHONE_AMY).withRemark(NON_COMPULSORY_REMARK).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
+                + EMAIL_DESC_AMY, new AddCommand(expectedPerson));
+
+        //missing email
+        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withEmail(NON_COMPULSORY_EMAIL_AMY)
+                .withAddress(NON_COMPULSORY_ADDRESS_AMY).withBloodType(NON_COMPULSORY_BLOODTYPE)
+                .withPhone(NON_COMPULSORY_PHONE_AMY).withRemark(NON_COMPULSORY_REMARK).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY, new AddCommand(expectedPerson));
+```
+###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
+``` java
+public class RemarkCommandParserTest {
+    private RemarkCommandParser parser = new RemarkCommandParser();
+
+    @Test
+    public void parseEmptyStringInputSuccess() {
+
+
+        //Define user inputs
+        final String emptyRemark = "";
+        Index thisIndex = INDEX_FIRST_PERSON;
+
+
+        String userInput = thisIndex.getOneBased() + " " + PREFIX_REMARK.toString() + emptyRemark;
+        RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(emptyRemark));
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+
+        // no remarks
+        userInput = thisIndex.getOneBased() + " " + PREFIX_REMARK.toString();
+        expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(""));
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parseFilledStringInputSuccess() {
+
+
+        //Define user inputs
+        final String emptyRemark = "I love Coffee";
+        Index thisIndex = INDEX_FIRST_PERSON;
+
+
+        String userInput = thisIndex.getOneBased() + " " + PREFIX_REMARK.toString() + emptyRemark;
+        RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(emptyRemark));
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+
+        // no remarks
+        userInput = thisIndex.getOneBased() + " " + PREFIX_REMARK.toString();
+        expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(""));
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parseNoIndexInputFailure() {
+
+        final String emptyRemark = "I love Coffee";
+        String userInput = PREFIX_REMARK.toString() + emptyRemark;
+
+        String expectedCommand = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, userInput, expectedCommand);
+
+    }
+
+    @Test
+    public void parseNoPrefixInputFailure() {
+
+        Index thisIndex = INDEX_FIRST_PERSON;
+        String userInput = thisIndex.getOneBased() + " ";
+
+        String expectedCommand = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, userInput, expectedCommand);
+
+    }
+}
+```
+###### /java/seedu/address/logic/commands/ListDescendingNameCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for ListDescendingNameCommand.
+ */
+public class ListDescendingNameCommandTest {
+    private Model model;
+    private Model expectedModel;
+    private ListDescendingNameCommand listUnderTestCommand;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        listUnderTestCommand = new ListDescendingNameCommand();
+        listUnderTestCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+    }
+
+    @Test
+    public void executeFilterList() {
+        expectedModel.listNameDescending();
+        assertCommandSuccess(listUnderTestCommand, model, ListDescendingNameCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/RemarkCommandTest.java
+``` java
+public class RemarkCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void executeValidRemarkAddSuccess() throws Exception {
+
+        Person personToRemark = new PersonBuilder(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased())).withRemark("Remark To Add").build();
+
+        RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON, personToRemark.getRemark().value);
+
+        String expectedMessage = String.format(remarkCommand.MESSAGE_REMARK_PERSON_SUCCESS, personToRemark);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personToRemark);
+
+        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeValidRemarkDeleteSuccess() throws Exception {
+
+        Person personToRemark = new PersonBuilder(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased())).withRemark("").build();
+
+        RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON, personToRemark.getRemark().value);
+
+        String expectedMessage = String.format(remarkCommand.MESSAGE_REMOVE_REMARK_SUCCESS, personToRemark);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personToRemark);
+
+        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeValidIndexFilteredListEditRemarksSuccess() throws Exception {
+        showFirstPersonOnly(model);
+
+        ReadOnlyPerson personToRemark = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(personToRemark).withRemark("Test").build();
+        RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON,
+                editedPerson.getRemark().toString());
+
+        String expectedMessage = String.format(RemarkCommand.MESSAGE_REMARK_PERSON_SUCCESS, personToRemark);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        showFirstPersonOnly(expectedModel);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personToRemark);
+
+        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeValidIndexFilteredListDeleteRemarksSuccess() throws Exception {
+        showFirstPersonOnly(model);
+
+        ReadOnlyPerson personToRemark = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(personToRemark).withRemark("").build();
+        RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON,
+                editedPerson.getRemark().toString());
+
+        String expectedMessage = String.format(RemarkCommand.MESSAGE_REMOVE_REMARK_SUCCESS, personToRemark);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        showFirstPersonOnly(expectedModel);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personToRemark);
+
+        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeInvalidIndexUnfilteredListThrowsCommandException() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        RemarkCommand remarkCommand = getRemarkCommandForPerson(outOfBoundIndex, VALID_REMARK_AMY);
+
+        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void executeInvalidIndexFilteredListThrowsCommandException() {
+        showFirstPersonOnly(model);
+
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        RemarkCommand remarkCommand = getRemarkCommandForPerson(outOfBoundIndex, VALID_REMARK_AMY);
+
+        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+
+        // Create RemarkCommand for testing
+        // Amy used to test for empty remarks
+        // Bob used to test for filled remarks
+        RemarkCommand testCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
+        RemarkCommand testCommandTwo = new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_BOB));
+
+        //Test for same object
+        assertTrue(testCommand.equals(testCommand));
+        assertTrue(testCommandTwo.equals(testCommandTwo));
+
+        //Test for same values
+        assertTrue(testCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY))));
+        assertTrue(testCommandTwo.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_BOB))));
+
+        //Test to ensure command is strictly a RemarkCommand
+        assertFalse(testCommand.equals(new AddCommand(CARL)));
+        assertFalse(testCommand.equals(new ClearCommand()));
+        assertFalse(testCommand.equals(new DeleteCommand(INDEX_FIRST_PERSON)));
+        assertFalse(testCommand.equals(new HistoryCommand()));
+        assertFalse(testCommand.equals(new HelpCommand()));
+        assertFalse(testCommand.equals(new RedoCommand()));
+        assertFalse(testCommand.equals(new UndoCommand()));
+        assertFalse(testCommand.equals(new ListCommand()));
+        assertFalse(testCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_AMY)));
+
+        //Test to check for null
+        assertFalse(testCommand == null);
+        assertFalse(testCommandTwo == null);
+
+        //Test to check different Index returns false
+        assertFalse(testCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_AMY))));
+        assertFalse(testCommandTwo.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_BOB))));
+
+        //Test to check different remarks returns false
+        assertFalse(testCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_BOB))));
+        assertFalse(testCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_AMY))));
+
+    }
+
+
+    /**
+     * Generates a new RemarkCommand with the remarks of the given person.
+     *
+     * @param index  of person in list
+     * @param remark new remark to record
+     */
+    private RemarkCommand getRemarkCommandForPerson(Index index, String remark) {
+        RemarkCommand command = new RemarkCommand(index, new Remark(remark));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/ListIntegrationTest.java
+``` java
+public class ListIntegrationTest {
+    private Model model;
+    private Model expectedModel;
+
+    @Test
+    public void executeIntegrationTest() {
+
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Name expectedFirstName;
+        Name expectedLastName;
+        Name actualFirstName;
+        Name actualLastName;
+        int listLength;
+
+        //Ascending Reverse
+        expectedModel.listNameDescending();
+        model.listNameAscending();
+        model.listNameReversed();
+        expectedFirstName = expectedModel.getFilteredPersonList().get(0).getName();
+        actualFirstName = model.getFilteredPersonList().get(0).getName();
+        listLength = expectedModel.getFilteredPersonList().size();
+        expectedLastName = expectedModel.getFilteredPersonList().get(listLength - 1).getName();
+        assertEquals(expectedFirstName, actualFirstName);
+        assertTrue(expectedFirstName.equals(actualFirstName));
+        assertNotNull(actualFirstName);
+        assertNotNull(expectedFirstName);
+        assertFalse(actualFirstName.equals(expectedLastName));
+
+        //Descending Reverse
+        expectedModel.listNameAscending();
+        model.listNameDescending();
+        model.listNameReversed();
+        expectedFirstName = expectedModel.getFilteredPersonList().get(0).getName();
+        actualFirstName = model.getFilteredPersonList().get(0).getName();
+        listLength = expectedModel.getFilteredPersonList().size();
+        expectedLastName = expectedModel.getFilteredPersonList().get(listLength - 1).getName();
+        assertEquals(expectedFirstName, actualFirstName);
+        assertTrue(expectedFirstName.equals(actualFirstName));
+        assertNotNull(actualFirstName);
+        assertNotNull(expectedFirstName);
+        assertFalse(actualFirstName.equals(expectedLastName));
+
+        // (Descending vs Ascending) w Reverse
+        expectedModel.listNameDescending();
+        expectedModel.listNameReversed();
+        expectedModel.listNameReversed();
+        model.listNameAscending();
+        model.listNameReversed();
+        model.listNameReversed();
+        listLength = expectedModel.getFilteredPersonList().size();
+        actualFirstName = model.getFilteredPersonList().get(0).getName();
+        actualLastName = model.getFilteredPersonList().get(listLength - 1).getName();
+        expectedLastName = expectedModel.getFilteredPersonList().get(listLength - 1).getName();
+        expectedFirstName = expectedModel.getFilteredPersonList().get(0).getName();
+        assertFalse(actualFirstName.equals(expectedFirstName));
+        assertFalse(actualLastName.equals(expectedLastName));
+        assertEquals(actualFirstName, expectedLastName);
+        assertEquals(actualLastName, expectedFirstName);
+        model.listNameReversed();
+        actualFirstName = model.getFilteredPersonList().get(0).getName();
+        expectedLastName = expectedModel.getFilteredPersonList().get(listLength - 1).getName();
+        expectedFirstName = expectedModel.getFilteredPersonList().get(0).getName();
+        assertEquals(expectedFirstName, actualFirstName);
+        assertTrue(expectedFirstName.equals(actualFirstName));
+        assertNotNull(actualFirstName);
+        assertNotNull(expectedFirstName);
+        assertFalse(actualFirstName.equals(expectedLastName));
+
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/ListAscendingNameCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for ListAscendingNameCommand.
+ */
+public class ListAscendingNameCommandTest {
+    private Model model;
+    private Model expectedModel;
+    private ListAscendingNameCommand listUnderTestCommand;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        listUnderTestCommand = new ListAscendingNameCommand();
+        listUnderTestCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+    }
+
+    @Test
+    public void executeFilterList() {
+        expectedModel.listNameAscending();
+        assertCommandSuccess(listUnderTestCommand, model, ListAscendingNameCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/ListByTagCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) for {@code ListByTagCommand}.
+ */
+public class ListByTagCommandTest {
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void equals() {
+        TagContainsKeywordsPredicate firstPredicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("Family"));
+        TagContainsKeywordsPredicate secondPredicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("Friends"));
+
+        ListByTagCommand findFirstCommand = new ListByTagCommand(firstPredicate);
+        ListByTagCommand findSecondCommand = new ListByTagCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(findFirstCommand.equals(findFirstCommand));
+
+        // same values -> returns true
+        ListByTagCommand findFirstCommandCopy = new ListByTagCommand(firstPredicate);
+        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstCommand.equals(1));
+
+        // null
+        assertNotNull(findFirstCommand);
+
+        // different person -> returns false
+        assertFalse(findFirstCommand.equals(findSecondCommand));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code FindCommand}.
+     */
+    private ListByTagCommand prepareCommand(String userInput) {
+        ListByTagCommand command =
+                new ListByTagCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+
+
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     * - the command feedback is equal to {@code expectedMessage}<br>
+     * - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
+     * - the {@code AddressBook} in model remains the same after executing the {@code command}
+     */
+    private void assertCommandSuccess(ListByTagCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList) {
+        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        CommandResult commandResult = command.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/ListReverseCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for ListReverseCommand.
+ */
+public class ListReverseCommandTest {
+    private Model model;
+    private Model expectedModel;
+    private ListReverseCommand listUnderTestCommand;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        listUnderTestCommand = new ListReverseCommand();
+        listUnderTestCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+    }
+
+    @Test
+    public void executeFilterList() {
+        expectedModel.listNameReversed();
+        assertCommandSuccess(listUnderTestCommand, model, ListReverseCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+}
+```
+###### /java/seedu/address/storage/JsonUserPrefsStorageTest.java
+``` java
+    @Test
+    public void testUserPrefsGetAddressBookName() {
+        UserPrefs upUnderTest = getTypicalUserPrefs();
+        assertTrue("TypicalAddressBookName".equals(upUnderTest.getAddressBookName()));
+    }
+
+    @Test
+    public void testUserPrefsEquals() {
+        UserPrefs upUnderTest = getTypicalUserPrefs();
+        UserPrefs copyOfUpUnderTest = getTypicalUserPrefs();
+
+        //Return true if same object
+        assertTrue(upUnderTest.equals(upUnderTest));
+
+        //Return true if same instance
+        assertTrue(upUnderTest.equals(copyOfUpUnderTest));
+
+        // different types -> returns false
+        assertFalse(upUnderTest.equals(1));
+
+        // null -> returns false
+        assertNotNull(upUnderTest);
+
+    }
+
+    @Test
+    public void testUserPrefsHashCode() {
+        UserPrefs upUnderTest = getTypicalUserPrefs();
+        int firstHashCode = upUnderTest.hashCode();
+
+        UserPrefs upUnderTestTwo = new UserPrefs();
+        upUnderTestTwo.setGuiSettings(5000, 300, 200, 100);
+        upUnderTestTwo.setAddressBookFilePath("addressbookDIFF.xml");
+        upUnderTestTwo.setAddressBookName("TypicalAddressBookNameDIFF");
+        int secondHashCode = upUnderTestTwo.hashCode();
+
+        UserPrefs upUnderTestThree = getTypicalUserPrefs();
+        int thirdHashCode = upUnderTestThree.hashCode();
+
+        // Different user pref generates different hash
+        assertFalse(firstHashCode == secondHashCode);
+
+        // Same user pref generates same hash
+        assertTrue(firstHashCode == thirdHashCode);
+    }
+```
+###### /java/seedu/address/model/person/PersonTest.java
+``` java
+public class PersonTest {
+
+    @Test
+    public void testTagProperty() {
+        Person personOne = new PersonBuilder().withName("Tester").withTags("Friend").build();
+        Person personTwo = new PersonBuilder().withName("Jane").withTags("Family").build();
+
+        //Same UniqueTagList -> Returns True
+        assertTrue(personOne.tagProperty().equals(personOne.tagProperty()));
+
+        //Different UniqueTagList -> Returns False
+        assertFalse(personOne.tagProperty().equals(personTwo.tagProperty()));
+    }
+
+    @Test
+    public void testPersonHash() {
+        Person personOne = new PersonBuilder().withName("Tester").build();
+        Person personTwo = new PersonBuilder().withName("Jane").build();
+
+        int firstPersonHash = personOne.hashCode();
+        int secondPersonHash = personTwo.hashCode();
+
+        // Same person object has same hash
+        assertTrue(firstPersonHash == firstPersonHash);
+
+        // Different person object has different hash
+        assertFalse(firstPersonHash == secondPersonHash);
+    }
+
+
+}
+```
+###### /java/seedu/address/model/person/TagContainsKeywordsPredicateTest.java
+``` java
+public class TagContainsKeywordsPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("Patient");
+        List<String> secondPredicateKeywordList = Arrays.asList("Patient", "Colleague");
+
+        TagContainsKeywordsPredicate firstPredicate = new TagContainsKeywordsPredicate(firstPredicateKeywordList);
+        TagContainsKeywordsPredicate secondPredicate = new TagContainsKeywordsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        TagContainsKeywordsPredicate firstPredicateCopy = new TagContainsKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertNotNull(firstPredicate);
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void testTagIsPresentReturnsTrue() {
+        // One Tag
+        TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.singletonList("Patient"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Patient").build()));
+
+        // Multiple tags
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague", "Family").build()));
+
+        // Mixed-case keywords
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("FaMiLy"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("family").build()));
+
+        // Individual keywords follow "AND" logic
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague", "Family", "Female").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Male"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague", "Family", "Female").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family", "Male"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague", "Family").build()));
+    }
+
+    @Test
+    public void testTagIsNotValidReturnsFalse() {
+        TagContainsKeywordsPredicate predicate;
+        // Non-matching keyword
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Family"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague").build()));
+
+        // Keywords match phone, email and address, but does not match tag
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street", ""));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+                .withEmail("alice@email.com").withAddress("Main Street").withTags("Family").build()));
+
+        // Only one matching tag -> False
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague").build()));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Family").build()));
+    }
+
+    @Test
+    public void testValidArgsWithAndOr() {
+        //And included
+        TagContainsKeywordsPredicate predicate =
+                new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "and", "Family"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague").build()));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Family").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague", "Family").build()));
+
+        //Or included
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "or", "Family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Family").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague", "Family").build()));
+
+        //Complex combination
+        // [a,[b,c],d,[e,f,g],h]
+        // a or (b and c) or d or (e and f and g) or h
+        // Equivalence Partition:
+        // 1. Contains None
+        // 2. Contains At least one
+        List<String> myStringArray = Arrays.asList("a", "or", "b", "and", "c", "or", "d",
+                "or", "e", "and", "f", "and", "g", "or", "h");
+        predicate = new TagContainsKeywordsPredicate(myStringArray);
+        assertFalse(predicate.test(new PersonBuilder().withTags("i").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("e", "f", "g").build()));
+
+        //Additional Cases for Boundary cases
+        assertFalse(predicate.test(new PersonBuilder().withTags("e", "f", "b").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("a", "b", "c", "d", "e", "f", "g", "h", "i").build()));
+
+        //Case sensitive
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("COLLEAGUE", "and", "family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("colleague", "FAMILY").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("COLLEAGUE", "aNd", "family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("colleague", "FAMILY").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("COLLEAGUE", "AnD", "family"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("colleague", "FAMILY").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("colleague", "OR", "FAMILY"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("COLLEAGUE", "family").build()));
+
+    }
+
+}
+```
+###### /java/seedu/address/model/person/RemarkTest.java
+``` java
+public class RemarkTest {
+
+    @Test
+    public void testRemark() {
+        Remark emptyRemark = new Remark("");
+        Remark emptyRemarkCopy = new Remark(emptyRemark.toString());
+        Remark filledRemark = new Remark("Filled Remark");
+        Remark filledRemarkCopy = new Remark(filledRemark.toString());
+
+        assertTrue(emptyRemark.equals(emptyRemarkCopy));
+        assertTrue(filledRemark.equals(filledRemarkCopy));
+        assertFalse(emptyRemark.equals(filledRemark));
+        assertFalse(emptyRemarkCopy.equals(filledRemarkCopy));
+
+        assertTrue("".equals(emptyRemark.toString()));
+        assertFalse(emptyRemark.toString().equals(0));
+        assertFalse(emptyRemark.toString() == null);
+        assertFalse("".equals(emptyRemark));
+
+        assertTrue(filledRemark.toString().equals("Filled Remark"));
+        assertFalse(filledRemark.toString().equals(0));
+        assertFalse(filledRemark.toString() == null);
+        assertFalse("".equals(filledRemark));
+
+        int filledRemarkHash = filledRemarkCopy.hashCode();
+        int filledRemarkCopyHash = filledRemark.hashCode();
+        assertEquals(filledRemarkCopyHash, filledRemarkHash);
+    }
+}
+```
+###### /java/seedu/address/model/UniqueTagListTest.java
+``` java
+    @Test
+    public void testThrowDuplicateTagError() throws Exception {
+        UniqueTagList uniqueTagList = new UniqueTagList();
+        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
+        thrown.expect(UniqueTagList.DuplicateTagException.class);
+
+        Iterator myIterator = TypicalPersons.ALICE.getTags().iterator();
+        uniqueTagList.add((Tag) myIterator.next());
+
+    }
+```
+###### /java/seedu/address/model/UniqueTagListTest.java
+``` java
+    @Test
+    public void testEquals() {
+        UniqueTagList uniqueTagList = new UniqueTagList();
+        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
+
+        UniqueTagList uniqueTagListTwo = new UniqueTagList();
+        uniqueTagListTwo.setTags(TypicalPersons.ALICE.getTags());
+
+        UniqueTagList uniqueTagListThree = new UniqueTagList();
+        uniqueTagListThree.setTags(TypicalPersons.BOB.getTags());
+
+        // same object -> returns true
+        assertTrue(uniqueTagList.equals(uniqueTagList));
+
+        // copy of object -> returns true
+        assertTrue(uniqueTagList.equals(uniqueTagListTwo));
+
+        // different types -> returns false
+        assertFalse(uniqueTagList.equals(1));
+
+        // null -> returns false
+        assertNotNull(uniqueTagList);
+
+        // different sets -> returns false
+        assertFalse(uniqueTagList.equals(uniqueTagListThree));
+    }
+```
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+``` java
+    /**
+     * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withRemark(String remark) {
+        try {
+            ParserUtil.parseRemark(Optional.of(remark)).ifPresent(descriptor::setRemark);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("bloodtype is expected to be unique.");
+        }
+        return this;
+    }
 ```

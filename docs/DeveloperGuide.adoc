@@ -461,7 +461,7 @@ In the UI component, the tag is set by using the css attribute of the tag label.
 To illustrate how tag colors are set, below is a sequence diagram for how the random tag color command is executed.
 
 image::SDforTagColor.png[width="800"]
-    Figure 19: Sequence diagram for `random tag color` Model Component
+    Figure 19: Sequence diagram for random tag color Model Component
 
 The sequence diagram is given if the command requests the model to set all the tags to a random color. As seen from
 above diagram, each tag is updated to a certain color and does not need to know which tag belongs to which person.
@@ -900,6 +900,35 @@ corresponding to the new function e.g. +
 This is for reasons of complying with a Facade design pattern (where CopyCommand is the facade) which is used throughout MedNus.
 This is important particularly in cases where we want to retain polymorphism (of the CopyCommand class) and support the Open-Closed principle. +
 // end::copy[]
+
+// tag::relationship[]
+
+*How it is implemented* +
+The immplementation involves two main segments Logic and Model. +
+
+The sequence diagram of the Relationship Command is shown in Figure 29 below. +
+
+image::SDforRelationshipCommand.png[width="800"]
+    Figure 29: Sequence Diagram for Relationship Command
+
+* Firstly, the AddressBookParser checks if there is anything after `relation`. +
+e.g 1 rel/Husband: John Doe
+* Secondly, the RemarkCommandParser parses the input `1 rel/Husband: John Doe`. +
+Parsed index: 1 +
+Parsed string: Husband: John Doe
+* Thirdly, a RelationshipCommand is created and the parsed index and string are passed as arguments. +
+The index and relationship is set locally and execution, which calls the model, is run.
+* Next, model is called and filtered persons list is gotten. +
+A new Person object is created with local relationship variable instantiated. +
+The filtered persons list is updated. +
+Model gets the updated filtered persons list.
+
+*Reason for how it is implemented* +
+
+The relationship command makes use of existing implementations to reduce potential bugs that +
+might surfaced when an entirely new code is added to the existing code.
+
+// end::relationship[]
 
 == Documentation
 
