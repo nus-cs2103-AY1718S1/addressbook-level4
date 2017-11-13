@@ -1,0 +1,104 @@
+= Shi Tian - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ResidentBook
+ResidentBook is a newly conceptualised administrative tool catered for staffs handling hostel and college operations.. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/collated/main/shitian007.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/collated/test/shitian007.md[Test code]]
+
+=== Enhancement Added: Add Picture
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=picture]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For Administrative staff of the Hostel, it would always be of convenience to have a reference to a photo of the student.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=picture]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Autocomplete
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since there are a multitude of commands available to the user, it is highly improbably that they would be able to remember
+all the given commands. As such, it would be convenient to just remember partially the what the commands are and allow an
+autocompleted list to generate the commands for them.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Highlight
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=highlight]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since there will be occasions when the Administrator of the Residence wants to select a specific group of individuals,
+i.e. students who have yet to register for the next semester's housing, it would be convenient for them to be able to
+view the group with respect to those that have registered, perhaps to judge the rough percentage of residents who have
+registered.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=highlight]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* User Stories and Use Cases
+* Updated issues within according to user stories
+* Aided other teams in acceptance testing (Issue: https://github.com/CS2103AUG2017-T14-B3/main/issues/98)

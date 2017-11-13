@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= ResidentBook - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F09-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F09-B1`      Since: `AUG 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -48,7 +48,7 @@ This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.room.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
 
 === Configurations to do before writing code
@@ -98,7 +98,7 @@ The *_Architecture Diagram_* given above explains the high-level design of the A
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/room/MainApp.java[`MainApp`]. It is responsible for,
 
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
@@ -134,7 +134,7 @@ image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `ResidentBookChangedEvent` when the Resident Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -151,11 +151,11 @@ The sections below give more details of each component.
 image::UiClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+*API* : link:{repoURL}/src/main/java/seedu/room/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/room/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
 The `UI` component,
 
@@ -172,9 +172,9 @@ image::LogicCommandClassDiagram.png[width="800"]
 _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+link:{repoURL}/src/main/java/seedu/room/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  `Logic` uses the `ResidentBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
@@ -189,12 +189,12 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API* : link:{repoURL}/src/main/java/seedu/room/model/Model.java[`Model.java`]
 
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
+* stores the Resident Book data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -203,16 +203,16 @@ The `Model`,
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*API* : link:{repoURL}/src/main/java/seedu/room/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Resident Book data in xml format and read it back.
 
 === Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.residentbook.commons` package.
 
 == Implementation
 
@@ -221,13 +221,13 @@ This section describes some noteworthy details on how certain features are imple
 // tag::undoredo[]
 === Undo/Redo mechanism
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the resident book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the resident book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -262,7 +262,7 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the resident book. The current state of the resident book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
@@ -275,7 +275,7 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the resident book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -286,7 +286,7 @@ The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the resident book to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -316,7 +316,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 ---
 
 **Aspect:** How undo & redo executes +
-**Alternative 1 (current choice):** Saves the entire address book. +
+**Alternative 1 (current choice):** Saves the entire resident book. +
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
 **Alternative 2:** Individual command knows how to undo/redo by itself. +
@@ -326,12 +326,12 @@ image::UndoRedoActivityDiagram.png[width="200"]
 ---
 
 **Aspect:** Type of commands that can be undone/redone +
-**Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
+**Alternative 1 (current choice):** Only include commands that modifies the resident book (`add`, `clear`, `edit`). +
 **Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
 **Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
 **Alternative 2:** Include all commands. +
 **Pros:** Might be more intuitive for the user. +
-**Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
+**Cons:** User have no way of skipping such commands if he or she just want to reset the state of the resident book and not the view. +
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 ---
@@ -364,12 +364,998 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::picture[]
+=== Add Picture
+
+The add picture mechanism allows the adding of a picture to every individual person. +
+Images are saved in he format `<name><contact>` to differentiate between persons with the same name +
+It is implemented as both a CLI as well as a GUI feature.
+
+The GUI version includes two buttons available to the user in the PersonPanel.
+
+This is implemented in the PersonPanel directly using the Button object.
+
+[source,java]
+----
+    private void handleAddImage() {
+        FileChooser picChooser = new FileChooser();
+        File selectedPic = picChooser.showOpenDialog(null);
+        if (selectedPic != null) {
+            try {
+            ...
+
+
+    private void handleResetImage() {
+        try {
+            person.getPicture().resetPictureUrl();
+            if (person.getPicture().checkJarResourcePath()) {
+                InputStream in = this.getClass().getResourceAsStream(person.getPicture().getJarPictureUrl());
+                person.getPicture().setJarResourcePath();
+                Image personPicture = new Image(in);
+                ...
+----
+
+The CLI version allows the user to specify the index of the person and directly update the image url.
+
+This is implemented by updating the image field whenever the residentBook is updated.
+
+[source,java]
+----
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInformation(event.getNewSelection().person);
+    }
+
+    /**
+     * loads the selected person's information to be displayed.
+     */
+    private void loadPersonInformation(ReadOnlyPerson person) {
+        this.person = updatePersonFromLogic(person);
+        name.textProperty().setValue(person.getName().toString());
+        phone.textProperty().setValue(person.getPhone().toString());
+        ...
+----
+// end::picture[]
+
+// tag::autocomplete[]
+=== Autocomplete Feature
+
+The autocomplete mechanism implements a list of commands to be auto-completed upon user input
+
+The autocomplete list is obtained from the creation of an AutoComplete object and is automatically updated since it utilizes the model within the LogicManager
+
+[source,java]
+----
+    /**
+     * Updates AutoComplete suggestions according to user typed input
+     * @param userInput
+     */
+    public void updateAutoCompleteList(String userInput) {
+        switch (userInput) {
+        case "":
+            this.resetAutocompleteList();
+            break;
+        case "find":
+            this.autoCompleteList = getConcatPersonsArray("find");
+            break;
+        case "edit":
+            this.autoCompleteList = getConcatPersonsArray("edit");
+            break;
+        case "delete":
+            this.autoCompleteList = getConcatPersonsArray("delete");
+            break;
+        case "select":
+        ...
+----
+// end::autocomplete[]
+
+// tag::swaproom[]
+=== Swap Room Command
+
+The `swaproom` command swaps the rooms of two residents specified with indexes.
+[source,java]
+----
+public boolean equals(Object other) {
+    return other == this // short circuit if same object
+        || (other instanceof SwaproomCommand // instanceof handles nulls
+        && this.targetIndex1.equals(((SwaproomCommand) other).targetIndex1)
+        && this.targetIndex2.equals(((SwaproomCommand) other).targetIndex2)) // state check
+        || (other instanceof SwaproomCommand // instanceof handles nulls
+        && this.targetIndex1.equals(((SwaproomCommand) other).targetIndex2)
+        && this.targetIndex2.equals(((SwaproomCommand) other).targetIndex1)); // state check
+}
+----
+
+The method above is defined in `SwaproomCommand.java`. It is important to note that two swaproom commands with their residents' indexes swapped are still equal to each other. For example the following commands are equal:
+
+* `swaproom 3 4`
+* `swaproom 4 3`
+
+The command has a alias `sr`. So, the following commands are equivalent:
+
+* `swaproom 3 4`
+* `sr 3 4`
+
+Illegal arguments such as non-integer arguments or integers bigger than the size of the last shown list will raise a `CommandException` which will be displayed to the user in the command output box.
+// end::swaproom[]
+
+// tag::highlight[]
+=== Highlight Command
+
+The highlight command is implemented to highlight the contacts with the specified tag
+
+If the tag specified does not exist, trying to highlight the persons with the tag will raise an exception:
+[source,java]
+----
+public void updateHighlight(String highlightTag) {
+    try {
+        persons.updateHighlight(highlightTag);
+        if (!this.tags.contains(new Tag(highlightTag))) {
+            throw new TagNotFoundException("Tag not found");
+        }
+    } catch (IllegalValueException e) {
+        throw new TagNotFoundException("Tag not found");
+    }
+}
+----
+
+This exception is later caught higher up the execution stack and the user receives a message that the tag does not exist.
+
+To highlight the persons with the specified tags, the list of persons is indicated to be updated every time the command is run.
+This change is reflected in the UI with the refreshing of the persons list.
+
+[source,java]
+----
+private void initHighlightStatus() {
+    if (person.getHighlightStatus()) {
+        cardPane.setStyle("-fx-border-style: solid inside; -fx-border-width: 2;"
+            + "-fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: red;");
+    }
+}
+----
+
+The highlight command also allows removal of highlighting through input of "-" as tag name.
+
+[source, java]
+----
+    /**
+     * Removes highlighting of everyone
+     */
+    public void resetHighlightStatus() throws NoneHighlightedException {
+        boolean highlightReset = resetHighlightStatusHelper();
+        if (!highlightReset) {
+            throw new NoneHighlightedException("No Residents Highlighted");
+        }
+    }
+----
+// end::highlight[]
+
+// tag::temporaryperson[]
+=== Temporary person mechanism
+
+The implementation of temporary persons has two parts: +
+
+. Creating a timestamp for temporary persons
+. Deleting temporary persons
+
+==== Timestamp
+A Timestamp class has been implemented to record the time a person in the ResidentBook is created; more importantly, it
+records the time that a person will expire. A non-temporary person will never expire and has an expiry date of "null". On the other
+ hand, a temporary person has an expiry time represented by the LocalDateTime class.
+
+[source, java]
+public Timestamp(long day) throws IllegalValueException {
+    this.creationTime = LocalDateTime.now().withNano(0).withSecond(0).withMinute(0);
+    if (!isValidTimestamp(day)) {
+        throw new IllegalValueException(MESSAGE_TIMESTAMP_CONSTRAINTS);
+    }
+    if (day > 0) {
+        this.expiryTime = this.creationTime.plusDays(day).withNano(0).withSecond(0).withMinute(0);
+    }
+    this.daysToLive = day;
+}
+
+
+The level of precision chosen is to the nearest Hour. Originally, a LocalDateTime object's precision is to the nearest nanoseconds, but
+ this high level of precision is unnecessary to the users, and also cumbersome for developers to do tests due to the small
+ room for difference in system time. As we can see from the code block above, the time that this person will expire is to the nearest hour,
+ done by ignoring nanosecond, second, and minute.
+
+When creating a temporary person, users should input temp/ followed by the number of days they want this person to remain
+ i.e. "temp/2", without the quotation marks. The use of this temp/ prefix is optional. When temp/ is not used, a normal
+ person which does not expire is created.
+
+The following activity diagram shows the process of adding a temporary person.
+
+image::AddTempPersonAD.png[width="700"]
+
+[NOTE]
+Due to the nature of this implementation, testing becomes tricky. One way to test is to add a temporary person, then forward system time
+by the more than the number of days that this person will expire. The temporary person should not appear in the ResidentBook now. Remember to
+switch back your system time after testing.
+
+==== Deleting temporary persons
+
+Deletion of temporary persons is done when the ResidentBook starts up. When the ResidentBook object is intialised at the ModelManager,
+it deletes all(and any) temporary persons.
+
+[source, java]
+public ResidentBook(ReadOnlyResidentBook toBeCopied) {
+    this();
+    resetData(toBeCopied);
+    deleteTemporary();
+}
+
+
+A iterator iterates through the UniquePersonList and looks at the expiry time of every person. If the current time has past that
+of the expiry time, this person will be removed from the UniquePersonList.
+[source, java]
+public void deleteTemporary() {
+    UniquePersonList personsList = this.getUniquePersonList();
+    Iterator<Person> itr = personsList.iterator();
+    while (itr.hasNext()) {
+        Person person = itr.next();
+        LocalDateTime personExpiry = person.getTimestamp().getExpiryTime();
+        LocalDateTime current = LocalDateTime.now();
+        if (personExpiry != null) {
+            if (current.compareTo(personExpiry) == 1) {
+                itr.remove();
+            }
+        }
+    }
+}
+
+The following activity diagram shows how temporary persons are deleted from the ResidentBook.
+
+image::DeleteTempPersonAD.png[width="700"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of temporary persons +
+**Alternative 1 (current choice):** Use a LocalDateTime class to represent timestamp  +
+**Pros:** Flexible level of precision according to the developer i.e. to the nearest minute, or hour, etc. +
+**Cons:** A unintended change in system time may cause persons who are not due to expire to be deleted from the ResidentBook +
+**Alternative 2:** The previous implementation of temporary person only allows it to stay for one session i.e. all temporary persons will
+ be deleted the next time the application starts up +
+**Pros:** This implementation circumvents the problem of change in system time +
+**Cons:** This implementation is inflexible because users cannot choose how long they want a temporary person in the ResidentBook to stay.
+
+
+// end::temporaryperson[]
+
+//tag::import[]
+=== Import mechanism
+
+The import mechanism is essentially adding multiple Residents to the ResidentBook and integrating the current data with an external xml file. It is implemented by calling add function repeatedly till all the new Residents have been added to the current ResidentBook.
+
+This command only import Residents and does not support adding of Events in v1.5.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Import +
+**Alternative 1 (current choice):** Add all unique Residents currently not found in ResidentBook  +
+**Pros:** Removes redundancy and prevents duplication of data  +
+**Cons:** Current data will not be updated if there are exisiting Resident details in the ResidentBook +
+**Alternative 2:** Add all entries found on the file specified by user, and update the details when there is a difference +
+**Pros:** Get the most updated ResidentBook with each import +
+**Cons:** Import file may be outdated and not accurate, this results in inconsistency of data.
+
+The following is the Sequence Diagram for Import Command.
+
+image::SDforImportFile.png[width="800"]
+
+A button is also added onto the top bar menu to facilitate import via clicking and choosing file from FileChooser.
+
+image::import_file_Ui.png[width="800"]
+
+The Import Command is implemented this way, where user will specify the filePath:
+[source,java]
+----
+public ImportCommand(String filePath) {
+       this.filePath = filePath;
+}
+----
+
+It then goes through the data in the file and calls the add command repeatedly. If an exception is caught, it will continue and ignore that entry in the imported file. For every new Resident added, the name of the Resident is added to the list which keeps track of the new entries.
+[source,java]
+----
+private void addUniquePerson(ReadOnlyResidentBook newList, ArrayList<String> namesAdded) {
+        ObservableList<ReadOnlyPerson> personList = newList.getPersonList();
+
+        for (ReadOnlyPerson p : personList) {
+            try {
+                model.addPerson(p);
+            } catch (DuplicatePersonException e) {
+                continue;
+            }
+            namesAdded.add(p.getName().fullName);
+        }
+    }
+----
+
+The following method checks if there are any new Resident added to ResidentBook.
+[source,java]
+----
+private String getNamesFeedback(ArrayList<String> namesAdded) throws NoUniqueImport {
+        String namesFeedback = "";
+        if (namesAdded.size() == 0) {
+            throw new NoUniqueImport(MESSAGE_FILE_NOT_UNIQUE);
+        }
+
+        for (int i = 0; i < namesAdded.size(); i++) {
+            namesFeedback += namesAdded.get(i);
+
+            if (i + 1 != namesAdded.size()) {
+                namesFeedback += NAME_SEPERATOR;
+            }
+        }
+        return namesFeedback;
+    }
+----
+
+[NOTE]
+If the filePath is invalid, then there are no file that is readable and hence, an exception will be thrown. Users will be notified to check their filePath.
+
+If the data in the file specified is exactly the same as the current ResidentBook, there is nothing to import. The NoUniqueImport exception will be throw. Users will be notified to check their file.
+
+The following is the NoUniqueImport Exception:
+[source,java]
+----
+public class NoUniqueImport extends Exception {
+    public NoUniqueImport(String message) {
+        super(message);
+    }
+}
+----
+
+The following activity diagram summarize what happens inside the `ImportCommand` when a user executes this command:
+
+image::ImportCommandActivityDiagram.png[width="500"]
+
+// end::import[]
+
+// tag::backup[]
+=== Backup Command
+The backup command saves the current ResidentBook into backup.xml located in the project location.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Backup +
+**Alternative 1 (current choice):** Saves entire ResidentBook in a backup file  +
+**Pros:** Simple and straightforward in achieving objective of keeping another copy of ResidentBook  +
+**Cons:** Requires more storage space +
+**Alternative 2:** Allow user to specify which entries to be added to backup  +
+**Pros:** Flexible level of precision according to the needs of the user +
+**Cons:** User may miss some entries when specifying. Hard to roll back to the latest data during crisis
+
+One consideration for the chosen mechanism is that backup should aid during crisis, such as data corruption or lost. Hence, backing up the entire file is the safest choice for administrator staffs. The following function saves the ResidentBook and images.
+
+[source,java]
+----
+@Override
+    public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
+        saveResidentBook(residentBook, getDirAbsolutePath() + backup_location);
+        backupImages();
+    }
+----
+
+Apart from the Resident details, Backup command also includes saving the images uploaded by user previously.
+
+[source,java]
+----
+public void backupImages() throws IOException {
+        String backupFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME + "_backup";
+        String originalFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME;
+
+        handleImageBackupFolder(backupFolder, originalFolder);
+        handleImagesBackupFiles(backupFolder, originalFolder);
+    }
+----
+
+Check is done to make sure that folder where images are saved exists before creating a backup folder. If the staff did not save any pictures for the Residents, no backup folder will be created.
+
+[source,java]
+----
+private void handleImageBackupFolder(String backupFolder, String originalFolder) throws IOException {
+        File source = new File(originalFolder);
+        if (source.exists()) {
+            boolean backupExist = new File(backupFolder).exists();
+
+            if (!backupExist) {
+                boolean isSuccess = (new File(backupFolder)).mkdirs();
+                if (!isSuccess) {
+                    throw new IOException();
+                }
+            }
+        }
+    }
+----
+
+If the staff saved images for the Residents, the images will be copied from the source folder to the backup folder as seen below.
+
+[source,java]
+----
+private void handleImagesBackupFiles(String backupFolder, String originalFolder) throws IOException {
+        File source = new File(originalFolder);
+
+        if (source.exists()) {
+            File[] listOfImages = source.listFiles();
+
+            for (int i = 0; i < listOfImages.length; i++) {
+                File dest = new File(backupFolder + File.separator + listOfImages[i].getName());
+                copy(listOfImages[i], dest);
+            }
+        }
+
+    }
+----
+
+The following is the activity diagram of Backup Comand.
+
+image::BackupCommandActivityDiagram.png[width="500"]
+
+For future enhancement, developers may consider allowing user to specify backup location and file name.
+
+// end::backup[]
+
+// tag::addEvent[]
+=== Add Event Command
+
+The `addevent` command adds an `Event` to the `EventBook`. The format for the current command is:
+
+`addevent ti/TITLE des/DESCRIPTION loc/LOCATION [time/STARTTIME TO ENDTIME or STARTTIME DURATION (in hours)]`
+
+If the event being added already exists in the EventBook, executing the `add event` command raises a `DuplicateEventException`:
+
+[source, java]
+----
+@Override
+public CommandResult executeUndoableCommand() throws CommandException {
+    requireNonNull(model);
+    try {
+        model.addEvent(toAdd);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+    } catch (DuplicateEventException e) {
+        throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+    }
+}
+----
+
+
+Possible Future Implementations:
+
+* Allow tentative events for which the `Location` or `Datetime have not yet been finalised.
+* Allow adding events which span more than one day.
+
+// end::addEvent[]
+
+
+// tag::deleteEvent[]
+=== Delete Event Command
+
+The `deleteEvent` command deletes an `Event` from the `EventBook`. The format for the current command is:
+`deleteEvent INDEX (must be a positive integer)`
+
+If the index passed to the deleteEvent command as argument is greater than the number of events in the EventBook, a CommandException is raised on execution (in DeleteEventCommand.executeUndoableCommand()):
+
+[source, java]
+----
+    List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
+
+    if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+    }
+----
+
+Possible Future Implementations:
+
+* Allow deleting events by `Title` or `Datetime`.
+* Allow batch deleting of events to clear old events with a single command.
+
+// end::deleteEvent[]
+
+
+// tag::switchtab[]
+=== Switch Tab Command
+
+The `switch tab` command allows users to switch between the Residents List and the Events lists from the Command Line Interface.
+
+The two possible commands are `switch 1` which switches to Residents List and `switch 2` switches to the Events List
+
+If an invalid argument such as `a` or `5` is passed with the switch command, a `ParseException` is raised:
+
+[source, java]
+----
+public SwitchTabCommand parse(String args) throws ParseException {
+    try {
+        int index = ParserUtil.parseIndex(args).getOneBased();
+
+        if (index > 2 || index < 1) {
+            throw new IllegalValueException(MESSAGE_INVALID_COMMAND_FORMAT);
+        }
+        return new SwitchTabCommand(index);
+    } catch (IllegalValueException ive) {
+        throw new ParseException(
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwitchTabCommand.MESSAGE_USAGE));
+    }
+}
+----
+
+Furthermore, if a `SwitchTabCommand` command is successfully made with invalid arguments by another class (such as when running tests), a `CommandException` will be raised when the command is executed:
+
+[source, java]
+----
+@Override
+public CommandResult execute() throws CommandException {
+
+    if (targetIndex > 2 || targetIndex < 1) {
+        throw new CommandException(MESSAGE_USAGE);
+    }
+
+    EventsCenter.getInstance().post(new SwitchTabRequestEvent(targetIndex));
+    return new CommandResult(String.format(MESSAGE_SWITCH_TAB_SUCCESS, tabName));
+}
+----
+
+If successfully executed, the command posts a new `SwitchTabRequestEvent`. This event is later handled in the `UI:MainWindow`:
+
+[source, java]
+----
+public void switchTab(int index) {
+    tabPane.getSelectionModel().select(index);
+}
+
+@Subscribe
+private void handleSwitchTabEvent(SwitchTabRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    switchTab(event.targetIndex);
+}
+----
+
+Possible Future Implementations:
+
+* `switch` should be able to detect the current tab and switch without taking in any arguments.
+
+// end::switchtab[]
+
+
+// tag::sort[]
+=== Sort Command
+
+The sort command is implemented to sort the current Resident book according to the following possible criteria:
+* name
+* phone
+* room
+* email
+
+By default, the list is sorted by name. It is important to note that after every other command such as `add`, `edit` or `delete`, the sort is run again to maintain the order of the list.
+
+If the list is already sorted by a particular field, trying to sort it by the same field will raise an `AlreadySortedException`:
+[source,java]
+----
+public void sortBy(String sortCriteria) throws AlreadySortedException {
+
+    if (persons.getCurrentlySortedBy().equals(sortCriteria)) {
+        throw new AlreadySortedException("List already sorted by: " + sortCriteria);
+    } else {
+        persons.sortBy(sortCriteria);
+    }
+}
+----
+
+This exception is later caught higher up the execution stack and a CommandException is thrown. The user receives a message that the list is already sorted by the field.
+
+To enable the sorting, standard `FXCollections.sort` is used. To enable this, ReadOnlyPerson interface extends Comparable.
+The person Class which implements this interface defines compareTo to compare two fields. The following is a snippet from the compareTo method:
+[source,java]
+----
+public int compareTo(Object otherPerson) {
+
+    ReadOnlyPerson person = (ReadOnlyPerson) otherPerson;
+
+    // If a field is "Not Set" put the corresponding person at the end of the list.
+    if (firstField.equals("Not Set") && secondField.equals("Not Set")) {
+        return 0;
+    } else if (!firstField.equals("Not Set") && secondField.equals("Not Set")) {
+        return -1;
+    } else if (firstField.equals("Not Set") && !secondField.equals("Not Set")) {
+        return 1;
+    } else {
+        return firstField.compareTo(secondField);
+    }
+
+}
+----
+
+This compareTo method gives `Not Set` the least priority and hence if a list is sorted by a field (say `room`), the residents with rooms `Not Set` will appear at the bottom of the list.
+// end::sort[]
+
+// tag::removeTag[]
+=== RemoveTag Command
+
+The RemoveTag command is implemented for fast removal of a tag from all entries in the address book. It is implemented by updating the tag list of Residents. +
+The motivation for implementing such a command is that the hostel/hotel administrator may need to mass delete a Tag from the person. For example, deleting the "RA" (Resident Assistant) tag when the old batch of RA steps down from operations.
+
+==== Design Considerations
+
+**Aspect:** Implementation of RemoveTag +
+**Alternative 1 (current choice):** Removes all tag from Residents holding it, by looking through the current ResidentBook  +
+**Pros:** Effective way, as it ensures that no one holds the tag after going through all Residents  +
+**Cons:** May take a longer time when running through all Residents if the ResidentBook has large amount of data +
+**Alternative 2:** Keep a list of Residents holding the Tag, and update it when necessary  +
+**Pros:** Efficient way, O(1) time in retrieving all Residents holding the Tag.  +
+**Cons:** Redundancy and overhead in keeping another list of Residents. Edit, Add, Delete commands will require additional checks to prevent outdated data.
+
+The current choice of design prevents unnecessary overhead in implementation, and is straightforward. While it may take a longer time in operation when handlinng large amount of data,
+it is understood that Residents population does not vary a lot. Since the number of rooms are fixed due to building design, it is safe to assume that all operations are able to complete within a reasonable amount of time.
+
+The following is the Sequence Diagram for RemoveTag command. The alias is "rm".
+
+image::SDforRemoveTagCommand.png[width="800"]
+
+[NOTE]
+The difference between the RemoveTag and DeleteByTag is that RemoveTag does not remove any Resident from the ResidentBook. It just removes all the specified tags attached to the Resident.
+
+The following shows the implementation method, where user will specify the tagName:
+[source,java]
+----
+public RemoveTagCommand(String tagName) {
+        this.tagName = tagName;
+}
+----
+
+The following shows the core of RemoveTag command. It is essentially editing all Residents which holds the Tag specified by the user.
+[source,java]
+----
+private void updateTagList(List<ReadOnlyPerson> lastShownList, int i) throws CommandException {
+        ReadOnlyPerson personToEdit = lastShownList.get(i);
+        Person editedPerson = removedTagFromPerson(personToEdit);
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(MESSAGE_REMOVE_TAG_ERROR);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_REMOVE_TAG_ERROR);
+        }
+    }
+----
+
+This following section shows how the Tag specified is removed. It loops through the TagList each person has, and creates another set of updated TagList. While there will not be a duplication of tag, this defensive code ensures that indeed all specified tag is removed.
+[source,java]
+----
+private Person removedTagFromPerson(ReadOnlyPerson personToEdit) {
+        assert personToEdit != null;
+
+        Set<Tag> updatedTags = new HashSet<>();
+
+        for (Tag t : personToEdit.getTags()) {
+            if (t.tagName.equals(this.tagName)) {
+                continue;
+            } else {
+                updatedTags.add(t);
+            }
+        }
+
+        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getRoom(), personToEdit.getTimestamp(), updatedTags);
+    }
+----
+[NOTE]
+If the tagName is invalid, the TagNotFoundException will be raised.
+
+// end::removeTag[]
+
+// tag::deletebytag[]
+
+=== Deletebytag Command
+The deletebybtag command allows users to delete residents in the addressbook that has a certain tag supplied. This command is implemented to enable the deletion of persons who have a particular tag.
+The motivation for implementing such a command is so that hostel/hotel administrators can mass delete a certain
+group of residents without going through the trouble of deleting them one by one.
+
+Only one argument is supplied with this command, a String `tag`.
+
+The sequence of steps carried out by this command is shown in the activity diagram below.
+
+image::deleteByTagAD.png[width="800"]
+
+[NOTE]
+Deletebytag command and RemoveTag command may sound similar, but they serve totally different purpose.
+
+
+The function to actually delete the persons who have the `TAG` supplied is done in the UniquePersonList class.
+The code belows shows it's execution. First we define an iterator to iterate through all the persons in the list of persons. +
+The condition `if (p.getTags().contains(tag)` checks if each person has the `TAG` supplied.
+If it does, we remove the person from the list.
+
+The sequence diagram below shows the execution of the command.
+
+image::deleteByTagSD.png[width="800"]
+
+The `removeByTag(tag)` method is laid out below for better understanding.
+[source, java]
+public void removeByTag(Tag tag) throws CommandException {
+    Iterator<Person> itr = this.iterator();
+    int numRemoved = 0;
+    while (itr.hasNext()) {
+        Person p = itr.next();
+        if (p.getTags().contains(tag)) {
+            itr.remove();
+            numRemoved++;
+        }
+    }
+    if (numRemoved == 0) {
+        throw new CommandException(Messages.MESSAGE_INVALID_TAG_FOUND);
+    }
+}
+
+If by the end of method execution, number of people removed, `numRemoved` is 0, we conclude that it is because nobody has that tag supplied.
+Hence, a `INVALID_TAG_FOUND` message will be displayed to the user.
+
+// end::deletebytag[]
+
+==== Design Considerations
+Deletion of persons by multiple tag remains a viable enhancement to this command, but it is not implemented due to the
+following considerations:
+
+* To enable a clean workflow, hostel/hotel administrators might prefer deleting one group of people at a time. +
+* Ambiguity will be introduced into this command. The user may not know if by supplying multiple tags, the application will
+delete persons who have all the tags supplied, or delete all persons who has any of the tags supplied.
+
+
+// tag::Calendar[]
+=== Calendar Interface
+
+The calendar interface is implemented with a JavaFX Pane Class that contains 5 by 7 AnchorPaneNodes as individual dates. +
+
+During application start up, the MainWindow will create a Pane and adds a CalendarBoxPanel object inside. CalendarBoxPanel
+initialises the calendar in through the following construction.
+
+[source, java]
+public CalendarBoxPanel(Logic logic) {
+    super(FXML);
+    calendarBox = new CalendarBox(YearMonth.now(), logic);
+    calendarPane.getChildren().add(calendarBox.getView());
+}
+
+A CalendarBox object is created inside the CalendarBoxPanel which takes in the current date and an instance of the LogicManager that contains the list of events.
+
+The initialisation of the CalendarBox object is provided below.
+
+[source, java]
+public CalendarBox(YearMonth yearMonth, Logic logic) {
+    this.logic = logic;
+    currentYearMonth = yearMonth;
+    allCalendarDays = new ArrayList<>(35);
+    makeCalendarSkeleton();
+    makeCalendarNavigationTool();
+    populateCalendar(yearMonth, logic.getFilteredEventList());
+    // Create the calendar view
+    view = new VBox(titleBar, dayLabels, calendar);
+    VBox.setMargin(titleBar, new Insets(0, 0, 10, 0));
+}
+
+The calendar is made in broadly 3 steps.
+
+. `makeCalendarSkeleton()` makes the skeleton for the calendar, i.e. grids for one month, and label for days of the week.
+. `makeCalendarNavigationTool()` creates the entire navigation tool for the calender, i.e. title, previous-month button, next-month button
+. `populateCalendar(yearMonth, logic.getFilteredEventList())` set the days of the calendar to correspond to the appropriate date, with events populated at their corresponding dates
+
+When a new event is added or an existing event is removed, the calendar updates the change dynamically by repopulating the calendar with the updated list of events.
+This is done through the help of the EventBus shown below, which will call the method `handleCalenderBoxPanelChange(EventBookChangedEvent event)` whenever an instance of EventBookChangedEvent is raised.
+
+[source, java]
+@Subscribe
+public void handleCalenderBoxPanelChange(EventBookChangedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    calandarBoxPanel.getCalendarBox().refreshCalendar(this.logic);
+}
+
+
+For navigation to the previous or next month in the calendar, a click on the "PREV" or "NEXT" button will trigger a method to repopulate the calendar with dates
+and events of the appropriate month. This can also be done through the CLI by typing `prev` or `next` at the command bar.
+The sequence diagram for `prev` command is shown below. `next` works in a similar way.
+
+image::PrevCommandSD.png[width="800"]
+
+
+The implementation of `previousMonth()` is illustrated here. `nextMonth()` works in a similar way.
+
+[source, java]
+private void previousMonth() {
+    currentYearMonth = currentYearMonth.minusMonths(1);
+    populateCalendar(currentYearMonth, logic.getFilteredEventList());
+}
+
+==== Design Considerations
+
+**Aspect:** Implementation of Calendar +
+**Alternative 1 (current choice):** Repopulating a new calendar when there is a change in the EventBook +
+**Pros:** Simple to implement, and easy to understand. Simply make use of existing methods that we have written for populating the calendar for the first time. +
+**Cons:** Takes a little longer(not notably) for the calendar to be populated +
+**Alternative 2:** Use Google Calendar +
+**Pros:** Many functionalities are already created for us. +
+**Cons:** Security concerns because the ResidentBook would require User Authentication to login to Google. ResidentBook would also need to store
+the username and password.
+
+// end::Calendar[]
+
+
+// tag::styling[]
+=== UI Styling
+
+The main styling for the `UI` can be found in `DarkTheme.css`. The document has been divided into the following sections:
+
+* `Base Styling`
+* `Tab and Tab Pane Styling`
+* `Split Pane and list CSS`
+* `Button Styling`
+* `Button Styling in Person Panel`
+* `Dialog Pane Styling`
+* `Scroll bar Styling`
+* `Card Pane Styling`
+* `Command Pane Styling`
+* `Person Panel Styling`
+
+Here, we look at a specific section of `DarkTheme.css`:
+
+[source,css]
+----
+/*PERSON PANEL STYLING*/
+#personPanel {
+    -fx-background-color: #232A34;
+    -fx-padding: 61 35 50 35;
+}
+
+#personDetailsBox {
+    -fx-padding: 20 20 20 20;
+    -fx-background-color: #404040;
+    -fx-text-color: white;
+}
+
+#personDetailsBox #name {
+    -fx-padding: 7, 0, 0, 0;
+}
+
+#name, #phone, #address, #email {
+    -fx-text-fill: white;
+}
+----
+
+We prefer modifying individual ids instead of an entire class of elements to keep the CSS modular. However, do note that for `.tab` and `.button`, class selectors have been used instead of id selectors to enforce a uniform looks for all buttons and tabs throughout the application.
+
+It is important to note that not all the styling properties are defined in `DarkTheme.css`. For example, the colors for the tags are defined in `PersonCard.java`:
+[source,java]
+----
+private static ArrayList<String> colors = new ArrayList<String>(Arrays.asList(
+        "#cc6600", "#cc0000", "#d11141", "#00b159", "#00aedb",
+        "#f37735", "#ffc425", "#a200ff", "#742323", "#757a25", "#237629",
+        "#2c2972", "#732474"));
+
+private static String getColorForTag(String tag) {
+    if (!tagColor.containsKey(tag)) {
+        String chosenColor = colors.get(random.nextInt(colors.size()));
+        tagColor.put(tag, chosenColor);
+    }
+    return tagColor.get(tag);
+}
+----
+
+==== Notes on changing styling:
+* Please refrain from using `!important` because it induces ambiguity and reduces modularity in the codebase
+* Use `ids` instead of `classes` as css selectors.
+* If the new UI Styling is drastically different from the current version, consider putting it in a new file and changing the loaded css to that instead of the current `DarkTheme.css`
+* Do not use `element.setStyle()` unless there is no way using CSS to achieve the same. Using such methods induces difficulty in tracking the source of the styling making it cumbersome to edit later.
+// end::styling[]
+
+
+// tag::eventbook[]
+=== Events and EventBook
+In version 1.4 and above, the application has been expanded to allow not only list of `Residents` but also of `Events`. The rationale behind is to allow the hostel management staff be aware of the events taking place in the hostel and make necessary preparations for the same. This section breifly explains the implementation of `Events` and the `EventBook` at four different levels: `Model` `Logic` `UI` and `Storage`
+
+==== Model
+At the model level, the `Event` class describes the behavior of an `Event` object. It has the following fields:
+
+* `Title`
+* `Location`
+* `Datetime`
+* `Description`
+
+Each of these fields have a class of their own within `seedu/room/model/event` and these classes contain the definitions and validations for each field. For example lets look at a snippet from `Datetime.java`:
+
+[source,java]
+----
+/**
+ * Returns true if a given string is a valid datetime in the format dd/mm/yyyy hhmm k or dd/mm/yyyy hhmm to hhmm.
+ */
+public static boolean isValidDatetime(String test) {
+    String[] components = test.split(" ");
+    String date = components[0];
+    String startTime = components[1];
+
+    //If the format is dd/mm/yyyy hhmm k
+    if (components.length == 3) {
+        String duration = components[2];
+        return isValidDate(date) && isValidTime(startTime) && isValidDuration(duration);
+    //If the format is dd/mm/yyyy hhmm to hhmm
+    } else if (components.length == 4) {
+        String endtime = components[3];
+        return isValidDate(date) && isValidTime(startTime) && isValidTime(endtime);
+    } else {
+        return false;
+    }
+}
+----
+
+This snippet shows how the application checks for invalid an `Datetime` when a user tries to add an event to the EventBook. Note that currently, the current implementation of `Datetime` disallows multi-day Events.
+
+It is important to note that two Event objects are considered equivalent (i.e .equals returns true) if their `Title`, `Location` and `Datetime` are the equivalent irregardless of whether the `Description` is the same or not. This is because a user may try to add an Event again if he/see forgets that it has already been added before. In such a senario, it is very unlikely that the `Description` for both the attempts to add the events will be the same but the `Title`, `Location` and `Datetime` would probably be the same.
+
+If an event is being added to the `EventBook` when an equivalent event already exists, a `DuplicateEventException` will be thrown by the `Model`
+
+
+`EventBook` implements a `ReadOnlyEventBook` and is responsible for maintaining the list of Events for the Logic and UI to query and update. The notable methods defined for `EventBook` are:
+
+* `setEvents(List<? extends ReadOnlyEvent> events)`
+* `resetData(ReadOnlyEventBook newData)`
+* `addEvent(ReadOnlyEvent e)`
+* `updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedReadOnlyEvent)`
+* `removeEvent(ReadOnlyEvent key)`
+* `sortBy(String sortCriteria)`
+* `getEventList()`
+
+Some important things to note about `EventBook`:
+
+* By default, the events are sorted by `Title`
+* Querying for events may throw a `EventNotFoundException` and adding events may throw a `DuplicateEventException`
+
+Possible Future Implementations:
+
+* Implement a better sort for `Events`. Although they can be sorted by * `Title`, `Location`, `Datetime` and `Description`, a user would like to see upcoming events first. So, a possible sort criteria would be `Number of days until the Event`. So, the upcoming events would be at the top of the list and the past ones and others much later in the future would be further down.
+
+
+==== Logic
+At the logic level, there are two commands which allow addition and deletion of events:
+
+* Add Event Command: `addevent` or `ae`
+* Delete Event Command: `deleteevent` or `de`
+
+Both these commands follow the general implementations of an `Undoable Command`. For more details look at their respective sections in the Developer Guide: link:DeveloperGuide.adoc[addEvent] link:DeveloperGuide.adoc[deleteEvent]
+
+==== Storage
+The implementation of EventBook storage follows the ResidentBook storage closely. The main methods defined by the `EventBookStorage` interface are:
+
+* `getEventBookFilePath()`
+* `readEventBook()`
+* `readEventBook(String filePath)`
+* `saveEventBook(ReadOnlyEventBook eventBook)`
+* `saveEventBook(ReadOnlyEventBook eventBook, String filePath)`
+* `backupEventBook(ReadOnlyEventBook eventBook)`
+
+The EventBook is stored in an xml file at `data/eventbook.xml` using a `XmlSerializableEventBook` object. When the application is started, the contents of this xml file are read and passed to the Model. If there is no such file found, sample data is read from `SampleDataUtil` and the xml file is only created if any events are added or deleted from this sample data.
+
+==== UI
+The `EventBook` is displayed to the user as an `EventCard` in an `EventListPanel`. The `EventCard` displays all the necessary information about the event such as the title, date, time, location and description.
+
+To display this data in presentable manner and not clutter the UI of the application, a `TabPane` is used. A `TabPane` allows users to switch between the Residents List and the Events List. To switch between the tabs, a user can either use the `Switch Tab` command or a mouse click on either of the `Tabs`
+
+Possible Future Implementations:
+
+* Remove unnecessary details such as `Description` from the `EventCard`.
+* Allow `EventCards` to be selectable so that when selected, a Panel with all the details about the events is displayed
+* Allow the Calendar to be clickable and selectable so that when a day is selected, the Events for the day are displayed.
+
+// end::eventbook[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting. It supports adding of new contacts and will skip known contacts residing in the resident book.
+
+
 
 === Editing Documentation
 
@@ -427,14 +1413,14 @@ We have two types of tests:
 
 .  *GUI Tests* - These are tests involving the GUI. They include,
 .. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
+.. _Unit tests_ that test the individual components. These are in `seedu.room.ui` package.
 .  *Non-GUI Tests* - These are tests not involving the GUI. They include,
 ..  _Unit tests_ targeting the lowest level methods/classes. +
-e.g. `seedu.address.commons.StringUtilTest`
+e.g. `seedu.room.commons.StringUtilTest`
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
-e.g. `seedu.address.storage.StorageManagerTest`
+e.g. `seedu.room.storage.StorageManagerTest`
 ..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
-e.g. `seedu.address.logic.LogicManagerTest`
+e.g. `seedu.room.logic.LogicManagerTest`
 
 
 === Troubleshooting Testing
@@ -457,14 +1443,14 @@ We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor]
 
 Here are the steps to create a new release.
 
-.  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
+.  Update the version number in link:{repoURL}/src/main/java/seedu/room/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Resident Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -491,10 +1477,10 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 +
 ****
 * Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
+** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/room/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/room/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
+** link:{repoURL}/src/main/java/seedu/room/logic/parser/ResidentBookParser.java[`ResidentBookParser`] is responsible for analyzing command words.
 * Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
+** Modify the switch statement in link:{repoURL}/src/main/java/seedu/room/logic/parser/ResidentBookParser.java[`ResidentBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
 ** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
 ****
 
@@ -504,14 +1490,14 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 [TIP]
 Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the resident book.
 +
 ****
 * Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+** The link:{repoURL}/src/main/java/seedu/room/model/Model.java[`Model`] API needs to be updated.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/room/model/ResidentBook.java[`ResidentBook`] and link:{repoURL}/src/main/java/seedu/room/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/room/model/ResidentBook.java[`ResidentBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/room/model/person/Person.java[`Person`] allows you to update the tags.
 * Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
+** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/room/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
 ** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
@@ -533,13 +1519,13 @@ image::getting-started-ui-tag-after.png[width="300"]
 +
 ****
 * Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/room/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 * Solution
 ** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
 ****
 
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
+. Modify link:{repoURL}/src/main/java/seedu/room/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/room/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
 +
 **Before**
 +
@@ -551,15 +1537,15 @@ image::getting-started-ui-result-after.png[width="200"]
 +
 ****
 * Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
+** link:{repoURL}/src/main/java/seedu/room/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/room/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/room/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
+** Refer to link:{repoURL}/src/main/java/seedu/room/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
 * Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
+** Modify link:{repoURL}/src/main/java/seedu/room/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
+** Modify link:{repoURL}/src/main/java/seedu/room/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
 ** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
+. Modify the link:{repoURL}/src/main/java/seedu/room/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the resident book.
 +
 **Before**
 +
@@ -572,10 +1558,10 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
+** link:{repoURL}/src/main/java/seedu/room/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the resident book is updated.
 * Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
+** Modify the constructor of link:{repoURL}/src/main/java/seedu/room/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
+** Use link:{repoURL}/src/main/java/seedu/room/ui/StatusBarFooter.java[`StatusBarFooter#handleResidentBookChangedEvent(ResidentBookChangedEvent)`] to update the number of persons whenever there are new changes to the residentbook.
 ** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
@@ -585,12 +1571,12 @@ image::getting-started-ui-status-after.png[width="500"]
 [TIP]
 Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
 
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+. Add a new method `backupResidentBook(ReadOnlyResidentBook)`, so that the resident book can be saved in a fixed temporary location.
 +
 ****
 * Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
+** Add the API method in link:{repoURL}/src/main/java/seedu/room/storage/ResidentBookStorage.java[`ResidentBookStorage`] interface.
+** Implement the logic in link:{repoURL}/src/main/java/seedu/room/storage/StorageManager.java[`StorageManager`] class.
 * Solution
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
@@ -617,13 +1603,13 @@ Let's start by teaching the application how to parse a `remark` command. We will
 
 **Main:**
 
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
+. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/room/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
+. Modify link:{repoURL}/src/main/java/seedu/room/logic/parser/ResidentBookParser.java[`ResidentBookParser`] to accept a `RemarkCommand`.
 
 **Tests:**
 
 . Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
+. Add new test method to link:{repoURL}/src/test/java/seedu/room/logic/parser/ResidentBookParserTest.java[`ResidentBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
 
 ===== [Step 2] Logic: Teach the app to accept 'remark' arguments
 Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
@@ -632,33 +1618,33 @@ Let's teach the application to parse arguments that our `remark` command will ac
 
 . Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
 . Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
+. Modify link:{repoURL}/src/main/java/seedu/room/logic/parser/ResidentBookParser.java[`ResidentBookParser`] to use the newly implemented `RemarkCommandParser`.
 
 **Tests:**
 
 . Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
 . Add `RemarkCommandParserTest` that tests different boundary values
 for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
+. Modify link:{repoURL}/src/test/java/seedu/room/logic/parser/ResidentBookParserTest.java[`ResidentBookParserTest`] to test that the correct command is generated according to the user input.
 
 ===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/room/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
 
 **Main:**
 
 . Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
+. Add FXML annotation in link:{repoURL}/src/main/java/seedu/room/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
 
 **Tests:**
 
 . Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
 
 ===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
+We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/room/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
 **Main:**
 
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
+. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/room/model/person/Room.java[`Room`], remove the regex and change the names accordingly).
 . Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
 
 **Tests:**
@@ -666,37 +1652,37 @@ We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/s
 . Add test for `Remark`, to test the `Remark#equals()` method.
 
 ===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
+Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/room/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
 
 **Main:**
 
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
+. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/room/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/room/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
 . You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
+. Modify link:{repoURL}/src/main/java/seedu/room/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `residentBook.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
+We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/room/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
 
 **Main:**
 
 . Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
+. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/room/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
 
 **Tests:**
 
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
+. Fix `validResidentBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
 
 ===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
+Our remark label in link:{repoURL}/src/main/java/seedu/room/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
 
 **Main:**
 
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
+. Modify link:{repoURL}/src/main/java/seedu/room/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
 
 **Tests:**
 
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
+. Modify link:{repoURL}/src/test/java/seedu/room/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
+. In link:{repoURL}/src/test/java/seedu/room/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/room/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/room/ui/PersonCard.java[`PersonCard`].
 
 ===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
 We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
@@ -727,11 +1713,49 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |favourite a contact |it is convenient for me to access
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |know which contact I have not viewed for a specified period of time |delete those obsolete contacts
+
+|`* *` |user |upload pictures for my contact |I can store memories with my friend
+
+|`* *` |user |know the crash report so that when the residentbook crashes |restore backup
+
+|`* *` |user |encrypt selected contacts |avoid people from seeing confidential contact
+
+|`* *` |user |delete contacts by tag |remove them at one go
+
+|`* *` |user |import contacts using another xml file |add more contacts at one go
+
+|`* *` |user |use autocomplete |save typing time
+
+|`* *` |user |search my contacts by tag |make changes according to that single group
+
+|`*` |user |be able to export my residentbook information  |I can import it into another device
+
+|`* *` |user |email a group of contacts by tag |send important information efficiently
+
+|`* *` |user |be able to swap the rooms of the residents |update resident addresses conveniently
+
+|`* *` |user |pin important contacts to the top of the list |remind myself of activities
+
+|`* *` |user |remove a group of contacts using a single tag |remove contacts saved for a common purpose
+
+|`* *` |user |remove a tag that is shared by a group of contacts |update them easily when an event is over
+
+|`*` |user |be able to export my residentbook information |I can import it into another device
+
+|`*` |user |have tag coloring |find the category of contacts I am looking for
+
+|`*` |user with many persons in the resident book |sort persons by name |locate a person easily
+
+|`*` |user |add temporary contacts |don't have to add them permanently into my contact list.
+
+
 |=======================================================================
 
 {More to be added}
@@ -739,7 +1763,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `ResidentBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -747,25 +1771,109 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  ResidentBook shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  ResidentBook deletes the person
 +
 Use case ends.
 
 *Extensions*
 
-[none]
 * 2a. The list is empty.
-+
 Use case ends.
 
 * 3a. The given index is invalid.
+Use case resumes at step 2
+
+** 3a1. ResidentBook shows an error message.
 +
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
+Use case ends
+
+[discrete]
+== Use case: Import storage files
+
+*MSS*
+
+1. User requests to import external XML file
+2. System requests for file location
+3. User provides file location
+4. System loads file and shows success message, along with the updated list
+Use case ends.
+
+*Extensions*
+
+* 1a. System detects there is no file location specified
+
+** 1a1. System outputs message saying that the input location is incorrect
+Use case ends.
+
+* 3a. System detects an invalid file location or finds invalid XML file
+
+** 3a1. System asks for a new file location
+
+** Steps 3 is repeated until a valid file location is entered
+
+Use cases resumes at step 4
+
+* 3b. System detects not enough storage on hard drive
+
+** 3b1. System tells user not enough space on hard drive
+
+Use case ends.
+
+
+[discrete]
+// tag::backupUseCase[]
+== Use case: Backup storage files
+
+*MSS*
+
+1. User requests to backup file
+2. System requests for backup location
+3. User provides backup location
+4. System backups file and shows success message
+Use case ends.
+
+*Extensions*
+
+* 1a. System detects there is no new file to backup
+
+** 1a1. System outputs message saying there is nothing new to backup
+Use case ends.
+
+* 3a. System detects an invalid backup location
+
+** 3a1. System asks for a new backup location
+
+** Steps 3 is repeated until a valid backup location is entered
+
+Use cases resumes at step 4
+
+* 3b. System detects not enough storage on hard drive
+
+** 3b1. System tells user not enough space on hard drive
+
+Use case ends.
+
+// end::backupUseCase[]
+
+[discrete]
+== Use case: View and delete obsolete contacts
+
+*MSS*
+
+1. User requests to view unused contacts beyond a certain time (i.e. contacts not viewed for 3 years or more)
+2. System asks user to input the time period
+3. User input time period
+4. System generates a list of contacts not view for that period or longer
+5. User chooses which contact(s) to delete
+6. System deletes the contact(s)
+
+
+*Extensions*
+
+4a. There are no unused users beyond the time period user input
+Use case ends.
 
 {More to be added}
 
@@ -775,6 +1883,12 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Data files should be supported by previous version of resident book (backward compatibility)
+.  Data files should be portable to another computer with the same process running
+.  Resident book should backup every 30 days to aid disaster recovery
+.  Query in the resident book should be executed promptly
+.  Resident book should not take too much resources for other applications
+
 
 {More to be added}
 

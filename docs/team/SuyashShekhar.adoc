@@ -1,0 +1,219 @@
+= Suyash Shekhar - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Resident Book
+ResidentBook is a newly conceptualised administrative tool catered for staffs handling hostel and college operations. Universities such as NUS, has numerous hostels and colleges. Administrative staff has to handle all the matters regarding check in, check out , and ensuring
+that all Residents have paid for their fees during their stay. However, while the school employs a system with database of Resident details, common administrative staff are unable to read the information due to policies such as PDPA.
+
+Simple day to day operations can be carried out with minimal critical and private data. For example, Residents' NRIC is unnecessary when checking in, as the matriculation card is sufficient in proving his identity.
+
+Also, while the University welcomes exchange students and guests during the semester, some data cannot be found in the school's database if the guests approaches the college or hall directly. The temporary person feature is implemented, where the details will be automatically deleted after the timing specified by the staff.
+The feature also help to prevent storing redundant and unnecessary details in the ResidentBook. Additionally, for exchange students, the staff can easily import and export the details into the current ResidentBook.
+
+Colleges and Halls are famous for their vibrant community life. CCAs, dance classes and interest groups are just some example of weekly events Residents can participate in. Administrators are required to keep a calendar of upcoming events when queries by Professors or Guests who are interested in the events.
+However, with so many events happening every week, it will be hard to keep track without a calendar that shows the overview of events during the month. This also helps administrators in finding clashes of events.
+
+Keeping these in mind, ResidentBook is developed to ease the overhead and trouble of handling hostel or college administration matters. Showing only necessary details such as Room number and Contact number, administrators are able to perform day-to-day operations.
+ResidentBook uses Command line interface (CLI) as the primary source of input. Accompanied with features such as auto-complete, ResidenkBook aim to increase the efficiency and effectiveness of Hostel and College life.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/collated/main/sushinoya.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B1/main/blob/master/collated/test/sushinoya.md[Test code]]
+
+== Commands Added:
+
+=== 1. `Swap Room Command`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=swaproom]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+One of the most common requests that hostel managers face is that to swap rooms with a friend. It is difficult for the managers to accomodate such events because swapping rooms entails other logistics issues that come with swapping rooms. This is made easy in Resident Book where swapping rooms is a simple one line command.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=swaproom]
+
+#End of Extract#
+
+---
+
+
+=== 2. `Sort Command`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+* Sorting the residents by name or room allows the hostel management to efficiently see patterns which would have been difficult to see otherwise.
+* For example, sorting by room allows them to see who is neighbours with whom and hopefully be able to provide a more homogenous mixture of residents across the hostel.
+* Sorting also gives a list which is easy to look through and find residents from.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+
+#End of Extract#
+
+---
+
+
+=== 3. `Add Event Command`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addEvent]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+* A hostel management staff does not only need to account for the residents but also the happenings in the hostel.
+* The `add event` command allows the user to add upcoming events and keep track of them using a GUI-calendar.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addEvent]
+
+#End of Extract#
+
+---
+
+=== 4. `Delete Event Command`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deleteEvent]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+* Naturally, events need more than just adding. Deleting obsolete or cancelled events is important too. This simple `delete event` command does exactly that.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deleteEvent]
+
+#End of Extract#
+
+---
+
+
+=== 5. `Switch Tab Command`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=switchtab]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+* The `switch` command allows switching between the Resident List and the Events List using the CLI.
+* This completely eliminates the need for a mouse/trackpad to use the application since even switching tabs can now be controlled using keyboard commands
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=switchtab]
+
+#End of Extract#
+
+---
+
+
+== UI Enhancements:
+
+=== `Designed and Built UI`
+
+==== Description
+
+* Designed all the mock-ups before and during the project
+* Implemented the entire UI including all the styling and interactivity (except the Calendar)
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=styling]
+
+#End of Extract#
+
+---
+
+== Model and Storage Level Enhancements:
+
+=== `Implemented EventsBook`
+
+==== Description
+
+* Implemented an entirely separate group of classes for storing and maintaining `events`.
+* Also implemented the UI and wrote all the tests for events.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=eventbook]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+* Modified the structure of commands such as `add` to allow flexible arguments.
+* Offered Flexible Add Command implementation (with all accompanying tests) for reuse: https://github.com/nus-cs2103-AY1718S1/forum/issues/126.
+* Wrote several utility methods for tests such as EventsUtil and EventsBuilder. Also, wrote a seeded data in SampleUtilData of 20 events and persons for testing and default boot-up.
+* Set-up basic testing and notification structure for the repository.
+* Contributed major overhauls to the codebase by changing AddressBook to ResidentBook and fixing all the accompanying tests and validations.

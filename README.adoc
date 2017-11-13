@@ -1,27 +1,31 @@
-= Address Book (Level 4)
+= Resident Book
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-https://travis-ci.org/se-edu/addressbook-level4[image:https://travis-ci.org/se-edu/addressbook-level4.svg?branch=master[Build Status]]
-https://ci.appveyor.com/project/damithc/addressbook-level4[image:https://ci.appveyor.com/api/projects/status/3boko2x2vr5cc3w2?svg=true[Build status]]
-https://coveralls.io/github/se-edu/addressbook-level4?branch=master[image:https://coveralls.io/repos/github/se-edu/addressbook-level4/badge.svg?branch=master[Coverage Status]]
-https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_medium=referral&utm_content=se-edu/addressbook-level4&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/fc0b7775cf7f4fdeaf08776f3d8e364a[Codacy Badge]]
+https://travis-ci.org/CS2103AUG2017-F09-B1/main[image:https://travis-ci.org/CS2103AUG2017-F09-B1/main.svg?branch=master[Build Status]]
+https://ci.appveyor.com/project/CS2103AUG2017-F09-B1/main[image:https://ci.appveyor.com/api/projects/status/0n4qfceq2tujddy7/branch/master?svg=true[Build status]]
+https://coveralls.io/github/CS2103AUG2017-F09-B1/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-F09-B1/main/badge.svg?branch=master[Coverage Status]]
+https://www.codacy.com/app/Haozhe321/main?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CS2103AUG2017-F09-B1/main&amp;utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/626b9cc0538e40dba82ab88838923926[Codacy Badge]]
 
 ifdef::env-github[]
-image::docs/images/Ui.png[width="600"]
+image::docs/images/Ui.png[width="900"]
 endif::[]
 
 ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+* This is a desktop Resident Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* Resident Book is a newly conceptualised administrative tool catered for staffs handling hostel and college operations.
+* Administrative staff often face difficulties in collating and gathering information from off-the-shelf software such as Excel, and may miss out important details using a large spreadsheet.
+* Some common features include
+** Events handling mechanism
+** Tags to keep track of exchange/guests stays
+** Temporary contacts for exchange/guests stays
+** Import and backup of data for easier maintenance
+** Typing and GUI available for efficient and effective operations
+** Auto-complete to increase efficiency
+** Calendar so you never lose track of the days
 
 == Site Map
 

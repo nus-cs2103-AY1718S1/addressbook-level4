@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.control.ListView;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.ui.PersonCard;
+import seedu.room.model.person.ReadOnlyPerson;
+import seedu.room.ui.PersonCard;
 
 /**
  * Provides a handle for {@code PersonListPanel} containing the list of {@code PersonCard}.
