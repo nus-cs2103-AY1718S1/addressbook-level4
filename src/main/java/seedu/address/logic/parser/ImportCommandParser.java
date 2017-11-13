@@ -22,8 +22,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     public static final String IMPORT_FILE_DIRECTORY = "./data/import/";
 
     public static final String FILE_NAME_VALIDATION_REGEX = "([a-zA-Z0-9_]+)";
-    public static final String FILE_NAME_CONSTRAINTS = "File name should be an xml file that only contains alphanumeric"
-            + " or underscore characters";
+    public static final String FILE_NAME_CONSTRAINTS = "File should be an xml file with a naming convention that only "
+            + "contains alphanumeric or underscore characters";
 
     public static final String MESSAGE_INVALID_FILE_NAME = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
             ImportCommand.MESSAGE_USAGE) + "\nMore Info: " + FILE_NAME_CONSTRAINTS;
