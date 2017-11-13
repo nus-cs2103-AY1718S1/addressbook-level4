@@ -59,7 +59,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == Enhancement
 
-This section shows existing features implemented in HitMeUp.
+This section shows features that have been implemented in HitMeUp so far.
 
 ====
 * Add a contact using only their name and number, or with any of the following supported fields:
@@ -353,15 +353,15 @@ Allows you to export contacts from HitMeUp into a vCard file.
 Format: `export all` or `export INDEX [INDEX]...`
 
 ****
-* Exports information of all contacts or the contact at the specified INDEX into a vCard file.
-* The input 'all' is case-sensitive.
+* Exports information of all contacts or the contact at the specified `INDEX` into a vCard file.
+* The input `all` is case-sensitive.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 * The data folder directory where the vCard file ("contacts.vcf") is located will be displayed after a successful export as shown below.
 ****
 
 image::ExportDirectory.png[width="790"]
-_Figure 3.12. Data folder directory containing vCard file_
+_Figure 5.12. Data folder directory containing vCard file_
 
 Examples:
 
@@ -387,7 +387,7 @@ Format: `email INDEX [INDEX]...`
 ****
 
 image::EmailWindow.png[width="790"]
-_Figure 3.13. Default mail application in Windows 10_
+_Figure 5.13. Default mail application in Windows 10_
 
 =======
 [TIP]
