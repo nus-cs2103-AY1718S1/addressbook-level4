@@ -5,10 +5,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 https://travis-ci.org/se-edu/addressbook-level4[image:https://travis-ci.org/se-edu/addressbook-level4.svg?branch=master[Build Status]]
 https://coveralls.io/github/CS2103AUG2017-T09-B2/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-T09-B2/main/badge.svg?branch=master[Coverage Status]]
 
-ifdef::env-github[]
-image::docs/images/Ui.png[width="600"]
-endif::[]
-
 ifndef::env-github[]
 image::docs/images/Ui.png[width="600"]
 endif::[]
