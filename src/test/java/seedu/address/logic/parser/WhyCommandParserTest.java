@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.WhyCommand;
 
-//@@ author arnollim
+//@@author arnollim
 /**
  * WhyCommandParserTest tests the validity of the indices provided to WhyCommand
  */
