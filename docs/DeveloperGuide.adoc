@@ -1258,7 +1258,7 @@ Similar to the adding of events, the removing of events is also done through an 
 **Cons:** Uniqueness comparison is not succinct. +
 **Alternative 2:** Include `MemberList` as part of uniqueness test +
 **Pros:** Able to create an `Event` with the the same name, time and duration as long as `MemberList` elements are different. +
-**Cons:** Uniquenwss comparison is too lenient and syncing process may be unnecessarily complicated +
+**Cons:** Uniqueness comparison is too lenient and syncing process may be unnecessarily complicated +
 
 // end::schedule[]
 
