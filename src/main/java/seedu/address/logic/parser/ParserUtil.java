@@ -56,22 +56,22 @@ public class ParserUtil {
     /**
      * Parses  {@code oneBasedIndexes} into {@code numbers} and return it. The whitespace will be deleted.
      *
-     * @throws IllegalValueException if the specified index is invalid.
+     * @throws IllegalValueException if one of the specified index is invalid.
      */
     public static ArrayList<Index> parseIndexes(String oneBasedIndexes) throws IllegalValueException {
         String[] ns = oneBasedIndexes.trim().split(" ");
         ArrayList<Index> numbers = new ArrayList<>();
-        boolean allvalid = true;
+        boolean isValid = true;
         for (String a : ns) {
             String s = a.trim();
             if (StringUtil.isNonZeroUnsignedInteger(s)) {
                 numbers.add(Index.fromOneBased(Integer.parseInt(s)));
             } else {
-                allvalid = false;
+                isValid = false;
 
             }
         }
-        if (!allvalid) {
+        if (!isValid) {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return numbers;
