@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +27,7 @@ public class DeleteByIndexCommand extends DeleteCommand {
      */
     private Collection<ReadOnlyPerson> mapPersonsToIndexes(Collection<Index> indexes) throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        HashSet<ReadOnlyPerson> personSet = new HashSet<>();
+        ArrayList<ReadOnlyPerson> personSet = new ArrayList<>();
         for (Index index : indexes) {
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

@@ -10,7 +10,10 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -42,12 +45,51 @@ public class DeleteByIndexCommandTest {
         assertCommandSuccess(deleteByIndexCommand, model, expectedMessage, expectedModel);
     }
 
+    //@@author sarahnzx
+    @Test
+    public void execute_multipleValidIndicesUnfilteredList_success() throws Exception {
+        ReadOnlyPerson personToDelete = null;
+        String people = "";
+        List<Index> indexList = new ArrayList<>();
+
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        for (int i = 0; i < 3; i++) {
+            Index indexToDelete = Index.fromZeroBased(i);
+            personToDelete = model.getFilteredPersonList().get(indexToDelete.getZeroBased());
+            expectedModel.deletePerson(personToDelete);
+            people += "\n" + personToDelete.toString();
+            indexList.add(indexToDelete);
+        }
+
+        DeleteByIndexCommand deleteByIndexCommand = prepareCommand(indexList);
+        String expectedMessage = String.format(deleteByIndexCommand.MESSAGE_DELETE_PERSON_SUCCESS, people);
+        assertCommandSuccess(deleteByIndexCommand, model, expectedMessage, expectedModel);
+    }
+    //@@author
+
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         DeleteByIndexCommand deleteByIndexCommand = prepareCommand(outOfBoundIndex);
         assertCommandFailure(deleteByIndexCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
+
+    //@@author sarahnzx
+    @Test
+    public void execute_multipleIndicesWithInvalidIndexUnfilteredList_throwsCommandException() throws Exception {
+        List<Index> indexList = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Index index = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+            indexList.add(index);
+        }
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        indexList.add(outOfBoundIndex);
+        DeleteByIndexCommand deleteByIndexCommand = prepareCommand(indexList);
+        assertCommandFailure(deleteByIndexCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+    //@@author
 
     @Test
     public void execute_validIndexFilteredList_success() throws Exception {
@@ -108,6 +150,14 @@ public class DeleteByIndexCommandTest {
         deleteByIndexCommand.setData(model, getDummyStorage(), new CommandHistory(), new UndoRedoStack());
         return deleteByIndexCommand;
     }
+
+    //@@author sarahnzx
+    private DeleteByIndexCommand prepareCommand(Collection<Index> indexes) {
+        DeleteByIndexCommand deleteByIndexCommand = new DeleteByIndexCommand(indexes);
+        deleteByIndexCommand.setData(model, getDummyStorage(), new CommandHistory(), new UndoRedoStack());
+        return deleteByIndexCommand;
+    }
+    //@@author
 
     /**
      * Updates {@code model}'s filtered list to show no one.
