@@ -12,7 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Vivek
 image::viveklakshmanan.png[width="150", align="left"]
-{empty}[https://github.com/vivekscl[github]] [<<vivekscl#, portfolio>>]
+{empty}[https://github.com/vivekscl[github]] [https://cs2103aug2017-w13-b1.github.io/main/team/vivekscl.html[portfolio]]
 
 Role: Scheduling and Tasking +
 Responsibilities: Ensures that team is on track with completing the current week's milestones. Also in charge
