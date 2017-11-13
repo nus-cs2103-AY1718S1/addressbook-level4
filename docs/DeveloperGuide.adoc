@@ -545,12 +545,7 @@ the address book storage and then displayed on `PersonListPanel` on the GUI.
 Sorts and the lists everyone in the address book based on decreasing number of searches.
 
 ==== Implementation
-
-When the command is called, the user input is parsed as shown in the sequence diagram below.
-
-image::SDforSearchPerson.png[width="800"]
-
-Each successful `Find` command execution with non-zero search results, activates an update of search count for everyone in search results.+
+Each successful `Search` command execution with non-zero search results, activates an update of search count for everyone in search results.+
 [source,java]
 ----
 if (searchResultsCount != NO_RESULTS) {
@@ -590,7 +585,7 @@ the address book storage and then displayed on `PersonListPanel` on the GUI.
 
 **Aspect:** Persistent sort +
 **Alternative 1(current choice):** Persistent sort (Sort persons, by modifying `addressbook.xml`) +
-**Pros:** Reduces need for repeated sorting & speed up `find` command +
+**Pros:** Reduces need for repeated sorting & speed up `search` command +
 **Cons:** Unnecessary operations on storage `addressbook.xml` +
 **Alternative 2:** Non-persistent sort (Sort persons in a temporary list) +
 **Pros:** Reduce operations on storage file, `Addressbook.xml` +
@@ -712,6 +707,10 @@ Otherwise, users will be notified that specified tags are not used in address bo
 The feature is more powerful and useful than find which only searches by name.
 
 ==== Implementation
+
+When the command is called, the user input is parsed as shown in the sequence diagram below.
+
+image::SDforSearchPerson.png[width="800"]
 
 The search command checks the keyword(s) given by the user against any parameters contained in the selected person
 [source,java]
