@@ -14,7 +14,7 @@ import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
 
 //@@author deep4k
 /**
- * Command to create aliases
+ * Command to create an alias command
  */
 public class AliasCommand extends UndoableCommand {
 

@@ -18,6 +18,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author deep4k
+
 /**
  * Changes the remark of an existing person in the address book.
  */
@@ -41,6 +42,8 @@ public class RemarkCommand extends UndoableCommand {
     private final Remark remark;
 
     /**
+     * Constructor for a remark command
+     *
      * @param index  of the person in the filtered person list to edit the remark
      * @param remark of the person
      */
@@ -78,8 +81,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-     * @param personToEdit
-     * @return
+     * Returns the result message of the remark command made to {@code PersonToEdit}
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!remark.value.isEmpty()) {
