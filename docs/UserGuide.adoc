@@ -42,8 +42,10 @@ If you are missing Java 8, you may download it for free [http://www.oracle.com/t
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
+
 +
 image::Ui.png[width="790"]
+
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -302,18 +304,21 @@ Sorts the people with `owesMoney` tag based on their emails in descending order.
 [NOTE]
 theme feature available since v1.4.
 
-Change the theme of Rubrika to the theme specified.
-Format: theme KEYWORD
+Change the theme of Rubrika to the theme specified. +
+Format: `theme` `KEYWORD`
 
 ****
 * The command is case sensitive. e.g `darktheme` is different from `DarkTheme`.
 * The respective `.css` file must be added into resources before the function can work.
 ****
 
+Currently available themes are:
+
 ****
-* Currently available themes are:
-* DarkTheme
-* RedTheme
+* DarkTheme +
+image::darktheme.png[width="700"]
+* RedTheme +
+image::redtheme.png[width="700"]
 ****
 Examples:
 

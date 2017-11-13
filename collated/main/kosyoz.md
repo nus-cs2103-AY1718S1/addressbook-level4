@@ -34,19 +34,20 @@ public class ChangeThemeCommand extends Command {
     public static final String COMMAND_USAGE = COMMAND_WORD + " ";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Change the theme of the App. "
-            + "Parameters: ";
+            + "Parameters: [Name of Stylesheet]";
     public static final String MESSAGE_SUCCESS = "Theme Changed to ";
 
     private final String theme;
 
-    public ChangeThemeCommand( String theme)
-    {
+    public ChangeThemeCommand(String theme) {
         this.theme = theme;
     }
     @Override
-    public CommandResult execute()
-    {
+    public CommandResult execute() throws CommandException {
         EventsCenter.getInstance().post(new ChangeThemeEvent(theme));
+        if (theme.equals("")) {
+            throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS + theme));
     }
 
@@ -198,9 +199,21 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
      */
     public ChangeThemeCommand parse(String userInput) throws ParseException {
         String trimmedArgs = userInput.trim();
+        String filepath = "C:\\repos\\addressbook-level4\\src\\main\\resources\\view\\" +  trimmedArgs + ".css";
+        File check = new File("C:/repos/addressbook-level4/src/main/resources/view/" + trimmedArgs + ".css");
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
+        }
+        if (!check.exists()) {
+            throw new ParseException(String.format(MESSAGE_THEME_NOT_FOUND));
+        }
+        try {
+            if (!check.getCanonicalPath().equals(filepath)) {
+                throw new ParseException(String.format(MESSAGE_THEME_NOT_FOUND));
+            }
+        } catch (java.io.IOException ioe) {
+            throw new ParseException(String.format(MESSAGE_THEME_NOT_FOUND));
         }
         return new ChangeThemeCommand(trimmedArgs);
     }

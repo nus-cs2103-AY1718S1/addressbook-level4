@@ -688,7 +688,9 @@ If the file defined by the user uses a vCard (.vcf) file extension, then the add
 // tag::findtag[]
 === FindTag Function
 
-The find tag function is done by the `TagsContainsKeywordsPredicate` class which lies under `Model`.`TagsContainsKeywordsPredicate` will iterate through each person and returns true for the person that has the tags similar to the keywords.
+The find tag function is done by the `TagsContainsKeywordsPredicate` class which lies under `Model`.
+
+`TagsContainsKeywordsPredicate` will iterate through each person and returns true for the person that has the tags similar to the keywords.
 
 In the method `execute()` under `FindTagCommand`, the predicate is then used to update the filtered list when it is parsed into the method `updateFilteredPersonList(Predicate)` which belongs to the `Model` class.
 
@@ -727,9 +729,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 // tag::theme[]
 === Theme Function
 
-The Theme Function is done by Calling `ChangeThemeCommand` that take in a `String` that specify the type of theme the user want to change to.
+The `theme` Function is done by Calling `ChangeThemeCommand` that take in a `String` that specify the type of theme the user want to change to.
 
-'ChangeThemeEvent` is then executed which triggers `handleChangeTheme` in `MainWindow`.
+`ChangeThemeEvent` is then executed which triggers `handleChangeTheme` in `MainWindow`.
 
 `handleChangeTheme` check remove all Stylesheets that are not the one specified by the user and add the Stylesheet user specified.
 
