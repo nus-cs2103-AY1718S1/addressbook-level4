@@ -1,6 +1,12 @@
 = The Classroom - Test Script
 
-To start testing, replace addressbook.xml in the data folder with SampleData.xml after renaming.
+== Setting up for tests
+
+. Download the jar file, `[T09-B4][The Classroom].jar` from IVLE.
+. Create a new folder `data` in the directory where the jar file is located.
+. Download the Sample Data, `[T09-B4][The Classroom]SampleData.xml` file into the `data` folder.
+. Rename the Sample Data file to `addressbook.xml`.
+. Run the jar file and begin with the tests.
 
 == Contact-related features
 
