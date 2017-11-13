@@ -5,6 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE;
 import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_2;
 import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_3;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_4;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_5;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_6;
 import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_NO_ADDRESS;
 import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_NO_DOB;
 import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_NO_EMAIL;
@@ -197,8 +200,11 @@ public class Person implements ReadOnlyPerson {
         DateOfBirth dob = this.getDateOfBirth();
 
         Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(3);
-
+        int randomInt = randomGenerator.nextInt(6);
+        /**
+         * There are 6 easter egg messages that can be returned as feedback to the user. Which message is returned is
+         * randomly generated as decided by randomInt.
+         */
         if (randomInt == 0) {
 
             if (address.toString() == "") {
@@ -216,13 +222,18 @@ public class Person implements ReadOnlyPerson {
             }
 
         } else if (randomInt == 2) {
-
             if (email.value == "") {
                 this.reason = String.format(SHOWING_WHY_MESSAGE_NO_EMAIL, name);
             } else {
                 this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
             }
 
+        } else if (randomInt == 3) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_4, name);
+        } else if (randomInt == 4) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_5, name);
+        } else if (randomInt == 5) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_6, name);
         }
         return reason;
     }

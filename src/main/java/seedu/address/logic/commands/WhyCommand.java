@@ -25,6 +25,9 @@ public class WhyCommand extends Command {
     public static final String SHOWING_WHY_MESSAGE = "Because %1$s lives in %2$s";
     public static final String SHOWING_WHY_MESSAGE_2 = "Because %1$s is born in %2$s";
     public static final String SHOWING_WHY_MESSAGE_3 = "Because %1$s's email is %2$s";
+    public static final String SHOWING_WHY_MESSAGE_4 = "Because %1$s appreciates you";
+    public static final String SHOWING_WHY_MESSAGE_5 = "Because %1$s is a really cool person";
+    public static final String SHOWING_WHY_MESSAGE_6 = "Because %1$s can make the world a better place";
     public static final String SHOWING_WHY_MESSAGE_NO_ADDRESS = "Because %1$s has no address";
     public static final String SHOWING_WHY_MESSAGE_NO_DOB = "Because %1$s has no date of birth";
     public static final String SHOWING_WHY_MESSAGE_NO_EMAIL = "Because %1$s has no email";
