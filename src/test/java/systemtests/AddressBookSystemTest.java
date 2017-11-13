@@ -194,7 +194,7 @@ public abstract class AddressBookSystemTest {
         if (expectedUrl.equals(getBrowserPanel().getLoadedUrl())) {
             assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
         } else {
-            assertTrue(expectedUrl.toString().contains("https://ipv4.google.com/sorry/"));
+            assertTrue(getBrowserPanel().getLoadedUrl().toString().contains("https://ipv4.google.com/sorry/"));
         }
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
