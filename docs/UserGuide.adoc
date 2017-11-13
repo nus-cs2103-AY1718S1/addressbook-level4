@@ -216,13 +216,10 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous specified number of _undoable_ commands +
-were executed. If the number of stated is more than the available commands to undo, all the +
-_undoable_ commands will be undone. If no number is specified, only the most recent command will be undone. +
-Format: `undo 1` or `undo`
+Restores the address book to the state before the previous _undoable_ command was executed. +
+Format: `undo`
 
 [NOTE]
 ====
@@ -231,14 +228,9 @@ Undoable commands: those commands that modify the address book's content (`add`,
 
 Examples:
 
-* `fav 3` +
-`delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
 * `delete 1` +
 `list` +
-`undo 1` (reverses the `delete 1` command) +
+`undo` (reverses the `delete 1` command) +
 
 * `select 1` +
 `list` +
@@ -247,7 +239,31 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo 2` (reverses the `clear` command, followed by `delete 1` command) +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+
+=== Redoing the previously undone command : `redo`
+
+Reverses the most recent `undo` command. +
+Format: `redo`
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`redo` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`redo` (reapplies the `clear` command) +
+// end::undoredo[]
 
 === Redoing the previously undone command : `redo`
 
@@ -277,8 +293,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `clear` +
 `undo 2` (reverses the `clear` command, followed by the `delete 1` command) +
 `redo 2` (reapplies the `delete 1` command, followed by `clear` command) +
-
-// end::undoredo[]
 
 === Clearing all entries : `clear`
 
@@ -365,11 +379,11 @@ Format: `unlock PASSWORD`
 === Favouriting a person : `favourite`
 
 Favourites the person identified by the index number used in the last person listing. +
-If person identified is already a favourite, the person is no longer a favourite.
+If person identified by the index is already a favourite, the person will be removed from your favourites and shifted below your list of favourite contacts.
 Format: `favourite INDEX`
 
 ****
-* Changes the font colour of the person's name at the specified `INDEX` to red.
+* Adds a star beside the contact identified by the index.
 * Shifts the person up to the top of the list.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
@@ -388,6 +402,14 @@ Favourites the 1st person in the results of the `find` command.
 Favourites the 1st person in the address book. +
 `favourite 1` +
 Unfavourite the 1st person in the address book.
+
+Tips
+
+****
+* If you already have some favourite contacts, the next favourite contact will be added below them.
+* You can use the favourite command together with the todo command so that you do not miss out on any tasks assigned.
+* Using the sort command will still place your favourite contacts at the top of your contact list, but your favourite contacts will be sorted as a separate list.
+****
 
 // tag::export[]
 === Exporting address book : `export`
@@ -458,6 +480,76 @@ Switch between Todo list and browser. +
 Format: `switch NUMBER`  (1 for Todo list, 2 for browser)
 // end::switch[]
 
+// tag::undoredo[]
+=== Undoing previous command : `undo`
+
+Restores the address book to the state before the previous specified number of _undoable_ commands +
+were executed. If the number of stated is more than the available commands to undo, all the +
+_undoable_ commands will be undone. If no number is specified, only the most recent command will be undone. +
+Format: `undo 1` or `undo`
+
+[NOTE]
+====
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+====
+
+Examples:
+
+* `fav 3` +
+`delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command) +
+
+* `delete 1` +
+`list` +
+`undo 1` (reverses the `delete 1` command) +
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo 2` (reverses the `clear` command, followed by `delete 1` command) +
+
+Tips
+
+****
+* You can undo all commands by keying in a ridiculously large index eg. `undo 1000`
+****
+
+=== Redoing the previously undone command : `redo`
+
+Reverses the N most recent `undo` commands, where N refers to the number entered. If the number entered is greater than +
+the number of `undo` commands, all the `undo` commands will be reversed. If no number is given, only the most recent `undo` +
+command will be reversed.
+
+Format: `redo 2`
+
+Examples:
+
+* `favourite 3` +
+`delete 1` +
+`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `favourite 3` command) +
+`redo` (reapplies the `favourite 3` command) +
+
+* `delete 1` +
+`undo 1` +
+`redo 1` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`redo` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo 2` (reverses the `clear` command, followed by the `delete 1` command) +
+`redo 2` (reapplies the `delete 1` command, followed by `clear` command) +
+
+// end::undoredo[]
+
 == Coming in v2.0
 
 === Popup dialog window during editing
@@ -495,8 +587,8 @@ e.g.`select 2`
 * *Sort* : `sort OPTION` +
 e.g. `sort -n`
 * *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+* *Undo* : `undo` or `undo 2`
+* *Redo* : `redo` or `redo 2`
 * *Lock* : `lock PASSWORD`
 * *Todo* : `todo INDEX -a f/dd-MM-yyyy HH:mm [t/dd-MM-yyyy HH:mm] d/TASK_TO_DO` or +
 `todo INDEX1 -d  INDEX2` or +
