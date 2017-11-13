@@ -622,7 +622,7 @@ reduce the duplication of code, hence the program can be more succinct. +
 // end::additionalPhoneList[]
 
 
-// tag:: weatherReport[]
+// tag::weatherReport[]
 === Weather Forecast Display Mechanism
 
 ==== Motivation
@@ -660,7 +660,7 @@ is simply no internet connection.
 **Pros:** More detailed report available. +
 **Cons:** Inconvenient and slow.
 
-// end:: weatherReport[]
+// end::weatherReport[]
 
 == Documentation
 We use asciidoc for writing documentation.

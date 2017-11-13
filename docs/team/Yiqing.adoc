@@ -19,11 +19,6 @@ The user interacts with this application using a CLI, and it has a GUI created w
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
-
-include::../UserGuide.adoc[tag=additionalPhoneList]
-
-#End of Extract#
 
 Before adding any additional phone number, the `personalInformationPanel` will only display the primary phone number.
 See the image below for illustration.
@@ -109,53 +104,31 @@ include::../DeveloperGuide.adoc[tag=additionalPhoneList]
 
 #End of Extract#
 
-===== Model
-
-`UniquePhoneList` Classes are created for each person to store the person's additional phone numbers.
-A person has a primary phone number and a list of additional numbers.
-Primary phone number and additional numbers are stored separately.
-Primary number is saved directly as an attribute in Person while additional numbers are save in the `UniquePhoneList`.
-`UniquePhoneList` is a list of `Phone` object. It can be empty if the person does not have additional numbers.
-Primary phone number must not be null.
-
-
-image::UniquePhoneListClassDiagram.JPG[width="800"]
-
-
-===== Logic
-`PhoneCommand` is created to add/remove additional phone numbers.
-
-We support two different formats for a user to call `PhoneCommand`. They can choose to use whichever format that is more convenient for them.
-
-**Format 1: using index of the person** +
-The command will be `updatePhone INDEX [ACTION] [PHONE_NUMBER]`. The `INDEX` here will be the index of the person in the Contact Book.
-`[ACTION]` will be either `add` or `remove`.
-* Example: `updatePhone 1 add 83060774`. As such, the additional phone number will be added to the UniquePhoneList of the first person
-in the Contact Book if it does not cause duplicate phone numbers.
-
-**Format 2: using name of the person** +
-The command will be `updatePhone byName [ACTION] [PHONE_NUMBER] [NAME]`. The `INDEX` here will be the index of the person in the Contact Book.
-`[ACTION]` will be either `add` or `remove`. [NAME] has to be the full name which is saved to the Contact Book before.
-* Example: `updatePhone byName add 83060774 Alex Yeo`. As such, the additional phone number will be added to the UniquePhoneList of Alex Yeo if it does not cause duplicate phone numbers.
-
-We first use `PhoneCommandParser` to parse the input String command and we use two overloaded constructors to construct a `PhoneCommand` object for each format.
-
-For `add`, we will add the phone to the uniquePhoneList and check for duplicate.
-
-For `remove`, we will loop through the uniquePhoneList and remove this phone and check for NoPhoneFoundException.
-
-**Sequence Diagram**
-
-image::PhoneCommandSequenceDiagram.JPG[width="800"]
-
 ---
 
 === Enhancement added: weather forecast window
 
----
-#Start of Extract [from: User Guide]#
+==== External Behavior
 
-include::../UserGuide.adoc[tag=weatherWindow]
+---
+Once open the Contact book, the weather forecast will be shown on the statusBarFooter.
+
+* If there is internet connection to the device, then the weather forecast of the current day will be shown in the format of
+`WEATHER TEMPERATURE DATE LOCATION`. A example is attached below.
+
+image::weatherReport.jpg[width="600"]
+
+* If there is currently no internet connection, then we will show a default message shown as below.
+
+image::weatherNoInternet.jpg[width="500"]
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=weatherReport]
 
 #End of Extract#
 
@@ -164,7 +137,13 @@ include::../UserGuide.adoc[tag=weatherWindow]
 === Other contributions
 
 * Updated the GUI and change the layout(Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/61[#61])
-* Wrote additional tests for phone command
-[https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/test/eeching.md[PhoneCommandTest]]
+* show the `total number of person(s)` on the `statusBarFooter` as illustrated below (Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/78[#78])
+
+image::totalPerson.jpg[width="500"]
+
+* Wrote additional tests for PhoneCommand, PhoneCommandParser, UniquePhoneList
+(Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/53[#53])
+(Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/109[#109])
+(Pull requests https://github.com/CS2103AUG2017-T14-B1/main/pull/117[#117])
 
 
