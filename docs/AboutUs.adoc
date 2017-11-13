@@ -32,6 +32,7 @@ Responsibilities: UI
 
 === Valensia Sebastiani
 image::valensia0711.png[width="150", align="left"]
+{empty}[<<Valensia#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Storage
