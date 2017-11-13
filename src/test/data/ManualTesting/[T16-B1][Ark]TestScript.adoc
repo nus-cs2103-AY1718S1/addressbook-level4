@@ -24,11 +24,22 @@ deliveries. This test script is used help testers perform manual testing of Ark.
 
 == Features to Test
 
-
-
-=== Startup Test
-
+== Startup Tests
 We have implemented some features that triggered automatically on startup.
+
+=== Startup Overdue Parcels Popup Window
+A popup window notifying you of OVERDUE parcels will appear if there are OVERDUE parcels in the parcel list.
+
+==== Manual Testing
+
+*Description:* On startup, if there are any parcels found with the OVERDUE status in the uncompleted parcel list
+it will cause a popup window notifying the user of the number of OVERDUE parcels. +
+*Input:* - +
+*Expected output:* A popup window with the title of "Important" will appear over the main window of the Ark application.
+The content header will read "Overdue Parcels" and the content text will show
+"You have parcels whose status are overdue\n Number of overdue parcels: 5"
+
+=== Startup Backup
 
 ==== Manual Testing
 
