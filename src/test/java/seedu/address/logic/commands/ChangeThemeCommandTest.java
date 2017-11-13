@@ -22,7 +22,7 @@ public class ChangeThemeCommandTest {
     }
     @Test
     public void execute_invalidTheme_failure() {
-        assertExecutionFailure("" , "Invalid command format!");
+        assertExecutionFailure("" , "Invalid command format! \n%1$s");
     }
     /**
      * Executes a {@code ChangeThemeCommand} with the given {@code theme}, and checks that {@code ChangeThemeEvent}
