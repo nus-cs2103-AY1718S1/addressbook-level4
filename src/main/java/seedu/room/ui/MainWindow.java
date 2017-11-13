@@ -298,7 +298,7 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if(event.getTargetIndex() == 0) {
             calandarBoxPanel.getCalendarBox().previousMonth();
-        } else {
+        } else if (event.getTargetIndex() == 1){
             calandarBoxPanel.getCalendarBox().nextMonth();
         }
     }
