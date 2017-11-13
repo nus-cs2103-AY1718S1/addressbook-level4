@@ -1455,7 +1455,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |security-concerned debt collector |view my last login time |ensure that no one else is using my account
 
-|`* *` |security-concerned debt collector |have link:#2FA[2-FA] authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
+|`* *` |security-concerned debt collector |have link:#2-FA[2-FA] authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
 
 |`* *` |multi-device user |be able to export my contacts in another format (e.g xml, vcf) |store my contacts in another device
 
@@ -1637,7 +1637,7 @@ Use case ends.
 |===
 |Term |Definition
 
-|[[2-FA]]2FA
+|[[2-FA]]2-FA
 |An extra layer of security that is known as "multi factor authentication" that requires not only a password and username but also a token
 
 |[[ban]]Ban
