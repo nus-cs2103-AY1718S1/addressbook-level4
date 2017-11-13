@@ -20,7 +20,8 @@ endif::[]
 . Rename the `[W15-B3][ConnectUs]SampleData.xml` to `addressbook.xml` and place it inside the `data` folder.
 . Double click on the `[W15-B3][ConnectUs].jar` file to start our application.
 
-=== Results
+****
+*Results:*
 
 * In the *left most* column of our application, there should be 20 contact details appearing with indices from 1 to 20.
 * In the *middle* column there should be an empty form with the following fields:
@@ -37,15 +38,21 @@ endif::[]
     ** Call
     ** Share
 
-== Help
+****
 
+== Things to take note before starting the test
+. Ensure that your computer has an `internet connection`.
+. Ensure that you have a `QR Reader` mobile application installed in your phone.
+
+== Help
 . Type `help` on the command line on the top of our application with a blinking text cursor.
 . Click on the `Help` tab on the top left corner of our application and select the `Help` function.
 
-=== Results
+****
+*Results:*
 
 * Our user guide should pop up.
-
+****
 
 == Add a person
 
