@@ -14,6 +14,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,9 +30,15 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String remark;
+    @XmlElement(required = true)
+    private Integer id;
 
     @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    private List<XmlAdaptedTag> tagged;
+
+
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -50,6 +57,8 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        remark = source.getRemark().value;
+        id = source.getId();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -66,11 +75,15 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+        final Remark remark = new Remark(this.remark == null ? "" : this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+
+        final Integer id = new Integer(this.id);
+        return new Person(name, phone, email, address, remark, tags, id);
     }
 }

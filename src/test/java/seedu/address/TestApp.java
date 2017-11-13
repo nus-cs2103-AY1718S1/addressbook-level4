@@ -15,9 +15,12 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyTaskBook;
+import seedu.address.model.TaskBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.storage.XmlSerializableTaskBook;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
 
@@ -28,27 +31,42 @@ import systemtests.ModelHelper;
 public class TestApp extends MainApp {
 
     public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
+    public static final String SAVE_LOCATION_FOR_TASK_BOOK_TESTING =
+            TestUtil.getFilePathInSandboxFolder("sampleTaskData.xml");
     public static final String APP_TITLE = "Test App";
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String ADDRESS_BOOK_NAME = "Test";
     protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
+    protected Supplier<ReadOnlyTaskBook> initialTaskDataSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
+    protected String saveTaskFileLocation = SAVE_LOCATION_FOR_TASK_BOOK_TESTING;
 
     public TestApp() {
     }
 
-    public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier, String saveFileLocation) {
+    public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier,
+                   Supplier<ReadOnlyTaskBook> initialTaskDataSupplier, String saveFileLocation,
+                   String saveTaskFileLocation) {
         super();
         this.initialDataSupplier = initialDataSupplier;
+        this.initialTaskDataSupplier = initialTaskDataSupplier;
         this.saveFileLocation = saveFileLocation;
+        this.saveTaskFileLocation = saveTaskFileLocation;
 
         // If some initial local data has been provided, write those to the file
         if (initialDataSupplier.get() != null) {
             createDataFileWithData(new XmlSerializableAddressBook(this.initialDataSupplier.get()),
                     this.saveFileLocation);
         }
+
+        // initial data provided for taskBook will also be written to the file
+        if (initialTaskDataSupplier.get() != null) {
+            createDataFileWithData(new XmlSerializableTaskBook(this.initialTaskDataSupplier.get()),
+                    this.saveTaskFileLocation);
+        }
+
     }
 
     @Override
@@ -84,6 +102,19 @@ public class TestApp extends MainApp {
     }
 
     /**
+     * Returns a defensive copy of the task book data stored inside the storage file.
+     */
+    public TaskBook readStorageTaskBook() {
+        try {
+            return new TaskBook(storage.readTaskBook().get());
+        } catch (DataConversionException dce) {
+            throw new AssertionError("Data is not in the TaskBook format.");
+        } catch (IOException ioe) {
+            throw new AssertionError("Storage file cannot be found.");
+        }
+    }
+
+    /**
      * Returns the file path of the storage file.
      */
     public String getStorageSaveLocation() {
@@ -91,11 +122,19 @@ public class TestApp extends MainApp {
     }
 
     /**
+     * Returns the file path of the storage file for task book.
+     */
+    public String getTaskStorageSaveLocation() {
+        return storage.getTaskBookFilePath();
+    }
+
+    /**
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
+        Model copy = new ModelManager((model.getAddressBook()), model.getTaskBook(), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
+        ModelHelper.setFilteredTaskList(copy, model.getFilteredTaskList());
         return copy;
     }
 

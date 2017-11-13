@@ -29,10 +29,10 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/www.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final int MIN_WIDTH = 650;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -42,6 +42,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private TaskListPanel taskListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -56,6 +57,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane taskListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -135,11 +139,15 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        taskListPanel = new TaskListPanel(logic.getSortedTaskList());
+        taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
     }
 
     void hide() {
@@ -206,6 +214,10 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
+    }
+
+    public TaskListPanel getTaskListPanel () {
+        return this.taskListPanel;
     }
 
     void releaseResources() {

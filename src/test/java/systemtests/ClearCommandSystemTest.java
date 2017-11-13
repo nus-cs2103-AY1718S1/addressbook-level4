@@ -5,12 +5,17 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
+import seedu.address.TestApp;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalTasks;
 
 public class ClearCommandSystemTest extends AddressBookSystemTest {
 
@@ -65,7 +70,11 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command) {
-        assertCommandSuccess(command, ClearCommand.MESSAGE_SUCCESS, new ModelManager());
+        TestApp testApp = new TestApp(TypicalPersons::getTypicalAddressBook,
+                TypicalTasks::getTypicalTaskbook,
+                TestApp.SAVE_LOCATION_FOR_TESTING, TestApp.SAVE_LOCATION_FOR_TASK_BOOK_TESTING);
+        assertCommandSuccess(command, ClearCommand.MESSAGE_SUCCESS,
+                        new ModelManager(new AddressBook(), TypicalTasks.getTypicalTaskbook(), new UserPrefs()));
     }
 
     /**

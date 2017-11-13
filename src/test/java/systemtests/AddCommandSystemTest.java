@@ -224,12 +224,14 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }
+
 
     /**
      * Executes {@code command} and verifies that the command box displays {@code command}, the result display

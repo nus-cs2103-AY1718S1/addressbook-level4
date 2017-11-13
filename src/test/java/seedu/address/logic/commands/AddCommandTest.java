@@ -14,16 +14,23 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyTaskBook;
+import seedu.address.model.TaskBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -102,7 +109,15 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addTask(ReadOnlyTask task) throws DuplicateTaskException { }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetData(ReadOnlyTaskBook newData) {
             fail("This method should not be called.");
         }
 
@@ -113,7 +128,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public ReadOnlyTaskBook getTaskBook() {
+            fail("This method should not be called");
+            return null;
+        }
+
+        @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
             fail("This method should not be called.");
         }
 
@@ -124,7 +150,39 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
+                throws DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateTaskPriority(ReadOnlyTask target, Integer value) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void markTask(ReadOnlyTask task) throws TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyTask> getFilteredTaskList() {
+            return null;
+        }
+
+        @Override
+        public SortedList<ReadOnlyTask> getSortedTaskList() {
             fail("This method should not be called.");
             return null;
         }
@@ -133,6 +191,22 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+
+        }
+
+        @Override
+        public void taskByEnd() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void taskByPriority() {
+            fail("This method should not be called.");
+        }
+
     }
 
     /**
@@ -147,6 +221,11 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        @Override
+        public ReadOnlyTaskBook getTaskBook() {
+            return new TaskBook();
         }
     }
 
@@ -164,6 +243,12 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        //@@author ShaocongDong
+        @Override
+        public ReadOnlyTaskBook getTaskBook() {
+            return new TaskBook();
         }
     }
 

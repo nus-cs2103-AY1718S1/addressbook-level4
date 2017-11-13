@@ -22,18 +22,35 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Remark> remark;
+    private ObjectProperty<Integer> id;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.remark = new SimpleObjectProperty<>(remark);
+        this.id = new SimpleObjectProperty<>(this.hashCode());
+
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags, Integer id) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.remark = new SimpleObjectProperty<>(remark);
+        this.id = new SimpleObjectProperty<>(id);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -42,8 +59,8 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
+                source.getTags(), source.getId());
     }
 
     public void setName(Name name) {
@@ -100,6 +117,30 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Address getAddress() {
         return address.get();
+    }
+
+    public void setRemark(Remark remark) {
+        this.remark.set(requireNonNull(remark));
+    }
+
+    @Override
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
+
+    @Override
+    public Remark getRemark() {
+        return remark.get();
+    }
+
+    @Override
+    public ObjectProperty<Integer> idProperty() {
+        return id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id.get();
     }
 
     /**

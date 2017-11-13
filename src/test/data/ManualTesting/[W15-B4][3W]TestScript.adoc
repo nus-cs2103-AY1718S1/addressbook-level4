@@ -1,0 +1,136 @@
+= Manual Test Script For '[W15-B4][3W]'
+
+== How to load the data files
+As our applcation consists of one address book and one task book, and our separate storage of tasks and contacts, we have put the sample address book xml file and task book xml file inside the same folder named `[W15-B4][3W]SampleData`. +
+
+. Create a new empty folder for conducting this manual testing.
+. Copy or move the sample data folder into the new folder.
+. Put the Jar file into the same folder.
+
+After the above three steps, our app will be able to read and write from the sample data xml files. +
+
+== Layout of the interface
+We try to keep the original interface design. The interface layout design is roughly the same as the addressBook level 4 application. +
+
+. The top most is the `menu bar`.
+. The `foot bar` is at the bottom.
+. The `person panel` is at the left hand side.
+. The `map view panel` is in the middle.
+. The `task panel` is at the right hand side.
+. Type in the command in the command box and execute the command by using `enter` key on the keyboard.
+
+Next, we will start manually testing this application's functionalities by groups.
+
+== Testing the application
+
+In this section, we will go by group. For each command, we will list the full command, the meaning behind and the expected result.
+
+==== Help command
+`help` +
+You can then see the help and user manual for this application. The page shown is the user guide for our application.
+
+=== Managing contacts
+
+==== add command +
+`add n/Jim p/97865734 e/jim@example.com a/311, Clementi Ave 2, 02-41 t/friends` +
+You can see Mr.Jim, who is your friend, is added as the 21st person in the left person panel.
+
+==== find command +
+`find Shaocong/Zhixin/Kongjia/Xiaohan` +
+You can see there are four people listed, all of whom are tagged as teammates. They are the developers for this application.
+
+==== list command +
+`list` +
+You can see the full list with all persons currently in the application.
+
+==== select command +
+`select 1` +
+You can see the first person in the list is selected. In our app, selecting a person will also trigger the map panel in the middle to display the current selected person's address. +
+Inside the map panel, you can use mouse to interact with google map plug in and even get the routing information.
+
+==== edit command +
+`edit 1 p/12344321 e/AlexNew@example.com` +
+You can see the first person Alex's phone number and his email address have been updated.
+
+==== export command +
+`export 1` +
+Exporting a contact can generate an add command ready to be used and shared. You can see a new add command for adding Alex is generated in the response box.
+
+==== remark command +
+`remark 1 r/Very nice guy` +
+Remark helps to distinguish person in the contact list and add customizable description to the remarked person. +
++
+`remark 1` +
+This command clears the remark we added just now.
+
+==== delete command +
+`delete 21` +
+You can see our friend Jim is deleted.
+
+=== Managing tasks
+
+==== addTask command +
+`addTask n/manual testing d/this should be around 20min s/20-11-2017 11:00am f/20-11-2017 11:20am c/3 t/assignment` +
+This command adds a new task to the task list. You can see there's a new task called manual testing being added as the 11th task in the task list.
+
+==== editTask command +
+`editTask 11 s/20-11-2017 10:00am f/20-11-2017 10:20am` +
+This command edit out manual testing task starting from 11am to 10am.
+
+==== exportTask command +
+`exportTask 11` +
+Working similar to export command, this exportTask command will generate an addTask command for future usage and sharing.
+
+==== taskByEnd command +
+`taskByEnd` +
+This command can help us sort the tasks in the tasklist by the end date and time. Now we can see the tasks have already been sorted in the increasing order of the end date and time.
+
+==== taskByPriority command +
+`taskByPriority` +
+This command can help us sort the tasks in the tasklist by the priority values. Now we can see the super important and important tasks went up.
+
+==== setPriority command +
+`setPriority 1 c/1` +
+This command will set the priority of the first task to be `super important`.
+
+==== markTask command +
+`markTask 1` +
+This command mark the first task as complete and make it disappear.
+
+==== listTask command +
+`listTask` +
+This command will help list all the tasks curently in the task list, including the marked tasks, which will be displayed with a small green check mark.
+
+==== clearTask command +
+`clearTask` +
+This command will clear all the tasks in the task list panel.
+
+=== General
+
+==== undo command +
+`undo` +
+Undo commands typically revert back to the accidental changes. In this case, all the tasks have came back to the app.
+
+==== redo command +
+`redo` +
+Redo commands redo the changes that are rolled back by using `undo` command. In this case, the tasks are all gone again.
+ +
+`undo` +
+We get back the tasks for continuing the manual test.
+
+==== link command +
+`link 2 p/2 p/3` +
+Link commands link the person and task. Using the above command, we linked the discussion task with Bernice and Charlotte.
+`link 1 p/3 p/4` +
+We continue to link more tasks with persons.
+
+==== linkedTasks command +
+`linkedTasks 3` +
+This command display the current linked tasks with the third person Charlotte. You can see the dicussion and demo tasks.
+
+==== linkedPersons command +
+`linkedPersons 1` +
+This command display the current linked persons with discussion task, they are Bernice and Charlotte.
+
+== Exit the program
+It's the end of the manual test session and now you can exit the program by using `exit` command.

@@ -28,6 +28,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_INTEGER = "Integer is not a valid format integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -50,6 +51,26 @@ public class ParserUtil {
     public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
+    }
+
+    //@@author yuzu1209
+    /**
+     * Parses a {@code Optional<String> stringOptional} into an optional of the same type
+     * @param stringOptional , the optional passed in
+     * @return optional of String type
+     * @throws IllegalValueException
+     */
+    public static Optional<String> parseString(Optional<String> stringOptional) throws IllegalValueException {
+        requireNonNull(stringOptional);
+        return stringOptional.isPresent() ? Optional.of(stringOptional.get()) : Optional.empty();
+    }
+
+    /**
+     * Parser a {@code Optional<Boolean> complete} into an optional of the same type
+     */
+    public static Optional<Boolean> parseBoolean(Optional<Boolean> complete) throws IllegalValueException {
+        requireNonNull(complete);
+        return Optional.of(complete.get());
     }
 
     /**
@@ -77,6 +98,26 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> integerString} into an {@code Optional<Integer>} if it is present.
+     * See header comment for usage of {@code Optional} parameters.
+     * @param integerString , an optional of String
+     * @return an optional if integer if the optional of String input is present
+     * @throws IllegalValueException
+     */
+    public static Optional<Integer> parseInteger(Optional<String> integerString) throws IllegalValueException {
+        if (!integerString.isPresent()) {
+            return Optional.empty();
+        }
+        String string = integerString.get();
+        string = string.trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(string)) {
+            throw new IllegalValueException(MESSAGE_INVALID_INTEGER);
+        }
+        return integerString.isPresent() ? Optional.of(Integer.parseInt(
+                integerString.get().trim())) : Optional.empty();
     }
 
     /**

@@ -21,8 +21,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+
+    public static final String GOOGLE_DIR_URL_PREFIX = "https://www.google.com.sg/maps/dir//";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -41,9 +41,14 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Loads a person page with his location.
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+        loadPage(GOOGLE_DIR_URL_PREFIX  + person.getAddress().toString().replaceAll(" ", "+")
+                .replaceAll(",", "+")
+                .replaceAll("#", "+")
+                .replaceAll("-", "+"));
     }
 
     public void loadPage(String url) {

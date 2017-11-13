@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= 3W - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,29 +10,46 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W15-B4/tree/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-W15-B4`      Since: `Oct 2017`      Licence: `MIT`
+
+== Introduction
+
+3W stands for "Who, What & Where". It is a desktop application for University students, business people and all those who have a busy daily schedule.
+3W stores information about your contact, your tasks, and easily links different contacts and tasks for cross references.
+3W supports map show for contact address and task venue with a Google map window.
+3W is based on command line to interact.
+Life can be easier with 3W.
+
+This document is the developer guide for this application. In this document, you will learn how to set up the project and the developing environment.
+Following that, you can see the overall design of the application and the design and implementation of each component. The specific instructions and methods to do documentation and testing are also contained in this document.
+In addition, from the appendices, you will see the current user stories, use cases, functional and non-functional requirements, and some special glossaries defined for this document.
+We have a small product survey section for comparison between this application and other similar products.
+Please feel free to contribute to 3W by submitting your pull request to us!
 
 == Setting up
 
 === Prerequisites
+As a developer, if you want to contribute to this open source project, you must do the following to set up the developing environment before getting started.
 
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app is not compatible with earlier versions of Java 8.
 +
 
 . *IntelliJ* IDE
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+Please enable them if they are disabled. +
+Checking plug-ins states by going to `File` > `Settings` > `Plugins`.
 
 
 === Setting up the project in your computer
+After getting JDK and the IntelliJ IDE, you can set up the project by following the steps as follows:
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -43,15 +60,22 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Locate the `build.gradle` file and select it. Click `OK`
 . Click `Open as Project`
 . Click `OK` to accept the default settings
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+. Open a console and run the `gradle` command.
+.. Windows users please use `gradlew processResources`
+.. Mac/Linux users please use  `./gradlew processResources`).
+.. It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
+After finishing the above steps, you can verify your project environment and setups by:
 
 . Run the `seedu.address.MainApp` and try a few commands
-. link:#testing[Run the tests] to ensure they all pass.
+.. Type the command in the command line in the root folder of this application.
+.. Alternatively, you can right click the MainApp in `src` folder and click `run MainApp`.
+. link:#testing[Run the tests] to ensure that they all pass.
 
-=== Configurations to do before writing code
+=== Configuring the application
+If you wish, you can configure the application with style checker and continous integration using Travis and/or AppVeyor.
 
 ==== Configuring the coding style
 
@@ -68,16 +92,17 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103AUG2017-W15-B4/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103AUG2017-W15-B4/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
-
-Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
-
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+
+You can set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+
+Optionally, you can set up AppVeyor as a second CI, and the steps can be found at <<UsingAppVeyor#, UsingAppVeyor.adoc>>.
+
 
 ==== Getting started with coding
 
@@ -87,21 +112,22 @@ When you are ready to start coding,
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
+If you want to have a better understanding of the overall design and the specifications of the implementation of this application, this section can help get your started.
 
 === Architecture
 
+This *_Architecture Diagram_* given below shows the high-level design of the App.
+
 image::Architecture.png[width="600"]
 _Figure 2.1.1 : Architecture Diagram_
-
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* At app launch: Initializing the components in the correct sequence, and connects them up with each other.
+* At shut down: Shutting down the components and invokes cleanup method where necessary.
 
 link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
@@ -110,17 +136,17 @@ link:#common-classes[*`Commons`*] represents a collection of classes used by mul
 
 The rest of the App consists of four components.
 
-* link:#ui-component[*`UI`*] : The UI of the App.
+* link:#ui-component[*`UI`*] : The User Interface of the App.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Commonalities of the four components:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class. The class diagram of the logic component is shown here for your reference.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
@@ -134,7 +160,7 @@ image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+You can see from the diagram how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -144,12 +170,18 @@ _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
-The sections below give more details of each component.
+These are the details of each component.
 
 === UI component
 
+The user interface has a structure that can be demonstrated in the following figure.
+
+// tag::shaocong5[]
+
 image::UiClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
+
+// end::shaocong5[]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -164,6 +196,8 @@ The `UI` component,
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
 === Logic component
+
+The following figure shows how the logic component is structured.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
@@ -186,22 +220,34 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
+The model component has the following structure.
+
+// tag::shaocong3[]
+
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
+
+// end::shaocong3[]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the Address Book data and the Task Book data.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` and another unmodifiable `ObservableList<ReadOnlyTask>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
 
+The storage component interacts with the main application and the hard disk storage file. Its structure is shown below.
+
+// tag::shaocong4[]
+
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
+
+// end::shaocong4[]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -209,10 +255,11 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save the Task Book data in xml format and read it back.
 
 === Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Some classes are used by multiple components. They are in the `seedu.addressbook.commons` package.
 
 == Implementation
 
@@ -225,9 +272,11 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
-image::LogicCommandClassDiagram.png[width="800"]
+`UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern]. +
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+The details are given in this diagram.
+
+image::LogicCommandClassDiagram.png[width="800"]
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -260,12 +309,15 @@ public class DeleteCommand extends UndoableCommand {
 }
 ----
 
-Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
+. Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+. The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book.
+.. The current state of the address book is saved before the `delete 5` command executes.
+. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
+[NOTE]
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
@@ -273,9 +325,10 @@ image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+* The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+* We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`.
+* We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -291,10 +344,13 @@ The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, an
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+The user now decides to execute a new command, `clear`. +
+
+. As before, `clear` will be pushed into the `undoStack`.
+. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command.
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-
+[NOTE]
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
@@ -360,9 +416,106 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+// tag::taskbook[]
+
+=== TaskBook
+We develop this application as a parallel of two similar application, namely addressBook and taskBook. They are similar in many ways, including comman commands like `add` for adding a person and `addTask` for adding a task. +
+
+Adding a taskBook to our application originated from our design requirements. In product v1.0, we have updated developer guide and user guide for a set of new functionalities specially designed for tasks. Thus, we need to add a taskBook to this application.
+
+* The taskBook is a set of parallel functionalities apart from the addressBook.
+* The taskBook is related to addressbook in the sense that we can link the person and task together.
+* taskBook and addressBook has the following independent components: `model`, `logic`, and `storage`.
+* taskBook and addressBook share the same user interface by taking up taskPanel and personPanel respectively.
+
+With the extra taskBook working in parallel, the model interface should be modified in this way:
+[source,java]
+----
+
+ReadOnlyTaskBook getTaskBook();
+
+void addTask(ReadOnlyTask task) throws DuplicateTaskException;
+
+void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
+----
+
+With the updated model interface, the ModelManager and ModelStub should be modified accordingly. +
+
+For storage, we save the tasks into another storage file (xml file), the storage interface should be equipped with the following read and write methods:
+[source,java]
+----
+Optional<ReadOnlyTaskBook> readTaskBook() throws DataConversionException, IOException;
+
+@Override
+void saveTaskBook(ReadOnlyTaskBook addressBook) throws IOException;
+
+@Override
+Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException;
+
+@Override
+void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+
+void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
+
+void handleTaskBookChangedEvent(TaskBookChangedEvent tbce);
+----
+As given in storage and model, the main logic should be implemented this way to take both addressbook and the taskbook's storage during initialization. +
+[source,java]
+----
+UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+userPrefs = initPrefs(userPrefsStorage);
+AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
+TaskBookStorage taskBookStorage = new XmlTaskBookStorage(userPrefs.getTaskBookFilePath());
+storage = new StorageManager(addressBookStorage, userPrefsStorage, taskBookStorage);
+----
+The unit tests stub classes and setUp methods should be updated accordingly. +
+
+==== Design Considerations
+
+**Aspect:** Implementation of `taskBookStorage` +
+**Alternative 1 (current choice):** Create a new xml file and several xml adapted classes for task Book storage +
+**Pros:** We will not create any dependencies between taskBook and addressBook. +
+**Cons:** A lot of code seems very similar and more storage file become hrad to manage. +
+**Alternative 2:** Save the new task to the same storage xml file as addressBook +
+**Pros:** This method of implementation saves the space and it can reuse some of the codes in addressBook. +
+**Cons:** It creates dependency between the storage for both books and it is inefficient to retrieve only one of them from storage xml file.+
+
+---
+**Aspect** Implementation of modelling and logic of `taskBook` +
+**Alternative 1 (current choice):** Rewrite codes for taskBook, keep the original addressbook codes untouched. +
+**Pros:** The original addressBook logic and modelling will not be affected. We keep an independent book from the original. +
+**Cons:** The code reusage is very low and adding a taskBook become very tedious. +
+**Alternative 2:** Modify the original code base to reutiliza some of the common functionalities. +
+**Pros:** The code reusage is good and adding a taskBook becomes more efficient. +
+**Cons:** The dependency is very high between addressBook and taskBook, there is a high tendency to break original logic and modelling. +
+
+// end::taskbook[]
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== Route Planner mechanism
+
+The Route planner is done using the embedded webview component of JavaFX.
+
+==== Design Consideration
+
+**Aspect:** Google Map version +
+**Problem:** We are not using the full version of Google Map. That is because the embedded browser doesn't support the requirement for running full version.
+Thus only the lite version is available. Also, location cannot be retrieved. +
+**solution:** We directly use the google map direction url, and fill in the ending point by the address. User can simply enter his current location.
+
+=== link task to people
+
+**Aspect**: Implementation of `link` +
+**Alternative 1 (current choice):** add indexes to each person and task, store linking people's index in task. +
+**Pros:** don't need additional overhead. +
+**Cons:** linking and searching linked items are inefficient. +
+
+**Alternative 2 :** store the data in relational database, link is a join table. +
+**Pros:** more efficient to do linking and searching linked items. +
+**Cons:** need users have relational database installed. +
 
 == Documentation
 
@@ -393,6 +546,8 @@ Here are the steps to convert the project documentation files to PDF format.
 
 image::chrome_save_as_pdf.png[width="300"]
 _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+
+=== Route Planner mechanism
 
 == Testing
 
@@ -447,7 +602,7 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 === Build Automation
 
-See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+You can see <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
 === Continuous Integration
 
@@ -471,7 +626,7 @@ b. Require developers to download those libraries manually (this creates extra w
 [appendix]
 == Suggested Programming Tasks to Get Started
 
-Suggested path for new programmers:
+Here is a suggested path for new programmers:
 
 1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
 
@@ -727,11 +882,71 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |add a new task |track task that the user is interested
+
+|`* * *` |user |delete a task |untrack task that I no longer interested
+
+|`* * *` |user |mark a task as complete/incomplete |record my progress on doing tasks
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |user |focus on input bar at the start |get rid of the need of using mouse to click the input bar
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |set a task to be recurring |avoid redundant work when adding recurring tasks
+
+|`* *` |user |edit a recurrence of a task |update a task recurrence status whe needed
+
+|`* *` |user |see tasks in certain range of time |focus on upcoming tasks
+
+|`* *` |user |list tasks by date |see tasks by date order
+
+|`* *` |user |list tasks by priority|see tasks by priority order
+
+|`* *` |user |list tasks by tag|see tasks by tag
+
+|`* *` |user with at least one task|view one task details with the relevant person in the addressbook|see the details and get the information of a task and the relevant person
+
+|`* *` |user with at least one person|view one person details with the relevant tasks displayed in the addressbook|see person details and the relevant tasks in the application that are relevant to this person only
+
+|`* *` |user with at least one person|have a map view of the current selected person or himself|see the address of himself or the persons in the addressbook visually
+
+|`* *` |user with at least person|link a task to a person|relate the relevant tasks to the relevant person and organiza tasks with different people better
+
+|`* *` |user |add a general notes or comments to each contact person|record down some critical information about this person
+
+|`* *` |user |list last few contacts the user have found|see the most frequently searched or viewed contact person
+
+|`* *` |user |export contact info as an add command (user can choose whether to disclose the private information about this contact details)|copy and paste for other users to directly add this contact person's information
+
+|`* *` |user |export task details as an add command |copy and paste for other users to directly add this task information
+
+|`* *` |user |pin important contacts or task on top|to keep the important contacts on top of the view list for easier usage
+
+|`* *` |user |reminder region in task bar|see the reminder and be reminded of the deadline or the up comings of this task
+
+|`*` |user |add image to a contact person|see the person more visually with an image
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user|add new tasks with hierarchy |trace the tasks in the future
+
+|`*` |user|edit hierarchy|change the structure or name of the hierarchy
+
+|`*` |user with too many tasks that create conflicts|get error and warnings on event conflicts|to manage task more efficiently without conflicts
+
+|`*` |user|have multiple hot keys available |quickly use this app without using mouse
+
+|`*` |user|auto-completion of commands|easier for user to type command quickly
+
+|`*` |user|smart suggestion of the next part of the commands|easier for user to type command correctly
+
+|`*` |user|trigger & password |make the app more secure with password defence
+
+|`*` |user|customise background wallpaper |for user to have a better background they like
+
+|`*` |user|have a settings manager/config file |make it easier for user to migrate across devices and have some important settings
 |=======================================================================
 
 {More to be added}
@@ -740,6 +955,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+// tag::shaocong1[]
 
 [discrete]
 === Use case: Delete person
@@ -767,6 +984,229 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+
+[discrete]
+=== Use case: list tasks by date
+
+*MSS*
+
+1.  User requests to list tasks by date
+2.  AddressBook shows a list of tasks by date
+3.  User requests to see the tasks by date order
+4.  AddressBook shows the tasks by date
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The task list is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
+** 2a2. AddressBook is empty.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: list tasks by priority order
+
+*MSS*
+
+1.  User requests to list tasks by priority
+2.  AddressBook shows a list of tasks by priority
+3.  User requests to see the tasks by priority order
+4.  AddressBook shows the tasks by priority
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The task list is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
+** 2a2. AddressBook is empty.
++
+Use case resumes at step 2.
+
+Use case ends.
+
+[discrete]
+=== Use case: list tasks by tag
+
+*MSS*
+
+1.  User requests to list tasks by tag
+2.  AddressBook shows a list of tasks by tag
+3.  User requests to see the tasks by tag
+4.  AddressBook shows the tasks by tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The task list is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
+** 2a2. AddressBook is empty.
++
+Use case resumes at step 2.
+
+Use case ends.
+
+
+[discrete]
+=== Use case: Add a new task
+
+*MSS*
+
+1.  User requests to add a task
+2.  AddressBook prompts to ask for task details
+3.  User inputs task details
+4.  AddressBook adds the task
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The details is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit hierarchy
+
+*MSS*
+
+1.  User requests to edit hierarchy
+2.  AddressBook prompts to ask for hierarchy details
+3.  User inputs hierarchy details
+4.  AddressBook update hierarchy
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The details is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: View task details
+
+*MSS*
+
+1.  User requests to list tasks
+2.  AddressBook shows a list of persons
+3.  User requests to see a specific task details
+4.  AddressBook shows the details of a person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+[discrete]
+=== Use case: View task details
+
+*MSS*
+
+1.  User requests to list tasks
+2.  AddressBook shows a list of persons
+3.  User requests to see a specific task details
+4.  AddressBook shows the details of a person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: View task details
+
+*MSS*
+
+1.  User requests to list tasks
+2.  AddressBook shows a list of persons
+3.  User requests to see a specific task details
+4.  AddressBook shows the details of a person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Invalid actions
+
+*MSS*
+
+1.  User requests an invalid action
+2.  AddressBook shows a error message
+3.  AddressBook shows suggestions on fixings of this error or warning occurred
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The error message is hard to understand
++
+[none]
+** 2a1. The user can choose to exit/restart the program
+** 2a2. The user can choose to redo this action
++
+Use case ends.
+
+* 3a. The given suggestion is not a good fix
++
+[none]
+** 3a1. AddressBook opt to redo this action
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -775,8 +1215,15 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to respond and update within 2s per actions
+.  Should give reasonable error messages and warnings
+.  Should try to give suggestions with valid reasons and logic
+.  Should have not very steep learning curve for a regular English-speaking person
+.  Should have detailed tutorials and documentation
 
 {More to be added}
+
+// end::shaocong1[]
 
 [appendix]
 == Glossary
@@ -795,19 +1242,44 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+// tag::shaocong2[]
+
+[[Invalid-action]]
+Invalid-action
+
+....
+An action that will trigger warnings and error messages
+Eg.: Dangerous events, delete and clashing events
+....
+[[Priority]]
+Priority
+
+....
+The importance of a task in the taskBook. Integer values of 1 to 5 are used to represent the priority.
+....
+[NOTE]
+====
+The correspondence between interger value and the priority of the tasks is as follows: 1 (super important), 2 (important), 3 (normal), 4 (trivial), and 5 (super trivial).
+====
+
 [appendix]
 == Product Survey
 
-*Product Name*
+*Trello*
 
-Author: ...
+Author: Dong Shaocong
 
 Pros:
 
-* ...
-* ...
+* Beautiful interfaces.
+* Notes which are easy to be removed, added, edited and moved.
+* Attachments and update history for an event.
+* Sync with different device for same account.
+* Power ups to choose including github and Slack.
 
 Cons:
 
-* ...
-* ...
+* It's not a command line software, and therefore not very friendly for developers and command line lovers
+* Unable to work offline and often clash with not so stable Internet connections
+
+// end::shaocong2[]
