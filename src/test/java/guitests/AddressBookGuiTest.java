@@ -15,7 +15,6 @@ import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
-import guitests.guihandles.StatusBarFooterHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -81,10 +80,6 @@ public abstract class AddressBookGuiTest {
 
     protected BrowserPanelHandle getBrowserPanel() {
         return mainWindowHandle.getBrowserPanel();
-    }
-
-    protected StatusBarFooterHandle getStatusBarFooter() {
-        return mainWindowHandle.getStatusBarFooter();
     }
 
     protected ResultDisplayHandle getResultDisplay() {

@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -18,7 +19,10 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.RefreshStatisticsPanelIfOpenEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ToggleBrowserPanelEvent;
+import seedu.address.commons.events.ui.ToggleStatisticsPanelEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -31,6 +35,7 @@ public class MainWindow extends UiPart<Region> {
 
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
+    private static final String STATISTICS_STYLE = "view/Statistics.css";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
 
@@ -42,11 +47,17 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private StatisticsPanel statisticsPanel;
     private Config config;
     private UserPrefs prefs;
 
+    private Boolean statisticsPanelOpen;
+
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane browserOrStatisticsPlaceholder;
+
+    @FXML
+    private StackPane statisticsPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -61,7 +72,10 @@ public class MainWindow extends UiPart<Region> {
     private StackPane resultDisplayPlaceholder;
 
     @FXML
-    private StackPane statusbarPlaceholder;
+    private StackPane peopleCountPlaceholder;
+
+    @FXML
+    private MenuBar menuBar;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -78,6 +92,7 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        scene.getStylesheets().add(STATISTICS_STYLE);
         primaryStage.setScene(scene);
 
         setAccelerators();
@@ -126,21 +141,47 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        switchToBrowserPanel();
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
+        ResultDisplay resultDisplay = new ResultDisplay(logic);
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+        PeopleCount peopleCount = new PeopleCount(logic.getFilteredPersonList().size());
+        peopleCountPlaceholder.getChildren().add(peopleCount.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
+
+    //@@author 500poundbear
+    /**
+     * Instantiates and adds the statistics panel to the UI
+     */
+    private void switchToStatisticsPanel() {
+        logger.info("Switched to statistics panel");
+
+        statisticsPanel = new StatisticsPanel(logic.getAllPersonList());
+        browserOrStatisticsPlaceholder.getChildren().clear();
+        browserOrStatisticsPlaceholder.getChildren().add(statisticsPanel.getRoot());
+        statisticsPanelOpen = true;
+    }
+
+
+    /**
+     * Instantiates and adds the browser panel to the UI
+     */
+    private void switchToBrowserPanel() {
+        logger.info("Switched to browser panel");
+
+        browserPanel = new BrowserPanel();
+        browserOrStatisticsPlaceholder.getChildren().clear();
+        browserOrStatisticsPlaceholder.getChildren().add(browserPanel.getRoot());
+        statisticsPanelOpen = false;
+    }
+    //@@author
 
     void hide() {
         primaryStage.hide();
@@ -204,10 +245,6 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
-    }
-
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -216,5 +253,26 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author 500poundbear
+    @Subscribe
+    private void handleToggleBrowserPanelEvent(ToggleBrowserPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchToBrowserPanel();
+    }
+
+    @Subscribe
+    private void handleToggleStatisticsPanelEvent(ToggleStatisticsPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchToStatisticsPanel();
+    }
+
+    @Subscribe
+    private void handleRefreshStatisticsPanelIfOpenEvent(RefreshStatisticsPanelIfOpenEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (statisticsPanelOpen) {
+            switchToStatisticsPanel();
+        }
     }
 }
