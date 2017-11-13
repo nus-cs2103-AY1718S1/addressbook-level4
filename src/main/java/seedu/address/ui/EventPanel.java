@@ -51,7 +51,7 @@ public class EventPanel extends UiPart<Region> {
         nameLabel.setText(event.getTitle().toString());
         timeslotLabel.setText(event.getTimeslot().toString());
         descriptionLabel.setText(event.getDescription().toString());
-        periodLabel.setText("Repeat: Every " + event.getPeriod().toString()+ " days.");
+        periodLabel.setText("Repeat: Every " + event.getPeriod().toString() + " days.");
 
     }
 
