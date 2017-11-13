@@ -96,6 +96,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
+    //@@author wenmogu
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
@@ -143,6 +144,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    //@@author
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}

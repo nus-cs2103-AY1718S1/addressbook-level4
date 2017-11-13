@@ -51,6 +51,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+// tag::autocomplete[]
 === Autocompleting commands : kbd:[Tab]
 
 Completes a command by filling the command box with the first suggestion shown in the result display. +
@@ -77,6 +78,7 @@ Examples:
 
 Clears the command box instantaneously. +
 Format: kbd:[Control]
+// end::autocomplete[]
 
 === Viewing help : `help`
 
@@ -124,6 +126,29 @@ Adds a directed relationship from the 1st person to the 3rd person with the conf
 * `addRelationship 2 3 undirected n/husband and wife ce/100`
 Adds an undirected relationship between the 2nd and 2rd with the name being 'husband and wife' and confidence estimate of 100.
 // end::addrelationship[]
+
+// tag::editrelationship[]
+=== Editing a relationship between two persons: `editRelationship`
+
+Edits a relationship between two persons in Intelli +
+Format: `editRelationship INDEX_ONE INDEX_TWO [n/NAME] [ce/CONFIDENCE_ESTIMATE]`
+
+****
+* The indexes of the persons are based on the most recent listing shown.
+* The indexes provided does not have to be in a particular order since two persons can maximally have one relationship between them (e.g. `editRelationship 1 2` is equivalent to `editRelationship 2 1`).
+* If only one attribute is updated (e.g. `editRelationship 1 2 n/NAME`), the other attribute will retain its original value in the pre-edited relationship.
+* `NAME`, which refers to the name of the relationship *can only be alphanumeric*.
+* `CONFIDENCE_ESTIMATE` refers to the confidence estimate the user gives to the relationship. `CONFIDENCE_ESTIMATE` *can only be numbers from 0 to 100 inclusive*.
+* The graph does not display confidence estimates that have the value 0.
+****
+
+Examples:
+
+* `editRelationship 1 2`
+* `editRelationship 1 2 n/friends`
+* `editRelationship 1 2 ce/3.12082`
+* `editRelationship 1 2 n/friends ce/3.12082`
+// end::editrelationship[]
 
 === Listing all persons : `list`
 
@@ -563,6 +588,8 @@ e.g. `delete 3`
 e.g. `deleteRelationship 2 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit relationship*: `editRelationship INDEX_ONE INDEX_TWO [n/NAME] [ce/CONFIDENCE_ESTIMATE]` +
+e.g. `editRelationship 1 2 n/friends ce/3`
 * *Exit* : `exit`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`

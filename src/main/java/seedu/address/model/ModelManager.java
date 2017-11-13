@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -21,6 +22,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.RelationshipNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.relationship.ConfidenceEstimate;
 import seedu.address.model.relationship.Relationship;
@@ -191,6 +193,110 @@ public class ModelManager extends ComponentManager implements Model {
         toPersonCasting.removeRelationship(relationshipToDelete2);
 
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    //@@author joanneong
+
+    /**
+     * Edits a relationship between two persons by updating the name and confidence estimate of the relationship.
+     *
+     * Note that this edit is actually done by removing the relationship and constructing a new relationship with
+     * the new name and confidence estimate.
+     */
+    public void editRelationship(Index indexFromPerson, Index indexToPerson, Name name,
+                                 ConfidenceEstimate confidenceEstimate)
+            throws DuplicateRelationshipException, RelationshipNotFoundException, IllegalValueException {
+        List<ReadOnlyPerson> lastShownList = getFilteredPersonList();
+
+        if (indexFromPerson.getZeroBased() >= lastShownList.size()
+                || indexToPerson.getZeroBased() >= lastShownList.size()
+                || indexFromPerson.getZeroBased() < 0
+                || indexToPerson.getZeroBased() < 0) {
+            throw new IllegalValueException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson fromPerson = lastShownList.get(indexFromPerson.getZeroBased());
+        ReadOnlyPerson toPerson = lastShownList.get(indexToPerson.getZeroBased());
+        Person fromPersonCasting = (Person) fromPerson;
+        Person toPersonCasting = (Person) toPerson;
+
+        Relationship undirectedRelationshipToFind = new Relationship(fromPerson, toPerson,
+                RelationshipDirection.UNDIRECTED);
+        Relationship directedRelationshipToFind = new Relationship(fromPerson, toPerson,
+                RelationshipDirection.DIRECTED);
+        Relationship alternativeDirectedRelationshipToFind = new Relationship(toPerson, fromPerson,
+                RelationshipDirection.DIRECTED);
+
+        // Check whether the original relationship was directed or undirected since direction is preserved
+        Set<Relationship> fromPersonRelationships = fromPerson.getRelationships();
+        Relationship oldRelationship = undirectedRelationshipToFind;
+        Relationship newRelationship = undirectedRelationshipToFind;
+        Name newName = name;
+        ConfidenceEstimate newConfidenceEstimate = confidenceEstimate;
+
+        boolean foundRelationship = false;
+
+        for (Relationship fromPersonRelationship : fromPersonRelationships) {
+            if (fromPersonRelationship.equals(undirectedRelationshipToFind)) {
+                oldRelationship = undirectedRelationshipToFind;
+                newRelationship = constructUpdatedRelationship(fromPerson, toPerson, RelationshipDirection.UNDIRECTED,
+                        newName, newConfidenceEstimate, fromPersonRelationship);
+                foundRelationship = true;
+                break;
+            } else if (fromPersonRelationship.equals(directedRelationshipToFind)) {
+                oldRelationship = directedRelationshipToFind;
+                newRelationship = constructUpdatedRelationship(fromPerson, toPerson, RelationshipDirection.DIRECTED,
+                        newName, newConfidenceEstimate, fromPersonRelationship);
+                foundRelationship = true;
+                break;
+            } else if (fromPersonRelationship.equals(alternativeDirectedRelationshipToFind)) {
+                oldRelationship = alternativeDirectedRelationshipToFind;
+                newRelationship = constructUpdatedRelationship(toPerson, fromPerson, RelationshipDirection.DIRECTED,
+                        newName, newConfidenceEstimate, fromPersonRelationship);
+                foundRelationship = true;
+                break;
+            }
+        }
+
+        if (foundRelationship) {
+            fromPersonCasting.removeRelationship(oldRelationship);
+            toPersonCasting.removeRelationship(oldRelationship);
+
+            fromPersonCasting.addRelationship(newRelationship);
+            toPersonCasting.addRelationship(newRelationship);
+
+            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            indicateAddressBookChanged();
+        } else {
+            throw new RelationshipNotFoundException("This relationship does not exist!");
+        }
+    }
+
+    /**
+     * Constructs a new relationship between two persons with the name and the confidence estimate
+     * provided.
+     *
+     * If there are no name/confidence estimate provided, the relationship will retain the name/
+     * confidence estimate of the original (pre-edited) relationship.
+     */
+    private Relationship constructUpdatedRelationship(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson,
+                                                      RelationshipDirection relationshipDirection, Name name,
+                                                      ConfidenceEstimate confidenceEstimate,
+                                                      Relationship fromPersonRelationship) {
+
+        boolean hasNewName = !name.equals(Name.UNSPECIFIED);
+        boolean hasNewConfidenceEstimate = !confidenceEstimate.equals(ConfidenceEstimate.UNSPECIFIED);
+        Name newName = name;
+        ConfidenceEstimate newConfidenceEstimate = confidenceEstimate;
+
+        if (!hasNewName) {
+            newName = fromPersonRelationship.getName();
+        }
+        if (!hasNewConfidenceEstimate) {
+            newConfidenceEstimate = fromPersonRelationship.getConfidenceEstimate();
+        }
+
+        return new Relationship(fromPerson, toPerson, relationshipDirection, newName, newConfidenceEstimate);
     }
 
     //=========== Filtered Person List Accessors =============================================================

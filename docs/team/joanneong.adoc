@@ -18,7 +18,6 @@ Intelli is a desktop relationship tracker used by private investigators (PI) to 
 include::../UserGuide.adoc[tag=find]
 
 #End of Extract#
-
 ---
 
 ==== Justification
@@ -35,7 +34,34 @@ This offers a lot of flexibility for users who wish to find different informatio
 include::../DeveloperGuide.adoc[tag=find]
 
 #End of Extract#
+---
 
+=== Enhancement Added: Edit relationship command
+
+==== External behaviour
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=editrelationship]
+
+#End of Extract#
+---
+
+==== Justification
+
+---
+This allows users to edit relationship attributes using a single operation. This is particularly useful since the target audience is private investigators who are likely to change and update relationship information frequently after they have gathered more intelligence.
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=editrelationship]
+
+#End of Extract#
 ---
 
 === Enhancement Added: Command autocompletion
@@ -43,19 +69,25 @@ include::../DeveloperGuide.adoc[tag=find]
 ==== External behavior
 
 ---
-When the user types a command in the command box, a list of suggestions appears which can be selected to complete the command.
+#Start of Extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+---
 
 ==== Justification
 
 ---
 Certain commands are lengthy, and users who would like to enter commands quickly will find this a handy feature.
 
+Additionally, users easily see what commands are supported by Intelli since all commands are displayed as valid suggestions if the user does not input any value in the command box.
+
 
 ==== Implementation
 
 ---
-This has been implemented by binding an autocompletion binding to the command box.
+This has been implemented by coupling the command box and the result display. When there is a change to the user input in the command box, the suggestion displayed in the result display will change accordingly.
 
 
 === Enhancement Added: Command information display
@@ -63,7 +95,7 @@ This has been implemented by binding an autocompletion binding to the command bo
 ==== External behavior
 
 ---
-When the user types in the command box, and the input matches a command word, the corresponding usage information will be displayed.
+When the user types in the command box, and the input matches a command word, the corresponding usage information will be displayed in a side panel.
 
 
 ==== Justification
@@ -95,7 +127,7 @@ The application should be a coherent whole instead of splitting into two unsight
 ==== Implementation
 
 ---
-This is done with the help of Java SwingNodes and JComponents.
+This is done with the help of Java SwingNodes and JComponents. The graph is embedded in a SwingNode and intialised when the application starts up..
 
 
 === Enhancement Added: Enhanced graph display
@@ -109,9 +141,10 @@ Improves the aesthetics of the integrated graph display.
 ==== Justification
 
 ---
-This increases the attractiveness of the application, and improves the user interface.
+This improves the user interface, making it more convenient for users to view their contacts and relationships on the graph.
 
+Additionally, this adds to the aesthetic appeal of the application.
 
 === Other contributions
 
-* Tidy up the user guide for easier perusal
+* Tidy up the user guide

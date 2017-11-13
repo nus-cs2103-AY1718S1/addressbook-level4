@@ -169,13 +169,11 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return tagsList.removeTag(tagGettingRemoved);
     }
 
-    //@@ author wenmogu
     @Override
     public Set<Relationship> getRelationships() {
         return Collections.unmodifiableSet(relationships.get().toSet());
     }
 
-    //@@ author wenmogu
     /**
      * Add a relationship to a person's relationships
      */
@@ -198,7 +196,6 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         reList.add(re);
     }
 
-    //@@author wenmogu
     /**
      * Removes a relationship from a person's relationships
      */

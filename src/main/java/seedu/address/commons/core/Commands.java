@@ -11,6 +11,7 @@ import seedu.address.logic.commands.ColourTagCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteRelationshipCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditRelationshipCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -39,6 +40,7 @@ public class Commands {
         DeleteCommand.COMMAND_WORD,
         DeleteRelationshipCommand.COMMAND_WORD,
         EditCommand.COMMAND_WORD,
+        EditRelationshipCommand.COMMAND_WORD,
         ExitCommand.COMMAND_WORD,
         FindCommand.COMMAND_WORD,
         HelpCommand.COMMAND_WORD,
@@ -63,6 +65,7 @@ public class Commands {
         DeleteCommand.COMMAND_ALIAS,
         DeleteRelationshipCommand.COMMAND_ALIAS,
         EditCommand.COMMAND_ALIAS,
+        EditRelationshipCommand.COMMAND_ALIAS,
         ExitCommand.COMMAND_ALIAS,
         FindCommand.COMMAND_ALIAS,
         HelpCommand.COMMAND_ALIAS,
@@ -87,6 +90,7 @@ public class Commands {
         DeleteCommand.SHORT_MESSAGE_USAGE,
         DeleteRelationshipCommand.SHORT_MESSAGE_USAGE,
         EditCommand.SHORT_MESSAGE_USAGE,
+        EditRelationshipCommand.SHORT_MESSAGE_USAGE,
         ExitCommand.SHORT_MESSAGE_USAGE,
         FindCommand.SHORT_MESSAGE_USAGE,
         HelpCommand.SHORT_MESSAGE_USAGE,
