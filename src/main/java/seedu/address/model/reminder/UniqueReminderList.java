@@ -7,8 +7,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.fxmisc.easybind.EasyBind;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
@@ -24,8 +22,6 @@ import seedu.address.model.reminder.exceptions.DuplicateReminderException;
  */
 public class UniqueReminderList implements Iterable<Reminder> {
     private final ObservableList<Reminder> internalList = FXCollections.observableArrayList();
-    // used by asObservableList()
-    private final ObservableList<ReadOnlyReminder> mappedList = EasyBind.map(internalList, (reminder) -> reminder);
 
     /**
      * Constructs empty UniqueReminderList
@@ -68,18 +64,6 @@ public class UniqueReminderList implements Iterable<Reminder> {
     public ArrayList<Reminder> toList() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return new ArrayList<>(internalList);
-    }
-
-    public void setReminders(UniqueReminderList replacement) {
-        this.internalList.setAll(replacement.internalList);
-    }
-
-    public void setReminders(List<? extends ReadOnlyReminder> reminders) throws DuplicateReminderException {
-        final UniqueReminderList replacement = new UniqueReminderList();
-        for (final ReadOnlyReminder reminder : reminders) {
-            replacement.add(new Reminder(reminder));
-        }
-        setReminders(replacement);
     }
 
     @Override
