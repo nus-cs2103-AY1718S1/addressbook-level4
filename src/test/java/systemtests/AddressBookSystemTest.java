@@ -3,7 +3,9 @@ package systemtests;
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_CAPTCHA_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
@@ -185,14 +187,27 @@ public abstract class AddressBookSystemTest {
 
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
+        URL expectedCaptchaUrl;
         try {
+            //@@author bladerail
+            String urlString = GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX;
+            urlString = urlString.replaceAll("\\+", "%2B");
+            urlString = urlString.replaceAll("\\?", "%3F");
+            urlString = urlString.replaceAll("\\=", "%3D");
+            urlString = urlString.replaceAll("\\&", "%26");
+            expectedCaptchaUrl = new URL(
+                    GOOGLE_SEARCH_CAPTCHA_PREFIX + urlString);
             expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
                     + GOOGLE_SEARCH_URL_SUFFIX);
+
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
-
+        assertTrue(expectedUrl.equals(getBrowserPanel().getLoadedUrl())
+                || getBrowserPanel().getLoadedUrl().toExternalForm()
+                .contains(expectedCaptchaUrl.toExternalForm()));
+        //@@author
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }

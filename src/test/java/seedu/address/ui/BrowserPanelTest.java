@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_CAPTCHA_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -49,11 +50,18 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated web page of a person
         postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
-                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
+        //@@author bladerail
+        String urlString = GOOGLE_SEARCH_URL_PREFIX
+                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX;
+        URL expectedPersonUrl = new URL(urlString);
+        URL expectedCaptchaUrl = new URL(
+                GOOGLE_SEARCH_CAPTCHA_PREFIX + getCaptchaUrl(urlString));
 
         waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+        assertTrue(expectedPersonUrl.equals(browserPanelHandle.getLoadedUrl())
+                || browserPanelHandle.getLoadedUrl().toExternalForm()
+                .contains(expectedCaptchaUrl.toExternalForm()));
+        //@@author hansiang93
     }
 
     @Test
@@ -68,10 +76,32 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated search page of a person
         postNow(searchSelectionEventStub);
-        URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
-                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
+        //@@author bladerail
+        String urlString = GOOGLE_SEARCH_URL_PREFIX
+                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX;
+        URL expectedPersonUrl = new URL(urlString);
+        URL expectedCaptchaUrl = new URL(
+                GOOGLE_SEARCH_CAPTCHA_PREFIX + getCaptchaUrl(urlString));
 
         waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+        assertTrue(expectedPersonUrl.equals(browserPanelHandle.getLoadedUrl())
+                || browserPanelHandle.getLoadedUrl().toExternalForm()
+                .contains(expectedCaptchaUrl.toExternalForm()));
+        //@@author hansiang93
     }
+
+    //@@author bladerail
+    /**
+     * Returns the string format of a captcha URL
+     * @param urlString
+     * @return
+     */
+    private String getCaptchaUrl(String urlString) {
+        String updatedUrlString = urlString.replaceAll("\\+", "%2B")
+                .replaceAll("\\?", "%3F")
+                .replaceAll("\\=", "%3D")
+                .replaceAll("\\&", "%26");
+        return updatedUrlString;
+    }
+    //@@author hansiang93
 }
