@@ -142,7 +142,7 @@ public class ChangeProfilePictureCommandTest {
     private ChangeProfilePictureCommand prepareCommand(Index index, String picturePath) {
         ChangeProfilePictureCommand changeProfilePictureCommand = new ChangeProfilePictureCommand(index, picturePath);
         changeProfilePictureCommand.setData(model, new CommandHistory(),
-                new UndoRedoStack(), new RecentlyDeletedQueue());
+                new UndoRedoStack(), new RecentlyDeletedQueue(), new String());
         return changeProfilePictureCommand;
     }
 

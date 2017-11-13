@@ -72,7 +72,8 @@ public class AddMultipleByTsvCommandTest {
                                                                         ArrayList<Integer> failedEntries,
                                                                         boolean isFileFound, Model model) {
         AddMultipleByTsvCommand command = new AddMultipleByTsvCommand(toAddPeople, failedEntries, isFileFound);
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), new RecentlyDeletedQueue());
+        command.setData(model, new CommandHistory(),
+                new UndoRedoStack(), new RecentlyDeletedQueue(), new String());
         return command;
     }
 
@@ -256,7 +257,7 @@ public class ChangeProfilePictureCommandTest {
     private ChangeProfilePictureCommand prepareCommand(Index index, String picturePath) {
         ChangeProfilePictureCommand changeProfilePictureCommand = new ChangeProfilePictureCommand(index, picturePath);
         changeProfilePictureCommand.setData(model, new CommandHistory(),
-                new UndoRedoStack(), new RecentlyDeletedQueue());
+                new UndoRedoStack(), new RecentlyDeletedQueue(), new String());
         return changeProfilePictureCommand;
     }
 
@@ -354,7 +355,8 @@ public class FindTagCommandTest {
     private FindTagCommand prepareCommand(String userInput) {
         FindTagCommand command =
                 new FindTagCommand(new TagsContainKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), new RecentlyDeletedQueue());
+        command.setData(model, new CommandHistory(),
+                new UndoRedoStack(), new RecentlyDeletedQueue(), new String());
         return command;
     }
 

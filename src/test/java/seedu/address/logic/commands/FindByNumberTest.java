@@ -76,7 +76,8 @@ public class FindByNumberTest {
     private FindNumberCommand prepareCommand(String userInput) {
         FindNumberCommand command =
             new FindNumberCommand(new NumberContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), new RecentlyDeletedQueue());
+        command.setData(model, new CommandHistory(),
+                new UndoRedoStack(), new RecentlyDeletedQueue(), new String());
         return command;
     }
 

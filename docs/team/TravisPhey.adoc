@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: TheYellowPage
 TheYellowPage is a desktop address book application designed with the needs of office workers in mind. The user interacts with it using a Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created with JavaFX. It is written in Java, and has about 6000 lines of code.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B4/main/blob/master/collated/main/TravisPhey.md[Functional Code]] [https://github.com/CS2103AUG2017-T10-B4/main/blob/master/collated/test/TravisPhey.md[Test Code]] {give links to collated code files}
 
 === 1st Enhancement Added: DeleteMultipleCommand
 
@@ -77,9 +77,5 @@ include::../DeveloperGuide.adoc[tag=FindCommand]
 
 === Other contributions
 
-* Updated the GUI background image (Pull requests https://github.com[#33], https://github.com[#34])
+* Updated the GUI background image (Pull requests https://github.com/CS2103AUG2017-T10-B4/main/[#94])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
