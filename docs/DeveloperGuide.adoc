@@ -1,4 +1,4 @@
-﻿= Sales Navigator- Developer Guide
+﻿= Sales Navigator - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -375,7 +375,7 @@ Additionally, an `AddressBookChangedEvent` is also raised to the `EventsCenter` 
 // tag::timetable[]
 // end::timetable[]
 
-// tag::Scheduling[]
+// tag::scheduling[]
 === Event Scheduling
 
 Whenever an event is created, it will be added into an
@@ -453,7 +453,7 @@ any overlap with an existing event, this will generate a
 `ObservableMap` only supports `HashMap`.
 ****
 
-// end::Scheduling[]
+// end::scheduling[]
 
 === Logging
 
@@ -581,11 +581,21 @@ the change does not affect that particular panel or card.
 === Attaching photo to a contact
 
 Another optional field that can be added to a contact is the photo field. It
-can be added either:
+can be added in two ways:
 
-* through the `add` or `edit` command; OR
+. Through GUI
+* When the `updatephoto` command is executed, or when the `import photo`
+button on the person panel (beneath the person's photo) is clicked, a
+`FileChooser` window will be opened in the main UI.
+* After user has chosen the image file (restricted to jpg/jpeg/png format),
+the file path will be passed into a new EditCommand `edit [index]
+ph/[filepath]` which will then be processed by the `Logic` component. After
+parsing, the command will be executed, and `Model` component will make the
+corresponding change (updating the `Photo` field of the person with )
 
-* through the GUI
+. By specifying ahrough the `add` or `edit` command
+
+
 
 ==== Command-line implementation
 
@@ -612,57 +622,390 @@ command-line implementation, this file is then copied to the
 // tag::Sorting[]
 === Sorting of persons list
 
-When viewing the persons list, user is able to sort them according to `Name`, `Tags`, `Priority` or `Status`. This
-allows the user to be able to view the list much easier by sorting them to whichever preference the user wants/needs.
+The sorting mechanism achieved by creating a new `SortCommand` and `SortCommandParser`. It is also facilitated by
+`UniquePersonList`, which resides in `AddressBook`. It supports
+ the rearrangement of the person list which modifies the current arrangement. This command inherits the
+`UndoableCommand` which allows the user to undo/redo the sorting.
 
-This enhancement is achieved by first creating a new SortCommand and SortCommandParser that processes the user input
-command that performs the suitable sorting method to achieve the user wants. Since this enhancement is not able to
-reuse some of the method in other components, new methods have to be created.
+The implementation of the `SortCommand` is as follows:
 
-The user input command will be passed to the SortCommandParsers which parses the input by checking to see if it is
-empty. If the input string is empty, it will throw a *ParseException* which throws a new *ParseException* and displays
- to the user that the input format is incorrect and the usage of the command. If it is not an empty string, it will
- return a new instance of the SortCommand with the input as the parameter. SortCommand performs the
- executeUndoableCommand by calling the sortPerson method in the *ModelManager* class which will call the sortPerson
- method from the *AddressBook* class which class the method sortPersonList from the *UniquePersonList*. All of the
- parameter passed in in each method are the input string which indicates the type of sorting the user wants/needs.
+[source, java]
+----
+public SortCommand(String sortType) {
+        this.sortType = sortType;
+    }
+----
 
-In *UniquePersonList*, the string passed will then be checked using a `switch case`. If the type is found, it will
-perform the corresponding sorting algorithm. If not it will throw a *InvalidSortTypeException* which tells the user
-that the sorting type the user keyed in does not exist.
+As you can see from the implementation, the command requires the input to be passed as a *String* parameter. Before
+the new instance of `SortCommand` is being created, the `SortCommandParser` will ensure that the input is not an
+empty string.
+
+The execution of the command is done in the following method:
+
+[source, java]
+----
+public CommandResult executeUndoableCommand() {
+    try {
+        model.sortPerson(sortType);
+        return new CommandResult(MESSAGE_SUCCESS + sortType);
+    } catch (InvalidSortTypeException iste) {
+            return new CommandResult(MESSAGE_UNKNOWN_SORT_TYPE);
+        }
+    }
+----
+
+After a series of method calls, the *model.sortPerson()* will eventually call the *sortPerson()* method in
+`UniquePersonList`.
+
+
+The implementation of the *sortPerson()* method:
+
+[source, java]
+----
+public void sortPerson(String type) throws InvalidSortTypeException {
+    final Comparator<Person> sortByName = (Person a, Person b) -> a.getName().toString()
+        .compareToIgnoreCase(b.getName().toString())
+    final Comparator<Person> sortByTags = (Person a, Person b) -> a.getTags().toString()
+        .compareToIgnoreCase((b.getTags().toString()));
+    final Comparator<Person> sortByCompany = (Person a, Person b) -> b.getCompany().compareTo(a
+        .getCompany());
+    final Comparator<Person> sortByPriority = (Person a, Person b) -> a.getPriority()
+        .compareTo(b.getPriority());
+    final Comparator<Person> sortByPosition = (Person a, Person b) -> b.getPosition().compareTo(a
+        .getPosition());
+    switch (type) {
+    case "name":
+        internalList.sort(sortByName);
+        break;
+    case "tag":
+        internalList.sort(sortByTags.thenComparing(sortByName));
+        break;
+    case "company":
+        internalList.sort(sortByCompany.thenComparing(sortByName));
+        break;
+    case "priority":
+        internalList.sort(sortByPriority.thenComparing(sortByName));
+        break;
+    case "position":
+        internalList.sort(sortByPosition.thenComparing(sortByName));
+        break;
+    default:
+        throw new InvalidSortTypeException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
+    }
+----
+As you can see from the above, there are 5 comparators that will perform different comparing method of the chosen the
+sorting type. The list of person will be rearranged after the *sortPerson()* method is executed.
 
 [NOTE]
-Explanation of how this is achieved will be done soon. A sequence diagram will be updated here to illustrate how the
-SortCommand and SortCommandParser operates.
+If sorting type is not found, an error message will to shown in the result display to notfiy the user of an unknown
+sorting
+type.
+
+Comparators for sorting *Name* and *Tag* are the same, they do not have a custom comparator.
+
+
+*Company* and *Position* have a default input, _"NIL"_, if it is not specified during the adding of the person,
+they should be sorted to the bottom of the list.
+
+*Priority* has the default input of priority is "L". They can be categorise into *three* different types, _H_, _M_
+and _L_. Priorities with the type as _"L"_ has to be at the bottom of the list with _"M"_ in the middle and _"H"_ at
+the top.
+
+Since *Company*, *Position* and *Priority* have specific way of sorting, a custom comparator would be needed in order
+ to get the arrangement that is most suited for the user.
+
+The *_ORDERED_ENTRIES_* indicates how should it should be sorted in both the comparator for *Company*, *Position* and
+ *Priority*.
+
+The implementation of the comparator for *Company* and *Position* are the same. For *Position* simply change all the
+variables and data type to be *Position*.
+
+An example of the implementation for *Company* is as follows:
+
+[source, java]
+----
+private static final String ORDERED_ENTRIES = "NIL";
+
+public int compareTo(Company company) {
+    if (ORDERED_ENTRIES.contains(company.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
+        return ORDERED_ENTRIES.indexOf(this.toString()) - ORDERED_ENTRIES.indexOf(company.toString());
+    }
+    if (ORDERED_ENTRIES.contains(company.toString())) {
+        return 1;
+    }
+    if (ORDERED_ENTRIES.contains(this.toString())) {
+        return -1;
+    }
+    return company.toString().compareToIgnoreCase(this.toString());
+}
+public int compare(Company companyOne, Company companyTwo) {
+    return companyOne.compareTo(companyTwo);
+}
+----
+
+The implementation of the comparator for *Priority* is as follows:
+
+[source, java]
+----
+private static final String ORDERED_ENTRIES = "L, M, H";
+
+public int compareTo(Priority priority) {
+    if (ORDERED_ENTRIES.contains(priority.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
+        return ORDERED_ENTRIES.indexOf(priority.toString()) - ORDERED_ENTRIES.indexOf(this.toString());
+    }
+    if (ORDERED_ENTRIES.contains(priority.toString())) {
+        return -1;
+    }
+    if (ORDERED_ENTRIES.contains(this.toString())) {
+        return 1;
+    }
+        return priority.toString().compareTo(this.toString());
+    }
+    @Override
+    public int compare(Priority priorityOne, Priority priorityTwo) {
+        return priorityOne.compareTo(priorityTwo);
+    }
+----
+
+The following sequence diagram shows how the sort operation works:
+
+image::SortCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations:
+*Aspect*: Implementation of Sorting
+
+*Alternative 1*: Just sort all the different methods alphabetically.
+
+*Pros*: The user is able to see the person list sorted alphabetically for each sorting method
+
+*Cons*: User may not want to sort them just alphabetically, the user may want a certain specific format of how the
+list should be sorted for example priority should be sorted with *H* and the top, *M* in the middle and *L* at the
+bottom.
+
+*Alternative 2 (current choice)*: Have the sorting method to deal with such specificaitions.
+
+*Pros*: Users is able to sort alphabetically automatically for all the sorting method provided.
+
+*Cons*: Custom comparator will be required to compare the the sorting types that have a specific format.
+
 // end::Sorting[]
 
 // tag::SettingRelationship[]
 === Setting relationship between two persons
 
-When viewing the persons list, user finds out if that a specific person has a relationship with another person. Thus,
-the user is able to set relationships between 2 persons if they are related to one another. The user can also delete
-the specific relationship between the 2 persons and also clear all relationships in the two persons. Each
-person is able to have multiple relationships but only one relationship per person.
+The setting of relationship mechanism achieved by creating a new `SetRelCommand`, `SetRelCommandParser`
+, `UniqueRelList` and `Relationship` classes. `SetRelCommand` and `SetRelCommandParser` classes resides in the `Logic
+Component` facilitated by `UniqueRelList` and `Relationship` classes resides in the `Model Component`.
+It supports the adding, deleting and clearing of relationship between two different persons. This command inherits the
+`UndoableCommand` which allows the user to undo/redo the adding/deleting/clearing of relationship between two persons.
 
-This feature is achieved by first creating the Relationship and UniqueRelList class that handles the relationship
- name and the list of relationship of each person. Next, creating the command to add, delete and clear relationship
-between 2 persons.
+The implementation of `Relationship` is as follows:
 
-This will be done using the command `set [INDEX] [INDEX] [PREFIX]RELATIONSHIP`. There are 3 different prefixes which
-performs different tasks. *ar/* adds relationship, *dr/* deletes relationship and *cr/* clears all
-relationships between the two persons.
+[source, java]
+----
+public Relationship(String name) throws IllegalValueException {
+    requireNonNull(name);
+    String trimmedName = name.trim();
+    if (!isValidRelType(trimmedName)) {
+        throw new IllegalValueException(MESSAGE_REL_CONSTRAINTS);
+    }
+    this.relType = name;
+}
 
-*SetRelCommandParser* parses the input and returns a new SetRelCommand which has the parameters of the two indexes,
-the new edited person and the boolean value of whether the add relationship prefix is present.
+public Relationship(String name, Set<Relationship> relation) {
+    this.relType = name + " " +  relation;
+}
+----
 
-*SetRelCommand* executes and sets the relationship between 2 persons. It also checks if there is a mutual relationship
-present in the indexes passed in. In order to change the relationship, the user will have to delete the
-specific relationship and add the new relationship.
+As you can see from the code above, the relationship name has to be validated to make sure it fits the a certain
+format by checking if it matches the regular expression for it. The overloaded constructor forms the relationship
+the string of the other person's name and the relationship.
 
-[NOTE]
-TO-DO: Sequence diagram will be up soon.
+Before a new instance of `SetRelCommand` is created,
+
+SetRelCommmandParser ensures that:
+
+1. the relationship prefix is present.
+2. the indexes are the same.
+3. the indexes are an unsigned integer.
+4. the relationships are not empty strings or null for adding and deleting.
+
+`SetRelCommandParser` returns a new instance of `SetRelCommand` that takes in two different indexes, an editedPerson
+and a boolean value that states whether the add relationship prefix is present.
+
+The implementation of `SetRelCommand` constructor is as follows:
+
+[source, java]
+----
+public SetRelCommand(Index indexOne, Index indexTwo, EditPerson editPerson, boolean addPrefixPresent) {
+    requireNonNull(indexOne);
+    requireNonNull(indexTwo);
+
+    this.indexOne = indexOne;
+    this.indexTwo = indexTwo;
+    this.editPerson = editPerson;
+    this.addPrefixPresent = addPrefixPresent;
+}
+----
+
+The execution of the command is done in the following method:
+
+[source, java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+    if ((indexOne.getZeroBased() >= lastShownList.size()) || (indexTwo.getZeroBased() >= lastShownList.size())) {
+        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    ReadOnlyPerson personToEditOne = lastShownList.get(indexOne.getZeroBased());
+    ReadOnlyPerson personToEditTwo = lastShownList.get(indexTwo.getZeroBased());
+    Person editedPersonOne = createEditedPerson(personToEditOne, editPerson, personToEditTwo);
+    Person editedPersonTwo = createEditedPerson(personToEditTwo, editPerson, personToEditOne);
+
+    if (addPrefixPresent && (personToEditOne.getRelation().toString().contains(personToEditTwo.getName().toString())
+        || personToEditTwo.getRelation().toString().contains(personToEditOne.getName().toString()))) {
+        throw new CommandException(MESSAGE_NO_MULTIPLE_REL);
+    }
+    try {
+        model.updatePerson(personToEditOne, editedPersonOne);
+        model.updatePerson(personToEditTwo, editedPersonTwo);
+    } catch (DuplicatePersonException dpe) {
+        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+    } catch (PersonNotFoundException pnfe) {
+        throw new AssertionError("The target person cannot be missing");
+    }
+    model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPersonOne, editedPersonTwo));
+}
+----
+
+The implementation of the adding/deleting and clearing was inspired to be by my course mate, Sim Yan Yu
+(syy94). However, the implementations are modified significantly to fit this feature.
+
+The implementations of adding/deleting are as follows:
+
+[source, java]
+----
+public Optional<Set<Relationship>> getToAddRel(ReadOnlyPerson person) {
+    Set<Relationship> relWithName = new HashSet<>();
+    if ((addRel == null)) {
+        return Optional.ofNullable(null);
+    }
+    relWithName.add(new Relationship(person.getName().toString(), addRel));
+
+    return Optional.of(relWithName);
+}
+
+public Optional<Set<Relationship>> getToDeleteRel(ReadOnlyPerson person) {
+    Set<Relationship> relWithName = new HashSet<>();
+    relWithName.add(new Relationship(person.getName().toString(), deleteRel));
+    return Optional.of(relWithName);
+}
+----
+
+After a series of method calls, the *model.updatePerson()* will eventually call the *setPerson()* method in
+UniquePersonList.
+
+The following sequence diagram shows how the set relationship operation works:
+
+image::SetRelCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations:
+*Aspect*: Settng relationships for contacts
+
+*Alternative 1*: Manually setting the relationship for each person.
+
+*Pros*: Able to delete relationship for a specific person.
+
+*Cons*: Double work needed to set relationship between 2 persons.
+
+*Alternative 2 (current choice)*: Make a new command that allows two persons to be added together.
+
+*Pros*: Less work needed for the user has the command requires two person indexes.
+
+*Cons*: New logic required to accept two indexes instead of one.
 
 // end::SettingRelationship[]
+
+// tag::Aliases[]
+=== Command: Aliases
+
+The checking of commands mechanism is achieved by creating a new `CheckCommandsParser` class that checks if the
+command entered by the user can be found as aliases/synonyms of other commands.
+
+This class returns the relevant command name back to `AddressBookParser` which returns an instance of the command
+based on the command name that was returned.
+
+An example of the implementation of how the checking of command checks is as follows:
+
+In `AddressBookParser`:
+[source, java]
+----
+private static CheckCommandsParser checkCommand = new CheckCommandsParser();
+
+String commandWord = matcher.group("commandWord");
+commandWord = checkCommand.matchCommand(commandWord);
+final String arguments = matcher.group("arguments");
+
+switch (commandWord) {
+    case AddCommand.COMMAND_WORD:
+    return new AddCommandParser().parse(arguments);
+----
+
+An example of the implementation checking the *add* command in `CheckCommandsParser` is as follows:
+[source, java]
+----
+/**
+ * used to store the userCommand in a set
+ */
+Set<String> userInputCommand = new HashSet<>();
+userInputCommand.add(userCommand);
+
+/**
+ * All the synonyms/aliases of the different commands
+ */
+final String[] subAddCommands = new String[] { "add", "a", "input", "create", "insert" };
+
+/**
+ * Sets all the strings in each command into a HashSet
+ */
+final Set<String> commandsForAdd = new HashSet<>(Arrays.asList(subAddCommands));
+
+/**
+ * Compares the userInputCommand with the different commands set
+ */
+if (!Collections.disjoint(userInputCommand, commandsForAdd)) {
+    finalUserCommand = "add";
+}
+----
+
+The code for the other commands will be the same except for the aliases/synonyms.
+
+[NOTE]
+If the input command does not match with any of the *aliases/synonyms*, an exception will be thrown to notify the
+user that the command entered is *invalid*.
+
+==== Design Considerations:
+*Aspect*: Implementation of aliases/synonyms for each command
+
+*Alternative 1*: Adding many aliases case to the `AddressBookParser` switch cases.
+
+*Pros*: Checks immediately at the `AddressBookParser` class
+
+*Cons*: Required to add all the aliases/synonyms to each command class and adding all of them to the switch cases in
+`AddressBookParser`.
+
+*Alternative 2 (current choice)*: Create a class that checks the command entered
+
+*Pros*: There is no need to add all the aliases/synonyms to each command class.
+
+*Cons*: Required to pass the command to the other class to check instead of being able to check directly at
+`AddressBookParser`.
+
+// end::Aliases[]
 
 == Documentation
 
