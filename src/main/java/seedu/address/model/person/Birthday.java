@@ -53,7 +53,6 @@ public class Birthday {
         return value;
     }
 
-    //@@author chrisboo
     @Override
     public boolean equals(Object other) {
         if (other == this) { // short circuit if same object
@@ -68,7 +67,6 @@ public class Birthday {
 
         return false;
     }
-    //@@author
 
     @Override
     public int hashCode() {

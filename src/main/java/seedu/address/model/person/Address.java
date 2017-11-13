@@ -44,7 +44,6 @@ public class Address {
         return value;
     }
 
-    //@@author chrisboo
     @Override
     public boolean equals(Object other) {
         if (other == this) { // short circuit if same object
@@ -59,7 +58,6 @@ public class Address {
 
         return false;
     }
-    //@@author
 
     @Override
     public int hashCode() {
