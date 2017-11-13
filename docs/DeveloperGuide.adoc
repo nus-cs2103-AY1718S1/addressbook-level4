@@ -411,7 +411,7 @@ a major drawback if the data are not stored (and thus presented) to users in a w
 
 Learning from many modern database implementations, we should think of the data as two tables: one for *contacts* and the
 other one for *events*. Each table is composed of many rows and many columns. A single contact/event is one row, while
-all their different properties/fields are the columns.
+all their different properties/fields are the columns (as can be seen from Figure 4.3.1.1 and 4.3.1.2).
 
 image::phpmyadminTableView.png[width="700"]
 _Figure 4.3.1.1 : Data Table View of phpMyAdmin (a MySQL visualization tool)_
@@ -422,7 +422,7 @@ _Figure 4.3.1.2 : Add New Column in phpMyAdmin_
 ==== Design Consideration
 
 **Aspect:** Where to store the "_metadata_" of different properties (short name, full name, regular expression, etc.) +
-**Alternative 1 (current choice):** Create a new class `PropertyManager` +
+**Alternative 1 (current choice):** Create a new class `PropertyManager` in Figure 4.3.2.1 +
 **Pros:** Efficient (there is only one copy) and easy for future development since it is centralized. +
 **Cons:** Requires major change to `Model` component and `Storage` component. +
 **Alternative 2:** Store these data along with each specific property class, like `Name`, `Email` +
@@ -430,7 +430,7 @@ _Figure 4.3.1.2 : Add New Column in phpMyAdmin_
 **Cons:** Hard to implement `AddPropertyCommand`, and difficult to manage as the project grows larger.
 
 image::PropertyManagerClassDiagram.png[width="200"]
-_Figure 4.3.2.1 : Class Diagram for `PropertyManager`_
+_Figure 4.3.2.1 : Class Diagram for_ `PropertyManager`
 
 ==== Implementation Outline
 
@@ -449,8 +449,9 @@ one copy of these "metadata". We will waste a lot of resources if we store these
 and users do not need any additional setup steps to use them.
 
 4. Add new customize properties: advanced users should be provided with a command (`config --add-property`) to add their
-own customize fields. They should have the freedom to arbitrarily choose things like short name, full name, etc. They can
-easily add/edit these properties of each contact stored in the application, just like the _pre-loaded_ ones.
+own customize fields (as shown in Figure 4.3.3.1). They should have the freedom to arbitrarily choose things like short
+name, full name, etc. They can easily add/edit these properties of each contact stored in the application, just like the
+_pre-loaded_ ones.
 
 image::PropertyManagerSequenceDiagram.png[width="800"]
 _Figure 4.3.3.1 : Sequence Diagram for Adding a Customize Property_
