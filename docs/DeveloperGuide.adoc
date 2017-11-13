@@ -201,7 +201,7 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
-=== UI component
+=== UI Component
 
 As seen from _Figure 2.2.1_ below, the UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
@@ -218,7 +218,7 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
-=== Logic component
+=== Logic Component
 
 _Figure 2.3.1_ below shows the structure of the `Logic` component.
 
@@ -250,7 +250,7 @@ _Figure 2.3.3_ below is the Sequence Diagram for interactions within the `Logic`
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
-=== Model component
+=== Model Component
 
 The structure of the `Model` component can be seen in _Figure 2.4.1_ below.
 
@@ -266,7 +266,7 @@ _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-=== Storage component
+=== Storage Component
 
 The structure of the `Storage` component can be seen in _Figure 2.5.1_ below.
 
@@ -280,7 +280,7 @@ _Figure 2.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-=== Common classes
+=== Common Classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
@@ -290,7 +290,7 @@ This section describes some noteworthy details on how certain features are imple
 Each sample code shows the correct sequence of calls and parameters in general implementation of the feature to allow you to perform modification of your own.
 
 // tag::undoredo[]
-=== Undo/Redo mechanism
+=== Undo/Redo Mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
@@ -658,7 +658,7 @@ _Figure 4.2.2: Enhanced `HelpCommand` execution_
 // end::help[]
 
 //tag::locate[]
-=== Locating a contact's address [Since v1.2]
+=== Locating a Contact's Address [Since v1.2]
 
 This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
 
@@ -789,7 +789,7 @@ _Figure 4.3.8 : Full UI outcome of locate implementation_
 // end::locate[]
 
 //tag::copy[]
-=== Copy email address to clipboard [Since v1.2]
+=== Copy Email Address to Clipboard [Since v1.2]
 
 The `copy` function uses the Clipboard in Toolkit API to automatically copy emails of selected indexes onto the system clipboard.
 The index(es) selected must exist in the current result display window, as shown in _Figure 4.5.1_.
@@ -950,7 +950,7 @@ _Figure 4.6.5: Output of `CalendarCommand.java` execution_
 //end::calendar[]
 
 // tag::multipleemails[]
-=== Support for adding or editing contact with multiple emails [Since v1.3]
+=== Support for Adding or Editing Contact with Multiple Emails [Since v1.3]
 
 Since version 1.3, more than one email can be saved to a `Person` and all emails can be displayed in the `PersonCard`. The `AddCommand` and `EditCommand` provides support to this enhancement.
 The method to parse all email inputs in `ParserUtil` returns a set of `Email` from a collection of user input emails, as seen in _Figure 4.7.1_ below.
@@ -1047,7 +1047,7 @@ _Figure 4.7.4: Code section in UniqueEmailList.java_
 // end::multipleemails[]
 
 //tag::country_code[]
-=== Country of contact [Since v1.3]
+=== Country of Contact [Since v1.3]
 
 When a contact is added or edited, its phone number is checked for existence of a country code prefix, e.g. "+1 ".
 The country code is extracted from the phone number in several steps:
@@ -1191,18 +1191,6 @@ This idea started with creating a field for standalone input of Country name. Ho
 many users may skip, we decided to infer this field from existing information instead. Depending on user feedback, we may want to re-open
 the idea of allowing custom user-defined input, concurrent to a default country inference when a contact is first made.
 
-
-**Aspect:** How to input Country name +
-**Alternative 1 (current choice):** Automatic detection from phone number +
-**Pros:** Fewer steps by user, ensures all contacts have country. +
-**Cons:** User cannot change a custom country for contact.  +
-**Alternative 2:** Automatic detection from address +
-**Pros:** Fewer steps by user, does not rely on phone prefixes. +
-**Cons:** User may not input country in some addresses. +
-**Alternative 3:** Manual entry of contact's country +
-**Pros:** Guarantees satisfactory country field as defined by user. +
-**Cons:** More steps, users may not want to expend the extra time while populating address book over time.
-
 ---
 //end::country_code[]
 
@@ -1324,7 +1312,7 @@ The outcome of schedule multiple command execution is shown in _Figure 4.4.1_ be
 
 image::ScheduleCommandMultipleScreenShot.png[width="400"]
 
-_Figure 4.4.1: UI display of a successful enhanced `ScheduleCommand` execution_
+_Figure 4.4.1: UI Display of a Successful Enhanced `ScheduleCommand` Execution_
 
 ==== Design Considerations
 
@@ -1346,7 +1334,7 @@ _Figure 4.4.1: UI display of a successful enhanced `ScheduleCommand` execution_
 //end::scheduleMultiple[]
 
 //tag::find[]
-=== FindCommand by any search field [Since v1.2 and v1.4]
+=== FindCommand by Any Search Field [Since v1.2 and v1.4]
 
 
 `FindCommand` which reside in `Logic` will support the search of contact by any keywords. `Logic` uses the `AddressBookParser` class to parse user command. `parseCommand` in `AddressBookParser` will detect the command word `find` and the keywords keyed in by user and call `parse` method in `FindCommandParser`.`parse` method in `FindCommandParser` will check for the prefix based existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`. _Figures 4.4.1_ indicates the the parsing of user command in  `FindCommandParser`.
@@ -1435,7 +1423,7 @@ _Figure 4.4.6g : Find by country [c/COUNTRY]_
 //end::find[]
 
 // tag::agenda[]
-=== Viewing of user's agenda [Since v1.4]
+=== Viewing of User's Agenda [Since v1.4]
 
 All scheduled activities by the user are displayed as a list view in the `AgendaPanel`. The `AgendaPanel` is first initialised in the `MainWindow`, with the observable schedule list of the `AddressBook` being passed in as a parameter to its constructor. This can be observed in _Figure 4.8.1_ below.
 
@@ -1589,7 +1577,7 @@ When the `Continue` button is pressed, `WelcomeScreen` will pass the `MainWindow
 
 
 // tag::reminder[]
-=== Pop-up reminder window [Since v1.5]
+=== Pop-up Reminder Window [Since v1.5]
 
 The `AddressBook` consists of 2 schedule lists: one contains all the scheduled activities by the user, while the other contains the scheduled activities that the user need to be reminded of. +
 If there exists any activities that the user need to be reminded of, a `ReminderWindow` will open after the `MainWindow`, as shown in _Figure 4.9.1_ below.
