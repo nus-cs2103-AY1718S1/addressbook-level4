@@ -1,5 +1,17 @@
 # willxujun
-###### /java/seedu/address/logic/commands/SearchCommandTest.java
+###### \java\seedu\address\logic\commands\EditCommandTest.java
+``` java
+        //clear tags, setting both tags to add and tags to remove to empty
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB).withTags().withTagsToRemove().build();
+        EditCommand editCommand = prepareCommand(descriptor, indexLastPerson);
+
+        //save index in a list for new message format
+        List<Index> expectedIndices = new ArrayList<>();
+        expectedIndices.add(INDEX_SEVENTH_PERSON);
+        String expectedMessage = String.format(MESSAGE_EDIT_PERSON_SUCCESS, expectedIndices.toString());
+```
+###### \java\seedu\address\logic\commands\SearchCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
@@ -119,7 +131,7 @@ public class SearchCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
         //empty (unknown) email value
         expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -133,7 +145,7 @@ public class SearchCommandTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + UNKNOWN_ADDRESS_DESC, new AddCommand(expectedPerson));
 ```
-###### /java/seedu/address/logic/parser/SearchParserTest.java
+###### \java\seedu\address\logic\parser\SearchParserTest.java
 ``` java
 public class SearchParserTest {
 
@@ -159,6 +171,21 @@ public class SearchParserTest {
 
 }
 ```
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
+``` java
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withTagsToRemove(String... tags) {
+        try {
+            descriptor.setTagsToRemove(ParserUtil.parseTags(Arrays.asList(tags)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+```
 ###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
@@ -181,7 +208,9 @@ public class SearchParserTest {
         System.out.println(personToEdit.getAsText());
         editedPerson = new PersonBuilder(personToEdit)
                 .withTags(originalTags).build();
-        assertCommandSuccess(command, index, editedPerson);
+        toEdit.clear();
+        toEdit.add(index);
+        assertCommandSuccess(command, toEdit, editedPerson);
 
         /* Case: delete a tag -> edited*/
         index = INDEX_FIRST_PERSON;
@@ -189,14 +218,18 @@ public class SearchParserTest {
         originalTags.remove(new Tag(VALID_TAG_FRIEND));
         editedPerson = new PersonBuilder(personToEdit)
                 .withTags(originalTags).build();
-        assertCommandSuccess(command, index, editedPerson);
+        toEdit.clear();
+        toEdit.add(index);
+        assertCommandSuccess(command, toEdit, editedPerson);
 
         /* Case: add a tag then delete the same tag -> edited*/
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND + RM_TAG_DESC_FRIEND;
         editedPerson = new PersonBuilder(personToEdit)
                 .withTags(originalTags).build();
-        assertCommandSuccess(command, index, editedPerson);
+        toEdit.clear();
+        toEdit.add(index);
+        assertCommandSuccess(command, toEdit, editedPerson);
 ```
 ###### \java\systemtests\FindCommandSystemTest.java
 ``` java

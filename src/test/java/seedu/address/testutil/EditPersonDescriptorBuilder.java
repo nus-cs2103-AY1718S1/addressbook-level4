@@ -97,6 +97,21 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author willxujun
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withTagsToRemove(String... tags) {
+        try {
+            descriptor.setTagsToRemove(ParserUtil.parseTags(Arrays.asList(tags)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
+
     public EditPersonDescriptor build() {
         return descriptor;
     }
