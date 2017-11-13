@@ -523,7 +523,7 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 **Cons:** modularity compromised, can envision the method getting larger as more features are integrated as flags.
 // end::search[]
 
-//tag::additionalPhoneList[]
+// tag::additionalPhoneList[]
 === Multiple phone numbers supported
 (launched in V1.3)
 
@@ -619,9 +619,10 @@ reduce the duplication of code, hence the program can be more succinct. +
 **Alternative 2:** only support `INDEX`. +
 **Pros:** Easier to code. +
 **Cons:** Less convenient for the users.
+// end::additionalPhoneList[]
 
 
-
+// tag:: weatherReport[]
 === Weather Forecast Display Mechanism
 
 ==== Motivation
@@ -658,6 +659,8 @@ is simply no internet connection.
 **Alternative 2:** Display on a new window when search for command word/click open the window. +
 **Pros:** More detailed report available. +
 **Cons:** Inconvenient and slow.
+
+// end:: weatherReport[]
 
 == Documentation
 We use asciidoc for writing documentation.
