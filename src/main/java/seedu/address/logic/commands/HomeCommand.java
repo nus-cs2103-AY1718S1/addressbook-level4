@@ -5,7 +5,7 @@ import seedu.address.commons.events.ui.HomeRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
- * Changes the graphs shown on the graph panel in the address book.
+ * Displays the home page when homeCommand is executed.
  */
 //@@author nahtanojmil
 public class HomeCommand extends Command {
