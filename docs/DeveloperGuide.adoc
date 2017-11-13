@@ -724,7 +724,7 @@ application to launch the default mail application registered inside the user's 
 An in-built calendar is added to the panel beside the list of events. This calendar shows a monthly view of the current month.
 
 image::Calendar.png[width="600"]
-_Figure 4.9.1 : Calendar_
+_Figure 4.9.1 : Calendar for month of November 2017_
 
 This is useful for users to be able to compare their list of events in the calendar. It can help users to check what day of the week their event is happening on. This is especially useful for NUS students as there is a fixed daily schedule and it would be easy to check what day it falls on to ensure their availability for the event. Other usages include having to see what dates lie on a particular day for students to plan weekly events. All in all, it provides a convenient way for students to have access to a calendar without having to open any external applications.
 
