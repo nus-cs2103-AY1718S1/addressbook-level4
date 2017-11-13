@@ -545,6 +545,11 @@ the address book storage and then displayed on `PersonListPanel` on the GUI.
 Sorts and the lists everyone in the address book based on decreasing number of searches.
 
 ==== Implementation
+
+When the command is called, the user input is parsed as shown in the sequence diagram below.
+
+image::SDforSearchPerson.png[width="800"]
+
 Each successful `Find` command execution with non-zero search results, activates an update of search count for everyone in search results.+
 [source,java]
 ----
