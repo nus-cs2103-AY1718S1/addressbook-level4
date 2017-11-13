@@ -221,20 +221,15 @@ Format: `bookmark INDEX`
 ** *Expected output* +
 Successfully bookmarked the first place in the list.
 
-. `list` +
-`bookmark 1`
-
-** *Expected output* +
-Error message "**Place already has that tag.**"
+[discrete]
+=== Negative Test Cases
 
 . `list` +
+`bookmark 5` +
 `bookmark 5`
 
 ** *Expected output* +
 Successfully bookmarked the first place in the list.
-
-[discrete]
-=== Negative Test Cases
 
 . `list` +
 `bookmark 45`
