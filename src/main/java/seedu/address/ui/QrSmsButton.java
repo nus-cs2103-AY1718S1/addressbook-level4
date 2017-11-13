@@ -39,7 +39,7 @@ public class QrSmsButton extends UiPart<Region> {
      */
     @FXML
     private void handleQrSmsButtonPressed() throws CommandException, ParseException, IOException {
-        if ( person != null) {
+        if (person != null) {
             bp.loadSmsQrCode(person);
             logger.info("QR Code displayed");
         } else {
@@ -53,7 +53,7 @@ public class QrSmsButton extends UiPart<Region> {
     }
 
     @Subscribe
-    private void clickButton(QrSmsEvent event ) {
+    private void clickButton(QrSmsEvent event) {
         bp.loadSmsQrCode((ReadOnlyPerson) event.getPerson());
     }
 

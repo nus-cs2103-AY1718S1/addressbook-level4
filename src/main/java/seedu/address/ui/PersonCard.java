@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.io.File;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,8 +25,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static final String filePath = "photos/";
-    private static final String defaultFilePath = "photos/default.jpeg";
+    private static final String FILE_PATH = "photos";
+    private static final String DEFAULT_FILE_PATH = "/images/default.jpeg";
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -93,17 +94,30 @@ public class PersonCard extends UiPart<Region> {
      */
     private void setImage() {
 
-        File file = new File(filePath + person.getEmail().toString() + ".png");
-        Path path = Paths.get(filePath + person.getEmail().toString() + ".png");
+        try {
+            Path p = Files.createDirectories(Paths.get(FILE_PATH));
 
-        if (Files.exists(path)) {
-            Image image = new Image(file.toURI().toString(), 150, 150, false, false);
-            photo.setImage(image);
+            String fp = p.toString();
 
-        } else {
-            File fileDefault = new File(defaultFilePath);
-            Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
-            photo.setImage(image);
+            File file = new File(fp + File.separator + person.getEmail().toString() + ".png");
+            Path path = Paths.get(fp + File.separator + person.getEmail().toString() + ".png");
+
+            if (Files.exists(path)) {
+                Image image = new Image(file.toURI().toString(), 150, 150, false, false);
+                photo.setImage(image);
+
+            } else {
+                URL url = getClass().getResource(DEFAULT_FILE_PATH);
+                try {
+                    Image img = new Image(url.openStream(), 150, 150, false, false);
+                    photo.setImage(img);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (Exception ie) {
+            ie.printStackTrace();
         }
 
     }
