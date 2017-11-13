@@ -125,9 +125,9 @@ Examples:
 Add commands are _undoable_ with the `undo` command.
 ====
 
-//tag::autocomplete[]
 [[autocomplete]]
 === Auto-completion _(Since v1.2)_
+//tag::autocomplete[]
 
 For commands that require additional field(s), auto-completion can be triggered by pressing kbd:[Tab] after keying in the command word.
 [NOTE]
@@ -203,8 +203,9 @@ Deletes the 1st person in the results of the `find` command.
 Delete commands are _undoable_ with the `undo` command.
 ====
 
-//tag::dropdownlist[]
+
 === Drop-down List of Possible Commands
+//tag::dropdownlist[]
 With the help of the drop-down list of suggestions, you do not need to memorise any command.
 
 When you type your commands inside the command box, you will notice that a drop-down list appears.
@@ -277,9 +278,9 @@ the 2nd person, or removes it otherwise.
 Edit commands are _undoable_ with the `undo` command.
 ====
 
-// tag::email[]
-=== `email`, `mail`, `mailto`, `send` or `m`: Composing an email _(Since v1.5rc)_
 
+=== `email`, `mail`, `mailto`, `send` or `m`: Composing an email _(Since v1.5rc)_
+// tag::email[]
 Opens the 'compose new email' window of the default email client, with the recipient's email address and subject
 (optional) filled in. +
 Format: `email INDEX [s/SUBJECT]` +
@@ -743,8 +744,8 @@ image::profile_pic_after.png[width="500"]
 
 == Keyboard Shortcuts
 
-// tag::auto-complete-shortcut[]
 === Auto-complete Command Shortcuts _(Since v1.3)_
+// tag::auto-complete-shortcut[]
 [NOTE]
 ====
 Using the keyboard shortcut is equivalent to typing in the corresponding command followed by pressing kbd:[Tab]

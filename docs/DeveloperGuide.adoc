@@ -692,8 +692,8 @@ access on a java https://docs.oracle.com/javase/8/docs/api/java/util/HashSet.htm
 
 // end::commandAbbreviations[]
 
-// tag::dropdownlist[]
 === Drop-down List of Possible Commands
+// tag::dropdownlist[]
 The dynamic drop-down list is created using `org.controlsfx.control.textfield.TextFields` https://controlsfx.bitbucket.io/org/controlsfx/control/textfield/TextFields.html#bindAutoCompletion-javafx.scene.control.TextField-javafx.util.Callback-[API] link:#api[(Application Programming Interface)].
 The `bindAutoCompletion` method in the `TestFields` creates a new auto-completion binding between the given textField and the given suggestion provider.
 
@@ -748,8 +748,8 @@ A command is added if all three conditions are satisfied:
 **Cons:** Most of the time, inaccurate suggestions are not necessary.
 // end::dropdownlist[]
 
-// tag::auto-completion[]
 === Auto-completion Mechanism
+// tag::auto-completion[]
 Auto-completion mechanism is implemented in `CommandBox` class under `UI` component.
 
 Auto-completion is activated when kbd:[Tab] key is pressed. This is done by adding a case in the keypress handler in `CommandBox`.
@@ -904,9 +904,9 @@ pressing the kbd:[esc] key will result in the application focusing on the person
 
 // end::shortcut[]
 
-// tag::auto-complete-shortcut[]
 === Auto-complete Command Shortcuts
-The link:#shortcut[Keyboard Shortcut Mechanism] is the foundation of this implementation.
+// tag::auto-complete-shortcut[]
+The Keyboard Shortcut Mechanism is the foundation of this implementation.
 
 When an auto-complete command shortcut is pressed, the corresponding command format will be displayed.
 The following codes shows the example for `add` command shortcut.
@@ -1263,8 +1263,8 @@ private void clearHighlights(WebEngine engine) {
 ----
 // end::helpWindowHighlight[]
 
-// tag::email[]
 === Composing Emails
+// tag::email[]
 This functionality is implemented through the `EmailCommand` class under `logic` component.
 
 An email command has the following format: `Email INDEX [s/SUBJECT]` (Subject is an optional field). When the command is executed, the user's default email client will open
@@ -1609,7 +1609,7 @@ During the handling of a suggestible command arguments for an `Edit` command,
 * Addresses are expected to be entered after a name (i.e. `COMMAND NAME ... ADDRESS`),
 making it _highly possible_ to obtain the address by getting the substring from the first occurrence of `Blk`, `Block` or the number to the end of the remaining string.
 9. Optional `Name` is checked. If present, extract, remove and continue. Otherwise continue.
-* Name is the last mandatory argument to be parsed.
+* Name is the last argument to be parsed.
 * Name must be non-empty and matches the defined name regex.
 * The unpredictable nature of name words makes it difficult to identify a person's name.
 * As seen in `Address`, if `Name` is entered after (to the right of) `Address`,
