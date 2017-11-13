@@ -12,11 +12,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookAccessChangedEvent;
 import seedu.address.commons.events.ui.AccessCountDisplayToggleEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ToggleBrowserPanelEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -57,6 +59,7 @@ public class PersonListPanel extends UiPart<Region> {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        EventsCenter.getInstance().post(new ToggleBrowserPanelEvent());
                         raise(new PersonPanelSelectionChangedEvent(newValue));
                         updateAccessCount(oldValue, newValue);
                     }
