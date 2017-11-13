@@ -133,15 +133,15 @@ checks of <code>null</code> in its respective class:</p>
 <p><strong>Aspect:</strong> Which component is responsible for <code>null</code>.<br></p>
 </div>
 <div class="paragraph">
-<p><strong>Alternative 1 (current choice):</strong> Parameters can be instantiated with <code>null</code> parameter, but the object itself cannot be <code>null</code>.
+<p><strong>Alternative 1 (current choice):</strong> Parameters can be instantiated with <code>null</code> parameter, but the object itself cannot be <code>null</code>.<br>
 <strong>Pros:</strong> Only parameter classes that are within <code>Model</code> component need to be modified. Other components are still functioning
 correctly. This improves coherent within <code>Model</code> component.<br>
 <strong>Cons:</strong> Potentially confusing for new developers. This design is equivalent to "having a phone with <code>null</code> number" rather
-than the more intuitive "doesn&#8217;t have a phone".</p>
+than the more intuitive "doesn&#8217;t have a phone".<br></p>
 </div>
 <div class="paragraph">
 <p><strong>Alternative 2:</strong> Parameter objects can be <code>null</code>.<br>
-<strong>Pros:</strong> More intuitive for a new developer. Easier modification on <code>Model</code> component.
+<strong>Pros:</strong> More intuitive for a new developer. Easier modification on <code>Model</code> component.<br>
 <strong>Cons:</strong> Many components rely on the assumption that parameter objects are non-null. Hence, this design will fail the other components.
 More verification is needed outside the <code>Model</code> component when interacting with these parameter objects. This increases coupling.<br></p>
 </div>
@@ -460,7 +460,7 @@ intuitively means a person named Amy with phone number 12345.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 08:47:47 +08:00
+Last updated 2017-11-13 17:01:44 +08:00
 </div>
 </div>
 </body>
