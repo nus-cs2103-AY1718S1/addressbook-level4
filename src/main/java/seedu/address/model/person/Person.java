@@ -10,6 +10,7 @@ import java.util.TreeSet;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -156,6 +157,13 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    public void addEventTag(String eventStr) throws IllegalValueException {
+        Tag event = new Tag(eventStr);
+        Set<Tag> tagSet = getTags();
+        tagSet.add(event);
+        setTags(tagSet);
     }
 
     //@@author YuchenHe98

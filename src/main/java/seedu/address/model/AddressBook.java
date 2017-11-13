@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.PossibleDays;
 import seedu.address.commons.core.PossibleTimes;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -256,4 +257,46 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sort() {
         persons.sort();
     }
-}
+    /**
+     * Checks Meeting Time based on the list of Index.
+     */
+    public boolean checkMeetingTime(Index[] listOfIndex, int day, int start, int end) {
+        boolean res = true;
+        TreeSet<Integer> satisfiedTimeSet = new TreeSet<>();
+        boolean started = false;
+        boolean ended = false;
+        for (int k = 0; k < PossibleTimes.TIMES.length; k++) {
+            if (PossibleTimes.TIMES[k] == start) {
+                started = true;
+            }
+            if (PossibleTimes.TIMES[k] == end) {
+                ended = true;
+            }
+            if (started && !ended) {
+                satisfiedTimeSet.add(day * PossibleDays.DAY_COEFFICIENT + PossibleTimes.TIMES[k]);
+            }
+            if (ended) break;
+        }
+        if (!started || !ended) res = false;
+        for (int j = 0; j < listOfIndex.length; j++) {
+            if (!res) {
+                break;
+            }
+            Iterator<Integer> iterator = satisfiedTimeSet.iterator();
+            Schedule currentSchedule = getPersonList().get(listOfIndex[j].getZeroBased()).getSchedule();
+            while (iterator.hasNext()) {
+                Integer timeNumber = iterator.next();
+                if (!currentSchedule.containsTimeNumber(timeNumber)) {
+                    res = false;
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+
+    public void addEventToPerson(Integer index, String eventStr) throws IllegalValueException {
+        persons.addEventTag(index,eventStr);
+    }
+
+ }

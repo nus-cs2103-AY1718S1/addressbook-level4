@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -61,4 +62,8 @@ public interface Model {
     void sort();
 
     TreeSet<Integer> generateMeetingTime(Index[] listOfIndex);
+
+    boolean checkMeetingTime(Index[] listOfIndex, int day, int start, int end);
+
+    void addEventToPerson(Integer index, String eventStr) throws IllegalValueException;
 }

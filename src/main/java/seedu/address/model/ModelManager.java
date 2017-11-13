@@ -14,6 +14,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -90,6 +91,10 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    public void addEventToPerson(Integer index, String eventStr) throws IllegalValueException {
+        addressBook.addEventToPerson(index, eventStr);
+    }
+
     //@@author YuchenHe98
     @Override
     public void addScheduleToPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException {
@@ -156,6 +161,16 @@ public class ModelManager extends ComponentManager implements Model {
         if (addressBook.removeTag(str)) {
             indicateAddressBookChanged();
         }
+    }
+
+
+    //@@author
+    /**
+     * Tests meeting time.
+     */
+    @Override
+    public boolean checkMeetingTime(Index[] listOfIndex, int day, int start, int end) {
+        return addressBook.checkMeetingTime(listOfIndex, day, start, end);
     }
 
     //@@author YuchenHe98

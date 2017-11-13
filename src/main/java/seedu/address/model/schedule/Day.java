@@ -9,6 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Day {
 
     private final Integer day;
+    private final String strDay;
 
     public Day(String dayToAdd) throws IllegalValueException {
         if ("Monday".equals(dayToAdd)) {
@@ -28,6 +29,7 @@ public class Day {
         } else {
             throw new IllegalValueException("Not a proper day");
         }
+        strDay = dayToAdd;
     }
 
     public boolean isValid() {
@@ -43,5 +45,9 @@ public class Day {
         return other == this // short circuit if same object
                 || (other instanceof Day) // instanceof handles nulls
                 && (this.day == ((Day) other).day); // state check
+    }
+
+    public String toString() {
+        return strDay;
     }
 }
