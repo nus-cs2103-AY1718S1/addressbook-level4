@@ -10,11 +10,12 @@ Furthermore, it helps them keep track of various tasks and reminds them about th
 The interaction between user and Gentleman’s Guide is mostly done through a Command Line Interface (CLI). +
 This application is written in Java, and its Graphical User Interface (GUI) is created with JavaFX.
 
-*About Project Portfolio*: This project portfolio summarizes all enhancements that I have added to Gentleman's Guide, including
+*About Project Portfolio*: This project portfolio summarizes all new features that I have added to Gentleman's Guide, including the instructions
+for users on how to use the features, the mechanism behind them, as well as the justification for implementing these features.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/main/duyson98.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/test/duyson98.md[Test code]]
 
-=== Enhancement Added: Retrieve command, Tag/Untag/Retag commands, View command
+=== Enhancement Added: Retrieve command, Tag/Untag/Retag commands
 
 ==== External behavior
 
@@ -24,8 +25,6 @@ This application is written in Java, and its Graphical User Interface (GUI) is c
 include::../UserGuide.adoc[tag=tagsmanipulation]
 
 include::../UserGuide.adoc[tag=retrieve]
-
-include::../UserGuide.adoc[tag=view]
 
 #End of Extract#
 
