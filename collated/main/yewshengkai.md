@@ -734,8 +734,8 @@ public class AboutWindow extends UiPart<Region> {
     @Subscribe
     private void handlePersonSideCardPanelChangedEvent(PersonSideCardRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.targetPerson);
         browser.setOpacity(100);
+        loadPersonPage(event.targetPerson);
     }
 
     @Subscribe
