@@ -4,7 +4,11 @@ import seedu.room.commons.core.EventsCenter;
 import seedu.room.commons.events.ui.ChangeMonthRequestEvent;
 
 //@@author Haozhe321
-public class NextCommand extends Command{
+
+/**
+ * The command to go to the next month in the calendar
+ */
+public class NextCommand extends Command {
     public static final String COMMAND_WORD = "next";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD

@@ -296,9 +296,9 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     public void handleChangeMonthCommand(ChangeMonthRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if(event.getTargetIndex() == 0) {
+        if (event.getTargetIndex() == 0) {
             calandarBoxPanel.getCalendarBox().previousMonth();
-        } else if (event.getTargetIndex() == 1){
+        } else if (event.getTargetIndex() == 1) {
             calandarBoxPanel.getCalendarBox().nextMonth();
         }
     }
