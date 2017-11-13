@@ -20,6 +20,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AccessCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
+import seedu.address.logic.commands.BirthdaysCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
@@ -178,7 +179,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_birthdays() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+        assertTrue(parser.parseCommand(BirthdaysCommand.COMMAND_WORD) instanceof BirthdaysCommand);
     }
 
     @Test
@@ -358,6 +359,50 @@ public class AddressBookParserTest {
         thrown.expect(ParseException.class);
         thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
         parser.parseCommand(SortCommand.COMMAND_WORD);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_birthdaysCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(BirthdaysCommand.COMMAND_WORD);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_favouriteListCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(FavouriteListCommand.COMMAND_WORD);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_favouriteCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(FavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_unfavouriteCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(UnfavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
     }
     //@@author
