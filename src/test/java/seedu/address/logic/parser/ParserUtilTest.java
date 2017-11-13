@@ -23,6 +23,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Photo;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -32,6 +33,7 @@ public class ParserUtilTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_PHOTO = "photo";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_REL = "#siblings";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -39,6 +41,7 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_REL = "siblings";
 
     private static final String s = File.separator;
     private static final String VALID_PHOTO = "src" + s + "main" + s
@@ -220,8 +223,28 @@ public class ParserUtilTest {
     @Test
     public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
         Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+        Set<Tag> expectedTagSet = new HashSet<>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+
+    //@@author huiyiiih
+    @Test
+    public void parseRels_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseRels(null);
+    }
+    @Test
+    public void parseRels_collectionWithInvalidRels_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseRels(Arrays.asList(INVALID_REL));
+    }
+    @Test
+    public void parseRels_collectionWithValidRels_returnsRelSet() throws Exception {
+        Set<Relationship> actualRelSet = ParserUtil.parseRels(Arrays.asList(VALID_REL));
+        Set<Relationship> expectedRelSet = new HashSet<>(Arrays.asList(new Relationship(VALID_REL)));
+
+        assertEquals(expectedRelSet, actualRelSet);
+    }
+    //@@author
 }

@@ -12,14 +12,13 @@ import java.util.Set;
  * so that the user does not have to remember specific commands
  */
 public class CheckCommandsParser {
-
     /**
      * Parsers user input command and match it with the synonyms/aliases
      *
      * @param userCommand user input command string
      * @return the relevant command it matches
      */
-    public static String matchCommand(String userCommand) {
+    public String matchCommand(String userCommand) {
         /**
          * sets the initial finalUserCommand to error
          */
@@ -42,16 +41,20 @@ public class CheckCommandsParser {
         final String[] subFindCommands = new String[] { "find", "f", "look", "search", "check" };
         final String[] subHelpCommands = new String[] { "help", "info" };
         final String[] subHistoryCommands = new String[] { "history", "h", "past" };
-        final String[] subListCommands = new String[] { "list", "l", "show", "display" };
+        final String[] subListAllCommands =
+                new String[] { "listall", "list all", "la", "show all", "display all", "list", "refresh" };
+        final String[] subListPersonsCommands =
+                new String[] { "listpersons", "list persons", "lp", "show persons", "display persons" };
+        final String[] subListEventsCommands =
+                new String[] { "listevents", "list events", "le", "show events", "display events" };
         final String[] subRedoCommands = new String[] { "redo", "r" };
         final String[] subSelectCommands = new String[] { "select", "s", "choose", "pick" };
         final String[] subSortCommands = new String[] { "sort", "arrange", "organise" };
         final String[] subUndoCommands = new String[] { "undo", "u" };
-        final String[] subCheckScheduleCommands = new String[] {"thisweek",
-            "schedule", "checkschedule", "tw", "cs"};
+        final String[] subCheckScheduleCommands = new String[] {"thisweek", "schedule", "checkschedule", "tw", "cs"};
         final String[] subAddEventsCommands = new String[] { "eventadd", "addevent", "ae", "ea" };
-        final String[] subDeleteEventsCommands = new String[] { "eventdel",
-            "delevent", "deleteevent", "eventdelete", "de", "ed" };
+        final String[] subDeleteEventsCommands =
+                new String[] { "eventdel", "delevent", "deleteevent", "eventdelete", "de", "ed" };
         final String[] subEditEventsCommands = new String[] { "eventedit", "editevent", "ee" };
         final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
         final String[] subUpdatePhotoCommands = new String[] { "updatephoto", "up" };
@@ -71,7 +74,9 @@ public class CheckCommandsParser {
         final Set<String> commandsForFind = new HashSet<>(Arrays.asList(subFindCommands));
         final Set<String> commandsForHelp = new HashSet<>(Arrays.asList(subHelpCommands));
         final Set<String> commandsForHistory = new HashSet<>(Arrays.asList(subHistoryCommands));
-        final Set<String> commandsForList = new HashSet<>(Arrays.asList(subListCommands));
+        final Set<String> commandsForListAll = new HashSet<>(Arrays.asList(subListAllCommands));
+        final Set<String> commandsForListPersons = new HashSet<>(Arrays.asList(subListPersonsCommands));
+        final Set<String> commandsForListEvents = new HashSet<>(Arrays.asList(subListEventsCommands));
         final Set<String> commandsForRedo = new HashSet<>(Arrays.asList(subRedoCommands));
         final Set<String> commandsForSelect = new HashSet<>(Arrays.asList(subSelectCommands));
         final Set<String> commandsForSort = new HashSet<>(Arrays.asList(subSortCommands));
@@ -106,8 +111,8 @@ public class CheckCommandsParser {
             finalUserCommand = "help";
         } else if (!Collections.disjoint(userInputCommand, commandsForHistory)) {
             finalUserCommand = "history";
-        } else if (!Collections.disjoint(userInputCommand, commandsForList)) {
-            finalUserCommand = "list";
+        } else if (!Collections.disjoint(userInputCommand, commandsForListAll)) {
+            finalUserCommand = "listall";
         } else if (!Collections.disjoint(userInputCommand, commandsForRedo)) {
             finalUserCommand = "redo";
         } else if (!Collections.disjoint(userInputCommand, commandsForSelect)) {
@@ -134,6 +139,10 @@ public class CheckCommandsParser {
             finalUserCommand = "timetable";
         } else if (!Collections.disjoint(userInputCommand, commandsForRepeat)) {
             finalUserCommand = "repeat";
+        } else if (!Collections.disjoint(userInputCommand, commandsForListPersons)) {
+            finalUserCommand = "listpersons";
+        } else if (!Collections.disjoint(userInputCommand, commandsForListEvents)) {
+            finalUserCommand = "listevents";
         }
         return finalUserCommand;
     }

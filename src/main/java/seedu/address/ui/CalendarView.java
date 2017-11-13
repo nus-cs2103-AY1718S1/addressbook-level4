@@ -346,7 +346,7 @@ public class CalendarView extends UiPart<Region> {
 
         try {
             startOfWeekTimeslot = new Timeslot(startofWeekTokens[2] + "/" + startofWeekTokens[1] + "/"
-                    + startofWeekTokens[0] + " " + "0700-0701");
+                    + startofWeekTokens[0] + " " + "0658-0659");
             endOfWeekTimeslot = new Timeslot(endofWeekTokens[2] + "/" + endofWeekTokens[1] + "/"
                     + endofWeekTokens[0] + " " + "2358-2359");
         } catch (IllegalValueException ive) {
@@ -543,10 +543,15 @@ public class CalendarView extends UiPart<Region> {
      */
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
-        logger.info("LastChangedEvent is " + abce.data.getLastChangedEvent());
-        logger.info("NewlyAddedEvent is " + abce.data.getNewlyAddedEvent());
-        updateEvents(calendarView, abce.data.getEventList(), abce.data.getLastChangedEvent(), abce.data
-                .getNewlyAddedEvent());
+        ReadOnlyEvent lastChangedEvent = abce.data.getLastChangedEvent();
+        ReadOnlyEvent newlyAddedEvent = abce.data.getNewlyAddedEvent();
+        logger.info("LastChangedEvent is " + lastChangedEvent);
+        logger.info("NewlyAddedEvent is " + newlyAddedEvent);
+        if (lastChangedEvent != null && newlyAddedEvent != null) {
+            updateEvents(calendarView, abce.data.getEventList(), lastChangedEvent, newlyAddedEvent);
+        } else {
+            initEvents(calendarView, abce.data.getEventList(), null);
+        }
     }
 
 

@@ -249,7 +249,7 @@ public class ParserUtil {
     /**
      * Parses {@code Collection<String> relationship} into a {@code Set<Relationship>}.
      */
-    public static Set<Relationship> parseRel(Collection<String> relation) throws IllegalValueException {
+    public static Set<Relationship> parseRels(Collection<String> relation) throws IllegalValueException {
         requireNonNull(relation);
         final Set<Relationship> relationSet = new HashSet<>();
         for (String relationType : relation) {

@@ -58,7 +58,7 @@ public interface ReadOnlyEvent {
 
     java.util.Date getEndDateTime();
 
-    void plusDays(int days);
+    Event plusDays(int days);
 
     Event getNextScheduledEvent();
 

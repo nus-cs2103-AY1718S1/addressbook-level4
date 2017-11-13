@@ -25,14 +25,12 @@ import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.commands.event.CheckScheduleCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.event.EditEventCommand;
-import seedu.address.logic.commands.event.FindEventCommand;
 import seedu.address.logic.commands.event.RepeatCommand;
 import seedu.address.logic.commands.event.ToggleTimetableCommand;
 import seedu.address.logic.commands.relationship.SetRelCommand;
 import seedu.address.logic.parser.event.AddEventCommandParser;
 import seedu.address.logic.parser.event.DeleteEventCommandParser;
 import seedu.address.logic.parser.event.EditEventCommandParser;
-import seedu.address.logic.parser.event.FindEventCommandParser;
 import seedu.address.logic.parser.event.RepeatCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.relationship.SetRelCommandParser;
@@ -42,6 +40,7 @@ import seedu.address.logic.parser.relationship.SetRelCommandParser;
  */
 public class AddressBookParser {
 
+    private static CheckCommandsParser checkCommand = new CheckCommandsParser();
     /**
      * Used for initial separation of command word and args.
      */
@@ -61,7 +60,7 @@ public class AddressBookParser {
         }
 
         String commandWord = matcher.group("commandWord");
-        commandWord = CheckCommandsParser.matchCommand(commandWord);
+        commandWord = checkCommand.matchCommand(commandWord);
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
         case AddCommand.COMMAND_WORD:
@@ -82,8 +81,14 @@ public class AddressBookParser {
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+        case ListCommand.COMMAND_WORD_ALL:
+            return new ListCommand(ListCommand.Option.ALL);
+
+        case ListCommand.COMMAND_WORD_EVENTS:
+            return new ListCommand(ListCommand.Option.EVENTS);
+
+        case ListCommand.COMMAND_WORD_PERSONS:
+            return new ListCommand(ListCommand.Option.PERSONS);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
@@ -114,9 +119,6 @@ public class AddressBookParser {
 
         case CheckScheduleCommand.COMMAND_WORD:
             return new CheckScheduleCommand();
-
-        case FindEventCommand.COMMAND_WORD:
-            return new FindEventCommandParser().parse(arguments);
 
         case SetRelCommand.COMMAND_WORD:
             return new SetRelCommandParser().parse(arguments);

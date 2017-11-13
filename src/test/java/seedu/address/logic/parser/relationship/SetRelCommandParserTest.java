@@ -55,6 +55,9 @@ public class SetRelCommandParserTest {
 
         // invalid prefix being parsed as preamble
         assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+
+        // one index present
+        assertParseFailure(parser, "1" + REL_DESC_SIBLINGS, SetRelCommandParser.INVALID_INDEX);
     }
     @Test
     public void parse_invalidValueFollowedByValidValue_success() {
@@ -87,7 +90,7 @@ public class SetRelCommandParserTest {
     }
     @Test
     public void parse_invalidPrefix_failure() {
-        assertParseFailure(parser, "1 2" + WRONG_REL_PREFIX + VALID_REL_SIBLINGS,
+        assertParseFailure(parser, "1 2 " + WRONG_REL_PREFIX + VALID_REL_SIBLINGS,
             MESSAGE_INVALID_FORMAT);
     }
     @Test

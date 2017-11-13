@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
+import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
@@ -32,6 +33,10 @@ import seedu.address.model.person.ReadOnlyPerson;
  * The main panel of the app that displays all the details of a person in the address book.
  */
 public class PersonPanel extends UiPart<Region> {
+    private static final double EMAIL_NAME_WIDTH = 42;
+    private static final double STATUS_NAME_WIDTH = 47;
+    private static final double HORIZONTAL_SCALE = 0.55;
+    private static final double HORIZONTAL_SCALE_EXTENDED = HORIZONTAL_SCALE + 0.05;
     private static final String FXML = "PersonPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private ReadOnlyPerson storedPerson;
@@ -50,6 +55,9 @@ public class PersonPanel extends UiPart<Region> {
     private Label phoneLabel;
 
     @FXML
+    private Label emailName;
+
+    @FXML
     private Label emailLabel;
 
     @FXML
@@ -60,6 +68,9 @@ public class PersonPanel extends UiPart<Region> {
 
     @FXML
     private Label positionLabel;
+
+    @FXML
+    private Label statusName;
 
     @FXML
     private Label statusLabel;
@@ -78,6 +89,8 @@ public class PersonPanel extends UiPart<Region> {
     @FXML
     private ImageView imageView;
 
+    @FXML
+    private Line line;
 
     public PersonPanel(Logic logic) {
         super(FXML);
@@ -152,7 +165,26 @@ public class PersonPanel extends UiPart<Region> {
         Image image = new Image(new File(imagePath).toURI().toString());
         photo.setImage(image);
         storedPerson = person;
-        //@@author sebtsh
+
+    }
+
+    //@@author sebtsh
+
+    /**
+     * Called by MainWindow. Sets the dimensions of the various elements for relative scaling once primaryStage
+     * dimensions are known.
+     * @param height
+     * @param width
+     */
+    public void setDimensions(double height, double width) {
+        emailLabel.setLayoutX(width * HORIZONTAL_SCALE);
+        emailName.setLayoutX(emailLabel.getLayoutX() - EMAIL_NAME_WIDTH);
+        statusName.setLayoutX(emailName.getLayoutX());
+        statusLabel.setLayoutX(statusName.getLayoutX() + STATUS_NAME_WIDTH);
+        photo.setLayoutX(width * HORIZONTAL_SCALE);
+        photoSelectionButton.setLayoutX(width * HORIZONTAL_SCALE);
+        photoSelectionButton.setLayoutY(photo.getLayoutY() + photo.getFitHeight());
+        line.setEndX(width * HORIZONTAL_SCALE_EXTENDED);
     }
 
     /**
@@ -171,6 +203,7 @@ public class PersonPanel extends UiPart<Region> {
         logger.fine(LogsCenter.getEventHandlingLogMessage
                 (event) + " for index " + index.getZeroBased());
         showPersonDetails(person);
+
     }
 
     /**

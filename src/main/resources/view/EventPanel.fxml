@@ -10,7 +10,7 @@
 
 <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="800.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="507.0" fitWidth="1085.0" opacity="0.15">
+      <ImageView fitHeight="507.0" fitWidth="1085.0" opacity="0.15" StackPane.alignment="CENTER_LEFT">
          <image>
             <Image url="/images/eventpanelbackground.png" />
          </image>
@@ -39,7 +39,7 @@
       </StackPane>
       <StackPane id="eventDescription" prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Label id="eventDescription" fx:id="descriptionLabel" prefHeight="158.0" prefWidth="278.0" text="Event Description Placeholder" wrapText="true" StackPane.alignment="BOTTOM_LEFT">
+            <Label id="eventDescription" fx:id="descriptionLabel" prefHeight="181.0" prefWidth="802.0" text="Event Description Placeholder" wrapText="true" StackPane.alignment="BOTTOM_LEFT">
                <padding>
                   <Insets bottom="150.0" />
                </padding>

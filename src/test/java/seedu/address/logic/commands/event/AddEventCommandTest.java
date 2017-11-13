@@ -115,7 +115,7 @@ public class AddEventCommandTest {
         }
 
         @Override
-        public void sortPerson(String type) {
+        public void sortPersonList(String type) {
             fail("This method should not be called.");
         }
 

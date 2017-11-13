@@ -3,13 +3,8 @@ package seedu.address.logic.commands.event;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PERIOD_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PERIOD_SOCCER;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MIDTERM;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_SOCCER;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_MIDTERM;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstEventOnly;

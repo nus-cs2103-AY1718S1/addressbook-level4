@@ -26,7 +26,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::v15ui.PNG[width="790"]
+image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -76,11 +76,6 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison c/ABC Foods po/Manager s/Requires follow up pr/L p/1234567 t/criminal`
 
-=== Listing all persons : `list`
-
-Synonyms/Aliases for the command: `l`, `show`, `display` +
-Shows a list of all persons in the address book. +
-Format: `list` / `show` / `display`
 
 === Editing a person : `edit`
 
@@ -234,17 +229,20 @@ last shown list.
 
 Synonyms/Aliases for the command: `arrange`, `organise` +
 Sorts list by different types +
-such as `name`, `tag`, `company`, `priority` or `status`. +
+such as `name`, `tag`, `company`, `priority` or `position`. +
 
 Format: `sort [TYPE]`
 
 [NOTE]
 ====
-1. Sorting by *priority* sorts the list by *_H, M and L_* repsectively. After sorting by H, M and L, they will then
+1. Sorting by *position* sorts the list according the person's position and it will sort all the NIL to be at the
+bottom. After doing it that, it will sort them alphabetically.
+
+2. Sorting by *priority* sorts the list by *_H, M and L_* repsectively. After sorting by H, M and L, they will then
 sort them
 alphabetically by their names.
 
-2. Sorting by *status* sorts the list by making all the *_NIL_* status to be at the bottom of the list. After doing
+3. Sorting by *company* sorts the list by making all the *_NIL_* status to be at the bottom of the list. After doing
 that it will then also sort them alphabetically.
 ====
 
@@ -258,7 +256,7 @@ Examples:
 
 * `sort priority`
 
-* `sort status`
+* `sort position`
 // end::sort[]
 
 // tag::setrelationship[]
@@ -375,6 +373,27 @@ Returns any event having titles that contain `Birthday`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+=== Listing all persons : `listpersons`
+
+`Updated in v1.5` +
+Synonyms/Aliases for the command: `lp`, `list persons`, `show persons`, `display persons` +
+Shows a list of all persons in the sales navigator via contacts tab. +
+Format: `listpersons` / `show` / `display`
+
+=== Listing all events : `listevents`
+
+`Updated in v1.5` +
+Synonyms/Aliases for the command: `le`, `list events`, `show events`, `display events` +
+Shows a list of all events in the sales navigator via events tab. +
+Format: `listevents` / `list events` / `show events` / `display events`
+
+=== Listing all persons : `listall`
+
+`Updated in v1.5` +
+Synonyms/Aliases for the command: `la`, `list all`, `list`, `refresh`, `show all`, `display all` +
+Shows a list of all persons and all events in the address book. +
+Format: `list all` / `list` / `refresh` / `show all` / `display all`
 
 // tag::schedule[]
 === Displaying user's schedule: `checkschedule`
@@ -624,7 +643,7 @@ e.g. `find James Jake`
 * *Find Event* : `eventfind KEYWORD [MORE_KEYWORDS]` +
 e.g. `find Bob's`
 * *Show/Hide Timetable* : `timetable` +
-* *List* : `list`
+* *List* : `list all`, `list persons`, `list events`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`

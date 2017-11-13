@@ -111,10 +111,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
     //@@author
+
     //@@author huiyiiih
     @Override
-    public void sortPerson(String type) throws InvalidSortTypeException {
-        addressBook.sortPerson(type);
+    public void sortPersonList(String type) throws InvalidSortTypeException {
+        addressBook.sortPersonList(type);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }

@@ -183,12 +183,12 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * Parses the {@code relation} into a {@code Set<Relationship>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
      */
     public EditPersonDescriptorBuilder withRelation(String... relation) {
         try {
-            descriptor.setRelation(ParserUtil.parseRel(Arrays.asList(relation)));
+            descriptor.setRelation(ParserUtil.parseRels(Arrays.asList(relation)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("relationships are expected to be unique.");
         }

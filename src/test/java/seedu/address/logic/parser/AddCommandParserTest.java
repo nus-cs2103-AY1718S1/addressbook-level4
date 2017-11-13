@@ -25,6 +25,7 @@ import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.REL_DESC_SIBLINGS;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
@@ -59,6 +60,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.Status;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
@@ -211,6 +213,18 @@ public class AddCommandParserTest {
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + INVALID_ADDRESS_DESC, Name.MESSAGE_NAME_CONSTRAINTS);
+    }
+    //@@author
+
+    //@@author huiyiiih
+    @Test
+    public void parse_addrelprefixpresent_failure() {
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + REL_DESC_SIBLINGS, Relationship.MESSAGE_REL_PREFIX_NOT_ALLOWED);
+
+        // invalid phone, add relationship prefix present but invalid phone message will be shown
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC
+            + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + REL_DESC_SIBLINGS, Phone.MESSAGE_PHONE_CONSTRAINTS);
     }
     //@@author
 }

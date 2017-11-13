@@ -26,7 +26,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.relationship.Relationship;
 
 /**
- * Parses all input arguments and create a new AddRelCommand object
+ * Parses all input arguments and create a new SetRelCommand object
  */
 public class SetRelCommandParser implements Parser<SetRelCommand> {
 
@@ -34,6 +34,8 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
         + "relationship between two persons.";
     public static final String NULL_RELATION_INPUT = "Relationship entered should not be empty.";
     public static final String SAME_INDEX_ERROR = "Index of the two persons must be different.";
+    public static final String INVALID_INDEX = "Indexes entered is invalid or there must be at least two indexes";
+    private static final int size = 3;
     /**
      * Parses the given {@code String} of arguments in the context of the SetRelCommand
      * and returns an SetRelCommand object for execution.
@@ -46,14 +48,21 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
             PREFIX_DELETE_RELATIONSHIP, PREFIX_CLEAR_RELATIONSHIP);
         Index indexOne;
         Index indexTwo;
+        String value;
+        String[] indexes;
         boolean addPrefixPresent = false;
+        value = argMultimap.getPreamble();
         if (!areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP,
             PREFIX_CLEAR_RELATIONSHIP)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetRelCommand.MESSAGE_USAGE));
         }
+        if (value.length() < size && !value.isEmpty()) {
+            throw new ParseException(INVALID_INDEX);
+        }
         try {
-            indexOne = ParserUtil.parseIndex(argMultimap.getPreamble().split("\\s+")[0]);
-            indexTwo = ParserUtil.parseIndex(argMultimap.getPreamble().split("\\s+")[1]);
+            indexes = value.split("\\s+");
+            indexOne = ParserUtil.parseIndex(indexes[0]);
+            indexTwo = ParserUtil.parseIndex(indexes[1]);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetRelCommand.MESSAGE_USAGE));
         }
@@ -66,16 +75,13 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
         }
         if (areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
             addPrefixPresent = true;
-            String addRelString = argMultimap.getValue(PREFIX_ADD_RELATIONSHIP).get();
-            requireNonNull(addRelString);
-            if (addRelString.length() == 0) {
-                throw new ParseException(NULL_RELATION_INPUT);
-            }
         }
-        if (areAnyPrefixesPresent(argMultimap, PREFIX_DELETE_RELATIONSHIP)) {
-            String addRelString = argMultimap.getValue(PREFIX_DELETE_RELATIONSHIP).get();
-            requireNonNull(addRelString);
-            if (addRelString.length() == 0) {
+        if (areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP)
+            || addPrefixPresent) {
+            try {
+                emptyInputArg(addPrefixPresent, argMultimap, PREFIX_ADD_RELATIONSHIP,
+                    PREFIX_DELETE_RELATIONSHIP, PREFIX_CLEAR_RELATIONSHIP);
+            } catch (ParseException pe) {
                 throw new ParseException(NULL_RELATION_INPUT);
             }
         }
@@ -104,18 +110,41 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
             return Optional.empty();
         }
         Collection<String> relSet = rel.size() == 1 && rel.contains("") ? Collections.emptySet() : rel;
-        return Optional.of(ParserUtil.parseRel(relSet));
+        return Optional.of(ParserUtil.parseRels(relSet));
     }
 
     /**
      * Checks if any of the prefixes are present
      * return true if the certain prefix is present and false if the certain prefix is not present
-     * @param argumentMultimap
-     * @param prefixes
+     * @param argumentMultimap      argumentMultiMap of the input string
+     * @param prefixes              any of the set relationship prefix(es)
      * @return true || false
      */
     private static boolean areAnyPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
+     * Checks if the argumentMultimap is empty for either the add relationship prefix if present
+     * and the delete relationship prefix
+     * @param addPrefixPresent      to indicate if add prefix is present
+     * @param argumentMultimap      input string
+     * @param prefixAdd             add relationship prefix
+     * @param prefixDelete          delete relationship prefix
+     */
+    private void emptyInputArg(boolean addPrefixPresent, ArgumentMultimap argumentMultimap, Prefix prefixAdd,
+                                        Prefix prefixDelete, Prefix prefixClear) throws ParseException {
+        String addRelString;
+
+        if (addPrefixPresent) {
+            addRelString = argumentMultimap.getValue(prefixAdd).get();
+        } else {
+            addRelString = argumentMultimap.getValue(prefixDelete).get();
+        }
+        requireNonNull(addRelString);
+        if (addRelString.length() == 0) {
+            throw new ParseException(NULL_RELATION_INPUT);
+        }
     }
 }
 //@@author

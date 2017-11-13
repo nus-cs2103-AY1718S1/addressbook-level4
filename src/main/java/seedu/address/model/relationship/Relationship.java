@@ -7,7 +7,6 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-
 /**
  * Represents a Relationship in the address book.
  * Guarantees: immutable; name is valid as declared in
@@ -15,7 +14,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Relationship {
 
     public static final String MESSAGE_REL_CONSTRAINTS = "Relationship types should be alphabetical";
-    public static final String REL_VALIDATION_REGEX = "\\p{Alpha}+";
+    public static final String MESSAGE_REL_PREFIX_NOT_ALLOWED =
+        "Relationship prefix(es) is/are not allowed in this command.";
+    public static final String REL_VALIDATION_REGEX = "[a-zA-Z0-9\\- ]+\\[[a-zA-Z0-9\\-]+.\\]|[a-zA-Z0-9\\-]+";
 
     public final String relType;
 
