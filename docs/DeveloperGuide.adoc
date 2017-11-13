@@ -1571,7 +1571,7 @@ image::WelcomeScreen.png[width="400"]
 
 _Figure 4.13.3 : The welcome screen_
 
-When the btn:[Continue] button is pressed, `WelcomeScreen` will pass the `MainWindow` scene into the `primaryStage`, replacing `WelcomeScreen` with `MainWindow`.
+When the "Continue" button is pressed, `WelcomeScreen` will pass the `MainWindow` scene into the `primaryStage`, replacing `WelcomeScreen` with `MainWindow`.
 
 ==== Design Considerations
 
