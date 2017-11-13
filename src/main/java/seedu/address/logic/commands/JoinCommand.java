@@ -71,9 +71,9 @@ public class JoinCommand extends UndoableCommand {
         try {
             model.joinEvent(personToJoin, eventToJoin);
         } catch (PersonHaveParticipateException phpe) {
-            return new CommandResult(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (HaveParticipateEventException npee) {
-            return new CommandResult(MESSAGE_DUPLICATE_EVENT);
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         }
         return new CommandResult(String.format(MESSAGE_JOIN_SUCCESS, personToJoin.getName(),
                 eventToJoin.getEventName()));
@@ -95,5 +95,13 @@ public class JoinCommand extends UndoableCommand {
         } catch (PersonHaveParticipateException | HaveParticipateEventException e) {
             throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return this == other
+                || (other instanceof DisjoinCommand
+                && this.eventIdx.equals(((JoinCommand) other).eventIdx)
+                && this.personIdx.equals(((JoinCommand) other).personIdx));
     }
 }

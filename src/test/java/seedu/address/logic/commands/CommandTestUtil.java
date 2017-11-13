@@ -280,6 +280,21 @@ public class CommandTestUtil {
     }
 
     /**
+     *  Let a specific person join a specific event
+     */
+    public static void joinEvent(Model model, Index personIndex, Index eventIndex) {
+        Person person = (Person) model.getFilteredPersonList().get(personIndex.getZeroBased());
+        Event event = (Event) model.getFilteredEventList().get(eventIndex.getZeroBased());
+        try {
+            model.joinEvent(person,event);
+        } catch (PersonHaveParticipateException e) {
+            throw new AssertionError("Impossible", e);
+        } catch (HaveParticipateEventException e) {
+            throw new AssertionError("Impossible", e);
+        }
+    }
+
+    /**
      * Let some persons join certain events
      */
     public static void joinEvents(Model model) {
