@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
 
 import com.google.api.services.people.v1.PeopleService;
@@ -64,7 +65,7 @@ public class SyncCommand extends Command {
     private List<Person> connections;
 
     private HashMap<String, Person> hashGoogleId;
-    private HashMap<String, Person> hashGoogle;
+    private HashMap<seedu.address.model.person.Person, Person> hashGoogle;
 
 
     @Override
@@ -110,14 +111,14 @@ public class SyncCommand extends Command {
                 .execute();
         connections = response.getConnections();
         hashId = constructHashId(personList);
-        hashAbc = constructHashName(personList);
+        hashAbc = constructHashAbc(personList);
 
         if (connections != null) {
             hashGoogleId = constructGoogleHashId();
-            hashGoogle = constructGoogleHashName();
+            hashGoogle = constructHashGoogle();
         } else {
             hashGoogleId = new HashMap<String, Person>();
-            hashGoogle = new HashMap<String, Person>();
+            hashGoogle = new HashMap<seedu.address.model.person.Person, Person>();
         }
     }
 
@@ -543,11 +544,19 @@ public class SyncCommand extends Command {
      * @return
      */
 
-    protected HashMap<String, ReadOnlyPerson> constructHashName (List<ReadOnlyPerson> personList) {
-        HashMap<String, ReadOnlyPerson> result = new HashMap<>();
+    protected HashMap<seedu.address.model.person.Person, ReadOnlyPerson> constructHashAbc (List<ReadOnlyPerson> personList) {
+        HashMap<seedu.address.model.person.Person, ReadOnlyPerson> result = new HashMap<>();
 
         personList.forEach(e -> {
-            result.put(e.getName().fullName, e);
+            try {
+                seedu.address.model.person.Person key = new seedu.address.model.person.Person(e.getName(), e.getPhone(), e.getEmail(), e.getAddress(),
+                        new Note(""), e.getId(), new LastUpdated(Instant.now().toString()),
+                        new HashSet<Tag>(), new HashSet<Meeting>());
+                result.put(key, e);
+            } catch (Exception ex) {
+                logger.severe("Hashing error in constructHashAbc");
+            }
+            
         });
 
         return result;
@@ -574,21 +583,17 @@ public class SyncCommand extends Command {
      * @return Hashmap
      */
 
-    protected HashMap<String, Person> constructGoogleHashName () {
-        HashMap<String, Person> result = new HashMap<>();
+    protected HashMap<seedu.address.model.person.Person, Person> constructHashGoogle () {
+        HashMap<seedu.address.model.person.Person, Person> result = new HashMap<>();
 
         connections.forEach(e -> {
-            String name = retrieveFullGName(e);
-            if (!result.containsKey(name)) {
-                result.put(name, e);
-            } else {
-                if (hashAbc.containsKey(name)) {
-                    ReadOnlyPerson person = hashAbc.get(name);
-                    if (equalPerson(person, e)) {
-                        result.put(name, e);
-                    }
-                }
+            try {
+                seedu.address.model.person.Person key = convertGooglePerson(e);
+                result.put(key, e);
+            } catch (Exception ex) {
+                logger.severe("Error in constructHashGoogle");
             }
+            
 
         });
 
