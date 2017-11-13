@@ -12,8 +12,10 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.photo.PhotoPath;
 import seedu.address.model.tag.Tag;
 
+//@@author April0616
 /**
  * An Immutable AddressBook that is serializable to XML format
  */
@@ -24,7 +26,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
-
+    @XmlElement
+    private List<XmlAdaptedPhotoPath> photoPaths;
     /**
      * Creates an empty XmlSerializableAddressBook.
      * This empty constructor is required for marshalling.
@@ -32,6 +35,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        photoPaths = new ArrayList<>();
     }
 
     /**
@@ -41,7 +45,24 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        photoPaths.addAll(src.getPhotoPathList().stream().map(XmlAdaptedPhotoPath::new).collect(Collectors.toList()));
     }
+
+    @Override
+    public ObservableList<PhotoPath> getPhotoPathList() {
+        final ObservableList<PhotoPath> photoPaths = this.photoPaths.stream().map(p -> {
+            try {
+                return p.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(photoPaths);
+    }
+
+    //@@author
 
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {

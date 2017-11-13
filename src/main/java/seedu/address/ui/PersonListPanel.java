@@ -13,8 +13,11 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.PersonAddressDisplayDirectionsEvent;
+import seedu.address.commons.events.model.PersonAddressDisplayMapEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.PersonSelectedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -27,8 +30,11 @@ public class PersonListPanel extends UiPart<Region> {
     @FXML
     private ListView<PersonCard> personListView;
 
+    private boolean shouldRaiseEvent;
+
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
+        this.shouldRaiseEvent = true;
         setConnections(personList);
         registerAsAnEventHandler(this);
     }
@@ -46,7 +52,10 @@ public class PersonListPanel extends UiPart<Region> {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        raise(new PersonPanelSelectionChangedEvent(newValue));
+                        if (shouldRaiseEvent) {
+                            raise(new PersonPanelSelectionChangedEvent(newValue));
+                        }
+                        shouldRaiseEvent = true;
                     }
                 });
     }
@@ -64,6 +73,27 @@ public class PersonListPanel extends UiPart<Region> {
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+
+    @Subscribe
+    private void handlePersonSelectedEvent(PersonSelectedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        shouldRaiseEvent = false;
+        scrollTo(event.index);
+    }
+
+    @Subscribe
+    private void handlePersonAddressDisplayMapEvent(PersonAddressDisplayMapEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        shouldRaiseEvent = false;
+        scrollTo(event.targetIndex);
+    }
+
+    @Subscribe
+    private void handlePersonAddressDisplayDirectionsEvent(PersonAddressDisplayDirectionsEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        shouldRaiseEvent = false;
         scrollTo(event.targetIndex);
     }
 

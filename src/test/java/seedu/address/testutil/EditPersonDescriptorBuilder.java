@@ -29,10 +29,14 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder(ReadOnlyPerson person) {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
+        descriptor.setGender(person.getGender());
+        descriptor.setMatricNo(person.getMatricNo());
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setTimetable(person.getTimetable());
         descriptor.setTags(person.getTags());
+        descriptor.setBirthday(person.getBirthday());
     }
 
     /**
@@ -43,6 +47,30 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseName(Optional.of(name)).ifPresent(descriptor::setName);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("name is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Gender} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withGender(String gender) {
+        try {
+            ParserUtil.parseGender(Optional.of(gender)).ifPresent(descriptor::setGender);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("gender is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code MatricNo} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withMatricNo(String matricNo) {
+        try {
+            ParserUtil.parseMatricNo(Optional.of(matricNo)).ifPresent(descriptor::setMatricNo);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("matric number is expected to be unique.");
         }
         return this;
     }
@@ -83,6 +111,20 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author zacharytang
+    /**
+     * Sets the {@code Timetable} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withTimetable(String url) {
+        try {
+            ParserUtil.parseTimetable(Optional.of(url)).ifPresent(descriptor::setTimetable);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
+
+    //@@author
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
@@ -96,7 +138,20 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
+    }
     public EditPersonDescriptor build() {
         return descriptor;
     }
+
+
 }

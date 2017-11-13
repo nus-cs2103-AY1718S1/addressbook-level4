@@ -1,0 +1,97 @@
+= Fan Yuting - Project Portfolio
+
+---
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: UniFy
+UniFy is a command-line application which provides a convenient way to store students' contact information.
+It is customised for NUS students, allowing them to efficiently manage their contact lists.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 10 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B1/main/blob/master/collated/main/April0616.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B1/main/blob/master/collated/test/April0616.md[Test code]] {give links to collated code files}
+
+
+=== Enhancement Added: RemarkCommand
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=remarkCommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+Existing tags are too short for the user to put down the noteworthy thing of a contact,
+and the remark for a person are more descriptive and unique so that you can always look back on.
+The remark command is designed to be an undoable command, and a new attribute named 'Remark' is
+added to the 'Person' class. The remark of a person will be displayed in the person information panel
+if the user key in the select command.
+
+==== Implementation
+
+(Pull requests https://github.com/CS2103AUG2017-W09-B1/main/pull/50[#50], https://github.com/CS2103AUG2017-W09-B1/main/pull/131[#131])
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remarkCommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Temporary Tags
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tempTag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Delete Old Contacts
+
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=oldContact]
+
+#End of Extract#
+
+
+---
+
+=== Other enhancements and contributions
+
+* Add gender & matric No. attribute to addCommand (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/68[#68])
+* Delete multiple persons (Pull requests https://github.com/CS2103AUG2017-W09-B1/main/pull/79[#79])
+* PhotoCommand: add display pictures of contacts (Pull requests https://github.com/CS2103AUG2017-W09-B1/main/pull/96[#96], https://github.com/CS2103AUG2017-W09-B1/main/pull/150[#150])
+* Improve UI (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/133[#133])
+* Fix some bugs (Pull requests https://github.com/CS2103AUG2017-W09-B1/main/pull/108/files[#108], https://github.com/CS2103AUG2017-W09-B1/main/pull/64[#64])
+* Improve styles (Pull requests https://github.com/CS2103AUG2017-W09-B1/main/pull/140/files[#140], https://github.com/CS2103AUG2017-W09-B1/main/pull/107[#107], https://github.com/CS2103AUG2017-W09-B1/main/pull/131[#131])
+* help form team in Github and setup the team repository
+
+---
+== Other Projects
+
+=== FisheryApp
+
+Build a software application for LSM4255 (Methods in Mathematical Biology) class in a team.
+This application allows students to participate in a fisheries management game to demonstrate the concepts of resource use,
+co-operation, and the tragedy of the commons.
+
+*Github Link*: [https://github.com/April0616/fishery-app[FisheryApp for LSM4255]]
+
+=== Algorithm Design Project
+
+Analyze the application of Game theory and Nash-equilibrium for a dynamic multiplayer competition.
+Design and implement the basic algorithm for evaluating the value of choices and providing the theoretically
+best strategy in the competition. Write the basic source code for this mathematical tool for “iyingdi” website and its mobile app.

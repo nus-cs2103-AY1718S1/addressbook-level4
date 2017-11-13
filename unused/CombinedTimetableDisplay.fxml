@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author zacharytang-unused -->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
+           xmlns:fx="http://javafx.com/fxml/1">
+    <SplitPane dividerPositions="0.2" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0"
+               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+               AnchorPane.topAnchor="0.0">
+        <AnchorPane styleClass="combined-timetable-label">
+            <GridPane layoutX="151.0" layoutY="26.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="300" minWidth="300.0" prefWidth="300"/>
+                    <ColumnConstraints hgrow="SOMETIMES"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                </rowConstraints>
+                <HBox alignment="CENTER_RIGHT">
+                    <Label alignment="CENTER" styleClass="combined-timetable-main-label" text="Timetables Displayed: ">
+                        <HBox.margin>
+                            <Insets right="2.5"/>
+                        </HBox.margin>
+                    </Label>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
+                    <Label fx:id="names" styleClass="combined-timetable-names" text="Label">
+                        <HBox.margin>
+                            <Insets left="2.5"/>
+                        </HBox.margin>
+                    </Label>
+                </HBox>
+            </GridPane>
+        </AnchorPane>
+        <AnchorPane fx:id="timetablePlaceholder" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0"/>
+    </SplitPane>
+</StackPane>

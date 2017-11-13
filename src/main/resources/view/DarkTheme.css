@@ -1,8 +1,9 @@
 .background {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #383838;
     background-color: #383838; /* Used in the default.html file */
 }
 
+// affects the tags
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -76,22 +77,47 @@
     -fx-background-color: -fx-focus-color;
 }
 
+/* @@author zacharytang */
 .split-pane:horizontal .split-pane-divider {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-border-color: transparent transparent transparent #4d4d4d;
+    -fx-background-color: derive(#383838, 50%);
+    -fx-background-insets: 3;
+    -fx-border-color: transparent transparent transparent transparent;
+}
+
+// horizontal divider above timetable
+.split-pane:vertical .split-pane-divider {
+    -fx-background-color: derive(#383838, 50%);
+    -fx-background-insets: 3;
+    -fx-border-color: transparent transparent transparent transparent;
 }
 
 .split-pane {
-    -fx-border-radius: 1;
-    -fx-border-width: 1;
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-background-color: #383838;
 }
 
+.info-panel {
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-border-color: #383838;
+}
+
+.browser-panel {
+    -fx-border-radius: 0;
+    -fx-border-width: 0;
+    -fx-border-color: #383838;
+}
+
+/* @@author nbriannl */
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-background-color: #383838;
 }
 
+/* @@author */
+// UI: Person List Panel
 .list-cell {
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
@@ -99,19 +125,20 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #3c3e3f;
+    -fx-background-color: #303030;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: #424242;
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #424d5f;
+    -fx-background-color: #3f5e70;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 5,0,5,5 );
 }
 
 .list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
+    -fx-border-color: #1f3744;
     -fx-border-width: 1;
 }
 
@@ -119,30 +146,129 @@
     -fx-text-fill: white;
 }
 
+// name of the person in personListPanel
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 16px;
-    -fx-text-fill: #010504;
+    -fx-text-fill: #010504; //ignore
 }
 
 .cell_small_label {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
-    -fx-text-fill: #010504;
+    -fx-text-fill: #010504; //ignore
 }
 
+/* @@author zacharytang */
+.display_big_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff; //ignore
+}
+
+.display_small_label {
+    -fx-font-weight: 500;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 15px;
+    -fx-text-fill: #ffffff; //ignore
+}
+
+.display_small_value {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 15px;
+    -fx-text-fill: #ffffff;
+}
+
+.timetable-label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-weight: 700; // font weight aka boldness of the font
+    -fx-text-fill: #FFFFFF; // Mon-Fri and Time Labels of The Timetable
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #383838;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #303030;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #FFFFFF; //
+    -fx-font-size: 12px;
+    -fx-font-family: "Segoe UI";
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #FFFFFF;
+}
+
+.info-name-cell {
+    -fx-background-color: #303030;
+}
+
+.info-cell {
+    -fx-background-color: #424242;
+}
+
+.timetable-tab-pane {
+    -fx-background-color: #383838;
+}
+
+.timetable-cell-filled {
+    -fx-background-color: #272727;
+}
+
+.timetable-cell-empty {
+    -fx-background-color: #383838;
+}
+
+.timetable-cell-empty, .timetable-cell-filled {
+    -fx-border-color: #9E9E9E;
+}
+
+.combined-timetable-label {
+    -fx-background-color: #303030;
+}
+
+.combined-timetable-main-label {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 22px;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.combined-timetable-names {
+    -fx-text-fill: #BDBDBD;
+    -fx-font-size: 22px;
+    -fx-font-family: "Segoe UI";
+}
+
+/* @@author */
 .anchor-pane {
-     -fx-background-color: derive(#1d1d1d, 20%);
+     -fx-background-color: #383838;
+}
+
+.person-info-panel {
+     -fx-background-color: #383838;
+     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 10,0,3,3 );
 }
 
 .pane-with-border {
-     -fx-background-color: derive(#1d1d1d, 20%);
+     -fx-background-color: #383838;
      -fx-border-color: derive(#1d1d1d, 10%);
-     -fx-border-top-width: 1px;
+     -fx-border-width: 0px;
 }
 
 .status-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #383838;
     -fx-text-fill: black;
 }
 
@@ -179,11 +305,11 @@
 }
 
 .grid-pane .anchor-pane {
-    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-background-color: #444444;
 }
 
 .context-menu {
-    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-background-color: #424242;
 }
 
 .context-menu .label {
@@ -191,7 +317,7 @@
 }
 
 .menu-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #444444;
 }
 
 .menu-bar .label {
@@ -255,7 +381,7 @@
 }
 
 .dialog-pane {
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: #1d1d1d; // useless
 }
 
 .dialog-pane > *.button-bar > *.container {
@@ -279,12 +405,13 @@
     -fx-text-fill: white;
 }
 
+// Style: color of the scrollbar
 .scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: transparent;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-background-color: derive(#383838, 50%);
     -fx-background-insets: 3;
 }
 
@@ -315,10 +442,12 @@
     -fx-text-fill: #F70D1A;
 }
 
+
+// UI: Command Box
 #commandTextField {
-    -fx-background-color: transparent #383838 transparent #383838;
+    -fx-background-color: transparent, #303030, transparent, #303030;
     -fx-background-insets: 0;
-    -fx-border-color: #383838 #383838 #ffffff #383838;
+    -fx-border-color: transparent transparent #606060 transparent;
     -fx-border-insets: 0;
     -fx-border-width: 1;
     -fx-font-family: "Segoe UI Light";
@@ -330,8 +459,9 @@
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
+// UI: Command Result Box
 #resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
+    -fx-background-color: transparent, #303030, transparent, #303030;
     -fx-background-radius: 0;
 }
 
@@ -342,9 +472,10 @@
 
 #tags .label {
     -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
+    -fx-background-color: derive(#383838, 50%);
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 5,0,1,1 );
 }

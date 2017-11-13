@@ -9,6 +9,11 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -19,6 +24,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -26,13 +32,16 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class DeleteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
+    //@@author April0616
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        ArrayList<ReadOnlyPerson> deletePersonList = new ArrayList<>();
+        deletePersonList.add(personToDelete);
+
+        String expectedMessage = deleteCommand.generateSuccessfulResultMsgForPerson(deletePersonList);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
@@ -40,6 +49,24 @@ public class DeleteCommandTest {
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
+    //@@author nbriannl
+    @Test
+    public void execute_validTagUnfilteredList_success() throws Exception {
+        Set<Tag> tagsToDelete = Stream.of(new Tag("friends")).collect(Collectors.toSet());
+        DeleteCommand deleteCommand = prepareCommand(tagsToDelete);
+
+        ArrayList<Tag> arrayTags = new ArrayList<>();
+        arrayTags.addAll(tagsToDelete);
+
+        String expectedMessage = DeleteCommand.generateResultMsgForTag(arrayTags);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteTag(new Tag("friends"));
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    //@@author
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
@@ -48,6 +75,20 @@ public class DeleteCommandTest {
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    //@@author nbriannl
+    @Test
+    public void execute_invalidTagUnfilteredList_throwsCommandException() throws Exception {
+        Set<Tag> wrongTag = Stream.of(new Tag("nonexistent")).collect(Collectors.toSet());
+        DeleteCommand deleteCommand = prepareCommand(wrongTag);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_TAG_PROVIDED);
+
+        Set<Tag> someWrongTags = Stream.of(new Tag("wrongtag"), new Tag("friends")).collect(Collectors.toSet());
+        DeleteCommand deleteCommand2 = prepareCommand(someWrongTags);
+        assertCommandFailure(deleteCommand2, model, Messages.MESSAGE_INVALID_TAG_PROVIDED);
+    }
+
+    //@@author April0616
     @Test
     public void execute_validIndexFilteredList_success() throws Exception {
         showFirstPersonOnly(model);
@@ -55,7 +96,10 @@ public class DeleteCommandTest {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        ArrayList<ReadOnlyPerson> deletePersonList = new ArrayList<>();
+        deletePersonList.add(personToDelete);
+
+        String expectedMessage = deleteCommand.generateSuccessfulResultMsgForPerson(deletePersonList);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
@@ -64,6 +108,27 @@ public class DeleteCommandTest {
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
+    //@@author nbriannl
+    @Test
+    public void execute_validTagFilteredList_success() throws Exception {
+        showFirstPersonOnly(model);
+
+        Set<Tag> tagsToDelete = Stream.of(new Tag("friends")).collect(Collectors.toSet());
+        DeleteCommand deleteCommand = prepareCommand(tagsToDelete);
+
+        ArrayList<Tag> arrayTags = new ArrayList<>();
+        arrayTags.addAll(tagsToDelete);
+
+        String expectedMessage = DeleteCommand.generateResultMsgForTag(arrayTags);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        showFirstPersonOnly(expectedModel);
+        expectedModel.deleteTag(new Tag("friends"));
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    //@@author
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showFirstPersonOnly(model);
@@ -77,8 +142,24 @@ public class DeleteCommandTest {
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    //@@author nbriannl
     @Test
-    public void equals() {
+    public void execute_invalidTagFilteredList_throwsCommandException() throws Exception {
+        showFirstPersonOnly(model);
+
+        Set<Tag> wrongTag = Stream.of(new Tag("nonexistent")).collect(Collectors.toSet());
+        DeleteCommand deleteCommand = prepareCommand(wrongTag);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_TAG_PROVIDED);
+
+        Set<Tag> someWrongTags = Stream.of(new Tag("wrongtag"), new Tag("friends")).collect(Collectors.toSet());
+        DeleteCommand deleteCommand2 = prepareCommand(someWrongTags);
+        assertCommandFailure(deleteCommand2, model, Messages.MESSAGE_INVALID_TAG_PROVIDED);
+    }
+
+    //@@author nbriannl
+    @Test
+    public void equals() throws Exception {
         DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_PERSON);
         DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_PERSON);
 
@@ -93,12 +174,38 @@ public class DeleteCommandTest {
         assertFalse(deleteFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        assertFalse(deleteFirstCommand == null);
 
         // different person -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+
+        Set<Tag> firstSet = Stream.of(new Tag("word")).collect(Collectors.toSet());
+        Set<Tag> secondSet = Stream.of(new Tag("other")).collect(Collectors.toSet());
+        Set<Tag> thirdSet = Stream.of(new Tag("multiple"), new Tag("words")).collect(Collectors.toSet());
+
+        DeleteCommand deleteFirstCommandTags = new DeleteCommand(firstSet);
+        DeleteCommand deleteSecondCommandTags = new DeleteCommand(secondSet);
+        DeleteCommand deleteThirdCommandTags = new DeleteCommand(thirdSet);
+
+        // same object -> returns true
+        assertTrue(deleteFirstCommandTags.equals(deleteFirstCommandTags));
+
+        // same values -> returns true
+        DeleteCommand deleteFirstCommandTagCopy = new DeleteCommand(firstSet);
+        assertTrue(deleteFirstCommandTags.equals(deleteFirstCommandTagCopy));
+
+        // different types -> returns false
+        assertFalse(deleteFirstCommandTags.equals(1));
+
+        // null -> returns false
+        assertFalse(deleteFirstCommandTags == null);
+
+        // different tag -> returns false
+        assertFalse(deleteFirstCommandTags.equals(deleteSecondCommandTags));
+        assertFalse(deleteFirstCommandTags.equals(deleteThirdCommandTags));
     }
 
+    //@@author
     /**
      * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
@@ -108,6 +215,17 @@ public class DeleteCommandTest {
         return deleteCommand;
     }
 
+    //@@author nbriannl
+    /**
+     * Returns a {@code DeleteCommand} with the parameter {@code tagSet}.
+     */
+    private DeleteCommand prepareCommand(Set<Tag> tagSet) {
+        DeleteCommand deleteCommand = new DeleteCommand(tagSet);
+        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteCommand;
+    }
+
+    //@@author
     /**
      * Updates {@code model}'s filtered list to show no one.
      */

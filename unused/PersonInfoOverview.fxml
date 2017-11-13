@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- @@author zacharytang-unused -->
+<StackPane styleClass="info-panel" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <!--Edit dividerPositions below to adjust vertical divider position between the person info and the timetable area -->
+    <SplitPane dividerPositions="0.3" orientation="VERTICAL">
+        <AnchorPane>
+            <!--Edit dividerPositions below to adjust the divider position between the person photo and the person details-->
+            <SplitPane dividerPositions="0.48333333333333334" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <AnchorPane fx:id="contactPhotoPane" minHeight="0.0" minWidth="0.0" styleClass="info-name-cell">
+               <children>
+                  <ImageView fx:id="contactPhoto" layoutX="1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+                  </ImageView>
+               </children></AnchorPane>
+
+                <AnchorPane minHeight="0.0" minWidth="0.0" styleClass="info-cell">
+                    <VBox alignment="CENTER_LEFT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox alignment="CENTER_LEFT" spacing="5">
+                            <Label styleClass="display_small_label" text="Name:" />
+                            <Label fx:id="name" styleClass="display_small_value" text="\$name" />
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="5">
+                            <Label styleClass="display_small_label" text="Gender:" />
+                            <Label fx:id="gender" styleClass="display_small_value" text="\$gender" />
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="5">
+                            <Label styleClass="display_small_label" text="Matriculation No:" />
+                            <Label fx:id="matricNo" styleClass="display_small_value" text="\$matricNo" />
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="5">
+                            <Label styleClass="display_small_label" text="Phone No:" />
+                            <Label fx:id="phone" styleClass="display_small_value" text="\$phone" />
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="5">
+                            <Label styleClass="display_small_label" text="Address:" />
+                            <Label fx:id="address" styleClass="display_small_value" text="\$address" wrapText="true"/>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="5">
+                            <Label styleClass="display_small_label" text="Email:" />
+                            <Label fx:id="email" styleClass="display_small_value" text="\$email" />
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="5">
+                            <Label styleClass="display_small_label" text="Birthday:" />
+                            <Label fx:id="birthday" styleClass="display_small_value" text="\$birthday" />
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="5">
+                            <Label styleClass="display_small_label" text="Remark:" />
+                            <Label fx:id="remark" styleClass="display_small_value" text="\$remark" wrapText="true"/>
+                        </HBox>
+                    </VBox>
+                </AnchorPane>
+            </SplitPane>
+        </AnchorPane>
+        <AnchorPane fx:id="timetablePlaceholder" />
+    </SplitPane>
+</StackPane>

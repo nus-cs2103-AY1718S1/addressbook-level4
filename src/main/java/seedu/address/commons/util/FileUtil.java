@@ -2,16 +2,122 @@ package seedu.address.commons.util;
 
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 
 /**
  * Writes and reads files
  */
 public class FileUtil {
-
+    //@@author April0616
+    public static final String REGEX_VALID_IMAGE = "([^\\s]+(\\.(?i)(jpg|jpeg|png|gif|bmp))$)";
     private static final String CHARSET = "UTF-8";
+    /**
+     * Checks whether the file is a valid image file.
+     * A valid image file should have extension "jpg", "jpeg", "png", "gif" or "bmp".
+     * @param photoPath of the image
+     * @return true if it has specified extension
+     */
+    public static Boolean isValidImageFile(String photoPath) {
+        return photoPath.matches(REGEX_VALID_IMAGE);
+    }
+
+    /**
+     * Gets the extension of the file path by split the path string by regex "."
+     * @param filePath
+     * @return extension string
+     */
+    public static String getFileExtension(String filePath) {
+        return "." + filePath.split("\\.")[1];
+    }
+
+    /**
+     * Checks whether the specified file is in the specified folder.
+     * @param filePath of the file to be checked
+     * @param folderPath of the folder
+     * @return true if the file is in the folder
+     */
+    public static Boolean isInFolder(String filePath, String folderPath) {
+        return filePath.startsWith(folderPath);
+    }
+    /**
+     * Copies all the contents from the file in original path to the one in destination path.
+     * @param oriPath of the file to be copied
+     * @param destPath of the file to be pasted
+     * @return true if the file is successfully copied to the specified place.
+     */
+    public static boolean copyFile(String oriPath, String destPath) throws IOException {
+
+        //create a buffer to store content
+        byte[] buffer = new byte[1024];
+
+        //bufferedInputStream
+        FileInputStream fis = new FileInputStream(oriPath);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+
+        //bufferedOutputStream
+        FileOutputStream fos = new FileOutputStream(destPath);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+        int numBytes = bis.read(buffer);
+        while (numBytes > 0) {
+            bos.write(buffer, 0, numBytes);
+            numBytes = bis.read(buffer);
+        }
+
+        //close input,output stream
+        bis.close();
+        bos.close();
+
+        return true;
+    }
+
+    /**
+     * Removes the file in the app if it exists.
+     * @param path of the file to be deleted
+     */
+    public static void removeAppFile(String path) {
+        File fileToDelete = new File(path);
+        if (fileToDelete.exists()) {
+            fileToDelete.delete();
+        }
+    }
+
+    /**
+     * Checks whether two files have the same content.
+     * @param firstPath path of one file
+     * @param secondPath path of another file
+     * @return true if they have the same content, false otherwise
+     * @throws IOException if an I/O error occurs reading from the stream
+     */
+    public static boolean haveSameContent(String firstPath, String secondPath) {
+        Path p1 = Paths.get(firstPath);
+        Path p2 = Paths.get(secondPath);
+
+        byte[] firstFileBytes = new byte[0];
+        try {
+            firstFileBytes = Files.readAllBytes(p1);
+        } catch (IOException e) {
+            assert false : "An I/O error occurs reading from the stream.";
+        }
+
+        byte[] secondFileBytes = new byte[0];
+        try {
+            secondFileBytes = Files.readAllBytes(p2);
+        } catch (IOException e) {
+            assert false : "An I/O error occurs reading from the stream.";
+        }
+        return Arrays.equals(firstFileBytes, secondFileBytes);
+    }
+    //@@author
 
     public static boolean isFileExists(File file) {
         return file.exists() && file.isFile();

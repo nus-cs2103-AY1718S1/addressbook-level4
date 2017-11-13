@@ -1,0 +1,73 @@
+= Labayna Neil Brian Narido - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: UniFy
+UniFy is a desktop Address Book application for University students, particularly those from NUS (National University of Singapore).
+
+The user is able to manage the many people he meets in University, keep track of his friends' Birthdays, view his friend’s timetables, and much more.
+Most of the user interactions are via CLI, while there exists a GUI created with JavaFX. It is written in Java and has
+about 6kLoC.
+
+The source code is based on the  https://github.com/se-edu/addressbook-level4[AddressBook-Level4] project created by SE-EDU initiative.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B1/main/blob/master/collated/main/nbriannl.md[Functional code]]
+[https://github.com/CS2103AUG2017-W09-B1/main/blob/master/collated/test/nbriannl.md[Test code]] +
+
+=== Enhancement Added: Delete Tag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletetag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Deleting a common tag present in multiple contact is tedious so being able to delete a common tag is seen
+as an essential feature by a busy University student seeking efficiency.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletetag]
+
+#End of Extract#
+
+---
+
+=== Enhancements Proposed: Location Related Commands
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=locations]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Edit Tag (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/69[#69])
+* GMaps Command (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/74[#74])
+* UI: Added a Tag List Bar (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/88[#88])
+* UI: Added Theme Switching and did 2 stylesheets
+(Pull requests https://github.com/CS2103AUG2017-W09-B1/main/pull/134[#134],
+https://github.com/CS2103AUG2017-W09-B1/main/pull/134[#138])
+* Fixed Person Info Panel (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/134[#133]) to respond if current
+person being viewed is deleted, modified (via edit or delete tag) or on address book clear.
+* Modified or added to test to maintain or increase coverage
+(Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/12[#12])
+
+== Project:
+* Worked CP2106 Independent Software Development Project (Orbital)
+* Participated in Gamecraft 2016 hosted by NUS Game Development Group.

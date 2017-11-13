@@ -19,22 +19,33 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Gender;
+import seedu.address.model.person.MatricNo;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.timetable.Timetable;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
+    private static final String INVALID_GENDER = "hello";
+    private static final String INVALID_MATRIC_NO = "45663445K";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_TIMETABLE = "https://www.google.com";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
+    private static final String VALID_GENDER = "Female";
+    private static final String VALID_MATRIC_NO = "A0162533K";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_TIMETABLE = "http://modsn.us/5tN3z";
+    private static final String VALID_BIRTHDAY = "21061997";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -87,6 +98,58 @@ public class ParserUtilTest {
 
         assertEquals(expectedName, actualName.get());
     }
+
+    //@@author April0616
+    @Test
+    public void parseGender_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseGender(null);
+    }
+
+    @Test
+    public void parseGender_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseGender(Optional.of(INVALID_GENDER));
+    }
+
+    @Test
+    public void parseGender_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseGender(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseGender_validValue_returnsGender() throws Exception {
+        Gender expectedGender = new Gender(VALID_GENDER);
+        Optional<Gender> actualGender = ParserUtil.parseGender(Optional.of(VALID_GENDER));
+
+        assertEquals(expectedGender, actualGender.get());
+    }
+
+    @Test
+    public void parseMatricNo_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseMatricNo(null);
+    }
+
+    @Test
+    public void parseMatricNo_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseMatricNo(Optional.of(INVALID_MATRIC_NO));
+    }
+
+    @Test
+    public void parseMatricNo_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseMatricNo(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseMatricNo_validValue_returnsMatricNo() throws Exception {
+        MatricNo expectedMatricNo = new MatricNo(VALID_MATRIC_NO);
+        Optional<MatricNo> actualMatricNo = ParserUtil.parseMatricNo(Optional.of(VALID_MATRIC_NO));
+
+        assertEquals(expectedMatricNo, actualMatricNo.get());
+    }
+    //@@author
 
     @Test
     public void parsePhone_null_throwsNullPointerException() throws Exception {
@@ -163,6 +226,59 @@ public class ParserUtilTest {
         assertEquals(expectedEmail, actualEmail.get());
     }
 
+    //@@author zacharytang
+    @Test
+    public void parseTimetable_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTimetable(null);
+    }
+
+    @Test
+    public void parseTimetable_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTimetable(Optional.of(INVALID_TIMETABLE));
+    }
+
+    @Test
+    public void parseTimetable_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTimetable(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseTimetable_validValue_returnsTimetable() throws Exception {
+        Timetable expectedTimetable = new Timetable(VALID_TIMETABLE);
+        Optional<Timetable> actualTimetable = ParserUtil.parseTimetable(Optional.of(VALID_TIMETABLE));
+
+        assertEquals(expectedTimetable, actualTimetable.get());
+    }
+
+    //@@author CindyTsai1
+    @Test
+    public void parseBirthday_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseBirthday(null);
+    }
+
+    @Test
+    public void parseBirthday_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseBirthday(Optional.of(INVALID_TIMETABLE));
+    }
+
+    @Test
+    public void parseBirthday_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseBirthday(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseBirthday_validValue_returnsTimetable() throws Exception {
+        Birthday expectedBirthday = new Birthday(VALID_BIRTHDAY);
+        Optional<Birthday> actualBirthday = ParserUtil.parseBirthday(Optional.of(VALID_BIRTHDAY));
+
+        assertEquals(expectedBirthday, actualBirthday.get());
+    }
+
+    //@@author
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);

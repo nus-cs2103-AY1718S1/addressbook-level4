@@ -1,0 +1,961 @@
+= UniFy - Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:repoURL: https://github.com/CS2103AUG2017-W09-B1/main/tree/master
+
+By: `Team W09-B1`      Since: `Aug 2017`      Licence: `MIT`
+
+---
+
+== Before You Start Testing
+=== Materials Required for Testing
+Before testing, you need ensure that you have the test data  ([W09-B1][UniFy]SampleData.xml) and a picture in your somewhere in your computer that you know the path to.
+Place UniFy.jar in an empty folder. Open UniFy.jar.
+
+=== Import Test Data
+****
+* If you are testing on the .jar file, you need to replace the current storage file: addressbook.xml. +
+* Type `clear` to clear the application. +
+* Close the application. +
+* You should now see additional files created and a folder called `data`. +
+* Open `data`. +
+* Replace addressbook.xml with [W09-B1][UniFy]SampleData.xml and rename it to addressbook.xml. +
+* Open UniFy.jar. +
+* You are ready for testing.
+****
+
+== Special Instructions
+=== Test Procedures
+Type the command in the command box and press 'Enter'.
+You should type in the commands in the script in order, or you will not see the correct output.
+
+== Content for Testing (Include ALIAS)
+=== AddCommand
+==== Description/Data
+AddCommand can add persons into the application. All fields are currently optional, except name.
+
+==== Steps To Execute And Expected Results
+*Type in:* add n/The Myth g/Male p/12345678 e/the_myth@example.com a/NUS m/A0000000A b/01011991 t/CS2103T tt/http://modsn.us/Zd8wn +
+*Expected Result:* Success message with person information displayed and person information displayed at display panel +
+*Result Message:* +
+[green]#New person added: The Myth +
+Gender: Male +
+Matric No.: A0000000A +
+Phone: 12345678 +
+Email: the_myth@example.com +
+Address: NUS +
+Birthday: 01/01/1991 +
+Timetable: http://modsn.us/Zd8wn +
+Remark:  +
+Photo:  +
+Tags: [CS2103T]#
+
+*Type in:* add n/haha  +
+*Expected Result:* Success message with person information displayed (blank for fields with no input) and person information displayed at display panel +
+*Result Message:* +
+[green]#New person added: haha +
+Gender: +
+Matric No.:  +
+Phone:  +
+Email:  +
+Address:  +
+Birthday:  +
+Timetable:  +
+Remark:  +
+Photo:  +
+Tags:#
+
+*Type in:* add n/hehe g/h +
+*Expected Result:* Error message suggesting the correct gender format +
+*Result Message:*  +
+[red]#Person gender should be a case-insensitive string of either 'male', 'female', or 'm', 'f'#
+
+*Type in:* add n/hehe p/abc +
+*Expected Result:* Error message suggesting the correct phone format +
+*Result Message:* +
+[red]#Phone numbers can only contain numbers, and should be at least 3 digits long#
+
+*Type in:* add n/hehe m/A123456A +
+*Expected Result:* Error message suggesting the correct matriculation number format +
+*Result Message:* +
+[red]#Person's matriculation number should be a 9-character string starting with 'A' or 'a', followed by 7 digits, and ending with a letter.#
+
+*Type in:* add n/hehe e/heheexample.com +
+*Expected Result:* Error message suggesting the correct email format +
+*Result Message:* +
+[red]#Person emails should be 2 alphanumeric/period strings separated by '@'#
+
+*Type in:* add n/hehe b/29021997 +
+*Expected Result:* Error message showing that the date is invalid +
+*Result Message:* +
+[red]#This date does not exist.#
+
+*Type in:* add n/hehe b/1234567 +
+*Expected Result:* Error message suggesting the correct birthday format +
+*Result Message:* +
+[red]#Person's birthday should be in the format of DDMMYYYY#
+
+*Type in:* add n/hehe tt/http://modsn.us/12345 +
+*Expected Result:* Error message suggesting the NUSMods URL is not valid +
+*Result Message:*  +
+[red]#Invalid shortened URL provided#
+
+*Type in:* add n/hehe tt/https://nusmods.com/timetable/2017-2018/sem1?CS2101[SEC]=1&CS2103T[TUT]=T1&CS2010[LEC]=1&CS2010[TUT]=9&CS2010[LAB]=8&ES2660[SEC]=3&GEQ1000[TUT]=E17&CS1010J[LEC]=1&CS1010J[TUT]=10 +
+*Expected Result:* Error message requesting for a shortened NUSMods URL +
+*Result Message:* +
+[red]#Timetable URLs should be a valid shortened NUSMods URL#
+
+*Type in:* add +
+*Expected Result:* Error message suggesting the correct command format +
+*Result Message:* +
+[red]#Invalid command format!  +
+| add |: Adds a person to the address book. +
+Parameters: n/NAME [g/GENDER] [m/MATRIC NO.] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tt/TIMETABLE_URL] [t/TAG]... +
+Example: add n/John Doe g/Male m/A0162533K p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/21051994 tt/http://modsn.us/0YdMq t/friends t/owesMoney#
+
+
+=== ThemeCommand
+==== Description/Data
+ThemeCommand can switch themes in the application. +
+There are 2 themes currently implemented: DarkTheme.css and LightTheme.css
+
+==== Steps To Execute And Expected Results
+*Type in:* theme light +
+*Expected Result:* Error message reminding user that the theme is correct +
+*Result Message:* +
+[red]#You are already using this theme!#
+
+*Type in:* theme dark +
+*Expected Result:* Application change theme into DarkTheme.css +
+*Result Message:*  +
+[green]#Theme switched: DarkTheme.css#
+
+*Type in:* theme light +
+*Expected Result:* Application change theme into LightTheme.css +
+*Result Message:* +
+[green]#Theme switched: LightTheme.css#
+
+*Type in:* theme red +
+*Expected Result:* Error Message for non exist themes +
+*Result Message:*  +
+[red]#Invalid Theme Name#
+
+*Type in:* theme +
+*Expected Result:* Error Message for correct command input +
+*Result Message:* +
+[red]#Invalid command format!  +
+| theme |: Changes the theme to the specified theme word. +
+Parameters: THEMEWORD +
+            (Possible theme words are: dark, light) +
+Example: theme dark +
+         theme light#
+
+=== DeleteCommand (Person)
+==== Description/Data
+DeleteCommand can delete multiple persons simultaneously.
+
+==== Steps To Execute And Expected Results
+*Type in:* delete 1, 2, 3 +
+*Expected Result:* Delete the first, second and third persons in the shown list. Person Info Panel shows first person in list. Success message showing information of persons deleted. +
+*Result Message:* +
+[green]#Deleted Persons : +
+[ 1. Damith 2. Neil Bryan 3. Fan Yiting ] +
+Details:  +
+[Damith +
+Gender: Male +
+Matric No.:  +
+Phone: 96584398 +
+Email: damith@u.nus.edu +
+Address: NUS COM2 #2-57 +
+Birthday:  +
+Timetable:  +
+Remark: [CS2103T Prof and Tutor] +
+Photo:  +
+Tags: [Legend][Myth][CS2103T][Man][Prof]] +
+[Neil Bryan +
+Gender: Male +
+Matric No.: A0155016R +
+Phone: 96477278 +
+Email: neilbrian.nl@u.nus.edu +
+Address: Blk 666, Yishun St 61 +
+Birthday: 02/10/1995 +
+Timetable: http://modsn.us/VLQ3g +
+Remark: [Handsome] +
+Photo:  +
+Tags: [Teammate][CS2103T][CS2101]] +
+[Fan Yiting +
+Gender: Female +
+Matric No.: A0162131F +
+Phone: 96857667 +
+Email: fyt0616@u.nus.edu +
+Address: Prince George Park Residences NUS +
+Birthday: 16/06/1998 +
+Timetable: http://modsn.us/aHN0q +
+Remark: [Likes playing Dota 2] +
+Photo:  +
+Tags: [Teammate][CS2103T][CS2101]]#
+
+*Type in:* undo +
+*Expected Result:* Success message for undo command. 3 persons restored. +
+*Result Message:* +
+[green]#Undo success!#
+
+*Type in:* delete 1 +
+*Expected Result:* Delete the first person in the shown list.  +
+*Result Message:* +
+[green]#Deleted Person : +
+[ 1. Damith ] +
+Details:  +
+[Damith +
+Gender: Male +
+Matric No.:  +
+Phone: 96584398 +
+Email: damith@u.nus.edu +
+Address: NUS COM2 #2-57 +
+Birthday:  +
+Timetable:  +
+Remark: [CS2103T Prof and Tutor] +
+Photo:  +
+Tags: [Legend][Myth][CS2103T][Man][Prof]]#
+
+*Type in:* undo +
+*Expected Result:* Success message for undo command. 1 person restored. +
+*Result Message:* +
+[green]#Undo success!#
+
+*Type in:* delete -1, -2 +
+*Expected Result:* Show Error message +
+*Result Message:*  +
+[red]#Invalid command format! +
+      | delete |: Deletes the persons identified using their last displayed indexes used in the last person listing. +
+                     OR the tag specified from all people containing the specific tag +
+      Parameters: INDEX... (must be positive integers) +
+                         OR  t/TAG... (case-sensitive) +
+      Example: delete 1 +
+                     delete 1, 2, 3 +
+                     delete 2 3 4 +
+                     delete t/friend +
+                     delete t/friend t/enemy#
+
+*Type in:* delete 999 +
+*Expected Result:* Show Error message +
+*Result Message:*  +
+[red]#The person index provided is invalid#
+
+*Type in:* delete +
+*Expected Result:* Error message suggesting the correct command format +
+*Result Message:* +
+[red]#Invalid command format! +
+| delete |: Deletes the persons identified using their last displayed indexes used in the last person listing. +
+           	OR the tag specified from all people containing the specific tag +
+Parameters: INDEX... (must be positive integers) +
+               	OR  t/TAG... (case-sensitive) +
+Example: delete 1 +
+           	delete 1, 2, 3 +
+           	delete 2 3 4 +
+           	delete t/friend +
+           	delete t/friend t/enemy#
+
+=== DeleteCommand (Tag)
+==== Description/Data
+DeleteCommand can delete one or more tags.
+
+==== Steps To Execute And Expected Results
+*Type in:* delete t/CS2103T +
+*Expected Result:* CS2103T Tag removed from all contacts with CS2103T tag. Removed from panel with list of all tags (Tag List Panel) +
+*Result Message:*  +
+[green]#Deleted Tag : +
+[ CS2103T ]#
+
+*Type in:* undo +
+*Expected Result:* Success message for undo command. [CS2103T] restored. +
+*Result Message:*  +
+[green]#Undo success!#
+
+*Type in:* delete t/CS2101 t/Teammate +
+*Expected Result:* CS2103T and Teammate Tags removed from all contacts with any of these tag. +
+*Result Message:*  +
+[green]#Deleted Tags : +
+[Teammate, CS2101 ]#
+
+*Type in:* undo +
+*Expected Result:* Success message for undo command. [Teammate] and [CS2103T] restored. +
+*Result Message:*  +
+[green]#Undo success!#
+
+*Type in:* delete t/A +
+*Expected Result:* Error message showing tag A does not exist +
+*Result Message:*  +
+[red]#One (or more) of the tags provided does not exist#
+
+*Type in:* delete t/Arts t/Bus +
+*Expected Result:* Error message showing those tags do not exist +
+*Result Message:*  +
+[red]#One (or more) of the tags provided does not exist#
+
+*Type in:* delete t/  +
+*Expected Result:* Error message suggesting correct command input +
+*Result Message:*  +
+[red]#Invalid command format! +
+| delete |: Deletes the persons identified using their last displayed indexes used in the last person listing. +
+           	OR the tag specified from all people containing the specific tag +
+Parameters: INDEX... (must be positive integers) +
+               	OR  t/TAG... (case-sensitive) +
+Example: delete 1 +
+         delete 1, 2, 3 +
+         delete 2 3 4 +
+           	delete t/friend +
+           	delete t/friend t/enemy#
+
+*Type in:* delete t/-1 +
+*Expected Result:* Error message suggesting correct command input +
+*Result Message:*  +
+[red]#Invalid command format! +
+| delete |: Deletes the persons identified using their last displayed indexes used in the last person listing. +
+           	OR the tag specified from all people containing the specific tag +
+Parameters: INDEX... (must be positive integers) +
+               	OR  t/TAG... (case-sensitive) +
+Example: delete 1 +
+           	delete 1, 2, 3 +
+           	delete 2 3 4 +
+           	delete t/friend +
+           	delete t/friend t/enemy#
+
+=== EditCommand (Person)
+==== Description/Data
+Edits a person’s information.
+
+==== Steps To Execute And Expected Results
+*Type in:* edit +
+*Expected Result:* Error message suggesting correct command input +
+*Result Message:* +
+[red]#Invalid command format! +
+| edit |: Edits the details of the person identified by the index number used in the last person listing. +
+           Existing values will be overwritten by the input values. +
+Parameters: INDEX (must be a positive integer) [n/NAME] [g/GENDER] [m/MATRIC NO.] [p/PHONE] [e/EMAIL] [a/ADDRESS] +
+                   [tt/TIMETABLE_URL] [t/TAG]... [b/BIRTHDAY] +
+Example: edit 1 p/91234567 e/johndoe@example.com +
+OR +
+| edit |: Edits the specified tag in all contacts containing this tag with a new specified tag. +
+Parameters: old/TAG new/TAG +
+Example: edit old/CS1020 new/CS2010#
+
+*Type in:* edit 26 p/12345678 g/F +
+*Expected Result:* Success message showing the person with edited field +
+*Result Message:* +
+[green]#Edited Person: haha +
+Gender: Female +
+Matric No.: +
+Phone: 12345678 +
+Email: +
+Address: +
+Birthday: +
+Timetable: +
+Remark: +
+Photo: +
+Tags:#
+
+*Type in:* edit 26 g/M m/A0000000A p/12345678 e/the_myth@example.com b/01011991 a/NUS n/The Myth t/CS2103T tt/http://modsn.us/Zd8wn +
+*Expected Result:* Error message showing same person exist in address book +
+*Result Message:* +
+[red]#This person already exists in the address book.#
+
+*_Following test are repeated from AddCommand (modified as EditCommand, but returns the same results as AddCommand)_*
+
+*Type in:* edit 26 g/h +
+*Expected Result:* Error message suggest correct gender input +
+*Result Message:* +
+[red]#Person gender should be a case-insensitive string of either 'male', 'female', or 'm', 'f'#
+
+*Type in:* edit 26 p/abc +
+*Expected Result:* Error message suggesting the correct phone format +
+*Result Message:* +
+[red]#Phone numbers can only contain numbers, and should be at least 3 digits long#
+
+*Type in:* edit 26 m/A123456A +
+*Expected Result:* Error message suggesting the correct matriculation number format +
+*Result Message:* +
+[red]#Person's matriculation number should be a 9-character string starting with 'A' or 'a', followed by 7 digits, and ending with a letter.#
+
+*Type in:* edit 26 e/heheexample.com +
+*Expected Result:* Error message suggesting the correct email format +
+*Result Message:* +
+[red]#Person emails should be 2 alphanumeric/period strings separated by '@'#
+
+*Type in:* edit 26 b/29021997 +
+*Expected Result:* Error message showing that the date is invalid +
+*Result Message:* +
+[red]#This date does not exist.#
+
+*Type in:* edit 26 b/1234567 +
+*Expected Result:* Error message suggesting the correct birthday format +
+*Result Message:* +
+[red]#Person's birthday should be in the format of DDMMYYYY#
+
+*Type in:* edit 26 tt/http://modsn.us/12345 +
+*Expected Result:* Error message suggesting the NUSMods URL is not valid +
+*Result Message:* +
+[red]#Invalid shortened URL provided#
+
+*Type in:* edit 26 tt/https://nusmods.com/timetable/2017-2018/sem1?CS2101[SEC]=1&CS2103T[TUT]=T1 +
+*Expected Result:* Error message requesting for a shortened NUSMods URL +
+*Result Message:* +
+[red]#Timetable URLs should be a valid shortened NUSMods URL#
+
+=== EditCommand (Tag)
+==== Description/Data
+Edits a tag specified as the old tag to the tag specified as the new tag.
+
+==== Steps To Execute And Expected Results
+*Type in:* edit old/Arts new/Friend +
+*Expected Result:* Arts tags now edited into Friend, an existing Tag. +
+*Result Message:*  +
+[green]#Edited Tag: +
+From 'Arts' to 'Friend'#
+
+*Type in:* edit old/Prof new/ +
+*Expected Result:* Error Message suggesting the correct tagName input +
+*Result Message:*  +
+[red]#Tags names should be alphanumeric, and should not be blank#
+
+*Type in:* edit old/At new/Friend +
+*Expected Result:* Error Message showing that old tag At does not exist +
+*Result Message:*  +
+[red]#The specified old tag does not exist#
+
+=== PhotoCommand (For WINDOWS System only)
+==== Description/Data
+PhotoCommand is to add the photo to your specified contact.
+This command only works with WINDOWS Operating System in v1.5.
+
+==== Before Test PhotoCommand
+Right click on one picture file, click `Properties`
+and copy the file path in the `location:` field.
+It should be an absolute file path in your computer, like "C:\selfie\bg.jpg".
+
+==== Steps To Execute And Expected Results
+*Type in:* photo +
+*Expected Result:* Error message suggesting the correct command input +
+*Result Message:*  +
+[red]#Invalid command format!  +
+| photo |: Adds a photo to the person identified by the index number used in the last person listingby specifying the path of the photo. +
+If the path field is empty, the old photo path is removed for the person. +
+Parameters: INDEX ph/[PHOTO PATH]  +
+                   (INDEX must be a positive integer) +
+Example: (add photo)     photo 1 ph/C:\Users\User\Desktop\photo.jpg +
+               (delete photo) photo 2 ph/#
+
+*Type in:* photo 1 ph/[Your copied photo path] +
+*Expected Result:* You could see the photo is added to the first person in the shown list. +
+*Result Message:* +
+[green]#Successfully saved photo and added the photo path to Person: Damith +
+Gender: Male +
+Matric No.:  +
+Phone: 96584398 +
+Email: damith@u.nus.edu +
+Address: NUS COM2 #2-57 +
+Birthday:  +
+Timetable:  +
+Remark: [CS2103T Prof and Tutor] +
+Photo: [Your copied file path] +
+Tags: [Legend][Myth][CS2103T][Man][Prof]#
+
+*Type in:* ph 1 +
+*Expected Result:* The photo is removed from the person card. +
+*Result Message:* +
+[green]#Removed photo path from Person: Damith +
+Gender: Male +
+Matric No.:  +
+Phone: 96584398 +
+Email: damith@u.nus.edu +
+Address: NUS COM2 #2-57 +
+Birthday:  +
+Timetable:  +
+Remark: [CS2103T Prof and Tutor] +
+Photo: +
+Tags: [Legend][Myth][CS2103T][Man][Prof]#
+
+*Type in:* photo 1 ph/Q:\haha.jpg +
+*Expected Result:* Error message showing there is no such file +
+*Result Message:* +
+[red]#Cannot find file here!  +
+| photo |: Adds a photo to the person identified by the index number used in the last person listingby specifying the path of the photo. +
+If the path field is empty, the old photo path is removed for the person. +
+Parameters: INDEX ph/[PHOTO PATH]  +
+                   (INDEX must be a positive integer) +
+Example: (add photo)     photo 1 ph/C:\Users\User\Desktop\photo.jpg +
+               (delete photo) photo 2 ph/#
+
+*Type in:* photo 2 ph/[Your copied photo path] +
+*Expected Result:* You could see the photo is added to the second person in the shown list. +
+*Result Message:* +
+[green]#Successfully saved photo and added the photo path to Person: Neil Bryan +
+Gender: Male +
+Matric No.: A0155016R +
+Phone: 96477278 +
+Email: neilbrian.nl@u.nus.edu +
+Address: Blk 666, Yishun St 61 +
+Birthday: 02/10/1995 +
+Timetable: http://modsn.us/VLQ3g +
+Remark: [Handsome] +
+Photo: [Your copied photo path] +
+Tags: [Teammate][CS2103T][CS2101]]#
+
+*Type in:* undo +
+Expected Result: Undo the previous result. +
+Result Message:  +
+[green]#Undo Success!#
+
+*Type in:* select 2 +
+Expected Result: The photo will be removed from the person card of the 2nd person. +
+Result Message: +
+[green]#Selected Person: 2#
+
+*Type in:* ph 1 +
+*Expected Result:* Message showing there is no photo path to remove +
+*Result Message:*  +
+[red]#No photo path to remove from Person: Damith +
+Gender: Male +
+Matric No.:  +
+Phone: 96584398 +
+Email: damith@u.nus.edu +
+Address: NUS COM2 #2-57 +
+Birthday:  +
+Timetable:  +
+Remark: [Likes CS2103T] +
+Photo:  +
+Tags: [Legend][Myth][CS2103T][Man][Prof]#
+
+*Type in:* ph 1 ph/[A path of txt file] +
+*Expected Result:* Message showing there is an error +
+*Result Message:*  +
+Invalid file path! +
+| photo |: Adds a photo to the person identified by the index number used in the last person listingby specifying the path of the photo. +
+The valid photo extensions are 'jpg', 'jpeg', 'png', 'gif' or 'bmp'.
+
+=== RemarkCommand
+==== Description/Data
+Remark Command is to add a remark to the specified person.
+
+==== Steps To Execute And Expected Results
+*Type in:* remark +
+*Expected Result:* Error message suggesting the correct command format +
+*Result Message:* +
+[red]#Invalid command format!  +
+| remark |: Adds one or more remarks the person identified by the index number used in the last person listing. +
+                 If the remark field is empty, the remark is removed for the person. +
+Parameters: INDEX r/[REMARK1] r/[REMARK2] ... +
+                   (INDEX must be a positive integer) +
+Example: (add a remark) remark 1 r/Likes to drink coffee +
+               (add multiple remarks) remark 1 r/Likes to drink coffee r/CAP5.0 +
+               (delete remarks) remark 2 r/#
+
+*Type in:* remark 1 r/Likes CS2103T +
+*Expected Result:* Add the remark 'Likes CS2103T' to the first person in the shown list. +
+*Result Message:*  +
+[green]#Added Remark(s) to Person: Damith +
+Gender: Male +
+Matric No.:  +
+Phone: 96584398 +
+Email: damith@u.nus.edu +
+Address: NUS COM2 #2-57 +
+Birthday:  +
+Timetable:  +
+Remark: [Likes CS2103T] +
+Photo:  +
+Tags: [Legend][Myth][CS2103T][Man][Prof]#
+
+*Type in:* remark 1 r/ +
+*Expected Result:* Remove the remark from the 1st person in the shown list. +
+*Result Message:*  +
+[green]#Removed Remark(s) from Person: Damith +
+Gender: Male +
+Matric No.:  +
+Phone: 96584398 +
+Email: damith@u.nus.edu +
+Address: NUS COM2 #2-57 +
+Birthday:  +
+Timetable:  +
+Remark:  +
+Photo:  +
+Tags: [Legend][Myth][CS2103T][Man][Prof]#
+
+*Type in:* rm 2 r/404 r/NOT FOUND +
+*Expected Result:* Add two remarks to the 2nd person in the shown list. +
+*Result Message:*  +
+[green]#Added Remark(s) to Person: Neil Bryan +
+Gender: Male +
+Matric No.: A0155016R +
+Phone: 96477278 +
+Email: neilbrian.nl@u.nus.edu +
+Address: Blk 666, Yishun St 61 +
+Birthday: 02/10/1995 +
+Timetable: http://modsn.us/VLQ3g +
+Remark: [404, NOT FOUND] +
+Photo:  +
+Tags: [Teammate][CS2103T][CS2101]#
+
+*Type in:* undo +
+*Expected Result:* Undo the previous command.  +
+*Result Message:*  +
+[green]#Undo success!#
+
+*Type in:* select 2 +
+*Expected Result:* The remark added to the 2nd person in the shown list will be removed. +
+*Result Message:*  +
+[green]#Selected Person: 2#
+
+=== FindCommand
+==== Description/Data
+Find Command is to find the persons with different fields of information.
+
+==== Steps To Execute And Expected Results
+*Type in:* find +
+*Expected Result:* Error message suggesting the correct command format +
+*Result Message:*  +
+[red]#Invalid command format!  +
+| find |: Finds all persons whose information contain any of the specified keywords (case-insensitive) and displays them as a list with index numbers. +
+Parameters: [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]... +
+Example:  +
+find n/ian zach +
+Returns any person with name including 'ian' and 'zach'. +
+find t/friends t/owesMoney +
+Returns all persons in UniFy containing *both* 'JCfriends' and 'computing'.#
+
+*Type in:* find n/an +
+*Expected Result:* Display all persons name containing `an` +
+*Result Message:*  +
+[green]#9 persons listed!#
+
+*Type in:* find p/32 +
+*Expected Result:* Display all persons phone containing `32` +
+*Result Message:*  +
+[green]#1 persons listed!#
+
+*Type in:* find e/@ +
+*Expected Result:* Display all persons email containing `@` +
+*Result Message:*  +
+[green]#24 persons listed!#
+
+*Type in:* find a/blk +
+*Expected Result:* Display all persons address containing `blk` +
+*Result Message:*  +
+[green]#11 persons listed!#
+
+*Type in:* find b/06 +
+*Expected Result:* Display all persons birthday month is June +
+*Result Message:*  +
+[green]#2 persons listed! [Born in June]#
+
+*Type in:* find t/cs +
+*Expected Result:* Display all persons tagName containing cs +
+*Result Message:*  +
+[green]#13 persons listed!#
+
+*Type in:* find b/abc +
+*Expected Result:* Error message suggesting Birthday month must be in integer +
+*Result Message:*  +
+[red]#Keyword input must be in integer.#
+
+*Type in:* find b/13 +
+*Expected Result:* Error message suggesting Birthday month out of bound +
+*Result Message:*  +
+[red]#Month 13 does not exist.#
+
+*Type in:* find b/1 +
+*Expected Result:* Error message suggesting Birthday Month input needs to be 2 digits +
+*Result Message:* +
+[red]#You should type 01 instead of 1.#
+
+*Type in:* find p/ +
+*Expected Result:* Error message showing the need of at least one field to be searched +
+*Result Message:*  +
+[red]#At least one field to find must be provided.#
+
+=== GmapsCommand
+==== Description/Data
+Opens a google map location view of the address for the person specified by the index. +
+If you specify an address. It shows the directions from that specified address to the person’s address.
+
+==== Steps To Execute And Expected Results
+*Type in:* gmaps +
+*Expected Result:* Error Message suggesting the correct Command input +
+*Result Message:*  +
+[red]#Invalid command format! +
+| gmaps |: Opens a Google Maps view of a person’s address. +
+            	If an address is specified, shows the directions from the address to that person's address. +
+Format: gmaps INDEX [a/ADDRESS] +
+Example: gmaps 1 +
+           	gmaps 1 a/Blk 123, Yishun 75#
+
+*Type in:* gmaps 1 +
+*Expected Result:* Shows the google maps directions to Damith’s location (NUS School of Computing, Computing 2 (COM2)) +
+*Result Message:*  +
+[green]#Showing Map View of Damith's address#
+
+*Type in:* gmaps 2 a/NUS +
+*Expected Result:* Shows the google maps directions to Bryan’s location (666 Yishun Street 61) from (National University of Singapore, 21 Lower Kent Ridge Rd, Singapore 119077) +
+*Result Message:*  +
+[green]#Showing directions to Neil Bryan#
+
+*Type in:* list +
+*Expected Result:* All persons in addressbook listed. +
+*Result Message:* +
+[green]#Listed all persons#
+
+*Type in:* gmaps 22 +
+*Expected Result:* Error Message showing that the person has no address to show +
+*Result Message:*  +
+[red]#Herman Khor has no address!#
+
+*Type in:* gmaps 3 a/ +
+*Expected Result:* Error Message suggesting the correct address input +
+*Result Message:*  +
+[red]#Person addresses can take any values, and it should not be blank#
+
+=== TimetableCommand
+==== Description/Data
+Timetable Command shows the combined timetable of selected persons
+
+==== Steps to Execute And Expected Results
+*Type in:* whenfree 1 2 3 +
+*Expected Result:* A combined timetable is shown +
+*Result Message:* +
+[green]#Displayed timetables: +
+[Damith] +
+[Neil Bryan] +
+[Fan Yiting]#
+
+*Type in:* whenfree 1, 4 +
+*Expected Result:* A combined timetable is shown +
+*Result Message:* +
+[green]#Displayed timetables: +
+[Damith] +
+[Tai Yu Xuan]#
+
+*Type in:* whenfree 1 +
+*Expected Result:* A combined timetable is shown +
+*Result Message:* +
+[green]#Displayed timetables: [Damith]#
+
+*Type in:* find t/CS2101 +
+*Expected Result:* Display all persons having `CS2101` tag +
+*Result Message:* +
+[green]#5 Persons listed!#
+
+*Type in:* whenfree +
+*Expected Result:* A combined timetable is shown +
+*Result Message:* +
+[green]#Displayed timetables: +
+[Neil Bryan] +
+[Fan Yiting] +
+[Tai Yu Xuan] +
+[Zachariah Tan] +
+[Oswald Wong]#
+
+=== SuggestCommand
+==== Description/Data
+Suggest function suggests user the correct input
+
+==== Steps To Execute And Expected Results
+*Type in:* fnid +
+*Expected Result:* Correct command word suggested +
+*Result Message:* +
+[gree]#Do you mean find?#
+
+=== ListCommand
+==== Description/Data
+List Command is to list all persons.
+
+==== Steps To Execute And Expected Results
+*Type in:* list +
+*Expected Result:* All persons in addressbook listed. +
+*Result Message:* +
+[green]#Listed all persons#
+
+=== HelpCommand
+==== Description/Data
+Help Command is to open the User guide link for user to view
+
+==== Steps To Execute And Expected Results
+*Type in:* help +
+*Expected Result:* help page pops up. +
+*Result Message:* +
+[green]#Opened help window.#
+
+=== SelectCommand
+==== Description/Data
+Select Command is to select a person to show his information.
+
+==== Steps To Execute And Expected Results
+*Type in:* select 1 +
+*Expected Result:* first person in addressbook selected. Information displayed. +
+*Result Message:* +
+[green]#Selected Person: 1#
+
+=== HistoryCommand
+==== Description/Data
+History Command is to show the history of commands used since the start of the launch of addressbook
+
+==== Steps To Execute And Expected ResultsType in: history
+*Type in:* history +
+*Expected Result:* A list of executed commands is shown +
+*Result Message:* +
+[green]#Entered commands (from most recent to earliest): +
+select 1 +
+help +
+list +
+fnid +
+whenfree +
+find t/CS2101 +
+whenfree 1 +
+whenfree 1 2 3 +
+gmaps 3 a/ +
+gmaps 22 +
+list +
+gmaps 2 a/NUS +
+gmaps 1 +
+gmaps +
+find p/ +
+find b/1 +
+find b/13 +
+find b/abc +
+find t/cs +
+find b/06 +
+find a/blk +
+find e/@ +
+find p/32 +
+find n/an +
+find +
+select 2 +
+undo +
+rm 2 r/404 r/NOT FOUND +
+remark 1 r/ +
+remark 1 r/Likes CS2103T +
+remark +
+ph 1 +
+select 2 +
+undo +
+photo 2 ph/[your file path] +
+photo 1 ph/Q:\haha.jpg +
+ph 1 +
+photo 1 ph/[your file path] +
+photo +
+ph 1 ph/[your file path of a txt file] +
+edit old/At new/Friend +
+edit old/Prof new/ +
+edit old/Arts new/Friend +
+edit 26 tt/https://nusmods.com/timetable/2017-2018/sem1?CS2101[SEC]=1&CS2103T[TUT]=T1&CS2010[LEC]=1&CS2010[TUT]=9&CS2010[LAB]=8&ES2660[SEC]=3&GEQ1000[TUT]=E17&CS1010J[LEC]=1&CS1010J[TUT]=10 +
+edit 26 tt/http://modsn.us/12345 +
+edit 26 b/1234567 +
+edit 26 b/29021997 +
+edit 26 e/heheexample.com +
+edit 26 m/A123456A +
+edit 26 p/abc +
+edit 26 g/h +
+edit 26 g/M m/A0000000A p/12345678 e/the_myth@example.com b/01011991 a/NUS n/The Myth t/CS2103T tt/http://modsn.us/Zd8wn +
+edit 26 p/12345678 g/F +
+edit +
+delete t/-1 +
+delete t/ +
+delete t/Arts t/Bus +
+delete t/A +
+undo +
+delete t/CS2101 t/Teammate +
+undo +
+delete t/CS2103T +
+delete +
+delete 999 +
+delete -1, -2 +
+undo +
+delete 1 +
+undo +
+delete 1 2 3 +
+theme +
+theme red +
+theme light +
+theme dark +
+theme light +
+add +
+add n/hehe tt/https://nusmods.com/timetable/2017-2018/sem1?CS2101[SEC]=1&CS2103T[TUT]=T1&CS2010[LEC]=1&CS2010[TUT]=9&CS2010[LAB]=8&ES2660[SEC]=3&GEQ1000[TUT]=E17&CS1010J[LEC]=1&CS1010J[TUT]=10 +
+add n/hehe tt/http://modsn.us/12345 +
+add n/hehe b/1234567 +
+add n/hehe b/29021997 +
+add n/hehe e/heheexample.com +
+add n/hehe m/A123456A +
+add n/hehe p/abc +
+add n/hehe g/h +
+add n/haha +
+add n/The Myth g/Male p/12345678 e/the_myth@example.com a/NUS m/A0000000A b/01011991 t/CS2103T tt/http://modsn.us/Zd8wn#
+
+=== UndoCommand
+==== Description/Data
+Undo Command is to undo an action done.
+
+==== Steps To Execute And Expected Results
+*Type in:* edit 1 n/1 +
+*Expected Result:* Success Message of the first person with his edited fields +
+*Result Message:* +
+[green]#Edited Person: 1 +
+Gender: Male +
+Matric No.: +
+Phone: 96584398 +
+Email: damith@u.nus.edu +
+Address: NUS COM2 #2-57 +
+Birthday: +
+Timetable: +
+Remark: [Likes CS2103T] +
+Photo: +
+Tags: [Legend][Myth][CS2103T][Man][Prof]#
+
+*Type in:* undo +
+*Expected Result:* The name of the first person reverts back. +
+*Result Message:* +
+[green]#Undo success!#
+
+=== RedoCommand
+==== Description/Data
+Redo Command is to redo the previous undone Command.
+
+==== Steps To Execute And Expected Results
+*Type in:* redo +
+*Expected Result:* The name of the first person is edited to be 1 +
+*Result Message:* +
+[green]#Redo success!#
+
+*Type in:* undo +
+*Expected Result:* The name of the first person reverts back. +
+*Result Message:* +
+[green]#Undo success!#
+
+=== ClearCommand
+==== Description/Data
+Clear Command is to clear the data in the addressbook.
+
+==== Steps To Execute And Expected Results
+*Type in:* clear +
+*Expected Result:* All persona are cleared +
+*Result Message:* +
+[green]#Address book has been cleared!#
+
+*Type in:* undo +
+*Expected Result:* The person list is restored +
+*Result Message:* +
+[green]#Undo success!#
+
+=== ExitCommand
+==== Description
+Exit Command is to exit the program
+
+==== Steps To Execute And Expected Results
+*Type in:* exit +
+*Expected Result:*  The addressbook closes.

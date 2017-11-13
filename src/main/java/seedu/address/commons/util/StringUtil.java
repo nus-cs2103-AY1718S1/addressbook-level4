@@ -11,12 +11,13 @@ import java.io.StringWriter;
  */
 public class StringUtil {
 
+    //@@author CindyTsai1
     /**
-     * Returns true if the {@code sentence} contains the {@code word}.
+     * Returns true if the {@code sentence} equals the {@code word}.
      *   Ignores case, but a full word match is required.
      *   <br>examples:<pre>
-     *       containsWordIgnoreCase("ABc def", "abc") == true
-     *       containsWordIgnoreCase("ABc def", "DEF") == true
+     *       containsWordIgnoreCase("ABc def", "abc def") == true
+     *       containsWordIgnoreCase("ABc def", "abc DEF") == true
      *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
      *       </pre>
      * @param sentence cannot be null
@@ -26,21 +27,28 @@ public class StringUtil {
         requireNonNull(sentence);
         requireNonNull(word);
 
-        String preppedWord = word.trim();
-        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
-
-        String preppedSentence = sentence;
+        String preppedSentence = sentence.trim();
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+        String preppedWord = word.trim();
+        String[] wordsInPreppedWord = preppedWord.split("\\s+");
+        checkArgument(!wordsInPreppedWord[0].equals(""), "Word parameter cannot be empty");
+        //checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
 
-        for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.equalsIgnoreCase(preppedWord)) {
-                return true;
+        //check if the names and the word have the same number of words
+        if (wordsInPreppedSentence.length != wordsInPreppedWord.length) {
+            return false;
+        }
+
+        //check if all words in sentence matches all words in word
+        for (int i = 0; i < wordsInPreppedSentence.length; i++) {
+            if (!wordsInPreppedSentence[i].equalsIgnoreCase(wordsInPreppedWord[i])) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
+    //@@author
     /**
      * Returns a detailed message of the t, including the stack trace.
      */

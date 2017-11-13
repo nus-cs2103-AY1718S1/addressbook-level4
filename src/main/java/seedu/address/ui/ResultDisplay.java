@@ -7,11 +7,13 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+
 
 /**
  * A ui for the status bar that is displayed at the header of the application.
@@ -32,10 +34,31 @@ public class ResultDisplay extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author CindyTsai1-reused
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
+
+        if (event.isError) {
+            setErrorStyle();
+        } else {
+            setDefaultStyle();
+        }
+    }
+
+    //@@author CindyTsai1
+    private void setDefaultStyle() {
+        resultDisplay.getStyleClass().remove("error");
+    }
+
+    private void setErrorStyle() {
+        ObservableList<String> style = resultDisplay.getStyleClass();
+        if (style.contains("error")) {
+            return;
+        }
+
+        style.add("error");
     }
 
 }

@@ -1,0 +1,88 @@
+= Zachary Tang Tjun Chii - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: UniFy
+UniFy is a desktop Address Book application for University students, particularly those from NUS (National University of Singapore).
+
+The user is able to manage the many people he meets in University, keep track of his friends' Birthdays, view his friend’s timetables, and much more.
+Most of the user interactions are via CLI, while there exists a GUI created with JavaFX. It is written in Java and has
+about 6kLoC.
+
+The source code is based on the  https://github.com/se-edu/addressbook-level4[AddressBook-Level4] project created by SE-EDU initiative.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B1/main/blob/master/collated/main/zacharytang.md[Functional code]]
+[https://github.com/CS2103AUG2017-W09-B1/main/blob/master/collated/test/zacharytang.md[Test code]] +
+
+=== Enhancement Added: Timetable Features
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=timetable]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+NUS students are the target audience of our application, and most planning of events or group meetings require the
+usage of an individual's timetables. By implementing the storage of timetables and viewing of combined timetables, users will be
+able to easily see when common free times between groups of people are.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=timetable]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Changing of font size
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=fontsize]
+
+#End of Extract#
+
+---
+
+=== User Guide Contributions: Introduction
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=intro]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Integration of individual UI enhancement and fixes (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/136[#136],
+ https://github.com/CS2103AUG2017-W09-B1/main/pull/141[#141])
+* UI: Display of selected person in main window (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/87[#87])
+* UI: Updated footer to include number of persons (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/14[#14])
+* Added aliases for commands (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/13[#13],
+ https://github.com/CS2103AUG2017-W09-B1/main/pull/2[#2])
+* Maintained tests (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/218[#218],
+ https://github.com/CS2103AUG2017-W09-B1/main/pull/211[#211],
+ https://github.com/CS2103AUG2017-W09-B1/main/pull/181[#181])
+* Maintained project documentation (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/262[#262],
+ https://github.com/CS2103AUG2017-W09-B1/main/pull/240[#240])
+* Maintained project repo page (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/15[#15],
+ https://github.com/CS2103AUG2017-W09-B1/main/pull/9[#9],
+ https://github.com/CS2103AUG2017-W09-B1/main/pull/1[#1])
+
+== Project:
+* Worked CP2106 Independent Software Development Project (Orbital)

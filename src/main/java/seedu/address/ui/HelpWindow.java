@@ -59,6 +59,7 @@ public class HelpWindow extends UiPart<Region> {
      */
     public void show() {
         logger.fine("Showing help page about the application.");
-        dialogStage.showAndWait();
+        dialogStage.show();
+        dialogStage.toFront();
     }
 }

@@ -4,12 +4,17 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GENDER_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MATRIC_NO_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_NONEXISTENT_TAG;
+import static seedu.address.logic.commands.EditCommand.generateResultMsgForTag;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -27,6 +32,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -51,17 +57,35 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
+    //@@author nbriannl
+    @Test
+    public void executeForTags_unfilteredList_success() throws Exception {
+        Tag oldTag = new Tag("friends");
+        Tag newTag = new Tag("enemy");
+        EditCommand editCommand = prepareCommand(oldTag, newTag);
+
+        String expectedMessage = generateResultMsgForTag(oldTag, newTag);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.editTag(oldTag, newTag);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    //@@author
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
         Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
         ReadOnlyPerson lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
 
         PersonBuilder personInList = new PersonBuilder(lastPerson);
-        Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
+        Person editedPerson = personInList.withName(VALID_NAME_BOB).withGender(VALID_GENDER_BOB)
+                .withMatricNo(VALID_MATRIC_NO_BOB).withPhone(VALID_PHONE_BOB)
+                .withBirthday(VALID_BIRTHDAY_BOB).withTags(VALID_TAG_HUSBAND).build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withGender(VALID_GENDER_BOB).withMatricNo(VALID_MATRIC_NO_BOB)
+                .withPhone(VALID_PHONE_BOB).withBirthday(VALID_BIRTHDAY_BOB).withTags(VALID_TAG_HUSBAND).build();
         EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
@@ -101,6 +125,24 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
+    //@@author nbriannl
+    @Test
+    public void executeForTags_filteredList_success() throws Exception {
+        showFirstPersonOnly(model);
+
+        Tag oldTag = new Tag("friends");
+        Tag newTag = new Tag("enemy");
+        EditCommand editCommand = prepareCommand(oldTag, newTag);
+
+        String expectedMessage = generateResultMsgForTag(oldTag, newTag);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.editTag(oldTag, newTag);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    //@@author
     @Test
     public void execute_duplicatePersonUnfilteredList_failure() {
         Person firstPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
@@ -131,6 +173,27 @@ public class EditCommandTest {
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    //@@author nbriannl
+    @Test
+    public void executeForTags_invalidTagUnfilteredList_failure() throws Exception {
+        Tag invalidTag = new Tag("idontevenexistlolololol");
+        Tag newTag = new Tag("enemy");
+        EditCommand editCommand = prepareCommand(invalidTag, newTag);
+
+        assertCommandFailure(editCommand, model, MESSAGE_NONEXISTENT_TAG);
+    }
+
+    @Test
+    public void executeForTags_invalidTagFilteredList_failure() throws Exception {
+        showFirstPersonOnly(model);
+        Tag invalidTag = new Tag("idontevenexistlolololol");
+        Tag newTag = new Tag("enemy");
+        EditCommand editCommand = prepareCommand(invalidTag, newTag);
+
+        assertCommandFailure(editCommand, model, MESSAGE_NONEXISTENT_TAG);
+    }
+
+    //@@author
     /**
      * Edit filtered list where index is larger than size of filtered list,
      * but smaller than size of address book
@@ -148,8 +211,9 @@ public class EditCommandTest {
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    //@@author nbriannl-reused
     @Test
-    public void equals() {
+    public void equals() throws Exception {
         final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
 
         // same values -> returns true
@@ -171,13 +235,47 @@ public class EditCommandTest {
 
         // different descriptor -> returns false
         assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_BOB)));
+
+        final EditCommand standardCommandForTags = new EditCommand(new Tag("old"), new Tag("new"));
+
+        // same value -> return true
+        assertTrue(standardCommandForTags.equals(new EditCommand(new Tag("old"), new Tag("new"))));
+
+        // same object -> return true
+        assertTrue(standardCommandForTags.equals(standardCommandForTags));
+
+        // null -> return false
+        assertFalse(standardCommandForTags.equals(null));
+
+        // different types -> return false
+        assertFalse(standardCommandForTags.equals(new ClearCommand()));
+
+        // different old tag -> return false
+        assertFalse(standardCommandForTags.equals(new EditCommand(new Tag("different"), new Tag("new"))));
+
+        // different new tag -> return false
+        assertFalse(standardCommandForTags.equals(new EditCommand(new Tag("old"), new Tag("different"))));
+
+        // different everything -> return false
+        assertFalse(standardCommandForTags.equals(new EditCommand(new Tag("absolutely"), new Tag("different"))));
     }
 
+    //@@author
     /**
-     * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code EditCommand} for person with parameters {@code index} and {@code descriptor}
      */
     private EditCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
         EditCommand editCommand = new EditCommand(index, descriptor);
+        editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return editCommand;
+    }
+
+    //@@author nbriannl
+    /**
+     * Returns an {@code EditCommand} for tag with parameters {@code oldTag} and {@code newTag}
+     */
+    private EditCommand prepareCommand(Tag oldTag, Tag newTag) {
+        EditCommand editCommand = new EditCommand(oldTag, newTag);
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editCommand;
     }

@@ -12,6 +12,7 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 /**
  * The main LogicManager of the app.
@@ -40,6 +41,7 @@ public class LogicManager extends ComponentManager implements Logic {
             CommandResult result = command.execute();
             undoRedoStack.push(command);
             return result;
+
         } finally {
             history.add(commandText);
         }
@@ -50,6 +52,23 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
+    //author@@ nbriannl
+    @Override
+    public ObservableList<Tag> getTagList() {
+        return model.getAddressBook().getTagList();
+    }
+
+    @Override
+    public void checkAllMasterListTagsAreBeingUsed () {
+        model.checkMasterTagListHasAllTagsUsed();
+    }
+
+    @Override
+    public void setCurrentTheme(String theme) {
+        model.setCurrentTheme(theme);
+    }
+
+    //author@@
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());

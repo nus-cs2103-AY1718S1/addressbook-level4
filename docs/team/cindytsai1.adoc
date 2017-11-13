@@ -1,0 +1,67 @@
+= Tsai Yu Hsuan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: UniFy
+UniFy is a desktop Address Book application for students from National University of Singapore.
+
+The user is able to manage the people he meets in University, such as keeping track of his friends' Birthdays, viewing his friend’s timetables.
+Most of the user interactions are via CLI, while there exists a GUI created with JavaFX. It is written in Java and has
+about 6kLoC.
+
+The source code is based on the  https://github.com/se-edu/addressbook-level4[AddressBook-Level4] project created by SE-EDU initiative.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B1/main/blob/master/collated/main/CindyTsai1.md[Functional code]]
+[https://github.com/CS2103AUG2017-W09-B1/main/blob/master/collated/test/CindyTsai1.md[Test code]] +
+
+=== Enhancement Added: Birthday Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users are able to store birthdays by inputting in the format of DDMMYYYY when adding a person. This allows the user to get a list of people having the same birthday month which is especially important for university students who celebrates friends' birthdays.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Password command
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=password]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Suggest command (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/86[#86])
+* Find by multiple field (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/97[#97])
+* Make add command fields optional (Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/154[#154])
+* UI: Change error message colour (Pull requests https://github.com/CS2103AUG2017-W09-B1/main/pull/57[#57])
+* Modified or added to test to maintain or increase coverage
+(Pull request https://github.com/CS2103AUG2017-W09-B1/main/pull/86[#86])
+
+== Project:
+* Worked CP2106 Independent Software Development Project (Orbital)

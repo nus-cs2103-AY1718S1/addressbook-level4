@@ -12,7 +12,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.model.PersonAddressDisplayDirectionsEvent;
+import seedu.address.commons.events.model.PersonAddressDisplayMapEvent;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -23,6 +25,8 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps/search/";
+    public static final String GOOGLE_MAPS_DIRECTIONS_URL_PREFIX = "https://www.google.com.sg/maps/dir/";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -41,11 +45,17 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+    //@@author nbriannl
+    private void loadGoogleMap(ReadOnlyPerson person) {
+        loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress());
     }
 
+
+    private void loadGoogleMapDirections(ReadOnlyPerson person, Address address) {
+        loadPage(GOOGLE_MAPS_DIRECTIONS_URL_PREFIX + address.toString() + "/" + person.getAddress());
+    }
+
+    //@@author
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -65,9 +75,16 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    //@@author nbriannl
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handlePersonAddressDisplayMapEvent(PersonAddressDisplayMapEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadGoogleMap(event.person);
+    }
+
+    @Subscribe
+    private void handlePersonAddressDisplayDirectionsEvent(PersonAddressDisplayDirectionsEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadGoogleMapDirections(event.person, event.address);
     }
 }

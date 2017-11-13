@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Damith</name>
+        <gender>Male</gender>
+        <matricNo></matricNo>
+        <phone>96584398</phone>
+        <email>damith@u.nus.edu</email>
+        <address>NUS COM2 #2-57</address>
+        <birthday></birthday>
+        <timetable></timetable>
+        <remark>[CS2103T Prof and Tutor]</remark>
+        <photoPath></photoPath>
+        <tagged>Legend</tagged>
+        <tagged>Myth</tagged>
+        <tagged>CS2103T</tagged>
+        <tagged>Man</tagged>
+        <tagged>Prof</tagged>
+    </persons>
+    <persons>
+        <name>Neil Bryan</name>
+        <gender>Male</gender>
+        <matricNo>A0155016R</matricNo>
+        <phone>96477278</phone>
+        <email>neilbrian.nl@u.nus.edu</email>
+        <address>Blk 666, Yishun St 61</address>
+        <birthday>02101995</birthday>
+        <timetable>http://modsn.us/VLQ3g</timetable>
+        <remark>[Handsome]</remark>
+        <photoPath></photoPath>
+        <tagged>Teammate</tagged>
+        <tagged>CS2103T</tagged>
+        <tagged>CS2101</tagged>
+    </persons>
+    <persons>
+        <name>Fan Yiting</name>
+        <gender>Female</gender>
+        <matricNo>A0162131F</matricNo>
+        <phone>96857667</phone>
+        <email>fyt0616@u.nus.edu</email>
+        <address>Prince George Park Residences NUS</address>
+        <birthday>16061998</birthday>
+        <timetable>http://modsn.us/aHN0q</timetable>
+        <remark>[Likes playing Dota 2]</remark>
+        <photoPath></photoPath>
+        <tagged>Teammate</tagged>
+        <tagged>CS2103T</tagged>
+        <tagged>CS2101</tagged>
+    </persons>
+    <persons>
+        <name>Tai Yu Xuan</name>
+        <gender>Female</gender>
+        <matricNo>A0161331N</matricNo>
+        <phone>95567202</phone>
+        <email>cyndy93@u.nus.edu</email>
+        <address>7 Serangoon Avenue 6, #13-07</address>
+        <birthday>18081993</birthday>
+        <timetable>http://modsn.us/VLQ3g</timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>Teammate</tagged>
+        <tagged>CS2103T</tagged>
+        <tagged>CS2101</tagged>
+    </persons>
+    <persons>
+        <name>Zachariah Tan</name>
+        <gender>Male</gender>
+        <matricNo>A0131788N</matricNo>
+        <phone>91677489</phone>
+        <email>zachtan@u.nus.edu</email>
+        <address>Blk 43 Marine Crescent, #22-02</address>
+        <birthday>06121995</birthday>
+        <timetable>http://modsn.us/9UKRW</timetable>
+        <remark>[Big Dreamer]</remark>
+        <photoPath></photoPath>
+        <tagged>Teammate</tagged>
+        <tagged>CS2105</tagged>
+        <tagged>CS2103T</tagged>
+        <tagged>CS2101</tagged>
+    </persons>
+    <persons>
+        <name>Claire Cordeiro</name>
+        <gender>Female</gender>
+        <matricNo>A5515792W</matricNo>
+        <phone>91402202</phone>
+        <email>clairecordeiro@u.nus.edu</email>
+        <address>Blk 122 Aljunied Lane, #04-26</address>
+        <birthday>25051992</birthday>
+        <timetable>http://modsn.us/HOhl3</timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>CatholicSociety</tagged>
+        <tagged>GEH1014</tagged>
+        <tagged>Arts</tagged>
+    </persons>
+    <persons>
+        <name>Jeannie Khoo</name>
+        <gender>Female</gender>
+        <matricNo>A7266581X</matricNo>
+        <phone>96565121</phone>
+        <email></email>
+        <address>Sheares Hall NUS</address>
+        <birthday></birthday>
+        <timetable>http://modsn.us/Oqiyc</timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>CS2105</tagged>
+        <tagged>MA1101R</tagged>
+    </persons>
+    <persons>
+        <name>Adelia Toy Tee Hooi</name>
+        <gender>Female</gender>
+        <matricNo>A6846796F</matricNo>
+        <phone>94792484</phone>
+        <email>adeliatoyteehooi@u.nus.edu</email>
+        <address>6 Kallang Lane, #08-15</address>
+        <birthday></birthday>
+        <timetable>http://modsn.us/rBmlH</timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>Business</tagged>
+    </persons>
+    <persons>
+        <name>Ed Lin</name>
+        <gender>Male</gender>
+        <matricNo></matricNo>
+        <phone>95998898</phone>
+        <email>edlin@u.nus.edu</email>
+        <address>Raffles Hall NUS</address>
+        <birthday>15051997</birthday>
+        <timetable>http://modsn.us/GWp3V</timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>GEH1014</tagged>
+        <tagged>Arts</tagged>
+    </persons>
+    <persons>
+        <name>Lum Sze Nga</name>
+        <gender>Female</gender>
+        <matricNo>A2547955I</matricNo>
+        <phone>97663550</phone>
+        <email>lumszenga@u.nus.edu</email>
+        <address>Sheares Hall NUS</address>
+        <birthday></birthday>
+        <timetable>http://modsn.us/HOhl3</timetable>
+        <remark>[Vice President of EML]</remark>
+        <photoPath></photoPath>
+        <tagged>Engineering</tagged>
+        <tagged>EML</tagged>
+    </persons>
+    <persons>
+        <name>Dana Yip</name>
+        <gender>Female</gender>
+        <matricNo>A1402075Y</matricNo>
+        <phone>96305522</phone>
+        <email>danayip@u.nus.edu</email>
+        <address>Kent Ridge Hall NUS</address>
+        <birthday>01121991</birthday>
+        <timetable>http://modsn.us/eFI8C</timetable>
+        <remark>[Met at Zouk]</remark>
+        <photoPath></photoPath>
+        <tagged>Clubber</tagged>
+        <tagged>Business</tagged>
+    </persons>
+    <persons>
+        <name>Siti Wahid</name>
+        <gender>Female</gender>
+        <matricNo>A6474133P</matricNo>
+        <phone>95412434</phone>
+        <email>sitiwahid@u.nus.edu</email>
+        <address>Blk 16 Bukit Panjang Street 85, #13-04</address>
+        <birthday>12011997</birthday>
+        <timetable>http://modsn.us/HRWvw</timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>CS2105</tagged>
+        <tagged>Computing</tagged>
+    </persons>
+    <persons>
+        <name>Aisha Othman</name>
+        <gender>Female</gender>
+        <matricNo>A5621093G</matricNo>
+        <phone>96443413</phone>
+        <email>aishaothman@u.nus.edu</email>
+        <address>NUS Tembusu College</address>
+        <birthday>20101994</birthday>
+        <timetable>http://modsn.us/GWp3V</timetable>
+        <remark>[From Sweden]</remark>
+        <photoPath></photoPath>
+        <tagged>ExchangeStudent</tagged>
+        <tagged>Computing</tagged>
+    </persons>
+    <persons>
+        <name>Godfrey Fu</name>
+        <gender>Male</gender>
+        <matricNo>A4290228I</matricNo>
+        <phone>96135308</phone>
+        <email>godfreyfu@u.nus.edu</email>
+        <address>Blk 192 Lorong 4 MacPherson, #09-20</address>
+        <birthday>20061995</birthday>
+        <timetable>http://modsn.us/Oqiyc</timetable>
+        <remark>[Acad Cell Director</remark>
+        <photoPath></photoPath>
+        <tagged>CS3230</tagged>
+        <tagged>ComputingClub</tagged>
+    </persons>
+    <persons>
+        <name>Oswald Wong</name>
+        <gender>Male</gender>
+        <matricNo>A5132347I</matricNo>
+        <phone>95893683</phone>
+        <email>oswaldwong@u.nus.edu</email>
+        <address>Blk 287 Tampines Street 71, #10-22</address>
+        <birthday>25051991</birthday>
+        <timetable>http://modsn.us/FX3uR</timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>CS2103T</tagged>
+        <tagged>ComputingClub</tagged>
+        <tagged>CS2101</tagged>
+    </persons>
+    <persons>
+        <name>Sylvester Wee</name>
+        <gender>Male</gender>
+        <matricNo>A8234209P</matricNo>
+        <phone>92149328</phone>
+        <email>sylvesterwee@u.nus.edu</email>
+        <address>Blk 192 Lorong 4 MacPherson, #09-20</address>
+        <birthday>20121996</birthday>
+        <timetable>http://modsn.us/GWp3V</timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>CS3216</tagged>
+        <tagged>Computing</tagged>
+    </persons>
+    <persons>
+        <name>Raheem Mahmood</name>
+        <gender>Female</gender>
+        <matricNo>A4326200N</matricNo>
+        <phone>97525168</phone>
+        <email>raheemmahmood@u.nus.edu</email>
+        <address>Blk 122 Aljunied Lane, #04-26</address>
+        <birthday>15011996</birthday>
+        <timetable>http://modsn.us/AWYIc</timetable>
+        <remark>[Malay Studies]</remark>
+        <photoPath></photoPath>
+        <tagged>Arts</tagged>
+    </persons>
+    <persons>
+        <name>Vicente Jasudasen</name>
+        <gender>Male</gender>
+        <matricNo></matricNo>
+        <phone>92800748</phone>
+        <email>vicentejasudasen@u.nus.edu</email>
+        <address></address>
+        <birthday></birthday>
+        <timetable></timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>CS2030</tagged>
+        <tagged>Computing</tagged>
+        <tagged>Prof</tagged>
+    </persons>
+    <persons>
+        <name>Betty Lam</name>
+        <gender>Female</gender>
+        <matricNo>A3705172D</matricNo>
+        <phone>98682048</phone>
+        <email>bettylam@u.nus.edu</email>
+        <address>Blk 192 Lorong 4 MacPherson, #09-20</address>
+        <birthday>15011991</birthday>
+        <timetable>http://modsn.us/AWYIc</timetable>
+        <remark>[Met her in Science bus stop], [NUSSU Publicity Director</remark>
+        <photoPath></photoPath>
+        <tagged>Science</tagged>
+        <tagged>NUSSU</tagged>
+    </persons>
+    <persons>
+        <name>Angeline Ee</name>
+        <gender>Female</gender>
+        <matricNo>A3169668G</matricNo>
+        <phone>96658073</phone>
+        <email>angelineee@u.nus.edu</email>
+        <address>Eusoff Hall NUS</address>
+        <birthday>25031997</birthday>
+        <timetable>http://modsn.us/HOhl3</timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>FOW2016</tagged>
+        <tagged>Computing</tagged>
+    </persons>
+    <persons>
+        <name>Oh Geok Har Felicia</name>
+        <gender>Female</gender>
+        <matricNo>A5291046T</matricNo>
+        <phone>97295002</phone>
+        <email>ohgeokharfelicia@u.nus.edu</email>
+        <address>Blk 287 Tampines Street 71, #10-22</address>
+        <birthday>20041994</birthday>
+        <timetable>http://modsn.us/qSFsb</timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>Friend</tagged>
+        <tagged>Arts</tagged>
+    </persons>
+    <persons>
+        <name>Herman Khor</name>
+        <gender>Male</gender>
+        <matricNo>A6748010J</matricNo>
+        <phone>93126657</phone>
+        <email>hermankhor@u.nus.edu</email>
+        <address></address>
+        <birthday>12051996</birthday>
+        <timetable></timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>MA1101R</tagged>
+        <tagged>Computing</tagged>
+        <tagged>TA</tagged>
+    </persons>
+    <persons>
+        <name>Ashraff Mohamad</name>
+        <gender>Male</gender>
+        <matricNo>A8034404O</matricNo>
+        <phone>93785086</phone>
+        <email>ashraffmohamad@u.nus.edu</email>
+        <address>Blk 407 Pasir Ris Street 11, #08-21</address>
+        <birthday>15041991</birthday>
+        <timetable>http://modsn.us/eFI8C</timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>Engineering</tagged>
+        <tagged>EML</tagged>
+    </persons>
+    <persons>
+        <name>Lenny Rajiv</name>
+        <gender>Male</gender>
+        <matricNo>A2973624K</matricNo>
+        <phone>99243696</phone>
+        <email>lennyrajiv@u.nus.edu</email>
+        <address>Sheares Hall NUS</address>
+        <birthday>15101991</birthday>
+        <timetable>http://modsn.us/GWp3V</timetable>
+        <remark></remark>
+        <photoPath></photoPath>
+        <tagged>Business</tagged>
+    </persons>
+    <tags>CatholicSociety</tags>
+    <tags>Legend</tags>
+    <tags>ExchangeStudent</tags>
+    <tags>Science</tags>
+    <tags>CS2105</tags>
+    <tags>MA1101R</tags>
+    <tags>GEH1014</tags>
+    <tags>CS3216</tags>
+    <tags>Computing</tags>
+    <tags>CS2101</tags>
+    <tags>Arts</tags>
+    <tags>Engineering</tags>
+    <tags>Clubber</tags>
+    <tags>CS3230</tags>
+    <tags>Friend</tags>
+    <tags>CS2103T</tags>
+    <tags>Prof</tags>
+    <tags>Business</tags>
+    <tags>Myth</tags>
+    <tags>EML</tags>
+    <tags>TA</tags>
+    <tags>Teammate</tags>
+    <tags>FOW2016</tags>
+    <tags>CS2030</tags>
+    <tags>Man</tags>
+    <tags>ComputingClub</tags>
+    <tags>NUSSU</tags>
+</addressbook>

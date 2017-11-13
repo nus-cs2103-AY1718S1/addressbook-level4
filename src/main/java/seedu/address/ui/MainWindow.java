@@ -17,22 +17,25 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
+//@@author April0616
 /**
  * The Main Window. Provides the basic application layout containing
  * a menu bar and space where other JavaFX elements can be placed.
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/icon.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static final String VIEW_PATH = "/view/";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -40,13 +43,19 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private TagColorMap tagColorMap;
+    private PersonInfoPanel personInfoPanel;
+    private InfoPanel infoPanel;
     private PersonListPanel personListPanel;
+    private TagListPanel tagListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane infoPlaceholder;
+
+    @FXML
+    private StackPane personInfoPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -58,11 +67,17 @@ public class MainWindow extends UiPart<Region> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
+    private StackPane tagListPanelPlaceholder;
+
+    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
 
+    /**
+     * Initializes the main window by the parameters provided.
+     */
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -77,6 +92,7 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
+        setWindowDefaultTheme(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
@@ -84,6 +100,9 @@ public class MainWindow extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Gets the primary stage of the main window.
+     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -91,6 +110,7 @@ public class MainWindow extends UiPart<Region> {
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }
+    //@@author
 
     /**
      * Sets the accelerator of a MenuItem.
@@ -122,20 +142,29 @@ public class MainWindow extends UiPart<Region> {
         });
     }
 
+    //@@author nbriannl
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        infoPanel = new InfoPanel();
+        infoPlaceholder.getChildren().add(infoPanel.getRoot());
+
+        personInfoPanel = new PersonInfoPanel();
+        personInfoPlaceholder.getChildren().add(personInfoPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        tagListPanel = new TagListPanel(logic.getTagList());
+        tagListPanelPlaceholder.getChildren().add(tagListPanel.getRoot());
+        logic.checkAllMasterListTagsAreBeingUsed();
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -192,6 +221,24 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    /**
+     * Changes the current theme to the given theme.
+     */
+    public void handleChangeTheme(String theme) {
+        if (getRoot().getStylesheets().size() > 1) {
+            getRoot().getStylesheets().remove(1);
+        }
+        getRoot().getStylesheets().add(VIEW_PATH + theme);
+    }
+
+    private void setWindowDefaultTheme(UserPrefs prefs) {
+        getRoot().getStylesheets().add(prefs.getCurrentTheme());
+    }
+
+    String getCurrentTheme() {
+        return getRoot().getStylesheets().get(1);
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -209,12 +256,19 @@ public class MainWindow extends UiPart<Region> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        infoPanel.freeResources();
     }
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleChangeTheme(event.themeToChangeTo);
+        logic.setCurrentTheme(getCurrentTheme());
     }
 }

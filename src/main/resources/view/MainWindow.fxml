@@ -1,56 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- @@author April0616 -->
+
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@Extensions.css" />
+    </stylesheets>
+    <MenuBar fx:id="menuBar" maxHeight="22.0" prefHeight="22.0" prefWidth="2000.0" VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+        </Menu>
+    </MenuBar>
+    <HBox>
+        <VBox fx:id="personList">
+            <StackPane fx:id="personListPanelPlaceholder" minWidth="255.0" VBox.vgrow="ALWAYS" />
+        </VBox>
+        <AnchorPane>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <stylesheets>
-    <URL value="@DarkTheme.css" />
-    <URL value="@Extensions.css" />
-  </stylesheets>
+            <SplitPane dividerPositions="0.26582278481012656" orientation="VERTICAL" prefWidth="2000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
-  <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-    <Menu mnemonicParsing="false" text="File">
-      <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-    </Menu>
-    <Menu mnemonicParsing="false" text="Help">
-      <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-    </Menu>
-  </MenuBar>
+                <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4269269269269269" maxHeight="628.0" minHeight="230.0" prefHeight="600.0" prefWidth="1990.0">
+                    <VBox maxWidth="1000.0" minHeight="81.0" minWidth="430.0" prefHeight="81.0" prefWidth="843.0" SplitPane.resizableWithParent="true">
+                        <padding>
+                            <Insets bottom="10" left="10" right="10" top="10" />
+                        </padding>
 
-  <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-    <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
-    </padding>
-  </StackPane>
+                        <!-- @@author nbriannl -->
+                        <StackPane fx:id="tagListPanelPlaceholder" alignment="TOP_CENTER" styleClass="pane-with-border">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                     </padding>
+                        </StackPane>
+                        <StackPane fx:id="personInfoPlaceholder" VBox.vgrow="ALWAYS" />
 
-  <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-      minHeight="100" prefHeight="100" maxHeight="100">
-    <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
-    </padding>
-  </StackPane>
+                    </VBox>
+                        <!-- @@author April0616 -->
+                    <VBox minWidth="200" prefWidth="323.0">
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
-      <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
-      </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-    </VBox>
-
-    <StackPane fx:id="browserPlaceholder" prefWidth="340" >
-      <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
-      </padding>
-    </StackPane>
-  </SplitPane>
-
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+                        <StackPane fx:id="commandBoxPlaceholder" minWidth="100" prefWidth="305.0" styleClass="pane-with-border">
+                            <padding>
+                                <Insets bottom="5" left="10" right="10" top="5" />
+                            </padding>
+                        </StackPane>
+                        <StackPane fx:id="resultDisplayPlaceholder" minWidth="100" prefWidth="320.0" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
+                            <padding>
+                                <Insets bottom="5" left="10" right="10" top="5" />
+                            </padding>
+                        </StackPane>
+                    </VBox>
+                </SplitPane>
+                <!-- @@author zacharytang -->
+                <StackPane fx:id="infoPlaceholder" styleClass="pane-with-border">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                </StackPane>
+            </SplitPane>
+        </AnchorPane>
+    </HBox>
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>

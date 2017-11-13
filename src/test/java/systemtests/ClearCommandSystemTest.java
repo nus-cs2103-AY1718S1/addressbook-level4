@@ -1,6 +1,5 @@
 package systemtests;
 
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
@@ -8,6 +7,7 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SuggestCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -22,6 +22,20 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
          * spaces -> cleared
          */
         assertCommandSuccess("   " + ClearCommand.COMMAND_WORD + " ab12   ");
+        assertSelectedCardUnchanged();
+
+        /* Case: clear non-empty address book with alias, command with leading spaces
+         * and trailing alphanumeric characters and spaces -> cleared
+         */
+        executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
+        assertCommandSuccess("   " + ClearCommand.COMMAND_ALIAS + " ab12   ");
+        assertSelectedCardUnchanged();
+
+        /* Case: clear non-empty address book with secondary keyword, command with leading spaces
+         * and trailing alphanumeric characters and spaces -> cleared
+         */
+        executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
+        assertCommandSuccess("   " + ClearCommand.COMMAND_SECONDARY + " ab12   ");
         assertSelectedCardUnchanged();
 
         /* Case: undo clearing address book -> original address book restored */
@@ -52,8 +66,20 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
 
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("ClEaR", MESSAGE_UNKNOWN_COMMAND);
+        /* Case: clear address book with alias -> cleared */
+        assertCommandSuccess(ClearCommand.COMMAND_ALIAS);
+        assertSelectedCardUnchanged();
+
+        /* Case: clear address book with secondary keyword-> cleared */
+        assertCommandSuccess(ClearCommand.COMMAND_SECONDARY);
+        assertSelectedCardUnchanged();
+
+        /* Case: mixed case command word -> cleared */
+        assertCommandSuccess("ClEaR");
+        assertSelectedCardUnchanged();
+
+        /* Case: invalid keyword -> suggested */
+        assertCommandFailure("claer", String.format(SuggestCommand.MESSAGE_SUCCESS, "clear"));
     }
 
     /**

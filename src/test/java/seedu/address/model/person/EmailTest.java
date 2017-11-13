@@ -10,7 +10,6 @@ public class EmailTest {
     @Test
     public void isValidEmail() {
         // blank email
-        assertFalse(Email.isValidEmail("")); // empty string
         assertFalse(Email.isValidEmail(" ")); // spaces only
 
         // missing parts
@@ -27,7 +26,8 @@ public class EmailTest {
         assertFalse(Email.isValidEmail("peter@jack@example.com")); // '@' symbol in local part
         assertFalse(Email.isValidEmail("peterjack@example@com")); // '@' symbol in domain name
 
-        // valid email
+        // valid email/ empty when optional
+        assertTrue(Email.isValidEmail("")); // empty string
         assertTrue(Email.isValidEmail("PeterJack_1190@example.com"));
         assertTrue(Email.isValidEmail("a@b"));  // minimal
         assertTrue(Email.isValidEmail("test@localhost"));   // alphabets only
