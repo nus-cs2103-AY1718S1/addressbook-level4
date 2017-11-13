@@ -385,7 +385,7 @@ image::FindSequenceDiagram.png[width="800"]
 [NOTE]
 The `predicate` used depends on which type of detail the user is using to find.
 
-The 4 predicates are as follow: +
+The 4 predicates are as follow:
 * if search by `name` then `NameContainsKeywordsPredicate` is used
 * if search by `phone number` then `PhoneContainsSpecifiedKeywordsPredicate` is used
 * if search by `email` then `EmailContainsSpecifiedKeywordsPredicate` is used
