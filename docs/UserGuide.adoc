@@ -22,9 +22,10 @@ ever increasing network.
 
 This user guide provides the following references to further assist users in navigating UniCity should they require so: +
 
-* A walkthrough of UniCity's features and their behaviour. +
+* A walk-through of UniCity's features and their behaviour. +
 * Instructions on how to execute UniCity's commands. +
-* Future enhancements to be implemented in UniCity. These enhancements highlights the direction and vision of UniCity. +
+* Future enhancements to be implemented in UniCity.
+** These enhancements highlight the direction and vision of UniCity. +
 * A summary of the commands. +
 * A dedicated section for Frequently Asked Questions (FAQ). +
 
@@ -51,9 +52,10 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `UniCity.jar` link: https://github.com/CS2103AUG2017-W13-B1/main/releases[here].
 .  Copy the file to the folder you want to use as the home folder for UniCity.
-.  Double-click the file to start the app. The graphic user interface (GUI) should appear in a few seconds.
+.  Double-click the file to start the app. The graphic user interface (GUI) should appear as seen in figure 1.
 +
 image::Ui.png[width="790"]
+Figure 1: Start up page of UniCity User Interface
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -73,13 +75,13 @@ Refer to the link:#features[Features] section below for details of each command.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * All command words are case insensitive. Some of these commands can be abbreviated to a single or few letters.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Items with `…`​ after them can be used multiple times including zero times, e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be entered in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
 === Viewing contacts
 
-This section lists commands that partition and view a part of UniCity's contact list.
+This section lists down the commands that partition and view a part of UniCity's contact list.
 
 ==== Listing all contacts : `list`
 
@@ -106,10 +108,10 @@ Format: +
 Examples:
 
 * `filter professor` +
-Returns any contacts having at least a `[professor]` tag
+Returns any contacts having at least a `[professor]` tag. +
 Hides contacts that do not contain a `[professor]` tag. Example: Contacts with `[neighbour][senior]` tags will not be shown.
 * `FILTER professor tutor` +
-Returns any contacts having at least a `[professor]` or `[tutor]` tag, or both.
+Returns any contacts having at least a `[professor]` or `[tutor]` tag, or both. +
 Hides contacts that do not contain `[professor]` and `[tutor]`. Example: Contacts with `[coursemate][friend]` tags will not be shown.
 // end::filterbytags[]
 
@@ -130,7 +132,7 @@ Format: +
 * Contact names matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return
  `Hans Gruber`, `Bo Yang`
 * When no contacts are found, the command will return an accurate suggestion of
-  who you might have been referring to, with the results of that suggestion shown as well.
+  who you might have been referring to, with the results of that suggestion shown as well. More details will be shown in figure 2 below.
 ****
 
 Examples:
@@ -143,6 +145,7 @@ Returns any contact having names `Betsy`, `Tim`, or `John`
 Returns `No results for alx. Showing results for Alex instead`
 
 image::FindCommandBeforeAndAfter.png[width="790"]
+Figure 2: UI shown for find command
 
 // end::find[]
 
@@ -169,10 +172,10 @@ Format: +
 * If there is no contact in the list, nothing will be sorted.
 ****
 
-Examples:
+Example:
 
 * `sort` +
-Sort the contacts in UniCity by ascending order.
+Sort the list of contacts in UniCity by ascending order.
 // end::sort[]
 
 === Modifying contacts
@@ -181,18 +184,18 @@ This section lists commands that modify UniCity's contact list.
 
 ==== Adding a contact: `add`
 
-Adds a contact in UniCity +
+Adds a contact to UniCity. +
 Format: +
-`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` +
-`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...`
+`add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
+`a n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
 
 ****
-* Only the name and phone number field are compulsory. Default value will be entered if other fields are left empty.
+* Only the name and phone number field are compulsory. Default values will be entered if other fields are left empty.
 * Multiple values can be entered for one field but the system will only use the last input entered.
 ****
 
 [TIP]
-A contact can have any number of tags (including 0)
+A contact can have any number of tags (including 0).
 
 Examples:
 
@@ -203,8 +206,8 @@ Examples:
 
 Edits an existing contact in UniCity's contact list. +
 Format: +
-`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-`e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
+`e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
 
 ****
 * Edits the contact at the specified `INDEX`. The index refers to the index number shown in the last contact listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -220,6 +223,9 @@ Examples:
 Edits the phone number and email address of the 1st contact to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd contact to be `Betsy Crower` and clears all existing tags.
+* `e 3 n/Michael Jackson p/92837465 e/mj@hotmail.com a/USA b/24/02/1982 t/singer` +
+Edits the name, phone number, email, address, birthday and tag of the 3rd contact to be `Michael Jackson`, `92837465`, `mj@hotmail.com`,
+`USA`, `24/02/1982` and `singer` respectively.
 
 // tag::favourite[]
 ==== Editing a contact : `favourite`
@@ -232,17 +238,18 @@ Format: +
 ****
 * Modifies the `favourite` field of the contact with the input index.
 * If the contact is a favourite contact, sets the `favourite` status to false.
-* If the contact is not a favourite contact, mark it as favourite.
+* If the contact is not a favourite contact, mark it as favourite. More details shown in figure 3 below
 * The index number refers to the order in the latest list.
 * The index number must be a positive integer and cannot exceed the length of the latest list.
 ****
 
-Examples:
+Example:
 
 * `favourite 1` +
 Changes the `favourite` status of the 1st contact in the latest list.
 
 image::fav-command-ui.png[width="790"]
+Figure 3: UI shown for favourite command
 // end::favourite[]
 // tag::birthday[]
 
@@ -259,6 +266,7 @@ Format: +
 * The index *must be a positive integer* 1, 2, 3, ...
 * The birthday *must be in positive intgers* 1, 2, 3, ...
 * The birthday *must be 6 or 8 integers long* in the format DD/MM/YY or DD/MM/YYYY  ...
+* The month and day of the birthday added will be populated in the calendar as a red block. More details is shown in figure 4 below.
 ****
 
 Examples:
@@ -269,7 +277,8 @@ Adds the birthday "21 Oct 95" to the 1st contact in UniCity's contact list.
 * `bd 3 b/21/10/1995` +
 Adds the birthday "21 Oct 1995" to the 3rd contact in UniCity's contact list.
 
-image::birthday-command-uI.png[width="790"]
+image::birthday-command-ui.png[width="790"]
+Figure 5: UI shown for birthday command
 // end::birthday[]
 
 
@@ -295,8 +304,11 @@ Examples:
 `addtag 1 2 3 t/friends` +
 Adds the tag "friends" to the 1st, 2nd and 3rd contacts in UniCity's contact list.
 * `find Betsy` +
-`at 2 5 t/classmate` +
-Adds the tag "classmate" to the 2nd and 5th contacts in the results of the `find` command.
+`at 2 3 5 t/classmate` +
+Adds the tag "classmate" to the 2nd, 3rd and 5th contacts in the results of the `find` command as shown in figure 6 below.
+
+image::addtag-command-ui.png[width="790"]
+Figure 6: UI shown for add tag command
 
 ==== Removing a tag from selected contacts : `removetag`
 
@@ -318,7 +330,7 @@ Examples:
 `removetag 1 2 3 t/friends` +
 Removes the tag "friends" from 1st, 2nd and 3rd contacts in UniCity's contact list.
 * `find Betsy` +
-`removetag 2 5 t/classmate` +
+`rt 2 5 t/classmate` +
 Removes the tag "classmate" from the 2nd and 5th contacts in the results of the `find` command.
 
 // end::addremove[]
@@ -375,10 +387,11 @@ Examples:
 `select 2` +
 Selects the 2nd contact in UniCity's contact list.
 * `find Betsy` +
-`s 1` +
-Selects the 1st contact in the results of the `find` command.
+`s 5` +
+Selects the 5th contact in the results of the `find` command as shown in figure 7 below.
 
 image::select-command-ui.png[width="790"]
+Figure 7: UI for select command
 
 // tag::facebook[]
 ==== Searching Facebook for a contact's profile : `facebook`
@@ -394,12 +407,13 @@ Format: +
 * The index *must be a positive integer* and *within the length of the current listing*.
 ****
 
-Examples:
+Example:
 
-* `facebook 1`
-Searches on Facebook the profile of the person whose contact is 1st in the current listing.
+* `facebook 5`
+Searches on Facebook the profile of the person whose contact is 1st in the current listing as shown in figure 8 below.
 
 image::facebook-command-ui.png[width="790"]
+Figure 8: UI for FaceBook search command
 // end::facebook[]
 
 // tag::locate[]
@@ -418,10 +432,13 @@ Format: +
 
 Examples:
 
-* `locate 1`
-Finds the address of the person from the 1st contact in the latest listing on Google Maps.
+* `locate 3`
+Finds the address of the person from the 3rd
+
+ contact in the latest listing on Google Maps as shown in figure 9.
 
 image::locate-command-ui.png[width="790"]
+Figure 9: UI for locate command
 // end::locate[]
 
 === Managing command sequence and history
@@ -563,11 +580,12 @@ Changes the window size to big.
 // tag::exit[]
 ==== Exiting the program : `exit`
 
-Prompts a confirmation step to exit to programme. +
+Prompts a confirmation step to exit to programme as shown in figure 10 below. +
 Exits the programme if two consecutive `exit` commands are given. +
 Format: `exit`
 
 image::exit-confirmation.png[width="790"]
+Figure 10: UI for exit confirmation
 // end::exit[]
 
 ==== Saving the data
