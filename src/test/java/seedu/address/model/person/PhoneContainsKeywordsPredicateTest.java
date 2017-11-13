@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
-import seedu.address.testutil.PersonBuilder;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,8 +9,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import seedu.address.testutil.PersonBuilder;
 
 public class PhoneContainsKeywordsPredicateTest {
 
@@ -25,7 +25,8 @@ public class PhoneContainsKeywordsPredicateTest {
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        PhoneContainsKeywordsPredicate firstPredicateCopy = new PhoneContainsKeywordsPredicate(firstPredicateKeywordList);
+        PhoneContainsKeywordsPredicate firstPredicateCopy = new PhoneContainsKeywordsPredicate
+                (firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -39,7 +40,7 @@ public class PhoneContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_PhoneContainsKeywords_returnsTrue() {
+    public void test_phoneContainsKeywords_returnsTrue() {
         // One keyword
         PhoneContainsKeywordsPredicate predicate = new PhoneContainsKeywordsPredicate(Collections
                 .singletonList("11111111"));
@@ -60,7 +61,7 @@ public class PhoneContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_PhoneDoesNotContainKeywords_returnsFalse() {
+    public void test_phoneDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         PhoneContainsKeywordsPredicate predicate = new PhoneContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withPhone("11111111").build()));

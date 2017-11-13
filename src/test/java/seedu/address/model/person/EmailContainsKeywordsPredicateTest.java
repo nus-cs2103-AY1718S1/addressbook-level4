@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
-import seedu.address.testutil.PersonBuilder;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,8 +9,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import seedu.address.testutil.PersonBuilder;
 
 public class EmailContainsKeywordsPredicateTest {
 
@@ -25,7 +25,8 @@ public class EmailContainsKeywordsPredicateTest {
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        EmailContainsKeywordsPredicate firstPredicateCopy = new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
+        EmailContainsKeywordsPredicate firstPredicateCopy = new EmailContainsKeywordsPredicate
+                (firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -39,7 +40,7 @@ public class EmailContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_EmailContainsKeywords_returnsTrue() {
+    public void test_emailContainsKeywords_returnsTrue() {
         // One keyword
         EmailContainsKeywordsPredicate predicate = new EmailContainsKeywordsPredicate(Collections
                 .singletonList("example@gmail.com"));
@@ -61,7 +62,7 @@ public class EmailContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_EmailDoesNotContainKeywords_returnsFalse() {
+    public void test_emailDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         EmailContainsKeywordsPredicate predicate = new EmailContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withEmail("example@gamil.com").build()));
