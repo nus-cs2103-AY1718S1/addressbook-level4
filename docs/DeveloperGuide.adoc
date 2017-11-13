@@ -298,7 +298,7 @@ The redo does the exact opposite (pops from `redoStack`, pushes to `undoStack`, 
 [NOTE]
 If the `redoStack` is empty, there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. The `redoStack` is no longer empty. It will be purged as it no longer makes sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow). This is shown in Figure 3.1.6.
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. The `redoStack` is no longer empty. It will be purged as it no longer makes sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow). This is shown in Figure 3.1.1.6.
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 _Figure 3.1.1.6 : Execute Clear Command Stack Diagram_
@@ -306,7 +306,7 @@ _Figure 3.1.1.6 : Execute Clear Command Stack Diagram_
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution, as shown in Figure 3.1.1.7.
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 3.1.7 : Execute List Command Stack Diagram_
+_Figure 3.1.1.7 : Execute List Command Stack Diagram_
 
 The following activity diagram, Figure 3.1.1.8,  summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
