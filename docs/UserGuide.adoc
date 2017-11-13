@@ -234,7 +234,7 @@ Format: `addli n/NAME o/OWNER i/INSURED b/BENEFICIARY pr/PREMIUM c/CONTRACT_FILE
 [TIP]
 ====
 *Prefix filling* +
-All fields are required here as a contract needs to be complete before it is valid.
+All fields are required here as a life insurance needs to be complete before it is valid.
 However, due to the multitude of information required, you can press enter with an unfilled
 command to trigger the autofill to prompt you with the prefixes required. Also,
 pressing enter allows you to move to the next field.

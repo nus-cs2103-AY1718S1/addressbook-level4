@@ -900,6 +900,10 @@ public void syncMasterLifeInsuranceMapWith(UniquePersonList persons) {
 The method `syncMappedListWithInternalMap()` in the last line is used to synchronize the internal list of `LifeInsurances` inside `UniqueLifeInsuranceMap`.
 This internal list is used for exposing an `ObservableList<ReadOnlyInsurance>` to the UI for binding.
 
+[NOTE]
+Because `Person` objects are identified by `Name` and stored in a list,
+for every `LifeInsurance` object we have to iterate through the entire list of persons to check if the name of the `Person` object matches with the name of the three `InsurancePerson` objects.
+
 The second method ensures that every `Person` in the master list contains the correct list of `LifeInsurance` objects corresponding to his/her list of insurance ids `List<UUID>`.
 It is implemented in this way:
 
@@ -919,16 +923,14 @@ public void syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap) th
 }
 ----
 
-==== Design Considerations
+[NOTE]
+Because `LifeInsurance` objects are identified by `UUID` and stored in a map,
+for every `Person` object can simply retrieve the `LifeInsurance` he/she is involved by providing the id rather than iterating through the entire map.
 
-**Aspect:** Data structure for storing and saving life insurances in xml format: +
-**Alternative 1 (current choice):** Use a map to store ids as keys and life insurances as values. +
-**Pros:** Provides efficient O(1) data access using the id. +
-**Cons:** Requires an internal list to provide an `ObservableList<ReadOnlyInsurance>` to the UI for binding.
-The internal list have to be synchronized when data in the map changes. +
-**Alternative 2:** Use a list to store all `LifeInsurances`. +
-**Pros:** Does not require internal list. Easier implementation. +
-**Cons:** Less efficient data access. Requires iterating through the entire list to search for a life insurance using id.
+The two methods above are grouped into a method called `synWithUpdate()`, which is called every time when
+an operation related to `LifeInsurance` or `Person` in is executed, e.g. `addPerson(ReadOnlyPerson p)`, `deleteInsurance(ReadOnlyInsurance target)`.
+
+==== Design Considerations
 
 **Aspect:** Data structure for storing and saving life insurances in xml format: +
 **Alternative 1 (current choice):** Use a map to store ids as keys and life insurances as values. +
@@ -949,6 +951,20 @@ The internal list have to be synchronized when data in the map changes. +
 The following sequence diagram shows how the add life insurance operation works:
 
 image::AddLifeInsuranceCommandSequenceDiagram.png[width="800"]
+
+There are eight compulsory fields required for the user to input in the add life insurance command.
+They are: name, owner, insured, beneficiary, premium, signing date, expiry date, and contract file name.
+
+
+==== Design Considerations
+
+**Aspect:** Number of fields required from the user input: +
+**Alternative 1 (current choice):** Every field must be provided. +
+**Pros:** Ensures no field with null or empty value exists in a `LifeInsurance` object. +
+**Cons:** Not user-friendly. The user needs to fill in every field every time.
+**Alternative 2:** Making the name field the only compulsory field. The rest can be not provided. +
+**Pros:** More flexibility and user-friendly. +
+**Cons:** Requires good handling of null or empty values. In addition, an edit life insurance command has to be created to allow users to update the unfilled fields.
 
 // end::addli[]
 
