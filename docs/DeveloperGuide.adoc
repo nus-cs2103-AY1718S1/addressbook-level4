@@ -680,7 +680,7 @@ image::Reminder.png[width="600"]
 _Figure 5.11.1 : Reminder for single meeting_
 
 Implementation: +
-The creation of the pop up starts from the calling of `MeetingAlert` class during the opening of the application. The implementation of meeting pop up reminder ultilises `javafx.stage.Stage`. Before the instantiation of the `MeetingAlert` class, there will be a check if the next meeting is a group meeting or normal meeting. Subsequently, the results will be shown on the reminder itself, shown in Figure 5.8.2.
+The creation of the pop up starts if there is a meeting on the day itself by the calling of `MeetingAlert` class during the opening of the application. The implementation of meeting pop up reminder ultilises `javafx.stage.Stage`. Before the instantiation of the `MeetingAlert` class, there will be a check if the next meeting is a group meeting or normal meeting. Subsequently, the results will be shown on the reminder itself, shown in Figure 5.8.2.
 
 image::Reminder(1).png[width="600"]
 _Figure 5.11.2 : Reminder for group meeting_

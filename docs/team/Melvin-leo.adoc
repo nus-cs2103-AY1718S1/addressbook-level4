@@ -50,7 +50,7 @@ include::../UserGuide.adoc[tag=popUp]
 
 ==== Justification
 
-This implementation further boost our capability of reminding of _ScheduBook_. After implementing the meeting cards, we realised that despite the coloured card, there were no significant reminder that can really catch the eye of the users. However, this pop up reminder is significant to a large extent and most of the details are shown to the user. Furthermore, the user will have to acknowledge the pop up before actually entering the application.
+This implementation further boosts our capability of reminding of _ScheduBook_. After implementing the meeting cards, we realised that despite the coloured card, there was no significant reminder that can really catch the eye of the users. However, this pop-up reminder is significant to a large extent and most of the details are shown to the user. Furthermore, the user will have to acknowledge the pop up before actually entering the application.
 
 ==== Implementation
 
@@ -75,7 +75,7 @@ include::../UserGuide.adoc[tag=autodelete]
 
 ==== Justification
 
-In order for _ScheduBook_ to be more user-friendly and convenient, automatic deletion of meetings that have past the scheduled date and time should be implemented, since there is no need for the application to remind user of an overdue meeting.
+In order for _ScheduBook_ to be more user-friendly and convenient, automatic deletion of meetings that have past the scheduled date and time should be implemented, since there is no need for the application to remind the user of an overdue meeting.
 
 ==== Implementation
 
