@@ -20,6 +20,7 @@ public class Name {
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
     public final String fullName;
+    private String browserName;
 
     /**
      * Validates given name.
@@ -33,6 +34,7 @@ public class Name {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
         this.fullName = trimmedName;
+        this.browserName = trimmedName;
     }
 
     /**
@@ -42,6 +44,10 @@ public class Name {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
+    //@@author jshoung
+    public String getBrowserName() {
+        return browserName;
+    }
 
     @Override
     public String toString() {

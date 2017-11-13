@@ -1,9 +1,59 @@
+<!--@@author jshoung-->
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="DarkTheme.css">
+    <link rel="stylesheet" href="DarkThemeCommands.css">
 </head>
 
 <body class="background">
+<!-- <img src="https://i.imgur.com/BduVh7O.png" draggable="false" alt="ContactHub Logo"> -->
+<h1>Command Summary</h1><br>
+<ul>
+    <li><span class="command">add (a)</span>: Adds a contact to ContactHub.<br>
+        <span>Format</span>: add n/NAME p/PHONE... e/EMAIL... a/ADDRESS b/BIRTHDAY [m/MODULE]...<br></li>
+    <li><span class="command">edit (e)</span>: Edits the details of the contact identified by the index number used in the last contact listing. Existing values will be overwritten by the input values.<br>
+        <span>Format</span>: edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL]... [a/ADDRESS] [b/BIRTHDAY] [m/MODULE]...<br></li>
+    <li><span class="command">find (f)</span>: Finds contacts whose names contain any of the given keywords.<br>
+        <span>Format</span>: find KEYWORD [MORE_KEYWORDS]...<br></li>
+    <li><span class="command">findmodule (fm)</span>: Finds modules whose names contain any of the given keywords.<br>
+        <span>Format</span>: findmodule MODULE_NAME [MORE_MODULE_NAMES]...<br></li>
+    <li><span class="command">getmodule (gm)</span>: Shows NUSMods module information in browser.<br>
+        <span>Format</span>: getmodule MODULE_NAME<br></li>
+    <li><span class="command">listmodules (lm)</span>: Shows a list of all modules in ContactHub.<br></li>
+    <li><span class="command">delete (d)</span>: Deletes the specified contact from ContactHub.<br>
+        <span>Format</span>: delete INDEX<br></li>
+    <li><span class="command">select (sl)</span>: Selects the contact identified by the index number used in the last contact listing.<br>
+        <span>Format</span>: select INDEX<br></li>
+    <li><span class="command">addphoto (ap)</span>: Adds a photo to a contact using the index of the contact in the latest listing.<br>
+        <span>Format</span>: addphoto INDEX u/IMAGE_URL<br></li>
+    <li><span class="command">addtask (at)</span>: Adds a task to the task list.<br>
+        <span>Format</span>: addtask t/APPOINTMENT d/DATE s/START_TIME<br></li>
+    <li><span class="command">edittask (et)</span>: Edits the details of the task identified by the index number.<br>
+        <span>Format</span>: edittask INDEX [t/APPOINTMENT] [d/DATE] [s/STARTTIME]<br></li>
+    <li><span class="command">deletetask (dt)</span>: Deletes the task identified by the index number in the task list.<br>
+        <span>Format</span>: deletetask INDEX<br></li>
+    <li><span class="command">summary (sm)</span>: Opens the ContactHub Command Summary.<br></li>
+    <li><span class="command">venue (v)</span>: Shows NUSMods venue information.<br></li>
+    <li><span class="command">bus (b)</span>: Opens the NUS bus routes.<br></li>
+    <li><span class="command">map (m)</span>: Opens the NUS map.<br></li>
+    <li><span class="command">help (hp)</span>: Opens the User Guide.<br></li>
+    <li><span class="command">history (h)</span>: Shows the commands that were previously entered.<br></li>
+    <li><span class="command">list (l)</span>: Shows a list of all contacts.<br></li>
+    <li><span class="command">clear (c)</span>: Clears ALL contact entries.<br></li>
+    <li><span class="command">undo (u)</span>: Restores ContactHub to the state before the previous undoable command was executed.<br></li>
+    <li><span class="command">redo (r)</span>: Reverses the most recent undo command.<br></li>
+    <li><span class="command">exit (x)</span>: Exits the program.<br></li>
+</ul>
+<br>
+<h1>Keyboard Shortcuts</h1>
+<br>
+<ul>
+    <li><span class="command">Escape</span>: Clears the whole command box.<br>
+    <li><span class="command">Alt</span>: Relocates text cursor to the right completely.<br>
+    <li><span class="command">Delete</span>: Deletes a chunk of words or chunk of whitespace on the left of the text cursor.<br>
+    <li><span class="command">Insert</span>: Fills the command box with the AddCommand parameters.<br>
+</ul>
+
 </body>
 </html>
+

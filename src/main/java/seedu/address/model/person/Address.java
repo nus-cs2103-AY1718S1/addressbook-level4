@@ -20,7 +20,9 @@ public class Address {
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
 
     public final String value;
-
+    // @@author tanchc
+    private String gMapsAddress;
+    // @@author
     /**
      * Validates given address.
      *
@@ -32,6 +34,9 @@ public class Address {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         this.value = address;
+        //@@author tanchc
+        this.gMapsAddress = address.replace("Blk ", "");
+        //@@author
     }
 
     /**
@@ -56,6 +61,15 @@ public class Address {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+    //@@author tanchc
+    public String getGMapsAddress() {
+        return gMapsAddress;
+    }
+
+    //@@author jshoung
+    public String getBrowserAddress() {
+        return value;
     }
 
 }

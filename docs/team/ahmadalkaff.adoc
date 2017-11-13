@@ -1,0 +1,141 @@
+= Ahmad Alkaff - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== ContactHub
+ContactHub is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B2/main/blob/master/collated/main/ahmadalkaff.md[Functional code]] [https://github.com/CS2103AUG2017-T11-B2/main/blob/master/collated/test/ahmadalkaff.md[Test code]]
+
+=== Enhancement Added: Sorts the person list alphabetically
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Sorting the person list of ContactHub in an alphabetical order allows the user to identify all of the persons.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Listings of all the modules in ContactHub
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=listmodules]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+When using ContactHub, all contacts can be assigned to a module. With the ListModules feature,
+users can now know all the modules in ContactHub.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=listmodules]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: EditTask
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=edittask]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+When using ContactHub, users can add tasks to be done. With the edit task feature, users can now have the
+option to edit incorrect information. This would benefit the user greatly as well
+as attract more users to use ContactHub.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=edittask]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: DeleteTask
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletetask]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+When using ContactHub, users can add tasks to be done. With the delete task feature, users can now have the
+option to delete the task once it is done. This would benefit the user greatly as well
+as attract more users to use ContactHub.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletetask]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add `sendEmail` feature
+
+==== Justification
+
+When using ContactHub, users can send email to anyone in the person list. With the send email feature, users can now
+have the option to send emails to anyone in ContactHub. This would greatly benefit the users in the form of
+communicating with other persons.
+
+=== Other contributions
+
+* Initiated command alias for commands (Pull requests https://github.com[#30])
+* Add UseCase in the DeveloperGuide (Pull requests https://github.com[#48])
+* Allow users to add multiple phone numbers and emails to a single contact (Pull requests https://github.com[#93], https://github.com[#97])
+* Updated the Architecture Diagrams (Pull requests https://github.com[#127], https://github.com[#147])

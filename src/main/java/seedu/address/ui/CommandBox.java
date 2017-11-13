@@ -1,5 +1,12 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -17,7 +24,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
- */
+ **/
 public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
@@ -55,10 +62,125 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        //@@author viviantan95
+        case ESCAPE:
+            commandTextField.setText("");
+            break;
+        case ALT:
+            keyEvent.consume();
+            commandTextField.positionCaret(commandTextField.getText().length());
+            break;
+        case DELETE:
+            keyEvent.consume();
+            deleteChunk();
+            break;
+        case INSERT:
+            commandTextField.setText("add " + PREFIX_NAME + " " + PREFIX_PHONE + " " + PREFIX_BIRTHDAY + " "
+                    + PREFIX_EMAIL + " " + PREFIX_ADDRESS + " " + PREFIX_MODULE);
+            commandTextField.positionCaret(6);
+            break;
+        //@@author
         default:
             // let JavaFx handle the keypress
         }
     }
+    //@@author viviantan95
+    /**
+     * Updates the text field by the position of the caret
+     * 1. If the caret is in the extreme left position, break.
+     * 2. If the caret is at the extreme right position, it will delete a chunk or white spaces or words accordingly
+     * 3. If the chunk on the left of the caret are white spaces, it will delete
+     * 4. If the chunk on the left of the caret are words, it will delete
+     */
+    private void deleteChunk() {
+        int caretPos = commandTextField.getCaretPosition();
+        int newCaretPos;
+
+        if (caretPos == 0) {
+            return;
+        }
+
+        if (caretPos == commandTextField.getText().length()) {   //caret at the extreme right of command box text
+            if (noCharBefore(caretPos)) {
+                //remove chunk of space
+                newCaretPos = caretPos;
+
+                for (int i = newCaretPos; i > 0; i--) {
+                    if (!noCharBefore(newCaretPos)) {
+                        break;
+                    }
+                    newCaretPos -= 1;
+                }
+            } else {
+                //remove chunk of words
+                newCaretPos = caretPos;
+
+                for (int i = newCaretPos; i > 0; i--) {
+                    if (noCharBefore(newCaretPos)) {
+                        break;
+                    }
+                    newCaretPos -= 1;
+                }
+            }
+        } else if (noCharBefore(caretPos) && caretPos != commandTextField.getText().length()) {
+            //remove chunk of space
+            int tempCaretPos = caretPos;
+
+            for (int i = tempCaretPos; i > 0; i--) {
+                if (!noCharBefore(tempCaretPos)) {
+                    break;
+                }
+                tempCaretPos -= 1;
+            }
+            newCaretPos = tempCaretPos;
+
+        } else {
+            //remove chunk of words
+            int tempCaretPos = caretPos;
+
+            for (int i = tempCaretPos; i > 0; i--) {
+                if (noCharBefore(tempCaretPos)) {
+                    break;
+                }
+                tempCaretPos -= 1;
+            }
+            newCaretPos = tempCaretPos;
+        }
+        newCommandBoxText(newCaretPos, caretPos);
+        commandTextField.positionCaret(newCaretPos);
+    }
+
+    /**
+     * Replaces the command box text with reference of position of new text cursor and position of old text cursor
+     * @param newCaretPos
+     * @param oldCaretPos
+     */
+    private void newCommandBoxText(int newCaretPos, int oldCaretPos) {
+        String oldCommandBoxText = commandTextField.getText().substring(0, newCaretPos);
+        String newCommandBoxText;
+        if (oldCaretPos == 0 || oldCaretPos == commandTextField.getText().length()) {
+            newCommandBoxText = oldCommandBoxText;
+        } else {
+            newCommandBoxText = oldCommandBoxText + commandTextField.getText().substring(oldCaretPos);
+        }
+        commandTextField.setText(newCommandBoxText);
+    }
+
+    //Checks if there are any characters before the text cursor
+    private boolean noCharBefore(int caretPos) {
+        Character charBeforeCaret = commandTextField.getText().charAt(caretPos - 1);
+        String toString = Character.toString(charBeforeCaret);
+        return (toString.equals(" "));
+    }
+
+    //Checks if there are any characters before the text cursor
+    //NullPointerException would occur if this function is called when text cursor is at extreme right
+    private boolean noCharAfter(int caretPos) {
+        Character charAfterCaret = commandTextField.getText().charAt(caretPos);
+        String toString = Character.toString(charAfterCaret);
+        return (toString.equals(" "));
+    }
+    //@@author
 
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
@@ -107,14 +229,14 @@ public class CommandBox extends UiPart<Region> {
             // process result of the command
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
 
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage()));
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
     }
 
@@ -148,4 +270,12 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    //@@author viviantan95
+    /**
+     * Gets text field for test
+     */
+    public TextField getCommandTextField() {
+        return commandTextField;
+    }
+    //@@author
 }

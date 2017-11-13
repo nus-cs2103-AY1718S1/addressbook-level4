@@ -1,0 +1,151 @@
+= Vivian Tan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ContactHub
+ContactHub is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B2/main/blob/master/collated/main/viviantan95.md[Functional code]] [https://github.com/CS2103AUG2017-T11-B2/main/blob/master/collated/test/viviantan95.md[Test code]]
+
+=== Enhancement Added: Add birthday property in Person Model
+
+==== External behaviour
+
+=== Adding a birthday property to a Contact [Since v1.1]
+
+Add a birthday property to the Contact in Contacthub. +
+Format: `add n/NAME p/PHONE_NUMBER... b/BIRTHDAY e/EMAIL... a/ADDRESS [m/MODULE]...` +
+
+****
+* Adds a birthday property to the Contact.
+* The birthday must be of valid format.
+****
+
+Examples:
+
+* `add n/John Doe p/98765432 b/10/10/1980 e/johnd@example.com a/John street, block 123, #01-01` +
+* `add n/Betsy Crowe m/CS2101 e/betsycrowe@example.com a/Newgate Prison p/1234567 b/18/08/1989 m/criminal` +
+Sets the contact with the following details.
+
+
+==== Justification
+The enhancement allows the user to save another information of the contact that the user wishes to add. As our target
+audience is students, they are likely to celebrate birthdays for each other often. The birthday property also allows
+the addition of other enhancements like sorting the list by birthday or notifications of contacts with their birthdays
+ occurring today.
+
+==== Implementation
+
+=== Birthday property in person model
+
+The birthday property is facilitated by a `Birthday` class, which is a property class of the `person` class. It allows
+the user to add a birthday field to each of the contacts.
+
+image::birthdayDiagram.png[width="300"]
+
+The `Birthday` class stores the birthday information of the contact and will be displayed in the contact's information.
+The birthday information can be edited using the `edit` command.
+
+Whenever the user adds a new contact using the `AddCommand`, a new `Birthday` object is instantiated.
+The `Birthday` class checks the validity of the birthday string, if valid, a new `Person` object would be
+instantiated, otherwise an IllegalValueException would be thrown.
+
+The birthday property is implemented this way.
+
+[source,java]
+----
+
+public class Birthday {
+   public Birthday(string birthday)throws IllegalValueException {
+       // ...birthday logic...
+       }
+}
+----
+
+Suppose the user wants to add a new contact. The user fills in the information for `AddCommand`.
+
+image::birthday1.PNG[width="400"]
+
+The user then executes the `AddCommand`.
+
+image::birthday2.PNG[width="300]
+
+==== Design consideration
+
+**Aspects:** Implementation of birthday class +
+**Alternative 1 (current choice):** Implements in `person` class. +
+**Pros:** Easy to implement. +
+**Cons:** Hard for new developers to understand the template pattern.
+
+=== Enhancement Added: Adding a photo to a contact in Contacthub
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addphoto]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Adding a photo to each contact of ContactHub would make the contacts more recognisable to the user, hence easier
+identification of contacts.
+Furthermore ContactHub's target audience is university students, therefore to make the application more interesting
+ and youthful, so as to add a fun factor when using ContactHub.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addphoto]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Keyboard Shortcuts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=keyboardshortcuts]
+
+#End of Extract#
+
+---
+
+=== Justification
+
+When using ContactHub, it is sometimes quite a hassle when using the command line. Especially when adding
+numerous contacts or when typing incorrect information. Hence, with keyboard shortcuts, using the command line
+would be much more easier and time saving. This would benefit the user greatly as well as attract more users to
+use ContactHub.
+
+=== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=keyboardshortcuts]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+* Using NUSMods as an additional feature.
+* Using IVLE as an additional feature.
+
+=== Other contributions
+
+* Assigned random tag colors to random tags (Pull requests https://github.com[#52])
+* Add user stories into developer guide (Pull requests https://github.com[#49])

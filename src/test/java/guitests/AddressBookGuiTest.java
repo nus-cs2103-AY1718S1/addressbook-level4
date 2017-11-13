@@ -16,11 +16,13 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import guitests.guihandles.TaskListPanelHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
 import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalTasks;
 
 /**
  * A GUI Test class for AddressBook.
@@ -63,8 +65,20 @@ public abstract class AddressBookGuiTest {
      * Override this in child classes to set the initial local data.
      * Return null to use the data in the file specified in {@link #getDataFileLocation()}
      */
+    protected AddressBook getInitialPersonData() {
+        return TypicalPersons.getTypicalAddressBookPersons();
+    }
+
     protected AddressBook getInitialData() {
-        return TypicalPersons.getTypicalAddressBook();
+        return TypicalPersons.getTypicalAddressBookData();
+    }
+
+    /**
+     * Override this in child classes to set the initial local data.
+     * Return null to use the data in the file specified in {@link #getDataFileLocation()}
+     */
+    protected AddressBook getInitialTaskData() {
+        return TypicalTasks.getTypicalAddressBookTasks();
     }
 
     protected CommandBoxHandle getCommandBox() {
@@ -73,6 +87,10 @@ public abstract class AddressBookGuiTest {
 
     protected PersonListPanelHandle getPersonListPanel() {
         return mainWindowHandle.getPersonListPanel();
+    }
+
+    protected TaskListPanelHandle getTaskListPanel() {
+        return mainWindowHandle.getTaskListPanel();
     }
 
     protected MainMenuHandle getMainMenu() {

@@ -1,0 +1,128 @@
+= Clement Tan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== ContactHub
+ContactHub is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B2/main/blob/master/collated/main/tanchc.md[Functional code]] [https://github.com/CS2103AUG2017-T11-B2/main/blob/master/collated/test/tanchc.md[Test code]]
+
+=== Enhancement Added: FindModule
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findmodule]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Implementing the findmodule function to ContactHub would make it easier for the users to filter through the list of
+contacts based on module codes, hence easier searching of contacts.
+Furthermore ContactHub's target audience is university students, hence the use of modules codes to help search for
+potential groupmates or classmates to possibly to help them with homework or relaying information in case of absence.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findmodule]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Google Maps User Interface
+
+==== Justification
+
+When using ContactHub, sometimes just knowing the address of your contact. Especially when you plan to pay them a visit
+or help to pass important notes from university. Hence, with the implementation of the Google Maps UI, ContactHub
+becomes so much more useful as the user will have a better idea of the exact location of their contact on a map.
+This would benefit the user greatly as well as attract more users to use ContactHub.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=googlemaps]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: TaskList User Interface
+
+==== Justification
+
+When using ContactHub, we also wanted ContactHub to provide additional functions other than the ability to handle
+contacts more efficiently. Hence we came up with the idea of adding a TaskList User Interface into ContactHub to help
+the user to keep track of their tasks and serve to remind them what they have to do.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tasklist]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: AddTask
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addtask]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Of course, with a TaskList User Interface, the user should be given the capability to add tasks to the TaskList. Just
+adding a person's contact to the PersonList requires an add command, the same can also be said for adding a task to the
+TaskList where an addtask command is requried.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addtask]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add syncContacts feature
+
+---
+
+==== Justification
+
+When using ContactHub, users may have a lot of contacts which may be very tedious for the users to add one by one,
+especially for a command line interface. Hence this would greatly encourage users to use ContactHub as all of their
+contacts can be added more efficiently into ContactHub, thereby saving the user's time and effort.
+
+---
+
+=== Other contributions
+
+* Helped teammates to debug their test cases (Pull requests https://github.com[#128], https://github.com[#188])
+* Add UseCase in the DeveloperGuide (Pull requests https://github.com[#69])
+* Helped to rearrange the User Interface for ContactHub to accomodate another TaskList
+(Pull requests https://github.com[#112])

@@ -1,0 +1,190 @@
+<!--@@author tanchc-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--<link rel="stylesheet" href="DarkTheme.css">-->
+<!--<meta charset="UTF-8">-->
+<!--<title>Title</title>-->
+<!--</head>-->
+<!--<body class = "background">-->
+<!--<div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" src= "https://maps.google.com/maps?q= $body &t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>google maps einbinden <a href="http://www.pureblack.de/google-maps/">pureblack.de</a></div><style>.mapouter{overflow:hidden;height:500px;width:600px;}.gmap_canvas {background:none!important;height:500px;width:600px;}</style></div>-->
+<!--</body>-->
+<!--</html>-->
+
+<html>
+<title>Contact Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body class="w3-content" style="max-width:1300px" onload="initialize()">
+
+<style type="text/css">
+    html {
+        height: 100%
+    }
+
+    body {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+    }
+
+    img {
+        user-drag: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+
+    strong {
+        font-size: 18px;
+    }
+
+    #map_canvas {
+        height: 100%;
+        background-color: #666970;
+    }
+</style>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false">
+</script>
+<script type="text/javascript">
+    function initialize() {
+        var latlng = new google.maps.LatLng(1.3521, 103.8198);
+        var myOptions = {
+            zoom: 16,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControl: false,
+            navigationControl: false,
+            streetViewControl: false,
+            scrollwheel: false,
+            backgroundColor: "#666970",
+            gestureHandling: 'greedy',
+        };
+
+        document.geocoder = new google.maps.Geocoder();
+        document.map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: document.map,
+            visible: false
+        });
+
+
+        document.zoomIn = function zoomIn() {
+            var zoomLevel = document.map.getZoom();
+            if (zoomLevel <= 20) document.map.setZoom(zoomLevel + 1);
+        }
+
+        document.zoomOut = function zoomOut() {
+            var zoomLevel = document.map.getZoom();
+            if (zoomLevel > 0) document.map.setZoom(zoomLevel - 1);
+        }
+
+        document.setMapTypeRoad = function setMapTypeRoad() {
+            document.map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+        }
+        document.setMapTypeSatellite = function setMapTypeSatellite() {
+            document.map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+        }
+        document.setMapTypeHybrid = function setMapTypeHybrid() {
+            document.map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+        }
+        document.setMapTypeTerrain = function setMapTypeTerrain() {
+            document.map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
+        }
+
+        /*The method that I call from JavaFX*/
+        document.updateMarker = function updateMarker(location) {
+            marker.setPosition(location);
+            marker.setVisible(true);
+        }
+
+        document.goToLocation = function goToLocation(searchString) {
+            document.geocoder.geocode({'address': searchString}, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    document.updateMarker(results[0].geometry.location);
+                    document.map.setCenter(results[0].geometry.location);
+                    document.map.setClickableIcons(false);
+                } else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+            });
+        }
+
+        //@@author jshoung
+        document.setName = function setName(name) {
+            document.getElementById("name").innerHTML = name;
+        }
+
+        document.setBirthday = function setBirthday(birthday) {
+            document.getElementById("birthday").innerHTML = "Birthday: " + birthday;
+        }
+
+        document.setEmail = function setEmail(email) {
+            document.getElementById("email").innerHTML = "Email(s): " + email;
+        }
+
+        document.setPhone = function setPhone(phone) {
+            document.getElementById("phone").innerHTML = "Phone Number(s): " + phone;
+        }
+
+        document.setModule = function setModule(module) {
+            document.getElementById("module").innerHTML = "Module(s): " + module;
+        }
+
+        document.setAddress = function setAddress(address) {
+            document.getElementById("address").innerHTML = "Address: " + address;
+        }
+
+        document.setPhoto = function setPhoto(photo) {
+            if (photo === "images/defaultPhoto.png") {
+                alert("No custom image loaded");
+                document.getElementById("photo").src = "https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg";
+            } else {
+            document.getElementById("photo").src = photo;
+            }
+        }
+    }
+</script>
+
+<!--@@author jshoung-->
+<!-- First Grid: Picture & Contact Info -->
+<div class="w3-row">
+    <div class="w3-half w3-blue-grey w3-container w3-center" style="height:700px">
+        <div class="w3-padding-64 w3-center">
+            <h1 id="name"></h1>
+        </div>
+        <!--<div class="w3-padding-64 w3-center">-->
+            <img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" id="photo" class="w3-margin w3-circle" alt="Person" style="width:50%">
+        <!--</div>-->
+    </div>
+    <div class="w3-half w3-black w3-container w3-center" style="height:700px">
+        <div class="w3-padding-64">
+            <h1>Contact Information</h1>
+        </div>
+        <!--<div class="w3-padding-64">-->
+            <strong>
+                <p id="phone"></p>
+                <p id="address"></p>
+                <p id="email"></p>
+                <p id="birthday"></p>
+                <p id="module"></p>
+                <p id="remark"></p>
+            </strong>
+        <!--</div>-->
+    </div>
+
+</div>
+
+<!-- Second Grid: Map -->
+<div class="w3-row">
+    <div class="w3-black w3-container w3-center" style="height:700px" id="map_canvas"></div>
+</div>
+
+</body>
+</html>

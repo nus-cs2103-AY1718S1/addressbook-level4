@@ -14,8 +14,15 @@ import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
 
 public class SampleDataTest extends AddressBookGuiTest {
+
     @Override
-    protected AddressBook getInitialData() {
+    protected AddressBook getInitialPersonData() {
+        // return null to force test app to load data from file only
+        return null;
+    }
+
+    @Override
+    protected AddressBook getInitialTaskData() {
         // return null to force test app to load data from file only
         return null;
     }

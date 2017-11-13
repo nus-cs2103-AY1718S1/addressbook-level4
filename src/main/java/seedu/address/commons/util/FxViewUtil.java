@@ -1,5 +1,7 @@
 package seedu.address.commons.util;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -13,6 +15,14 @@ public class FxViewUtil {
      */
     public static void setStageIcon(Stage stage, String iconSource) {
         stage.getIcons().setAll(AppUtil.getImage(iconSource));
+    }
+
+    //@@author jshoung
+    /**
+     * Returns the currently loaded {@code image} in the {@code ImageView}. For future test implementation
+     */
+    public static Image getImage(ImageView imageview) {
+        return imageview.getImage();
     }
 
 }

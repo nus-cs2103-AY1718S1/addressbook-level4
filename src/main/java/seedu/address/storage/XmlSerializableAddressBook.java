@@ -11,8 +11,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.module.Module;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -22,8 +23,12 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
     @XmlElement
     private List<XmlAdaptedPerson> persons;
+    // @@author tanchc
     @XmlElement
-    private List<XmlAdaptedTag> tags;
+    private List<XmlAdaptedTask> tasks;
+    // @@author
+    @XmlElement
+    private List<XmlAdaptedModule> modules;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -31,7 +36,10 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
      */
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
-        tags = new ArrayList<>();
+        // @@author tanchc
+        tasks = new ArrayList<>();
+        // @@author
+        modules = new ArrayList<>();
     }
 
     /**
@@ -40,7 +48,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
-        tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        tasks.addAll(src.getTaskList().stream().map(XmlAdaptedTask::new).collect(Collectors.toList()));
+        modules.addAll(src.getModuleList().stream().map(XmlAdaptedModule::new).collect(Collectors.toList()));
     }
 
     @Override
@@ -56,19 +65,33 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(persons);
     }
-
+    // @@author tanchc
     @Override
-    public ObservableList<Tag> getTagList() {
-        final ObservableList<Tag> tags = this.tags.stream().map(t -> {
+    public ObservableList<ReadOnlyTask> getTaskList() {
+        final ObservableList<ReadOnlyTask> tasks = this.tasks.stream().map(tk -> {
             try {
-                return t.toModelType();
+                return tk.toModelType();
             } catch (IllegalValueException e) {
                 e.printStackTrace();
                 //TODO: better error handling
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        return FXCollections.unmodifiableObservableList(tags);
+        return FXCollections.unmodifiableObservableList(tasks);
+    }
+    // @@author
+    @Override
+    public ObservableList<Module> getModuleList() {
+        final ObservableList<Module> modules = this.modules.stream().map(m -> {
+            try {
+                return m.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(modules);
     }
 
 }

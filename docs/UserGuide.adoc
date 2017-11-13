@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= ContactHub - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T11-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103T T11-B2` Since: `Sep 2017` License: `MIT` Version: `1.5rc`
 
 == Quick Start
 
@@ -22,8 +22,8 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `ContactHub.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your ContactHub.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -33,66 +33,74 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`add`** `n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to ContactHub.
+* **`delete`** `3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
-
-== Features
+.  Refer to the sections below for details of each command.
 
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Commands are `case insensitive`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user.
+* Parameters in `[square brackets]` are optional.
+* Paramters with `…`​ after them can be used multiple times.
+* Parameters can be in any order.
+* Each command has a given abbreviation you can use in place of the command itself.
 ====
 
-=== Viewing help : `help`
+== Contact Commands
 
-Format: `help`
+* These commands are for any actions relating to your contacts.
 
-=== Adding a person: `add`
+=== Adding a person: `add` or `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER... b/BIRTHDAY e/EMAIL... a/ADDRESS [m/MODULE]...` +
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have multiple number of phone numbers and emails +
+A person can have any number of modules (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 b/10/10/1980 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Betsy Crowe m/CS2101 e/betsycrowe@example.com a/Newgate Prison p/1234567 b/18/08/1989 m/criminal`
 
-=== Listing all persons : `list`
+=== Listing all persons : `list` or `l`
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
-=== Editing a person : `edit`
+// tag::sort[]
+=== Sorting all persons : `sort` or `s`
+
+Shows a list of all persons in the address book sorted in an alphabetical order. +
+Format: `sort`
+// end::sort[]
+
+=== Editing a person : `edit` or `e`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE]... [b/BIRTHDAY] [e/EMAIL]... [a/ADDRESS] [m/MODULE]...` +
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing modules, the existing modules of the person will be removed i.e adding of modules is not cumulative.
+* You can remove all the person's modules by typing `m/` without specifying any modules after it.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 p/91234567 b/09/09/1980 e/johndoe@example.com` +
+Edits the phone number, birthday and email address of the 1st person to be `91234567`, `09/09/1980` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower m/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing modules.
 
-=== Locating persons by name: `find`
+=== Locating persons by name: `find` or `f`
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -102,17 +110,17 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Contacts matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find Betsy Tim John`  +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+=== Deleting a person : `delete` or `d`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -128,11 +136,11 @@ Examples:
 * `list` +
 `delete 2` +
 Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+* `find Betsy`  +
+`delete 1`  +
+Deletes the 1st person in the results of the `find`  command.
 
-=== Selecting a person : `select`
+=== Selecting a person : `select` or `sl`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
@@ -146,13 +154,188 @@ Format: `select INDEX`
 Examples:
 
 * `list` +
-`select 2` +
+`select 2`  +
 Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+=== Clearing all entries : `clear` or `c`
+
+Clears all contact entries from ContactHub. +
+Format: `clear`
+
+// tag::listmodules[]
+=== Listing all modules : `listmodules` or `lm` [Since v1.2]
+
+Shows a list of all modules in the address book. +
+Format: `listmodules`
+// end::listmodules[]
+
+// tag::findmodule[]
+=== Locating persons by modules: `findmodule` or `fm` [Since v1.2]
+
+Finds persons whose modules contain any of the given keywords. +
+Format: `findmodule KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only the exact module name is matched e.g. `CS2103` will not match `CS2103T`
+* Contacts matching at least one keyword will be returned. e.g. `CS2101 CS2103` will return
+  contacts with modules containing either 'CS2101', 'CS2103' or both
+****
+
+Examples:
+
+* `findmodule CS2101` +
+Returns `Alex Yeoh` and `Bernice Yu` with modules containing 'CS2101' inside
+* `findmodule CS2101 CS2103`  +
+Returns any person having modules `CS2101` or `CS2103`
+// end::findmodule[]
+
+// tag::addphoto[]
+=== Adding a photo to a Contact: `addPhoto` or `ap` [Since v1.3]
+
+Add a custom photo to the profile of a Contact in Contacthub. +
+Format: `addphoto INDEX u/PHOTO_URL`
+
+****
+* Adds a photo to the Contact of the specific `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index must be valid and a positive integer 1, 2, 3, ...
+* The URL of the photo stored in the internet must be valid.
+* Exclude `u/PHOTO_URL` to reset the photo back to default.
+****
+
+Examples:
+
+* `addphoto 1 u/https://www.facebook.com/AlexYeoh/photo1.jpg` +
+Sets the photo of the 1st contact to that in the given URL.
+* `addphoto 1` +
+Resets the photo of the 1st contact back to the default image.
+// end::addphoto[]
+
+== View Commands
+
+* These commands are used to open the described information in
+either a new window or in the browser panel.
+
+=== Viewing help : `help` or `h`
+
+Opens the User Guide in a new window. +
+Format: `help`
+
+// tag::busmap[]
+
+=== Viewing NUS bus routes : `bus` or `b` [Since v1.5rc]
+
+Opens the official reference for NUS bus routes in a new window. +
+Format: `bus`
+
+=== Viewing NUS map : `map` or `m` [Since v1.5rc]
+
+Opens the official map for NUS in a new window. +
+Format: `map`
+
+// end::busmap[]
+
+=== Viewing command summary : `summary` or `sm` [Since v1.5rc]
+
+The command summary is open by default in the browser upon starting the application.
+ This command is used to reopen it after using other commands that load in the browser. e.g. `getmodule` +
+Format: `summary`
+
+// tag::nusmods[]
+=== Viewing module information : `getmodule` or `gm` [Since v1.5rc]
+
+Opens the NUSMods module information page for the given module in the browser. +
+Format: `getmodule MODULE`
+
+Example:
+
+* `getmodule CS2101` +
+Opens the `CS2101` NUSMods page in the browser.
+
+****
+* Entering an invalid module will load the main NUSMods page.
+****
+
+=== Viewing venue information : `venue` or `v` [Since v1.5rc]
+
+Opens the NUSMods venue information page for the given venue in the browser. +
+Format: `venue VENUE_NAME`
+
+Example:
+
+* `venue COM1-0204` +
+Opens the `COM1-0204` NUSMods page in the browser.
+
+****
+* Entering an invalid venue will load the main NUSMods page.
+****
+// end::nusmods[]
+
+== Tasklist Commands
+
+* These commands are used for the tasklist.
+
+// tag::addtask[]
+=== Adding a task: `addtask` or `at` [Since v1.4]
+
+Adds a task to ContactHub +
+Format: `addtask t/APPOINTMENT d/DATE s/START_TIME`
+
+[TIP]
+A person can have multiple tasks with the same appointment name, date and start time
+
+Examples:
+
+* `addtask t/Meeting d/25/11/2017 s/12:00 `
+* `addtask t/Soccer Match d/11/02/2018 s/12:00 `
+// end::addtask[]
+
+// tag::edittask[]
+=== Editing a task: `edittask` or `et` [Since v1.4]
+
+Edits an existing task in ContactHub +
+Format: `edittask t/APPOINTMENT d/DATE s/START_TIME`
+
+****
+* Edits the task at the specified `INDEX`. The index refers to the index number shown in the task listing. The index must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+Examples:
+
+* `edittask 1 t/Work d/31/10/2017 s/12:00`
+Edits the appointment, date and start time of the 1st task to be `Work`, `31/10/2017` and `12:00` respectively.
+* `edittask 2 d/20/12/2017 s/08:00`
+Edits the date and start time of the 2nd task to be `20/12/2017` and `08:00` respectively.
+// end::edittask[]
+
+// tag::deletetask[]
+=== Deleting a task: `deletetask` or `dt` [Since v1.4]
+
+Deletes the specified task from ContactHub. +
+Format: `deletetask INDEX`
+
+****
+* Deletes the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent task listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `delete 1` +
+Deletes the 1st task in ContactHub.
+// end::deletetask[]
+
+== System Commands
+
+* These commands are for general application functions that aren't specific to any feature.
+
+=== Listing entered commands : `history` or `h`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -163,23 +346,23 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `undo` or `u`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: Commands that modify contents of either contacts or tasklist.
 ====
 
 Examples:
 
 * `delete 1` +
-`list` +
+`list`  +
 `undo` (reverses the `delete 1` command) +
 
-* `select 1` +
+* `select 1`  +
 `list` +
 `undo` +
 The `undo` command fails as there are no undoable commands executed previously.
@@ -189,7 +372,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo` or `r`
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -212,41 +395,45 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Exiting the program : `exit`
+=== Exiting the program : `exit` or `x`
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+=== Saving data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+ContactHub data is saved in the hard disk automatically after any command that changes the data. +
+
 There is no need to save manually.
+
+// tag::keyboardshortcuts[]
+== Keyboard Shortcuts [Since v1.2]
+
+Several keyboard keys have special operations when typing in command box. +
+
+* *Escape* : Clears the whole command box
+* *Alt* : Relocates text cursor to the right completely
+* *Delete* : Deletes a chunk of words or chunk of whitespace on the left of the text cursor
+* *Insert* : Fills the command box with the AddCommand parameters.
+// end::keyboardshortcuts[]
+
+== Coming in v2.0
+
+* Right-click functionality
+* Note functionality
+* Map navigation functionality with CLI input
+* Send email functionality with CLI input
 
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*Q*: How do I transfer my data to another computer? +
+*A*: _Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous ContactHub folder._
 
-== Command Summary
+*Q*: Why are the keyboard shortcuts not working? +
+*A*: _Make sure the command line is selected before you use the shortcut._
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+*Q*: I cleared my contacts by accident, how do I get them back? +
+*A*: _If you have not closed the application or done anything else yet, you can use the ‘undo’ command to recover your contacts._
+
+*Q*: ContactHub is not loading when I double-click on the file, what should I do? +
+*A*: _Ensure you have Java version 1.8.0_60 or later installed on your computer. ContactHub will not work with earlier versions. Check the “Getting Started” section for more info._

@@ -13,7 +13,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.ClearPersonSelectionEvent;
+import seedu.address.commons.events.ui.JumpToPersonListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -61,12 +62,29 @@ public class PersonListPanel extends UiPart<Region> {
         });
     }
 
+    //@@author jshoung
+    /**
+     * Scrolls to the top and clears person selection.
+     */
+    private void scrollToAndClear() {
+        Platform.runLater(() -> {
+            personListView.scrollTo(1);
+            personListView.getSelectionModel().clearSelection();
+        });
+    }
+
     @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+    private void handleClearPersonListRequestEvent(ClearPersonSelectionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollToAndClear();
+    }
+    // @@author tanchc
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToPersonListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
-
+    // @@author
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */

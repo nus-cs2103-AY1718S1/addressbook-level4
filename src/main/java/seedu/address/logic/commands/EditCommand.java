@@ -2,10 +2,11 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -16,15 +17,18 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.module.Module;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
+
 
 /**
  * Edits the details of an existing person in the address book.
@@ -32,6 +36,7 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_ALIAS = "e";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -39,22 +44,28 @@ public class EditCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
+            //@@author viviantan95
+            + "[" + PREFIX_BIRTHDAY + "BIRTHDAY] "
+            //@@author
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_MODULE + "MODULE]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_PHONE + "91234567 "
+            + PREFIX_EMAIL + "johndoe@example.com" + "\n"
+            + "Example: " + COMMAND_ALIAS + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in ContactHub.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -96,12 +107,19 @@ public class EditCommand extends UndoableCommand {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        // @@author ahmadalkaff
+        Set<Phone> updatedPhones = editPersonDescriptor.getPhones().orElse(personToEdit.getPhones());
+        // @@author viviantan95
+        Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
+        //@@author ahmadalkaff
+        Set<Email> updatedEmails = editPersonDescriptor.getEmails().orElse(personToEdit.getEmails());
+        // @@author
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Photo updatedPhoto = personToEdit.getPhoto();
+        Set<Module> updatedModules = editPersonDescriptor.getModules().orElse(personToEdit.getModules());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhones, updatedBirthday, updatedEmails, updatedAddress,
+                updatedPhoto, updatedModules);
     }
 
     @Override
@@ -128,26 +146,32 @@ public class EditCommand extends UndoableCommand {
      */
     public static class EditPersonDescriptor {
         private Name name;
-        private Phone phone;
-        private Email email;
+        private Set<Phone> phones;
+        private Birthday birthday;
+        private Set<Email> emails;
         private Address address;
-        private Set<Tag> tags;
+        private Set<Module> modules;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
-            this.phone = toCopy.phone;
-            this.email = toCopy.email;
+            this.phones = toCopy.phones;
+            //@@author viviantan95
+            this.birthday = toCopy.birthday;
+            //@@author
+            this.emails = toCopy.emails;
             this.address = toCopy.address;
-            this.tags = toCopy.tags;
+            this.modules = toCopy.modules;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phones, this.birthday, this.emails,
+                    this.address, this.modules);
         }
 
         public void setName(Name name) {
@@ -158,21 +182,35 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(name);
         }
 
-        public void setPhone(Phone phone) {
-            this.phone = phone;
+        // @@author ahmadalkaff
+        public void setPhones(Set<Phone> phones) {
+            this.phones = phones;
         }
 
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
+        public Optional<Set<Phone>> getPhones() {
+            return Optional.ofNullable(phones);
+        }
+        // @@author
+
+        //@@author viviantan95
+        public void setBirthday(Birthday birthday) {
+            this.birthday = birthday;
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public Optional<Birthday> getBirthday() {
+            return Optional.ofNullable(birthday);
+        }
+        //@@author
+
+        // @@author ahmadalkaff
+        public void setEmails(Set<Email> emails) {
+            this.emails = emails;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+        public Optional<Set<Email>> getEmails() {
+            return Optional.ofNullable(emails);
         }
+        // @@author
 
         public void setAddress(Address address) {
             this.address = address;
@@ -182,12 +220,12 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
-        public void setTags(Set<Tag> tags) {
-            this.tags = tags;
+        public void setModules(Set<Module> modules) {
+            this.modules = modules;
         }
 
-        public Optional<Set<Tag>> getTags() {
-            return Optional.ofNullable(tags);
+        public Optional<Set<Module>> getModules() {
+            return Optional.ofNullable(modules);
         }
 
         @Override
@@ -206,10 +244,13 @@ public class EditCommand extends UndoableCommand {
             EditPersonDescriptor e = (EditPersonDescriptor) other;
 
             return getName().equals(e.getName())
-                    && getPhone().equals(e.getPhone())
-                    && getEmail().equals(e.getEmail())
+                    && getPhones().equals(e.getPhones())
+                    //@@author viviantan95
+                    && getBirthday().equals(e.getBirthday())
+                    //@@author
+                    && getEmails().equals(e.getEmails())
                     && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
+                    && getModules().equals(e.getModules());
         }
     }
 }

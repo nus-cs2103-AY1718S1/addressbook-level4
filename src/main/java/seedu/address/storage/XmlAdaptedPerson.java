@@ -8,13 +8,15 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.module.Module;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.Tag;
 
 /**
  * JAXB-friendly version of the Person.
@@ -24,14 +26,22 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private String phone;
+    private List<XmlAdaptedPhone> phones = new ArrayList<>();
+    //@@author viviantan95
     @XmlElement(required = true)
-    private String email;
+    private String birthday;
+    //@@author
+    @XmlElement(required = true)
+    private List<XmlAdaptedEmail> emails = new ArrayList<>();
     @XmlElement(required = true)
     private String address;
+    //@@author viviantan95
+    @XmlElement(required = true)
+    private String photo;
+    //@@author
 
     @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    private List<XmlAdaptedModule> modules = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -47,12 +57,26 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
         name = source.getName().fullName;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
+        // @@author ahmadalkaff
+        phones = new ArrayList<>();
+        for (Phone phone : source.getPhones()) {
+            phones.add(new XmlAdaptedPhone(phone));
+        }
+        //@@author viviantan95
+        birthday = source.getBirthday().value;
+        //@@author ahmadalkaff
+        emails = new ArrayList<>();
+        for (Email email : source.getEmails()) {
+            emails.add(new XmlAdaptedEmail(email));
+        }
+        // @@author
         address = source.getAddress().value;
-        tagged = new ArrayList<>();
-        for (Tag tag : source.getTags()) {
-            tagged.add(new XmlAdaptedTag(tag));
+        //@@author viviantan95
+        photo = source.getPhoto().value;
+        //@@author
+        modules = new ArrayList<>();
+        for (Module mod : source.getModules()) {
+            modules.add(new XmlAdaptedModule(mod));
         }
     }
 
@@ -62,15 +86,34 @@ public class XmlAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
+        // @@author ahmadalkaff
+        final List<Phone> personPhones = new ArrayList<>();
+        for (XmlAdaptedPhone phone : phones) {
+            personPhones.add(phone.toModelType());
         }
+
+        final List<Email> personEmails = new ArrayList<>();
+        for (XmlAdaptedEmail email : emails) {
+            personEmails.add(email.toModelType());
+        }
+        // @@author
+
+        final List<Module> personModules = new ArrayList<>();
+        for (XmlAdaptedModule mod : modules) {
+            personModules.add(mod.toModelType());
+        }
+
         final Name name = new Name(this.name);
-        final Phone phone = new Phone(this.phone);
-        final Email email = new Email(this.email);
+        final Set<Phone> phones = new HashSet<>(personPhones);
+        //@@author viviantan95
+        final Birthday birthday = new Birthday(this.birthday);
+        //@@author
+        final Set<Email> emails = new HashSet<>(personEmails);
         final Address address = new Address(this.address);
-        final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        //@@author viviantan95
+        final Photo photo = new Photo(this.photo);
+        //@@author
+        final Set<Module> modules = new HashSet<>(personModules);
+        return new Person(name, phones, birthday, emails, address, photo, modules);
     }
 }

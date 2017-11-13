@@ -20,10 +20,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.module.Module;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -100,7 +103,12 @@ public class AddCommandTest {
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             fail("This method should not be called.");
         }
-
+        // @@author tanchc
+        @Override
+        public void addTask(ReadOnlyTask task) {
+            fail("This method should not be called.");
+        }
+        // @@author
         @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
@@ -118,8 +126,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask) {
             fail("This method should not be called.");
         }
 
@@ -128,11 +146,35 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
-
+        // @@author tanchc
+        @Override
+        public ObservableList<ReadOnlyTask> getFilteredTaskList() {
+            fail("This method should not be called.");
+            return null;
+        }
+        // @@author
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+        // @@author tanchc
+        @Override
+        public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+            fail("This method should not be called.");
+        }
+        // @@author ahmadalkaff
+        @Override
+        public void sortPersonListByName() {
+            fail("This method should not be called.");
+        }
+        // @@author
+
+        //@@author jshoung
+        @Override
+        public void deleteModule(Module module) throws DuplicatePersonException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
     }
 
     /**

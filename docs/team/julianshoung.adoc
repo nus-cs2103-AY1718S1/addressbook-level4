@@ -1,0 +1,94 @@
+= Julian Shoung - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ContactHub
+ContactHub is a desktop address book application designed for NUS students, created as part of NUS modules CS2101 and CS2103T.
+The project constraints were to create an addressbook application where input was handled by a  CLI, while output was handled by a GUI.
+
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B2/main/blob/master/collated/main/jshoung.md[Functional code]] [https://github.com/CS2103AUG2017-T11-B2/main/blob/master/collated/test/jshoung.md[Test code]]
+
+=== Enhancement Added: NUSMods Implementation
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=nusmods]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The enhancement allows students, our target audience, to conveniently check
+useful information within the application using only the CLI. NUSMods was chosen as it is popular among NUS students
+and provides up-to-date information.
+
+Checking module and venue information were decided to be the most relevant features implementable, while still keeping within
+the given constraints of the project. It provides a quick, easy way to access this information without having to leave the application.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=nusmods]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Bus and Map references
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=busmap]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Having multiple classes in different locations is common for NUS students, getting around the campus
+can be daunting especially for new students. These quick references have been added for students'
+convenience.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=busmap]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: IVLE Integration
+
+Add the ability to login to IVLE and retrieve announcements, downloads, etc. from within ContactHub.
+
+=== Other contributions
+
+* Addition of HTML command summary page on previously blank default page. (Pull request https://github.com/CS2103AUG2017-T11-B2/main/pull/73[#73])
+* Addition of person count to status bar footer. (Pull request https://github.com/CS2103AUG2017-T11-B2/main/pull/161[#161])
+* Addition of NFR. (Pull request https://github.com/CS2103AUG2017-T11-B2/main/pull/55[#55])
+* Changed default window sizing for main application and other windows. (Pull request https://github.com/CS2103AUG2017-T11-B2/main/pull/94[#94])
+* Refactoring of tag functionality into module functionality. (Pull request https://github.com/CS2103AUG2017-T11-B2/main/pull/110[#110])
+* Updated GUI color scheme to be consistent when person/task list empty. (Pull request https://github.com/CS2103AUG2017-T11-B2/main/pull/123[#123])
+* Changed command input to be case insensitive. (Pull request https://github.com/CS2103AUG2017-T11-B2/main/pull/104[#104])
+* Changed browser panel for selected person from Google search to detailed HTML contact page that pulls information from the contact. (Pull request https://github.com/CS2103AUG2017-T11-B2/main/pull/126[#126])
+* Overseeing overall documentation structure and organization.
+
+

@@ -7,6 +7,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * A utility class for test cases.
@@ -34,14 +35,14 @@ public class TestUtil {
     /**
      * Returns the middle index of the person in the {@code model}'s person list.
      */
-    public static Index getMidIndex(Model model) {
+    public static Index getMidPersonIndex(Model model) {
         return Index.fromOneBased(model.getAddressBook().getPersonList().size() / 2);
     }
 
     /**
      * Returns the last index of the person in the {@code model}'s person list.
      */
-    public static Index getLastIndex(Model model) {
+    public static Index getLastPersonIndex(Model model) {
         return Index.fromOneBased(model.getAddressBook().getPersonList().size());
     }
 
@@ -50,5 +51,26 @@ public class TestUtil {
      */
     public static ReadOnlyPerson getPerson(Model model, Index index) {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
+    }
+
+    /**
+     * Returns the middle index of the task in the {@code model}'s task list.
+     */
+    public static Index getMidTaskIndex(Model model) {
+        return Index.fromOneBased(model.getAddressBook().getTaskList().size() / 2);
+    }
+
+    /**
+     * Returns the last index of the task in the {@code model}'s task list.
+     */
+    public static Index getLastTaskIndex(Model model) {
+        return Index.fromOneBased(model.getAddressBook().getTaskList().size());
+    }
+
+    /**
+     * Returns the task in the {@code model}'s task list at {@code index}.
+     */
+    public static ReadOnlyTask getTask(Model model, Index index) {
+        return model.getAddressBook().getTaskList().get(index.getZeroBased());
     }
 }

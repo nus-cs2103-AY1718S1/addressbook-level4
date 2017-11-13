@@ -15,7 +15,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
 /**
- * Manages storage of AddressBook data in local storage.
+ * Manages storage of ContactHub data in local storage.
  */
 public class StorageManager extends ComponentManager implements Storage {
 
