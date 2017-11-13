@@ -1,4 +1,4 @@
-# leonchowwenhao
+# Leonchowwenhao
 ###### \java\seedu\address\logic\commands\DeleteEventCommand.java
 ``` java
 /**

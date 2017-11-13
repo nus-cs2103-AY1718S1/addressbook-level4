@@ -12,8 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.TogglePanelEvent;
 import seedu.address.commons.events.ui.ToggleSelectEvent;
 
-// @@author leonchowwenhao
-
+// @@author LeonChowWenHao
 /**
  * A ui containing browserpanel, informationboard and eventlistpanel.
  * This UI is also responsible for handling toggle request events, switching between displaying details or the browser.
