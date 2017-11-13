@@ -542,10 +542,24 @@ Checks if the tag used is valid. +
 Invalid Command Test 8*
 Checks if the birthday provided is in the correct format and valid. *
 
+. `add n/James b/29/2/2013
+
+*Expected Output*: Person Birthday should be in the format of DD/MM/YYYY and also valid.
+
+. `add n\James b/
+
+*Expected Output*: Person Birthday should be in the format of DD/MM/YYYY and also valid.
+
+. `add n\James b/199/02/20111
+
+*Expected Output*: Person Birthday should be in the format of DD/MM/YYYY and also valid.
+
 Invalid Command Test 9*
 Checks if the website provided is in the correct format. *
 
+. `add n/James w/www.foobar.com`
 
+Website should contain a prefix of http://www https://www.
 
 === Miscellaneous
 
