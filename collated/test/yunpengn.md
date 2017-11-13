@@ -1232,7 +1232,7 @@ public class ReminderNotFoundExceptionTest {
 ###### \java\seedu\address\model\reminder\ReminderTest.java
 ``` java
     @Test
-    public void createViaName__alternativeConstructor_checkCorrectness() {
+    public void createUsingName_alternativeConstructor_checkCorrectness() {
         Reminder reminder = new Reminder("some name here", message);
         assertEquals("some name here", reminder.getName());
     }
@@ -1266,10 +1266,10 @@ public class ReminderNotFoundExceptionTest {
 ###### \java\seedu\address\model\reminder\UniqueReminderListTest.java
 ``` java
 public class UniqueReminderListTest {
+    private static final Reminder reminder = new Reminder(EVENT1, "Some message");
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    private static final Reminder reminder = new Reminder(EVENT1, "Some message");
 
     @Test
     public void create_viaList_checkCorrectness() throws Exception {
