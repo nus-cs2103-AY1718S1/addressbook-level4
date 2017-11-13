@@ -921,6 +921,18 @@ Current date as of writing is 12 November 2017.
 The parcel list is maintained in sorted order by comparing
 their delivery dates, with the earliest on top.
 
+The following sequence diagram shows how the delivery date is parsed to
+https://github.com/ocpsoft/prettytime[PrettyTime]'s parser:
+
+image::DeliveryDateSequenceDiagram.png[width="890"]
+_Figure 4.14.1 : Sequence diagram describing the parsing of delivery date when `edit 1 d/today` is executed_
+
+As seen in the sequence diagram above, a request comes in to ParserUtil to parse the delivery date. A new
+DeliveryDate is then created and within it we instantiate a SimpleDateFormat object with the desired date
+format and an instance of PrettyTimeParser. We then request for PrettyTimeParser to parse the string `today`
+and subsequently pass it's result into our SimpleDateFormat to format our date in the way we've defined, `dd-MM-yyyy`.
+After the date has been formatted, we store it within the DeliveryDate object to be returned to ParserUtil and
+subsequently returned to whichever method which called it.
 //end::deliveryDate[]
 
 //tag::tags[]
@@ -955,7 +967,7 @@ use different tag names to refer to the same tag.
 
 === Maintain sorted and selection mechanism
 image::AddParcelSdForLogic.png[width="890"]
-_Figure 4.14.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
+_Figure 4.16.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
 
 The list of parcels in Ark is maintained to be always in sorted order according to delivery dates,
 with the earliest being on the top. This is so that the user will be able to look at the more
