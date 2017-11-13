@@ -2637,22 +2637,3 @@ Gradle is an open source build automation system that builds upon the concepts o
 ....
 
 link:#the-myths-book---developer-guide[Back To Top]
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
-
-link:#the-myths-book---developer-guide[Back To Top]
