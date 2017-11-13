@@ -14,7 +14,7 @@ public class ChangeWindowSizeCommand extends Command {
 
     public static final String COMMAND_WORD = "ws";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Changes window size. Command is case insensitive. "
+            + ": Changes window size. Command is case insensitive. \n"
             + "Parameters: WINDOWSIZE (Allowed sizes are small, med, big)\n"
             + "Example 1: " + COMMAND_WORD + " small\n"
             + "Example 2: " + COMMAND_WORD + " big";
