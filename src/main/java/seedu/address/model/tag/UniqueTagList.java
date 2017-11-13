@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * A list of tags that enforces no nulls and uniqueness between its elements.
@@ -26,7 +27,8 @@ public class UniqueTagList implements Iterable<Tag> {
     /**
      * Constructs empty TagList.
      */
-    public UniqueTagList() {}
+    public UniqueTagList() {
+    }
 
     /**
      * Creates a UniqueTagList using given tags.
@@ -104,6 +106,21 @@ public class UniqueTagList implements Iterable<Tag> {
     public ObservableList<Tag> asObservableList() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    /**
+     * Searches the tag list to find Pinned Tag. Can always be found as the person in pinned already
+     *
+     * @param pinnedPerson
+     * @return true is pin tag exists, false if no pin tag
+     */
+    public static boolean containsPinTag(ReadOnlyPerson pinnedPerson) {
+        for (Tag tag : pinnedPerson.getTags()) {
+            if ("Pinned".equals(tag.tagName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

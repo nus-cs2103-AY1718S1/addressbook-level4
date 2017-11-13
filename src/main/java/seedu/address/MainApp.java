@@ -40,7 +40,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -52,9 +52,10 @@ public class MainApp extends Application {
     protected UserPrefs userPrefs;
 
 
+    //@@author LimeFallacie
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Drawing Circles ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
@@ -67,14 +68,18 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
+        if (!model.getFilteredPersonList().isEmpty()) {
+            model.sort("name");
+        }
 
-        logic = new LogicManager(model);
+        logic = new LogicManager(model, storage);
 
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
     }
 
+    //@@author
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
         return applicationParameters.get(parameterName);
@@ -189,7 +194,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Closing Circles ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);

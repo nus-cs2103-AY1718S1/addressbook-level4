@@ -1,0 +1,138 @@
+= Eldon Ng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Circles
+Circles is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC. +
+*Code contributed*: [link:https://github.com/CS2103AUG2017-T17-B3/main/tree/master/collated/main/eldonng.md[Functional code]] [link:https://github.com/CS2103AUG2017-T17-B3/main/tree/master/collated/test/eldonng.md[Test code]]
+
+=== Enhancement added: Pin/Unpin
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=pinunpin]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Pinning a frequently accessed contact in Circles will allow the users to be able to access these contacts easily. As Circles is catered towards University students, pinning the contacts of Professors or Tutors will be helpful for them,
+as they would be able to access their contact information more easily.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=pinunpin]
+
+#End of Extract#
+
+---
+
+=== Enhancement added: Create and Delete groups
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=groups]
+include::../UserGuide.adoc[tag=selectgroup]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The `Group` feature in Circles is added so that users can customise their contacts into Groups easily, so that they can manage their groups of friends, or create groups for group projects.
+Students using Circles will be able to store contacts into multiple groups and it will be more convenient for them to see who is in their group, as they can just click on the groups and view the contact information of everyone in the group.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=groups]
+
+#End of Extract#
+
+---
+
+=== Enhancement added: Set tag colour
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=setcolour]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The `setcolour` command let users customise their colour of tags used in Circles. This is to make Circles more vibrant and lively, as the colour of the tags will be replaced, compared to the default dull blue colour.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=setcolour]
+
+#End of Extract#
+
+---
+
+=== Enhancement added: Enhanced Find Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The implementation of the `find` command has been greatly improved. Rather than just being able to find the name of the users, the find command can now search for all fields in a contact's information.
+This will be more convenient for the users, as they can also find a contact's phone number, email and other details. Users also do not have to enter the full name of the person, the new `find` command also allow
+partial matching of the contact's names.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== *Other Contributions*
+
+* Redesigned the UI of Circles.
+ Many changes has been made to the UI from its default GUI to the current one:
+** A `PersonInfo` panel was added in the middle to display all the contact information of a person.
+** Temporarily removed the `BrowserPanel`, as it is being improved on. Will return in v2.0.
+** Create a `GroupListPanel` to display all the groups in Circles.
+** Summarised the `PersonCard` to show less information. More information will be shown in the `PersonInfo` UI Panel.
+
+* Added an auto-complete list in the `Command Box`
+** Gives users suggestions of the commands availble in Circles.
+** Completes long commands such as `setcolour` or `deletegroup` for users

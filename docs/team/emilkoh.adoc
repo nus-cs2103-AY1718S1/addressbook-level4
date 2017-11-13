@@ -1,0 +1,137 @@
+= Emil Koh - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:repoURL: https://github.com/CS2103AUG2017-T17-B3/main/tree/master
+
+== Project: Circles
+Circles is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 6 kLoC.
+
+*Code Contributed*: [link:{repoURL}/collated/main/LimeFallacie.md[`Functional Code`]][link:{repoURL}/collated/test/LimeFallacie.md[`Test Code`]]
+
+=== Enhancement Added: Sorting
+
+==== External Behaviour
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[leveloffset=+2, tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+As our target audience was University students, we felt the need to provide tools to organise the contacts list as one student can come across many
+over the course of his studies. With the ability to organise contacts in an intuitive way, users would easily be able to locate contacts by scrolling through the list
+rather than constantly using the `Find` command.
+
+The command word `sort` is used to denote the sort, and the following word would decide how the list would be sorted.
+As there are plenty of different ways to sort contacts, this implementation was chosen to allow modularity for the inclusion of more ways to sort the list in the future.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[leveloffset=+2, tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Listing by tags
+
+==== External Behaviour
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[leveloffset=+2, tag=listtag]
+
+#End of Extract#
+
+---
+
+==== Justification
+This allows the user more flexibility in searching for several contacts with similar tags, a major quality of life improvement.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[leveloffset=+2, tag=listtag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Export/Import contacts list
+
+==== External Behaviour
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[leveloffset=+2, tag=expimp]
+
+#End of Extract#
+
+---
+
+==== Justification
+Exporting and importing of the contacts list allows the user more portability.
+All the user's data can be easily transferred between terminals and can also be easily backed up.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[leveloffset=+2, tag=expimp]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Changing User Settings: `settings`
+
+==== External Behaviour
+Format: `settings`
+
+1. Enter `settings` followed by the setting the user wishes to change
+2. input the change
+3. User Settings would now be updated.
+
+Example: `settings filepath C:\user\desktop\Circles\data.xml` +
+The above command would change the default destination file path for saving the contacts list to the user-defined directory.
+
+==== Justification
+Since now Commands have access to StorageManager methods,
+allowing commands to change the settings saved to Config.json or preferences.json would be the next step to quality of life improvements.
+This allows the user more room to customize the product, and defines the user's ownership of the product, as well as his control over aesthetics and minor GUI adjustments of Circles.
+It would also allow expansion into more customized user experiences like custom themes and css files, which we can now save in the json files
+so Circles knows which css file to use when initializing.
+
+==== Implementation
+A possible method of doing so would be changing the `UserPrefs` object that would subsequently be saved in the Storage component to preferences.json.
+`StorageManager` can then save the user preferences and overwrite the save json file for storage.
+
+=== Other Contributions
+* Researched Storage Component extensively to find a way to save HashMaps in some form, to aid development of the setcolour command. +
+The Command was to allow users to change the color of tags, but we didnt have a way to store the changes, so the colours would revert back to default whenever the program was restarted.
+(Pull Requests link:https://github.com/CS2103AUG2017-T17-B3/main/pull/37[#37], link:https://github.com/CS2103AUG2017-T17-B3/main/pull/43[#43]) +
+
+* Found bugs and made suggestions for ConnectUs (Team W15-B3) during trial acceptance testing.
+(Issues link:https://github.com/CS2103AUG2017-W15-B3/main/issues/94[#94], link:https://github.com/CS2103AUG2017-W15-B3/main/issues/98[#98],
+link:https://github.com/CS2103AUG2017-W15-B3/main/issues/99[#99], link:https://github.com/CS2103AUG2017-W15-B3/main/issues/100[#100])
+
+
+

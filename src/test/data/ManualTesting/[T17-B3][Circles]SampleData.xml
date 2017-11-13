@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <birthday>02-03-1995</birthday>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <pinned>false</pinned>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>alfred low</name>
+        <phone>94531513</phone>
+        <birthday>30-04-1993</birthday>
+        <email>alowfred@gmail.com</email>
+        <address>NUS Computing</address>
+        <pinned>false</pinned>
+        <tagged>notReal</tagged>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <birthday>02-03-1995</birthday>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <pinned>false</pinned>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>bob</name>
+        <phone>97825930</phone>
+        <birthday>02-01-1980</birthday>
+        <email>bob@bob.com</email>
+        <address>bob's house</address>
+        <pinned>false</pinned>
+        <tagged>notReal</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <birthday>02-03-1995</birthday>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <pinned>false</pinned>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <birthday>02-03-1995</birthday>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <pinned>false</pinned>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>deepak bhudda</name>
+        <phone>2103</phone>
+        <birthday>-</birthday>
+        <email>-</email>
+        <address>in your heart</address>
+        <pinned>false</pinned>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>eldon ng</name>
+        <phone>94452858</phone>
+        <birthday>03-08-1994</birthday>
+        <email>eldonng@gmail.com</email>
+        <address>NUS</address>
+        <pinned>false</pinned>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>emil</name>
+        <phone>97409279</phone>
+        <birthday>07-10-1995</birthday>
+        <email>emilkoh@hotmail.com</email>
+        <address>-</address>
+        <pinned>false</pinned>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>eric</name>
+        <phone>-</phone>
+        <birthday>-</birthday>
+        <email>-</email>
+        <address>-</address>
+        <pinned>false</pinned>
+        <tagged>CS2101</tagged>
+    </persons>
+    <persons>
+        <name>gideon gu</name>
+        <phone>86341902</phone>
+        <birthday>30-06-1995</birthday>
+        <email>fugideon@msn.com</email>
+        <address>somewhere else</address>
+        <pinned>false</pinned>
+        <tagged>dota</tagged>
+    </persons>
+    <persons>
+        <name>guok enjie</name>
+        <phone>911</phone>
+        <birthday>12-12-1995</birthday>
+        <email>stantheman@something.com</email>
+        <address>-</address>
+        <pinned>false</pinned>
+    </persons>
+    <persons>
+        <name>henry ang</name>
+        <phone>999</phone>
+        <birthday>09-11-1992</birthday>
+        <email>henryang@frozventus.com</email>
+        <address>payalebar somewhere</address>
+        <pinned>false</pinned>
+        <tagged>frozventus</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <birthday>02-03-1995</birthday>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <pinned>false</pinned>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>khor rushan</name>
+        <phone>62353535</phone>
+        <birthday>-</birthday>
+        <email>rushankhor@dota.com</email>
+        <address>steam</address>
+        <pinned>false</pinned>
+        <tagged>dota</tagged>
+    </persons>
+    <persons>
+        <name>loh darrin</name>
+        <phone>111</phone>
+        <birthday>01-01-1995</birthday>
+        <email>darringloh@gmail.com</email>
+        <address>serangoon somewhere</address>
+        <pinned>false</pinned>
+        <tagged>grabhitch</tagged>
+    </persons>
+    <persons>
+        <name>mavis</name>
+        <phone>-</phone>
+        <birthday>-</birthday>
+        <email>-</email>
+        <address>-</address>
+        <pinned>false</pinned>
+        <tagged>cs2103</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <birthday>02-03-1995</birthday>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <pinned>false</pinned>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>sam</name>
+        <phone>90000000</phone>
+        <birthday>04-07-2000</birthday>
+        <email>sam@sam.sg</email>
+        <address>sam's house</address>
+        <pinned>false</pinned>
+        <tagged>notReal</tagged>
+        <tagged>dota</tagged>
+        <tagged>sam</tagged>
+    </persons>
+    <persons>
+        <name>someone</name>
+        <phone>12345678</phone>
+        <birthday>30-12-2000</birthday>
+        <email>something@something.com</email>
+        <address>somewhere</address>
+        <pinned>false</pinned>
+        <tagged>something</tagged>
+    </persons>
+    <tags>CS2101Tutor</tags>
+    <tags>cs2103</tags>
+    <tags>neighbours</tags>
+    <tags>CS2101</tags>
+    <tags>friends</tags>
+    <tags>something</tags>
+    <tags>tchoukball</tags>
+    <tags>CS2103</tags>
+    <tags>notReal</tags>
+    <tags>colleagues</tags>
+    <tags>dota</tags>
+    <tags>classmates</tags>
+    <tags>family</tags>
+    <tags>frozventus</tags>
+    <tags>grabhitch</tags>
+    <tags>sam</tags>
+    <groups>
+        <name>Sample Group</name>
+        <persons>
+            <name>Alex Yeoh</name>
+            <phone>87438807</phone>
+            <birthday>02-03-1995</birthday>
+            <email>alexyeoh@example.com</email>
+            <address>Blk 30 Geylang Street 29, #06-40</address>
+            <pinned>false</pinned>
+            <tagged>friends</tagged>
+        </persons>
+        <persons>
+            <name>Bernice Yu</name>
+            <phone>99272758</phone>
+            <birthday>02-03-1995</birthday>
+            <email>berniceyu@example.com</email>
+            <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+            <pinned>false</pinned>
+            <tagged>colleagues</tagged>
+            <tagged>friends</tagged>
+        </persons>
+    </groups>
+    <groups>
+        <name>CS2103T17B3</name>
+        <persons>
+            <name>mavis</name>
+            <phone>-</phone>
+            <birthday>-</birthday>
+            <email>-</email>
+            <address>-</address>
+            <pinned>false</pinned>
+            <tagged>cs2103</tagged>
+            <tagged>friends</tagged>
+        </persons>
+        <persons>
+            <name>emil</name>
+            <phone>97409279</phone>
+            <birthday>07-10-1995</birthday>
+            <email>emilkoh@hotmail.com</email>
+            <address>-</address>
+            <pinned>false</pinned>
+            <tagged>friends</tagged>
+        </persons>
+        <persons>
+            <name>eldon ng</name>
+            <phone>94452858</phone>
+            <birthday>03-08-1994</birthday>
+            <email>eldonng@gmail.com</email>
+            <address>NUS</address>
+            <pinned>false</pinned>
+            <tagged>colleagues</tagged>
+        </persons>
+    </groups>
+    <groups>
+        <name>CS2103T17B4</name>
+        <persons>
+            <name>gideon gu</name>
+            <phone>86341902</phone>
+            <birthday>30-06-1995</birthday>
+            <email>fugideon@msn.com</email>
+            <address>somewhere else</address>
+            <pinned>false</pinned>
+            <tagged>dota</tagged>
+        </persons>
+        <persons>
+            <name>guok enjie</name>
+            <phone>911</phone>
+            <birthday>12-12-1995</birthday>
+            <email>stantheman@something.com</email>
+            <address>-</address>
+            <pinned>false</pinned>
+        </persons>
+        <persons>
+            <name>henry ang</name>
+            <phone>999</phone>
+            <birthday>09-11-1992</birthday>
+            <email>henryang@frozventus.com</email>
+            <address>payalebar somewhere</address>
+            <pinned>false</pinned>
+            <tagged>frozventus</tagged>
+        </persons>
+        <persons>
+            <name>loh darrin</name>
+            <phone>111</phone>
+            <birthday>01-01-1995</birthday>
+            <email>darringloh@gmail.com</email>
+            <address>serangoon somewhere</address>
+            <pinned>false</pinned>
+            <tagged>grabhitch</tagged>
+        </persons>
+    </groups>
+</addressbook>

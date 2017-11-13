@@ -20,36 +20,42 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
+    private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<Boolean> pinned;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Birthday birthday, Email email, Address address, boolean pin, Set<Tag> tags) {
+        requireAllNonNull(name, phone, birthday, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
+        this.birthday = new SimpleObjectProperty<>(birthday);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        pinned = new SimpleObjectProperty<>(pin);
     }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+        this(source.getName(), source.getPhone(), source.getBirthday(), source.getEmail(), source.getAddress(),
+                source.isPinned(), source.getTags());
     }
+
 
     public void setName(Name name) {
         this.name.set(requireNonNull(name));
     }
 
+    //@@author mavistoh
     @Override
     public ObjectProperty<Name> nameProperty() {
         return name;
@@ -61,7 +67,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone));
+        this.phone.set(phone);
     }
 
     @Override
@@ -74,8 +80,22 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(birthday);
+    }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() {
+        return birthday.get();
+    }
+
     public void setEmail(Email email) {
-        this.email.set(requireNonNull(email));
+        this.email.set(email);
     }
 
     @Override
@@ -89,7 +109,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setAddress(Address address) {
-        this.address.set(requireNonNull(address));
+        this.address.set(address);
     }
 
     @Override
@@ -102,6 +122,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -113,6 +134,21 @@ public class Person implements ReadOnlyPerson {
 
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
+    }
+
+    @Override
+    public boolean isPinned() {
+        return pinned.get();
+    }
+
+    @Override
+    public void setPin() {
+        pinned.set(true);
+    }
+
+    @Override
+    public void setUnpin() {
+        pinned.set(false);
     }
 
     /**
@@ -132,7 +168,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, birthday, email, address, tags);
     }
 
     @Override

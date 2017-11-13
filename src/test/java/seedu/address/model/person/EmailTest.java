@@ -28,6 +28,7 @@ public class EmailTest {
         assertFalse(Email.isValidEmail("peterjack@example@com")); // '@' symbol in domain name
 
         // valid email
+        assertTrue(Email.isValidEmail("-"));
         assertTrue(Email.isValidEmail("PeterJack_1190@example.com"));
         assertTrue(Email.isValidEmail("a@b"));  // minimal
         assertTrue(Email.isValidEmail("test@localhost"));   // alphabets only

@@ -56,7 +56,7 @@ public class StatusBarFooterTest extends AddressBookGuiTest {
 
     @Test
     public void syncStatus_nonMutatingCommandSucceeds_syncStatusRemainsUnchanged() {
-        assertTrue(runCommand(ListCommand.COMMAND_WORD)); // non-mutating command succeeds
+        assertTrue(runCommand(String.format(ListCommand.COMMAND_WORD + " all"))); // non-mutating command succeeds
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }
 

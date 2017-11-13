@@ -13,7 +13,9 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.storage.Storage;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.TypicalStorage;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
@@ -21,10 +23,12 @@ import seedu.address.testutil.PersonBuilder;
 public class AddCommandIntegrationTest {
 
     private Model model;
+    private Storage storage;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        storage = new TypicalStorage().setUp();
     }
 
     @Test
@@ -49,7 +53,7 @@ public class AddCommandIntegrationTest {
      */
     private AddCommand prepareCommand(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
         return command;
     }
 }

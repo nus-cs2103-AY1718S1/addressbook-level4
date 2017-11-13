@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Circles - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T17-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T17-B3`      Last Updated: `1 Nov 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -31,6 +31,7 @@ This app will not work with earlier versions of Java 8.
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
+<<<
 
 === Setting up the project in your computer
 
@@ -50,6 +51,8 @@ This will generate all resources required by the application and tests.
 
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
+
+<<<
 
 === Configurations to do before writing code
 
@@ -81,10 +84,9 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+When you are ready to start coding, get some sense of the overall design by reading the link:#architecture[Architecture] section.
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+<<<
 
 == Design
 
@@ -125,6 +127,8 @@ For example, the `Logic` component (see the class diagram given below) defines i
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
 
+<<<
+
 [discrete]
 ==== Events-Driven nature of the design
 
@@ -143,6 +147,8 @@ _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+
+<<<
 
 The sections below give more details of each component.
 
@@ -163,6 +169,8 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
+<<<
+
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
@@ -176,13 +184,15 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a person), `Storage` (e.g. export the contacts list) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+
+<<<
 
 === Model component
 
@@ -197,6 +207,8 @@ The `Model`,
 * stores the Address Book data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+
+<<<
 
 === Storage component
 
@@ -213,6 +225,8 @@ The `Storage` component,
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+<<<
 
 == Implementation
 
@@ -345,6 +359,775 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+<<<
+
+// tag::groups[]
+=== Group Feature
+The group feature enables users to create and delete a group in Circles. It is stored as a `Group` object which contains
+a `GroupName`, which stores the group name, and a `List<ReadOnlyPerson>` which stores the group members. +
+
+A `Group` object is stored in the `UniqueGroupList` inside the `AddressBook` class. The `UniqueGroupList` does not allow duplicate groups that have the same name in Circles.
+Otherwise, it will throw a `DuplicateGroupException`. +
+
+==== Creating a group
+To create a group in Circles, the user will enter the following command: `creategroup n/GROUP_NAME i/INDEXES...`. +
+GROUP_NAME will be the name of the group, and INDEXES are the indexes of the persons that you want to add into the group. +
+
+
+Firstly, when a `creategroup` command has been entered in the Command Box, it enters the `CreateGroupCommandParser` class, which parses the arguments into a `GroupName` and a `List<Index>`,
+containing the indexes of the persons that is being added to the group. +
+The sequence diagram for `CreateGroupCommandParser` is shown below.
+
+image::CreateGroupCommandParserSequenceDiagram.png[width="800"]
+
+Next, the `CreateGroupCommand` class will take in the parameters parsed by `CreateGroupCommandParser`, and use the list of indexes to add the person corresponding to the index into a List<ReadOnlyPerson>.
+A person will only be added to the group once, even if an index has been repeated more than once in the list. +
+
+Then, a new `Group` will be created, and the `addGroup()` method in `Model` will add the group into Circles.
+The code implementation is shown below, and is accessible in link: {repoURL}/src/main/java/seedu/address/logic/commands/CreateGroupCommand.java[`CreateGroupCommand.java`] +
+[source,java]
+----
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> groupMembers = new ArrayList<>();
+
+        for (Index index: indexes) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            ReadOnlyPerson personToAdd = lastShownList.get(index.getZeroBased());
+            if (!groupMembers.contains(personToAdd)) {
+                groupMembers.add(personToAdd);
+            }
+        }
+        ReadOnlyGroup newGroup = new Group(groupName, groupMembers);
+        try {
+            model.addGroup(newGroup);
+        } catch (DuplicateGroupException dge) {
+            throw new CommandException(MESSAGE_DUPLICATE_GROUP);
+        }
+        model.updateFilteredGroupList(Model.PREDICATE_SHOW_ALL_GROUPS);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, groupName, groupMembers.size()));
+    }
+----
+
+Finally, `Model` will call the `addGroup()` method in `AddressBook` to add the group into the `UniqueGroupList`.
+The `addGroup()` method will then call the `add()` method in `UniqueGroupList`, which will check for duplicate groups in Circles.
+Any group that have the same name will be considered as duplicates. If a duplicate group has been found, a `DuplicateGroupException` error will be thrown, and the group will not be added into Circles.
+Otherwise, the group will be successfully added into Circles.
+This method is shown below, and can be found in {repoURL}/src/main/java/seedu/address/model/group/UniqueGroupList.java[`UniqueGroupList.java`]
+[source,java]
+----
+    public void add(ReadOnlyGroup toAdd) throws DuplicateGroupException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateGroupException();
+        }
+        internalList.add(new Group(toAdd));
+    }
+----
+
+===== Design Considerations
+*Aspect:* Implementation of the `Group` feature +
+*Alternative 1 (current choice):* Create a Group class to store the persons into a group +
+*Pros:* Creating a separate class called `Group` will look more professional, and allows an additional UI panel to show to list of groups. Enhances the user experience.  +
+*Cons:* Hard to implement, and higher risk for bugs in the application. +
+
+*Alternative 2:* Create a tag for the group +
+*Pros:* Short and easy solution to implement a group, and users can just use the `list tags` command to show the specific groups +
+*Cons:* It violates the Single Responsibility Principle as tags are now being used for two different things, labels for the person as well as groups.
+
+*Aspect:* Handling of group members inside `Group`+
+*Alternative 1 (current choice):* Create a `List<ReadOnlyPerson>` inside `Group` to store the group members +
+*Pros:* Easy to implement, changes in the person list inside Circles will not affect the `Group`. Less coupling.+
+*Cons:* Deleting of contacts in Circles will not reflect in the list inside the `Group`. +
+
+*Alternative 2:* Link the group members to the `UniquePersonList` in `AddressBook`
+*Pros:* Any changes to the contacts list will be updated immediately into the groups.
+*Cons:* It will be harder to implement, and will result in more coupling.
+
+<<<
+
+==== Deleting a group
+To delete a group in Circles, the user will enter `deletegroup INDEX`, where INDEX is the index of the group in the group list panel. +
+
+Firstly, when a `deletegroup` command is entered in the Command Box, it enters the `DeleteGroupCommandParser` class, which parses the index of the group that is going to be deleted.
+The sequence diagram for `DeleteGroupCommandParser` is shown below.
+
+image::DeleteGroupCommandParserSequenceDiagram.png[width="800"]
+
+Next, the `DeleteGroupCommand` class will take in the `Index` that is parsed by `DeleteGroupCommandParser` and calls the `deleteGroup()` method in `Model`.
+The code implementation is shown below, and can be found in {repoURL}/src/main/java/seedu/address/logic/commands/DeleteGroupCommand.java[`DeleteGroupCommand.java`]
+[source,java]
+----
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        List<ReadOnlyGroup> lastShownList = model.getGroupList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyGroup groupToDelete = lastShownList.get(targetIndex.getZeroBased());
+        try {
+            model.deleteGroup(groupToDelete);
+        } catch (GroupNotFoundException gnfe) {
+            assert false : "The target group cannot be missing";
+        }
+
+        return new CommandResult(String.format(MESSAGE_DELETE_GROUP_SUCCESS, groupToDelete.getGroupName().fullName));
+    }
+----
+
+Finally, `Model` will call the `deleteGroup()` method in `AddressBook`, which will then call the `delete()` method in `UniqueGroupList` which will delete the group from Circles.
+If the group cannot be found inside the `UniqueGroupList`, it will throw a `GroupNotFoundException` error to the user. This method is shown below, and can be found in
+{repoURL}/src/main/java/seedu/address/model/group/UniqueGroupList.java[`UniqueGroupList.java`]
+[source,java]
+----
+    public boolean remove(ReadOnlyGroup toRemove) throws GroupNotFoundException {
+        requireNonNull(toRemove);
+        final boolean groupFoundAndDeleted = internalList.remove(toRemove);
+        if (!groupFoundAndDeleted) {
+            throw new GroupNotFoundException();
+        }
+        return groupFoundAndDeleted;
+    }
+----
+
+==== Selecting a group
+To select a group in circles, users can enter the command `selectgroup INDEX`, where INDEX is the index of the group in the group list panel. +
+Alternatively, users can also choose to click on the group in the group list to select it.
+
+Firstly, when a `selectgroup` command is entered in the Command Box, it enters the `SelectGroupCommandParser` class, which parses the index of the group that is selected.
+
+Next, the `SelectGroupCommand` class will take in the Index parsed by `SelectGroupCommandParser`, and calls the `deleteGroup()` method in `Model`.
+If the Index is valid, it will post a `JumpToGroupListRequestEvent` which includes the `targetIndex` of the group that is being selected.
+The code implementation is shown below, and can be found in
+{repoURL}/src/main/java/seedu/address/logic/commands/SelectGroupCommand.java[`SelectGroupCommand.java`]
+[source,java]
+----
+public CommandResult execute() throws CommandException {
+
+        List<ReadOnlyGroup> lastShownList = model.getGroupList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+        }
+
+        EventsCenter.getInstance().post(new JumpToGroupListRequestEvent(targetIndex));
+        return new CommandResult(String.format(MESSAGE_SELECT_GROUP_SUCCESS, targetIndex.getOneBased()));
+
+    }
+----
+
+Then, the `GroupListPanel` class in `UI` will handle the `JumpToGroupListRequestEvent`, and selects the `GroupCard` of the selected group.
+It will also call the `setEventHandlerForSelectionChangeEvent()` method, which raises a `GroupPanelSelectionChangedEvent` event.
+The code implementation is shown below, and can be found in
+{repoURL}/src/main/java/seedu/address/ui/GroupListPanel.java[`GroupListPanel.java`]
+[source,java]
+----
+private void handleJumpToGroupListRequestEvent(JumpToGroupListRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    scrollTo(event.targetIndex);
+}
+
+private void setEventHandlerForSelectionChangeEvent() {
+        groupListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in group list panel changed to : '" + newValue + "'");
+                        raise(new GroupPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+
+----
+Finally, the `GroupPanelSelectionChangedEvent` is handled by `ModelManager`, which will update the `filteredList` of persons, to display the group members in the group on the `PersonListPanel`.
+The code implementation is shown below, and can be found in
+{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager.java`]
+[source,java]
+----
+private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    updateFilteredPersonList(person -> event.getNewSelection().group.getGroupMembers().contains(person));
+    raise(new NewPersonListEvent(getFilteredPersonList()));
+}
+----
+
+// end::groups[]
+
+// tag::pinunpin[]
+=== Pin Feature
+The pin features enables users to pin their contacts to the top of their contact list. This will help them to access contacts that they frequently visit easily. +
+
+A contact is considered pin when the `pinned` is `true`. `pinned` is a `boolean` variable inside the `Person` class. When a person is added into Circles, the `pinned` value will be set to `false`.
+So, every contact in Circles in not pinned by default.
+
+==== Pinning a person
+To pin a person, the user will enter `pin INDEX`, where INDEX is the index of the person in the person list panel. +
+
+Firstly, when a `pin` command is entered into the Command Box, it is parsed by `PinCommandParser`, which will return the `Index` of the target person.
+
+Next, `PinCommand` will get the `Index`, and locate the target person.
+
+Then, `PinCommand` will call the `pinPerson()` method in `Model`, which will set the `pinned` boolean inside `Person` to be true.
+If the person is already pinned, it will show a message, indicating that the person is already pinned. +
+The implementation of the code is shown below, and can be found in
+{repoURL}/src/main/java/seedu/address/logic/commands/PinCommand.java[`PinCommand.java`]
+[source,java]
+----
+ public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToPin = lastShownList.get(index.getZeroBased());
+        try {
+            if (personToPin.isPinned()) {
+                return new CommandResult(MESSAGE_ALREADY_PINNED);
+            } else {
+                model.pinPerson(personToPin);
+                model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+                return new CommandResult(String.format(MESSAGE_PIN_PERSON_SUCCESS, personToPin));
+            }
+        } catch (PersonNotFoundException pnfe) {
+            throw new CommandException(MESSAGE_PIN_PERSON_FAILED);
+        }
+    }
+----
+After that, `Model` will sort the contact list by name, and bring the pinned contact to the top.
+
+Finally, Circles will save the address book, as changes has been made.
+
+==== Unpinning a person
+To unpin a person, the user will enter `unpin INDEX`, where INDEX is the index of the person in the person list panel.
+
+Firstly, when an `unpin` command is entered into the Command Box, it is parsed by `UnpinCommandParser`, which will return the `Index` of the target person.
+
+Next, `UnpinCommand` will get the `Index`, and locate the target person.
+
+Then, `UnpinCommand` will call the unpinPerson() method in `Model`, which will set the `pinned` boolean inside `Person` to be false.
+If the person was already unpinned, it will show a message, indicating that the person is already unpinned.
+The implementation of the code is shown below, and can be found in  {repoURL}/src/main/java/seedu/address/logic/commands/PinCommand.java[`PinCommand.java`]
+[source,java]
+----
+ public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToUnpin = lastShownList.get(index.getZeroBased());
+        try {
+            if (personToUnpin.isPinned()) {
+                model.unpinPerson(personToUnpin);
+                model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+                return new CommandResult(String.format(MESSAGE_UNPIN_PERSON_SUCCESS, personToUnpin));
+            } else {
+                return new CommandResult(MESSAGE_ALREADY_UNPINNED);
+            }
+        } catch (PersonNotFoundException pnfe) {
+            throw new CommandException(MESSAGE_UNPIN_PERSON_FAILED);
+        }
+----
+
+After that, `Model` will sort the contact list by name, bringing the unpinned contact back to the list in alphabetical order.
+
+Finally, Circles will save the address book as changes has been made.
+
+==== Design Considerations
+*Aspect:* Implementation of pin +
+*Alternative 1 (current choice):* Use a boolean variable to store `pin` information +
+*Pros:* Easy to implement, lower risk of having a bug. +
+*Cons:* Required to change the constuctors of `Person`, and modify many existing files to store the boolean `pinned` variable +
+
+*Alternative 2:* Storing the `pin` information as a `Pinned` tag +
+*Pros:* Storing the `pin` information as a tag is easy to implement, and does not cause any storage issues. +
+*Cons:* Potential bug where users can add a similar tag as the pin tag, and thus, be able to pin a contact without using the `pin` command.
+// end::pinunpin[]
+
+// tag::find[]
+=== Enhanced Find Command
+
+The enhanced `find` command now allows searches for a Person's Name, Phone Number, Email, Address and Tags. It uses the
+`PersonContainsKeywordsPredicate` to search for the keywords in the address book. It also allows users to search for a person even when they search with an incomplete name (e.g: `find lex` will return Alex).
+
+To search whether a person contains the specific keywords, `PersonContainsKeywordsPredicate` will run 2 boolean methods:
+
+First, it will call `getSearchText()` from the `ReadOnlyPerson` class, which will return a String, and searches the String for the requested keyword.
+The code implementation is shown below, and is accessible in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson.java`] +
+[source,java]
+----
+default String getSearchText() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" ")
+                .append(getPhone())
+                .append(" ")
+                .append(getBirthday())
+                .append(" ")
+                .append(getAddress())
+                .append(" ")
+                .append(getEmail())
+                .append(" ")
+                .append(getEmail().getUserName())
+                .append(" ")
+                .append(getEmail().getDomainName());
+        for (Tag tag: getTags()) {
+            builder.append(" ")
+                .append(tag.tagName);
+        }
+
+        return builder.toString();
+    }
+----
+Next, it will get the Person's name by using `getName` method from `ReadOnlyPerson`, and check if the name contains the requested keyword by using `contains(CharSequence keyword)`.
+If there is any match, this boolean method will return true. This method is shown below; and can be found in link:{repoURL}/src/main/java/seedu/address/model/person/PersonContainsKeywordsPredicate.java[`PersonContainsKeywordsPredicate.java`]
+[source,java]
+----
+@Override
+public boolean test(ReadOnlyPerson person) {
+    return keywords.stream()
+            .anyMatch(keyword -> StringUtil
+            .containsWordIgnoreCase(person
+            .getSearchText(), keyword))
+            || keywords.stream()
+            .anyMatch(keyword -> checkName(
+            person.getName(), keyword));
+}
+
+private boolean checkName(Name personName, String keyword) {
+    return personName
+    .toString()
+    .toLowerCase()
+    .contains(keyword.trim()
+    .toLowerCase());
+}
+----
+
+[NOTE]
+The `getSearchText` method inside the `ReadOnlyPerson` class will convert all the Name, Phone Number, Email, Address and Tags into a String, that can be used to search for the person.
+
+// end::find[]
+
+==== Design Considerations
+*Aspect:* Search conditions for `Person` +
+*Alternative 1 (current choice):* Search CharSequence in person's name, and full word in all other fields +
+*Pros:* By checking CharSequence only in name, and not on others, usage such as `find a` will not just show everyone that has `a` in their contact information. +
+*Cons:* Typing partial email, phone number, address and tag will not show the any result. +
+
+*Alternative 2:* Search CharSequence for all fields inside a `Person`. +
+*Pros:* Partial search words will show results for any fields in contact information +
+*Cons:* Usage such as `find a` will search for everything that contains `a` in a person's contact information, which is not useful for the user.
+
+<<<
+
+// tag::sort[]
+=== Sort mechanism
+
+The `sort` command now allows for the list of contacts to be sorted via phone number, name, or email in lexicographic order.
+It uses the `sorted()` method included in `ObservableList.java`, with comparators defined by the developer.
+
+To begin a sort, `SortCommand` will call `model.sort(String type)` with a String parameter. This parameter defines how the list will be sorted,
+and can be one of 3 options, "name", "phone" or "email".
+
+Next, a comparator will be chosen and passed into the `sorted()` method based on the parameter passed from the `Command`.
+The methods for choosing the comparator and calling the `sortBy()` method are shown below, and can be found in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager.java`]
+
+[source,java]
+----
+@Override
+public void sort(String sortType) throws DuplicatePersonException {
+    switch (sortType) {
+    case SortCommand.ARGUMENT_NAME:
+        addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_NAME));
+        break;
+
+    case SortCommand.ARGUMENT_PHONE:
+        addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_PHONE));
+        break;
+
+    case SortCommand.ARGUMENT_EMAIL:
+        addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_EMAIL));
+        break;
+
+    default:
+        break;
+
+    }
+    indicateAddressBookChanged();
+}
+----
+[source,java]
+----
+private ArrayList<ReadOnlyPerson> sortBy(Comparator<ReadOnlyPerson> comparator) {
+    ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
+    updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+    SortedList<ReadOnlyPerson> sortedList =
+                getFilteredPersonList()
+                .filtered(PREDICATE_SHOW_PINNED_PERSONS)
+                .sorted(comparator);
+
+    newList.addAll(sortedList);
+    sortedList = getFilteredPersonList()
+    .filtered(PREDICATE_SHOW_UNPINNED_PERSONS)
+    .sorted(comparator);
+
+    newList.addAll(sortedList);
+    return newList;
+}
+----
+
+[NOTE]
+Expanding the number of ways the list can be sorted requires adding cases to the switch in link:{repoURL}/src/main/java/seedu/address/logic/commands/SortCommand.java[`SortCommand.java`]
+and creating a new comparator in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager.java`]
+
+==== Design Considerations
+*Aspect:* Methodology used for sorting +
+*Alternative 1 (current choice):* `ObservableList` 's `sorted()` method +
+*Pros:* Easy to implement, relatively modular +
+*Cons:* Dependant on Java API, future changes to the method could affect the implementation
+
+*Alternative 2:* Override methods with own implementations; code sorting functionality directly into UniquePersonList +
+*Pros:* Less dependant on provided resources, more flexible with product's requirements +
+*Cons:* Resource-intensive; increases coupling between Logic and Model
+// end::sort[]
+
+<<<
+
+//tag::delete[]
+=== Deleting Multiple Contacts
+
+A method added to previous address book as an enhancement was to be able to delete multiple contacts at a time.
+This is done by creating an index that is a one-based index to read the list of people desired to be deleted instead of the default zero-based index.
+The one-based index code fragment is as follow:
+
+[source,java]
+----
+public static Index[] arrayFromOneBased(int[] oneBasedIndex) {
+    …
+    arrayIndex[i] = new Index(oneBasedIndex[i] - 1);
+    }
+    return arrayIndex;
+}
+----
+
+Parser will need to be taught to read oneBasedIndex array into Indexand we will use the newly created array to form a new method:
+
+[source,java]
+----
+public static Index[] parseDeleteIndex(String oneBasedIndex) throws IllegalValueException {
+…
+    for(String str : parts) {
+        trimmedIndex[i] = str.trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex[i])) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+    …
+    }
+}
+----
+
+<<<
+
+Delete command will then need to be able to read the array in order to take in the index as shown below:
+
+[source,java]
+----
+public DeleteCommand parse(String args) throws ParseException {
+    …
+    Index index[] = ParserUtil.parseDeleteIndex(args);
+    …
+}
+----
+
+[NOTE]
+Command for Delete will be updated after parsing of new array for delete function is completed in link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand.java`]
+
+==== Design Considerations
+*Aspect:* Implementation of Multiple deletion +
+*Alternative 1 (current choice):* Use an one-based array to accept deletion of multiple contacts using their index +
+*Pros:* Implementation is simple +
+*Cons:* Might be slower than previous delete method as it has to read from an array before executing the deletion itself +
+//end::delete[]
+
+<<<
+
+//tag::optional[]
+=== Optional Fields
+Previously in the `add` function, all fields implemented are compulsory to be filled in. The function `requirednonnull()`
+ensures that the method `AddCommand` does not take in any empty parameters for any fields. +
+The fields which was previously required were `name`, `phone`, `birthdate`, `email` and `address`. +
+ +
+The enhancement for the `add` function ensures that user can add in contacts even without a full set of parameters. Only
+`name` field is compulsory now. All other fields will read in empty fields and parse the parameters into the `AddCommand`,
+reading it as "-" now. +
+
+Name will stay compulsory as follow while other fields make use of the extended list
+`Optional` from `import java.util.Optional` :
+[source, java]
+----
+ try {
+            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            Optional<Phone> checkPhone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE));
+            if (!checkPhone.isPresent()) {
+                phone = new Phone(null);
+            } else {
+                phone = checkPhone.get();
+            }
+            Optional<Birthday> checkBirthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY));
+            if (!checkBirthday.isPresent()) {
+                birthday = new Birthday(null);
+            } else {
+                birthday = checkBirthday.get();
+            }
+            Optional<Email> checkEmail = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL));
+            if (!checkEmail.isPresent()) {
+                email = new Email(null);
+            } else {
+                email = checkEmail.get();
+            }
+            Optional<Address> checkAddress = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS));
+            if (!checkAddress.isPresent()) {
+                address = new Address(null);
+            } else {
+                address = checkAddress.get();
+            }
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+----
+Each parameter will then be taught to accept null input and read it as `-`. The implementation takes place in each field's
+model. +
+An example of teaching the parameter to reflect `-` in the person card is as shown below from `model/person/Address.java`:
+
+[source,java]
+----
+...
+public static final String ADDRESS_EMPTY = "-";
+...
+public Address(String address) throws IllegalValueException {
+        if (address == null) {
+            this.value = ADDRESS_EMPTY;
+        } else {
+            if (!isValidAddress(address)) {
+                throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+            }
+            this.value = address;
+        }
+    }
+...
+
+public static boolean isValidAddress(String test) {
+    return test.matches(ADDRESS_VALIDATION_REGEX) || test.matches(ADDRESS_EMPTY);
+    }
+----
+
+==== Design Considerations
+*Aspect:* Optional Fields +
+*Alternative 1 (current choice):* Extends from Optional list to each parameter and replace null field with "-" +
+*Pros:* Implementation is simple +
+*Cons:* May accept same name with different fields filled in as different person cards +
+//end::optional[]
+
+<<<
+
+//tag::birthday[]
+=== Birthday Parameter
+
+A birthday parameter has been introduced to `Add` Command for users to input contact's birthdate into Circles.
+
+The logic has been taught to accept the new parameter in `logic/commands/AddCommand.java` and `EditCommand.java`.
+The parser for Birthday has been implemented in `logic/parser/ParserUtil.java` as shown below:
+[source,java]
+----
+public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+          requireNonNull(birthday);
+          return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
+      }
+----
+
+The `Person` class will then have to include `birthday` as a field:
+[source,java]
+----
+ public Person(Name name, Phone phone, Birthday birthday, Email email, Address address, Set<Tag> tags) {
+         requireAllNonNull(name, phone, birthday, email, address, tags);
+         ...
+ this.birthday = new SimpleObjectProperty<>(birthday);
+   ...
+ public Person(ReadOnlyPerson source) {
+    this(source.getName(), source.getPhone(), source.getBirthday(), source.getEmail(), source.getAddress(),
+    source.getTags());
+----
+
+The UI has to be edited to include a placeholder for the field in `PersonInfoPanel.fxml`:
+
+[source,java]
+----
+<Label fx:id="birthday" styleClass="label-bright" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+----
+To implement `birthday` field, the parameter is added into the Person class as shown below in the model diagram. This is
+ implemented as `Birthday.c` +
+
+image::ModelClassDiagram.png[width="800"]
+_Figure 3 : Structure of the Model Component_ +
+
+[source,java]
+----
+public Birthday(String birthday) throws IllegalValueException {
+        if (birthday == null) {
+            this.value = BIRTHDAY_EMPTY;
+        } else {
+            String trimmedBirthday = birthday.trim();
+            if (!isValidBirthday(trimmedBirthday)) {
+                throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+            }
+            this.value = trimmedBirthday;
+        }
+    }
+
+----
+
+As shown in the model diagram, `ReadOnlyPerson` will have to be modified to support the `birthday` field:
+[source,java]
+----
+ObjectProperty<Birthday> birthdayProperty();
+    Birthday getBirthday();
+----
+
+In the storage aspect, new field will need to be added in the `XMLAdaptedPerson` class so that
+the data will be saved even when Circles is closed:
+[source,java]
+----
+public XmlAdaptedPerson(ReadOnlyPerson source) {
+            name = source.getName().fullName;
+            phone = source.getPhone().value;
+            birthday = source.getBirthday().value;
+            email = source.getEmail().value;
+            ...
+            }
+----
+==== Design Considerations
+*Aspect:* Birthday Field +
+*Alternative 1 (current choice):* To build a new field in Person and replicate from the previous fields given +
+*Pros:* Implementation is similar to `phone` field+
+*Cons:* Extremely complicated regex to take into consideration of leap years and number of days in a month +
+//end::birthday[]
+
+<<<
+
+// tag::listtag[]
+=== Listing by tags
+The List command was expanded to accommodate listing contacts with specific tags.
+This was done through the creation of predicates based on the argument passed in when the List command is called.
+The argument, being a String referring to the tag specified for listing, is passed into the `getPredicateForTags()` method shown below,
+which returns a predicate to check if each person in the list has the tag.
+
+[source,java]
+----
+    public Predicate<ReadOnlyPerson> getPredicateForTags(String arg) throws IllegalValueException {
+        try {
+            Tag targetTag = new Tag(arg);
+            Predicate<ReadOnlyPerson> taggedPredicate = p -> p.getTags().contains(targetTag);
+            return taggedPredicate;
+        }  catch (IllegalValueException ive) {
+            throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
+        }
+    }
+----
+The above method implementation can also be found at link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager.java`]
+
+The predicate is then passed into the updateFilteredPersonList() method to subsequently update the list being displayed.
+How `getPredicateForTags()` is called is demonstrated below; the snippet can be found in link:{repoURL}/src/main/java/seedu/address/logic/commands/ListCommand.java[`ListCommand.java`]
+[source,java]
+----
+Predicate <ReadOnlyPerson> predicateShowAllTagged = model.getPredicateForTags(tagToList);
+            model.updateFilteredPersonList(predicateShowAllTagged);
+            String concat = " with " + tagToList + " tag.";
+            return new CommandResult(String.format(MESSAGE_SUCCESS, concat));
+----
+
+[NOTE]
+The initial command, “list”, which merely displayed all the persons in the list, has now been changed to the command “list all”.
+
+==== Design Considerations
+*Aspect:* Filtering the list +
+*Alternative 1 (Current Choice):* Using a new predicate +
+*Pros:* Implementation not too complex, easy to debug +
+*Cons:* Usage is limited, will be slow if there are a large number of contacts +
+
+*Alternative 2:* creating HashMaps for each tag to each person in the contact list +
+*Pros:* O(1) implementation for filtering +
+*Cons:* Extremely space-inefficient +
+// end::listtag[]
+
+<<<
+
+// tag::expimp[]
+=== Export/Import
+The Export and Import commands were added to make users' data more portable and easier to back-up and restore.
+This was done by redirecting the Storage component's `saveAddressBook()` and `readAddressBook()` methods to user-defined file paths.
+The user input for destination file path (export) and origin file path (import) is parsed as a String through `ExportCommandParser` and `ImportCommandParser`.
+
+[source, java]
+----
+public abstract class Command {
+    protected Model model;
+    protected CommandHistory history;
+    protected UndoRedoStack undoRedoStack;
+    protected Storage storage;
+----
+
+The Command abstract class was expanded on to allow access to Storage Components through StorageManager. This is what allows the
+Export and Import Commands to access `storage.saveAddressBook()` and `storage.readAddressBook()`.
+The code snippet shown above can also be found in link:{repoURL}/src/main/java/seedu/address/logic/commands/Command.java[`Command.java`]
+
+==== Design Considerations
+*Aspect:* Mechanism for writing to file +
+*Alternative 1 (Current Choice):* Expanding Command abstract class to allow Commands to have access to StorageManager methods. +
+*Pros:* the addition of Storage access to Command is very unlikely to affect the implementation of other features, and makes efficient use of `StorageManager.java`. +
+*Cons:* Insisting on precise directory location is rather unintuitive for most users, implementations where Windows explorer (or Finder for Mac) is called to show where to save the file would be better,
+unfortunately the constraints of the module forbid us from doing so.
+
+*Alternative 2:* Calling explorer or finder to select the directory location +
+*Pros:* Intuitive method to selecting file destinations +
+*Cons:* Implementation is slightly more complex, command would now be executed in 2 or more steps, which is against the project's allowance.
+// end::expimp[]
+
+<<<
+
+// tag::setcolour[]
+=== Changing Tag Colours
+The `setcolour` command allows users to customise the colour of tags in Circles. +
+
+The colours of the tags are stored as a `HashMap<String, String>` inside the `UserPrefs` class. When a `setcolour` command is called, and there is change in a tag colour,
+`SetColourCommand` will call `setTagColour()` in `Model`, which updates the `HashMap<String, String>` inside `UserPrefs`.
+The method `setTagColour()` is shown below, and the code can be found in {repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager.java`]
+[source,java]
+----
+ public void setTagColour(String tagName, String colour) throws IllegalValueException {
+        List<Tag> tagList = addressBook.getTagList();
+        for (Tag tag: tagList) {
+            if (tagName.equals(tag.tagName)) {
+                tagColours.put(tag, colour);
+                updateAllPersons(tagColours);
+                indicateAddressBookChanged();
+                raise(new NewPersonListEvent(getFilteredPersonList()));
+                colourPrefs.updateColorMap(tagColours);
+                return;
+            }
+        }
+        throw new IllegalValueException("No such tag!");
+    }
+----
+Then, the UI will be notified of the change by `NewPersonListEvent`, and updates the `PersonCard` and `PersonInfo` classes to reflect the change in colour.
+// end::setcolour[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -363,6 +1146,8 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+<<<
 
 == Documentation
 
@@ -393,6 +1178,8 @@ Here are the steps to convert the project documentation files to PDF format.
 
 image::chrome_save_as_pdf.png[width="300"]
 _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+
+<<<
 
 == Testing
 
@@ -443,6 +1230,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+<<<
+
 == Dev Ops
 
 === Build Automation
@@ -467,6 +1256,8 @@ Here are the steps to create a new release.
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
+
+<<<
 
 [appendix]
 == Suggested Programming Tasks to Get Started
@@ -713,28 +1504,93 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
+<<<
+
 [appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="70%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person| store my contacts' information easily
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |be prompted before clearing my addressbook | do not clear my addressbook accidentally
+
+|`* * *` |user |share contacts on other platforms (e.g WhatsApp/Telegram) |pass contact information to my friends
+
+|`* * *` |user |save contacts as another file format| use my contacts on other platforms
+
+|`* * *` |user |pin/set favourite contacts| choose the people I contact frequently
+
+|`* * *` |user |find contacts in non case-sensitive mode| refer and search for my friends easily
+
+|`* * *` |user |leave some fields blank| still add the contact into addressbook despite not knowing
+                their full contact information
+
+|`* * *` |user |sort contacts by email| see the emails of my contacts in alphabetical order to search contacts easily
+
+|`* * *` |user |sort contacts by name| view all my contacts in an alphabetical order to search for contacts easily
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |list all contacts in specific [tags]| view all contacts in specific categories easily
+
+|`* *` |user |color code categories| differentiate the tags easily
+
+|`* *` |user |link URL for FaceBook for my contacts| see what they are doing on social media
+
+|`* *` |user |link URL for Instagram for my contacts| see what they are doing on social media
+
+|`* *` |user |link URL for Twitter for my contacts| see what they are doing on social media
+
+|`* *` |user |view the last 5 added contacts| know who I added recently
+
+|`* *` |user |prompted before deleting a contact| do not delete contacts by accident
+
+|`* *` |user |use the new Mailto: command| write emails quickly
+
+|`* *` |user |prompted before exit| not exit accidentally
+
+|`* *` |user |sort contacts into specific categories| have an easier reference
+
+|`* *` |user |input birthdays for my contacts| remember their birthdays
+
+|`* *` |user |reminded for upcoming birthdays| not forget their birthdays
+
+|`* *` |user |sort contacts by phone number| refer to their phone numbers easily
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |show address on google maps| do not have to open another application separately
+
+|`*` |user |save addressbook under different names |differentiate separate addressbooks
+
+|`*` |user |import/export addressbook master file |access the address books from different devices
+
+|`*` |user |find contacts through phone number| track unknown phone numbers to callers
+
+|`*` |user |find contacts through email| known the sender of email whose address is not saved
+
+|`*` |user |view contacts with photo display| differentiate contacts with the same name
+
+|`*` |user |view date and time in addressbook | check them without exiting the application
+
+|`*` |user |link URL for LinkedIn for my contacts| connect with contacts for business purposes
+
+|`*` |user |change color scheme, so that graphic user interface can be customised to my liking
 |=======================================================================
 
 {More to be added}
+
+<<<
 
 [appendix]
 == Use Cases
@@ -747,9 +1603,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+2.  Circles shows a list of persons
+3.  User requests to delete a specific person or multiple people in the list
+4.  Circles deletes the person
 +
 Use case ends.
 
@@ -763,9 +1619,58 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Circles shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Sorting
+
+1. Input 'sort <type>', replace <type> with fields (mentioned in step 2) to sort by
+* a. 'name' to sort alphabetically by name
+* b. 'email' to sort alphabetically by email handle
+* c. 'phone' to sort by phone number
+2. Circles displays sorted list of persons according to specified field
+
+Use case ends.
+
+[discrete]
+=== Use case: Pin
+
+1. User finds a specific person
+2. Circles displays the person's details
+3. User selects 'pin' option
+4. Circles will now display chosen person at top of list
+
+Use case ends.
+
+[discrete]
+=== Use case: Listing by [tag]
+
+1. User inputs 'list [tag]' where [tag] is any user-specified tag
+2. Circles filters out all persons without [tag]
+3. Circles shows a list of all persons with [tag]
+
+Use case ends.
+
+[discrete]
+=== Use case: Exporting contact data
+
+1. User inputs 'export'
+2. Circles prompts User to select a location on terminal to save the data file
+3. User selects location
+4. A data file is generated in User-specified location
+
+Use case ends.
+
+[discrete]
+=== Use case: Importing contact data
+
+1. User inputs 'import [location]', where [location] is the location of the data file
+* example: C:/User/Documents/myAddressBook
+2. Circles overwrites current data with new imported data
+
+Use case ends.
 
 {More to be added}
 
@@ -775,11 +1680,34 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work in 32 and 64 bits environment.
+.  Should come with automated unit tests.
+.  Should be user-friendly for people who have no prior experience in using an addressbook.
+.  Should be able to redirect user to third-party browsers when links are clicked.
+.  Should be a stand-alone program.
 
 {More to be added}
 
+<<<
+
 [appendix]
 == Glossary
+
+[[cli]]
+CLI
+
+....
+A command line interface (CLI) is a user interface in which the user responds to visual prompt by typing commands on a
+specified line, and solely relies on textual input and output
+....
+
+[[gui]]
+GUI
+
+....
+A graphical user interface (GUI) is a human-computer interface that allows users to interact with the computer
+visually, by windows, icons and buttons, to make the program easy to use
+....
 
 [[mainstream-os]]
 Mainstream OS
@@ -795,19 +1723,28 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[ui]]
+UI
+
+....
+A user interface (UI) is a platform which a user interacts with an application
+....
+
+<<<
+
 [appendix]
 == Product Survey
 
-*Product Name*
+*Circles*
 
-Author: ...
+Authors: Eldon Ng, Emil Koh, Mavis Toh
 
 Pros:
 
-* ...
-* ...
+* Helps user get used to the CLI environment and constraints while providing a comfortable UI
+* Stores and organises contacts to help user keep track of his/her social networks
 
 Cons:
 
-* ...
-* ...
+* purely CLI interface, usage has a learning curve
+* aesthetics still a work in progress

@@ -40,13 +40,15 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private PersonInfo personInfoPanel;
     private PersonListPanel personListPanel;
+    private BrowserPanel browserPanel;
+    private GroupListPanel groupListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane personInfoPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -56,6 +58,12 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane browserPanelPlaceholder;
+
+    @FXML
+    private StackPane groupListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -126,11 +134,17 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        personInfoPanel = new PersonInfo(prefs.getColourMap());
+        personInfoPlaceholder.getChildren().add(personInfoPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), prefs.getColourMap());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        browserPanel = new BrowserPanel();
+        browserPanelPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        groupListPanel = new GroupListPanel(logic.getGroupList(), logic.getFilteredPersonList());
+        groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -206,10 +220,6 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
     }
 
     @Subscribe

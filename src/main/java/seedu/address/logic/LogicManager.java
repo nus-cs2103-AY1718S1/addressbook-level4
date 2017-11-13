@@ -11,7 +11,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.Storage;
 
 /**
  * The main LogicManager of the app.
@@ -23,20 +25,25 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    //@@author LimeFallacie
+    private final Storage storage;
 
-    public LogicManager(Model model) {
+    //@@author LimeFallacie
+    public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
+        this.storage = storage;
     }
 
+    //@@author
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = addressBookParser.parseCommand(commandText);
-            command.setData(model, history, undoRedoStack);
+            command.setData(model, history, undoRedoStack, storage);
             CommandResult result = command.execute();
             undoRedoStack.push(command);
             return result;
@@ -50,6 +57,13 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
+    //@@author eldonng
+    @Override
+    public ObservableList<ReadOnlyGroup> getGroupList() {
+        return model.getGroupList();
+    }
+
+    //@@author
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());

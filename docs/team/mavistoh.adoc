@@ -1,0 +1,123 @@
+= Mavis Toh - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Circles
+Circles is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T17-B3/main/blob/master/collated/main/mavistoh.md[Functional code]] [https://github.com/CS2103AUG2017-T17-B3/main/blob/master/collated/test/mavistoh.md[Test code]]
+
+=== Enhancement Added: Delete Multiple
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=delete]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Multiple deletion is implemented as an enhancement from the current `delete` function. This
+is to aid users to delete more than 1 contact within 1 command. Functions implemented previously
+only allow users to either delete single contact or the whole list.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=delete]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Optional Fields while Adding
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=optional]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users may not have the full set of details for a particular contact and the previous `add` mechanism may deny users to
+add these contacts into Circles.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=optional]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Birthday field
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=optional]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The addition of this field provides user with more comprehensive contact details to
+add into Circles.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=birthday]
+
+#End of Extract#
+---
+
+=== Enhancement Proposed
+==== Link Social Networking Sites
+A new field called `URL` can be implemented as a parameter for input of contact details so that
+users can store contact's social media sites from Circles. +
+
+Implementation will be similar to the `birthday` field and link it to `BrowserPanel` class in UI to get the usernames
+as suffix for the social media platform URL.
+
+==== Change of Theme Colours
+Similar to the implementation of the `birthday` field, a command called `Mode` can be executed to change
+theme of Circles. +
+
+When executing `Mode`, user can change theme colours, i.e: Dark Theme, Light Theme, Black-White Theme etc. . This
+enhancement to link to UI aspect of Circles. Currently there is only one theme which is `DarkTheme.css`. Variations can
+be made from `/resources/view` and link to `Mode` Command.
+
+=== Other contributions
+
+* Implemented `Find Address` function for V1.1 version of Circles. This function
+ finds contact with keyword matching contact's address. (Pull request https://github.com/CS2103AUG2017-T17-B3/main/pull/12[#12]) +
+ This was subsequently improved into `Find [KEYWORD]` function which matches keyword to all fields
+from the contact card. +
+
+* Found bugs for Team T10-B3 during acceptance testing. (Issue https://github.com/CS2103AUG2017-T10-B3/main/issues/72[#1],
+Issue https://github.com/CS2103AUG2017-T10-B3/main/issues/77[#2])

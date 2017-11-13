@@ -1,12 +1,20 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
+
+
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -14,6 +22,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final String PIN_ICON = "/images/pinned_icon.png";
+
+    public final ReadOnlyPerson person;
+
+    private HashMap<String, String> colourMap;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -23,28 +36,25 @@ public class PersonCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final ReadOnlyPerson person;
-
     @FXML
     private HBox cardPane;
     @FXML
-    private Label name;
+    private ImageView pinIcon;
     @FXML
-    private Label id;
+    private Text name;
     @FXML
-    private Label phone;
-    @FXML
-    private Label address;
-    @FXML
-    private Label email;
+    private Text id;
+
     @FXML
     private FlowPane tags;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+    public PersonCard(ReadOnlyPerson person, int displayedIndex, HashMap<String, String> colourMap) {
         super(FXML);
         this.person = person;
+        this.colourMap = colourMap;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        setPinIcon(person);
         bindListeners(person);
     }
 
@@ -54,19 +64,35 @@ public class PersonCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        pinIcon.setImage(setPinIcon(person));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
     }
 
+    /**
+     * Initialises all tags in FlowPane to show the person's tags and their colour.
+     * @param person
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            setTagColour(tagLabel, tag);
+            tags.getChildren().add(tagLabel);
+        });
     }
 
+    //@@author eldonng
+    private void setTagColour(Label tagLabel, Tag tag) {
+        if (colourMap.containsKey(tag.tagName)) {
+            tagLabel.setStyle("-fx-background-color: " + colourMap.get(tag.tagName));
+        } else {
+            tagLabel.setStyle(null);
+        }
+    }
+
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -83,5 +109,14 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    //@@author eldonng
+    private Image setPinIcon(ReadOnlyPerson person) {
+        if (person.isPinned()) {
+            return new Image(PIN_ICON);
+        } else {
+            return null;
+        }
     }
 }

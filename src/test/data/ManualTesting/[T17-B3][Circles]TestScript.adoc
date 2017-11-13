@@ -1,0 +1,68 @@
+= Test Script for Manual Testing
+:stylesDir: stylesheets
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+== Loading the SampleData.xml file: `import`
+
+1. Take note of the directory location of SampleData.xml
+2. input `import` followed by [directory]\[Sample data file name] +
+e.g. `import C:\users\user\Desktop\SampleData.xml`
+3. The sample data will overwrite the existing contacts list.
+
+<<<
+
+=== Test cases
+
+[width="100%",cols="30%,70%",options="header"]
+|===
+|Input|Expected Output
+|add n/test user p/123|New person added: test user Phone: 123 Birthday: - Email: - Address: - Tags:
+|pin 21|Pinned person: test user Phone: - Birthday: - Email: - Address: - Tags:
+|list friends|Listed all persons with friends tag +
+(test user should not appear)
+|list all|Listed all persons
+|delete 1|Deleted Person: test user Phone: - Birthday: - Email: - Address: - Tags:
+|undo|Undo success (test user should still be pinned)
+|sort name|Sorted all persons by name (test user should still be at the top)
+|sort email|Sorted all persons by email (test user should still be at the top)
+|sort phone|Sorted all persons by phone number (test user should still be at the top)
+|find test|1 persons listed
+|edit 1 t/test|Edited Person: test user Phone: - Birthday: - Email: - Address: - Tags: [test]
+|setcolour test red|All tags [test] are now coloured red
+|setcolour notReal pink|Unfortunately, pink is unavailable to be set in addressbook
+|exit|
+|Run circles.jar again|(test user should still be pinned) ([test] tag should still be red)
+|unpin 1|Unpinned Person: test user Phone: - Birthday: - Email: - Address: - Tags: [test]
+|add n/ test user2|New person added: test user2 Phone: - Birthday: - Email: - Address: - Tags:
+|delete 21, 22|Deleted Person: test user Phone: - Birthday: - Email: - Address: - Tags: [test] +
+               Deleted Person: test user2 Phone: - Birthday: - Email: - Address: - Tags:
+
+|undo|Undo success (both test user and test user2 should return as index 21 and 22)
+|edit 22 t/test|Edited Person: test user2 Phone: - Birthday: - Email: - Address: - Tags: [test] ([test] should be red)
+|edit 20 b/29-02-2000 t/test|Edited Person: someone Phone: 12345678 Birthday: 29-02-2000 Email: something@something.com Address: somewhere Tags: [test]
+|edit 20 p/test|(should fail) Phone numbers can only contain numbers, and should be at least 3 digits long
+|add n/test user3|New person added: test user3 Phone: - Birthday: - Email: - Address: - Tags:
+|find test|4 persons listed (test appears in both tags and names)
+|creategroup n/test i/1 2 3 4 4 4 4|New group added:test, with 4 member(s) (index 4 will only be added once)
+|list all|Listed all persons
+|creategroup n/test i/1 2 3|(should fail) This group already exists in the address book
+|creategroup n/test2 i/16 8 12 10 2 1|New group added:test2, with 6 member(s) +
+(mixed order of indexes will not affect group creation)
+|selectgroup 3|Selected Group: 3 (Group 3 members will be displayed on the left)
+|selectgroup 4|Selected Group: 4 (Group 4 members will be displayed on the left)
+|deletegroup 4|Deleted Group: test (Group 3 members will be displayed)
+|list all|Listed all persons (Group 4 members will NOT have been deleted)
+|find test|4 persons listed
+|export testexport|Contacts list exported successfully. +
+(check directory of jar file for exported file; check contents of file for newly added test users)
+|delete 1,2,3,4|Deleted Person: someone Phone: 12345678 Birthday: 29-02-2000 Email: something@something.com Address: somewhere Tags: [test] +
+                Deleted Person: test user Phone: - Birthday: - Email: - Address: - Tags: [test] +
+                Deleted Person: test user2 Phone: - Birthday: - Email: - Address: - Tags: [test] +
+                Deleted Person: test user3 Phone: - Birthday: - Email: - Address: - Tags:
+
+|===
+

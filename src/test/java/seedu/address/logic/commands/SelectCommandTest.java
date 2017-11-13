@@ -23,6 +23,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.Storage;
+import seedu.address.testutil.TypicalStorage;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -33,10 +35,13 @@ public class SelectCommandTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private Model model;
+    private Storage storage;
+
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        storage = new TypicalStorage().setUp();
     }
 
     @Test
@@ -135,7 +140,7 @@ public class SelectCommandTest {
      */
     private SelectCommand prepareCommand(Index index) {
         SelectCommand selectCommand = new SelectCommand(index);
-        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack(), storage);
         return selectCommand;
     }
 }
