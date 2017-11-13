@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author syy94 -->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<ScrollPane minHeight="250" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1">
+
+    <VBox>
+        <padding>
+            <Insets bottom="5" left="15" right="5" top="5"/>
+        </padding>
+        <HBox alignment="CENTER_LEFT" spacing="5">
+            <Label fx:id="name" styleClass="cell_big_label"/>
+            <Label fx:id="group" styleClass="cell_big_label" text="Select a person to view their details."/>
+            <VBox.margin>
+                <Insets/>
+            </VBox.margin>
+        </HBox>
+        <FlowPane fx:id="tags">
+            <padding>
+                <Insets bottom="4.0" top="4.0"/>
+            </padding>
+        </FlowPane>
+        <Label fx:id="phone" styleClass="cell_small_label"/>
+        <Label fx:id="address" styleClass="cell_small_label"/>
+        <Label fx:id="email" styleClass="cell_small_label"/>
+        <!--fields are generated and added in the codes as they are of a variable number-->
+        <VBox fx:id="fields" styleClass="cell_small_label"/>
+    </VBox>
+
+</ScrollPane>

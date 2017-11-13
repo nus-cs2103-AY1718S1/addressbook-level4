@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -95,6 +97,23 @@ public class UniquePersonList implements Iterable<Person> {
         }
         setPersons(replacement);
     }
+
+    //@@author sofarsophie
+    /**
+     * Sorts the internal list by the field identified by the given prefix.
+     */
+    public void sortPersons(Prefix prefixToSortBy) {
+
+        Collections.sort(internalList, new ReadOnlyPersonComparator(prefixToSortBy));
+        UniquePersonList replacement = new UniquePersonList();
+        try {
+            replacement.setPersons(internalList);
+        } catch (DuplicatePersonException dpe) {
+            dpe.getMessage();
+        }
+        setPersons(replacement);
+    }
+    //@author
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

@@ -56,7 +56,7 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         default:
-            // let JavaFx handle the keypress
+                // let JavaFx handle the keypress
         }
     }
 
@@ -113,7 +113,10 @@ public class CommandBox extends UiPart<Region> {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
-            logger.info("Invalid command: " + commandTextField.getText());
+            //makes sure password does not get leaked to the logs
+            if (!logic.getIsLocked()) {
+                logger.info("Invalid command: " + commandTextField.getText());
+            }
             raise(new NewResultAvailableEvent(e.getMessage()));
         }
     }

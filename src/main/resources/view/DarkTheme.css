@@ -3,6 +3,30 @@
     background-color: #383838; /* Used in the default.html file */
 }
 
+/*@@author sofarsophie*/
+.combo-box {
+    -fx-background: white;
+    -fx-background-color: transparent;
+}
+
+.combo-box .list-cell {
+    -fx-background: white;
+    -fx-background-color: transparent;
+}
+
+.combo-box-base {
+    -fx-background-color: #eee;
+}
+
+.combo-box-base:hover {
+    -fx-background-color: #dcdcdc;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #dadada;
+}
+/*@@author*/
+
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -130,6 +154,20 @@
     -fx-font-size: 13px;
     -fx-text-fill: #010504;
 }
+
+/*@@author kengying*/
+VBox .cell_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 16px;
+    -fx-text-fill: #EAECEE;
+}
+
+VBox .cell_small_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #EAECEE;
+}
+/*@@author*/
 
 .anchor-pane {
      -fx-background-color: derive(#1d1d1d, 20%);
@@ -305,6 +343,14 @@
     -fx-padding: 8 1 8 1;
 }
 
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
+
+.scroll-pane {
+   -fx-background-color: transparent;
+}
+
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
@@ -348,3 +394,13 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+//@@author syy94
+#group {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 1 10 1 10;
+    -fx-border-radius: 500;
+    -fx-background-radius: 500;
+}
+//@@author

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= humanDEX - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F11-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2103AUG2017-F11-B1`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -22,7 +22,7 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `humanDEX.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -32,8 +32,8 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* *`list`**`all` : lists all contacts
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 g/Savings` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -54,63 +54,128 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+// tag::adding-a-person-code-add-code[]
+
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME  g/GROUP [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [c/CUSTOMFIEILD_KEY:CUSTOMFIELD_VALUE]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags or custom fields (including 0)
+[TIP]
+A person can be saved with just name and group
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 g/Health c/School:NUS c/Company:Google`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 g/Life t/criminal`
+* `add n/Henry Harry g/Savings`
+* `add n/Tim Tom p/12356923 a/Timmy street g/Holiday`
 
-=== Listing all persons : `list`
+// end::adding-a-person-code-add-code[]
 
-Shows a list of all persons in the address book. +
-Format: `list`
+// tag::listing-all-persons-code-list-code[]
 
+=== [Since v1.3] Listing all persons : `list`
+
+list all, shows all person in humanDEX +
+list tags, shows all tags in humanDEX +
+list groups, shows all groups in humanDEX +
+Format: `list [SEARCH_TERM]`
+
+Examples:
+
+* `list all`
+* `list tags`
+* `list groups`
+
+// end::listing-all-persons-code-list-code[]
+
+// tag::sort[]
+=== [Since v1.3] [Since v1.4] Sorts and lists all persons using fields : `sort`
+
+Sorts the most recent persons listing by the given parameter in lexicographic order. +
+Format: `sort [prefix]...`
+
+[TIP]
+prefix includes [n/] [p/] [e/] [a/] [g/]
+
+****
+* Sorts list based on one given parameter from: Name, Phone, Email, Address, or Group.
+* If no parameter is given, sorts list by the contacts' names in alphabetical order.
+* Cannot sort using multiple parameters.
+* Cannot sort an empty contact list.
+* A sorted contacts list can be unsorted by using the command `undo`.
+* Sort can also be done by using the filter dropdown above the persons list, as follows:
+****
+
+image::sort-filter-controls.png[width="600"]
+
+Examples:
+
+* `sort p/`
+Sorts the most recent persons listing by phone number.
+* `find a/jurong` + `sort`
+Finds all people with address containing 'jurong' and sorts by name.
+* `sort`, `sort n/`
+Sorts the most recent persons listing by name.
+// end::sort[]
+
+// tag::editindividual[]
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [-t/TAG]... [+t/TAG]... [clearTag/] [c/CUSTOMFIEILD_KEY:CUSTOMFIELD_VALUE]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing custom fields, the existing custom fields of the person will be removed i.e adding of custom fields is not cumulative.
+* You can remove all the person's custom fields by typing `c/` without specifying any custom fields after it.
+* When editing tags, `clearTag/` takes precedence followed by `+t/` and then `-t/`.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
+* `edit 2 n/Betsy Crower clearTag/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 3 c/School:NUS` +
+Clears all existing custom fields and adds the custom field `School:NUS`.
 
-=== Locating persons by name: `find`
+// end::editindividual[]
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+// tag::find[]
+
+=== [Since v1.2] Locating persons by other fields: `find`
+
+Finds persons whose field matches any of the given fields.
+Format: `find prefix/INPUT [n/NAME]... [p/PHONE]... [e/EMAIL]... [a/ADDRESS]... [g/GROUP]... [t/TAG]... [c/CUSTOMFIELD]...`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive. e.g `Email@Email.com` will match `email@email.com`
+* Any field will be searched.
+* The order of the keywords does not matter. e.g. `find n\Hans n\Bo` will match `find n\Bo n\Hans`
+* For name, phone, and address, partial words will also be matched.
+e.g. `find p/9004` will match anyone whose phone number contains `9004`.
+* For phone and email, the given input must also be in the correct form of the corresponding field.
+e.g. `find e/gmail` is invalid. `find e\_lee@nus.edu.sg` is valid.
+e.g. `find p/9` is invalid. Use the `sort` command instead if you want to categorize contacts by the starting digit of a phone number.
+* Persons matching at least one field will be returned (i.e. `OR` search).
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find n/John` +
+Returns `Johnathan Kim` and `John Doe`
+* `find t/colleagues t/friends` +
+Returns any person who has a `colleague` tag or a `friends` tag.
+* `find t/shopkeeper g/Retail`
+Returns any persons who has the `shopkeeper` tag or is in the `Retail` group.
+// end::find[]
 
 === Deleting a person : `delete`
 
@@ -125,10 +190,10 @@ Format: `delete INDEX`
 
 Examples:
 
-* `list` +
+* `list all` +
 `delete 2` +
 Deletes the 2nd person in the address book.
-* `find Betsy` +
+* `find n/Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
@@ -145,10 +210,10 @@ Format: `select INDEX`
 
 Examples:
 
-* `list` +
+* `list all` +
 `select 2` +
 Selects the 2nd person in the address book.
-* `find Betsy` +
+* `find n/Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
@@ -170,17 +235,17 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `clear`, `find` and `sort`).
 ====
 
 Examples:
 
 * `delete 1` +
-`list` +
+`list all` +
 `undo` (reverses the `delete 1` command) +
 
 * `select 1` +
-`list` +
+`list all` +
 `undo` +
 The `undo` command fails as there are no undoable commands executed previously.
 
@@ -217,6 +282,20 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+// tag::password[]
+=== [Since v1.4][Since v1.5] Setting Passwords: `password`
+
+Sets, removes or changes password required to use the application. Once a password is set, upon restarting humanDEX, the user will be required to
+enter the password in order to access humanDex. If the password is forgotten refer to the Developer Guide to rectify the problem.
+
+Format:
+
+* Add: `password pwd/PASSWORD`
+* Remove: `password pwd/PASSWORD clearPwd/`
+* Change: `password pwd/PASSWORD new/NEW_PASSWORD`
+
+// end::password[]
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -227,6 +306,38 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Features v2.0
+
+=== [Coming in v2.0] Creating a new humanDEX : `new_humanDEX`
+
+Creates a new humanDEX.
+Format: `new_humanDEX NAME`
+
+***
+* If you do not specify the name, the default name will be set to `humanDEX_#`
+* You can perform all commands in any humanDEX.
+* Modifying a contact in one humanDEX will be reflected in all other humanDEXes.
+***
+
+=== [Coming in v2.0] Switching to another humanDEX : `switch`
+
+Switches to another humanDEX.
+Format: `switch NAME`
+
+***
+* A new humanDEX interface will popup.
+***
+
+=== [Coming in v2.0] Listing the edit history of a contact : `edit_history`
+
+Lists all edit history of the person, identified by the index number used in the last person listing, in reverse chronological order. +
+Format: `edit_history INDEX`
+
+Examples:
+
+* `edit 1 p/12341234` +
+`edit_history 1` (prints: `phone number changed from ******** to 12341234`
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -234,19 +345,31 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME g/GROUP [p/PHONE_NUMBER] [e/EMAIL a/ADDRESS] [t/TAG] [c/CUSTOMFIEILD_KEY:CUSTOMFIELD_VALUE]` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague c/School:NUS g/Savings`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [-t/TAG]... [+t/TAG]... [clearTag/] [g/GROUP]` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
+* *Find by field* : `find [n/NAME]... [p/PHONE]... [e/EMAIL]... [a/ADDRESS]... [t/TAG]... [g/GROUP]... [c/CUSTOMFIELD]` +
+e.g. `find p/99991234`
+e.g. `find t/colleagues t/clients g/Savings`
+* *List* : `list [SEARCH_TERM]`
+e.g. `list tags`
+e.g. `list groups`
+e.g. `list all`
+* *Sort (by name)* : `sort`
+* *Sort* : `sort [n/] [p/] [e/] [a/] [t/]` +
+e.g. `sort n/ a/`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Password Management*
+
+** Add: `password pwd/PASSWORD`
+** Remove: `password pwd/PASSWORD clearPwd/`
+** Change: `password pwd/PASSWORD new/NEW_PASSWORD`

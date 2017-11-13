@@ -2,13 +2,15 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
-public class Name {
+public class Name implements Comparable<Name>, Comparator<Name> {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
             "Person names should only contain alphanumeric characters and spaces, and it should not be blank";
@@ -42,6 +44,15 @@ public class Name {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
+    //@@author sofarsophie
+    public int compareTo(Name n) {
+        return this.fullName.compareTo(n.fullName);
+    }
+
+    public int compare(Name a, Name b) {
+        return a.fullName.compareTo(b.fullName);
+    }
+    //@@author
 
     @Override
     public String toString() {
@@ -59,5 +70,6 @@ public class Name {
     public int hashCode() {
         return fullName.hashCode();
     }
+
 
 }

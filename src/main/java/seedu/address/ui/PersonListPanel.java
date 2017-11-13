@@ -14,8 +14,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.PasswordAcceptedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.SecurityManager;
 
 /**
  * Panel containing the list of persons.
@@ -27,11 +29,26 @@ public class PersonListPanel extends UiPart<Region> {
     @FXML
     private ListView<PersonCard> personListView;
 
+    private ObservableList<ReadOnlyPerson> personList;
+
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
+        registerAsAnEventHandler(this);
+
+        //@@author syy94
+        this.personList = personList;
+        if (!SecurityManager.passExists()) {
+            init();
+        }
+        //@@author
+    }
+
+    //@@author syy94
+    private void init() {
         setConnections(personList);
         registerAsAnEventHandler(this);
     }
+    //@@author
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
         ObservableList<PersonCard> mappedList = EasyBind.map(
@@ -85,4 +102,11 @@ public class PersonListPanel extends UiPart<Region> {
         }
     }
 
+    //@@author syy94
+    @Subscribe
+    private void handlePasswordAcceptedEvent(PasswordAcceptedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Password Accepted. Showing Persons"));
+        init();
+    }
+    //@@author
 }

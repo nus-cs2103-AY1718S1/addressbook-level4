@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.util.ColorUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -30,6 +31,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
+    private Label group;
+    @FXML
     private Label id;
     @FXML
     private Label phone;
@@ -45,6 +48,7 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        initGroups(person);
         bindListeners(person);
     }
 
@@ -54,18 +58,35 @@ public class PersonCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        group.textProperty().bind(Bindings.convert(person.groupProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
+            initGroups(person);
         });
     }
 
+    //@@author syy94
+    /**
+     * Creates and add the tags belonging to the person
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            final Label label = new Label(tag.tagName);
+            label.setStyle("-fx-background-color: " + ColorUtil.getUniqueHsbColorForObject(tag));
+            tags.getChildren().add(label);
+        });
     }
+    //@@author
+
+    //@@author kengying
+    private void initGroups(ReadOnlyPerson person) {
+        group.setStyle("-fx-background-color: " + ColorUtil.getUniqueHsbColorForObject(person.getGroup()));
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

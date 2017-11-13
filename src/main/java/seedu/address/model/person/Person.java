@@ -9,6 +9,9 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.customfields.CustomField;
+import seedu.address.model.customfields.CustomFieldsList;
+import seedu.address.model.group.Group;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,28 +25,32 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
+    private ObjectProperty<Group> group;
+    private ObjectProperty<CustomFieldsList> fieldsList;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Group group, Set<CustomField> fields, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, fields, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.group = new SimpleObjectProperty<>(group);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.fieldsList = new SimpleObjectProperty<>(new CustomFieldsList(fields));
     }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getGroup(),
+                source.getFields(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -101,6 +108,36 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address.get();
     }
+
+    public void setGroup(Group group) {
+        this.group.set(requireNonNull(group));
+    }
+
+    @Override
+    public ObjectProperty<Group> groupProperty() {
+        return group;
+    }
+
+    @Override
+    public Group getGroup() {
+        return group.get();
+    }
+
+    //@@author syy94
+    public void setFields(Set<CustomField> replacement) {
+        fieldsList.set(new CustomFieldsList(replacement));
+    }
+
+    @Override
+    public ObjectProperty<CustomFieldsList> fieldsListProperty() {
+        return fieldsList;
+    }
+
+    @Override
+    public Set<CustomField> getFields() {
+        return Collections.unmodifiableSet(fieldsList.get().toSet());
+    }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

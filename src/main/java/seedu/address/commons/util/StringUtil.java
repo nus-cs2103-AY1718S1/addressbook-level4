@@ -41,6 +41,33 @@ public class StringUtil {
         return false;
     }
 
+    //@@author syy94
+    /**
+     * Returns true if the {@code sentence} contains the {@code word}.
+     *   Ignores case and partial words are accepted.
+     *   <br>examples:<pre>
+     *       containsPartialTextIgnoreCase("ABc def", "abc") == true
+     *       containsPartialTextIgnoreCase("ABc def", "DEF") == true
+     *       containsPartialTextIgnoreCase("ABc def", "AB") == true
+     *       containsPartialTextIgnoreCase("ABc def", "c de") == true
+     *       containsPartialTextIgnoreCase("ABc def", "cde") == false
+     *       </pre>
+     * @param sentence cannot be null
+     * @param text cannot be null, cannot be empty
+     */
+    public static boolean containsPartialTextIgnoreCase(String sentence, String text) {
+        requireNonNull(sentence);
+        requireNonNull(text);
+
+        String preppedWord = text.trim().toLowerCase();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+
+        String preppedSentence = sentence.trim().toLowerCase();
+
+        return preppedSentence.contains(preppedWord);
+    }
+    //@@author
+
     /**
      * Returns a detailed message of the t, including the stack trace.
      */

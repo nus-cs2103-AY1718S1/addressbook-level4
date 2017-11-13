@@ -1,0 +1,201 @@
+= humanDEX Manual Testing
+:toc:
+:toc-placement: preamble
+:imagesDir: images
+:stylesDir: stylesheets
+
+== Project Configuration
+1. Create folder call *data* +
+2. Copy *[F11-B01][humanDEX]SampleData.xml* to *data* folder.
+3. Rename *[F11-B01][humanDEX]SampleData.xml* to *addressbook.xml*.
+4. Run *humanDEX.jar* application to begin usage.
+
+== Testing instruction
+
+=== 1.1 Add Contact
+
+*user actions* +
+1. User adding `Katie Harbour`. +
+
+*Command input* +
+1. add n/Katie Harbour p/98889898 e/katie_harbour@example.com g/Health a/311, Clementi Ave 2, #02-25 t/1year c/Next Meeting: Dec 3 +
+
+*Command output* +
+1. New person added: Katie Harbour Phone: 98889898 Email: katie_harbour@example.com Address: 311, Clementi Ave 2, #02-25 Group: Health Fields: [NEXT MEETING:Dec 3] Tags: 1year +
+
+---
+=== 1.2 Add Contact, Partial field
+
+*user actions* +
+1. User adding `Tom Timmy`. +
+
+*Command input* +
+1. add n/Tom Timmy e/tom@example.com g/Savings +
+
+*Command output* +
+1. New person added: Tom Timmy Phone:  Email: tom@example.com Address:  Group: Savings Fields: [] Tags:  +
+
+---
+=== 2.1 Edit Contact
+
+*user actions* +
+1. User edit `Alice Pang` to `Alicey Pang`, add tag `friends` and delete `client`. +
+2. User edit 6 by removing all tags.
+
+*Command input* +
+1. edit 1 n/Alicey Pang +t/friends -t/client +
+2. edit 6 clearTag/ +
+
+*Command output* +
+1. Edited Person: Alicey Pang Phone: 91223432 Email: alice@examplemail.com Address: 12 Bishan Ave 2 Group: Health Fields: [STATUS:to Meet, MEETING:Dec 3] Tags: friends +
+2. Edited Person: Grover Johnson Phone: 99831125 Email: johnson@example.com Address:  Group: AXA Fields: [] Tags:  +
+
+---
+=== 3.1 List contacts, tags, groups
+
+*user actions* +
+1. User list all contact based on last sorted/unsorted order. +
+2. User list all tags currently being used.
+3. User list all groups currently being used.
+
+*Command input* +
+1. list all +
+2. list tags +
+3. list groups +
+
+*Command output* +
+1. 22 persons listed! +
+2. List all tags:  1year, Client, Retire, Student, client, colleague, friend, friends, onLoan, potentialClient, recommend +
+3. List all groups:  AXA, Allianz, Health, House, Predontial, Retail, Saving, Savings, Travel +
+
+---
+=== 4.1 Sort
+
+*user actions* +
+1. User sort by prefix p/ +
+2. User find group Saving +
+3. User sort again +
+
+*Command input* +
+1. sort p/ +
+2. find g/Saving +
+3. sort +
+
+*Command output* +
+1. Sorted list! +
+2. 2 persons listed! +
+3. Sorted list! +
+
+---
+=== 5.1 Find
+
+*user actions* +
+1. User find name with alice or phone number that contain 910 or custom field with meeting. +
+
+*Command input* +
+1. Find n/alice p/910 c/meeting +
+
+*Command output* +
+1. 6 persons listed! +
+
+---
+=== 6.1 Delete
+
+*user actions* +
+1. User list all contacts +
+2. User delete index 22 +
+
+*Command input* +
+1. list all +
+2. delete 22 +
+
+*Command output* +
+1. 22 persons listed! +
+2. Deleted Person: Xina Gin Phone: 928401923 Email: gin@example.com Address: Kovan Av 87, Blk 19 Group: Predontial Fields: [STATUS:Signed, PAYMENT:Yearly] Tags: Client +
+
+---
+=== 7.1 Select
+
+*user actions* +
+1. User select index 1 +
+
+*Command input* +
+1. select 1+
+
+*Command output* +
+1. Selected Person: 1 +
+
+---
+=== 8.1 Undo, Redo
+
+*user actions* +
+1. User request undo +
+2. User request redo +
+
+*Command input* +
+1. undo +
+2. redo +
+
+*Command output* +
+1. Undo success! +
+2. Redo success! +
+
+---
+=== 9.1 Password, add
+
+*user actions* +
+1. User add password +
+2. User exit +
+3. Run *humanDEX.jar* +
+3. User login using password +
+
+*Command input* +
+1. Password pwd/PASSWORD +
+2. Exit +
+3. PASSWORD +
+
+*Command output* +
+1. Password Set +
+2. Welcome +
+
+---
+=== 9.2 Password, clear
+
+*user actions* +
+1. User clear password +
+
+*Command input* +
+1. Password pwd/PASSWORD clearPwd/ +
+
+*Command output* +
+1. Password Cleared +
+
+---
+=== 9.3 Password, change
+
+*user actions* +
+1. User add password +
+2. User change password +
+
+*Command input* +
+1. Password pwd/PASSWORD  +
+2. Password pwd/PASSWORD new/NEW_PASSWORD +
+
+*Command output* +
+1. Password Set +
+2. Password Changed +
+
+---
+=== 10.1 Help
+
+*user actions* +
+1. User open help. +
+
+*Command input* +
+1. help
+
+*Command output* +
+1. Opened help window
+
+
+

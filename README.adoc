@@ -1,11 +1,8 @@
-= Address Book (Level 4)
+= humanDex
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-https://travis-ci.org/se-edu/addressbook-level4[image:https://travis-ci.org/se-edu/addressbook-level4.svg?branch=master[Build Status]]
-https://ci.appveyor.com/project/damithc/addressbook-level4[image:https://ci.appveyor.com/api/projects/status/3boko2x2vr5cc3w2?svg=true[Build status]]
-https://coveralls.io/github/se-edu/addressbook-level4?branch=master[image:https://coveralls.io/repos/github/se-edu/addressbook-level4/badge.svg?branch=master[Coverage Status]]
-https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_medium=referral&utm_content=se-edu/addressbook-level4&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/fc0b7775cf7f4fdeaf08776f3d8e364a[Codacy Badge]]
+https://travis-ci.org/CS2103AUG2017-F11-B1/main[image:https://travis-ci.org/CS2103AUG2017-F11-B1/main.svg?branch=master[Build Status]]
 
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
@@ -15,19 +12,23 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+Too many clients on hand? Not enough time to save their details?
+
+Welcome to *humanDEX*! This is an address book specially made for insurance agents who need an efficient application for managing their long list of clients and colleagues!
+
+humanDEX helps you to manage your contact in a more flexible way!
+In the current version (v1.5). It allows you to create your own field - add any information you need to remember to your contacts. Have a new, exciting client? Add their contacts just with his/her name and group! Have too many clients at hand? You can sort your big list of clients according to their details, as well as find a specific client. You can also see all the insurances you're selling with a quick command!
+
+"Time is money" - well, for insurance agents, "Information is money"! With the most recent update, humanDEX now has extra security measures to safeguard your precious sales information. Simply create a new password and prevent others from stealing your clients' details!
+
+In future version of humanDEX, we aim to make contacts exchange much easier by exporting contact list and clients/colleagues will be able to save your number when you save theirs! Look out for more exciting features in the upcoming updates.
+
+humanDEX - the best solution to keeping your busy insurance agent life organised.
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
@@ -35,5 +36,6 @@ endif::[]
 
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
+* Built on the existing https://github.com/se-edu/addressbook-level4[AddressBook-Level4] project created by SE-EDU initiative.
 
 == Licence : link:LICENSE[MIT]

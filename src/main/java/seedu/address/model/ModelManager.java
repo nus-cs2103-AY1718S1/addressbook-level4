@@ -3,8 +3,13 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,9 +17,13 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.parser.Prefix;
+import seedu.address.model.group.Group;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -80,6 +89,72 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+
+    //@@author sofarsophie
+    @Override
+    public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        ObservableList<ReadOnlyPerson> personList = addressBook.getPersonList();
+        for (int i = 0; i < personList.size(); i++) {
+            ReadOnlyPerson currReadOnlyPerson = personList.get(i);
+
+            Person newPerson = new Person(currReadOnlyPerson);
+            Set<Tag> tagList = newPerson.getTags();
+            tagList.remove(tag);
+            newPerson.setTags(tagList);
+
+            addressBook.updatePerson(currReadOnlyPerson, newPerson);
+        }
+    }
+    //@@author
+
+    //@@author kengying
+    @Override
+    public List<Tag> getTagList() {
+        List<Tag> listTagsWithDuplicates = new ArrayList<>();
+
+        filteredPersons.forEach(persons -> listTagsWithDuplicates.addAll(persons.getTags()));
+
+        List<Tag> listTags = listTagsWithDuplicates.stream()
+                .distinct()
+                .collect(Collectors.toList());
+
+        listTags.sort(Comparator.comparing(Tag::toString));
+
+
+        return listTags;
+    }
+
+    @Override
+    public List<Group> getGroupList() {
+        ObservableList<ReadOnlyPerson> personList = addressBook.getPersonList();
+        List<Group> listGroupWithDuplicates = new ArrayList<>();
+        for (int i = 0; i < personList.size(); i++) {
+            ReadOnlyPerson currReadOnlyPerson = personList.get(i);
+
+            Person newPerson = new Person(currReadOnlyPerson);
+            listGroupWithDuplicates.add(newPerson.getGroup());
+        }
+
+        List<Group> listGroups = listGroupWithDuplicates.stream()
+                .distinct()
+                .collect(Collectors.toList());
+
+        listGroups.sort(Comparator.comparing(Group::toString));
+
+
+        return listGroups;
+    }
+    //@@author
+
+    //@@author sofarsophie
+    @Override
+    public ObservableList<ReadOnlyPerson> sortFilteredPersonList(ObservableList<ReadOnlyPerson> personsList,
+                                                                 Prefix prefix) {
+        addressBook.sortPersonsList(prefix);
+        indicateAddressBookChanged();
+        return personsList;
+    }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

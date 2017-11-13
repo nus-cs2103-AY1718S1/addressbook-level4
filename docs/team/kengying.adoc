@@ -1,0 +1,69 @@
+= Law Keng Ying - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F11-B1/main/blob/master/collated/main/kengying.md[Functional Code]] [https://github.com/CS2103AUG2017-F11-B1/main/blob/master/collated/test/kengying.md[Test Code]] [https://github.com/CS2103AUG2017-F11-B1/main/blob/master/collated/unused/kengying.md[Unused Code]]
+
+=== Enhancement Added: `Group`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=adding-a-person-code-add-code]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+User will be able to add group to their different clients. The difference between `tag` and `group` is that, a user must have a group when being added while tag is optional.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=group]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `List`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=listing-all-persons-code-list-code]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As the amount of contacts increase, there will be too many tags and groups to keep track. `List` tags/groups, will be able to show the available tags/groups that are currently being in used.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=list]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Wrote the test script and some test data (Pull requests https://github.com/CS2103AUG2017-F11-B1/main/pull/107[#107])

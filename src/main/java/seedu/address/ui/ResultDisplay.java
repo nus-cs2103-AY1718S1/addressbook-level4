@@ -12,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.storage.SecurityManager;
 
 /**
  * A ui for the status bar that is displayed at the header of the application.
@@ -30,6 +31,11 @@ public class ResultDisplay extends UiPart<Region> {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);
         registerAsAnEventHandler(this);
+        //@@author syy94
+        if (SecurityManager.passExists()) {
+            displayed.setValue("Enter Password:");
+        }
+        //@@author
     }
 
     @Subscribe

@@ -12,7 +12,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
-public class ClearCommandSystemTest extends AddressBookSystemTest {
+public class  ClearCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void clear() {

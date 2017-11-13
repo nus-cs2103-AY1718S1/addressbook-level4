@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alice Pang</name>
+        <phone>91223432</phone>
+        <email>alice@examplemail.com</email>
+        <address>12 Bishan Ave 2</address>
+        <group>Health</group>
+        <tagged>client</tagged>
+        <fieldsList>STATUS:to Meet</fieldsList>
+        <fieldsList>MEETING:Dec 3</fieldsList>
+    </persons>
+    <persons>
+        <name>Ronald Picker</name>
+        <phone>88190912</phone>
+        <email>ronald@example.com</email>
+        <address></address>
+        <group>Travel</group>
+        <tagged>client</tagged>
+        <fieldsList>STATUS:to Sign</fieldsList>
+    </persons>
+    <persons>
+        <name>Janice Brown</name>
+        <phone>99102323</phone>
+        <email></email>
+        <address>449 Jurong East Central</address>
+        <group>House</group>
+        <tagged>potentialClient</tagged>
+        <fieldsList>TYPE:landed</fieldsList>
+    </persons>
+    <persons>
+        <name>Hansel Parker</name>
+        <phone>81921212</phone>
+        <email>hP@example.co</email>
+        <address></address>
+        <group>House</group>
+        <tagged>client</tagged>
+        <fieldsList>STATUS:to Meet</fieldsList>
+        <fieldsList>MEETING:Dec 8</fieldsList>
+        <fieldsList>TYPE:landed</fieldsList>
+    </persons>
+    <persons>
+        <name>Betsy Kate</name>
+        <phone>98201231</phone>
+        <email>kate@example.com</email>
+        <address></address>
+        <group>House</group>
+        <tagged>client</tagged>
+        <fieldsList>TYPE:condo</fieldsList>
+    </persons>
+    <persons>
+        <name>Grover Johnson</name>
+        <phone>99831125</phone>
+        <email>johnson@example.com</email>
+        <address></address>
+        <group>AXA</group>
+        <tagged>friend</tagged>
+        <tagged>colleague</tagged>
+    </persons>
+    <persons>
+        <name>Pensy Li</name>
+        <phone>89819231</phone>
+        <email>pensy@example.com</email>
+        <address></address>
+        <group>AXA</group>
+        <tagged>friend</tagged>
+        <tagged>colleague</tagged>
+    </persons>
+    <persons>
+        <name>Candaces Sweet Shop</name>
+        <phone>67362123</phone>
+        <email></email>
+        <address>99 Tooth Road</address>
+        <group>Retail</group>
+        <tagged>client</tagged>
+    </persons>
+    <persons>
+        <name>Jonathan Lim</name>
+        <phone>89182012</phone>
+        <email></email>
+        <address>Clemnet Road</address>
+        <group>Allianz</group>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Maria Quek</name>
+        <phone>88918201</phone>
+        <email>Quekky@example.com</email>
+        <address></address>
+        <group>AXA</group>
+        <tagged>friend</tagged>
+        <fieldsList>STATUS:to Meet</fieldsList>
+    </persons>
+    <persons>
+        <name>Celane Doine</name>
+        <phone>91840513</phone>
+        <email>doine@example.com</email>
+        <address></address>
+        <group>Predontial</group>
+        <tagged>recommend</tagged>
+        <fieldsList>STATUS:to Meet</fieldsList>
+        <fieldsList>MEETING:Dec 8</fieldsList>
+    </persons>
+    <persons>
+        <name>Sharon Tan</name>
+        <phone>82140693</phone>
+        <email></email>
+        <address>Blk 65 Yishy Road</address>
+        <group>AXA</group>
+    </persons>
+    <persons>
+        <name>Shelly Sha</name>
+        <phone>85962034</phone>
+        <email>shashasha@example.com</email>
+        <address></address>
+        <group>Predontial</group>
+    </persons>
+    <persons>
+        <name>Katerina Lee</name>
+        <phone>9819384</phone>
+        <email>l.katty@example.com</email>
+        <address></address>
+        <group>Allianz</group>
+        <tagged>onLoan</tagged>
+        <fieldsList>DUE:Dec 9</fieldsList>
+    </persons>
+    <persons>
+        <name>Benji Sia</name>
+        <phone>92019384</phone>
+        <email>Sia.B@example.com</email>
+        <address></address>
+        <group>AXA</group>
+        <tagged>Student</tagged>
+        <fieldsList>DUE:Nov 9</fieldsList>
+    </persons>
+    <persons>
+        <name>Gordon Mo</name>
+        <phone></phone>
+        <email>Mo.G@example.com</email>
+        <address>Bishan Park, Blk 56</address>
+        <group>Travel</group>
+        <tagged>client</tagged>
+        <fieldsList>STATUS:Signed</fieldsList>
+        <fieldsList>PAYMENT:Yearly</fieldsList>
+    </persons>
+    <persons>
+        <name>Jaden Jade</name>
+        <phone>92840193</phone>
+        <email>urboijade@example.com</email>
+        <address>North Vista Av 2, Blk 282</address>
+        <group>House</group>
+        <tagged>Retire</tagged>
+        <tagged>Client</tagged>
+        <fieldsList>PAYMENT:Monthly</fieldsList>
+        <fieldsList>STATUS:Signed</fieldsList>
+    </persons>
+    <persons>
+        <name>Xina Gin</name>
+        <phone>928401923</phone>
+        <email>gin@example.com</email>
+        <address>Kovan Av 87, Blk 19</address>
+        <group>Predontial</group>
+        <tagged>Client</tagged>
+        <fieldsList>STATUS:Signed</fieldsList>
+        <fieldsList>PAYMENT:Yearly</fieldsList>
+    </persons>
+    <persons>
+        <name>Joy Tan</name>
+        <phone>918230194</phone>
+        <email>joytan@example.com</email>
+        <address>Paya Lebar, Blk 3 #10-11</address>
+        <group>Predontial</group>
+        <fieldsList>STATUS:to Meet</fieldsList>
+    </persons>
+    <persons>
+        <name>Sheerun Sam</name>
+        <phone>92810342</phone>
+        <email>emoballad@example.com</email>
+        <address>English Garden Ave 82, Blk 65</address>
+        <group>Saving</group>
+        <fieldsList>STATUS:to Meet</fieldsList>
+        <fieldsList>MEETING:Nov 28</fieldsList>
+    </persons>
+    <tags>client</tags>
+    <tags>potentialClient</tags>
+    <tags>friend</tags>
+    <tags>colleague</tags>
+    <tags>recommend</tags>
+    <tags>onLoan</tags>
+    <tags>Student</tags>
+    <tags>Retire</tags>
+    <tags>Client</tags>
+    <groups>Health</groups>
+    <groups>Travel</groups>
+    <groups>House</groups>
+    <groups>AXA</groups>
+    <groups>AxA</groups>
+    <groups>Retail</groups>
+    <groups>Allianz</groups>
+    <groups>Predontial</groups>
+    <groups>Saving</groups>
+</addressbook>

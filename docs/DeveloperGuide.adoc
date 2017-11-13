@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= humanDEX - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F11-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2103AUG2017-F11-B1`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -364,6 +364,292 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::find[]
+=== Find
+
+The `find` command was enhanced to allow a more rigorous search. The new find command allows users to search for Persons in the humanDEX using any fields.
+It supports partial search and users are required to input fields using prefixes.
+
+==== Implementation
+
+The enhanced `find` command was implemented by first, modifying the parsing mechanism in `FindCommandParser`. After checking whether any of the prefixes exist in the `argMultiMap`, the parser uses four methods to parse each field. An example of a Parser method is as follows: +
+
+[source,java]
+----
+private Optional<List<Name>> parseNamesForSearch(List<String> names) throws IllegalValueException {
+    assert names != null;
+
+    if (names.isEmpty()) {
+        return Optional.empty();
+    }
+    List<String> nameList = names.size() == 1 && names.contains("") ? Collections.emptyList() : names;
+    return Optional.of(ParserUtil.parseNames(nameList));
+}
+----
+
+The method above returns an Optional so that when a user does not input any name fields to search, the method still returns. +
+
+These parsed arguments are delivered to the `PersonContainsKeywordsPredicate` (`Predicate`) by creating a `FindFields` object that is located within the `PersonContainsKeywordsPredicate` class. For each searchable field, the `FindFields` class uses a list to store the search inputs. For instance, keywords that are a `Name` are saved in a list like below. +
+
+[source,java]
+----
+private List<Name> nameKeywords;
+----
+
+The class also provides one setter and two getter methods for each of the fields. The former getter method returns a Optional, while the latter returns a Stream. The latter was implemented so that `getNameKeywords().map(List::stream).orElseGet(Stream::empty)` does not have to be repeated multiple times. Below is an example of the two getter methods for `Name`: +
+
+[source,java]
+----
+public Optional<List<Name>> getNameKeywords() {
+    return Optional.ofNullable(nameKeywords);
+}
+
+public Stream<Name> getNameKeywordsStream() {
+    return this.getNameKeywords().map(List::stream).orElseGet(Stream::empty);
+}
+----
+
+By having a method that returns a stream, the stream is able to call the `anyMatch()` method to check if the stream contains any of the given `Person`s fields. +
+
+[source,java]
+----
+(findFields.getNameKeywordsStream().anyMatch(keyword
+->StringUtil.containsPartialTextIgnoreCase(person.getName().fullName,keyword.fullName)))
+----
+
+After successful parsing, `FindCommand` is executed as per other commands. The `find` command now returns partial matches. +
+
+The sequence diagram below shows how the enhanced `find` command works. +
+
+image::SDForFind.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Parsing of emails as parameters +
+**Alternative 1 (current choice):** Parses and creates email classes with the current validation method. +
+**Pros:** Quick to implement, consistent validation throughout. +
+**Cons:** Does not allow users to search using email suffixes (e.g., `find e/@comp.nus.edu.sg`). +
+**Alternative 2:** Implement an overloaded constructor for `Email` that surpasses validation. +
+**Pros:** Will allow more flexible uses for users. +
+**Cons:** The team needs to agree on whether implementing an overloaded constructor is useful in terms of the entire software. Not having enough uses for the constructor may call for other solutions.
+
+==== Improvements
+
+**Improvement:** Create new constructor for `Email` and `Phone` so that any type of input can be processed without a validation warning. For each constructor, provide a boolean `needsValidation` value to flag whether the `value` must be validated. This can be a quick fix to enhancing the `find` method so that any input can be used as a `FindField` element,
+ without changing too much of the code. +
+
+// end::find[]
+
+// tag::customfield[]
+
+=== [Since v1.3] Custom Fields
+
+The ability for the users to define their own custom fields is implemented to give the users more control over the data they are keeping about their contacts.
+The main purpose of this feature is idealised to allow users to store data that does not seem to fit the use of tags and groups.
+Some examples of fields could be birthdays, the company the contact works under etc.
+
+==== Variables
+The CustomField class holds 2 variables:
+
+* key : name of the field
+* value : value of the field
+
+==== Design considerations
+During development the use of Hashmap was considered as a way to store these fields, limiting the keys to be unique. However, the user may have a need to store 2 different values under a same key.
+
+=====
+For Example:
+
+* HashMap Method:
+
+ Phone:98765432
+ Phone1:84434663
+
+* HashSet Method:
+
+ Phone:98765432
+ Phone:84434663
+
+From a UI perspective, the HashSet method may look more aethestically pleasing as compared to the HashMap method.
+
+Therefore, HashSet is used as it is able to allow the user to fully choose which display method they prefer giving them more flexibility.
+
+=====
+
+==== Implementation
+The CustomField class was developed first and added to Person class. Then the necessary classes are created and developed such that it fits into the existing code. The add and edit command are then updated to support this new feature and finally, test cases are updated to check that this feature have been integrated seamlessly with the existing code.
+
+Other than this, CustomField is structured almost the same as `Name` and `Tags` attribute.
+
+==== Improvements
+
+If there is a need to collate values with similar keys, a `HashMap<String, Set<String>>` can be used, where `String`
+represents the key and the `Set<String>` will be the values.
+
+// end::customfield[]
+
+// tag::list[]
+=== List
+
+The `list` command allows the user to list the contacts by tag(s).
+The following sequence diagram shows how the `list` operation works:
+
+image::SDforListPerson.png[width="691"]
+_Figure 2.1.1 : `list` Diagram_
+
+==== Design Considerations
+
+**Aspect:** Implementation of `ListCommandParser` +
+**Alternative 1 (current choice):** Add a class to parse command from `AddressBookParser` +
+**Pros:** A better usage for listing +
+**Cons:** New class will be added in, need to add more test cases. +
+
+// end::list[]
+
+// tag::sort[]
+=== Sort
+
+The `sort` command allows users to sort their contacts by any given field, with the exception of `Tag`. It is an undoable command.
+
+==== Implementation
+
+The following sequence diagram represents the sort command.
+
+image::SDForSort.png[width="800"]
+
+In the sequence diagram, the sequence after the `Model` calls `sortPersonsList(Prefix prefix)` are omitted. The `Model` executes `sortFilteredPersonList`, which sorts the `internalList` using a custom comparator. A `ReadOnlyPersonComparator` has been defined with an overridden `compare` method, that holds a static `Prefix` variable to compare two `ReadOnlyPerson` objects by. The comparator returns an appropriate integer after comparing two `ReadOnlyPerson` objects based on the field identified by the given `prefix`. +
+
+The implementation also involves a UI element, implemented using Java FX. A dropdown UI element is more intuitive for users who prefer GUI controls over CLI controls. A `SortControls` stack plane is placed inside the `PersonList` vertical box. When a user selects a sort parameter from the dropdown, it triggers the logic to execute a command with the relevant parameter. +
+
+A `ComboBox` was used to implement the dropdown. CSS codes were written for the dropdown so that the dropdown and the list cells change shade upon `hover`. This improves the user experience by explicitly showing the system response. +
+
+==== Design Considerations
+
+**Aspect:** Command type of `SortCommand` +
+**Alternative 1 (current choice):** Implement `SortCommand` as an undoable command +
+**Pros:** Better user experience, as users can undo any sort commands executed by mistake. +
+**Cons:** Difficulty in implementation when the `SortCommand` is expanded to support sorting by multiple parameters. +
+**Alternative 2:** Implement `SortCommand` as an ordinary command +
+**Pros:** Easier to implement. +
+**Cons:** When sorting by multiple parameters is enabled, users may wish to revert their address book to the original state after revising the sorted version. Thus not being able to undo a sort will lead to low usability.
+
+**Aspect:** Command word of `SortCommand` +
+**Alternative 1 (current choice):** Use the prefixes (e.g., n/) for the sort command word. +
+**Pros:** Easy for users, as other commands use the prefixes for distinguishing between fields. +
+**Cons:** Some users may feel it not so intuitive. Difficult to standardize. +
+**Alternative 3:** Use the name of the field (e.g., name) for the sort command word. +
+**Pros:** Can be more intuitive. Matching each prefix to the field name can be useful in other parts of the code as well (e.g., returning the `name` comparator for the `n/` prefix), although implementing this may be an overkill. +
+**Cons:** Inconsistent with the other commands. +
+**Mitigation:** Enable a UI element for the same command, so that users who feel it unintuitive to use the prefixes as the command word can use this alternative.
+// end::sort[]
+
+// tag::editindividual[]
+=== [Since v1.3] Edit (Individual Tags)
+
+==== Method
+With the additional 3 prefixes, input from the prefixes `+t/` and `-t/` are stored into sets `toAdd` and `toRemove` in the
+`EditPersonDescriptor` class. If the `clearTag/` prefix exists, the `EditPersonDescriptor` class will also take note of it.
+
+During the execute() method, a new `Set<Tags>` will be created and if `clearTag/` does not exist, the new `Set<Tags>` will then
+add all existing tags from the `personToEdit`. Then it will continue to add all the `Tags` in the `toAdd` and then remove
+all the tags in the Set `toRemove`.
+
+==== Tag Precedence
+At the point of development the precedence of `clearTags`, `+t/` (add tag) and then `-t/` (remove tag) is used.
+
+=====
+Argument:
+
+* If `+t/` > `-t/` > `clearTag/`
+** When the user uses all 3 prefixes, `+t/` and `-t/` will be made redundant and the user have wasted time typing values for `+t/` and `-t/`.
+* If `clearTag/` > `-t/` > `+t/`
+** When the user uses all 3 prefixes, with `+t/` and `-t/` having the same values, `-t/` will not be ignored and `+t/` and `-t/` will cancel each other out.
+=====
+
+// end::editindividual[]
+
+// tag::group[]
+
+=== Group
+
+The `add` command allows user to add group to a person.
+Every person will need to have a group.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Group +
+**Alternative 1 (current choice):** Use the current `add` command for adding of groups. +
+**Pros:** Easier to be done. +
+**Cons:** Will not be able to create an empty group. +
+**Alternative 2:** Create another command for managing groups.  +
+**Pros:** More distinct differentiation of link:#group[group] and link:#tag[tag]. +
+**Cons:** Time consuming.
+
+// end::group[]
+
+// tag::password[]
+
+=== Passwords
+
+As of v1.5, passwords can be of any string. This feature will be improved to check for stronger passwords. Until a
+better way of recovering passwords are found, the password will exist as a non-hidden file. Currently this password
+feature is a proof of concept on how the look and feel of the password command should be.
+
+The modes of this command is decided by the existence of the prefixes. Only the `pwd/` prefix is mandatory.
+
+* Set requires: `pwd/` prefix.
+* Remove requires: `pwd/` and `clearPwd/` prefix.
+* Change requires: `pwd/` and `new/` prefix.
+
+==== Sequence Diagram
+
+image::PasswordCommandSequenceDiagram.png[width="691"]
+
+Depending on the user input mode may be of either `SetPass`, `ChangePass` or `ClearPass`.
+
+==== Password Recovery
+
+As of v1.5, no password recovery is supported. If the password is forgotten during development, go to the data folder
+and delete the `pass` file and restart humanDex.
+
+==== Improvements
+
+To make the password more effective at keeping the data secure, the addressbook.xml should be encrypted too. As no matter how
+secure the password is, it is redundant if the data can be freely accessed in the xml. Then upon completion of this task
+ the password can then be saved with the data, therefore making it more difficult to access the password.
+
+==== Implementation +
+
+Pseudo-codes for how the application reacts if there is a password.
+
+* PersonListPanel, LogicManager and ResultDisplay checks if password exists. If it does, go into locked mode else, operate as usual.
+* Locked mode
+. Result Display will prompt user to enter the password
+. LogicManager will assume any text in the CommandBox is the password
+. If password entered is correct, a PasswordAcceptedEvent will be posted and PersonListPanel and LogicManager will resume operating in their normal mode.
+. If password entered is incorrect, just prompt the user to enter the password again.
+
+==== Design Consideration
+
+**Aspect:** Structure of command
+
+**Alternative 1 (current choice):** Use a single command with multiple modes. +
+**Pros:** Easier to program. +
+**Cons:** Multiple 3 subclasses in CommandPassword +
+**Alternative 2:** Different Commands for different modes.  +
+**Pros:** More distinct differentiation various modes +
+**Cons:** Time comsuming and user needs to remember multiple commands.
+
+==== Improvements
+
+- Password storage
+. Set the `data/pass` file to be hidden.
+. Store the password in database.xml as an encrypted string.
+- Security
+* Encrypt the database.xml so that passwords will not be redundant.
+
+// end::password[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -504,14 +790,14 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 [TIP]
 Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified link:#tag[tag] will be removed from everyone in the address book.
 +
 ****
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the link:#tag[tag] removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the link:#tag[tags].
 * Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
+** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `link:#tag[tag]` from each person.
 ** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
@@ -521,7 +807,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 [TIP]
 Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
+. Use different colors for different link:#tag[tags] inside person cards. For example, `friends` link:#tag[tags] can be all in grey, and `colleagues` link:#tag[tags] can be all in red.
 +
 **Before**
 +
@@ -715,6 +1001,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 [appendix]
 == User Stories
+**Target user**
+
+Our target users are insurance agents that have lots of contacts. They may need different address books for their different types of clients. If an insurance agent plans on retiring and wants to pass the contacts to his/her fellow colleagues, he/she will be able to export the address book and the colleague will be able to import it.
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
@@ -723,15 +1012,78 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person specifying their name, phone, home address and email address |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |list a contact according to the link:#tag[tag](s) |find my friends better
+
+|`* * *` |user |find contacts based on the different fields, for instance 'find /p 123 /e @hotmail.com' |locate details of persons without having to go through the entire list
+
+|`* * *` |user |remove a link:#tag[tag] |manage the link:#tag[tag]
+
+|`* * *` |user |list a contact according to the link:#tag[tag](s) |find my friends better
+
+|`* * *` |forgetful user |filter my contacts based on their link:#tag[tag](s), affiliations, gender, age et cetera |find someone even when I forget their name
+
+|`* * *` |user |edit details base on parameters, for instance 'edit user /p 12345678' |edit a contact more easily and in a shorter way
+
+|`* * *` |user with many persons in the address book |create link:#group[group](s) in my address book |categorize my acquaintances neatly
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |set and change my password to my address book |hide link:#private-contact-detail[private contact details] and prevent others from seeing those details
+
+|`* *` |user |undo an addition, deletion, or edit of a contact |
+
+|`* *` |user |know if I am adding a duplicate name but with different details |store people with same names
+
+|`* *` |user |view my edit history of each contact that I edited at least once |old data can be kept for posterity
+
+|`* *` |user |export my address book as a file |use the file in other applications
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |delete some details |
+
+|`*` |user |sort according to multiple different parameters |locate a person easier
+
+|`*` |user |choose to add my contacts to my acquaintance's address book when I add their contacts to mine |allow my contacts to easily add me
+
+|`*` |user |display my contact's address using Google Map |navigate my way
+
+|`*` |user |have a temp delete 'folder' after I delete a contact and contact will be deleted after a week |re-add the contact back if I change my mind
+
+|`*` |user |have multiple address books |further categorize contacts
+
+|`*` |user |delete a person from multiple address books |not have to delete them multiple times
+
+|`*` |user |update a user across all address books |not have to update them multiple times
+
+|`*` |user |search for a user across multiple address books |find people more efficiently
+
+|`*` |user |delete address books I do not need |organize my contacts better
+
+|`*` |user |edit the look and feel of the GUI |change it according to my favorite color, icon, font size et cetera
+
+|`*` |user |add LinkedIn or Facebook profile links to my contacts |navigate to their social media profiles easily
+
+|`*` |user |drag-and-drop my contacts around the address book |sort or manage my contacts manually
+
+|`*` |user |retrieve my address book on any device |access my address book anywhere
+
+|`*` |user |add a person into multiple address books |not have to add them multiple times
+
+|`*` |user |add people and it will be reflected on other devices |not have to add the contact to multiple devices
+
+|`*` |user |delete people and it will reflected on other devices |not have to delete multiple times
+
+|`*` |user |edit my address book anywhere, from any device, |keep the most up-to-date copy of it
+
+|`*` |user |customize my profile with a photo and descriptions |allow my contacts to easily recognize me when I am in their address book
+
 |=======================================================================
 
 {More to be added}
@@ -767,6 +1119,82 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User request to add person by specifying their name, phone, home address and email address.
+2.  AddressBook adds the person
+3.  AddressBook shows success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Person already exists in address book.
++
+Use case ends.
+
+* 2b. Input is invalid.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1. User requests to edit person by giving person's name and new parameter(s)
+2. AddressBook shows confirm message.
+3. User confirms to edit the Person.
+4. AddressBook edits the Person's given parameter(s).
+5. AddressBook shows the edited person entry.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No person in the user's AddressBook matches the given person (invalid input).
++
+[none]
+** 2a1. AddressBook shows error message.
++
+Use case ends.
+
+[none]
+* 2b. The given person does not have the stated parameter(s) (invalid input).
++
+[none]
+** 2b1. AddressBook shows error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Export Address Book
+
+*MSS*
+
+1.	User requests to export Address Book
+2.	AddressBook prompts for export location
+3.	User requests a certain location on their computer
+4.	AddressBook exports the address Book to the specified location
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given location is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -775,8 +1203,12 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  New functions must be added regularly.
+.  The system should work on both windows and unix.
+.  The system should be responsive to user inputs
+.  The product should be usable by any user who has an adequate experience of computer usage.
+.  Database should be easily convertible to a JSON format.
+.  Database should be able to be exported to a common file type (eg. csv).
 
 [appendix]
 == Glossary
@@ -795,19 +1227,16 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
+[[tag]]
+Tag
 
-*Product Name*
+....
+A 'tag' is a temporary label that can be used as a casual, mental-note for users to quickly remember who the contact is. For instance, a tag can include detailed relationships ('BFF') or short description about that person ('cool professor').
+....
 
-Author: ...
+[[group]]
+Group
+....
+A 'Group' is a broad category that users can categorize their contacts into. For instance, these can include school names ('NUS') or relationships ('work').
+....
 
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
