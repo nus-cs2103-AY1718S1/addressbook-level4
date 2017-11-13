@@ -1,0 +1,294 @@
+= Gentleman's Guide (V1.5) - TestScript
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-T09-B1/main
+
+By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT` +
+
+== Introduction
+
+Below are all the test cases for our product - Gentleman's Guide.
+
+== Test cases for commands
+
+=== Create account
+
+=== Login to account
+
+=== Logout of account
+
+=== Add person to contact list
+
+*Positive Test cases:*
+
+`(Normal person added)` +
+**Command:** +
+add n/tester1 p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+**Expected Message:** +
+New person added: tester1 Phone: 98765432 Email: johnd@example.com Address: 311, Clementi Ave 2, #02-25 Birthday:  Tags: [owesMoney][friends] +
+*Expected Output:* +
+Person tester1 added
+
+`(Tags are not compulsory)` +
+*Command:* +
+add n/tester2 p/98765422 e/jamie@example.com a/311, Clementi Ave 2, #02-26 +
+*Expected Message:* +
+New person added: tester2 Phone: 98765422 Email: jamie@example.com Address: 311, Clementi Ave 2, #02-26 Birthday:  Tags:  +
+*Expected Output:* +
+Person tester2 added with no tags
+
+*Negative Test cases:*
+
+`(Missing Name)` +
+*Command:* +
+add p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+*Expected Message:* +
+Invalid command format!
+add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+*Expected Output:* +
+Message error
+
+`(Missing Phone)` +
+*Command:* +
+add n/tester3 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+*Expected Message:* +
+Invalid command format!
+add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+*Expected Output:* +
+Message error
+
+`(Missing Email)` +
+*Command:* +
+add n/tester4 p/98765432 a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+*Expected Message:* +
+Invalid command format!
+add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+*Expected Output:* +
+Message error
+
+`(Missing Address)` +
+*Command:* +
+add n/tester5 p/98765432 e/johnd@example.com t/friends t/owesMoney +
+*Expected Message:* +
+Invalid command format!
+add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+*Expected Output:* +
+Message error
+
+`(More than one parameters missing)` +
+*Command:* +
+add n/tester6 +
+*Expected Message:* +
+Invalid command format!
+add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+*Expected Output:* +
+Message error
+
+`(Invalid Phone Number)` +
+*Command:* +
+add n/tester7 p/AAAAAAAA e/mary@example.com a/NUS t/friends t/owesMoney +
+*Expected Message:* +
+Phone numbers can only contain numbers, and should be at least 3 digits long +
+*Expected Output:* +
+Message error
+
+`(Invalid Email, without "@")` +
+*Command:* +
+add n/tester8 p/87654326 e/maryexample.com a/NUS t/friends t/owesMoney +
+*Expected Message:* +
+Person emails should be 2 alphanumeric/period strings separated by '@' +
+*Expected Output:* +
+Message error
+
+`(Duplicate Persons)` +
+*Command:* +
+
+1. add n/tester9 p/98765431 e/scarlett@example.com a/311, Clementi Ave 2, #02-15 t/friends t/owesMoney +
+2. add n/tester9 p/98765431 e/scarlett@example.com a/311, Clementi Ave 2, #02-15 t/friends t/owesMoney +
+
+*Expected Message:* +
+This person already exists in the address book +
+*Expected Output:* +
+Message error
+
+=== Edit person in contact list
+
+*Positive Test case*
+
+`(Valid name, phone, email, address, tag)` +
+*Command:* +
+edit 1 n/tester10 p/87655678 e/johnny@example.com a/NUS t/enemies +
+*Expected Message:* +
+Edited Person: tester10 Phone: 87655678 Email: johnny@example.com Address: NUS Birthday: 01/01/1992 Tags: [enemies] +
+*Expected Output:* +
+Person's particulars updated
+
+
+*Negative test cases*
+
+`(Missing name, phone, email, address, tag)` +
+*Command:* +
+edit 1 n/ p/ e/ a/ t/ +
+*Expected Message:* +
+Person names should only contain alphanumeric characters and spaces, and it should not be blank +
+*Expected Output:* +
+Message error
+
+`(Invalid phone)` +
+*Command:* edit 1 p/BBBBBBBB +
+*Expected Message:* +
+Phone numbers can only contain numbers, and should be at least 3 digits long +
+*Expected Output:* +
+Message error
+
+`(Invalid email)` +
+*Command:* edit 1 e/johnnyexample.com +
+*Expected Message:* +
+Person emails should be 2 alphanumeric/period strings separated by '@' +
+*Expected Output:* +
+Message error
+
+`(Edit to become duplicate persons)` +
+*Command:* +
+1. add n/tester11 p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+2. add n/tester12 p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney +
+3. e "index of tester11" n/tester12
+
+*Expected Message:* +
+This person already exists in the address book +
+*Expected Output:* +
+Message error
+
+`(Invalid Index)` +
+*Command:* +
+edit 1000 n/tester1 +
+*Expected Message:* +
+The person index provided is invalid +
+*Expected Output:* +
+Message error
+
+=== Delete person
+
+*Positive Test Case*
+
+`(Delete person successfully)` +
+*Command:* +
+delete 1 +
+*Expected Message:* +
+Deleted Person: tester10 Phone: 87655678 Email: johnny@example.com Address: NUS Birthday: 01/01/1992 Tags: [enemies] +
+*Expected Output:* Person deleted successfully
+
+*Negative Test case*
+
+`(Invalid Index)` +
+*Command:* +
+Delete 0 / Delete 10000 +
+*Expected Message:* +
+The person index provided is invalid +
+*Expected Output:* Message error +
+
+=== Select person
+
+*Positive Test Case*
+
+`(Select person successfully)` +
+*Command:* +
+select 1 +
+*Expected Message:* +
+Selected Person: 1
+*Expected Output:* +
+Address of user on map +
+
+=== View person
+
+*Positive Test Case*
+
+`(View details of person)` +
+*Command:* +
+view 1 +
+*Expected Message:* +
+Retrieved Profile of: testerX +
+*Expected Output:* +
+Person's details shown +
+
+=== Find person
+
+*Positive Test Case*
+
+`(Valid person)` +
+*Command:* +
+find John Doe
+*Expected Message:* +
+1 persons listed!
+*Expected Output:* +
+Person with name John Doe listed
+
+*Negative Test Case*
+
+`(Invalid person)` +
+*Command:* +
+find tester13
+*Expected Message:* +
+0 persons listed!
+*Expected Output:* +
+No one would be found
+
+=== Add reminder to reminder list
+
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+addReminder n/reminder1 submission p/Low d/25/12/2017 15:00 m/Submit to manager t/Work t/John +
+*Expected Message:* +
+New reminder added: reminder1 Priority: Low Date: 25/12/2017 15:00 Message: Submit to manager Tags: [Work][John] +
+*Expected Output:* +
+Reminder added
+
+`(Invalid priority)` +
+addReminder n/reminder2 submission p/low d/25/12/2017 15:00 m/Submit to manager t/Work t/John +
+*Expected Message:* +
+Priority can only be Low / Medium / High +
+*Expected Output:* +
+Message error
+
+
+*Positive Test Case*
+
+`()` +
+*Command:* +
+*Expected Message:* +
+*Expected Output:* +
+
+
+
+*Positive Test Case*
+
+`()` +
+*Command:* +
+*Expected Message:* +
+*Expected Output:* +
+
+
+
+
+*Positive Test Case*
+
+`()` +
+*Command:* +
+*Expected Message:* +
+*Expected Output:* +
