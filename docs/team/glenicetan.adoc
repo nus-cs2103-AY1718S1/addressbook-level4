@@ -10,7 +10,7 @@ that all Residents have paid for their fees during their stay. However, while th
 Simple day to day operations can be carried out with minimal critical and private data. For example, Residents' NRIC is unnecessary when checking in, as the matriculation card is sufficient in proving his identity.
 
 Also, while the University welcomes exchange students and guests during the semester, some data cannot be found in the school's database if the guests approaches the college or hall directly. The temporary person feature is implemented, where the details will be automatically deleted after the timing specified by the staff.
-The feature also help to prevent storing redundant and unnecessary details in the ResidentBook. Additionally, for exchange students, the staff can easily import and export the details into the current ResidentBook. 
+The feature also help to prevent storing redundant and unnecessary details in the ResidentBook. Additionally, for exchange students, the staff can easily import and export the details into the current ResidentBook.
 
 Colleges and Halls are famous for their vibrant community life. CCAs, dance classes and interest groups are just some example of weekly events Residents can participate in. administrators are required to keep a calendar of upcoming events when queries by Professors or Guests who are interested in the events.
 However, with so many events happening every week, it will be hard to keep track without a calendar that shows the overview of events during the month. This also helps administrators in finding clashes of events.
