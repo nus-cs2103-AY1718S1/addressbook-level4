@@ -1,12 +1,12 @@
 # archthegit
-###### /java/seedu/address/commons/core/EventsCenter.java
+###### \java\seedu\address\commons\core\EventsCenter.java
 ``` java
     public void unregisterHandler(Object handler) {
         eventBus.unregister(handler);
     }
 
 ```
-###### /java/seedu/address/commons/events/ui/PersonPanelUnselectEvent.java
+###### \java\seedu\address\commons\events\ui\PersonPanelUnselectEvent.java
 ``` java
 /**
  * Represents an unselection in the Person List Panel
@@ -19,7 +19,7 @@ public class PersonPanelUnselectEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/PersonSelectionChangedEvent.java
+###### \java\seedu\address\commons\events\ui\PersonSelectionChangedEvent.java
 ``` java
 
 /**
@@ -46,7 +46,7 @@ public class PersonSelectionChangedEvent extends BaseEvent {
 
 
 ```
-###### /java/seedu/address/commons/util/StringUtil.java
+###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
 
     /**
@@ -71,7 +71,7 @@ public class PersonSelectionChangedEvent extends BaseEvent {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         if ((preppedWord.length() >= 2) && isWordInName(preppedWord, wordsInPreppedSentence)) {
-                return true;
+            return true;
         }
         return false;
     }
@@ -93,7 +93,7 @@ public class PersonSelectionChangedEvent extends BaseEvent {
     }
 
 ```
-###### /java/seedu/address/logic/commands/BirthdaysCommand.java
+###### \java\seedu\address\logic\commands\BirthdaysCommand.java
 ``` java
 /**
  * Lists all persons with a birthday today
@@ -121,13 +121,13 @@ public class BirthdaysCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/UndoableCommand.java
+###### \java\seedu\address\logic\commands\UndoableCommand.java
 ``` java
         if (model.ifSelectedPerson()) {
             model.unselectPerson();
         }
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
 
     @Override
@@ -137,7 +137,7 @@ public class BirthdaysCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void updateSelectedPerson(ReadOnlyPerson person) {
@@ -164,7 +164,7 @@ public class BirthdaysCommand extends Command {
     }
 
 ```
-###### /java/seedu/address/model/person/Birthday.java
+###### \java\seedu\address\model\person\Birthday.java
 ``` java
 /**
  * Represents a Person's birthday in the address book.
@@ -228,7 +228,7 @@ public class Birthday {
 }
 
 ```
-###### /java/seedu/address/model/person/CheckIfBirthday.java
+###### \java\seedu\address\model\person\CheckIfBirthday.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Birthday} matches today.
@@ -267,7 +267,7 @@ public class CheckIfBirthday implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### /java/seedu/address/model/person/NameContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\NameContainsKeywordsPredicate.java
 ``` java
     @Override
     public boolean test(ReadOnlyPerson person) {
@@ -285,7 +285,7 @@ public class CheckIfBirthday implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
 
     public void setBirthday(Birthday birthday) {
@@ -303,7 +303,7 @@ public class CheckIfBirthday implements Predicate<ReadOnlyPerson> {
     }
 
 ```
-###### /java/seedu/address/ui/DetailsPanel.java
+###### \java\seedu\address\ui\DetailsPanel.java
 ``` java
 
 /**
@@ -498,7 +498,7 @@ public class DetailsPanel extends UiPart<Region> {
 
 
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
     private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
@@ -508,13 +508,13 @@ public class DetailsPanel extends UiPart<Region> {
         detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
     }
 ```
-###### /java/seedu/address/ui/UiPart.java
+###### \java\seedu\address\ui\UiPart.java
 ``` java
     protected void unregisterAsAnEventHandler(Object handler) {
         EventsCenter.getInstance().unregisterHandler(handler);
     }
 ```
-###### /resources/view/DetailsPanel.fxml
+###### \resources\view\DetailsPanel.fxml
 ``` fxml
 
 <StackPane fx:id="detailsPanel" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">

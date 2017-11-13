@@ -1,5 +1,5 @@
 # khooroko-reused
-###### /java/seedu/address/ui/DetailsPanelTest.java
+###### \java\seedu\address\ui\DetailsPanelTest.java
 ``` java
     @Before
     public void setUp() {
@@ -12,7 +12,7 @@
     }
 
 ```
-###### /java/seedu/address/ui/DetailsPanelTest.java
+###### \java\seedu\address\ui\DetailsPanelTest.java
 ``` java
     /**
      * Asserts that {@code infoPanel} displays the details of {@code expectedPerson} correctly.

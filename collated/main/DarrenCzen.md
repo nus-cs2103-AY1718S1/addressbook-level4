@@ -1,5 +1,5 @@
 # DarrenCzen
-###### /java/seedu/address/commons/events/ui/AccessLocationRequestEvent.java
+###### \java\seedu\address\commons\events\ui\AccessLocationRequestEvent.java
 ``` java
 /**
  * Indicates a request to load the location of a person on Google Maps Search in the Browser.
@@ -17,7 +17,7 @@ public class AccessLocationRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/AccessWebsiteRequestEvent.java
+###### \java\seedu\address\commons\events\ui\AccessWebsiteRequestEvent.java
 ``` java
 /**
  * Indicates a request to load the website of a person in the Browser.
@@ -36,7 +36,7 @@ public class AccessWebsiteRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/EventPanelUnselectEvent.java
+###### \java\seedu\address\commons\events\ui\EventPanelUnselectEvent.java
 ``` java
 /**
  * Indicates a request to unselect an event card in the case of a delete or switching of platforms
@@ -48,7 +48,7 @@ public class EventPanelUnselectEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/TogglePanelEvent.java
+###### \java\seedu\address\commons\events\ui\TogglePanelEvent.java
 ``` java
 
 import seedu.address.commons.events.BaseEvent;
@@ -70,7 +70,7 @@ public class TogglePanelEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AccessCommand.java
+###### \java\seedu\address\logic\commands\AccessCommand.java
 ``` java
 /**
  * Accesses a person's website in the address book.
@@ -119,7 +119,7 @@ public class AccessCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditCommand.java
+###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
         public void setWebsite(Website website) {
             this.website = website;
@@ -130,7 +130,7 @@ public class AccessCommand extends Command {
         }
 
 ```
-###### /java/seedu/address/logic/commands/LocationCommand.java
+###### \java\seedu\address\logic\commands\LocationCommand.java
 ``` java
 /**
  * Accesses a person's location in the address book.
@@ -179,7 +179,7 @@ public class LocationCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
  * Sorts all persons in the address book alphabetically for the user.
@@ -198,7 +198,7 @@ public class SortCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AccessCommandParser.java
+###### \java\seedu\address\logic\parser\AccessCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AccessCommand object
@@ -221,7 +221,7 @@ public class AccessCommandParser implements Parser<AccessCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddCommandParser.java
+###### \java\seedu\address\logic\parser\AddCommandParser.java
 ``` java
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -281,7 +281,7 @@ public class AccessCommandParser implements Parser<AccessCommand> {
     }
 
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
 /**
  * Parses user input.
@@ -445,7 +445,7 @@ public class AddressBookParser {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/LocationCommandParser.java
+###### \java\seedu\address\logic\parser\LocationCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AccessCommand object
@@ -469,7 +469,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /** Ensures that every person in the AddressBook
      *  is sorted in an alphabetical order.
@@ -479,7 +479,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public synchronized void sort() {
@@ -489,7 +489,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/Address.java
+###### \java\seedu\address\model\person\Address.java
 ``` java
     /**
      * Validates given address.
@@ -516,7 +516,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/HomeNumber.java
+###### \java\seedu\address\model\person\HomeNumber.java
 ``` java
     /**
      * Validates given home number.
@@ -544,7 +544,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/Name.java
+###### \java\seedu\address\model\person\Name.java
 ``` java
     /**
      * This method was adapted from user, scottb, on StackOverFlow.
@@ -567,14 +567,14 @@ public class LocationCommandParser implements Parser<LocationCommand> {
         return newString.toString();
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
 
     public void setWebsite(Website website) {
         this.website.set(requireNonNull(website));
     }
 ```
-###### /java/seedu/address/model/person/SchEmail.java
+###### \java\seedu\address\model\person\SchEmail.java
 ``` java
     /**
      * Validates given email.
@@ -602,7 +602,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
      * Sorts every person in the list alphabetically.
@@ -613,7 +613,7 @@ public class LocationCommandParser implements Parser<LocationCommand> {
     }
 
 ```
-###### /java/seedu/address/model/person/Website.java
+###### \java\seedu\address\model\person\Website.java
 ``` java
 /**
  * Represents a Person's website information in the address book.
@@ -677,7 +677,7 @@ public class Website {
 
 }
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     /**
      * Access website through browser panel based on person's link
@@ -693,7 +693,7 @@ public class Website {
     }
 
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     @Subscribe
     private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
@@ -708,7 +708,7 @@ public class Website {
     }
 }
 ```
-###### /java/seedu/address/ui/EventsDetailsPanel.java
+###### \java\seedu\address\ui\EventsDetailsPanel.java
 ``` java
 /**
  * The Details Panel of the App that displays full information of a {@code Event}.
@@ -821,7 +821,7 @@ public class EventsDetailsPanel extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
     private void handleToggleEvent(TogglePanelEvent event) {
@@ -829,7 +829,7 @@ public class EventsDetailsPanel extends UiPart<Region> {
         handleToggle(event.selectedPanel);
     }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
     private void handleUnselectOfEventCardEvent(EventPanelUnselectEvent event) {
@@ -839,7 +839,7 @@ public class EventsDetailsPanel extends UiPart<Region> {
         eventsDetailsPanelPlaceholder.getChildren().add(eventsDetailsPanel.getRoot());
     }
 ```
-###### /resources/view/EventsDetailsPanel.fxml
+###### \resources\view\EventsDetailsPanel.fxml
 ``` fxml
 
 <StackPane fx:id="eventsDetailsPanel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">

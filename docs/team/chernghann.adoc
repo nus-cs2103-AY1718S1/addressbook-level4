@@ -117,6 +117,8 @@ include::../DeveloperGuide.adoc[tag=calendar]
 
 === Enhancement Proposed 1: School Timetable
 
+==== External Behaviour & Justification
+
 Nusmods is commonly used by students in National University of Singapore to plan for their school modules and organising their timetable.
 I am proposing an in-app timetable that caters to the all the different universities in Singapore. Similar to Nusmods, the students
 will be able to key in their module code and plan out their timetable in The Myth's Book. Thankfully for the Nusmods api, I believe that
@@ -124,11 +126,16 @@ this enhancement could be achieve in a few month's time and be implemented in th
 
 === Enhancement Proposed 2: Name Card Recognition
 
+==== External Behaviour & Justification
+
 As we attempt to allow The Myth's Book to reach out to the target audience, I feel that the working adults could also use this application
 at work. Thus, this enhancement that I propose is for the working adults who tend to have name cards or business cards. User of
 the application can then simply use their laptop's web camera feature to scan the name card and store the details of the contact.
 
 === Other contributions
+
+This section outlines the additional contribution for The Myth's Book and UniFy (Software by Team W09-B1).
+
 ** Acceptance Testing
 * Provided suggestions for improvement
 - Improvement in their User Guide instructions for deleting tags. (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/121#event-1330982844[#121])
