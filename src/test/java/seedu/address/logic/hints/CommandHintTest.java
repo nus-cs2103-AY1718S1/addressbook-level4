@@ -43,7 +43,7 @@ public class CommandHintTest {
                 commandHint,
                 "",
                 " type help for user guide",
-                "j");
+                "");
 
         commandHint = new CommandHint("edit", "edit");
         assertHintContent(
@@ -141,7 +141,7 @@ public class CommandHintTest {
                 commandHint,
                 "",
                 " type help for user guide",
-                "unknown");
+                "");
     }
 
 

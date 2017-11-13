@@ -27,6 +27,8 @@ import seedu.address.model.UserPrefs;
  */
 public class CommandHint extends Hint {
 
+    protected String autoCompleteCommandWord = "";
+
     protected String commandWord;
 
     public CommandHint(String userInput, String commandWord) {
@@ -37,7 +39,7 @@ public class CommandHint extends Hint {
 
     @Override
     public String autocomplete() {
-        return userInput.trim() + argumentHint;
+        return autoCompleteCommandWord;
     }
 
     /**
@@ -52,6 +54,7 @@ public class CommandHint extends Hint {
             description = " type help for user guide";
             argumentHint = "";
         } else {
+            autoCompleteCommandWord = autocompleted + " ";
             argumentHint = StringUtil.difference(commandWord, autocompleted) + " ";
             description = getDescription(autocompleted);
         }

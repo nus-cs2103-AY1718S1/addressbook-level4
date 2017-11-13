@@ -21,8 +21,8 @@ public class AutocompleteTest {
     @Test
     public void autocomplete_invalidCommand_returnsItself() {
         assertEquals(
-                "should-not-complete-to-any-commands",
-                autocomplete("should-not-complete-to-any-commands"));
+                "",
+                autocomplete("should-clear-command-input"));
     }
 
     @Test
