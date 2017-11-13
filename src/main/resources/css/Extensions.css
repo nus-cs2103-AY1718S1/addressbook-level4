@@ -46,3 +46,47 @@
     -fx-text-fill: white;
     -fx-text-alignment: left;
 }
+/* @@author */
+
+/* @@author dennaloh */
+.calender-title-property-value {
+    -fx-font-family: "Bradley Hand";
+    -fx-font-size: 40px;
+    -fx-text-fill: lightskyblue;
+    -fx-text-alignment: left;
+}
+
+.calender-property-value {
+    -fx-font-family: "Arial";
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
+}
+
+.calender-property1-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 50px;
+    -fx-text-fill: lightpink;
+    -fx-text-alignment: right;
+}
+
+.calender-property2-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 50px;
+    -fx-text-fill: lightgoldenrodyellow;
+    -fx-text-alignment: right;
+}
+
+.calender-property3-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 50px;
+    -fx-text-fill: lightsalmon;
+    -fx-text-alignment: right;
+}
+
+.calender-property4-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 50px;
+    -fx-text-fill: lightgreen;
+    -fx-text-alignment: right;
+}

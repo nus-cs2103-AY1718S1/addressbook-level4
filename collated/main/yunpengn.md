@@ -2132,18 +2132,23 @@ public class XmlAdaptedPropertyManager {
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 
+    /**
+     * Similar to methods for contacts except with EventCalendar.
+     */
     @FXML
     private void handleSwitchToEvents() {
         dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        dataDetailsPanelPlaceholder.getChildren().add(new EventCalendar().getRoot());
     }
 
     @Subscribe
     public void handleSwitchToEvents(SwitchToEventsListEvent event) {
-        dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataDetailsPanelPlaceholder.getChildren().add(new EventCalendar().getRoot());
     }
 
     @Subscribe

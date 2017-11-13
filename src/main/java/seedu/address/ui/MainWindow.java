@@ -27,6 +27,7 @@ import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.event.EventCalendar;
 import seedu.address.ui.event.EventListPanel;
 import seedu.address.ui.person.PersonDetailsPanel;
 import seedu.address.ui.person.PersonListPanel;
@@ -231,18 +232,23 @@ public class MainWindow extends UiPart<Region> {
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 
+    /**
+     * Similar to methods for contacts except with EventCalendar.
+     */
     @FXML
     private void handleSwitchToEvents() {
         dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        dataDetailsPanelPlaceholder.getChildren().add(new EventCalendar().getRoot());
     }
 
     @Subscribe
     public void handleSwitchToEvents(SwitchToEventsListEvent event) {
-        dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataDetailsPanelPlaceholder.getChildren().add(new EventCalendar().getRoot());
     }
 
     @Subscribe
@@ -252,6 +258,14 @@ public class MainWindow extends UiPart<Region> {
 
         dataDetailsPanelPlaceholder.getChildren().clear();
         dataDetailsPanelPlaceholder.getChildren().add(new PersonDetailsPanel(person).getRoot());
+    }
+    //@@author
+
+    //@@author dennaloh
+    @FXML
+    private void handleEventCalendar() {
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataDetailsPanelPlaceholder.getChildren().add(new EventCalendar().getRoot());
     }
     //@@author
 
