@@ -81,7 +81,7 @@ public class CommandBoxHelper extends UiPart<Region> {
     public void selectDownHelperBox() {
         if (commandBoxHelperList.getSelectionModel().getSelectedItem() == null
                 || commandBoxHelperList.getSelectionModel().getSelectedIndex()
-                == commandBoxHelperList.getItems().size() -1) {
+                == commandBoxHelperList.getItems().size() - 1) {
             commandBoxHelperList.getSelectionModel().selectFirst();
         } else {
             commandBoxHelperList.getSelectionModel().select(
