@@ -1,0 +1,86 @@
+= Test Script for Manual Testing
+
+== Loading the sample data
+
+---
+
+. Download the `[W15-B3][ConnectUs]SampleData.xml` from the ManualTesting folder.
+. Create a folder called `data` and place it on the same directory as the `[W15-B3][ConnectUs].jar` file.
+. Rename the `[W15-B3][ConnectUs]SampleData.xml` to `addressbook.xml` and place it inside the `data` folder.
+. Double click on the `[W15-B3][ConnectUs].jar` file to start our application.
+
+=== Results
+
+* In the *left most* column of our application, there should be 20 contact details appearing with indices from 1 to 20.
+* In the *middle* column there should be an empty form with the following fields:
+    ** Name
+    ** Phone
+    ** Email
+    ** Address
+    ** Tags
+    ** a `Save` button
+* In the *right most* column of our application, there should be a green in color image with our `ConnectUs` logo.
+* On top of the right column, there should be 4 buttons with the label:
+    ** Clear
+    ** SMS
+    ** Call
+    ** Share
+
+== Help
+
+. Type `help` on the command line on the top of our application with a blinking text cursor.
+. Click on the `Help` tab on the top left corner of our application and select the `Help` function.
+
+=== Results
+
+* Our user guide should pop up.
+
+== Add a person
+
+== List all person
+
+== Edit a person
+
+== Find a person
+
+== Delete a person
+
+== Displaying Contact Location
+
+== Email a person
+
+== Selecting a person
+
+== History of commands entered
+
+== Undo previous command
+
+== Redo previously undone command
+
+== Sort contacts in the addressbook
+
+== Filter list by tag
+
+== Importing Contacts from external source
+
+== Exporting contacts to external source
+
+== Change color theme of our application
+
+== Upload an image for a person
+
+== Delete all images for all people
+
+== Clear logfile
+
+== Genering QR Code
+
+=== QRCode to call a person
+
+=== QRCode to send a message to a person
+
+=== QRCOde to save a contact
+
+== Clear all entries in the contact list
+
+== Exit the application
