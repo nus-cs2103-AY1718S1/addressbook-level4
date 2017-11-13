@@ -751,7 +751,6 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 // end::commandshortcuts[]
 
 == FAQ
-//TODO: Update and Populate FAQ (add to about 7 in total)
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
