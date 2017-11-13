@@ -508,11 +508,54 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::setpath[]
+=== Setting the path to local profile pictures folder : `setpath`
+
+Sets the folder location to access and import debtors' profile pictures. +
+Paths should be absolute paths and not relative ones. Also, paths should point to the folder rather than the picture itself. +
+
+It is recommended to create a folder and fill it up with the necessary profile pictures for the application. If there is a need to add a new picture, it should be added into this specific folder. +
+
+The folder should only contain pictures with the `.jpg` extension. Moreover, the pictures should be named after the debtors in the application's database. +
+
+For example, for the debtor Alex Yeoh, the name of her picture should be `AlexYeoh.jpg` +
+As for the debtor Bernice Yu, the name of her picture should be `BerniceYu.jpg` +
+
+If it is necessary to change the location of the folder, the `setpath` command should be used again to indicate this change in location of the profile pictures folder. +
+
+Format: `setpath [PATH]`
+
+Examples:
+
+* `setpath C:/Users/acer/Desktop/SE/profilepic/` +
+* `setpath C:/Users/acer/Desktop/SE/profilepic` +
+* `setpath C:\Users\acer\Desktop\SE\profilepic\` +
+* `setpath C:\Users\acer\Desktop\SE\profilepic` +
+* `setpath out/production/resources/images/` +
+* `setpath out/production/resources/images` +
+* `setpath out\production\resources\images\` +
+* `setpath out\production\resources\images` +
+// end::setpath[]
+
 // tag::addpic[]
 === Adding a profile picture to a person : `addpic`
 
 Adds a user specified profile picture to the specified person. +
-Format: 'addpic [INDEX]'
+
+A path to the pictures folder must first be set using the `setpath` command +
+The picture of the debtor should already be present in this folder and should be named after the debtor himself. +
+
+Examples: +
+
+Roy Balakrishnan's picture should be named as `RoyBalakrishnan` and the extension of the file should be `.jpg` +
+
+Full file name: `RoyBalakrishnan.jpg` +
+
+Herbert He's picture should be named as `HerbertHe` and the extension of the file should be `.jpg` +
+
+Full file name: `HerbertHe.jpg` +
+
+Format to add picture to the selected person : 'addpic [INDEX]'
 
 ****
 * Adds a profile picture to the person at the specified `INDEX`.
@@ -524,13 +567,16 @@ Format: 'addpic [INDEX]'
 Examples:
 
 * `list` +
+`setpath C:\Users\acer\Desktop\SE1\profilepic` +
 `addpic 2` +
 Adds a picture to the 2nd person in masterlist.
 * `find Betsy` +
+`setpath C:\Users\acer\Desktop\SE2\profilepic` +
 `addpic 1` +
 Adds a profile picture to the 1st person from the results of the `find` command.
 * `select 3` +
-`addpic`
+`setpath C:\Users\acer\Desktop\SE7\profilepic` +
+`addpic` +
 Adds a profile picture to the 3rd person from the masterlist in the address book.
 // end::addpic[]
 
@@ -559,20 +605,6 @@ Deletes the profile picture of the 1st person from the results of the `find` com
 `delpic`
 Deletes the profile picture of the 3rd person from the masterlist in the address book.
 // end::delpic[]
-
-// tag::setpath[]
-=== Setting the path to local profile pictures folder : `setpath`
-
-Sets the folder location to access and import debtors profile pictures. +
-Format: `setpath`
-
-Examples:
-
-* `setpath C:/Users/acer/Desktop/SE/profilepic/` +
-* `setpath C:\Users\acer\Desktop\SE\profilepic\` +
-* `setpath out/production/resources/images/` +
-* `setpath out\production\resources\images\` +
-// end::setpath[]
 
 === Clearing all entries : `clear`
 
@@ -701,9 +733,11 @@ e.g. `sort debt`
 e.g. `addpic 2`
 * *Delete Picture*  : `delpic [INDEX]` +
 e.g. `delpic 2`
-* *Setpath* : `setpath`
-e.g. `setpath C:/Users/acer/Desktop/SE/profilepic/`
-e.g. `setpath C:\Users\acer\Desktop\SE\profilepic\`
+* *Setpath* : `setpath [PATH]` +
+e.g. `setpath C:/Users/acer/Desktop/SE/profilepic/` +
+e.g. `setpath C:/Users/acer/Desktop/SE/profilepic` +
+e.g. `setpath C:\Users\acer\Desktop\SE\profilepic\` +
+e.g. `setpath C:\Users\acer\Desktop\SE\profilepic` +
 * *Filter* : `filter TAG1 TAG2 ...` +
 e.g `filter friendly cooperative`
 * *Undo* : `undo`
@@ -745,11 +779,10 @@ e.g `filter friendly cooperative`
 
 * Filter contacts by tags (since v1.4)
 * Replace `Phone` field with `Handphone`, `Home phone` and `Office phone` (since v1.4)
-* Profile pictures of clients shown next to their details. (since v1.4)
 * List of people who have overdue debts. (since v1.4)
 * A progress bar to indicate how much of the person's debt has been paid off. (since v1.4)
 
-* Specifically import and save profile pictures to existing database of the application. (since v1.5)
+* Profile pictures of clients shown next to their details. (since v1.5)
 * Different appearance themes (since v1.5)
 
 == Features to be included by `V2.0`

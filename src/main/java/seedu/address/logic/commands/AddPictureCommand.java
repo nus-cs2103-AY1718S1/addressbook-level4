@@ -6,6 +6,7 @@ import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.ProfilePictureNotFoundException;
 
 //@@author jaivigneshvenugopal
 /**
@@ -35,8 +36,11 @@ public class AddPictureCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        if (!model.addProfilePicture(personToUpdate)) {
-            throw new CommandException(MESSAGE_ADDPIC_FAILURE);
+
+        try {
+            model.addProfilePicture(personToUpdate);
+        } catch (ProfilePictureNotFoundException ppnfe) {
+            throw new CommandException(String.format(MESSAGE_ADDPIC_FAILURE, personToUpdate.getName()));
         }
 
         ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
