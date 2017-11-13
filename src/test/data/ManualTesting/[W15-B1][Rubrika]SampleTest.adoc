@@ -1,0 +1,21 @@
+= Manual Testing Script
+
+== Testing : AutoComplete feature
+
+=== AutoComplete Command
+
+==== Valid Input without Command Skeleton
+
+Test: +
+Enter `de` and then press `TAB` key.
+
+Result: +
+`delete` should appear in the command box, followed by a space.
+
+==== Valid Input with Command Skeleton
+
+Test: +
+Enter `ed` and then press `TAB` key.
+
+Result: +
+`edit` should appear in the command box, together with the fields that the user can enter.
