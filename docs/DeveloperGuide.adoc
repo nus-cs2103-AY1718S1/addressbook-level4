@@ -600,7 +600,7 @@ the address book storage and then displayed on `PersonListPanel` on the GUI.
 
 **Aspect:** Persistent sort +
 **Alternative 1(current choice):** Persistent sort (Sort persons, by modifying `addressbook.xml`) +
-**Pros:** Reduces need for repeated sorting & speed up `find` command +
+**Pros:** Reduces need for repeated sorting & speed up `search` command +
 **Cons:** Unnecessary operations on storage `addressbook.xml` +
 **Alternative 2:** Non-persistent sort (Sort persons in a temporary list) +
 **Pros:** Reduce operations on storage file, `Addressbook.xml` +
@@ -725,6 +725,10 @@ The feature is more powerful and useful than find which only searches by name.
 
 ==== Implementation
 
+When the command is called, the user input is parsed as shown in the sequence diagram below.
+
+image::SDforSearchPerson.png[width="800"]
+
 The search command checks the keyword(s) given by the user against any parameters contained in the selected person
 [source,java]
 ----
@@ -764,7 +768,12 @@ Displays the google maps location of a person's address
 
 ==== Implementation
 
-When 'map' command is executed, it retrieves the current list of people,
+When 'map' command is executed, the command is interacts with the various components
+as shown in the high-level sequence diagram below.
+
+image::MapCommandHighLevelSequenceDiagram.png[width="800"]
+
+It retrieves the current list of people from model,
 and selects the person's address based on the index given.
 
 [source,java]
@@ -775,7 +784,7 @@ ReadOnlyPerson personToShow = lastShownList.get(index.getZeroBased());
 ----
 
 The address is then passed into a url template for a page loader to display
-the google maps on the browser panel
+the google maps on the browser panel.
 
 [source,java]
 ----

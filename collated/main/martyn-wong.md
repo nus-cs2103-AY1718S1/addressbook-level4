@@ -1,5 +1,40 @@
 # martyn-wong
-###### /java/seedu/address/commons/events/ui/MapPersonEvent.java
+###### \java\seedu\address\commons\core\index\Selection.java
+``` java
+/**
+ * To get or set the selection state of the application
+ */
+public class Selection {
+
+    private static boolean isPersonSelected = false;
+    private static boolean isMeetingChosen = false;
+
+    public static void setPersonSelected() {
+        isPersonSelected = true;
+    }
+
+    public static void setPersonNotSelected() {
+        isPersonSelected = false;
+    }
+
+    public static void setMeetingChosen() {
+        isMeetingChosen = true;
+    }
+
+    public static void setMeetingNotChosen() {
+        isMeetingChosen = false;
+    }
+
+    public static boolean getSelectionStatus() {
+        return isPersonSelected;
+    }
+
+    public static boolean getMeetingStatus() {
+        return isMeetingChosen;
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\MapPersonEvent.java
 ``` java
 /**
  * Represents a mapping function call by user
@@ -22,114 +57,66 @@ public class MapPersonEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/core/index/Selection.java
+###### \java\seedu\address\logic\commands\MapCommand.java
 ``` java
 /**
- * To get or set the selection state of the application
+ *  Returns selected person's address in google map search in browser panel
  */
-public class Selection {
+public class MapCommand extends UndoableCommand {
 
-    private static boolean isPersonSelected = false;
+    public static final String COMMAND_WORD = "map";
+    public static final String COMMAND_ALIAS = "m";
 
-    public static void setPersonSelected() {
-        isPersonSelected = true;
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " INDEX";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the address of person on Google Maps "
+            + "identified by the index number used in the last person listing. "
+            + "Parameters: INDEX "
+            + "Example: " + COMMAND_WORD + " 1 ";
+    public static final String MESSAGE_MAP_SHOWN_SUCCESS = "Map Display Successful! Address of: %1$s";
+
+    public final Index index;
+
+    public MapCommand (Index index) {
+        this.index = index;
     }
 
-    public static void setPersonNotSelected() {
-        isPersonSelected = false;
-    }
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
 
-    public static boolean getSelectionStatus() {
-        return isPersonSelected;
-    }
-}
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-    private static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    /***
-     * Loads google map of person
-     * @param person
-     */
-    private void loadPersonMap(ReadOnlyPerson person) throws CommandException {
-        if (personSelected == null) {
-            throw new CommandException("Please select a person");
-        }
-        setMapsChosenTrue();
-        setLinkedinChosenFalse();
-        loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
-    }
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    /**
-     * Setter method to set the Boolean value of hasMapsBeenChosen
-     */
-    public void setMapsChosenTrue () {
-        hasMapsBeenChosen = true;
-    }
-
-    public void setMapsChosenFalse () {
-        hasMapsBeenChosen = false;
-    }
-```
-###### /java/seedu/address/logic/parser/SearchCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new SearchCommand object
- */
-public class SearchCommandParser implements Parser<SearchCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the SearchCommand
-     * and returns an SearchCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public SearchCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+        if (Selection.getSelectionStatus() == false && index.getOneBased() <= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_PERSON_NOT_SELECTED);
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        if (Selection.getMeetingStatus() == true) {
+            throw new CommandException(Messages.MESSAGE_WRONG_DISPLAY_MODE);
+        }
 
-        return new SearchCommand(new PersonContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
-    }
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
 
-}
-```
-###### /java/seedu/address/logic/parser/MapCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new MapCommand object
- */
-public class MapCommandParser implements Parser<MapCommand> {
-    /**
-     * Parses the given {@code String} of arguments in the context of the MapCommand
-     * and returns an MapCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
+        ReadOnlyPerson personToShow = lastShownList.get(index.getZeroBased());
 
-    public MapCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new MapCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MapCommand.MESSAGE_USAGE));
+            model.mapPerson(personToShow);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
         }
+
+        return new CommandResult(String.format(MESSAGE_MAP_SHOWN_SUCCESS, personToShow));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof MapCommand // instanceof handles nulls
+                && this.index.equals(((MapCommand) other).index)); // state check
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SearchCommand.java
+###### \java\seedu\address\logic\commands\SearchCommand.java
 ``` java
 /**
  * Searches the address book for any parameters that match the given keyword.
@@ -173,62 +160,90 @@ public class SearchCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/MapCommand.java
+###### \java\seedu\address\logic\parser\MapCommandParser.java
 ``` java
 /**
- *  Returns selected person's address in google map search in browser panel
+ * Parses input arguments and creates a new MapCommand object
  */
-public class MapCommand extends UndoableCommand {
+public class MapCommandParser implements Parser<MapCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the MapCommand
+     * and returns an MapCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
 
-    public static final String COMMAND_WORD = "map";
-    public static final String COMMAND_ALIAS = "m";
-
-    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " INDEX";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the address of person on Google Maps "
-            + "identified by the index number used in the last person listing. "
-            + "Parameters: INDEX "
-            + "Example: " + COMMAND_WORD + " 1 ";
-    public static final String MESSAGE_MAP_SHOWN_SUCCESS = "Map Display Successful! Address of: %1$s";
-
-    public final Index index;
-
-    public MapCommand (Index index) {
-        this.index = index;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (Selection.getSelectionStatus() == false && index.getOneBased() <= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_PERSON_NOT_SELECTED);
-        }
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson personToShow = lastShownList.get(index.getZeroBased());
-
+    public MapCommand parse(String args) throws ParseException {
         try {
-            model.mapPerson(personToShow);
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
+            Index index = ParserUtil.parseIndex(args);
+            return new MapCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MapCommand.MESSAGE_USAGE));
         }
-
-        return new CommandResult(String.format(MESSAGE_MAP_SHOWN_SUCCESS, personToShow));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof MapCommand // instanceof handles nulls
-                && this.index.equals(((MapCommand) other).index)); // state check
     }
 }
 ```
-###### /java/seedu/address/model/person/PersonContainsKeywordsPredicate.java
+###### \java\seedu\address\logic\parser\SearchCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new SearchCommand object
+ */
+public class SearchCommandParser implements Parser<SearchCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the SearchCommand
+     * and returns an SearchCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public SearchCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+        }
+
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+
+        return new SearchCommand(new PersonContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+    }
+
+}
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    default void updateFilteredPersonList() {
+        updateFilteredPersonList();
+    }
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /**
+     * Shows the google map for the selected person in the browser panel
+     */
+    void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+}
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public void updateFilteredPersonList() {
+        updateFilteredPersonList();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        raise(new MapPersonEvent(target));
+    }
+
+}
+```
+###### \java\seedu\address\model\person\PersonContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Parameters} matches any of the keywords given.
@@ -255,37 +270,39 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
 }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
-    @Override
-    public void updateFilteredPersonList() {
-        updateFilteredPersonList();
-    }
+    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
+    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    private static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
-    @Override
-    public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        raise(new MapPersonEvent(target));
+    /***
+     * Loads google map of person
+     * @param person
+     */
+    private void loadPersonMap(ReadOnlyPerson person) throws CommandException {
+        if (personSelected == null) {
+            throw new CommandException("Please select a person");
+        }
+        setMapsChosenTrue();
+        setLinkedinChosenFalse();
+        loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
-}
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
+     * Setter method to set the Boolean value of hasMapsBeenChosen
      */
-    default void updateFilteredPersonList() {
-        updateFilteredPersonList();
+    public void setMapsChosenTrue () {
+        hasMapsBeenChosen = true;
     }
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /**
-     * Shows the google map for the selected person in the browser panel
-     */
-    void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException;
-}
+
+    public void setMapsChosenFalse () {
+        hasMapsBeenChosen = false;
+    }
 ```
