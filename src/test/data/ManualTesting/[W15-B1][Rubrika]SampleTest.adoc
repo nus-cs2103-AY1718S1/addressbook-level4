@@ -177,5 +177,119 @@ Enter `clear`
 _Result:_ +
 Entire contact list is deleted with message "Address book has been cleared!".
 
+== Testing : AutoComplete feature
 
+=== AutoComplete Command
 
+==== Valid Input without Command Skeleton
+
+_Test:_ +
+Enter `de` and then press `TAB` key.
+
+_Result:_ +
+`delete` should appear in the command box, followed by a space.
+
+****
+* Commands without command skeletons in autocomplete includes:
+* `exit`, `help`, `list`, `select`, etc.
+****
+
+==== Valid Input with Command Skeleton
+
+_Test:_ +
+Enter `ed` and then press `TAB` key.
+
+_Result:_ +
+`edit` should appear in the command box, together with the fields that the user can enter.
+
+****
+* Only other commands with command skeletons are:
+* `add` and `remark`
+****
+
+==== Invalid Input (No Command)
+
+_Test:_ +
+Enter `derp` and then press `TAB` key.
+
+_Result:_ +
+Nothing should change in the command box, `derp` and only `derp` should be in the command box.
+
+=== AutoComplete By Set String
+
+==== Sort Command
+
+_Test:_ +
+Enter `sort n` and then press `TAB` key.
+
+_Result:_ +
+`sort name` should appear in the command box.
+
+_Test:_ +
+Enter `sort name a` and then press `TAB` key.
+
+_Result:_ +
+`sort name asc` should appear in the command box.
+
+==== Theme Command
+
+_Test:_ +
+Enter `theme r` and then press `TAB` key.
+
+_Result:_ +
+`theme RedTheme` should appear in the command box.
+
+=== AutoComplete By Word In Name
+
+==== Finding Multiple Words in Name
+
+_Test:_ +
+Enter `find a` and press `TAB` key four times.
+
+_Result:_ +
+`find Andy` should appear first, followed by +
+`find Alicia` and then, +
+`find Ang` and finally, +
+`find a`
+
+==== Fail to Find Words in Name
+
+_Test:_ +
+Enter `find z` and press `TAB` key.
+
+_Result:_ +
+Nothing should change in the command box, `find z` and only `find z` should be in the command box.
+
+=== AutoComplete By Tags
+
+_Test:_ +
+Enter `findtag f` and press `TAB` key.
+
+_Result:_ +
+`findtag freelancer` should appear in the command box.
+
+=== AutoComplete By Prefix
+
+==== Search for Name in Model
+
+_Test:_ +
+Enter `add n/c` and press `TAB` key.
+
+_Result:_ +
+`add n/Cosy Ko` should appear in the command box.
+
+==== Search for Email in Model
+
+_Test:_ +
+Enter `edit 2 p/91783123 e/janet` and press `TAB` key.
+
+_Result:_ +
+`edit 2 p/91783123 e/janetoh@gmail.com` should appear in the command box.
+
+=== AutoComplete in the Middle of Input
+
+_Test:_ +
+Enter `removetag e prospective`, place caret right after `removetag e` without changing anything after the caret, and press `TAB` key.
+
+_Result:_ +
+`removetag event prospective` should appear in the command box, with `vent` in `event` selected.
