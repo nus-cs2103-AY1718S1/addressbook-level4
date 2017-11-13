@@ -7,8 +7,9 @@ https://ci.appveyor.com/project/danielbrzn/main[image:https://ci.appveyor.com/ap
 https://coveralls.io/github/CS2103AUG2017-W14-B3/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-W14-B3/main/badge.svg?branch=master[Coverage Status]]
 
 ifdef::env-github[]
-image::docs/images/Ui.png[width="800"]
 endif::[]
+
+image::docs/images/Ui.png[width="800"]
 
 // tag::introduction[]
 * HitMeUp is an address book application designed with the sociable user in mind.
@@ -19,7 +20,6 @@ endif::[]
 
 // tag::features[]
 == Features
-
 ====
 
 * Add a contact using only their name and number, or with any of the following supported fields:
