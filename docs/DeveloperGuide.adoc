@@ -603,25 +603,27 @@ reasons such as the save file being corrupted/missing+
 //tag::import[]
 === Import Mechanism
 
-To use this command, you can type `import (FILE_NAME)` into the `CommandBox`. e.g. `import ark_save`
+To use this command, you can type `import ` and the name of your file into the `CommandBox`. e.g. `import ark_save`
 
-The `Import` mechanism allows users to import parcels from valid `Ark` storage files stored as `.xml` files into the
-current instance of `Ark`. This mechanism is facilitated by a `readAddressBook` method within `XmlAddressBookStorage` to
-load the parcels stored in the `xml` file and an `ModelManager#addAllParcels` to add the parcels in
-the storage file into the current instance of `Ark`. +
+The `import` mechanism allows users to import parcels from valid storage files stored in a `.xml` format. This mechanism
+ allows users to add multiple parcels stored in the imported storage file into the running instance of Ark. This
+ mechanism is facilitated by the `readAddressBook()` method within `AddressBookStorage()` to
+load the parcels stored in the storage file and the `ModelManager#addAllParcels` method to add the parcels in
+the storage file into the running instance of `Ark`. +
 
-Since the `Import` mechanism modifies the data stored in `Ark`, it has to be an undoable command. Thus, it inherits from
-the `UndoableCommands` interface rather than inheriting direclty from the `Command` interface. +
+Since the `import` mechanism modifies the data stored in `Ark`, it should be an extension of the `UndoCommand`. Thus,
+it inherits from the `UndoableCommand` interface rather than inheriting direclty from the `Command` interface. +
 
-The following sequence diagram shows how the `import` operation works:
+The following sequence diagram describes the sequence of events that occur when you enter 'import ark_save' into the
+ `CommandBox`:
 
 image::ImportSequenceDiagram.png[width="1000"]
 _Figure 4.7.1 : Sequence diagram describing the operation of `import` when it is executed_
 
 As seen in the sequence diagram above, the command is first parsed to create an `ImportCommandParser`. This parser
-takes the arguments of the input as the name of the file to import and converts it to a full file path string to
-locate the file to import. Thereafter, it loads the file to import into Ark and reads the data. This returns a list of
-parcels that are used in create an `ImportCommand`.
+takes the arguments of the import command ("ark_save") as the name of the file to import and converts it to a
+full file path string ("./data/import/ark_save.xml") to locate the file to import. Thereafter, it loads the file
+to import into Ark and reads the data. This returns a list of parcels that are used in create an `ImportCommand`.
 
 When the command is executed, the following sequence of events take place:
 
@@ -630,19 +632,19 @@ _Figure 4.7.2 : Reference frame for the execution of the Import Command_
 
 As seen in the diagram above, when the command is executed, the `executeUndoableMethod` methods calls
 `ModelManager#addAllParcels` method. In this method, all unique parcels are added into the running instance of Ark.
-If the parcel is not unique such that it will create a duplicate parcel in the inventory, the parcel is ignored and
-the process continues until the last parcel has been added.
+If the parcel is not unique such that it will create a duplicate parcel in the current instance of Ark,
+the parcel is ignored and the process continues until the last parcel has been added.
 
 [NOTE]
 The file to be imported has to be stored in the `./data/import` folder. i.e. calling `import ark_save` will import the
 file `./data/import/ark_save.xml`. +
-If the user enters a file name that contains characters other than alphanumeric characters or a file name that is
+If the user enters a file name that contains characters other than alphanumeric characters or imports a file that is
 not in a `.xml` format, the command will throw an Exception.
 
 [WARNING]
 The `ImportCommand` will only add non-duplicate parcels. Duplicate parcels are ignored. +
 If all the parcels to be imported into Ark are duplicates, then no parcels are imported and an Exception is thrown. +
-If the file to import is either, a `CommandException` will be thrown
+If the file to import is missing or empty, a `CommandException` will be thrown
 
 ==== Design Considerations
 
@@ -665,7 +667,7 @@ feature has to be manually implemented in `ImportCommand` as well.
 **Aspect: Arguments to import files** +
 
 * **Alternative 1 (current choice):** Imports save files from only one location +
-** **Pros:** User will only stored his save files at one location, he will not store them at random locations and lose
+** **Pros:** User will only store his save files at one location, he will not store them at random locations and lose
 track of them. User only has to type the name of the file and does not need to type the full file path to locate
 the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 ** **Cons:** The user has restrictions on where he can import files from. +
@@ -679,9 +681,10 @@ the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 
 * **Alternative 1 (current choice):** File Names can only contain alphanumeric and underscore characters and be in the
 `.xml` format. +
-** **Pros:** Users will constraint their file naming to contain more semantic names rather than having symbols in their
- naming of Ark save files. +
-** **Cons:** The user has restrictions on the file naming conventions he can use to name his import files +
+** **Pros:** Users need to constraint their file naming to contain more semantic names rather than having
+non-alphanumeric or non-underscore characters in their naming of Ark save files. +
+** **Cons:** The user has restrictions on the file naming conventions he can use to name the save files that he wants
+to import. +
 * **Alternative 2:** No file name check +
 ** **Pros:** Allows user to name his files following any conventions and be successfully imported into Ark. +
 ** **Cons:** Makes Ark vulnerable to simple directory traversals where user can access files outside the
@@ -689,7 +692,6 @@ the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 //end::import[]
 
 //tag::autocomplete[]
-
 === Tab autocomplete mechanism
 
 image::SDforTabAutocomplete.png[width="900"]
@@ -768,9 +770,10 @@ This issue can occur during festive periods such as Christmas when the number of
 //tag::postalCode[]
 === Postal Code Field
 
-The Postal Code field is implemented as part of Address. The `Postal Code` class stores the postal address of locations
-in Singapore. It only accepts values of `s` or `S` followed by 6 digits. The value stored in this class is used to store
- the postal code of the address. The value is used to query Google Maps when the `select` command is executed.
+The postal code field is represented using the `PostalCode` class. The `PostalCode` field is implemented as part of the
+`Address` class. The `PostalCode` class stores the postal address the address text. It only accepts values of
+`s` or `S` followed by 6 digits. The `PostalCode` will generate a `String` to query Google Maps when the `select`
+command is executed or a when a parcel is selected.
 
 [NOTE]
 Presently, the `PostalCode` field still does a very relaxed validation and does not completely ensure that the postal
@@ -783,22 +786,35 @@ code exists even though it might meet the criteria above. The team is working on
 **Implementation of `Postal Code`**
 
 * **Alternative 1 (current choice):** `Postal Code` is designed as a part of the `Address` class.
-** **Pros:** This composition relationship is more intuitive. If an `Address` is deleted, its corresponding `Postal
-Code` is also deleted.
+** **Pros:** This composition relationship is more intuitive. If an `Address` is deleted, its corresponding `PostalCode`
+is also deleted.
 ** **Cons:** - +
 * **Alternative 2:** Separate the `PostalCode` class from the `Address` class
 ** **Pros:** - +
 ** **Cons:** When an `Address` is deleted, its corresponding `PostalCode` has to be searched and deleted as well. This
 results in more overhead.
+
+---
+
+**Valid inputs to the `PostalCode` class**
+
+* **Alternative 1 (current choice):** `Postal code accepts postal district codes above 80. (first two digits of postal code)
+** **Pros:** This ensures that when new postal code districts are added into Singapore, the user will be able to add the
+postal codes from the new postal code district without receiving an error.
+** **Cons:** The user might enter postal codes that belong to a non-existent district e.g. S810000 +
+* **Alternative 2:** Reject postal codes with postal district codes above 80.
+** **Pros:** The user will have a stricter validation of his postal code. +
+** **Cons:** If a new postal district is added, e.g. 81, and there is parcel that has a postal code belonging to the
+district, Ark will reject that parcel from being entered,
 //end::postalCode[]
 
 //tag::status[]
 === Status field
 
 `Status` represents the current stage of delivery that a parcel is at. As seen in the class diagram below,
-`Status` is implemented using `Enumeration` interface and it has the four possible values:
+`Status` is implements an `Enumeration` interface and it has the four possible values:
 
-image::StatusClassDiagram.png[width:"250"]
+image::StatusClassDiagram.png[width:"150"]
 _Figure 4.13: Status Class Diagram_
 
 The following are the descriptions for the four possible values of `Status`:
@@ -815,7 +831,7 @@ delivered by.
 
 As seen in the class diagram, the `getInstance()` method retrieves the static instance of `Status` based on the `status`
 String input. For example, `getInstance("pending")` will return the `PENDING Status`. Additionally, Status is updated
-automatically when a parcel is edited, added. The Status of parcels in Ark will also be updated when Ark first launches.
+automatically when a parcel is edited or added. The `Status` of parcels in Ark will also be updated when Ark first launches.
 This is done through the `getUpdatedInstance(s : Status, d : DeliveryDate)` method and the overloaded method
 `getUpdated(d : DeliveryDate)` method. +
 
