@@ -28,9 +28,9 @@ Aliases help users execute commands they might forget. For example, if the user 
 add a new contact to the address book, they can type any of `add`, `create`, or `new`. In addition,
 we allow users to define their own aliases if the default ones are not memorable enough.
 
-We do not
-provide short-form aliases (e.g. `a` as an alias for `add`) by default as we feel having a powerful
-autocompletion feature completely eclipses any uses for cryptic short-form commands.
+We do not provide short-form aliases (e.g. `a` as an alias for `add`) by default as we feel having a
+powerful autocompletion feature completely eclipses any uses for cryptic short-form commands. If the
+user feels short-form aliases are required, they can add them themselves.
 
 ==== Implementation
 
@@ -43,7 +43,73 @@ include::../DeveloperGuide.adoc[tag=alias]
 
 ---
 
-=== Enhancement Added: Alias
+=== Enhancement Added: Command Box Validation
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=inline-hints]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+In order to familiarise new users to the command-line interface, we validate commands as the users type.
+This allows them to know if their commands are incorrect before they press enter. This is only helpful
+for users able to touch-type. As our target audience is computing students, we can safely assume a majority
+of the users will benefit from this feature.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=validation]
+
+#End of Extract#
+
+---
+
+---
+
+=== Enhancement Added: Command Box Icon
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=inline-hints]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As with input validation, this feature is introduced to give users a hint of what their command will
+do, before they execute it. Besides helping users use the command-line more effectively, it also helps
+to make the user interface more polished, as these icons are present in most search boxes (e.g. internet
+browsers display the page's icon, macOS's Spotlight displays the application's icon).
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=commandboxicon]
+
+#End of Extract#
+
+---
+
+---
+
+=== Enhancement Added: Autocomplete
 
 ==== External behavior
 
@@ -72,13 +138,28 @@ include::../DeveloperGuide.adoc[tag=autocomplete]
 ---
 
 === image:engsheng_header_enhancementproposed.png[width="900"]
-=== Enhancement Proposed: Add command `remark`
 
-{Explain similar to the Undo/Redo feature above.}
+=== Enhancement Proposed: History Substring Search
+
+Currently, when pressing `Up` or `Down` in the command box, we can cycle through our previously typed
+commands, irregardless of what is typed in the command box. One possible enhancement is changing it so
+it only cycles through commands that contain whatever is in the command box as a substring (i.e. like
+link:https://github.com/zsh-users/zsh-history-substring-search[zsh-history-substring-search]).
+
+=== Enhancement Proposed: Composite Aliases
+
+The alias feature currently implemented only allows users to create aliases for one partial or full
+command. One possible enhancement is to allow users to delimit commands in their aliases with semicolons,
+like: `alias delete3 delete 1; delete 1; delete 1`. This will allow users to perform repetitive tasks
+quickly, with just one command.
 
 === image:engsheng_header_contribution.png[width="900"]
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
+* Taught the team to use Git's interactive rebase feature, and streamlined our Git history to a linear
+  and more readable format.
+* Fix issues related to font embedding in JavaFX CSS (Pull request: https://github.com/CS2103AUG2017-W11-B4/main/pull/15)
+* Update repo badges to Unify's repo (Pull request: https://github.com/CS2103AUG2017-W11-B4/main/pull/21)
+* Update `.gitignore` to remove generated files (Pull request: https://github.com/CS2103AUG2017-W11-B4/main/pull/23)
+* Refactor Alias feature to match SOLID principles (Pull requests: https://github.com/CS2103AUG2017-W11-B4/main/pull/24, https://github.com/CS2103AUG2017-W11-B4/main/pull/42, https://github.com/CS2103AUG2017-W11-B4/main/pull/101)
+* Rewrite UserGuide to be friendlier (Pull request: https://github.com/CS2103AUG2017-W11-B4/main/pull/52)

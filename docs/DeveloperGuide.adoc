@@ -810,32 +810,73 @@ dependencies {
 **Cons:** Users may find it annoying as every action they take, the system will play an audio cue. +
 
 // end::audiblefeedback[]
+
 ---
+
+// tag::validation[]
+=== Command Box Validation
+
+We validate the user's command as he is typing, which allows real-time feedback to the user on whether
+their command is valid.
+
+This is done by listening to the `TextField` associated to `CommandBox`. Whenever there is a change in
+input of the `TextField`, we call `setStyleByValidityOfInput`. As we have a reference to the `LogicMangager`
+(which is used for undo/redo), we can just run `LogicManager#parse` to check if the current input is valid,
+and style the input box accordingly.
+
+==== Design Considerations
+
+**Aspect:** Listen to `CommandBox` input's changes +
+**Alternative 1 (current choice):** Listen directly to `commandTextField`. +
+**Pros:** No coupling with `EventsCenter`. +
+**Cons:** Inconsistent with implementation of other features (e.g. hints, command box icon). +
+**Alternative 2:** Subscribe to `CommandInputChangedEvent`. +
+**Pros:** Easily extensible as logic can be extracted into another class. +
+**Cons:** Adds additional dependency to `EventsCenter`. +
+// end::validation[]
+
+---
+
+// tag::commandboxicon[]
+=== Command Box Icon
+
+In addition to styling the command box, we also show the user icons matching their command on the right
+of the command box.
+
+We leverage a third-party library called link:https://github.com/aalmiray/ikonli[Ikonli]. We add a new
+JavaFX component, `CommandBoxIcon`, which subscribes to `CommandInputChangedEvent` and calls
+`parseCommandAndArguments`, and passes the returned `commandWord` into `parseIconCode`, which then returns
+an `Ikon`, which we display.
+
+==== Design Considerations
+
+**Aspect:** Where to get icons +
+**Alternative 1 (current choice):** Use `Ikonli`, a third-party library. +
+**Pros:** Easy to implement. +
+**Cons:** Adds additional third-party dependency. +
+**Alternative 2:** Embed them as images or icons. +
+**Pros:** Easy to customize, as icons are all embedded images. +
+**Cons:** Reinvents the wheel. +
+// end::commandboxicon[]
+
+---
+
 // tag::alias[]
 === Aliases
 
-Users can specify aliases that map to other commands, which helps them reduce the amount of typing required,
-and also the cognitive load of memorising exact commands.
-For example, `alias show list` will map `show` to the `list` command. When the user types `show` in the
-command box, the result will be the same as when he types `list`.
-
-To remove an alias, users can use the
-`unalias` command. For example, `unalias show` will remove the mapping for `show`.
-`unalias`,
-
-We implement this feature by adding a new `Aliases` class to the `UserPrefs` model. Since `UserPrefs` is saved
+We implement aliases by adding a new `Aliases` class to the `UserPrefs` model. Since `UserPrefs` is saved
 to file, aliases will persist through application restarts.
 
 `Aliases` contains a `HashMap<String, String>` which maps `alias -> command`. This allows us to find the
-matching command in amortized O(1) time. By default, `Aliases` contains a map of short-forms for frequently
-used commands. For example, `a -> add`, `d -> delete`, `l -> list`, etc.
+matching command in amortized O(1) time. By default, `Aliases` contains a map of synonyms for frequently
+used commands. For example, `new -> add`, `remove -> delete`, `show -> list`, etc.
 
 We added a new parser, `parseCommandAndArguments` in `ParserUtil` that parses user input into a `commandWord` and `arguments`, which
-`AddressBookParser`, uses. To allow access to the `UserPrefs` instance in `ParserUtil`, we changed `UserPrefs`
+`AddressBookParser` uses. To allow access to the `UserPrefs` instance in `ParserUtil`, we changed `UserPrefs`
 into a link:#singleton[Singleton]. `parseCommandAndArguments` refers to the `Aliases` instance inside `UserPrefs`
 and returns the mapped command.
 
-This sequence diagram shows how `parseCommandAndArguments` work:
+This simplified sequence diagram shows how `parseCommandAndArguments` work:
 
 image::AliasSequenceDiagram.png[width="800"]
 
@@ -848,9 +889,37 @@ image::AliasSequenceDiagram.png[width="800"]
 **Alternative 2:** Pass the `UserPrefs` instance down to the parser +
 **Pros:** Less coupling. Follows Law of Demeter. +
 **Cons:** Heavy changes to code base to pass the instance downstream. +
+// end::alias[]
 
 ___
-// end::alias[]
+
+// tag::autocomplete[]
+=== Autocomplete
+
+We implement autocompletion by introducing a new class: `Autocomplete`. This class contains all the
+utility methods required for obtaining an appropriate autocompletion from a given user input. The
+main method is `autocomplete(String input)`. This takes in the user's input and attempts to generate
+a hint from it. As we need to display the autocompletion in the command box hints, this reduces
+duplicated code required for producing the autocompletion.
+
+There are several other utility methods in the class, such as `autocompleteFromList`, which takes in
+an input and an array of strings, and returns the first command that contains input as a prefix, or
+`autocompleteCommand`, which takes in a command word and compares it with a list of all commands and
+aliases, and autocompletes the command.
+
+
+==== Design Considerations
+
+**Aspect:** Degree of coupling between Autocomplete and Hints. +
+**Alternative 1 (current choice):** Share logic by coupling both classes. +
+**Pros:** Minimize code duplication, as logic can be shared. +
+**Cons:** Increases coupling. Difficult to stub in testing. +
+**Alternative 2:** Implement the logic in both classes. +
+**Pros:** Less coupling. +
+**Cons:** Increase chance of regression if only one class is changed. +
+// end::autocomplete[]
+
+---
 
 === Listening for Input Change
 
@@ -938,7 +1007,7 @@ ___
 
 // end::inline-hints[]
 
-=== Hints and AutoComplete Parsing
+=== Hints and Autocomplete Parsing
 Inline hints and tab autocompletion of user input is encapsulated by a `Hint` object.
 A `Hint` object will take in the current user input and/or other arguments (depending on the implementation of the concrete Hint).
 
