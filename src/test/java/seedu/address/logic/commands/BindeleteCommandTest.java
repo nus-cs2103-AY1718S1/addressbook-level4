@@ -25,7 +25,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author Pengyuz
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code BindeleteCommand}.
  */
 public class BindeleteCommandTest {
 
@@ -153,7 +153,7 @@ public class BindeleteCommandTest {
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Returns a {@code BindeleteCommand} with the parameter {@code index}.
      */
     private BindeleteCommand prepareCommand(ArrayList<Index> indexes) {
 
@@ -164,7 +164,7 @@ public class BindeleteCommandTest {
 
 
     /**
-     * Updates {@code model}'s filtered list to show no one.
+     * Updates {@code model}'s recycle bin filtered list to show no one.
      */
     private void showNoPerson(Model model) {
         model.updateFilteredPersonList(p -> false);

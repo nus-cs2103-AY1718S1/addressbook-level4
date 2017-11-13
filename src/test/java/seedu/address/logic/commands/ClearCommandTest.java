@@ -27,7 +27,7 @@ public class ClearCommandTest {
     }
 
     /**
-     * Generates a new {@code ClearCommand} which upon execution, clears the contents in {@code model}.
+     * Generates a new {@code ClearCommand} which upon execution, clears the contents in address book{@code model}.
      */
     private ClearCommand prepareCommand(Model model) {
         ClearCommand command = new ClearCommand();

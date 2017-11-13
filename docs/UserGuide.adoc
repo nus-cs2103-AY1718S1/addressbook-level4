@@ -78,6 +78,8 @@ Examples:
 Shows the usage of command `list`
 * `help add` +
 Shows the usage of command `add`
+* `help` +
+Shows this User Guide in the opened Help Window.
 // end::help[]
 
 === Adding a person: `add` _[Since v1.1]_
