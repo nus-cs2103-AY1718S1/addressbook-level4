@@ -378,7 +378,7 @@ Examples:
 * `remark 1 r/owes money` +
 adds the remark "owes money" to person of index 1 in the address book.
 
-* `remark 4 r/' +
+* `remark 4 r/` +
 removes any remark from the person of index 4 in the address book.
 // end::remark[]
 
