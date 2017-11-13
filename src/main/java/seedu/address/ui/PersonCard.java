@@ -184,7 +184,7 @@ public class PersonCard extends UiPart<Region> {
      */
     @FXML
     private void toggleFavorite() {
-        raise(new ToggleFavoritePersonEvent(id.getText().substring(0, 1)));
+        raise(new ToggleFavoritePersonEvent(id.getText().substring(0, id.getText().indexOf("."))));
     }
 
     /**

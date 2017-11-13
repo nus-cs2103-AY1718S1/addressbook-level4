@@ -1,0 +1,89 @@
+= Contact+ Pro Test Script
+ifdef::env-github,env-browser[:relfileprefix: ~/docs/]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+== Load the Sample Data
+
+Simply put the `SampleData.xml` in the `data` folder from the directory root that contains `Contact+ Pro.jar`.
+Run the programme and the list of sample data should be loaded into the app.
+
+== Manual Tests
+
+=== Command Line
+
+==== Locate Command
+
+etc
+
+==== Favorite Command
+
+To favorite the 3rd person, type in the command: +
+Type `favorite 3`
+
+The `Result Display` should display the `favorited` followed by the name of the person.
+The favorited person in the list should have the heart Icon beside the name and should appear on the top
+section of the list (along with other favorited persons).
+
+[NOTE]
+====
+To un-favorite a person, simply input the `favorite` command again with the person's index,
+ie `favorite 3`.
+====
+
+==== Find Command
+
+Find command has been powered to search through any properties of a person's class. +
+Type `find Alex`
+
+The programme should now only display `Alex Yeoh` since she's the only person whose attributes contains
+that substring.
+
+For specific attribute search, use a prefix before the searched string: +
+Type `find m/Computer Science`
+
+The programme should now list 8 people in total who have major that contains the subtring
+`Computer Science`.
+
+To return to all persons view: +
+Type `list`.
+
+{Add more test cases here}
+
+---
+
+=== Graphical navigation
+
+==== When clicking on a Group
+
+Click on a group and the list of persons in that group will appear on the
+person list panel on the right.
+
+To return to all persons view: +
+Type `list`.
+
+==== When clicking on a Person
+
+Click on a person cell (Avoid clicking on the details or other functions might get triggered),
+a google mape will appear showing the location of the address of that person.
+
+==== When clicking on a Person's name
+
+Click on a person name label and the browser panel should display a google search result list
+with the name as a parameter.
+
+==== When clicking on a Person's major
+
+Click on a person major label and the browser panel should display a google search result list
+with the string `NUS` + major.
+
+==== When clicking on a Person's heart/heart outline shape
+
+Click on a person's heart/heart outline shape will trigger the `favorite` command on that person.
+When the person `Alex Yeoh` is favorited in the list, click on the heart shape and she will
+be un-favorited (heart shape turns into a heart outline).
+
+==== When clicking on a Person's facebook icon
+
+When a person's facebook icon is shown, click on it will make the browser panel display the profile
+page of the person.
+Click on `Mark Zuckerberg` 's facebook icon to go to his facebook profile.
