@@ -18,7 +18,7 @@ This is by no means an exhaustive list of tests.
 . Rename it `addressbook.xml`.
 
 [NOTE]
-A common mistake is renaming the file name as `addressbook.xml` making the entire file to be read as
+A common mistake is renaming the file name as `addressbook.xml`, making the entire file to be read as
 `addressbook.xml.xml`. Make sure that the name is simply addressbook and the file type is xml.
 
 == Manual testing on UniCity commands

@@ -55,9 +55,56 @@
         <birthday>No Birthday Added</birthday>
         <tagged>friends</tagged>
     </persons>
+    <persons>
+        <name>Bill Gates</name>
+        <phone>88888888</phone>
+        <email>therealbillgates@hotmail.com</email>
+        <address>No Address Added</address>
+        <favourite>False</favourite>
+        <birthday>No Birthday Added</birthday>
+        <tagged>boss</tagged>
+    </persons>
+    <persons>
+        <name>McDonald Trump</name>
+        <phone>99998888</phone>
+        <email>prestrump@gamil.com</email>
+        <address>No Address Added</address>
+        <favourite>True</favourite>
+        <birthday>No Birthday Added</birthday>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Thomas Cormen</name>
+        <phone>80327643</phone>
+        <email>thomascormen@gmail.com</email>
+        <address>MIT</address>
+        <favourite>True</favourite>
+        <birthday>01/01/1956</birthday>
+        <tagged>professors</tagged>
+    </persons>
+    <persons>
+        <name>Alan Turing</name>
+        <phone>97324518</phone>
+        <email>alanturing@gmail.com</email>
+        <address>6 College Avenue East, #20-01</address>
+        <favourite>True</favourite>
+        <birthday>23/06/1912</birthday>
+        <tagged>professors</tagged>
+    </persons>
+    <persons>
+        <name>Tim Jobs</name>
+        <phone>92534954</phone>
+        <email>imnotstevejobs@gmail.com</email>
+        <address>1 Infinite Loop, #01-01</address>
+        <favourite>True</favourite>
+        <birthday>28/02/1974</birthday>
+        <tagged>colleagues</tagged>
+    </persons>
     <tags>colleagues</tags>
     <tags>classmates</tags>
     <tags>neighbours</tags>
     <tags>family</tags>
     <tags>friends</tags>
+    <tags>boss</tags>
+    <tags>professors</tags>
 </addressbook>
