@@ -41,7 +41,9 @@ public class CheckCommandsParser {
         final String[] subFindCommands = new String[] { "find", "f", "look", "search", "check" };
         final String[] subHelpCommands = new String[] { "help", "info" };
         final String[] subHistoryCommands = new String[] { "history", "h", "past" };
-        final String[] subListCommands = new String[] { "listall", "l", "show all", "display all" };
+        final String[] subListAllCommands = new String[] { "listall", "list all", "la", "show all", "display all", "list", "refresh" };
+        final String[] subListPersonsCommands = new String[] { "listpersons", "list persons", "lp", "show persons", "display persons" };
+        final String[] subListEventsCommands = new String[] { "listevents", "list events", "le", "show events", "display events" };
         final String[] subRedoCommands = new String[] { "redo", "r" };
         final String[] subSelectCommands = new String[] { "select", "s", "choose", "pick" };
         final String[] subSortCommands = new String[] { "sort", "arrange", "organise" };
@@ -69,7 +71,9 @@ public class CheckCommandsParser {
         final Set<String> commandsForFind = new HashSet<>(Arrays.asList(subFindCommands));
         final Set<String> commandsForHelp = new HashSet<>(Arrays.asList(subHelpCommands));
         final Set<String> commandsForHistory = new HashSet<>(Arrays.asList(subHistoryCommands));
-        final Set<String> commandsForList = new HashSet<>(Arrays.asList(subListCommands));
+        final Set<String> commandsForListAll = new HashSet<>(Arrays.asList(subListAllCommands));
+        final Set<String> commandsForListPersons = new HashSet<>(Arrays.asList(subListPersonsCommands));
+        final Set<String> commandsForListEvents = new HashSet<>(Arrays.asList(subListEventsCommands));
         final Set<String> commandsForRedo = new HashSet<>(Arrays.asList(subRedoCommands));
         final Set<String> commandsForSelect = new HashSet<>(Arrays.asList(subSelectCommands));
         final Set<String> commandsForSort = new HashSet<>(Arrays.asList(subSortCommands));
@@ -103,7 +107,7 @@ public class CheckCommandsParser {
             finalUserCommand = "help";
         } else if (!Collections.disjoint(userInputCommand, commandsForHistory)) {
             finalUserCommand = "history";
-        } else if (!Collections.disjoint(userInputCommand, commandsForList)) {
+        } else if (!Collections.disjoint(userInputCommand, commandsForListAll)) {
             finalUserCommand = "listall";
         } else if (!Collections.disjoint(userInputCommand, commandsForRedo)) {
             finalUserCommand = "redo";
@@ -129,6 +133,10 @@ public class CheckCommandsParser {
             finalUserCommand = "set";
         } else if (!Collections.disjoint(userInputCommand, commandsForToggleTimetable)) {
             finalUserCommand = "timetable";
+        } else if (!Collections.disjoint(userInputCommand, commandsForListPersons)) {
+            finalUserCommand = "listpersons";
+        } else if (!Collections.disjoint(userInputCommand, commandsForListEvents)) {
+            finalUserCommand = "listevents";
         }
         return finalUserCommand;
     }
