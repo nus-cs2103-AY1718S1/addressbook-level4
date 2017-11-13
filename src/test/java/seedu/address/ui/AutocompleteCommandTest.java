@@ -15,6 +15,7 @@ public class AutocompleteCommandTest {
         assertEquals(AutocompleteCommand.ADD, AutocompleteCommand.getInstance("add"));
         assertEquals(AutocompleteCommand.CLEAR, AutocompleteCommand.getInstance("clear"));
         assertEquals(AutocompleteCommand.DELETE, AutocompleteCommand.getInstance("delete"));
+        assertEquals(AutocompleteCommand.DELETE_TAG, AutocompleteCommand.getInstance("deleteTag"));
         assertEquals(AutocompleteCommand.EDIT, AutocompleteCommand.getInstance("edit"));
         assertEquals(AutocompleteCommand.EXIT, AutocompleteCommand.getInstance("exit"));
         assertEquals(AutocompleteCommand.FIND, AutocompleteCommand.getInstance("find"));
