@@ -12,7 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Date {
 
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "The day month and year must be valid in form dd-mm-yyyy \n"
+            "The day month and year must be valid in form dd/mm/yyyy \n"
                     + "Single value days should be keyed in without 0 in front.";
 
     public static final String DATE_VALIDATION_REGEX = "^\\d{1,2}\\/\\d{1,2}\\/\\d{4}$";
