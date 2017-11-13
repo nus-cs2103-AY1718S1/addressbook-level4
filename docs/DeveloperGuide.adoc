@@ -1,4 +1,4 @@
-﻿= H.M.U v1.4 - Developer Guide
+﻿= H.M.U - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
