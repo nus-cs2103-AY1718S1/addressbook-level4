@@ -5,7 +5,9 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.events.ui.PopulateBirthdayEvent;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 
@@ -60,7 +62,7 @@ public class FindCommand extends Command {
             return new CommandResult(String.format(Messages.MESSAGE_NO_PERSON_FOUND, predicate,
                     String.join(", ", targetsAsList)));
         }
-
+        EventsCenter.getInstance().post(new PopulateBirthdayEvent(model.getFilteredPersonList()));
         return new CommandResult(getMessageForPersonListShownSummary(numberOfPersonsShown));
     }
 
