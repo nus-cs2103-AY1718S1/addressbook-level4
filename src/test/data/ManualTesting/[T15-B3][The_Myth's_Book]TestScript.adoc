@@ -1,0 +1,321 @@
+= The Myth's Book - Test Script
+:sectnums:
+:imagesDir: images
+
+
+== Introduction
+This document explains the steps to perform manual testing, and how to load the sample data.
+
+== Loading the Sample Data
+
+The following are the steps to load sample data:
+
+. Step 1
+  Rename the SampleData.xml to addressbook.xml
+. Step 2
+  Move this addressbook.xml to \data folder.
+. Step 3
+  You will get a dialog box asking if you would like to overwrite the existing addressbook.xml file. Click on `overwrite`.
+
+== Commands to Test
+
+=== Help
+
+Command Usage: `help`
+
+* `help` +
+Expected Result: New window pops up showing all commands The Myth's Book offers.
+
+=== History
+
+Command Usage: `history`
+
+* `history` +
+Expected Result: Shows `help` in the result box.
+
+=== Themes
+
+Command Usage: `themes`
+
+* `themes` +
+Expected Result: Opens a window showing all the themes you can switch to in the application (currently there are two). +
+
+=== Switch themes
+
+Command Usage: `switch INDEX`
+
+To note: +
+****
+* Currently The Myth's Book offers only two themes. So the index provided must be either 1 or 2. +
+****
+
+* `switch 2` +
+Expected Result: Switches theme of application to a bright theme.
+
+* `switch 1` +
+Expected Result: Switches theme of application to a dark theme.
+
+* `switch` +
+Expected Result: Invalid command format!
+                 switch: Switches the current theme to the theme identified by the index number in the themes list.
+                 Parameters: INDEX (must be a positive integer)
+                 Example: switch 1 +
+
+=== Add
+Command Usage: `add n/NAME p/PHONE_NUMBER e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]…`
+
+To note: +
+****
+* NAME, PHONE and EMAIL are compulsory fields for the command.
+****
+
+* `add n/Jessica Alba p/98456321 e/jalaba@hotmail.com` +
+Expected result: New person added
+                 Person list panel jumps to added person card
+                 Details Panel displays newly added persons details. +
+
+* `add n/Dickson Chan p/84563241 e/dickson_chan@gmail.com w/https://www.facebook.com/dicksonChan`  +
+ Expected result: New person added
+                  Person list panel jumps to added person card
+                  Details Panel displays newly added persons details. +
+
+* `add n/James Cordon p/8543219 b/12/11/1998`
+Expected Result:Invalid command format!
+                add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME NUMBER] [se/SCHOOL EMAIL] [b/BIRTHDAY] [t/TAG]...
+                Example: add n/John Doe p/98765432 h/65822291 e/johnd@example.com se/e0001111@u.nus.edu w/https://www.facebook.com/johnDoe a/311, Clementi Ave 2, #02-25 b/12/02/1998 t/friends t/owesMoney +
+
+=== Sort Command
+Command usage:
+`sort`
+
+Note: Sorting does not persist if you close the application.
+
+* `sort` +
+Expected result: List Sorted +
++
+Contact list will be sorted in alphabetical order.
+
+=== Find Command Enhancement
+Command usage:
+`find KEYWORD`
+
+Note: Find allows searching for part of the Contact's name. However, the part of the name you are searching for must be at least 2 characters long and is in the starting of either the first or last name.
+
+=== Find Tags
+
+Command usage: `findtag TAG [TAG..]`
+
+Note: type `list` before each findtag test case.
+
+* `findtag brother` +
+Expected result: 1 persons listed! +
++
+`Wei Hong` will be displayed.
+
+* `findtag colleagues friends` +
+Expected result: 6 persons listed! +
++
+`Alex Yeoh`, `Bernice Yu`, `Irfan Ibrahim`, `Darren`, `Jinting`, `John Doe` will be displayed.
+
+* `findtag work` +
+Expected result: 0 persons listed! +
+
+* `findtag work friends`
+Expected Result: 4 persons listed!
++
+`Alex Yeoh`, `Bernice Yu`, `Darren`, `John Doe` will be displayed.
+
+* `findtag` +
+Expected result: Invalid command format!
+                 findtag: Finds all persons whose tags contain any of the specified keywords (case-insensitive) and displays them as a list with index numbers.
+                 Parameters: KEYWORD [MORE_KEYWORDS]...
+                 Example: findtag friend +
+
+=== Birthdays
+
+Command usage: `birthdays`
+
+* `birthdays` +
+Expected Result: Wish these 1 people a Happy Birthday!
++
+`Bernice Yu` will be displayed.
+
+* `bd` +
+Expected Result: Wish these 1 people a Happy Birthday!
++
+`Bernice Yu` will be displayed.
+
+* `birthday` +
+Expected Result: Unknown command
+
+=== Locate
+*Please type the `list` command before conducting the test.*
+
+Command usage: `locate INDEX`
+
+Note: Google maps might not load immediately please wait awhile. +
+
+* `locate 3` +
+Expected Result: Accessed location of Person: David Li at Index 3
++
+Google maps is shown on the right most panel with David Li's address location. +
+
+* `locate 19` +
+Expected Result: User accessed does not have an address! +
+
+* `locate 23`
+Expected Result: The index provided is invalid. +
+
+* `locate` +
+Expected Result: Invalid command format!
+                 locate: Accesses the location of the person identified by the index number used in the last person listing.
+                 Parameters: INDEX (must be a positive integer)
+                 Example: locate 1 +
+
+=== Access
+*Please reload the `addressbook.xml` data before conducting the test.*
+
+Command Usage: `access INDEX`
+
+To note: +
+****
+*Browser might not load immediately please wait awhile. +
+*Please sign in to the corresponding social media page to access the person's details.
+****
+
+. `access 2` +
+Expected result: Accessed website of Person: Bernice Yu at Index 2. +
+
+. `access 23` +
+Expected result: The index provided is invalid. +
+
+. `access 19` +
+Expected Result: User does not have website. +
+
+. `access` +
+Expected Result: Invalid command format!
+                 access: Accesses the website of the person identified by the index number used in the last person listing.
+                 Parameters: INDEX (must be a positive integer)
+                 Example: access 1 +
+
+
+
+=== Adding an event
+*Please make sure to reload the sample reminder data before conducting the tests below to have accurate expected results.*
+* Please type `events` to be in the events list panel before starting this section of the test.
+
+Command usage: `addevent n/NAME d/DATE a/ADDRESS`
+
+To note: +
+****
+* All three parameters NAME, DATE and ADDRESS must be filled. +
+* DATE must be in the format dd/mm/yyyy. `'-'`, `'/'` and `'.'` can be used to separate the day, month and year field of the date. +
+* NAME can be of any value, as long as it is not empty.
+* If the event has passed, the calendar cell corresponding to the date of the event is colored in beige. +
+* The `undo` and `redo` commands apply to events.
+****
+
+Cases:
+
+. `events`
+
+. `addevent n/Bowling with friends d/20/11/2017 a/Kallang bowling` +
+Expected result: New event added: Bowling with friends Date: 20/11/2017 Address: Kallang bowling +
+A new event would be added to the events list.
+Calendar UI is populated. +
+
+
+. `addevent n/Exam d/18-11-2017 a/NUS` +
+Expected result: The day month and year must be valid in form dd-mm-yyyy
+                 Single value days should be keyed in without 0 in front.+
+
+. `addevent n/Jess's birthday a/Home` +
+Expected result : Invalid command format!
+                  addevent: Adds an event to the address book. Parameters: n/NAME d/DATE a/ADDRESS
+                  Example: addevent n/ZoukOut d/5/12/2017 a/Sentosa Beach, Siloso +
+
+=== delete an event
+*Please undo after each delete event command. *
+*Please switch to events list panel before trying out this test. *
+
+Command Usage: `deleteevent INDEX`
+
+. `deleteevent 1` +
+Expected Result: Deleted Event: ZoukOut Date: 5/12/2017 Address: Sentosa Beach, Siloso +
+
+. `deleteevent` +
+Expected Result: Invalid command format!
+                 deleteevent: Deletes the event identified by the index number used in the last person listing.
+                 Parameters: INDEX (must be a positive integer)
+                 Example: deleteevent 1 +
+
+. `deleteevent 21` +
+Expected Result: The index provided is invalid +
+
+
+=== Events
+Command usage: `events`
+
+* `events` +
+Expected Result: Listed all events.
+switch to Events list +
+
+=== Favourite
+* Please switch to person list panel using the `list` command before trying out this test. *
+
+Command Usage: `favourite INDEX`
+
+To note: +
+****
+* Use the `favourites` command to check if person has been added to favourite list.
+****
+
+* `favourite 3` +
+Expected result: Favourited Person: Charlotte Oliveiro Phone: 93210283 HomeNumber: 61112223 Email: charlotte@example.com SchEmail: charlotte@u.ntu.edu Website: https://www.facebook.com/charlotteO Address: Blk 11 Ang Mo Kio Street 74, #11-04 Birthday: 05/03/2001 Tags: [neighbours] +
+
+* `favourite 3` +
+Expected result: Person is already favourited. +
+
+* `favourite 21` +
+Expected result: The index provided is invalid.
+
+* `favourite` +
+Expected result: Invalid command format!
+                 favourite: Favourites the person identified by the index number used in the last person listing.
+                 Parameters: INDEX (must be a positive integer)
+                 Example: favourite 1
+
+=== Unfavourite
+* Please switch to person list panel using the `list` command before trying out this test. *
+
+Command Usage: `unfavourite INDEX`
+
+To note: +
+****
+* Use the `favourites` command to check if person has been added to favourite list.
+****
+
+* `unfavourite 3` +
+Expected result: Unfavourited Person: Charlotte Oliveiro Phone: 93210283 HomeNumber: 61112223 Email: charlotte@example.com SchEmail: charlotte@u.ntu.edu Website: https://www.facebook.com/charlotteO Address: Blk 11 Ang Mo Kio Street 74, #11-04 Birthday: 05/03/2001 Tags: [neighbours] +
+
+* `unfavourite 3` +
+Expected result: Person is not favourited. +
+
+* `unfavourite 21` +
+Expected result: The index provided is invalid.
+
+* `unfavourite` +
+Expected result: Invalid command format!
+                 unfavourite: Unfavourites the person identified by the index number used in the last person listing.
+                 Parameters: INDEX (must be a positive integer)
+                 Example: unfavourite 1
+
+=== Favourites
+* Please switch to person list panel using the `list` command before trying out this test. *
+
+Command Usage: `favourites`
+
+ * `favourites` +
+ Expected Result: Listed all favourited persons. +
+
+
