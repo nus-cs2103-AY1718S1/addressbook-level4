@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>John Doe</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Test Person</name>
+        <phone>82533579</phone>
+        <email>Test@email.com</email>
+        <address>Blk 141 Toilet Rd #02-22</address>
+    </persons>  
+    <persons>
+        <name>Test Person2</name>
+        <phone>82333579</phone>
+        <email>Test@email.com</email>
+        <address>Blk 151 Toilet Rd #02-24</address>
+    </persons>
+    <persons>
+        <name>Elvis Poh</name>
+        <phone>82333755</phone>
+        <email>Idol@email.com</email>
+        <address>Blk 151 NUS Rd #04-24</address>
+        <tagged>Idol</tagged>
+    </persons>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+    <tags>owesMoney</tags>
+    <tags>Idol</tags>
+    <meetings>
+        <name>Soccer Game</name>
+        <place>Nus field</place>
+        <date>01-01-3000 00:00</date>
+        <persons>
+            <name>Alex Yeoh</name>
+            <phone>87438807</phone>
+            <email>alexyeoh@example.com</email>
+            <address>Blk 30 Geylang Street 29, #06-40</address>
+            <tagged>friends</tagged>
+        </persons>
+        <persons>
+            <name>Bernice Yu</name>
+            <phone>99272758</phone>
+            <email>berniceyu@example.com</email>
+            <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+            <tagged>colleagues</tagged>
+            <tagged>friends</tagged>
+        </persons>
+        <persons>
+            <name>Charlotte Oliveiro</name>
+            <phone>93210283</phone>
+            <email>charlotte@example.com</email>
+            <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+            <tagged>neighbours</tagged>
+        </persons>
+        <meetTag>1</meetTag>
+    </meetings>
+    <meetings>
+        <name>Soccer Practice</name>
+        <place>Nus field</place>
+        <date>01-01-3000 00:01</date>
+        <persons>
+            <name>Alex Yeoh</name>
+            <phone>87438807</phone>
+            <email>alexyeoh@example.com</email>
+            <address>Blk 30 Geylang Street 29, #06-40</address>
+            <tagged>friends</tagged>
+        </persons>
+        <meetTag>1</meetTag>
+    </meetings>
+    <meetings>
+        <name>Talking session</name>
+        <place>School Canteen</place>
+        <date>01-01-3000 00:03</date>
+        <persons>
+            <name>Irfan Ibrahim</name>
+            <phone>92492021</phone>
+            <email>irfan@example.com</email>
+            <address>Blk 47 Tampines Street 20, #17-35</address>
+            <tagged>classmates</tagged>
+        </persons>
+        <meetTag>0</meetTag>
+    </meetings>
+    <meetings>
+        <name>Dinner</name>
+        <place>TechnoEdge</place>
+        <date>01-01-3000 00:05</date>
+        <persons>
+            <name>Charlotte Oliveiro</name>
+            <phone>93210283</phone>
+            <email>charlotte@example.com</email>
+            <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+            <tagged>neighbours</tagged>
+        </persons>
+        <meetTag>1</meetTag>
+    </meetings>
+    <meetings>
+        <name>Swimming</name>
+        <place>Nus Pool</place>
+        <date>02-01-3000 00:01</date>
+        <persons>
+            <name>David Li</name>
+            <phone>91031282</phone>
+            <email>lidavid@example.com</email>
+            <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+            <tagged>family</tagged>
+        </persons>
+        <meetTag>1</meetTag>
+    </meetings>
+    <meetings>
+        <name>Treasure Hunting</name>
+        <place>Pacific Ocean</place>
+        <date>02-01-3000 00:06</date>
+        <persons>
+            <name>John Doe</name>
+            <phone>98765432</phone>
+            <email>johnd@example.com</email>
+            <address>311, Clementi Ave 2, #02-25</address>
+            <tagged>owesMoney</tagged>
+            <tagged>friends</tagged>
+        </persons>
+        <meetTag>1</meetTag>
+    </meetings>
+    <meetings>
+        <name>Pilgrimage</name>
+        <place>Mordor</place>
+        <date>01-01-3010 00:00</date>
+        <persons>
+            <name>Irfan Ibrahim</name>
+            <phone>92492021</phone>
+            <email>irfan@example.com</email>
+            <address>Blk 47 Tampines Street 20, #17-35</address>
+            <tagged>classmates</tagged>
+        </persons>
+        <persons>
+            <name>Roy Balakrishnan</name>
+            <phone>92624417</phone>
+            <email>royb@example.com</email>
+            <address>Blk 45 Aljunied Street 85, #11-31</address>
+            <tagged>colleagues</tagged>
+        </persons>
+        <meetTag>1</meetTag>
+    </meetings>
+    <meetings>
+        <name>Concert</name>
+        <place>TestLocation</place>
+        <date>30-12-9999 23:59</date>
+        <persons>
+            <name>Elvis Poh</name>
+            <phone>82333755</phone>
+            <email>Idol@email.com</email>
+            <address>Blk 151 NUS Rd #04-24</address>
+            <tagged>Idol</tagged>
+        </persons>
+        <meetTag>1</meetTag>
+    </meetings>
+    <meetings>
+        <name>Test Group Meeting</name>
+        <place>TestLocation2</place>
+        <date>31-12-9999 23:58</date>
+        <persons>
+            <name>Test Person</name>
+            <phone>82533579</phone>
+            <email>Test@email.com</email>
+            <address>Blk 141 Toilet Rd #02-22</address>
+        </persons>
+        <persons>
+            <name>Test Person2</name>
+            <phone>82333579</phone>
+            <email>Test@email.com</email>
+            <address>Blk 151 Toilet Rd #02-24</address>
+        </persons>
+        <persons>
+            <name>Elvis Poh</name>
+            <phone>82333755</phone>
+            <email>Idol@email.com</email>
+            <address>Blk 151 NUS Rd #04-24</address>
+            <tagged>Idol</tagged>
+        </persons>
+        <meetTag>1</meetTag>
+    </meetings>
+    <meetings>
+        <name>Test Meeting</name>
+        <place>TestLocation</place>
+        <date>31-12-9999 23:59</date>
+        <persons>
+            <name>Test Person</name>
+            <phone>82533579</phone>
+            <email>Test@email.com</email>
+            <address>Blk 141 Toilet Rd #02-22</address>
+        </persons>
+        <meetTag>2</meetTag>
+    </meetings>
+</addressbook>

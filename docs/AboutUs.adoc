@@ -19,7 +19,7 @@ Responsibilities: LOGIC
 '''
 === Ng Kheng Yi
 image::khengyi.png[width="150", align="left"]
-{empty}[http://github.com/kyngyi[github]] [<<khengyi#, portfolio>>]
+{empty}[http://github.com/kyngyi[github]] [<<kyngyii#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model
@@ -35,7 +35,7 @@ Responsibilities: UI & Storage
 '''
 === Muhammad Syabil Bin Mohamed Sazali
 image::syabildoo.png[width="150", align="left"]
-{empty}[https://github.com/syabildoo[github]] [<<syabildoo#, portfolio>>]
+{empty}[https://github.com/syabildoo[github]] [<<Syabil#, portfolio>>]
 
 Role: Member +
 Responsibilities: Model & UI
