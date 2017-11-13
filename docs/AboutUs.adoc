@@ -40,7 +40,7 @@ Responsibilities: Storage
 
 === Xiang Hailin
 image::Hailinx.png[width="150", align="left"]
-{empty}[<<Xiang Hailin#, portfolio>>]
+{empty}[<<XiangHailin#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Logic
