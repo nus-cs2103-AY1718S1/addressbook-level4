@@ -345,7 +345,7 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1a1e37, 5%);
+    -fx-background-color: #1a1e37;
     -fx-background-radius: 18 18 18 18;
     -fx-background-insets: 1;
 }
@@ -555,6 +555,38 @@
 }
 
 #header {
+    -fx-font-size: 15px;
+}
+
+#aliasListView {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#aliasListPanel {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#representation {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#keyword {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#representationLabel {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#keywordLabel {
+    -fx-font-family: "Space Mono Italic";
     -fx-font-size: 15px;
 }
 

@@ -13,13 +13,13 @@
 
 <HBox fx:id="sortMenuBox" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="findIcon" fitHeight="40.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/search.png" />
          </image>
       </ImageView>
       <TextField fx:id="searchBox" onKeyReleased="#handleSearchFieldChanged" prefHeight="40.0" prefWidth="167.0" promptText="Search Person..." />
-      <MenuButton mnemonicParsing="false">
+      <MenuButton fx:id="sortMenu" mnemonicParsing="false">
         <items>
           <MenuItem fx:id="nameItem" mnemonicParsing="false" onAction="#handleNameItemPressed" text="Name" />
           <MenuItem fx:id="phoneItem" mnemonicParsing="false" onAction="#handlePhoneItemPressed" text="Phone" />

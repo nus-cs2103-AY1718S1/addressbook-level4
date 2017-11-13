@@ -384,4 +384,37 @@
     -fx-font-size: 15px;
 }
 
+/* ========== ALIAS CARD ==========*/
+#aliasListView {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#aliasListPanel {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#representation {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#keyword {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#representationLabel {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#keywordLabel {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
 

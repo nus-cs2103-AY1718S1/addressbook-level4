@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
@@ -54,6 +55,9 @@ public class SortFindPanel extends UiPart<Region> {
 
     @FXML
     private MenuItem addressItem;
+    
+    @FXML
+    private ImageView findIcon;
 
     public SortFindPanel(Logic logic) {
         super(FXML);
@@ -190,6 +194,7 @@ public class SortFindPanel extends UiPart<Region> {
         searchBox.setPromptText("Search Person...");
         sortMenu.setVisible(true);
         searchBox.setVisible(true);
+        findIcon.setVisible(true);
     }
 
     /**
@@ -198,6 +203,8 @@ public class SortFindPanel extends UiPart<Region> {
     private void switchToAliasView() {
         searchBox.setVisible(false);
         sortMenu.setVisible(false);
+        findIcon.setVisible(false);
+        
     }
 
     /**
@@ -221,6 +228,7 @@ public class SortFindPanel extends UiPart<Region> {
         searchBox.setPromptText("Search Task...");
         sortMenu.setVisible(false);
         searchBox.setVisible(true);
+        findIcon.setVisible(true);
     }
 
     public MenuButton getSortMenu() {
