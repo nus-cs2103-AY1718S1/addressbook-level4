@@ -39,7 +39,7 @@
       </StackPane>
       <StackPane id="eventDescription" prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Label id="eventDescription" fx:id="descriptionLabel" prefHeight="158.0" prefWidth="278.0" text="Event Description Placeholder" wrapText="true" StackPane.alignment="BOTTOM_LEFT">
+            <Label id="eventDescription" fx:id="descriptionLabel" prefHeight="181.0" prefWidth="802.0" text="Event Description Placeholder" wrapText="true" StackPane.alignment="BOTTOM_LEFT">
                <padding>
                   <Insets bottom="150.0" />
                </padding>
