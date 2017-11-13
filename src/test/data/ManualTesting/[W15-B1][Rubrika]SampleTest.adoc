@@ -1,5 +1,182 @@
 = Manual Testing Script
 
+== Testing : ChangeTheme feature
+
+=== Theme Command
+
+==== Valid Input with success message
+
+_Test:_ +
+Enter `theme` `RedTheme` .
+
+_Result:_ +
+theme of Rubrika should change with success message "Theme Changed to RedTheme".
+
+Other available themes includes:
+****
+* DarkTheme.
+****
+
+==== Invalid Input with warning
+
+_Test:_ +
+Enter `theme` `YellowTheme`.
+
+_Result:_ +
+Nothing will change. Show warning message "Theme not found".
+
+****
+* theme command is case-sensitive, "yellowtheme" is not equals to "YellowTheme"
+****
+
+== Testing : FindTag feature
+
+=== Findtag Command
+
+==== Valid Input with success message
+
+_Test:_ +
+Enter `findtag` `important`.
+
+_Result:_ +
+9 person should be listed all with the tag `important`.
+
+Finding contacts with multiple tags is allows. Other valid tags includes:
+****
+*prospective +
+*event
+****
+
+==== Invalid command format
+
+_Test:_ +
+Enter `findtag` follow by nothing.
+
+_Result:_ +
+Warning "Invalid command format!".
+
+****
+* theme command is case-insensitive, "FRIENDS" is equals to "friends"
+****
+
+== Testing : ChangeTheme feature
+
+=== Theme Command
+
+==== Valid Input with success message
+
+_Test:_ +
+Enter `theme` `RedTheme` .
+
+_Result:_ +
+theme of Rubrika should change with success message "Theme Changed to RedTheme".
+
+Other available themes includes:
+****
+* DarkTheme.
+****
+
+==== Invalid Input with warning
+
+_Test:_ +
+Enter `theme` `YellowTheme`.
+
+_Result:_ +
+Nothing will change. Show warning message "Theme not found".
+
+****
+* theme command is case-sensitive, "yellowtheme" is not equals to "YellowTheme"
+****
+
+== Testing : Google Map feature
+
+=== Search Address On Google Map
+
+==== Show Address on Google Map
+
+_Test:_ +
+Click any person listed in contact list.
+
+_Result:_ +
+Google Map panel appear, auto input address of contact person and search it on Google Map.
+
+== Testing : Remarks feature
+
+=== Remark Command
+
+==== Valid Input with success message
+
+_Test:_ +
+Enter `remark 1 r/meeting at 3am`.
+
+_Result:_ +
+First person in the contact list should have a remark "meeting at 3am" included in the contact.
+
+Removing an existing remark can be done by:
+****
+* Enter `remark 1 r/`.
+****
+
+==== Invalid Input with warning
+
+_Test:_ +
+Enter `remark 200 r/meeting at 3am`.
+
+_Result:_ +
+Show warning message "The person index provided is invalid".
+
+****
+* Adding new remark under the same contact will remove previous remark.
+****
+
+== Testing : Help feature
+
+=== help Command
+
+==== Valid input with success call up window.
+
+_Test:_ +
+Enter `help`.
+
+_Result:_ +
+New help window appear showing User Guide.
+
+== Testing : Delete feature
+
+=== Delete Command
+
+==== Valid Input with success message
+
+_Test:_ +
+Enter `delete 1`.
+
+_Result:_ +
+First person in the contact list should be deleted with message "Deleted Person: [NAME] [PHONE] [EMAIL] [ADDRESS] [REMARKS] [TAGS]".
+
+==== Invalid Input with warning
+
+_Test:_ +
+Enter `delete 200`.
+
+_Result:_ +
+Show warning message "The person index provided is invalid".
+
+****
+* Delete the entire contact list by using the `clear` command.
+****
+
+== Testing : Clear feature
+
+=== Clear Command
+
+==== Valid Input with success message
+
+_Test:_ +
+Enter `clear`
+
+_Result:_ +
+Entire contact list is deleted with message "Address book has been cleared!".
+
 == Testing : AutoComplete feature
 
 === AutoComplete Command
