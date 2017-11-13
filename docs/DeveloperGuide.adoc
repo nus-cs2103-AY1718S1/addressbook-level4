@@ -616,6 +616,12 @@ Sort extends command which makes it an undoable command.
 
 Sort command can only be executed only if the person list is not empty.
 
+image::sort.PNG[width="800"]
+_Figure 4.5 : Sequence diagram for `SortCommand`_
+
+Firsty, the user inputs a string "sort" which will then create a SortCommand instance which will then be excuted by the ModelManager class which will then sorts the list according to alphabetical order of the contacts names.
+The new sorted list will then be returned and shown back to the user.
+
 It uses the sort method from the collection class to sort the array list of persons in the address book:
 
 [source, java]
@@ -635,6 +641,7 @@ public Boolean sortPersonList(ArrayList<ReadOnlyPerson> personlist) {
         return true;
 }
 ----
+
 // end::sort[]
 
 // tag::theme[]
