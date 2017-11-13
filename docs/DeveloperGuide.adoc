@@ -763,28 +763,42 @@ Also creates coupling between the `Autocompleter` and `CommandBox`. +
 //end::autocomplete[]
 
 //tag::trackingNumber[]
-
 === Tracking Number Field
 
 Parcels have tracking numbers for delivery vendors to keep track of the parcels that they send out on a daily basis.
 This feature is important because a single person can have many parcels belonging to him. Tracking numbers are used
 to differentiate between the different parcels that are going to be delivered to the same person. Tracking numbers also
-serve as a better way of narrowing down and pinpointing parcels of interest since these numbers are more unique
+serve as a better way of narrowing down and pinpointing parcels of interest since these numbers are likely to be more
+unique than names in a localized region.
 
 [NOTE]
 Presently, the `Tracking Number` Field only has support for Registered Article tracking numbers belonging to SingPost.
 You can read more about their Registered Article tracking number
  link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here].
 
+==== Design Considerations
+
+**Tracking Numbers implementation.**
+
+* **Alternative 1 (current choice):** Ark allows duplicate `TrackingNumber` entries.
+** **Pros:** In the event that the number of parcels in the users' inventory exceeds the number of possible
+`TrackingNumber` entries, the user will still be able to add the parcel into Ark. There has been instances where
+tracking numbers were reused. Moreover, different delivery companies have different policies on how the tracking
+numbers` are used. Therefore, it is difficult to implement a general policy for `TrackingNumber` entries. +
+** **Cons:** Less intuitive to users. +
+* **Alternative 2:** Ark only allows non-duplicate `TrackingNumber` entries.
+** **Pros:** More intuitive for users. +
+** **Cons:** Impossible to add parcel with duplicate entry even if the parcel does have that specific `Tracking Number`.
+This issue can occur during festive periods such as Christmas when the number of parcels can exceed the number of
+`TrackingNumber` entries.
 //end::trackingNumber[]
 
 //tag::postalCode[]
+=== Postal Code Field
 
-=== PostalCode Field
-
-The `PostalCode` field is implemented as part of Address. This class stores the postal address of locations in Singapore.
-It only accepts values of `s` or `S` followed by 6 digits. The value stored in this class is used to store the postal
-code of the address. The value is used to query Google Maps when the `select` command is executed.
+The Postal Code field is implemented as part of Address. The `Postal Code` class stores the postal address of locations
+in Singapore. It only accepts values of `s` or `S` followed by 6 digits. The value stored in this class is used to store
+ the postal code of the address. The value is used to query Google Maps when the `select` command is executed.
 
 [NOTE]
 Presently, the `PostalCode` field still does a very relaxed validation and does not completely ensure that the postal
@@ -792,13 +806,30 @@ code exists even though it might meet the criteria above. The team is working on
  in Singapore by quering the Google Maps Distance Matrix API. In the meantime, it is assumed that users will enter
  the correct postal code.
 
+==== Design Considerations
+
+**Implementation of `Postal Code`**
+
+* **Alternative 1 (current choice):** `Postal Code` is designed as a part of the `Address` class.
+** **Pros:** This composition relationship is more intuitive. If an `Address` is deleted, its corresponding `Postal
+Code` is also deleted.
+** **Cons:** - +
+* **Alternative 2:** Separate the `PostalCode` class from the `Address` class
+** **Pros:** - +
+** **Cons:** When an `Address` is deleted, its corresponding `PostalCode` has to be searched and deleted as well. This
+results in more overhead.
 //end::postalCode[]
 
 //tag::status[]
-
 === Status field
 
-`Status` is used to indicate the current stage of delivery that a parcel is at. It has 4 possible states:
+`Status` represents the current stage of delivery that a parcel is at. As seen in the class diagram below,
+`Status` is implemented using `Enumeration` interface and it has the four possible values:
+
+image::StatusClassDiagram.png[width:"250"]
+_Figure 4.13: Status Class Diagram_
+
+The following are the descriptions for the four possible values of `Status`:
 
 [width="100%",cols="20%,<80%",options="header",]
 |=======================================================================
@@ -810,20 +841,44 @@ delivered by.
 |OVERDUE | This state indicates that the parcel has not been delivered and has passed its due date.
 |=======================================================================
 
-These states have different colours codes to allow users to differentiate the `Status` values more easily.
+As seen in the class diagram, the `getInstance()` method retrieves the static instance of `Status` based on the `status`
+String input. For example, `getInstance("pending")` will return the `PENDING Status`. Additionally, Status is updated
+automatically when a parcel is edited, added. The Status of parcels in Ark will also be updated when Ark first launches.
+This is done through the `getUpdatedInstance(s : Status, d : DeliveryDate)` method and the overloaded method
+`getUpdated(d : DeliveryDate)` method. +
+
+The automatic `Status` update updates based on the comparison of today's date to the `DeliveryDate` object given as the
+parameter of `getUpdatedStatus()`. If today's date is after the date indicated in the `DeliveryDate` object, the method
+will return an `OVERDUE Status`. Otherwise, it will return a `PENDING Status`. The `Status` update only works for
+`Status` values of `PENDING` and `OVERDUE`. `COMPLETED` and `DELIVERING Status` are not updated.
 
 ==== Design Considerations
 
-**`Implementation of Status`**
+**Implementation of `Status`**
 
-* **Alternative 1 (current choice):** Status is an enum class.
-** **Pros:** `Status` should only have fixed values. The user should also not be allowed to create new `Status` objects.
+* **Alternative 1 (current choice):** Status implements an Enumeration.
+** **Pros:** `Status` has a fixed number of  values. The user should also not be allowed to create new `Status` objects.
+This also standardizes the naming conventions used to describe the same delivery status in Ark.
 ** **Cons:** Less options for the user to alter the `Status` values +
 * **Alternative 2:** Allow the user to define any `Status` they wish.
 ** **Pros:** Users have more versatility on naming conventions
 ** **Cons:** It becomes more difficult to import data files since different users may use different terminologies to
-describe the same status of the parcel.
+describe the same `Status` of the parcel.
 
+---
+
+**Updating of `Status`**
+
+* **Alternative 1 (current choice):** Separate `Status` update from retrieving an instance of Status
+** **Pros:** By separating the update and retrieval, we are using the Separation of Concerns Principle, `getInstance()`
+checks if the String input is a valid `Status` and returns it. On the other hand, `getUpdatedInstance()` receives a
+valid `Status` and returns an updated `Status` with respect to the `DeliveryDate` provided as a parameter. Easier to
+test these methods and integrate the automatic `Status` update into the codebase.
+** **Cons:** More overhead. +
+* **Alternative 2:** Update `State` in `getInstance()`.
+** **Pros:** Less overhead and more intuitive.
+** **Cons:** More tedious to code because a `DeliveryDate` object has to be instantiated before programmer is able to
+retrieve a `Status`.
 //end::status[]
 
 //tag::deliveryDate[]
