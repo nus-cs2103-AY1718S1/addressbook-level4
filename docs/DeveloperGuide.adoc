@@ -586,6 +586,19 @@ UI parts (nodes) in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetails
 
 `ParallelTransition` is used to play multiple `Transition` objects simultaneously. In this case, it plays `FadeTransition` and `TranslateTransition` together, resulting in what you see - text and images fading in from nothing.
 
+=== Design Considerations
+
+**Aspect:** Implementation of the user interface components +
+**Alternative 1 (current choice):** Basic layout by `.FXML` files,
+nested components created by code. +
+**Pros:** Scene Builder and  `.FXML` files will not be cluttered and complicated +
+**Cons:** It will be more difficult for you to troubleshoot components that are created at run-time. +
+**Alternative 2:** Basic layout and nested components in `.FXML` files. +
+**Pros:** It will be easier for you to troubleshoot UI components using Scene Builder +
+**Cons:** Scene Builder and `.FXML` files may be extremely complicated and cluttered;
+there is no segregation of basic layout and content placeholders.
+// end::UISystem[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
