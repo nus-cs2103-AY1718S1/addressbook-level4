@@ -518,7 +518,7 @@ Only name and phone number are the required fields. +
 
 Program will handle and create default objects for all other fields that are not fulfilled by user. +
 
-The function below is the code to create default values for empty fields.
+The function below is the code to create objects with default values when empty field exists.
 
 [source, java]
 ----
