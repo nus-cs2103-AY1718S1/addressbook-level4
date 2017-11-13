@@ -999,7 +999,7 @@ image::saving-theme-preference-seq-diagram.png[width="800"]
 To allow user to find their contacts more easily, we implemented the adding of display photo feature. This would be especially helpful to those users who are visual learners so that they can remember their contacts more easily as well.
 
 .DisplayPhoto is one of the members in the Person class
-image::person-class-diagram-displayphoto.png[width="800"
+image::person-class-diagram-displayphoto.png[width="800"]
 
 ==== Contacts without Display Photo
 
