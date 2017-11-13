@@ -5,12 +5,12 @@
 
 == Project: The Classroom
 The Classroom is a desktop address book application designed to specifically cater to students to manage their contacts.
-The user interacts with it using a CLI, and it has a GUI created with JavaFX.
-It is written in Java.
+The user interacts with it using a CLI, has a GUI created with JavaFX and is wriitten in Java.
+
 The Classroom is equipped with features and functionalities aimed to facilitate in effectively managing contacts'
 details as well as tasks that they may share with them which is represented  in the application in the form of remarks.
 
-This portfolio page aims to highlight features that has been enhanced or introduced to meet the needs of students and
+This portfolio page aims to highlight features that have been enhanced or introduced to meet the needs of students and
 further push the capabilities of the application towards total user-customisation. Additionally, extracts of the User and Developer Guide are
 included to further illustrate the implementation and execution of these features.
 
@@ -109,9 +109,4 @@ the Clock and Date aspect.
 
 === Other contributions
 
-//* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-//* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
-== Project:
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+Added Welcome screen in browser panel as part of UI. (Pull Request https://github.com/CS2103AUG2017-T09-B4/main/pull/120[#120])

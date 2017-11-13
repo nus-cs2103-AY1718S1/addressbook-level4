@@ -12,9 +12,9 @@ public class AddTagCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Add the tag to a person by the index number used "
             + "in the last person listing.\n"
-            + "Parameters: INDEX... TAG...(INDEX must be positive integer)\n"
-            + "[INDEX] can be set as a range."
-            + "Example: " + COMMAND_WORD + " 1 friends"
+            + "Parameters: INDEX... TAG...(INDEX must be positive integer & TAG must be alphanumeric)\n"
+            + "[INDEX] can be set as a range.\n"
+            + "Example: " + COMMAND_WORD + " 1 friends\n"
             + "Example: " + COMMAND_WORD + " 1-4 friends";
 
     public static final String MESSAGE_ADDED_SUCCESS = "Added Tag: %1$s";
@@ -40,17 +40,21 @@ public class AddTagCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         String successMessage;
         String duplicate;
+        Set<Tag> tagDisplaySet;
 
         for (Index i : index) {
             if (i.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
-        successMessage = String.format(MESSAGE_ADDED_SUCCESS + " to index " + indexDisplay + ".", tag);
+        successMessage = MESSAGE_ADDED_SUCCESS + " to index " + indexDisplay + ".";
         duplicate = String.format(MESSAGE_DUPLICATE_TAG + " index: " + indexDisplay + ".", tag);
 
+        String completeSuccess;
+
         try {
-            model.addTag(tag, index);
+            tagDisplaySet = model.addTag(tag, index);
+            completeSuccess = String.format(successMessage, tagDisplaySet);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(
                     String.format
@@ -58,7 +62,7 @@ public class AddTagCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new CommandException(duplicate);
         }
-        return new CommandResult(successMessage);
+        return new CommandResult(completeSuccess);
     }
 
     @Override
@@ -122,9 +126,9 @@ public class RemoveTagCommand extends UndoableCommand {
             + "in the last person listing.\n"
             + "Remove the specified tag in the whole address book by excluding the [INDEX] parameter.\n"
             + "Parameters: INDEX... TAG...(INDEX must be positive integer)\n"
-            + "[INDEX] can be set as a range."
-            + "Example: " + COMMAND_WORD + " 1 friends"
-            + "Example: " + COMMAND_WORD + " 1-4 friends";
+            + "[INDEX] can be set as a range.\n"
+            + "Example: " + COMMAND_WORD + " 1 friends\n"
+            + "Example: " + COMMAND_WORD + " 1-4 friends\n";
 
     public static final String MESSAGE_REMOVE_SUCCESS = "Removed Tag: %1$s";
     public static final String MESSAGE_TAG_NOT_FOUND = "Tag: %1$s does not exist in";
@@ -149,6 +153,21 @@ public class RemoveTagCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         String successMessage;
         String notFound;
+        Set<Tag> tagDisplaySet;
+        List<Integer> numList = new ArrayList<>();
+
+
+        Iterator<String> it = indexList.iterator();
+        while (it.hasNext()) {
+            int numToAdd = Integer.parseInt(it.next());
+            numList.add(numToAdd);
+        }
+        Collections.sort(numList);
+        indexList.clear();
+        for (Integer i : numList) {
+            String strToAdd = String.valueOf(i);
+            indexList.add(strToAdd);
+        }
 
         String indexDisplay = indexList.stream().collect(Collectors.joining(", "));
 
@@ -159,16 +178,18 @@ public class RemoveTagCommand extends UndoableCommand {
                     throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
                 }
             }
-            successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from index " + indexDisplay + ".", tag);
+            successMessage = MESSAGE_REMOVE_SUCCESS + " from index " + indexDisplay + ".";
             notFound = String.format(MESSAGE_TAG_NOT_FOUND + " index: " + indexDisplay + ".", tag);
         } else {
-            successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from address book.", tag);
+            successMessage = MESSAGE_REMOVE_SUCCESS + " from address book.";
             notFound = String.format(MESSAGE_TAG_NOT_FOUND + " the address book.", tag);
         }
 
+        String completeSuccess;
 
         try {
-            model.removeTag(tag, indexList);
+            tagDisplaySet = model.removeTag(tag, indexList);
+            completeSuccess = String.format(successMessage, tagDisplaySet);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(
                     String.format
@@ -176,7 +197,7 @@ public class RemoveTagCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new CommandException(notFound);
         }
-        return new CommandResult(successMessage);
+        return new CommandResult(completeSuccess);
 
     }
 
@@ -429,7 +450,19 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
             throw new ParseException("Please provide an input for tag\n"
                     + String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
         }
-        Collections.sort(indexSet);
+
+        List<Integer> numList = new ArrayList<>();
+        Iterator<String> it = indexSet.iterator();
+        while (it.hasNext()) {
+            int numToAdd = Integer.parseInt(it.next());
+            numList.add(numToAdd);
+        }
+        Collections.sort(numList);
+        indexSet.clear();
+        for (Integer i : numList) {
+            String strToAdd = String.valueOf(i);
+            indexSet.add(strToAdd);
+        }
         indexInput = indexSet.stream().collect(Collectors.joining(", "));
         return new AddTagCommand(toAddSet, index, indexInput);
     }
@@ -788,7 +821,6 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
                 }
             }
         }
-        Collections.sort(indexSet);
         return new RemoveTagCommand(toRemoveSet, index, indexSet);
     }
 
@@ -851,8 +883,10 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
-    public void removeTag(Set<Tag> tag, List<String> index) throws DuplicatePersonException,
+    public Set<Tag> removeTag(Set<Tag> tag, List<String> index) throws DuplicatePersonException,
             PersonNotFoundException {
+        Set<Tag> removedTags;
+        Set<Tag> displayTags = new HashSet<>();
         int totalSize = getFilteredPersonList().size();
         boolean tagExist = false;
         int decrease = 0;
@@ -876,25 +910,35 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
                 }
                 Person toUpdate = new Person(toDelete);
                 Set<Tag> oldTags = toDelete.getTags();
-                Set<Tag> newTags = deleteTag(tag, oldTags);
+                Set<Tag> newTags = deleteTagUpdate(tag, oldTags);
                 if (!(newTags.size() == oldTags.size())) {
                     toUpdate.setTags(newTags);
                     tagExist = true;
                     removed = true;
                     decrease++;
                     updatePerson(toDelete, toUpdate);
+                    removedTags = getTagsChanged(oldTags, newTags);
+                    displayTags = updateDisplayTags(displayTags, removedTags);
                 }
             }
         } else {
             for (int i = 0; i < totalSize; i++) {
-                Person toDelete = new Person(getFilteredPersonList().get(i));
+                int newSize = getFilteredPersonList().size();
+                Person toDelete;
+                if (newSize == totalSize) {
+                    toDelete = new Person(getFilteredPersonList().get(i));
+                } else {
+                    toDelete = new Person(getFilteredPersonList().get(0));
+                }
                 Person toUpdate = new Person(toDelete);
                 Set<Tag> oldTags = toDelete.getTags();
-                Set<Tag> newTags = deleteTag(tag, oldTags);
+                Set<Tag> newTags = deleteTagUpdate(tag, oldTags);
                 if (!(newTags.size() == oldTags.size())) {
                     toUpdate.setTags(newTags);
                     tagExist = true;
                     updatePerson(toDelete, toUpdate);
+                    removedTags = getTagsChanged(oldTags, newTags);
+                    displayTags = updateDisplayTags(displayTags, removedTags);
                 }
             }
         }
@@ -902,12 +946,14 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
         if (!tagExist) {
             throw new PersonNotFoundException();
         }
+        return displayTags;
     }
 
     @Override
-    public void addTag(Set<Tag> tag, Set<Index> index) throws PersonNotFoundException,
+    public Set<Tag> addTag(Set<Tag> tag, Set<Index> index) throws PersonNotFoundException,
             DuplicatePersonException {
-
+        Set<Tag> addedTags;
+        Set<Tag> displayTags = new HashSet<>();
         Iterator<Index> indexIt = index.iterator();
         boolean added = false;
 
@@ -921,14 +967,52 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
                 toUpdate.setTags(updated);
                 added = true;
                 updatePerson(toCheck, toUpdate);
+                addedTags = getTagsChanged(updated, current);
+                displayTags = updateDisplayTags(displayTags, addedTags);
             }
         }
 
         if (!added) {
             throw new PersonNotFoundException();
         }
+        return displayTags;
     }
 
+    /**
+     *
+     * @param currentDisplay
+     * @param changedTags
+     * @return updated set of removed tags
+     */
+    private Set<Tag> updateDisplayTags(Set<Tag> currentDisplay, Set<Tag> changedTags) {
+        Iterator<Tag> it = changedTags.iterator();
+        while (it.hasNext()) {
+            Tag checkTag = it.next();
+            if (!currentDisplay.contains(checkTag)) {
+                currentDisplay.add(checkTag);
+            }
+        }
+        return currentDisplay;
+    }
+
+    /**
+     *
+     * @param compareFrom set with tags to compare individually
+     * @param compareWith set to check if tags contain within
+     * @return set of tags that has been added/removed
+     */
+    private Set<Tag> getTagsChanged(Set<Tag> compareFrom, Set<Tag> compareWith) {
+        Set<Tag> changedSet = new HashSet<>();
+
+        Iterator<Tag> it = compareFrom.iterator();
+        while (it.hasNext()) {
+            Tag checkTag = it.next();
+            if (!compareWith.contains(checkTag)) {
+                changedSet.add(checkTag);
+            }
+        }
+        return changedSet;
+    }
 
     /**
      *
@@ -936,7 +1020,7 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
      * @param oldTags set of current tags
      * @return Set of Tags of new Person to be updated
      */
-    private Set<Tag> deleteTag(Set<Tag> tag, Set<Tag> oldTags) {
+    private Set<Tag> deleteTagUpdate(Set<Tag> tag, Set<Tag> oldTags) {
         Set<Tag> newTags = new HashSet<>();
 
         Iterator<Tag> it = oldTags.iterator();

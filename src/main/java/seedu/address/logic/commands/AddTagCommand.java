@@ -26,9 +26,9 @@ public class AddTagCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Add the tag to a person by the index number used "
             + "in the last person listing.\n"
-            + "Parameters: INDEX... TAG...(INDEX must be positive integer)\n"
-            + "[INDEX] can be set as a range."
-            + "Example: " + COMMAND_WORD + " 1 friends"
+            + "Parameters: INDEX... TAG...(INDEX must be positive integer & TAG must be alphanumeric)\n"
+            + "[INDEX] can be set as a range.\n"
+            + "Example: " + COMMAND_WORD + " 1 friends\n"
             + "Example: " + COMMAND_WORD + " 1-4 friends";
 
     public static final String MESSAGE_ADDED_SUCCESS = "Added Tag: %1$s";
@@ -54,17 +54,21 @@ public class AddTagCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         String successMessage;
         String duplicate;
+        Set<Tag> tagDisplaySet;
 
         for (Index i : index) {
             if (i.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
-        successMessage = String.format(MESSAGE_ADDED_SUCCESS + " to index " + indexDisplay + ".", tag);
+        successMessage = MESSAGE_ADDED_SUCCESS + " to index " + indexDisplay + ".";
         duplicate = String.format(MESSAGE_DUPLICATE_TAG + " index: " + indexDisplay + ".", tag);
 
+        String completeSuccess;
+
         try {
-            model.addTag(tag, index);
+            tagDisplaySet = model.addTag(tag, index);
+            completeSuccess = String.format(successMessage, tagDisplaySet);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(
                     String.format
@@ -72,7 +76,7 @@ public class AddTagCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new CommandException(duplicate);
         }
-        return new CommandResult(successMessage);
+        return new CommandResult(completeSuccess);
     }
 
     @Override
