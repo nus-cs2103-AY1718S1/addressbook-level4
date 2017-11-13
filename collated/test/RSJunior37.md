@@ -212,8 +212,10 @@ public class PartialFindCommandTest {
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }
+
 ```
-###### \java\seedu\address\testutil\InsuranceBuilder.java
+
+###### \java\seedu\address\testutil\InsuranceBuilder.java : Obsolete, some adjustment made to fit changes in final version and renamed into LifeInsuranceBuilder by OscarWang114
 ``` java
 /**
  * A utility class to help with building LifeInsurance objects.
@@ -328,6 +330,25 @@ public class InsuranceBuilder {
 
 }
 ```
+###### \java\seedu\address\testutil\TypicalInsurances.java
+``` java
+/**
+ * A utility class containing a list of {@code Person} objects to be used in tests.
+ */
+public class TypicalInsurances {
+    public static final ReadOnlyInsurance COMMON_INSURANCE =
+            new LifeInsuranceBuilder().withInsuranceName("Common Insurance")
+            .withOwner(new Person(ALICE))
+            .withBeneficiary(new Person(BENSON))
+            .withInsured(new Person(CARL))
+            .withPremium("123.45")
+            .withContractFileName("common.pdf")
+            .withSigningDate("01 Jan 2017")
+            .withExpiryDate("31 Dec 2020").build();
+
+    private TypicalInsurances() {} // prevents instantiation
+}
+```
 ###### \java\seedu\address\ui\InsuranceProfilePanelTest.java
 ``` java
 public class InsuranceProfilePanelTest extends GuiUnitTest {
@@ -338,7 +359,7 @@ public class InsuranceProfilePanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        ReadOnlyInsurance insurance = COMMONINSURANCE;
+        ReadOnlyInsurance insurance = COMMON_INSURANCE;
         insuranceClickedEventStub = new InsurancePanelSelectionChangedEvent(insurance);
 
         guiRobot.interact(() -> insuranceProfilePanel = new InsuranceProfilePanel());
