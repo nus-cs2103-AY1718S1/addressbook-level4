@@ -531,7 +531,6 @@ e.g.`select 2`
 
 === What's new in v1.1
 * Google Maps Support
-* Invalid Command now shows red
 * Sort Command
 
 === What's new in v1.2
@@ -560,8 +559,8 @@ e.g.`select 2`
 * Autocompletion for commands
 
 == Coming Soon in v2.0
-Customizable Toolbar
-More User-Friendly Change Password +
-Contact's photo support +
-Closest Meet-up Point +
+* Customizable Toolbar
+* More User-Friendly Change Password
+* Contact's photo support
+* Closest Meet-up Point
 
