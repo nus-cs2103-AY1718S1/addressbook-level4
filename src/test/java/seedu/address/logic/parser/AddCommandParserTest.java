@@ -41,11 +41,13 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
+
+    public static final String MISSING_FIELD = "---";
+
     private AddCommandParser parser = new AddCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
-        final String MISSING_FIELD = "---";
 
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
@@ -57,7 +59,7 @@ public class AddCommandParserTest {
                 .withEmail(MISSING_FIELD).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
 
         Person expectedMissingAddressPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(MISSING_FIELD).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
+                .withEmail(VALID_EMAIL_BOB).withAddress(MISSING_FIELD).withTags(VALID_TAG_FRIEND).build();
 
         Person expectedMissingPhoneEmailAddressPerson = new PersonBuilder().withName(VALID_NAME_BOB)
                 .withPhone(MISSING_FIELD).withEmail(MISSING_FIELD).withAddress(MISSING_FIELD)
