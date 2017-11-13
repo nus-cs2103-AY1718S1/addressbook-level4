@@ -303,7 +303,6 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void syncWhitelist() {
         filteredWhitelistedPersons = new FilteredList<>(this.addressBook.getWhitelistedPersonList());
-        filteredWhitelistedPersons.setPredicate(filteredWhitelistedPersons.getPredicate());
     }
     //@@author
 
@@ -434,11 +433,17 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Sets the person's display picture boolean status to false
+     * @return true if person's picture is successfully removed
      */
     @Override
-    public void removeProfilePicture(ReadOnlyPerson person) {
-        addressBook.removeProfilePic(person);
-        indicateAddressBookChanged();
+    public boolean removeProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException {
+        if (person.hasDisplayPicture()) {
+            addressBook.removeProfilePic(person);
+            indicateAddressBookChanged();
+            return true;
+        } else {
+            throw new ProfilePictureNotFoundException();
+        }
     }
     //@@author
 
@@ -644,7 +649,11 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author jaivigneshvenugopal
     @Subscribe
     public void handleMissingDisplayPictureEvent(MissingDisplayPictureEvent event) {
-        removeProfilePicture(event.getPerson());
+        try {
+            removeProfilePicture(event.getPerson());
+        } catch (ProfilePictureNotFoundException e) {
+            assert false : "This is not possible as person's hasDisplayPicture boolean value must be true";
+        }
     }
 
 
