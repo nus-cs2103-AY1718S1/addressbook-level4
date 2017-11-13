@@ -829,7 +829,7 @@ _Figure 4.5.3b : Copy from multiple contacts_
 
 _Figure 4.5.4_ below shows an applied use of this command in an e-mail application--addresses automatically detected upon clipboard paste
 
-image::CopyCommand_browser_result.PNG[width="400"]
+image::CopyCommand_browser_result.PNG[width="800"]
 _Figures 4.5.4: Applied use of command in email application_
 
 ==== Design Considerations for `CopyCommand`
@@ -1155,16 +1155,16 @@ Observe in Figure 4.8.6 below, that the contact shows `Country Unavailable` when
 is used without a country code prefix. When its phone number field is edited in Figure 4.8.7, the country
 name field automatically changes to `Singapore` upon returning the command.
 
-image::country_code demo 1.PNG[width="400"]
+image::country_code demo 1.PNG[width="800"]
 _Figure 4.8.6 : Country code shows unavailable status when no code is entered._
 
-image::country_code demo 2.PNG[width="400"]
+image::country_code demo 2.PNG[width="800"]
 _Figure 4.8.7 : Country name updated once a matching country code is added to phone number._
 
 Note that as shown in Figure 4.8.8, country codes that do not belong to any valid country or state will be
 rejected. The current list of acceptable codes can be listed with the command `help codes`.
 
-image::country_code demo 3.PNG[width="600"]
+image::country_code demo 3.PNG[width="800"]
 _Figure 4.8.8 : Copy from multiple contacts_
 
 ==== Design Considerations for `Country`
@@ -1212,7 +1212,7 @@ The `ScheduleCommand` allows users to schedule and activity with one person in t
 
 image::ScheduleCommandLogicCommandClassDiagram.png[width="800"]
 
-_Figure 4.9.1: `ScheduleCommand` inherits from `UndoableCommand`
+_Figure 4.9.1: `ScheduleCommand` inherits from `UndoableCommand`_
 
 
 The diagram in _Figure 4.9.2_ below shows the sequence of the schedule operation.
