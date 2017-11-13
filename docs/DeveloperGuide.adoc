@@ -859,8 +859,61 @@ The `String` key inside the map has the same value with the `String` field insid
             <!-- XmlAdaptedLifeInsurance -->
         </value>
     </entry>
-    <!-- allows more entries -->
+    <!-- more entries -->
 </lifeInsuranceMap>
+----
+
+
+==== Synchronizing Life Insurances with Persons
+
+Inside `Addressbook.java` there are two methods in charge of keeping the life insurance master map `UniqueLifeInsuranceMap` and person master list `UniquePersonList` synchronized with each other.
+The first method, according to execution order, is `syncMasterLifeInsuranceMapWith(UniquePersonList persons)` and the
+second method is `syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap)`
+
+The first method ensures that the three `InsurancePerson` objects (owner, insured, and beneficiary) of every `LifeInsurance` in the master map links to its corresponding `Person` object if it exists in the persons list.
+In addition, it also populates the list of insurance ids `List<UUID>` in every `Person` object with id of the life insurance he/her is involved in.
+It is implemented in this way:
+[source,java]
+----
+public void syncMasterLifeInsuranceMapWith(UniquePersonList persons) {
+    clearAllPersonsInsuranceIds();
+    lifeInsuranceMap.forEach((id, insurance) -> {
+        insurance.resetAllInsurancePersons();
+
+        String owner = insurance.getOwnerName();
+        // ... similar logic for insured and beneficiary...
+        persons.forEach(person -> {
+            if (person.getName().toString().equals(owner)) {
+                insurance.setOwner(new InsurancePerson(person));
+                person.addLifeInsuranceIds(id);
+            }
+            // ... similar logic for insured and beneficiary...
+        });
+    });
+    lifeInsuranceMap.syncMappedListWithInternalMap();
+}
+----
+
+[NOTE]
+The method `syncMappedListWithInternalMap()` in the last line is used to synchronize the internal list of `LifeInsurances` inside `UniqueLifeInsuranceMap`.
+This internal list is used for exposing an `ObservableList<ReadOnlyInsurance>` to the UI for binding.
+
+The second method ensures that every `Person` in the master list contains the correct list of `LifeInsurance` objects corresponding to his/her list of insurance ids `List<UUID>`.
+It is implemented in this way:
+[source,java]
+----
+public void syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap) throws InsuranceNotFoundException {
+    persons.forEach((ThrowingConsumer<Person>) person -> {
+        List<UUID> idList = person.getLifeInsuranceIds();
+        if (!idList.isEmpty()) {
+            person.clearLifeInsurances();
+            idList.forEach((ThrowingConsumer<UUID>) id -> {
+                LifeInsurance lf = lifeInsuranceMap.get(id);
+                person.addLifeInsurances(lf);
+            });
+        }
+    });
+}
 ----
 
 ==== Design Considerations
@@ -875,17 +928,6 @@ The internal list have to be synchronized when data in the map changes. +
 **Cons:** Less efficient data access. Requires iterating through the entire list to search for a life insurance using id.
 
 ---
-
-**Aspect:**  +
-**Alternative 1 (current choice):** Through `Logic` +
-**Pros:** Reusing code. Binding it to `Logic` will automatically update any related possible changes occuring in `Logic Component`. Also easier to perform tests. +
-**Cons:** More detoured execution, going through checking of command type and parser. +
-**Alternative 2:** Directly create `PartialCommand` object with trimmed list of arguments. +
-**Pros:** Lowers coupling and dependencies, less irrelevant logs.  +
-**Cons:** Lower accountability and assumes no future changes to `Command` signature +
-
----
-
 // end::li[]
 
 // tag::addli[]
