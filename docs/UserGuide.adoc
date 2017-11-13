@@ -452,3 +452,6 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Print* : `print`
+* *Why* : `why`
+
