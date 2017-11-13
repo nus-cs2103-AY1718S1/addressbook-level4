@@ -897,15 +897,13 @@ public void handleCalenderBoxPanelChange(EventBookChangedEvent event) {
 
 
 For navigation to the previous or next month in the calendar, a click on the "PREV" or "NEXT" button will trigger a method to repopulate the calendar with dates
- and events of the appropriate month.
+ and events of the appropriate month. This can also be done through the CLI by typing `prev` or `next` at the command bar.
+The sequence diagram for `prev` command is shown below. `next` works in a similar way.
 
-[source, java]
-private void makeButtons(Button previousMonth, Button nextMonth) {
-    previousMonth.setOnAction(e -> previousMonth());
-    nextMonth.setOnAction(e -> nextMonth());
-}
+image::PrevCommandSD.png[width="800"]
 
-The inner working of `previousMonth()` is illustrated here. `nextMonth()` works in a similar way.
+
+The implementation of `previousMonth()` is illustrated here. `nextMonth()` works in a similar way.
 [source, java]
 private void previousMonth() {
     currentYearMonth = currentYearMonth.minusMonths(1);
