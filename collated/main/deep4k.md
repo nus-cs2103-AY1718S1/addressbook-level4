@@ -3829,6 +3829,7 @@ public class XmlAdaptedTask {
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
+
     /**
      * Sets the additional info needed for their respective {@code person } properties
      * and adds it inside Hbox details. Hbox details will be added to PersonCard parent
