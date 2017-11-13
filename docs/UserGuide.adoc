@@ -237,18 +237,9 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME_NUMBE
 
 // end::add1[]
 
-Prefixes and its meaning:
 
-[width="40%",cols="20%,<15%,<5%, <30%,<30%,options="header",]
-|=======================================================================
-|Compulsory Prefix | Meaning|.|Optional Prefix | Meaning
-|`n` |name|.|`a` |address
-|`p` |phone|.|`w` |website
-|`e` |email|.|`h` |home number
-|-|-|.|`b`|birthday
-|-|-|.|`se`|school email
-|-|-|.|`t`|tag
-|=======================================================================
+image::UGPrefix.PNG[width="500"]
+
 
 // tag::add2[]
 You can follow the examples below to guide you on how to add an individual.
