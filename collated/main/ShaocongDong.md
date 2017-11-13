@@ -44,18 +44,6 @@
                   <Font name="Courier Bold" size="18.0" />
                </font>
             </Label>
-        <ImageView fx:id="mark" />
-      </HBox>
-      <FlowPane fx:id="tags" />
-      <Label fx:id="description" styleClass="cell_small_label" text="\$description" />
-      <Label fx:id="startDateTime" styleClass="cell_small_label" text="\$start" />
-      <Label fx:id="endDateTime" styleClass="cell_small_label" text="\$end" />
-    </VBox>
-      <rowConstraints>
-         <RowConstraints />
-      </rowConstraints>
-  </GridPane>
-</HBox>
 ```
 ###### /java/seedu/address/ui/TaskCard.java
 ``` java
@@ -188,35 +176,6 @@ public class TaskCard extends UiPart<Region> {
         });
     }
 
-    /**
-     * Initialize mark for task card
-     * @param task
-     */
-    private void initMark(ReadOnlyTask task) {
-        Image markIcon = new Image(ICON);
-        if (task.getComplete()) {
-            mark.setImage(markIcon);
-        }
-
-    }
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof TaskCard)) {
-            return false;
-        }
-
-        // state check
-        TaskCard card = (TaskCard) other;
-        return id.getText().equals(card.id.getText())
-                && task.equals(card.task);
-    }
-}
 ```
 ###### /java/seedu/address/ui/TaskListPanel.java
 ``` java
@@ -308,34 +267,6 @@ public class TaskListPanel extends UiPart<Region> {
         setConnections(uiList);
     }
 
-    /**
-     * Some comment
-     */
-    class TaskListViewCell extends ListCell<TaskCard> {
-
-        @Override
-        protected void updateItem(TaskCard task, boolean empty) {
-            super.updateItem(task, empty);
-
-            if (showAllTask) {
-                if (empty || task == null) {
-                    setGraphic(null);
-                    setText(null);
-                } else {
-                    setGraphic(task.getRoot());
-                }
-            } else {
-                if (empty || task == null || task.getTask().getComplete()) {
-                    setGraphic(null);
-                    setText(null);
-                } else {
-                    setGraphic(task.getRoot());
-                }
-            }
-        }
-    }
-
-}
 ```
 ###### /java/seedu/address/commons/events/ui/TaskPanelSelectionChangedEvent.java
 ``` java
@@ -1049,8 +980,8 @@ public class AddTaskCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "picnic "
             + PREFIX_DESCRIPTION + "have fun at Botanic Garden "
-            + PREFIX_START_DATE_TIME + "26-11-2017 12:00pm "
-            + PREFIX_END_DATE_TIME + "26-11-2017 15:00pm "
+            + PREFIX_START_DATE_TIME + "26-11-2017 11:00am "
+            + PREFIX_END_DATE_TIME + "26-11-2017 12:00am "
             + PREFIX_PRIORITY + "3 "
             + PREFIX_TAG + "friends ";
 
@@ -2046,44 +1977,9 @@ public class UniqueTaskList implements Iterable<Task> {
         internalList.add(new Task(toAdd));
     }
 
-    /**
-     * Replaces the task {@code target} in the list with {@code editedTask}.
-     *
-     * @throws DuplicateTaskException if the replacement is equivalent to another existing task in the list.
-     * @throws TaskNotFoundException if {@code target} could not be found in the list.
-     */
-    public void setTask(ReadOnlyTask target, ReadOnlyTask editedTask)
-            throws DuplicateTaskException, TaskNotFoundException {
-        requireNonNull(editedTask);
-
-        int index = internalList.indexOf(target);
-        if (index == -1) {
-            throw new TaskNotFoundException();
-        }
-
-        if (!target.equals(editedTask) && internalList.contains(editedTask)) {
-            throw new DuplicateTaskException();
-        }
-
-        internalList.set(index, new Task(editedTask));
-    }
-
-    /**
-     * Marks a task in the list to be completed.
-     *
-     * @throws TaskNotFoundException if {@code target} could not be found in the list.
-     */
-    public void setComplete(ReadOnlyTask task) throws TaskNotFoundException {
-        requireNonNull(task);
-        int index = internalList.indexOf(task);
-        if (index == -1) {
-            throw new TaskNotFoundException();
-        }
-        Task completedTask = new Task(task);
-        completedTask.setComplete();
-        internalList.set(index, completedTask);
-    }
-
+```
+###### /java/seedu/address/model/task/UniqueTaskList.java
+``` java
     /**
      * Removes the equivalent task from the list.
      *
@@ -2444,14 +2340,9 @@ public class TaskBook implements ReadOnlyTaskBook {
         tasks.add(newTask);
     }
 
-    /**
-     * Marks an existing task to be completed.
-     * @throws TaskNotFoundException if the task could not be found in the list..
-     */
-    public void markTask(ReadOnlyTask p) throws TaskNotFoundException {
-        tasks.setComplete(p);
-    }
-
+```
+###### /java/seedu/address/model/TaskBook.java
+``` java
     /**
      * Replaces the given task {@code target} in the list with {@code editedReadOnlyTask}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyTask}.

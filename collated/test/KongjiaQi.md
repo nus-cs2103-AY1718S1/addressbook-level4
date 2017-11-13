@@ -1,122 +1,262 @@
 # KongjiaQi
-###### \java\seedu\address\logic\commands\CommandTestUtil.java
+###### /java/seedu/address/logic/parser/MarkTaskCommandParserTest.java
 ``` java
-    //public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "Hotpot&"; // '&' not allowed in names
-    public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION + " "; // ' ' blank space not allowed
-    public static final String INVALID_START_DESC = " " + PREFIX_START_DATE_TIME + "19981209"; // not the correct style
-    public static final String INVALID_END_DESC = " " + PREFIX_END_DATE_TIME; // empty string not allowed
-    //public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 
-    static {
-        DESC_DEMO = new EditTaskDescriptorBuilder().withName(VALID_NAME_DEMO)
-                .withDescription(VALID_DESCRIPTION_DEMO).withStart(VALID_START_DEMO).withEnd(VALID_END_DEMO)
-                .withTags(VALID_TAG_DEMO).build();
-        DESC_HOTPOT = new EditTaskDescriptorBuilder().withName(VALID_NAME_HOTPOT)
-                .withDescription(VALID_DESCRIPTION_HOTPOT).withStart(VALID_START_HOTPOT).withEnd(VALID_END_HOTPOT)
-                .withTags(VALID_TAG_HOTPOT).build();
+import org.junit.Test;
+
+import seedu.address.logic.commands.MarkTaskCommand;
+
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the MarkTaskCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the MarkTaskCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class MarkTaskCommandParserTest {
+
+    private MarkTaskCommandParser parser = new MarkTaskCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsMarkTaskCommand() {
+        assertParseSuccess(parser, "1", new MarkTaskCommand(INDEX_FIRST_TASK));
     }
 
-    /**
-     * Executes the given {@code command}, confirms that <br>
-     * - the result message matches {@code expectedMessage} <br>
-     * - the {@code actualModel} matches {@code expectedModel}
-     */
-    public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
-            Model expectedModel) {
-        try {
-            CommandResult result = command.execute();
-            assertEquals(expectedMessage, result.feedbackToUser);
-            assertEquals(expectedModel, actualModel);
-        } catch (CommandException ce) {
-            throw new AssertionError("Execution of command should not fail.", ce);
-        }
-    }
-
-
-    /**
-     * Executes the given {@code command}, confirms that <br>
-     * - a {@code CommandException} is thrown <br>
-     * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
-     */
-    public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
-        // we are unable to defensively copy the model for comparison later, so we can
-        // only do so by copying its components.
-        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
-
-        try {
-            command.execute();
-            fail("The expected CommandException was not thrown.");
-        } catch (CommandException e) {
-            assertEquals(expectedMessage, e.getMessage());
-            assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
-        }
-    }
-
-```
-###### \java\seedu\address\logic\commands\CommandTestUtil.java
-``` java
-    /**
-     * Executes the given {@code taskCommand}, confirms that <br>
-     * - a {@code CommandException} is thrown <br>
-     * - the TaskCommandException message matches {@code expectedMessage} <br>
-     * - the task book and the filtered task list in the {@code actualModel} remain unchanged
-     */
-    public static void assertTaskCommandFailure(Command command, Model actualModel, String expectedMessage) {
-        // we are unable to defensively copy the model for comparison later, so we can
-        // only do so by copying its components.
-        TaskBook expectedTaskBook = new TaskBook(actualModel.getTaskBook());
-        List<ReadOnlyTask> expectedFilteredList = new ArrayList<>(actualModel.getFilteredTaskList());
-
-        try {
-            command.execute();
-            fail("The expected CommandException was not thrown.");
-        } catch (CommandException e) {
-            assertEquals(expectedMessage, e.getMessage());
-            assertEquals(expectedTaskBook, actualModel.getTaskBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredTaskList());
-        }
-    }
-
-    /**
-     * Updates {@code model}'s filtered person list to show only the first person in the {@code model}'s 3W.
-     */
-    public static void showFirstPersonOnly(Model model) {
-        ReadOnlyPerson person = model.getAddressBook().getPersonList().get(0);
-        final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new ContainsKeywordsPredicate(Arrays.asList(splitName[0])));
-
-        assert model.getFilteredPersonList().size() == 1;
-    }
-
-    /**
-     * Updates {@code model}'s filtered task list to show only the first task in the {@code model}'s 3W.
-     */
-    public static void showFirstTaskOnly(Model model) {
-        ReadOnlyTask task = model.getTaskBook().getTaskList().get(0);
-        List<Name> name = Arrays.asList(task.getName());
-        model.updateFilteredTaskList(new TaskNameContainsKeywordsPredicate(name));
-
-        assert model.getFilteredTaskList().size() == 1;
-    }
-
-    /**
-     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
-     */
-    public static void deleteFirstPerson(Model model) {
-        ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(0);
-        try {
-            model.deletePerson(firstPerson);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
-        }
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkTaskCommand.MESSAGE_USAGE));
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditTaskCommandTest.java
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
+``` java
+    @Test
+    public void parseDescription_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseString(null);
+    }
+
+    @Test
+    public void parseDescription_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseString(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseStart_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseString(null);
+    }
+
+    @Test
+    public void parseStart_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseString(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseEnd_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseString(null);
+    }
+
+    @Test
+    public void parseEnd_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseString(Optional.empty()).isPresent());
+    }
+
+
+    @Test
+    public void parseEmail_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseEmail(null);
+    }
+
+    @Test
+    public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseEmail(Optional.of(INVALID_EMAIL));
+    }
+
+    @Test
+    public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseEmail_validValue_returnsEmail() throws Exception {
+        Email expectedEmail = new Email(VALID_EMAIL);
+        Optional<Email> actualEmail = ParserUtil.parseEmail(Optional.of(VALID_EMAIL));
+
+        assertEquals(expectedEmail, actualEmail.get());
+    }
+
+    @Test
+    public void parseTags_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTags(null);
+    }
+
+    @Test
+    public void parseTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG));
+    }
+
+    @Test
+    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {
+        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());
+    }
+
+    @Test
+    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
+        Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
+        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+
+        assertEquals(expectedTagSet, actualTagSet);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/EditTaskCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_DEMO;
+
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_DEMO;
+
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_TASK;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.EditTaskCommand;
+import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
+
+import seedu.address.testutil.EditTaskDescriptorBuilder;
+
+public class EditTaskCommandParserTest {
+
+    private static final String TAG_EMPTY = " " + PREFIX_TAG;
+
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE);
+
+    private EditTaskCommandParser parser = new EditTaskCommandParser();
+
+    @Test
+    public void parse_missingParts_failure() {
+        // no index specified
+        assertParseFailure(parser, VALID_NAME_DEMO, MESSAGE_INVALID_FORMAT);
+
+        // no field specified
+        assertParseFailure(parser, "1", EditTaskCommand.MESSAGE_NOT_EDITED);
+
+        // no index and no field specified
+        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidPreamble_failure() {
+        // negative index
+        assertParseFailure(parser, "-5" + NAME_DESC_DEMO, MESSAGE_INVALID_FORMAT);
+
+        // zero index
+        assertParseFailure(parser, "0" + NAME_DESC_DEMO, MESSAGE_INVALID_FORMAT);
+
+        // invalid arguments being parsed as preamble
+        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
+
+        // invalid prefix being parsed as preamble
+        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+    }
+
+
+    @Test
+    public void parse_resetTags_success() {
+        Index targetIndex = INDEX_THIRD_TASK;
+        String userInput = targetIndex.getOneBased() + TAG_EMPTY;
+
+        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withTags().build();
+        EditTaskCommand expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/EditTaskDescriptorTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import static seedu.address.logic.commands.CommandTestUtil.DESC_DEMO;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_HOTPOT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_HOTPOT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_HOTPOT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_HOTPOT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_HOTPOT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HOTPOT;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
+
+public class EditTaskDescriptorTest {
+
+    @Test
+    public void equals() {
+        // same values -> returns true
+        EditTaskDescriptor descriptorWithSameValues = new EditTaskDescriptor(DESC_DEMO);
+        assertTrue(DESC_DEMO.equals(descriptorWithSameValues));
+
+        // same object -> returns true
+        assertTrue(DESC_DEMO.equals(DESC_DEMO));
+
+        // null -> returns false
+        assertFalse(DESC_DEMO.equals(null));
+
+        // different types -> returns false
+        assertFalse(DESC_DEMO.equals(5));
+
+        // different values -> returns false
+        assertFalse(DESC_DEMO.equals(DESC_HOTPOT));
+
+        // different name -> returns false
+        EditTaskDescriptor editedDemo = new EditTaskDescriptorBuilder(DESC_DEMO).withName(VALID_NAME_HOTPOT).build();
+        assertFalse(DESC_DEMO.equals(editedDemo));
+
+        // different description -> returns false
+        editedDemo = new EditTaskDescriptorBuilder(DESC_DEMO).withDescription(VALID_DESCRIPTION_HOTPOT).build();
+        assertFalse(DESC_DEMO.equals(editedDemo));
+
+        // different start time -> returns false
+        editedDemo = new EditTaskDescriptorBuilder(DESC_DEMO).withStart(VALID_START_HOTPOT).build();
+        assertFalse(DESC_DEMO.equals(editedDemo));
+
+        // different end time -> returns false
+        editedDemo = new EditTaskDescriptorBuilder(DESC_DEMO).withEnd(VALID_END_HOTPOT).build();
+        assertFalse(DESC_DEMO.equals(editedDemo));
+
+        // different tags -> returns false
+        editedDemo = new EditTaskDescriptorBuilder(DESC_DEMO).withTags(VALID_TAG_HOTPOT).build();
+        assertFalse(DESC_DEMO.equals(editedDemo));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/EditTaskCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -309,69 +449,124 @@ public class EditTaskCommandTest {
 }
 
 ```
-###### \java\seedu\address\logic\commands\EditTaskDescriptorTest.java
+###### /java/seedu/address/logic/commands/CommandTestUtil.java
 ``` java
-package seedu.address.logic.commands;
+    //public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "Hotpot&"; // '&' not allowed in names
+    public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION + " "; // ' ' blank space not allowed
+    public static final String INVALID_START_DESC = " " + PREFIX_START_DATE_TIME + "19981209"; // not the correct style
+    public static final String INVALID_END_DESC = " " + PREFIX_END_DATE_TIME; // empty string not allowed
+    //public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
-import static seedu.address.logic.commands.CommandTestUtil.DESC_DEMO;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_HOTPOT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_HOTPOT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_HOTPOT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_HOTPOT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_HOTPOT;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HOTPOT;
+    static {
+        DESC_DEMO = new EditTaskDescriptorBuilder().withName(VALID_NAME_DEMO)
+                .withDescription(VALID_DESCRIPTION_DEMO).withStart(VALID_START_DEMO).withEnd(VALID_END_DEMO)
+                .withTags(VALID_TAG_DEMO).build();
+        DESC_HOTPOT = new EditTaskDescriptorBuilder().withName(VALID_NAME_HOTPOT)
+                .withDescription(VALID_DESCRIPTION_HOTPOT).withStart(VALID_START_HOTPOT).withEnd(VALID_END_HOTPOT)
+                .withTags(VALID_TAG_HOTPOT).build();
+    }
 
-import org.junit.Test;
+    /**
+     * Executes the given {@code command}, confirms that <br>
+     * - the result message matches {@code expectedMessage} <br>
+     * - the {@code actualModel} matches {@code expectedModel}
+     */
+    public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
+            Model expectedModel) {
+        try {
+            CommandResult result = command.execute();
+            assertEquals(expectedMessage, result.feedbackToUser);
+            assertEquals(expectedModel, actualModel);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
+    }
 
-import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
-import seedu.address.testutil.EditTaskDescriptorBuilder;
 
-public class EditTaskDescriptorTest {
+    /**
+     * Executes the given {@code command}, confirms that <br>
+     * - a {@code CommandException} is thrown <br>
+     * - the CommandException message matches {@code expectedMessage} <br>
+     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
+     */
+    public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
+        // we are unable to defensively copy the model for comparison later, so we can
+        // only do so by copying its components.
+        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
+        List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
 
-    @Test
-    public void equals() {
-        // same values -> returns true
-        EditTaskDescriptor descriptorWithSameValues = new EditTaskDescriptor(DESC_DEMO);
-        assertTrue(DESC_DEMO.equals(descriptorWithSameValues));
+        try {
+            command.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException e) {
+            assertEquals(expectedMessage, e.getMessage());
+            assertEquals(expectedAddressBook, actualModel.getAddressBook());
+            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+        }
+    }
 
-        // same object -> returns true
-        assertTrue(DESC_DEMO.equals(DESC_DEMO));
+```
+###### /java/seedu/address/logic/commands/CommandTestUtil.java
+``` java
+    /**
+     * Executes the given {@code taskCommand}, confirms that <br>
+     * - a {@code CommandException} is thrown <br>
+     * - the TaskCommandException message matches {@code expectedMessage} <br>
+     * - the task book and the filtered task list in the {@code actualModel} remain unchanged
+     */
+    public static void assertTaskCommandFailure(Command command, Model actualModel, String expectedMessage) {
+        // we are unable to defensively copy the model for comparison later, so we can
+        // only do so by copying its components.
+        TaskBook expectedTaskBook = new TaskBook(actualModel.getTaskBook());
+        List<ReadOnlyTask> expectedFilteredList = new ArrayList<>(actualModel.getFilteredTaskList());
 
-        // null -> returns false
-        assertFalse(DESC_DEMO.equals(null));
+        try {
+            command.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException e) {
+            assertEquals(expectedMessage, e.getMessage());
+            assertEquals(expectedTaskBook, actualModel.getTaskBook());
+            assertEquals(expectedFilteredList, actualModel.getFilteredTaskList());
+        }
+    }
 
-        // different types -> returns false
-        assertFalse(DESC_DEMO.equals(5));
+    /**
+     * Updates {@code model}'s filtered person list to show only the first person in the {@code model}'s 3W.
+     */
+    public static void showFirstPersonOnly(Model model) {
+        ReadOnlyPerson person = model.getAddressBook().getPersonList().get(0);
+        final String[] splitName = person.getName().fullName.split("\\s+");
+        model.updateFilteredPersonList(new ContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        // different values -> returns false
-        assertFalse(DESC_DEMO.equals(DESC_HOTPOT));
+        assert model.getFilteredPersonList().size() == 1;
+    }
 
-        // different name -> returns false
-        EditTaskDescriptor editedDemo = new EditTaskDescriptorBuilder(DESC_DEMO).withName(VALID_NAME_HOTPOT).build();
-        assertFalse(DESC_DEMO.equals(editedDemo));
+    /**
+     * Updates {@code model}'s filtered task list to show only the first task in the {@code model}'s 3W.
+     */
+    public static void showFirstTaskOnly(Model model) {
+        ReadOnlyTask task = model.getTaskBook().getTaskList().get(0);
+        List<Name> name = Arrays.asList(task.getName());
+        model.updateFilteredTaskList(new TaskNameContainsKeywordsPredicate(name));
 
-        // different description -> returns false
-        editedDemo = new EditTaskDescriptorBuilder(DESC_DEMO).withDescription(VALID_DESCRIPTION_HOTPOT).build();
-        assertFalse(DESC_DEMO.equals(editedDemo));
+        assert model.getFilteredTaskList().size() == 1;
+    }
 
-        // different start time -> returns false
-        editedDemo = new EditTaskDescriptorBuilder(DESC_DEMO).withStart(VALID_START_HOTPOT).build();
-        assertFalse(DESC_DEMO.equals(editedDemo));
-
-        // different end time -> returns false
-        editedDemo = new EditTaskDescriptorBuilder(DESC_DEMO).withEnd(VALID_END_HOTPOT).build();
-        assertFalse(DESC_DEMO.equals(editedDemo));
-
-        // different tags -> returns false
-        editedDemo = new EditTaskDescriptorBuilder(DESC_DEMO).withTags(VALID_TAG_HOTPOT).build();
-        assertFalse(DESC_DEMO.equals(editedDemo));
+    /**
+     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstPerson(Model model) {
+        ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(0);
+        try {
+            model.deletePerson(firstPerson);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ListTaskCommandTest.java
+###### /java/seedu/address/logic/commands/ListTaskCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -419,7 +614,7 @@ public class ListTaskCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\MarkTaskCommandTest.java
+###### /java/seedu/address/logic/commands/MarkTaskCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -517,202 +712,48 @@ public class MarkTaskCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\EditTaskCommandParserTest.java
+###### /java/seedu/address/testutil/TaskUtil.java
 ``` java
-package seedu.address.logic.parser;
+package seedu.address.testutil;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_DEMO;
-
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_DEMO;
-
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_TASK;
 
-import org.junit.Test;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EditTaskCommand;
-import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
-
-import seedu.address.testutil.EditTaskDescriptorBuilder;
-
-public class EditTaskCommandParserTest {
-
-    private static final String TAG_EMPTY = " " + PREFIX_TAG;
-
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE);
-
-    private EditTaskCommandParser parser = new EditTaskCommandParser();
-
-    @Test
-    public void parse_missingParts_failure() {
-        // no index specified
-        assertParseFailure(parser, VALID_NAME_DEMO, MESSAGE_INVALID_FORMAT);
-
-        // no field specified
-        assertParseFailure(parser, "1", EditTaskCommand.MESSAGE_NOT_EDITED);
-
-        // no index and no field specified
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_invalidPreamble_failure() {
-        // negative index
-        assertParseFailure(parser, "-5" + NAME_DESC_DEMO, MESSAGE_INVALID_FORMAT);
-
-        // zero index
-        assertParseFailure(parser, "0" + NAME_DESC_DEMO, MESSAGE_INVALID_FORMAT);
-
-        // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
-        // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
-    }
-
-
-    @Test
-    public void parse_resetTags_success() {
-        Index targetIndex = INDEX_THIRD_TASK;
-        String userInput = targetIndex.getOneBased() + TAG_EMPTY;
-
-        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withTags().build();
-        EditTaskCommand expectedCommand = new EditTaskCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-}
-```
-###### \java\seedu\address\logic\parser\MarkTaskCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.MarkTaskCommand;
+import seedu.address.logic.commands.AddTaskCommand;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
- * As we are only doing white-box testing, our test cases do not cover path variations
- * outside of the MarkTaskCommand code. For example, inputs "1" and "1 abc" take the
- * same path through the MarkTaskCommand, and therefore we test only one of them.
- * The path variation for those two cases occur inside the ParserUtil, and
- * therefore should be covered by the ParserUtilTest.
+ * A utility class for Task.
  */
-public class MarkTaskCommandParserTest {
+public class TaskUtil {
 
-    private MarkTaskCommandParser parser = new MarkTaskCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsMarkTaskCommand() {
-        assertParseSuccess(parser, "1", new MarkTaskCommand(INDEX_FIRST_TASK));
+    /**
+     * Returns an add task command string for adding the {@code task}.
+     */
+    public static String getAddTaskCommand(ReadOnlyTask task) {
+        return AddTaskCommand.COMMAND_WORD + " " + getTaskDetails(task);
     }
 
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkTaskCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
-    @Test
-    public void parseDescription_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseString(null);
-    }
-
-    @Test
-    public void parseDescription_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseString(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseStart_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseString(null);
-    }
-
-    @Test
-    public void parseStart_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseString(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseEnd_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseString(null);
-    }
-
-    @Test
-    public void parseEnd_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseString(Optional.empty()).isPresent());
-    }
-
-
-    @Test
-    public void parseEmail_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseEmail(null);
-    }
-
-    @Test
-    public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseEmail(Optional.of(INVALID_EMAIL));
-    }
-
-    @Test
-    public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseEmail_validValue_returnsEmail() throws Exception {
-        Email expectedEmail = new Email(VALID_EMAIL);
-        Optional<Email> actualEmail = ParserUtil.parseEmail(Optional.of(VALID_EMAIL));
-
-        assertEquals(expectedEmail, actualEmail.get());
-    }
-
-    @Test
-    public void parseTags_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseTags(null);
-    }
-
-    @Test
-    public void parseTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG));
-    }
-
-    @Test
-    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {
-        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());
-    }
-
-    @Test
-    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
-        Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
-
-        assertEquals(expectedTagSet, actualTagSet);
+    /**
+     * Returns the part of command string for the given {@code task}'s details.
+     */
+    public static String getTaskDetails(ReadOnlyTask task) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(PREFIX_NAME + task.getName().name + " ");
+        sb.append(PREFIX_DESCRIPTION + task.getDescription().value + " ");
+        sb.append(PREFIX_START_DATE_TIME + task.getStartDateTime().getState() + " ");
+        sb.append(PREFIX_END_DATE_TIME + task.getEndDateTime().getState() + " ");
+        task.getTags().stream().forEach(
+                s -> sb.append(PREFIX_TAG + s.tagName + " ")
+        );
+        return sb.toString();
     }
 }
 ```
-###### \java\seedu\address\testutil\EditTaskDescriptorBuilder.java
+###### /java/seedu/address/testutil/EditTaskDescriptorBuilder.java
 ``` java
 package seedu.address.testutil;
 
@@ -829,47 +870,6 @@ public class EditTaskDescriptorBuilder {
 
     public EditTaskDescriptor build() {
         return descriptor;
-    }
-}
-```
-###### \java\seedu\address\testutil\TaskUtil.java
-``` java
-package seedu.address.testutil;
-
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE_TIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
-import seedu.address.logic.commands.AddTaskCommand;
-import seedu.address.model.task.ReadOnlyTask;
-
-/**
- * A utility class for Task.
- */
-public class TaskUtil {
-
-    /**
-     * Returns an add task command string for adding the {@code task}.
-     */
-    public static String getAddTaskCommand(ReadOnlyTask task) {
-        return AddTaskCommand.COMMAND_WORD + " " + getTaskDetails(task);
-    }
-
-    /**
-     * Returns the part of command string for the given {@code task}'s details.
-     */
-    public static String getTaskDetails(ReadOnlyTask task) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + task.getName().name + " ");
-        sb.append(PREFIX_DESCRIPTION + task.getDescription().value + " ");
-        sb.append(PREFIX_START_DATE_TIME + task.getStartDateTime().getState() + " ");
-        sb.append(PREFIX_END_DATE_TIME + task.getEndDateTime().getState() + " ");
-        task.getTags().stream().forEach(
-                s -> sb.append(PREFIX_TAG + s.tagName + " ")
-        );
-        return sb.toString();
     }
 }
 ```
