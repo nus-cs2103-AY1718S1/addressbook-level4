@@ -461,7 +461,7 @@ In the UI component, the tag is set by using the css attribute of the tag label.
 To illustrate how tag colors are set, below is a sequence diagram for how the random tag color command is executed.
 
 image::SDforTagColor.png[width="800"]
-    Figure 19: Sequence diagram for `random tag color` Model Component
+    Figure 19: Sequence diagram for random tag color Model Component
 
 The sequence diagram is given if the command requests the model to set all the tags to a random color. As seen from
 above diagram, each tag is updated to a certain color and does not need to know which tag belongs to which person.
