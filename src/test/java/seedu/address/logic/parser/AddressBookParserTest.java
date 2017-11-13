@@ -30,6 +30,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FavouriteListCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -239,13 +240,47 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_personCommandsInEventsMode() throws Exception {
         assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
 
         //commands that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(AddCommand.COMMAND_WORD + " n/Aaron Chen p/83323322 e/aaron@hotmail.com");
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " p/83333322");
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
         parser.parseCommand(AccessCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
         parser.parseCommand(LocationCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
 
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(ClearCommand.COMMAND_WORD);
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(FindCommand.COMMAND_WORD + " " + "Emil");
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(FindTagCommand.COMMAND_WORD + " " + "friends");
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(SortCommand.COMMAND_WORD);
 
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
     }
