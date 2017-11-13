@@ -903,6 +903,14 @@ This is important particularly in cases where we want to retain polymorphism (of
 
 // tag::relationship[]
 
+=== *Enhancement: Relationship Command* +
+
+*Reason for implementation* +
+
+As MedNus is designed for doctors to use, being able to check the relationships of a patient +
+is very useful especially in emergency situation when contacting a patient's family and friends +
+are of utmost importance.
+
 *How it is implemented* +
 The immplementation involves two main segments Logic and Model. +
 
