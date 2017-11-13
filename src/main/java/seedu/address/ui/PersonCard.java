@@ -71,7 +71,9 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        //@@author vsudhakar
         avatar.imageProperty().bind(person.getAvatar().avatarImageProperty());
+        //@@author
         comment.textProperty().bind(Bindings.convert(person.commentProperty()));
         appoint.textProperty().bind(Bindings.convert(person.appointProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
