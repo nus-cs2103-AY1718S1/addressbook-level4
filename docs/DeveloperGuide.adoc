@@ -483,74 +483,55 @@ will stop the current music track.
 
 Both the `music play` and the `music stop` commands are executed in the same `MusicCommand` class. This also makes the commands easier to remember for the user as well, as anything related to `music` will start with `music` as a command.
 
-As shown below, additional extended commands can be added by having an additional case in the switch statement, as the extended commands are handled in a switch statement.
+Additional extended commands can be added by having an additional case in the switch statement, as the extended commands are handled in a switch statement.
 In addition, the `MusicCommand` class will create a new `music thread`, this is to prevent the User Interface from being non-responsive in the current thread. Currently, all music played will be in a loop until it is stopped by the user, through the `music stop` command.
 
 [source,java]
 ----
-switch (command) {
-case "play":
-    if (RadioCommand.isRadioPlaying()) {
-        RadioCommand.stopRadioPlayer();
-    }
-    stopMusicPlayer();
-    if (genreExist) {
-        //check if current genre same previous playing music genre
-        //if different reset track number
-        if (!genre.equals(previousGenre)) {
-            trackNumber = 1;
-        }
-        messageSuccess = genre.toUpperCase() + " Music " + trackNumber + " Playing";
-        music = new Music("audio/music/"
-                + genre + trackNumber + ".mp3");
-        music.start();
-
-        if (trackNumber < maxTrackNumber) {
-            trackNumber++;
-        } else {
-            //reset track number back to 1
-            trackNumber = 1;
-        }
-        //Text to Speech
-        new TextToSpeech(messageSuccess).speak();
-        //set current playing genre as previousGenre
-        previousGenre = genre;
-        return new CommandResult(messageSuccess);
-    } else {
-        return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));
-    }
-//Stop the music that is currently playing
-case "stop":
-    if (!isMusicPlaying()) {
-        //Text to Speech
-        new TextToSpeech(MESSAGE_NO_MUSIC_PLAYING).speak();
-        return new CommandResult(MESSAGE_NO_MUSIC_PLAYING);
-    }
-    stopMusicPlayer();
-    //Text to Speech
-    new TextToSpeech(MESSAGE_STOP).speak();
-    return new CommandResult(MESSAGE_STOP);
-
-default:
-    return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));
-}
+music = new Music("audio/music/" + genre + trackNumber + ".mp3");
+music.start();
 ----
 
 {sp}
 
 image::header_note.png[width="400"]
 
-* If you wish to include more music tracks, you also have to change the variable `maxTrackNumber = 2` to the desired number. For example, if you wish to have 3 music tracks for each genre, you have to change it to `maxTrackNumber = 3` and ensure that each genre has at least 3 music tracks in the `resources/audio/music` folder.
+* If you wish to include more music tracks, you also have to change the variable `maxTrackNumber = 2` to the desired number. For example, if you wish to have 3 music tracks for each genre, you have to change it to `maxTrackNumber = 3`
+and ensure that each genre has at least 3 music tracks in the `resources/audio/music` folder. As shown below, `maxTrackNumber` is used to check for last track number in the playlist. This is to reset the track number back to 1,
+ when the user decides plays the next music track.
+
+[source,java]
+----
+if (trackNumber < maxTrackNumber) {
+    trackNumber++;
+} else {
+    //reset track number back to 1
+    trackNumber = 1;
+}
+----
+
+{sp}
 
 * You are also able to add a new genre of music. However make sure that it too has the equal number of music tracks as the other genres. In addition, you have to update the `GENRE_LIST` array to include the new genre that you have just added.
 
-* Adding more music tracks will result in a large .jar file size.
+[source,java]
+----
+public static final String[] GENRE_LIST = {"pop", "dance", "classic"};
+----
+
+{sp}
+
 
 The following sequence diagram shows how the music operation works:
 
 image::DG_seq_music.png[width="900"]
 
-The following activity diagram summarises what happens inside the `MusicCommand` when a user executes a new command:
+{sp}
+
+The following activity diagram summarises what happens inside the `MusicCommand` class when a user executes a new command: +
+
+It first has to check the extended command, whether it is a `play` or a `stop` command. It then checks if is there any music or radio player is already currently playing, if it does, it stops the current music/radio player.
+Next, it checks if the user has input any `[GENRE]` and play that chosen `[GENRE]` music, otherwise, the default "pop" `[GENRE]` music will be played.
 
 image::DG_activitydiagram_music.png[width="700"]
 
@@ -618,7 +599,7 @@ Hence, the radio thread will only be closed when the user executes the `radio st
 image::header_note.png[width="400"]
 
 * If you wish to include more radio broadcast station, just simply modify `radio.java` class as shown below, and add new case into the switch statement, with a valid url that streams in .mp3 codec.
-* Do note that only .mp3 stream urls can be used.
+* Do note that only .mp3 stream URLs can be used.
 
 [source,java]
 ----
@@ -660,7 +641,12 @@ The following sequence diagram shows how the radio operation works:
 
 image::DG_seq_radio.png[width="900"]
 
-The following activity diagram summarises what happens inside the `RadioCommand` when a user executes a new command:
+{sp}
+
+The following activity diagram summarises what happens inside the `RadioCommand` class when a user executes a new command:
+
+It first has to check the extended command, whether it is a `play` or a `stop` command. It then checks if is there any music or radio player is already currently playing, if it does, it stops the current music/radio player.
+Next, it checks if the user has an Internet connection. It also check if the user has input any `[GENRE]` and play that chosen `[GENRE]` radio broadcast, otherwise, the default "pop" `[GENRE]` broadcast will be played.
 
 image::DG_activitydiagram_radio.png[width="700"]
 
@@ -684,7 +670,7 @@ This library is required as it can convert input stream into .mp3 codec immediat
 image::header_warning.png[width="400"]
 
 * In order for the radio player to work, it requires an Internet connection, as it streams the radio broadcast through the Internet.
-* Remember to check the status of the stream URLs. As it is possible but highly unlikely that one of those radio broadcast has shut down.
+* Remember to check the status of the stream URLs. As it is possible but highly unlikely that one of those radio broadcast has been shut down.
 // end::radiocommand[]
 
 ---
@@ -725,7 +711,13 @@ The following sequence diagram shows how the share operation works:
 
 image::DG_seq_share.png[width="900"]
 
-The following activity diagram summarises what happens inside the `ShareCommand` when a user executes a new command:
+{sp}
+
+The following activity diagram summarises what happens inside the `ShareCommand` class when a user executes a new command:
+
+It first has to check the `INDEX` of the selected contact. Next, it reads the `INDEX` and gets that contact's details.
+Then, it checks for the arguments, whether is it a numeric valid index or just a string. It also validates the recipients' email addresses.
+Lastly, it checks for an Internet connection and sends the email if so.
 
 image::DG_activitydiagram_share.png[width="700"]
 
@@ -1110,7 +1102,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |user |see my contacts while managing my address book |remember what I need to do without flipping back and forth
-|`* * *` |user |backup the contacts into a xml file |transfer my contact details with another user or load the existing details to another computer of mine
 |`* * *` |user |create new contacts in the address book |add new contacts
 |`* * *` |user |type commands that do not follow the format |use them without memorizing the formats
 |`* * *` |user |merge duplicate contacts |use my addressbook without clutter
@@ -1147,7 +1138,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `Unify` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Add person
@@ -1155,7 +1146,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to add person
-2.  AddressBook adds the person with success message
+2.  Unify adds the person with success message
 +
 Use case ends.
 
@@ -1165,14 +1156,14 @@ Use case ends.
 * 1a. The format of person information given is invalid.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Unify shows an error message.
 +
 Use case resumes at step 1.
 
-* 1b. The Address Book already contains person with the same details.
+* 1b. Unify already contains person with the same details.
 +
 [none]
-** 1b1. AddressBook shows an error message.
+** 1b1. Unify shows an error message.
 +
 Use case resumes at step 1.
 
@@ -1182,9 +1173,9 @@ Use case resumes at step 1.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Unify shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  Unify deletes the person
 +
 Use case ends.
 
@@ -1198,7 +1189,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Unify shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1208,7 +1199,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to find person by name
-2.  AddressBook shows a list of persons whose full name contains name provided
+2.  Unify shows a list of persons whose full name contains name provided
 +
 Use case ends.
 
@@ -1225,9 +1216,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Unify shows a list of persons
 3.  User request to edit person's information
-4.  AddressBook updates person's information with success message
+4.  Unify updates person's information with success message
 +
 Use case ends.
 
@@ -1241,19 +1232,164 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Unify shows an error message.
 +
 Use case resumes at step 2.
 
 * 3b. The format of new information given is not valid.
 +
 [none]
-** 3b1. AddressBook shows an error message.
+** 3b1. Unify shows an error message.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Share contact by email
 
-{More to be added}
+*MSS*
+
+1.  User requests to list persons
+2.  Unify shows a list of persons
+3.  User request to share a contact's details by email
+4.  Unify sends out email to the recipient indicated by user with success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Unify shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The format of new information given is not valid.
++
+[none]
+** 3b1. Unify shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The recipient's email address is not valid.
++
+[none]
+** 3c1. Unify shows an error message.
++
+Use case resumes at step 2.
+
+* 3d. User does not have an Internet connection.
++
+[none]
+** 3d1. Unify shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Play music
+
+*MSS*
+
+1.  User requests to play music
+2.  Unify plays the music with success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format of music command given is invalid.
++
+[none]
+** 1a1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Stop music
+
+*MSS*
+
+1.  User requests to stop music
+2.  Unify plays the music with success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format of music command given is invalid.
++
+[none]
+** 1a1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+* 1b. Unify does not have any current music player playing.
++
+[none]
+** 1b1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Play radio
+
+*MSS*
+
+1.  User requests to play radio broadcast
+2.  Unify plays the radio broadcast with success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format of radio command given is invalid.
++
+[none]
+** 1a1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+* 1b. User does not have an Internet connection.
++
+[none]
+** 1b1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Stop radio
+
+*MSS*
+
+1.  User requests to stop radio broadcast
+2.  Unify plays the radio broadcast with success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format of radio command given is invalid.
++
+[none]
+** 1a1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+* 1b. Unify does not have any current radio player playing.
++
+[none]
+** 1b1. Unify shows an error message.
++
+Use case resumes at step 1.
 
 [appendix]
 == Non Functional Requirements
@@ -1273,13 +1409,14 @@ Use case resumes at step 2.
 [cols="2*^"]
 |===
 | *TERMS* | *EXPLANATION*
+| *Application Programming Interface (API)* | Is a set of subroutine definitions, protocols, and tools for building application software, usually related to a software library.
 | *Average Typing Speed* | 40 words per minute.
 | *Command Line Interface (CLI)* |  link:http://searchwindowsserver.techtarget.com/definition/command-line-interface-CLI[Full Definition] A user interface to a computer's operating system or an application in which the user responds to a visual prompt by typing in a command on a specified line, receives a response back from the system, and then enters another command, and so forth.
 | *Mainstream OS* |  Windows, Linux, Unix, OS-X.
 | *Natural Language* |  link:http://whatis.techtarget.com/definition/natural-language[Full Definition] In computing, natural language refers to a human language such as English, Russian, German, or Japanese as distinct from the typically artificial command or programming language with which one usually talks to a computer.
-
 | *Portable Application* |  A portable application (portable app) is a software product designed to be easily moved from one computing environment to another. They include portable versions of regular applications – such as browsers, for example – as well as specialized apps designed to enhance mobile computing.
 | *Private contact detail* |  A contact detail that is not meant to be shared with others
 | *Sluggishness* |  link:https://www.nngroup.com/articles/response-times-3-important-limits/[Response Times: The 3 Important Limits] Respond time of greater than 1 second upon user input
 | *Singleton* |  link:https://en.wikipedia.org/wiki/Singleton_pattern[Wikipedia Article] A class which has only one instance
+| *Uniform Resource Locator (URL)* |  Is colloquially termed a web address. It is a reference to a web resource that specifies its location on a computer network and a mechanism for retrieving it.
 |===

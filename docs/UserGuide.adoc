@@ -285,7 +285,7 @@ image:step3.png[width="70"] The contact list will be displayed with every contac
 
 image::UG_list2.png[width="590"]
 
-image:step4.png[width="70"] Type `delete` into the command box first, then follow the index of the contact list, after which press kbd:[Enter] to execute it.
+image:step4.png[width="70"] Type `delete` into the command box first, then follow the `INDEX` of the contact list, after which press kbd:[Enter] to execute it.
 
 image::UG_delete1.png[width="590"]
 
@@ -319,7 +319,7 @@ Alias: `change`
 
 image::header_note.png[width="400"]
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. The `INDEX` refers to the index number shown in the last person listing. The `INDEX` *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * You can remove the person's remarks by typing `r/` without specifying any remarks after it.
@@ -447,7 +447,7 @@ image::UG_commandheader_select.png[width="500"]
 
 Two hands on your keyboard and don't want to press the mouse?
 Unify's `select` command provides and alternative to clicking on a contact list.
-It selects the person identified by the index number used in the last contact listing. +
+It selects the person identified by the `INDEX` number used in the last contact listing. +
 
 image::UG_header_format.png[width="400"]
 
@@ -458,8 +458,8 @@ image::UG_header_alias.png[width="400"]
 Alias: `choose`, `pick`
 
 image::header_note.png[width="400"]
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The `INDEX` refers to the index number shown in the most recent listing.
+* The `INDEX` *must be a positive integer* `1, 2, 3, ...`
 
 image::UG_header_examples.png[width="400"]
 
@@ -482,11 +482,11 @@ image:step3.png[width="70"] The contact list will be displayed with every contac
 
 image::UG_list2.png[width="590"]
 
-image:step4.png[width="70"] Type `select` into the command box first, then follow the index of the contact list, after which press kbd:[Enter] to execute it.
+image:step4.png[width="70"] Type `select` into the command box first, then follow the `INDEX` of the contact list, after which press kbd:[Enter] to execute it.
 
 image::UG_select1.png[width="590"]
 
-image:step5.png[width="70"] The result box will display "Selected person:" with the index.
+image:step5.png[width="70"] The result box will display "Selected person:" with the `INDEX`.
 
 image:step6.png[width="70"] The selected person will be highlighted from the contact list.
 
@@ -743,7 +743,7 @@ image:step3.png[width="70"] The contact list will display every contact found in
 
 image::UG_list2.png[width="590"]
 
-image:step4.png[width="70"] To start sharing the contact through email, type `share` into the command box first, then follows by the index of the contact list and your recipient's email address or their index in the contact list, after which press kbd:[Enter] to execute it.
+image:step4.png[width="70"] To start sharing the contact through email, type `share` into the command box first, then follows by the `INDEX` of the contact list and your recipient's email address or their index in the contact list, after which press kbd:[Enter] to execute it.
 
 image::UG_share1.png[width="590"]
 
@@ -1041,7 +1041,7 @@ image::UG_mainheader_upcomingfeatures.png[width="900"]
 
 image::UG_header_v2features.png[width="500"]
 
-* Speech-To-Text feature, to give users another way of input as well as executing commands hands free. This will be greatly beneficial to those who want to multitask, as it ables to execute multiple commands. +
+* The speech-to-text feature, is to give users another way of input as well as executing commands hands-free. This will be greatly beneficial to those who want to multitask, as it able to execute multiple commands.
 +
 For example, when the user is editing a contact, he/she is able to say "music play pop" to play some music without moving away from his/her current task.
 
