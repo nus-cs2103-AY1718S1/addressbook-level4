@@ -7,9 +7,9 @@ ConTag is an efficient and feature-packed desktop address book application for t
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/main/CT15.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/test/CT15.md[Test code]]
 
-=== Enhancement Added: Expansion of Existing Help Function
+== Enhancement Added: Expansion of Existing Help Function
 
-==== External behavior
+=== External behavior
 
 ---
 
@@ -21,11 +21,11 @@ include::../UserGuide.adoc[tag=help]
 
 ---
 
-==== Justification
+=== Justification
 
 ConTag supports various commands with different command formats. This makes it difficult for new users to remember how each command is used. Displaying the format of a specific command will save users the trouble to go through the user guide repeatedly. This enhancement serves as a quick reminder for both new and frequent users.
 
-==== Implementation
+=== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
@@ -36,9 +36,9 @@ include::../DeveloperGuide.adoc[tag=help]
 
 ---
 
-=== Enhancement Added: Schedule an Activity Multiple Persons
+== Enhancement Added: Schedule an Activity Multiple Persons
 
-==== External behavior
+=== External behavior
 
 ---
 
@@ -50,7 +50,7 @@ include::../UserGuide.adoc[tag=schedule]
 
 ---
 
-==== Justification
+=== Justification
 
 ConTag is targeted towards business users. It is, hence, important for the application to allow users to schedule activities with their contacts.
 
@@ -60,7 +60,7 @@ In v1.4, users can have multiple activities with a contact. Furthermore, an acti
 
 The improvement from v1.3 to v1.4 is based on the reasoning that there exists activities, such as meeting, that involve more than one people. It is also possible to have multiple different schedules with a contact.
 
-==== Implementation
+=== Implementation
 
 ---
 
@@ -74,9 +74,9 @@ include::../DeveloperGuide.adoc[tag=scheduleMultiple]
 
 ---
 
-=== Enhancement Added: Welcome Screen Display
+== Enhancement Added: Welcome Screen Display
 
-==== External behavior
+=== External behavior
 
 ---
 
@@ -88,13 +88,13 @@ include::../UserGuide.adoc[tag=welcomeScreen]
 
 ---
 
-==== Justification
+=== Justification
 
 Welcome screen is another form of advertising as it displays clearly the application logo when the application is launched.
 
 It is understood that users may not like welcome screen. Therefore, users have the choice to enable and disable the welcome screen. However, it is hoped that the display of a random productivity quote together with the welcome screen will provide an incentive for the users to enable the welcome screen.
 
-==== Implementation
+=== Implementation
 
 ---
 
@@ -106,7 +106,7 @@ include::../DeveloperGuide.adoc[tag=welcomeScreen]
 
 ---
 
-=== Other contributions
+== Other contributions
 
 * Created the 2 different versions of ConTag logo for the documentations and the application
 * Enabled ConTag to take in command aliases as command identifiers in addition to only command words

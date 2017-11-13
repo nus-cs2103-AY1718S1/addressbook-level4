@@ -777,7 +777,7 @@ _Figure 4.4.7 : Sequence diagram showing how the web page is loaded from `Person
 
 _Figure 4.4.8_ below shows the full UI outcome of selecting a selecting a `PersonCard` in the `PersonListPanel`, as well as displaying the corresponding address location in `BrowserPanel`.
 
-image::Full UI outcome for LocateCommand.png[width="800"]
+image::FullUIoutcomeLocateCommand.png[width="800"]
 _Figure 4.4.8 : Full UI outcome of locate implementation_
 
 ==== Design Considerations
