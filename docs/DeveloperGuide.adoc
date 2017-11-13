@@ -578,12 +578,12 @@ be implemented in both `saveAddressBook()` and `backup()` +
 able to revert to the start of the session, which is likely to be a functional copy of his original save file. +
 ** **Cons:** This does not give the most recent copy of the data of the Ark if many changes were made in a single
 session. +
-* **Alternative 2:** Backup data every few minutes +
+1* **Alternative 2:** Backup data every few minutes +
 ** **Pros:** Provides a very recent copy of the data on Ark. +
 ** **Cons:** More tedious and difficult to implement. User may also be running another process at that point of time.
 This could cause a bottleneck if there is a lot of data to be saved, and multiple backup calls will be queued one after
 the other if the previous backup process is called even before the current one has finished running. +
-* **Alternative 3:** Backup data after a fixed number of `UndoableCommand`s. +
+* **Alternative 3:** Backup data after a fixed number of `UndoableCommand`. +
 ** **Pros:** Provides a very recent copy of the data on Ark. +
 ** **Cons:** More tedious and difficult to implement. Difficult to determine the optimal amount of data to restore. If
 the corruption of the data is caused by a series of commands, it becomes difficult to provide reasonable assurance
@@ -591,13 +591,13 @@ that the backup file provides a functional copy of the data of Ark.
 
 ---
 
-**Aspect: Case: Backup if safe file is not present** +
+**Aspect: Case: Backup if main storage file is not present** +
 
-* **Alternative 1 (current choice):** Ark does not backup if it cannot read the save file +
+* **Alternative 1 (current choice):** Ark does not backup if it cannot read the main storage file +
 ** **Pros:** Backup data will not be overwritten in the event that Ark is not able to read the designated save file for
-reasons such as the save file being corrupted/missing+
+reasons such as the save file being corrupted/missing. +
 ** **Cons:** Additional overhead to check if Ark is able to read the save file. +
-* **Alternative 2:**Back up even if the save file does not exist or cannot be read by Ark. +
+* **Alternative 2:**Back up even if the main storage file does not exist or cannot be read by Ark. +
 ** **Pros:** Less overhead needed to check if Ark is able to read the save file. +
 ** **Cons:** Backup data could be overwritten in the event the designated save file is corrupted/missing. +
 //end::backup[]
@@ -846,7 +846,7 @@ will return an `OVERDUE Status`. Otherwise, it will return a `PENDING Status`. T
 
 **Implementation of `Status`**
 
-* **Alternative 1 (current choice):** Status implements an Enumeration.
+* **Alternative 1 (current choice):** Status implements an Enumeration interface.
 ** **Pros:** `Status` has a fixed number of  values. The user should also not be allowed to create new `Status` objects.
 This also standardizes the naming conventions used to describe the same delivery status in Ark.
 ** **Cons:** Less options for the user to alter the `Status` values +
@@ -865,10 +865,10 @@ checks if the String input is a valid `Status` and returns it. On the other hand
 valid `Status` and returns an updated `Status` with respect to the `DeliveryDate` provided as a parameter. Easier to
 test these methods and integrate the automatic `Status` update into the codebase.
 ** **Cons:** More overhead. +
-* **Alternative 2:** Update `State` in `getInstance()`.
+* **Alternative 2:** Update `Status` in `getInstance()`.
 ** **Pros:** Less overhead and more intuitive.
 ** **Cons:** More tedious to code because a `DeliveryDate` object has to be instantiated before programmer is able to
-retrieve a `Status`.
+retrieve an updated `Status`.
 //end::status[]
 
 //tag::deliveryDate[]
@@ -932,7 +932,7 @@ when handling.
 
 **`Implementation of Tag`**
 
-* **Alternative 1 (current choice):** Tag implements the Enumeration class.
+* **Alternative 1 (current choice):** Tag implements the Enumeration interface.
 ** **Pros:** `Tag`s has fixed values. The user should also not be allowed to create new `Tag` objects.
 ** **Cons:** Less options for the user to alter the `Tag` values +
 * **Alternative 2:** Allow the user to define any `Tag`s they wish.

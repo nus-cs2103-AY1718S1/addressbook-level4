@@ -337,8 +337,9 @@ You can view the pull request link:https://github.com/CS2103AUG2017-T16-B1/main/
  ** link:https://github.com/nus-cs2103-AY1718S1/forum/issues/152[Will this violate SRP]
  ** link:https://github.com/nus-cs2103-AY1718S1/forum/issues/14[Code quality improvements for addressbook-level1: share here #14]
 
-== Project: NUSVisions
+== Other Project: NUSVisions
 
-NUSVisions is an application meant to help NUS students plan for the entire 4 years of their studies. It stores your
-sessions to ensure that modules saved in your plans remain after a period of time. I deployed the web application on
-a Heroku server and you can access it by clicking link:https://nusvision.herokuapp.com/[here]
+NUSVisions was an application I built over the Summer of 2017. NUSVisions is an application meant to help NUS students
+plan for the entire 4 years of their studies. It stores your sessions to ensure that modules saved in your plans remain
+after a period of time. I deployed the web application on a Heroku server and you can access it by clicking
+link:https://nusvision.herokuapp.com/[here]

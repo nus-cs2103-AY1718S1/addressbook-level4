@@ -195,7 +195,7 @@ The Tracking Number field represents the tracking number of the parcels.
 This field allows you to add tracking numbers to your parcels. Tracking numbers allow you to keep track of the parcels
 that are in your possession. This field is important because a single person can have many parcels belonging to
 him. Hence, you can use our Tracking Number to differentiate between the different parcels that are allocated to a
-single recipient. You can also use tracking numbers to identify specific parcels to be allocated
+single recipient. You can also use tracking numbers to identify specific parcels.
 
 [NOTE]
 Ark only supports tracking numbers for registered articles managed by SingPost at this instance. These
