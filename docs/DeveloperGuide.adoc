@@ -383,7 +383,7 @@ public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
 // end::sort[]
 
 // tag::remark[]
-=== Remark Command
+=== Remark Command (Since v1.1)
 
 The `remark` command allows the user to edit the remark field of a contact. The field is initially empty when a new
 `Person` is instantiated.
@@ -444,7 +444,7 @@ Access display is implemented with two `PersonCard` JavaFX files, `PersonCardLis
 // end::accessdisplay[]
 
 // tag::statistics[]
-=== Statistics Command
+=== Statistics Command (Since v1.3)
 
 The `statistics` command allows the user to view information about the system. The `statistics` command does not take
 any additional parameters.
@@ -477,24 +477,27 @@ an `ArrayList<Integer>` data structure that will be displayed by the `BarChart` 
 [source,java]
 ----
 public ArrayList<Integer> getNewPersonsAddByMonth(int displayYears) {
+        int totalMonthsDisplayed = yearsToMonth(displayYears) + 1;
 
-    ArrayList<Integer> countByMonth = new ArrayList<>(Collections.nCopies(displayYears * 12 + 1, 0));
+        ArrayList<Integer> countByMonth = new ArrayList<>(
+                Collections.nCopies(totalMonthsDisplayed, 0));
 
-    personList.forEach((p) -> {
-        Date givenDate = p.getCreatedAt();
-        ZonedDateTime given = givenDate.toInstant().atZone(ZoneId.of("UTC"));
+        personList.forEach(p -> {
+            Date givenDate = p.getCreatedAt();
+            ZonedDateTime given = givenDate.toInstant().atZone(ZoneId.of(ZONE_ID));
 
-        int personAddedYear = Integer.parseInt(Year.from(given).toString());
-        int personAddedMonth = Month.from(given).getValue();
+            int personAddedYear = Integer.parseInt(Year.from(given).toString());
+            int personAddedMonth = Month.from(given).getValue();
 
-        int indOffset = calculateCountByMonthOffset(personAddedMonth, personAddedYear);
-        if (indOffset >= 0 && indOffset <= displayYears * 12) {
-            countByMonth.set(indOffset, countByMonth.get(indOffset) + 1);
-        }
-    });
+            int indOffset = calculateCountByMonthOffset(personAddedMonth, personAddedYear);
 
-    return countByMonth;
-}
+            if (isOffsetWithinDisplayRange(indOffset, totalMonthsDisplayed)) {
+                countByMonth.set(indOffset, countByMonth.get(indOffset) + 1);
+            }
+        });
+
+        return countByMonth;
+    }
 ----
 
 ==== Design Considerations
@@ -509,19 +512,18 @@ shown appropriately (based on the command that is given).
 * **Alternative 2:** Utilise the browser class to display the statistics
 ** **Pros:** Developer does not have to manage the swapping UI parts.
 ** **Cons:** Information has to be passed from the Java system into a format that can be rendered
-by the browser engine. It is tricker to test and more likely to break.
+by the browser engine. There is a higher chance that this will break in the future.
 
 **Aspect:** Displaying of key information in `StatisticsPanel`
 
 * **Alternative 1 (current choice):** A bar chart breakdown by month in the last 2 years of newly created users
-** **Pros:** Developer does not have to manage the swapping UI parts.
-** **Cons:** Information has to be passed from the Java system into a format that can be rendered
-by the browser engine. It is tricker to test and more likely to break.
+** **Pros:** A month by month comparison of the number of people added can be seen
+** **Cons:** The user cannot quickly tell the total number of people added in other intervals.
 
 * **Alternative 2:** A pie chart breakdown by year in the last 5 years of newly created users
 ** **Pros:** User will be able to tell quickly the portion of Persons added in the year as compared to the past years.
 ** **Cons:** A breakdown by year might not allow the user to answer a more important question easily: how has the number
-of people added changed in a more manageable timeframe (such as a month)?
+of people added changed in a more manageable timeframe (such as a month).
 // end::statistics[]
 
 // tag::findregex[]
