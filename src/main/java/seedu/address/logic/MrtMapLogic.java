@@ -5,8 +5,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
+//@@author Yew Onn
+/**
+ * The java class that computes the list of mrt stations that reduces the total travelling
+ * time. The timing is base on actual mrt data.
+ */
 public class MrtMapLogic {
-    MrtMapLogic(){
+    public MrtMapLogic(){
         initialise();
     }
     //require five minutes to transfer station
@@ -615,7 +620,8 @@ public class MrtMapLogic {
     private int[] getMinTotalTime(String[] mrtStationNames){
         int[] minTotalTimeList = new int[mrtStations.size()];
         for(int i = 0; i < mrtStationNames.length; i++) {
-            int mrtStationIndex = stationCodeToIndex.get(mrtStationNames);
+            String mrtStationName = mrtStationNames[i];
+            int mrtStationIndex = nameToIndex.get(mrtStationName);
             int[] tempTimeList = getMinTime(mrtStationIndex);
             for(int j = 0; j < tempTimeList.length; j++) {
                 minTotalTimeList[j] += tempTimeList[j];
@@ -685,6 +691,34 @@ public class MrtMapLogic {
         return false;
     }
 
+    /**
+     *
+     * @param mrtStations
+     * @return the mrtStation list without duplicate. Order remains the same.
+     */
+    private ArrayList<String> removeDuplicateMrt(ArrayList<String> mrtStations){
+        HashMap<String, Boolean> mrtList = new HashMap<String, Boolean>();
+        ArrayList<String> noDuplicateMrtList = new ArrayList<String>();
+        for(int i = 0; i < mrtStations.size(); i++){
+            String mrtName = mrtStations.get(i);
+            if(!mrtList.containsKey(mrtName)){
+                mrtList.put(mrtName, true);
+                noDuplicateMrtList.add(mrtName);
+            }
+        }
+        return noDuplicateMrtList;
+    }
+
+    private ArrayList<String> removeInvalidMrtStation(ArrayList<String> mrtStations){
+        ArrayList<String> validMrtStations = new ArrayList<String>();
+        for(int i = 0; i < mrtStations.size(); i++){
+            if(nameToIndex.containsKey(mrtStations.get(i))){
+                validMrtStations.add(mrtStations.get(i));
+            }
+        }
+        return validMrtStations;
+    }
+
     //For debugging purpose only.
     private void printAdjList(){
         for(int i = 0; i < adjList.size(); i++) {
@@ -704,8 +738,30 @@ public class MrtMapLogic {
         }
     }
 
+    private void printSingleMrtTiming(int sourceIndex){
+        int[] minTable = getMinTime(sourceIndex);
+        for(int i = 0; i < minTable.length; i++){
+            MrtStation mrtStation = mrtStations.get(i);
+            String stationName = mrtStation.getName();
+            System.out.println(i+", "+stationName+": "+minTable[i]);
+        }
+    }
+
+    private void printSortedMrt(ArrayList<String> stationNames){
+        ArrayList<String> sortedList = getSortedMrtList(stationNames);
+        for(int i = 0; i < sortedList.size(); i++){
+            System.out.println(i+" = "+sortedList.get(i));
+        }
+    }
+
     public static void main (String[] args){
         MrtMapLogic mrtMapLogic = new MrtMapLogic();
-        mrtMapLogic.printAdjList();
+       // mrtMapLogic.printSingleMrtTiming(141);
+        ArrayList<String> stationNames = new ArrayList<String>();
+        stationNames.add("Changi Airport");
+        stationNames.add("Tuas Link");
+        stationNames.add("Dhoby Ghaut");
+        stationNames.add("adofmalkf");
+        mrtMapLogic.printSortedMrt(stationNames);
     }
 }
