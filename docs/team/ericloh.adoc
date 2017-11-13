@@ -71,7 +71,11 @@ include::../DeveloperGuide.adoc[tag=appointmentimplementation]
 
 === Enhancement Proposed (for Version 2.0)
 * More CLI for calendar view. Allow users to go to a selected date.
+** Currently there is no way for the user to navigate through the calendar without using the mouse. It would be useful
+for the doctors if they have the access to such shortcuts.
 * Make deletion of appointments easier. Remove the need to type in the whole description to delete.
+** Current deletion is too verbose and takes too much effort. This implementation has to be reworked in order to use
+the index for deletion instead of the name.
 
 === Other Contributions
 * https://github.com/CS2103AUG2017-T17-B2/main/pull/101[Revamped Developer Guide content] with Ru Shan
