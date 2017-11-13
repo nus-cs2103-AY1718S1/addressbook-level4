@@ -1942,9 +1942,9 @@ The details panel is used to show all the information regarding a person as comp
 
 The details panel can be accessed by using the `select` command or by directly clicking on the peron card in the ui.
 
-The details panel is directly accessed by `MainWindow` class. The `details panel` class extends from `UiPart<Region>` and calls the super class constructor to use the FXML file.
+The  panel is directly accessed by `MainWindow` class. The `details panel` class extends from `UiPart<Region>` and calls the super class constructor to use the FXML file.
 
-The details panel also calls the `loadBlankPage()` method in its constructor so that the user does not see anything on the details panel when the application is first opened.
+It also calls the `loadBlankPage()` method in its constructor so that the user does not see anything on the details panel when the application is first opened.
 
 The `loadPersonInfo()` method is called from  two event handlers `handlePersonPanelSelectionChangedEvent()` and `handlePersonSelectionChangedEvent()` as shown in the code snippet below.
 [source,java]
@@ -1966,6 +1966,11 @@ The `loadPersonInfo()` method is called from  two event handlers `handlePersonPa
 The `handlePersonPanelSelectionChangedEvent` is used to load a person's details only when a person card has been selected and a personPanelSelectionChangedEvent is raised. The PersonSelectionchangedEvent is raised when the person's details are updated using the `edit` command.
 
 The `loadPersonInfo` is facilitated by the `bindListeners()` method that "listens" for a change in any of the fields of the person.
+
+The sequence diagram is shown in 5.18.1 below.
+
+image::DetailsPanelMechanism.png[width="800"]
+Figure 5.18.1 Details Panel Sequence Diagram
 
 ==== Design Considerations
 **Aspect:** Creating the details panel when there is a person card. +
