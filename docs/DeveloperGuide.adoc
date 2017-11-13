@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= image:DG_developerguideheader.png[width="900"]
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,29 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W-11 B4`      Since: `Sep 2017`      Licence: `MIT`
+
+== Contributing to Unify
+
+=== Who we are
+Unify is an open source Command Line Interface (CLI) AddressBook.
+We aim to offer a an efficient solution for contact management for computing students through the command line.
+
+=== How to contribute
+Looking to contribute to Unify? You have come to the right place! This developer guide provides information for
+both experienced and first-time contributors.
+
+==== First Time Contributors
+First time contributing to an open source project? Welcome to the community - we appreciate your enthusiasm! +
+
+* For starters, do read our Setting up guide to familiarize yourself with Unify
+* If you are ready to contribute, make a pull request (pr) on our main repository.
+** First time making a pr? There's a great guide for beginners over https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github[here]
+* Lastly, if you have any questions, feel free to https://github.com/CS2103AUG2017-W11-B4/main/issues[make an issue] or <<ContactUs#, contact us>> directly.
+
+==== Experienced Developers
+Thank you for taking the time to look at our project. While we have worked on this extensively, do let us know what can be improved!
+Your experience and contribution will be invaluable in improving Unify for our valued users.
 
 == Setting up
 
@@ -360,6 +382,692 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+// tag::find[]
+
+=== Find by Person Details
+
+Unify offers users the option to find people by their details. To implement the new command syntax,
+`FindCommandParser` makes use of the `ArgumentTokenizer#tokenize` to generate an `ArgumentMultimap`. The `ArgumentMultimap's`
+`key` contains the detail's prefix and `value` contains the keywords that succeed that prefix.
+
+For each detail, there are specific `Predicates` that are defined. They are `AddressContainsKeywordPredicate`, `EmailContainsKeywordPredicate`,
+`NameContainsKeywordPredicate`, `PhoneContainsKeywordPredicate` and `TagsContainKeywordPredicate`, `RemarkContainsKeywordPredicate`. The implementation is as follows:
+
+[source,java]
+----
+public class DetailContainsKeywordPredicate implements Predicate<ReadOnlyPerson> {
+
+    ...
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        String detail = person.getDetail(); //getter for person's specific detail
+
+        //we convert detail to lowercase and check if it contains the lower case keyword
+        return detail.toLowerCase().contains(keyword.toLowerCase());
+    }
+
+}
+
+----
+[NOTE]
+For Tags, we test for all tags and check for at least one `String#contains` match. For Remark, we check using `StringUtil#containsWordIgnoreCase`.
+
+
+However, just having a specific `Predicate` for each detail is insufficient as `ModelManager#updateFilteredPersonList()`
+only takes only a single `Predicate` as an argument.
+As such, to accept multiple details in one query, we need to encapsulate multiple `Predicates` into one `Predicate`.
+This is encapsulated by `PersonContainsFieldsPredicate` which takes in a list of `Predicates` as an argument.
+
+Internally, the `Predicates` are stored in a `HashSet`.
+
+[source,java]
+----
+public class PersonContainsFieldsPredicate implements Predicate<ReadOnlyPerson> {
+
+    ...
+
+    public PersonContainsFieldsPredicate(List<Predicate> predicates) {
+        this.predicates = predicates.stream().collect(Collectors.toSet()); //Collects in a HashSet
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        for (Predicate searchQuery : predicates) {
+            if (!searchQuery.test(person)) {
+                return false;
+            }
+        }
+        return true;
+    }
+----
+
+For `PersonContainsFieldsPredicate#test` we iterate through all `Predicates` and return `false` if any of their `#test` calls return false. Thus this `Predicate` will check for all matches before return `true` (ie an *AND* find).
+Consider a `PersonContainsFieldsPredicate p` with `NameContainsKeywordPredicate n`, `AddressContainsKeywordPredicate a` and a `ReadOnlyPerson rop`. `rop's` `Name` contains keyword found in `n` but `Address` does not contain the keyword found in `a`.
+The following sequence diagram shows `p` being tested on `rop`.
+
+image::PersonContainsFieldsPredicate.png[width="800"]
+
+We can pass this `PersonContainsFieldsPredicate` into `ModelManager#updateFilteredPersonList()` which updates `FilteredList` the with the new `Predicate` which updates
+the list to suit the parameters of the find query.
+
+==== Design Considerations
+
+**Aspect:** Storing of `Predicates` in `PersonContainsFieldsPredicate` +
+**Alternative 1 (current choice):** Store in a `HashSet` +
+**Pros:** We can filter out duplicate `Predicates`. `equals()` implementation is cleaner. +
+**Cons:** Must override `hashCode()` for new `Predicate`. Constructor must iterate through list to create `Set`. +
+**Alternative 2:** Store in a `List` +
+**Pros:** Do not need to override `hashCode()` for new `Predicate`. Constructor only needs to assign constructor arguments. +
+**Cons:** `equals()` results in O(n^2^) execution. Also results in 2 nested `for` loops. +
+
+---
+
+**Aspect:** Encapsulation of multiple `Predicates` +
+**Alternative 1 (current choice):** Create different `Predicates` and wrap them in one `Predicate` +
+**Pros:** Modular code: we can easily implement an *OR* find by creating a new wrapper `Predicate` and reusing the existing `Predicates`. `PersonContainsFieldsPredicate`
+does not have to be aware of new `Predicates` +
+**Cons:** Every new field in `ReadOnlyPerson` requires a new `Predicate` +
+**Alternative 2:** Create one `Predicate` that implements test by switch statements +
+**Pros:** A new field can be added by adding an additional case to the switch statement +
+**Cons:** Implementing *OR* find will require the reuse of switch statements in a new `Predicate`. When creating a new `Predicate`, all the switch
+ statements must be updated. +
+
+---
+// end::find[]
+
+// tag::musiccommand[]
+=== Music Player Mechanism
+The `music` command is extended with an additional command behind it. For example, `music play`, has `play` as the extended command. The `play` command at the back means that the system will play a music track. While `music stop` command
+will stop the current music track.
+
+Both the `music play` and the `music stop` commands are executed in the same `MusicCommand` class. This also makes the commands easier to remember for the user as well, as anything related to `music` will start with `music` as a command.
+
+Additional extended commands can be added by having an additional case in the switch statement, as the extended commands are handled in a switch statement.
+In addition, the `MusicCommand` class will create a new `music thread`, this is to prevent the User Interface from being non-responsive in the current thread. Currently, all music played will be in a loop until it is stopped by the user, through the `music stop` command.
+
+[source,java]
+----
+music = new Music("audio/music/" + genre + trackNumber + ".mp3");
+music.start();
+----
+
+{sp}
+
+image::header_note.png[width="400"]
+
+* If you wish to include more music tracks, you also have to change the variable `maxTrackNumber = 2` to the desired number. For example, if you wish to have 3 music tracks for each genre, you have to change it to `maxTrackNumber = 3`
+and ensure that each genre has at least 3 music tracks in the `resources/audio/music` folder. As shown below, `maxTrackNumber` is used to check for last track number in the playlist. This is to reset the track number back to 1,
+ when the user decides plays the next music track.
+
+[source,java]
+----
+if (trackNumber < maxTrackNumber) {
+    trackNumber++;
+} else {
+    //reset track number back to 1
+    trackNumber = 1;
+}
+----
+
+{sp}
+
+* You are also able to add a new genre of music. However make sure that it too has the equal number of music tracks as the other genres. In addition, you have to update the `GENRE_LIST` array to include the new genre that you have just added.
+
+[source,java]
+----
+public static final String[] GENRE_LIST = {"pop", "dance", "classic"};
+----
+
+{sp}
+
+
+The following sequence diagram shows how the music operation works:
+
+image::DG_seq_music.png[width="900"]
+
+{sp}
+
+The following activity diagram summarises what happens inside the `MusicCommand` class when a user executes a new command: +
+
+It first has to check the extended command, whether it is a `play` or a `stop` command. It then checks if is there any music or radio player is already currently playing, if it does, it stops the current music/radio player.
+Next, it checks if the user has input any `[GENRE]` and play that chosen `[GENRE]` music, otherwise, the default "pop" `[GENRE]` music will be played.
+
+image::DG_activitydiagram_music.png[width="700"]
+
+{sp}
+
+==== Prerequisites/Dependencies
+
+The music player function requires an external library. You have to add `compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'` to your dependencies in `build.gradle` file. as shown below.
+
+[source,java]
+----
+dependencies {
+    compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'
+}
+----
+
+{sp}
+
+image::header_warning.png[width="400"]
+
+* The `trackNumber` has to be less than or equal to the number of each genre tracks you have in the `resources/audio/music` folder. For example, if `trackNumber` is 2, it is required to have at least 2 mp3 files of each genre of music.
+
+image::MusicList.jpg[width="200"]
+
+* The `resources/audio/music` folder cannot be empty.
+
+* You can only add music tracks that are encoded in .mp3 format.
+
+==== Design Considerations
+
+**Aspect:** Naming of music tracks +
+
+**Alternative 1 (current choice):** Name begins with the genre followed by track number +
+**Pros:** Easy to maintain, as it allows the addition of music tracks by adding more mp3 files and a change of only one or two variables in the code. +
+**Cons:** Require to have the same exact number of music tracks for each genre +
+
+**Alternative 2:** Any file name  +
+**Pros:** Able to hold music track title name, which can be used to display to the user in the result box +
+**Cons:** Requires an array to keep track of the music tracks for each genre. More code manipulation required when adding more music tracks +
+
+{sp}
+
+**Aspect:** Which music file to play first +
+
+**Alternative 1 (current choice):** Play the music file that starts with 1 then increases from there +
+**Pros:** Easy to implement. Users are able to know what song is coming up next on the tracklist +
+**Cons:** Always start playing the same music track first +
+
+**Alternative 2:** Play a random music file +
+**Pros:** Has a chance to be different the next time the user starts playing music. +
+**Cons:** User does not know which song is going to be played next.
+
+---
+// end::musiccommand[]
+
+// tag::radiocommand[]
+=== Radio Player Mechanism
+The `radio` command is extended with an additional command behind it. For example, `radio play`, has `play` as the extended command. The `play` command at the back means that the system will play a radio broadcast channel. While `radio stop` command
+will stop the current radio player.
+
+Both the `radio play` and the `radio stop` commands are executed in the same `RadioCommand` class. This also makes the commands easier to remember for the user as well, as anything related to `radio` will start with `radio` as a command.
+In addition, the `RadioCommand` class will create a new `radio thread`, this is to prevent the User Interface from being non-responsive in the current thread. The radio thread will stream endlessly unless the stream has been shut down.
+Hence, the radio thread will only be closed when the user executes the `radio stop` command.
+
+image::header_note.png[width="400"]
+
+* If you wish to include more radio broadcast station, just simply modify `radio.java` class as shown below, and add new case into the switch statement, with a valid url that streams in .mp3 codec.
+* Do note that only .mp3 stream URLs can be used.
+
+[source,java]
+----
+public void run() {
+        BufferedInputStream in = null;
+        try {
+            switch (genre) {
+            case "chinese":
+                radioStreamUrl = "http://198.105.214.140:2000/Live?icy=http";
+                break;
+            case "classic":
+                radioStreamUrl = "http://media-sov.musicradio.com/ClassicFMMP3";
+                break;
+            case "news":
+                radioStreamUrl = "http://streams.kqed.org/kqedradio?";
+                break;
+            case "pop":
+                radioStreamUrl = "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_q";
+                break;
+            default:
+                radioStreamUrl = "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_q";
+                break;
+            }
+
+            in = new BufferedInputStream(new URL(radioStreamUrl).openStream());
+            player = new Player(in);
+            player.play();
+            in.close();
+        } catch (IOException e) {
+            logger.info("Invalid IO for BufferedInputStream: " + radioStreamUrl);
+        } catch (JavaLayerException e) {
+            logger.info("JavaLayerExeception: Invalid File Type for Radio Player");
+        }
+    }
+}
+----
+
+The following sequence diagram shows how the radio operation works:
+
+image::DG_seq_radio.png[width="900"]
+
+{sp}
+
+The following activity diagram summarises what happens inside the `RadioCommand` class when a user executes a new command:
+
+It first has to check the extended command, whether it is a `play` or a `stop` command. It then checks if is there any music or radio player is already currently playing, if it does, it stops the current music/radio player.
+Next, it checks if the user has an Internet connection. It also check if the user has input any `[GENRE]` and play that chosen `[GENRE]` radio broadcast, otherwise, the default "pop" `[GENRE]` broadcast will be played.
+
+image::DG_activitydiagram_radio.png[width="700"]
+
+{sp}
+
+==== Prerequisites/Dependencies
+
+The radio streaming function requires an external library. You have to add `compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'` to your dependencies in `build.gradle` file. as shown below.
+
+[source,java]
+----
+dependencies {
+    compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'
+}
+----
+
+{sp}
+
+This library is required as it can convert input stream into .mp3 codec immediately.
+
+image::header_warning.png[width="400"]
+
+* In order for the radio player to work, it requires an Internet connection, as it streams the radio broadcast through the Internet.
+* Remember to check the status of the stream URLs. As it is possible but highly unlikely that one of those radio broadcast has been shut down.
+// end::radiocommand[]
+
+---
+
+// tag::sharecommand[]
+=== Share Contacts by Email Mechanism
+
+The `share` command takes in the parameter that consists an `INDEX`, of which is the selected contact's details to be shared with.
+Followed by s/`INDEX` `EMAIL`, which are the parameters for the recipient email address. This format allows the parameters `INDEX` `EMAIL` found are interchangeable.
+
+By using the `isNumeric(string)` method, which returns us a boolean. If it returns true, it means that input is an `INDEX`, otherwise, it is a string.
+Next, we want to check if those string values are indeed valid email addresses, use the isValidEmailAddress(string) to check whether is it a valid email address.
+This method requires the use of `javax.mail` API, as it creates a new `InternetAddress` object and calls `validate()' method to check if the email address is valid or not.
+
+Once, we know the email address are valid. We have to create a new thread to send these emails. Because, if we were to send more than 2 emails,
+the main thread for the UI will be non-responsive.
+
+image::header_note.png[width="400"]
+
+* If you wish to change to a different host email address, just simply modify `sendEmail.java` class as shown below, and change the variable values, such as senderEmail, password, and the host.
+* If your sender's email is from `Gmail`, your host has to be `smtp.gmail.com`
+* If your sender's email is from `Outlook`, your host has to be `smtp-mail.outlook.com`
+* If your sender's email is from `Hotmail`, your host has to be `smtp.live.com`
+
+
+[source,java]
+----
+
+String senderEmail = "unifycs2103@gmail.com";
+String password = "CS2103CS2103";
+// For Gmail host
+String host = "smtp.gmail.com";
+----
+
+{sp}
+
+The following sequence diagram shows how the share operation works:
+
+image::DG_seq_share.png[width="900"]
+
+{sp}
+
+The following activity diagram summarises what happens inside the `ShareCommand` class when a user executes a new command:
+
+It first has to check the `INDEX` of the selected contact. Next, it reads the `INDEX` and gets that contact's details.
+Then, it checks for the arguments, whether is it a numeric valid index or just a string. It also validates the recipients' email addresses.
+Lastly, it checks for an Internet connection and sends the email if so.
+
+image::DG_activitydiagram_share.png[width="700"]
+
+{sp}
+
+==== Prerequisites/Dependencies
+
+The sharing of contacts by email function requires an external library. You have to add `compile 'javax.mail:mail:1.4.7'` to your dependencies in `build.gradle` file. as shown below.
+
+[source,java]
+----
+dependencies {
+    compile 'javax.mail:mail:1.4.7'
+}
+----
+
+{sp}
+
+image::header_warning.png[width="400"]
+
+* In order for the sharing of contacts feature to work, it requires Internet connection first, as it's main function requires to sends an email to the recipients.
+
+==== Design Considerations
+
+**Aspect:** What to use for subject header in email +
+
+**Alternative 1 (current choice):** Fixed subject header +
+**Pros:** Easy to implement. Prevent of abuse of subject header to send negative subject headers +
+**Cons:** Always the same subject header +
+
+**Alternative 2:** Let user input the subject header +
+**Pros:** Different subject header can be used for different purpose. +
+**Cons:** Can be abused to send offensive subject headers, leading to a bad reputation for Unify, as the recipients think that the offensive subject header is from Unify.
+
+// end::sharecommand[]
+
+---
+
+// tag::audiblefeedback[]
+=== Audible Feedback Mechanism
+Audio feedback is created by using two different audio cues. First is the typing sound, that is created by playing a .mp3 sound file using the `Audio.java` class. You may use this class to play a sound file without looping. You just have to create a new `Audio`
+object with an `audioFileName` of which is your .mp3 resource file.
+
+The second audio cue comes from the Text-To-Speech feature, which plays an human-like speech back to the user when they have successfully executed a command.
+This can be easily added to any new commands by creating a new `TextToSpeech` object with the string `word` that you want it to speak. Next call the `TextToSpeech.speak()` method to run the Text-To-Speech feature.
+
+For example, `new TextToSpeech("hello").speak();` will cause the system to say "hello" when it is executed.
+
+==== Prerequisites/Dependencies
+The audio play back function requires an external library. You have to add `compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'` to your dependencies in `build.gradle` file. as shown below.
+
+[source,java]
+----
+dependencies {
+    compile group: 'com.googlecode.soundlibs', name: 'jlayer', version: '1.0.1-1'
+}
+----
+
+{sp}
+
+The Text-To-Speech feature requires an external library. You have to add `compile 'javax.mail:mail:1.4.7'` to your dependencies +
+and `url "https://oss.sonatype.org/content/repositories/snapshots"` to your maven repositories in `build.gradle` file. as shown below.
+
+[source,java]
+----
+repositories {
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+}
+dependencies {
+    compile group: 'org.jvoicexml', name: 'cmu_us_kal', version: '1.2.3-SNAPSHOT'
+    compile group: 'org.jvoicexml', name: 'cmu_time_awb', version: '1.2.3-SNAPSHOT'
+}
+
+----
+
+{sp}
+
+==== Design Considerations
+
+**Aspect:** When to use Text-To-Speech audio feedback +
+
+**Alternative 1 (current choice):** Successful and unsuccessful command execution excluding invalid commands +
+**Pros:** Giving audible feedback when users needed it the most, such as confirmation of successful command execution +
+**Cons:** Invalid commands have no audio feedback +
+
+**Alternative 2:** All commands, including invalid commands, have audio feedback +
+**Pros:** Users able to have audible feedback for every action they take +
+**Cons:** Users may find it annoying as every action they take, the system will play an audio cue. +
+
+// end::audiblefeedback[]
+
+---
+
+// tag::validation[]
+=== Command Box Validation
+
+We validate the user's command as he is typing, which allows real-time feedback to the user on whether
+their command is valid.
+
+This is done by listening to the `TextField` associated to `CommandBox`. Whenever there is a change in
+input of the `TextField`, we call `setStyleByValidityOfInput`. As we have a reference to the `LogicMangager`
+(which is used for undo/redo), we can just run `LogicManager#parse` to check if the current input is valid,
+and style the input box accordingly.
+
+==== Design Considerations
+
+**Aspect:** Listen to `CommandBox` input's changes +
+**Alternative 1 (current choice):** Listen directly to `commandTextField`. +
+**Pros:** No coupling with `EventsCenter`. +
+**Cons:** Inconsistent with implementation of other features (e.g. hints, command box icon). +
+**Alternative 2:** Subscribe to `CommandInputChangedEvent`. +
+**Pros:** Easily extensible as logic can be extracted into another class. +
+**Cons:** Adds additional dependency to `EventsCenter`. +
+// end::validation[]
+
+---
+
+// tag::commandboxicon[]
+=== Command Box Icon
+
+In addition to styling the command box, we also show the user icons matching their command on the right
+of the command box.
+
+We leverage a third-party library called link:https://github.com/aalmiray/ikonli[Ikonli]. We add a new
+JavaFX component, `CommandBoxIcon`, which subscribes to `CommandInputChangedEvent` and calls
+`parseCommandAndArguments`, and passes the returned `commandWord` into `parseIconCode`, which then returns
+an `Ikon`, which we display.
+
+==== Design Considerations
+
+**Aspect:** Where to get icons +
+**Alternative 1 (current choice):** Use `Ikonli`, a third-party library. +
+**Pros:** Easy to implement. +
+**Cons:** Adds additional third-party dependency. +
+**Alternative 2:** Embed them as images or icons. +
+**Pros:** Easy to customize, as icons are all embedded images. +
+**Cons:** Reinvents the wheel. +
+// end::commandboxicon[]
+
+---
+
+// tag::alias[]
+=== Aliases
+
+We implement aliases by adding a new `Aliases` class to the `UserPrefs` model. Since `UserPrefs` is saved
+to file, aliases will persist through application restarts.
+
+`Aliases` contains a `HashMap<String, String>` which maps `alias -> command`. This allows us to find the
+matching command in amortized O(1) time. By default, `Aliases` contains a map of synonyms for frequently
+used commands. For example, `new -> add`, `remove -> delete`, `show -> list`, etc.
+
+We added a new parser, `parseCommandAndArguments` in `ParserUtil` that parses user input into a `commandWord` and `arguments`, which
+`AddressBookParser` uses. To allow access to the `UserPrefs` instance in `ParserUtil`, we changed `UserPrefs`
+into a link:#singleton[Singleton]. `parseCommandAndArguments` refers to the `Aliases` instance inside `UserPrefs`
+and returns the mapped command.
+
+This simplified sequence diagram shows how `parseCommandAndArguments` work:
+
+image::AliasSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Accessing `UserPrefs` from `ParserUtil` and other classes +
+**Alternative 1 (current choice):** Turn `UserPrefs` into a Singleton +
+**Pros:** Easy to implement. Minimise code change across code base. +
+**Cons:** Increases coupling. Difficult to stub in testing. Does not reset between tests. +
+**Alternative 2:** Pass the `UserPrefs` instance down to the parser +
+**Pros:** Less coupling. Follows Law of Demeter. +
+**Cons:** Heavy changes to code base to pass the instance downstream. +
+// end::alias[]
+
+___
+
+// tag::autocomplete[]
+=== Autocomplete
+
+We implement autocompletion by introducing a new class: `Autocomplete`. This class contains all the
+utility methods required for obtaining an appropriate autocompletion from a given user input. The
+main method is `autocomplete(String input)`. This takes in the user's input and attempts to generate
+a hint from it. As we need to display the autocompletion in the command box hints, this reduces
+duplicated code required for producing the autocompletion.
+
+There are several other utility methods in the class, such as `autocompleteFromList`, which takes in
+an input and an array of strings, and returns the first command that contains input as a prefix, or
+`autocompleteCommand`, which takes in a command word and compares it with a list of all commands and
+aliases, and autocompletes the command.
+
+The following activity diagram summarises what happens when a user presses `Tab`:
+
+image::AutocompleteActivityDiagram.png[width="400"]
+
+==== Design Considerations
+
+**Aspect:** Degree of coupling between Autocomplete and Hints. +
+**Alternative 1 (current choice):** Share logic by coupling both classes. +
+**Pros:** Minimize code duplication, as logic can be shared. +
+**Cons:** Increases coupling. Difficult to stub in testing. +
+**Alternative 2:** Implement the logic in both classes. +
+**Pros:** Less coupling. +
+**Cons:** Increase chance of regression if only one class is changed. +
+// end::autocomplete[]
+
+---
+
+=== Listening for Input Change
+
+When the `CommandTextField` detects a change in its input, it will raise a `CommandInputChangedEvent`.
+The `CommandInputChangedEvent` will contain `currentInput` of the `CommandTextField`.
+
+[source, java]
+----
+public class CommandInputChangedEvent extends BaseEvent {
+
+    public final String currentInput;
+
+    public CommandInputChangedEvent(String newCurrentInput) {
+        currentInput = newCurrentInput;
+    }
+
+    //... mandatory event logic
+}
+----
+
+Components that adjust based on change in input, for example inline hints, can simply subscribe to this event.
+
+
+==== Design Considerations
+
+**Aspect:** How to inform other components on input change +
+**Alternative 1 (current choice):** Raise an event +
+**Pros:** Easy to implement. Less coupling with other components +
+**Cons:** Many Events raised which crowds logging.  +
+**Alternative 2:** Add other component's method directly to `CommandTextField` text property listener +
+**Pros:** No events raised. Has access to `CommandTextField` instance +
+**Cons:** Increases coupling. Difficult to pass instance of other components to `CommandTextField` +
+
+___
+
+// tag::inline-hints[]
+=== Displaying Inline Hints
+
+==== Inspiration
+We wish to display hints similar to how Apple's Spotlight displays their completion and hints.
+
+image::AppleSpotlightSuggestions.jpg[width="600"]
+
+[[inline-hint-terms]]
+==== Terms
+As of v1.5, an inline hint consists of a concatenation of an argument hint and a description.
+An argument hint is an inline suggestion for the next letters to type. For example **add |** n/, n/ being the argument hint.
+A description would describe the details of the current command you are typing.
+
+Please refer to the illustration below.
+
+image::InlineHintsArgumentAndDescription.png[width="800"]
+
+==== How we implemented it
+In `JavaFX` it is not possible to have a prompt text next to user's input in a `TextField`.
+
+In Unify, we have two `JavaFX` `TextFields` side by side. The input is keyed in the `CommandTextField` `TextField` while the inline hints are set in the `CommandBoxHints` `TextField`. These `TextFields` are placed in `HBox` and thus will not overlap.
+
+At the start, the `CommandTextField` will be empty and length 0.
+
+image::InlineHintsStart.png[width="800"]
+As the user keys in the input `CommandTextField` will grow based on the text keyed in with the the help of `TextUtil` methods. As the `CommandTextField` grows, the `HBox` will automatically push the `CommandBoxHints` to the right.
+
+image::InlineHintsTextFieldGrow.png[width="800"]
+
+[NOTE]
+We clamp the size of the `CommandTextField` to half of the window size so that we have sufficient room for the hints.
+
+image::InlineHintsWindowSize.png[width="800"]
+
+
+==== Design Considerations
+
+**Aspect:** Calculating displacement of hints to simulate inline hints +
+**Alternative 1 (current choice):** Put two resizeable `TextFields` side by side. Let the `HBox` handle the displacement +
+**Pros:** We have control on how big the `TextFields` can be. +
+**Cons:**  Difficult to test the resize calculation as font rendered is different according to OS. Difficult to implement as we have to account for user clicking/tabbing into the `CommandBoxHints` +
+**Alternative 2:** Overlay a label over the `CommandTextField`. The label will contain the user input + the inline hint  +
+
+image::InlineHintsOverlay.png[width="400"]
+**Pros:** Easy to implement. +
+**Cons:** Hints and Text mis-align when user input exceeds the length of the `TextField`, unable to find work around. +
+
+___
+
+// end::inline-hints[]
+
+=== Hints and Autocomplete Parsing
+Inline hints and tab autocompletion of user input is encapsulated by a `Hint` object.
+A `Hint` object will take in the current user input and/or other arguments (depending on the implementation of the concrete Hint).
+
+Inline hints can be accessed from `getArgumentHint()` and `getDescription()`.
+The next user input on tab can be accessed from `autocomplete()`.
+
+Different commands have similar command format. Hence we separate some of the `Hints` to inherit from
+subclasses `FixedArgumentsHint`, `NoArgumentsHint`, `ArgumentsHint` to reuse the same logic.
+
+The inheritance diagram is shown below:
+
+image::HintsClassDiagram.png[width="800"]
+
+==== Why separate argument hints and description
+For explanation on what argument hints and description are, click link:#inline-hint-terms[here].
+
+We separate the hint like so for 2 reasons:
+
+. We can style the text differently (for v2.0)
+.. In the `CommandTextField` our argument hints should be the same size as our input while our description, which can get quite lengthy, can be smaller in size
+.. We can also have the description displayed in a separate component
+. The `autocomplete()` output and argument hints are closely related.
+.. For many commands, we would want to autocomplete the argument hint. (eg. completing to the next prefix)
+
+___
+
+// tag::avatar[]
+
+=== Avatar
+
+When users add a contact, they have an option to specify an avatar for the person. If entered with a valid
+path to a .jpg or .png, the image is stored under `data/images/avatars/` with a unique string id using Java's `UUID`.
+
+The `Avatar` will store the unique string id with its file format (eg UUID.png) as its value. +
+
+For contacts who were not given an `Avatar`. Their `Avatar` field will be an empty string. When selected, these people will have a default avatar.
+The activity diagram when a person is selected is shown below.
+
+image::GetAvatarActivityDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** How to save image +
+**Alternative 1 (current choice):** Duplicate image is saved with a unique string id under data +
+**Pros:** Application is easily portable - all image files stored in data folder +
+**Cons:** Many images are created after multiple testing. (images won't have the same name) +
+**Alternative 2:** The absolute file path of the image is saved. When avatar needs to be displayed, the image will be fetched from there. +
+**Pros:** Easy to implement. +
+**Cons:** Application is not portable. If the jar and data files are transferred to a different computer, the `Avatar` loaded will be the default one. +
+**Alternative 3:** Use online link to images +
+**Pros:** Easy to implement. +
+**Cons:** Application is not portable as it requires internet connection +
+
+___
+
+// end::avatar[]
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
@@ -469,251 +1177,6 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
@@ -721,17 +1184,36 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* * *` |user |add a new person |
-
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |see my contacts while managing my address book |remember what I need to do without flipping back and forth
+|`* * *` |user |create new contacts in the address book |add new contacts
+|`* * *` |user |type commands that do not follow the format |use them without memorizing the formats
+|`* * *` |user |merge duplicate contacts |use my addressbook without clutter
+|`* * *` |user |group my contacts in more than one grouping |search my contacts easily by groups
+|`* * *` |user |filter and search contacts |display important contacts
+|`* * *` |user |update existing contacts from the address book |update existing contacts if they have changed their contact number or details
+|`* * *` |user |add a short description  |recall details about them
+|`* * *` |user |view all my contacts |organise my contacts easily
+|`* * *` |user |delete contacts from the address book |remove unwanted contacts
+|`* *` |user |be prompted about upcoming birthdays |prepare a gift for my friends
+|`* *` |user |see an aesthetically pleasing application |use the app daily and not get bored of it so quickly
+|`* *` |user |have ways to enter commands with shortcuts |update and traverse my address book quickly
+|`* *` |user |sync my contacts from my phone |skip adding users manually
+|`* *` |user |star my favourite contacts |quickly access my most important contacts
+|`* *` |user |easily input the commands as the systems learn the behaviour and common commands that I had in the past |auto-complete my words
+|`* *` |user |use link:#natural-language[natural language] to perform actions |use it without memorising the syntax of commands
+|`* *` |user |easily input commands into the link:#command-line-interface[Command Line Interface (CLI)] with the system prompting me with options of each command |easily input commands without having to refer to the user guide
+|`* *` |user |store my contact's birthday |know when to prepare a gift
+|`* *` |user |change the colour of the user interface design and the font colour |make it feel more personal
+|`* *` |user |add a photo to my contacts |visually identify my friends
+|`*` |user |see mutual friends |understand my social network better
+|`*` |user |use speech to input to the link:#command-line-interface[CLI] |use the app hands-free
+|`*` |user |see people whom I've not talked to recently, |reconnect with people whom I've not met in a while
+|`*` |user |access my friend's social media from the address book |stay up to date with their lives
+|`*` |user |select different language settings |navigate the user interface in my native language
+|`*` |user |view emergency contacts immediately with a single command, and these contacts are hidden and can't be deleted |easily find the relevant emergency contacts such as the contact for ambulance or police easily
+|`*` |user |see where my friends live on the map |visualise who lives near me
+|`*` |user |edit the layout of the UI |customise the layout to suit my needs
+|`*` |user |set a password to my address book |prevent other users from accessing my address book
 |=======================================================================
 
 {More to be added}
@@ -739,7 +1221,34 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `Unify` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person
+2.  Unify adds the person with success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format of person information given is invalid.
++
+[none]
+** 1a1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+* 1b. Unify already contains person with the same details.
++
+[none]
+** 1b1. Unify shows an error message.
++
+Use case resumes at step 1.
 
 [discrete]
 === Use case: Delete person
@@ -747,9 +1256,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Unify shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  Unify deletes the person
 +
 Use case ends.
 
@@ -763,51 +1272,234 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Unify shows an error message.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find person by name
+2.  Unify shows a list of persons whose full name contains name provided
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  Unify shows a list of persons
+3.  User request to edit person's information
+4.  Unify updates person's information with success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Unify shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The format of new information given is not valid.
++
+[none]
+** 3b1. Unify shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Share contact by email
+
+*MSS*
+
+1.  User requests to list persons
+2.  Unify shows a list of persons
+3.  User request to share a contact's details by email
+4.  Unify sends out email to the recipient indicated by user with success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Unify shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The format of new information given is not valid.
++
+[none]
+** 3b1. Unify shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The recipient's email address is not valid.
++
+[none]
+** 3c1. Unify shows an error message.
++
+Use case resumes at step 2.
+
+* 3d. User does not have an Internet connection.
++
+[none]
+** 3d1. Unify shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Play music
+
+*MSS*
+
+1.  User requests to play music
+2.  Unify plays the music with success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format of music command given is invalid.
++
+[none]
+** 1a1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Stop music
+
+*MSS*
+
+1.  User requests to stop music
+2.  Unify plays the music with success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format of music command given is invalid.
++
+[none]
+** 1a1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+* 1b. Unify does not have any current music player playing.
++
+[none]
+** 1b1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Play radio
+
+*MSS*
+
+1.  User requests to play radio broadcast
+2.  Unify plays the radio broadcast with success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format of radio command given is invalid.
++
+[none]
+** 1a1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+* 1b. User does not have an Internet connection.
++
+[none]
+** 1b1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Stop radio
+
+*MSS*
+
+1.  User requests to stop radio broadcast
+2.  Unify plays the radio broadcast with success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format of radio command given is invalid.
++
+[none]
+** 1a1. Unify shows an error message.
++
+Use case resumes at step 1.
+
+* 1b. Unify does not have any current radio player playing.
++
+[none]
+** 1b1. Unify shows an error message.
++
+Use case resumes at step 1.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Program should have a clean design, that is still readable with low brightness.
+.  Should encompass most point of possible failures.
+.  System should be modular, able to add, remove or improve features anytime without disruption.
+.  Should be user friendly, such that a young child can use it without any supervision.
+.  Should be able to hold up to 1000 persons without a noticeable link:#response-time[sluggishness] in performance for typical usage.
+.  A user with above link:#average-typing-speed[average typing speed] for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
-{More to be added}
 
 [appendix]
 == Glossary
 
-[[mainstream-os]]
-Mainstream OS
-
-....
-Windows, Linux, Unix, OS-X
-....
-
-[[private-contact-detail]]
-Private contact detail
-
-....
-A contact detail that is not meant to be shared with others
-....
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+[cols="2*^"]
+|===
+| *TERMS* | *EXPLANATION*
+| *Application Programming Interface (API)* | Is a set of subroutine definitions, protocols, and tools for building application software, usually related to a software library.
+| *Average Typing Speed* | 40 words per minute.
+| *Command Line Interface (CLI)* |  link:http://searchwindowsserver.techtarget.com/definition/command-line-interface-CLI[Full Definition] A user interface to a computer's operating system or an application in which the user responds to a visual prompt by typing in a command on a specified line, receives a response back from the system, and then enters another command, and so forth.
+| *Mainstream OS* |  Windows, Linux, Unix, OS-X.
+| *Natural Language* |  link:http://whatis.techtarget.com/definition/natural-language[Full Definition] In computing, natural language refers to a human language such as English, Russian, German, or Japanese as distinct from the typically artificial command or programming language with which one usually talks to a computer.
+| *Portable Application* |  A portable application (portable app) is a software product designed to be easily moved from one computing environment to another. They include portable versions of regular applications – such as browsers, for example – as well as specialized apps designed to enhance mobile computing.
+| *Private contact detail* |  A contact detail that is not meant to be shared with others
+| *Sluggishness* |  link:https://www.nngroup.com/articles/response-times-3-important-limits/[Response Times: The 3 Important Limits] Respond time of greater than 1 second upon user input
+| *Singleton* |  link:https://en.wikipedia.org/wiki/Singleton_pattern[Wikipedia Article] A class which has only one instance
+| *Uniform Resource Locator (URL)* |  Is colloquially termed a web address. It is a reference to a web resource that specifies its location on a computer network and a mechanism for retrieving it.
+|===

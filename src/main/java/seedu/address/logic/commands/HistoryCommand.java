@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.TextToSpeech;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 
@@ -27,6 +28,10 @@ public class HistoryCommand extends Command {
         }
 
         Collections.reverse(previousCommands);
+        //@@author hanselblack
+        //Text to Speech
+        new TextToSpeech("Showing list of previous commands").speak();;
+        //@@author
         return new CommandResult(String.format(MESSAGE_SUCCESS, String.join("\n", previousCommands)));
     }
 
@@ -35,4 +40,5 @@ public class HistoryCommand extends Command {
         requireNonNull(history);
         this.history = history;
     }
+
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @@author nicholaschuayunzhi -->
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextField?>
+
+
+<TextField fx:id="commandBoxHints" editable="false" onMouseClicked="#handleOnClick" pickOnBounds="false" text="Enter Command Here" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <cursor>
+      <Cursor fx:constant="TEXT" />
+   </cursor>
+</TextField>

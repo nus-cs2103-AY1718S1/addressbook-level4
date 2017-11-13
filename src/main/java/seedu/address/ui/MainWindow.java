@@ -33,6 +33,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static MainWindow instance;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -40,16 +41,20 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private PersonPanel personPanel;
     private Config config;
     private UserPrefs prefs;
 
+
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane panelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
+
+    @FXML
+    private StackPane commandBoxIconPlaceholder;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -82,6 +87,15 @@ public class MainWindow extends UiPart<Region> {
 
         setAccelerators();
         registerAsAnEventHandler(this);
+        instance = this;
+    }
+
+    public static MainWindow getInstance() {
+        return instance;
+    }
+
+    public Logic getLogic() {
+        return logic;
     }
 
     public Stage getPrimaryStage() {
@@ -126,8 +140,8 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        personPanel = new PersonPanel();
+        panelPlaceholder.getChildren().add(personPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -140,6 +154,9 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        CommandBoxIcon commandBoxIcon = new CommandBoxIcon();
+        commandBoxIconPlaceholder.getChildren().add(commandBoxIcon.getRoot());
     }
 
     void hide() {
@@ -206,10 +223,6 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
     }
 
     @Subscribe

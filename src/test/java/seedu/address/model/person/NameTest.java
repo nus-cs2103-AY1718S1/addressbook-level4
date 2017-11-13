@@ -1,9 +1,12 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 public class NameTest {
 
@@ -21,5 +24,14 @@ public class NameTest {
         assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
         assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+    }
+
+    @Test
+    public void hashCodeTest() throws IllegalValueException {
+        Name nameStub = new Name("name");
+        assertEquals("name".hashCode(), nameStub.hashCode());
+
+        Name nameStub2 = new Name("name2");
+        assertEquals("name2".hashCode(), nameStub2.hashCode());
     }
 }

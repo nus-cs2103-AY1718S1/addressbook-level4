@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.TextToSpeech;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -21,10 +22,18 @@ public class UndoCommand extends Command {
         requireAllNonNull(model, undoRedoStack);
 
         if (!undoRedoStack.canUndo()) {
+            //@@author hanselblack
+            //Text to Speech
+            new TextToSpeech(MESSAGE_FAILURE);
+            //@@author
             throw new CommandException(MESSAGE_FAILURE);
         }
 
         undoRedoStack.popUndo().undo();
+        //@@author hanselblack
+        //Text to Speech
+        new TextToSpeech(MESSAGE_SUCCESS).speak();
+        //@@author
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
@@ -33,4 +42,5 @@ public class UndoCommand extends Command {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
     }
+
 }

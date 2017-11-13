@@ -1,7 +1,10 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import java.util.function.Predicate;
 
+import seedu.address.logic.TextToSpeech;
+
+//@@author nicholaschuayunzhi
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -10,20 +13,25 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose details contain ALL of "
+            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " n/alice a/Blk 100 Street t/friend";
 
-    private final NameContainsKeywordsPredicate predicate;
+    private final Predicate predicate;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    public FindCommand(Predicate predicate) {
         this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
+        //@@author hanselblack
+        //Text to Speech
+        new TextToSpeech("Heres what I have found").speak();
+        //@@author
+        //@@author nicholaschuayunzhi
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
@@ -33,4 +41,5 @@ public class FindCommand extends Command {
                 || (other instanceof FindCommand // instanceof handles nulls
                 && this.predicate.equals(((FindCommand) other).predicate)); // state check
     }
+
 }

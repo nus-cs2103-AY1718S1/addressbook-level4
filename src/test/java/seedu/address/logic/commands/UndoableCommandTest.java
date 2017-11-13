@@ -63,5 +63,6 @@ public class UndoableCommandTest {
             }
             return new CommandResult("");
         }
+
     }
 }

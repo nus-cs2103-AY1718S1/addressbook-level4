@@ -33,4 +33,5 @@ public class RedoCommand extends Command {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
     }
+
 }

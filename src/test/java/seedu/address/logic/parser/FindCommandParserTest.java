@@ -1,15 +1,24 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.AddressContainsKeywordPredicate;
+import seedu.address.model.person.EmailContainsKeywordPredicate;
+import seedu.address.model.person.NameContainsKeywordPredicate;
+import seedu.address.model.person.PersonContainsFieldsPredicate;
+import seedu.address.model.person.PhoneContainsKeywordPredicate;
+import seedu.address.model.person.RemarkContainsKeywordPredicate;
+import seedu.address.model.person.TagsContainKeywordPredicate;
 
 public class FindCommandParserTest {
 
@@ -20,15 +29,38 @@ public class FindCommandParserTest {
         assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
+    //@@author nicholaschuayunzhi
     @Test
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommand =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
-        assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
+                new FindCommand(new PersonContainsFieldsPredicate(Arrays.asList(
+                                        new NameContainsKeywordPredicate("Alice"),
+                                        new TagsContainKeywordPredicate("friend"),
+                                        new PhoneContainsKeywordPredicate("111"),
+                                        new AddressContainsKeywordPredicate("Big Road"),
+                                        new EmailContainsKeywordPredicate("email@email.com"),
+                                        new RemarkContainsKeywordPredicate("likes"))));
+
+        assertParseSuccess(parser, "n/Alice t/friend a/Big Road e/email@email.com p/111 r/likes", expectedFindCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+        assertParseSuccess(parser,
+                " \n n/Alice a/Big Road\n \r\nr/likes \ne/email@email.com\t t/friend   p/111\t", expectedFindCommand);
+    }
+
+    @Test
+    public void unknown_prefix() {
+        try {
+            Method m = parser.getClass().getDeclaredMethod("valueAndPrefixIntoPredicate", String.class, Prefix.class);
+            m.setAccessible(true);
+            Predicate p =
+                    (Predicate) m.invoke(parser, "UNKNOWN_PREFIX", new Prefix("UNKNOWN"));
+            assertEquals(p, new NameContainsKeywordPredicate("UNKNOWN_PREFIX"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert false;
+        }
     }
 
 }

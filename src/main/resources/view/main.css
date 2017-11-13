@@ -1,0 +1,127 @@
+/**
+ * Shared
+ */
+
+/* @@author nicholaschuayunzhi */
+
+@font-face {
+    src: url("./ProximaNovaAltRegular-webfont.ttf");
+}
+
+.root * {
+    base: black;
+    accent: #141E30;
+    light: white;
+    -fx-font-family: "Proxima Nova Alt Rg", "Helvetica";
+    -fx-background-color: transparent;
+    -fx-text-fill: light;
+}
+
+#id, #tags .label {
+    -fx-text-fill: derive(light, -40%);
+}
+
+#tag:hover {
+    -fx-underline: true;
+    -fx-text-fill: light !important;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: derive(base, -5%);
+    -fx-fill-width: 10;
+}
+
+/**
+ * Menu Bar
+ */
+
+#menuBar * {
+    -fx-background-color: light;
+    -fx-text-fill: base;
+}
+
+/**
+ * Command Box
+ */
+
+#commandBoxWrapper {
+    -fx-padding: 20;
+}
+
+#commandBoxItems {
+    -fx-border-color: transparent transparent light transparent;
+}
+
+#commandTextField, #commandBoxHints{
+    -fx-font-size: 25pt;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, base, 5, 0, 0, 0);
+    -fx-padding: 0 0 0 0;
+}
+
+#commandBoxHints {
+    -fx-opacity: 0.4;
+}
+
+
+#commandBoxIconPlaceholder {
+    -fx-padding: 0 0 0 10;
+}
+
+#commandBoxIconPlaceholder .ikonli-font-icon {
+    -fx-icon-color: light;
+}
+
+/**
+ * Result Display
+ */
+
+#resultDisplay {
+    -fx-font-size: 13pt;
+    -fx-text-fill: derive(light, -40%);
+}
+
+#resultDisplayPlaceholder {
+    -fx-padding: 0 10 0 10;
+}
+
+/**
+ * Person List
+ */
+
+#personListVBox {
+    -fx-padding: 0 0 0 20;
+}
+
+#personListVBox #name, #personListVBox #id{
+    -fx-font-size: 15pt;
+}
+
+#personListVBox .scroll-bar:horizontal .thumb {
+    -fx-background-color: transparent;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: rgba(0, 0, 0, 0.7);
+}
+
+/**
+ * Person Panel
+ */
+#personPanel {
+    -fx-font-size: 15pt;
+}
+
+#personPanel #name {
+    -fx-font-size: 25pt;
+    -fx-effect: dropshadow(gaussian, base, 10, 0, 0, 2);
+}
+
+#details {
+    lighterBase: derive(base, 10%);
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, accent 0%, lighterBase 100%);
+}

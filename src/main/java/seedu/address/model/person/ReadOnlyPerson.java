@@ -20,8 +20,21 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+
+    //@@author nicholaschuayunzhi
+    ObjectProperty<Avatar> avatarProperty();
+    Avatar getAvatar();
+    /**
+     * This is required as explained in Avatar#saveAvatar
+     * Must be changed in the future as this breaks the read-only interface of ReadOnlyPerson
+     */
+    void saveAvatar();
+    //@@author
+
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Remark> remarkProperty();
+    Remark getRemark();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -47,6 +60,8 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Remark: ")
+                .append(getRemark())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

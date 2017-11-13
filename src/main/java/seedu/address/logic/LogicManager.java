@@ -32,10 +32,16 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public Command parse(String commandText) throws ParseException {
+        Command command = addressBookParser.parseCommand(commandText);
+        return command;
+    }
+
+    @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
-            Command command = addressBookParser.parseCommand(commandText);
+            Command command = parse(commandText);
             command.setData(model, history, undoRedoStack);
             CommandResult result = command.execute();
             undoRedoStack.push(command);

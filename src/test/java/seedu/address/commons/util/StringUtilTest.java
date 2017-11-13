@@ -2,8 +2,10 @@ package seedu.address.commons.util;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.util.StringUtil.difference;
 
 import java.io.FileNotFoundException;
 import java.util.Optional;
@@ -153,6 +155,24 @@ public class StringUtilTest {
     public void getDetails_nullGiven_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         StringUtil.getDetails(null);
+    }
+
+    @Test
+    public void differenceTest() {
+        assertEquals(null, difference(null, null));
+        assertEquals("Abc", difference("Abc", null));
+        assertEquals("", difference("", ""));
+        assertEquals("abc", difference("", "abc"));
+        assertEquals("abc", difference("def", "abc"));
+        assertEquals("def", difference("abc", "abcdef"));
+        assertEquals("", difference("abcdef", "abcdef"));
+        assertEquals("def", difference("abc", "abcdef"));
+        assertEquals("xyz", difference("abcdef", "abcxyz"));
+        assertEquals("xyz", difference("abcdef", "xyz"));
+
+
+
+
     }
 
 

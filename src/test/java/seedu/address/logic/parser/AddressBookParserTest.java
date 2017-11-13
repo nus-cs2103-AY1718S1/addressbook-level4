@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -25,12 +26,17 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MusicCommand;
+import seedu.address.logic.commands.RadioCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShareCommand;
+import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameContainsKeywordPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonContainsFieldsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -46,6 +52,20 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
+    }
+
+    @Test
+    public void parseCommand_alias() throws Exception {
+        AliasCommand command = (AliasCommand) parser.parseCommand(
+                AliasCommand.COMMAND_WORD + " show " + ListCommand.COMMAND_WORD);
+        assertEquals(new AliasCommand("show", ListCommand.COMMAND_WORD), command);
+    }
+
+    @Test
+    public void parseCommand_unalias() throws Exception {
+        UnaliasCommand command = (UnaliasCommand) parser.parseCommand(
+                UnaliasCommand.COMMAND_WORD + " show");
+        assertEquals(new UnaliasCommand("show"), command);
     }
 
     @Test
@@ -80,8 +100,15 @@ public class AddressBookParserTest {
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                FindCommand.COMMAND_WORD + " "
+                        + keywords.stream().map((keyword) -> "n/" + keyword).collect(Collectors.joining(" ")));
+
+        PersonContainsFieldsPredicate pcfp = new PersonContainsFieldsPredicate(
+                keywords.stream()
+                        .map((keyword) -> new NameContainsKeywordPredicate(keyword))
+                        .collect(Collectors.toList()));
+
+        assertEquals(new FindCommand(pcfp), command);
     }
 
     @Test
@@ -141,4 +168,29 @@ public class AddressBookParserTest {
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
     }
+
+    //@@author hanselblack
+    @Test
+    public void parseCommand_music() throws Exception {
+        MusicCommand command = (MusicCommand) parser.parseCommand(
+                MusicCommand.COMMAND_WORD + " play ");
+        assertEquals(new MusicCommand("play"), command);
+    }
+
+    @Test
+    public void parseCommand_radio() throws Exception {
+        RadioCommand command = (RadioCommand) parser.parseCommand(
+                RadioCommand.COMMAND_WORD + " play ");
+        assertEquals(new RadioCommand("play"), command);
+    }
+
+    @Test
+    public void parseCommand_share() throws Exception {
+        String[] shareEmailArray = {"unifycs2103@gmail.com"};
+        ShareCommand command = (ShareCommand) parser.parseCommand(
+                ShareCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                        + " s/" + shareEmailArray);
+        assertEquals(new ShareCommand(INDEX_FIRST_PERSON, shareEmailArray) , command);
+    }
+    //@@author
 }

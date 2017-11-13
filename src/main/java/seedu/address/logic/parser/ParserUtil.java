@@ -1,19 +1,47 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.kordamp.ikonli.Ikon;
+import org.kordamp.ikonli.feather.Feather;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AliasCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MusicCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UnaliasCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Aliases;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,6 +57,32 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+
+    /**
+     * Used for initial separation of command word and args.
+     */
+    public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    //@@author goweiwen
+    private static final Map<String, Ikon> Icons = new HashMap<>();
+    static {
+        Icons.put(MusicCommand.COMMAND_WORD, Feather.FTH_PLAY);
+        Icons.put(AddCommand.COMMAND_WORD, Feather.FTH_PLUS);
+        Icons.put(AliasCommand.COMMAND_WORD, Feather.FTH_LINK);
+        Icons.put(UnaliasCommand.COMMAND_WORD, Feather.FTH_CROSS);
+        Icons.put(EditCommand.COMMAND_WORD, Feather.FTH_FILE_ADD);
+        Icons.put(SelectCommand.COMMAND_WORD, Feather.FTH_HEAD);
+        Icons.put(DeleteCommand.COMMAND_WORD, Feather.FTH_TRASH);
+        Icons.put(ClearCommand.COMMAND_WORD, Feather.FTH_CROSS);
+        Icons.put(FindCommand.COMMAND_WORD, Feather.FTH_SEARCH);
+        Icons.put(ListCommand.COMMAND_WORD, Feather.FTH_PAPER);
+        Icons.put(HistoryCommand.COMMAND_WORD, Feather.FTH_CLOCK);
+        Icons.put(ExitCommand.COMMAND_WORD, Feather.FTH_POWER);
+        Icons.put(HelpCommand.COMMAND_WORD, Feather.FTH_HELP);
+        Icons.put(UndoCommand.COMMAND_WORD, Feather.FTH_ARROW_LEFT);
+        Icons.put(RedoCommand.COMMAND_WORD, Feather.FTH_ARROW_RIGHT);
+    }
+    //@@author
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -78,6 +132,36 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
+    //@@author hanselblack
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.of(new Remark(""));
+    }
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> editParseRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
+    }
+    //@@author
+
+    /**
+     * Parses a {@code Optional<String> avatarFilePath} into an {@code Optional<Avatar>}
+     * if {@code avatarFilePath} is present.
+     * If not present, creates an avatar with null value into {@code Optional<Avatar>}
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Avatar> parseAvatar(Optional<String> avatarFilePath) throws IllegalValueException {
+        requireNonNull(avatarFilePath);
+        return avatarFilePath.isPresent()
+                ? Optional.of(Avatar.readAndCreateAvatar(avatarFilePath.get())) : Optional.of(new Avatar(null));
+    }
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
@@ -90,4 +174,69 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    //@@author goweiwen
+    /**
+     * Parses {@code String command} and returns itself if it is a valid command.
+     */
+    public static String parseCommand(String command) {
+        requireNonNull(command);
+        switch (command) {
+        case AddCommand.COMMAND_WORD:
+        case AliasCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_WORD:
+        case ClearCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_WORD:
+        case HistoryCommand.COMMAND_WORD:
+        case ExitCommand.COMMAND_WORD:
+        case HelpCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_WORD:
+            return command;
+        default:
+            return null;
+        }
+    }
+
+    /**
+     * Parses {@code String command} and returns the corresponding {@code Ikon icon}
+     * if valid.
+     */
+    public static Ikon parseIconCode(String command) {
+        requireNonNull(command);
+        return Icons.get(command);
+    }
+
+    /**
+     * Parses {@code String userInput} and returns an array of {commandWord, arguments} if valid.
+     */
+    public static String[] parseCommandAndArguments(String userInput) throws ParseException {
+        requireNonNull(userInput);
+
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        String commandWord = matcher.group("commandWord");
+        String arguments = matcher.group("arguments");
+
+        Aliases aliases = UserPrefs.getInstance().getAliases();
+        String aliasedCommand = aliases.getCommand(commandWord);
+        if (aliasedCommand != null) {
+            final Matcher aliasMatcher = BASIC_COMMAND_FORMAT.matcher(aliasedCommand.trim());
+            if (!aliasMatcher.matches()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            }
+
+            commandWord = aliasMatcher.group("commandWord");
+            arguments = aliasMatcher.group("arguments") + " " + arguments;
+        }
+
+        return new String[] {commandWord, arguments};
+    }
+
 }

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= image:UG_userguideheader.png[width="900"]
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,39 +10,130 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W11-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W-11 B4`      Since: `Sep 2017`      Licence: `MIT`
+
+image::header_tableofcontents.png[width="400"]
+
+== Welcome to Unify
+image::UG_mainheader_introduction.png[width="900"]
+{sp}
+
+=== Do More with Less
+Unify is a Command Line Interface AddressBook that helps you manage your contacts efficiently. Unlike conventional Address Books, Unify adopts a Command-Line Interface (CLI).
+By having a CLI, you can navigate and manage Unify efficiently by typing commands.
+Commands capture the important details of your action into a concise line.
+With just one line, you can traverse your large network to find your old pal John or update your Brother's phone number.
+Now you can spend less time in your Address Book, and more time on what matters most to you.
+
+
+=== First Time CLI User?
+// tag::inline-hints[]
+* Don't fret! Unify offers inline hints to prompt you what to type next,
++
+image::UG_Hints.png[width="300"]
++
+and will validate your input and display icons matching your command as you type. +
++
+image::UG_Validation.png[width="300"]
+// end::inline-hints[]
+
++
+* Afraid you will accidentally delete your significant other's details? We've got you covered! The `undo` command lets you revert any important changes to prevent any future embarrassment/pain. +
+* Still lost? You can type `help` to access the User Guide whenever you need. +
+* Unify will guide you along the way so that you can turn from Novice to Master in no time! +
+
+=== How to Use the User Guide
+image::UG_header_howtouseuserguide.png[width="500"]
+{sp}
+
+Everything you need to know about Unify is in this user guide.
+
+You can quickly navigate the user guide by clicking on the links found in the table of contents at the top of the user guide.
+
+An example of the user guide for the features is shown below. You can identify the feature's title, description, format and easy to follow step by step instructions.
+
+image::UG_howtouse1.png[width="590"]
+{sp}
+
+To find the information you need, just look out for these sub-headers in the user guide. These are the few sub-headers you will find in this user guide below.
+
+These sub-headers are unique, they are marked with a circle surrounding the first letter of the header. This help you find the information quickly. Just look out for the first letter in the circle and you can find what you need to know immediately!
+
+For example, the letter "F" in the circle represent format. Hence, you just have to look out for the letter "F" in the circle, to find the format quickly.
+
+image::UG_howtouse2.png[width="590"]
+
+Follow the step by step instructions by doing step 1 first. Step 1 is linked to the numbered icons that labels the section of the user interface you have to interacts with.
+Therefore, you should have a similar user interface of Unify when following the step by step instructions.
+
+image::UG_howtouse3.png[width="590"]
+{sp}
+
+=== A Quick Look At Unify
+
+Unify's user interface is split into a few sections. These sections are highlighted in the image below.
+
+* Command Box
+* Message Box
+* List of Contacts
+* Contact's Details
+
+image::UG_quicklookui.png[width="790"]
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
-+
+image::UG_mainheader_installationguide.png[width="900"]
+//-
+{sp}
+Follow this installation guide to get Unify up and running on your computer.
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}
+
+image:step1.png[width="70"]Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
-+
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
-+
-image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+
+image:step2.png[width="70"] Download the latest `[W11-B4][Unify].jar` link:{repoURL}/releases[here].
+
+image:step3.png[width="70"]  Copy the file to the folder you want to use as the home folder for your Address Book.
+
+image:step4.png[width="70"] Double-click the file to start the app. You should see the application open in a few seconds:
+
+image::UG_introui.png[width="590"]
+
+image:step5.png[width="70"]  Type the command in the command box and press kbd:[Enter] to execute it. e.g. Typing *`help`* and pressing kbd:[Enter] will open the help window.
+
+image::UG_help.png[width="590"]
+{sp}
+
+image::UG_header_examples.png[width="400"]
+{sp}
+
+Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**` n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-== Features
+== Features Format
 
+Unify is jam-packed with features and it may be daunting for new users.
+The subsequent sections of the user guide provides a step by step walk-through of all the commands Unify has to offer.
+
+Do read our short explanation about Command Format and Tags below so that the subsequent portions of this section will make sense to you.
+
+=== Command Format
 ====
-*Command Format*
+image::UG_header_commandformat.png[width="500"]
+{sp}+
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
@@ -50,80 +141,132 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Tags
 
-Format: `help`
+Tags are a way for you to label your contacts. Your contacts can contain multiple tags which help you identify them more easily.
+A person's tag will be indicated on the List of Contacts as well as the Contact's details.
+
+image::UG_tag.png[width="590"]
+
+Tags should only contain letters and numbers, and cannot contain any spaces.
+
+[TIP]
+A common way to utilise tags is grouping your contacts with tags. For example, you can tag your family members with a `family` tag.
+Next time if you want to search for your family members, you can execute the link:#find[`find` command] to list your family members.
+
+[[features]]
+== Basic Features
+image::UG_mainheader_basicfeatures.png[width="900"]
+//-
+{sp}
+
+// tag::addcommand[]
 
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+image::UG_commandheader_add.png[width="500"]
+{sp}+
+Adding a new contact? Unify's `add` command takes a person's information and records it in Unify as a contact!
+
+image::UG_header_format.png[width="400"]
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [i/AVATAR_FILE_PATH] [t/TAG]...`
+
+image::header_note.png[width="400"]
+* You can have multiple tags for each of your contacts.
+
+* Remark, avatar and tag fields are optional! You do not have to fill them if you do not have any remarks, avatar picture, or tags to add currently. +
+Don't worry! You are still able to add these to your contacts later using the link:#editcommand[Edit] command.
 
 [TIP]
-A person can have any number of tags (including 0)
+Still unsure of what fields are required? Not to worry! Unify's in-line hints will prompt you on the fields required.
+Simply press kbd:[Tab] to autocomplete to the next required prefix!
 
-Examples:
+image::UG_header_alias.png[width="400"]
+Alias: `new`, `create`
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+image::UG_header_examples.png[width="400"]
 
-=== Listing all persons : `list`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/Loves Tea`
+* `add n/Leonard Tan t/friend e/leonard@example.com a/Jurong East #23-24 p/1234567 i/d:/pictures/leonard.png t/classmates` +
 
-Shows a list of all persons in the address book. +
-Format: `list`
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Simply type `add` into the command box first, then follow the format as shown above, after which press kbd:[Enter] to execute it.
 
-=== Editing a person : `edit`
+image::UG_add1.png[width="590"]
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+image:step2.png[width="70"] The result box will display "New person added:" with the contact details that you have just input.
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+image:step3.png[width="70"] Your contact list will display the newly added contact at the bottom of the list.
 
-Examples:
+image::UG_add2.png[width="590"]
+{sp}+
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+image::header_warning.png[width="400"]
+Duplicate contact cannot be added! You cannot add a new contact that have same exact details as another contact in your contact list. You may encounter this message
+"This person already exists in the address book" at image:step2.png[width="70"] if you try to do so.
 
-=== Locating persons by name: `find`
+image::header_note.png[width="400"]
+* When choosing the right image for your contact, make sure that the image is in .jpg or .png format.
+* For a contact's avatar file path, you may specify the full path of the image (ie: d:/pictures/betsy.png)
+* For Windows users, if you are unsure how to get the path of the image click http://www.howto-connect.com/copy-path-of-a-file-or-folder-in-windows-10/[here]
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+image::divider.png[width="900"]
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+// end::addcommand[]
 
-Examples:
+=== Clearing all entries : `clear`
+image::UG_commandheader_clear.png[width="500"]
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+If you want to empty Unify from all contacts, Unify's `clear` command clears all entries from the address book.
+
+image::UG_header_format.png[width="400"]
+Format: `clear`
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `clear` into the command box, and press kbd:[Enter] to execute it.
+
+image::UG_clear1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display "Address book has been cleared". +
+
+image:step3.png[width="70"] The cleared contact will be deleted from the contact list. +
+
+image:step4.png[width="70"] The details of last updated will be updated with your system time.
+
+image::UG_clear2.png[width="590"]
+
+{sp}+
+
+image::divider.png[width="900"]
 
 === Deleting a person : `delete`
+image::UG_commandheader_delete.png[width="500"]
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Deleting a duplicate contact?
+Unify's `delete` command removes a specified contact from the address book. +
 
-****
+[TIP]
+If you accidentally deleted a contact, Unify's `undo` command can help undo the deletion!
+
+image::UG_header_format.png[width="400"]
+
+Format: `delete INDEX` +
+
+image::UG_header_alias.png[width="400"]
+
+Alias: `remove`
+
+image::header_note.png[width="400"]
+
 * Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+* The `INDEX` refers to the index number shown in the most recent listing.
 
-Examples:
+image::header_warning.png[width="400"]
+* The `INDEX` *must be a positive integer* 1, 2, 3, ...
+
+image::UG_header_examples.png[width="400"]
 
 * `list` +
 `delete 2` +
@@ -132,18 +275,195 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `list` into the command box, and press kbd:[Enter] to execute it.
+
+image::UG_list1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display "Listed all persons"
+
+image:step3.png[width="70"] The contact list will be displayed with every contacts found in the address book. You can scroll down to view more contacts in the list.
+
+image::UG_list2.png[width="590"]
+
+image:step4.png[width="70"] Type `delete` into the command box first, then follow the `INDEX` of the contact list, after which press kbd:[Enter] to execute it.
+
+image::UG_delete1.png[width="590"]
+
+image:step5.png[width="70"] The result box will display "Deleted person:" with the deleted details.
+
+image:step6.png[width="70"] The deleted contact will be deleted from the contact list.
+
+image:step7.png[width="70"] The details of last updated will be updated with your system time.
+
+image::UG_delete2.png[width="590"]
+
+{sp}+
+
+image::divider.png[width="900"]
+
+// tag::editcommand[]
+[[editcommand]]
+=== Editing a person : `edit`
+
+image::UG_commandheader_edit.png[width="500"]
+
+Need to update your girlfriend's phone number? Or misspelt your tutor's e-mail address?
+Unify's `edit` command lets you edit an existing contact's details in the address book. +
+
+image::UG_header_format.png[width="400"]
+
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...` +
+
+image::UG_header_alias.png[width="400"]
+Alias: `change`
+
+image::header_note.png[width="400"]
+
+* Edits the person at the specified `INDEX`. The `INDEX` refers to the index number shown in the last person listing. The `INDEX` *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* You can remove the person's remarks by typing `r/` without specifying any remarks after it.
+* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+
+image::UG_header_examples.png[width="400"]
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+
+* `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd person to `Betsy Crower` and clears all existing tags.
+
+* `edit 3 r/Loan me $50` +
+Edits the remarks of the 3rd person to `Loan me $50.
+
+* `edit 3 r/` +
+Remove the remarks of the 3rd person.
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] You can easily edit a person's details by typing `edit` into the command box first, then follow the format as shown above, after which press kbd:[Enter] to execute it.
+
+image::UG_edit1.png[width="590"]
+
+image:step2.png[width="70"] Well done! You have successfully edit the person's details if you see the result box displayed "Edited person:" with the edited details.
+
+image:step3.png[width="70"] The details of last updated will be also updated with your system time.
+
+image::UG_edit2.png[width="590"]
+{sp}+
+
+image::header_warning.png[width="400"]
+You cannot edit a contact to have the same exact details as another contact in your contact list. You may encounter this message
+"This person already exists in the address book" at image:step2.png[width="70"] if you try to do so.
+
+image::divider.png[width="900"]
+
+// end::editcommand[]
+
+=== Exiting the program : `exit`
+image::UG_commandheader_exit.png[width="500"]
+
+Exits the program. +
+
+image::UG_header_format.png[width="400"]
+Format: `exit`
+
+image::UG_header_alias.png[width="400"]
+Alias: `quit`
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `exit` into the command box, and press kbd:[Enter] to execute it. +
+
+image:step2.png[width="70"] The application will be closed.
+
+image::UG_exit1.png[width="590"]
+
+{sp}+
+
+image::divider.png[width="900"]
+
+=== Listing all persons : `list`
+
+image::UG_commandheader_list.png[width="500"]
+
+Looking to scroll through your entire contact list? Or just want to admire your large network?
+Unify's `list` command will list of all your contacts! +
+
+image::UG_header_format.png[width="400"]
+Format: `list` +
+
+image::UG_header_alias.png[width="400"]
+Alias: `ls`, `show`
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `list` into the command box, and press kbd:[Enter] to execute it.
+
+image::UG_list1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display "Listed all persons"
+
+image:step3.png[width="70"] The contact list will be displayed with every contacts found in the address book. You can scroll down to view more contacts in the list.
+
+image::UG_list2.png[width="590"]
+{sp}+
+
+image::divider.png[width="900"]
+
+=== Listing entered commands : `history`
+image::UG_commandheader_history.png[width="500"]
+
+If you are unsure what commands the `undo` command will undo, Unify's `history` command will
+lists all the commands that you have entered in reverse chronological order. +
+
+image::UG_header_format.png[width="400"]
+Format: `history`
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `history` into the command box, and press kbd:[Enter] to execute it.
+
+image::UG_history1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display "Entered commands (from most recent to earliest):" with the history of the commands you have previously entered.
+
+image::UG_history2.png[width="590"]
+
+image:step3.png[width="70"] If your result box will display "You have not yet entered any commands." Do not worry! It just means that you have not entered any commands yet! Try executing a command and repeat step 1 again.
+
+image::UG_history3.png[width="590"]
+
+{sp}+
+
+image::header_note.png[width="400"]
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+
+image::divider.png[width="900"]
+
 === Selecting a person : `select`
+image::UG_commandheader_select.png[width="500"]
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Two hands on your keyboard and don't want to press the mouse?
+Unify's `select` command provides and alternative to clicking on a contact list.
+It selects the person identified by the `INDEX` number used in the last contact listing. +
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+image::UG_header_format.png[width="400"]
 
-Examples:
+Format: `select INDEX` +
+
+image::UG_header_alias.png[width="400"]
+
+Alias: `choose`, `pick`
+
+image::header_note.png[width="400"]
+* The `INDEX` refers to the index number shown in the most recent listing.
+* The `INDEX` *must be a positive integer* `1, 2, 3, ...`
+
+image::UG_header_examples.png[width="400"]
 
 * `list` +
 `select 2` +
@@ -152,28 +472,475 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `list` into the command box, and press kbd:[Enter] to execute it.
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+image::UG_list1.png[width="590"]
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+image:step2.png[width="70"] The result box will display "Listed all persons"
 
-// tag::undoredo[]
+image:step3.png[width="70"] The contact list will be displayed with every contacts found in the address book. You can scroll down to view more contacts in the list.
+
+image::UG_list2.png[width="590"]
+
+image:step4.png[width="70"] Type `select` into the command box first, then follow the `INDEX` of the contact list, after which press kbd:[Enter] to execute it.
+
+image::UG_select1.png[width="590"]
+
+image:step5.png[width="70"] The result box will display "Selected person:" with the `INDEX`.
+
+image:step6.png[width="70"] The selected person will be highlighted from the contact list.
+
+image:step7.png[width="70"] The details of the selected person will be shown in the contact's detail box.
+
+image::UG_select2.png[width="590"]
+
+{sp}+
+
+image::divider.png[width="900"]
+
+=== Viewing help : `help`
+
+image::UG_commandheader_help.png[width="500"]
+{sp}+
+Feeling lost and not sure what to do? You can type the `help` command and Unify will open an in-application
+user guide for your reference!
+
+image::UG_header_format.png[width="400"]
+Format: `help`
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `help` into the command box, and press kbd:[Enter] to execute it.
+
+image::UG_help1.png[width="590"]
+image:step2.png[width="70"] The help window will appear as shown above.
+
+image::UG_help2.png[width="590"]
+{sp}+
+
+image::divider.png[width="900"]
+
+== Advanced Features
+image::UG_mainheader_advancedfeatures.png[width="900"]
+//-
+{sp}
+
+// tag::autocomplete[]
+=== Autocompleting commands: kbd:[Tab]
+
+image::UG_commandheader_autocomplete.png[width="500"]
+{sp}+
+Slow typer? Fret not! Just press kbd:[Tab] and Unify will automatically finish your commands for you.
+
+[TIP]
+Autocomplete understands what you're typing and can automatically complete parameters of some commands,
+too! Simply press kbd:[Tab] whenever you're unsure what to type next.
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type an incomplete command into the command box, and press kbd:[Tab] to autocomplete it.
+
+image:step2.png[width="70"] The automatically completed command will appear in the command box.
+
+{sp}+
+
+image::divider.png[width="900"]
+// end::autocomplete[]
+
+// tag::alias[]
+=== Adding aliases : `alias`
+image::UG_commandheader_aliasadd.png[width="500"]
+
+If you find yourself forgetting your commands often, you can define aliases to rename the commands to
+something easier to remember!
+
+Unify's `alias` command creates an alias to another command. If an alias is unspecified, it lists all aliases. +
+
+image::UG_header_format.png[width="400"]
+Format: `alias [ALIAS COMMAND]`
+
+image::UG_header_examples.png[width="400"]
+
+* `alias unfriend delete 1` +
+`unfriend` (deletes the first person in the list) +
+* `alias friends find t/friend` +
+`friends` (lists all persons with the `friend` tag) +
+* `alias` +
+Lists all your previously defined aliases.
+
+{sp}+
+
+image::divider.png[width="900"]
+
+=== Deleting aliases : `unalias`
+image::UG_commandheader_aliasdelete.png[width="500"]
+
+Deletes a previously defined alias. +
+
+image::UG_header_format.png[width="400"]
+Format: `unalias ALIAS`
+
+image::UG_header_examples.png[width="400"]
+
+* `alias unfriend delete` +
+`unalias unfriend` +
+`unfriend` +
+The `unfriend` command fails as there is no longer such a command.
+// end::alias[]
+
+{sp}+
+
+image::divider.png[width="900"]
+
+// tag::find[]
+[[find]]
+=== Searching for people by details: `find`
+image::UG_commandheader_find.png[width="500"]
+
+Looking for an old friend who stayed in Bishan? Identifying the person who sent you a message from his e-mail made in Primary School?
+Unify's `find` command allows you to search for people based on their details, which include: +
+
+* Name
+* Phone
+* E-mail
+* Address
+* Tags
+* Remark
+
+image::UG_header_format.png[width="400"]
+Format: `find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG] [r/REMARK]...` +
+
+image::UG_header_alias.png[width="400"]
+Alias: `search`, `filter`
+
+
+image::UG_header_examples.png[width="400"]
+
+* `find n/John` +
+Returns `john` and `John Doe`
+* `find n/John t/friend p/123` +
+Returns any person whose name contains `john`, has a tag which contains `friend` and whose phone contains `123`.
+* `find a/Blk 100 Street` +
+Returns any person whose address contains `Blk 100 Street` (case-insensitive). Does not return person whose address is `Street Blk 100`.
+
+image::header_note.png[width="400"]
+
+****
+* Only people matching all the keywords will be returned (i.e. `AND` search).
+** e.g. `n/Hans n/Bo` will not return `Hans Gruber` or `Bo Yang` but will return `Hans Holbo`.
+* The search is case insensitive. e.g `n/hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `n/Hans n/Bo` will match `Bo Hans`
+* You may search for different fields by adding a prefix. ([n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG])
+* If the first field is a name, you do not need a prefix. (find NAME [MORE_PREFIX/KEYWORDS]...) +
+* Words will be matched if the keyword is contained by the peron's details e.g. `n/Han` will identify `Hans`, `n/Gabrielle` will not identify `Gabriel`.
+* For Remark, only people whose remark sentence contains your query will be found. A full word match is required but it is case-insensitive.
+** For example `find r/swim` will identify John whose remark is `likes to swim` but not Hans whose remark is `likes swimming`.
+****
+
+image::UG_header_examples.png[width="400"]
+
+* `find n/John` +
+Returns `john` and `John Doe`
+* `find n/John t/friend p/123` +
+Returns any person whose name contains `john`, has a tag which contains `friend` and whose phone contains `123`.
+* `find a/Blk 100 Street` +
+Returns any person whose address contains `Blk 100 Street` (case-insensitive). Does not return person whose address is `Street Blk 100`.
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `find` into the command box first, then follow the format as shown above, after which press kbd:[Enter] to execute it.
+
+image::UG_find1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display (number) persons listed!
+
+image::UG_find2.png[width="590"]
+
+image:step3.png[width="70"] You can click on any other of people listed in the list of contacts or do a `select` command.
+
+image:step4.png[width="70"] The details of the selected person will be displayed under the Contact Details.
+
+image::UG_find3.png[width="590"]
+{sp}+
+
+TIP: You can also click on tags to do a search for that tag. (ie. find t/CLICKED_TAG); +
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+
+image:step1.png[width="70"] Click on the tag you wish to search for.
+
+image::UG_findtag1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display (number) persons listed!
+
+image::UG_find2.png[width="590"]
+
+image:step3.png[width="70"] You can click on any other of people listed in the list of contacts or do a `select` command.
+
+image:step4.png[width="70"] The details of the selected person will be displayed under the Contact Details.
+
+image::UG_find3.png[width="590"]
+{sp}+
+
+image::divider.png[width="900"]
+// end::find[]
+
+// tag::sharecommand[]
+=== Sharing contact's details by email : `share`
+image::UG_commandheader_share.png[width="500"]
+
+Want to share a contact to your colleagues or friends via email?
+Unify's `share` command lets you email the selected contact's details to your designated email!
+
+image::UG_header_format.png[width="400"]
+Format:
+
+* `share INDEX s/EMAIL`
+* `share INDEX s/INDEX`
+* `share INDEX s/EMAIL INDEX` is same as `share INDEX s/INDEX EMAIL`
+
+image::header_note.png[width="400"]
+
+You can share the selected contact's details to as many email addresses as you wish.
+
+* For example, to share a contact with three email addresses,
+use the format `share INDEX s/INDEX INDEX INDEX` or `INDEX s/EMAIL INDEX EMAIL`.
+* The `INDEX` after the "s/" can also be replaced with an `EMAIL`, and it is also interchangeable.
+
+
+image::UG_header_examples.png[width="400"]
+
+* `list` +
+`share 1 s/cs2103@gmail.com` +
+Sends the 1st contact's details in the address book as an email to cs2103@gmail.com.
+
+* `list` +
+`share 1 s/2` +
+Sends the 1st contact's details in the address book as an email to the 2nd contact's email in the address book.
+
+* `list` +
+`share 1 s/cs2103@gmail.com 2` +
+Sends the 1st contact's details in the address book as an email to both cs2103@gmail.com and the 2nd contact's email in the address book.
+
+image::header_warning.png[width="400"]
+Ensure that you have input a valid email address to send to, otherwise the result box will display "Email address is not valid!"
+and the email will not be sent.
+
+image::UG_sharewarning.png[width="590"]
+
+{sp}+
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] First, find your contacts that you wish to share details about. Type `list` into the command box, and press kbd:[Enter] to execute it.
+
+image::UG_list1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display "Listed all persons".
+
+image:step3.png[width="70"] The contact list will display every contact found in the address book. You can scroll down to view more contacts in the list.
+
+image::UG_list2.png[width="590"]
+
+image:step4.png[width="70"] To start sharing the contact through email, type `share` into the command box first, then follows by the `INDEX` of the contact list and your recipient's email address or their index in the contact list, after which press kbd:[Enter] to execute it.
+
+image::UG_share1.png[width="590"]
+
+image:step5.png[width="70"] You are done! The contact details have been sent out as an email to your recipients. The result box will also display "Email Sent!".
+
+image::UG_share2.png[width="590"]
+
+{sp}+
+
+image::header_warning.png[width="400"]
+
+* This share feature requires an Internet connection!
+* Otherwise, your  image:step5.png[width="70"] will have the result box displaying "Not Connected to the Internet".
+
+image::UG_share2a.png[width="590"]
+
+{sp}+
+
+image::header_note.png[width="400"]
+
+If you are unable to find the email that has been sent out to your inbox, try searching for it under the "junk" folder.
+
+{sp}+
+
+image::divider.png[width="900"]
+// end::sharecommand[]
+
+// tag::musiccommand[]
+=== Playing music : `music play`
+image::UG_commandheader_musicplay.png[width="500"]
+
+Want to listen to some of your favourite tunes, but do not have any Internet connection currently? Fear not! Unify has got you covered! Unify's `music play` command plays a music track
+from a specific genre from a list of built-in mp3 music. You can select from three different genres, such as "pop", "dance" and "classic".
+
+image::UG_header_format.png[width="400"]
+Format: `music play [GENRE]`
+
+image::header_note.png[width="400"]
+
+* You can only select either "pop", "dance" or "classic" as the `[GENRE]` of the music.
+* If you had input `music play` command without any `[GENRE]`. It will play some "pop" music by default.
+* Tired of the same music playing on a loop?  To skip to the next track, input the same command as previously for example, if you had input `music play pop`,
+input the same command `music play pop` again to go to the next pop music track.
+* Changing of the music `[GENRE]` or inputting the `radio stop` command, will reset your music playlist back to track number 1.
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] To start off your day with some music, type `music play` into the command box, then follows by a `[GENRE]` and press kbd:[Enter] to execute it.
+
+image::UG_musicplay1.png[width="590"]
+
+image:step2.png[width="70"] If your `[GENRE]` is Pop, the result box will display "POP Music 1 Playing".
+
+image::UG_musicplay2.png[width="590"]
+
+{sp}+
+
+image::header_note.png[width="400"]
+
+* To play a different `[GENRE]` music track. You can repeat image:step1.png[width="70"] again with a different `[GENRE]` as the input.
+* For example, input `music play classic` at image:step1.png[width="70"] to play classical music instead.
+
+{sp}+
+
+image::divider.png[width="900"]
+
+=== Stopping music : `music stop`
+image::UG_commandheader_musicstop.png[width="500"]
+
+Maybe the music is getting a little distracting or you are just not in the mood for some tunes.
+`music stop` command stops the current music track playing so that you can focus on the task at hand.
+
+image::UG_header_format.png[width="400"]
+Format: `music stop`
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] You can stop the music from playing by typing `music stop` into the command box, and press kbd:[Enter] to execute it.
+
+image::UG_musicstop1.png[width="590"]
+
+image:step2.png[width="70"] Now you have the silence that you need and the result box will also display "Music Stopped".
+
+image::UG_musicstop2.png[width="590"]
+
+{sp}+
+
+image::header_note.png[width="400"]
+
+If there is no music currently playing and you try to stop the music player, you may encounter "No music is currently playing" in the result box at image:step2.png[width="70"].  No worries! It is not a problem at all! Just execute the `music stop`
+command only when the music player is currently playing.
+
+image::UG_musicstop2a.png[width="590"]
+
+{sp}+
+
+image::divider.png[width="900"]
+// end::musiccommand[]
+
+// tag::radiocommand[]
+=== Playing radio : `radio play`
+image::UG_commandheader_radioplay.png[width="500"]
+
+Want to hear the latest pop songs that everyone is talking about? Or maybe you are interested to hear the news for weather broadcast or potential sales advertisement
+that only happens on a radio channel! Then tune in to Unify's radio player using the `radio play [GENRE]` command. There are currently four different `[GENRE]` to choose from,
+as "pop", "chinese", "classic" and "news".
+
+image::UG_header_format.png[width="400"]
+Format: `radio play [GENRE]`
+
+image::header_note.png[width="400"]
+
+* The genre can only be "pop", "chinese", "classic" or "news".
+* If you had input `radio play` command without any `[GENRE]`. It will play the broadcast from the "pop" genre radio station by default.
+* If your radio player suddenly stops playing, ensure that you are still connected to the Internet, as it requires an Internet connection in order to work.
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] To play some radio broadcast, type `radio play` into the command box, then follows by a `[GENRE]` and press kbd:[Enter] to execute it.
+
+image::UG_radioplay1.png[width="590"]
+
+image:step2.png[width="70"] If your `[GENRE]` is "pop", the result box will display "POP Radio Playing".
+
+image::UG_radioplay2.png[width="590"]
+
+{sp}+
+
+image::header_warning.png[width="400"]
+
+* Unify's radio player requires an Internet connection to work!
+* Otherwise, your  image:step2.png[width="70"] will have the result box displaying "Not Connected to the Internet".
+
+image::UG_nointernet.png[width="590"]
+
+{sp}+
+
+image::header_note.png[width="400"]
+
+* To play other  radio `[GENRE]` stations, you can repeat image:step1.png[width="70"] again with a different `[GENRE]` as the input.
+* For example, input `radio play classic` at image:step1.png[width="70"] to listen to the classical radio station.
+
+{sp}+
+
+image::divider.png[width="900"]
+
+=== Stopping radio : `radio stop`
+image::UG_commandheader_radiostop.png[width="500"]
+
+Maybe the radio broadcast is getting a little distracting. No worries!
+`radio stop` command stops the radio player from playing so that you can focus on your task at hand.
+
+image::UG_header_format.png[width="400"]
+Format: `radio stop`
+
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] You can stop the radio player from playing by typing `radio stop` into the command box, and press kbd:[Enter] to execute it.
+
+image::UG_radiostop1.png[width="590"]
+
+image:step2.png[width="70"] The radio player will stop playing the broadcast and you have the silence that you need. The result box will also
+display "Radio Stopped".
+
+image::UG_radiostop2.png[width="590"]
+
+{sp}+
+
+image::header_note.png[width="400"]
+
+If the radio player is currently not playing and you try to stop the radio player, you may encounter "No Radio is currently playing" in the result box at image:step2.png[width="70"]. No worries! It is not a problem at all! Just execute the `radio stop`
+command only when the radio player is currently playing.
+
+image::UG_radiostop2a.png[width="590"]
+
+{sp}+
+
+image::divider.png[width="900"]
+// end::radiocommand[]
+
 === Undoing previous command : `undo`
+image::UG_commandheader_undo.png[width="500"]
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Accidentally cleared all your contacts? Edited the wrong contact detail? Fear not! Unify's `undo` command restores the
+address book to the state before the previous _undoable_ command was executed. This is your emergency command if you
+incorrectly modified Unify's contact list.+
+
+image::UG_header_format.png[width="400"]
 Format: `undo`
 
-[NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
+image::header_note.png[width="400"]
 
-Examples:
+Undoable commands modify the address book's content (`add`, `delete`, `edit` and `clear`).
+
+image::UG_header_examples.png[width="400"]
 
 * `delete 1` +
 `list` +
@@ -189,12 +956,31 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `undo` into the command box, and press kbd:[Enter] to execute it.
 
-Reverses the most recent `undo` command. +
+image::UG_undo1.png[width="590"]
+
+image:step2.png[width="70"] The result box will display "Undo success!"
+
+image:step3.png[width="70"] The undo action can be seen, as the previously deleted contact list is added back.
+
+image::UG_undo2.png[width="590"]
+
+{sp}+
+
+image::divider.png[width="900"]
+
+=== Redoing the previously undone command : `redo`
+image::UG_commandheader_redo.png[width="500"]
+
+Just like how `undo` undoes your most recent command, `redo` reverses the most recent `undo` command. +
+
+image::UG_header_format.png[width="400"]
 Format: `redo`
 
-Examples:
+image::UG_header_examples.png[width="400"]
 
 * `delete 1` +
 `undo` (reverses the `delete 1` command) +
@@ -210,43 +996,123 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
-// end::undoredo[]
 
-=== Clearing all entries : `clear`
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `redo` into the command box, and press kbd:[Enter] to execute it.
 
-Clears all entries from the address book. +
-Format: `clear`
+image::UG_redo1.png[width="590"]
 
-=== Exiting the program : `exit`
+image:step2.png[width="70"] The result box will display "Redo success!"
 
-Exits the program. +
-Format: `exit`
+image:step3.png[width="70"] The redo action can be seen, as the previously deleted contact list is deleted.
 
-=== Saving the data
+image::UG_redo2.png[width="590"]
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+{sp}+
+
+image::divider.png[width="900"]
+
+== Miscellaneous Features
+image::UG_mainheader_miscfeatures.png[width="900"]
+//-
+{sp}
+
+=== Saving the Data
+image::UG_header_savingdata.png[width="500"]
+
+Unify knows that your contacts are important and automatically saves them to your hard disk. There is no need to save manually.
+
+// tag::audiblefeedback[]
+=== Audible Feedback
+image::UG_header_audiblefeedback.png[width="500"]
+
+Unify knows that speed is important to you, hence audible feedback is another key component in giving you that extra confirmation
+that your actions have been executed.
+
+* An audible typing sound will be played whenever you are typing in the command box.
+* An audible confirmation feedback to your executed commands. Giving you the audible feedback that your command is executed successfully.
+* Unify has a built-in text-to-speech
+feature that is able to read your friend's name when you click on their details. Giving you that extra confirmation feedback you needed.
+// end::audiblefeedback[]
+
+== Upcoming Features in Future Releases
+image::UG_mainheader_upcomingfeatures.png[width="900"]
+//-
+{sp}
+
+image::UG_header_v2features.png[width="500"]
+
+* The speech-to-text feature, is to give users another way of input as well as executing commands hands-free. This will be greatly beneficial to those who want to multitask, as it able to execute multiple commands.
++
+For example, when the user is editing a contact, he/she is able to say "music play pop" to play some music without moving away from his/her current task.
+
+* Index tabbing cycles based on people listed in the contact list
+** Now, if you entered an index that is too large, pressing kbd:[Tab] will help correct your index immediately.
+** For example:
+1. There are 6 people listed
+2. user input: `delete 6`
+3. press kbd:[Tab]
+4. user input: `delete 1`
+
+* Use links to online images for `Avatar` +
+** In v2.0, you can use links to profile pictures on your favourite social media as `Avatar` for your contacts
+** Simply enter the link as the argument (eg: i/https://avatars2.githubusercontent.com/u/1926229?s=400&v=4) and Unify will download the image for you!
+
 
 == FAQ
+image::UG_mainheader_faq.png[width="900"]
+//-
+{sp}
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+image:question.png[width="70"] How do I transfer my data to another Computer? +
+image:answer.png[width="70"] Install the application in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+{sp}
+
+image:question.png[width="70"] Where do I find the latest version of Unify? +
+image:answer.png[width="70"] You can find the latest release version link:{repoURL}/releases[here].
 
 == Command Summary
+image::UG_mainheader_commandsummary.png[width="900"]
+//-
+{sp}
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[cols="3*^"]
+|===
+| *COMMAND* | *FORMAT* | *EXAMPLE*
+| *Add* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [i/AVATAR_FILE_PATH] [t/TAG]...` | `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Loves Tea i/d:/pictures/betsy.png t/friend t/colleague`
+| *Alias* | `alias [ALIAS COMMAND]` | `alias unfriend delete 1`
+| *Clear* | `clear` | `clear`
+| *Delete* | `delete INDEX` | `delete 3`
+| *Edit* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`| `edit 2 n/James Lee r/Loves Cake`
+| *Find* | `find PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS]...` | `find James t/friend`
+| *List* | `list`| `list`
+| *Help* | `help`| `help`
+| *Select* | `select INDEX`| `select 2`
+| *Share* | `share INDEX s/EMAIL` +
+ or `share INDEX s/INDEX` +
+ or `share INDEX s/EMAIL INDEX` | `share 1 s/cs2103@gmail.com 2` +
+ or `share 1 s/2` +
+ or `share 1 s/cs2103@gmail.com 2`
+| *History* | `history`| `history`
+.2+| *Music*| `music play [GENRE]`
+| `music play pop` | `music stop` | `music stop`
+.2+| *Radio*| `radio play [GENRE]`
+| `radio play pop` | `radio stop` | `radio stop`
+| *Redo* | `redo` | `redo`
+| *Undo* | `undo` | `undo`
+| *Unalias* | `unalias ALIAS` | `unalias unfriend`
+|===
+
+== Glossary
+image::UG_mainheader_glossary.png[width="900"]
+//-
+{sp}
+
+[cols="2*^"]
+|===
+| *TERMS* | *EXPLANATION*
+| *Avatar* | A picture representing a particular person.
+| *Command Line Interface (CLI)* |  Is a means of interacting with a computer program where the user (or client) issues commands to the program in the form of successive lines of text (command lines).
+| *Text-To-Speech (TTS)* |  A system that converts normal language text into speech; other systems render symbolic linguistic representations like phonetic transcriptions into speech. Or a speech synthesiser
