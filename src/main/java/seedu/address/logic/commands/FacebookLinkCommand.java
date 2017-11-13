@@ -19,12 +19,13 @@ import seedu.address.ui.BrowserPanel;
 public class FacebookLinkCommand extends Command {
     public static final String COMMAND_WORD = "facebooklink";
     public static final String COMMAND_ALIAS = "fblink";
+    public static final String EXAMPLE_LINK = "https://www.google.com.sg/";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": share a URL in link format to Facebook account\n"
             + "Alias: " + COMMAND_ALIAS + "\n"
             + "Parameters: MESSAGE\n"
-            + "Example: " + COMMAND_WORD + " https://www.google.com.sg/";
+            + "Example: " + COMMAND_WORD + " " + EXAMPLE_LINK;
 
     public static final String MESSAGE_FACEBOOK_LINK_SUCCESS = "Shared link on Facebook!";
     public static final String MESSAGE_FACEBOOK_LINK_INITIATED = "User not authenticated, log in to proceed.";
@@ -33,11 +34,13 @@ public class FacebookLinkCommand extends Command {
     private static String link;
     private static WebEngine webEngine;
 
+    private String toPost;
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
     public FacebookLinkCommand(String url) {
         link = url;
+        toPost = url;
     }
 
     /**
@@ -78,4 +81,12 @@ public class FacebookLinkCommand extends Command {
             return new CommandResult(MESSAGE_FACEBOOK_LINK_SUCCESS + " (to " + user + "'s page.)");
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FacebookLinkCommand // instanceof handles nulls
+                && toPost.equals(((FacebookLinkCommand) other).toPost));
+    }
 }
+//@@author

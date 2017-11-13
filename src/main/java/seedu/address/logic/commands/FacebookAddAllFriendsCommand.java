@@ -26,15 +26,15 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "fbaddall";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": adds all available friends from a Facebook account. (maximum friends that can be added is "
-            + "currently capped at 30.)\n"
+            + ": adds all available friends from an authenticated Facebook account.\n"
             + "Alias: " + COMMAND_ALIAS + "\n";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_ERROR = "Error with Facebook Tagable Friends API call."
             + "User may not be registered as 'Test User'";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_PAGING_ERROR = "Error with getting next page";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_SUCCESS = " valid friends added from Facebook!";
-    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED = "User not authenticated, "
-            + "log in to proceed.";
+    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATION_ERROR = "User not authenticated, "
+            + "please input 'facebookconnect' command first.";
+    public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED = "Adding all friends from Facebook...";
     public static final String EXTRACT_USER_ID_REGEX = "set=a.(.*?)\\&type";
 
     private static Facebook facebookInstance;
@@ -43,7 +43,6 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     private static ResponseList<TaggableFriend> currentList;
     private static Paging<TaggableFriend> currentPaging;
     private static String currentPhotoID;
-    private static int maxFriends = 30;
     private static int totalFriendsAdded = 0;
     private static int friendIndex = 0;
 
@@ -124,10 +123,6 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
      * Sets up the counter and adds the next Facebook Contact
      */
     public static void setupNextFriend() {
-        if (totalFriendsAdded >= maxFriends) {
-            finishFacebookAddAllFriends();
-            return;
-        }
         friendIndex++;
         try {
             addNextFriend();
@@ -165,14 +160,18 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         if (!FacebookConnectCommand.isAuthenticated()) {
-            BrowserPanel.setProcessType(COMMAND_WORD);
-            FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
-            newFacebookConnect.execute();
-            return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);
+            throw new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATION_ERROR);
         } else {
             BrowserPanel.setProcessType(COMMAND_WORD);
             addFirstFriend();
             return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FacebookAddAllFriendsCommand); // instanceof handles nulls
+    }
 }
+//@@author

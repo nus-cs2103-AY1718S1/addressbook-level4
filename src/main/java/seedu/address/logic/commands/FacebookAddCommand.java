@@ -33,11 +33,12 @@ import seedu.address.ui.BrowserPanel;
 public class FacebookAddCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "facebookadd";
     public static final String COMMAND_ALIAS = "fbadd";
+    public static final String EXAMPLE_NAME = "Barack Obama";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a facebook user to the address book.\n"
             + "Alias: " + COMMAND_ALIAS + "\n"
             + "Parameters: FACEBOOK_USER_NAME\n"
-            + "Example: " + COMMAND_WORD + "alice fong";
+            + "Example: " + COMMAND_WORD + " " + EXAMPLE_NAME;
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
@@ -143,4 +144,12 @@ public class FacebookAddCommand extends UndoableCommand {
         }
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FacebookAddCommand // instanceof handles nulls
+                && userName.equals(((FacebookAddCommand) other).userName));
+    }
+
 }
+//@@author
