@@ -106,4 +106,4 @@ include::../DeveloperGuide.adoc[tag=modechange]
 
 == Orbital Project: PayAlarm
 
-* Worked on an app with an SMS integrating feature. Complete the project with SQL, HTML, CSS. (https://github.com/darrinloh/payalarm-project[PayAlarm])
+* Worked on an app with an SMS integrating feature. Completed the project with SQL, HTML, CSS. (https://github.com/darrinloh/payalarm-project[PayAlarm])
