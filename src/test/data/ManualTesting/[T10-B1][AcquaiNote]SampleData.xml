@@ -4,7 +4,7 @@
         <name>Some Body</name>
         <phone>98765432</phone>
         <email>somebody@google.com</email>
-        <address>Some Street, 07-21</address>
+        <address>Clementi</address>
         <favourite>true</favourite>
         <tagged>friends</tagged>
         <xmlTodoItems>
