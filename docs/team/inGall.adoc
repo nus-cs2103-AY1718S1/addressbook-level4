@@ -60,7 +60,7 @@ For the `listReminder` command, it allows users to see all the reminders at a ti
 For example, a user may search for a specific reminder. It will bring them to a page with only the reminder. To
 bring them back to the list of all reminders, the `listReminder` command is needed.
 
-All these simple and easy to use commands allow users, especially our target audience(businessmen) to use it with ease.
+All these simple and easy to use commands allow users, especially our target audience (businessmen) to use it with ease.
 
 ==== Implementation
 
@@ -85,5 +85,6 @@ include::../DeveloperGuide.adoc[tag = listReminder]
 
 === Other Contributions
 
-- Added test cases to help improve code coverage (Pull Requests https://github.com/CS2103AUG2017-T09-B1/main/pull/77[#77],
-  https://github.com/CS2103AUG2017-T09-B1/main/pull/85[#85], https://github.com/CS2103AUG2017-T09-B1/main/pull/89[89] )
+- Added test cases to improve code coverage (Pull Requests https://github.com/CS2103AUG2017-T09-B1/main/pull/77[#77],
+  https://github.com/CS2103AUG2017-T09-B1/main/pull/85[#85], https://github.com/CS2103AUG2017-T09-B1/main/pull/89[89],
+  https://github.com/CS2103AUG2017-T09-B1/main/pull/121[#121] )
