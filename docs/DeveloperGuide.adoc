@@ -400,6 +400,7 @@ such as `addmeeting`, `deletemeeting`, `editmeeting`, `listmeeting` and `findmee
 The attributes of Meeting class include `NameMeeting`, `DateTime`, `Place`, `Persons` and `MeetingTag`, as seen in the figure below.
 
 image::MeetingCLass.png[width="300"]
+_Figure 5.4.1 Meeting Class_
 
 `Persons` are `ReadOnlyPerson` class from the contact list added by the users. In this meeting class, `List<ReadOnlyPerson> personsToMeet` are an object inside `Meeting` class which stores the information of the persons inside the class itself.
 
@@ -518,7 +519,7 @@ When the `findexactmeeting` command is called with the appropriate parameters, a
 The following sequence diagram shows how the command works:
 
 image::FindExactMeetingSequence.png[width="800"]
-_Figure 5.5.1 : Find Exact Meeting Sequence Diagram_
+_Figure 5.8.1 : Find Exact Meeting Sequence Diagram_
 
 For example,
 
@@ -689,29 +690,29 @@ The implementation of meeting card starts of from creating 'Meeting' class which
 * These object properties of the meeting class are assigned to the labels in the Meeting card of MeetingCard.java, handled by UI manager.
 
 image::UiMeetingCardSequenceDiagram.png[width="800"]
-_Figure 5.10.1 : Sequence diagram of Ui of Meeting Card_
+_Figure 5.12.1 : Sequence diagram of Ui of Meeting Card_
 
 * The list of meeting cards are assigned to the panel at the right of the program. The list are created with 'UniqueMeetingList'. This list of meetings are always sorted according to date and time, with the nearest date and time first. The implementation of the sorting of this `Meeting` cards is by using lambda sort, where the `LocalDateTime` of the `DateTime` in `Meeting` are sorted.
 
 image::MeetingCard.png[width="250"]
-_Figure 5.10.2 : Meeting Card_
+_Figure 5.12.2 : Meeting Card_
 
 To show the urgency of the meeting, as you can see from the examples below, colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
 
 * `darkRed` : Meeting is in next 24 hours.
 
 image::MeetingCard1.png[width="250"]
-_Figure 5.10.3 : Meeting card that due within 24 hours_
+_Figure 5.12.3 : Meeting card that due within 24 hours_
 
 * `red` : Meeting is in next 48 hours.
 
 image::MeetingCard2.png[width="250"]
-_Figure 5.10.4 : Meeting Card that due within 48 hours_
+_Figure 5.12.4 : Meeting Card that due within 48 hours_
 
 * `orangeRed` : Meeting is in next 72 hours.
 
 image::MeetingCard3.png[width="250"]
-_Figure 5.10.5 : Meeting Card that due within 72 hours_
+_Figure 5.12.5 : Meeting Card that due within 72 hours_
 
 ==== Design Considerations
 
@@ -729,13 +730,13 @@ _Figure 5.10.5 : Meeting Card that due within 72 hours_
 To maximise the ability to remind the users of their meetings, a pop up reminder with the details of the meetings are shown to the user. The user will just have to acknowledge it. The pop up reminder activates and provides the details of the users' next meeting in 24 hours. As you can see from the Figure 5.8.1, there are sufficient details of the next meeting and the extra button is for the user to confirm the reminder.
 
 image::Reminder.png[width="600"]
-_Figure 5.11.1 : Reminder for single meeting_
+_Figure 5.13.1 : Reminder for single meeting_
 
 Implementation: +
 The creation of the pop up starts if there is a meeting on the day itself by the calling of `MeetingAlert` class during the opening of the application. The implementation of meeting pop up reminder ultilises `javafx.stage.Stage`. Before the instantiation of the `MeetingAlert` class, there will be a check if the next meeting is a group meeting or normal meeting. Subsequently, the results will be shown on the reminder itself, shown in Figure 5.8.2.
 
 image::Reminder(1).png[width="600"]
-_Figure 5.11.2 : Reminder for group meeting_
+_Figure 5.13.2 : Reminder for group meeting_
 
 ==== Design Considerations
 
@@ -753,7 +754,28 @@ _Figure 5.11.2 : Reminder for group meeting_
 Since, meetings that have been attended or missed are not needed in the meeting reminders anymore, we found a need for _ScheduBook_ to manage the meetings and delete them, without the need for user to manually delete them.
 
 Implementation: +
-When _ScheduBook_ is being booted up, the application loads up `addressbook`.xml file which stores the record of the saved file from the previous boot up of _ScheduBook_. Hence, using `LocalDateTime` classes and methods, any meetings that have dates before the time the user boot up _ScheduBook_ will not be added to the `filteredMeetingList` that is used to replace the pre-loaded list. Hence, the newest list will not include those meetings and further saved back to the `addressbook`.xml file when user shut down _ScheduBook_.
+When _ScheduBook_ is being booted up, the application loads up `addressbook`.xml file which stores the record of the saved file from the previous boot up of _ScheduBook_. Hence, using `LocalDateTime` classes and methods, any meetings that have dates before the time the user boot up _ScheduBook_ will not be added to the `filteredMeetingList` that is used to replace the pre-loaded list as you can see in the code snippet below. Hence, the newest list will not include those meetings and further saved back to the `addressbook`.xml file when user shut down _ScheduBook_.
+
+----
+for (final ReadOnlyMeeting meeting : meetings) {
+            if (dateIsAfter((meeting.getDate().toString()))) {
+            //to delete meetings that have passed automatically
+                replacement.add(new Meeting(meeting));
+            }
+        }
+----
+
+----
+private boolean dateIsAfter (String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime currDate = LocalDateTime.now();
+        LocalDateTime meetDate = LocalDateTime.parse(date, formatter);
+        if (meetDate.isAfter((currDate))) {
+            return true;
+        }
+        return false;
+    }
+----
 
 ==== Design Considerations
 

@@ -96,13 +96,19 @@ This allows user to search contact list by tags. Hence, finding person will be e
 === Enhancement Proposed: Import/export Google Contacts
 To better integrate _ScheduBook_ into our users' lives, _ScheduBook_ will be implementing the ability to import google contacts so that users can easily sync their own contact list to _ScheduBook_. Scheduling meeting with his/her contacts will be much more convenient.
 
+=== Enhancement Proposed: A pop-up for clashing meeting
+A pop-up reminder will be opened when user adds a meeting that is within fifteen minutes of another meeting. It is just to remind the user so that he/she will be aware that there is another meeting that are near and to make changes if necessary.
 
 === Other contributions
 
 Contribution to _ScheduBook_
 
-* Added Meeting Tags for meeting cards to indicate importance of meeting. (Pull requests )
-* Added Junit Test cases (Pull requests )
-* Updated ui of Meeting List (Pull requests )
+* Added Meeting Tags for meeting cards to indicate importance of meeting. (Pull requests https://github.com/CS2103AUG2017-T09-B2/main/pull/191[#191])
+* Added Junit Test cases (Pull requests https://github.com/CS2103AUG2017-T09-B2/main/pull/148[#148], https://github.com/CS2103AUG2017-T09-B2/main/pull/141[#141], https://github.com/CS2103AUG2017-T09-B2/main/pull/202[#202], https://github.com/CS2103AUG2017-T09-B2/main/pull/214[#214])
+* Updated UI of Meeting List (Pull requests https://github.com/CS2103AUG2017-T09-B2/main/pull/54[#54], https://github.com/CS2103AUG2017-T09-B2/main/pull/77[#77])
+* Solved UI of background colour problem (Pull requests https://github.com/CS2103AUG2017-T09-B2/main/pull/200[#200])
+* Created valid date regex to solve leap year bug (Pull request https://github.com/CS2103AUG2017-T09-B2/main/pull/187[#187])
+* Added Coverall for whole project repo (https://coveralls.io/github/CS2103AUG2017-T09-B2/main[Coverall])
+
 
 == Project: FPGA audio Fx (Verilog programming for EE2020 in NUS)
