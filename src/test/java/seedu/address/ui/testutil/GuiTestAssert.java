@@ -28,6 +28,13 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
+    public static void assertCardEquals(EventCardHandle expectedCard, EventCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getEventName(), actualCard.getEventName());
+        assertEquals(expectedCard.getTime(), actualCard.getTime());
+
+    }
+
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
