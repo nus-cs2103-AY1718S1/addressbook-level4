@@ -110,14 +110,12 @@ include::../DeveloperGuide.adoc[tag=birthday]
 
 ==== External Behaviour
 
-----
 Type `task` on the command line to see a list of tasks you have to do for the week.
-----
+
 ==== Justification
 
-----
 A to-do list to remind university students when their assignment or submissions are due. This facilitates our purpose to reduce multi-tasking as much as possible as now even the tasks they have to do is in one application.
-----
+
 === Other contributions
 
 * Fixed bugs in the details panel [Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/130[pull request]]
