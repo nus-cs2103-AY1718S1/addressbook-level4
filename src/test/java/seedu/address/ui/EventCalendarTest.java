@@ -24,7 +24,7 @@ public class EventCalendarTest {
     @Test
     public void testFeb() throws Exception {
         MonthDateBuilder monthDateBuilderFeb = new MonthDateBuilder();
-        monthDateBuilderFeb.setMonthYearArray(01, 2017);
+        monthDateBuilderFeb.setMonthYearArray(1, 2017);
         String[] monthDateArrayFeb = monthDateBuilderFeb.getMonthDateArray();
         assertEquals(monthDateBuilderFeb.getNameOfMonth(), "February");
         assertEquals(monthDateArrayFeb[2], " ");
