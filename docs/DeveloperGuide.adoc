@@ -2161,7 +2161,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `Contag` and the *Actor* is the `user`, unless specified otherwise)
 
-[discrete]
 === Use case: Schedule an activity
 *MSS*
 
