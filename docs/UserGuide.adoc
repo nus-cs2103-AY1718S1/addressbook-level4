@@ -532,8 +532,7 @@ Deletes all photos from all contacts in the address book.
 
 === Clearing ConnectUs LogFile : `clearlog`
 // tag::connectuslog[]
-If you happen to realise that you committed a mistake after closing the application. Where the function of undo or redo is not valid to use,you can take advantage of our backend logging function that keeps track of all actions done by you in forms of '.txt' file. +
-It includes information of important actions as well as timestamp for each actions done. +
+If you happen to realise that you committed a mistake after closing the application. Where the function of undo or redo is not valid to use,you can take advantage of our backend logging function that keeps track of all actions done by you in forms of '.txt' file.It includes information of important actions as well as timestamp for each actions done. +
 This command allows you to clear the logfile which you might want to do so to keep the logfile neat and organised.
 Format: 'clearlog' or 'cl'
 [WARNING]
