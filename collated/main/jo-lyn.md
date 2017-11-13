@@ -392,39 +392,9 @@ public class KeyListener {
         } else if (KEY_COMBINATION_LIST.match(keyEvent)) {
             executeCommand(ListCommand.COMMAND_WORD);
 
-        } else if (KEY_COMBINATION_OPEN_FILE.match(keyEvent)) {
-            displayCommandFormat(OpenRolodexCommand.COMMAND_WORD);
-
-        } else if (KEY_COMBINATION_NEW_FILE.match(keyEvent)) {
-            displayCommandFormat(NewRolodexCommand.COMMAND_WORD);
-
-        } else if (KEY_COMBINATION_ADD.match(keyEvent)) {
-            displayCommandFormat(AddCommand.COMMAND_WORD);
-
-        } else if (KEY_COMBINATION_EDIT.match(keyEvent)) {
-            displayCommandFormat(EditCommand.COMMAND_WORD);
-
-        } else if (KEY_COMBINATION_EMAIL.match(keyEvent)) {
-            displayCommandFormat(EmailCommand.COMMAND_WORD);
-
-        } else if (KEY_COMBINATION_FIND.match(keyEvent)) {
-            displayCommandFormat(FindCommand.COMMAND_WORD);
-
-        } else if (KEY_COMBINATION_SELECT.match(keyEvent)) {
-            displayCommandFormat(SelectCommand.COMMAND_WORD);
-
-        } else if (KEY_COMBINATION_DELETE.match(keyEvent)
-                || KEY_COMBINATION_DELETE_ALTERNATIVE.match(keyEvent)) {
-            displayCommandFormat(DeleteCommand.COMMAND_WORD);
-
-        } else if (KEY_COMBINATION_REMARK.match(keyEvent)) {
-            displayCommandFormat(RemarkCommand.COMMAND_WORD);
-
-        } else {
-            // no key combination matches, do nothing
-        }
-    }
-
+```
+###### \java\seedu\address\ui\KeyListener.java
+``` java
     /**
      * Executes command triggered by key presses.
      */
@@ -721,20 +691,9 @@ public class KeyListenerUtil {
     public static final KeyCombination KEY_COMBINATION_UNDO = KeyCombination.valueOf(UndoCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_REDO = KeyCombination.valueOf(RedoCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_LIST = KeyCombination.valueOf(ListCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_OPEN_FILE =
-            KeyCombination.valueOf(OpenRolodexCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_NEW_FILE =
-            KeyCombination.valueOf(NewRolodexCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_ADD = KeyCombination.valueOf(AddCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_EDIT = KeyCombination.valueOf(EditCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_FIND = KeyCombination.valueOf(FindCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_SELECT = KeyCombination.valueOf(SelectCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_DELETE = KeyCombination.valueOf(DeleteCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_DELETE_ALTERNATIVE =
-            KeyCombination.valueOf(DeleteCommand.COMMAND_HOTKEY_ALTERNATIVE);
-    public static final KeyCombination KEY_COMBINATION_REMARK = KeyCombination.valueOf(RemarkCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_EMAIL = KeyCombination.valueOf(EmailCommand.COMMAND_HOTKEY);
-
+```
+###### \java\seedu\address\ui\util\KeyListenerUtil.java
+``` java
     public static final Set<KeyCombination> POSSIBLE_KEY_COMBINATIONS =
             new HashSet<>(Arrays.asList(
                     KEY_COMBINATION_FOCUS_PERSON_LIST,
@@ -749,16 +708,6 @@ public class KeyListenerUtil {
                     KEY_COMBINATION_LIST,
                     KEY_COMBINATION_OPEN_FILE,
                     KEY_COMBINATION_NEW_FILE,
-                    KEY_COMBINATION_ADD,
-                    KEY_COMBINATION_EDIT,
-                    KEY_COMBINATION_FIND,
-                    KEY_COMBINATION_SELECT,
-                    KEY_COMBINATION_DELETE,
-                    KEY_COMBINATION_DELETE_ALTERNATIVE,
-                    KEY_COMBINATION_REMARK,
-                    KEY_COMBINATION_EMAIL
-            ));
-}
 ```
 ###### \resources\view\LightTheme.css
 ``` css
