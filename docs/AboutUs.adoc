@@ -19,18 +19,20 @@ Responsibilities: UI & Dev Ops
 
 '''
 
-=== Dickson Chan
+=== Chan Kin Hung Dickson
 image::itsdickson.png[width="150", align="left"]
 {empty}[https://github.com/itsdickson[github]]
+{empty}[https://cs2103aug2017-t15-b3.github.io/main/team/itsdickson.html[Portfolio]]
 
 Role: Developer +
 Responsibilities: UI & Model
 
 '''
 
-=== Cherng Hann
+=== Chia Cherng Hann
 image::chernghann.png[width="150", align="left"]
 {empty}[http://github.com/chernghann[github]]
+{empty}[https://cs2103aug2017-t15-b3.github.io/main/team/chernghann.html[Portfolio]]
 
 Role: Developer & Documentation +
 Responsibilities: Storage & Model
@@ -40,6 +42,7 @@ Responsibilities: Storage & Model
 === Darren Chin Jhun Pyng
 image::darrenczen.png[width="150", align="left"]
 {empty}[http://github.com/DarrenCzen[github]]
+{empty}[https://cs2103aug2017-t15-b3.github.io/main/team/DarrenCzen.html[Portfolio]]
 
 Role: Developer & Documentation +
 Responsibilities: Model & Logic
