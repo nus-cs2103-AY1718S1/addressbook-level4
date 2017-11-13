@@ -22,6 +22,11 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    //@@author soonwj
+    ObjectProperty<ProfilePic> profilePicProperty();
+    ProfilePic getProfilePic();
+    int getViewCount();
+    //@@author
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

@@ -2,8 +2,10 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -14,6 +16,10 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfilePic;
+import seedu.address.model.person.event.Desc;
+import seedu.address.model.person.event.EventDate;
+import seedu.address.model.person.event.Header;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -41,6 +47,26 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses a bunch of {@code oneBasedIndex} into an list of {@code Index}
+     * and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified indexes is invalid (not non-zero unsigned integer).
+     */
+    public static ArrayList parseIndexes(List<String> numbers) throws IllegalValueException {
+        requireNonNull(numbers);
+        String trimmedArgs = String.join(" ", numbers).trim();
+        String[] result = trimmedArgs.split("\\s+");
+        ArrayList<Index> indexes = new ArrayList<>();
+        for (String index : result) {
+            if (!StringUtil.isNonZeroUnsignedInteger(index)) {
+                throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            }
+            indexes.add(Index.fromOneBased(Integer.parseInt(index)));
+        }
+        return indexes;
     }
 
     /**
@@ -79,6 +105,17 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author soonwj
+    /**
+     * Parses a {@code Optional<String> imageURL} into an {@code Optional<ProfilePic>} if {@code imageURL} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ProfilePic> parseImageUrl(Optional<String> imageUrl) throws IllegalValueException {
+        requireNonNull(imageUrl);
+        return imageUrl.isPresent() ? Optional.of(new ProfilePic(imageUrl.get())) : Optional.empty();
+    }
+    //@@author
+
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
@@ -89,5 +126,42 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+    /**
+     * Parses {@code Optional<String> names} into a {@code String[]}.
+     */
+    public static String[] parseEmailToCommand(List<String> names) throws IllegalValueException {
+        requireNonNull(names);
+        String trimmedArgs = String.join(" ", names).trim();
+        String[] result = trimmedArgs.split("\\s+");
+        return result;
+    }
+
+    //@@author royceljh
+    /**
+     * Parses a {@code Optional<String> Header} into an {@code Optional<Header>} if {@code header} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Header> parseHeader(Optional<String> header) throws IllegalValueException {
+        requireNonNull(header);
+        return header.isPresent() ? Optional.of(new Header(header.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> desc} into an {@code Optional<Desc>} if {@code desc} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Desc> parseDesc(Optional<String> desc) throws IllegalValueException {
+        requireNonNull(desc);
+        return desc.isPresent() ? Optional.of(new Desc(desc.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> eventDate} into an {@code Optional<EventDate>} if {@code eventDate} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventDate> parseEventDate(Optional<String> eventDate) throws IllegalValueException {
+        requireNonNull(eventDate);
+        return eventDate.isPresent() ? Optional.of(new EventDate(eventDate.get())) : Optional.empty();
     }
 }

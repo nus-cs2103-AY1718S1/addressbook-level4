@@ -22,18 +22,29 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<ProfilePic> profilePic;
 
     private ObjectProperty<UniqueTagList> tags;
+
+    private int viewCount = 0;
+
+    /**
+     * Using default profile picture.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+        this(name, phone, email, address, new ProfilePic(), tags);
+    }
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, ProfilePic profilePic, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, profilePic, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.profilePic = new SimpleObjectProperty<>(profilePic);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -42,8 +53,9 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getProfilePic(),
                 source.getTags());
+        this.viewCount = source.getViewCount();
     }
 
     public void setName(Name name) {
@@ -101,6 +113,31 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address.get();
     }
+
+    public void setProfilePic(ProfilePic profilePic) {
+        this.profilePic.set(requireNonNull(profilePic));
+    }
+
+    //@@author soonwj
+    @Override
+    public ObjectProperty<ProfilePic> profilePicProperty() {
+        return profilePic;
+    }
+
+    @Override
+    public ProfilePic getProfilePic() {
+        return profilePic.get();
+    }
+
+    @Override
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int newViewCount) {
+        viewCount = newViewCount;
+    }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

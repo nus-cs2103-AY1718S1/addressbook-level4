@@ -1,0 +1,54 @@
+= Royce Lim - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Directory of Contacts (DoC)
+DoC is a desktop contact and event managing application. It is built as an enhancement on top of the original `Addressbook-level4`
+by `Team SE-EDU`, which can be found here: https://github.com/se-edu/addressbook-level4. This project was built as part of the software engineering
+module `CS2103T` offered by the School of Computing in the National University of Singapore.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B1/main/blob/master/collated/main/royceljh.md[Functional code]] [https://github.com/CS2103AUG2017-T11-B1/main/blob/master/collated/test/royceljh.md[Test code]]
+
+=== Enhancement Added: `Event` feature to manage upcoming events
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=eventUG]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The added layer of event management helps to improve the user's experience. This feature allows DoC to manage two of the most fundamental aspects of the user's daily life.
+That is, to keep track both contacts and tasks and have access to either within the same platform. For busy individuals, this eliminates the trouble of switching between their contact list and calendar as DoC display both scenes in one
+and provides a better notification system. All events are sorted based on their allocated dates and sets a color to every event's background and displays a different color based on the urgency of an event.
+This added improvement aims to provide convenience when it comes to planning upcoming tasks/events.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=eventDG]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Tagging of contacts into events
+
+The ability to tag contacts to an event can further enhance user's experience with our product. Both features compliment one another as users can
+view an event and check for its involved personnel so that they can contact them by using the contact list in DoC. With an email feature created by one of our developers,
+the whole process tie in together when a user is able schedule an event, tags the intended contacts and email them with minimal command words.
+
+=== Other contributions
+
+* Performed acceptance testing in a separate team’s (https://github.com/CS2103AUG2017-F11-B2/main[F11-B2]) project
+and raised issues for bugs discovered (Issues https://github.com/CS2103AUG2017-F11-B2/main/issues/104[#104], https://github.com/CS2103AUG2017-F11-B2/main/issues/105[#105],
+ https://github.com/CS2103AUG2017-F11-B2/main/issues/107[#107], https://github.com/CS2103AUG2017-F11-B2/main/issues/110[#110], https://github.com/CS2103AUG2017-F11-B2/main/issues/113[#113]).

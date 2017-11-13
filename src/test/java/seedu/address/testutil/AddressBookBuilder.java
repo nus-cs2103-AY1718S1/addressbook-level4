@@ -3,6 +3,8 @@ package seedu.address.testutil;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.event.ReadOnlyEvent;
+import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
@@ -34,7 +36,19 @@ public class AddressBookBuilder {
         }
         return this;
     }
-
+    //@@author royceljh
+    /**
+     * Adds a new {@code Event} to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withEvent(ReadOnlyEvent event) {
+        try {
+            addressBook.addEvent(event);
+        } catch (DuplicateEventException dee) {
+            throw new IllegalArgumentException("event is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
     /**
      * Parses {@code tagName} into a {@code Tag} and adds it to the {@code AddressBook} that we are building.
      */

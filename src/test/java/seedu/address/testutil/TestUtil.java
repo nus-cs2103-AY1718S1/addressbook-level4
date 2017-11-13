@@ -7,6 +7,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.event.ReadOnlyEvent;
 
 /**
  * A utility class for test cases.
@@ -50,5 +51,20 @@ public class TestUtil {
      */
     public static ReadOnlyPerson getPerson(Model model, Index index) {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
+    }
+
+    //@@author royceljh
+    /**
+     * Returns the last index of the event in the {@code model}'s event list.
+     */
+    public static Index getEventLastIndex(Model model) {
+        return Index.fromOneBased(model.getAddressBook().getEventList().size());
+    }
+
+    /**
+     * Returns the event in the {@code model}'s event list at {@code index}.
+     */
+    public static ReadOnlyEvent getEvent(Model model, Index index) {
+        return model.getAddressBook().getEventList().get(index.getZeroBased());
     }
 }

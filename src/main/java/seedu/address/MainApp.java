@@ -15,6 +15,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
@@ -25,6 +26,9 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -40,7 +44,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -191,6 +195,7 @@ public class MainApp extends Application {
     public void stop() {
         logger.info("============================ [ Stopping Address Book ] =============================");
         ui.stop();
+        model.sortByViewCount();
         try {
             storage.saveUserPrefs(userPrefs);
         } catch (IOException e) {
@@ -199,6 +204,24 @@ public class MainApp extends Application {
         Platform.exit();
         System.exit(0);
     }
+
+    //@@author soonwj
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.getNewSelection().person != null) {
+            Person personSelected = new Person(event.getNewSelection().person);
+            personSelected.setViewCount(personSelected.getViewCount() + 1);
+            try {
+                model.updatePerson(event.getNewSelection().person, personSelected);
+            } catch (DuplicatePersonException dpe) {
+                assert false : "Impossible to be duplicate";
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "Impossible not to be found";
+            }
+        }
+    }
+    //@@author
 
     @Subscribe
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {

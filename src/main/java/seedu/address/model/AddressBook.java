@@ -13,7 +13,12 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.event.Event;
+import seedu.address.model.person.event.ReadOnlyEvent;
+import seedu.address.model.person.event.UniqueEventList;
+import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -25,6 +30,7 @@ import seedu.address.model.tag.UniqueTagList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final UniqueEventList events;
     private final UniqueTagList tags;
 
     /*
@@ -36,13 +42,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        events = new UniqueEventList();
         tags = new UniqueTagList();
     }
 
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Persons,Tags and Events in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -54,7 +61,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
     }
-
+    //@@author royceljh
+    public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
+        this.events.setEvents(events);
+    }
+    //@@author
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -68,6 +79,11 @@ public class AddressBook implements ReadOnlyAddressBook {
             setPersons(newData.getPersonList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
+        }
+        try {
+            setEvents(newData.getEventList());
+        } catch (DuplicateEventException e) {
+            assert false : "AddressBooks should not have duplicate events";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -161,12 +177,59 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
+    //@@author royceljh
+    /**
+     * Adds an event to the address book.
+     * @throws DuplicateEventException if an equivalent event already exists.
+     */
+    public void addEvent(ReadOnlyEvent e) throws DuplicateEventException {
+        Event newEvent = new Event(e);
+        events.add(newEvent);
+    }
+
+    /**
+     * Replaces the given event {@code target} in the list with {@code editedReadOnlyEvent}.
+     * @throws DuplicateEventException if updating the event's details causes the event to be equivalent to
+     *      another existing event in the list.
+     * @throws EventNotFoundException if {@code target} could not be found in the list.
+     */
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedReadOnlyEvent)
+            throws DuplicateEventException, EventNotFoundException {
+        requireNonNull(editedReadOnlyEvent);
+
+        Event editedEvent = new Event(editedReadOnlyEvent);
+        events.setEvent(target, editedEvent);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws EventNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
+        if (events.remove(key)) {
+            return true;
+        } else {
+            throw new EventNotFoundException();
+        }
+    }
+    //@@author
+
+    //@@author sidhmads
+    /**
+     * Sorts the persons list based on the name
+     * @return
+     */
+    public void sortPersons() {
+        persons.sort();
+    }
+    //@@author
 
     //// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags"
+                + events.asObservableList().size() + " events";
         // TODO: refine later
     }
 
@@ -179,13 +242,19 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
     }
-
+    //@@author royceljh
+    @Override
+    public ObservableList<ReadOnlyEvent> getEventList() {
+        return events.asObservableList();
+    }
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
+                && this.events.equals(((AddressBook) other).events);
     }
 
     @Override

@@ -1,7 +1,10 @@
-= AddressBook Level 4 - User Guide
+= Directory of Contacts (DoC) v1.5 - User Guide
 :toc:
-:toc-title:
-:toc-placement: preamble
+:toclevels: 4
+:front-cover-image: image::doc_logo_black.png[width = "50%"]
+:pagenums:
+:toc-title: Table of contents
+:toc-placement: macro
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -10,39 +13,85 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T11-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+image::DoC_coverpage.png[width="100%"]
 
-== Quick Start
+By: `CS2103AUG2017-T11-B1`      Since: `Sep 2017` +
+Adapted from AddressBook-Level4, by: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+<<<
+toc::[]
+
+
+
+
+== Introduction
+Are you having trouble keeping track of important dates and events? Is there too much hassle
+in the current way you manage contacts? If these are problems that plague your everyday life, stress no further, for we've
+engineered a cure!
+
+DoC is here to remedy all your event tracking and contact management woes. Built as a Command Line Interface (CLI) application,
+DoC provides a speedy solution to manage event and contact information, with only just a few clicks on the keyboard.
+
+[TIP]
+Command Line Interface (CLI): CLI is an interface that accepts commands in the form of typed input from the user's keyboard.
+
+This user guide was written to guide you through the several features that DoC offers, and how you can use them.
+For a quick summary of all the commands available to you, please refer to the following section: `5. Command Summary`.
+You should also refer to the Table of Contents above for quick navigation.
+
+
+
+
+
+== Getting started
+=== Installation guide
+To ensure a successful installation, please go through the following steps: +
+
+.  Ensure you have Java version `1.8.0_60` or later installed in your computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
-+
-image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  Download the latest `DoC.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for DoC.
+.  Double-click the file to start the app. The graphical user interface should appear in a few seconds.
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+<<<
 
-.  Refer to the link:#features[Features] section below for details of each command.
+=== Graphical user interface guide
+The following image highlights the 5 different components of DoC: +
 
-== Features
+image::Ui.png[width="100%"]
+Here's how you can use them: +
 
+**Command box** +
+Type your desired command into the `Command box` and press kbd:[Enter] to execute it. +
+    e.g. typing *`help`* and pressing kbd:[Enter] will open the help window. +
+
+**Status panel** +
+The `Status panel` displays DoC's feedback on your latest command.
+
+**Contacts panel** +
+The `Contacts panel` displays a list of your contacts stored by DoC. All your contacts will be displayed and listed alphabetically by default.
+Display customization can be achieved with commands `sort` and `find`.
+
+**Browser panel** +
+The `Browser panel` is DoC's built-in browser that facilitates several cool features like the `location`, `email`, `import`
+and `export`.
+
+**Events panel** +
+The `Events panel` displays your recorded events in the order of most urgent, coming soon, and overdue.
+
+
+== Features +
+
+
+[TIP]
 ====
-*Command Format*
+*Command format* +
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
@@ -50,203 +99,613 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
 
-Format: `help`
+=== Contact features
+You can manage your contacts through the following commands:
 
-=== Adding a person: `add`
+==== Adding a contact: `add`
 
-Adds a person to the address book +
+Adds a contact to DoC. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+====
+*Quick note:*
+
+A contact can have any number of tags (including 0).
+====
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+<<<
 
-Shows a list of all persons in the address book. +
-Format: `list`
+**Visual guide:**
 
-=== Editing a person : `edit`
+image::addpic.png[width="700"]
 
-Edits an existing person in the address book. +
+As shown in the image above, after entering the `add` command from the example, the newly added contact will appear in the `Contacts panel`.
+
+<<<
+
+==== Editing a contact : `edit`
+
+Edits an existing contact in DoC. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+[TIP]
+====
+*Quick notes:*
+
+* Edits the contact at the specified `INDEX`. The index refers to the index number shown in the last contact listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+* When editing tags, the existing tags of the contact will be removed i.e adding of tags is not cumulative.
+* You can remove all the contact's tags by typing `t/` without specifying any tags after it.
+====
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st contact to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd contact to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+<<<
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+**Visual guide:**
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+image::editpic.png[width="700"]
+
+As you can see from the image above, the `edit` command from the example will edit the stated parameters of a contact.
+
+<<<
+
+// tag::removeTag[]
+==== Removing tags: `removeTag`
+
+Finds contacts whose names or tags contain any of the given tag and removes that tag. +
+Format: `removeTag rm/INDEX t/TAG`
+
+[TIP]
+====
+*Quick notes:*
+
+* The search is case sensitive. e.g `family` will match `family`.
+* `rm/INDEX` is not compulsory. If not given, it will remove the tag from all contacts.
+* If `rm/INDEX` is stated, tags from those indexes in the current list will be removed.
+* Only full words will be matched e.g. `Family` will not match `Families`.
+* Contacts having that tag will be returned.
+====
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `removeTag t/Friend` +
+Friend tag is removed from all contacts.
+* `removeTag rm/1 2 t/Friend` +
+Friend tag is only removed from Index 1 and 2.
 
-=== Deleting a person : `delete`
+<<<
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+**Visual guide:**
 
-****
-* Deletes the person at the specified `INDEX`.
+image::removeTagpic.png[width="700"]
+
+As shown in the image above, the `removeTag` command will remove given `Tag` from all the appropriate contacts in Doc.
+// end::removeTag[]
+
+<<<
+
+// tag::profilePic[]
+==== Updating a contact's profile picture: `updateProfilePic`
+
+Updates the profile picture of a contact. +
+Format: `updateProfilePic INDEX [u/imageUrl]`
+
+[TIP]
+====
+*Quick notes:*
+
+* Updates the profile picture of the contact at the specified `INDEX`. The index refers to the index number shown in the last contact listing. The index *must be a positive integer* 1, 2, 3, ...
+* The index must be valid.
+* The `imageUrl` must be a valid one. It should start with `file:///` for images stored locally, or a valid web URL for an image stored on the internet.
+* If the image used as a profile picture of a particular contact gets moved or deleted, the profile picture of that contact will be changed back to the default one.
+====
+
+
+Examples:
+
+* `updateProfilePic 1 u/file:///C:/Users/Bobby/image.jpg` +
+Updates the profile picture of the 1st contact to be the image at `file:///C:/Users/Bobby/image.jpg`. +
+* `updateProfilePic 2 u/https://pbs.twimg.com/profile_images/889736688624312321/xVAFH9ZH_400x400.jpg` +
+Updates the profile picture of the 2nd contact to be the image at `https://pbs.twimg.com/profile_images/889736688624312321/xVAFH9ZH_400x400.jpg`. +
+
+<<<
+
+**Visual guide:**
+
+image::updateProfilePicImageExample.jpg[width="1000"]
+
+As shown in the image above, after entering the `updateProfilePic` command, the profile picture of the contact at the specified index is updated to the image stored at the url specified.
+
+<<<
+
+==== Deleting the profile picture of a contact : `deleteProfilePic`
+
+Deletes the profile picture of the specified contact from DoC. +
+Format: `deleteProfilePic INDEX`
+
+[TIP]
+====
+*Quick notes:*
+
+* Deletes the profile picture of the contact at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-****
+====
+
+Examples:
+
+* `list` +
+`deleteProfilePic 2` +
+Deletes the profile picture of the 2nd contact in the DoC.
+* `find Bobby` +
+`deleteProfilePic 1` +
+Deletes the profile picture of the 1st contact in the results of the `find` command.
+
+**Visual guide:**
+
+image::deleteProfilePicImageExample.jpg[width="1000"]
+
+As shown in the image above, after entering the `deleteProfilePic` command, the profile picture of the contact at the specified index is reverted back to the default.
+// end::profilePic[]
+
+<<<
+
+==== Deleting a contact : `delete`
+
+Deletes the specified contact from DoC. +
+Format: `delete INDEX`
+
+[TIP]
+====
+*Quick notes:*
+
+* Deletes the contact at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+====
 
 Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd contact in DoC.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st contact in the results of the `find` command.
 
-=== Selecting a person : `select`
+<<<
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+**Visual guide:**
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+image::deletepic.png[width="700"]
+
+According to the image above, let's say you want to delete the contact at index 3, enter the `delete` command and index to remove the contact from DoC.
+
+<<<
+
+// tag::import[]
+==== Importing contacts: `import`
+
+Import contacts to DoC from Google Contacts. +
+Format: `import`
+
+[TIP]
+====
+*Quick notes:*
+
+* Number of contacts imported is limited to 2000.
+* This features requires an internet connection.
+====
+
+**Steps** +
+**1.** Enter the `import` command, and wait for the `Browser panel` to navigate to Google's login page. +
+**2.** Log in to your Google account on the `Browser panel`. +
+**3.** Grant permission to DoC to access your contacts. +
+
+**Visual guide:**
+
+image::importpic.png[width="1000"]
+
+You can enter your credentials and grant permission to DoC to access your Google contacts, as highlighted by the
+red boxes in the images above.
+// end::import[]
+
+<<<
+
+// tag::export[]
+==== Exporting contacts: `export`
+
+Export your contacts from DoC to Google Contacts. +
+Format: `export` +
+
+[TIP]
+====
+*Quick note:*
+
+This feature requires an internet connection.
+====
+
+**Steps** +
+**1.** Enter the `export` command, and wait for the 'Browser panel' to navigate to Google's login page. +
+**2.** Log in to your Google account on the `Browser panel`. +
+**3.** Grant permission to DoC to access your contacts. +
+
+**Visual guide:**
+
+image::importpic.png[width="1000"]
+
+You can enter your credentials and grant permission to DoC to access your Google contacts, as highlighted by the
+red boxes in the images above.
+// end::export[]
+
+<<<
+
+// tag::find[]
+
+==== Finding contacts by name and tags: `find`
+Lists all contacts whose name or tags matches any of the given search terms. +
+Format: `find TERM1 [MORE_TERMS]`
+
+[TIP]
+====
+*Quick notes:*
+
+* The search is case insensitive; e.g a search term of `hans` will match any contact name containing `Hans`.
+* Only full words will be matched; e.g a search term of `Han` will not match a contact name containing `Hans`.
+* Name of contacts can be matched partially; e.g a search term of `Han` will match the contact name `Han Solo`.
+====
+
+<<<
+
+**Visual guide:**
+
+image::findpic.png[width="700"]
+
+As demonstrated by the image above, entering the command `find Family han` will display all contacts with a tag or
+part of name, matching any search term.
+// end::find[]
+
+<<<
+
+==== Listing all contacts : `list`
+
+Displays a list of all contacts currently stored in DoC. +
+Format: `list`
+
+**Visual guide:**
+
+image::listpic.png[width="700"]
+
+As demonstrated in the image above, regardless of the current view in `Contacts panel`, DoC will display the list of all contacts currently stored in DoC upon receiving the command `list`.
+
+<<<
+
+==== Selecting a contact : `select`
+
+Selects the contact identified by the index number used in the last contact listing, and loads the Google search result of the contact. +
+Format: `select INDEX` +
+Refer to the following visual guide on how you can retrieve the INDEX of a contact: +
+
+**Visual guide:**
+
+image::selectpic.png[width="700"]
+
+As demonstrated by the visual guide, you can first enter the command `list` to display a list of all contacts currently stored in DoC. After entering the `select` command, the Google search of the contact name will load up in the `Browser panel`.
+
+<<<
+
+// tag::email[]
+==== Emailing contacts : `email`
+
+Emails an existing contact/ a group in the DoC. +
+Format: `email [to/TO] [subject/SUBJECT] [body/BODY]`
+
+
+[TIP]
+====
+*Quick notes:*
+
+* Email `to` must be provided.
+* Email `subject` and `body` is optional.
+* Email `to` contains either the `contact's name` or a `tag name`.
+* Email `subject` contains the subject of the email.
+* Email `body` contains the body of the email.
+* This feature requires an internet connection.
+====
+
+Example:
+
+* `email to/Adam` +
+Opens the default emailing client and adds Adam to the `to` field and has the subject and body as null.
+
+
+* `email to/friends subject/SUBJECT body/BODY` +
+Opens the default emailing client and adds all the contacts who has the tag `friends` into the `to` area,
+adds the `subject` as `SUBJECT` and `body` as `BODY`. Please refer to the visual guide on the following page.
+
+<<<
+
+**Visual guide:**
+
+image::Email_UG.PNG[width="1000"]
+// end::email[]
+
+<<<
+
+// tag::map[]
+==== Locating a contact : `map`
+
+Shows the address of the contact or the directions from one location to another in Google Maps. +
+Format: `map INDEXES`
+
+[TIP]
+====
+*Quick notes:*
+
+* If `map` is followed by only one INDEX, then the address of the contact in that particular index will be shown.
+* If `map` is followed by more than one INDEX, then the directions from one place to another will be shown.
+* This features requires Internet connection.
+* Shows the address of the contact at the specified `INDEX`. The index refers to the index number shown in the last contact listing. The index *must be a positive integer* 1, 2, 3, ...
+====
+
+Example:
+
+`map 1` +
+
+**Visual guide:**
+
+image::Location_UG.PNG[width="1000"]
+
+As shown in the visual guide above, the address of the 1st contact is highlighted on Google Maps with the help of a marker.
+// end::map[]
+
+<<<
+
+// tag::eventUG[]
+=== Event features
+You can manage your events through the following commands:
+
+==== Adding an event: `addE`
+
+Adds an event to DoC. +
+Format: `addE h/HEADER de/DESCRIPTION d/DATE`
+
+[TIP]
+====
+*Quick note:*
+
+The date must a valid date with the format: year-month-day (yyyy-MM-dd).
+====
+
+
+Examples:
+
+* `addE h/Meeting de/Business meeting at in the afternoon at 2pm d/2017-11-20`
+* `addE h/Birthday de/John Doe's 21st bd celebration d/2018-02-05`
+
+<<<
+
+**Visual guide:**
+
+image::addEpic.png[width="700"]
+
+Your newly created event will be listed in the event panel and will be sorted based on its date. Thus, the earliest event will be displayed at the top of the panel.
+As shown in the guide above, the yellow panel indicates that an event upcoming in 2 or less days, the green panel indicates that an event that have yet to come (more than 2 days) and the red panel indicates that the event is already overdue.
+
+<<<
+
+==== Editing an event : `editE`
+
+Edits an existing event in DoC. +
+Format: `editE INDEX [h/HEADER] [de/DESCRIPTION] [d/DATE]`
+
+[TIP]
+====
+*Quick notes:*
+
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* The date must a valid date with the format: year-month-day (yyyy-MM-dd).
+* Existing values will be updated to the input values.
+====
+
+Example:
+
+`editE 3 h/Birthday party d/2017-10-30` +
+Edits the header and date of the 1st event to be `Birthday party` and `2017-10-30` respectively.
+
+<<<
+
+**Visual guide:**
+
+image::editEpic.png[width="700"]
+
+According to the image above, if you want to edit an `Event` at index 3 by changing the header and date, the edited event will be automatically sorted in the `Events panel` based on the new date.
+
+<<<
+
+==== Deleting an event : `deleteE`
+
+Deletes the specified event from DoC. +
+Format: `deleteE INDEX`
+
+[TIP]
+====
+*Quick notes:*
+
+* Deletes the event at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+* The index *must be a positive integer* 1, 2, 3, ...
 ====
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
+Example:
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+`deleteE 3` +
+Deletes the 3rd event in DoC.
 
-[NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
+**Visual guide:**
 
-Examples:
+image::deleteEpic.png[width="700"]
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+As shown on the image above, if you want to delete an overdue `Event`, simply key in the `deleteE` command stating the index and the event will be removed from DoC.
+// end::eventUG[]
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+<<<
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+=== General features
+The following commands and features are not specific to contacts or events, and can be used system-wide:
 
-=== Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+==== Clearing all entries : `clear`
 
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
+Clears all entries from DoC. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+==== Getting help : `help`
+Displays this document. +
+Format: `help`
 
+==== Displaying history : `history`
+Displays the history of commands you have entered, starting from the most recent one.  +
+This feature can be accessed in two different ways: +
+
+* Displays the history of commands on the status bar. +
+Format: `history` +
+
+* Paste previous commands directly to the command box. +
+Format: the kbd:[&uarr;] and kbd:[&darr;] arrows will paste the previous and next input respectively into the command box.
+
+==== Undoing previous command : `undo`
+
+Reverses the changes made by the previous command entered. +
+Format: `undo`
+
+[TIP]
+====
+*Quick note:*
+
+Only these commmands are currently undoable: `add`, `addE`, `delete`, `deleteE`, `edit`, `editE` and `clear`.
+====
+
+<<<
+
+**Visual guide:**
+
+image::undoPic.png[width="700"]
+
+As demonstrated by the image above, `history` command shows us that you have deleted the contact listed with an index of 2. A subsequent `undo` command,
+reverses the `delete 2` command by adding back the deleted contact.
+
+<<<
+
+==== Redoing the previously undone command : `redo`
+
+Reverses the most recent `undo` command, if any. +
+Format: `redo`
+
+**Visual guide:**
+
+image::redoPic.png[width="700"]
+
+As demonstrated by the image above, a command of 'delete 2' is first entered, deleting the contact listed with an index of 2.
+An `undo` command is then entered, adding the deleted contact back to the list of contacts. Now, the `redo` command entered
+simply deletes the contact with an index of 2 again.
+
+<<<
+
+==== Exiting the program : `exit`
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+// tag::unknowncommand[]
+==== Accepting suggested commands
+DoC is forgiving when it comes to mistyped commands. When DoC detects a typo in your input, it will automatically try to match it
+to a known command, and prompt you accordingly.
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+**Visual guide:** +
+
+image::unknownCommandVisualGuide.png[width="800]
+
+As shown in the visual guide above, when a match is found for mistyped inputs, DoC automatically prompts you with a suggestion.
+You can simply accept the suggestion with an input of `'yes'` or `'y'`. If you do not wish to do so, you can simply ignore the prompt
+and continue with another command.
+// end::unknowncommand[]
+
+<<<
+
+==== Saving the data
+All additions, deletions, and changes performed on the contacts stored in DoC are saved automatically.
 
 == FAQ
+****
+*How do I transfer my data to another Computer?* +
+Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous DoC folder.
+****
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
-== Command Summary
+== Command summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *AddE* `addE h/HEADER de/DESCRIPTION d/DATE` +
+e.g. `addE h/Meeting de/Business meeting at work for upcoming project. d/2017-11-20`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *DeleteE* : `deleteE INDEX` +
+e.g. `deleteE 2`
+* *DeleteProfilePic* : `deleteProfilePic INDEX` +
+e.g. `deleteProfilePic 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *EditE* : `editE INDEX [h/HEADER] [de/DESCRIPTION] [d/DATE]` +
+e.g. `editE 2 h/Party d/2018-01-12` +
+* *Exit* : `exit` +
+* *Export* : `export` +
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
 * *Help* : `help`
+* *History* : `history`
+* *Import* : `import`
+* *List* : `list`
+* *Map* : `map INDEX` +
+e.g. `map 1` +
+e.g. `map 1 2 3`
+* *Redo* : `redo`
+* *Remove Tag* : `removeTag rm/INDEX t/TAG` +
+e.g. `removeTag t/Friend` +
+e.g. `removeTag rm/1 2 t/Friend`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *History* : `history`
 * *Undo* : `undo`
-* *Redo* : `redo`
+* *UpdateProfilePic* : `updateProfilePic INDEX [u/imageUrl]` +
+e.g. `updateProfilePic 1 u/file:///C:/Users/Bobby/image.jpg` +
+e.g. `updateProfilePic 2 u/http://www.google.com/images/image.png` +
+
+== Features coming in v2.0
+
+DoC v2.0 is capable of delivering these features:
+
+* Multithreading - execute multiple threads simultaneously, to maximise utilisation of CPU time.
+* Tag one or more contacts to every event.
+* Add a location to an event.
+* A pop-up window will appear after starting DoC if there is an event that day.
+* CLI will autocomplete the user command when the user start to key in a command in the command box.
+* Improve the user interface of DoC.
+* Access to DoC using mobile phone.
+* Extract a list of contacts into a folder.
+* Send messages to contacts from DoC.
+* Option to type abbreviations of a command.

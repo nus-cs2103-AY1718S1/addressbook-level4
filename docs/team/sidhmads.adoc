@@ -1,0 +1,150 @@
+= Siddharth Madhavan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Directory of Contacts (DoC)
+DoC is a desktop contact and event managing application. It is built as an enhancement on top of the original `Addressbook-level4`
+by `Team SE-EDU`, which can be found here: https://github.com/se-edu/addressbook-level4. This project was built as part of the software engineering
+module `CS2103T` offered by the School of Computing in the National University of Singapore.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B1/main/blob/master/collated/main/sidhmads.md[Functional code]][https://github.com/CS2103AUG2017-T11-B1/main/blob/master/collated/test/sidhmads.md[Test code]]
+
+=== Enhancement Added: `RemoveTag` Command to assist the User in mass removal of tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=removeTag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The `RemoveTag` feature was built to enhance user experience. There would be instances where the User would need to remove a particular tag from everyone,
+or from a group of people. This function `RemoveTag` assist them in doing so. Without the presence of this command, the User would have to painstakingly
+edit each and every other contact that has to be modified manually.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=removeTag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `Find` Command that can search by both the Name and the Tag of the person
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This enhancement was built to improve user experience, through the implementation of a smarter find command.
+With this command, contacts can be found based on their `Tags` and `Names`
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `Email` Command to assist the User in mass emailing
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The `Email` feature  was built to reduce the workload on the User. The `Email` Command will allow user to email by `Tag`. Simply put,
+when the User selects `Email Friends`, all the contacts with the `Friends` tag will be added to the recipient list automatically.
+This feature will also work in tandem with the `Events` feature. When an `Event` is due, the user can immediately email the
+necessary contacts in a jiffy.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `Map` Command to assist the User in finding the location of a Contact and the directions from one place to another
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=map]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The `Map` feature  was built to show the contact's location to the User. The User can also determine the route from
+one contact's location to the next. This will help the User plan his activities better.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=map]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Facebook Integration
+
+==== External behaviour
+
+---
+
+==== Justification
+
+In today's modernised era, social media has taken over the world. A message sent by Facebook messenger would be quickly read than that compared to an email.
+Not only that, I am also planning on integrating the events created on our platform with the Facebook events and auto tagging the relevant parties directly on Facebook.
+This would reduce the possibility of someone missing out on the event.
+
+---
+
+=== Other contributions
+
+* Performed acceptance testing of a separate team's (https://github.com/CS2103AUG2017-T16-B1/main[T10-B2]) project, and raised issues for bugs discovered
+(Issues https://github.com/CS2103AUG2017-T10-B2/main/issues/81[#81]).

@@ -22,6 +22,9 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.event.Desc;
+import seedu.address.model.person.event.EventDate;
+import seedu.address.model.person.event.Header;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -37,6 +40,14 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+
+    private static final String INVALID_HEADER = " ";
+    private static final String INVALID_DESC = " ";
+    private static final String INVALID_EVENT_DATE = "2017-23-20";
+
+    private static final String VALID_HEADER = "Outing";
+    private static final String VALID_DESC = "dinner with friends";
+    private static final String VALID_EVENT_DATE = "2017-11-20";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -186,5 +197,80 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+    //@@author royceljh
+    @Test
+    public void parseHeader_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseHeader(null);
+    }
+
+    @Test
+    public void parseHeader_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseHeader(Optional.of(INVALID_HEADER));
+    }
+
+    @Test
+    public void parseHeader_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseHeader(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseHeader_validValue_returnsHeader() throws Exception {
+        Header expectedHeader = new Header(VALID_HEADER);
+        Optional<Header> actualHeader = ParserUtil.parseHeader(Optional.of(VALID_HEADER));
+
+        assertEquals(expectedHeader, actualHeader.get());
+    }
+
+    @Test
+    public void parseDesc_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDesc(null);
+    }
+
+    @Test
+    public void parseDesc_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseDesc(Optional.of(INVALID_DESC));
+    }
+
+    @Test
+    public void parseDesc_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDesc(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDesc_validValue_returnsDesc() throws Exception {
+        Desc expectedDesc = new Desc(VALID_DESC);
+        Optional<Desc> actualDesc = ParserUtil.parseDesc(Optional.of(VALID_DESC));
+
+        assertEquals(expectedDesc, actualDesc.get());
+    }
+
+    @Test
+    public void parseEventDate_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseEventDate(null);
+    }
+
+    @Test
+    public void parseEventDate_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseEventDate(Optional.of(INVALID_EVENT_DATE));
+    }
+
+    @Test
+    public void parseEventDate_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseEventDate(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseEventDate_validValue_returnsEventDate() throws Exception {
+        EventDate expectedEventDate = new EventDate(VALID_EVENT_DATE);
+        Optional<EventDate> actualEventDate = ParserUtil.parseEventDate(Optional.of(VALID_EVENT_DATE));
+
+        assertEquals(expectedEventDate, actualEventDate.get());
     }
 }

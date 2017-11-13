@@ -1,0 +1,81 @@
+= Soon Wei Jun - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Directory of Contacts (DoC)
+DoC is a desktop contact and event managing application. It is built as an enhancement on top of the original `Addressbook-level4`
+by `Team SE-EDU`, which can be found here: https://github.com/se-edu/addressbook-level4. This project was built as part of the software engineering
+module `CS2103T` offered by the School of Computing in the National University of Singapore.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B1/main/blob/master/collated/main/soonwj.md[Functional code]][https://github.com/CS2103AUG2017-T11-B1/main/blob/master/collated/test/soonwj.md[Test code]]
+
+=== Enhancement Added: UpdateProfilePic / DeleteProfilePic
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=profilePic]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With the addition of a profile picture to the contacts, it becomes easier to recognise which contact is which at one glance. This also aids to differentiating contacts with the same name.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=profilePic]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: ViewCount Tracking
+
+==== External behavior
+
+---
+At next start up of the app, the address book is sorted by the viewCount of each contact, from highest to lowest.
+
+---
+
+==== Justification
+
+This keeps the contacts that the user selects the most at the top for increased convenience for the user.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=viewCount]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Display the viewCount for each contact
+
+==== External behaviour
+
+The viewCount of each contact will be displayed on its `PersonCard`.
+
+==== Justification
+
+This allows the user to see how many times he or she has selected each of his contacts and this may serve as a reminder that there are contacts the user has not contacted in a while.
+
+---
+
+=== Other contributions
+
+* Performed acceptance testing of a separate team's (https://github.com/CS2103AUG2017-T16-B1/main[T16-B1]) project, and raised issues for bugs discovered
+  (Issues https://github.com/CS2103AUG2017-T16-B1/main/issues/154[#154], https://github.com/CS2103AUG2017-T16-B1/main/issues/156[#156]).
+* Made minor changes to UI (Pull Request https://github.com/CS2103AUG2017-T11-B1/main/pull/3[#3])

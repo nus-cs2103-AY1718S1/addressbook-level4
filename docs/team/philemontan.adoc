@@ -1,0 +1,105 @@
+= Philemon Tan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Directory of Contacts (DoC)
+DoC is a desktop contact and event managing application. It is built as an enhancement on top of the original `Addressbook-level4`
+by `Team SE-EDU`, which can be found here: https://github.com/se-edu/addressbook-level4. This project was built as part of the software engineering
+module `CS2103T` offered by the School of Computing in the National University of Singapore.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B1/main/blob/master/collated/main/philemontan.md[Functional code]][https://github.com/CS2103AUG2017-T11-B1/main/blob/master/collated/test/philemontan.md[Test code]]
+
+=== Enhancement Added: Command structure to support OAuth2, with `Import` and `Export` functionality via Google Contacts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=import]
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The `Import` feature was built to enhance user experience. It enables the user to bypass the lengthy process of manually adding all of his existing contacts. With
+this feature, the set up time required to use DoC meaningfully is minimized, making it more convenient for the user.
+
+The `Export` feature was also built to enhance user experience. It acts as a pseudo back-up mechanism,
+and also provides portability to contacts added in DoC, as the user can quickly
+transfer them across multiple different platforms via Google Contacts. It is now a simple process for the user to
+manage the same list of contacts across different PCs running DoC.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=oauth2]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Parsing of unknown user input
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=unknowncommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This enhancement was built to improve user experience, through the implementation of a more forgiving command-line interface.
+By prompting the user with a suggested command whenever a typo is detected, we provide increased convenience to the user.
+
+First, this eliminates the need for the user to constantly refer to the user guide when a mistyped command is entered, which was previously the case, when
+only an uninformative message: "Unknown command" was provided.
+
+Then, by allowing the user to simply accept our suggested command with short inputs of "yes" or "y", we eliminate the need for the
+user to retype his possibly lengthy command.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=unknowncommand]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Proposed: Local authentication and data encryption
+
+==== External behaviour
+
+The user will have to undergo an additional login process when DoC is run.
+
+==== Justification
+
+In the current implementation, data is stored in an unencrypted xml file. There is also a lack of authentication when
+DoC is run. These can pose a security problem as a user's contacts can be viewed in plain sight, and modified without permission by anyone using the same desktop.
+
+On top of improving security, a local authentication system can also allow multiple people to use DoC, on the same desktop.
+
+---
+
+=== Other contributions
+
+* Performed acceptance testing of a separate team's (https://github.com/CS2103AUG2017-T16-B1/main[T16-B1]) project, and raised issues for bugs discovered
+(Issues https://github.com/CS2103AUG2017-T16-B1/main/issues/151[#151], https://github.com/CS2103AUG2017-T16-B1/main/issues/152[#152]).
+* Provided assistance on the module forum (Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/140[#140]).

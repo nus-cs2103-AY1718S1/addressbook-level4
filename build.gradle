@@ -27,6 +27,7 @@ allprojects {
 
     repositories {
         jcenter()
+        maven {url 'lib'}
         mavenCentral()
         maven { url "https://repo.eclipse.org/content/repositories/egit-releases/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -60,6 +61,11 @@ allprojects {
     }
 
     dependencies {
+        compile fileTree(dir: 'lib', include: '*.jar')
+        runtime fileTree(dir: 'lib', include: '*.jar')
+        testCompile fileTree(dir: 'lib', include: '*.jar')
+        testRuntime fileTree(dir: 'lib', include: '*.jar')
+
         compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
         compile "org.controlsfx:controlsfx:$controlsFxVersion"
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
@@ -87,11 +93,18 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "Directory of Contacts v1.5.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
 }
+
+task listJars << {
+    configurations.compile.each {
+        File file -> println file.name
+    }
+}
+
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.12'
