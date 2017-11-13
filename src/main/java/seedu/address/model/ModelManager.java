@@ -416,18 +416,26 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author jaivigneshvenugopal
     /**
-     * Adds the picture of the person into app database and sets the person's display picture boolean status to true
-     * @return true if person's picture is successfully added
+     * Sets the path to the specified profile pictures folder in {@code userPrefs}
      */
     @Override
-    public boolean addProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException {
+    public void setProfilePicsPath(String path) {
+        userPrefs.setProfilePicturesFolderPath(path);
+    }
+
+    /**
+     * Adds the picture of the person into app database and sets the person's display picture boolean status to true
+     * @return updated {@code ReadOnlyPerson}.
+     */
+    @Override
+    public ReadOnlyPerson addProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException {
         String imageName = person.getName().toString().replaceAll("\\s+", "");
         File imageFile = new File(ProfilePicturesFolder.getPath() + imageName + JPG_EXTENSION);
 
         if (imageFile.exists()) {
-            addressBook.addProfilePic(person);
+            ReadOnlyPerson updatedPerson = addressBook.addProfilePic(person);
             indicateAddressBookChanged();
-            return true;
+            return updatedPerson;
         } else {
             throw new ProfilePictureNotFoundException();
         }
@@ -435,14 +443,14 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Sets the person's display picture boolean status to false
-     * @return true if person's picture is successfully removed
+     * @return updated {@code ReadOnlyPerson}.
      */
     @Override
-    public boolean removeProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException {
+    public ReadOnlyPerson removeProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException {
         if (person.hasDisplayPicture()) {
-            addressBook.removeProfilePic(person);
+            ReadOnlyPerson updatedPerson = addressBook.removeProfilePic(person);
             indicateAddressBookChanged();
-            return true;
+            return updatedPerson;
         } else {
             throw new ProfilePictureNotFoundException();
         }
