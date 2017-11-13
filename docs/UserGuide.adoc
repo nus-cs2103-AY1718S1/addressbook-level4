@@ -419,12 +419,18 @@ Emails the 1st person in the results of the `find` command.
 // end::email[]
 
 //tag::backup[]
-==== Back up address book : `backup` [Since v1.5]
+==== Back up address book : `backup` [Since v1.5, Windows-only]
 
 => Alias: `b` <=
 
 Create an exact copy of your address book in another directory anywhere on your PC.
 Format: `backup TARGET_DIRECTORY`
+
+[NOTE]
+====
+This feature has only currently been tested working on *Windows machines*. Other operating systems are not yet officially supported,
+and may induce unexpected results due to differences in file system.
+====
 
 ****
 * Result of command will only display as either successful or unsuccessful.

@@ -1793,7 +1793,10 @@ on the app. As such, it was unfeasible to add even more panes to the window and 
 ---
 //end::quick_start[]
 //tag::backup[]
-=== Contact Backup [Since v1.5]
+=== Contact Backup [Since v1.5, Windows-only]
+
+This feature has only been tested working for Windows, and glitches may occur for other operating systems (particularly
+those that use forward slashes in their file system rather than the back slash used in Windows, e.g. OS X).
 
 Contact information is valuable, and users may want to back up their data. By providing a user-friendly backup method,
 users will not have to dig around in the application directory and risk copying or deleting the wrong file.
