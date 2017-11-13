@@ -714,9 +714,46 @@ mechanism uses the `sort` method which resides inside `List` interface to sort t
 // tag::emailMech[]
 === Emailing mechanism
 
-The automatic opening of email on the user's desktop is facilitated mainly by the `Desktop` class which allows a Java application
-to launch the default mail application registered inside the user's native desktop to handle the email `URI`.
+The automatic opening of email on the user's desktop is facilitated mainly by the `Desktop` class which allows the Java
+application to launch the default mail application registered inside the user's native desktop to handle the email `URI`.
 // end::emailMech[]
+
+// tag::calendarMech[]
+=== Calendar mechanism
+
+An in-built calendar is added to the panel beside the list of events. This calendar shows a monthly view of the current month.
+
+image::Calendar.png[width="600"]
+_Figure 4.9.1 : Calendar_
+
+This is useful for users to be able to compare their list of events in the calendar. It can help users to check what day of the week their event is happening on. This is especially useful for NUS students as there is a fixed daily schedule and it would be easy to check what day it falls on to ensure their availability for the event. Other usages include having to see what dates lie on a particular day for students to plan weekly events. All in all, it provides a convenient way for students to have access to a calendar without having to open any external applications.
+
+==== Design Considerations
+
+*Aspect:* How to display the individual dates. +
+*Alternative 1 (current choice):* Use a GridPane to design the table in XML. Include a class to calculate dates to be shown, before populating individual cells in GridPane using data from class. +
+*Pros:* This method makes use of JavaFX, possibly allowing us to improve the aesthetic design in the future. It also allows individual objects to be created for individual cells. This could allow us to write more functionality such as showing number of events per day to dynamic colour changes in the future. The monthDateBuilder method provides an accurate graphical representation of the days in a monthly calendar. +
+*Cons:* The 42 cell design is fairly cumbersome, requiring the initialization of at least 42 cells. The class is limited in a way that it must have 42 cells, thus sometimes many cells are left unused, and there is a wastage of memory. +
+*Alternative 2:* Use JTable to display individual dates. +
+*Pros:* A ready to use API that can allow easy building of table showing dates. It is also a powerful tool with many functions. +
+*Cons:* JTable is a UI element from a different UI design model, and cannot make use of advantages brought about by the new advantages from JavaFX, such as the node capability of JavaFX and certain aesthetic modifications. Many of the JTable functions might not be used.
+
+==== Implementation Outline
+
+1. Create a EventCalendar class that contains the month that will be shown, containing all the necessary information required for a monthly calendar (i.e. dates, name of month).
+
+2. Create a monthDateBuilder class that will be used to set the current month and year of the calendar. It will also be arranging the dates in a way that will correspond to which day of the week it belongs to.
+
+3. Use Calendar class to set the current year and month and store in an array (i.e.monthYearArray) in monthDateBuilder. Also, use Calendar class to set the number of days in the current month and the day that the first date of the month falls on (i.e. set using setMonthAnchors method). These details are required to build the monthly view.
+
+4. There are a maximum of 42 cells to fill up in every month. Create a method (i.e. buildMonthArray method) to store the position of the dates in. Use an algorithm to store all the dates before the first date of the month as a blank, fill up the subsequent dates using the value of the first day of the month and their cell number, and the leftover dates will continue to be blanks until the 42nd cell.
+
+image::EventCalendarClassDiagram.png[width="300"]
+_Figure 4.9.1.1 : Class Diagram for `EventCalendar`_
+
+image::MonthDateBuilderClassDiagram.png[width="300"]
+_Figure 4.9.1.2 : Class Diagram for `MonthDateBuilder`_
+// end::calendarMech[]
 
 === Configuration
 
