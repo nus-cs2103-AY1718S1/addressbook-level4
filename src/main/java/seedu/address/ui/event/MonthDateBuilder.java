@@ -15,6 +15,10 @@ public class MonthDateBuilder {
     private Integer maxDayOfMonth;   //Number of days in the month
     private String nameOfMonth;
 
+    /**
+     * The constructor without parameter is used to get the current month;
+     * the other one is used as to get an arbitrary month and is used for testing.
+     */
     public MonthDateBuilder() {
         calendar = Calendar.getInstance();
 
