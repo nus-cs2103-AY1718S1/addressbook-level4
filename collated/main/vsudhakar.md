@@ -19,11 +19,13 @@
 package seedu.address.model.person;
 
 import java.io.File;
-import java.net.MalformedURLException;
+
+import com.sun.media.jfxmedia.logging.Logger;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
+import seedu.address.MainApp;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -34,28 +36,31 @@ public class Avatar {
     public static final String DEFAULT_AVATAR_DIRECTORY = "avatars/";
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "File path provided must point to a valid, readable image.";
 
+    private boolean defaultAvatar;
     private ObjectProperty<Image> avatarImage;
     private String avatarFilePath;
 
     public Avatar() {
         // Default object -> 'generic' avatar
-        this.avatarFilePath = new File(DEFAULT_AVATAR_IMAGE_PATH).getPath();
+        /*this.avatarFilePath = MainApp.class.getResource(DEFAULT_AVATAR_IMAGE_PATH).toExternalForm();
+        System.out.println("USING DEFAULT PATH: " + this.avatarFilePath);
+        Logger.logMsg(Logger.DEBUG, "USING DEFAULT PATH: " + this.avatarFilePath);*/
+        this.avatarFilePath = "";
+        this.defaultAvatar = true;
     }
 
     public Avatar(String avatarFilePath) throws IllegalValueException {
         if (validFile(avatarFilePath)) {
             File imgFile = new File(avatarFilePath);
-            try {
-                this.avatarFilePath = imgFile.toURI().toURL().toString();
-            } catch (MalformedURLException e) {
-                throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
-            }
+            this.avatarFilePath = avatarFilePath;
+            this.defaultAvatar = false;
         } else {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
     }
 
     public static String getDirectoryPath(String imageFile) {
+
         return DEFAULT_AVATAR_DIRECTORY + imageFile;
     }
 
@@ -69,7 +74,13 @@ public class Avatar {
      *
      */
     public void constructImageProperty() {
-        Image imgObj = new Image(this.avatarFilePath);
+        String resourcePath;
+        if (this.defaultAvatar) {
+            resourcePath = MainApp.class.getResource(DEFAULT_AVATAR_IMAGE_PATH).toString();
+        } else {
+            resourcePath = new File(this.avatarFilePath).toURI().toString();
+        }
+        Image imgObj = new Image(resourcePath);
         this.avatarImage = new SimpleObjectProperty<Image>(imgObj);
     }
 
@@ -93,8 +104,12 @@ public class Avatar {
     public static boolean validFile(String avatarFilePath) {
         try {
             File f = new File(avatarFilePath);
+            Logger.logMsg(Logger.DEBUG, "File: " + avatarFilePath + " | Exists: " + Boolean.toString(f.exists())
+                          + " | Can Read: " + Boolean.toString(f.canRead()));
             return f.exists() && f.canRead();
         } catch (NullPointerException e) {
+            Logger.logMsg(Logger.ERROR, "Error reading file at: " + avatarFilePath);
+            Logger.logMsg(Logger.ERROR, e.toString());
             return false;
         }
     }
@@ -120,14 +135,10 @@ public class Avatar {
 ```
 ###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
-        Avatar avatar;
+        Avatar avatar = null;
         try {
-            if (Avatar.validFile(this.avatar)) {
-                avatar = new Avatar(this.avatar);
-            } else {
-                avatar = new Avatar();
-            }
-        } catch (Exception e) {
+            avatar = new Avatar(this.avatar);
+        } catch (IllegalValueException e) {
             avatar = new Avatar();
         }
 ```
@@ -142,6 +153,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.model.UserPrefs;
@@ -166,7 +178,7 @@ public class ThemeSelectionWindow extends UiPart<Region> {
     @FXML
     private Label currentThemeLabel;
 
-    public ThemeSelectionWindow(UserPrefs prefs) {
+    public ThemeSelectionWindow(UserPrefs prefs, Stage parentStage) {
         super(FXML);
         this.prefs = prefs;
 
@@ -174,10 +186,12 @@ public class ThemeSelectionWindow extends UiPart<Region> {
         this.primaryStage = new Stage();
         Scene scene = new Scene(getRoot());
         this.primaryStage.setScene(scene);
-
-        // Set theme
-        scene.getStylesheets().add(
-                MainApp.class.getResource("/view/" + prefs.getCurrentUserTheme() + ".css").toExternalForm());
+        this.primaryStage.getIcons().add(new Image("/images/address_book_32.png"));
+        this.primaryStage.setHeight(729);
+        this.primaryStage.setWidth(1018);
+        this.primaryStage.setResizable(false);
+        this.primaryStage.initOwner(parentStage);
+        this.primaryStage.initModality(Modality.WINDOW_MODAL);
 
         // Configure UI
         this.primaryStage.setTitle("Theme Selection");
@@ -232,35 +246,5 @@ public class ThemeSelectionWindow extends UiPart<Region> {
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <SplitPane dividerPositions="0.29797979797979796" layoutX="200.0" layoutY="120.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="178.0">
-               <children>
-                  <Label fx:id="currentThemeLabel" text="" />
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-               <children>
-                  <GridPane prefHeight="398.0" prefWidth="174.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <ImageView fx:id="thumbnail1" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#handleTheme1" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="thumbnail2" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#handleTheme2" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-                     </children>
-                  </GridPane>
-               </children></AnchorPane>
-        </items>
-      </SplitPane>
-   </children>
-</AnchorPane>
 
 ```
