@@ -12,19 +12,23 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-Legend:
-`INPUTS` command to type (e.g. *select 1* means to execute ‘select 1’ in the command box) +
+*Legend:* +
+`Command inputs`
+[TIP]
+`select 1` means to execute ‘select 1’ in the command box +
 ```
 Expected results are contained here
 ```
 === Set up
 
 . Download all documents (i.e. all the test files) uploaded on v1.5 release. +
+Or from https://github.com/CS2103AUG2017-T12-B2/main/tree/master/src/test/data/ManualTesting +
 . Create a folder named ‘Blast’ and place the .jar file in +
 . Create a folder named ‘data’ at the root of ‘Blast’ folder +
 . Create a folder named ‘avatars’ at the root of ‘Blast’ folder +
 . Place the downloaded test image into `avatars` folder +
 . Place the downloaded test documents into `data` folder +
+. Rename `[T12-B2][Blast!]SampleData.xml` to `addressbook.xml` +
 . Launch the application
 
 === Add
@@ -274,6 +278,7 @@ export: export the address book to a chosen file type
 Parameters: export .txt [PATH]
 Example: export .txt C:/user/user/desktop
 ```
+
 ---
 `export .txt C:/address book` (on Windows) +
 `export .txt /Users/[YOUR USER NAME]/address book` (on MacOS) +
@@ -291,11 +296,13 @@ export: export the address book to a chosen file type
 Parameters: export .txt [PATH]
 Example: export .txt C:/user/user/desktop
 ```
+
 ---
 `export .txt C:\Windows` (on Windows only. Linux and MacOS do not apply)
 ```
 Access denied
 ```
+
 ---
 === Email Login
 *Note*: UI buttons will not update automatically if logged in (or out) from console. However, clicking the login button will update the login status accordingly.
@@ -306,6 +313,7 @@ email_login: log in with an email address
 Parameters: email_login "[EMAIL]" "[PASSWORD]"
 Example: email_login "example@gmail.com"" example password"
 ```
+
 ---
 `email_login cs2103testacc@gmail.com "testpass"` +
 `email_login cs2103testacc@gmail.com testpass` +
@@ -316,16 +324,19 @@ email_login: log in with an email address
 Parameters: email_login "[EMAIL]" "[PASSWORD]"
 Example: email_login "example@gmail.com"" example password"
 ```
+
 ---
 `email_login "123@hotmail.com" "password"`
 ```
 Log in failed: The email domain is not supported
 ```
+
 ---
 `email_login "123hotmail" "password"`
 ```
 The given email is not valid
 ```
+
 ---
 `email_login "cs2103testacc@gmail.com" "wrongpass"`
 ```
@@ -334,11 +345,13 @@ Log in failed: It could be one of the following reasons:
 2. Your email and password combination is not correct
 3. Allow less secure apps is not enable in your email
 ```
+
 ---
 `email_login "cs2103testacc@gmail.com" "testpass"`
 ```
 Successfully logged in as cs2103testacc@gmail.com
 ```
+
 ---
 === Email Send
 *Before testing this section please enter this command `email_login "cs2103testacc@gmail.com" "testpass"`*
@@ -351,6 +364,7 @@ Requires an logged in email using email_login
 Parameters: email_send "[RECIPIENTS]" "[TITLE]" "[BODY]"
 Example: email_send "example@gmail.com;example2@yahoo.com" "Test" "Test Body"
 ```
+
 ---
 `email_send cs2103testacc@gmail.com "Title" "Body"` +
 `email_send "cs2103testacc@gmail.com" Title Body` +
@@ -362,11 +376,13 @@ Requires an logged in email using email_login
 Parameters: email_send "[RECIPIENTS]" "[TITLE]" "[BODY]"
 Example: email_send "example@gmail.com;example2@yahoo.com" "Test" "Test Body"
 ```
+
 ---
 `email_send "cs2103testacc@gmail.com" "Title" "Body"`
 ```
 Successfully sent
 ```
+
 ---
 *Please substitute `[ANY OF YOUR EMAIL]` with a suitable email address.*
 `email_send "cs2103testacc@gmail.com;[ANY OF YOUR EMAIL]" "Title" "Body"`
@@ -380,6 +396,7 @@ Also please check that you have received an email from cs2103testacc@gmail.com w
 ```
 Logged out
 ```
+
 ---
 === Find Without Matching Whole Keyword
 `find_contain`
@@ -390,16 +407,19 @@ Parameters: find_contain PREFIX_PERSON_ATTRIBUTE/STRING [MORE_PARAMETERS]...Exam
 1) find_contain n/david li p/91
 2) find_contain e/gmail a/jurong
 ```
+
 ---
 `find_contain n/David Beckham`
 ```
 1 persons listed!
 ```
+
 ---
 `find_contain n/avid`
 ```
 2 persons listed!
 ```
+
 ---
 `find_contain n/vi p/99`
 ```
