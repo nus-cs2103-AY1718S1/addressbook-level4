@@ -9,9 +9,9 @@ ConTag is an efficient and feature-packed desktop address book application for t
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/main/CT15.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/test/CT15.md[Test code]]
 
-=== Enhancement Added: Expansion of Existing Help Function
+== Enhancement Added: Expansion of Existing Help Function
 
-==== External behavior
+=== External behavior
 
 ---
 
@@ -23,11 +23,11 @@ include::../UserGuide.adoc[tag=help]
 
 ---
 
-==== Justification
+=== Justification
 
 ConTag supports various commands with different command formats. This makes it difficult for new users to remember how each command is used. Displaying the format of a specific command will save users the trouble to go through the user guide repeatedly. This enhancement serves as a quick reminder for both new and frequent users.
 
-==== Implementation
+=== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
@@ -38,9 +38,9 @@ include::../DeveloperGuide.adoc[tag=help]
 
 ---
 
-=== Enhancement Added: Schedule an Activity Multiple Persons
+== Enhancement Added: Schedule an Activity Multiple Persons
 
-==== External behavior
+=== External behavior
 
 ---
 
@@ -52,13 +52,13 @@ include::../UserGuide.adoc[tag=schedule]
 
 ---
 
-==== Justification
+=== Justification
 
 ConTag is targeted towards busy business users and frequent travellers. Hence, it is important for the application to allow the user to schedule activities with his contacts.
 
 In v1.3, ConTag allow the user to schedule at most one activity with a person in the contact list. Moreover, only one person can be associated with an activity every time schedule command is executed. Starting from v1.4, the user can schedule multiple activities with a contact. Furthermore, an activity can be scheduled for multiple contacts at once. The improvement from v1.3 to v1.4 is based on the reasoning that there exists activities, such as team meetings, that involve more than one people. It is also possible for the user to have multiple different schedules with a single person in the contact list.
 
-==== Implementation
+=== Implementation
 
 ---
 
@@ -72,9 +72,9 @@ include::../DeveloperGuide.adoc[tag=scheduleMultiple]
 
 ---
 
-=== Enhancement Added: Welcome Screen Display
+== Enhancement Added: Welcome Screen Display
 
-==== External behavior
+=== External behavior
 
 ---
 
@@ -86,13 +86,13 @@ include::../UserGuide.adoc[tag=welcomeScreen]
 
 ---
 
-==== Justification
+=== Justification
 
 Welcome screen is another form of advertising as it clearly displays ConTag logo when the application is launched.
 
 It is understood that some users may not like the idea of having a welcome screen displayed every time they run ConTag. Therefore, there is an option for the user to enable and disable the welcome screen. However, it is hoped that the display of a productivity quote, out of the available 15 default quotes, every time the welcome screen is displayed will provide an incentive for the users to enable the welcome screen.
 
-==== Implementation
+=== Implementation
 
 ---
 
@@ -104,7 +104,7 @@ include::../DeveloperGuide.adoc[tag=welcomeScreen]
 
 ---
 
-=== Other contributions
+== Other contributions
 
 * Created 2 different versions of ConTag logo, 1 for the documentations and the other for the application
 * Enabled ConTag to recognise both command words and command aliases as valid command identifiers

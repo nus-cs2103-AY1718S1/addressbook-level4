@@ -295,6 +295,6 @@ Alias: `q` +
 
 . Type `exit`.
 
-==== Result
+=== Result
 
 . Main application window is closed.
