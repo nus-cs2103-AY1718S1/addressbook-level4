@@ -13,9 +13,7 @@ import java.util.Optional;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.event.RepeatCommand;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.event.Period;
 
 public class RepeatCommandParserTest {

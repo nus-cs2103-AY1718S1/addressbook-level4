@@ -116,7 +116,7 @@ public class PersonPanel extends UiPart<Region> {
                     logger.fine("Person Panel register button for index "
                             + index.getZeroBased());
                     CommandResult commandResult = logic.execute("edit " + index.getZeroBased() + " ph/"
-                            + file.toURI().getPath());
+                            + file.getAbsolutePath());
                     raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
                 } catch (CommandException | ParseException e) {
                     raise(new NewResultAvailableEvent(e.getMessage(), true));

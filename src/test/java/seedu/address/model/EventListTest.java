@@ -54,12 +54,12 @@ public class EventListTest {
         EventList eventList = new EventList();
         ReadOnlyEvent toAdd1 = new EventBuilder().withTimeslot(VALID_TIMESLOT_SOCCER).build();
         ReadOnlyEvent toAdd2 = new EventBuilder().withTimeslot(VALID_TIMESLOT_SOCCER).build();
-        ReadOnlyEvent toAdd2 = new EventBuilder().withTimeslot(VALID_TIMESLOT_SOCCER).build();
+        ReadOnlyEvent toAdd3 = new EventBuilder().withTimeslot(VALID_TIMESLOT_SOCCER).build();
 
         try {
             eventList.add(toAdd1);
             eventList.add(toAdd2);
-            fail("The expected exception was not thrown.")
+            fail("The expected exception was not thrown.");
         } catch (Exception e) {
             thrown.expect(EventTimeClashException.class);
         }
