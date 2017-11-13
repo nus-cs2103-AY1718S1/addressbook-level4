@@ -470,7 +470,7 @@ endif::[]
 == Importing Contacts from external source
 
 === Import contacts with all valid attributes successfully
-. Download the file `testImport1.vcf` from the ManualTesting folder
+. Download the file `testImport1.vcf` from the `ManualTesting` folder and place it in the same directory as the `[W15-B3][ConnectUs].jar` application
 . In the application, copy the following command onto the command line input: +
 `import testImport1.vcf`
 
@@ -482,7 +482,7 @@ endif::[]
 ****
 
 === Importing contacts with some missing attributes successfully.
-. Download the file `testImport2.vcf` from the ManualTesting folder
+. Download the file `testImport2.vcf` from the `ManualTesting` folder and place it in the same directory as the `[W15-B3][ConnectUs].jar` application
 . In the application, copy the following command onto the command line input: +
 `import testImport2.vcf`
 
