@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -21,12 +22,12 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyAddressBook_success() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Model model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
     }
 
     /**
-     * Generates a new {@code ClearCommand} which upon execution, clears the contents in {@code model}.
+     * Generates a new {@code ClearCommand} which upon execution, clears the contents in address book{@code model}.
      */
     private ClearCommand prepareCommand(Model model) {
         ClearCommand command = new ClearCommand();

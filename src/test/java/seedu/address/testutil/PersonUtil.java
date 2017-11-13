@@ -21,6 +21,14 @@ public class PersonUtil {
         return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
     }
 
+    public static String getCreateCommand(ReadOnlyPerson person) {
+        return AddCommand.COMMAND_WORD_2 + " " + getPersonDetails(person);
+    }
+
+    public static String getPutCommand(ReadOnlyPerson person) {
+        return AddCommand.COMMAND_WORD_3 + " " + getPersonDetails(person);
+    }
+
     /**
      * Returns the part of command string for the given {@code person}'s details.
      */

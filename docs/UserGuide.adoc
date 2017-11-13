@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= iConnect - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,16 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W09-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W09-B03`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+
+Introducing iConnect, our one-stop address book application built for students. We aim to serve as your personal secretary to ease your job as a student. Due to the ever-increasing workload, it has become a challenge to keep track of various school commitments while maintaining relationships with peers.
+
+With iConnect, missing schedules and losing contact with friends will be a thing of the past.
+Let’s get connected now!
 
 == Quick Start
 
@@ -22,11 +29,12 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `iConnect.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your iConnect.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
+_Figure 2.1 : Overview of iConnect_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -34,7 +42,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`delete`**`I/1 3` : deletes the 1st and 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
@@ -50,13 +58,36 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+[NOTE]
+iConnect will be referred to as *address book* in the following documentation.
 
-Format: `help`
+// tag::help[]
+=== Viewing help : `help` _[Since v1.3]_
 
-=== Adding a person: `add`
+If you don't know how to use some commands, don't worry, help command can guide you.
 
-Adds a person to the address book +
+_Alias:_ `h`
+
+You can look up the usage of the given command word using help command.
+
+Format: `help COMMAND`
+
+Examples:
+
+* `help list` +
+Shows the usage of command `list`
+* `help add` +
+Shows the usage of command `add`
+* `help` +
+Shows this User Guide in the opened Help Window.
+// end::help[]
+
+=== Adding a person : `add` _[Since v1.1]_
+
+_Alias:_ `create` `put`
+
+Stores a person’s contact details to address book records.
+
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
@@ -66,75 +97,421 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `creat n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `put n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 
-=== Listing all persons : `list`
+=== Listing all persons : `list` _[Since v1.1]_
 
-Shows a list of all persons in the address book. +
+_Alias:_ `show` `all`
+
+Shows a list of all persons stored in address book.
+
 Format: `list`
 
-=== Editing a person : `edit`
+=== Editing a person : `edit` _[Since v1.1]_
 
-Edits an existing person in the address book. +
+_Alias:_ `update` `modify`
+
+Edits an existing person in the address book.
+
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Modifies the person at the specified INDEX. The index refers to the index number shown in the last persons listing. The index must be a positive integer 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* You can remove all the person’s tags by typing t/ without specifying any tags after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags
+* `update 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively
+* `modify 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively
 
-=== Locating persons by name: `find`
+// tag::find[]
+=== Locating persons by different attributes : `find` _[Since v1.2]_
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+_Alias:_ `search` `get`
+
+Sometimes you might not remember the full name of a person. Perhaps you only know the phone number or home address of the person. But don't worry! By using this command, you are able to search for your contacts by some other informations such as phone number, email and home address. Even if you cannot remember the full name of your friend, you can still easily find him by his partial name!
+
+Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* A prefix is required before entering a different type of keyword.
+* The order of the keywords does not matter. e.g. Hans Bo will match Bo Hans.
+* You can find a person by searching for any substring of the attribute. e.g. hn will match John, 1234 will match 98123476.
+* All keywords regarding a certain attribute should be put after the prefix. e.g. n/alice bob.
+* You can only search for one address per time for Address type.
+* Persons matching at least one keyword will be returned. e.g. Hans Bo will return Hans Gruber, Bo Yang.
+* At least one of the optional fields must be provided.
 ****
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `search p/98765432` +
+Returns the person having phone number `98765432`
+* `get e/johndoe@gmail.com` +
+Returns the person having email `johndoe@gmail.com`
+* `find n/Betsy Tim John a/clementi street` +
+Returns any person having names `Betsy`, `Tim`, `John` or living at `Clementi Street`
+// end::find[]
 
-=== Deleting a person : `delete`
+// tag::sort[]
+=== Sorting list of persons : `sort` _[Since v1.2]_
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Suppose you wish to have your list of persons ordered by a specific attribute, you may use the `sort` command to do so. Be it name, email, phone, address or even the time it was first added. You can also choose to specify whether the attribute should be sorted in ascending or descending order, allowing you to have control over how your person panel should appear. +
+
+Format: `sort [n/(asc OR dsc)]`
+
+[TIP]
+Persons tagged as favourite will be sorted at the top of the list, followed by the rest of the contacts.
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
+* Sort command only accepts one attribute.
+* The list can be sorted by one of the following attribute: name, phone, email, address, time added.
+* Sorting order depends on the specified choice.
+* The `asc` signifies sorting in ascending order.
+* The `dsc` signifies sorting in descending order.
+* Entering command without any argument will default to name in ascending order.
+* Entering command without specifying order will default to ascending order.
+****
+
+Examples:
+
+* `sort` +
+Returns list of persons sorted by name added in ascending order
+* `sort p/asc` +
+Returns list of persons sorted by phone in ascending order
+* `sort t/dsc` +
+Returns list of persons sorted by time added in descending order
+// end::sort[]
+
+// tag::delete[]
+=== Deleting a person : `delete` _[Since v1.2]_
+If you want to keep your person list clean, just using delete command to remove some people to bin.
+
+_Alias:_ `remove` `-`
+
+You can delete a group of people from the address book.
+
+image::multiDeleteCommand.png[width="500"]
+_Figure 3.7.1 : Deleting multiple person_
+
+Format: `delete I/INDEX INDEX ...` (or) `delete n/NAME`
+
+****
+* Deletes person with given name or at these given specified `INDEX`.
+* The index refer to the index numbers shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The name must be the full name of the person.
+* Only one name is allowed for `delete` command.
+****
+
+Examples:
+
+* `list` +
+`delete I/1 2` +
+Deletes the 1st and 2nd person in the address book
+* `list` +
+`remove I/1 3` +
+Deletes the 1st and 3rd person in the address book
+* `list` +
+`- I/2 3` +
+Deletes the 2nd and 3rd person in the address book
+* `find Betsy` +
+`delete I/1` +
+Deletes the 1st person in the results of the `find` command
+// end::delete[]
+
+// tag::tagadd[]
+=== Adding a tag to person(s) : `t-add` _[Since v1.1]_
+
+You can add a tag to multiple persons specified by the indices in the current person listing. When you have a new project group, you can tag your group members in the contact list to differentiate from the rest of the contacts.
+
+Format: `t-add INDEX... TAG`
+
+****
+* The index refers to the index number shown in the most recent listing, you can key in multiple indices as well.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The TAG *must not have its first word as number*.
+****
+
+Examples:
+
+* `list` +
+`t-add 2 3 friends` +
+This command adds the tag `friends` to the 2nd and 3rd person in the contact list
+// end::tagadd[]
+
+// tag::tagaddfav[]
+=== Setting person(s) as favourite : `t-add` _[Since v1.3]_
+
+You can mark specified person(s) from your contact list as `favourite`. Contacts marked as `favourite` will always be pinned to top of the contact list.
+
+image::tAddCommand.png[width="500"]
+_Figure 3.9.1 : Tagging multiple person as favourite_
+
+Format: `t-add INDEX... favourite`
+
+****
+* All person(s) tagged as `favourite` by you will be identified by a coral shaped circle after the person name.
+* You can also use `fav`, and words containing `fav` interchangeably with `favourite`.
+* The index refers to the index number shown in the most recent listing, multiple indices are allowed.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+`t-add 2 3 favourite` +
+This command sets 2nd and 3rd person in the address book as favourite
+* `list` +
+`t-add 2 3 fav` +
+This command sets 2nd and 3rd person in the address book as favourite
+// end::tagaddfav[]
 
-=== Selecting a person : `select`
+// tag::tagremove[]
+=== Removing a tag from person(s) : `t-remove` _[Since v1.2]_
 
-Selects the person identified by the index number used in the last person listing. +
+You can remove a tag from specified person(s) from the address book.
+
+Format: `t-remove INDEX... TAG`
+
+****
+* The index refers to the index number shown in the most recent listing, multiple indices are allowed.
+* The index *must be a positive integer* 1, 2, 3, ...
+* If you wish to remove a tag from all person(s) in the list, simply leave out the INDEX.
+* The TAG *must not have its first word as a number*, for example `1 friend`.
+****
+
+image::tRemoveCommand-noIndex.png[width="500"]
+_Figure 3.10.1 : Removing all 'fav' tag_
+
+Examples:
+
+* `list` +
+`t-remove 2 3 friends` +
+This command removes the tag `friends` from the 2nd and 3rd person in the address book
+* `t-remove friends` +
+This command removes the tag `friends` from all person(s) with the tag `friends` in the current listing
+// tag::tagremove[]
+
+// tag::tagremovefav[]
+=== Removing person(s) from favourite : `t-remove` _[Since v1.2]_
+
+You can remove specified person(s) in the address book from your `favourite` list.
+
+image::tRemoveCommand.png[width="500"]
+_Figure 3.11.1 : Removing tag from multiple persons_
+
+Format: `t-remove INDEX... favourite`
+
+****
+* You can also use `fav`, and words containing `fav` interchangeably with `favourite`.
+* If you wish to clear your favourite list, simply leave out the INDEX.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`t-remove 2 3 fav` +
+This command removes the tag `favourite` from the 2nd and 3rd person in the address book
+// end::tagremovefav[]
+
+// tag::tagfind[]
+=== Finding the person(s) with given tag : `t-find` _[Since v1.3]_
+
+You can find all persons with the given tag.
+
+image::tFindCommand.png[width="500"]
+_Figure 3.12.1 : Finding all persons tagged 'fav'_
+
+Format: `t-find TAG`
+
+****
+* Person list panel shows a list of person(s) who have their `tagName` matching exactly; and those with `tagName` containing or contained in `TAG`.
+****
+
+Examples:
+
+* `t-find friend` +
+This command lists all the people with tag `friend`
+* `t-find frien` +
+This command could also list all the people with tag `friend` if any
+// end::tagfind[]
+
+// tag::changetheme[]
+=== Changing the theme according to user input : `theme` _[Since v1.5]_
+
+You can change the current theme into your preferred one.
+
+image::twilightTheme.png[width="790"]
+_Figure 3.13.1 : Twilight Theme_
+
+image::sunburstTheme.png[width="790"]
+_Figure 3.13.2 : Sunburst Theme_
+
+image::minimalismTheme.png[width="790"]
+_Figure 3.13.3 : Minimalism Theme_
+
+Format: `theme [THEME] OR [INDEX]`
+
+****
+* Currently there are 3 themes available, `Twilight`, `Sunburst`, `Minimalism`.
+* `Twilight` is dark in color; `Sunburst` is bright and lively; `Minimalism` is basic and is the default.
+* You can key in `Twilight` or `dark` or `1` to change into dark theme; `Sunburst` or `bright` or `2` to bright theme and `Minimalism` or `default` or `3` to default theme.
+* When you only key in `theme`, the result box would display `1.Twilight 2.Sunburst 3.Minimalism`, you can simply key in the index to change into the specific theme.
+* The result in result box indicates that you have successfully changed into your theme of choice.
+****
+
+Examples:
+
+* `theme dark` +
+This command changes current theme to Twilight
+* `theme Twilight` +
+This command changes current theme to Twilight
+* `theme 1` +
+This command changes current theme to Twilight
+// end::changetheme[]
+
+// tag::map[]
+=== Finding the location of a person using Google Map : `m-show` _[Since v1.3]_
+
+You might find it not very convenient to only show the contact's location as text. Therefore, iConnect allows you to see the location! By using this command, without typing in the person's address, you can easily find the location of your friend in Google Map, which will show in the centre browser.
+
+image::mShowCommand.png[width="790"]
+_Figure 3.14.1 : Finding the location of a contact_
+
+Format: `m-show INDEX`
+
+****
+* Find the person with the index number.
+* Only one index number is allowed as the input.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The address of the person selected will be shown visually on the browser screen.
+****
+
+Examples:
+
+* `m-show 1` +
+Shows the address of person with index 1 on the google map
+
+=== Finding the route from user's current location to the person selected : `m-route` _[Since v1.3]_
+
+Not only can iConnect show the location, it can also show you how to go there! Simply by adding your current location, it will show you the shortest path from your current address to your friend's home in the Google map.
+
+image::mRouteCommand.png[width="790"]
+_Figure 3.15.1 : Finding the route from current location to the address of a contact_
+
+Format: `m-route INDEX a/ADDRESS`
+
+****
+* Find the address of the person with the index number.
+* Only one index number is allowed as the input.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The address entered is the current location of the user (the place they want to start from).
+* A route will be shown on the map with the address as start location and selected person's address as destination.
+****
+
+Examples:
+
+* `m-route 1 a/Clementi Street` +
+Shows the route from `Clementi Street` to the address of person with index number `1`
+* `m-route 7 a/John street, block 123, #01-01` +
+Shows the route from `John street, block 123, #01-01` to the address of person with index number `7`
+// end::map[]
+
+
+// tag::sadd[]
+=== Adding an Event to Schedule : `s-add` _[Since v1.4]_
+
+With many commitments at hand, it is easy to overlook an event in your schedule. `s-add` allows you to add an event to your calendar and include persons from your addressbook as members of the event.
+
+image::sAddCommand.png[width="790"]
+_Figure 3.16.1 : Adding an event titled 'Orientation Camp' to address book_
+
+[TIP]
+Mouse over the greyed-out date in your calendar to see your events for the day.
+
+[TIP]
+You will be notified in the result panel if the newly added event clashes with another event in your calendar.
+
+Format: `s-add [m/INDEX INDEX…] n/NAME t/TIME [d/DURATION]`
+
+****
+* Creates an event with the given event name, event time, duration and members.
+* Members added will be reflected in the event list panel.
+* The index must be a positive integer 1, 2, 3, ...
+* TIME will be added in the following format: `yyyy-MM-dd HH:mm`
+* If duration is specified, it must be in the following format: `#d#h#m` (day/hour/minute)
+****
+
+Examples:
+
+* `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/120` +
+Adds a two-hour long event called ‘iConnect Conference’ on 4th of December 2017 at 8:45AM ,with the specified person at index 1, 2 and 3 into the addressbook calendar.
+* `s-add n/Exam Date t/2017-12-04 14:30 d/120` +
+Adds a two-hour long event called ‘Exam Date’ on 4th of December 2017 at 2:30PM into the addressbook calendar.+
+* `s-add n/Email Reminder t/2017-12-04 14:30` +
+Adds an event called ‘Email Reminder’ on 4th of December 2017 at 2:30PM into the addressbook calendar.
+// end::sadd[]
+
+// tag::sremove[]
+=== Removing an Event from Schedule : `s-remove` _[Since v1.4]_
+
+Suppose you want to remove multiple events from your calendar, you can use the `s-remove` command with the indexes of events to be deleted.
+
+image::sRemoveCommand.png[width="790"]
+_Figure 3.17.1 : Removing multiple events from address book_
+
+Format: `s-remove I/INDEX INDEX...`
+
+****
+* `INDEX` in this case is referring to the index of events in the event list panel
+* The index must be a positive integer 1, 2, 3, ...
+* Person details will be updated each time a deletion of event is made.
+****
+
+Examples:
+
+* `s-remove I/1` +
+Removes a single event with the index 1.
+* `s-remove I/1 2 3` +
+Removes 3 events with the index 1, 2 and 3.
+// end::sremove[]
+
+
+// tag::export[]
+=== Making a backup address book : `export` _[Since v1.4]_
+
+If you want to keep your address book clean and worry about how to get the contacts back, just export the information.
+
+You can keep a backup of your contact details to the given path.
+
+Format: `export PATH`
+
+****
+* Exports all the information of contacts to the given local address.
+****
+// end::export[]
+
+=== Selecting a person : `select` _[Since v1.1]_
+
+_Alias:_ `choose`
+
+Selects the person identified by the index number used in the last person listing.
+
 Format: `select INDEX`
 
 ****
@@ -147,15 +524,18 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the address book
 * `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`choose 1` +
+Selects the 1st person in the results of the `find` command
 
-=== Listing entered commands : `history`
+=== Listing entered commands : `history` _[Since v1.1]_
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+_Alias:_ `record`
+
+Lists all the commands that you have entered in reverse chronological order.
+
+Format: `history` or `record`
 
 [NOTE]
 ====
@@ -165,61 +545,218 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the address book to the state before the previous _undoable_ command was executed.
+
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`(including the corresponding shortcut command )).
 ====
 
 Examples:
 
-* `delete 1` +
+* `delete I/1` +
 `list` +
 `undo` (reverses the `delete 1` command) +
 
 * `select 1` +
 `list` +
 `undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+The `undo` command fails as there are no undoable commands executed previously
 
-* `delete 1` +
+* `delete I/1 2` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `delete I/1 2` command) +
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+Reverses the most recent `undo` command.
+
 Format: `redo`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `delete I/1` +
+`undo` (reverses the `delete I/1` command) +
+`redo` (reapplies the `delete I/1` command) +
 
-* `delete 1` +
+* `delete I/1 2` +
 `redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+The `redo` command fails as there are no `undo` commands executed previously
 
-* `delete 1` +
+* `delete I/1` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` (reverses the `delete I/1` command) +
+`redo` (reapplies the `delete I/1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::bin[]
+=== Restoring person(s) from recycle bin : `bin-restore` _[Since v1.5]_
+
+You find that people you wrongly deleted from address book in recycle bin, you can restore them back now.
+
+You can restore person(s) from bin to address book.
+
+image::multiRestoreCommand.png[width="600"]
+_Figure 3.23.1 : Restoring multiple persons from recycle bin_
+
+Format: `bin-restore INDEX INDEX ...`
+
+****
+* Recovers the people at these given specified `INDEX`.
+* The index refers to the index number shown in the current list.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The index must not be greater than the most recent bin size.
+****
+
+Examples:
+
+* `bin-restore 1 2` +
+Restores the 1st and 2nd person in the recycle bin
+
+=== Deleting person(s) in recycle bin : `bin-delete` _[Since v1.5]_
+
+If you want to keep your recycle bin clean, you can delete some of them from recycle bin. But you can't get them back.
+
+You can delete person(s) from bin.
+
+Format: `bin-delete INDEX INDEX ...`
+
+****
+* Recovers the people at these given specified `INDEX`.
+* The index refers to the index number shown in the most current list.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The index must not be greater than the most recent bin size.
+****
+
+Examples:
+
+* `bin-delete 1 2` +
+Delete the 1st and 2nd person in the recycle bin
+
+=== Clearing all contacts from bin : `bin-fresh` _[Since v1.5]_
+
+If you find all the information in recycle bin is useless, then just clear the recycle bin.
+
+You can clear the recycle bin.
+
+Format: `bin-fresh`
+// end::bin[]
+
+//tag::fontsize[]
+=== Increasing the font size of UI : `font` _[Coming in v2.0]_
+
+If you find it is uncomfortable to watch the UI because of the font size, you can choose to increase it or decrease it.
+
+You can increase or decrease the size of font.
+
+Format: `font -` `font +`
+//end::fontsize[]
+
+// tag::birthday[]
+=== Adding the birthday to a person : `b-add` _[Since v1.4]_
+
+Would it be nice if you can store the birthday of your contact so that you won't forget to send him a gift? Of course! By using this command, you are allowed to add birthday to a person. You can easily check it out using the calendar in the app. If you accidentally typed a wrong birthday, you can use this command again and enter the correct one.
+
+Format: `b-add INDEX BIRTHDAY`
+
+****
+* Adds birthday to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing, only one index is allowed.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The `BIRTHDAY` must follow the format DD/MM/YYYY, and it must be a valid date.
+* To update the birthday of a specified person, use `b-add` command and enter the new `BIRTHDAY` value.
+****
+
+Examples:
+
+* `find n/john` +
+`b-add 1 18/10/1993` +
+Adds the birthday 18/10/1993 to the first person named john in the address book
+
+=== Removing the birthday from a person : `b-remove` _[Since v1.5]_
+
+If you add the birthday to a wrong person, you can always enter this command to remove the birthday from the person.
+
+Format: `b-remove INDEX`
+
+****
+* Removes the birthday value from the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing, only one index is allowed.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The `BIRTHDAY` removed just now can be restored by using the `undo` command.
+****
+
+Examples:
+
+* `find n/john` +
+`b-remove 1` +
+Removes the birthday from the first person named john in the address book
+* `b-remove 6` +
+Removes the birthday from the 6th person in the most recent listing, and shows an error if there are less than 6 persons in the list
+// end::birthday[]
+
+// tag::link[]
+=== Adding a social media URL to a person : `l-add` _[Coming in v2.0]_
+
+You will find it very convenient to add some social media URLs to your friends so that you are able to see their posts and recent activities simply by clicking those social media icons in the centre person details panel. In this way, you do not need to open each social media app and search for the person before you can see their posts.
+
+Format: `l-add INDEX [tt/TWITTER] / [fb/FACEBOOK] / [nm/NUSMODS] / [ig/INSTAGRAM] / [gh/GITHUB]`
+
+****
+* Adds the social media link to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing, only one index is allowed.
+* The index *must be a positive integer* 1, 2, 3, ...
+* A prefix is required before entering the corresponding URL. Only one prefix and one URL is allowed for each command.
+* This command will also update the existing value to the input value.
+****
+
+Examples:
+
+* `l-add 1 fb/https://www.facebook.com/dale.sun.507` +
+Adds the Facebook URL to the 1st person in the contact list
+* `l-add 3 gh/https://github.com/dalessr` +
+Adds the GitHub URL to the 3rd person in the contact list
+// end::link[]
+
+// tag::shell[]
+=== Launching shell version : `shell` _[Coming in v2.0]_
+
+By using this command, you can open the shell version of the app. In this way, you are able to use the app without the clutter. You can still achieve most of the operations by only using the shell, except for some features related to the browser (e.g. the Map feature).
+
+Format: `shell`
+// end::shell[]
+
+// tag::sync[]
+=== Syncing with phone's contact list : `sync` _[Coming in v2.0]_
+
+You can synchronize contact list on your computer with the contact list in the `iConnect` on your phone.
+
+Format: `sync`
+// end::sync[]
+
+// tag::snusmods[]
+=== Fetching NUSMods timetable into calendar : `s-nusmods` _[Coming in v2.0]_
+
+By using this command, you can fetch your timetable from NUSMods into your calendar
+
+Format: `s-nusmods l/LINK`
+// end::snusmods[]
+
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the address book.
+
 Format: `clear`
 
 === Exiting the program : `exit`
 
-Exits the program. +
+Exits the program.
+
 Format: `exit`
 
 === Saving the data
@@ -232,21 +769,61 @@ There is no need to save manually.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+*Q*: Can I use this app without network connection? +
+*A*: You can achieve most of the commands offline except for those features using the browser window (e.g. `select` and `m-show`).
+
 == Command Summary
 
+* *Help* : `help COMMAND_WORD` +
+e.g. `help list`
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
+* *List* : `list`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
+* *Find* : `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]` +
+e.g. `find n/James p/8765 e/jamesho@example.com a/clementi street`
+* *Sort* : `sort [n/(asc/dsc)] [p/(asc/dsc)] [e/(asc/dsc)] [a/(asc/dsc)] [t/(asc/dsc)]` +
+e.g. `sort n/asc`
+* *TagAddFavourite* : `t-add INDEX... favourite` +
+e.g. `t-add 3 4 favourite`
+* *TagRemove* : `t-remove INDEX... TAG` +
+e.g. `t-remove 3 4 friends`
+* *TagRemoveFavourite* : `t-remove INDEX... favourite` +
+e.g. `t-remove 3 4 favourite`
+* *TagFind* : `t-find [TAG]` +
+e.g. `t-find friends`
+* *Theme* : `theme [THEME] OR [INDEX]` +
+e.g. `theme Twilight`
+* *MapShow* : `m-show INDEX` +
+e.g. `m-show 1`
+* *MapRoute* : `m-route INDEX a/ADDRESS` +
+e.g. `m-show 1 a/NUS`
+* *ScheduleAdd* : `s-add [m/INDEX INDEX…] n/NAME t/TIME d/DURATION` +
+e.g. `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/2h`
+* *ScheduleRemove* : `s-remove I/INDEX INDEX...` +
+e.g. `s-remove I/1 2 3`
+* *Export* : `export PATH` +
+e.g. `export /desktop/new_folder`
+* *Bindelete* : `bin-delete INDEX INDEX...` +
+e.g. `bin-delete 1 2 3`
+* *Binrestore* : `bin-restore INDEX INDEX...` +
+e.g. `bin-restore 1 2 3`
+* *Binfresh* : `bin-fresh` +
+e.g. `bin-fresh`
+* *Font* : `font` +
+e.g. `font +` ,`font -`
 * *Select* : `select INDEX` +
-e.g.`select 2`
+e.g. `select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *BirthdayAdd* : `b-add INDEX BIRTHDAY` +
+e.g. `b-add 1 18/10/1993`
+* *BirthdayRemove* : `b-remove INDEX` +
+e.g. `b-remove 1`
+* *LinkAdd* : `l-add INDEX [tt/TWITTER] / [fb/FACEBOOK] / [nm/NUSMODS] / [ig/INSTAGRAM] / [gh/GITHUB]` +
+e.g. `l-add 1 gh/https://github.com/dalessr`
+* *Shell* : `shell`
+* *Clear* : `clear`
+* *Exit* : `exit`

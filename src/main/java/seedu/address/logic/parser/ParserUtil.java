@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -9,7 +12,11 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.DateTimeUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.event.EventDuration;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.EventTime;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -33,6 +40,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -42,6 +50,34 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
+
+
+    //@@author Pengyuz
+    /**
+     * Parses  {@code oneBasedIndexes} into {@code numbers} and return it. The whitespace will be deleted.
+     *
+     * @throws IllegalValueException if one of the specified index is invalid.
+     */
+    public static ArrayList<Index> parseIndexes(String oneBasedIndexes) throws IllegalValueException {
+        String[] ns = oneBasedIndexes.trim().split(" ");
+        ArrayList<Index> numbers = new ArrayList<>();
+        boolean isValid = true;
+        for (String a : ns) {
+            String s = a.trim();
+            if (StringUtil.isNonZeroUnsignedInteger(s)) {
+                numbers.add(Index.fromOneBased(Integer.parseInt(s)));
+            } else {
+                isValid = false;
+
+            }
+        }
+        if (!isValid) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        return numbers;
+
+    }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
@@ -90,4 +126,53 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    //@@author eldriclim
+    //// Event-related parsing
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<EventName>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventName> parseEventName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new EventName(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses two {@code Optional<String> time} and {@code String duration} into an
+     * {@code Optional<EventTime>} if {@code time} is present.
+     *
+     * String duration is guaranteed to be initialised from input validation in
+     * @see ScheduleAddCommandParser
+     *
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventTime> parseEventTime(Optional<String> time, String duration)
+            throws DateTimeParseException, NumberFormatException, IllegalValueException {
+        requireNonNull(time);
+        requireNonNull(duration);
+
+        LocalDateTime eventTime = DateTimeUtil.parseStringToLocalDateTime(time.get());
+
+        return (time.isPresent())
+                ? Optional.of(new EventTime(eventTime, DateTimeUtil.parseDuration(duration)))
+                : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String duration} into an {@code EventDuration}
+     *
+     * String duration is guaranteed to be initialised from input validation in
+     * @see ScheduleAddCommandParser
+
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static EventDuration parseEventDuration(String duration)
+            throws NumberFormatException, IllegalValueException {
+        requireNonNull(duration);
+        return new EventDuration(DateTimeUtil.parseDuration(duration));
+    }
+
+
 }

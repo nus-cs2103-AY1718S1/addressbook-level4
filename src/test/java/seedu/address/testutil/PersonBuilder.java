@@ -1,9 +1,13 @@
 package seedu.address.testutil;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -22,6 +26,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_BIRTHDAY = "01/01/1970";
 
     private Person person;
 
@@ -31,8 +36,12 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
+            Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            Set<Event> defaultEvents = new HashSet<>();
+            DateAdded defaultDateAdded = new DateAdded();
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
+                    defaultTags, defaultEvents, defaultDateAdded);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -70,6 +79,35 @@ public class PersonBuilder {
     }
 
     /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and append it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withATags(String ... tags) {
+        try {
+            Set<Tag> newTags = SampleDataUtil.getTagSet(tags);
+            newTags.addAll(this.person.getTags());
+            this.person.setTags(newTags);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Removes the {@code tags} from a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withOutTag(String tag) {
+
+        Set<Tag> newTags = new HashSet<>();
+        for (Tag current :  this.person.getTags()) {
+            if (!tag.equals(current.tagName)) {
+                newTags.add(current);
+            }
+        }
+        this.person.setTags(newTags);
+        return this;
+    }
+
+    /**
      * Sets the {@code Address} of the {@code Person} that we are building.
      */
     public PersonBuilder withAddress(String address) {
@@ -101,6 +139,18 @@ public class PersonBuilder {
             this.person.setEmail(new Email(email));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Birthday} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withBirthday(String birthday) {
+        try {
+            this.person.setBirthday(new Birthday(birthday));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Birthday is expected to be unique.");
         }
         return this;
     }

@@ -7,12 +7,12 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-
 /**
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
+    private ReadOnlyAddressBook previousRecycleBin;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -23,15 +23,23 @@ public abstract class UndoableCommand extends Command {
         requireNonNull(model);
         this.previousAddressBook = new AddressBook(model.getAddressBook());
     }
+    //@@author Pengyuz
+    /**
+     * Stores the current state of {@code model#recyclebin}.
+     */
+    private void saveRecycleBinSnapshot() {
+        requireNonNull(model);
+        this.previousRecycleBin = new AddressBook(model.getRecycleBin());
+    }
 
     /**
-     * Reverts the AddressBook to the state before this command
+     * Reverts the AddressBook and Recyclebin to the state before this command
      * was executed and updates the filtered person list to
      * show all persons.
      */
     protected final void undo() {
-        requireAllNonNull(model, previousAddressBook);
-        model.resetData(previousAddressBook);
+        requireAllNonNull(model, previousAddressBook, previousRecycleBin);
+        model.resetData(previousAddressBook, previousRecycleBin);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
@@ -53,6 +61,7 @@ public abstract class UndoableCommand extends Command {
     @Override
     public final CommandResult execute() throws CommandException {
         saveAddressBookSnapshot();
+        saveRecycleBinSnapshot();
         return executeUndoableCommand();
     }
 }

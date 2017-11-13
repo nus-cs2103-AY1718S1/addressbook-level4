@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= iConnect - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,16 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W09-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W09-B03`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+// tag::dgintro[]
+iConnect is a command-line interface (CLI) based application which allows students to manage their contacts and keep track of their schedule. This documentation aims to guide you through the development process of iConnect, getting you started as an iConnect contributor. iConnect is written in Java and the editor of choice is IntelliJ IDE.
+
+Due its sizable codebase, you may want to get familiarise with the different architectural components to have a better understanding of each component works together.
+// end::dgintro[]
 
 == Setting up
 
@@ -91,7 +98,7 @@ When you are ready to start coding,
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -123,7 +130,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -131,7 +138,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,7 +146,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -149,7 +156,7 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -166,10 +173,10 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 3.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -182,12 +189,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -201,7 +208,7 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -218,6 +225,350 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::findmech[]
+=== Enhanced Find mechanism
+
+The enhanced version of find mechanism is facilitated by the `AddressBookParser`, which resides inside `LogicManager`. It allows you to search for person(s) by substrings of multiple different attributes (e.g. `Name`, `Phone`, `Email`, `Address`), which the case is insensitive for `Name`, `Email` and `Address` attributes.
+
+You are only allowed to search by `Name`, `Phone`, `Email` or `Address`. Searching by `Tag` or `Birthday` is not allowed. In order to search by tags, you can use the tag-find (`t-find`) command.
+
+The following diagram shows the inheritance diagram for Find command:
+
+image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Structure of Find Command in the Logic Component_
+
+When you are using the find command, you need to provided at least one keyword for any available attribute. Keywords of the same attribute need to be grouped together with a prefix (e.g. `n/`, `p/`, `e/`, `a/`). In this case, each prefix is allowed to appear at most once.
+
+During the implementation, `FindCommandParser` class splits the keywords of different attributes by searching for the locations of the prefixes, and then stores the keywords into separate ArrayLists. As a `NameContainsKeywordsPredicate` needs to be passed to `FindCommand` class, all the keywords from the ArrayLists are added to the predicate in order with each prefix added in front for separation.
+
+For example, the parser for name keywords is implemented this way:
+[source,java]
+----
+int indexOfName = trimmedArgs.indexOf(PREFIX_NAME.getPrefix());
+
+if (indexOfName != -1) {
+    int index = 0;
+    for (int i = 0; i < attributeIndexArray.length; i++) {
+        if (attributeIndexArray[i] == indexOfName) {
+            index = i;
+            break;
+        }
+    }
+    trimmedNames = trimmedArgs.substring(indexOfName + 2, attributeIndexArray[index + 1]).trim();
+}
+
+List<String> keyWordsToSearch = new ArrayList<>();
+
+if (trimmedNames != null) {
+    String[] nameKeywords = trimmedNames.split(" ");
+    keyWordsToSearch.add(PREFIX_NAME.getPrefix());
+    for (int i = 0; i < nameKeywords.length; i++) {
+        keyWordsToSearch.add(nameKeywords[i]);
+    }
+}
+
+NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(keyWordsToSearch);
+----
+
+When `FindCommand` class is executing, the keywords are taken out from the predicate and stored into separate ArrayLists again by distinguishing the prefixes stored in front of each type of keywords. The reason we do this twice is because we want to keep the consistency of all the command classes instead of changing the parameter type passed into `FindCommand` class. The contacts can be searched separately by different attributes. For each attribute, every keyword is taken out and compared to the corresponding details of all the persons in the list. Once the keyword is matched to any substring of the person details, then the person's name will be stored into a list. After searching all the keywords, a name list with persons with details matching at least one keyword is obtained and passed to `updateFilteredPersonList` method. Finally, the person list is updated and displayed in the person list panel.
+
+For example, searching for name keywords is implemented this way:
+[source,java]
+----
+for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
+    nameList.add(model.getAddressBook().getPersonList().get(i).getName().toString().toLowerCase());
+}
+for (int i = 0; i < nameKeywords.size(); i++) {
+    for (int j = 0; j < nameList.size(); j++) {
+        if (nameList.get(j).contains(nameKeywords.get(i).toLowerCase())) {
+            matchedNames.add(nameList.get(j));
+        }
+    }
+}
+
+if (namesMatched != null) {
+    namesToSearch.addAll(matchedNames);
+}
+
+NameContainsKeywordsPredicate updatedPredicate = new NameContainsKeywordsPredicate(namesToSearch);
+model.updateFilteredPersonList(updatedPredicate);
+----
+
+The following sequence diagram shows how the find command works:
+
+image::FindCommandSequenceDiagram.png[width="800"]
+_Figure 4.1.2 : Interactions Inside the Logic Component for the `find n/john p/1234 e/example.com` Command_
+
+[NOTE]
+If no argument is provided after the command word, an invalid format message will be shown.
+
+
+[NOTE]
+If no prefix is found inside the argument, then an invalid format message will be shown.
+
+
+[NOTE]
+If some dummy values are found before the first prefix and after the command word, then an invalid format message will be shown.
+
+
+[NOTE]
+If no keywords are provided after a prefix, then an invalid format message will be shown.
+
+
+[NOTE]
+If more than one same prefix is provided, then the person list will be searched only by keywords behind the first prefix.
+
+==== Design Considerations
+
+**Aspect:** Find person by `Address` keyword +
+**Alternative 1 (current choice):** Find person by a single `Address` keyword +
+**Pros:** We will not need to separate multiple addresses since it is difficult to distinguish. +
+**Cons:** It is inconvenient to find multiple persons from different locations. +
+**Alternative 2:** Separate different addresses by a special character (e.g. `;` or `*`) +
+**Pros:** You are able to find person(s) staying at different locations. +
+**Cons:** The find command becomes very long. It is hard for you to type all the addresses correctly.
+// end::findmech[]
+
+// tag::mapmech[]
+=== Map mechanism
+
+Map function shows you the home address of a person in Google Map, which is displayed in the centre browser view panel. It allows you to see your friend's location by specifying the index number of the person inside the app. In addition, by entering your current location, it can also show you the shortest path from your location to the selected person's location.
+
+You are not allowed to find the locations of multiple persons by using this feature. Also, only one starting location is allowed when you are trying to find the route.
+
+The following diagram shows the inheritance diagram for the Map commands:
+
+image::MapCommandClassDiagram.png[width="800"]
+_Figure 4.2.1 : Structure of Map Commands in the Logic Component_
+
+When you are using the map-show `(m-show)` command, you need to specify the index number of the person whom you would like to see the location of. As for the map-route `(m-route)` command, apart from specifying the index number, you also need to add a prefix `a/` before you enter your current location. The prefix should appear only once.
+
+During the implementation, map command parser class extracts the index number of the contact and passes the value to the corresponding map command. For `m-route` command, the parser class also extracts your current location by using the prefix symbol. The map command classes will post and raise an event once they are called, based on the parameters they have received.
+
+If you enter `m-show` command, a `BrowserPanelShowLocationEvent` will start. It will build a Google map URL with the specified location of the person selected, and load the Google map in the browser panel.
+
+The event for showing the location is implemented this way:
+[source,java]
+----
+public class BrowserPanelShowLocationEvent extends BaseEvent {
+
+    private final ReadOnlyPerson person;
+
+    public BrowserPanelShowLocationEvent(ReadOnlyPerson person) {
+        this.person = person;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public ReadOnlyPerson getNewSelection() {
+        return person;
+    }
+}
+----
+
+The browser panel class that handles this event is implemented this way:
+[source,java]
+----
+public void loadLocationPage(ReadOnlyPerson person) {
+    loadPage(GOOGLE_MAP_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
+            + GOOGLE_MAP_SEARCH_URL_SUFFIX);
+}
+
+public void loadPage(String url) {
+    Platform.runLater(() -> browser.getEngine().load(url));
+}
+
+private void handleBrowserPanelShowLocationEvent(BrowserPanelShowLocationEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    loadLocationPage(event.getNewSelection());
+}
+----
+
+If you enter `m-route` command, a `BrowserPanelFindRouteEvent` will start. It will build a Google map URL with the specified location of the person selected and your location, and load the Google map in the browser panel.
+
+The event for displaying the route is implemented this way:
+[source,java]
+----
+public class BrowserPanelFindRouteEvent extends BaseEvent {
+
+    private final ReadOnlyPerson person;
+    private final String address;
+
+    public BrowserPanelFindRouteEvent(ReadOnlyPerson person, String address) {
+        this.person = person;
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public ReadOnlyPerson getSelectedPerson() {
+        return person;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+}
+----
+
+The browser panel class that handles this event is implemented this way:
+[source,java]
+----
+public void loadRoutePage(ReadOnlyPerson person, String address) {
+    String startLocation = address.trim().replaceAll(" ", "+");
+    String endLocation = person.getAddress().toString().trim().replaceAll(" ", "+");
+    loadPage(GOOGLE_MAP_DIRECTION_URL_PREFIX + startLocation
+            + GOOGLE_MAP_SEARCH_URL_SUFFIX + endLocation
+            + GOOGLE_MAP_SEARCH_URL_SUFFIX);
+}
+
+public void loadPage(String url) {
+    Platform.runLater(() -> browser.getEngine().load(url));
+}
+
+private  void handleBrowserPanelFindRouteEvent(BrowserPanelFindRouteEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    loadRoutePage(event.getSelectedPerson(), event.getAddress());
+}
+----
+
+The following sequence diagrams show you how the Map commands work:
+
+image::MapShowCommandSequenceDiagram.png[width="800"]
+_Figure 4.2.2 : Interactions Inside the Logic Component for the `m-show 1` Command_
+
+image::MapRouteCommandSequenceDiagram.png[width="800"]
+_Figure 4.2.3 : Interactions Inside the Logic Component for the `m-route 1 a/nus` Command_
+
+[NOTE]
+If no argument is provided after the command word, an invalid format message will be shown.
+
+
+[NOTE]
+If the index number provided is out of the bound of person list, an invalid person index message will be shown.
+
+
+[NOTE]
+If no prefix is found inside the argument when typing `m-route` command, then an invalid format message will be shown.
+
+==== Design Considerations
+
+**Aspect:** Locate a person in Google map +
+**Alternative 1 (current choice):** Add the string value of address to Google map URL +
+**Pros:** The process of finding the location using Google map is simple and straightforward. +
+**Cons:** Google map is not able to find the location or route if the location is not in Singapore. +
+**Alternative 2:** Use some other online maps (e.g. Baidu Map) +
+**Pros:** You are able to find the location in the map even it is not in Singapore. +
+**Cons:** The URL will not be changing during the process, thus it is not easy to achieve the map functions.
+// end::mapmech[]
+
+// tag::birthdaymech[]
+=== Birthday mechanism
+
+The birthday feature allows you to add/update/remove birthday to a selected person. The birthday value is not required when you add a person, since you might not know the birthday of every person. You are not allowed to use `edit` command to update person's birthday.
+
+When you are executing the birthday related commands, only one person is allowed to be selected. The `BIRTHDAY` parameter needs to follow DD/MM/YYYY format. Only the valid date values are allowed to be stored into person's birthday.
+
+The following diagram shows the inheritance diagram for Birthday commands:
+
+image::BirthdayCommandClassDiagram.png[width="800"]
+_Figure 4.3.1 : Structure of Birthday Commands in the Logic Component_
+
+During the implementation, birthday commands parser classes extracts the index number of the person as well as birthday value, and passes them to the corresponding birthday classes. The default birthday value of each person is `01/01/1900`. To add birthday to a person, we actually updated the person's birthday with the new birthday value. To delete a person's birthday, we just update the person's birthday and set it as default value. Updating a person's birthday is similar to adding birthday to the person. The two functions are the same in implementation.
+
+Each time a person is selected from the person list panel, we check the value of the selected person's birthday. If it is default value, it will not be shown in the person details panel.
+
+The adding birthday function is implemented this way:
+[source,java]
+----
+List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+    if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    ReadOnlyPerson currentPerson = lastShownList.get(targetIndex.getZeroBased());
+    Person personToEdit = (Person) lastShownList.get(targetIndex.getZeroBased());
+    personToEdit.setBirthday(birthdayToAdd);
+
+    try {
+        model.updatePerson(currentPerson, personToEdit);
+    } catch (DuplicatePersonException dpe) {
+        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+    } catch (PersonNotFoundException pnfe) {
+        throw new AssertionError("The target person cannot be missing");
+    }
+
+    model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+    EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+
+    return new CommandResult(String.format(MESSAGE_ADD_BIRTHDAY_SUCCESS, personToEdit));
+----
+
+The removing birthday function is implemented this way:
+[source,java]
+----
+List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+    if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    ReadOnlyPerson currentPerson = lastShownList.get(targetIndex.getZeroBased());
+    Person personToEdit = (Person) lastShownList.get(targetIndex.getZeroBased());
+    Birthday birthdayToAdd = new Birthday();
+    personToEdit.setBirthday(birthdayToAdd);
+
+    try {
+        model.updatePerson(currentPerson, personToEdit);
+    } catch (DuplicatePersonException dpe) {
+        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+    } catch (PersonNotFoundException pnfe) {
+        throw new AssertionError("The target person cannot be missing");
+    }
+
+    model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+    EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+
+    return new CommandResult(String.format(MESSAGE_REMOVE_BIRTHDAY_SUCCESS, personToEdit));
+----
+
+The following sequence diagrams show you how the birthday commands work:
+
+image::BirthdayAddCommandSequenceDiagram.png[width="800"]
+_Figure 4.3.2 : Interactions Inside the Logic Component for the `b-add 1 01/01/2000` Command_
+
+image::BirthdayRemoveCommandSequenceDiagram.png[width="800"]
+_Figure 4.3.3 : Interactions Inside the Logic Component for the `b-remove 1` Command_
+
+[NOTE]
+If no argument is provided after the command word, an invalid format message will be shown.
+
+
+[NOTE]
+If the index number provided is out of the bound of person list, an invalid person index message will be shown.
+
+
+[NOTE]
+If an invalid birthday is provided for birthday-remove command, an invalid input birthday message will be shown.
+
+==== Design Considerations
+
+**Aspect:** Birthday value of a contact +
+**Alternative 1 (current choice):** Every person without specifying a birthday has a default birthday value `01/01/1900` +
+**Pros:** It is easy to create a person object without specifying the birthday value. +
+**Cons:** The birthday will not be shown in the person details panel if the person's birthday is exactly the default birthday. +
+**Alternative 2:** Initialize a person's birthday only when a birthday is added to the person, and set the birthday object as `null` when deleting the birthday +
+**Pros:** There is no default birthday for each person, thus any date can be shown in person details panel. +
+**Cons:** It is not convenient every time we want to create a new person object.
+// end::birthdaymech[]
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
@@ -226,6 +577,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.4.1 : Structure of Undo/Redo Command in the Logic Component_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -265,10 +617,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.4.2a : UndoRedoStack Typing Delete Command_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.4.2b : UndoRedoStack Typing Add Command_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -278,6 +632,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.4.2c : UndoRedoStack Typing Undo Command_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -285,6 +640,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.4.3 : Interactions Inside the Logic Component for the `undo` Command_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -294,14 +650,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.4.4a : UndoRedoStack Typing Redo Command_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.4.4b : UndoRedoStack Typing List Command_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.4.5 : UndoRedoStack Entering New Commands_
 
 ==== Design Considerations
 
@@ -345,6 +704,589 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+//tag::sortmech[]
+=== Sorting Mechanism
+
+The sorting mechanism is facilitated by `SortCommandParser` and `SortCommand`, with both classes residing in the `Logic` component of the address book. Since the address book state will be modified during the sorting process, the `sort` has to be undoable.
+
+`SortCommandParser` takes in an argument in the form of `[PREFIX]/[ORDER]` that defines how `UniquePersonList` should be sorted. You may customise the sort operation, with `PREFIX` specifying the sort type and `ORDER` specifying the sort order. It first checks for validity against a regular expression. Once verified, the argument will be tokenized to identify your specified sort order and sort type. A `SortCommand` object is then created with the identified sort type and sort order.
+
+The `PREFIX` can be any of the following: `n/` for sorting persons by name, `p/` for sorting persons by phone number, `e/` for sorting persons by email, `a/` for sorting persons by address and `t/` for sorting persons by the time they was first added into the address book. The `ORDER` can be either `asc` for sorting in ascending order or `dsc` for sorting in descending order. Suppose both `PREFIX` and `ORDER` are not specified, your sort operation will be defaulted to name in ascending order. Alternatively, suppose the `ORDER` is not specified, it will be defaulted to ascending.
+
+Upon execution of `SortCommand`, a `Comparator<ReadOnlyPerson>` will be initialised based on the sort type and sort order it receives. A `sortPerson` function call will be made to `Model`, which propagates down to `UniquePersonList`, where the sorting of the `internalList` occurs. Since sorting of `internalList` results in the change of state to address book, `SortCommand` is to be implemented as an `UndoableCommand`.
+
+image::LogicCommandClassDiagram_Sort.png[width="800"]
+_Figure 4.5.1 : Structure of Sort Command in the Logic Component_
+
+[NOTE]
+Implementation of Sorting Mechanism requires both the manipulation of `Logic` and `Model` component of address book.
+
+The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
+
+image::SortPersonSdForLogic.png[width="800"]
+_Figure 4.5.2 : Interactions Inside the Logic Component for the `sort n/asc` Command_
+
+[NOTE]
+If the list is found to be empty, an `EmptyListException` will be thrown from `UniquePersonList`. The command should be terminated without any state change, keeping the redoStack clean of changes.
+
+==== Design Considerations
+
+**Aspect:** Initialising of `Comparator<ReadOnlyPerson>` +
+**Alternative 1 (current choice):** Initialise in `SortCommand` +
+**Pros:** Clear separation of concerns, `SortCommandParser` to handle identifying of attribute to sort by only. +
+**Cons:** Hard for new developers to follow as other commands like `AddCommand` handles object creation in its parser. +
+**Alternative 2: ** Initialise in `UniquePersonList` +
+**Pros:** Straightforward as initialises the `Comparator` where it is used. +
+**Cons:** `UniquePersonList` is at a lower level and should only handle a minimal set of `Person` related operations, and not logical operations like string matching. +
+
+---
+
+**Aspect:** Sorting by multiple attribute +
+**Alternative 1 (current choice):** Only allows sorting by single attribute +
+**Pros:** Fast and arguments to input is straightforward. +
+**Cons:** Unable to have fine grain control of how list should appear. +
+**Alternative 2:** Allow sorting by multiple attribute +
+**Pros:** Enables fine grain control of how list should appear. +
+**Cons:** Not necessary as effect is only obvious when contact list is long and has multiple common names. As target audience for iConnect are students, contact list will not be more than few thousand contacts long. +
+
+---
+
+**Aspect:** Justification for sorting contacts by time added +
+**Alternative 1 (current choice):** Allows sorting by time added +
+**Pros:** iConnect is design to be an all-in-one scheduling app where it is left open for extended period of time for students to check schedule. Previous implementations required user to exit and relaunch the application for viewing contacts in chronological order again. By allowing sorting by time added, user are also able to toggle to see recently added contacts first. +
+**Cons:** Extra attribute has to be added to each user. +
+**Alternative 2:** Not implementing sorting by time added +
+**Pros:** Can be achieved by restarting app. +
+**Cons:** Requires restarting of app which waste time and processing resources when list is long. +
+// end::sortmech[]
+
+=== Adding a tag to multiple people
+
+Adding a tag to multiple people is facilitated by `TagAddCommand`, which extends `UndoableCommand`, it supports undoing and redoing of commands that modifies the state of the address book.
+
+The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
+
+image::TagAddCommandSequenceDiagram.png[width="800"]
+_Figure 4.6.1 : Interactions Inside the Logic Component for the `t-add 1 2 CS2103` Command_
+
+TagAddCommand is implemented in this way:
+[source,java]
+----
+public class TagAddCommand extends UndoableCommand {
+@Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... TagAddCommand logic ...
+    }
+}
+----
+
+For example, the user input might be `t-add 1 2 3 college friend`. +
+
+After the command word `t-add` is parsed at the `AddresBookParser`, the remaining user input( indices in the list, tag to add), in the example `1 2 3 college friend`, will be passed to and parsed by `TagAddCommandParser`.
+
+Different from the previous limitation on the choice of word for `tag`, which is `Alnum`, we allow multiple words `tagName` as well, such as `college friend`.
+
+The change of `tagName` format requires a new algorithm for parsing in the `TagAddCommandParser`.
+The key is to differentiate between indices and `tagName`. The parser algorithm would first split the input string into parts by space as delimiter. +
+It would then determine whether each part is a word or a number, the parser keeps track of the last recognized number.
+After processing the entire user input, the parser would treat all parts until the last recognized number as indices and those after it as `tagName`.
+In this case, as `3` is the last part that is numeric, `1 2 3` are treated as indices and `college friend` is treated as `tagName`. +
+
+The command `t-add` is also used to add in `favourite` tag, for example `t-add 1 2 3 favourite`. +
+Person(s) with `favourite` tag will have a small coral circle next to the person's name in the left person list panel. And person(s) with `favourite` tag would always be pinned to top of the person list. +
+We also recognize other words containing `fav` as `favourite`, such as `favo`. +
+
+The `TagAddCommandParser` returns `TagAddCommand` after execution, which will be further processed by `logic` component.
+
+TagAddCommandParser is implemented in this way:
+[source,java]
+----
+public class TagAddCommandParser implements Parser<TagAddCommand> {
+
+    public TagAddCommand parse(String args) throws ParseException {
+        // ... TagAddCommandParser logic ...
+        int defaultLastNumberIndex = -1;
+        int completeNumOfArgs = 2;
+        String newTag = "";
+
+        int lastIndex = defaultLastNumberIndex;
+        String[] argsArray;
+        ArrayList<Index> index = new ArrayList<>();
+        if (args.isEmpty() || (argsArray = args.trim().split(" ")).length < completeNumOfArgs) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
+        }
+        try {
+            for (int i = 0; i < argsArray.length; i++) {
+                if (argsArray[i].matches("\\d+")) {
+                    index.add(ParserUtil.parseIndex(argsArray[i]));
+                    lastIndex = i;
+                } else {
+                    break;
+                }
+            }
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
+        }
+        // ... Other TagAddCommandParser logic ...
+    }
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Implementation of adding a tag to person(s) by indices +
+**Alternative 1 (current choice):** Add a new Command `TagAddCommand` +
+**Pros:** Having a separate command for adding a tag is consistent with a series of tag related operations we designed to have. We can implements `UndoableCommand` Abstract Class, so that we have undo/redo functionality. +
+**Cons:** Have to add in a new Command class and the corresponding parser class. +
+**Alternative 2:** Modify current EditCommand +
+**Pros:** Only need to change a small part of code and the undo/redo functionality can be preserved. +
+**Cons:** The current `EditCommand` only enables the user to edit one person at a time, which makes adding a tag to multiple contacts tedious.
+
+---
+
+**Aspect:** Implementation of parsing a `TagAddCommand` +
+**Alternative 1 (current choice):** Add a new Parser class `TagAddCommandParser` +
+**Pros:** The input format can be customized for `TagAddCommand`. +
+**Cons:** Have to add in a new Parser class. +
+**Alternative 2:** Make use of `EditCommandParser` +
+**Pros:** We only need to change a small part of code. +
+**Cons:** User input is restricted by the EditCommand input format.
+
+---
+
+**Aspect:** Whether to accept user input that has partially invalid indices +
+**Alternative 1 (current choice):** Do not accept +
+**Pros:** Easy to implement. +
+**Cons:** User has to type in the valid indices again. +
+**Alternative 2:** Ignore the invalid indices +
+**Pros:** Efficient for the user. +
+**Cons:** Difficult to implement.
+
+---
+
+**Aspect:** Whether to have another command to set person(s) as `favourite` +
+**Alternative 1 (current choice):** No, setting `favourite` utilizes the current `t-add` command +
+**Pros:** User does not need to remember extra commands and treating `favourite` as `tag` is intuitive. Other tag-related operations such as `t-remove` and `t-find` can also be used to manipulate `favourite` tag. +
+**Cons:** Computationally costly to determine whether person(s) are set as `favourite`, as the entire `tagList` needs to be iterated. +
+**Alternative 2:** Have a separate set of commands for `favourite` +
+**Pros:** Have a clear separation of functions. +
+**Cons:** Not user friendly.
+// end::tagadd[]
+
+// tag::tagremove[]
+=== Removing a tag from multiple people
+
+You can remove a tag from multiple people. This is realized using `TagRemoveCommand`, which extends `UndoableCommand`, it supports undoing and redoing of commands that modifies the state of the address book.
+
+The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
+
+image::TagRemoveCommandSequenceDiagram.png[width="800"]
+_Figure 4.7.1 : Interactions Inside the Logic Component for the `t-remove CS2103` Command_
+
+TagRemoveCommand is implemented in this way:
+[source,java]
+----
+public class TagRemoveCommand extends UndoableCommand {
+@Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... TagRemoveCommand logic ...
+    }
+}
+----
+
+For example, the user input might be `t-remove 1 2 3 college friend`. +
+After the command word `t-remove` is parsed at the `AddresBookParser`, the remaining user input( indices in the list, tag to remove), in the example `1 2 3 college friend`, will be passed to and parsed by `TagRemoveCommandParser`.
+
+We also support multiple words as `tagName`, as long as the first word in `tagName` is not a number. +
+This is because the key is to differentiate between indices and `tagName` is by identifying the last recognized number. If a `tagName` has its first word as a number, that word would be treated as an index instead. +
+In this case, as `3` is the last part that is numeric, `1 2 3` is treated as indices and `college friend` is treated as `tagName`. +
+
+`tagName` keyed in by the user must be of the exact match with the actual `tagName` in order for that `tag` to be removed successfully except for `favourite` tag. +
+As `tagName` for `favourite` is not shown explicitly to the user other than a coral circle next to the person name, and user can key in any words containing `fav` to indicate `favourite`, +
+It would be impractical to still look for exact match for `tagName`, thus, additional checks need to be done to determine whether the user wants to remove a `favourite` tag and whether the person(s) selected has `favourite` tag.
+
+The `TagRemoveCommandParser` returns `TagRemoveCommand` after execution, which will be further processed by `logic` component.
+
+TagRemoveCommandParser is implemented in this way:
+[source,java]
+----
+public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
+
+    public TagRemoveCommand parse(String args) throws ParseException {
+        // ... TagRemoveCommandParser logic ...
+    }
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Whether to accept user input that has partially invalid indices +
+**Alternative 1 (current choice):** Do not accept +
+**Pros:** Easy to implement. +
+**Cons:** User have to type in the valid indices again. +
+**Alternative 2:** Ignore the invalid indices +
+**Pros:** Efficient for the user. +
+**Cons:** Difficult to implement.
+
+**Aspect:** Whether to accept removing a tag from multiple persons if someone does not hava the given tag to remove +
+**Alternative 1 (current choice):** Do not accept +
+**Pros:** Easy to implement. +
+**Cons:** User have to type in the valid indices again. +
+**Alternative 2:** Ignore the invalid indices +
+**Pros:** Efficient for the user. +
+**Cons:** Difficult to implement and might be an issue for undo/redo operation.
+
+**Aspect:** Whether to accept user to key in only substring of `tagName` to remove that tag +
+**Alternative 1 (current choice):** Do not accept except for `favourite` tag +
+**Pros:** Prevent the user from removing extra `tag`. +
+**Cons:** User have to type in multiple times to remove similar `tag`s such as `friend` and `college friend`. +
+**Alternative 2:** Remove all `tag`s containing the given substring +
+**Pros:** Efficient for the user. +
+**Cons:** The user might not want to remove all tags containing the substring.
+// end::tagremove[]
+
+// tag::tagfind[]
+=== Listing person(s) with the given tagName
+
+You can get a list of person(s) with the given `tagName`. This is realized using `TagFindCommand`.
+
+The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
+
+image::TagFindCommandSequenceDiagram.png[width="800"]
+_Figure 4.8.1 : Interactions Inside the Logic Component for the `t-find CS2103` Command_
+
+`t-find` command shows all person(s) with tag containing or contained in the given `tagName`. `TagFindCommandParser` passes a `TagMatchingKeywordPredicate` to `TagFindCommand` to update filteredPersonList.
+//end::tagfind[]
+
+// tag::changetheme[]
+=== Changing to the theme of choice
+
+You can change to your theme of choice. There are 3 themes currently, `Twilight`, `Sunburst` and `Minimalism`. This command is not undoable.
+
+SwitchThemeCommand is implemented in this way:
+
+For example, the user input might be `theme Twilight`. +
+After the command word `theme` is parsed at the `AddresBookParser`, the remaining user input( theme of choice), in the example, `Twilight`, will be passed to and parsed by `SwitchThemeCommandParser`.
+We also support other words other than the actual theme name for theme of choice, it might also be `dark` for `Twilight`; `bright` for `Sunburst` and `default` for `Minimalism`. +
+If you only key in `theme`, an error message suggesting the use of this command will be shown in the `result box`. +
+You can just key in the index of your theme of choice instead of the words. +
+
+image::SwitchThemeCommandErrorMessage.png[width="500"]
+_Figure 4.9.1a : Theme Command Typing Command Word Only_
+
+If you key in an invalid index, an error message will be shown in the `result box`.
+
+image::SwitchThemeCommandInvalidIndex.png[width="300"]
+_Figure 4.9.1b : Theme Command Typing Invalid Index Number_
+
+If you key in an unknown theme word, an error message will be shown in the `result box`.
+
+image::SwitchThemeCommandInvalidWord.png[width="300"]
+_Figure 4.9.1c : Theme Command Typing Invalid Theme Word_
+
+The `SwitchThemeParser` returns `SwitchThemeCommand` after execution, which will be further processed by `logic` component.
+
+==== Design Considerations
+
+**Aspect:** How to make the command more intuitive +
+**Alternative 1 (current choice):** Accept more aliases for theme of choice +
+**Pros:** The user does not need to type the full theme name. +
+**Cons:** Difficult to implement. +
+**Alternative 2:** Accept only the official theme names +
+**Pros:** Easy to implement. +
+**Cons:** Not user friendly.
+// end::changetheme[]
+
+// tag::delete[]
+=== Improvements on DeleteCommand
+
+We have improved the delete command to let it be able to delete by multiple indexes or a name with prefix. The reason why we do this is to improve the efficiency to delete the contacts.The prefix for deleting by name is `n/`. The prefix for deleting by indexes is `I/`.
+
+The following sequence diagram shows how the delete command works:
+
+image::DeleteCommandSequenceDiagram.png[width="800"]
+_Figure 4.10.1 : Interactions Inside the Logic Component for the `delete I/1` Command_
+
+You can see that the way we implemented this is to change the DeleteCommandParser and DeleteCommand.
+
+As for the DeleteCommandParser, we check whether there is the prefix we want in the userInput. Once the prefix is identified, if it is a `n/`, it will directly return back the parameters to DeleteCommand. If it is a `I/`, the parameters will be parsed by ParserUtil and return back the results to DeleteCommand.
+
+For example, the parser for Index is implemented this way:
+[source,java]
+----
+public static ArrayList<Index> parseIndexes(String oneBasedIndexes) throws IllegalValueException {
+        String[] ns = oneBasedIndexes.trim().split(" ");
+        ArrayList<Index> numbers = new ArrayList<>();
+        boolean allvalid = true;
+        for (String a : ns) {
+            String s = a.trim();
+            if (StringUtil.isNonZeroUnsignedInteger(s)) {
+                numbers.add(Index.fromOneBased(Integer.parseInt(s)));
+            } else {
+                allvalid = false;
+
+            }
+        }
+        if (!allvalid) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        return numbers;
+
+    }
+----
+
+As for the DeleteCommand, you can use it to deal with two kinds of parameters: a list of indexes or a name string. If it is a list of indexes, the DeleteCommand will check whether the indexes are within the size of all persons and assert command failure if there is an illegal index. If it is a name string, the DeleteCommand will assert command failure when there is no such person in the list with name given and when there are multiple persons with the same name given.
+
+For example, the command delete people by index is implemented this way:
+[source,java]
+----
+ List<ReadOnlyPerson> lastShownList =  model.getFilteredPersonList();
+ ArrayList<ReadOnlyPerson> personstodelete =  new ArrayList<ReadOnlyPerson>();
+ //...delete name logic
+ for (Index s: targetIndexs) {
+     if (s.getZeroBased() >= lastShownList.size()) {
+          allvalid = false;
+         } else {
+          personstodelete.add(lastShownList.get(s.getZeroBased()));
+          exist = true;
+         }
+ }
+ //...dealing duplicate logic...
+ if (allvalid && exist) {
+    try {
+        model.deletePerson(personstodelete);
+    }
+    //...catch exception logic...
+ }
+----
+[NOTE]
+If your input doesn't start with correct prefix, then the command can't identify what kind of input it deals with, and a `ParseException` will be thrown when parsing.
+
+[NOTE]
+If your input contains illegal values or nothing after the prefix, the the command can't identify the target person, and a `ParseException` will be thrown when parsing.
+
+[NOTE]
+If your input is index and it is out of bound of person list, then the command can't find the person to delete, and a `CommandException` will be thrown when processsing.
+
+[NOTE]
+If your input is a name and there is no person with such name in the list, then the command can't find the person to delete, and a `CommandException` will be thrown when processsing.
+
+Moreover, if there is more than one person in the list with the name give, then the command don't know which one ot delete. It will show all the person with same name in GUI and remind the user to choose one to delete.
+
+
+==== Design Considerations
+
+**Aspect:**  Implementation of `DeleteCommandParser` +
+**Alternative 1 (current choice):**  Add a prefix after the command word to distinguish between delete by name or indexes. +
+**Pros:**  It is more convenient to identify the type of input to deal with. +
+**Cons:**  It is less convenient for users to type in the prefix. +
+**Alternative 2:** Use the type of first input word after command word to differentiate. +
+**Pros:**  It is more convenient for the users to type. +
+**Cons:** It is harder for the developer to find the type if the users give a name with all numbers to a contact.
+
+---
+
+**Aspect:**  How to deal with multiple persons with same name condition +
+**Alternative 1 (current choice):**  Do not delete the persons and show all the persons with the same target name on the list. Remind the user to decide which one to delete. +
+**Pros:**  It considers more about the users. Try to ensure the target is the person who the users want to delete. +
+**Cons:**  It cost users more time to delete a person if they don't know the index of the target. +
+**Alternative 2:** Delete the first person with the name in the list and show it to user. +
+**Pros:**  It cost users less time to delete a person if they know the sequence of the persons with the same name. +
+**Cons:** It is hard to guarantee the right person is deleted. The user may need to redo to fix it.
+// end::delete[]
+
+// tag::help[]
+
+=== Improvement on HelpCommand
+
+We make the help command to be able to alert the usage of a speified command.
+
+The way we do it is to make the help command paser to identify the command word after 'help' and show the command usage of that command.
+
+The following sequence diagram shows how help command works:
+
+image::HelpCommandSequenceDiagram.png[width="800"]
+_Figure 4.11.1 : Interactions Inside the Logic Component for the `help add` Command_
+
+For example, you can see the implementation of the help command parser as follow:
+[source,java]
+----
+public HelpCommand parse(String args) throws ParseException {
+    String input = args.toLowerCase().trim();
+
+    if (input.equals(AddCommand.COMMAND_WORD) || input.equals(AddCommand.COMMAND_WORD_2)
+        || input.equals(AddCommand.COMMAND_WORD_3)) {
+        return new HelpCommand("add");
+    }//... other command logic...
+}
+----
+[NOTE]
+If the input command word after 'help' can not be identified, then you will see the whole UserGuide.
+// end::help[]
+
+// tag::bin[]
+=== RecycleBin Mechanism
+
+We design a recycle bin in the iConnect to store the person removed from address book. In this way, users can restore the people they wrongly deleted. You may think that it can be done by udno/redo command. Actually, if users want to restore a person they deleted long time ago, then the undo/redo command would not hlep.
+
+The users can interact with bin using four commands: 'bin-delete', 'bin-fresh', 'bin-restore';
+
+The way we deal with recycle bin storage is the same as we deal with addressbook storage. We store the recycle bin as a xml file and read and save it in the same way as address book storage. Then we put the addressbook and recycleibn into model.
+
+*Bin commands*
+
+* `bin-delete` : Deletes the people in the recycle bin by index as shown in the list.
+* `bin-fresh` : Deletes all the peopel in the recycle bin.
+* `bin-restore` : Restores the people in the recycle bin to address book by given index.
+
+[NOTE]
+If we find duplicate people (A') when deleting a person (A) to recyclebin or restoring a person (A) to addressbook, then this person (A') will be omitted and directly removed and the person (A) will remain.
+
+==== Design Considerations
+
+**Aspect:**  How to deal with duplicate person in recycle bin +
+**Alternative 1 (current choice):**  Don't put a peron into the recycle bin if we find duplicate person in bin when we delete from address book. +
+**Pros:**  It is more convenient to restore a person if we keep the person in bin unique . +
+**Cons:**  The information of the second duplicate person will not be stored in adressbook. +
+**Alternative 2:** Put the person with duplicate one into recycle bin. +
+**Pros:**  It's less likely we will lose data when we delete. +
+**Cons:**  It is harder when we need to restore a person with duplicate persons in the bin.
+
+---
+
+**Aspect:**  Information to store in recycle bin +
+**Alternative 1 (current choice):**  Don't store the tag and event of a person, and store all the other information. +
+**Pros:**  It is more convenient to restore a person without affecting the tag list and event list in address book . +
+**Cons:**  Users may need to add the tag and event of a person retored from the recycle bin again. +
+**Alternative 2:** Store all the information of a perosn into recycle bin when the person is deleted from address book. +
+**Pros:**  Users don't need to edit the tag and evnet of restored person again. +
+**Cons:**  It costs a lot more work to reload a person with its own tag and event.
+
+// end::bin[]
+
+// tag::export[]
+=== Exporting
+
+We are using 'java.io.File' and 'java.io.FileWriter' to export address book data.
+
+The following sequence diagram shows how export command works:
+
+image::ExportCommandSequenceDiagram.png[width="800"]
+_Figure 4.13.1 : Interactions Inside the Logic Component for the `export path` Command_
+
+* The filepath should be a complete path to a specific location of a empty txt file in your computer.
+* The order of the output information is 'person', 'event';
+// end::export[]
+
+// tag::schedule[]
+=== Scheduler Feature
+The `ScheduleAddCommand` allows you to add an `Event` into address book and is stored in an ArrayList-like `UniqueEventList` in `AddressBook`. Each event may have a number of members and they are specified by their `Index` in the `PersonListPanel` during the user input phase. The `ScheduleRemoveCommand` allows you to remove an `Event` from address book by inputting the `Index` of an event in the `EventListPanel`. Note that you may input more than one `Index` to remove multiple events at a time.
+
+Since both command requires the modification of `AddressBook` contents, they implemented as an UndoableCommand.
+
+image::LogicCommandClassDiagram_ScheduleCommands.png[width="800"]
+_Figure 4.14.1 : Structure of Schedule-related Commands in the Logic Component_
+
+****
+
+*Event-Person Relationship* +
+
+Each time an `Event` is created, four other composite objects are created as well:
+
+* `EventName` contains a single variable `fullName` that is verified to only contain alphanumeric characters and spaces and should not be blank.
+* `EventTime` stores and handles the start time, end time and the duration of an event. Since the concept of start and end time involves duration, `EvenTime` has to have an instance of an event’s duration despite us having `EventDuration`. You can also check an event’s status, with the function `isUpcoming` which returns a boolean value.
+* `EventDuration` stores the duration of an event and may range from having a value of 0 to days.
+* `MemberList` stores a list of `Person` who is involved with the event and may be empty. Each element is synced to a `Person` in the master `UniquePersonList` in `AddressBook`.
+
+Each `Person` maintains its own `UniqueEventList` with each element synced to an `Event` in the master `UniqueEventList` in `AddressBook`. In otherwords, both object references each other.
+
+****
+
+`UniqueEventList` functions as a List of `Events` where every element is unique and the uniqueness of an event is defined by its name, time and duration. If two different events have the same value for the three attributes, it is considered to be a duplicate. You can also check if an `Event` clashes with any of the events in `UniqueEventList`, by running the `hasClashes` function which returns true if a clash exist.
+
+*Adding an Event to Schedule*
+
+Each time `ScheduleAddCommand` is executed, `AddressBook` first checks if there are any `Person` involved in the `Event`. Suppose no `Index` was specified in the user input, it signifies that the event has no members and is directly added into the `UniqueEventList` in `AddressBook`. However, suppose a number of `Person` has been selected as members in the input, a list of new `Person` object will be created and events will be added through a person update. Each `Person` in the new list reflects a `Person` that was selected, with the addition of the `Event`, that is to be added, in his/her `UniqueEventList`. The list of new `Person` will then be used to update its respective counterpart in `AddressBook`, where it undergoes a direct replacement followed by a two `Event`-related syncing. This sync process will result in the adding of events in the master `UniqueEventList` of `AddressBook`.
+
+*Syncing the Event-Person Relationship*
+
+The first sync checks that every event of a `Person` exist is the master `UniqueEventList` in `AddressBook`, and points each event to an event in the master list. Suppose an event does not exist in the master list, it is added to the master list before the syncing process. The second sync updates all the `Event` of each newly edited `Person` to have their `MemberList` point to a `Person` in the master person list in `AddressBook`.
+
+[source,java]
+----
+    /**
+     * Ensures that every event in this person:
+     * - exists in the master list {@link #events}
+     * - points to a Event object in the master list
+     */
+    private void syncMasterEventListWith(Person person) {
+        final UniqueEventList personEvents = new UniqueEventList(person.getEvents());
+        events.mergeFrom(personEvents);
+
+        // Create map with values = event object references in the master list
+        // used for checking person event references
+        final Map<Event, Event> masterEventObjects = new HashMap<>();
+        events.forEach(event -> masterEventObjects.put(event, event));
+
+        // Rebuild the personal list of events to point to the relevant events in the master event list.
+        final Set<Event> correctEventReferences = new HashSet<>();
+        personEvents.forEach(event -> correctEventReferences.add(masterEventObjects.get(event)));
+        person.setEvents(correctEventReferences);
+    }
+
+    /**
+     * Ensures that every member in this event:
+     * - points to a person object in the master person list
+     */
+    private void syncMasterEventListMembers(Event event) {
+
+        // Create map with values = person object references in the master list
+        // used for checking member references
+        final Map<Person, Person> masterPersonObjects = new HashMap<>();
+        this.persons.forEach(person -> masterPersonObjects.put(person, person));
+
+        ArrayList<ReadOnlyPerson> eventMembers = new ArrayList<>();
+        this.persons.asObservableList().stream().filter(readOnlyPerson ->
+                readOnlyPerson.getEvents().contains(event)).forEach(eventMembers::add);
+
+
+        // Rebuild the list of member to point to the relevant person in the master person list.
+        final Set<Person> correctPersonReferences = new HashSet<>();
+        eventMembers.forEach(person -> correctPersonReferences.add(masterPersonObjects.get(person)));
+        event.setMemberList(new MemberList(
+                new ArrayList<>(correctPersonReferences)));
+    }
+----
+
+The two syncing process ensures the `MemberList` of each `Event` points to a `Person` in master person list and also having each element in `UniqueEventList` of `Person` points to an event in the master event list.
+
+*Removing an Event from Schedule*
+
+Similar to the adding of events, the removing of events is also done through an update and sync process. Suppose an `Event` has an empty `MemberList`, the specified `Event` will be directly removed from the master `UniqueEventList` in `AddressBook`. However, if the `Event` that is to be deleted has members involved, it will be removed through the same update and sync process.
+
+==== Design Considerations
+
+**Aspect:** Keeping track of the duration of an `Event` +
+**Alternative 1 (current choice):** Create a separate object named `EventDuration`, despite having a duration stored in `EventTime` +
+**Pros:** Implementing a separate object for duration follows the OOP model and also facilitates specific operations in the `Logic` and `UI` component. Firstly, duration has its own set of parsing and validation criteria during the input phase, justifying the need for separation. Secondly, duration has to be implemented as a separate object for it to appear as a standalone UI label. Since binding of `textProperty` read the `toString` of the binded `ObjectProperty`, duration has to be stored as a separate `ObjectProperty`. +
+**Cons:** Both `EventTime` and `EventDuration` has an instance of duration. +
+**Alternative 2:** Stores duration of event in `EventTime` only +
+**Pros:** Lesser code to work with. +
+**Cons:** Unable to output duration as a standalone element on the UI due to the restrictions of `EventCard` label bindings. +
+
+---
+
+**Aspect:** Uniqueness of an `Event` +
+**Alternative 1 (current choice):** Have uniqueness defined by only `EventName`, `EventTime` and `EventDuration` +
+**Pros:** The absence of `MemberList` allows for a more straightforward update and sync process during the application's initialisation phase. All `Person` and `Event` objects are first read and create from `addressbook.xml` without any referencing to each other. Suppose `MemberList` is included as part of the uniqueness check, it has to be built before the update process. However, the correct `Person` does not exist since no event has been added to any `Person`. +
+**Cons:** Uniqueness comparison is not succinct. +
+**Alternative 2:** Include `MemberList` as part of uniqueness test +
+**Pros:** Able to create an `Event` with the the same name, time and duration as long as `MemberList` elements are different. +
+**Cons:** Uniqueness comparison is too lenient and syncing process may be unnecessarily complicated. +
+
+// end::schedule[]
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -363,6 +1305,8 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+
 
 == Documentation
 
@@ -392,7 +1336,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -723,18 +1667,74 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |organised user |sort contacts by different attributes, ascending/descending order |look for specific contact easily
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |organised user |classify my contacts by a tag |find the relevant people under a tag quickly
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |desperate user |find contact by substring of name |find a person even if I forget the exact contact name
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |forgetful user |find specific contacts by attributes other than name |find out the contact’s name
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |lazy user |launch commands by keying in shortcuts |save time
+
+|`* * *` |organised user |have different colors for tag to specify its priority |have a finer classification
+
+|`* * *` |logical user |sort contacts chronologically by either ascending or descending order |keep track of my records
+
+|`* * *` |forgetful user |type in alias of commands |choose not to remember specific commands
+
+|`* * *` |lazy user |delete multiple user by index |perform batch deletion
+
+|`* * *` |lazy user |delete user by name |perform faster deletion without finding the index
+
+|`* * *` |worried user |export my contact list to a backup file (separate from data/addressbook.xml) |restore my contact list in case corruption happens
+
+|`* *` |particular user |change the color theme/background image of the product |have a nice visual experience
+
+|`* *` |paranoid user |hide private contact details by default |minimize chance of someone else seeing them by accident
+
+|`* *` |power user |launch a shell version of the product |operate without the clutter
+
+|`* *` |organised user |record schedules with my contacts (like a calendar) | keep track of my upcoming events
+
+|`* *` |dedicated user |see my contact’s address on google map |meet them for project
+
+|`* *` |power user |copy contact details to clipboard | have quick access to contact details in plaintext
+
+|`* *` |sociable user |store social media information for contacts |keep track
+
+|`* *` |friendly user |find out the route from one contact’s address to my home address |know the way to my contact’s home
+
+|`* *` |frequent user |synchronize contact information with all devices |choose not to update one by one
+
+|`* *` |forgetful user |input events based on natural language |add in events easily
+
+|`* *` |careless user |specify number of times to undo/redo with in input parameter |save time
+
+|`* *` |careless user |get a list of contact that I removed (like a Recycle bin) |recover the accidentally deleted ones
+
+|`* *` |paranoid user |remove all contacts permanently from the deleted contact list |clear my records
+
+|`*` |power user |exclude words in my searches |filter my search result
+
+|`*` |efficient user |send an email from the program (launch the system’s default mailto:) |do something with the contacts
+
+|`*` |sociable user |customize the URL of my contact (instead of the default google page) |be up to date with how my contacts are doing
+
+|`*` |friendly user |get notification on contacts’ birthdays |send birthday wishes
+
+|`*` |forgetful user |get notification on upcoming events |choose not to remember mentally
+
+|`*` |forgetful user |store standalone events (does not involve anyone in the contact list) |keep track of my schedule
+
+|`*` |friendly user |tag the hobbies of contacts |get closer to them
+
+|`*` |lazy user |get contact details by scanning QR code |choose not to type manually
+
+|`*` |friendly user |find date matches |meet new friends
+
+|`*` |sociable user |share events online for people to see |people can join me
 |=======================================================================
-
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -742,41 +1742,185 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add contact
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User input command to add contact: add n/[NAME] p/[PHONE] e/[EMAIL] a/[ADDRESS]
+2.  Address book stores contact and outputs success message
+
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. User enters incomplete contact information with missing fields
++
+[none]
+** 2a1. Address book shows error message
++
+Use case ends.
++
+Use case ends.
+[none]
+* 2b. Similar contact already exist in Address Book
++
+[none]
+** 2b1. Address book shows error message
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+[discrete]
+=== Use case: Edit contact
+
+*MSS*
+
+1.  User input command to edit contact: edit INDEX n/[NAME] p/[PHONE] e/[EMAIL] a/[ADDRESS]
+2.  Address book edits relevant contact details and outputs success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Invalid index inputted
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 2a1. Address book shows error message
 +
-Use case resumes at step 2.
+Use case ends.
 
-{More to be added}
+* 2b. No attributes was inputted
++
+[none]
+** 2b1. Address book shows error message
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete contact
+
+*MSS*
+
+1.  User input command to delete contact: delete INDEX
+2.  Address delete contact from list and outputs success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Invalid index inputted
++
+[none]
+** 2a1. Address book shows error message
++
+Use case ends.
+
+[discrete]
+=== Use case: Find contact by keywords
+
+*MSS*
+
+1.  User input command to find contacts: find [n/NAMES] [p/PHONES] [e/EMAILS] [a/ADDRESS]
+2.  Address book shows a list of contacts with at least one of the keywords provided
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No arguments are provided after the command word
++
+[none]
+** 2a1. Address book shows user an incorrect input format message
++
+Use case ends.
+
+* 2b. No keywords are provided after a prefix
++
+[none]
+** 2b1. Address book shows user an incorrect input format message
++
+Use case ends.
+
+* 2c. Dummy values are provided before the first prefix
++
+[none]
+** 2c1. Address book shows user an incorrect input format message
++
+Use case ends.
+
+* 2d. User enters multiple same prefixes
++
+[none]
+** 2d1. Address book only shows contacts provided by keywords after the first prefix and ignores the rest
++
+Use case ends.
+
+* 2e. No contacts found by the given keywords
+[none]
+** 2e1. Address book shows an empty list message
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort contact list
+
+*MSS*
+
+1.  User input command to sort contacts: sort [PREFIX]/[ORDER]
+2.  Address book sorts contacts and output sorted list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No arguments inputted
++
+[none]
+** 2a1. Address book sorts contacts by name in ascending order and output sorted list
++
+Use case ends.
+
+[none]
+* 2a. No sort order inputted
++
+[none]
+** 2a1. Address book sort by inputted attribute in ascending order and output sorted list
++
+Use case ends.
+
+[none]
+* 2a. The address book is empty
++
+[none]
+** 2a1. Address book shows an empty list message
++
+Use case ends.
+
+* 2a. Invalid arguments inputted
++
+[none]
+** 2a1. Address book shows an error message
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
+.  Address book should have restricted access.
+.  System should responds within 2 seconds.
+.  Address book source should be open sourced.
+.  Should work on both 32bit and 64bit.
+.  Instructions should be in logical abbreviations of their functions.
+.  Users are able to type short commands (less than 80 characters) to achieve what they want.
+.  The address book product should to free to all users.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
 
 [appendix]
 == Glossary
@@ -795,19 +1939,37 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
+[[Alnum]]
+Alnum
 
-*Product Name*
+....
+A regular expression that matches all numbers and letters
+....
 
-Author: ...
+[[tagName]]
+tagName
 
-Pros:
+....
+Name of a tag
+....
 
-* ...
-* ...
+[[index]]
+index
 
-Cons:
+....
+A running number used to label the contacts, often inserted after a command to serve as contact selection
+....
 
-* ...
-* ...
+[[recycle-list]]
+recycle list
+
+....
+A list of deleted contacts
+....
+
+[[AddressBook.xml]]
+AddressBook.xml
+
+....
+The file that the contact list is stored to, located in the ‘data’ folder
+....

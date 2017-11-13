@@ -5,8 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -20,9 +22,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyListException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
@@ -102,7 +108,27 @@ public class AddCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void restorePerson(ReadOnlyPerson person) throws DuplicatePersonException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+        @Override
+        public void restorePerson(ArrayList<ReadOnlyPerson> person) throws DuplicatePersonException,
+                PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetData(ReadOnlyAddressBook newData, ReadOnlyAddressBook newRecycleibin) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetRecyclebin(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
 
@@ -111,10 +137,23 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
+        @Override
+        public ReadOnlyAddressBook getRecycleBin() {
+            fail("This method should not be called.");
+            return null;
+        }
 
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
+        }
+
+        public void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
+            fail("This method should not be called");
+        }
+
+        public void deleteBinPerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
+            fail("This method should not be called");
         }
 
         @Override
@@ -129,10 +168,58 @@ public class AddCommandTest {
             return null;
         }
 
+        public ObservableList<ReadOnlyPerson> getRecycleBinPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ObservableList<Event> getEventList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        public void updateFilteredBinList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateListOfPerson(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons)
+                throws DuplicatePersonException, PersonNotFoundException {
+            fail("This method should not be called.");
+
+        }
+
+        @Override
+        public void addEvent(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons, Event event)
+                throws DuplicateEventException, DuplicatePersonException, PersonNotFoundException {
+            fail("This method should not be called.");
+
+        }
+
+        @Override
+        public void removeEvents(ArrayList<ReadOnlyPerson> targets, ArrayList<ReadOnlyPerson> editedPersons,
+                                 ArrayList<Event> toRemoveEvents)
+                throws DuplicatePersonException, PersonNotFoundException, EventNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortEvents(LocalDate date) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasEvenClashes(Event event) {
+            fail("This method should not be called.");
+            return false;
+        }
+
     }
 
     /**
@@ -146,6 +233,11 @@ public class AddCommandTest {
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+
+        @Override
+        public ReadOnlyAddressBook getRecycleBin() {
             return new AddressBook();
         }
     }
@@ -163,6 +255,11 @@ public class AddCommandTest {
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+
+        @Override
+        public ReadOnlyAddressBook getRecycleBin() {
             return new AddressBook();
         }
     }

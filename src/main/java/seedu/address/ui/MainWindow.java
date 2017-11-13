@@ -8,6 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -17,6 +19,9 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeBrightThemeEvent;
+import seedu.address.commons.events.ui.ChangeDarkThemeEvent;
+import seedu.address.commons.events.ui.ChangeDefaultThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -29,7 +34,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/iConnect_icon.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -41,9 +46,19 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private RecycleBinPanel recycleBinPanel;
+    private PersonDetailsPanel personDetailsPanel;
     private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
     private Config config;
     private UserPrefs prefs;
+    private CalendarView calendarView;
+
+    @FXML
+    private StackPane contactDetailsPlaceholder;
+
+    @FXML
+    private StackPane recycleBinListPlaceHolder;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -55,17 +70,31 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private MenuItem styleMenuItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane eventListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
+    private StackPane calendarViewPlaceholder;
+
+    @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private SplitPane schedulePanel;
+
+    @FXML
+    private TabPane infoDisplayPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
-
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
@@ -94,6 +123,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -126,11 +156,24 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
+        personDetailsPanel = new PersonDetailsPanel(logic.getFilteredPersonList(), infoDisplayPlaceholder);
+        contactDetailsPlaceholder.getChildren().add(personDetailsPanel.getRoot());
+
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        recycleBinPanel = new RecycleBinPanel(logic.getRecycleBinList(), infoDisplayPlaceholder);
+        recycleBinListPlaceHolder.getChildren().add(recycleBinPanel.getRoot());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        eventListPanel = new EventListPanel(logic.getEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
+        calendarView = new CalendarView(logic.getEventList());
+        calendarViewPlaceholder.getChildren().add(calendarView.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -140,6 +183,10 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        schedulePanel.setDividerPositions(1);
+
+
     }
 
     void hide() {
@@ -152,6 +199,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -192,6 +240,41 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    //@@author ZhangH795
+    /**
+     * Change to dark theme.
+     */
+    @FXML
+    public void changeToDarkTheme() {
+        Scene scene = primaryStage.getScene();
+        scene.getStylesheets().setAll("view/DarkTheme.css");
+        primaryStage.setScene(scene);
+        show();
+    }
+
+    /**
+     * Change to bright theme.
+     */
+    @FXML
+    public void changeToBrightTheme() {
+        Scene scene = primaryStage.getScene();
+        scene.getStylesheets().setAll("view/BrightTheme.css");
+        primaryStage.setScene(scene);
+        show();
+    }
+
+    /**
+     * Change to default theme.
+     */
+    @FXML
+    public void changeToDefaultTheme() {
+        Scene scene = primaryStage.getScene();
+        scene.getStylesheets().setAll("view/Extensions.css");
+        primaryStage.setScene(scene);
+        show();
+    }
+    //@@author
+
     void show() {
         primaryStage.show();
     }
@@ -217,4 +300,24 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author ZhangH795
+    @Subscribe
+    private void handleDarkThemeEvent(ChangeDarkThemeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        changeToDarkTheme();
+    }
+
+    @Subscribe
+    private void handleBrightThemeEvent(ChangeBrightThemeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        changeToBrightTheme();
+    }
+
+    @Subscribe
+    private void handleDefaultThemeEvent(ChangeDefaultThemeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        changeToDefaultTheme();
+    }
+    //@@author
 }

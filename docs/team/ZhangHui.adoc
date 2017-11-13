@@ -1,0 +1,62 @@
+= Zhang Hui - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: iConnect
+Introducing iConnect, our one-stop address book application built for students. We aim to serve as your personal secretary to ease your job as a student. Due to the ever-increasing workload, it has become a challenge to keep track of various school commitments while maintaining relationships with peers.
+
+With iConnect, missing schedules and losing contact with friends will be a thing of the past.
+Let’s get connected now!
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/main/ZhangH795.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/test/ZhangH795.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added:
+TagAdd / TagRemove / TagFind / Theme
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tagadd]
+
+include::../UserGuide.adoc[tag=tagremove]
+
+include::../UserGuide.adoc[tag=tagaddfav]
+
+include::../UserGuide.adoc[tag=tagremovefav]
+
+include::../UserGuide.adoc[tag=changetheme]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Enables the user to manipulate tags more conveniently, as in our application, tags can be used to identify modules that some of the contacts take.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tagadd]
+
+include::../DeveloperGuide.adoc[tag=tagremove]
+
+include::../DeveloperGuide.adoc[tag=changetheme]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `sync`
+
+Synchronize the application with phone's contact list.
+
+=== Other contributions
+
+* Updated the GUI color scheme [https://github.com/CS2103AUG2017-W09-B3/main/commit/61d64d21d0991f7cbb04fc3975168f51920fd055[Pull request #126]]
+* Wrote additional tests to increase coverage

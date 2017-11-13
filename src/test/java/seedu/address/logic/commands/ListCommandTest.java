@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -24,8 +25,8 @@ public class ListCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new AddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), new AddressBook(), new UserPrefs());
 
         listCommand = new ListCommand();
         listCommand.setData(model, new CommandHistory(), new UndoRedoStack());

@@ -10,6 +10,8 @@ import static seedu.address.testutil.TestUtil.getPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -19,6 +21,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
@@ -32,7 +35,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
+        String command = DeleteCommand.COMMAND_WORD + "   I/" + INDEX_FIRST_PERSON.getOneBased();
         ReadOnlyPerson deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
@@ -70,7 +73,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
-        command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
+        command = DeleteCommand.COMMAND_WORD + " I/" + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* --------------------- Performing delete operation while a person card is selected ------------------------ */
@@ -81,7 +84,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         Index selectedIndex = getLastIndex(expectedModel);
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
         selectPerson(selectedIndex);
-        command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
+        command = DeleteCommand.COMMAND_WORD + " I/" + selectedIndex.getOneBased();
         deletedPerson = removePerson(expectedModel, selectedIndex);
         expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
@@ -89,27 +92,27 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
         /* Case: invalid index (0) -> rejected */
-        command = DeleteCommand.COMMAND_WORD + " 0";
+        command = DeleteCommand.COMMAND_WORD + " I/0";
         assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid index (-1) -> rejected */
-        command = DeleteCommand.COMMAND_WORD + " -1";
+        command = DeleteCommand.COMMAND_WORD + " I/-1";
         assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
                 getModel().getAddressBook().getPersonList().size() + 1);
-        command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
+        command = DeleteCommand.COMMAND_WORD + " I/" + outOfBoundsIndex.getOneBased();
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " I/abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " I/1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("DelETE I/1", MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**
@@ -118,10 +121,14 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      */
     private ReadOnlyPerson removePerson(Model model, Index index) {
         ReadOnlyPerson targetPerson = getPerson(model, index);
+        ArrayList<ReadOnlyPerson> target = new ArrayList<>();
+        target.add(targetPerson);
         try {
-            model.deletePerson(targetPerson);
+            model.deletePerson(target);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");
+        } catch (DuplicatePersonException d) {
+            throw new AssertionError("impossible");
         }
         return targetPerson;
     }
@@ -137,7 +144,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
 
         assertCommandSuccess(
-                DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);
+                DeleteCommand.COMMAND_WORD + " I/"
+                        + toDelete.getOneBased(), expectedModel, expectedResultMessage);
     }
 
     /**
@@ -157,7 +165,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url
+     * Performs same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url
      * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
      * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
@@ -169,10 +177,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         if (expectedSelectedCardIndex != null) {
             assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            assertSelectedCardUnchanged();
         }
-
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }

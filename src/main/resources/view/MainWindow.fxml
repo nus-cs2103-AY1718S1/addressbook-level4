@@ -6,51 +6,97 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <stylesheets>
-    <URL value="@DarkTheme.css" />
-    <URL value="@Extensions.css" />
-  </stylesheets>
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@Extensions.css" />
+    </stylesheets>
 
-  <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-    <Menu mnemonicParsing="false" text="File">
-      <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-    </Menu>
-    <Menu mnemonicParsing="false" text="Help">
-      <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-    </Menu>
-  </MenuBar>
+    <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+        </Menu>
+      <Menu mnemonicParsing="false" text="Style">
+        <items>
+            <MenuItem fx:id="NightMode" mnemonicParsing="false" onAction="#changeToDarkTheme" text="Twilight" />
+          <MenuItem fx:id="DayMode" mnemonicParsing="false" onAction="#changeToBrightTheme" text="Sunburst" />
+            <MenuItem fx:id="Default" mnemonicParsing="false" onAction="#changeToDefaultTheme" text="Minimalism" />
+        </items>
+      </Menu>
+    </MenuBar>
+    <SplitPane dividerPositions="0.5" VBox.vgrow="ALWAYS">
+        <items>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+                <children>
+                    <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
+                        <padding>
+                            <Insets bottom="5" left="10" right="10" top="5" />
+                        </padding>
+                    </StackPane>
+               <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" VBox.vgrow="ALWAYS">
+                 <items>
+                          <StackPane fx:id="resultDisplayPlaceholder" maxHeight="300.0" minHeight="100" prefHeight="100" styleClass="pane-with-border">
+                              <padding>
+                                  <Insets bottom="5" left="10" right="10" top="5" />
+                              </padding>
+                          </StackPane>
+                          <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5">
+                              <VBox fx:id="personList" minWidth="340.0" prefWidth="340.0" SplitPane.resizableWithParent="false">
+                                  <padding>
+                                      <Insets bottom="10" left="10" right="10" top="10" />
+                                  </padding>
+                                  <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+                              </VBox>
 
-  <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-    <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
-    </padding>
-  </StackPane>
-
-  <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-      minHeight="100" prefHeight="100" maxHeight="100">
-    <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
-    </padding>
-  </StackPane>
-
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
-      <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
-      </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-    </VBox>
-
-    <StackPane fx:id="browserPlaceholder" prefWidth="340" >
-      <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
-      </padding>
-    </StackPane>
-  </SplitPane>
-
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+                              <TabPane fx:id="infoDisplayPlaceholder" prefHeight="200.0" prefWidth="340.0">
+                                  <tabs>
+                                      <Tab closable="false" text="Contact Details">
+                                          <content>
+                                              <StackPane fx:id="contactDetailsPlaceholder" prefWidth="340">
+                                                  <padding>
+                                                      <Insets bottom="10" left="10" right="10" top="10" />
+                                                  </padding>
+                                              </StackPane>
+                                          </content>
+                                      </Tab>
+                                      <Tab closable="false" text="Browser">
+                                          <content>
+                                              <StackPane fx:id="browserPlaceholder" prefWidth="340">
+                                                  <padding>
+                                                      <Insets bottom="10" left="10" right="10" top="10" />
+                                                  </padding>
+                                              </StackPane>
+                                          </content>
+                                      </Tab>
+                              <Tab closable="false" text="Recyclebin ">
+                                 <content>
+                                    <StackPane fx:id="recycleBinListPlaceHolder" prefHeight="150.0" prefWidth="200.0" />
+                                 </content>
+                              </Tab>
+                                  </tabs>
+                              </TabPane>
+                          </SplitPane>
+                 </items>
+               </SplitPane>
+                </children>
+            </VBox>
+            <SplitPane fx:id="schedulePanel" dividerPositions="1.0" maxWidth="500.0" minWidth="300.0" orientation="VERTICAL" prefWidth="400.0">
+                <items>
+                    <StackPane fx:id="calendarViewPlaceholder" alignment="TOP_LEFT" maxHeight="-Infinity" />
+                    <StackPane fx:id="eventListPanelPlaceholder" alignment="TOP_LEFT" minHeight="-Infinity" />
+                </items>
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+            </SplitPane>
+        </items>
+    </SplitPane>
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>

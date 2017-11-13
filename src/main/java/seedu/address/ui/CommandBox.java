@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
+
+import org.controlsfx.control.textfield.TextFields;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +16,7 @@ import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -25,6 +29,7 @@ public class CommandBox extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
+    private final ArrayList<String> suggestions;
     private ListElementPointer historySnapshot;
 
     @FXML
@@ -36,6 +41,8 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        suggestions = AddressBookParser.getCommandNames();
+        TextFields.bindAutoCompletion(commandTextField, suggestions);
     }
 
     /**
@@ -56,7 +63,6 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         default:
-            // let JavaFx handle the keypress
         }
     }
 
@@ -107,14 +113,14 @@ public class CommandBox extends UiPart<Region> {
             // process result of the command
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
 
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage()));
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
     }
 

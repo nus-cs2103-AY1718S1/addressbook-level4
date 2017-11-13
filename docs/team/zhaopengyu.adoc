@@ -1,0 +1,61 @@
+= Zhao Pengyu - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: iConnect
+iConnect is a desktop address book application used for University Students to manage their contacts information and schedule event. It has many attractive features such as using time table to mark up the event, using google map to show the location and using recycle bin to hold deleted person to allow restore.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/main/Pengyuz.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/test/Pengyuz.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Help/Delete/Export/bin-list/bin-clear/bin-delete/bin-restore
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=delete]
+
+include::../UserGuide.adoc[tag=help]
+
+include::../UserGuide.adoc[tag=export]
+
+include::../UserGuide.adoc[tag=bin]
+
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The need for recycle bin commands:
+
+It is more convenient for users to find back a person they wrongly delete before instead of readding the person again. The undo/redo command can only acheive the same functionality when the delete command is conducted after the last exiting of application. However, if the delete command is conducted long time ago or before last exiting of application, it is hard or impossible for users to find the wrongly deleted person back. Therefore, we need a recycle bin to store all the perosn delted by user to facilitating restoring.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=delete]
+
+include::../DeveloperGuide.adoc[tag=help]
+
+include::../DeveloperGuide.adoc[tag=export]
+
+include::../DeveloperGuide.adoc[tag=bin]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+include::../UserGuide.adoc[tag=fontsize]
+
+=== Other contributions
+
+* Update the GUI of recyclebin list (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/138 [#138]) and (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/131 [#131]).
+

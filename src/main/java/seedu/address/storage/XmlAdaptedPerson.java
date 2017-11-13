@@ -8,7 +8,10 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -24,20 +27,28 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
+    private String birthday;
+    @XmlElement(required = true)
     private String phone;
     @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String dateAdded;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+
+    @XmlElement
+    private List<XmlAdaptedEvent> onEvent = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedPerson() {
+    }
 
 
     /**
@@ -47,6 +58,7 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
         name = source.getName().fullName;
+        birthday = source.getBirthday().value;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
@@ -54,6 +66,10 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        for (Event event : source.getEvents()) {
+            onEvent.add(new XmlAdaptedEvent(event));
+        }
+        dateAdded = source.getDateAdded().toString();
     }
 
     /**
@@ -66,11 +82,18 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+        final List<Event> personEvents = new ArrayList<>();
+        for (XmlAdaptedEvent event : onEvent) {
+            personEvents.add(event.toModelType());
+        }
         final Name name = new Name(this.name);
+        final Birthday birthday = new Birthday(this.birthday);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        final Set<Event> events = new HashSet<>(personEvents);
+        final DateAdded dateAdded = new DateAdded(this.dateAdded);
+        return new Person(name, birthday, phone, email, address, tags, events, dateAdded);
     }
 }

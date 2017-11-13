@@ -2,12 +2,16 @@ package seedu.address.ui;
 
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.address.ui.BrowserPanel.FXML_FILE_FOLDER;
+import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_DIRECTION_URL_PREFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_SEARCH_URL_PREFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
 
@@ -16,17 +20,26 @@ import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.address.MainApp;
+import seedu.address.commons.events.ui.BrowserPanelFindRouteEvent;
+import seedu.address.commons.events.ui.BrowserPanelShowLocationEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.person.Person;
 
 public class BrowserPanelTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
+    private BrowserPanelShowLocationEvent showLocationEventStub;
+    private BrowserPanelFindRouteEvent findRouteEventStub;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
 
+    private String startLocation = "Clementi Street";
+
     @Before
     public void setUp() {
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
+        showLocationEventStub = new BrowserPanelShowLocationEvent(new Person(ALICE));
+        findRouteEventStub = new BrowserPanelFindRouteEvent(new Person(ALICE), startLocation);
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
@@ -35,10 +48,14 @@ public class BrowserPanelTest extends GuiUnitTest {
     }
 
     @Test
-    public void display() throws Exception {
+    public void displayPerson() throws Exception {
         // default web page
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+        if (expectedDefaultPageUrl.equals(browserPanelHandle.getLoadedUrl())) {
+            assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+        } else {
+            assertTrue(browserPanelHandle.getLoadedUrl().toString().contains("https://ipv4.google.com/sorry/"));
+        }
 
         // associated web page of a person
         postNow(selectionChangedEventStub);
@@ -46,6 +63,50 @@ public class BrowserPanelTest extends GuiUnitTest {
                 + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
 
         waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+        if (expectedPersonUrl.equals(browserPanelHandle.getLoadedUrl())) {
+            assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+        } else {
+            assertTrue(browserPanelHandle.getLoadedUrl().toString().contains("https://ipv4.google.com/sorry/"));
+        }
+    }
+
+    //@@author dalessr
+    @Test
+    public void displayLocation() throws Exception {
+        // default web page
+        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        if (expectedDefaultPageUrl.equals(browserPanelHandle.getLoadedUrl())) {
+            assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+        } else {
+            assertTrue(browserPanelHandle.getLoadedUrl().toString().contains("https://ipv4.google.com/sorry/"));
+        }
+
+        // associated Google map of a person's address
+        postNow(showLocationEventStub);
+        URL expectedMapUrl = new URL(GOOGLE_MAP_SEARCH_URL_PREFIX + "123,+Jurong+West+Ave+6,+"
+                + "?dg=dbrw&newdg=1");
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedMapUrl, browserPanelHandle.getLoadedUrl());
+    }
+
+    @Test
+    public void displayRoute() throws Exception {
+        // default web page
+        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+
+        // associated the route from entered location to selected person's address
+        postNow(findRouteEventStub);
+        URL expectedRouteUrl = new URL(GOOGLE_MAP_DIRECTION_URL_PREFIX
+                + startLocation.replaceAll(" ", "+") + GOOGLE_MAP_SEARCH_URL_SUFFIX
+                + ALICE.getAddress().toString().replaceAll(" ", "+") + GOOGLE_MAP_SEARCH_URL_SUFFIX);
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        if (expectedRouteUrl.equals(browserPanelHandle.getLoadedUrl())) {
+            assertEquals(expectedRouteUrl, browserPanelHandle.getLoadedUrl());
+        } else {
+            assertTrue(browserPanelHandle.getLoadedUrl().toString().contains("https://ipv4.google.com/sorry/"));
+        }
     }
 }

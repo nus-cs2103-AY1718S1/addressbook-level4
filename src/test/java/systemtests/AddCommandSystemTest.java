@@ -9,7 +9,6 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
@@ -50,7 +49,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
@@ -120,7 +118,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, toAdd);
 
         /* Case: filters the person list before adding -> added */
-        executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
+        executeCommand(FindCommand.COMMAND_WORD + " n/ " + KEYWORD_MATCHING_MEIER);
         assert getModel().getFilteredPersonList().size()
                 < getModel().getAddressBook().getPersonList().size();
         assertCommandSuccess(IDA);
@@ -179,11 +177,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid address -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_ADDRESS_DESC;
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
-
-        /* Case: invalid tag -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + INVALID_TAG_DESC;
-        assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 
     /**
@@ -226,7 +219,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }

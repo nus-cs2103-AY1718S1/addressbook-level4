@@ -64,6 +64,13 @@ public class PersonCardTest extends GuiUnitTest {
 
         // same person, different index -> returns false
         assertFalse(personCard.equals(new PersonCard(person, 1)));
+
+        Person person1 = new PersonBuilder().withTags("1").build();
+        PersonCard personCard1 = new PersonCard(person1, 0);
+
+        // same person, same index -> returns true
+        PersonCard copy1 = new PersonCard(person1, 0);
+        assertTrue(personCard1.equals(copy1));
     }
 
     /**

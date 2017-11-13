@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,28 +24,49 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<DateAdded> dateAdded;
+    private ObjectProperty<UniqueEventList> events;
+    private ObjectProperty<Birthday> birthday;
 
     /**
+     * /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Event> events,
+                  DateAdded dateAdded) {
+        requireAllNonNull(name, phone, email, address, tags, dateAdded);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
-        // protect internal tags from changes in the arg list
+        this.birthday = new SimpleObjectProperty<>(new Birthday());
+        this.dateAdded = new SimpleObjectProperty<>(dateAdded);
+        // protect internal tags & events from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.events = new SimpleObjectProperty<>(new UniqueEventList(events));
+    }
+
+    public Person(Name name, Birthday birthday, Phone phone, Email email, Address address, Set<Tag> tags,
+                  Set<Event> events, DateAdded dateAdded) {
+        requireAllNonNull(name, phone, email, address, tags, dateAdded);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.birthday = new SimpleObjectProperty<>(birthday);
+        this.dateAdded = new SimpleObjectProperty<>(dateAdded);
+        // protect internal tags & events from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.events = new SimpleObjectProperty<>(new UniqueEventList(events));
     }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+        this(source.getName(), source.getBirthday(), source.getPhone(), source.getEmail(), source.getAddress(),
+                source.getTags(), source.getEvents(), source.getDateAdded());
     }
 
     public void setName(Name name) {
@@ -58,6 +81,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Name getName() {
         return name.get();
+    }
+
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() {
+        return birthday.get();
     }
 
     public void setPhone(Phone phone) {
@@ -102,6 +139,11 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    @Override
+    public DateAdded getDateAdded() {
+        return dateAdded.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -122,6 +164,43 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author ZhangH795
+    /**
+     * Checks whether a person has favourite tag.
+     *
+     * @return true if the person has favourite tag
+     */
+    @Override
+    public boolean isFavourite() {
+        for (Tag tag : getTags()) {
+            if (tag.tagName.toLowerCase().contains("fav")) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //@@author
+
+    /**
+     * Returns an immutable event set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<Event> getEvents() {
+        return Collections.unmodifiableSet(events.get().toSet());
+    }
+
+    public ObjectProperty<UniqueEventList> eventProperty() {
+        return events;
+    }
+
+    /**
+     * Replaces this person's events with the events in the argument events set.
+     */
+    public void setEvents(Set<Event> replacement) {
+        events.set(new UniqueEventList(replacement));
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -132,7 +211,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, events, dateAdded);
     }
 
     @Override

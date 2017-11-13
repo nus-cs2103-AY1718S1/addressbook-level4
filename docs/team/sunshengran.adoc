@@ -1,0 +1,66 @@
+= Sun Shengran - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: iConnect
+iConnect is a desktop address book application used for NUS undergraduates social network connection purpose. We aim to make the student's school life much easier and more convenient. With this app, students are able to manage their study, work as well as social activities in a more efficient way. The user is required to interact with the app by typing command line, and it has a GUI created with JavaFX for user's convenience. It is written in Java, and has about 25 thousand line of codes (kLoC).
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/main/dalessr.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/test/dalessr.md[Test code]]
+
+=== Enhancements Added: Find, Map, Birthday
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+include::../UserGuide.adoc[tag=map]
+
+include::../UserGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+* Having the enhanced `find` command allows users to find specific contacts more efficiently.
+
+* Having the `m-show` and `m-route` command allows users to find the home location of their contacts in case they would like to meet them.
+
+* Having a `b-add` and `b-remove` command allows users to add, update and remove birthdays of their contacts, adding a personal touch to their address book.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findmech]
+
+include::../DeveloperGuide.adoc[tag=mapmech]
+
+include::../DeveloperGuide.adoc[tag=birthdaymech]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=link]
+
+include::../UserGuide.adoc[tag=shell]
+
+#End of Extract#
+
+=== Other contributions
+
+* GUI design: built the person details panel (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/84[#84])
+* GUI design: open a new tab in centre panel to display the browser view for each social media icon (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/98[#98])
+* GUI design: command word auto-completion (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/120[#120])
+* Wrote additional tests to increase coverage (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/101[#101], https://github.com/CS2103AUG2017-W09-B3/main/pull/132[#132])

@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <birthday>29/09/1994</birthday>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <dateAdded>01/01/2016 11:11:53</dateAdded>
+        <tagged>classmates</tagged>
+        <tagged>friends</tagged>
+        <onEvent>
+            <eventName>CS2103T Exam</eventName>
+            <eventTime>2017-12-04 10:00</eventTime>
+            <eventDuration>120</eventDuration>
+        </onEvent>
+        <onEvent>
+            <eventName>Matchmaking Event</eventName>
+            <eventTime>2017-09-23 18:30</eventTime>
+            <eventDuration>90</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <birthday>27/02/1983</birthday>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <dateAdded>07/02/2016 12:00:01</dateAdded>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <onEvent>
+            <eventName>Matchmaking Event</eventName>
+            <eventTime>2017-09-23 18:30</eventTime>
+            <eventDuration>90</eventDuration>
+        </onEvent>
+        <onEvent>
+            <eventName>Meeting for Project Demo</eventName>
+            <eventTime>2017-10-24 09:00</eventTime>
+            <eventDuration>60</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <birthday>03/12/1992</birthday>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <dateAdded>01/05/2016 12:00:01</dateAdded>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <birthday>30/05/1976</birthday>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <dateAdded>15/09/2016 12:00:01</dateAdded>
+        <tagged>family</tagged>
+        <onEvent>
+            <eventName>Family Gathering and Outing</eventName>
+            <eventTime>2017-12-16 17:00</eventTime>
+            <eventDuration>180</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <birthday>18/11/1960</birthday>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <dateAdded>15/09/2016 12:01:01</dateAdded>
+        <tagged>profs</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <birthday>25/08/1996</birthday>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <dateAdded>20/09/2016 12:00:01</dateAdded>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Quintin Levell</name>
+        <birthday>04/09/1997</birthday>
+        <phone>66012135</phone>
+        <email>levellq@example.com</email>
+        <address>Blk 39 Aljunied Street 18, #03-44</address>
+        <dateAdded>01/10/2016 11:11:53</dateAdded>
+        <tagged>cs2103</tagged>
+        <tagged>friends</tagged>
+        <onEvent>
+            <eventName>Meeting for Project Demo</eventName>
+            <eventTime>2017-10-24 09:00</eventTime>
+            <eventDuration>60</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Gino Trost</name>
+        <birthday>27/05/1987</birthday>
+        <phone>85154314</phone>
+        <email>trostg@example.com</email>
+        <address>Blk 40 Boon Lay Street 87, #03-12</address>
+        <dateAdded>07/10/2016 12:00:01</dateAdded>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <onEvent>
+            <eventName>Meeting for Project Demo</eventName>
+            <eventTime>2017-10-24 09:00</eventTime>
+            <eventDuration>60</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Honey Digiacomo</name>
+        <birthday>14/12/1994</birthday>
+        <phone>98500414</phone>
+        <email>digiahoney@example.com</email>
+        <address>Blk 166 Ang Mo Kio Vista, #03-28</address>
+        <dateAdded>01/12/2016 12:00:01</dateAdded>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>Fred Greenland</name>
+        <birthday>27/05/1982</birthday>
+        <phone>62667227</phone>
+        <email>greenfd@example.com</email>
+        <address>Blk 395 Woodlands Street 10, #15-18</address>
+        <dateAdded>15/12/2016 12:00:01</dateAdded>
+        <tagged>family</tagged>
+        <onEvent>
+            <eventName>Family Gathering and Outing</eventName>
+            <eventTime>2017-12-16 17:00</eventTime>
+            <eventDuration>180</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Francina Schepers</name>
+        <birthday>07/08/1997</birthday>
+        <phone>62667887</phone>
+        <email>francina@example.com</email>
+        <address>Blk 477 Jurong East Street 28, #01-33</address>
+        <dateAdded>01/02/2017 12:01:01</dateAdded>
+        <tagged>classmates</tagged>
+        <tagged>cs2103</tagged>
+        <onEvent>
+            <eventName>CS2103T Exam</eventName>
+            <eventTime>2017-12-04 10:00</eventTime>
+            <eventDuration>120</eventDuration>
+        </onEvent>
+        <onEvent>
+            <eventName>Matchmaking Event</eventName>
+            <eventTime>2017-09-23 18:30</eventTime>
+            <eventDuration>90</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Ima Mauffray</name>
+        <birthday>17/10/1969</birthday>
+        <phone>86159036</phone>
+        <email>imamau@example.com</email>
+        <address>Blk 395 Lorong 6 Orchard Road, #04-36</address>
+        <dateAdded>20/02/2017 12:00:01</dateAdded>
+        <tagged>profs</tagged>
+    </persons>
+    <persons>
+        <name>Han Slankard</name>
+        <birthday>18/10/1970</birthday>
+        <phone>82034763</phone>
+        <email>hans@example.com</email>
+        <address>Blk 322 Lorong 2 Paya Lebar, #15-21</address>
+        <dateAdded>01/05/2017 11:11:53</dateAdded>
+        <tagged>family</tagged>
+        <onEvent>
+            <eventName>Family Gathering and Outing</eventName>
+            <eventTime>2017-12-16 17:00</eventTime>
+            <eventDuration>180</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Audry Sustaita</name>
+        <birthday>25/10/1983</birthday>
+        <phone>72394273</phone>
+        <email>audrys@example.com</email>
+        <address>Blk 20 Jurong West Street 82, #10-02</address>
+        <dateAdded>07/05/2017 12:00:01</dateAdded>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Jade Dimas</name>
+        <birthday>28/01/1976</birthday>
+        <phone>99282463</phone>
+        <email>dimasj@example.com</email>
+        <address>Blk 142 Geylang East Street 86, #18-33</address>
+        <dateAdded>01/08/2017 12:00:01</dateAdded>
+        <tagged>tutors</tagged>
+    </persons>
+    <persons>
+        <name>Lory Prosper</name>
+        <birthday>05/05/1978</birthday>
+        <phone>65029401</phone>
+        <email>lory123@example.com</email>
+        <address>Blk 145 Shunfu Point, #11-05</address>
+        <dateAdded>15/09/2017 12:00:01</dateAdded>
+        <tagged>family</tagged>
+        <onEvent>
+            <eventName>Family Gathering and Outing</eventName>
+            <eventTime>2017-12-16 17:00</eventTime>
+            <eventDuration>180</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Leone Tipps</name>
+        <birthday>08/12/1989</birthday>
+        <phone>82058265</phone>
+        <email>tippsl@example.com</email>
+        <address>Blk 39 Ang Mo Kio Street 86, #07-22</address>
+        <dateAdded>28/09/2017 12:01:01</dateAdded>
+        <tagged>classmates</tagged>
+        <onEvent>
+            <eventName>CS2103T Exam</eventName>
+            <eventTime>2017-12-04 10:00</eventTime>
+            <eventDuration>120</eventDuration>
+        </onEvent>
+        <onEvent>
+            <eventName>Matchmaking Event</eventName>
+            <eventTime>2017-09-23 18:30</eventTime>
+            <eventDuration>90</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Rusty Lucena</name>
+        <birthday>12/06/1973</birthday>
+        <phone>93376847</phone>
+        <email>lucenar@example.com</email>
+        <address>Blk 345 Geylang East Street 27, #15-03</address>
+        <dateAdded>01/10/2017 12:00:01</dateAdded>
+        <tagged>tutors</tagged>
+        <onEvent>
+            <eventName>Meeting for Project Demo</eventName>
+            <eventTime>2017-10-24 09:00</eventTime>
+            <eventDuration>60</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Rhea Vallo</name>
+        <birthday>18/09/1999</birthday>
+        <phone>65028849</phone>
+        <email>vallor@example.com</email>
+        <address>Blk 12 Lorong 14 Marine Parade, #05-25</address>
+        <dateAdded>01/10/2017 11:11:53</dateAdded>
+        <tagged>family</tagged>
+        <onEvent>
+            <eventName>Family Gathering and Outing</eventName>
+            <eventTime>2017-12-16 17:00</eventTime>
+            <eventDuration>180</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Stanford Blakemore</name>
+        <birthday>15/01/1983</birthday>
+        <phone>52170156</phone>
+        <email>stanford@example.com</email>
+        <address>Blk 397 Serangoon Gardens Street 24, #03-26</address>
+        <dateAdded>10/10/2017 12:00:01</dateAdded>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <onEvent>
+            <eventName>Matchmaking Event</eventName>
+            <eventTime>2017-09-23 18:30</eventTime>
+            <eventDuration>90</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Lori Bancroft</name>
+        <birthday>21/03/1992</birthday>
+        <phone>88305967</phone>
+        <email>lorib@example.com</email>
+        <address>Blk 453 Jurong East Street 25, #10-13</address>
+        <dateAdded>15/10/2017 12:00:01</dateAdded>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>Hollis Biles</name>
+        <birthday>29/07/1988</birthday>
+        <phone>92264773</phone>
+        <email>bilesh@example.com</email>
+        <address>Blk 48 Lorong 10 Caldecott, #07-02</address>
+        <dateAdded>29/10/2017 12:00:01</dateAdded>
+        <tagged>family</tagged>
+        <onEvent>
+            <eventName>Family Gathering and Outing</eventName>
+            <eventTime>2017-12-16 17:00</eventTime>
+            <eventDuration>180</eventDuration>
+        </onEvent>
+    </persons>
+    <persons>
+        <name>Linn Mcewen</name>
+        <birthday>10/10/1966</birthday>
+        <phone>93045568</phone>
+        <email>mcewenlinn@example.com</email>
+        <address>Blk 17 Boon Lay Street 29, #13-32</address>
+        <dateAdded>01/11/2017 12:01:01</dateAdded>
+        <tagged>profs</tagged>
+    </persons>
+    <persons>
+        <name>Melvin Sigmund</name>
+        <birthday>02/09/1995</birthday>
+        <phone>66083995</phone>
+        <email>melvins@example.com</email>
+        <address>Blk 29 Aljunied Street 76, #09-25</address>
+        <dateAdded>05/11/2017 12:00:01</dateAdded>
+        <tagged>colleagues</tagged>
+        <onEvent>
+            <eventName>Matchmaking Event</eventName>
+            <eventTime>2017-09-23 18:30</eventTime>
+            <eventDuration>90</eventDuration>
+        </onEvent>
+    </persons>
+    <tags>tutors</tags>
+    <tags>profs</tags>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>cs2103</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+    <events>
+        <eventName>CS2103T Exam</eventName>
+        <eventTime>2017-12-04 10:00</eventTime>
+        <eventDuration>120</eventDuration>
+    </events>
+    <events>
+        <eventName>Matchmaking Event</eventName>
+        <eventTime>2017-09-23 18:30</eventTime>
+        <eventDuration>90</eventDuration>
+    </events>
+    <events>
+        <eventName>Meeting for Project Demo</eventName>
+        <eventTime>2017-10-24 09:00</eventTime>
+        <eventDuration>60</eventDuration>
+    </events>
+    <events>
+        <eventName>Family Gathering and Outing</eventName>
+        <eventTime>2017-12-16 17:00</eventTime>
+        <eventDuration>180</eventDuration>
+    </events>
+</addressbook>

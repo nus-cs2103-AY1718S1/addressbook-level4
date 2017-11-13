@@ -26,12 +26,15 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.model.util.SampleRecycleUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.RecycleBinStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlRecycleBinStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -62,7 +65,8 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        RecycleBinStorage recycleBinStorage = new XmlRecycleBinStorage(userPrefs.getRecycleBinFilePath());
+        storage = new StorageManager(addressBookStorage, recycleBinStorage, userPrefsStorage);
 
         initLogging(config);
 
@@ -87,22 +91,28 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyAddressBook> recycleBinOptional;
         ReadOnlyAddressBook initialData;
+        ReadOnlyAddressBook initialRe;
         try {
             addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
+            recycleBinOptional = storage.readRecycleBin();
+            if (!addressBookOptional.isPresent() || !recycleBinOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialRe = recycleBinOptional.orElseGet(SampleRecycleUtil::getSampleRecycleBin);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initialRe = new AddressBook();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initialRe = new AddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, initialRe, userPrefs);
     }
 
     private void initLogging(Config config) {
