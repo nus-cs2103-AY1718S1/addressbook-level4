@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
@@ -9,6 +10,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.control.skin.DatePickerContent;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 
@@ -23,6 +25,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.CalendarChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.ChangeModeCommand;
@@ -43,6 +46,7 @@ public class CalendarPanel extends UiPart<Region> {
     private static final String FXML = "CalendarPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private static Clock clock = Clock.systemDefaultZone();
     private final Logic logic;
     private final Model model;
 
@@ -75,7 +79,20 @@ public class CalendarPanel extends UiPart<Region> {
         calendarPane.getChildren().add(popupContent);
         //selectDate(popupContent, "30-10-2017");
     }
+    //@@author
 
+    //@@author tby1994
+    /**
+     * Update the calendar
+     */
+    private void updateCalender() {
+        DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
+        DatePickerContent popupContent = (DatePickerContent) datePickerSkin.getPopupContent();
+        calendarPane.getChildren().add(popupContent);
+    }
+    //@@author
+
+    //@@author tpq95
     /**
      * Load datePicker with various dates, birthday from personList and deadline from taskList
      * @param personList
@@ -269,4 +286,14 @@ public class CalendarPanel extends UiPart<Region> {
         return dayCellFactory;
     }
 
+    //@@author tby1994
+    @Subscribe
+    public void handleCalendarChangedEvent(CalendarChangedEvent abc) {
+        long now = clock.millis();
+        String lastUpdated = new Date(now).toString();
+        logger.info(LogsCenter.getEventHandlingLogMessage(abc, "Calender updated status to " + lastUpdated));
+        setDate(model.getAddressBook().getPersonList(), model.getAddressBook().getTaskList());
+        //loadDefaultPage();
+        updateCalender();
+    }
 }
