@@ -11,230 +11,198 @@ This document explains the steps to perform manual testing, and how to load the 
 The following are the steps to load sample data:
 
 . Step 1
+  Rename the SampleData.xml to addressbook.xml
 . Step 2
-. ...
+  Move this addressbook.xml to \data folder.
+. Step 3
+  You will get a dialog box asking if you would like to overwrite the existing addressbook.xml file. Click on `overwrite`.
 
 == Commands to Test
 
+=== Help
 
-=== Frequently Visited Contacts
+Command Usage: `help`
 
-Following are the commands which will increase the `PopularityCounter` by one for the contacts viewed/searched:
+* `help` +
+Expected Result: New window pops up showing all commands The Myth's Book offers.
 
-*** `viewtag`
-*** `select`
-*** `details`
-*** `location`
-*** `email`
+=== History
 
-[NOTE]
-Manual selection of person through a click also increases the popularity counter of that person. This is the same action as `details` command.
+Command Usage: `history`
 
+* `history` +
+Expected Result: Shows `help` in the result box.
 
-[NOTE]
-To closely notice the changes, please reset the data by deleting the `addressbook.xml` and allowing our application to generate default contacts each with zero popularity( or replacing by sampledata file given). Initially everyone has zero popularity and ones added earlier in addressbook will be ranked higher in Frequently Visited List
+=== Themes
 
-Order of Events:
+Command Usage: `themes`
 
-image::initialPC.PNG[width="400"]
+* `themes` +
+Expected Result: Opens a window showing all the themes you can switch to in the application (currently there are two). +
 
-. Initially you should see the above list in Popular contact
+=== Switch themes
 
-. `details 10` +
-Index 10's popularity counter increased. +
-Janice come on the #1 position
+Command Usage: `switch INDEX`
 
-. `viewtag friends` +
-Everyone with tag `friends` gets counter increased. +
-Akshay comes on #4 position
+To note: +
+****
+* Currently The Myth's Book offers only two themes. So the index provided must be either 1 or 2. +
+****
 
+* `switch 2` +
+Expected Result: Switches theme of application to a bright theme.
 
-. `list` +
-`select 1` +
-Charlotte's counter increases +
-Charlotte's comes on #4 position before Akshay even though they have the same counter since, Charlotte was added before Akshay in address book
+* `switch 1` +
+Expected Result: Switches theme of application to a dark theme.
 
-You can try other commands to see the updation of Popular Contact List.
+* `switch` +
+Expected Result: Invalid command format!
+                 switch: Switches the current theme to the theme identified by the index number in the themes list.
+                 Parameters: INDEX (must be a positive integer)
+                 Example: switch 1 +
 
-=== Filter
-*Please reload the `addressbook` data before conducting the test.*
+=== Add
+Command Usage: `add n/NAME p/PHONE_NUMBER e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]…`
 
-Command usage: `filter [n/NAME] [t/TAG]`
+To note: +
+****
+* NAME, PHONE and EMAIL are compulsory fields for the command.
+****
 
-* `filter n/alex` +
-Expected result: 2 persons listed! +
+* `add n/Jessica Alba p/98456321 e/jalaba@hotmail.com` +
+Expected result: New person added
+                 Person list panel jumps to added person card
+                 Details Panel displays newly added persons details. +
+
+* `add n/Dickson Chan p/84563241 e/dickson_chan@gmail.com w/https://www.facebook.com/dicksonChan`  +
+ Expected result: New person added
+                  Person list panel jumps to added person card
+                  Details Panel displays newly added persons details. +
+
+* `add n/James Cordon p/8543219 b/12/11/1998`
+Expected Result:Invalid command format!
+                add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL [w/WEBSITE] [a/ADDRESS] [h/HOME NUMBER] [se/SCHOOL EMAIL] [b/BIRTHDAY] [t/TAG]...
+                Example: add n/John Doe p/98765432 h/65822291 e/johnd@example.com se/e0001111@u.nus.edu w/https://www.facebook.com/johnDoe a/311, Clementi Ave 2, #02-25 b/12/02/1998 t/friends t/owesMoney +
+
+=== Sort Command
+Command usage:
+`sort`
+
+Note: Sorting does not persist if you close the application.
+
+* `sort` +
+Expected result: List Sorted +
 +
-`Alex Yeoh` and `Alex` will be displayed
+Contact list will be sorted in alphabetical order.
 
-* `filter n/alex n/yeoh` +
+=== Find Command Enhancement
+Command usage:
+`find KEYWORD`
+
+Note: Find allows searching for part of the Contact's name. However, the part of the name you are searching for must be at least 2 characters long and is in the starting of either the first or last name.
+
+=== Find Tags
+
+Command usage: `findtag TAG [TAG..]`
+
+Note: type `list` before each findtag test case.
+
+* `findtag brother` +
 Expected result: 1 persons listed! +
 +
-`Alex Yeoh` will be displayed.
+`Wei Hong` will be displayed.
 
-* `filter n/alex yeoh` +
-Expected result: 1 persons listed! +
+* `findtag colleagues friends` +
+Expected result: 6 persons listed! +
 +
-`Alex Yeoh` will be displayed.
+`Alex Yeoh`, `Bernice Yu`, `Irfan Ibrahim`, `Darren`, `Jinting`, `John Doe` will be displayed.
 
-* `filter n/yeoh alex` +
-Expected result: 1 persons listed! +
-+
-`Alex Yeoh` will be displayed. The order of the name does not matter.
-
-* `filter t/friends` +
-Expected result: 3 persons listed! +
-+
-`Alex Yeoh`, `Bernice Yu` and `Akshay` having the tag `friends` will be displayed.
-
-* `filter t/friends t/colleagues` +
-Expected result: 2 persons listed! +
-+
-`Bernice Yu` and `Akshay` having both tags `colleagues` and `friends` will be displayed.
-
-* `filter t/friends colleagues` +
-Expected result: 2 persons listed! +
-+
-`Bernice Yu` and `Akshay` having both tags `colleagues` and `friends` will be displayed.
-
-* `filter n/alex t/friends` +
-Expected result: 1 persons listed! +
-+
-`Alex Yeoh` will be displayed because the contact has a name containing `alex` and has the tag `friends`.
-
-* `filter t/friends n/alex` +
-Expected result: 1 persons listed! +
-+
-`Alex Yeoh` will be displayed. The ordering does not matter.
-
-* `filter n/friends` +
+* `findtag work` +
 Expected result: 0 persons listed! +
+
+* `findtag work friends`
+Expected Result: 4 persons listed!
 +
-No contacts will be displayed because there are no contacts having the name `friends`.
+`Alex Yeoh`, `Bernice Yu`, `Darren`, `John Doe` will be displayed.
 
-* `filter` +
-Expected result: Invalid command format! +
-                 filter: Filters all persons whose names and tags contain all of the specified keywords and displays them as a list with index numbers. +
-                 Parameters: [n/NAME] [t/TAG]... +
-                 Note: At least one of the parameters must be specified. +
-                 Example: filter n/Alex t/friends
-
-* `filter Alex` +
-Expected result: Invalid command format! +
-                 filter: Filters all persons whose names and tags contain all of the specified keywords and displays them as a list with index numbers. +
-                 Parameters: [n/NAME] [t/TAG]... +
-                 Note: At least one of the parameters must be specified. +
-                 Example: filter n/Alex t/friends
-
-* `filter n/` +
-Expected result: Invalid command format! +
-                 filter: Filters all persons whose names and tags contain all of the specified keywords and displays them as a list with index numbers. +
-                 Parameters: [n/NAME] [t/TAG]... +
-                 Note: At least one of the parameters must be specified. +
-                 Example: filter n/Alex t/friends
-
-* `filter t/` +
-Expected result: Invalid command format! +
-                 filter: Filters all persons whose names and tags contain all of the specified keywords and displays them as a list with index numbers. +
-                 Parameters: [n/NAME] [t/TAG]... +
-                 Note: At least one of the parameters must be specified. +
-                 Example: filter n/Alex t/friends
-
-* `filter n/Alex t/` +
-Expected result: Invalid command format! +
-                 filter: Filters all persons whose names and tags contain all of the specified keywords and displays them as a list with index numbers. +
-                 Parameters: [n/NAME] [t/TAG]... +
-                 Note: At least one of the parameters must be specified. +
-                 Example: filter n/Alex t/friends
-
-=== Nickname
-*Please reload the `addressbook` data before conducting the test.*
-
-Command usage: `nickname INDEX [NICKNAME]`
-
-* `list` +
-`nickname 1 Alexandra` +
-Expected result: Nickname successfully set to Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Birthday: 21-10-1995 Nickname: Alexandra Tags: [friends] +
-+
-The nickname `Alexandra` will be displayed next to the contact.
-
-* `nickname 1 Alexandra` +
-Expected result: Nickname remains unchanged for Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Birthday: 21-10-1995 Nickname: Alexandra Tags: [friends]
-
-* `nickname 1` +
-Expected result: Nickname successfully removed from Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Birthday: 21-10-1995 Nickname:  Tags: [friends] +
-+
-The nickname from the contact will be removed.
-
-
-* To test the command works on a filtered list: +
-`find alex` +
-`nickname 2 Alan` +
-Expected result: Nickname successfully set to Person: Alex Phone: 83292191 Email: alex@example.com Address: 35, Jurong East Birthday: 10-2-1950 Nickname: Alan Tags: [family] +
-+
-The nickname `Alan` will be displayed next to the contact.
-
-* `nickname` +
+* `findtag` +
 Expected result: Invalid command format!
-                 nickname: Sets the nickname to the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
-                 Parameters: INDEX (must be a positive integer) [NICKNAME]
-                 Example: nickname 1 Adam
+                 findtag: Finds all persons whose tags contain any of the specified keywords (case-insensitive) and displays them as a list with index numbers.
+                 Parameters: KEYWORD [MORE_KEYWORDS]...
+                 Example: findtag friend +
 
-* `nickname 0` +
-Expected result: Invalid command format!
-                 nickname: Sets the nickname to the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
-                 Parameters: INDEX (must be a positive integer) [NICKNAME]
-                 Example: nickname 1 Adam
+=== Birthdays
 
-* `nickname 22` +
-Expected result: The person index provided is invalid +
+Command usage: `birthdays`
+
+* `birthdays` +
+Expected Result: Wish these 1 people a Happy Birthday!
 +
-Note: This result will be displayed only if there are 21 or less contacts on the current displayed list.
+`Bernice Yu` will be displayed.
 
-=== Theme
-Command usage: `theme THEME`
-
-* `theme day` +
-Expected result: Successfully set theme: day +
+* `bd` +
+Expected Result: Wish these 1 people a Happy Birthday!
 +
-The theme will be changed to `day`.
+`Bernice Yu` will be displayed.
 
-* `theme blue` +
-Expected result: Unknown theme +
-                 theme: Changes the theme of the address book +
-                 Parameter: THEME +
-                 List of available themes: day, night +
-                 Example: theme day
+* `birthday` +
+Expected Result: Unknown command
 
-* `theme` +
-Expected result: Invalid command format! +
-                 theme: Changes the theme of the address book +
-                 Parameter: THEME +
-                 List of available themes: day, night +
-                 Example: theme day
+=== Locate
+*Please type the `list` command before conducting the test.*
 
-=== Toggle
-Command usage: `toggle`
+Command usage: `locate INDEX`
 
-Toggles between the reminders panel and browser panel. Something to take note of is that if iContacts is currently
-displaying the details panel, `toggle` would then bring out the reminders panel first, before alternating between
-the reminders panel and browser panel.
+Note: Google maps might not load immediately please wait awhile. +
 
-Cases:
+* `locate 3` +
+Expected Result: Accessed location of Person: David Li at Index 3
++
+Google maps is shown on the right most panel with David Li's address location. +
 
-. `toggle` and iContacts is currently displaying the reminders panel. +
-Expected result: Toggle successful. +
-iContacts would now display the browser panel.
+* `locate 19` +
+Expected Result: User accessed does not have an address! +
 
-. `toggle` and iContacts is currently displaying the browser panel. +
-Expected result: Toggle successful. +
-iContacts would now display the reminders panel.
+* `locate 23`
+Expected Result: The index provided is invalid. +
 
-. `toggle` and iContacts is currently displaying the details panel. +
-Expected result: Toggle successful. +
-iContacts would now display the reminders panel.
+* `locate` +
+Expected Result: Invalid command format!
+                 locate: Accesses the location of the person identified by the index number used in the last person listing.
+                 Parameters: INDEX (must be a positive integer)
+                 Example: locate 1 +
+
+=== Access
+*Please reload the `addressbook.xml` data before conducting the test.*
+
+Command Usage: `access INDEX`
+
+To note: +
+****
+*Browser might not load immediately please wait awhile. +
+*Please sign in to the corresponding social media page to access the person's details.
+****
+
+. `access 2` +
+Expected result: Accessed website of Person: Bernice Yu at Index 2. +
+
+. `access 23` +
+Expected result: The index provided is invalid. +
+
+. `access 19` +
+Expected Result: User does not have website. +
+
+. `access` +
+Expected Result: Invalid command format!
+                 access: Accesses the website of the person identified by the index number used in the last person listing.
+                 Parameters: INDEX (must be a positive integer)
+                 Example: access 1 +
+
+
 
 === Adding an event
 *Please make sure to reload the sample reminder data before conducting the tests below to have accurate expected results.*
+* Please type `events` to be in the events list panel before starting this section of the test.
 
 Command usage: `addevent n/NAME d/DATE a/ADDRESS`
 
@@ -249,379 +217,105 @@ To note: +
 
 Cases:
 
-. `addevent n/Bowling with friends d/20-11-2017 a/` +
-Expected result: New reminder added! +
-A new reminder would be added to the reminder list.
+. `events`
 
-. `addevent rd/Unique Reminder d/01-02-2017 ti/08:00` +
-*As the reminder is exactly the same reminder as above, there will be an issue of duplicate reminders.* +
-Expected result: This reminder already exists in iContacts.
+. `addevent n/Bowling with friends d/20/11/2017 a/Kallang bowling` +
+Expected result: New event added: Bowling with friends Date: 20/11/2017 Address: Kallang bowling +
+A new event would be added to the events list.
+Calendar UI is populated. +
 
-. `addevent rd/ d/12/12/2000 ti/09:00` +
-Expected result: +
-Invalid command format! +
-addreminder: Adds a reminder. +
-Parameters: rd/REMINDER d/DATE ti/TIME +
-REMINDER must be non-empty. DATE must be in the format dd-mm-yyyy, dd/mm/yyyy or dd.mm.yyyy, and must be a valid date. TIME is in 24-hour format. +
-Example: addreminder rd/Dinner with Family d/22-11-2017 ti/1700
 
-. `addevent rd/Valid reminder 1 d/29/2/2017 ti/18:00` +
-*This `addreminder` command includes an invalid leap day.* +
-Expected result: +
-Date must be valid, and in the following format: +
-'.', '-' and '/' can be used to separate the day, month and year fields, and need not be used in pairs (i.e. 21.10/1995 works as well). +
-Day field: 1 - 31. +
-Month field: 1-12. +
-Year field: 1900 - 2099. +
-Example: 21/10/1995, 21-05-1996, 8.10.1987, 01/12-1995, 01.01-1990
+. `addevent n/Exam d/18-11-2017 a/NUS` +
+Expected result: The day month and year must be valid in form dd-mm-yyyy
+                 Single value days should be keyed in without 0 in front.+
 
-. `addevent rd/Valid reminder 1 d/31/11/2017 ti/18:00` +
-*This `addreminder` command includes an invalid day field for the specified month field.* +
-Expected result: +
-Date must be valid, and in the following format: +
-'.', '-' and '/' can be used to separate the day, month and year fields, and need not be used in pairs (i.e. 21.10/1995 works as well). +
-Day field: 1 - 31. +
-Month field: 1-12. +
-Year field: 1900 - 2099. +
-Example: 21/10/1995, 21-05-1996, 8.10.1987, 01/12-1995, 01.01-1990
+. `addevent n/Jess's birthday a/Home` +
+Expected result : Invalid command format!
+                  addevent: Adds an event to the address book. Parameters: n/NAME d/DATE a/ADDRESS
+                  Example: addevent n/ZoukOut d/5/12/2017 a/Sentosa Beach, Siloso +
 
-. `addreminder rd/Valid reminder 1 d/01-01-2017 ti/24:00` +
-*This `addreminder` command contains a time that is invalid in 24-hr format.* +
-Expected result: +
-Time must be in 24-hour format, with a colon separating the hour and minute fields. +
-Example: 09:00, 23:59, 17:56
+=== delete an event
+*Please undo after each delete event command. *
+*Please switch to events list panel before trying out this test. *
 
-. `addreminder rd/Valid reminder 1 d/01-01-2017 ti/0800` +
-*This `addreminder` command contains a time field not separated by a colon `:`.* +
-Expected result: +
-Time must be in 24-hour format, with a colon separating the hour and minute fields. +
-Example: 09:00, 23:59, 17:56
+Command Usage: `deleteevent INDEX`
 
-. Any `addreminder` command that does not contain all three fields. +
-Expected result: +
-Invalid command format! +
-addreminder: Adds a reminder. +
-Parameters: rd/REMINDER d/DATE ti/TIME +
-REMINDER must be non-empty. DATE must be in the format dd-mm-yyyy, dd/mm/yyyy or dd.mm.yyyy, and must be a valid date. TIME is in 24-hour format. +
-Example: addreminder rd/Dinner with Family d/22-11-2017 ti/1700
+. `deleteevent 1` +
+Expected Result: Deleted Event: ZoukOut Date: 5/12/2017 Address: Sentosa Beach, Siloso +
 
-=== Deleting a reminder
-*Please make sure to reload the sample reminder data before conducting the tests below to have accurate expected results.*
-
-Command usage: `deletereminder INDEX` +
-
-****
-* Deletes the reminder at the specified `INDEX`.
-* The index refers to the index number shown in the list of reminders.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-. `deletereminder 1` +
-Expected result: +
-Deleted reminder: CS2103T Release jar +
-15-11-2017 +
-12:00
-
-. `deletereminder 0` +
-Expected result: +
-Invalid command format! +
-deletereminder: Deletes the reminder identified by the index number used in the reminder listing. +
-Parameters: INDEX (must be a positive integer) +
-Example: deletereminder 1
-
-. `deletereminder 7` +
-Expected result: +
-The reminder index provided is invalid.
-
-=== Editing a reminder
-*Please make sure to reload the sample reminder data before conducting the tests below to have accurate expected results.*
-
-Command usage: `editreminder [rd/REMINDER] [d/DATE] [ti/TIME]`
-
-****
-* Edits the reminder at the specified `INDEX`. The index refers to the index number shown in the list of reminders. The index *must be a positive integer* 1, 2, 3...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values. If the field is left empty, the original value will be used instead.
-****
-
-Cases:
-
-. `editreminder 1 rd/New reminder 1 d/01/01/2017 ti/08:00` +
-Expected result: +
-Edited Reminder: New reminder 1 +
-01-01-2017 +
-08:00.
-
-. `editreminder 0 rd/New reminder 2 d/02/02/2017 ti/10:00` +
-Expected result: +
-Invalid command format! +
-editreminder: Edits the details of the reminder identified by the index number. Existing values will be overwritten by the input values. +
-Parameters: INDEX (must be a positive integer) [rd/REMINDER][d/DATE][ti/TIME] +
-Additionally, if REMINDER is edited, the new value must contain at least one character. +
-Example: editreminder 1 rd/Changed reminder
-
-. `editreminder 10 rd/New reminder 3 d/03/03/2017 ti/11:00` +
-Expected result: +
-The reminder index provided is invalid.
-
-. `editreminder 1 rd/ d/03/03/2017 ti/11:00` +
-Expected result: +
-Invalid command format! +
-Reminder can be of any value, and cannot be empty.
-
-. `editreminder 1 rd/New reminder 4 d/29/2/2017 ti/18:00` +
-*This `editreminder` command includes an invalid leap day.* +
-Expected result: +
-Date must be valid, and in the following format: +
-'.', '-' and '/' can be used to separate the day, month and year fields, and need not be used in pairs (i.e. 21.10/1995 works as well). +
-Day field: 1 - 31. +
-Month field: 1-12. +
-Year field: 1900 - 2099. +
-Example: 21/10/1995, 21-05-1996, 8.10.1987, 01/12-1995, 01.01-1990
-
-. `editreminder 1 rd/New reminder 5 d/31/11/2017 ti/18:00` +
-*This `editreminder` command includes an invalid day field for the specified month field.* +
-Expected result: +
-Date must be valid, and in the following format: +
-'.', '-' and '/' can be used to separate the day, month and year fields, and need not be used in pairs (i.e. 21.10/1995 works as well). +
-Day field: 1 - 31. +
-Month field: 1-12. +
-Year field: 1900 - 2099. +
-Example: 21/10/1995, 21-05-1996, 8.10.1987, 01/12-1995, 01.01-1990
-
-. `editreminder 1 rd/New reminder 6 d/30/11/2017 ti/24:00` +
-*This `editreminder` command contains a time that is invalid in 24-hr format.* +
-Expected result: +
-Time must be in 24-hour format, with a colon separating the hour and minute fields. +
-Example: 09:00, 23:59, 17:56
-
-. `editreminder 1 rd/New reminder 7 d/01-01-2017 ti/0800` +
-*This `editreminder` command contains a time field not separated by a colon `:`.* +
-Expected result: +
-Time must be in 24-hour format, with a colon separating the hour and minute fields. +
-Example: 09:00, 23:59, 17:56
-
-. `editreminder 1` +
-*This `editreminder` command did not specify a single field to edit.* +
-Expected result: +
-At least one field to edit must be provided.
-
-. `editreminder 1 rd/Fix Bugs of iContacts d/04-12-2017 ti/10:00` +
-*This `editreminder` command edits a reminder such that it becomes identical to another reminder, resulting in duplicate reminders.* +
-Expected result: +
-This reminder already exists in iContacts.
-
-
-=== Display Picture
-Command usage:
-`displaypic INDEX PATHOFIMAGE`
-
-Note:  +
-
-* The `PATHOFIMAGE` refers to the path of the image existing in local device.
-* Copy the path of image from your local device. Make sure the image is correct.
-* The picture on local device can be deleted after executing the command.
-
-Cases:
-
-. `displaypic 1 C:\Users\Admin\Desktop\My Files\mypic.jpg` +
-Expected result: Added Display Picture to Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Birthday: 21-10-1995 Nickname: Albert Tags: [friends]
-
-* The person with index 1 will be assigned the image.
-
-. `displaypic 23 C:\Users\Admin\Desktop\My Files\mypic.jpg` +
-Expected result: The person index provided is invalid
-
-. `displaypic 1` +
-Expected result: Removed Display Picture from Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Birthday: 21-10-1995 Nickname: Albert Tags: [friends]
-
-* The person with index 1 will have his display picture removed and it will show the default display picture
-
-
-. `displaypic C:\Users\Admin\Desktop\My Files\mypic.jpg` +
-Expected result: Invalid command format!
-                 displaypic: Adds/Updates the profile picture of a person identified by the index number used in the last person listing. Existing Display picture will be updated by the image referenced in the input path.
-                 Parameters: INDEX (must be a positive integer) dp/[PATH]
-                 Example: displaypic 2 C:\Users\Admin\Desktop\pic.jpg
-
-. `displaypic 3 hucddv/sfsdd.svd` +
-Expected result: This specified path cannot be read. Please check it's validity and try again
-
-image::ImageException.PNG[width="400"]
-
-
-=== Location Command
-Command usage:
-`location INDEX`
-
-Note:  +
-
-* Loads location of person in Browser Panel using GoogleMaps.
-* It does not check for validity of Address and let's google maps handle that case
-
-
-Cases:
-
-. `location 1` +
-Expected result: Location of Bernice Yu: Blk 30 Lorong 3 Serangoon Gardens, #07-18
-
-. `location 22` +
-Expected result: The person index provided is invalid
-
-. `location` +
-Expected result: Invalid command format!
-                 location: Displays  the location of specified person. Parameters: INDEX (must be a positive integer)
-                 Example: location 1
-
-
-
-=== Email Command
-Command usage:
-`email s/SERVICE to/TAG [sub/SUBJECT] [body/BODY]`
-
-Note:  +
-
-* The prefix body/ and sub/ are optional.
-* The TAG can only be one single keyword.
-* The SERVICE can only be `gmail` or `outlook`.
-
-
-Cases:
-
-. `email s/outlook to/friends sub/hey body/bye` +
-Expected result: Email .
-
-. `email s/gmail to/nonexistingtag ` +
-Expected result: Email not sent. Please enter a valid tag and correct service
-
-. `email s/outlook to/friends` +
-Expected result: Email .
-
-. `email s/gmail` +
-Expected result:Invalid command format!
-                email:  people in the Address Book.
-                The 'service' field is compulsory
-                The 'to' field can take tag and it only supports one parameter.
-                Parameters: s/SERVICE to/TAG sub/SUBJECT body/BODY
-                Example: email s/gmail to/cs2103 sub/Meeting body/On Monday
-
-. `email s/outlook to/friends` +
-Expected result: Email .
-
-. `email s/incorrectService to/friends ` +
-Expected result: Email not sent. Please enter a valid tag and correct service
-
-
-=== ViewTag Command
-Command usage:
-`viewtag TAG`
-
-Note:  +
-
-* It only supports one TAG
-* It searches in entire address book rather than current shown list
-
-Cases:
-
-. `viewtag friends` +
-Expected result: 3 persons listed!
-
-. `viewtag nothing` +
-Expected result: 0 persons listed!
-
-. `viewtag` +
-Expected result: Invalid command format!
-                 viewtag: Finds all persons who are associated with the tag in the specified keywords (case-sensitive) and displays them as a list with index numbers.
-                 Parameters: KEYWORD
-                 Example: viewtag cs2103
-
-
-=== Details Command
-Command usage:
-`details INDEX`
-
-Note:  +
-
-* Shows details of the person in Details Panel depending on the INDEX specified in currently shown list.
-
-Cases:
-
-. `details 1` +
-Expected result: Showing Details: 1
-
-. `details 22` +
-Expected result: The person index provided is invalid
-
-. `details` +
-Expected result: Invalid command format!
-                 details: Shows details the person identified by the index number used in the last person listing.
+. `deleteevent` +
+Expected Result: Invalid command format!
+                 deleteevent: Deletes the event identified by the index number used in the last person listing.
                  Parameters: INDEX (must be a positive integer)
-                 Example: details 1
+                 Example: deleteevent 1 +
+
+. `deleteevent 21` +
+Expected Result: The index provided is invalid +
 
 
-=== Export Command
-Command usage: `export r/RANGE p/PATH`
+=== Events
+Command usage: `events`
 
-* `viewtag nusStudentClub`
-* `export r/*1* p/path of the file\Zee Leon *WITHOUT* .xml extension` +
-Expected result: Export Successful +
-+
-*Zee Leon.xml* file containing contact *Zee Leon* will be generated and stored in the specified *PATH*.
+* `events` +
+Expected Result: Listed all events.
+switch to Events list +
 
-* `export r/*1-3* p/path of the file\multiple *WITHOUT* .xml extension` +
-Expected result: Export Successful +
-+
-*multiple.xml* file containing contacts *Zee Leon*, *Yow rin* and *Wayne Lee* will be generated and stored in the specified *PATH*.
+=== Favourite
+* Please switch to person list panel using the `list` command before trying out this test. *
 
-* `export r/*all* p/path of the file\nusstudentclub *WITHOUT* .xml extension` +
-Expected result: Export Successful +
-+
-*nusstudentclub.xml* file containing *all* contacts in the current list will be generated and stored in the specified *PATH*.
+Command Usage: `favourite INDEX`
 
-* `export r/a p/invalid filepath *WITHOUT* .xml extension` +
-Expected result: Export Failed Invalid RANGE or PATH
+To note: +
+****
+* Use the `favourites` command to check if person has been added to favourite list.
+****
+
+* `favourite 3` +
+Expected result: Favourited Person: Charlotte Oliveiro Phone: 93210283 HomeNumber: 61112223 Email: charlotte@example.com SchEmail: charlotte@u.ntu.edu Website: https://www.facebook.com/charlotteO Address: Blk 11 Ang Mo Kio Street 74, #11-04 Birthday: 05/03/2001 Tags: [neighbours] +
+
+* `favourite 3` +
+Expected result: Person is already favourited. +
+
+* `favourite 21` +
+Expected result: The index provided is invalid.
+
+* `favourite` +
+Expected result: Invalid command format!
+                 favourite: Favourites the person identified by the index number used in the last person listing.
+                 Parameters: INDEX (must be a positive integer)
+                 Example: favourite 1
+
+=== Unfavourite
+* Please switch to person list panel using the `list` command before trying out this test. *
+
+Command Usage: `unfavourite INDEX`
+
+To note: +
+****
+* Use the `favourites` command to check if person has been added to favourite list.
+****
+
+* `unfavourite 3` +
+Expected result: Unfavourited Person: Charlotte Oliveiro Phone: 93210283 HomeNumber: 61112223 Email: charlotte@example.com SchEmail: charlotte@u.ntu.edu Website: https://www.facebook.com/charlotteO Address: Blk 11 Ang Mo Kio Street 74, #11-04 Birthday: 05/03/2001 Tags: [neighbours] +
+
+* `unfavourite 3` +
+Expected result: Person is not favourited. +
+
+* `unfavourite 21` +
+Expected result: The index provided is invalid.
+
+* `unfavourite` +
+Expected result: Invalid command format!
+                 unfavourite: Unfavourites the person identified by the index number used in the last person listing.
+                 Parameters: INDEX (must be a positive integer)
+                 Example: unfavourite 1
+
+=== Favourites
+* Please switch to person list panel using the `list` command before trying out this test. *
+
+Command Usage: `favourites`
+
+ * `favourites` +
+ Expected Result: Listed all favourited persons. +
 
 
-=== Import Command
-Command usage:
-`import p/PATH`
-
-* `viewtag nusStudentClub`
-* `delete 1`
-* `import p/specified path\Zee Leon.xml` +
-Expected result: 1 person/s imported 0 duplicate/s found +
-+
-Imports the contact *Zee Leon* into iContacts.
-
-* `delete 1`
-* `delete 1`
-* `delete 1`
-
-* `import p/specified path\multiple.xml` +
-Expected result: 3 person/s imported 0 duplicate/s found +
-+
-Imports the contact *Zee Leon*, *Yow rin*, *Wayne Lee* into iContacts.
-
-* `import p/specified path\nusstudentclub.xml` +
-Expected result: 0 person/s imported 4 duplicate/s found +
-+
-Imports 0 contacts as all incoming contacts are duplicate.
-
-
-=== Sort Command
-Command usage:
-`sort`
-
-Note: Sorting does not persist if you close the application.
-
-* `sort` +
-Expected result: List Sorted +
-+
-Contact list will be sorted in alphabetical order.
-
-
-=== Find Command Enhancement
-Command usage:
-`find KEYWORD`
-
-Note: Find allows searching for part of the Contact's name. However, the part of the name you are searching for must be at least 2 characters long and is in the starting of either the first or last name.
