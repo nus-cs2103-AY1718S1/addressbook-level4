@@ -394,7 +394,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
 // tag::genericProperty[]
-=== Generic Property
+=== Generic property
 
 We are using a generic `Property` class to support **arbitrary field** feature.
 
@@ -458,7 +458,7 @@ _Figure 4.3.3.1 : Sequence Diagram for Adding a Customize Property_
 // end::genericProperty[]
 
 //tag::autoReminders[]
-=== Auto Reminders
+=== Auto reminders
 
 We are adding a reminder to the event whenever an event is added. Reminders will notify users 2 days in advance before
 event itself.
@@ -527,7 +527,7 @@ _Figure 4.4.2.3 : Sequence Diagram for Adding an event (reminders are automatica
 //end::autoReminders[]
 
 //tag::themeSwitch[]
-=== Switch Themes mechanism
+=== Switch themes mechanism
 
 As **BoNUS** is targeted at students, we want to allow students to personalise **BoNUS**. To open up such a
 possibility, we decided to introduce the `SwitchThemeCommand` to support bright and dark
@@ -617,7 +617,7 @@ Raise the event whenever `SwitchThemeCommand` is executed such that the theme wi
 //end::themeSwitch[]
 
 // tag::importExportXml[]
-=== Import & Export mechanism
+=== Import & export XML mechanism
 
 In order to open up more possibilities to **BoNUS**, we have introduced the `import` and `export` commands. We are using
 `ImportXmlCommand` and `ExportCommand` to support importing and exporting of address book data through XML files.
@@ -705,7 +705,57 @@ the user, while being able to inform users on the mistakes that they have made.
 **Cons:** File path validation may also be required for other purposes.
 // end::importExportXml[]
 
-=== Contacts/Event listing order by name/date time mechanism
+=== Import timetable from NUSMods
+
+We implement an  `ImportNusmodsCommand` to help users directly import their NUSMods timetable to *BoNUS* by simply copy-paste
+the URL.
+
+==== Inspiration
+
+As stated in <<UserGuide#, User Guide>>, *BoNUS* helps you _better(B) organize(o) your NUS life_. Thus, we want to make
+the application an integrated personal manager for NUS students. The main activities for most students are study-related and
+most NUS students are currently using https://nusmods.com/[NUSMods] to build their school timetable.
+
+image::NusmodsWebsite.png[width="750"]
+_Figure 4.7.1.1 : NUSMods Website Interface_
+
+Let's imagine some of our users want to use the event feature in *BoNUS*. They want to input final examinations for all
+the modules they are taking as upcoming events. It would be very inconvenient and tedious if they have to do this manually.
+Even worse, it is very likely they are already using NUSMods and thus are not willing to add these events again. They may
+end up not using the event feature at all.
+
+However, users may find it very useful if they can import their NUSMods timetable using a simple command. Eventually, they
+would choose *BoNUS* because they can manage both contacts and events in one application conveniently. and the migration
+from NUSMods to *BoNUS* is not troublesome.
+
+==== Design Considerations
+
+**Aspect:** Relationship between `ImportXmlCommand` and `ImportNusmodsCommand` +
+**Alternative 1 (current choice):** Add a new abstract `ImportCommand` class and let both of them become its sub-commands
+(inherit from it). +
+**Pros:** This is inspired by many popular command-line tools (like Git). `import` is called the actual command, while
+`--xml` and `--script` is called the options. More Unix/Linux users would be used to this approach. This is important for
+us because we assume our users are typists and they are very likely to frequently use tools like Git. +
+**Cons:** Need to write extra codes and parsing also becomes more complicated. +
+**Alternative 2:** Implement these two commands separately. +
+**Pros:** East to implement and similar to other commands. +
+**Cons:** Our users may not be used to it. The command word will become longer. It is not a good OOP practice as well
+because common details are not abstracted into a parent class and this produces duplicate codes.
+
+_(Similar strategy has been adopted in `ConfigCommand`)_
+
+---
+
+**Aspect:** How to obtain user's NUSMods timetable +
+**Alternative 1 (current choice):** Let users copy-paste the URL as a parameter of `ImportNusmodsCommand`. +
+**Pros:** Simple to use and easy to implement as well +
+**Cons:** Need to check whether the URL is valid and from NUSMods (currently using regular expression). +
+**Alternative 2:** Implement a built-in browser +
+**Pros:** East to implement and similar to other commands. +
+**Cons:** Our users may not be used to it. The command word will become longer. It is not a good OOP practice as well
+because common details are not abstracted into a parent class and this produces duplicate codes.
+
+=== Contacts/event listing order by name/date time mechanism
 
 Whenever there is a command that triggers the "_refresh_" of link:{repoURL}/src/main/java/seedu/address/ui/person/PersonListPanel.java[`PersonListPanel`]
 or link:{repoURL}/src/main/java/seedu/address/ui/event/EventListPanel.java[`EventListPanel`], like when adding a new contact
@@ -762,21 +812,23 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 == Documentation
 
-We use asciidoc for writing documentation.
+We use AsciiDoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We chose AsciiDoc over Markdown because AsciiDoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
+
+==== Using Google Chrome PDF printer
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -789,6 +841,14 @@ Here are the steps to convert the project documentation files to PDF format.
 
 image::chrome_save_as_pdf.png[width="300"]
 _Figure 5.3.1 : Saving documentation as PDF files in Chrome_
+
+==== Using `asciidoc-pdf` Ruby gem
+
+If you have Ruby installed on your development machine, we suggest you using a useful gem `asciidoc-pdf` to automatically
+convert the documentation into PDF format.
+
+You can find more information about `asciidoc-pdf` from their https://github.com/asciidoctor/asciidoctor-pdf[GitHub repository].
+Instructions on how to use it can also be found on AsciiDoctor website at http://asciidoctor.org/docs/convert-asciidoc-to-pdf/[here].
 
 == Testing
 
