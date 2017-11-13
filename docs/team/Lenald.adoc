@@ -152,4 +152,4 @@ include::../DeveloperGuide.adoc[tag=studentparentcontact]
 
 == Other Projects: NUS Interactive Food Map
 
-It is an interactive food map of the NUS campus that shows information of major food places in the nus map.
+It is an interactive food https://github.com/Lenaldnwj/Orbital-NUS-Interactive-Food-Map[map] of the NUS campus that shows information of major food places in the NUS map.
