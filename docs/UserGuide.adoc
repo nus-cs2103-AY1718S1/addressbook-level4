@@ -29,8 +29,7 @@ Contag is an efficient and feature-packed address book desktop application custo
 
 === The ConTag Help System
 
-Fret not, we are here to help you navigate the application with ease.
-Our help system is designed to progressively provide all necessary information from beginner to expert.
+Our help system is designed to progressively provide all necessary information to help you navigate the application with ease.
 
 Apart from comprehensive help coverage in this user guide, you can also choose to get concentrated help on specific areas with `help` in the command line of Contag or pressing the `F1` key.
 
