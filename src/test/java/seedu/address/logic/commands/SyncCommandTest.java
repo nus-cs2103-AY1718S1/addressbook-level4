@@ -142,6 +142,7 @@ public class SyncCommandTest {
 
         assertTrue(syncCommand.equalPerson(actualAlice, alice));
         assertTrue(actualAlice.equals(aliceAbc));
+        assertEquals(aliceAbc.hashCode(), actualAlice.hashCode());
     }
 
     @Test

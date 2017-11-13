@@ -185,8 +185,6 @@ public class SyncCommand extends Command {
                     seedu.address.model.person.Person key = convertGooglePerson(person);
                     if (key == null) continue;
                     if (!hashAbc.containsKey(key)) {
-                        System.out.println("WAD");
-                        System.out.println("Inserting: " + key.toString() + "\n Hash: " + key.hashCode());
                         addAContact(person);
                     } else {
                         seedu.address.model.person.ReadOnlyPerson aPerson = hashAbc.get(key);
@@ -262,7 +260,6 @@ public class SyncCommand extends Command {
                 model.updatePerson(aPerson, updatedAPerson);
 
             } else if (compare > 0) {
-
                 // The local contact is updated
                 seedu.address.model.person.Person updatedPerson = convertGooglePerson(person, aPerson);
                 model.updatePerson(aPerson, updatedPerson);
@@ -417,22 +414,26 @@ public class SyncCommand extends Command {
 
         if (name == null) {
             logger.warning("Google Contact has no retrievable name");
-        } else {
-            seedu.address.model.person.Name aName = new seedu.address.model.person.Name(retrieveFullGName(person));
-            Phone aPhone = (phone == null || !Phone.isValidPhone(phone.getValue().replaceAll("\\s+", "")))
-                    ? new Phone(null)
-                    : new seedu.address.model.person.Phone(phone.getValue().replaceAll("\\s+", ""));
-            seedu.address.model.person.Address aAddress = (
-                    address == null || !seedu.address.model.person.Address.isValidAddress(address.getFormattedValue()))
-                    ? new seedu.address.model.person.Address(null)
-                    : new seedu.address.model.person.Address(address.getFormattedValue());
-            Email aEmail = (email == null || !Email.isValidEmail(email.getValue()))
-                    ? new Email(null)
-                    : new Email(email.getValue());
-            aPerson = new seedu.address.model.person.Person(aName, aPhone, aEmail, aAddress,
-                    aOldPerson.getNote(), new Id(id), new LastUpdated(lastUpdated),
-                    aOldPerson.getTags(), aOldPerson.getMeetings());
         }
+
+        seedu.address.model.person.Name aName = (name == null
+                || !seedu.address.model.person.Name.isValidName(retrieveFullGName(person))
+                ? aOldPerson.getName()
+                : new seedu.address.model.person.Name(retrieveFullGName(person)));
+        Phone aPhone = (phone == null || !Phone.isValidPhone(phone.getValue().replaceAll("\\s+", "")))
+                ? new Phone(null)
+                : new seedu.address.model.person.Phone(phone.getValue().replaceAll("\\s+", ""));
+        seedu.address.model.person.Address aAddress = (
+                address == null || !seedu.address.model.person.Address.isValidAddress(address.getFormattedValue()))
+                ? new seedu.address.model.person.Address(null)
+                : new seedu.address.model.person.Address(address.getFormattedValue());
+        Email aEmail = (email == null || !Email.isValidEmail(email.getValue()))
+                ? new Email(null)
+                : new Email(email.getValue());
+        aPerson = new seedu.address.model.person.Person(aName, aPhone, aEmail, aAddress,
+                aOldPerson.getNote(), new Id(id), new LastUpdated(lastUpdated),
+                aOldPerson.getTags(), aOldPerson.getMeetings());
+
 
         return aPerson;
     }
@@ -560,7 +561,6 @@ public class SyncCommand extends Command {
         personList.forEach(e -> {
             try {
                 seedu.address.model.person.Person key = getHashKey(e);
-                System.out.println("Inserting: " + key.toString() + "\n Hash: " + key.hashCode());
                 result.put(key, e);
             } catch (Exception ex) {
                 logger.severe("Hashing error in constructHashAbc");
