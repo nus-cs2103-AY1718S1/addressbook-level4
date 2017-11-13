@@ -62,7 +62,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         if (expectedPersonUrl.equals(browserPanelHandle.getLoadedUrl())) {
             assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
         } else {
-            assertTrue(browserPanelHandle.toString().contains("sorry"));
+            assertTrue(browserPanelHandle.getLoadedUrl().toString().contains("sorry"));
         }
     }
 
