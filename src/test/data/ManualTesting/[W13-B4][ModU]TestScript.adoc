@@ -1,0 +1,265 @@
+= ModU - Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-W13-B4/main
+
+By: `CS2103AUG2017-W13-B4`      Since: `Oct 2017`      Licence: `MIT`
+
+== Introduction
+
+This document is used for manual scripted testing. It will cover all functionality of ModU.
+
+
+== Setting up and loading of sample data
+
+. Relocate the `ModU.jar` file to an empty folder.
+. Double click the `.jar` file to launch ModU.
+. Close ModU.
+. You will notice in the folder where `ModU.jar` was placed at,  the following 4 files and 1 folder will be generated:
+.. `addressbook.log.0` file
+.. `addressbook.log.0.lck` file
+.. `config.json` file
+.. `preferences.json` file
+.. `data` folder
+. Rename the sample data file `[T13-B4][ModU]SampleData.xml` to `addressbook.xml`.
+. Open the `data` folder and replace the existing `addressbook.xml` file in the folder with the newly renamed sample data file `addressbook.xml`.
+. Launch ModU and the data will be updated.
+
+== Instruction to perform manual testing
+
+===	Help command
+
+. Type `help` into the `Command Box`.
+. A help window will pop up and displays the user guide for ModU. The user guide contains useful information to show users how to use ModU.
+There is a command summary section which shows a list of valid command at the bottom of the page.
+. Close the help window.
+. The message `Open help window.` will be displayed on the `Result Display Box` upon successful execution of the command.
+The `Command Box` is now empty.
+
+=== Invalid command
+
+. Type an invalid command `halp` into the `Command Box`.
+. The message `Unknown command` will be displayed on the `Result Display Box`. +
+The command `halp` that was typed into the `Command Box` stays on the `Command Box` and is highlighted in red.
+
+
+
+=== History command
+. Type `history` into the Command Box.
+. The message +
+`Entered commands (from most recent to earliest): +
+      halp +
+      help` +
+      will be displayed on the `Result Display Box` upon successful execution of the command.
+      The `Command Box` is now empty.
+
+
+=== Customise font size command
+. Type `customise fs/xlarge` into the `Command Box`.
+. The font size in `Command Box`, `Display Panel`, `Result Display Box` and `Timetable/Browser/Sticky Notes Panel` have been increased to __xlarge__.
+. The message `Changed font size to xlarge.` will be displayed on the `Result Display Box` upon successful execution of the command. The `Command Box` is now empty.
+. Other available font size include __xsmall__, __small__, __normal__ and __large__.
+. This command is not undoable.
+
+
+=== Switch theme command
+. Type `theme dark` into the `Command Box`.
+. The theme has now been switched to __dark__ theme.
+. The message `Switched theme to dark.` will be displayed on the `Result Display Box `upon successful execution of the command.
+The `Command Box` is now empty.
+. Type `theme light` into the `Command Box`.
+. The theme has now been switched back to __light__ (default) theme.
+. The message `Switched theme to light.` will be displayed on the `Result Display Box` upon successful execution of the command.
+The `Command Box` is now empty.
+. Notice the theme of the UI is have returned to the previous default theme.
+. Type `theme light` into the `Command Box` again.
+. As it is already in the light theme, the `Result Display Box` will show the message `Please choose a different theme from the current one.`
+. This command is not undoable.
+
+=== List command by location
+. By default, the `Display Panel` will be on *module list mode* which show all modules saved in ModU.
+. Type `list location`.
+. Notice that the `Display Panel` now switch to location list mode and show a list of all locations being saved in ModU.
+Message `Listed location(s)` for successful execution `list` command by location and the `Command Box` is now empty.
+
+=== List command by module
+. Type `list module`.
+. Notice that the `Display Panel` now switch back to *module list mode* and show a list of all modules being saved in ModU.
+Message `Listed module(s)` for successful execution `list` command by module and the `Command Box` is now empty.
+. Also notice in the `Timetable/Browser/Sticky Notes panel`, it shows remarks in the form of sticky notes for remarked modules.
+
+=== List command by marked
+. Type `list marked`.
+. Notice that the `Display Panel` now switch back to *lesson list mode* and show a list of all modules being saved in the marked list.
+Message `Listed marked(s)` for successful execution `list` command by marked and the `Command Box` is now empty.
+. Also notice in the `Timetable/Browser/Sticky Notes panel`, it shows a timetable.
+
+=== Add command
+
+. Type `add m/AA1111 ct/LEC v/LT99 gp/1 ts/FRI[1400-1600] l/Ma Siu Lun` to add a lesson with:
+.. Module code: AA1111
+.. Class type: lecture
+.. Venue: LT99
+.. Time slot: Friday, from 2pm to 4pm
+.. Lecturer: Ma Siu Lun
+. Scroll down to the end of the `Display Panel` and notice that a new module `6. AA1111` is being added at the end of the list as the module `AA1111` was not added previously.
+. Notice message `New lesson added:  Module Code: AA1111 Class Type: LEC Location: LT99 Group: 1 Time Slot: FRI[1400-1600] Lecturers: [Ma Siu Lun]` for successful execution of `add` command and the `Command Box` is now empty.
+
+=== Color Enable command
+. Type `color enable`.
+. Notice message `Enable highlighting of keyword.` for successful execution of `color enable` command shown on the `Result Display Box`. The `Command Box` is now empty.
+. Notice the `Command Box` currently have a new red border with an red *__X__* icon at the right end of the `Command Box`.
+. Type a valid command like `add m/AA1111 ct/LEC v/LT99 gp/1 ts/FRI[1400-1600] l/Ma Siu Lun` without pressing kbd:[Enter].
+. The red border of the `Command Box` is turned into green and the right end icon have been changed into a green *__tick__* icon. In addition, the prefix (example __ts/__ , __gp/__) have turned yellow and the command word `add` have turned red.
+. Remove `m/A1111` from the line in `Command Box` and you will see the border changed back to red and the right end icon have change back to the red *__X__* icon.
+
+=== View command
+. Type `view 6` to see all the lessons ModU have for the module `AA1111`.
+. Notice message `lessons(s) founded with module code AA1111` for successful execution `view` command and the `Command Box` is now empty.
+. The `Display Panel` now show all the lessons that are offered under module `AA1111`. Now the `Display Panel` only shows one lesson which contains all the information of the lesson which is added from the previous `add command`.
+. `Timetable/Browser/Sticky Notes panel` shows the timetable of all the lessons offered under the module. Currently the timetable show the only lesson `AA1111` has and shown on the `Friday 2 to 4pm` time slot.
+
+=== Edit command for lesson
+. Type `edit 1 ts/MON[1000-1200]` to edit the lesson time slot of the only lesson in `AA1111` to `Monday 10am to 12pm`.
+. Notice message `Edited Lesson:  Module Code: AA1111 Class Type: LEC Location: LT99 Group: 1 Time Slot: MON[1000-1200] Lecturers: [Ma Siu Lun]` for successful execution `edit` command and the `Command Box` is now empty.
+. Notice the timetable is reflected with the change of the edit of time slot.
+
+=== Edit command for module
+. Type `list module` to show all modules saved in ModU.
+. Type `view 1` to show all lessons offered under the module `CS2103T`.
+. Type `list module` to return to list module mode.
+. Type `edit 1 CS2222` to change the module code of module `CS2103T` to `CS2222`.
+. Notice message `Edited Module: CS2222` for successful execution `edit` command and the `Command Box` is now empty.
+. Now the first module in `Display Panel` in list module mode which was originally showing `1. CS2103T` before the execution of previous `edit` command was changed to `1. CS2222`.
+. Type `view 1` to show all lessons offered under the module `CS2222`.
+. Notice in the `Display Panel` and the timetable, everything shown was similar to the previous `view` command. The only difference is the module code of all lessons have been changed from `CS2103T` to `CS2222`.
+
+=== Edit command for location
+. Type `list location` to show all locations saved in ModU.
+. Type `view 2` to show all lessons is conducted weekly at the location `LT27`.
+. Type `list location` to switch back to list location mode.
+. Type `edit 2 LT77` to change the location name of location `LT27` to `LT77`.
+. Notice message `Edited Location: LT77` for successful execution Edit command and the `Command Box` is now empty.
+. Now the first location in `Display Panel` in list location mode which was originally showing `2. LT27` before the execution of previous `edit` command was changed to `2. LT77`.
+. Type `view 1` to show all lessons conducted weekly at location `LT77`.
+. Notice in the `Display Panel` and the timetable, everything shown was similar to the previous `view` command. The only difference is the location name of all lessons have been changed from `LT27` to `LT77`.
+
+=== Mark command
+. Type `list module` to show all modules saved in ModU.
+. Type `view 1` to view all lessons under the module `CS2222`.
+. Type `mark 1` to mark the first lesson under the module `CS2222` which is taught by lecturer `Damith`.
+. Notice message `Marked Lesson:   Module Code: CS2222 Class Type: LEC Location: LT19 Group: 1 Time Slot: FRI[1400-1600] Lecturers: [Damith]` for successful execution `mark` command and the `Command Box` is now empty.
+. Notice there is a new yellow star shown on the marked lesson.
+. Type `mark 2` and `mark 3`.
+
+=== List command by marked
+. Type `list marked` to show all marked lesson.
+. Notice message `Listed marked(s)` for successful execution `list` command and the `Command Box` is now empty.
+. Now you can see all 3 lessons that you have marked from `CS2222` previously on the `Display Panel`.
+
+=== Unmark command
+. Type `unmark 1` to unmark the marked `CS2222` that is taught by lecturer `Damith`.
+. Notice message `Unmarked Lesson:   Module Code: CS2222 Class Type: LEC Location: LT19 Group: 1 Time Slot: FRI[1400-1600] Lecturers: [Damith]` for successful execution `unmark` command and the `Command Box` is now empty.
+. Notice the unmarked lesson was removed from the `Display Panel` and leaving with 2 remaining marked lessons.
+. Type `unmark 2` to unmark the lesson taught by lecturer `Felix`.
+. Type `list module` to view all modules.
+. Type `view 1` to view all lesson under `CS2222`.
+. Notice that the `Display Panel` only left with one marked lesson with a yellow star on it.
+
+=== Find command by module
+. Type `list module` to list all modules.
+. Type `find CS` to find all module with module codes contain `CS`.
+. Notice message `find command executed` for successful execution `find` command and the `Command Box` is now empty.
+. Now the Display Panel only shows 4 modules `CS2222`, `CS2020`, `CS2103` and `CS3230` which are the modules that contains `CS` on their module code.
+
+=== Find command by lesson
+. Type `view 1` to list all lessons under `CS2222`.
+. Type `find MON` to show all lesson with its detail contain `MON`.
+. Notice message `find command executed` for successful execution `find` command and the `Command Box` is now empty.
+. Now the `Display Panel` only show one lesson which is taught by lecturer `Felix`.
+
+=== Find command by location
+. Type `list location` to list all locations.
+. Type `find LT` to find all locations with location name contain `LT`.
+. Notice message `find command executed` for successful execution `find` command and the `Command Box` is now empty.
+. Now the `Display Panel` only shows 4 locations `LT19`, `LT27`, `T15` and `LT99` which are the locations that contains `LT` in their names.
+
+=== Sort command by location
+. Type `list location` to list all locations.
+. Type `sort` to sort the location with by its location name lexicographically.
+. Notice message `List sorted successfully` for successful execution `sort` command and the `Command Box` is now empty.
+. The location list is now sorted lexicographically in the `Display Panel`.
+
+=== Sort command by module
+. Type `list module` to list all modules.
+. Type `sort` to sort the module with by its module code lexicographically.
+. Notice message `List sorted successfully` for successful execution `sort` command and the `Command Box` is now empty.
+. The module list is now sorted lexicographically in the `Display Panel`.
+
+=== Delete command by lesson
+. Type `list module` to list all modules.
+. Type `view 4` to view all lessons under `CS2222`.
+. Type `delete 4` to delete the marked lesson which is taught by lecturer `John`.
+. Notice message `Deleted Lesson:  Module Code: CS2222 Class Type: Tut Location: Com1-0202 Group: 2 Time Slot: WED[0900-1000] Lecturers: [John]` for successful execution `delete` command and the `Command Box` is now empty.
+. Now the `Display Panel` no longer contained the marked lesson.
+
+=== Delete command by module
+. Type `list module` to list all modules.
+. Type `delete 1` to delete the module `AA1111`.
+. Notice message `Deleted Module: AA1111` for successful execution `delete` command and the `Command Box` is now empty.
+. Module `AA1111` is now removed from the `Display Panel` along with all lessons under this module.
+
+=== Delete command by location
+. Type `list location` to list all locations.
+. Type `delete 1` to delete the location `Com1-0201`.
+. Notice message `Deleted location: Com1-0201` for successful execution of `delete` command and the `Command Box` is now empty.
+. Location `Com1-0201` is now removed from the `Display Panel` along with all lessons conducted weekly at this location.
+
+=== Remark command
+. Type `list module` to list all modules.
+. Type `remark 1 The Greatest Module` to give module `CS2020` a remark.
+. Notice message `Remarked Module: CS2020` for successful execution `remark` command and the `Command Box` is now empty.
+. Now at the `Timetable/Browser/Sticky Notes panel` have a new additional remark `8. The Greatest Module`.
+. Type `remark –d 8` to remove the previously added remark.
+. Notice message `Deleted Remark: The Greatest Module` for successful execution `remark` command and the `Command Box` is now empty.
+. The previously added remark is now removed from `Timetable/Browser/Sticky Notes panel`.
+
+=== Select command to show remark that belong to one module
+. Type `list module` to list all modules.
+. Type `select 1` to show only the remark that belong to module `CS2020`.
+. Notice message `Selected: 1` for successful execution `select` command and the `Command Box` is now empty.
+. Now in the `Timetable/Browser/Sticky Notes panel` only show one remark `1.CS2020 : Introduction to data structures and algorithms.` , that belong to `CS2020`.
+
+=== Clear command
+. Type `clear`.
+. Notice message `ModU has been cleared!` for successful execution `clear` command and the `Command Box` is now empty.
+. All data are cleared in ModU and all panels are now empty.
+
+=== Undo command
+. Type `undo` in Command Box.
+. Notice message `Undo success!` for successful execution `undo` command and the `Command Box` is now empty.
+. ModU revert to the previous state prior to execution of the previous `clear` command.
+
+[NOTE]
+The `undo` command does not work after `list` or `view` command. +
+The `redo` command only works if the previous command is `undo`. +
+
+=== Redo command
+. Type `redo`.
+. Notice message `Redo success!` for successful execution `redo` command and the `Command Box` is now empty.
+. The action from the execution of the previous `undo` command are being revert. Now ModU revert to the state after the execution of `clear` command.
+
+=== Exit command
+. Type `exit`.
+. ModU is now closed.
+
+

@@ -2,11 +2,19 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
 
 == Project: ModU
 include::../DeveloperGuide.adoc[tag=intro]
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/caoliangnus.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/caoliangnus.md[Test code]]
+
+[NOTE]
+Some pictures below might look strange because they are supposed to be gif in User Guide. [user
+guide (https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/UserGuide.adoc)]
 
 === Enhancement Added: Highlighting Keywords
 
