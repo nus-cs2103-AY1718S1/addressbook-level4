@@ -1,0 +1,66 @@
+= Wong Shi Jing - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: People.connect
+People.connect is a desktop address book application used to allow people to store important information about those they care for. The user interacts with it using a CLI, and it has a GUI created although most user interactions happen using a command line interface where minimal mouse usage is required.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T12-B3/main/blob/master/collated/main/wshijing.md[Functional code]] [https://github.com/CS2103AUG2017-T12-B3/main/blob/master/collated/test/wshijing.md[Test code]]
+
+=== Enhancement Added: Photo attribute
+
+==== External behavior
+
+---
+When a new user is added to the address book, for a person to be easily identified, a photo could be added. However, this field may be optional. The address book will still provide a default image so that the list will look consistent. In addition, a person can also edit a photo by just editing the photo file name of a person.
+
+---
+
+==== Justification
+
+If a user were to associate a person in the address book with a photo, in the case of two people having the same name, the user can easily differentiate them.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=photo]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sort
+
+==== External behavior
+
+---
+A user might have a long list of contacts and the sort command could be used to allow the address book to be more user-friendly as it will be sorted in alphabetical order.
+
+---
+
+==== Justification
+
+If a user were to have a list of 100 persons it will be tough to find the 49 added person if the user could not remember the index. The user can just use the sort command and looking through a list in alphabetical order is much hassle free.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sortcommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Sort by birthday command `sort birthday`
+
+Currently, the sort function only sorts the name. We could allow the user to sort by birthday so that the user can see upcoming birthdays shown at the top of the list.
+
+=== Other contributions
+
+* Found bugs from another team's product: [https://github.com/CS2103AUG2017-W13-B1/main/issues/91[#91]]
+* Suggested enhancement for another team's product: [https://github.com/CS2103AUG2017-W13-B1/main/issues/92[#92]]

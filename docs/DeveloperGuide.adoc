@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= People.connect - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `MapsPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -345,6 +345,77 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::sortcommand[]
+=== Sort mechanism
+
+The sort mechanism is facilitated the `AddressBookParser` where the sort command will be called. +
+When a sort command is executed, the sort command will conduct a sort on the current `list` in the address book based on the full name in alphabetical order.
+
+The following sequence diagram shows how the sort operation works:
+
+image::SortCommandSequenceDiagram.png[width="800"]
+
+The following activity diagram summarize what happens inside the `Sort Command` when a user executes the command:
+
+image::SortCommandActivityDiagram.png[width="400"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SortCommand` +
+**Alternative 1 (current choice):** Sort list by the sort command parser to sort the current ObservableList<ReadOnlyPerson> person list. +
+**Pros:** We will not make any changes to the current `internalList` thus will not affect any other commands that we have implemented. +
+**Cons:** Hard for new developers to understand the way we sort the read only person list. +
+**Alternative 2:** Just sort the `internalList` +
+**Pros:** Does not involve the `ObservableList`, easier for new developers to understand. +
+**Cons:** Changes made to the `internalList` might affect other existing commands.
+// end::sortcommand[]
+
+// tag::listcommand[]
+=== List mechanism
+
+The list mechanism is assisted by two classes `ListCommandParser` residing in `parser` and `PersonContainsKeywordsPredicate` residing in `person`. +
+It supports the listing of contacts which do not modify the addressbook(e.g. `Exit`, `Find`). Such commands inherit from `Command`, unlike commands inheriting from `UndoableCommand` which modify the state of the address book.
+
+The following sequence diagram shows how the list operation works:
+
+image::ListCommandSequenceDiagram.png[width="800"]
+
+The following activity diagram shows what happens when a user executes a new list command:
+
+image::ListCommandActivityDiagram.png[width="400"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `ListCommand` +
+**Alternative 1 (current choice):** Add a new class ListCommandParser +
+**Pros:** We will be able to provide arguments to list only certain types of contacts +
+**Cons:** Hard for new developers to understand why we used `list` command instead of `find` to get contacts with certain tags. +
+**Alternative 2:** No parser class +
+**Pros:** Easier for new developers to understand +
+**Cons:** All contacts are listed every time which may be an issue if user is trying to filter contacts by tags
+//end::listcommand[]
+
+// tag::locatecommand[]
+=== Locate mechanism
+
+The locate mechanism is facilitated by an `PersonPanelSelectionChangedEvent` which resides in `Events`. +
+It supports locating an address on Google maps based on the person selected based on the index chosen.
+
+The following sequence diagram shows how the locate operation works:
+
+image::LocateCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `LocateCommand` +
+**Alternative 1 (current choice):** Add a new class LocateCommandParser +
+**Pros:** We will be able to provide arguments to locate a specific person +
+**Cons:** Hard for new developers to understand why we used `locate` command instead of using mouse to select a specific person. +
+**Alternative 2:** No locate command parser class +
+**Pros:** Easier for new developers to understand +
+**Cons:** Increase mouse usage instead of making full use of the Command Line Interface(CLI)
+//end::locatecommand[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -359,6 +430,102 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+// tag::birthday[]
+=== Birthday attribute
+
+Person class consists of five different attributes: `Name`, `Address`, `Phone`, `Email` and `Birthday`. Birthday class has a very similar implementation compared to the other attribute classes. New instance of Birthday is initialized by giving the constructor the parameter birthday in String format. The parameter is required to be non-null, and it is first validated before accepting it as a birthday value for the class.
+
+*Validation*
+
+The valid form for a birthday string is `DD/MM/YYYY`, where every character must be a digit except for the slashes. This validation is performed to prohibit the user from inputting something completely peculiar, for example a string of spaces or a long sequence of characters.
+
+Examples for a valid birthday:
+
+* `14/12/1993`
+* `22/02/2001`
+* `29/02/2008`
+
+The date of the birthday is validated using Java's SimpleDateFormatter class. The formatter parses user's input and if the parsing is successful, the date is valid. The parser also accounts for leap days.
+//end::birthday[]
+
+// tag::phoneConvention[]
+=== Phone attribute
+
+Person class consists of five different attributes: `Name`, `Address`, `Phone`, `Email` and `Birthday`. The Phone class +
+has implementation similar to other attribute classes. New instance of Phone is initialized through constructor. Important +
+thing to note here is the once the phone is validated to be only numbers, it is also followed by the conversion of phone +
+into the national convention format as well.
+
+The conversion to national convention is done within the Phone class in the following way:
+[source,java]
+----
+public Phone(String phone) throws IllegalValueException {
+    // ... phone validation logic ...
+
+    this.value = formatPhone(trimmedPhone);
+}
+
+public static String formatPhone(String trimmedPhone) {
+    // ... variable declarations ...
+    String formattedPhone = generateFormattedPhone(trimmedPhone, phoneLength);
+
+    return formattedPhone;
+}
+----
+
+*Validation*
+
+The valid form of phone is `xxxxxxxx` with as many characters as the user want, but no less than 3. Every character must +
+be a digit and there should be no other character like `+`. This prevents the user to enter alphabets or other invalid +
+characters while entering phone numbers.
+
+The example of valid phone numbers are:
+
+* `6596631234`
+* `919911204422`
+* `15671237070`
+
+The example of invalid phone numbers are:
+
+* `6596asd`
+* `+919911204422`
+* `12`
+
+The current validation allows the user to enter as many digits as he/she wants which is not the case in real life. The +
+numbers must be restricted to certain number of digits based on the country. Such validation will be performed in the future +
+version of the tool. The validation for number of digits will be quite extensive since different countries have different +
+number of digits in their phone numbers, which is the reason it is noe done yet.
+//end::phoneConvention[]
+
+// tag::photo[]
+=== Photo attribute
+Person class consists of five different attributes: `Name`, `Address`, `Phone`, `Email` and `Birthday`. Photo class has a very similar implementation compared to the other attribute classes. New instance of Photo is initialized by giving the constructor the parameter photo in String format. The parameter is optional and if a file is not in the correct location, a default photo will be loaded on the address book.
+
+*Validation*
+
+The valid form for a birthday string is `template.jpg`, where both file name and file type must be valid. This validation is performed to prohibit the user from inputting something completely peculiar, for example a file name which only consists of numbers and a file type which is not an image.
+
+Examples for a valid photo file name:
+
+* `abc.jpg`
+* `JPG.png`
+* `EddyTan.jpg`
+
+Examples for a invalid photo file name:
+
+* `.jpg`
+* `123.txt`
+* `EddyTan`
+//end::photo[]
+
+// tag::load[]
+=== Load command
+
+Load command's implementation is similar to other commands: LoadCommand class inherits UndoableCommand and load command's parser implements Parser interface. The following sequence diagram shows the execution of command "load testbook.xml"
+
+image::ParseLoadCommand.png[width="800"]
+//end::load[]
 
 === Configuration
 
@@ -729,9 +896,69 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |add birth dates |wish people on their birthdays
+
+|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user with many persons in the address book |list people by tags |locate a person easily
+
+|`* * *` |user with many persons in the address book |have different colored tags |easily differentiate people based on different tags
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |add contacts from pre-existing address book |save time without entering the same contacts again
+
+|`* *` |user |auto-format phone number |easily figure out the country code or phone number
+
+|`* *` |user |add a picture of the person |make it easier for myself to identify the person
+
+|`* *` |user |find contacts in runtime |find contacts without typing the entire name
+
+|`* *` |user with many persons in the address book |set password to the address book |keep my contacts safe from others
+
+|`* *` |user with many persons in the address book |find a person by phone |locate details of a person without having to go through the entire list
+
+|`* *` |user with many persons in the address book |make groups of contacts |group relevant contacts together
+
+|`*` |user |add a picture of the person |make it easier for myself to identify the person
+
+|`* *` |user with many persons in the address book |see the contact details in grid view |find information faster
+
+|`*` |user |sync contacts from online services like facebook,google etc |add contacts directly without entering them
+
+|`*` |user |add prefix to name |assign proper designation to each name
+
+|`*` |user |add deadlines |so that I can finish tasks on time
+
+|`*` |user |use google maps to show me the address of person |navigate to that address
+
+|`*` |user |add homepage for the person |see the persons further details or publications if need be
+
+|`*` |user |add notes to a person |add extra information about that person
+
+|`*` |user |add twitter id |remain updated with their twitter posts
+
+|`*` |user |add multiple phone numbers to a person |know multiple ways to contact a person
+
+|`*` |user |enter the location for storage file |store my contacts anywhere I want
+
+|`*` |user |see the emails or messages exchanged with person |see the history of interaction with the person
+
+|`*` |user |receive notification for birthday |call or text the person to wish him/her
+
+|`*` |user |have alternate themes for the app |change look of the app if I get bored with one theme
+
+|`*` |user with many persons in the address book |add job title and department to a person |know the profession of each entry
+
+|`*` |user with many persons in the address book |find persons by group |locate details of persons belonging to particular group
+
+|`*` |user with many persons in the address book |see the number of searches performed on a person |see the people I search for the most
+
+|`*` |user with many persons in the address book |add connections to a person |connect different people in the list
+
+|`*` |user with many persons in the address book |see the number of connections made by person |see the people with most connections
+
+|`*` |user |add a person with incomplete details |add a person and fill incomplete entries later
 |=======================================================================
 
 {More to be added}
@@ -767,6 +994,57 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Find contact's birthday
+
+*MSS*
+
+1.  User searches for specific person.
+2.  AddressBook shows the person for the user.
+3.  User checks person's birthday.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The searched person is not in the AddressBook.
++
+Use case ends.
+
+=== Use case: List people with a specific tag
+
+*MSS*
+
+1.  User specifies the tag she wants to be searched.
+2.  The AddressBook shows the contacts with the searched tag.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. No contacts are found.
++
+Use case ends.
+
+=== Use case: Sort contacts by name
+
+*MSS*
+
+1.  User lists all the contacts.
+2.  AddressBook shows the contacts in the order they were added to the AddressBook.
+3.  User sorts the contacts.
+4.  AddressBook lists all the contacts sorted by the their name.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no contacts.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -775,6 +1053,15 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should not use more than 5 sec as a start up time.
+.  Should respond within 1 sec of giving a command.
+.  Should use at most 4 mb of memory.
+.  Should not take more than 10 minutes for user to learn to use the system.
+.  Should not use more than 30 % of CPU resources during command execution.
+.  Should display all entries in a list perfectly correctly on every command.
+.  Should not have any unhandled exceptions from wrong user input.
+.  Should be easy to install by user without any assistance.
+.  Should have consistent display formats for all commands.
 
 {More to be added}
 
