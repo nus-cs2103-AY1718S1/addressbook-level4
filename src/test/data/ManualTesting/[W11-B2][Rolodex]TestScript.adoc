@@ -453,8 +453,8 @@ Drop-Down List
 ^^^^^^^^^^^^^^
 
 1.  Type `s`
-2.  Press `↓` until the `select` option is highlighted in the drop-down
-list
+2.  Press `Enter` or click to choose the `select` option in the drop-down
+    list
 3.  Press `Enter`
 4.  Press `space` and type `3`
 5.  Press `Enter`
@@ -1350,10 +1350,9 @@ Drop-Down List
 
 1.  Type `d 1` and press `Enter`
 2.  Type `u`
-3.  Press `↓` until the `undo` option is highlighted in the drop-down
-list
+3.  Press `Enter` or click to select the `undo` option in the drop-down
+    list
 4.  Press `Enter`
-5.  Press `Enter`
 
 [[expected-behaviour56]]
 Expected Behaviour
@@ -1431,10 +1430,9 @@ Drop-Down List
 1.  Type `d 1` and press `Enter`
 2.  Type `undo` and press `Enter`
 3.  Type `r`
-4.  Press `↓` until the `redo` option is highlighted in the drop-down
-list
+4.  Press `Enter` or click to select the `redo` option in the drop-down
+    list
 5.  Press `Enter`
-6.  Press `Enter`
 
 [[expected-behaviour61]]
 Expected Behaviour
