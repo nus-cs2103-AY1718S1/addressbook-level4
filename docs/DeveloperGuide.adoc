@@ -802,14 +802,14 @@ public class AddressBookParser {
 
 ==== Design Considerations
 
-Aspect: Which commands will be unavailable for the child to use +
-Alternative 1 (current choice): All commands that modifies Bluebird's contact list or task list will be unavailable +
-Pros: This provides maximum safety for the parents +
-Cons: If the child adds contacts or tasks wrongly, he has to add a new command and will not be able to
+**Aspect**: Which commands will be unavailable for the child to use +
+**Alternative 1 (current choice)**: All commands that modifies Bluebird's contact list or task list will be unavailable +
+**Pros**: This provides maximum safety for the parents +
+**Cons**: If the child adds contacts or tasks wrongly, he has to add a new command and will not be able to
 delete or edit the previous one +
-Alternative 2: Only prevent commands that deletes Bluebird's contact list or task list +
-Pros: This allows child to edit the contacts or tasks if they were to add wrongly +
-Cons: There is a possibility that the child may edit important contacts or tasks.
+**Alternative 2**: Only prevent commands that deletes Bluebird's contact list or task list +
+**Pros**: This allows child to edit the contacts or tasks if they were to add wrongly +
+**Cons**: There is a possibility that the child may edit important contacts or tasks.
 // end::parentmode[]
 
 // tag::birthdayfield[]
@@ -821,6 +821,17 @@ card in Bluebird can be edited to add the birth date. There are 2 valid formats 
 field, which are `DD/MM/YYYY` or `DD/MM/YY`, where only digits are permitted. Months in the form of alphabets are not
 permitted.
 
+==== Design Considerations
+
+**Aspect**: Format of birth date input +
+**Alternative 1 (current choice)**: Input all commands only the format of `DD/MM/YYYY` and `DD/MM/YY`. +
+**Pros**: This provides standardization of date format where the day comes before the month. +
+**Cons**: Not yet able to accommodate date input in short formed words, such as Nov or Dec. +
+**Alternative 2**: Allows command format to be in alphabets as well in addition to formats in alternative 1. +
+**Pros**: More user friendly as user can enter months in short formed words as well. +
+**Cons**: Tougher to implement as will have to account every permutation of dates entered.
+
+The implementation of the method is credited to Hyma Tiyyagura.
 // end::birthdayfield[]
 
 // tag::showbirthdays[]
@@ -829,6 +840,18 @@ The `showbirthdays` command scans through the list of person contacts in Bluebir
 birthdays fall on the same date as the current day with respect to the user. The `showbirthdays` command is made possible
 with the `CheckBirthdays` class. The CheckBirthdays class determines if a contact's birthday falls on the current day
 by checking if the day and month of the contact's birthday is equal to the current day and month date.
+
+==== Design Considerations
+
+**Aspect**: Whether `showbirthdays` should show birthdays for the day today, or for the week or month.
+**Alternative 1 (current choice)**: `showbirthdays` command only shows for today's birthdays.
+**Pros**: Shows the most relevant and soonest dates.
+**Cons**: User might want to know the upcoming birthdays as well.
+**Alternative 2**: `showbirthdays` command allows the user to set the time duration of birthdays he would like to view.
+**Pros**: Shows the upcoming birthdays so that user can pre-empt.
+**Cons**: Might vary by days, weeks, month, and will be much tougher to implement.
+
+The implementation of the method is credited to Hyma Tiyyagura.
 // end::showbirthdays[]
 
 // tag::documentation[]
