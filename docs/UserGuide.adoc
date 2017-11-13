@@ -515,7 +515,7 @@ Redo commands are _undoable_ with the `undo` command.
 
 Adds a remark to the specified person in Rolodex. +
 Format: `remark INDEX [r/REMARK]` +
-Alternatives: `remark` can be replaced by `note` or `rmk` or `comment`
+Alternatives: `remark` can be replaced by `note` or `rmk` or `comment` +
 Keyboard shortcut: kbd:[Ctrl+R]
 
 ****
@@ -780,8 +780,6 @@ Using the keyboard shortcut is equivalent to typing in the corresponding command
 | kbd:[Ctrl + Z] | Undo last command
 | kbd:[Ctrl + Y] | Redo last command
 | kbd:[F1] | View help window
-| kbd:[Ctrl + O] | Open a Rolodex file
-| kbd:[Ctrl + N] | Create new Rolodex file
 |===
 
 === Navigation/Selection Shortcuts _(Since v1.2)_
