@@ -450,7 +450,7 @@ Shows all events which the 1st person in the results of the `find` command joins
 
 You will see the following after typing `list` and `selectE 2`: +
 
-image::UG_select event.png[width='790']
+image::UG_select_event.png[width='790']
 _Figure 3.12: select events result_
 
 // end::selectE[]
