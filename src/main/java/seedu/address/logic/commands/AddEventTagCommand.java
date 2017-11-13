@@ -2,15 +2,14 @@ package seedu.address.logic.commands;
 import java.util.List;
 import java.util.TreeSet;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.PossibleDays;
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.Day;
-import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.Slot;
 import seedu.address.model.schedule.Time;
 import seedu.address.model.tag.Tag;
@@ -19,10 +18,10 @@ import seedu.address.model.tag.Tag;
 /**
  * Selects a person identified using it's last displayed index from the address book.
  */
-public class AddEventTagCommand extends Command {
+public class AddEventTagCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "schEvent";
-    public static final String COMMAND_ALIAS = "se";
+    public static final String COMMAND_WORD = "addEventTag";
+    public static final String COMMAND_ALIAS = "event";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": schedules an event in the time specified \n"
@@ -31,7 +30,7 @@ public class AddEventTagCommand extends Command {
             + "Example: " + COMMAND_WORD + "n/Meeting d/Monday st/1000 et/1300 loc/School persons/1 2 5 7 8";
 
     public static final String MESSAGE_ARRANGE_PERSON_SUCCESS = "Event Tag successfully added!";
-    public static final String MESSAGE_ARRANGE_PERSON_FAILURE = "Event cannot be scheduled;"
+    public static final String MESSAGE_ARRANGE_PERSON_FAILURE = "Not everyone can make it; "
             + "try using the 'arrange' command to look for common timings";
 
     private final Index[] listOfIndex;
@@ -53,8 +52,8 @@ public class AddEventTagCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
-
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         boolean check = model.checkMeetingTime(listOfIndex, day.getDay(), startTime.getTime(), endTime.getTime());
         if (!check) {

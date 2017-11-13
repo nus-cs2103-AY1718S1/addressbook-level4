@@ -407,6 +407,23 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 Sorts all the entries in addressbook in the alphabetical order of the names. +
 Format: `sort`
+
+=== Storing scheduled content in a tag : `addEventTag` or `event`
+
+Store information of an event and its participants in a tag. +
+Format: `event n/EVENT d/DAY st/START et/END loc/LOCATION persons/INDEX [INDEX]`
+
+Examples:
+
+* `event n/EVENT d/DAY st/TIME et/TIME` +
+`loc/LOCATION persons/INDEX [INDEX]` +
+adds the tag "EVENTonDAYatLOCATION" for the person whose index was mentioned if all can make it
+
+* `event n/Training d/Monday st/1000 et/1700` +
+`loc/School persons/1 2 3 4` +
+adds the tag "TrainingonMondayatSchool" for all the persons whose index are listed if all can make it
+
+
 // end::sort[]
 
 // tag::undoredo[]
