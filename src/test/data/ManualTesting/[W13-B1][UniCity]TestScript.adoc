@@ -132,3 +132,39 @@ Command usage: `undomult NUMBER_OF_COMMANDS_TO_UNDO`
 
 Command usage: `ws WINDOWSIZE`
 
+=== Favourite command
+
+Command usage: `favourite INDEX` or `fav INDEX`
+
+[NOTE]
+If the person is already a favourite person, performing `FavouriteCommand` on this person will remove the person from favourite.
+
+
+* `favourite 2` +
+Expected result: Favourite Person: Charlotte Oliverio Phone: 91031282 Email: charoli@gmail.com Address: Blk 436 Serangoon Gardens Street 26, #16-43 Favourite: True Birthday: 02/03/1994 Tags: [family]
++
+The star on the top right corner of Charlotte's person card will become yellow.
+
+* `fav 1` +
+Expected result: Remove Person from Favourites: Alex Yeoh Phone: 87438807 Email: alexyeoh@yahoo.com Address: Blk 30 Geylang Street 29, #06-40 Favourite: False Birthday: 04/05/1995 Tags: [colleagues][friends]
++
+The star on the top right corner of Alex's person card will become transparent.
+
+* `favourite 0` +
+Expected result: +
+Invalid command format! +
+favourite: Mark the person as favourite by the index number used in the last person listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: favourite OR fav 1
++
+
+* `fav 99999` +
+Expected result: The person index provided is invalid
+
+* `favourite` +
+Expected result: +
+Invalid command format! +
+favourite: Mark the person as favourite by the index number used in the last person listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: favourite OR fav 1
++
