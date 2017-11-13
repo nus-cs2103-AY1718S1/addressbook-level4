@@ -65,6 +65,13 @@ allprojects {
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
         compile "com.google.guava:guava:$guavaVersion"
+        compile 'commons-net:commons-net:3.6'
+        compile "org.testfx:testfx-core:$testFxVersion"
+        compile "org.testfx:testfx-junit:$testFxVersion"
+        compile "org.testfx:testfx-legacy:$testFxVersion", {
+            exclude group: "junit", module: "junit"
+        }
+        compile "org.testfx:openjfx-monocle:$monocleVersion"
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"
@@ -73,6 +80,7 @@ allprojects {
             exclude group: "junit", module: "junit"
         }
         testCompile "org.testfx:openjfx-monocle:$monocleVersion"
+
     }
 
     sourceSets {
@@ -87,7 +95,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "rolodex.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
@@ -122,8 +130,8 @@ tasks.coveralls {
     onlyIf { System.env.'CI' }
 }
 
-class AddressBookTest extends Test {
-    public AddressBookTest() {
+class RolodexTest extends Test {
+    public RolodexTest() {
     	  forkEvery = 1
         systemProperty 'testfx.setup.timeout', '60000'
 
@@ -148,7 +156,7 @@ class AddressBookTest extends Test {
     }
 }
 
-task guiTests(type: AddressBookTest) {
+task guiTests(type: RolodexTest) {
     include 'guitests/**'
     include 'systemtests/**'
     include 'seedu/address/ui/**'
@@ -159,7 +167,7 @@ task guiTests(type: AddressBookTest) {
 }
 
 
-task nonGuiTests(type: AddressBookTest) {
+task nonGuiTests(type: RolodexTest) {
     include 'seedu/address/**'
     exclude 'seedu/address/ui/**'
 
@@ -169,7 +177,7 @@ task nonGuiTests(type: AddressBookTest) {
 }
 
 // Test mode depends on whether headless task has been run
-task allTests(type: AddressBookTest) {
+task allTests(type: RolodexTest) {
     jacoco {
         destinationFile = new File("${buildDir}/jacoco/test.exec")
     }
@@ -208,8 +216,13 @@ asciidoctor {
  * This is needed for linked stylesheets and embedded stylesheets which import other files.
  */
 task copyStylesheets(type: Copy) {
-    from "${asciidoctor.sourceDir}/stylesheets"
-    into "${asciidoctor.outputDir}/html5/stylesheets"
+    from ("${asciidoctor.sourceDir}/") {
+        include 'stylesheets/*'
+        include 'scripts/jquery.highlight-5.js'
+        include 'scripts/jquery-3.2.1.min.js'
+    }
+
+    into "${asciidoctor.outputDir}/html5"
 }
 asciidoctor.dependsOn copyStylesheets
 
@@ -219,7 +232,8 @@ task deployOfflineDocs(type: Copy) {
     from ("${asciidoctor.outputDir}/html5") {
         include 'stylesheets/*'
         include 'images/*'
-        include 'UserGuide.html'
+        include 'scripts/*'
+        include 'Help.html'
     }
 }
 

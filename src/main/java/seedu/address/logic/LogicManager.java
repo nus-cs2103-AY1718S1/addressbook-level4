@@ -8,8 +8,9 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.AddressBookParser;
+import seedu.address.logic.parser.RolodexParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.exceptions.SuggestibleParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -21,21 +22,22 @@ public class LogicManager extends ComponentManager implements Logic {
 
     private final Model model;
     private final CommandHistory history;
-    private final AddressBookParser addressBookParser;
+    private final RolodexParser rolodexParser;
     private final UndoRedoStack undoRedoStack;
 
     public LogicManager(Model model) {
         this.model = model;
         this.history = new CommandHistory();
-        this.addressBookParser = new AddressBookParser();
+        this.rolodexParser = new RolodexParser();
         this.undoRedoStack = new UndoRedoStack();
     }
 
     @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException {
+    public CommandResult execute(String commandText)
+            throws CommandException, ParseException, SuggestibleParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
-            Command command = addressBookParser.parseCommand(commandText);
+            Command command = rolodexParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack);
             CommandResult result = command.execute();
             undoRedoStack.push(command);
@@ -46,8 +48,18 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return model.getFilteredPersonList();
+    public UndoRedoStack getUndoRedoStack() {
+        return undoRedoStack;
+    }
+
+    @Override
+    public void clearUndoRedoStack() {
+        undoRedoStack.clear();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getLatestPersonList() {
+        return model.getLatestPersonList();
     }
 
     @Override

@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's phone number in the address book.
+ * Represents a Person's phone number in the rolodex.
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
 public class Email {
@@ -52,6 +52,10 @@ public class Email {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    public int compareTo(Email other) {
+        return toString().compareTo(other.toString());
     }
 
 }

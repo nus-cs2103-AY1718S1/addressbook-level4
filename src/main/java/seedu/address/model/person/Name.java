@@ -2,10 +2,13 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's name in the address book.
+ * Represents a Person's name in the rolodex.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {
@@ -18,6 +21,7 @@ public class Name {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String NAME_REPLACEMENT_REGEX = "[^A-Za-z0-9 ]";
 
     public final String fullName;
 
@@ -42,6 +46,12 @@ public class Name {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
+    /**
+     * Retrieves a listing of every word in the name, in order.
+     */
+    public List<String> getWordsInName() {
+        return Arrays.asList(fullName.split("\\s+"));
+    }
 
     @Override
     public String toString() {
@@ -58,6 +68,10 @@ public class Name {
     @Override
     public int hashCode() {
         return fullName.hashCode();
+    }
+
+    public int compareTo(Name other) {
+        return toString().toLowerCase().compareTo(other.toString().toLowerCase());
     }
 
 }

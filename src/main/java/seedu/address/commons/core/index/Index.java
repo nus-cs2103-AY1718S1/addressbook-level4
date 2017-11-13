@@ -9,6 +9,9 @@ package seedu.address.commons.core.index;
  * convert it back to an int if the index will not be passed to a different component again.
  */
 public class Index {
+
+    public static final String INDEX_VALIDATION_REGEX = "-?\\d+";
+
     private int zeroBasedIndex;
 
     /**

@@ -24,6 +24,13 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
+     * Returns true if the text field is focused.
+     */
+    public boolean isFocused() {
+        return getRootNode().isFocused();
+    }
+
+    /**
      * Enters the given command in the Command Box and presses enter.
      * @return true if the command succeeded, false otherwise.
      */
@@ -31,6 +38,20 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         click();
         guiRobot.interact(() -> getRootNode().setText(command));
         guiRobot.pauseForHuman();
+
+        guiRobot.type(KeyCode.ENTER);
+
+        return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Enters the given command in the Command Box, wait for the drop-down list to appear and presses enter.
+     * @return true if the command succeeded, false otherwise.
+     */
+    public boolean inputAndEnter(String input) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(input));
+        guiRobot.pauseForDropDownList();
 
         guiRobot.type(KeyCode.ENTER);
 

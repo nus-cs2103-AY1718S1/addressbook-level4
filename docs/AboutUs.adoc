@@ -4,53 +4,40 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+Rolodex was developed by the https://github.com/orgs/CS2103AUG2017-W11-B2/people[Rolodex] team (CS2103 W11-B2) and
+is an extension of the AddressBook - Level 4 developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Ang Zhan Yu
+image::zy-ang.jpg[width="150", align="left"]
+{empty}https://github.com/ZY-Ang[github] <<ZhanYu#, portfolio>>
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: FS Developer, DevOps +
+Responsibilities: Storage, Model, Logic
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Tan Yi Jing, Jolyn
+image::jo-lyn.jpg[width="150", align="left"]
+{empty}https://github.com/jo-lyn[github] <<Jolyn#, portfolio>>
 
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: FS Developer, Documentation +
+Responsibilities: UI, Model, Logic
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Tan Mingrui
+image::mingruiii.jpg[width="150", align="left"]
+{empty}http://github.com/mingruiii[github] <<Mingrui#, portfolio>>
 
-Role: Developer +
-Responsibilities: UI
+Role: FS Developer, UX Designer +
+Responsibilities: UX, Model, Email
 
 '''
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]

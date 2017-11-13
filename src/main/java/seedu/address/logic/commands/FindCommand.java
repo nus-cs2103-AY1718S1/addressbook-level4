@@ -1,30 +1,52 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_DESCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_DEFAULT;
+import static seedu.address.logic.parser.SortUtil.MESSAGE_SORT_USAGE;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import seedu.address.logic.parser.SortArgument;
+import seedu.address.model.person.PersonDataContainsKeywordsPredicate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Finds and lists all persons in rolodex whose name roughly match any of
+ * the argument keywords up to code-specified word length limits.
+ * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
+            new HashSet<>(Arrays.asList(COMMAND_WORD, "f", "filter", "search"));
+    public static final String COMMAND_HOTKEY = "Ctrl+f";
+    public static final String FORMAT = "find KEYWORD(S)";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names roughly match any of "
+            + "the specified keywords (case-insensitive) "
+            + "or whose tags contains the specified keywords (case-sensitive), "
+            + "and displays them as a list with index numbers, "
+            + "sorted by the specified sort order or the default sort order.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]..." + MESSAGE_SORT_USAGE + "\n"
+            + "Example: " + COMMAND_WORD + " alice bobby charlie "
+            + SORT_ARGUMENT_PHONE_DEFAULT + " " + SORT_ARGUMENT_NAME_DESCENDING;
 
-    private final NameContainsKeywordsPredicate predicate;
+    private final PersonDataContainsKeywordsPredicate predicate;
+    private final List<SortArgument> sortArguments;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    public FindCommand(PersonDataContainsKeywordsPredicate predicate, List<SortArgument> sortArguments) {
         this.predicate = predicate;
+        this.sortArguments = sortArguments;
     }
 
     @Override
     public CommandResult execute() {
+        model.updateSortComparator(sortArguments);
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(getMessageForPersonListShownSummary(model.getLatestPersonList().size()));
     }
 
     @Override

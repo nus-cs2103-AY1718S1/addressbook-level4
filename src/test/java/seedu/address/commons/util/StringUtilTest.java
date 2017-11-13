@@ -2,8 +2,11 @@ package seedu.address.commons.util;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.util.StringUtil.levenshteinDistance;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import java.io.FileNotFoundException;
 import java.util.Optional;
@@ -62,7 +65,7 @@ public class StringUtilTest {
      */
 
     @Test
-    public void containsWordIgnoreCase_nullWord_throwsNullPointerException() {
+    public void containsWordIgnoreCaseNullWordThrowsNullPointerException() {
         assertExceptionThrown(NullPointerException.class, "typical sentence", null, Optional.empty());
     }
 
@@ -74,19 +77,19 @@ public class StringUtilTest {
     }
 
     @Test
-    public void containsWordIgnoreCase_emptyWord_throwsIllegalArgumentException() {
+    public void containsWordIgnoreCaseEmptyWordThrowsIllegalArgumentException() {
         assertExceptionThrown(IllegalArgumentException.class, "typical sentence", "  ",
                 Optional.of("Word parameter cannot be empty"));
     }
 
     @Test
-    public void containsWordIgnoreCase_multipleWords_throwsIllegalArgumentException() {
+    public void containsWordIgnoreCaseMultipleWordsThrowsIllegalArgumentException() {
         assertExceptionThrown(IllegalArgumentException.class, "typical sentence", "aaa BBB",
                 Optional.of("Word parameter should be a single word"));
     }
 
     @Test
-    public void containsWordIgnoreCase_nullSentence_throwsNullPointerException() {
+    public void containsWordIgnoreCaseNullSentenceThrowsNullPointerException() {
         assertExceptionThrown(NullPointerException.class, null, "abc", Optional.empty());
     }
 
@@ -116,7 +119,7 @@ public class StringUtilTest {
      */
 
     @Test
-    public void containsWordIgnoreCase_validInputs_correctResult() {
+    public void containsWordIgnoreCaseValidInputsCorrectResult() {
 
         // Empty sentence
         assertFalse(StringUtil.containsWordIgnoreCase("", "abc")); // Boundary case
@@ -144,15 +147,37 @@ public class StringUtilTest {
      */
 
     @Test
-    public void getDetails_exceptionGiven() {
+    public void getDetailsExceptionGiven() {
         assertThat(StringUtil.getDetails(new FileNotFoundException("file not found")),
                    containsString("java.io.FileNotFoundException: file not found"));
     }
 
     @Test
-    public void getDetails_nullGiven_throwsNullPointerException() {
+    public void getDetailsNullGivenThrowsNullPointerException() {
         thrown.expect(NullPointerException.class);
         StringUtil.getDetails(null);
+    }
+
+    //---------------- Tests for levenshteinDistance --------------------------------------
+
+    @Test
+    public void testlevenshteinDistance() {
+        // Assert additions and deletions
+        assertEquals(levenshteinDistance("Bobby", "Bob"), 2);
+        assertEquals(levenshteinDistance("Bobby", "Bob"), 2);
+        assertEquals(levenshteinDistance("Alex", "Alexander"), 5);
+        assertEquals(levenshteinDistance("Alex", "Alxe"), 2);
+
+        // Assert substitutions
+        assertEquals(levenshteinDistance(KEYWORD_MATCHING_MEIER, "Meyer") , 1);
+        assertEquals(levenshteinDistance("Bazinga", "Bazingy"), 1);
+        assertEquals(levenshteinDistance("Whoop", "Vroom"), 3);
+        assertEquals(levenshteinDistance("substitution", "gajgbzbabzil"), "substitution".length());
+
+        // Assert case-insensitivity
+        assertEquals(levenshteinDistance("aaa", "AAA"), 0);
+        assertEquals(levenshteinDistance("Alex", "alex"), 0);
+        assertEquals(levenshteinDistance("ALEX", "alex"), 0);
     }
 
 

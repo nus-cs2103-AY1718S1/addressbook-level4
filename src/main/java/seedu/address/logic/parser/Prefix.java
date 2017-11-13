@@ -15,6 +15,10 @@ public class Prefix {
         return prefix;
     }
 
+    public String concat(Postfix postfix) {
+        return prefix.concat(postfix.toString());
+    }
+
     public String toString() {
         return getPrefix();
     }

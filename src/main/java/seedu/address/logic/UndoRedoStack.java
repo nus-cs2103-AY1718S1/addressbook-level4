@@ -20,6 +20,13 @@ public class UndoRedoStack {
         redoStack = new Stack<>();
     }
 
+    public UndoRedoStack(UndoRedoStack toBeCopied) {
+        undoStack = new Stack<>();
+        redoStack = new Stack<>();
+        undoStack.addAll(toBeCopied.undoStack);
+        redoStack.addAll(toBeCopied.redoStack);
+    }
+
     /**
      * Pushes {@code command} onto the undo-stack if it is of type {@code UndoableCommand}. Clears the redo-stack
      * if {@code command} is not of type {@code UndoCommand} or {@code RedoCommand}.
@@ -85,5 +92,13 @@ public class UndoRedoStack {
         // state check
         return undoStack.equals(stack.undoStack)
                 && redoStack.equals(stack.redoStack);
+    }
+
+    /**
+     * Clears the {@code UndoRedoStack} by emptying out {@code undoStack} and {@code redoStack}.
+     */
+    public void clear() {
+        undoStack.clear();
+        redoStack.clear();
     }
 }

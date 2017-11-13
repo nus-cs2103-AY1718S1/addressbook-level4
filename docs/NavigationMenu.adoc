@@ -1,0 +1,10 @@
+// Create the menu as an inline list, only if it's to be displayed in a browser
+ifndef::env-github[]
+[.nav-headbar#navbar]
+- https://cs2103aug2017-w11-b2.github.io/main/[Home]
+- https://cs2103aug2017-w11-b2.github.io/main/UserGuide.html[User Guide]
+- https://cs2103aug2017-w11-b2.github.io/main/DeveloperGuide.html[Developer Guide]
+- https://cs2103aug2017-w11-b2.github.io/main/AboutUs.html[About]
+- https://cs2103aug2017-w11-b2.github.io/main/ContactUs.html[Contact]
+- https://github.com/CS2103AUG2017-W11-B2/main[Github]
+endif::[]

@@ -1,4 +1,5 @@
-= AddressBook Level 4 - User Guide
+// tag::excludeNavbar[]
+= Rolodex - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,36 +11,85 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W11-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+
+Rolodex is a desktop contact management application for people who have many social circles and wish to organise different groups of contacts separately and efficiently. +
+If you are a businessmen with a long list of clients to keep in touch with, a teacher with the contact information of hundreds of students in your phone,
+a freelancer with multiple groups of co-workers or customers, or just anyone with a need for fast and easy contact management, Rolodex is perfect for you.
 
 == Quick Start
+
+This section serves as a tutorial for you to familiarize yourself with the usage of Rolodex.
+By following the steps below, getting started with Rolodex should be a fast and smooth process.
+
+=== Installation
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+Rolodex will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `rolodex.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Rolodex.
+.  Double-click the file to start the app. You should see the GUI (Graphical User Interface) in a few seconds as shown below.
 +
 image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+
+=== User Interface
+
+The following picture labels the main components of the application.
+
+image::UiLabeled.png[width="790"]
+
+The table below summarises the function of each component.
+
+[width=100%, cols="1,3"]
+|===
+
+| Command Box | This is where you type in your commands to tell Rolodex to perform actions.
+| Command Result Panel | After entering a command, the feedback/result will be displayed here. +
+This is to notify you whether the command is valid, and to inform you if the action has been executed successfully.
+| Contact List | All contacts are listed here in alphabetical order by default. +
+When you perform a search action, the search result will be displayed here.
+| Contact Detail Panel | When you select a contact in Contact List, his/her details (name, phone number, email, address, tags and remark) will be displayed here.
+|===
+
+=== Executing Commands
+
+.  Type the command (case insensitive) in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to Rolodex.
 
-.  Refer to the link:#features[Features] section below for details of each command.
+[TIP]
+The standard format for keying in person details is `PREFIX/PERSON_DETAIL` (e.g. `n/John Doe` for keying in a name). +
+The following table summarizes the prefixes and the corresponding person details they represent. +
+
+[width=30%, cols="2,3"]
+|===
+| Prefix | Person Detail
+
+| n/ | Name
+| p/ | Phone
+| e/ | Email
+| a/ | Address
+| r/ | Remark
+| t/ | Tag
+|===
+
+For the details of each command, you may refer to the link:#features[Features] section below.
 
 == Features
+
+To get a full understanding of the capabilities of your Rolodex, we recommend following this https://cs2103aug2017-w11-b2.github.io/TestScript[guide].
 
 ====
 *Command Format*
@@ -50,72 +100,88 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+[[add]]
+=== `add`, `a` or `+`: Adding a Person _(Since v1.3)_
 
-Format: `help`
-
-=== Adding a person: `add`
-
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-
+Adds a person to Rolodex. +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...` +
 [TIP]
+====
+Press kbd:[Tab] after typing `add` to generate the required field(s). See link:#autocomplete[3.2. Auto-completion] for more details.
+====
+Alternatives: `add` can be replaced by `a` or `+` +
+Keyboard shortcut: kbd:[Ctrl++]
+
+[NOTE]
 A person can have any number of tags (including 0)
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 r/Stole my house key t/criminal`
 
-=== Listing all persons : `list`
+[TIP]
+====
+Add commands are _undoable_ with the `undo` command.
+====
 
-Shows a list of all persons in the address book. +
-Format: `list`
+[[autocomplete]]
+=== Auto-completion _(Since v1.2)_
+//tag::autocomplete[]
 
-=== Editing a person : `edit`
+For commands that require additional field(s), auto-completion can be triggered by pressing kbd:[Tab] after keying in the command word.
+[NOTE]
+====
+Commands with auto-completion enabled: `add`, `delete`, `edit`, `email`, `find`, `new`, `open`, `select` and `remark`. +
+These are commands that required additonal field(s).
+====
+Example:
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+* Type `add` in the command box +
+* Press kbd:[Tab]
+* You will see the full format displayed in the command box as shown below.
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+image::AutoCompletionAfterTab.png[width="500"]
 
-Examples:
+* Note that the placeholder for the name field has been auto-selected. Now you can directly type in the name.
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+image::AutoCompleteTypeName.png[width="500"]
 
-=== Locating persons by name: `find`
+* After you are done typing the name, press kbd:[Tab] again to go to the next field.
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+image::AutoCompletionNextField.png[width="500"]
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+* After you are done with the entire command, press kbd:[Enter] to execute the command as usual.
 
-Examples:
+[TIP]
+====
+In addition to using kbd:[Tab] to navigate to the next field, you can press kbd:[Shift+Tab] to navigate to the previous field.
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+====
+//end::autocomplete[]
 
-=== Deleting a person : `delete`
+=== `clear` or `c`: Clearing All Persons _(Since v1.3)_
 
-Deletes the specified person from the address book. +
+Clears all entries from Rolodex. +
+Format: `clear` or `c` +
+Keyboard shortcut: kbd:[Ctrl+Shift+C]
+
+[TIP]
+====
+Clear commands are _undoable_ with the `undo` command.
+====
+
+=== `delete`, `d` or `-`: Deleting a Person _(Since v1.3)_
+
+Deletes the specified person from Rolodex. +
 Format: `delete INDEX`
+
+[TIP]
+====
+Press kbd:[Tab] after typing `delete` to generate the required field(s). See link:#autocomplete[3.2. Auto-completion] for more details.
+====
+Alternatives: `delete` can be replaced by `d` or `-` +
+Keyboard shortcut: kbd:[Ctrl+Shift+D]
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -127,18 +193,370 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in Rolodex.
 * `find Betsy` +
-`delete 1` +
+`d 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+[TIP]
+====
+Delete commands are _undoable_ with the `undo` command.
+====
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+
+=== Drop-down List of Possible Commands
+//tag::dropdownlist[]
+With the help of the drop-down list of suggestions, you do not need to memorise any command.
+
+When you type your commands inside the command box, you will notice that a drop-down list appears.
+
+For example, if you type the letter "e", a drop-down list consisting of three options `edit`, `email` and `exit` appears, as shown in the screenshot below.
+
+image::DropDownList1.png[width="300"]
+
+The list will get updated as you type, to only display commands that match your input. Following the previous example,
+if you type the letter "m" after having typed in "e", the list should only consist of the `email` command now.
+
+image::DropDownList2.png[width="300"]
+
+When the drop-down list is shown, you can:
+
+* Use `↑` and `↓` arrow keys to navigate through the list
+* Press kbd:[Enter] to select the highlighted option
+
+or
+
+* Use your mouse to click on the option to select it
+
+After you have selected the command you wish to enter, you should see it displayed in the command box.
+For example, you should see the following when you select `email` in the drop-down list.
+
+image::DropDownList3.png[width="800"]
+
+Now you can:
+
+* press kbd:[Enter] to execute the command if no additional fields are required, or
+* continue to type in the rest of the command input, or
+* press kbd:[Tab] to activate auto-completion, see link:#autocomplete[3.2. Auto-completion] for details.
+
+If you want to see the list of all commands, simply type kbd:[Space] in an empty command box.
+The following list should appear.
+
+image::DropDownList4.png[width="300"]
+//end::dropdownlist[]
+
+[[edit]]
+=== `edit`, `e`, `change` or `modify`: Editing a Person _(Since v1.3)_
+
+Edits an existing person in Rolodex. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...` +
+[TIP]
+====
+Press kbd:[Tab] after typing `edit` to generate the required field(s). See link:#autocomplete[3.2. Auto-completion] for more details.
+====
+Alternatives: `edit` can be replaced by `change`, `modify` or `e` +
+Keyboard shortcut: kbd:[Ctrl+E]
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the person will be toggled i.e if a similar tag exists in the person,
+that tag would be removed, or added otherwise.
+****
+
+Examples:
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `e 2 n/Betsy Crower t/friends` +
+Edits the name of the 2nd person to be `Betsy Crower` and adds the tag `friends` if the tag `friends` does not exist in
+the 2nd person, or removes it otherwise.
+
+[TIP]
+====
+Edit commands are _undoable_ with the `undo` command.
+====
+
+
+=== `email`, `mail`, `mailto`, `send` or `m`: Composing an email _(Since v1.5rc)_
+// tag::email[]
+Opens the 'compose new email' window of the default email client, with the recipient's email address and subject
+(optional) filled in. +
+Format: `email INDEX [s/SUBJECT]` +
+[TIP]
+====
+Press kbd:[Tab] after typing `email` to generate the required field(s). See link:#autocomplete[3.2. Auto-completion] for more details.
+====
+Alternatives: `email` can be replaced by `mail`, `mailto`, `send` or `m` +
+Keyboard shortcut: kbd:[Ctrl+M]
+// end::email[]
+
+=== `exit`, `quit`, `close`, `bye` or `esc`: Exiting the Program _(Since v1.3)_
+
+Exits the program. +
+Format: `exit` +
+Alternatives: `exit` can be replaced by `quit`, `close`, `bye` or `esc` +
+Keyboard shortcut: kbd:[Alt+F4]
+
+// tag::find[]
+=== `find`, `filter`, `search` or `f`: Locating Persons in Rolodex _(Since v1.4)_
+
+Finds persons in Rolodex. +
+Format: `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` +
+[TIP]
+====
+Press kbd:[Tab] after typing `find` to generate the required field(s). See link:#autocomplete[3.2. Auto-completion] for more details.
+====
+Alternatives: `find` can be replaced by `filter`, `search` or `f` +
+Keyboard shortcut: kbd:[Ctrl+F]
+
+****
+* Only the [underline]#name# and [underline]#tags# are searched.
+* The [underline]#name# is searched _fuzzily_.
+* The [underline]#tags# is searched _exactly_.
+* The search will only find _distinct persons_. e.g. `han solo han solo` will only return `han solo`
+* The search is _case insensitive_ for [underline]#names#. e.g. `hans` will match `Hans`
+* The search is _case sensitive_ for [underline]#tags#. e.g. only `School` will match `School`
+* The search is _fuzzy_ for [underline]#name words# of 4 or more characters. e.g `Hnas` will match `Hans`
+* The search is _exact_ for [underline]#name words# of less than 4 characters. e.g. `hans` will not match `Han` but `han` will match `Han`
+* The search is an _OR_ search (i.e. Persons matching at least one keyword will be returned). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The [underline]#order of the keywords# _does not matter_. e.g. `Hans school Bo` will match `Bo Hans` and others with the `school` tag
+****
+
+Examples:
+
+* `find John` or `find jhon` +
+Returns `john` and `John Doe`
+* `search Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+* `find School` +
+Returns any person having tag `School`
+* `find School werk` +
+Returns any person having tag `School` or tag `werk`
+
+include::UserGuide.adoc[tag=sortUsage]
+
+[NOTE]
+Sort arguments *do not count as search arguments*.
+
+Examples:
+
+* `find John p/` or `find jhon p/asc` +
+Returns `john` and `John Doe`, sorted by ascending phone number.
+* `search Betsy Tim John n/ p/desc` +
+Returns any person having names `Betsy`, `Tim`, or `John`, sorted by name then by descending phone if names are equal.
+* `find School a/desc` +
+Returns any person having tag `School`, sorted by descending address.
+* `find School werk e/` +
+Returns any person having tag `School` or tag `werk`, sorted by email.
+* `find e/ p/desc` +
+Returns an error (do not count as search arguments).
+// end::find[]
+
+=== `help`, `assist`, `faq` or `h`: Viewing Help _(Since v1.4)_
+
+Format: `help` +
+Alternatives: `help` can be replaced with `assist`, `faq` or `h` +
+Keyboard shortcut: kbd:[F1]
+
+=== `history`, `his` or `past`: Listing Entered Commands _(Since v1.3)_
+
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `history`, `his` or `past` +
+Keyboard shortcut: kbd:[Ctrl+H]
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+// tag::list[]
+=== `list`, `show`, `display` or `l`: Listing All Persons _(Since v1.3)_
+
+Shows a list of all persons in Rolodex, sorted by the specified sort order or default sort order. +
+Format: `list [SORT_ARGUMENTS]` +
+Alternatives: `list` can be replaced by `show`, `display` or `l` +
+Keyboard shortcut: kbd:[Ctrl+L]
+
+// tag::sortUsage[]
+****
+* `[SORT_ARGUMENTS]` can be none, some, any or all of `n/` `p/` `e/` `a/` `n/desc` `p/desc` `e/desc` `a/desc` `n/asc` `p/asc`
+ `e/asc` `a/asc`, delimited by spaces, in no particular fixed order.
+* The sort argument prefix for sorting by [underline]#name# is `n/`.
+* The sort argument prefix for sorting by [underline]#phone# is `p/`.
+* The sort argument prefix for sorting by [underline]#email# is `e/`.
+* The sort argument prefix for sorting by [underline]#address# is `a/`.
+* The sort argument postfix `desc` denotes that the sort field is to be sorted in descending link:#lexicographic[lexicographical] order.
+* The sort argument postfix `asc` denotes that the sort field is to be sorted in ascending link:#lexicographic[lexicographical] order.
+* Sort arguments without a postfix are sorted by ascending link:#lexicographic[lexicographical] order.
+* The order of the `SORT_ARGUMENTS` are left-prioritized.
+****
+// end::sortUsage[]
+
+Examples:
+
+* `list` or `l` displays all persons by the default sort order.
+* `l n/desc` displays all persons sorted by descending name.
+* `list p/ a/desc` or `list p/asc a/desc` displays all persons sorted by ascending phone, then by descending address.
+// end::list[]
+
+// tag::newfile[]
+=== `new`, `n`, `touch` or `>`: Creating a New Rolodex Storage File _(Since v1.3)_
+
+Creates a new Rolodex at the specified filepath and reloads the application with new sample data. +
+Format: `new FILEPATH` or `n FILEPATH` +
+Keyboard Shortcut: kbd:[Ctrl+N]
+
+****
+* Creates the rolodex at the specified `FILEPATH`.
+* The `FILEPATH` can be project-relative or any directory on the system.
+* The `FILEPATH` must end with a file extension .rldx in order for data to be created and saved.
+* If `FILEPATH` already exists, use the `open` command instead.
+* The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
+****
+
+After creating a new Rolodex, verify that you have correctly created the Rolodex at the correct directory by checking the status bar of your application:
+
+image::OpenNewStatusBar.png[width="700"]
+
+[WARNING]
+====
+The `new` command will refresh your session and all existing _undoable_ commands will be cleared. It is recommended that you confirm you are satisfied with your changes before opening a new file.
+====
+
+Examples:
+
+* `new C:/Users/Rolodex/downloads/myOwn.rldx` +
+`n C:/Users/Rolodex/downloads/myOwn.rldx` +
+`n C:\Users\Rolodex\downloads\myOwn.rldx` +
+Creates a new Rolodex file `myOwn.rldx` at the directory `C:\Users\Rolodex\downloads` and reloads the application with sample data created for the new Rolodex.
+* `new data/default.rldx` +
+`new data\default.rldx` +
+Creates a new Rolodex file `default.rldx` at the relative directory `data` and reloads the application with sample data created for the new Rolodex.
+// end::newfile[]
+
+// tag::openfile[]
+
+=== `open`, `o`, `cd`, `ls` or `<`: Opening an Existing Rolodex Storage File _(Since v1.3)_
+
+Reloads the application with data from a rolodex at the specified filepath. +
+Format: `open FILEPATH` or `o FILEPATH` +
+Keyboard Shortcut: kbd:[Ctrl+O]
+
+****
+* Loads the rolodex at the specified `FILEPATH`.
+* The `FILEPATH` can be project-relative or any directory on the system.
+* The `FILEPATH` must be a file with xml formatted data.
+* The `FILEPATH` must end with a file extension .rldx in order for data to be saved.
+* If `FILEPATH` does not exist, use the `new` command instead.
+* The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
+****
+
+[TIP]
+====
+When the application is opened, Rolodex will load the last accessed Rolodex directory.
+====
+
+After opening the Rolodex, verify that you have correctly opened the Rolodex at the correct directory by checking the status bar of your application:
+
+image::OpenNewStatusBar.png[width="700"]
+
+[IMPORTANT]
+====
+Opening a file without a `.rldx` extension **will not save your changes**.
+====
+
+[WARNING]
+====
+The `open` command will refresh your session and all existing _undoable_ commands will be cleared. It is recommended that you confirm you are satisfied with your changes before opening a new file.
+====
+
+Examples:
+
+* `open C:/Users/Rolodex/downloads/myOwn.rldx` +
+`o C:/Users/Rolodex/downloads/myOwn.rldx` +
+`o C:\Users\Rolodex\downloads\myOwn.rldx` +
+Loads the application with the data at the directory `C:/Users/Rolodex/downloads/myOwn.rldx`.
+* `open data/default.rldx` +
+`open data\default.rldx` +
+Loads the application with the data in `default.rldx` in the folder `data`.
+// end::openfile[]
+
+=== `redo` or `r`: Redoing the Previously Undone Command _(Since v1.3)_
+
+Reverses the most recent `undo` command. +
+Format: `redo` or `r` +
+Keyboard shortcut: kbd:[Ctrl+Y]
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`r` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`r` (reapplies the `clear` command) +
+
+[TIP]
+====
+Redo commands are _undoable_ with the `undo` command.
+====
+
+// tag::remark[]
+=== `remark`, `rmk`, `note` or `comment` : Adding a Remark _(Since v1.4)_
+
+Adds a remark to the specified person in Rolodex. +
+Format: `remark INDEX [r/REMARK]` +
+Alternatives: `remark` can be replaced by `note` or `rmk` or `comment` +
+Keyboard shortcut: kbd:[Ctrl+R]
+
+****
+* Adds a remark to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* An existing remark will be replaced.
+****
+
+Examples:
+
+* `remark 1 r/Likes fishing` +
+Sets the remark of the 1st person to `Likes fishing`.
+* `note 1 r/` +
+Removes the remark for the 1st person.
+
+[TIP]
+====
+* Remarks can also be added using the `add` command, and modified with the `edit` command.
+* Remark commands are _undoable_ with the `undo` command.
+====
+// end::remark[]
+
+=== Saving the Data _(Since v1.0)_
+
+Rolodex's data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+=== `select` or `s`: Selecting a Person _(Since v1.3)_
+
+Selects the person identified by the index number used in the last person listing. +
+Format: `select INDEX` or `s INDEX` +
+[TIP]
+====
+Press kbd:[Tab] after typing `select` to generate the required field(s). See link:#autocomplete[3.2. Auto-completion] for more details.
+====
+Keyboard shortcut: kbd:[Ctrl+S]
+
+****
+* Selects the person and view the complete details of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -147,30 +565,27 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in Rolodex.
 * `find Betsy` +
-`select 1` +
+`s 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+=== Tagging a Person
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+* You can directly add tag(s) to a person when you are adding him/her to Rolodex for the first time.
+See link:#add[3.1. Adding a Person] for more details.
+* To add tag(s) to existing contacts in Rolodex, you use the `edit INDEX t/TAG` command. See link:#edit[3.6. Editing a Person] for more details.
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+=== `undo` or `u`: Undoing a Previous Command _(Since v1.3)_
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
-
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Some commands in rolodex are undoable. If you accidentally executed an undoable command, you can restore Rolodex to the previous state using the undo command. +
+Format: `undo` or `u` +
+Keyboard Shortcut: kbd:[Ctrl+Z]
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: `add`, `clear`, `delete`, `edit`, `redo` and `remark`. +
+These are commands that modify Rolodex's content.
 ====
 
 Examples:
@@ -181,72 +596,232 @@ Examples:
 
 * `select 1` +
 `list` +
-`undo` +
+`u` +
 The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`u` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+// tag::suggestion[]
+=== `y` or `yes` or `k` or `ok` or `yea` or `yeah`: Confirming a suggested command _(Since v1.5)_
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+Confirms a command suggested by Rolodex. +
+Format: `y` or `yes` or `ok` or `yea` or `yeah` +
+
+[TIP]
+====
+A command will be suggested by Rolodex if you make a typo in your command.
+====
+Examples:
+
+* `s3`, a typo for the command `s 3` will be suggested.
+`y` or `yes` or `k` or `ok` or `yea` or `yeah` executes `s 3` as normal and _Charlotte Oliviero_ will be selected:
+
+image::SuggestionSelect.png[width="700"]
+
+* `rmke3 Likes to swim` will be suggested as the formatted command, `rmk 3 r/Likes to swim`.
+`y` or `yes` or `k` or `ok` or `yea` or `yeah` executes `rmk 3 r/Likes to swim` as normal and `Likes to swim` will be added to _Charlotte Oliviero_:
+
+image::SuggestionRemark.png[width="700"]
+
+* `add Hansel Black 410 Madison Avenue NY 10029 friends neighbours ab@de.fg 98437653` will be suggested as the formatted command,
+`add n/Hansel Black p/98437653 e/ab@de.fg a/410 Madison Avenue NY 10029 t/friends t/neighbours`.
+`y` or `yes` or `k` or `ok` or `yea` or `yeah` executes the `add` command as normal and _Hansel Black_ with appropriate fields will be added to the Rolodex:
+
+image::SuggestionAdd.png[width="700"]
+// end::suggestion[]
+
+
+== Upcoming Features
+
+// tag::picture[]
+=== Adding a Profile Picture: `picture` or `pic` _(Coming in v2.0)_
+
+Adds a profile picture to the specified person in Rolodex. +
+Format: `picture INDEX FILE_DIRECTORY` or `pic INDEX FILE_DIRECTORY`
+
+****
+* Adds a profile picture to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* The `FILE_DIRECTORY` indicates the location of the profile picture to be added.
+* An existing profile picture will be replaced.
+****
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `picture 1 C:\Users\John\Pictures\my_pic.png` +
+Sets the profile picture of the 1st person to `my_pic.png`.
+* `pic 6 C:\Users\Alice\Pictures\Contacts\john.png` +
+Sets the profile picture of the 6th person to `john.png`.
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+The second example is illustrated in greater detail here:
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+1. Before the addition of profile pictures, the contact list is loaded with the default avatar image as shown below.
++
+image::profile_pic_before.png[width="500"]
++
+2. `pic 6 C:\Users\Alice\Pictures\Contacts\john.png` is entered in the command box with the valid `FILE_DIRECTORY`.
++
+3. If the command is entered correctly, you should see the updated profile picture as specified in the `FILE_DIRECTORY` of the command.
++
+image::profile_pic_after.png[width="500"]
+// end::picture[]
 
-=== Clearing all entries : `clear`
+== Command Summary
 
-Clears all entries from the address book. +
-Format: `clear`
+[width=90%, cols="1,9"]
+|===
+| Command | Format
 
-=== Exiting the program : `exit`
+.4+| Add | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...`
+         | `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...`
+         | `+ n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...`
+         | *E.g.* `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+.2+| Clear | `clear`
+           | `c`
+.4+| Delete | `delete INDEX`
+            | `d INDEX`
+            | `- INDEX`
+            | *E.g.* `delete 3`
+.5+| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`
+          | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`
+          | `change INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`
+          | `modify INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...`
+          | *E.g.* `edit 2 n/James Lee e/jameslee@example.com`
+.6+| Email | `email INDEX [s/SUBJECT]`
+           | `mail INDEX [s/SUBJECT]`
+           | `mailto INDEX [s/SUBJECT]`
+           | `send INDEX [s/SUBJECT]`
+           | `m INDEX [s/SUBJECT]`
+           | *E.g.* `email 1 s/Long time no see`
+.5+| Exit | `exit`
+          | `quit`
+          | `close`
+          | `bye`
+          | `esc`
+.5+| Find | `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+          | `filter KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+          | `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+          | `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+          | *E.g.* `find James Jake Jhon` *or* `find friends n/desc`
+.2+| Help | `help`
+          | `h`
+.3+| History | `history`
+             | `his`
+             | `past`
+.5+| List | `list [SORT_ARGUMENTS]`
+          | `show [SORT_ARGUMENTS]`
+          | `display [SORT_ARGUMENTS]`
+          | `l [SORT_ARGUMENTS]`
+          | *E.g.* `list` *or* `list n/desc`
+.5+| New | `new FILEPATH`
+         | `n FILEPATH`
+         | `touch FILEPATH`
+         | `> FILEPATH`
+         | *E.g.* `new data\default.rldx`
+.6+| Open | `open FILEPATH`
+          | `o FILEPATH`
+          | `cd FILEPATH`
+          | `ls FILEPATH`
+          | `< FILEPATH`
+          | *E.g.* `open data\default.rldx`
+.2+| Redo | `redo`
+          | `r`
+.5+| Remark | `remark INDEX r/REMARK`
+            | `note INDEX r/REMARK`
+            | `rmk INDEX r/REMARK`
+            | `comment INDEX r/REMARK`
+            | *E.g.* `remark 1 r/Loves to sing`
+.3+| Select | `select INDEX`
+            | `s INDEX`
+            | *E.g.* `select 2`
+.2+| Undo | `undo`
+          | `u`
+|===
 
-Exits the program. +
-Format: `exit`
+== Keyboard Shortcuts
 
-=== Saving the data
+=== Auto-complete Command Shortcuts _(Since v1.3)_
+// tag::auto-complete-shortcut[]
+[NOTE]
+====
+Using the keyboard shortcut is equivalent to typing in the corresponding command followed by pressing kbd:[Tab]
+====
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+[width=60%, cols="2,4"]
+|===
+| Shortcut | Purpose
+
+| kbd:[Ctrl + +] | Display the `add` command format in command box
+| kbd:[Ctrl + D] or kbd:[Ctrl + -]| Display the `delete` command format in command box
+| kbd:[Ctrl + E] | Display the `edit` command format in command box
+| kbd:[Ctrl + F] | Display the `find` command format in command box
+| kbd:[Ctrl + M] | Display the `email` command format in command box
+| kbd:[Ctrl + N] | Display the `new` command format in command box
+| kbd:[Ctrl + O] | Display the `open` command format in command box
+| kbd:[Ctrl + R] | Display the `remark` command format in command box
+| kbd:[Ctrl + S] | Display the `select` command format in command box
+
+|===
+// end::auto-complete-shortcut[]
+
+// tag::shortcut[]
+=== Quick Command Shortcuts _(Since v1.2)_
+
+[width=60%, cols="2,4"]
+|===
+| Shortcut | Purpose
+
+| kbd:[Ctrl + Shift + C] | Clear contact list
+| kbd:[Ctrl + H] | View history
+| kbd:[Ctrl + L] | List all contacts
+| kbd:[Ctrl + Z] | Undo last command
+| kbd:[Ctrl + Y] | Redo last command
+| kbd:[F1] | View help window
+|===
+
+=== Navigation/Selection Shortcuts _(Since v1.2)_
+
+[width=60%, cols="2,4"]
+|===
+| Shortcut | Purpose
+
+| kbd:[Enter] | Select the command box
+| kbd:[Esc] or kbd:[Ctrl + ←]| Select the contact list panel
+| kbd:[Ctrl + →]| Select the result display panel
+2.+| When the command box is not in selection:
+| kbd:[↑] and kbd:[↓] | Scroll the contact list
+| kbd:[Ctrl + D] | Delete the selected contact _(Coming in V2.0)_
+| kbd:[Alt + F4] | Exit the application
+|===
+// end::shortcut[]
+
+// end::excludeNavbar[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Rolodex folder.
 
-== Command Summary
+*Q*: How do I know if there is a newer version of the application? +
+*A*: You may follow our link:https://github.com/CS2103AUG2017-W11-B2/main/releases[release page] to check for any new updates.
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+*Q*: Help! This guide did not solve my problem. +
+*A*: You may raise any enquires at our link:https://github.com/CS2103AUG2017-W11-B2/main/issues[issues page] by creating a new issue.
+We will do our best to answer to your queries.
+
+*Q*: I found a bug, where do I report it? +
+*A*: As similar to above, you may create a new issue at our link:https://github.com/CS2103AUG2017-W11-B2/main/issues[issues page].
+
+*Q*: Can I contribute to the code? +
+*A*: Of course! We welcome new contributors. You can contribute by creating a new Pull Request link:https://github.com/CS2103AUG2017-W11-B2/main/pulls[here].
+To get started, you may want to check out our link:https://cs2103aug2017-w11-b2.github.io/main/DeveloperGuide.html[Developer's Guide].
+
+include::Glossary.adoc[]
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]

@@ -13,7 +13,7 @@ import org.junit.Test;
 import guitests.guihandles.AlertDialogHandle;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 
-public class ErrorDialogGuiTest extends AddressBookGuiTest {
+public class ErrorDialogGuiTest extends RolodexGuiTest {
 
     private static final IOException IO_EXCEPTION_STUB = new IOException("Stub");
 

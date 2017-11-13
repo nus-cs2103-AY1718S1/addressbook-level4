@@ -1,0 +1,1528 @@
+[[doc]]
+[[rolodex-test-script]]
+Rolodex - Test Script
+---------------------
+
+This is a document explaining the steps to perform manual testing (i.e.
+manual scripted testing), starting with how to load the sample data.
+
+You can also view this document
+https://cs2103aug2017-w11-b2.github.io/TestScript[here] in all its html
+glory.
+
+[[setting-up]]
+Setting Up
+~~~~~~~~~~
+
+1.  *Follow the instructions with numbers labeled closely.*
+2.  Download the latest rolodex.jar from
+https://github.com/CS2103AUG2017-W11-B2/main/releases[here].
+3.  Download our sample database with more than 25 persons pre-loaded
+for this exercise
+https://github.com/CS2103AUG2017-W11-B2/main/tree/master/src/test/data/ManualTesting/%5BW11-B2%5D%5BRolodex%5DSampleData.rldx[here].
+4.  Start up rolodex.jar in an empty directory and close it.
+5.  You should see a preferences.json file in the same directory as your
+jar file.
+6.  Replace the value of the key rolodexFilePath in the json file to a
+directory of your choosing.
+7.  Place SampleData.rldx in that directory. We recommend creating a
+directory data in the same folder as your rolodex.jar file and placing
+SampleData.rldx in there. (i.e. _data/SampleData.rldx_)
+8.  Start up rolodex.jar again. You should see the application loaded
+with at least 25 sample contacts.
+9.  The status bar on the bottom right should correctly display the
+directory at which you placed the SampleData.rldx (the file you are
+going to be operating on).
+
+[[add-command]]
+Add Command
+~~~~~~~~~~~
+
+[[basic-functionality]]
+Basic Functionality
+^^^^^^^^^^^^^^^^^^^
+
+1.  Type
+`add n/Alice Ken p/91234567 e/alice@gmail.com a/900, Alice Street`
+2.  Press `Enter`
+
+[[expected-behaviour]]
+Expected Behaviour
+++++++++++++++++++
+
+* New contact with entered particulars is added to Rolodex
+* Contact is automatically displayed on the bottom right panel
+* Name, phone, email and address fields are compulsory.
+
+[[abbreviations]]
+Abbreviations
+^^^^^^^^^^^^^
+
+1.  Type
+`a n/Alice Ken p/91234567 e/alice@gmail.com a/800, Alice Street`
+2.  Press `Enter`
+
+[[expected-behaviour1]]
+Expected Behaviour
+++++++++++++++++++
+
+* New contact with entered particulars is added to Rolodex
+* Contact is automatically displayed on the bottom right panel
+* Name, phone, email and address fields are compulsory
+
+'''''
+
+1.  Type
+`+ n/Alice Ken p/91234567 e/alice@gmail.com a/700, Alice Street`
+2.  Press `Enter`
+
+[[expected-behaviour2]]
+Expected Behaviour
+++++++++++++++++++
+
+* New contact with entered particulars is added to Rolodex
+* Contact is automatically displayed on the bottom right panel
+* Name, phone, email and address fields are compulsory
+
+[[drop-down-list]]
+Drop-down List
+^^^^^^^^^^^^^^
+
+1.  Type `a`
+2.  Press `Enter` or click to select the `add` option in the drop-down
+list
+3.  Press `Space`
+4.  Type `n/Alice Ken p/91234567 e/alice@gmail.com a/900, Alice Street`
+5.  Press `Enter`
+
+[[expected-behaviour3]]
+Expected Behaviour
+++++++++++++++++++
+
+* New contact with entered particulars is added to Rolodex
+* Contact is automatically displayed on the bottom right panel
+* Name, phone, email and address fields are compulsory
+
+[[auto-completion]]
+Auto-completion
+^^^^^^^^^^^^^^^
+
+1.  Type `add` and press `Tab`
+2.  Type `Alice Ken` and press `Tab`
+3.  Type `91234567` and press `Tab`
+4.  Type `alice@gmail.com` and press `Tab`
+5.  Type `900, Alice Street`
+6.  Press `Enter`
+
+[[expected-behaviour4]]
+Expected Behaviour
+++++++++++++++++++
+
+* New contact with entered particulars is added to Rolodex
+* Contact is automatically displayed on the bottom right panel
+* Name, phone, email and address fields are compulsory
+
+[[invalid-command-suggestion]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `add alice@gmail.com Alice Ken 900, Alice Street 91234567`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean add n/Alice Ken p/91234567 e/alice@gmail.com a/900, Alice
+Street?’
+4.  Press `Enter`
+
+[[expected-behaviour5]]
+Expected Behaviour
+++++++++++++++++++
+
+* New contact with entered particulars is added to Rolodex
+* Contact is automatically displayed on the bottom right panel
+* Name, phone, email and address fields are compulsory
+
+[[keyboard-shortcut]]
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `+`
+2.  Type `Alice Ken` and press `Tab`
+3.  Type `91234567` and press `Tab`
+4.  Type `alice@gmail.com` and press `Tab`
+5.  Type `900, Alice Street`
+6.  Press `Enter`
+
+[[expected-behaviour6]]
+Expected Behaviour
++++++++++++++++++
+
+* New contact with entered particulars is added to Rolodex
+* Contact is automatically displayed on the bottom right panel
+* Name, phone, email and address fields are compulsory
+
+[[delete-command]]
+Delete Command
+~~~~~~~~~~~~~~~
+
+[[basic-functionality1]]
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
+
+1.  Type `delete 1`
+2.  Press `Enter`
+
+[[expected-behaviour7]]
+Expected Behaviour
++++++++++++++++++
+
+* First contact is deleted from Rolodex
+
+[[abbreviations1]]
+Abbreviations
+^^^^^^^^^^^^^^
+
+1.  Type `d 2`
+2.  Press `Enter`
+
+[[expected-behaviour8]]
+Expected Behaviour
++++++++++++++++++
+
+* Second contact is deleted from Rolodex
+
+'''''
+
+1.  Type `- 3`
+2.  Press `Enter`
+
+[[expected-behaviour9]]
+Expected Behaviour
++++++++++++++++++
+
+* Third contact is deleted from Rolodex
+
+[[auto-completion1]]
+Auto-Completion
+^^^^^^^^^^^^^^^
+
+1.  Type `delete` and press `Tab`
+2.  Type `1` and press `Enter`
+
+[[expected-behaviour10]]
+Expected Behaviour
++++++++++++++++++
+
+* First contact is deleted from Rolodex
+
+[[invalid-command-suggestion1]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `d21 durian`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean D21?’
+4.  Press `Enter`
+
+[[expected-behavior]]
+Expected Behavior
+++++++++++++++++
+
+* The 21st contact is deleted from Rolodex
+
+[[keyboard-shortcut1]]
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `D`
+2.  Type `1` and press `Enter`
+
+[[expected-behaviour11]]
+Expected Behaviour
++++++++++++++++++
+
+* First contact is deleted from Rolodex
+
+[[edit-command]]
+Edit Command
+~~~~~~~~~~~~~
+
+[[basic-functionality2]]
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
+
+1.  Type
+`edit 1 n/A p/99999999 e/edit@gmail.com r/Edited contact. t/edited`
+2.  Press `Enter`
+
+[[expected-behaviour12]]
+Expected Behaviour
++++++++++++++++++
+
+* The particulars of the first contact are edited with the new inputs.
+* The tag `edited` should be added to the existing tags.
+* The edited contact is automatically displayed on the bottom right
+panel
+
+[[tag-toggling]]
+Tag Toggling
+^^^^^^^^^^^^
+
+1.  Type `edit 1 t/edited` (A should be the first contact)
+2.  Press `Enter`
+
+[[expected-behaviour13]]
+Expected Behaviour
++++++++++++++++++
+
+* The tag `edited` should be removed from A
+
+[[abbreviations2]]
+Abbreviations
+^^^^^^^^^^^^^
+
+1.  Type `e 1 n/B`
+2.  Press `Enter`
+
+[[expected-behaviour14]]
+Expected Behaviour
++++++++++++++++++
+
+* First contact should be renamed to B
+
+'''''
+
+1.  Type `change 1 p/88888888`
+2.  Press `Enter`
+
+[[expected-behaviour15]]
+Expected Behaviour
++++++++++++++++++
+
+* Phone number of first contact should now be “88888888”
+
+'''''
+
+1.  Type `modify 1 e/modified@mail.com`
+2.  Press `Enter`
+
+[[expected-behaviour16]]
+Expected Behaviour
++++++++++++++++++
+
+* Email of first contact should now be "modified@mail.com"
+
+[[drop-down-list1]]
+Drop-Down List
+^^^^^^^^^^^^^^
+
+1.  Type `e`
+2.  Press `↓` until the `edit` option is highlighted in the drop-down
+list
+3.  Press `Enter`
+4.  Press `Space`
+5.  Type `n/A p/99999999 e/edit@gmail.com r/Edited contact. t/edited`
+6.  Press `Enter`
+
+[[expected-behaviour17]]
+Expected Behaviour
++++++++++++++++++
+
+* The particulars of the first contact are edited with the new inputs.
+* The tag `edited` should be added to the existing tags.
+* The edited contact is automatically displayed on the bottom right
+panel
+
+[[auto-completion2]]
+Auto-Completion
+^^^^^^^^^^^^^^^
+
+1.  Type `edit`
+2.  Press `Tab`
+3.  Type `1 n/B`
+4.  Press `Enter`
+
+[[expected-behaviour18]]
+Expected Behaviour
++++++++++++++++++
+
+* First contact should be renamed to B
+
+[[invalid-command-suggestion2]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `edit 1Alice`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean edit 1 n/Alice?’
+4.  Press `Enter`
+
+[[expected-behaviour19]]
+Expected Behaviour
++++++++++++++++++
+
+* First contact should be renamed to alice
+
+'''''
+
+1.  Type `edt 1 12345678`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean edit 1 p/12345678?’
+4.  Press `Enter`
+
+[[expected-behaviour20]]
+Expected Behaviour
++++++++++++++++++
+
+* Phone number of first contact should now be “12345678”
+
+'''''
+
+1.  Type `edi 1 abc@efg`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean edit 1 e/abc@efg?’
+4.  Press `Enter`
+
+[[expected-behaviour21]]
+Expected Behaviour
++++++++++++++++++
+
+* Email of first contact should now be “abc@efg”
+
+'''''
+
+1.  Type `dit 1 3 computing drive`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean edit 1 a/3 computing drive?’
+4.  Press `Enter`
+
+[[expected-behaviour22]]
+Expected Behaviour
++++++++++++++++++
+
+* Address of first contact should now be “3 computing drive”
+
+[[keyboard-shortcut2]]
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `E`
+2.  Type `1 n/bob`
+3.  Press `Enter`
+
+[[expected-behaviour23]]
+Expected Behaviour
++++++++++++++++++
+
+* First contact should be renamed to bob
+
+[[select-command]]
+Select Command
+~~~~~~~~~~~~~~
+
+[[basic-functionality3]]
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
+
+1.  Type `select 1`
+
+[[expected-behaviour24]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should be selected
+
+[[abbreviations3]]
+Abbreviations
+^^^^^^^^^^^^^
+
+1.  Type `s 2`
+
+[[expected-behaviour25]]
+Expected Behaviour
++++++++++++++++++
+
+* The second contact should be selected
+
+[[drop-down-list2]]
+Drop-Down List
+^^^^^^^^^^^^^^
+
+1.  Type `s`
+2.  Press `Enter` or click to choose the `select` option in the drop-down
+    list
+3.  Press `Enter`
+4.  Press `space` and type `3`
+5.  Press `Enter`
+
+[[expected-behaviour26]]
+Expected Behaviour
++++++++++++++++++
+
+* The third contact should be selected
+
+[[auto-completion3]]
+Auto-Completion
+^^^^^^^^^^^^^^^
+
+1.  Type `s`
+2.  Press `Tab`
+3.  Type `1`
+4.  Press `Enter`
+
+[[expected-behaviour27]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should be selected
+
+[[invalid-command-suggestion3]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `s1`
+2.  Press`Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+“Did you mean s 1?”
+4.  Press `Enter`
+
+[[expected-behaviour28]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should be selected
+
+[[keyboard-shortcut3]]
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
+
+1.  Press `Esc`
+2.  Press `↓` or `↑` several times
+3.  Press `Enter`
+
+[[expected-behaviour29]]
+Expected Behaviour
++++++++++++++++++
+
+* In step 1, the command box should be deselected
+* In step 2, the contact list should be scrollable
+* In step 3, the command box should be selected
+
+[[email-command]]
+Email Command
+~~~~~~~~~~~~~~
+
+[[basic-functionality4]]
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
+
+1.  Type `email 1 s/hello`
+2.  Press `Enter`
+
+[[expected-behaviour30]]
+Expected Behaviour
++++++++++++++++++
+
+* Your default email client should open a new compose email window
+* Recipient’s email address should be the first contact’s email address
+* Subject should be “hello”
+
+'''''
+
+1.  Type `email 1`
+2.  Press `Enter`
+
+[[expected-behaviour31]]
+Expected Behaviour
++++++++++++++++++
+
+* Your default email client should open a new compose email window
+* Recipient’s email address should be the first contact’s email address
+(Subject field is optional)
+
+[[auto-completion4]]
+Auto-Completion
+^^^^^^^^^^^^^^^
+
+1.  Type `M`
+2.  Press `Tab`
+3.  Type `1 s/hello`
+4.  Press `Tab`
+
+[[expected-behaviour32]]
+Expected Behaviour
++++++++++++++++++
+
+* Your default email client should open a new compose email window
+* Recipient’s email address should be the first contact’s email address
+* Subject should be “hello”
+
+[[invalid-command-suggestion4]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `mal1 hello`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+“Did you mean mail 1 s/hello?”
+4.  Press `Enter`
+
+[[expected-behaviour33]]
+Expected Behaviour
++++++++++++++++++
+
+* Your default email client should open a new compose email window
+* Recipient’s email address should be the first contact’s email address
+* Subject should be “hello”
+
+[[keyboard-shortcut4]]
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `M`
+2.  Type `1 s/hello`
+3.  Press `Enter`
+
+[[expected-behaviour34]]
+Expected Behaviour
++++++++++++++++++
+
+* Your default email client should open a new compose email window
+* Recipient’s email address should be the first contact’s email address
+* Subject should be “hello”
+
+[[find-command]]
+Find Command
+~~~~~~~~~~~~
+
+[[find-by-name]]
+Find by name
+^^^^^^^^^^^
+
+[[exact-matches]]
+Exact matches
++++++++++++++
+
+1.  Type `find bravo`
+2.  Press `Enter`
+
+[[expected-behavior1]]
+Expected Behaviour
++++++++++++++++++
+
+* The contact list is filtered with contacts with the name “Bravo”
+
+[[fuzzy-matching]]
+Fuzzy Matching
+++++++++++++++
+
+1.  Type `find brabo`
+2.  Press `Enter`
+
+[[expected-behavior2]]
+Expected Behaviour
++++++++++++++++++
+
+* The contact list is filtered with contacts roughly matching the name
+“brabo”, “Bravo” included.
+
+[[find-by-tag]]
+Find by tag
+^^^^^^^^^^^
+
+1.  Type `find friends`
+2.  Press `Enter`
+
+[[expected-behavior3]]
+Expected Behaviour
++++++++++++++++++
+
+* The contact list is filtered with contacts tagged as “friends”.
+
+[[sorting]]
+Sorting
+^^^^^^^
+
+1.  Type `find friends n/desc`
+2.  Press `Enter`
+
+[[expected-behavior4]]
+Expected Behaviour
++++++++++++++++++
+
+* The contact list is filtered with contacts tagged as “friends”, sorted
+by descending order of name.
+
+'''''
+
+1.  Type `find friends p/desc`
+2.  Press `Enter`
+
+[[expected-behavior5]]
+Expected Behaviour
++++++++++++++++++
+
+* The contact list is filtered with contacts tagged as “friends”, sorted
+by descending phone.
+
+'''''
+
+1.  Type `find friends p/desc`
+2.  Press `Enter`
+
+[[expected-behavior6]]
+Expected Behaviour
++++++++++++++++++
+
+* The contact list is filtered with contacts tagged as “friends”, sorted
+by descending phone.
+
+'''''
+
+1.  Type `find friends p/desc a/`
+2.  Press `Enter`
+
+[[expected-behavior7]]
+Expected Behaviour
++++++++++++++++++
+
+* The contact list is filtered with contacts tagged as “friends”, sorted
+by descending phone, then by ascending address.
+
+[[auto-completion5]]
+Auto-Completion
+^^^^^^^^^^^^^^^
+
+1.  Type `find`
+2.  Press `Tab`
+3.  Type `bravo`
+4.  Press `Enter`
+
+[[expected-behavior8]]
+Expected Behaviour
++++++++++++++++++
+
+* The contact list is filtered with contacts roughly matching the name
+“brabo”, “Bravo” included.
+
+[[keyboard-shortcut5]]
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `F`
+2.  Type `school` and press `Enter`
+
+[[expected-behavior9]]
+Expected Behavior
++++++++++++++++++
+
+* The contact list is filtered with contacts tagged as “school”.
+
+[[invalid-command-suggestion5]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `findmy friends`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean find friends?’
+4.  Press `Enter`
+
+[[expected-behavior10]]
+Expected Behaviour
++++++++++++++++++
+
+* The contact list is filtered with contacts tagged as “friends”.
+
+[[help-command]]
+Help Command
+~~~~~~~~~~~~
+
+[[basic-functionality5]]
+Basic Functionality
+^^^^^^^^^^^^^^^^^^^
+
+1.  Type `help`
+2.  Press `Enter`
+
+[[expected-behavior11]]
+Expected Behaviour
++++++++++++++++++
+
+* The Rolodex User Guide should be opened in a new window
+
+[[help-window-searching]]
+Help Window Searching
+^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `add` into the search bar located at the top of the window
+2.  Press `Enter` or click the _Search_ button
+
+[[expected-behavior12]]
+Expected Behaviour
++++++++++++++++++
+
+* All words “add” in the document should be highlighted in yellow
+
+[[invalid-command-suggestion6]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `halp me`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean help?’
+4.  Press `Enter`
+
+[[expected-behavior13]]
+Expected Behaviour
++++++++++++++++++
+
+* The Rolodex User Guide should be opened in a new window
+
+[[history-command]]
+History Command
+~~~~~~~~~~~~~~~
+
+[[basic-functionality6]]
+Basic Functionality
+^^^^^^^^^^^^^^^^^^^
+
+1.  Type `history`
+2.  Press `Enter`
+
+[[expected-behavior14]]
+Expected Behaviour
++++++++++++++++++
+
+* Entered commands from most recent to earliest should be displayed on
+the result panel
+
+[[invalid-command-suggestion7]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `hisdory is a dory pun`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean history?’
+4.  Press `Enter`
+
+[[expected-behavior15]]
+Expected Behaviour
++++++++++++++++++
+
+* Entered commands from most recent to earliest should be displayed on
+the result panel
+
+[[keyboard-shortcut6]]
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
+
+1.  Type `Ctrl` + `H`
+
+[[expected-behavior16]]
+Expected Behaviour
++++++++++++++++++
+
+* Entered commands from most recent to earliest should be displayed on
+the result panel
+
+[[list-command]]
+List Command
+~~~~~~~~~~~~
+
+[[basic-functionality7]]
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
+
+1.  Type `list`
+2.  Press `Enter`
+
+[[expected-behavior17]]
+Expected Behaviour
++++++++++++++++++
+
+* All contacts should be listed in Rolodex
+
+[[abbreviations4]]
+Abbreviations
+^^^^^^^^^^^^^
+
+1.  Type `l`
+2.  Press `Enter`
+
+[[expected-behavior18]]
+Expected Behaviour
++++++++++++++++++
+
+* All contacts should be listed in Rolodex
+
+'''''
+
+1.  Type `show`
+2.  Press `Enter`
+
+[[expected-behavior19]]
+Expected Behaviour
++++++++++++++++++
+
+* All contacts should be listed in Rolodex
+
+'''''
+
+1.  Type `display`
+2.  Press `Enter`
+
+[[expected-behavior20]]
+Expected Behaviour
++++++++++++++++++
+
+* All contacts should be listed in Rolodex
+
+[[sorting1]]
+Sorting
+^^^^^^^
+
+1.  Type `list p/asc a/desc`
+2.  Press `Enter`
+
+[[expected-behavior21]]
+Expected Behaviour
++++++++++++++++++
+
+* The contact list should be sorted by ascending phone, then by
+descending address.
+
+[[invalid-command-suggestion8]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `lost is me, Am I lost? Yes I am. Lost little lamb`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean list?’
+4.  Press `Enter`
+
+[[expected-behavior22]]
+Expected Behaviour
++++++++++++++++++
+
+* All contacts should be listed in Rolodex
+
+[[keyboard-shortcut7]]
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `L`
+
+[[expected-behavior23]]
+Expected Behaviour
++++++++++++++++++
+
+* All contacts should be listed in Rolodex
+
+[[new-rolodex-command]]
+New Rolodex Command
+~~~~~~~~~~~~~~~~~~~
+
+[[creating-new-rolodex-at-relative-directory]]
+Creating New Rolodex at Relative Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `new data/SampleData2.rldx` or `n data/SampleData2.rldx`
+2.  Press `Enter`
+
+[[expected-behaviour35]]
+Expected Behaviour
++++++++++++++++++
+
+* A new Rolodex is created under the relative directory (data folder
+should be in same place as .jar file).
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. the data file you are currently operating on)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[creating-new-rolodex-at-system-directory]]
+Creating New Rolodex at System Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[[windows]]
+Windows:
+++++++++
+
+1.  Type `new C:/Users/YOUR_USERNAME/Desktop/SampleData.rldx`
+2.  Press `Enter`
+
+[[mac]]
+Mac:
++++++
+
+1.  Type `new /Users/YOUR_USERNAME/Desktop/SampleData.rldx`
+2.  Press `Enter`
+
+[[linux]]
+Linux:
+++++++
+
+1.  Type `new /home/YOUR_USERNAME/Desktop/SampleData.rldx`
+2.  Press `Enter`
+
+[[expected-behaviour36]]
+Expected Behaviour
++++++++++++++++++
+
+* A new test file, `SampleData.rldx` should be created on your desktop.
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. the data file you are currently operating on)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[attempting-to-re-create-existing-rolodex]]
+Attempting to Re-Create Existing Rolodex
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `new data/SampleData.rldx`
+2.  Press `Enter`
+
+[[expected-behaviour37]]
+Expected Behaviour
++++++++++++++++++
+
+* An error message should be displayed, prompting to use the `open`
+command instead.
+* The original SampleData.rldx should not be overwritten or changed.
+
+[[auto-completion6]]
+Auto-Completion
+^^^^^^^^^^^^^^^
+
+1.  Type `new`
+2.  Press `Tab`
+3.  Type`data/SampleData3.rldx`
+4.  Press `Enter`
+
+[[expected-behaviour38]]
+Expected Behaviour
++++++++++++++++++
+
+* A new Rolodex is created under the relative directory (data folder
+should be in same place as .jar file).
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. `data/SampleData3.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[invalid-command-suggestion9]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `new:( data/SampleData4`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean new data/SampleData3.rldx?’
+4.  Press `Enter`
+
+[[expected-behaviour39]]
+Expected Behaviour
++++++++++++++++++
+
+* A new Rolodex is created under the relative directory (data folder
+should be in same place as .jar file).
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. `data/SampleData4.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[keyboard-shortcut8]]
+Keyboard Shortcut
+
+
+1.  Press `Ctrl` + `N`
+2.  Type`data/SampleData5.rldx`
+3.  Press `Enter`
+
+[[expected-behaviour40]]
+Expected Behaviour
++++++++++++++++++
+
+* A new Rolodex is created under the relative directory (data folder
+should be in same place as .jar file).
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. `data/SampleData5.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[open-rolodex-command]]
+Open Rolodex Command
+~~~~~~~~~~~~~~~~~~~~
+
+[[requirements]]
+Requirements
+^^^^^^^^^^^^
+
+1.  Please complete the section
+https://cs2103aug2017-w11-b2.github.io/TestScript/#New-Rolodex-Command[New
+Rolodex Command] before proceeding with this section.
+
+[[opening-rolodex-at-relative-directory]]
+Opening Rolodex at Relative Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `open data/SampleData2.rldx` or `o data/SampleData2.rldx`
+2.  Press `Enter`
+
+[[expected-behaviour41]]
+Expected Behaviour
++++++++++++++++++
+
+* The original Rolodex under the relative directory (data folder should
+be in same place as .jar file) is opened.
+* The status bar on the bottom right of the application updates to the
+opened Rolodex (i.e. `data/SampleData2.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[opening-rolodex-at-system-directory]]
+Opening Rolodex at System Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[[windows1]]
+Windows:
+++++++++
+
+1.  Type `open C:/Users/YOUR_USERNAME/Desktop/SampleData3.rldx`
+2.  Press `Enter`
+
+[[mac1]]
+Mac:
+++++
+
+1.  Type `open /Users/YOUR_USERNAME/Desktop/SampleData3.rldx`
+2.  Press `Enter`
+
+[[linux1]]
+Linux:
++++++++
+
+1.  Type `open /home/YOUR_USERNAME/Desktop/SampleData3.rldx`
+2.  Press `Enter`
+
+[[expected-behaviour42]]
+Expected Behaviour
++++++++++++++++++
+
+* The original test file, `SampleData.rldx` should be loaded onto your
+application.
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. `data/SampleData.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[attempting-to-open-non-existent-rolodex]]
+Attempting to Open Non-Existent Rolodex
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `open data/SampleData4.rldx`
+2.  Press `Enter`
+
+[[expected-behaviour43]]
+Expected Behaviour
++++++++++++++++++
+
+* An error message should be displayed, prompting to use the `new`
+command instead.
+* The original SampleData.rldx should not be overwritten or changed.
+
+[[auto-completion7]]
+Auto-Completion
+^^^^^^^^^^^^^^^
+
+1.  Type `open`
+2.  Press `Tab`
+3.  Type `data/SampleData.rldx`
+
+[[expected-behaviour44]]
+Expected Behaviour
++++++++++++++++++
+
+* The original Rolodex under the relative directory (data folder should
+be in same place as .jar file) is opened.
+* The status bar on the bottom right of the application updates to the
+opened Rolodex (i.e. `data/SampleData.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[invalid-command-suggestion10]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `open:) data/SampleData2`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean open data/SampleData2.rldx?’
+4.  Press `Enter`
+
+[[expected-behaviour45]]
+Expected Behaviour
++++++++++++++++++
+
+* The Rolodex under the relative directory (data folder should be in
+same place as .jar file).
+* The status bar on the bottom right of the application updates to the
+new Rolodex (i.e. `data/SampleData2.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[keyboard-shortcut9]]
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `O`
+2.  Type `data/SampleData.rldx`
+3.  Press `Enter`
+
+[[expected-behaviour46]]
+Expected Behaviour
++++++++++++++++++
+
+* The original Rolodex under the relative directory (data folder should
+be in same place as .jar file) is opened.
+* The status bar on the bottom right of the application updates to the
+opened Rolodex (i.e. `data/SampleData.rldx`)
+* Undo/Redo no longer works as new data has been inserted and stack has
+been cleared.
+
+[[remark-command]]
+Remark Command
+~~~~~~~~~~~~~~
+
+[[basic-functionality8]]
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
+
+1.  Type `remark 1 r/Loves to talk.`
+2.  Press `Enter`
+3.  Type `select 1`
+4.  Press `Enter`
+
+[[expected-behaviour47]]
+Expected Behaviour
++++++++++++++++++
+
+* The selected contact should have the remark “Loves to talk.”
+
+[[abbreviations5]]
+Abbreviations
+^^^^^^^^^^^^^
+
+1.  Type `rmk 3 r/Loves to sing.`
+2.  Press `Enter`
+3.  Type `select 3`
+4.  Press `Enter`
+
+[[expected-behaviour48]]
+Expected Behaviour
++++++++++++++++++
+
+* The selected contact should have the remark “Loves to sing.”
+
+'''''
+
+1.  Type `comment 3 r/Loves to jump.`
+2.  Press `Enter`
+3.  Type `select 3`
+4.  Press `Enter`
+
+[[expected-behaviour49]]
+Expected Behaviour
++++++++++++++++++
+
+* The selected contact should have the remark “Loves to jump.”
+
+'''''
+
+1.  Type `note 3 r/Loves to eat.`
+2.  Press `Enter`
+3.  Type `select 3`
+4.  Press `Enter`
+
+[[expected-behaviour50]]
+Expected Behaviour
++++++++++++++++++
+
+* The selected contact should have the remark “Loves to eat.”
+
+[[auto-completion8]]
+Auto-Completion
+^^^^^^^^^^^^^^^
+
+1.  Type `remark` and press `Tab`
+2.  Type `1`
+3.  Press `Tab`
+4.  Type `Loves to swim`
+5.  Press `Enter`
+6.  Type `select 1`
+7.  Press `Enter`
+
+[[expected-behaviour51]]
+Expected Behaviour
++++++++++++++++++
+
+* The selected contact should have the remark “Loves to swim.”
+
+[[keyboard-shortcut10]]
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
+
+1.  Press `Ctrl` + `R`
+2.  Type `1`
+3.  Press `Tab`
+4.  Type `Loves to dance`
+5.  Press `Enter`
+6.  Type `select 1`
+7.  Press `Enter`
+
+[[expected-behaviour52]]
+Expected Behaviour
++++++++++++++++++
+
+* The selected contact should have the remark “Loves to dance.”
+
+[[invalid-command-suggestion11]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `rmk1 Hates dancing`
+2.  Press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean rmk 1 r/Hates dancing?’
+4.  Press `Enter`
+5.  Type `select 1`
+6.  Press `Enter`
+
+[[expected-behaviour53]]
+Expected Behaviour
++++++++++++++++++
+
+* The selected contact should have the remark “Hates dancing”
+
+[[undo-command]]
+Undo Command
+~~~~~~~~~~~~
+
+[[basic-functionality9]]
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
+
+1.  Type `delete 1` and press `Enter`
+2.  Type `undo`
+3.  Press `Enter`
+
+[[expected-behaviour54]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should remain in Rolodex
+
+[[abbreviations6]]
+Abbreviations
+^^^^^^^^^^^^^
+
+1.  Type `d 1` and press `Enter`
+2.  Type `undo`
+3.  Press `Enter`
+
+[[expected-behaviour55]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should remain in Rolodex
+
+[[drop-down-list3]]
+Drop-Down List
+^^^^^^^^^^^^^^
+
+1.  Type `d 1` and press `Enter`
+2.  Type `u`
+3.  Press `Enter` or click to select the `undo` option in the drop-down
+    list
+4.  Press `Enter`
+
+[[expected-behaviour56]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should remain in Rolodex
+
+[[invalid-command-suggestion12]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `d 1` and press `Enter`
+2.  Type `udon YUMMY!!! :P` and press `Enter`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean undo?’
+4.  Press `Enter`
+
+[[expected-behaviour57]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should remain in Rolodex
+
+[[keyboard-shortcut11]]
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
+
+1.  Type `d 1` and press `Enter`
+2.  Press `Ctrl` + `Z`
+
+[[expected-behaviour58]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should remain in Rolodex
+
+[[redo-command]]
+Redo Command
+~~~~~~~~~~~
+
+[[basic-functionality10]]
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
+
+1.  Type `d 1` and press `Enter`
+2.  Type `undo` and press `Enter`
+3.  Type `redo`
+4.  Press `Enter`
+
+[[expected-behaviour59]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should be deleted from Rolodex
+
+[[abbreviations7]]
+Abbreviations
+^^^^^^^^^^^^^
+
+1.  Type `d 1` and press `Enter`
+2.  Type `undo` and press `Enter`
+3.  Type `r`
+4.  Press `Enter`
+
+[[expected-behaviour60]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should be deleted from Rolodex
+
+[[drop-down-list4]]
+Drop-Down List
+^^^^^^^^^^^^^^
+
+1.  Type `d 1` and press `Enter`
+2.  Type `undo` and press `Enter`
+3.  Type `r`
+4.  Press `Enter` or click to select the `redo` option in the drop-down
+    list
+5.  Press `Enter`
+
+[[expected-behaviour61]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should be deleted from Rolodex
+
+[[invalid-command-suggestion13]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Type `d 1` and press `Enter`
+2.  Type `undo` and press `Enter`
+3.  Type `redp`
+4.  Press `Enter`
+
+[[expected-behaviour62]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should be deleted from Rolodex
+
+[[keyboard-shortcut12]]
+Keyboard Shortcut
+^^^^^^^^^^^^^^^^^
+
+1.  Type `d 1` and press `Enter`
+2.  Type `undo` and press `Enter`
+3.  Press `Ctrl` + `Y`
+
+[[expected-behaviour63]]
+Expected Behaviour
++++++++++++++++++
+
+* The first contact should be deleted from Rolodex
+
+[[exit-command]]
+Exit Command
+~~~~~~~~~~~~
+
+1.  Type `exit` or `quit` or `close` or `bye` or `esc`
+2.  Press `Enter`
+
+[[expected-behaviour64]]
+Expected Behaviour
++++++++++++++++++
+
+* The application should be closed.
+
+[[invalid-command-suggestion14]]
+Invalid Command Suggestion
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.  Reopen the application by clicking the rolodex.jar file.
+2.  Type `exito`
+3.  Type `y` or `yes` or `k` or `ok` or `yea` or `yeah` when prompted
+‘Did you mean exit?’
+4.  Press `Enter`
+
+[[expected-behaviour65]]
+Expected Behaviour
++++++++++++++++++
+
+* The application should be closed.
+
+[[end]]
+End
+~~~
+
+Congratulations. You have reached the end of the tests. Found any bugs?
+Report it at https://github.com/CS2103AUG2017-W11-B2/main/issues. We’ll
+give you a cookie for finding bugs! :)
+
+[[bonus-star-wars-ep-iv]]
+Bonus: Star Wars Ep IV
+~~~~~~~~~~~~~~~~~~~~~~
+
+[[requirements1]]
+Requirements
+^^^^^^^^^^^^
+
+Make sure you are connected to the internet and are *on a network that
+has port 25 open*. Chances are many universities’s (ahem) networks block
+the incoming port and this won’t work. Solution? Use a tether. Trust us
+- it’s awesome!
+
+[[basic-functionality11]]
+Basic Functionality
+^^^^^^^^^^^^^^^^^^
+
+1.  Type `starwars` or `sw`
+2.  Press `Enter`.
+3.  Enjoy!

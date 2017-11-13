@@ -5,15 +5,18 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's phone number in the address book.
+ * Represents a Person's phone number in the rolodex.
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
 public class Phone {
 
 
     public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Phone numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
+            "Phone numbers can only contain numbers, "
+                    + "optionally appended with '+', "
+                    + "start with only digits 1 to 9, "
+                    + "and should at least 7 digits long.";
+    public static final String PHONE_VALIDATION_REGEX = "\\+?[1-9]\\d{6,}";
     public final String value;
 
     /**
@@ -52,6 +55,10 @@ public class Phone {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    public int compareTo(Phone other) {
+        return toString().compareTo(other.toString());
     }
 
 }

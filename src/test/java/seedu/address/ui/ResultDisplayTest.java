@@ -1,7 +1,9 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
+import static seedu.address.ui.ResultDisplay.WELCOME_TEXT;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,10 +16,11 @@ public class ResultDisplayTest extends GuiUnitTest {
     private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB = new NewResultAvailableEvent("Stub");
 
     private ResultDisplayHandle resultDisplayHandle;
+    private ResultDisplay resultDisplay;
 
     @Before
     public void setUp() {
-        ResultDisplay resultDisplay = new ResultDisplay();
+        resultDisplay = new ResultDisplay();
         uiPartRule.setUiPart(resultDisplay);
 
         resultDisplayHandle = new ResultDisplayHandle(getChildNode(resultDisplay.getRoot(),
@@ -26,6 +29,9 @@ public class ResultDisplayTest extends GuiUnitTest {
 
     @Test
     public void display() {
+        // prompt text
+        assertEquals(WELCOME_TEXT, resultDisplayHandle.getPromptText());
+
         // default result text
         guiRobot.pauseForHuman();
         assertEquals("", resultDisplayHandle.getText());
@@ -34,5 +40,11 @@ public class ResultDisplayTest extends GuiUnitTest {
         postNow(NEW_RESULT_EVENT_STUB);
         guiRobot.pauseForHuman();
         assertEquals(NEW_RESULT_EVENT_STUB.message, resultDisplayHandle.getText());
+    }
+
+    @Test
+    public void setFocus() {
+        resultDisplay.setFocus();
+        assertTrue(resultDisplayHandle.isFocused());
     }
 }

@@ -11,7 +11,12 @@ import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
@@ -42,13 +47,13 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void commandBox_startingWithSuccessfulCommand() {
+    public void commandBoxStartingWithSuccessfulCommand() {
         assertBehaviorForSuccessfulCommand();
         assertBehaviorForFailedCommand();
     }
 
     @Test
-    public void commandBox_startingWithFailedCommand() {
+    public void commandBoxStartingWithFailedCommand() {
         assertBehaviorForFailedCommand();
         assertBehaviorForSuccessfulCommand();
 
@@ -59,7 +64,37 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void commandBox_handleKeyPress() {
+    public void addCommandAutoComplete() {
+        assertAutoComplete("a", AddCommand.COMMAND_WORD);
+        assertInputHistory(KeyCode.TAB, AddCommand.FORMAT);
+    }
+
+    @Test
+    public void selectCommandAutoComplete() {
+        assertAutoComplete("s", SelectCommand.COMMAND_WORD);
+        assertInputHistory(KeyCode.TAB, SelectCommand.FORMAT);
+    }
+
+    @Test
+    public void findCommandAutoComplete() {
+        assertAutoComplete("f", FindCommand.COMMAND_WORD);
+        assertInputHistory(KeyCode.TAB, FindCommand.FORMAT);
+    }
+
+    @Test
+    public void deleteCommandAutoComplete() {
+        assertAutoComplete("d", DeleteCommand.COMMAND_WORD);
+        assertInputHistory(KeyCode.TAB, DeleteCommand.FORMAT);
+    }
+
+    @Test
+    public void editCommandAutoComplete() {
+        assertAutoComplete("ed", EditCommand.COMMAND_WORD);
+        assertInputHistory(KeyCode.TAB, EditCommand.FORMAT);
+    }
+
+    @Test
+    public void commandBoxHandleKeyPress() {
         commandBoxHandle.run(COMMAND_THAT_FAILS);
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
         guiRobot.push(KeyCode.ESCAPE);
@@ -70,7 +105,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleKeyPress_startingWithUp() {
+    public void handleKeyPressStartingWithUp() {
         // empty history
         assertInputHistory(KeyCode.UP, "");
         assertInputHistory(KeyCode.DOWN, "");
@@ -102,7 +137,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleKeyPress_startingWithDown() {
+    public void handleKeyPressStartingWithDown() {
         // empty history
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.UP, "");
@@ -152,6 +187,15 @@ public class CommandBoxTest extends GuiUnitTest {
      */
     private void assertInputHistory(KeyCode keycode, String expectedCommand) {
         guiRobot.push(keycode);
+        assertEquals(expectedCommand, commandBoxHandle.getInput());
+    }
+
+    /**
+     * Types in {@code input} and presses enter to select the first option from the drop-down list,
+     * then checks that the input in the {@code commandBox} equals to {@code expectedCommand}.
+     */
+    private void assertAutoComplete(String input, String expectedCommand) {
+        commandBoxHandle.inputAndEnter(input);
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
 }

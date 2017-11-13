@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.storage.util.RolodexStorageUtil.ROLODEX_FILE_EXTENSION;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
@@ -16,15 +17,20 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.AddressBook;
+import seedu.address.commons.events.model.RolodexChangedEvent;
+import seedu.address.commons.events.storage.RolodexChangedDirectoryEvent;
+import seedu.address.model.Rolodex;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 
-    private static final String STUB_SAVE_LOCATION = "Stub";
+    private static final String STUB_SAVE_LOCATION = "Stub" + ROLODEX_FILE_EXTENSION;
+    private static final String STUB_SAVE_LOCATION_NEW = "NewStub" + ROLODEX_FILE_EXTENSION;
     private static final String RELATIVE_PATH = "./";
 
-    private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(new AddressBook());
+    private static final RolodexChangedEvent EVENT_STUB_CHANGE_DATA =
+            new RolodexChangedEvent(new Rolodex());
+    private static final RolodexChangedDirectoryEvent EVENT_STUB_CHANGE_DIRECTORY =
+            new RolodexChangedDirectoryEvent(RELATIVE_PATH + STUB_SAVE_LOCATION_NEW);
 
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
@@ -56,9 +62,14 @@ public class StatusBarFooterTest extends GuiUnitTest {
         // initial state
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION, SYNC_STATUS_INITIAL);
 
-        // after address book is updated
-        postNow(EVENT_STUB);
+        // after rolodex is updated
+        postNow(EVENT_STUB_CHANGE_DATA);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
+                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
+
+        // after rolodex directory is updated
+        postNow(EVENT_STUB_CHANGE_DIRECTORY);
+        assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION_NEW,
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
     }
 

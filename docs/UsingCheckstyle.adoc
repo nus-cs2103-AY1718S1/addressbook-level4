@@ -18,7 +18,7 @@ Restart the IDE to complete the installation.
 +
 image::checkstyle-idea-scan-scope.png[width="500"]
 . Click the plus sign under `Configuration File`
-. Enter an arbitrary description e.g. addressbook
+. Enter an arbitrary description e.g. rolodex
 . Select `Use a local Checkstyle file`
 . Use the checkstyle configuration file found at `config/checkstyle/checkstyle.xml`
 . Click `Next` > `Finish`
@@ -38,3 +38,7 @@ image::checkstyle-idea-configuration.png[width="700"]
 
 * Reason: The plugin may not immediately run after setting it up.
 * Solution: Restart the IDE.
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]

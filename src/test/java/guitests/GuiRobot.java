@@ -14,7 +14,8 @@ import javafx.stage.Stage;
  */
 public class GuiRobot extends FxRobot {
 
-    private static final int PAUSE_FOR_HUMAN_DELAY_MILLISECONDS = 250;
+    private static final int PAUSE_FOR_HUMAN_DELAY_MILLISECONDS = 500;
+    private static final int PAUSE_FOR_DROP_DOWN_LIST_TO_APPEAR = 500;
     private static final int DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS = 5000;
 
     private static final String PROPERTY_TESTFX_HEADLESS = "testfx.headless";
@@ -28,15 +29,24 @@ public class GuiRobot extends FxRobot {
 
     /**
      * Pauses execution for {@code PAUSE_FOR_HUMAN_DELAY_MILLISECONDS} milliseconds for a human to examine the
-     * effects of the test. This method will be disabled when the GUI tests are executed in headless mode to avoid
-     * unnecessary delays.
+     * effects of the test.
      */
     public void pauseForHuman() {
+        /* the pause is also enabled in headless mode to avoid unexpected behaviour in tests
         if (isHeadlessMode) {
             return;
-        }
+        }*/
 
         sleep(PAUSE_FOR_HUMAN_DELAY_MILLISECONDS);
+    }
+
+    /**
+     * Pauses execution for {@code PAUSE_FOR_DROP_DOWN_LIST_TO_APPEAR} milliseconds for the auto-completion drop-down
+     * list to appear. This method will be disabled when the GUI tests are executed in headless mode to avoid
+     * unnecessary delays.
+     */
+    public void pauseForDropDownList() {
+        sleep(PAUSE_FOR_DROP_DOWN_LIST_TO_APPEAR);
     }
 
     /**

@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's address in the address book.
+ * Represents a Person's address in the rolodex.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
 public class Address {
@@ -18,6 +18,8 @@ public class Address {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    public static final String ADDRESS_BLOCK_WORD_MATCHING_REGEX = "Block |block |Blk |blk ";
+    public static final String ADDRESS_BLOCK_MATCHING_REGEX = "^\\d{1,5}[a-zA-Z, -]| \\d{1,5}[a-zA-Z, -]|a\\/\\d{1,5}";
 
     public final String value;
 
@@ -56,6 +58,10 @@ public class Address {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    public int compareTo(Address other) {
+        return toString().compareTo(other.toString());
     }
 
 }

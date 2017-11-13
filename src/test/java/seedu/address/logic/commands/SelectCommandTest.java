@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalRolodex;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -36,12 +36,12 @@ public class SelectCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalRolodex(), new UserPrefs());
     }
 
     @Test
-    public void execute_validIndexUnfilteredList_success() {
-        Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
+    public void executeValidIndexUnfilteredListSuccess() {
+        Index lastPersonIndex = Index.fromOneBased(model.getLatestPersonList().size());
 
         assertExecutionSuccess(INDEX_FIRST_PERSON);
         assertExecutionSuccess(INDEX_THIRD_PERSON);
@@ -49,26 +49,26 @@ public class SelectCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_failure() {
-        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+    public void executeInvalidIndexUnfilteredListFailure() {
+        Index outOfBoundsIndex = Index.fromOneBased(model.getLatestPersonList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() {
+    public void executeValidIndexFilteredListSuccess() {
         showFirstPersonOnly(model);
 
         assertExecutionSuccess(INDEX_FIRST_PERSON);
     }
 
     @Test
-    public void execute_invalidIndexFilteredList_failure() {
+    public void executeInvalidIndexFilteredListFailure() {
         showFirstPersonOnly(model);
 
         Index outOfBoundsIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        // ensures that outOfBoundIndex is still in bounds of rolodex list
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getRolodex().getPersonList().size());
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
