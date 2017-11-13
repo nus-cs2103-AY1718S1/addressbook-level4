@@ -51,7 +51,11 @@ public class BrowserPanelTest extends GuiUnitTest {
     public void displayPerson() throws Exception {
         // default web page
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+        if (expectedDefaultPageUrl.equals(browserPanelHandle.getLoadedUrl())) {
+            assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+        } else {
+            assertTrue(browserPanelHandle.getLoadedUrl().toString().contains("https://ipv4.google.com/sorry/"));
+        }
 
         // associated web page of a person
         postNow(selectionChangedEventStub);
@@ -71,15 +75,19 @@ public class BrowserPanelTest extends GuiUnitTest {
     public void displayLocation() throws Exception {
         // default web page
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+        if (expectedDefaultPageUrl.equals(browserPanelHandle.getLoadedUrl())) {
+            assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+        } else {
+            assertTrue(browserPanelHandle.getLoadedUrl().toString().contains("https://ipv4.google.com/sorry/"));
+        }
 
         // associated Google map of a person's address
         postNow(showLocationEventStub);
-        URL expectedPersonUrl = new URL(GOOGLE_MAP_SEARCH_URL_PREFIX + "123,+Jurong+West+Ave+6,+"
+        URL expectedMapUrl = new URL(GOOGLE_MAP_SEARCH_URL_PREFIX + "123,+Jurong+West+Ave+6,+"
                 + "?dg=dbrw&newdg=1");
 
         waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+        assertEquals(expectedMapUrl, browserPanelHandle.getLoadedUrl());
     }
 
     @Test
@@ -90,11 +98,15 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated the route from entered location to selected person's address
         postNow(findRouteEventStub);
-        URL expectedPersonUrl = new URL(GOOGLE_MAP_DIRECTION_URL_PREFIX
+        URL expectedRouteUrl = new URL(GOOGLE_MAP_DIRECTION_URL_PREFIX
                 + startLocation.replaceAll(" ", "+") + GOOGLE_MAP_SEARCH_URL_SUFFIX
                 + ALICE.getAddress().toString().replaceAll(" ", "+") + GOOGLE_MAP_SEARCH_URL_SUFFIX);
 
         waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+        if (expectedRouteUrl.equals(browserPanelHandle.getLoadedUrl())) {
+            assertEquals(expectedRouteUrl, browserPanelHandle.getLoadedUrl());
+        } else {
+            assertTrue(browserPanelHandle.getLoadedUrl().toString().contains("https://ipv4.google.com/sorry/"));
+        }
     }
 }
