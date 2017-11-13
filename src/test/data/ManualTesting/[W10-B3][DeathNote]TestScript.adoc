@@ -463,7 +463,96 @@ Changes the current theme of Deathnote
 
 . `theme evil`
 
-*Expected Output:* Theme evil. +
+*Expected Output:* Theme has been changed +
 *Observe: * The window theme changes to the evil theme.
 
-==
+== Invalid Testing
+
+Some commands have validation. You may use the following tests to check if invalid inputs are rejected correctly. +
+
+=== Add Command
+
+*Invalid Command Test 1* +
+Checks if duplicate people can be added. +
+
+. `add n/Adeeb`
+. `add n/Adeeb`
+
+*Expected Output:* This person already exists in the address book +
+
+*Invalid Command Test 2* +
+Checks if duplicate people different tags can be added. +
+
+. `add n/Adeeb t/best`
+. `add n/Adeeb t/worst`
+
+*Expected Output:* This person already exists in the address book +
+
+*Invalid Command Test 3* +
+Checks if the name is valid. +
+
+. `add n/`
+
+*Expected Output:* Person names should only contain alphanumeric characters and spaces, and it should not be blank +
+
+. `add n/James&`
+
+*Expected Output:* Person names should only contain alphanumeric characters and spaces, and it should not be blank +
+
+*Invalid Command Test 4* +
+Checks if the phone number provided is valid. +
+
+. `add n/James p/7`
+
+*Expected Output:* Phone numbers can only contain numbers, and should be at least 3 digits long +
+
+. `add n/James p/77*77777`
+
+*Expected Output:* Phone numbers can only contain numbers, and should be at least 3 digits long +
+
+. ` add n/James p/abdce`
+
+*Expected Output:* Phone numbers can only contain numbers, and should be at least 3 digits long +
+
+*Invalid Command Test 5*
+Checks if the email provided is valid. +
+
+. `add n/James e/mail!yahoo`
+
+*Expected Output*: Person emails should be 2 alphanumeric/period strings separated by '@' +
+
+. `add n/James e/@@@@`
+
+*Expected Output*: Person emails should be 2 alphanumeric/period strings separated by '@' +
+
+Invalid Command Test 6*
+Checks if address is blank if used. +
+
+. `add n/James a/`
+
+*Expected Output*: Person addresses can take any values, and it should not be blank +
+
+Invalid Command Test 7*
+Checks if the tag used is valid. +
+
+. `add n/James t/d**k`
+
+*Expected Output*: Tags names should be alphanumeric +
+
+Invalid Command Test 8*
+Checks if the birthday provided is in the correct format and valid. *
+
+Invalid Command Test 9*
+Checks if the website provided is in the correct format. *
+
+
+
+=== Miscellaneous
+
+Using a command that does not exist will give an error.
+
+*Misc Command Test 1*
+
+. `misc`
+
+*Expected Output*: Unknown Command
