@@ -1,0 +1,86 @@
+= Derek Nam - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Personal Information Manager Program (PIMP)
+Personal Information Management Program (PIMP) is a command line interface (CLI) address book that allows you to store your contacts. You can use PIMP to add friends, add specific tags to them, add their social media accounts (such as Facebook, Twitter, Instagram), or add remarks. You can search through the list of your contacts by typing specific names. For more advanced user, you can use regex to find your friends. Most of the functionality works by typing in single line commands.
+
+PIMP v1.5 is available on any platform running Java 8.
+
+=== Enhancement Added: Statistics
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=statistics]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A professional socialite needs information to track his/her career. PIMP allows users an overview of when the contacts were added and which social media platform they are on, so that they can capitalise on it in the future (maybe offer more content on social media platforms where more contacts are active on, or know whether he/she needs to meet more people in the upcoming month).
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=statistics]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Remark
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The remark allows the user to attach miscellaneous information about a contact. This functionality helps users to recall details of their contacts' life.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed (for v2.0)
+
+1) Viewing statistics based on start and end date +
+A socialite might want to scrutinise and breakdown his/her activities more granularly, and thus with a date picker for the start and end date, a socalite will be able to find out precise information about certain periods in his/her life.
+
+2) Birthday +
+It is important for a socialite to be able to plan his/her schedule based on their birthdays. As such, a feature to add and view a monthly breakdown of people with their birthdays in a certain month will be highly relevant to a socalite.
+
+
+=== Other contributions
+
+* Added total number of people and total recently added people to status bar (Pull requests https://github.com[#2], https://github.com[#75])
+
+* Help identify bugs in other projects: +
+https://github.com/CS2103AUG2017-W15-B3/main/issues/97 +
+https://github.com/CS2103AUG2017-W15-B3/main/issues/127 +
+https://github.com/CS2103AUG2017-W15-B3/main/issues/128
+
+* Submitted a pull request which was merged into the course repository: +
+https://github.com/se-edu/addressbook-level2/pull/209

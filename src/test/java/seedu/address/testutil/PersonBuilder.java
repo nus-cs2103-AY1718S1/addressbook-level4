@@ -1,14 +1,18 @@
 package seedu.address.testutil;
 
+import java.util.Date;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.AccessCount;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
+import seedu.address.model.person.SocialMedia;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -20,8 +24,10 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
+    public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_USERNAME = "alicepaul123";
 
     private Person person;
 
@@ -31,8 +37,13 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
+            Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            Date createdAt = new Date();
+            SocialMedia socialMedia = new SocialMedia(DEFAULT_USERNAME, DEFAULT_USERNAME, DEFAULT_USERNAME);
+            AccessCount accessCount = new AccessCount(0);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultRemark,
+                    defaultTags, createdAt, socialMedia, accessCount);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -102,6 +113,33 @@ public class PersonBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        this.person.setRemark(new Remark(remark));
+        return this;
+    }
+
+    //@@author kenpaxtonlim
+    /**
+     * Sets the {@code SocialMedia} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withSocialMedia(String facebook, String twitter, String instagram) {
+        this.person.setSocialMedia(new SocialMedia(facebook, twitter, instagram));
+        return this;
+    }
+    //@@author
+
+    /**
+     * Sets the {@code SocialMedia} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCreatedAt(Date createdAt) {
+        this.person.setCreatedAt(createdAt);
+
         return this;
     }
 

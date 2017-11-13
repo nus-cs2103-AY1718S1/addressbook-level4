@@ -14,7 +14,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Represents a distinct part of the UI. e.g. Windows, dialogs, panels, status bars, etc.
+ * Represents a distinct part of the UI. e.g. Windows, dialogs, panels, people count bar, etc.
  * It contains a scene graph with a root node of type {@code T}.
  */
 public abstract class UiPart<T> {

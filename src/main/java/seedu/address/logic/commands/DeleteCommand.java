@@ -2,8 +2,10 @@ package seedu.address.logic.commands;
 
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.RefreshStatisticsPanelIfOpenEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -14,7 +16,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
-
+    public static final String COMMAND_ALIAS = "d";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
@@ -42,6 +44,7 @@ public class DeleteCommand extends UndoableCommand {
 
         try {
             model.deletePerson(personToDelete);
+            EventsCenter.getInstance().post(new RefreshStatisticsPanelIfOpenEvent());
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
