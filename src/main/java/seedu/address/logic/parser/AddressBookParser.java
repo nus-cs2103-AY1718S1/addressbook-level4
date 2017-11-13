@@ -122,9 +122,6 @@ public class AddressBookParser {
         case CheckScheduleCommand.COMMAND_WORD:
             return new CheckScheduleCommand();
 
-        case FindEventCommand.COMMAND_WORD:
-            return new FindEventCommandParser().parse(arguments);
-
         case SetRelCommand.COMMAND_WORD:
             return new SetRelCommandParser().parse(arguments);
 
