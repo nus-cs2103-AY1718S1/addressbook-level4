@@ -93,10 +93,3 @@ include::../DeveloperGuide.adoc[tag=model]
 * Wrote tests for Model component. +
     (pull request: [https://github.com/CS2103AUG2017-W14-B4/main/pull/126[#126]])
 
-=== Enhancement Proposed:
-
-Users can send messages through this app.
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}

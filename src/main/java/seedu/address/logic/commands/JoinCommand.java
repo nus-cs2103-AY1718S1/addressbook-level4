@@ -64,7 +64,7 @@ public class JoinCommand extends UndoableCommand {
             throw new  CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         if (eventIdx.getZeroBased() >= lastShownEventList.size()) {
-            throw new  CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new  CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
         personToJoin = (Person) lastShownPersonList.get(personIdx.getZeroBased());
         eventToJoin = (Event) lastShownEventList.get(eventIdx.getZeroBased());
