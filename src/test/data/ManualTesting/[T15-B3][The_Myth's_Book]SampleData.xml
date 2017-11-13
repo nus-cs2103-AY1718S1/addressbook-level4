@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <homeNumber>65822291</homeNumber>
+        <email>alexyeoh@example.com</email>
+        <schEmail>e0011223@u.nus.edu</schEmail>
+        <website>https://www.facebook.com/alexYeoh</website>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <birthday>12/11/1998</birthday>
+        <favourite>false</favourite>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <homeNumber>65731231</homeNumber>
+        <email>berniceyu@example.com</email>
+        <schEmail>e3445566@u.ntu.edu</schEmail>
+        <website>https://www.facebook.com/berniceYu</website>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <birthday>17/04/1950</birthday>
+        <favourite>false</favourite>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <homeNumber>61112223</homeNumber>
+        <email>charlotte@example.com</email>
+        <schEmail>charlotte@u.ntu.edu</schEmail>
+        <website>https://www.facebook.com/charlotteO</website>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <birthday>05/03/2001</birthday>
+        <favourite>false</favourite>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <homeNumber>61231234</homeNumber>
+        <email>lidavid@example.com</email>
+        <schEmail>david_li@u.nus.edu</schEmail>
+        <website>https://www.facebook.com/davidLi</website>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <birthday>06/07/1982</birthday>
+        <favourite>false</favourite>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <homeNumber>65512340</homeNumber>
+        <email>irfan@example.com</email>
+        <schEmail>irfan_ibrahim@u.ntu.edu</schEmail>
+        <website>https://www.facebook.com/irfanIbra</website>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <birthday>10/12/2005</birthday>
+        <favourite>false</favourite>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <homeNumber>68910234</homeNumber>
+        <email>royb@example.com</email>
+        <schEmail>roy_99@vjc.com.sg</schEmail>
+        <website>https://www.facebook.com/royBala</website>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <birthday>22/09/1975</birthday>
+        <favourite>false</favourite>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Dickson</name>
+        <phone>90110291</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>dickson@gmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>NIL</birthday>
+        <favourite>false</favourite>
+    </persons>
+    <persons>
+        <name>Darren</name>
+        <phone>90110291</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>darren@gmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>NIL</birthday>
+        <favourite>false</favourite>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Cherng Hann</name>
+        <phone>97123121</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>chernghann@gmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>NIL</birthday>
+        <favourite>false</favourite>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Deepak</name>
+        <phone>98910219</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>deep4k@gmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>NIL</birthday>
+        <favourite>false</favourite>
+        <tagged>nosleep</tagged>
+    </persons>
+    <persons>
+        <name>Wyn</name>
+        <phone>92210011</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>wyn@gmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>NIL</birthday>
+        <favourite>false</favourite>
+        <tagged>salesman</tagged>
+    </persons>
+    <persons>
+        <name>Alpheus</name>
+        <phone>92121311</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>Alpheus@gmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>NIL</birthday>
+        <favourite>false</favourite>
+        <tagged>brother</tagged>
+    </persons>
+    <persons>
+        <name>Azizi</name>
+        <phone>92121311</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>azizi@gmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>NIL</birthday>
+        <favourite>false</favourite>
+        <tagged>homie</tagged>
+    </persons>
+    <persons>
+        <name>Anton</name>
+        <phone>94441122</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>anton@gmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>NIL</birthday>
+        <favourite>false</favourite>
+        <tagged>rich</tagged>
+    </persons>
+    <persons>
+        <name>Wenhao</name>
+        <phone>94123122</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>wen_hao@gmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>11/12/1995</birthday>
+        <favourite>false</favourite>
+    </persons>
+    <persons>
+        <name>Jinting</name>
+        <phone>95612333</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>jin_ting@hotmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>NIL</birthday>
+        <favourite>false</favourite>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Wei Hong</name>
+        <phone>87361322</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>weihong@hotmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>NIL</birthday>
+        <favourite>false</favourite>
+        <tagged>brother</tagged>
+    </persons>
+    <persons>
+        <name>Justin</name>
+        <phone>87360022</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>justinpoh@hotmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>NIL</birthday>
+        <favourite>false</favourite>
+        <tagged>neighbour</tagged>
+    </persons>
+    <persons>
+        <name>Javen</name>
+        <phone>82210022</phone>
+        <homeNumber>NIL</homeNumber>
+        <email>javern@hotmail.com</email>
+        <schEmail>NIL</schEmail>
+        <website>NIL</website>
+        <address>NIL</address>
+        <birthday>NIL</birthday>
+        <favourite>false</favourite>
+        <tagged>swimmer</tagged>
+    </persons>
+    <persons>
+        <name>John Doe</name>
+        <phone>98765432</phone>
+        <homeNumber>65822291</homeNumber>
+        <email>johnd@example.com</email>
+        <schEmail>e0001111@u.nus.edu</schEmail>
+        <website>https://www.facebook.com/johnDoe</website>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <birthday>12/02/1998</birthday>
+        <favourite>false</favourite>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <events>
+        <name>ZoukOut</name>
+        <address>Sentosa Beach, Siloso</address>
+        <date>5/12/2017</date>
+    </events>
+    <events>
+        <name>Halloween Horror Night</name>
+        <address>USS</address>
+        <date>5/12/2017</date>
+    </events>
+    <events>
+        <name>EE2020 Finals</name>
+        <address>MPSH</address>
+        <date>15/11/2017</date>
+    </events>
+    <events>
+        <name>CS2103 Software Demo</name>
+        <address>COM 1 SR 10</address>
+        <date>16/11/2017</date>
+    </events>
+    <events>
+        <name>Ed Sheeran Concert</name>
+        <address>Kallang Stadium</address>
+        <date>19/11/2017</date>
+    </events>
+    <events>
+        <name>CG2271 Finals</name>
+        <address>MPSH2A</address>
+        <date>4/12/2017</date>
+    </events>
+    <events>
+        <name>Katy Perry Concert</name>
+        <address>HardRock Hotel</address>
+        <date>25/12/2017</date>
+    </events>
+    <events>
+        <name>Sister's Wedding</name>
+        <address>Ritz Carton</address>
+        <date>12/12/2017</date>
+    </events>
+    <events>
+        <name>Night Cycling</name>
+        <address>East Coast Park</address>
+        <date>22/12/2017</date>
+    </events>
+    <events>
+        <name>CS GO FINALS</name>
+        <address>Seattle stadium</address>
+        <date>13/11/2017</date>
+    </events>
+    <events>
+        <name>NEW YEAR COUNTDOWN</name>
+        <address>Marina Bay Sands</address>
+        <date>31/12/2017</date>
+    </events>
+    <events>
+        <name>Exchange</name>
+        <address>Changi Airport</address>
+        <date>31/2/2018</date>
+    </events>
+    <events>
+        <name>Chinese New Year</name>
+        <address>Chinatown</address>
+        <date>15/2/2018</date>
+    </events>
+    <events>
+        <name>Deepavali</name>
+        <address>Deep4k's House</address>
+        <date>18/10/2018</date>
+    </events>
+    <events>
+        <name>Baby's 1 month</name>
+        <address>Darren's House</address>
+        <date>25/11/2017</date>
+    </events>
+    <events>
+        <name>MMA finals</name>
+        <address>Boxing Ring</address>
+        <date>25/10/2017</date>
+    </events>
+    <events>
+        <name>DOTA2 FInals</name>
+        <address>FASS</address>
+        <date>25/08/2017</date>
+    </events>
+    <events>
+        <name>The Rising Star FInals</name>
+        <address>FUtown</address>
+        <date>3/11/2017</date>
+    </events>
+    <events>
+        <name>The Dream Composition</name>
+        <address>University Cultural Centre</address>
+        <date>30/11/2017</date>
+    </events>
+    <events>
+        <name>The Night of the Arts</name>
+        <address>KE7</address>
+        <date>30/12/2017</date>
+    </events>
+    <tags>nosleep</tags>
+    <tags>rich</tags>
+    <tags>neighbours</tags>
+    <tags>neighbour</tags>
+    <tags>swimmer</tags>
+    <tags>friends</tags>
+    <tags>homie</tags>
+    <tags>owesMoney</tags>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>salesman</tags>
+    <tags>family</tags>
+    <tags>brother</tags>
+</addressbook>
