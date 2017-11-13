@@ -12,7 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing], http
 
 === Niu Yunpeng
 image::yunpengn.jpg[width="150", align="left"]
-{empty}[https://yunpengn.github.io/[homepage]] [https://github.com/yunpengn[github]]
+{empty}[https://yunpengn.github.io/[homepage]] [https://github.com/yunpengn[github]] [<<yunpengn#, portfolio>>]
 
 Role: Team Lead +
 Responsibility: UI component
@@ -21,7 +21,7 @@ Responsibility: UI component
 
 === Ng Jun Yang
 image::junyango.jpg[width= "150", align="left"]
-{empty}[https://github.com/junyango[github]]
+{empty}[https://github.com/junyango[github]] [<<junyang#, portfolio>>]
 
 Role: Test Engineer +
 Responsibility: Model component
@@ -30,7 +30,7 @@ Responsibility: Model component
 
 === Low Weng Fei
 image::low5545.jpeg[width="150", align="left"]
-{empty}[https://github.com/low5545[github]]
+{empty}[https://github.com/low5545[github]] [<<wengfei#, portfolio>>]
 
 Role: Back-end Developer +
 Responsibility: Logic component
@@ -39,7 +39,7 @@ Responsibility: Logic component
 
 === Loh Denna
 image::dennaloh.jpg[width="150", align="left"]
-{empty}[https://github.com/dennaloh[github]]
+{empty}[https://github.com/dennaloh[github]] [<<dennaloh#, portfolio>>]
 
 Role: Quality Assurance Engineer +
 Responsibility: Storage component
