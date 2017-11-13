@@ -177,7 +177,6 @@ It should be noted that each time the user logs into `Codii`, it checks through 
 whose deadlines have been passed and automatically adds them into the overdue list. +
 
 Shows a list of all persons with overdue debt in the address book. +
-
 Format: `overduelist`
 // end::overduelist[]
 
