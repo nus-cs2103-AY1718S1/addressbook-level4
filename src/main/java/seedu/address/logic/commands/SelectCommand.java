@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
@@ -9,6 +10,7 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.social.SocialInfo;
 
 /**
  * Selects a person identified using it's last displayed index from the address book.
@@ -25,6 +27,7 @@ public class SelectCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
+    public static final String MESSAGE_SOCIAL_TYPE_NOT_FOUND = "Requested social media type not found for person.";
 
     private final Index targetIndex;
     private String socialType = null;
@@ -51,6 +54,14 @@ public class SelectCommand extends Command {
         }
 
         ReadOnlyPerson selectedPerson = lastShownList.get(targetIndex.getZeroBased());
+
+        if (socialType != null) {
+            // check to see if the social type matches any of the selected person's social media accounts
+            if (!checkPersonHasSocialType(selectedPerson, socialType)) {
+                throw new CommandException(MESSAGE_SOCIAL_TYPE_NOT_FOUND);
+            }
+        }
+
         try {
             model.selectPerson(selectedPerson);
             // index of person might have shifted because of the select operation
@@ -62,6 +73,19 @@ public class SelectCommand extends Command {
         }
 
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+    }
+
+    //@@author sarahnzx
+    private boolean checkPersonHasSocialType(ReadOnlyPerson selectedPerson, String socialType) {
+        Set<SocialInfo> selectedPersonSocialInfos = selectedPerson.getSocialInfos();
+        boolean hasSameSocialType = false;
+        for (SocialInfo si : selectedPersonSocialInfos) {
+            if (si.getSocialType().equals(socialType)) {
+                hasSameSocialType = true;
+                break;
+            }
+        }
+        return hasSameSocialType;
     }
     //@@author
 
