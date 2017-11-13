@@ -366,10 +366,11 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 ---
 
-**Aspect:** Data structure to support the undo/redo commands +
+===== Data structure to support the undo/redo commands +
 **Alternative 1 (current choice):** Use separate stack for undo and redo +
 **Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project. +
 **Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`. +
+
 **Alternative 2:** Use `HistoryManager` for undo/redo +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
@@ -726,19 +727,21 @@ A command is added if all three conditions are satisfied:
 
 ==== Design Considerations
 
-**Aspect:** Implementation +
+===== Implementation +
 **Alternative 1 (current choice):** Make use of `TestFields` API +
 **Pros:** Easy to implement +
 **Pros:** List is dynamic. +
 **Cons:** User cannot see the full format of the commands in the drop-down list. +
+
 **Alternative 2:** Use ComboBox +
 **Pros:** User can see the required fields for each command in the drop-down box. +
 **Cons:** As user selects an option, the command is executed with the place holders, resulting in an invalid command. User has to manually select the placeholders and change accordingly.
 
-**Aspect:** Auto-completion binding +
+===== Auto-completion binding +
 **Alternative 1 (current choice):** Only suggest commands that starts with user input +
 **Pros:** Suggested commands are accurate. +
 **Cons:** The list usually only display one or two options because not many commands start with the same alphabet. +
+
 **Alternative 2:** Suggest commands that contain the user input. +
 **Pros:** More suggestions would be displayed. +
 **Pros:** User has a higher chance of finding the desired command when a typo is made. +
