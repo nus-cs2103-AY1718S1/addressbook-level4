@@ -646,6 +646,69 @@ image::ImportCommandActivityDiagram.png[width="300"]
 
 Future enhancements may include a selection option from the UI and allowing the users to specify if they would like to overwrite contacts with identical names.
 
+// tag::switchtab[]
+=== Switch Tab Command
+
+The `switch tab` command allows users to switch between the Residents List and the Events lists from the Command Line Interface.
+
+The two possible commands are `switch 1` which switches to Residents List and `switch 2` switches to the Events List
+
+If an invalid argument such as `a` or `5` is passed with the switch command, a `ParseException` is raised:
+
+[source, java]
+----
+public SwitchTabCommand parse(String args) throws ParseException {
+    try {
+        int index = ParserUtil.parseIndex(args).getOneBased();
+
+        if (index > 2 || index < 1) {
+            throw new IllegalValueException(MESSAGE_INVALID_COMMAND_FORMAT);
+        }
+        return new SwitchTabCommand(index);
+    } catch (IllegalValueException ive) {
+        throw new ParseException(
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwitchTabCommand.MESSAGE_USAGE));
+    }
+}
+----
+
+Furthermore, if a `SwitchTabCommand` command is successfully made with invalid arguments by another class (such as when running tests), a `CommandException` will be raised when the command is executed:
+
+[source, java]
+----
+@Override
+public CommandResult execute() throws CommandException {
+
+    if (targetIndex > 2 || targetIndex < 1) {
+        throw new CommandException(MESSAGE_USAGE);
+    }
+
+    EventsCenter.getInstance().post(new SwitchTabRequestEvent(targetIndex));
+    return new CommandResult(String.format(MESSAGE_SWITCH_TAB_SUCCESS, tabName));
+}
+----
+
+If successfully executed, the command posts a new `SwitchTabRequestEvent`. This event is later handled in the `UI:MainWindow`:
+
+[source, java]
+----
+public void switchTab(int index) {
+    tabPane.getSelectionModel().select(index);
+}
+
+@Subscribe
+private void handleSwitchTabEvent(SwitchTabRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    switchTab(event.targetIndex);
+}
+----
+
+Possible Future Implementations:
+
+* `switch` should be able to detect the current tab and switch without taking in any arguments.
+
+// end::switchtab[]
+
 
 // tag::sort[]
 === Sort Command
