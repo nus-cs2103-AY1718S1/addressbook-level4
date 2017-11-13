@@ -240,7 +240,8 @@ Format: `sort [TYPE]`
 
 [NOTE]
 ====
-1. Sorting by *position* sorts the list according the person's position and and
+1. Sorting by *position* sorts the list according the person's position and it will sort all the NIL to be at the
+bottom. After doing it that, it will sort them alphabetically.
 
 2. Sorting by *priority* sorts the list by *_H, M and L_* repsectively. After sorting by H, M and L, they will then
 sort them
