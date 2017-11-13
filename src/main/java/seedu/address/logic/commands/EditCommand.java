@@ -18,6 +18,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
@@ -31,6 +32,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.social.SocialInfo;
+import seedu.address.model.social.UniqueSocialInfoList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -86,7 +88,12 @@ public class EditCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Person editedPerson = null;
+        try {
+            editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        } catch (DuplicateDataException dde) {
+            throw new CommandException(dde.getMessage());
+        }
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -104,7 +111,7 @@ public class EditCommand extends UndoableCommand {
      * edited with {@code editPersonDescriptor}.
      */
     private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
+                                             EditPersonDescriptor editPersonDescriptor) throws DuplicateDataException {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
@@ -116,9 +123,9 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<SocialInfo> updatedSocialInfos =
                 editPersonDescriptor.getSocialInfos().orElse(personToEdit.getSocialInfos());
-
+        UniqueSocialInfoList uniqueSocialInfoList = new UniqueSocialInfoList(updatedSocialInfos);
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavorite, updatedPhoto,
-                updatedTags, updatedSocialInfos);
+                updatedTags, uniqueSocialInfoList);
     }
 
     @Override

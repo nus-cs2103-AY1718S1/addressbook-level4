@@ -20,6 +20,12 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
         OptionBearingArgument opArgs = new OptionBearingArgument(args);
         String trimmedArgs = opArgs.getRawArgs();
 
+        if (opArgs.getOptions().size() != 1) {
+            // theme command must have one option specified
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
+        }
+
         if (trimmedArgs.isEmpty()
                 || (!opArgs.getOptions().contains(ThemeCommand.COMMAND_OPTION_DAY)
                 && !opArgs.getOptions().contains(ThemeCommand.COMMAND_OPTION_NIGHT))) {

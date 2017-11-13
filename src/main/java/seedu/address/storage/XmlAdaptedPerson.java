@@ -19,6 +19,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.social.SocialInfo;
+import seedu.address.model.social.UniqueSocialInfoList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -98,7 +99,9 @@ public class XmlAdaptedPerson {
         final DisplayPhoto displayPhoto = new DisplayPhoto(this.displayPhoto);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<SocialInfo> socialInfos = new HashSet<>(personSocialInfos);
+        final UniqueSocialInfoList uniqueSocialInfoList = new UniqueSocialInfoList(socialInfos);
         final LastAccessDate lastAccessDate = new LastAccessDate(new Date(lastAccessDateEpoch));
-        return new Person(name, phone, email, address, favorite, displayPhoto, tags, socialInfos, lastAccessDate);
+        return new Person(name, phone, email, address, favorite, displayPhoto, tags,
+                uniqueSocialInfoList, lastAccessDate);
     }
 }
