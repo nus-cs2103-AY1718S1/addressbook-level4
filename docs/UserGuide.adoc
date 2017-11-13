@@ -43,7 +43,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 This application comes pre-loaded with necessary contacts from school, so that students do not have to search and add one by one when they need them. `coming in v2.0`
 
-This application supports Alphanumeric and Chinese character input as name. `coming in v2.0`
+This application supports Alphanumeric character input as name. `coming in v2.0`
 ====
 *Command Format*
 
