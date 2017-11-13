@@ -481,14 +481,20 @@ _Figure 5.2.2 EventsCommand Logic Sequence Diagram_
 // tag::addevent[]
 === Add Event mechanism
 
-Add event mechanism adds an event which stores in the The Myth's Book. The add event mechanism is facilitated by an `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
+An `Event` is created by `EventName`, `Date` and `Address` as the details of the event.
+It also implements `ReadOnlyEvent` interface. The class diagram is shown in Figure 5.3.1 below.
+
+image::eventclassdiagram.PNG[width="800"]
+_Figure 5.3.1 Event Class Diagram_
+
+Add event mechanism adds an Event which stores in the The Myth's Book. The add event mechanism is facilitated by an `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
 different events with their information given by the user. This command inherits from `UndoableCommand`.
 
-From Figure 5.3.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the AddEventCommand
+From Figure 5.3.2 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the AddEventCommand
 can be undoable, where the previous state of The Myth's Book before the event is saved.
 
 image::AddEventDiagram.PNG[width="800"]
-_Figure 5.3.1 AddEventCommand Logic Class Diagram_
+_Figure 5.3.2 AddEventCommand Logic Class Diagram_
 
 The execution of AddEventCommand is processed in this way:
 
@@ -499,10 +505,10 @@ The execution of AddEventCommand is processed in this way:
   to update the list being filtered and also call an event `indicatedAddressBookChanged()` to show that the addressBook has be updated
   with additional event.
 
-The illustration of the execution is illustrated in Figure 5.3.2 below.
+The illustration of the execution is illustrated in Figure 5.3.3 below.
 
 image::addeventmodelseqdiagram.PNG[width="800"]
-_Figure 5.3.2 AddEventCommand Model Sequence Diagram_
+_Figure 5.3.3 AddEventCommand Model Sequence Diagram_
 
 Code of `AddEventCommand`:
 [source,java]
@@ -1827,7 +1833,7 @@ be populated with a change in background color.
             ap.setDate(calendarDate);
             ap.setTopAnchor(txt, 5.0);
             ap.setLeftAnchor(txt, 5.0);
-            ap.setStyle("calendar-color");
+            ap.setStyle("-fx-background-color: transparent;");
             ap.getChildren().add(txt);
             calendarDate = calendarDate.plusDays(1);
         }
@@ -1919,7 +1925,7 @@ It reverts every node to be of the same color, then runs through the events list
 ----
     public void populateUpdatedCalendar(UniqueEventList eventList) {
         for (AnchorPaneNode ap : allCalendarDays) {
-            ap.setStyle("calendar-color");
+            ap.setStyle("-fx-background-color: transparent;");
             for (Event event1 : eventList) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
                 String newDate = formatter.format(ap.getDate());
