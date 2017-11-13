@@ -572,6 +572,147 @@ Delete will only work within the bounds of the current displayed list +
 
 *Expected Output*: The person index provided is invalid +
 
+=== Edit Command
+
+*Invalid Edit Command Test 1*
+Edit will only work within the bounds of the current displayed list +
+*Ensure that you have at least 2 people in Deathnote. E.g. James and Chris* +
+
+. `find n/Chris`
+. `edit 2 b/15/02/1992`
+
+*Expected Output*: The person index provided is invalid +
+
+*Invalid Edit Command Test 2*
+Edit is based on base 1 index +
+
+. `edit 0 b/15/02/1992`
+
+*Expected Output*: The person index provided is invalid +
+
+*Invalid Edit Command Test 3*
+Edit is based on base 1 index +
+
+. `edit -1 b/15/02/1992`
+
+*Expected Output*: The person index provided is invalid +
+
+*Invalid Edit Command Test 4*
+Edit is based on base 1 index +
+*Ensure that your list has at most 3 people*
+
+. `edit 3 b/15/02/1992`
+
+*Expected Output*: The person index provided is invalid +
+
+*Invalid Edit Command Test 5*
+Edit is based on base 1 index +
+*Ensure that your list has at most 3 people*
+
+. `edit b/15/02/1992`
+
+*Expected Output*: The person index provided is invalid +
+
+*Invalid Edit Command Test 6*
+Edit needs at least one field to edit +
+
+. `edit 1`
+
+*Expected Output*: At least one field to edit must be provided. +
+
+*Invalid Edit Command Test 7* +
+Checks if the name is valid. +
+
+. `edit 1 n/`
+
+*Expected Output:* Person names should only contain alphanumeric characters and spaces, and it should not be blank +
+
+. `edit 1 n/James&`
+
+*Expected Output:* Person names should only contain alphanumeric characters and spaces, and it should not be blank +
+
+*Invalid Edit Command Test 8* +
+Checks if the phone number provided is valid. +
+
+. `edi 1 p/7`
+
+*Expected Output:* Phone numbers can only contain numbers, and should be at least 3 digits long +
+
+. `edit 1 p/77*77777`
+
+*Expected Output:* Phone numbers can only contain numbers, and should be at least 3 digits long +
+
+. ` edit 1 p/abdce`
+
+*Expected Output:* Phone numbers can only contain numbers, and should be at least 3 digits long +
+
+*Invalid Edit Command Test 9*
+Checks if the email provided is valid. +
+
+. `edit 1 e/mail!yahoo`
+
+*Expected Output*: Person emails should be 2 alphanumeric/period strings separated by '@' +
+
+. `edit 1 e/@@@@`
+
+*Expected Output*: Person emails should be 2 alphanumeric/period strings separated by '@' +
+
+*Invalid Edit Command Test 10*
+Checks if address is blank if used. +
+
+. `edit 1 a/`
+
+*Expected Output*: Person addresses can take any values, and it should not be blank +
+
+*Invalid Edit Command Test 11*
+Checks if the tag used is valid. +
+
+. `edit 1 t/d**k`
+
+*Expected Output*: Tags names should be alphanumeric +
+
+*Invalid Edit Command Test 12*
+Checks if the birthday provided is in the correct format and valid. *
+
+. `edit 1 b/29/2/2013
+
+*Expected Output*: Person Birthday should be in the format of DD/MM/YYYY and also valid.
+
+. `edit 1 b/
+
+*Expected Output*: Person Birthday should be in the format of DD/MM/YYYY and also valid.
+
+. `edit 1 b/199/02/20111
+
+*Expected Output*: Person Birthday should be in the format of DD/MM/YYYY and also valid.
+
+*Invalid Edit Command Test 13*
+Checks if the website provided is in the correct format. *
+
+. `edit 1 w/www.foobar.com`
+
+Website should contain a prefix of http:// https://.
+
+*Invalid Edit Command Test 14*
+Checks if editting a person results in a duplicate +
+*Do these commands in sequence in an empty DeathNote*
+
+. `add n/Adeeb`
+. `add n/Jeremy`
+. `edit 1 n/Adeeb`
+
+*Expected Output*: This person already exists in the address book.
+
+*Invalid Edit Command Test 14*
+Checks if editting a person results in a duplicate just with different tags. +
+*Do these commands in sequence in an empty DeathNote*
+
+. `add n/Adeeb t/member`
+. `add n/Jeremy t/leader`
+. `edit 1 n/Adeeb`
+
+*Expected Output*: This person already exists in the address book.
+
 === Miscellaneous
 
 Using a command that does not exist will give an error.
