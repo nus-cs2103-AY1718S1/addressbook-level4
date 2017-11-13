@@ -4,9 +4,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Bluebird
-Bluebird is a desktop based organisational tool for the working parent on the go. Bluebird is suitable for a variety of
-day-to-day management tasks, including managing appointments for both yourself and your child, and also organising the
-contact information from your Address Book.
+Bluebird is a desktop based organisational tool for the working parent on the go. Bluebird is suitable
+for a variety of day-to-day management tasks, including managing appointments for both yourself and your
+child, and also organising the contact information from your Address Book. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 15 kLoC. +
+
+This project portfolio serves to provide an insight into how Azizi Azfar has contributed to project Bluebird. Included
+in this portfolio are the enhancements, features, tests and proposed enhancements that Azizi Azfar has contribued to the project.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/main/aziziazfar.md[Functional code]]
  [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/test/aziziazfar.md[Test code]]
