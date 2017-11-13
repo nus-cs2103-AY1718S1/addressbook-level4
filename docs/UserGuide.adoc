@@ -237,10 +237,6 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-[NOTE]
-====
-Deleting a person also deletes all the meetings**(Including group meetings)** with people of the same name as the person deleted
-====
 
 === Selecting a person : `select`
 
@@ -262,6 +258,9 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+[NOTE]
+When there is a selected person, a deletion of any person will result in the reselection of the next available person,
+causing the opening of another pop-up window
 
 // tag::addmeeting[]
 
