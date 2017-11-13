@@ -140,6 +140,9 @@ public class ParserUtil {
         }
     }
 
+    /**
+     * Parses the String into an array of Index
+     */
     public static Index[] parseIndexArr(String indices) throws IllegalValueException {
         String[] strArr = indices.split(" ");
         Index[] indexArr = new Index[strArr.length];

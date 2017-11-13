@@ -3,11 +3,14 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -156,6 +159,10 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    /**
+     * adds an eventTag to the person
+     * @param event
+     */
     public void addEventTag(Tag event) {
         Set<Tag> tags = getTags();
         Set<Tag> tagSet = new HashSet<Tag>();

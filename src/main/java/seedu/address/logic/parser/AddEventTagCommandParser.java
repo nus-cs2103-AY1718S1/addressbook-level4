@@ -1,9 +1,14 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSONS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
+
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -13,8 +18,9 @@ import seedu.address.model.schedule.Day;
 import seedu.address.model.schedule.Time;
 import seedu.address.model.tag.Tag;
 
-import java.util.stream.Stream;
-
+/**
+ * Parses the arguments for AddEventTagFunction and creates a new AddEventTagCommand
+ */
 public class AddEventTagCommandParser {
     /**
      * Parses the given {@code String} of arguments in the context of the AddEventTagCommand
@@ -25,7 +31,8 @@ public class AddEventTagCommandParser {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DAY, PREFIX_START_TIME,
                 PREFIX_END_TIME, PREFIX_LOC, PREFIX_PERSONS);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DAY, PREFIX_START_TIME, PREFIX_END_TIME, PREFIX_LOC, PREFIX_PERSONS)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DAY, PREFIX_START_TIME, PREFIX_END_TIME,
+                PREFIX_LOC, PREFIX_PERSONS)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventTagCommand.MESSAGE_USAGE));
         }
 

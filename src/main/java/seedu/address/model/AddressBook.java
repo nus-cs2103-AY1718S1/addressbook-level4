@@ -15,7 +15,6 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.PossibleDays;
 import seedu.address.commons.core.PossibleTimes;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -275,7 +274,9 @@ public class AddressBook implements ReadOnlyAddressBook {
             if (started && !ended) {
                 satisfiedTimeSet.add(day * PossibleDays.DAY_COEFFICIENT + PossibleTimes.TIMES[k]);
             }
-            if (ended) break;
+            if (ended) {
+                break;
+            }
         }
         if (!started || !ended) res = false;
         for (int j = 0; j < listOfIndex.length; j++) {
@@ -296,7 +297,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public void addEventToPerson(Integer index, Tag event) {
-        persons.addEventTag(index,event);
+        persons.addEventTag(index, event);
     }
-
  }

@@ -1,6 +1,4 @@
 package seedu.address.logic.commands;
-import java.util.List;
-import java.util.TreeSet;
 
 import static java.util.Objects.requireNonNull;
 
@@ -13,6 +11,9 @@ import seedu.address.model.schedule.Day;
 import seedu.address.model.schedule.Slot;
 import seedu.address.model.schedule.Time;
 import seedu.address.model.tag.Tag;
+
+import java.util.List;
+import java.util.TreeSet;
 
 //@@author YuchenHe98
 /**
