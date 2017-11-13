@@ -3,23 +3,21 @@ package seedu.address.logic.commands;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.TreeSet;
 
 import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.PossibleDays;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.schedule.Schedule;
-import seedu.address.model.schedule.Time;
 import seedu.address.logic.MrtMapLogic;
+import seedu.address.ui.MrtMapUI;
 
-//@@author
+//@@author Yew Onn
 /**
- * Display a list of mrt stations that reduces the accumulated travelling time
+ * Display a list of mrt stations that minimises the accumulated travelling time
+ * of every specified individual
  */
 public class MeetingLocationCommand extends Command {
-
+    private final int NUM_DISPLAY_STATION = 3;
     public static final String COMMAND_WORD = "MeetingLocation";
     public static final String COMMAND_ALIAS = "ml";
 
@@ -57,9 +55,13 @@ public class MeetingLocationCommand extends Command {
             mrtStations.add(mrtStation);
         }
 
-        ArrayList<String> sortStations =
-        String toShow = scheduleInfo();
-        return new CommandResult(String.format(MESSAGE_MEETING_LOCATION_SUCCESS) + toShow);
+        MrtMapLogic mrtMapLogic = new MrtMapLogic();
+        ArrayList<String> sortedStationNames = mrtMapLogic.getSortedMrtList(mrtStations);
+        MrtMapUI mrtMapUI = new MrtMapUI();
+        mrtMapUI.displayConvenientPoints(sortedStationNames, NUM_DISPLAY_STATION);
+        String showMrtInfoToUser = getMrtInfos(sortedStationNames, NUM_DISPLAY_STATION);
+        return new CommandResult(String.format(MESSAGE_MEETING_LOCATION_SUCCESS)
+                + showMrtInfoToUser);
 
     }
 
@@ -75,16 +77,16 @@ public class MeetingLocationCommand extends Command {
     /**
      * Returns the info of schedule to be shown to the user later.
      */
-    public String scheduleInfo() {
-        TreeSet<Integer>[] timeSetArray = Schedule.splitScheduleToDays(model.generateMeetingTime(listOfIndex));
-        String toShow = "\nAll common free time: \n";
-        for (int i = 0; i < timeSetArray.length; i++) {
-            toShow = toShow + PossibleDays.DAY_TIME[i] + ":\n";
-            for (Integer time : timeSetArray[i]) {
-                toShow = toShow + Time.getTimeToString(time) + "--"
-                        + Time.getTimeToString(Time.increaseTimeInteger(time)) + " ";
-            }
+    public String getMrtInfos(ArrayList<String> stationNames, int numStationToDisplay) {
+        String toShow = "\nTop Metting Location: ";
+        System.out.println("toShow = "+toShow);
+        for (int i = 0; i < stationNames.size() && i < numStationToDisplay; i++) {
             toShow += "\n";
+            String currLine = Integer.toString(i + 1);
+            currLine += ") ";
+            currLine += stationNames.get(i);
+            toShow += currLine;
+            System.out.println("currLine = "+currLine);
         }
         return toShow;
     }
