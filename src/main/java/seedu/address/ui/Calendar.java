@@ -105,7 +105,7 @@ public class Calendar {
             ap.setDate(calendarDate);
             ap.setTopAnchor(txt, 5.0);
             ap.setLeftAnchor(txt, 5.0);
-            ap.setStyle("calendar-color");
+            ap.setStyle("-fx-background-color: transparent;");
             ap.getChildren().add(txt);
             calendarDate = calendarDate.plusDays(1);
 
@@ -157,7 +157,7 @@ public class Calendar {
      */
     public void populateUpdatedCalendar(UniqueEventList eventList) {
         for (AnchorPaneNode ap : allCalendarDays) {
-            ap.setStyle("calendar-color");
+            ap.setStyle("-fx-background-color: transparent;");
             for (Event event1 : eventList) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
                 String newDate = formatter.format(ap.getDate());
