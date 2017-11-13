@@ -20,14 +20,14 @@ By: `Team W10-B2`      Since: `Aug 2017`      Licence: `MIT`
 === About
 
 This user guide will provide you with instructions on how to use the KayPoh application.
-You should not need any prior technical knowledge to make use of this guide. However,
-some knowledge about a command line interface would be helpful.
+You should not require any prior technical knowledge to make use of this guide. However,
+knowledge about command line interfaces will be helpful.
 
 === Product Overview
 
-Have you ever gotten curious about what your friends, family, or maybe even
-that old classmate you haven’t spoke to in years have been up to? But perhaps you don’t really
-want to talk to them right now. So, what do you do? You stalk their social media accounts!
+Have you ever been curious about what your friends, family, or maybe even
+that old classmate you haven’t spoke to in years have been up to? Perhaps you don’t really
+want to talk to them right now, so the next best option is to stalk their social media accounts!
 
 KayPoh is a desktop contact management application designed specifically for social users.
 You can use KayPoh to store contact and social information information about people,
@@ -35,7 +35,7 @@ and use it to view your contacts' social media feeds at any time.
 
 == Getting Started
 
-=== Set Up
+=== Setting Up
 .  Ensure that you have Java version `1.8.0_60` or later installed in your computer.
 Verify your java version link:https://www.java.com/en/download/installed.jsp[here].
 +
@@ -44,32 +44,39 @@ Having any Java 8 version is not enough. +
 This appplication will not work with earlier versions of Java 8. +
 Download the latest Java version link:https://www.java.com/en/download/manual.jsp[here].
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Store the `addressbook.jar` file into a folder of your choice. This will be the `home` folder for the application.
+.  Download the latest `KayPoh.jar` link:{repoURL}/releases[here].
+.  Store the `KayPoh.jar` file into a folder of your choice. This will be the `home` folder for the application.
 .  Double-click the file to start the application.
 
-=== First Usage
+=== Exploring KayPoh
 
-.  Figure 1 below displays the application's starting display.
+.  After starting up KayPoh, you should see a user interface similar to that in Figure 1.
 
 +
 .User Interface of KayPoh
 image::Ui.png[width="800"]
 +
 
-.  Figure 2 below introduces the key panels of the application.
+.  The key parts of the user interface are identified in Figure 2.
 +
-.User Interface of KayPoh
+.User Interface of KayPoh with key parts identified
 image::UiWithMarkings.png[width="800"]
 +
-.  Try it yourself! Type some of these commands in the command input box and press kbd:[Enter] to execute it:
+.  Try it yourself! +
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to KayPoh.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+Type some of these commands in the command input box and press kbd:[Enter] to execute them:
 
-.  Refer to the link:#features[Features] section below for the details of each command.
+* `list` +
+All contacts in KayPoh are listed in the contacts list.
+* `add n/John Doe p/98765432 e/johnd@example.com a/10 John Street` +
+A new contact with the name `John Doe`, phone number `98765432`, email address `johnd@example.com` and address `10 John Street`
+is added to KayPoh.
+* `delete 3`
+The third person in the contacts list is deleted from KayPoh.
+* `exit` +
+The application terminates.
+
+To learn more about each command, refer to the link:#features[Features] section below.
 
 == Using Commands
 
@@ -79,7 +86,7 @@ To perform actions in KayPoh, you will need to type a command into the command i
 image::command-box.png[width="800"]
 
 // tag::command-syntax[]
-=== Breaking down the command syntax
+=== Breaking Down the Command Syntax
 Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]#PARAMETERS#` +
 
 * The [red]`COMMAND_WORD` is the first word in the command
@@ -99,7 +106,7 @@ Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]
 // end::command-syntax[]
 
 [[representing-persons]]
-=== Representing a person as a parameter
+=== Representing Persons as Parameters
 
 When using commands that involve managing contact information, you may be required to enter information about a person as a `[blue]#PARAMETER#`.
 
@@ -157,7 +164,7 @@ represents a person who has:
 
 == Features
 
-=== Understanding command formats
+=== Understanding Command Formats
 In this user guide, you will find information about how commands are to be used explained in the form of *command formats*.
 
 These *command formats* will tell you what the [red]`COMMAND_WORD` for the command is, whether [blue]`OPTIONS` are available for the command,
@@ -182,9 +189,8 @@ and what [green]`PARAMETERS` you need to provide the command with.
 === Managing Contacts
 
 // tag::addperson[]
-==== Adding a person: `add`
-
-To add a person to KayPoh, use the `add` command.
+==== Adding a Person: `add`
+Met a new friend? Add him to KayPoh using the the `add` command!
 
 ====
 *Command format*: +
@@ -192,19 +198,20 @@ To add a person to KayPoh, use the `add` command.
 
 *Alias*: `[red]#a#`
 ====
+
+You should see the person represented by the parameters added to the contacts list after executing the command.
+
 [NOTE]
 ====
 The person to be added can:
 
-* Have at least one phone number, but possibly more phone numbers [Since v1.2]
+* Have mulitple phone numbers, but must have at least one [Since v1.2]
 * Have any number (including zero) of tags
 * Have any number (including zero) of social media accounts [Since v1.2]
 ** More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
 * Be marked as a favorite contact by including the parameter `f/` when executing the command [Since v1.2]
 * Have a display picture added by specifying the `DISPLAY_PHOTO_FILE_PATH` when executing the command [Since v1.5]
 ====
-
-You should see the person represented by the parameters added to the contacts list after executing the command.
 
 *Examples*:
 
@@ -228,19 +235,18 @@ image::add-example-2-command-result.png[width="700"]
 |===
 |Incorrect |Correct
 
-|Exclude required parameters in the command +
+|Command excludes required parameters. +
 e.g. `add n/Michael Van Gerwen` is missing the required `PHONE_NUMBER`, `ADDRESS` and `EMAIL` parameters.
 |Ensure that all required parameters as specified in the command format have been added.
 
-|Input invalid parameters in the command +
+|Input invalid parameters in the command. +
 |Ensure that all required parameters are valid as specified in the <<representing-persons, Representing Persons>> section.
 
 |===
 // end::addperson[]
 
 // tag::editperson[]
-==== Editing a person: `edit`
-
+==== Editing a Person: `edit`
 To edit an existing person in KayPoh, use the `edit` command.
 
 ====
@@ -250,6 +256,10 @@ To edit an existing person in KayPoh, use the `edit` command.
 *Alias*: `[red]#e#`
 ====
 
+You should see the attributes of the person at the specified `INDEX` in the contacts list updated according to the input parameters.
+
+[NOTE]
+====
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * You can favorite a person by including the parameter `f/`, or unfavorite by including the parameter `uf/`. [Since v1.2] +
@@ -259,6 +269,7 @@ To edit an existing person in KayPoh, use the `edit` command.
 * When editing social media accounts, the person's existing social media accounts will be replaced by the new social media accounts. [Since v1.2]
 ** You can remove all the person's existing social media accounts by including the parameter `s/` without specifying any `SOCIAL_MEDIA_ACCOUNTS`.
 ** More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
+====
 
 *Examples*:
 
@@ -291,7 +302,7 @@ image::edit-example-3-command-result.png[width="700"]
 
 |Input an `INDEX` that is invalid. +
 e.g. `-1`, `0.1`, `abc`
-|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the contacts list*.
 
 |Input invalid parameters in the command +
 |Ensure that all required parameters are valid as specified in the <<representing-persons, Representing Persons>> section.
@@ -300,9 +311,9 @@ e.g. `-1`, `0.1`, `abc`
 // end::editperson[]
 
 // tag::favoriteunfavoriteperson[]
-==== Favoriting a person [Since v1.2]: `fav`
-
-To mark person(s) as a favorite contact, use the `fav` command.
+==== Labelling Favorite Contacts [Since v1.2]: `fav`
+KayPoh helps you to keep track of the people that matter most to you. Label important people as a favorite contacts using
+the `fav` command so that you never miss out on a moment in their lives.
 
 ====
 *Command format*: `[red]#fav# [green]#INDEX [ADDITIONAL INDEXES]...#`
@@ -331,12 +342,11 @@ image::favorite-after-find-command-result.png[width="800"]
 
 |Input an `INDEX` that is invalid. +
 e.g. `-1`, `0.1`, `abc`
-|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the contacts list*.
 |===
 
-==== Unfavoriting a person [Since v1.2]: `unfav`
-
-To remove person(s) from the list of favorite contacts, use the `unfav` command.
+==== Removing Favorite Contacts [Since v1.2]: `unfav`
+To remove someone from your favorite contacts, use the `unfav` command.
 
 ====
 *Command format*: `[red]#unfav# [green]#INDEX [ADDITIONAL INDEXES]...#`
@@ -365,56 +375,46 @@ image::unfavorite-after-find-command-result.png[width="800"]
 
 |Input an `INDEX` that is invalid. +
 e.g. `-1`, `0.1`, `abc`
-|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the contacts list*.
 |===
 // end::favoriteunfavoriteperson[]
 
 // tag::deletebyindex[]
-==== Deleting a person: `delete`
-
-To delete person(s) from KayPoh, use the `delete` command.
+==== Deleting a Person: `delete`
+Not interested in a contact anymore? Remove him from KayPoh using the `delete` command!
 
 ====
 *Command format*:
 
-* Deleting persons by `[green]#INDEX#` (default): `[red]#delete# [green]#INDEX [ADDITIONAL_INDEXES]...#`
+* Deleting persons by index: `[red]#delete# [green]#INDEX [ADDITIONAL_INDEXES]...#`
 
-* Deleting persons by `[blue]#tag#` [Since v1.4]: `[red]#delete# [blue]#-tag# [green]#TAG [ADDITIONAL_TAGS]...#`
+* Deleting persons by tag [Since v1.4]: `[red]#delete# [blue]#-tag# [green]#TAG [ADDITIONAL_TAGS]...#`
 
-*Alias*: `d`
+*Alias*: `[red]#d#`
 ====
 
-[NOTE]
-All contacts with the input tag will be deleted.
-Make sure that none of the contacts that you do not intend to delete have the input tag.
-You can use the <<find-by-tag, find command>> to view all contacts that have the tag.
+Persons in the contacts list identified by the keyword will be deleted from KayPoh.
 
 *Examples*:
 
 * `[red]#list#` +
 `[red]#delete# [green]#3 4#` +
-Deletes the third and fourth persons in KayPoh.
+Deletes the third and fourth persons in the contacts list containing all contacts in KayPoh.
 
-.Deleted persons at third and fourth index
+.Third and fourth person in the contacts deleted
 image::delete-multiple-command-result.png[width="1000"]
 
 * `[red]#find# [green]#Bernice#` +
 `[red]#delete# [green]#1#` +
-Deletes the 1st person in the list of contacts with the name `Bernice`.
+Deletes the first person in the contacts list containing all contacts with the name `Bernice`.
 
-.Deleted person at first index i.e. Bernice Yu
+.First person with the name Bernice deleted
 image::delete-after-find-command-result.png[width="1000"]
 
-* `[red]#delete# [blue]#-tag# [green]#friends#` +
-Deletes all persons with the tag `friends`
-
-.Deleted all persons with the "friends" tag
-image::delete-by-tag-command-result.png[width="700"]
-
 * `[red]#delete# [blue]#-tag# [green]#colleagues neighbours#` +
-Deletes all persons with the tags `colleagues` or `neighbours`
+Deletes all persons in the contacts list with the tags `colleagues` or `neighbours`
 
-.Deleted all persons with the "colleagues" and "neighbours" tags
+.Persons in the contacts list with the "colleagues" and "neighbours" tags
 image::delete-by-multiple-tags-command-result.png[width="700"]
 
 .Common Mistakes
@@ -423,26 +423,26 @@ image::delete-by-multiple-tags-command-result.png[width="700"]
 
 |Input an `INDEX` that is invalid. +
 e.g. `-1`, `0.1`, `abc`
-|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the contacts list*.
 |===
 // end::deletebyindex[]
 
-==== Clearing all entries: `clear`
-
-To clear all entries from KayPoh, use the `clear` comand.
+==== Clearing All Persons: `clear`
+To clear all entries from KayPoh, use the `clear` command.
 
 ====
 *Command format*: `[red]#clear#`
 ====
 
-.Cleared all entries in KayPoh
+All contacts in KayPoh will be removed and your contacts list should be empty.
+
+.Cleared all contacts in KayPoh
 image::clear-command-result.png[width="350"]
 
 === Navigating KayPoh
 
-==== Listing persons: `list`
-
-To have all your contacts displayed in KayPoh, use the `list` command.
+==== Listing Persons: `list`
+To have all your contacts displayed in your contacts list, use the `list` command.
 
 ====
 *Command format*: `[red]#list#` +
@@ -454,23 +454,22 @@ To have all your contacts displayed in KayPoh, use the `list` command.
 `[red]#list# [blue]#-fav#`
 ====
 
-You should see the person list populated with all of your contacts after executing the command.
+You should see your contacts list populated with your contacts after executing the command.
 
-.Person list populated with all contacts
+.Contacts list populated with all contacts
 image::list-command-result.png[width="350"]
 
 // tag::select[]
-==== Selecting a person: `select`
-
-To view the social media feed of a contact, use the `select` command.
+==== Selecting a Person: `select`
+Want to stalk someone's social media feed? Use the `select` command!
 ====
 *Command format*: `[red]#select# [green]#INDEX [SOCIAL_MEDIA_PLATFORM]#` +
 *Alias*: `[red]#s#`
 ====
 
-* The [green]`INDEX` refers to the index number of the person to be stalked in the person list.
-* The [green]`SOCIAL_MEDIA_PLATFORM` identifies which social media account belonging to the person you wish to view.
-* If no [green]`SOCIAL_MEDIA_PLATFORM` is specified, the feed of a random social media account associated
+* The `INDEX` refers to the index number of the person to be stalked in the contacts list.
+* The `SOCIAL_MEDIA_PLATFORM` identifies which social media account belonging to the person you wish to view.
+* If no `SOCIAL_MEDIA_PLATFORM` is specified, the feed of a random social media account associated
 with the person will be displayed in the browser window. If there is no social media account associated with
 the person, a Google search of the person's name will be displayed instead.
 
@@ -482,7 +481,7 @@ image::stalk-command-result.png[width="800"]
 *Example*:
 
 * `[red]#select# [green]#1 facebook#` +
-Displays the Facebook account of the first person in the current person list
+Displays the Facebook account of the first person in the current contacts list
 
 .Common Mistakes
 |===
@@ -490,12 +489,12 @@ Displays the Facebook account of the first person in the current person list
 
 |Input an `INDEX` that is invalid. +
 e.g. `-1`, `0.1`, `abc`
-|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the contacts list*.
 
 |Input a `SOCIAL_MEDIA_PLATFORM` that the user does not have an associated account for. +
-e.g. If the first user in the person list does not have an instagram account, and the command `stalk 1 instagram` is entered.
+e.g. If the first user in the contacts list does not have an instagram account, and the command `stalk 1 instagram` is entered.
 |Ensure that the selected user has an associated account for the `SOCIAL_MEDIA_PLATFORM` specified. The social media accounts associated with
-a user can be found in the person list.
+a user can be found in the contacts list.
 
 image:stalk-command-social-info.png[width="350"]
 |===
@@ -503,8 +502,8 @@ image:stalk-command-social-info.png[width="350"]
 
 // tag::find-by-tag[]
 [[find-by-tag]]
-==== Finding persons: `find`
-To find contacts by some criteria, use the `find` command.
+==== Finding Persons: `find`
+Finding the person you're looking for doesn't have to be slow and tedious. With KayPoh, you can simply use the `find` command!
 
 ====
 *Command format*:
@@ -517,30 +516,29 @@ To find contacts by some criteria, use the `find` command.
 *Alias*: `[red]#f#` +
 ====
 
-* Contacts that match *any* of the provided [green]`KEYWORDS` will be displayed in the person list.
+* Contacts that match *any* of the provided `KEYWORDS` will be displayed in the contacts list.
 * The search is case insensitive. e.g `john` will match `John`.
-* The order of the [green]`KEYWORDS` does not matter. e.g. `John Doe` will match `Doe John`.
+* The order of the `KEYWORDS` does not matter. e.g. `John Doe` will match `Doe John`.
 * Only full words will be matched e.g. `Jo` will not match `John`.
 
-You should see the persons that meet the provided criteria displayed in the person list after executing the command.
+You should see the persons that meet the provided criteria displayed in the contacts list after executing the command.
 
-.Person list after finding contacts with the tag `friends`
+.Contacts list after finding contacts with the tag `friends`
 image::find-command-result.png[width="300"]
 
 *Examples*:
 
 * `[red]#find# [green]#John#` +
-Displays persons with the names `john` and `John Doe` in the person list.
+Displays persons with the names `john` and `John Doe` in the contacts list.
 * `[red]#find# [green]#Betsy Tim John#` +
-Displays persons with names `Betsy`, `Tim`, or `John` in the person list.
+Displays persons with names `Betsy`, `Tim`, or `John` in the contacts list.
 * `[red]#find# [blue]#-tag# [green]#friends colleagues#` +
-Displays persons with tags `friends` or `colleagues` in the person list.
+Displays persons with tags `friends` or `colleagues` in the contacts list.
 // end::find-by-tag[]
 
 // tag::sort[]
-==== Sorting the displayed list [Since v1.4]: `sort`
-
-To sort the person list, use the `sort` command.
+==== Sorting the Contacts List [Since v1.4]: `sort`
+To sort your contacts list, use the `sort` command.
 
 ====
 *Command format*:
@@ -556,15 +554,15 @@ To sort the person list, use the `sort` command.
 ====
 
 * The default sort orders contacts first by their `favorite` status, then by their `name` in lexicographic order.
-* Sorting with the [blue]`name` option orders contacts by their `name` in lexicographic order.
-* Sorting with the [blue]`recent` option orders contacts by when they were last added, updated, or stalked.
+* Sorting with the `name` option orders contacts by their `name` in lexicographic order.
+* Sorting with the `recent` option orders contacts by when they were last added, updated, or selected.
 
-The person list should be sorted based on the specified option after executing the command.
+The contacts list should be sorted based on the specified option after executing the command.
 
-.Person list after executing a default sort
+.contacts list after executing a default sort
 image::sort-command-default-result.png[width="300"]
 
-.Person list after executing a sort by `name`
+.contacts list after executing a sort by `name`
 image::sort-command-name-result.png[width="300"]
 
 *Examples*:
@@ -602,29 +600,45 @@ represents the Instagram account with the username `damyth`.
 ==== Facebook Integrations
 
 // tag::facebookconnect[]
+[[facebook-connect]]
 ===== Connecting to Facebook [Since v1.2]: `facebookconnect`
+To connect your Facebook account to KayPoh, use the `facebookconnect` command.
 
-Connects to your Facebook account. +
-Command Format: `[red]#facebookconnect#`
+====
+*Command format*: `[red]#facebookconnect#` +
+*Alias*: `[red]#fbconnect#` +
+====
 
-* First ensure that you are added as a test user for the Facebook Application. Add yourself as a test user link:https://developers.facebook.com/apps/131555220900267/roles/[here].
-* Launches a Facebook authorization page in the browser
-* Key in your credentials to connect to your Facebook account
-* Once your Facebook account has been connected, you can use all the other Facebook features.
+Once you have executed the command, a Facebook authorization page will be displayed in the browser.
+
+.Facebook authorization page displayed in browser after executing facebookconnect command
+image::facebookconnect-result.png[width="800"]
+
+You can key in your Facebook credentials into the page to connect to your Facebook account. Once your Facebook account has
+been connected, you can use the other Facebook features that KayPoh offers.
 // end::facebookconnect[]
 
 // tag::facebookpost[]
 [[facebookpost]]
-=====  Posting a status to Facebook [Since v1.3]: `facebookpost`
+=====  Posting a Status to Facebook [Since v1.3]: `facebookpost`
+Have a thought you want to share with your friends on Facebook? Post it to your wall using the `facebookpost` command!
 
-Posts a status to your Facebook wall. +
-Command Format `[red]#facebookpost# [green]#STATUS#`
+====
+*Command format*: `[red]#facebookpost# [green]#STATUS#` +
+*Alias*: `[red]#fbpost#` +
+====
 
-* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
+Your status will be posted to your Facebook wall.
+
+.Status posted to Facebook wall after executing facebookpost command
+image::facebookpost-result.png[width="800"]
+
+[NOTE]
+Your Facebook account must be connected to use this feature.
+If you have not already <<facebook-connect, connected to your Facebook account>>, the Facebook authorization page will automatically be launched in
 the browser.
-* Your status will then be posted to Facebook.
 
-Examples:
+*Examples*:
 
 * `facebookpost hello world!` +
 Posts the status 'hello world!' to your Facebook wall.
@@ -633,149 +647,195 @@ Posts the status 'hello world!' to your Facebook wall.
 // tag::facebooklink[]
 [[facebooklink]]
 =====  Sharing a Link to Facebook [Since v1.4]: `facebooklink`
+Have an interesting link? Share it on your Facebook wall with the `facebooklink` command.
 
-Shares a link to your Facebook wall. +
-Command Format `[red]#facebooklink# [green]#URL#`
+====
+*Command format*: `[red]#facebooklink# [green]#LINK_URL#` +
+*Alias*: `[red]#fblink#` +
+====
 
-* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
+Your link will be shared on your Facebook wall.
+
+.Link posted to Facebook wall after executing facebooklink command
+image::facebooklink-result.png[width="800"]
+
+[NOTE]
+Your Facebook account must be connected to use this feature.
+If you have not already <<facebook-connect, connected to your Facebook account>>, the Facebook authorization page will automatically be launched in
 the browser.
-* Your URL will then be shared to Facebook.
 
-Examples:
+*Examples*:
 
-* `facebook post https://www.google.com` +
-Posts the link to `https://www.google.com` to your Facebook wall.
+* `facebooklink https://www.google.com` +
+Shares the link to `https://www.google.com` on your Facebook wall.
+
+.Common Mistakes
+|===
+|Incorrect |Correct
+
+|An invalid `LINK_URL` is input. +
+e.g. `some.invalid.link`
+|Ensure that the `LINK_URL` is valid and starts with either `http://` or `https://`.
+
+|===
 // end::facebooklink[]
 
 // tag::facebookadd[]
 [[facebookadd]]
-=====  Adding a contact from Facebook [Since v1.5]: `facebookadd`
+=====  Adding a Contact from Facebook [Since v1.5]: `facebookadd`
+To add a contact to KayPoh using information on their Facebook account, use the `facebookadd` command.
 
-Imports a Facebook user as a contact. +
-Command Format `[red]#facebookadd# [green]#USERNAME#`
+====
+*Command format*: `[red]#facebookadd# [green]#DISPLAY_NAME#` +
+*Alias*: `[red]#fbadd#` +
+====
 
-* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
+The Facebook user with the specified display name will be added to KayPoh.
+
+.Facebook user with the specified display name added to KayPoh
+image::facebookadd-result.png[width="800"]
+
+[NOTE]
+Your Facebook account must be connected to use this feature.
+If you have not already <<facebook-connect, connected to your Facebook account>>, the Facebook authorization page will automatically be launched in
 the browser.
-* The Facebook user will then be added as a contact.
 
 Examples:
 
-* `facebookadd barack obama` +
-Imports the facebook user 'Barack Obama' to your contacts.
+* `facebookadd Barack Obama` +
+Adds the Facebook user with the display name 'Barack Obama' as a contact to KayPoh.
 // end::facebookadd[]
 
 // tag::facebookaddallfriends[]
 [[facebookaddallfriends]]
-===== Adding all your Facebook friends [Since v1.5]: `facebookaddallfriends`
+===== Adding Your Facebook Friends [Since v1.5]: `facebookaddallfriends`
+To make getting started with KayPoh even easier, you can import all of your Facebook friends as contacts using the
+`facebookaddallfriends` command.
 
-Imports all your Facebook friends as contacts. (Current maximum is set at 30 friends) +
-Command Format `[red]#facebookaddallfriends#`
+====
+*Command format*: `[red]#facebookaddallfriends#` +
+*Alias*: `[red]#fbaddall#` +
+====
 
-* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
-the browser.
-* All your valid facebook friends will then be added as a contact.
+All Facebook friends of your connected Facebook account will be added to KayPoh as contacts.
+
+[NOTE]
+Your Facebook account must be connected to use this feature.
+Please ensure that you have <<facebook-connect, connected to your Facebook account>> before using the command.
+
 // end::facebookaddallfriends[]
 
 === Managing Contact Data
 
-KayPoh contacts data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
 ==== Sharing Contacts
 
 [[export-command]]
-===== Exporting contact data: `export`
+===== Exporting Contacts: `export`
+To share your contacts with your friends, you can use the `export` command to save your contact information to a file
+and send the file to your friend.
 
-Exports all contact data to an external file. +
-Command format: `[red]#export# [green]#FILE_PATH#` +
+====
+*Command format*: `[red]#export# [green]#EXPORT_FILE_PATH#` +
+====
 
-* `[green]#FILE_PATH#` is the location where the contact data is to be exported to.
-* The input `[green]#FILE_PATH#` must be an absolute file path.
-** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
-** `c:\Users\seedu\Documents\exportData.xml` for Windows
-* You must have *write access* to the specified `[green]#FILE_PATH#`.
-
-You should see the confirmation message in the result display. +
+You should see a confirmation message, and new file at the specified `EXPORT_FILE_PATH` should be created containing your
+contact information.
 
 .Confirmation message after exporting contacts
 image::export-contacts.png[width="800"]
 
+This file can be sent to your friends, who can then <<import-command, import>> your contacts from the file.
+
 Examples:
 
 * `[red]#export# [green]#/Users/seedu/Documents/exportData.xml#` +
-Exports contact data to the location `/Users/seedu/Documents/exportData.xml`
+Exports contact data to the file `exportData.xml` in the folder `/Users/KayPoh/Documents`
+
+.Common Mistakes
+|===
+|Incorrect |Correct
+
+|User does not have *write access* to the specified `EXPORT_FILE_PATH`. +
+|Ensure that you have write access to the `EXPORT_FILE_PATH` that you are trying to export your contacts to.
+
+|===
 
 [[import-command]]
-===== Importing contact data: `import`
+===== Importing Contacts: `import`
+To import contacts from an external file, use the `import` command.
 
-Imports contact data from an external file. +
-Command format: `[red]#import# [green]#FILE_PATH#`
+====
+*Command format*: `[red]#import# [green]#IMPORT_FILE_PATH#` +
+====
 
-* `[green]#FILE_PATH#` is the location of the data file from which contact data is to be imported.
-* The input `[green]#FILE_PATH#` must be an absolute file path, e.g.
-** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
-** `c:\Users\seedu\Documents\exportData.xml` for Windows
-* You must have *read access* to the specified `[green]#FILE_PATH#`.
-
-You should see the confirmation message in the result display. +
+You should see a confirmation message, and contacts stored in the file at `IMPORT_FILE_PATH` should be added to KayPoh.
 
 .Confirmation message after importing contacts
 image::import-contacts.png[width="800"]
 
 Examples:
 
-* `[red]#import# [green]#/Users/seedu/Documents/exportData.xml#` +
-Imports contact data to the location `/Users/seedu/Documents/exportData.xml`
+* `[red]#import# [green]#/Users/KayPoh/Documents/importData.xml#` +
+Imports contact data from file `importData.xml` in the folder `/Users/KayPoh/Documents`
 
 
-==== Synchronizing with the cloud [Coming in v2.0]:
+.Common Mistakes
+|===
+|Incorrect |Correct
 
-===== Configuring your cloud account: `sync`
+|User does not have *read access* to the specified `IMPORT_FILE_PATH`. +
+|Ensure that you have read access to the `IMPORT_FILE_PATH` that you are trying to import contacts from.
 
-Configures the addressbook to synchronize with the cloud using the given user credentials. +
-Command format: `[red]#sync# [green]#u/USERNAME p/PASSWORD#`
+|===
 
-===== Synchronizing with the cloud
+==== Synchronizing with the Cloud [Coming in v2.0]:
 
-KayPoh contacts data is automatically synchronized with cloud when an internet connection is available. +
-There is no need to synchronize manually.
+===== Configuring Your Cloud Account: `sync`
+To configure KayPoh to synchronize your contact information with the cloud, use the `sync` command.
 
-===== Removing your cloud account: `unsync`
+====
+*Command format*: `[red]#sync# [green]#u/USERNAME p/PASSWORD#` +
+====
 
-Stops synchronizing of contact information with any previously configured cloud accounts. +
-Command format: `[red]#unsync#`
+===== Synchronizing with the Cloud
+
+KayPoh's contact data is automatically synchronized with cloud when an internet connection is available.
+There is no need to synchronize your contacts manually.
+
+===== Removing Your Cloud Account: `unsync`
+
+To stops synchronizing your contact information with the previously configured cloud account, use the `unsync` command.
+
+====
+*Command format*: `[red]#unsync#` +
+====
 
 === Miscellaneous
 
-==== Changing themes: `theme` [Since v1.4]
-
-To change the theme of the application, use the `theme` command.
+==== Changing Themes: `theme` [Since v1.4]
+Variety is the spice of life! To change the theme of the application, use the `theme` command.
 
 ====
-*Command format*: `[red]#theme# [blue]#[OPTION]#` +
-*Alias*: `t`
+*Command format*:
+
+* Changing to `day` theme:
+`[red]#theme# [blue]#-day#`
+* Changing to `night` theme:
+`[red]#theme# [blue]#-night#`
+
+*Alias*: `[red]#t#` +
 ====
+You should see the user interface change according to the specified theme.
 
-*Options*:
-
-* `[blue]#-day#` +
-Changes the application theme to a light color scheme.
-* `[blue]#-night#` +
-Changes the application theme to a dark color scheme.
-
-*Examples*:
-
-* `theme -day`
-
+.User interface after applying the day theme
 image::Ui-day.png[width="800"]
 
-* `theme -night`
-
+.User interface after applying the night theme
 image::Ui-night.png[width="800"]
 
-==== Listing entered commands: `history`
+==== Listing Entered Commands: `history`
+Forgot what you just did? Use the `history` command to list all the commands that you have entered in reverse chronological order.
 
-To list all the commands that you have entered in reverse chronological order, use the `history` command. +
 ====
 *Command format*: `[red]#history#`
 ====
@@ -786,18 +846,24 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-==== Undoing previous command: `undo`
-
-To restore KayPoh to the state before the previous _undoable_ command was executed, use the `undo` command. +
+==== Undoing Previous Command: `undo`
+We all make mistakes sometimes. To restore KayPoh to the state before the previous _undoable_ command was executed, use the `undo` command. +
 
 ====
-*Command format*: `undo` +
-*Alias*: `u`
+*Command format*: `[red]#undo#` +
+*Alias*: `[red]#u#`
 ====
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the KayPoh's content (`add`, `delete`, `edit` and `clear`).
+The following commands are undoable:
+
+* `add`
+* `edit`
+* `fav`
+* `unfav`
+* `delete`
+* `clear`
 ====
 
 *Examples*:
@@ -817,12 +883,12 @@ The `undo` command fails as there are no undoable commands executed previously.
 `[red]#undo#` (reverses the `clear` command) +
 `[red]#undo#` (reverses the `delete 1` command) +
 
-==== Redoing the previously undone command: `redo`
+==== Redoing the Previously Undone Command: `redo`
 
 To reverse the most recent `undo` command, use the `redo` command. +
 ====
-*Command format*: `redo` +
-*Alias*: `r`
+*Command format*: `[red]#redo#` +
+*Alias*: `[red]#r#`
 ====
 
 *Examples*:
@@ -843,54 +909,134 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `[red]#redo#` (reapplies the `clear` command) +
 // end::undoredo[]
 
-==== Exiting the application: `exit`
-
-To exit the application, use the `exit` command.
+==== Exiting the Application: `exit`
+To exit the KayPoh, use the `exit` command.
 
 ====
-*Command format*: `exit` +
-*Alias*: `x`
+*Command format*: `[red]#exit#` +
+*Alias*: `[red]#x#`
 ====
 
-==== Viewing help: `help`
+The application will close upon executing of this command.
 
+==== Viewing Help: `help`
 To open the help window, use the `help` command.
 
 ====
-*Command format*: `help`
+*Command format*: `[red]#help#`
 ====
+
+You should see a window showing the user guide displayed.
+
+.Help window showing the user guide
+image::help-result.png[width="800"]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: <<export-command, Export>> your data and transfer the exported file to the other computer. Install the application in the other computer, start it up and <<import-command, import>> the data file.
+*A*: <<export-command, Export>> your data and transfer the exported file to the other computer. Install KayPoh on the other computer, start it up and <<import-command, import>> the data file.
 
 == Command Summary
+[cols="10,5,90"]
+|===
+|Command|Alias|Command Format
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... [s/SOCIAL_TYPE USERNAME]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague s/facebook jamesho`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [s/SOCIAL_TYPE USERNAME]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Favorite*: `fav INDEX [ADDITIONAL INDEXES] +
-e.g. `fav 1 2 3`
-* *Unfavorite*: `unfav INDEX [ADDITIONAL INDEXES] +
-e.g. `unfav 1 2 3`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Export*: `export FILE_PATH` +
-e.g. `export /Users/seedu/Documents/exportData.xml`
-* *Import*: `import FILE_PATH` +
-e.g. `import /Users/seedu/Documents/importData.xml`
-* *Connect to Facebook*: `facebook connect` +
-* *Post to Facebook*: `facebook post STATUS` +
-e.g. `facebook post hello world!`
+|`add`
+|`a`
+|`[red]#add# [green]#n/NAME p/PHONE_NUMBER [p/ADDITIONAL_PHONE_NUMBERS]... e/EMAIL a/ADDRESS [f/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...#`
+
+|`edit`
+|`e`
+|`[red]#edit# [green]#INDEX [n/NAME] [p/PHONE]... [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...#`
+
+|`fav`
+|
+|`[red]#fav# [green]#INDEX [ADDITIONAL_INDEXES]...#`
+
+|`unfav`
+|
+|`[red]#unfav# [green]#INDEX [ADDITIONAL_INDEXES]...#`
+
+|`delete`
+|`d`
+|Deleting by index: `[red]#delete# [green]#INDEX [ADDITIONAL_INDEXES]...#` +
+Deleting by tag: `[red]#delete# [blue]#-tag# [green]#KEYWORD [MORE_KEYWORDS]...#`
+
+|`clear`
+|`c`
+|`[red]#clear#`
+
+|`list`
+|`l`
+|Listing all contacts: `[red]#list#` +
+Listing all favorite contacts: `[red]#list# [blue]#-fav#`
+
+|`select`
+|`s`
+|`[red]#select# [green]#INDEX [SOCIAL_MEDIA_PLATFORM]#`
+
+|`find`
+|`f`
+|Finding contacts by name: `[red]#find# [green]#KEYWORD [ADDITIONAL_KEYWORDS]#` +
+Finding contacts by tag: `[red]#find# [blue]#-tag# [green]#KEYWORD [ADDITIONAL_KEYWORDS]#`
+
+|`sort`
+|`sr`
+|Default sort: `[red]#sort#` +
+Sorting by name: `[red]#sort# [blue]#-name#` +
+Sorting by last access date: `[red]#sort# [blue]#-recent#`
+
+|`facebookconnect`
+|`fbconnect`
+|`[red]#facebookconnect#`
+
+|`facebookpost`
+|`fbpost`
+|`[red]#facebookpost# [green]#STATUS#`
+
+|`facebooklink`
+|`fblink`
+|`[red]#facebooklink# [green]#URL#`
+
+|`facebookadd`
+|`fbadd`
+|`[red]#facebookadd# [green]#NAME#`
+
+|`facebookaddallfriends`
+|`fbaddall`
+|`[red]#facebookaddallfriends#`
+
+|`export`
+|
+|`[red]#export# [green]#FILE_PATH#`
+
+|`import`
+|
+|`[red]#import# [green]#FILE_PATH#`
+
+|`theme`
+|`t`
+|Changing to day theme: `[red]#theme# [blue]#-day#` +
+Changing to night theme: `[red]#theme# [blue]#-night#`
+
+|`history`
+|
+|`[red]#history#`
+
+|`undo`
+|`u`
+|`[red]#undo#`
+
+|`redo`
+|`r`
+|`[red]#redo#`
+
+|`exit`
+|`x`
+|`[red]#exit#`
+
+|`help`
+|
+|`[red]#help#`
+
+|===
