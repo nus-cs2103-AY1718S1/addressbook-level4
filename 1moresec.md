@@ -116,67 +116,18 @@ public class FindTaskCommandParser implements Parser<FindTaskCommand> {
         case FindTaskCommand.COMMAND_WORD:
         case FindTaskCommand.COMMAND_ALIAS:
             return new FindTaskCommandParser().parse(arguments);
-
-        case RemarkCommand.COMMAND_WORD:
-            return new RemarkCommandParser().parse(arguments);
-
-        case SetPriorityCommand.COMMAND_WORD:
-        case SetPriorityCommand.COMMAND_ALIAS:
-            return new SetPriorityCommandParser().parse(arguments);
-
-        case ListCommand.COMMAND_WORD:
-        case ListCommand.COMMAND_ALIAS:
-            return new ListCommand();
-
 ```
 ###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case ExportCommand.COMMAND_WORD:
         case ExportCommand.COMMAND_ALIAS:
             return new ExportCommandParser().parse(arguments);
-
-        case TaskByEndCommand.COMMAND_WORD:
-        case TaskByEndCommand.COMMAND_ALIAS:
-            return new TaskByEndCommand();
-
-        case TaskByPriorityCommand.COMMAND_WORD:
-        case TaskByPriorityCommand.COMMAND_ALIAS:
-            return new TaskByPriorityCommand();
-
 ```
 ###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case ExportTaskCommand.COMMAND_WORD:
         case ExportTaskCommand.COMMAND_ALIAS:
             return new ExportTaskCommandParser().parse(arguments);
-
-        case HistoryCommand.COMMAND_WORD:
-        case HistoryCommand.COMMAND_ALIAS:
-            return new HistoryCommand();
-
-        case ExitCommand.COMMAND_WORD:
-        case ExitCommand.COMMAND_ALIAS:
-            return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-        case HelpCommand.COMMAND_ALIAS:
-            return new HelpCommand();
-
-        case UndoCommand.COMMAND_WORD:
-        case UndoCommand.COMMAND_ALIAS:
-            return new UndoCommand();
-
-        case RedoCommand.COMMAND_WORD:
-        case RedoCommand.COMMAND_ALIAS:
-            return new RedoCommand();
-
-
-        default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
-        }
-    }
-
-}
 ```
 ###### /java/seedu/address/logic/parser/ExportTaskCommandParser.java
 ``` java
@@ -287,18 +238,6 @@ public class ExportCommand extends Command {
     }
 
 }
-```
-###### /java/seedu/address/logic/commands/Command.java
-``` java
-    /**
-     * Constructs a feedback message to summarise an operation that displayed a listing of tasks.
-     *
-     * @param displaySize used to generate summary
-     * @return summary message for persons displayed
-     */
-    public static String getMessageForTaskListShownSummary(int displaySize) {
-        return String.format(Messages.MESSAGE_TASKS_LISTED_OVERVIEW, displaySize);
-    }
 ```
 ###### /java/seedu/address/logic/commands/FindTaskCommand.java
 ``` java
