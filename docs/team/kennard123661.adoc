@@ -327,6 +327,15 @@ link:https://github.com/CS2103AUG2017-T16-B1/main/pull/168[here]
 * Made Ark application open in list mode on startup. You can view the pull request link:https://github.com/CS2103AUG2017-T16-B1/main/pull/175[here]
 * Add end-to-end internal logic for parcel tab click (this change is pretty huge).
 You can view the pull request link:https://github.com/CS2103AUG2017-T16-B1/main/pull/175[here]
+* Fixed Acceptance Testing bugs for my team. Some examples:
+ ** link:https://github.com/CS2103AUG2017-T16-B1/main/issues/159[#159]
+ ** link:https://github.com/CS2103AUG2017-T16-B1/main/issues/154[#154]
+* Helped other teams do acceptance testing. Some examples:
+ ** link:https://github.com/CS2103AUG2017-W09-B1/main/issues/189[W09-B1]
+ ** link:https://github.com/CS2103AUG2017-T11-B3/main/issues/111[T11-B3]
+* Participate in forum. Some examples:
+ ** link:https://github.com/nus-cs2103-AY1718S1/forum/issues/152[Will this violate SRP]
+ ** link:https://github.com/nus-cs2103-AY1718S1/forum/issues/14[Code quality improvements for addressbook-level1: share here #14]
 
 == Project: NUSVisions
 
