@@ -320,6 +320,12 @@ public class AddCommandTest extends CommandTest {
             return false;
         }
 
+        @Override
+        public ReadOnlyPerson resetDeadlineForPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called");
+            return null;
+        }
+
     }
 
     /**

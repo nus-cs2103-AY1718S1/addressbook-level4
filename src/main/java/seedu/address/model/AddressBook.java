@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.PaybackCommand;
 import seedu.address.model.person.DateRepaid;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -441,6 +442,33 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.getReadOnlyPerson(index);
     }
 
+    //@@author lawwman
+    /**
+     * Reset's the person's {@code deadline} field to the default deadline.
+     * @return ReadOnly resetPerson
+     * @throws PersonNotFoundException if person does not exist in the list
+     */
+    public ReadOnlyPerson resetPersonDeadline(ReadOnlyPerson p) throws PersonNotFoundException {
+        int index;
+        index = persons.getIndexOf(p);
+
+        Person resetPerson = new Person(p);
+        try {
+            resetPerson.setDeadline(new Deadline(Deadline.NO_DEADLINE_SET));
+        } catch (IllegalValueException ive) {
+            assert false : "Given input of deadline cannot be invalid.";
+        }
+
+        persons.remove(p);
+
+        try {
+            persons.add(index, resetPerson);
+        } catch (DuplicatePersonException dpe) {
+            assert false : "There should be no duplicate when resetting the date repaid field of a person";
+        }
+
+        return persons.getReadOnlyPerson(index);
+    }
     //@@author jaivigneshvenugopal
     /**
      * Adds the picture of the person into app database and sets the person's display picture boolean status to true

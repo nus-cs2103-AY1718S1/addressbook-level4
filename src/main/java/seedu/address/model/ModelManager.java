@@ -399,6 +399,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author lawwman
     @Override
     public void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths) {
         String accruedAmount = person.calcAccruedAmount(differenceInMonths);
@@ -410,6 +411,17 @@ public class ModelManager extends ComponentManager implements Model {
         } catch (IllegalValueException ive) {
             assert false : Debt.MESSAGE_DEBT_CONSTRAINTS;
         }
+    }
+
+    /**
+     * Removes the {@code person} deadline.
+     * @throws PersonNotFoundException if the person is not found in addressbook
+     */
+    @Override
+    public ReadOnlyPerson resetDeadlineForPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        ReadOnlyPerson person = addressBook.resetPersonDeadline(target);
+        indicateAddressBookChanged();
+        return person;
     }
 
     //@@author jaivigneshvenugopal
