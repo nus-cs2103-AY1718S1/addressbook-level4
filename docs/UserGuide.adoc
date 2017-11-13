@@ -499,7 +499,7 @@ Removes the `friends` tag from the second to fifth person in the contact list.
 // end::addremove[]
 
 // tag::remarkchecklist[]
-==== Add a remark note to contact: `addremark`, `removeremark`
+==== Add a remark note to contact: `addremark`
 
 *Description:* Adds the specified remark(s).
 
@@ -530,7 +530,7 @@ Examples:
 
 *Suggestion for use:* If you want to add a remark pertaining to a person to take note of a task you want to do with him/her.
 
-==== Remove a remark note to contact: `addremark`, `removeremark`
+==== Remove a remark note to contact: `removeremark`
 
 *Description:* Removes the specified remark(s).
 
