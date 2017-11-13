@@ -21,7 +21,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Parses the arguments for AddEventTagFunction and creates a new AddEventTagCommand
  */
-public class AddEventTagCommandParser {
+public class AddEventTagCommandParser implements Parser<AddEventTagCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddEventTagCommand
      * @throws ParseException if the user input does not conform the expected format
