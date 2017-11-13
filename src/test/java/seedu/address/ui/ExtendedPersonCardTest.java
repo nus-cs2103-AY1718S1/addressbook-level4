@@ -41,22 +41,6 @@ public class ExtendedPersonCardTest extends GuiUnitTest {
         postNow(new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1)));
         assertPersonIsDisplayed(BOB, extendedPersonCardHandle);
     }
-    //======================== Helper methods ===============================
-    /**
-     * Asserts that {@code extended person card} displays details of {@code expectedPerson} correctly
-     */
-    private void assertPersonIsDisplayed(ReadOnlyPerson expectedPerson, ExtendedPersonCardHandle
-            extendedPersonCardHandle) {
-        guiRobot.pauseForHuman();
-        assertEquals(expectedPerson.getName().toString(), extendedPersonCardHandle.getName());
-        assertEquals(expectedPerson.getPhone().toString(), extendedPersonCardHandle.getPhone());
-        assertEquals(expectedPerson.getAddress().toString(), extendedPersonCardHandle.getAddress());
-        assertEquals(expectedPerson.getFormClass().toString(), extendedPersonCardHandle.getFormclass());
-        assertEquals(expectedPerson.getGrades().toString(), extendedPersonCardHandle.getGrades());
-        assertEquals(expectedPerson.getPostalCode().toString(), extendedPersonCardHandle.getPostalCode());
-        assertEquals(expectedPerson.getEmail().toString(), extendedPersonCardHandle.getEmail());
-        assertEquals(expectedPerson.getRemark().toString(), extendedPersonCardHandle.getRemark());
-    }
 
     @Test
     public void equals() {
@@ -82,6 +66,23 @@ public class ExtendedPersonCardTest extends GuiUnitTest {
 
         // same person, different index -> returns false
         assertFalse(personCard.equals(new PersonCard(person, 1)));
+    }
+
+    //======================================== HELPER METHODS ==========================================
+    /**
+     * Asserts that {@code extended person card} displays details of {@code expectedPerson} correctly
+     */
+    private void assertPersonIsDisplayed(ReadOnlyPerson expectedPerson, ExtendedPersonCardHandle
+            extendedPersonCardHandle) {
+        guiRobot.pauseForHuman();
+        assertEquals(expectedPerson.getName().toString(), extendedPersonCardHandle.getName());
+        assertEquals(expectedPerson.getPhone().toString(), extendedPersonCardHandle.getPhone());
+        assertEquals(expectedPerson.getAddress().toString(), extendedPersonCardHandle.getAddress());
+        assertEquals(expectedPerson.getFormClass().toString(), extendedPersonCardHandle.getFormclass());
+        assertEquals(expectedPerson.getGrades().toString(), extendedPersonCardHandle.getGrades());
+        assertEquals(expectedPerson.getPostalCode().toString(), extendedPersonCardHandle.getPostalCode());
+        assertEquals(expectedPerson.getEmail().toString(), extendedPersonCardHandle.getEmail());
+        assertEquals(expectedPerson.getRemark().toString(), extendedPersonCardHandle.getRemark());
     }
 
     /**

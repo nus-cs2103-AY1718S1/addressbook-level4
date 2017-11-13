@@ -84,7 +84,6 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
                 return s.toModelType();
             } catch (IllegalValueException e) {
                 e.printStackTrace();
-                //TODO: better error handling
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));

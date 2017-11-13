@@ -1,9 +1,7 @@
 # lincredibleJC
-###### \java\seedu\address\commons\events\model\FilteredPersonListChangedEvent.java
+###### /java/seedu/address/commons/events/model/FilteredPersonListChangedEvent.java
 ``` java
-/**
- * Represents a Change in the current FilteredPersonList
- */
+/** Represents the FilteredPersonList in the model has changed */
 public class FilteredPersonListChangedEvent extends BaseEvent {
 
     private final ObservableList<ReadOnlyPerson> currentFilteredList;
@@ -22,7 +20,7 @@ public class FilteredPersonListChangedEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindTagsCommand.java
+###### /java/seedu/address/logic/commands/FindTagsCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose tags contains any of the argument keywords.
@@ -47,7 +45,6 @@ public class FindTagsCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        EventsCenter.getInstance().post(new FilteredPersonListChangedEvent(model.getFilteredPersonList()));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
@@ -60,23 +57,8 @@ public class FindTagsCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
-    /**
-     * Parses user input into command for execution.
-     *
-     * @param userInput full user input string
-     * @return the command based on the user input
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public Command parseCommand(String userInput) throws ParseException {
-        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        }
-
-        final String commandWord = matcher.group("commandWord");
-        final String arguments = matcher.group("arguments");
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD://Fallthrough
@@ -141,6 +123,10 @@ public class FindTagsCommand extends Command {
         case ViewScheduleCommand.COMMAND_ALIAS:
             return new ViewScheduleCommand();
 
+        case DeleteScheduleCommand.COMMAND_WORD:
+        case DeleteScheduleCommand.COMMAND_ALIAS:
+            return new DeleteScheduleCommandParser().parse(arguments);
+
         case RemarkCommand.COMMAND_WORD:
         case RemarkCommand.COMMAND_ALIAS:
             return new RemarkCommandParser().parse(arguments);
@@ -148,12 +134,14 @@ public class FindTagsCommand extends Command {
         case TabCommand.COMMAND_WORD:
             return new TabCommandParser().parse(arguments);
 
+        case HomeCommand.COMMAND_WORD:
+            return new HomeCommand();
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
-    }
 ```
-###### \java\seedu\address\logic\parser\FindTagsCommandParser.java
+###### /java/seedu/address/logic/parser/FindTagsCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindTagsCommand object
@@ -180,7 +168,7 @@ public class FindTagsCommandParser implements Parser<FindTagsCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> formClass} into an {@code Optional<FormClass>} if {@code formClass}
@@ -202,8 +190,9 @@ public class FindTagsCommandParser implements Parser<FindTagsCommand> {
         return grades.isPresent() ? Optional.of(new Grades(grades.get())) : Optional.empty();
     }
 ```
-###### \java\seedu\address\logic\statistics\Statistics.java
+###### /java/seedu/address/logic/statistics/Statistics.java
 ``` java
+
 /**
  * Calculates statistics of the persons inside an ObservableList
  */
@@ -225,9 +214,9 @@ public class Statistics {
     }
 
     /**
-     * Takes in a PersonList and initialises the appropriate values to the Statistics instance
+     * Takes in a PersonList, extracts every person's grades, sorts it and stores it in the current Statistics instance
      *
-     * @param personList the list of persons being taken in
+     * @param personList the list of persons to extract the scores from
      */
     public void initScore(ObservableList<ReadOnlyPerson> personList) {
         int listSize = personList.size();
@@ -240,9 +229,9 @@ public class Statistics {
     }
 
     /**
-     * Takes in an array and assigns the appropriate values to the Statistics instance
+     * Takes in an array of scores, sorts it and stores it in the current Statistics instance
      *
-     * @param scoreArray the array of doubles used fo calculating statistics
+     * @param scoreArray the array of doubles used for calculating statistics
      */
     public void initScore(double[] scoreArray) {
         Arrays.sort(scoreArray);
@@ -250,6 +239,9 @@ public class Statistics {
         this.size = scoreArray.length;
     }
 
+    /**
+     * @return the average value in scoreArray
+     */
     private double getMean() {
         return DoubleStream.of(scoreArray).sum() / size;
     }
@@ -262,6 +254,10 @@ public class Statistics {
         }
     }
 
+    /**
+     * @return Returns the middle number in scoreArray. If scoreArray is odd, the middle number is returned.
+     * If scoreArray is even, the average of the two numbers in the middle is returned
+     */
     private double getMedian() {
         return (size % 2 == 1)
                 ? scoreArray[(size - 1) / 2]
@@ -276,13 +272,31 @@ public class Statistics {
         }
     }
 
-    private double getMedianWithIndexes(double[] arr, int startIndex, int endIndex) {
+    /**
+     * Returns the middle number in the array starting at startIndex and ending at endIndex in scoreArray
+     * If scoreArray is odd, the middle number is returned
+     * If scoreArray is even, the average of the two numbers in the middle is returned
+     *
+     * @param arr        the array of numbers
+     * @param startIndex the starting index of the desired array in scoreArray
+     * @param endIndex   the ending index of teh desired array in scoreArray
+     * @return the middle value of the array starting at startIndex and ending at endIndex in scoreArray
+     */
+    private double getMedianWithIndexes(double[] arr, int startIndex, int endIndex) throws NegativeArraySizeException {
         int currSize = endIndex - startIndex + 1;
-        return (currSize % 2 == 0)
-                ? (arr[startIndex + currSize / 2 - 1] + arr[startIndex + currSize / 2]) / 2
-                : arr[startIndex + (currSize - 1) / 2];
+        if (currSize >= 0) {
+            return (currSize % 2 == 0)
+                    ? (arr[startIndex + currSize / 2 - 1] + arr[startIndex + currSize / 2]) / 2
+                    : arr[startIndex + (currSize - 1) / 2];
+        }
+        throw new NegativeArraySizeException("endIndex must not be smaller than startIndex!");
     }
 
+    /**
+     * Returns the smaller number if there is a tie
+     *
+     * @return the double value that appears most frequently in scoreArray
+     */
     private double getMode() {
         double mode = 0;
         double currPersonScore;
@@ -311,6 +325,9 @@ public class Statistics {
         }
     }
 
+    /**
+     * @return the 25th percontile score in the scoreArray
+     */
     private double getQuartile1() {
         return getMedianWithIndexes(scoreArray, 0, size / 2 - 1);
     }
@@ -325,20 +342,9 @@ public class Statistics {
         }
     }
 
-    private double getQuartile2() {
-        return getMedianWithIndexes(scoreArray, 0, size - 1);
-    }
-
-    public String getQuartile2String() {
-        if (size > 1) {
-            return getRoundedStringFromDouble(getQuartile2(), numDecimalPlace);
-        } else if (size > 0) {
-            return INSUFFICIENT_DATA_MESSAGE;
-        } else {
-            return NO_PERSONS_MESSAGE;
-        }
-    }
-
+    /**
+     * @return the 75th percentile score in the scoreArray
+     */
     private double getQuartile3() {
         return (size % 2 == 0)
                 ? getMedianWithIndexes(scoreArray, size / 2, size - 1)
@@ -355,6 +361,9 @@ public class Statistics {
         }
     }
 
+    /**
+     * @return the difference between the 75th and 25th percentile scores in the scoreArray
+     */
     private double getInterQuartileRange() {
         return getQuartile3() - getQuartile1();
     }
@@ -369,6 +378,9 @@ public class Statistics {
         }
     }
 
+    /**
+     * @return the variance of the values in the scoreArray
+     */
     private double getVariance() {
         double temp = 0;
         double mean = getMean();
@@ -388,6 +400,9 @@ public class Statistics {
         }
     }
 
+    /**
+     * @return the standard deviations of the values in the scoreArray
+     */
     private double getStdDev() {
         return Math.sqrt(getVariance());
     }
@@ -403,7 +418,7 @@ public class Statistics {
     }
 
     /**
-     * Formats and returns a double into a fixed number of decimal places and returns it as a string
+     * Formats a double into a fixed number of decimal places and returns it as a string
      *
      * @param value  the double to be formatted
      * @param places number of decimal places of the output string
@@ -420,7 +435,23 @@ public class Statistics {
 
 }
 ```
-###### \java\seedu\address\model\person\FormClass.java
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /** Raises an event to update the StatisticsPanel */
+    private void updateStatisticsPanel() {
+        raise(new FilteredPersonListChangedEvent(filteredPersons));
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        filteredPersons.setPredicate(predicate);
+        updateStatisticsPanel();
+    }
+```
+###### /java/seedu/address/model/person/FormClass.java
 ``` java
 /**
  * Represents a Person's FormClass name in the address book.
@@ -476,7 +507,7 @@ public class FormClass {
 
 }
 ```
-###### \java\seedu\address\model\person\Grades.java
+###### /java/seedu/address/model/person/Grades.java
 ``` java
 /**
  * Represents a Person's Grades in the address book.
@@ -533,7 +564,7 @@ public class Grades {
 
 }
 ```
-###### \java\seedu\address\model\person\ReadOnlyPerson.java
+###### /java/seedu/address/model/person/ReadOnlyPerson.java
 ``` java
     default String getTagsAsString() {
         StringBuilder sb = new StringBuilder();
@@ -541,7 +572,7 @@ public class Grades {
         return sb.toString();
     }
 ```
-###### \java\seedu\address\model\person\TagsContainsKeywordsPredicate.java
+###### /java/seedu/address/model/person/TagsContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
@@ -569,7 +600,7 @@ public class TagsContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 }
 
 ```
-###### \java\seedu\address\ui\StatisticsPanel.java
+###### /java/seedu/address/ui/StatisticsPanel.java
 ``` java
 /**
  * Statistics Panel that displays the statistics of a filteredList
@@ -625,148 +656,80 @@ public class StatisticsPanel extends UiPart<Region> {
     @Subscribe
     private void handleFilteredPersonListChangedEvent(FilteredPersonListChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        statistics.initScore(event.getCurrentFilteredPersonList()); // Update currentList data
+        statistics.initScore(event.getCurrentFilteredPersonList()); // Updates the statistics instance values
         loadListStatistics();
     }
 
 }
 ```
-###### \resources\view\MainWindow.fxml
-``` fxml
-
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-    <stylesheets>
-        <URL value="@DarkTheme.css" />
-        <URL value="@Extensions.css" />
-    </stylesheets>
-
-
-    <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-        <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-        </Menu>
-    </MenuBar>
-
-    <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
-        <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-        </padding>
-    </StackPane>
-
-    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="120" minHeight="120" prefHeight="120" styleClass="pane-with-border" VBox.vgrow="NEVER">
-        <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-        </padding>
-    </StackPane>
-
-    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" SplitPane.resizableWithParent="false">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-        </VBox>
-        <SplitPane dividerPositions="0.5" orientation="VERTICAL">
-            <items>
-
-                <StackPane fx:id="extendedPersonCardPlaceholder">
-                    <padding>
-                        <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
-                </StackPane>
-                <StackPane fx:id="statisticsPanelPlaceholder" />
-            </items>
-        </SplitPane>
-
-        <StackPane fx:id="graphPanelPlaceholder">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-        </StackPane>
-    </SplitPane>
-
-    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
-</VBox>
-```
-###### \resources\view\StatisticsPanel.fxml
+###### /resources/view/StatisticsPanel.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-<VBox id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox id="stackPane" prefHeight="315.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.111"
+      xmlns:fx="http://javafx.com/fxml/1">
     <padding>
-        <Insets bottom="5" left="5" right="15" top="5" />
+        <Insets bottom="5" left="5" right="15" top="5"/>
     </padding>
     <children>
         <Label fx:id="groupStatistics" layoutX="10.0" layoutY="172.0" text="Statistics of the current list">
             <font>
-                <Font size="28.0" />
+                <Font size="28.0"/>
             </font>
-         <graphic>
-            <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/statistics.png" />
-               </image>
-            </ImageView>
-         </graphic>
-        </Label>
-        <Label id="mean" fx:id="mean" text="\$mean">
             <graphic>
-                <Label text="Mean:" />
+                <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/statistics.png"/>
+                    </image>
+                </ImageView>
             </graphic>
         </Label>
-        <Label id="median" fx:id="median" text="\$median">
-            <graphic>
-                <Label text="Median" />
-            </graphic>
-        </Label>
-        <Label id="mode" fx:id="mode" layoutX="10.0" layoutY="37.0" text="\$mode">
-            <graphic>
-                <Label text="Mode:" />
-            </graphic>
-        </Label>
-        <Label id="variance" fx:id="variance" layoutX="10.0" layoutY="10.0" text="\$variance">
-            <graphic>
-                <Label text="Variance:" />
-            </graphic>
-        </Label>
-        <Label id="standardDeviation" fx:id="standardDeviation" layoutX="10.0" layoutY="10.0" text="\$standardDeviation">
-            <graphic>
-                <Label text="StandardDeviation" />
-            </graphic>
-        </Label>
-        <Label id="quartile3" fx:id="quartile3" text="\$quartile3">
-            <graphic>
-                <Label text="75th Percentile:" />
-            </graphic>
-        </Label>
-        <Label id="quartile1" fx:id="quartile1" layoutX="10.0" layoutY="37.0" text="\$quartile1">
-            <graphic>
-                <Label text="25th Percentile:" />
-            </graphic>
-        </Label>
-        <Label id="interQuartileRange" fx:id="interquartileRange" layoutX="10.0" layoutY="91.0" text="\$interquartileRange">
-            <graphic>
-                <Label text="Interquartile Range:" />
-            </graphic>
-        </Label>
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" maxWidth="130" minWidth="130.0" prefWidth="150.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="275" minWidth="10.0" prefWidth="275.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Label text="Mean:"/>
+                <Label id="mean" fx:id="mean" text="\$mean" GridPane.columnIndex="1"/>
+                <Label text="Median:" GridPane.rowIndex="1"/>
+                <Label text="Mode:" GridPane.rowIndex="2"/>
+                <Label text="Variance:" GridPane.rowIndex="3"/>
+                <Label text="StandardDeviation:" GridPane.rowIndex="4"/>
+                <Label text="75th Percentile:" GridPane.rowIndex="5"/>
+                <Label text="25th Percentile:" GridPane.rowIndex="6"/>
+                <Label text="Interquartile Range:" GridPane.rowIndex="7"/>
+                <Label id="median" fx:id="median" text="\$median" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label id="mode" fx:id="mode" text="\$mode" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label id="variance" fx:id="variance" text="\$variance" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <Label id="standardDeviation" fx:id="standardDeviation" text="\$standardDeviation"
+                       GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <Label id="quartile3" fx:id="quartile3" text="\$quartile3" GridPane.columnIndex="1"
+                       GridPane.rowIndex="5"/>
+                <Label id="quartile1" fx:id="quartile1" text="\$quartile1" GridPane.columnIndex="1"
+                       GridPane.rowIndex="6"/>
+                <Label id="interQuartileRange" fx:id="interquartileRange" text="\$interquartileRange"
+                       GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+            </children>
+        </GridPane>
     </children>
 </VBox>
 ```
