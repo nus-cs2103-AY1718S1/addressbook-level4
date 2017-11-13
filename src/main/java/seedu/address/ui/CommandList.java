@@ -13,7 +13,6 @@ import seedu.address.logic.commands.persons.FindCommand;
 import seedu.address.logic.commands.persons.ListCommand;
 import seedu.address.logic.commands.persons.SelectCommand;
 import seedu.address.logic.commands.tags.DetagCommand;
-import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.logic.parser.CliSyntax;
 
 /**
@@ -24,8 +23,7 @@ public class CommandList {
     public static final String[] COMMANDS = {
         ChangeModeCommand.COMMAND_WORD + " " + CliSyntax.PREFIX_TM_MODE.getPrefix(),
         ChangeModeCommand.COMMAND_WORD + " " + CliSyntax.PREFIX_AB_MODE.getPrefix(),
-        AddCommand.COMMAND_WORD + " " + CliSyntax.PREFIX_NAME,
-        AddTaskCommand.COMMAND_WORD,
+        AddCommand.COMMAND_WORD,
         FindCommand.COMMAND_WORD,
         ListCommand.COMMAND_WORD,
         SelectCommand.COMMAND_WORD,

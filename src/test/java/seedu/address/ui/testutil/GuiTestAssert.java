@@ -46,7 +46,6 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysTask(ReadOnlyTask expectedTask, TaskCardHandle actualCard) {
         assertEquals(expectedTask.getDescription().taskDescription, actualCard.getDescription());
-        assertEquals(expectedTask.getStartDate().toString(), actualCard.getStartDate());
         assertEquals(expectedTask.getDeadline().toString(), actualCard.getDeadline());
     }
 
