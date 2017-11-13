@@ -14,7 +14,7 @@ endif::[]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
-== Introduction
+== Introductio`n
 
 === What is Rubrika?
 
@@ -563,7 +563,7 @@ You can even find someone without executing the `find` command, but just let Aut
 * `removetag fa` becomes `removetag` followed by all possible tags starting with `fa`
 * `delete 1` does not autocomplete because the command does not involve person data
 
-=== Autocompleting Anywhere in the Command Input Box
+=== Autocomplete Anywhere in the Command Input Box
 
 `Tab` key can be used almost anywhere in the command input box. +
 You can go back to complete or modify any particulars you may have missed out.
