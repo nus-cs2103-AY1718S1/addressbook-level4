@@ -157,11 +157,13 @@ public class ResidentBookParser {
         case HelpCommand.COMMAND_ALIAS:
             return new HelpCommand();
 
+        //@@author Haozhe321
         case PrevCommand.COMMAND_WORD:
             return new PrevCommand();
 
         case NextCommand.COMMAND_WORD:
             return new NextCommand();
+        //@@author
 
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();

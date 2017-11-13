@@ -3,6 +3,7 @@ package seedu.room.logic.commands;
 import seedu.room.commons.core.EventsCenter;
 import seedu.room.commons.events.ui.ChangeMonthRequestEvent;
 
+//@@author Haozhe321
 public class NextCommand extends Command{
     public static final String COMMAND_WORD = "next";
 

@@ -72,7 +72,7 @@ include::../DeveloperGuide.adoc[tag=deletebytag]
 
 ---
 
-=== Enhancement Added: Add Calendar Interface
+=== Enhancement Added: Add Calendar Interface and Commands
 
 ==== External behavior
 
