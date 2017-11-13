@@ -169,7 +169,7 @@ public class ParserUtilTest {
         assertEquals(expectedEmail, actualEmail.get());
     }
 
-    // @@author a0107442n
+    // @@author shuang-yang
 
     @Test
     public void parsePhoto_null_throwsNullPointerException() throws Exception {

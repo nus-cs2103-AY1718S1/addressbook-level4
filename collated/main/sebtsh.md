@@ -215,6 +215,9 @@
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
+        if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
+            throw new ParseException(MESSAGE_ADDREL_PREFIX_NOT_ALLOWED);
+        }
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
@@ -227,15 +230,15 @@
             Status status = new Status("NIL");
             Priority priority = new Priority("L");
             Note note = new Note("NIL");
+            Set<Relationship> relationList = new HashSet<>();
             //Initialize photo to the default icon
             String s = File.separator;
             Photo photo = new Photo("src" + s + "main" + s + "resources" + s
                     + "images" + s + "default.jpg");
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            Set<Relationship> relationList = ParserUtil.parseRel(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP));
 
-            //Since Company, Position, Status, Priority and Phot are optional
+            //Since Company, Position, Status, Priority and Photo and Relationship are optional
             // parameters, set them if they are present
             if (arePrefixesPresent(argMultimap, PREFIX_COMPANY)) {
                 company = ParserUtil.parseCompany(argMultimap.getValue(PREFIX_COMPANY)).get();
@@ -298,7 +301,9 @@
                         PREFIX_TAG, PREFIX_ADD_RELATIONSHIP);
 
         Index index;
-
+        if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
+            throw new ParseException(MESSAGE_ADDREL_PREFIX_NOT_ALLOWED);
+        }
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
@@ -320,8 +325,6 @@
             ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE)).ifPresent(editPersonDescriptor::setNote);
             ParserUtil.parsePhoto(argMultimap.getValue(PREFIX_PHOTO)).ifPresent(editPersonDescriptor::setPhoto);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-            parseRelForEdit(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP)).ifPresent
-                (editPersonDescriptor::setRelation);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -567,6 +570,7 @@ public class Note {
             this.status = new SimpleObjectProperty<>(new Status("NIL"));
             this.priority = new SimpleObjectProperty<>(new Priority("L"));
             this.note = new SimpleObjectProperty<>(new Note("NIL"));
+            this.relation = new SimpleObjectProperty<>(new UniqueRelList(new HashSet<>()));
             this.photo = new SimpleObjectProperty<>(new Photo("src/main/resources/images/default.jpg"));;
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
@@ -574,8 +578,6 @@ public class Note {
 
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        // protect internal connections from changes in the arg list
-        this.relation = new SimpleObjectProperty<>(new UniqueRelList(relation));
     }
 
     /**
@@ -808,13 +810,15 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's priority in the address book.
  */
 
-public class Priority {
+public class Priority implements Comparator<Priority> {
     public static final String MESSAGE_PRIORITY_CONSTRAINTS =
             "Person priority can take only H, M, or L as inputs.";
 
@@ -822,6 +826,8 @@ public class Priority {
      * Only H, M and L are allowed as inputs.
      */
     public static final String PRIORITY_VALIDATION_REGEX = "[HML]";
+
+    private static final String ORDERED_ENTRIES = "L, M, H";
 
     public final String value;
 
@@ -862,7 +868,6 @@ public class Priority {
         return value.hashCode();
     }
 
-}
 ```
 ###### \java\seedu\address\model\person\ReadOnlyPerson.java
 ``` java
@@ -945,13 +950,15 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's status in the address book.
  */
 
-public class Status {
+public class Status implements Comparator<Status> {
     public static final String MESSAGE_STATUS_CONSTRAINTS =
             "Person status can take any values, and it should not be blank";
 
@@ -960,6 +967,8 @@ public class Status {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String STATUS_VALIDATION_REGEX = "[^\\s].*";
+
+    private static final String ORDERED_ENTRIES = "NIL";
 
     public final String value;
 
@@ -999,8 +1008,6 @@ public class Status {
     public int hashCode() {
         return value.hashCode();
     }
-
-}
 ```
 ###### \java\seedu\address\model\tag\UniqueTagList.java
 ``` java
@@ -1187,7 +1194,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -1211,6 +1217,8 @@ public class EventPanel extends UiPart<Region> {
     @FXML
     private Label descriptionLabel;
 
+    @FXML
+    private Label periodLabel;
 
     public EventPanel(Logic logic) {
         super(FXML);
@@ -1227,6 +1235,11 @@ public class EventPanel extends UiPart<Region> {
         nameLabel.setText(event.getTitle().toString());
         timeslotLabel.setText(event.getTimeslot().toString());
         descriptionLabel.setText(event.getDescription().toString());
+
+        int period = Integer.parseInt(event.getPeriod().toString());
+        if (period != 0) {
+            periodLabel.setText("Repeat: Every " + event.getPeriod().toString() + " days.");
+        }
     }
 
     /**
@@ -1252,18 +1265,19 @@ public class EventPanel extends UiPart<Region> {
      * Calls showEventDetails when the address book is changed. This results in any edits to the currently displayed
      * event being refreshed immediately, instead of the user having to click away and click back to see the changes.
      * @param event
-     */
+
     @Subscribe
     private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         for (ReadOnlyEvent dataEvent : event.data.getEventList()) {
-            if (storedEvent.getTitle().equals(dataEvent.getTitle())) {
+            if (storedEvent != null && storedEvent.getTitle().equals(dataEvent.getTitle())) {
                 showEventDetails(storedEventIndex, dataEvent);
                 storedEvent = dataEvent;
                 break;
             }
         }
     }
+    */
 }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
@@ -1276,6 +1290,15 @@ public class EventPanel extends UiPart<Region> {
         eventPanel = new EventPanel(logic);
 
         personPanel = new PersonPanel(logic);
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+                if(browserPlaceholder.getChildren().contains(personPanel.getRoot())) {
+                    browserPlaceholder.getChildren().remove(personPanel.getRoot());
+                }
+                if(browserPlaceholder.getChildren().contains(eventPanel.getRoot())) {
+                    browserPlaceholder.getChildren().remove(eventPanel.getRoot());
+                }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
@@ -1319,6 +1342,38 @@ public class EventPanel extends UiPart<Region> {
     private void handleEventPanelSelectionChangedEvent(EventPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleEventPanelSelected();
+    }
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+        company.textProperty().bind(Bindings.convert(person.companyProperty()));
+        position.textProperty().bind(Bindings.convert(person.positionProperty()));
+        priority.textProperty().bind(Bindings.convert(person.priorityProperty()));
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+
+    /**
+     *Changes the CSS rules to apply different colours to different priorities.
+     */
+    private void setPriorityTextFill() {
+        if (priority.textProperty().getValue().equals("H")) {
+            pane.setId("highpriority");
+        } else if (priority.textProperty().getValue().equals("M")) {
+            pane.setId("mediumpriority");
+        } else if (priority.textProperty().getValue().equals("L")) {
+            pane.setId("lowpriority");
+        }
+    }
+
+    /**
+     * Checks the priority when the address book is changed and sets the text fill accordingly.
+     * @param event
+    */
+    @Subscribe
+    private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
+        logger.fine(LogsCenter.getEventHandlingLogMessage(event));
+        setPriorityTextFill();
     }
 }
 ```
@@ -1414,6 +1469,8 @@ public class PersonPanel extends UiPart<Region> {
     private Label noteLabel;
 
     @FXML
+    private FlowPane relationshipPane;
+    @FXML
     private FlowPane tagsPane;
 
     @FXML
@@ -1447,7 +1504,9 @@ public class PersonPanel extends UiPart<Region> {
         noteLabel.setText(person.getNote().toString());
         tagsPane.getChildren().removeAll(tagsPane.getChildren());
         person.getTags().forEach(tag -> tagsPane.getChildren().add(new Label(tag.tagName)));
-
+        relationshipPane.getChildren().removeAll(relationshipPane.getChildren());
+        person.getRelation().forEach
+            (relationship -> relationshipPane.getChildren().add(new Label(relationship.relType)));
 ```
 ###### \java\seedu\address\ui\PersonPanel.java
 ``` java
@@ -1506,36 +1565,77 @@ public class PersonPanel extends UiPart<Region> {
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 16pt;
 }
+
+#highpriority .label {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+    -fx-padding: 1 1 1 1;
+    -fx-border-radius: 1;
+    -fx-background-radius: 1;
+    -fx-font-size: 11;
+}
+
+#mediumpriority .label {
+    -fx-text-fill: white;
+    -fx-background-color: orange;
+    -fx-padding: 1 1 1 1;
+    -fx-border-radius: 1;
+    -fx-background-radius: 1;
+    -fx-font-size: 11;
+}
+
+#lowpriority .label {
+    -fx-text-fill: white;
+    -fx-background-color: green;
+    -fx-padding: 1 1 1 1;
+    -fx-border-radius: 1;
+    -fx-background-radius: 1;
+    -fx-font-size: 11;
+}
 ```
 ###### \resources\view\EventPanel.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="800.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <StackPane id="eventName" prefHeight="150.0" prefWidth="200.0">
+      <ImageView fitHeight="507.0" fitWidth="807.0" opacity="0.15">
+         <image>
+            <Image url="@../../../../../../Desktop/eventpanelbackground.jpg" />
+         </image>
+      </ImageView>
+      <StackPane id="eventPeriod" prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Label id="eventName" fx:id="nameLabel" alignment="TOP_CENTER" text="Event Name Placeholder" StackPane.alignment="TOP_CENTER">
+            <Label id="eventPeriod" fx:id="periodLabel" prefHeight="200.0" prefWidth="281.0" wrapText="true" StackPane.alignment="BOTTOM_LEFT">
                <padding>
-                  <Insets top="100.0" />
+                  <Insets top="50.0" />
                </padding>
             </Label>
          </children>
       </StackPane>
+      <StackPane id="eventName" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Label id="eventName" fx:id="nameLabel" prefHeight="105.0" prefWidth="800.0" text="Event Name Placeholder" StackPane.alignment="TOP_CENTER" />
+         </children>
+      </StackPane>
       <StackPane id="eventTime" prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Label id="eventTime" fx:id="timeslotLabel" text="Event Timeslot Placeholder" StackPane.alignment="CENTER" />
+            <Label id="eventTime" fx:id="timeslotLabel" prefHeight="187.0" prefWidth="449.0" text="Event Timeslot Placeholder" StackPane.alignment="CENTER_LEFT">
+               <padding>
+                  <Insets bottom="130.0" />
+               </padding></Label>
          </children>
       </StackPane>
       <StackPane id="eventDescription" prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Label id="eventDescription" fx:id="descriptionLabel" alignment="CENTER" prefHeight="200.0" prefWidth="800.0" text="Event Description Placeholder" textAlignment="CENTER" wrapText="true" StackPane.alignment="BOTTOM_CENTER">
+            <Label id="eventDescription" fx:id="descriptionLabel" prefHeight="158.0" prefWidth="278.0" text="Event Description Placeholder" wrapText="true" StackPane.alignment="BOTTOM_LEFT">
                <padding>
-                  <Insets bottom="50.0" />
+                  <Insets bottom="150.0" />
                </padding>
             </Label>
          </children>
@@ -1548,14 +1648,15 @@ public class PersonPanel extends UiPart<Region> {
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <AnchorPane>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="846.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <AnchorPane layoutX="-1.0" prefHeight="407.0" prefWidth="1043.0">
    <children>
       <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" prefHeight="62.0" prefWidth="346.0" styleClass="label-header">
          <font>
@@ -1639,25 +1740,4 @@ public class PersonPanel extends UiPart<Region> {
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="278.0" prefHeight="62.0"
-             prefWidth="231.0" styleClass="label-header" text="Events" AnchorPane.leftAnchor="14.0">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-      </Label>
-      <Label layoutX="8.0" layoutY="331.0" prefHeight="62.0"
-             prefWidth="332.0" styleClass="label-header" text="Connections" AnchorPane.leftAnchor="14.0">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="150.0" layoutX="636.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" />
-      <Line endX="500.0" layoutX="115.0" layoutY="285.0" startX="-100.0" stroke="#d0d0d0" />
-      <Line endX="500.0" layoutX="115.0" layoutY="336.0" startX="-100.0" stroke="#d0d0d0" />
-         <Button fx:id="photoSelectionButton" alignment="CENTER" layoutX="428.0" layoutY="129.0" minHeight="25" prefHeight="25" prefWidth="100" styleClass="importButton" text="import photo">
-
-      </Button>
-   </children>
-   </AnchorPane>
-</AnchorPane>
 ```

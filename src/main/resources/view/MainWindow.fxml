@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- @@author yangshuang -->
+<!-- @@author shuang-yang -->
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
@@ -20,15 +20,15 @@
 
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@../../../../../../2103_project/src/main/resources/view/BrightTheme.css" />
-        <URL value="@../../../../../../2103_project/src/main/resources/view/Extensions.css" />
-        <URL value="@../../../../../../2103_project/src/main/resources/view/CalendarView.css" />
+        <URL value="@BrightTheme.css" />
+        <URL value="@Extensions.css" />
+        <URL value="@CalendarView.css" />
     </stylesheets>
 
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@../../../../../../2103_project/src/main/resources/view/BrightTheme.css" />
-        <URL value="@../../../../../../2103_project/src/main/resources/view/Extensions.css" />
+        <URL value="@BrightTheme.css" />
+        <URL value="@Extensions.css" />
     </stylesheets>
 
     <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
@@ -71,9 +71,9 @@
     </SplitPane>
 
     <!-- @@author reginleiff -->
-    <SplitPane id="schedule" dividerPositions="0.15" minHeight="70.0" prefHeight="70.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+    <SplitPane fx:id="timetable" dividerPositions="0.15" minHeight="85.0" prefHeight="85.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
         <StackPane maxHeight="60.0" maxWidth="85.0" minHeight="60.0" minWidth="85.0" prefHeight="60.0" prefWidth="85.0">
-            <Label fx:id="scheduleTitle" text="Schedule: " StackPane.alignment="CENTER_LEFT">
+            <Label fx:id="timetableTitle" text="Schedule: " StackPane.alignment="CENTER_LEFT">
                <StackPane.margin>
                   <Insets />
                </StackPane.margin>
@@ -81,7 +81,7 @@
                   <Insets left="10.0" />
                </padding></Label>
         </StackPane>
-        <StackPane fx:id="scheduleListPanelPlaceholder" styleClass="background" HBox.hgrow="ALWAYS">
+        <StackPane fx:id="timetableListPanelPlaceholder" styleClass="background" HBox.hgrow="ALWAYS">
             <padding>
                <Insets left="10.0" />
             </padding></StackPane>
@@ -111,13 +111,13 @@
             </TabPane>
         </VBox>
 
-        <StackPane fx:id="browserPlaceholder" minWidth="200" prefWidth="500" styleClass="webView">
+        <StackPane fx:id="browserPlaceholder" minWidth="200.0" prefWidth="500.0" styleClass="webView">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
         </StackPane>
     </SplitPane>
-    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
+    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100.0" minHeight="100" prefHeight="100.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
             <Insets bottom="5" left="10" right="10" top="5" />
         </padding>

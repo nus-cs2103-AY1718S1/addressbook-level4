@@ -3,6 +3,7 @@ package seedu.address.model.event;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Optional;
 
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.event.timeslot.Date;
@@ -35,6 +36,18 @@ public interface ReadOnlyEvent {
 
     Description getDescription();
 
+    //@@author shuang-yang
+
+    ObjectProperty<Period> periodProperty();
+
+    Period getPeriod();
+
+    void setPeriod(Period period);
+
+    Optional<ReadOnlyEvent> getTemplateEvent();
+
+    void setTemplateEvent(Optional<ReadOnlyEvent> templateEvent);
+
     boolean happensBefore(Timeslot slot);
 
     boolean happensAfter(Timeslot slot);
@@ -42,6 +55,9 @@ public interface ReadOnlyEvent {
     Duration getDuration();
 
     LocalTime getStartTime();
+
+    java.util.Date getEndDateTime();
+    //@@author
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -63,7 +79,9 @@ public interface ReadOnlyEvent {
                 .append(" Timeslot: ")
                 .append(getTimeslot())
                 .append(" Description: ")
-                .append(getDescription());
+                .append(getDescription())
+                .append(" Period of recurrence: ")
+                .append(getPeriod());
         return builder.toString();
     }
 }

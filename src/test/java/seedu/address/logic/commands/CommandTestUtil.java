@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERIOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.relationship.SetRelCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -32,6 +34,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditEventDescriptorBuilder;
+import seedu.address.testutil.EditPersonBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -49,6 +52,11 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+
+    //@@author huiyiiih
+    public static final String VALID_NAME_JOE = "Joe Smith";
+    public static final String VALID_NAME_JANE = "Jane Smith";
+    //@@author
     //@@author sebtsh
     public static final String VALID_COMPANY_AMY = "Microsoft";
     public static final String VALID_COMPANY_BOB = "Google";
@@ -95,8 +103,14 @@ public class CommandTestUtil {
     public static final String PHOTO_DESC_BOB = " " + PREFIX_PHOTO + VALID_PHOTO_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    //@@author huiyiiih
     public static final String REL_DESC_SIBLINGS = " " + PREFIX_ADD_RELATIONSHIP + VALID_REL_SIBLINGS;
     public static final String REL_DESC_COLLEAGUE = " " + PREFIX_ADD_RELATIONSHIP + VALID_REL_COLLEAGUE;
+    public static final String REL_DESC_JOE_SIBLINGS = " " + PREFIX_ADD_RELATIONSHIP + "Joe Smith" + " ["
+        + VALID_REL_COLLEAGUE + "]";
+    public static final String REL_DESC_JANE_SIBLINGS = " " + PREFIX_ADD_RELATIONSHIP + "Jane Smith" + " ["
+        + VALID_REL_COLLEAGUE + "]";
+    //@@author
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -113,10 +127,13 @@ public class CommandTestUtil {
     // string not allowed for status
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_REL_DESC = " " + PREFIX_ADD_RELATIONSHIP + "sibling*"; // '*' not allowed in
-    // relationships
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    //@@author huiyiiih
+    public static final SetRelCommand.EditPerson DESC_JOE;
+    public static final SetRelCommand.EditPerson DESC_JANE;
+    //@@author
 
     //====== Events =========================================================================================
 
@@ -129,6 +146,14 @@ public class CommandTestUtil {
     public static final String VALID_DESCRIPTION_MIDTERM = "MPSH-2A, Seat 727";
     public static final String VALID_DESCRIPTION_SOCCER = "Bring the ball pump and drinks";
 
+    //@@author shuang-yang
+    public static final String VALID_PERIOD_MIDTERM = " 180";
+    public static final String VALID_PERIOD_SOCCER = " 7";
+    public static final String INVALID_PERIOD_SOCCER = " -7";
+    public static final String PERIOD_MIDTERM = " " + PREFIX_PERIOD + VALID_PERIOD_MIDTERM;
+    public static final String PERIOD_SOCCER = " " + PREFIX_PERIOD + VALID_PERIOD_SOCCER;
+    public static final String INVALID_PERIOD = " " + PREFIX_PERIOD + " -1";
+    //@@author
 
     public static final String TITLE_MIDTERM = " " + PREFIX_NAME + VALID_TITLE_MIDTERM;
     public static final String TITLE_SOCCER = " " + PREFIX_NAME + VALID_TITLE_SOCCER;
@@ -164,10 +189,24 @@ public class CommandTestUtil {
 
         DESC_MIDTERM = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_MIDTERM)
                 .withTimeslot(VALID_TIMESLOT_MIDTERM)
-                .withDescription(VALID_DESCRIPTION_MIDTERM).build();
+                .withDescription(VALID_DESCRIPTION_MIDTERM).withPeriod(VALID_PERIOD_MIDTERM).build();
         DESC_SOCCER = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_SOCCER)
                 .withTimeslot(VALID_TIMESLOT_SOCCER)
-                .withDescription(VALID_DESCRIPTION_SOCCER).build();
+                .withDescription(VALID_DESCRIPTION_SOCCER).withPeriod(VALID_PERIOD_SOCCER).build();
+        //@@author huiyiiih
+        DESC_JOE = new EditPersonBuilder().withName(VALID_NAME_JOE)
+            .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+            .withCompany(VALID_COMPANY_AMY).withPosition(VALID_POSITION_AMY)
+            .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
+            .withNote(VALID_NOTE_AMY).withPhoto(VALID_PHOTO_AMY).withTags
+            (VALID_TAG_FRIEND).withToAddRel(VALID_REL_SIBLINGS).build();
+        DESC_JANE = new EditPersonBuilder().withName(VALID_NAME_JANE)
+            .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+            .withCompany(VALID_COMPANY_AMY).withPosition(VALID_POSITION_AMY)
+            .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
+            .withNote(VALID_NOTE_AMY).withPhoto(VALID_PHOTO_AMY).withTags
+            (VALID_TAG_FRIEND).withToAddRel(VALID_REL_COLLEAGUE).build();
+        //@@author
     }
 
     /**

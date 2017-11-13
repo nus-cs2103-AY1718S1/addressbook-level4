@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * Parses the command entered by the user
- * and check it with the synonyms provided
+ * and checks it with the synonyms provided
  * so that the user does not have to remember specific commands
  */
 public class CheckCommandsParser {
@@ -54,7 +54,10 @@ public class CheckCommandsParser {
             "delevent", "deleteevent", "eventdelete", "de", "ed" };
         final String[] subEditEventsCommands = new String[] { "eventedit", "editevent", "ee" };
         final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
+        final String[] subUpdatePhotoCommands = new String[] { "updatephoto", "up" };
         final String[] subSetRelCommands = new String[] { "set", "rel", "setrel" };
+        final String[] subRepeatCommands = new String[] {"repeat", "rp"};
+        final String[] subToggleTimetableCommands = new String[] { "timetable", "tt" };
 
 
         /**
@@ -79,7 +82,10 @@ public class CheckCommandsParser {
         final Set<String> commandsForDeleteEvent = new HashSet<>(Arrays.asList(subDeleteEventsCommands));
         final Set<String> commandsForEditEvent = new HashSet<>(Arrays.asList(subEditEventsCommands));
         final Set<String> commandsForFindEvent = new HashSet<>(Arrays.asList(subFindEventsCommands));
+        final Set<String> commandsForUpdatePhoto = new HashSet<>(Arrays.asList(subUpdatePhotoCommands));
         final Set<String> commandsForSetRel = new HashSet<>(Arrays.asList(subSetRelCommands));
+        final Set<String> commandsForRepeat = new HashSet<>(Arrays.asList(subRepeatCommands));
+        final Set<String> commandsForToggleTimetable = new HashSet<>(Arrays.asList(subToggleTimetableCommands));
 
         /**
          * Compares the userInputCommand with the different commands set
@@ -120,8 +126,14 @@ public class CheckCommandsParser {
             finalUserCommand = "eventedit";
         } else if (!Collections.disjoint(userInputCommand, commandsForFindEvent)) {
             finalUserCommand = "eventfind";
+        } else if (!Collections.disjoint(userInputCommand, commandsForUpdatePhoto)) {
+            finalUserCommand = "updatephoto";
         } else if (!Collections.disjoint(userInputCommand, commandsForSetRel)) {
             finalUserCommand = "set";
+        } else if (!Collections.disjoint(userInputCommand, commandsForToggleTimetable)) {
+            finalUserCommand = "timetable";
+        } else if (!Collections.disjoint(userInputCommand, commandsForRepeat)) {
+            finalUserCommand = "repeat";
         }
         return finalUserCommand;
     }

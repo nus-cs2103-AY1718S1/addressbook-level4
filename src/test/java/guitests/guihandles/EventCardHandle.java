@@ -3,7 +3,7 @@ package guitests.guihandles;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
-// @@author a0107442n
+// @@author shuang-yang
 
 /**
  * Provides a handle to a person card in the person list panel.

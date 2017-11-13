@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -58,6 +59,7 @@ public class Person implements ReadOnlyPerson {
             this.status = new SimpleObjectProperty<>(new Status("NIL"));
             this.priority = new SimpleObjectProperty<>(new Priority("L"));
             this.note = new SimpleObjectProperty<>(new Note("NIL"));
+            this.relation = new SimpleObjectProperty<>(new UniqueRelList(new HashSet<>()));
             this.photo = new SimpleObjectProperty<>(new Photo("src/main/resources/images/default.jpg"));;
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
@@ -65,8 +67,6 @@ public class Person implements ReadOnlyPerson {
 
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        // protect internal connections from changes in the arg list
-        this.relation = new SimpleObjectProperty<>(new UniqueRelList(relation));
     }
 
     /**
@@ -318,7 +318,7 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
-
+    //@@author huiyiiih
     /**
      * Returns an immutable relationship set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -329,15 +329,13 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Replaces this person's relationship with the tags in the argument tag set.
+     * Replaces this person's relationship with the relationships in the argument relationship set.
      */
     public void setRel(Set<Relationship> replacement) {
         relation.set(new UniqueRelList(replacement));
     }
+    //@@author
 
-    public ObjectProperty<UniqueRelList> relProperty() {
-        return relation;
-    }
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -50,6 +50,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueRelList relation;
 
     private ReadOnlyEvent lastChangedEvent;
+    private ReadOnlyEvent newlyAddedEvent;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -200,6 +201,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(this::syncMasterTagListWith);
     }
 
+    //@@author huiyiiih
     /**
      * Ensures that every relationships in this person:
      * - exists in the master list {@link #relation}
@@ -219,7 +221,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         personRel.forEach(rel -> correctRelReferences.add(masterRelObjects.get(rel)));
         person.setRel(correctRelReferences);
     }
-
     /**
      * Ensures that every relation in these persons:
      * - exists in the master list {@link #relation}
@@ -230,6 +231,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private void syncMasterRelListWith(UniquePersonList persons) {
         persons.forEach(this::syncMasterRelListWith);
     }
+    //@@author
     /**
      * Removes {@code key} from this {@code AddressBook}.
      *
@@ -267,6 +269,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addEvent(ReadOnlyEvent e) throws EventTimeClashException {
         Event newEvent = new Event(e);
         events.add(newEvent);
+        lastChangedEvent = null;
+        newlyAddedEvent = newEvent;
     }
 
     /**
@@ -276,6 +280,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
         lastChangedEvent = key;
+        newlyAddedEvent = null;
         if (events.remove(key)) {
             return true;
         } else {
@@ -296,11 +301,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         Event editedEvent = new Event(editedReadOnlyEvent);
         events.setEvent(target, editedEvent);
         lastChangedEvent = target;
+        newlyAddedEvent = editedEvent;
     }
 
     @Override
     public ReadOnlyEvent getLastChangedEvent() {
         return this.lastChangedEvent;
+    }
+
+
+    @Override
+    public ReadOnlyEvent getNewlyAddedEvent() {
+        return this.newlyAddedEvent;
     }
     //@@author
 
@@ -327,11 +339,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
     }
+    //@@author huiyiiih
     @Override
     public ObservableList<Relationship> getRelList() {
         return relation.asObservableList();
     }
-
+    //@@author
     //@@author reginleiff
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
@@ -339,7 +352,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<ReadOnlyEvent> getSchedule(Date currentDate) {
+    public ObservableList<ReadOnlyEvent> getTimetable(Date currentDate) {
         return events.getObservableSubList(currentDate);
     }
     //@@author
@@ -349,7 +362,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.relation.equalsOrderInsensitive(((AddressBook) other).relation));
     }
 
     @Override
@@ -377,4 +391,5 @@ public class AddressBook implements ReadOnlyAddressBook {
             return null;
         }
     }
+
 }

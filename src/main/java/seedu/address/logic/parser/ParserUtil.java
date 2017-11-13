@@ -14,6 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.event.Description;
+import seedu.address.model.event.Period;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.person.Address;
@@ -55,6 +56,16 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+    /**
+     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     *
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static Optional<Period> parsePeriod(Optional<String> period) throws IllegalValueException {
+        requireNonNull(period);
+        return period.isPresent() ? Optional.of(new Period(period.get())) : Optional.empty();
     }
 
     /**
@@ -138,7 +149,7 @@ public class ParserUtil {
         return note.isPresent() ? Optional.of(new Note(note.get())) : Optional.empty();
     }
 
-    //@@author a0107442n
+    //@@author shuang-yang
     /**
      * Parses a {@code Optional<String> photo} into an {@code Optional<Photo>}
      * if {@code photo} is present.
@@ -235,6 +246,7 @@ public class ParserUtil {
         }
         return tagSet;
     }
+    //@@author huiyiiih
     /**
      * Parses {@code Collection<String> relationship} into a {@code Set<Relationship>}.
      */
@@ -246,4 +258,5 @@ public class ParserUtil {
         }
         return relationSet;
     }
+    //@@author
 }

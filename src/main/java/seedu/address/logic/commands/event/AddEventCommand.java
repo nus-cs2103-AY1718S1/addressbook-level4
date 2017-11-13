@@ -1,9 +1,9 @@
-//@@author reginleiff
 package seedu.address.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERIOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 
@@ -14,6 +14,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventTimeClashException;
 
+//@@author reginleiff
 /**
  * Adds an event to the address book.
  */
@@ -26,11 +27,13 @@ public class AddEventCommand extends UndoableCommand {
             + PREFIX_NAME + "TITLE "
             + PREFIX_TIMESLOT + "TIMING "
             + PREFIX_DESCRIPTION + "DESCRIPTION "
+            + "[" + PREFIX_PERIOD + "PERIOD]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John's 21st Birthday "
             + PREFIX_TIMESLOT + "22/10/2017 1900-2200 "
-            + PREFIX_DESCRIPTION + "johnd@example.com ";
+            + PREFIX_DESCRIPTION + "johnd@example.com "
+            + PREFIX_PERIOD + "14";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_TIME_CLASH = "This event has time clash with an existing event";

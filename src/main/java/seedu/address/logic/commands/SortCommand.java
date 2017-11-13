@@ -15,7 +15,6 @@ public class SortCommand extends UndoableCommand {
             + "Parameters: TYPE  (name, tag, company, priority, status)\n"
             + "Example: " + COMMAND_WORD + " name";
     public static final String MESSAGE_SUCCESS = "Sorted according to ";
-    //{"Sorted according to name", "Sorted according to tags", "Sorted " + " according to address"};
     private final String type;
 
     public SortCommand(String type) {
