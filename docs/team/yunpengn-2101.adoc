@@ -3,15 +3,25 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+== Purpose
+
+This project portfolio documents the work I have done as a developer of the *BoNUS* development team. It describes the
+features that I have added and purposed. Some sections from https://cs2103aug2017-t09-b3.github.io/main/UserGuide.html[User Guide]
+and https://cs2103aug2017-t09-b3.github.io/main/DeveloperGuide.html[Developer Guide] are extracted out to help with the
+explanation.
+
 == Project: BoNUS
 
 **BoNUS** is a desktop personal organizer application dedicated to NUS students to carry out various tasks such as storing
 contacts, scheduling for upcoming events, timetable planning as well as a calendar to better organise their campus life.
 
 This project is the result of a semester-long software engineering https://nus-cs2103.github.io/website/[module] at
-http://www.nus.edu.sg/[NUS]. It is built my teammates and me, as listed https://cs2103aug2017-t09-b3.github.io/main/AboutUs.html[here].
+http://www.nus.edu.sg/[NUS]. It is built by my teammates and me, as listed https://cs2103aug2017-t09-b3.github.io/main/AboutUs.html[here].
 Most of the backend codes are written in Java, while https://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-overview.htm#JFXST784[JavaFX]
 is adapted as the frontend framework.
+
+See our https://cs2103aug2017-t09-b3.github.io/[project website] or https://github.com/CS2103AUG2017-T09-B3/main[GitHub repository]
+for more information.
 
 *Code contributed*:
 
@@ -20,56 +30,51 @@ is adapted as the frontend framework.
 
 === Enhancement Added: Generic Property
 
+==== Justification
+
+All similar https://nus-cs2103.github.io/website/admin/projectList.html[products] have provided a few fields for users to
+store their contacts' information. Our application *BoNUS* should provide something unique to stand out of them.
+
+What if we provide the flexibility to allow users to define customize properties on their own? Different users certainly
+have different requirements and thus would like to store different information about their contacts. The fields pre-defined
+by the software may not suit their needs. Therefore, it is necessary to provide the `config --add-property` command to
+allow users define as many customize properties as they want.
+
 ==== External behavior
 
----
+Do you feel that the pre-defined properties in *BoNUS* does not suit your needs or you need more properties? No worry! You
+can use `config -add-property` command to add a new customize property field.
 
-==== Adding a customize property : `(cfg)config --add-property`
-
-Adds a new customize property field available to all persons or events. +
-Format: `(cfg)config --add-property s/SHORT_NAME f/FULL_NAME [m/MESSAGE r/REGULAR_EXPRESSION]`
+Format: +
+`config --add-property s/SHORT_NAME f/FULL_NAME [m/MESSAGE r/REGULAR_EXPRESSION]` +
+or +
+`cfg --add-property s/SHORT_NAME f/FULL_NAME [m/MESSAGE r/REGULAR_EXPRESSION]`
 
 ****
-* This command does not add a new property to a specific person. Instead, it defines a property that will be available to
-all persons/events.
-* The short name `s/` and full name `f/` of the new property are compulsory, while the constraint message `m/` and regular
-expression for validation `r/` are optional. However, `m/` and `r/` must come together, i.e. a regular expression must be
-accompanied by a constraint message, which will be shown when the validation fails.
-* If constraint message and regular expression are not specified, the default would be `[^\s].*`, which mean the value of
-this property cannot be blank.
-* Short name is the identity (primary key) of all properties. Thus, the short name must be unique. The command will fail
-if there is an existing property with the same short name.
-* The given regular expression must use legal syntax. It will be checked by the
-https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#compile-java.lang.String-[Pattern.compile] method.
+. You need to think of a short name for this new property (corresponding to `s/SHORT_NAME`).
+. You should make sure this short name is unique, meaning that there is no existing property with the same short name.
+. You need to define a full name for this new property (corresponding to `f/FULL_NAME`).
+. You should choose an identifiable value for this full name because it will be displayed when you view the details of contacts.
+. You can optionally write a constraint message for this new property (corresponding to `m/MESSAGE`).
+. You can optionally write a regular expression to restrict the accepted value for this new property to be in certain
+format (corresponding to `m/MESSAGE`).
 ****
 
 Example:
 
 * `config --add-property s/ag f/age`
-* `config --add-property s/b f/birthday m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*`
+* `config --add-property s/b f/birthday m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*` +
+After adding a new property _birthday_, you can use it when adding a new contact. +
+`add n/Linda p/85438796 e/linda@example.com a/5 Marina Bay Road b/Jan 29, 1987 t/friends` +
+Now, Linda's birthday is stored as Jan 29th, 1987.
 
 [NOTE]
 ====
-* Short name is used as the prefix for `add`/`addE` and `edit`/`editE` commands.
+* You need to use the short name as the prefix in `add`/`addE` and `edit`/`editE` commands.
 * Full name is used to display the name of each property on the right panel (to show details of the selected person, use `select` command).
 * Constraint message is the string that will be shown in result display box when the input value for this property is invalid.
 * Regular expression is used to check whether the input value for this property is valid.
 ====
-
-==== Justification
-
----
-
-Our application **BoNUS** will not be able to stand out from all the similar https://nus-cs2103.github.io/website/admin/projectList.html[products]
-if we simply provide users with a few additional fields to store the information of their contacts. Instead, to suit the
-various needs from users, we have to provide the flexibility to allow users to define customize properties on their own.
-
-Users can use the `config --add-property` command to define as many new properties as they want, after which they could
-set these properties when they use the `add` command to add a new contact.
-
-In the current design and implementation, the `PropertyManager` class is used to store and manage the meta-data of all
-properties. Default properties like `Name`, `Phone`, `Email` and `Address` are pre-loaded into `PropertyManager`, while
-user-defined properties will be added into `PropertyManager` by `config --add-property` command.
 
 ==== Implementation
 
@@ -411,22 +416,3 @@ https://github.com/nus-cs2103-AY1718S1/forum/issues/197[#197], https://github.co
 https://github.com/nus-cs2103/website/issues/28[#28], https://github.com/nus-cs2103/website/issues/29[#29],
 https://github.com/nus-cs2103/website/issues/34[#34], https://github.com/nus-cs2103/website/issues/39[#39],
 https://github.com/nus-cs2103/website/issues/41[#41], https://github.com/nus-cs2103/website/issues/43[#43]
-
-== Project: Lions Befrienders Management System
-
-I worked at http://www.comp.nus.edu.sg/~vwo/[CVWO (Computing for Voluntary Welfare Organisations)] as a web developer during the
-Year 1 summer vacation.
-
-My team at CVWO rewrote, upgraded and deployed the http://www.comp.nus.edu.sg/~vwo/projects/2017-lbsa.html[management
-system] for https://www.lionsbefrienders.org.sg/[Lions Befrienders (Singapore)], which was formed in 1995 and served thousands
-of senior citizens. This system saves a lot of time for staff at Lions Befrienders to manage their growing enormous clients
-across the country, while ensuring high service quality.
-
-== Project: A Multi-User 3D Game Environment for CS1101S
-
-This project aims at building a 3D game environment to assist http://www.comp.nus.edu.sg/~cs1101s/[CS1101S] students in
-learning programming. The game is built using https://unity3d.com/[Unity3D] game engine. It provides vivid visualization
-to help students have a deeper understanding of the related data structure and algorithms used.
-
-CS1101S is a module taught in the Department of Computer Science at the NUS School of Computing. It serves as a rigorous
-and thorough introduction to programming methodology.
