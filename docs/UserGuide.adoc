@@ -326,6 +326,26 @@ image::deletebytagMessage.png[width='800']
 
 // end::deletebytag[]
 
+// tag::removeTag[]
+=== Remove Tag from Person: `removeTag RA`
+
+Deletes tag in the address book, and remove Tag from all Residents in possession of it +
+Format: `removeTag TAG` +
+Command Alias: `rm`
+
+Examples:
+
+* `removeTag RA` will delete RA tag from ResidentBook, and remove "RA" tag from everyone.
+
+* If Alice has tags "RA" and "CollegeMaster", `removeTag RA` will remove tag from Alice, retaining her other details in the ResidentBook.
+
+The tagName specified must exist in the current ResidentBook. If it does not exist, exception will be thrown and user will be notified that not such tag exist.
+The following shows an example when invalid tag is provided.
+
+
+
+// end::removeTag[]
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
