@@ -17,6 +17,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.RecycleBin;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -25,16 +26,16 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new RecycleBin(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        String expectedMessage = DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS + personToDelete;
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getRecycleBin(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -50,14 +51,14 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() throws Exception {
-        showFirstPersonOnly(model);
+        showFirstPersonOnly(model, false);
 
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        String expectedMessage = DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS + personToDelete;
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getRecycleBin(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
         showNoPerson(expectedModel);
 
@@ -66,7 +67,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showFirstPersonOnly(model);
+        showFirstPersonOnly(model, false);
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
@@ -104,7 +105,7 @@ public class DeleteCommandTest {
      */
     private DeleteCommand prepareCommand(Index index) {
         DeleteCommand deleteCommand = new DeleteCommand(index);
-        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack(), false);
         return deleteCommand;
     }
 

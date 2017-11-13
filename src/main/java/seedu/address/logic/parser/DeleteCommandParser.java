@@ -12,6 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class DeleteCommandParser implements Parser<DeleteCommand> {
 
+    //@@author Gideonfu-reused
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteCommand
      * and returns an DeleteCommand object for execution.
@@ -19,7 +20,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     public DeleteCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
+            Index[] index = ParserUtil.parseDeleteIndex(args);
             return new DeleteCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(

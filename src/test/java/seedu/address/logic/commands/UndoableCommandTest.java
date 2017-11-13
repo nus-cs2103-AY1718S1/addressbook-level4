@@ -11,15 +11,17 @@ import org.junit.Test;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.RecycleBin;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class UndoableCommandTest {
-    private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalAddressBook(), new RecycleBin(), new UserPrefs());
     private final DummyCommand dummyCommand = new DummyCommand(model);
 
-    private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalAddressBook(), new RecycleBin(), new UserPrefs());
 
     @Test
     public void executeUndo() throws Exception {
@@ -27,17 +29,17 @@ public class UndoableCommandTest {
         deleteFirstPerson(expectedModel);
         assertEquals(expectedModel, model);
 
-        showFirstPersonOnly(model);
+        showFirstPersonOnly(model, false);
 
         // undo() should cause the model's filtered list to show all persons
         dummyCommand.undo();
-        expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(getTypicalAddressBook(), new RecycleBin(), new UserPrefs());
         assertEquals(expectedModel, model);
     }
 
     @Test
     public void redo() {
-        showFirstPersonOnly(model);
+        showFirstPersonOnly(model, false);
 
         // redo() should cause the model's filtered list to show all persons
         dummyCommand.redo();
@@ -60,6 +62,8 @@ public class UndoableCommandTest {
                 model.deletePerson(personToDelete);
             } catch (PersonNotFoundException pnfe) {
                 fail("Impossible: personToDelete was retrieved from model.");
+            } catch (DuplicatePersonException dpe) {
+                assert false : "Duplicate person will not be added to RecycleBin.";
             }
             return new CommandResult("");
         }

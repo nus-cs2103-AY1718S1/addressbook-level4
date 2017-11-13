@@ -1,0 +1,77 @@
+= Gideon Fu - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:repoURL: https://github.com/CS2103AUG2017-T17-B4/main
+
+== Project: OneBook
+OneBook is a desktop Address Book application. It uses a Graphical User Interface (GUI) but most of the interactions happen using Command Line Interface (CLI).
+
+OneBook is optimized for companies' usage. It is also suitable for general usage.
+
+OneBook allows users to easily import and export contacts, send emails conveniently and stores a database of contacts.
+
+*Code contributed*: [link:{repoURL}/blob/master/collated/main/Gideonfu.md[Functional code]] [link:{repoURL}/blob/master/collated/test/Gideonfu.md[Test code]]
+
+=== Enhancement Added: Modify Delete command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=delete]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Deleting contacts one by one can be extremely time consuming if the user wishes to delete many contacts. Having a `delete` command that simply allows for only one deletion is not suitable. The modified `delete` command is now able to delete multiple contacts in a single command by separating the indexes with a comma.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=delete]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Modify Find command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Justification
+
+By extending the `find` command to enable searching in the various fields, the utility given to users is greatly enhanced. For example, users will be able to find all persons in a given organisation, or all persons with a certain birthday month. Users can also find a particular person by searching for their phone number, address, or email.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Added Remark field into contacts (Pull requests link:{repoURL}/pull/66[#66] {repoURL}/pull/94[#94])
+* Changed browser to display address of selected person in Google Maps (Pull requests link:{repoURL}/pull/55[#55])
+* Added Java Date Validation to Birthday field and improved `BIRTHDAY_VALIDATION_REGEX` to check if date given is valid (Pull requests link:{repoURL}/pull/49[#49] link:{repoURL}/pull/57[#57])
+* Reported bugs (Issues https://github.com/CS2103AUG2017-T09-B3/main/issues/141[BoNUS #141] https://github.com/CS2103AUG2017-T09-B3/main/issues/142[BoNUS #142])

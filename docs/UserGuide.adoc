@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= OneBook - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,23 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T17-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017 T17-B4`      Since: `Jun 2016`      Licence: `MIT`
+
+== Product Overview
+
+=== Introduction
+
+OneBook is a desktop Address Book application. It uses a Graphical User Interface (GUI) but most of the interactions happen using Command Line Interface (CLI).
+
+OneBook is optimized for companies' usage. It is also suitable for general usage.
+
+OneBook allows users to easily import and export contacts, send emails conveniently and stores a database of contacts.
+
+=== About
+
+OneBook User Guide contains a detailed manual for using the application. The step-by-step instructions in this User Guide will assist you when using OneBook.
 
 == Quick Start
 
@@ -33,7 +47,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 b/21-01-1995 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -54,28 +68,46 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+//tag::modechange[]
+=== Changing theme: `mode`
+
+Changes the theme of OneBook between default mode and lite mode.
+
+Format: `mode`
+//end::modechange[]
+
+//tag::addoptionalfields[]
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME [p/PHONE_NUMBER] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [o/ORGANISATION] [r/REMARK] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
+[TIP]
+Fields that are enclosed by square brackets are optional.
+
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 b/21-01-1995 e/johnd@example.com a/John street, block 123, #01-01 o/Apple Inc. r/Meeting for dinner tomorrow 6pm`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison b/22-02-1998 p/1234567 t/criminal`
+* `add n/Timothy Smith`
+//end::addoptionalfields[]
 
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
+****
+* Upon usage of this command, the top left of the list will be replaced with *List* to indicate that the list displayed is not filtered.
+****
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [o/ORGANISATION] [r/REMARK] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -92,35 +124,53 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+// tag::find[]
+=== Locating persons: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons whose particular field contain any of the given keywords. +
+Format: `find MAIN_KEYWORD KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The main keyword determines the search field.
+* Accepted main keywords: *name* / *address* / *email* / *phone* / *birthday* / *tag* / *org* (organisation).
+* The search is case insensitive. e.g `name hans` will return `Hans`
+* The order of the keywords does not matter. e.g. `name Hans Bo` will return `Bo Hans`
+* The search filter applies to the current list displayed
+* Partial words will still be matched e.g. `name Han` will return `Hans`
+* *name* / *email* / *phone* / *tag*: Persons containing at least one keyword will be returned (i.e. `OR` search). e.g. `name Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* *address* / *org*: Persons containing all the keywords will be returned (i.e. `AND` search). e.g. `address Serangoon Street 4` will not return `Serangoon Street 6`
+* *birthday*: Keywords are expected to be in the format '`mm`', a 2 digit number indicating the month.
+* Upon usage of this command, the top left of the list will be appended with *Filtered* to indicate that the list display is filtered.
 ****
 
 Examples:
 
-* `find John` +
+* `find name John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find name Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find email johndoe` +
+Returns any person having an email containing `johndoe`
+* `find address Geylang Street 5` +
+Returns only persons having an address containing `Geylang Street 5`
+* `bin` +
+`find name Jake` +
+Returns any person with the name `Jake`
+// end::find[]
 
+// tag::delete[]
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Deletes the specified person(s) from the address book. +
+Format: `delete INDEX, [MORE_INDEXES]`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the person(s) at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* The indexes *must be in ascending order*.
+* `delete` *does not delete contacts from the Recycle Bin*. Use `bindelete` instead.
+* `delete` *will still delete contacts from OneBook* even after using `bin` to display the Recycle Bin.
 ****
 
 Examples:
@@ -128,9 +178,13 @@ Examples:
 * `list` +
 `delete 2` +
 Deletes the 2nd person in the address book.
+* `list` +
+`delete 3, 4` +
+Deletes the 3rd and 4th persons in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+// end::delete[]
 
 === Selecting a person : `select`
 
@@ -138,7 +192,7 @@ Selects the person identified by the index number used in the last person listin
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects and loads the details and address of the person at the specified `INDEX` in Google Maps.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -151,6 +205,9 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+* `bin` +
+`select 2` +
+Selects the 2nd person in the recycle bin.
 
 === Listing entered commands : `history`
 
@@ -212,10 +269,158 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the address book, including the recycle bin +
 Format: `clear`
+
+****
+* Contacts deleted using this command will not show up in the Recycle Bin.
+****
+
+// tag::sort[]
+=== Locating persons: `sort`
+
+Sorts the list in OneBook according to name or email in alphabetical order. +
+Format: `sort [KEYWORD]`
+
+****
+* The keyword determines the sort field (*name*/*email*).
+* At least one contact must be in OneBook before sorting.
+* The sort applies to the current listing displayed.
+****
+
+Examples:
+
+* `sort name`
+* `sort email`
+* `bin` +
+`sort name` +
+Sorts the recycle bin entries in alphabetical order of their name.
+// end::sort[]
+
+// tag::import[]
+=== Importing a VCard file(.vcf) to OneBook : `import`
+
+Import a VCard file from directory to OneBook +
+Format: `import [file directory]`
+
+****
+* Imports a VCard file from a valid directory.
+* If format in the file follows VCard format, it will import contacts to OneBook.
+* Notify the number of contacts that are succesfully imported.
+* Notify if there are duplicated contacts or if the contacts in the file have information that has invalid format.
+****
+
+Examples:
+
+* `import C:\Users\User\Desktop\contacts.vcf` (Windows)
+* `import C:\Users\User\Downloads\contacts.vcf` (Windows)
+* `import /Users/user/Downloads/contacts.vcf` (MAC OSX)
+* `import /Users/user/Desktop/contacts.vcf` (MAC OSX)
+// end::import[]
+
+// tag::export[]
+=== Exporting from OneBook to VCard file(.vcf) or CSV file(.csv) : `export`
+
+Create a VCard file or CSV File and export from OneBook to the file directory +
+Format: `export [file directory(including filename and file extension)]`
+[NOTE]
+====
+Export to VCard file if you intend to import into another application which uses the contact details. +
+Export to CSV file for easy reference to find contacts using Microsoft Excel.
+====
+****
+* Exports a VCard file to a valid directory.
+* The created file must end with VCard extension(.vcf) or CSV file(.csv).
+* The user can choose the name for the created file.
+****
+
+Examples:
+
+* `export C:\Users\User\Desktop\contacts.vcf` (Windows)
+* `export C:\Users\User\Downloads\OneBook.vcf` (Windows)
+* `export /Users/user/Downloads/contacts.vcf` (MAC OSX)
+* `export/Users/user/Desktop/OneBook.vcf` (MAC OSX)
+* `export C:\Users\User\Downloads\OneBook.csv` (Windows)
+* `export /Users/user/Downloads/contacts.csv` (MAC OSX)
+// end::export[]
+
+// tag::email[]
+=== Email to a person from Onebook contact list : `email`
+
+Emails to the person selected from Onebook contact list +
+Format: `email [Index]`
+
+****
+* Email to the person from the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The selected person's email address must not be empty.
+* The command will open user's desktop default mail application. Users need to sign in to the mail application if they havent before they can send an email to the recipent(selected person).
+****
+
+Examples:
+
+* `email 1`
+* `email 3`
+// end::email[]
+
+
+// tag::bin[]
+=== Recycle Bin : `bin`
+
+Shows a list of deleted persons. +
+Format: `bin`
+
+****
+* The listing will be replaced with recycle bin entries.
+* Upon usage of this command, the top left of the list will be replaced with *Bin* to indicate the list displayed is the recycle bin
+* When displaying Recycle Bin, `delete` *will still be able to delete contacts from OneBook*.
+****
+
+=== Restore entry from recycle bin : `restore`
+
+Restore the specified person from the bin to the address book. +
+Format: `restore INDEX, [MORE_INDEXES]`
+
+****
+* Restores the person at the specified `INDEX`.
+* The index refers to the index number shown in the bin listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* `restore` *will still be able to restore contacts from Recycle Bin* even if the current listing shown is the contacts listing.
+****
+
+Examples:
+
+* `bin` +
+`restore 2` +
+Restores the 2nd person in recycle bin to the address book. +
+
+=== Remove entry from recycle bin : `bindelete`
+
+Remove the specified person from the bin. +
+Format: `bindelete INDEX, [MORE_INDEXES]`
+
+****
+* Removes the person at the specified `INDEX`.
+* The index refers to the index number shown in the bin listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* `bindelete` *will still be able to delete entries from Recycle Bin* even if the current listing shown is the contacts listing.
+****
+
+Examples:
+
+* `bin` +
+`bindelete 2` +
+Removes the 2nd person in recycle bin. +
+
+=== Clearing all recycle bin entries : `binclear`
+
+Clears all entries from the recycle bin. +
+Format: `binclear`
+// end::bin[]
 
 === Exiting the program : `exit`
 
@@ -227,26 +432,86 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+//tag::backup[]
+=== Backup data
+
+OneBook will automatically create a backup copy whenever the application is started.
+
+If the application checks that the main data file is corrupted, it will load the backup file.
+
+If the backup file does not exist or is corrupted too, OneBook will start with a sample AddressBook data.
+
+//end::backup[]
+
+=== Import from CSV(.csv) files to OneBook : `import` [yellow]#*Coming in v2.0#
+
+Import a CSV file from directory to OneBook +
+Format: `import [file directory]`
+
+=== Email to a person from Onebook contact list  via user's default web browser: `email` [yellow]#*Coming in v2.0#
+
+Emails to the person selected from Onebook contact list  via user's default web browser +
+Format: `email [email website] [Index]`
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+*Q*: Why do I keep getting unknown command when typing a command? +
+*A*: The command typed is invalid. Refer to Command Summary section for all the commands.
+
+*Q*: After entering list command, why do I not get any contact list? +
+*A*: You might not have added at least one person to Onebook. Add at least one person to Onebook and try running the command again.
+
+*Q*: Why does it link to Windows mail or MACOS mailand not microsoft outlook when I type email command? +
+*A*: Your default mail application might be windows mail, not microsoft outlook. Go to settings to change your default mail application to your preference.
+
+*Q*: I have 500 contacts to import. When I use import command, only 490 contacts are imported. +
+*A*: You might have duplicated contacts in the list which are not imported.
+
+*Q*: How do I unfilter my currently displayed list? +
+*A*: Depending on which list you are in. In the contact list, enter `list` command. In the recycle bin, enter `bin` command.
+
+*Q*: How do I switch back to contact list after I switch to recycle bin? +
+*A*: Use the `list` command.
+
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
 * *Help* : `help`
+* *Mode* : `mode`
+* *Add* `add n/NAME p/PHONE_NUMBER b/BIRTHADAY e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 b/18-04-1995 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Clear* : `clear`
+* *Delete* : `delete INDEX, [MORE_INDEXES]` +
+e.g. `delete 3, 4, 5`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Find* : `find MAIN_KEYWORD KEYWORD [MORE_KEYWORDS]` +
+e.g. `find name James Jake` +
+e.g. `find phone 123456789`
+* *Import* : `import [file directory]` +
+e.g. `import C:\Users\User\Desktop\contacts.vcf` (Windows) +
+e.g. `import /Users/user/Downloads/contacts.vcf` (MAC OSX)
+* *Export* : `import [file directory]` +
+e.g. `export C:\Users\User\Desktop\contacts.vcf` (Windows) +
+e.g. `export /Users/user/Downloads/contacts.vcf` (MAC OSX) +
+e.g. `export C:\Users\User\Desktop\contacts.csv` (Windows) +
+e.g. `export /Users/user/Downloads/contacts.csv` (MAC OSX)
+* *Email* : `email INDEX` +
+e.g.`email 2`
+* *List* : `list`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Sort* : `sort KEYWORD` +
+e.g. `sort name` +
+e.g. `sort email`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Recycle Bin* : `bin`
+* *Restore* : `restore INDEX` +
+e.g. `restore 2, 3, 4`
+* *Bin Delete* : `bindelete INDEX` +
+e.g. `bindelete 2, 3`
+* *Clear Recycle Bin* : `binclear`

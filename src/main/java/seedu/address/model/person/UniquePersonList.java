@@ -1,7 +1,11 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.SortCommand.SORT_EMAIL;
+import static seedu.address.logic.commands.SortCommand.SORT_NAME;
 
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyAddressBookException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -48,6 +53,30 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
+    //@@author stan789
+    /**
+     * Sorts the list by type(name or email) in alphabetical order.
+     */
+    public void sort(String sortType) throws EmptyAddressBookException {
+        if (internalList.isEmpty()) {
+            throw new EmptyAddressBookException();
+        }
+
+        switch(sortType) {
+
+        case SORT_NAME:
+            internalList.sort(Comparator.comparing(p -> p.getName().toString().toLowerCase()));
+            break;
+
+        case SORT_EMAIL:
+            internalList.sort(Comparator.comparing(p -> p.getEmail().toString().toLowerCase()));
+            break;
+
+        default:
+        }
+
+    }
+
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
@@ -75,13 +104,13 @@ public class UniquePersonList implements Iterable<Person> {
      *
      * @throws PersonNotFoundException if no such person could be found in the list.
      */
-    public boolean remove(ReadOnlyPerson toRemove) throws PersonNotFoundException {
+    public ReadOnlyPerson remove(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         requireNonNull(toRemove);
         final boolean personFoundAndDeleted = internalList.remove(toRemove);
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
         }
-        return personFoundAndDeleted;
+        return toRemove;
     }
 
     public void setPersons(UniquePersonList replacement) {
@@ -102,6 +131,7 @@ public class UniquePersonList implements Iterable<Person> {
     public ObservableList<ReadOnlyPerson> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
+
 
     @Override
     public Iterator<Person> iterator() {

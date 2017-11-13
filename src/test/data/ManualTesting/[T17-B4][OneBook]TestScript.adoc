@@ -1,0 +1,61 @@
+= Test Script for Manual Testing
+:stylesDir: stylesheets
+
+== Loading the SampleData.xml file
+1. Locate the file directory of your `OneBook.jar`.
+2. Create a folder named `data` in the same directory as the `OneBook.jar`.
+3. Copy the `[T17-B4][OneBook]SampleData.xml` file to the `data` folder.
+4. Rename `[T17-B4][OneBook]SampleData.xml` to `addressbook.xml`.
+5. Run the `OneBook.jar` application.
+
+== Test Script
+[width="100%",cols="3*",options="header",]
+|=======================================================================
+|Function |Command |Expected Output
+|Export to VCard file |export C:\User\user\Desktop\OneBook.vcf |OneBook has been exported to OneBook file successfully.
+|Export to CSV file |export C:\User\user\Desktop\OneBook.csv |OneBook has been exported to OneBook file successfully.
+|Clear entire OneBook |clear |Application data has been reset!
+|Import to OneBook |import C:\User\user\Desktop\OneBook.vcf |20 contact/contacts have been imported successfully.
+|Show help window |help |Opened help window.
+|Add with all details |add n/John Doe p/98765432 b/02-01-1995 e/johnd@example.com a/311, Clementi Ave 2, #02-25 o/Apple Inc. r/Owe $10 t/friends t/owesMoney |New person added: John Doe Phone: 98765432 Birthday: 02-01-1995 Email: johnd@example.com Address: 311, Clementi Ave 2, #02-25 Organisation: Apple Inc. Remark: Owe $10 Tags: [owesMoney][friends]
+|Add with name only |add n/Darrin |New person added: Darrin Phone: ~ Birthday: ~ Email: ~ Address: ~ Organisation: ~ Remark: ~ Tags:
+|Switch color scheme | mode | New mode enabled.
+|Edit name |edit 1 n/Alex Tan | Edited Person: Alex Tan Phone: 87438807 Birthday: 02-01-1995 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Organisation: Apple Inc. Remark: Meet for dinner 12/11 6pm Nex Tags: [friends]
+|Edit all fields except name |edit 1 p/12345678 b/12-12-1996 a/Serangoon Street 20 o/Lipton r/Meet for lunch at NEX t/colleague |Edited Person: Alex Tan Phone: 12345678 Birthday: 12-12-1996 Email: alexyeoh@example.com Address: Serangoon Street 20 Organisation: Lipton Remark: Meet for lunch at NEX Tags: [colleague]
+|Undo last command |undo |Undo success!
+|Redo last command |redo |Redo success!
+|Find person by name |find name Lim | 2 persons listed!
+|Select person |select 1 |Selected Person: 1
+|Delete person |delete 1 | Deleted Person: Clara Lim Phone: 95451992 Birthday: 22-09-1995 Email: ClaraLim@yahoo.com Address: 13 Margaret Drive Organisation: Havanians Co. Remark: ~ Tags: [ChildhoodFriend]
+|List all persons |list | Listed all persons
+|Find person by email |find email johnd@example.com |1 persons listed!
+|Open email application with selected person as addressee | email 1 | Email open successful
+|List all persons |list | Listed all persons
+|Clear entire OneBook |clear |Application data has been reset!
+|Undo last command |undo |Undo success!
+|Sort by email |sort email |The list has been sorted.
+|Sort by name |sort name |The list has been sorted.
+|Delete multiple persons |delete 1, 2, 3, 4, 5, 6 |Deleted Person: Alex Tan Phone: 12345678 Birthday: 12-12-1996 Email: alexyeoh@example.com Address: Serangoon Street 20 Organisation: Lipton Remark: Meet for lunch at NEX Tags: [colleague]
+                                                   Deleted Person: Amy Yew Phone: 95021922 Birthday: 19-02-1995 Email: AmyYew@AmyY.com Address: ~ Organisation: Watsons Remark: ~ Tags: [Pharmicist]
+                                                   Deleted Person: Bernice Yu Phone: 99272758 Birthday: 02-02-1995 Email: berniceyu@example.com Address: Blk 30 Lorong 3 Serangoon Gardens, #07-18 Organisation: Bosch Ltd. Remark: Owe $50 Tags: [colleagues][friends]
+                                                   Deleted Person: Charlotte Oliveiro Phone: 93210283 Birthday: 02-03-1995 Email: charlotte@example.com Address: Blk 11 Ang Mo Kio Street 74, #11-04 Organisation: CIMB Ltd. Remark: Meet for lunch 5/10 12pm J8 Tags: [neighbours]
+                                                   Deleted Person: Darrin Phone: ~ Birthday: ~ Email: ~ Address: ~ Organisation: ~ Remark: ~ Tags:
+                                                   Deleted Person: David Li Phone: 91031282 Birthday: 02-04-1995 Email: lidavid@example.com Address: Blk 436 Serangoon Gardens Street 26, #16-43 Organisation: Dell Inc. Remark: Owe me $20 Tags: [Cousin]
+|Enter recycle bin |bin |Listed all deleted persons
+|Sort recycle bin by name |sort name |The list has been sorted.
+|Sort recycle bin by email |sort email |The list has been sorted.
+|Find person in recycle bin by phone number |find phone 95451992 |1 persons listed!
+|Restore person in recycle bin |restore 1 |Restored Person: Clara Lim Phone: 95451992 Birthday: 22-09-1995 Email: ClaraLim@yahoo.com Address: 13 Margaret Drive Organisation: Havanians Co. Remark: ~ Tags: [ChildhoodFriend]
+|Enter recycle bin |bin |Listed all deleted persons
+|Find person in recycle bin by organisation |find org lipton |1 persons listed!
+|Permanently delete person from OneBook |bindelete 1 |Deleted from Bin: Alex Tan Phone: 12345678 Birthday: 12-12-1996 Email: alexyeoh@example.com Address: Serangoon Street 20 Organisation: Lipton Remark: Meet for lunch at NEX Tags: [colleague]
+|Enter recycle bin |bin |Listed all deleted persons
+|Permanently delete multiple persons from OneBook |bindelete 1, 2 |Deleted from Bin: Amy Yew Phone: 95021922 Birthday: 19-02-1995 Email: AmyYew@AmyY.com Address: ~ Organisation: Watsons Remark: ~ Tags: [Pharmicist]
+                                                                   Deleted from Bin: Bernice Yu Phone: 99272758 Birthday: 02-02-1995 Email: berniceyu@example.com Address: Blk 30 Lorong 3 Serangoon Gardens, #07-18 Organisation: Bosch Ltd. Remark: Owe $50 Tags: [colleagues][friends]
+|Undo last command |undo |Undo success!
+|Restore multiple persons in recycle bin |restore 1, 2 |Restored Person: Amy Yew Phone: 95021922 Birthday: 19-02-1995 Email: AmyYew@AmyY.com Address: ~ Organisation: Watsons Remark: ~ Tags: [Pharmicist]
+                                                        Restored Person: Bernice Yu Phone: 99272758 Birthday: 02-02-1995 Email: berniceyu@example.com Address: Blk 30 Lorong 3 Serangoon Gardens, #07-18 Organisation: Bosch Ltd. Remark: Owe $50 Tags: [colleagues][friends]
+|Clear recycle bin |binclear |Recycle Bin has been cleared!
+|List all persons |list | Listed all persons
+|Exit OneBook |exit |(exits the program)
+|=======================================================================

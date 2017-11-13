@@ -13,6 +13,7 @@ public abstract class Command {
     protected Model model;
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
+    protected boolean binMode;
 
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
@@ -32,12 +33,14 @@ public abstract class Command {
      */
     public abstract CommandResult execute() throws CommandException;
 
+    //@@author frozventus
     /**
      * Provides any needed dependencies to the command.
      * Commands making use of any of these should override this method to gain
      * access to the dependencies.
      */
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, boolean binMode) {
         this.model = model;
+        this.binMode = binMode;
     }
 }

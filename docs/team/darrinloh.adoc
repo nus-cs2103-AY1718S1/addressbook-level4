@@ -1,0 +1,109 @@
+= Darrin Loh - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:repoURL: https://github.com/CS2103AUG2017-T17-B4/main
+
+== Project: OneBook
+OneBook is a desktop Address Book application. It uses a Graphical User Interface (GUI) but most of the interactions happen using Command Line Interface (CLI).
+
+OneBook is optimised for companies' usage. It is also suitable for general usage.
+
+OneBook allows users to easily import or export contacts, send emails conveniently and stores a database of contacts.
+
+*Code contributed*: [link:{repoURL}/blob/master/collated/main/darrinloh.md[Functional code]] [link:{repoURL}/blob/master/collated/test/darrinloh.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Backup OneBook
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It is important for OneBook to keep a backup copy of the main data file. In the case of accidentally corrupting the main file, we can ensure that there is no loss of data for the user and the user's data is safely stored in a backup file.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add command with optional fields
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addoptionalfields]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The user might not have all the details of the contact being added. By making the fields optional (excluding name), this will allow the user greater flexibility in using OneBook.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addoptionalfields]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Change Theme using Mode Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=modechange]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Changing of themes will enhance the user's experience and allow the user interface to be seemingly smoother for the user.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=modechange]
+
+#End of Extract#
+
+---
+
+
+=== Other contributions
+
+* Added a organisation field into OneBook (Pull request link:{repoURL}/pull/53[#53])
+* Reported bugs (https://github.com/CS2103AUG2017-T13-B1/main/issues/125[Project LISA #125])
+
+== Orbital Project: PayAlarm
+
+* Worked on an app with an SMS integrating feature. Completed the project with SQL, HTML, CSS. (https://github.com/darrinloh/payalarm-project[PayAlarm])

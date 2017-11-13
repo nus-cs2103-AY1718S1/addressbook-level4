@@ -11,9 +11,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Organisation;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -43,12 +46,37 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author Gideonfu
+    /**
+     * Parses {@code oneBasedIndex} into an {@code Index[]} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static Index[] parseDeleteIndex(String oneBasedIndex) throws IllegalValueException {
+        String[] parts = oneBasedIndex.split(",");
+        String[] trimmedIndex = new String[parts.length];
+        int[] trimmedIntIndex = new int[parts.length];
+
+        for (int i = 0; i < parts.length; i++) {
+            trimmedIndex[i] = parts[i].trim();
+            if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex[i])) {
+                throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            }
+        }
+
+        for (int i = 0; i < trimmedIndex.length; i++) {
+            trimmedIntIndex[i] = Integer.parseInt(trimmedIndex[i]);
+        }
+
+        return Index.arrayFromOneBased(trimmedIntIndex);
+    }
+    //@@author
+
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
-        requireNonNull(name);
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
     }
 
@@ -57,8 +85,15 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 
     /**
@@ -66,7 +101,6 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
         return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
     }
 
@@ -75,8 +109,25 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> organisation} into an {@code Optional<Organisation>}
+     * if {@code organisation} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Organisation> parseOrganisation(Optional<String> organisation) throws IllegalValueException {
+        return organisation.isPresent() ? Optional.of(new Organisation(organisation.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>}
+     * if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
     }
 
     /**

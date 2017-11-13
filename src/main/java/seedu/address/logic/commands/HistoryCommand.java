@@ -31,7 +31,7 @@ public class HistoryCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, boolean binMode) {
         requireNonNull(history);
         this.history = history;
     }

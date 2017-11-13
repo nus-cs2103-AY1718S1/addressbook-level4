@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- @@author frozventus -->
+<StackPane alignment="TOP_LEFT" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox fx:id="detailsPane" prefWidth="160.0">
+         <children>
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+              <items>
+                  <Label fx:id="nameHeader" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Name :">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="nameLarge">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></Label>
+              </items>
+            </SplitPane>
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+              <items>
+                  <Label fx:id="phoneHeader" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Phone :">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="phoneLarge">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></Label>
+              </items>
+            </SplitPane>
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+              <items>
+                  <Label fx:id="birthdayHeader" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Birthday :">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="birthdayLarge">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></Label>
+              </items>
+            </SplitPane>
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+              <items>
+                  <Label fx:id="emailHeader" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Email :">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="emailLarge">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></Label>
+              </items>
+            </SplitPane>
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+               <items>
+                  <Label fx:id="organisationHeader" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Organisation :">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="organisationLarge">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+               </items>
+            </SplitPane>
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+              <items>
+                  <Label fx:id="tagsHeader" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Tags :">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <FlowPane fx:id="tagsLarge" alignment="CENTER_LEFT">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></FlowPane>
+              </items>
+            </SplitPane>
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+              <items>
+                  <Label fx:id="remarkHeader" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Remarks :">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="remarkLarge">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></Label>
+              </items>
+            </SplitPane>
+         </children>
+      </VBox>
+   </children>
+</StackPane>

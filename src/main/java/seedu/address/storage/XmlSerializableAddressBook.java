@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +16,6 @@ import seedu.address.model.tag.Tag;
 /**
  * An Immutable AddressBook that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
 public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
     @XmlElement

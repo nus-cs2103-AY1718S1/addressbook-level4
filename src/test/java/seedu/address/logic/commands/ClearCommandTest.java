@@ -9,6 +9,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.RecycleBin;
 import seedu.address.model.UserPrefs;
 
 public class ClearCommandTest {
@@ -21,7 +22,7 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyAddressBook_success() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Model model = new ModelManager(getTypicalAddressBook(), new RecycleBin(), new UserPrefs());
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
     }
 
@@ -30,7 +31,7 @@ public class ClearCommandTest {
      */
     private ClearCommand prepareCommand(Model model) {
         ClearCommand command = new ClearCommand();
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), false);
         return command;
     }
 }

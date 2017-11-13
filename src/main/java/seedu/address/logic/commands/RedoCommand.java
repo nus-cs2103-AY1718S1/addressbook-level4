@@ -29,7 +29,7 @@ public class RedoCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack) {
+    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, boolean binMode) {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
     }

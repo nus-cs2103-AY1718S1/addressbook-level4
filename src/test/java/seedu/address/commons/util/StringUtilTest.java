@@ -107,9 +107,9 @@ public class StringUtilTest {
      *   - last word in sentence
      *   - middle word in sentence
      *   - matches multiple words
+     *   - query word matches part of a sentence word
      *
      * Possible scenarios returning false:
-     *   - query word matches part of a sentence word
      *   - sentence word matches part of the query word
      *
      * The test method below tries to verify all above with a reasonably low number of test cases.
@@ -122,8 +122,8 @@ public class StringUtilTest {
         assertFalse(StringUtil.containsWordIgnoreCase("", "abc")); // Boundary case
         assertFalse(StringUtil.containsWordIgnoreCase("    ", "123"));
 
-        // Matches a partial word only
-        assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bb")); // Sentence word bigger than query word
+        // Matches a partial word
+        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bb")); // Sentence word bigger than query word
         assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
 
         // Matches word in the sentence, different upper/lower case letters

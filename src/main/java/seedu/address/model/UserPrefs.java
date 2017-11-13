@@ -9,13 +9,32 @@ import seedu.address.commons.core.GuiSettings;
  */
 public class UserPrefs {
 
+    private static final String DEFAULT_THEME = "/view/DarkTheme.css";
+
     private GuiSettings guiSettings;
+
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String recycleBinFilePath = "data/recyclebin.xml";
+    private String addressBookName = "MyOneBook";
+    private String theme;
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
     }
+
+    //@@author darrinloh
+    public String getTheme() {
+        return theme == null ? DEFAULT_THEME : theme;
+    }
+
+    public void updateLastUsedThemeSetting(String theme) {
+        this.theme = theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+    //@@author
 
     public GuiSettings getGuiSettings() {
         return guiSettings == null ? new GuiSettings() : guiSettings;
@@ -58,6 +77,7 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
+                && Objects.equals(recycleBinFilePath, o.recycleBinFilePath)
                 && Objects.equals(addressBookName, o.addressBookName);
     }
 
@@ -71,6 +91,7 @@ public class UserPrefs {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
+        sb.append("\nRecycle bin data file location : " + recycleBinFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
         return sb.toString();
     }

@@ -17,6 +17,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -26,7 +27,7 @@ import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PHONE = "+651234";
+    private static final String INVALID_PHONE = "!651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
@@ -62,6 +63,35 @@ public class ParserUtilTest {
         // Leading and trailing whitespaces
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
     }
+
+    //@@author Gideonfu
+    @Test
+    public void parseDeleteIndex_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseDeleteIndex("10 a");
+    }
+
+    @Test
+    public void parseDeleteIndex_outOfRangeInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_INDEX);
+        ParserUtil.parseDeleteIndex(Long.toString(Integer.MAX_VALUE + 1));
+    }
+
+    @Test
+    public void parseDeleteIndex_validInput_success() throws Exception {
+        // No whitespaces
+        int[] indexes = new int[] {1};
+        assertTrue(Arrays.equals(Index.arrayFromOneBased(indexes), ParserUtil.parseDeleteIndex("1")));
+
+        // Leading and trailing whitespaces
+        assertTrue(Arrays.equals(Index.arrayFromOneBased(indexes), ParserUtil.parseDeleteIndex("  1  ")));
+
+        // Multiple index input
+        indexes = new int[] {1, 2};
+        assertTrue(Arrays.equals(Index.arrayFromOneBased(indexes), ParserUtil.parseDeleteIndex("1, 2")));
+    }
+    //@@author
 
     @Test
     public void parseName_null_throwsNullPointerException() throws Exception {

@@ -15,7 +15,7 @@ public class XmlFileStorage {
     /**
      * Saves the given addressbook data to the specified file.
      */
-    public static void saveDataToFile(File file, XmlSerializableAddressBook addressBook)
+    public static void saveDataToFile(File file, XmlSerializableAddressBookCombined addressBook)
             throws FileNotFoundException {
         try {
             XmlUtil.saveDataToFile(file, addressBook);
@@ -24,13 +24,16 @@ public class XmlFileStorage {
         }
     }
 
+    //@@author frozventus
     /**
      * Returns address book in the file or an empty address book
      */
-    public static XmlSerializableAddressBook loadDataFromSaveFile(File file) throws DataConversionException,
+    public static AddressBookData loadDataFromSaveFile(File file) throws DataConversionException,
                                                                             FileNotFoundException {
         try {
-            return XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
+            XmlSerializableAddressBookCombined data =
+                    XmlUtil.getDataFromFile(file, XmlSerializableAddressBookCombined.class);
+            return new AddressBookData(data.getAddressBook(), data.getRecycleBin());
         } catch (JAXBException e) {
             throw new DataConversionException(e);
         }

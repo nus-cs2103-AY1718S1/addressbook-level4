@@ -46,9 +46,23 @@ public class TestUtil {
     }
 
     /**
+     * Returns the last index of the person in the {@code model}'s bin list.
+     */
+    public static Index getLastIndexFromBin(Model model) {
+        return Index.fromOneBased(model.getRecycleBin().getPersonList().size());
+    }
+
+    /**
      * Returns the person in the {@code model}'s person list at {@code index}.
      */
     public static ReadOnlyPerson getPerson(Model model, Index index) {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
+    }
+
+    /**
+     * Returns the person in the {@code model}'s bin list at {@code index}.
+     */
+    public static ReadOnlyPerson getPersonFromBin(Model model, Index index) {
+        return model.getRecycleBin().getPersonList().get(index.getZeroBased());
     }
 }

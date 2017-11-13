@@ -22,6 +22,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.RecycleBin;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -36,7 +37,7 @@ public class SelectCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new RecycleBin(), new UserPrefs());
     }
 
     @Test
@@ -57,14 +58,14 @@ public class SelectCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showFirstPersonOnly(model);
+        showFirstPersonOnly(model, false);
 
         assertExecutionSuccess(INDEX_FIRST_PERSON);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_failure() {
-        showFirstPersonOnly(model);
+        showFirstPersonOnly(model, false);
 
         Index outOfBoundsIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
@@ -135,7 +136,7 @@ public class SelectCommandTest {
      */
     private SelectCommand prepareCommand(Index index) {
         SelectCommand selectCommand = new SelectCommand(index);
-        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack(), false);
         return selectCommand;
     }
 }

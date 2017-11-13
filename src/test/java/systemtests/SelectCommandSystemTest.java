@@ -3,6 +3,11 @@ package systemtests;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.BIRTHDAY_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.ORGANISATION_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
@@ -11,6 +16,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -52,6 +58,13 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: select the current selected card -> selected */
         assertCommandSuccess(command, middleIndex);
+
+        /* Case: Select a person without an address -> selected */
+        executeCommand(AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + BIRTHDAY_DESC_AMY
+                + EMAIL_DESC_AMY + ORGANISATION_DESC_AMY);
+        Index lastIndex = Index.fromOneBased(getModel().getFilteredPersonList().size());
+        command = SelectCommand.COMMAND_WORD + " " + lastIndex.getOneBased();
+        assertCommandSuccess(command, lastIndex);
 
         /* Case: filtered person list, select index within bounds of address book but out of bounds of person list
          * -> rejected

@@ -3,9 +3,9 @@ package systemtests;
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
+import static seedu.address.ui.AddressPanel.DEFAULT_PAGE;
+import static seedu.address.ui.AddressPanel.GOOGLE_SEARCH_URL_PREFIX;
+import static seedu.address.ui.AddressPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -22,7 +22,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
-import guitests.guihandles.BrowserPanelHandle;
+import guitests.guihandles.AddressPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
@@ -33,6 +33,7 @@ import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.BinListCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -66,7 +67,7 @@ public abstract class AddressBookSystemTest {
         testApp = setupHelper.setupApplication();
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
-        waitUntilBrowserLoaded(getBrowserPanel());
+        waitUntilBrowserLoaded(getAddressPanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -88,8 +89,8 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
+    public AddressPanelHandle getAddressPanel() {
+        return mainWindowHandle.getAddressPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -112,7 +113,7 @@ public abstract class AddressBookSystemTest {
 
         mainWindowHandle.getCommandBox().run(command);
 
-        waitUntilBrowserLoaded(getBrowserPanel());
+        //waitUntilBrowserLoaded(getAddressPanel());
     }
 
     /**
@@ -127,10 +128,28 @@ public abstract class AddressBookSystemTest {
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
     protected void showPersonsWithName(String keyword) {
-        executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
+        executeCommand(FindCommand.COMMAND_WORD + " " + FindCommand.KEYWORD_NAME + " " + keyword);
         assert getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size();
     }
 
+    //@@author frozventus
+    /**
+     * Displays all persons in the recycle bin.
+     */
+    protected void showAllPersonsInBin() {
+        executeCommand(BinListCommand.COMMAND_WORD);
+        assert getModel().getRecycleBin().getPersonList().size() == getModelWithBin().getFilteredPersonList().size();
+    }
+
+    /**
+     * Displays all persons in recycle bin with any parts of their names matching {@code keyword} (case-insensitive).
+     */
+    protected void showPersonsInBinWithName(String keyword) {
+        executeCommand(FindCommand.COMMAND_WORD + " " + FindCommand.KEYWORD_NAME + " " + keyword);
+        assert getModelWithBin().getFilteredPersonList().size() <= getModel().getRecycleBin().getPersonList().size();
+    }
+
+    //@@author
     /**
      * Selects the person at {@code index} of the displayed list.
      */
@@ -150,16 +169,34 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
+        assertEquals(expectedModel.getRecycleBin(), testApp.readStorageRecycleBin());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
     }
 
+    //@@author frozventus
     /**
-     * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
+     * {@code expectedResultMessage}, the model and storage contains the same person objects as {@code expectedModel}
+     * and the person list panel displays the persons in the model correctly.
+     * For use when displaying Recycle Bin
+     */
+    protected void assertApplicationDisplaysExpectedWithBin(String expectedCommandInput, String expectedResultMessage,
+                                                     Model expectedModel) {
+        assertEquals(expectedCommandInput, getCommandBox().getInput());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+        assertEquals(expectedModel, getModelWithBin());
+        assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
+        assertEquals(expectedModel.getRecycleBin(), testApp.readStorageRecycleBin());
+    }
+
+    //@@author
+    /**
+     * Calls {@code AddressPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        getBrowserPanel().rememberUrl();
+        getAddressPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
@@ -168,17 +205,16 @@ public abstract class AddressBookSystemTest {
     /**
      * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
      * of the previously selected person.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see AddressPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
-        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
     /**
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see AddressPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
@@ -190,18 +226,18 @@ public abstract class AddressBookSystemTest {
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
+        //assertEquals(expectedUrl, getAddressPanel().getLoadedUrl());
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
     /**
      * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see AddressPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
+
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
 
@@ -248,7 +284,7 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getAddressPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {
@@ -261,5 +297,13 @@ public abstract class AddressBookSystemTest {
      */
     protected Model getModel() {
         return testApp.getModel();
+    }
+
+    //@@ author frozventus
+    /**
+     * Returns a defensive copy of the current model in Bin configuration.
+     */
+    protected Model getModelWithBin() {
+        return testApp.getModelBinMode();
     }
 }

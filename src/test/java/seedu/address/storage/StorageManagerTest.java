@@ -4,6 +4,7 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalRecycleBin;
 
 import java.io.IOException;
 
@@ -16,6 +17,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.RecycleBin;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -39,6 +41,12 @@ public class StorageManagerTest {
         return testFolder.getRoot().getPath() + fileName;
     }
 
+    //@@author darrinloh
+    @Test
+    public void getUserPrefsFilePathTest() {
+        assertEquals(getTempFilePath("prefs"), storageManager.getUserPrefsFilePath());
+    }
+    //@@author
 
     @Test
     public void prefsReadSave() throws Exception {
@@ -62,10 +70,22 @@ public class StorageManagerTest {
          * More extensive testing of UserPref saving/reading is done in {@link XmlAddressBookStorageTest} class.
          */
         AddressBook original = getTypicalAddressBook();
-        storageManager.saveAddressBook(original);
-        ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
+        RecycleBin bin = getTypicalRecycleBin();
+        storageManager.saveAddressBook(new AddressBookData(original, bin));
+        ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get().getAddressBook();
+        ReadOnlyAddressBook retrievedBin = storageManager.readAddressBook().get().getRecycleBin();
         assertEquals(original, new AddressBook(retrieved));
+        assertEquals(bin, new RecycleBin(retrievedBin));
     }
+
+    //@@author darrinloh
+    @Test
+    public void backupAddressBookUrlTest() {
+        String expectedUrl = storageManager.getAddressBookFilePath() + "-backup.xml";
+        String actualUrl = storageManager.getBackUpAddressBookFilePath();
+        assertEquals(expectedUrl, actualUrl);
+    }
+    //@@author
 
     @Test
     public void getAddressBookFilePath() {
@@ -77,7 +97,8 @@ public class StorageManagerTest {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
                                              new JsonUserPrefsStorage("dummy"));
-        storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
+        storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBookData(new AddressBook(),
+                                                                                              new RecycleBin())));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
@@ -92,7 +113,7 @@ public class StorageManagerTest {
         }
 
         @Override
-        public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+        public void saveAddressBook(AddressBookData addressBook, String filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }

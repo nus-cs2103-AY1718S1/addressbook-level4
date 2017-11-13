@@ -15,6 +15,7 @@ public interface AddressBookStorage {
      * Returns the file path of the data file.
      */
     String getAddressBookFilePath();
+    String getBackUpAddressBookFilePath();
 
     /**
      * Returns AddressBook data as a {@link ReadOnlyAddressBook}.
@@ -22,23 +23,32 @@ public interface AddressBookStorage {
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
-    Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException;
+    Optional<AddressBookData> readAddressBook() throws DataConversionException, IOException;
 
     /**
      * @see #getAddressBookFilePath()
      */
-    Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException;
+    Optional<AddressBookData> readAddressBook(String filePath) throws DataConversionException, IOException;
 
     /**
-     * Saves the given {@link ReadOnlyAddressBook} to the storage.
+     * Returns AddressBook back up data as a {@link ReadOnlyAddressBook}.
+     *  Returns {@code Optional.empty()} if storage file is not found.
+     *  @throws DataConversionException if the data in storage is not in the expected format.
+     *  @throws IOException if there was any problem when reading from the stoage.
+     */
+    Optional<AddressBookData> readBackUpAddressBook() throws DataConversionException, IOException;
+
+    /**
+     * Saves the given {@link AddressBookData} to the storage.
      * @param addressBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+    void saveAddressBook(AddressBookData addressBook) throws IOException;
 
     /**
-     * @see #saveAddressBook(ReadOnlyAddressBook)
+     * @see #saveAddressBook(AddressBookData)
      */
-    void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
+    void saveAddressBook(AddressBookData addressBook, String filePath)
+            throws IOException;
 
 }

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= OneBook - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T17-B4/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017 T17-B4`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -146,6 +146,7 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
+// tag::ui[]
 === UI component
 
 image::UiClassDiagram.png[width="800"]
@@ -153,15 +154,18 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `PersonDisplayCard`, `StatusBarFooter`, `AddressPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+
+The color scheme of the `UI` component is determined using the css files `DarkTheme.css` and `LightTheme.css`.
 
 The `UI` component,
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
+// end::ui[]
 
 === Logic component
 
@@ -194,21 +198,28 @@ _Figure 2.4.1 : Structure of the Model Component_
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the Address Book data and Recycle Bin data.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that is derived between the Address Book data and the Recycle Bin data depending
+on the list being displayed. This data can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
+// tag::storage[]
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
+
+image::AddressBookDataClassDiagram.png[width="400"]
+_Figure 2.5.2 : Structure of Data Storage_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the `AddressBookData` object of OneBook, which holds both the address book data and recycle bin data, in xml format and read it back.
+* can save a backup copy of the xml data that will be loaded in situations where the main xml data is corrupted.
+// end::storage[]
 
 === Common classes
 
@@ -364,6 +375,217 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+//tag::addoptionalfields[]
+=== Add Contact with optional fields
+The `add` function is implemented by `AddCommand`. The `add` function has been enhanced to allow the user to add certain fields into the contact. For the fields that the user does not want to input, no prefixes for the field will be entered. The class `AddCommandParser` will interpret it as a null value and assign the string '-' to the following field. This will represent that the field is not assigned.
+
+The `name` field is compulsory.
+
+The fields that are not compulsory are `phone`, `birthday`, `email`, `address`, `organisation`, and `tags`.
+//end::addoptionalfields[]
+
+// tag::find[]
+=== Find mechanism
+
+The `find` function is implemented by `FindCommand`, which updates the list of displayed contacts. `FindCommandParser` checks that the KEYWORDS entered are valid, then passes a predicate from `ContainsKeywordsPredicate` into `FindCommand`. +
+
+Given below is the Sequence Diagram that shows how the `find` operation works: +
+
+image::FindPersonDiagram.png[width="800"]
+_Figure 3.6.1 : Sequence Diagram for find operation_
+
+The designated fields allowed are: +
+
+* `name` +
+* `address` +
+* `email` +
+* `phone number` +
+* `birthday month` +
+* `organisation` +
+
+**Aspect:** Command keywords. +
+**Alternative 1 (current choice):**  Allow user to search each field using specific keywords. +
+**Pros:** More utility is given to users as they can find their contacts using specific keywords for the individual fields. +
+**Cons:** Too many main keywords for users to remember. +
+**Alternative 2:** Allow user to search for all fields without specific keywords. +
+**Pros:** No extra keywords to remember. +
+**Cons:** Search may end up overlapping with other unwanted fields, giving a less precise search.
+// end::find[]
+
+// tag::sort[]
+=== Sort mechanism
+
+The `sort` function is implemented by the `SortCommand`, which sorts the OneBook contact list by name or email alphabetically.
+There is a `SortCommandParser` which checks for the KEYWORD which must be either name or email.
+When a user wants to sort the address book by name, the logic manager will execute the command by parsing the command to the other classes accordingly as shown in the figure below.
+
+image::SortPersonDiagram.png[width="800"]
+_Figure 3.7.1 : Sequence Diagram for sort operation_
+
+When SortCommand is executed, it will call executeSort() in the ModelManager. The executeSort() will call executeSort in Addressbook and finally, sort() method will be called in the UniquePersonList will sort the AddressBook alphabetically.
+
+==== Design considerations
+**Aspect:** What fields to be sorted. +
+**Alternative 1 (current choice):**  allows user to sort name and email only. +
+**Pros:** Sorting by name or email is the most common, so users do not need to remember the many sorting options. +
+**Cons:** Users do not have the freedom to select what fields to be sorted according to. +
+**Alternative 2:** Allow users to sort all fields. +
+**Pros:** Users have the freedom to select what fields to be sorted according to. +
+**Cons:** Not useful as most users sort by name only.
+// end::sort[]
+
+// tag::delete[]
+=== Delete mechanism
+
+The `delete` function is implemented by `DeleteCommand`. The function has been enhanced to allow multiple deletions at once. `DeleteCommandParser` returns a `DeleteCommand` with an array of indexes which are taken from the user input. `DeleteCommand` then executes the deletion of the respective persons.
+
+The indexes given by the user must be separated by a comma for multiple deletions.
+// end::delete[]
+
+// tag::import[]
+=== Import mechanism
+
+The `import` function is implemented by `ImportCommand`, which imports the contacts in a VCard file to Onebook. It imports a VCard file from a valid directory which the user need to input after keying "import" command in the command box. Inputting a directory is easier than asking the user to put the VCard file in a specific directory.
+The format in the VCard file is checked to ensure that it is valid before importing it to OneBook. The fields that are currently imported from VCard file are: +
+
+* `name` +
+* `address` +
+* `email` +
+* `phone number` +
+* `birthday` +
+* `organisation` +
+* `remarks`
+
+The `ImportCommandParser` will check if the file directory exist and whether the extension is correct. Then it will  create a new `ImportCommand`.
+When ImportCommand is executed, it will call importFile() in Model as shown in the diagram below.
+
+image::ImportDiagram.png[width="800"]
+_Figure 3.8.1 : Sequence Diagram for import operation_
+
+The Model Manager will then call getPersonFromFile() in ImportVCardFile. It will return an ArrayList of Person which will be added to OneBook using addPerson() in Model Manager. There is an importAnalysis object to track the number of contacts that are successfully imported from the file as well as track if there are duplicated contacts or information in contacts with invalid format.
+
+==== Design considerations
+**Aspect:** Which file formats to allow to import. +
+**Alternative 1 (current choice):** Only allow VCard file. +
+**Pros:** VCard file has a format for each field, which makes importing easier. Some file formats such as csv does not have common heading standards which make import difficult. +
+**Cons:** Users can only import VCard file. +
+**Alternative 2:** Allow all contact file formats. +
+**Pros:** Users can import contacts in the different file formats that have. +
+**Cons:** Difficult to implement since file formats such as csv does not have common heading standards.
+// end::import[]
+
+// tag::export[]
+=== Export mechanism
+
+The `export` function is implemented by `ExportCommand`, which exports the contacts in Onebook to a VCard file. It exports a VCard file to a valid directory which the user need to input after keying "export" command in the command box. Inputting a directory is easier for the user so user would know where to find the exported file.
+The fields that are currently exported to VCard file are: +
+
+* `name` +
+* `address` +
+* `email` +
+* `phone number` +
+* `birthday` +
+* `organisation` +
+* `remarks`
+
+The `ExportCommandParser` will check if the file directory exist and whether the extension is correct. Then it will  create a new `ExportCommand`.
+When ExportCommand is executed, it will call exportFile() in Model.
+
+image::ExportDiagram.png[width="800"]
+_Figure 3.9.1 : Sequence Diagram for export operation_
+
+The model manager will then call either createCsvFile() in ExportCsvFile if the file extension is .csv or createVCardFile() if the file extension is .vcf.
+ExportCsvFile will create a .csv file with the contacts information from OneBook and createVCardFile() will create .vcf file with contacts information from OneBook. The file will be created in the file directory specified by the user.
+
+==== Design considerations
+**Aspect:** Which file formats to allow to export. +
+**Alternative 1 (current choice):** Only allow VCard file and csv file. +
+**Pros:** csv file and VCard file format are the most common file formats for contacts which makes it easy for users to import to other contact applications. +
+**Cons:** Users can only export VCard file or csv file. +
+**Alternative 2:** Allow user to export to all other file formats. +
+**Pros:** Users can choose which file format they want to export as. +
+**Cons:** Difficult to implement there are alot of file formats to implement for export.
+// end::export[]
+
+// tag::email[]
+=== Email mechanism
+The email function is implemented by the EmailCommand, which will fill in the email address in the compose message in user’s desktop default application.
+Users will key in email index where index refers to the index of the person listed in the PersonListPanel which they wish to email to. It will be parse through AddressBookParser and EmailCommandParser to extract the index. A new EmailCommand will be created and the EmailCommand open user’s desktop default mail application.
+
+==== Design considerations
+**Aspect:** How should the email work. +
+**Alternative 1 (current choice):** opened via user’s default desktop application. +
+**Pros:** It is easy to implement. Most operating system such as Windows or MacOS have a email application installed. +
+**Cons:** Users need to make sure the email application such as Microsoft outlook is their desktop default application. Users need a email application on their desktop/computers. +
+**Alternative 2:** email directly from the command box using Java Mail API. +
+**Pros:** Users do not need to get out of java application to send an email. +
+**Cons:** If users need to type long messages, it will be problematic as the command box is not long enough to preview the whole message at once.
+// end::email[]
+
+
+// tag::bin[]
+=== Recycle bin
+The recycle bin is implemented by having OneBook store the list of person deleted using a separate list from the main address book list. +
+This list is implemented via extending `AddressBook` class.
+
+To support display of `RecycleBin`, two separate `ObservableList<ReadOnlyPerson>` are stored in `Model`. One of the list contains the `AddressBook` contacts,
+while the other contains the `RecycleBin` contacts. The displayed `ObservableList<ReadOnlyPerson>` switches between the two depending on which mode is being displayed.
+This allows for `find` and `sort` to retain compability between regular display and bin display. +
+The diagram belows shows the sequence of execution when `bin` is executed.
+
+image::BinListDiagram.png[width="800"]
+_Figure 3.11.1 Sequence Diagram for bin operation_
+
+The `RecycleBin` is one of the components of `AddressBookData` that is saved in the `addressbool.xml` file for storage. When `AddressBookData` is loaded,
+data for `AddressBook` and `RecycleBin` are both loaded.
+
+==== Design considerations
+
+**Aspect:** Implementation of `RecycleBin` +
+**Alternative 1 (current choice):** Add a new type of list `RecycleBin` extending from `AddressBook` +
+**Pros:** We will be able to store additional information in the list. Existing methods for `AddressBook` can still be used. +
+**Cons:** Increases workload as a new class is added. Testing of newly introduced class is also required. +
+**Alternative 2:** Just reuse `AddressBook` to store a separate list for `RecycleBin` +
+**Pros:** Does not require alot of code changes. +
+**Cons:** Unable to add additional fields to `RecycleBin` entry. Increases coupling between `RecycleBin` and `AddressBook` which is undesired. +
+
+---
+
+**Aspect:** Implementation of commands for `RecycleBin` +
+**Alternative 1 (current choice):** Add a new group of commands specifically for `RecycleBin` usage with `bin` as the first part of each command. +
+**Pros:** Less mixup in command purpose. Commands will look more organized. Existing command naming can be reused. +
+**Cons:** A new parser will have to added for each command that determines the command is for `RecycleBin`. +
+**Alternative 2:** Add a new command using unused command words for each feature of `RecycleBin` usage. +
+**Pros:** Commands will not have `bin` in front of each of them, making them less repetitive.. +
+**Cons:** Commands will be easily mixed up. Purpose of command will be unintuitive, `clear` may mean to clear recycle bin or to clear address book. A separate command name for clearing recycle bin need to be thought of (clear can no longer be used). +
+// end::bin[]
+
+//tag::backup[]
+=== Backup AddressBook
+When OneBook is launched, the system will look for the main data file to open.
+
+If the main data file is able to open, it will create a backup copy of the main file from the `StorageManager`.
+
+There is no implementation for the backup function. It will happen on every start up of the application.
+//end::backup[]
+
+//tag::modechange[]
+=== Change mode mechanism
+The `mode` function is implemented by `ModeCommand`,
+which will change the background theme by replacing the current CSS and HTML files with new files.
+
+The diagram below shows the sequence of execution when `mode` is executed.
+
+image::modeCommand.png[width="800"]
+
+_Figure 3.13.1 Sequence Diagram for mode operation_
+
+ModeCommand will invoke a `post(ModeChangeRequestEvent)` method which will be read by `EventsCentre`.
+
+The `MainWindow` will process the request and change the CSS and HTML files accordingly.
+//end::modechange[]
+
+
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -469,251 +691,6 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
@@ -723,23 +700,93 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
+|`* * *` |user |be able to sort my Address Book |find my contacts easily
+
+|`* * *` |user |undo my action |undo what I have done accidentally
+
+|`* * *` |user |redo my action |redo what I have undone
+
 |`* * *` |user |add a new person |
+
+|`* * *` |user |merge duplicate contacts |have a cleaner Address Book
+
+|`* * *` |user |edit contacts |update contact information
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |have a confirmation dialog box for deleting |keep my contacts safe
+
+|`* *` |user |save the birthdays of my contacts |check my contact's birthday
+
+|`* *` |user |have link:#night-mode[night mode] available |use it comfortably at night
+
+|`* *` |user |have a shortcut for removing contacts |easily remove contacts
+
+|`* *` |user |be able to group my contacts |find grouped contacts easily
+
+|`* *` |user |store multiple numbers for a single person |store numbers for friends with multiple numbers
+
+|`* *` |user |change colour scheme/theme |customise the Address Book to my liking
+
+|`* *` |new user |import all my contacts from VCard File |easily transfer contacts
+
+|`* *` |user |export all my contacts to VCard File |easily transfer contacts to my phone or google contacts
+
+|`* *` |user |add a profile picture for my contacts |easily identify my contacts
+
+|`* *` |user |add a user login for access to my Address Book |prevent unauthorised access by other people
+
+|`* *` |user |add notes to my contact |store additional information
+
+|`* *` |user |change my display fonts |customise my Address Book to my liking
+
+|`* *` |user |find suggested contacts |easily add contacts that I do not have within my social circle
+
+|`* *` |user |have a recently deleted folder |restore contacts that I have deleted accidentally
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`*` |user |have a section for frequent contacts |easily access frequent contacts
 
-{More to be added}
+|`*` |user |have reminders for up-coming birthdays |know whose birthday is coming up
+
+|`*` |user |delete multiple contacts at once |clear contacts more efficiently
+
+|`*` |user |have cloud integration |access contacts from any device
+
+|`*` |user |have link:#quick-access-widgets[quick access widgets] |access Address Book quickly
+
+|`*` |user |know the date of adding a contact |know when I added that contact
+
+
+|=======================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `OneBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a person
+2.  OneBook adds the person
+
+*Extensions*
+
+[none]
+* 1a. The entered person particulars are invalid.
++
+Use case ends.
+
+[none]
+** 1a1. OneBook shows an error message.
++
+Use case ends.
 
 [discrete]
 === Use case: Delete person
@@ -747,9 +794,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  OneBook shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  OneBook deletes the person
 +
 Use case ends.
 
@@ -763,11 +810,168 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. OneBook shows an error message.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Find User by name
+
+*MSS*
+
+1.  User requests to find person by name
+2.  OneBook list the person that corresponds to the name.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+*  1a. The given person name is invalid.
++
+Use case ends.
+
+[none]
+*  1a1. OneBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Help
+
+*MSS*
+
+1. User requests to see usage instructions
+2. OneBook displays list of usage instructions
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear OneBook data
+
+*MSS*
+
+1. User requests to clear OneBook
+2. OneBook clears all the data stored
++
+Use case ends.
+
+[discrete]
+=== Use case: Restore person
+
+*MSS*
+
+1.  User requests to see the recycle bin
+2.  OneBook shows the recycle bin
+3.  User requests to restore a specific person from the bin
+4.  OneBook restores the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The bin is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. OneBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The chosen person is already inside the contact list
++
+[none]
+** 3b1. OneBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Delete recycle bin entry
+
+*MSS*
+
+1.  User requests to see the recycle bin
+2.  OneBook shows the recycle bin
+3.  User requests to delete a specific person in the recycle bin
+4.  OneBook deletes the person from the recycle bin
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The recycle bin is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. OneBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The chosen person is already inside the contact list
++
+[none]
+** 3b1. OneBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Clear recycle bin data
+
+*MSS*
+
+1. User requests to clear recycle bin
+2. OneBook clears the recycle bin
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort person in OneBook
+
+*MSS*
+
+1. User requests to sort OneBook by name
+2. OneBook sorts contacts by name in alphabetical order.
++
+Use case ends.
+
+[discrete]
+=== Use case: Import contacts to OneBook
+
+*MSS*
+
+1. User requests to import file containing contacts to OneBook.
+2. OneBook imports the contacts from file.
++
+Use case ends.
+
+[discrete]
+=== Use case: Export contacts from OneBook
+
+*MSS*
+
+1. User requests to export contacts from OneBook to a file.
+2. OneBook exports the contacts in OneBook to file.
++
+Use case ends.
+
+[discrete]
+=== Use case: Email person
+
+*MSS*
+
+1. User requests to email a specific person in OneBook.
+2. OneBook opens user's desktop default mail application with email address filled.
++
+Use case ends.
+[discrete]
 
 [appendix]
 == Non Functional Requirements
@@ -775,11 +979,21 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  User should have a basic knowledge of how to use a computer.
+.  It should not be difficult to add more features in the future.
+.  Address Book should be allocated sufficient memory to store contacts
+.  Address Book should be easy to use for new users.
+.  User should be able to navigate the Address Book easily.
+.  Address Book should have a backup in case contacts are accidentally cleared.
+.  Address Book should be secure so that private information will not be leaked.
+.  Address Book should respond fast enough to user inputs.
 
 {More to be added}
 
 [appendix]
 == Glossary
+
+
 
 [[mainstream-os]]
 Mainstream OS
@@ -795,19 +1009,23 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
+[[address-book]]
+Address Book
 
-*Product Name*
+....
+A virtual book used for storing entries of people, including their details
+....
 
-Author: ...
+[[night-mode]]
+Night mode
 
-Pros:
+....
+Address Book is dimmed so that the application will not be too glaring in an environment with less light
+....
 
-* ...
-* ...
+[[quick-access-widgets]]
+Quick access widgets
 
-Cons:
-
-* ...
-* ...
+....
+Widgets provide quick access to information without requiring you to open the application
+....

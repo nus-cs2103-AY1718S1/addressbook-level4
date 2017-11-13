@@ -1,0 +1,138 @@
+= Guok Enjie Stanley - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:repoURL: https://github.com/CS2103AUG2017-T17-B4/main
+
+== Project: OneBook
+OneBook is a desktop Address Book application. It uses a Graphical User Interface (GUI) but most of the interactions happen using Command Line Interface (CLI).
+OneBook is optimized for companies' usage. It is also suitable for general usage.
+OneBook allows users to easily import and export contacts, send emails conveniently and stores a database of contacts.
+
+*Code contributed*: [link:https://github.com/CS2103AUG2017-T17-B4/main/blob/master/collated/main/stan789.md[Functional code]] [link:https://github.com/CS2103AUG2017-T17-B4/main/blob/master/collated/test/stan789.md[Test code]]
+
+=== Enhancement Added: Sort
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+* When adding contacts to OneBook, the contacts are messy as there is no order in which the contacts are organised.
+
+* Users might want the contact list to be more organised and sorting by name or email makes it easier to browse the list.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Import
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=import]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+* Adding alot of contacts at once might be very troublesome and time-consuming for users by using the add command.
+* Allows users to import a VCard file which contains a list of contacts that are export for another contact application as such outlook.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=import]
+
+#End of Extract#
+
+---
+=== Enhancement Added: Export
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+* Some users might want to use the contact list in OneBook for other contact application.
+
+* Some users might not have OneBook application on their current desktop. This is where exporting to csv format helps as users can quickly access their contacts from Microsoft Excel.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Email
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+* When sending email to one of the person in OneBook's contact list, it might be troublesome to copy and paste the email address when composing a new email.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+
+=== Other contributions
+
+* Design and add application icon for OneBook. (link:{repoURL}/commit/e83218389346f34983358269497972a10c840ceb[Commit link])
+* Reported bugs (https://github.com/CS2103AUG2017-W15-B3/main/issues/101[ConnectUs #101],
+https://github.com/CS2103AUG2017-W15-B3/main/issues/96[ConnectUs #96])
+

@@ -114,6 +114,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
      * Returns true if the selected {@code PersonCard} is different from the value remembered by the most recent
      * {@code rememberSelectedPersonCard()} call.
      */
+
     public boolean isSelectedPersonCardChanged() {
         List<PersonCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 

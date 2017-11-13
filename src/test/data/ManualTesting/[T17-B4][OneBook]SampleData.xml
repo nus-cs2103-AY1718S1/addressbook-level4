@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <addressBook>
+        <persons>
+            <name>Alex Yeoh</name>
+            <phone>87438807</phone>
+            <birthday>02-01-1995</birthday>
+            <email>alexyeoh@example.com</email>
+            <address>Blk 30 Geylang Street 29, #06-40</address>
+            <organisation>Apple Inc.</organisation>
+            <remark>Meet for dinner 12/11 6pm Nex</remark>
+            <tagged>friends</tagged>
+        </persons>
+        <persons>
+            <name>Bernice Yu</name>
+            <phone>99272758</phone>
+            <birthday>02-02-1995</birthday>
+            <email>berniceyu@example.com</email>
+            <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+            <organisation>Bosch Ltd.</organisation>
+            <remark>Owe $50</remark>
+            <tagged>colleagues</tagged>
+            <tagged>friends</tagged>
+        </persons>
+        <persons>
+            <name>Charlotte Oliveiro</name>
+            <phone>93210283</phone>
+            <birthday>02-03-1995</birthday>
+            <email>charlotte@example.com</email>
+            <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+            <organisation>CIMB Ltd.</organisation>
+            <remark>Meet for lunch 5/10 12pm J8</remark>
+            <tagged>neighbours</tagged>
+        </persons>
+        <persons>
+            <name>David Li</name>
+            <phone>91031282</phone>
+            <birthday>02-04-1995</birthday>
+            <email>lidavid@example.com</email>
+            <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+            <organisation>Dell Inc.</organisation>
+            <remark>Owe me $20</remark>
+            <tagged>Cousin</tagged>
+        </persons>
+        <persons>
+            <name>Irfan Ibrahim</name>
+            <phone>92492021</phone>
+            <birthday>02-05-1995</birthday>
+            <email>irfan@example.com</email>
+            <address>Blk 47 Tampines Street 20, #17-35</address>
+            <organisation>IBM Ltd.</organisation>
+            <remark>Return his calculator</remark>
+            <tagged>classmates</tagged>
+        </persons>
+        <persons>
+            <name>Ken Wong</name>
+            <phone>91234552</phone>
+            <birthday>05-03-1991</birthday>
+            <email>kenwongm@gmail.com</email>
+            <address>311 Punggol Way,#02-25</address>
+            <organisation>Google</organisation>
+            <remark>~</remark>
+            <tagged>swimmer</tagged>
+        </persons>
+        <persons>
+            <name>Henry Ang</name>
+            <phone>91919191</phone>
+            <birthday>02-02-1995</birthday>
+            <email>coolhenry@henry.com</email>
+            <address>Hougang Ave 3</address>
+            <organisation>NUS</organisation>
+            <remark>Owes him a drink</remark>
+            <tagged>CS2103T</tagged>
+        </persons>
+        <persons>
+            <name>Stanley</name>
+            <phone>81920492</phone>
+            <birthday>01-02-1995</birthday>
+            <email>Stanley@stanley.com</email>
+            <address>Choa Chu Kang</address>
+            <organisation>~</organisation>
+            <remark>Needs his help with bootcamp</remark>
+            <tagged>CS2103T</tagged>
+        </persons>
+        <persons>
+            <name>Gideon</name>
+            <phone>98821000</phone>
+            <birthday>10-05-1995</birthday>
+            <email>Gideon@gideon.com</email>
+            <address>Yio Chu Kang</address>
+            <organisation>~</organisation>
+            <remark>Dota on Sunday Evening 9pm</remark>
+            <tagged>CS2103T</tagged>
+        </persons>
+        <persons>
+            <name>Emil Koh</name>
+            <phone>90021567</phone>
+            <birthday>08-01-1995</birthday>
+            <email>Email@emil.com</email>
+            <address>Upper Serangoon</address>
+            <organisation>Emil Pte Ltd</organisation>
+            <remark>~</remark>
+            <tagged>CS2101</tagged>
+        </persons>
+        <persons>
+            <name>Sam Ge</name>
+            <phone>91029000</phone>
+            <birthday>~</birthday>
+            <email>SamGe@nus.edu.sg</email>
+            <address>~</address>
+            <organisation>NUS</organisation>
+            <remark>Consultation on 4pm Friday</remark>
+            <tagged>Professor</tagged>
+        </persons>
+        <persons>
+            <name>Eldon Ng</name>
+            <phone>97281001</phone>
+            <birthday>23-10-1995</birthday>
+            <email>ElLovesPokemon@gmail.com</email>
+            <address>402 Sembawang Way</address>
+            <organisation>~</organisation>
+            <remark>~</remark>
+            <tagged>NUS</tagged>
+        </persons>
+        <persons>
+            <name>Clara Lim</name>
+            <phone>95451992</phone>
+            <birthday>22-09-1995</birthday>
+            <email>ClaraLim@yahoo.com</email>
+            <address>13 Margaret Drive</address>
+            <organisation>Havanians Co.</organisation>
+            <remark>~</remark>
+            <tagged>ChildhoodFriend</tagged>
+        </persons>
+        <persons>
+            <name>Timothy Koo</name>
+            <phone>91028226</phone>
+            <birthday>14-09-1989</birthday>
+            <email>timothy@example.com</email>
+            <address>~</address>
+            <organisation>Bally Co.</organisation>
+            <remark>Collect my wallet on Saturday morning</remark>
+            <tagged>Salesman</tagged>
+        </persons>
+        <persons>
+            <name>Jacob Lim</name>
+            <phone>90028765</phone>
+            <birthday>10-10-1994</birthday>
+            <email>Jacob@jj.com</email>
+            <address>~</address>
+            <organisation>ATeam</organisation>
+            <remark>Collate findings on Monday</remark>
+            <tagged>Researcher</tagged>
+        </persons>
+        <persons>
+            <name>Uncle Johnson</name>
+            <phone>81126002</phone>
+            <birthday>02-01-1980</birthday>
+            <email>Johnjohn@example.com</email>
+            <address>~</address>
+            <organisation>NTUC</organisation>
+            <remark>~</remark>
+            <tagged>Uncle</tagged>
+        </persons>
+        <persons>
+            <name>Kim Jong San</name>
+            <phone>91162007</phone>
+            <birthday>07-10-1990</birthday>
+            <email>Kimmy@korean.com</email>
+            <address>UTown</address>
+            <organisation>Innisfree</organisation>
+            <remark>~</remark>
+            <tagged>bestie</tagged>
+        </persons>
+        <persons>
+            <name>Hitlor Soo</name>
+            <phone>95551000</phone>
+            <birthday>10-05-1991</birthday>
+            <email>Hitlor@gmail.com</email>
+            <address>Grange Road</address>
+            <organisation>President of German Society</organisation>
+            <remark>~</remark>
+            <tagged>NUS</tagged>
+        </persons>
+        <persons>
+            <name>Amy Yew</name>
+            <phone>95021922</phone>
+            <birthday>19-02-1995</birthday>
+            <email>AmyYew@AmyY.com</email>
+            <address>~</address>
+            <organisation>Watsons</organisation>
+            <remark>~</remark>
+            <tagged>Pharmicist</tagged>
+        </persons>
+        <persons>
+            <name>Joey Soo</name>
+            <phone>94562222</phone>
+            <birthday>05-10-1995</birthday>
+            <email>JoJo1995@yahoo.com</email>
+            <address>Blk 19 Lorong 1 Toa Payoh #01-20</address>
+            <organisation>LiHo</organisation>
+            <remark>~</remark>
+            <tagged>Cousin</tagged>
+        </persons>
+        <tags>bestie</tags>
+        <tags>Professor</tags>
+        <tags>sick</tags>
+        <tags>Masterball</tags>
+        <tags>CS2101</tags>
+        <tags>mac</tags>
+        <tags>CS2103</tags>
+        <tags>CS1010</tags>
+        <tags>Researcher</tags>
+        <tags>dota</tags>
+        <tags>CS2103T</tags>
+        <tags>ChildhoodFriend</tags>
+        <tags>Salesman</tags>
+        <tags>Uncle</tags>
+        <tags>Meanie</tags>
+        <tags>Pharmicist</tags>
+        <tags>loves</tags>
+        <tags>Wasted</tags>
+        <tags>Cousin</tags>
+        <tags>pokedex</tags>
+        <tags>ugly</tags>
+        <tags>neighbours</tags>
+        <tags>swimmer</tags>
+        <tags>completed</tags>
+        <tags>Student</tags>
+        <tags>prof</tags>
+        <tags>NUS</tags>
+        <tags>friends</tags>
+        <tags>addict</tags>
+        <tags>colleagues</tags>
+        <tags>classmates</tags>
+        <tags>family</tags>
+    </addressBook>
+    <recycleBin/>
+</addressbook>

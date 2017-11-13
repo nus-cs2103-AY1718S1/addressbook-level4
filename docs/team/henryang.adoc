@@ -1,0 +1,110 @@
+= Henry Ang Tien Hock - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:repoURL: https://github.com/CS2103AUG2017-T17-B4/main
+
+== Project: OneBook
+OneBook is a desktop Address Book application. It uses a Graphical User Interface (GUI) but most of the interactions happen using Command Line Interface (CLI).
+
+OneBook is optimized for companies' usage. It is also suitable for general usage.
+
+OneBook allows users to easily import and export contacts, send emails conveniently and stores a database of contacts.
+
+*Code contributed*: [link:{repoURL}/blob/master/collated/main/frozventus.md[Functional code]] [link:{repoURL}/blob/master/collated/test/frozventus.md[Test code]]
+
+=== Enhancement Added: Recycle Bin
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=bin]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Accidentally deleting contacts can be a major problem for companies expecially if it is an important contact.
+The `undo` function is sometimes not suitable for use due to reasons such as:
+
+* Many commands to undo.
+* Application has already been closed and restarted, hence clearing the undo/redo stack.
+
+The `restore` command allows users to selectively restore deleted contacts. +
+The `bindelete` and `binclear` commands allow users to manage their Recycle Bin to reduce clutter.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=bin]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Modify UI to display contact details.
+
+==== External behavior
+
+New Ui
+
+image::Ui.png[width="790"]
+
+==== Justification
+
+The original UI has a large amount of spaced used for a browser display panel of a Google Search of the selected contact's name. +
+This does not serve much useful purpose while taking a large amount of space. +
+To better make use of the space, all details except name, phone and tags of the contacts are stripped from the contact display list on the side.
+The details are then only displayed when the person are selected from the list. The browser panel is also now made to display
+Google Maps address of the selected contact instead.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=ui]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Modify Storage to save `AddressBookData` instead of `ReadOnlyAddressBook` in xml format
+
+==== External Behaviour
+
+The storage file `addressbook.xml` holds the data of `AddressBookData`, which contains data of both the `AddressBook` and `RecycleBin`.
+
+==== Justification
+
+The original version of Storage only allows storage of one copy of `ReadOnlyAddressBook`. This makes it impossible to store the data
+of `RecycleBin`, causing `RecycleBin` data to be lost upon closing the application.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=storage]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Added Birthday field into contacts (Pull requests link:{repoURL}/pull/23[#23])
+* Setting up project repository (Pull requests link:{repoURL}/pull/1[#1], link:{repoURL}/pull/2[#2], link:{repoURL}/pull/3[#3])
+* Reported bugs (Issues https://github.com/CS2103AUG2017-T17-B2/main/issues/170[MedNus #170], https://github.com/CS2103AUG2017-T17-B2/main/issues/172[MedNus #172],
+https://github.com/CS2103AUG2017-T17-B2/main/issues/174[MedNus #174])
+
+== Project: TickList
+
+Ticklist is a to-do-list application for Android, completed as part of http://nusskylab-dev.comp.nus.edu.sg/[Orbital] together with https://github.com/DarrenCzen[DarrenCzen]. +
+The repository can be found here: https://github.com/FrozVentus/TickList[TickList].

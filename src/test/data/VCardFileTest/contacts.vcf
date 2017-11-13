@@ -1,0 +1,11 @@
+BEGIN:VCARD
+VERSION:4.0
+N:Yam;Alex;;;
+FN:Alex Yam
+EMAIL:alexyam@hotmail.com
+ADR:;311 Clementi Ave 2;#02-25;;;;
+TEL:98765432
+BDAY:1991-05-15
+CATEGORIES:swimmer,biker
+ORG:NUS
+END:VCARD

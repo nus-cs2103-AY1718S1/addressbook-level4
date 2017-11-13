@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+
+<!-- @@author frozventus -->
+<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <VBox fx:id="addressPane" prefHeight="200.0" prefWidth="100.0">
+      <children>
+         <SplitPane dividerPositions="0.5" maxHeight="100.0" minHeight="100.0" prefHeight="100.0" prefWidth="200.0">
+            <items>
+               <Label fx:id="addressHeader" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" text="Address :">
+                  <padding>
+                     <Insets left="5.0" />
+                  </padding></Label>
+               <Label fx:id="addressLarge">
+                  <padding>
+                     <Insets left="5.0" />
+                  </padding></Label>
+            </items>
+         </SplitPane>
+        <WebView fx:id="browser" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="ALWAYS" />
+      </children>
+   </VBox>
+</StackPane>

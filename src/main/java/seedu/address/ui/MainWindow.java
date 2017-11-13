@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -17,7 +18,11 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.commands.DisplayBinEvent;
+import seedu.address.commons.events.commands.DisplayListFilteredEvent;
+import seedu.address.commons.events.commands.DisplayListResetEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ModeChangeRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -29,24 +34,27 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
+    public static final String DARK_MODE = "/view/DarkTheme.css";
+    public static final String LIGHT_MODE = "/view/LightTheme.css";
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
+    private static final int CURRENT_THEME = 1;
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
-
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private AddressPanel addressPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private PersonDisplayCard personDisplayCard;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane addressPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -63,6 +71,15 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private StackPane detailsPlaceholder;
+
+    @FXML
+    private StackPane notesPlaceholder;
+
+    @FXML
+    private Label listName;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -77,6 +94,7 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
+        setWindowDefaultTheme(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
@@ -122,12 +140,13 @@ public class MainWindow extends UiPart<Region> {
         });
     }
 
+    //@@author frozventus
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        addressPanel = new AddressPanel(prefs);
+        addressPlaceholder.getChildren().add(addressPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -140,8 +159,12 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        personDisplayCard = new PersonDisplayCard();
+        detailsPlaceholder.getChildren().add(personDisplayCard.getRoot());
     }
 
+    //@@author
     void hide() {
         primaryStage.hide();
     }
@@ -150,6 +173,49 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setTitle(appTitle);
     }
 
+    //@@author darrinloh
+    /**
+     * Changes the Html document after input by user
+     */
+    private void changeHtml() {
+        String theme = getCurrentThemeSetting();
+        addressPanel.setDefaultPage(theme);
+    }
+
+    /**
+     * Changes the Css style sheet after input by user
+     */
+    private void changeCss() {
+        String theme = getCurrentThemeSetting();
+        if (theme.contains(DARK_MODE)) {
+            getRoot().getStylesheets().remove(DARK_MODE);
+            getRoot().getStylesheets().add(LIGHT_MODE);
+            prefs.setTheme(LIGHT_MODE);
+        } else {
+            getRoot().getStylesheets().remove(LIGHT_MODE);
+            getRoot().getStylesheets().add(DARK_MODE);
+            prefs.setTheme(DARK_MODE);
+        }
+    }
+    //@@author
+
+    //@@author frozventus
+    private void setListDisplay() {
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
+    private void switchListDisplay() {
+        logic.setListDisplay();
+        listName.textProperty().setValue("List");
+    }
+
+    private void switchBinDisplay() {
+        logic.setBinDisplay();
+        listName.textProperty().setValue("Bin");
+    }
+
+    //@@author
     /**
      * Sets the given image as the icon of the main window.
      * @param iconSource e.g. {@code "/images/help_icon.png"}
@@ -158,6 +224,13 @@ public class MainWindow extends UiPart<Region> {
         FxViewUtil.setStageIcon(primaryStage, iconSource);
     }
 
+    /**
+     * Sets the default theme based on user preferences.
+     * @param prefs
+     */
+    private void setWindowDefaultTheme(UserPrefs prefs) {
+        getRoot().getStylesheets().add(prefs.getTheme());
+    }
     /**
      * Sets the default size based on user preferences.
      */
@@ -182,6 +255,16 @@ public class MainWindow extends UiPart<Region> {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
+
+    //@@author darrinloh
+    /**
+     * Returns the current theme of the main Window.
+     */
+    String getCurrentThemeSetting() {
+        return getRoot().getStylesheets().get(CURRENT_THEME);
+    }
+    //@@author
+
 
     /**
      * Opens the help window.
@@ -209,12 +292,54 @@ public class MainWindow extends UiPart<Region> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        addressPanel.freeResources();
     }
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author frozventus
+    @Subscribe
+    private void handleDisplayListFilteredEvent(DisplayListFilteredEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (listName.textProperty().get().equals("List")) {
+            listName.textProperty().setValue("Filtered List");
+        } else if (listName.textProperty().get().equals("Bin")) {
+            listName.textProperty().setValue("Filtered Bin");
+        }
+    }
+
+    @Subscribe
+    private void handleDisplayListResetEvent(DisplayListResetEvent event) {
+        if (listName.textProperty().get().equals("Bin") || listName.textProperty().get().equals("Filtered Bin")) {
+            switchListDisplay();
+            setListDisplay();
+        }
+        if (listName.textProperty().get().equals("Filtered List")) {
+            listName.textProperty().setValue("List");
+        }
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    }
+
+    @Subscribe
+    private void handleDisplayBinEvent(DisplayBinEvent event) {
+        if (listName.textProperty().get().equals("Filtered List") || listName.textProperty().get().equals("List")) {
+            switchBinDisplay();
+            setListDisplay();
+        }
+        if (listName.textProperty().get().equals("Filtered Bin")) {
+            listName.textProperty().setValue("Bin");
+        }
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    }
+
+    //@@author darrinloh
+    @Subscribe
+    private void handleChangeModeRequestEvent(ModeChangeRequestEvent event) {
+        changeHtml();
+        changeCss();
     }
 }

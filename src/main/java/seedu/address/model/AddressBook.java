@@ -14,6 +14,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyAddressBookException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -24,8 +25,8 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniquePersonList persons;
-    private final UniqueTagList tags;
+    protected final UniquePersonList persons;
+    protected final UniqueTagList tags;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -72,6 +73,15 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
+    }
+
+    //@@author stan789
+    /**
+     * Sorts the list by type(name or email) in alphabetical order.
+     */
+
+    public void executeSort(String sortType) throws EmptyAddressBookException {
+        persons.sort(sortType);
     }
 
     //// person-level operations
@@ -140,7 +150,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  - points to a Tag object in the master list
      *  @see #syncMasterTagListWith(Person)
      */
-    private void syncMasterTagListWith(UniquePersonList persons) {
+    protected void syncMasterTagListWith(UniquePersonList persons) {
         persons.forEach(this::syncMasterTagListWith);
     }
 
@@ -148,9 +158,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
-    public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
-            return true;
+    public ReadOnlyPerson removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
+        ReadOnlyPerson deletedPerson = persons.remove(key);
+        if (deletedPerson != null) {
+            return deletedPerson;
         } else {
             throw new PersonNotFoundException();
         }

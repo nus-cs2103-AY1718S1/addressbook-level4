@@ -23,9 +23,9 @@ public class WebViewUtil {
     }
 
     /**
-     * If the {@code browserPanelHandle}'s {@code WebView} is loading, sleeps the thread till it is successfully loaded.
+     * If the {@code addressPanelHandle}'s {@code WebView} is loading, sleeps the thread till it is successfully loaded.
      */
-    public static void waitUntilBrowserLoaded(BrowserPanelHandle browserPanelHandle) {
-        new GuiRobot().waitForEvent(browserPanelHandle::isLoaded);
+    public static void waitUntilBrowserLoaded(AddressPanelHandle addressPanelHandle) {
+        new GuiRobot().waitForEvent(addressPanelHandle::isLoaded);
     }
 }
