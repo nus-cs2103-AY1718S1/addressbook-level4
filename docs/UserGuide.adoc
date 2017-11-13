@@ -165,6 +165,17 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Listing entered commands : `history`
+
+Synonyms/Aliases for the command: `h`, `past` +
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `history` / `h` / `past
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
@@ -345,34 +356,6 @@ Deletes the 2nd event in Sales Navigator.
 `de 1` +
 Deletes the 1st event in the results of the `find` command.
 
-=== Locating events by name: `eventfind`
-
-`Since v1.2` +
-Synonyms/Aliases for the command: `findevent`, `fe`, `ef` +
-Finds events whose titles contain any of the given keywords. +
-Format: `eventfind KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The search will not account for apostrophes. e.g searching `Bob` will not match `Bob's birthday`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the title is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `cs2103 midterm` will
-return `Submission for CS2103 Week 9`, `CS2106 Midterm`
-****
-
-Examples:
-
-* `ef Bob's` +
-Returns `Bob's Birthday` and `Party at Bob's`
-* `ef Birthday` +
-Returns any event having titles that contain `Birthday`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
 
 === Listing all persons : `listpersons`
 
@@ -471,6 +454,29 @@ Format: `note [PERSON] [STRING]`
 Examples:
 * `note John Doe Remember to call him once every day otherwise he will question your commitment.`
 
+=== Locating events by name: `eventfind`
+
+`Coming in v2.0` +
+Synonyms/Aliases for the command: `findevent`, `fe`, `ef` +
+Finds events whose titles contain any of the given keywords. +
+Format: `eventfind KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The search will not account for apostrophes. e.g searching `Bob` will not match `Bob's birthday`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the title is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `cs2103 midterm` will
+return `Submission for CS2103 Week 9`, `CS2106 Midterm`
+****
+
+Examples:
+
+* `ef Bob's` +
+Returns `Bob's Birthday` and `Party at Bob's`
+* `ef Birthday` +
+Returns any event having titles that contain `Birthday`
 
 === View all persons with a specific tag : `tag`
 
@@ -538,11 +544,6 @@ If the setting is last set to enabled/disabled:
 
 // end::timetablesettings[]
 
-=== Listing entered commands : `history`
-
-Synonyms/Aliases for the command: `h`, `past` +
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history` / `h` / `past
 
 === App opens at startup of user's OS command: `startup`
 
