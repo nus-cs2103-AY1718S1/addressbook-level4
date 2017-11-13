@@ -10,7 +10,7 @@ This portfolio shows the contributions Aw Wen Hao has done for the development o
 == ConTag
 ConTag is an efficient and feature-packed desktop address book application for the most demanding business users and busiest frequent travellers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/main/17navasaw.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/test/17navasaw.md[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/main/17navasaw.md[Functional code]][https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/test/17navasaw.md[Test code]] +
 
 === Enhancement Added: Locating a person’s address
 

@@ -3,6 +3,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+== ConTag
+
 ConTag is an efficient and feature-packed desktop address book application for the most demanding business users and busiest frequent travellers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/main/CT15.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/test/CT15.md[Test code]]
