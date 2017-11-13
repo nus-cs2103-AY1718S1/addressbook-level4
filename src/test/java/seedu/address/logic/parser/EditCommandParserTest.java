@@ -34,8 +34,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.persons.EditCommand;
+import seedu.address.logic.commands.persons.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -65,7 +65,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_invalidPreamble_failure() {
+    public void parse_invalidPreamble_failure() throws Exception {
         // negative index
         assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
 

@@ -35,6 +35,7 @@ public class PersonCardTest extends GuiUnitTest {
             personWithTags.setAddress(ALICE.getAddress());
             personWithTags.setEmail(ALICE.getEmail());
             personWithTags.setPhone(ALICE.getPhone());
+            personWithTags.setBirthday(ALICE.getBirthday());
             personWithTags.setTags(ALICE.getTags());
         });
         assertCardDisplay(personCard, personWithTags, 2);
@@ -51,9 +52,6 @@ public class PersonCardTest extends GuiUnitTest {
 
         // same object -> returns true
         assertTrue(personCard.equals(personCard));
-
-        // null -> returns false
-        assertFalse(personCard.equals(null));
 
         // different types -> returns false
         assertFalse(personCard.equals(0));

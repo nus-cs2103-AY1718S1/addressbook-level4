@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class ArgumentTokenizer {
 
+    private static final String QUOTE_REGEX = "\"";
+
     /**
      * Tokenizes an arguments string and returns an {@code ArgumentMultimap} object that maps prefixes to their
      * respective argument values. Only the given prefixes will be recognized in the arguments string.
@@ -26,6 +28,23 @@ public class ArgumentTokenizer {
         return extractArguments(argsString, positions);
     }
 
+    //@@author raisa2010
+    /**
+     * Returns the part of the {@code argsString} that is unquoted to prevent tokenization of prefixes intended to be
+     * in the description. If the argsString contains no quotes then the entire string is returned.
+     * @param argsString Arguments string of the form: {@code "preamble" <prefix>value <prefix>value ...} or
+     *                   Arguments string of the form: {@code preamble <prefix>value <prefix>value ...}
+     * @return           The part of the {@code argsString} that is unquoted.
+     */
+    private static String extractUnquotedArgsString(String argsString) {
+        if (argsString.indexOf(QUOTE_REGEX) == argsString.lastIndexOf(QUOTE_REGEX)) {
+            return argsString;
+        }
+        String[] unquotedArgsString = argsString.split(QUOTE_REGEX);
+        return (unquotedArgsString.length == 2) ? "" : unquotedArgsString[2];
+    }
+
+    //@@author
     /**
      * Finds all zero-based prefix positions in the given arguments string.
      *
@@ -72,9 +91,11 @@ public class ArgumentTokenizer {
      * {@code fromIndex} = 0, this method returns 5.
      */
     private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
-        int prefixIndex = argsString.indexOf(" " + prefix, fromIndex);
+        String unquotedArgsString = extractUnquotedArgsString(argsString);
+        int lengthOfQuotedString = argsString.length() - unquotedArgsString.length();
+        int prefixIndex = unquotedArgsString.indexOf(" " + prefix, fromIndex);
         return prefixIndex == -1 ? -1
-                : prefixIndex + 1; // +1 as offset for whitespace
+                : prefixIndex + 1 + lengthOfQuotedString; // +1 as offset for whitespace
     }
 
     /**
@@ -86,7 +107,8 @@ public class ArgumentTokenizer {
      * @param prefixPositions Zero-based positions of all prefixes in {@code argsString}
      * @return                ArgumentMultimap object that maps prefixes to their arguments
      */
-    private static ArgumentMultimap extractArguments(String argsString, List<PrefixPosition> prefixPositions) {
+    private static ArgumentMultimap extractArguments(String argsString,
+                                                     List<PrefixPosition> prefixPositions) {
 
         // Sort by start position
         prefixPositions.sort((prefix1, prefix2) -> prefix1.getStartPosition() - prefix2.getStartPosition());

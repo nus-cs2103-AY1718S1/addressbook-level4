@@ -8,7 +8,10 @@ import java.util.stream.Collectors;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.TaskCardHandle;
+import guitests.guihandles.TaskListPanelHandle;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -39,6 +42,14 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedTask}.
+     */
+    public static void assertCardDisplaysTask(ReadOnlyTask expectedTask, TaskCardHandle actualCard) {
+        assertEquals(expectedTask.getDescription().taskDescription, actualCard.getDescription());
+        assertEquals(expectedTask.getDeadline().toString(), actualCard.getDeadline());
+    }
+
+    /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
      */
@@ -55,13 +66,39 @@ public class GuiTestAssert {
     public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyPerson> persons) {
         assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyPerson[0]));
     }
+    //@@author tby1994
+    /**
+     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
+     * in the correct order.
+     */
+    public static void assertTaskListMatching(TaskListPanelHandle taskListPanelHandle, ReadOnlyTask... tasks) {
+        for (int i = 0; i < tasks.length; i++) {
+            assertCardDisplaysTask(tasks[i], taskListPanelHandle.getTaskCardHandle(i));
+        }
+    }
 
+    /**
+     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
+     * in the correct order.
+     */
+    public static void assertTaskListMatching(TaskListPanelHandle taskListPanelHandle, List<ReadOnlyTask> tasks) {
+        assertTaskListMatching(taskListPanelHandle, tasks.toArray(new ReadOnlyTask[0]));
+    }
+    //@@author
     /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
      */
     public static void assertListSize(PersonListPanelHandle personListPanelHandle, int size) {
         int numberOfPeople = personListPanelHandle.getListSize();
         assertEquals(size, numberOfPeople);
+    }
+
+    /**
+     * Asserts the size of the list in {@code taskListPanelHandle} equals to {@code size}.
+     */
+    public static void assertTaskListSize(TaskListPanelHandle taskListPanelHandle, int size) {
+        int numberOfTasks = taskListPanelHandle.getListSize();
+        assertEquals(size, numberOfTasks);
     }
 
     /**

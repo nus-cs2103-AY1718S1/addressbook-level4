@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.TextFields;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -33,6 +35,8 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+        // binds command box to list of commands for autocompletion of input text
+        TextFields.bindAutoCompletion(commandTextField, CommandList.COMMANDS);
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
@@ -100,21 +104,24 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleCommandInputChanged() {
+        boolean commandIsInvalid;
         try {
+            commandIsInvalid = false;
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
             historySnapshot.next();
             // process result of the command
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, commandIsInvalid));
 
         } catch (CommandException | ParseException e) {
+            commandIsInvalid = true;
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage()));
+            raise(new NewResultAvailableEvent(e.getMessage(), commandIsInvalid));
         }
     }
 

@@ -1,0 +1,142 @@
+= Tang Bo Yang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Mobilize
+Mobilize is a organizing and planning desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B3/main/blob/master/collated/main/tby1994.md[Functional code]] [https://github.com/CS2103AUG2017-T11-B3/main/blob/master/collated/test/tby1994.md[Test code]]
+
+
+=== Enhancement Added: switch
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=switch]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With the integration of address book and task manager, users are required to memorize many commands. User would need to type a longer command keyword such as: `addtask` and `addperson`.
+
+Hence, adding switch command mode feature allows user to remember less commands. It will shorten the command keywords from `addtask` and `addperson` to just `add`.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=switch]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: find task
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With many tasks to the application, it is hard to browse through each task to find the target task
+
+Hence, with find task feature, user can easily search for the target task
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: select task
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=select]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The task tag feature allows user to include contacts that are involved in the task.
+
+Hence, with the select task feature, when user selects the task select task feature will auto search for the contacts who are involved in the task.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=select]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: list task
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=list]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+After user conduct a search for task, the user the user can view back the whole task list with `list` feature.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=list]
+
+#End of Extract#
+
+---
+
+=== Possible idea
+
+One possible idea is to include notification for task deadline. User will be notified if the deadline is on the day itself. Notification will be shown when user opens Mobilize.
+
+This feature can remind the user about the task deadline.
+
+---
+=== Other contributions
+
+* Updated the GUI for command mode(Pull request https://github.com/CS2103AUG2017-T11-B3/main/pull/114[#114])
+* Updated the GUI for task tags(Pull request https://github.com/CS2103AUG2017-T11-B3/main/pull/100[#100])
+* Updated the GUI for task manager(Pull request https://github.com/CS2103AUG2017-T11-B3/main/pull/60[#60])
+* Added some GUI test files for the team to conduct system tests(Pull request https://github.com/CS2103AUG2017-T11-B3/main/pull/60[#60])

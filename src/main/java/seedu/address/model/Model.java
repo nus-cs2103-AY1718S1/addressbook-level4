@@ -1,11 +1,18 @@
 package seedu.address.model;
 
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * The API of the Model component.
@@ -13,6 +20,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<ReadOnlyTask> PREDICATE_SHOW_ALL_TASKS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -25,6 +35,16 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    //@@author tpq95
+    /** Delete tag of given person */
+    void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
+            DuplicatePersonException, TagNotFoundException;
+    //@@author
+
+    /** Updates tags of a given person */
+    void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags)
+            throws PersonNotFoundException, DuplicatePersonException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -45,4 +65,38 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /** Adds the given task */
+    void addTask(ReadOnlyTask task) throws IllegalValueException;
+    //@@author eryao95
+    void deleteTask(ReadOnlyTask target) throws TaskNotFoundException;
+    //@@author
+    /**
+     * Replaces the given task {@code target} with {@code editedTask}.
+     *
+     * @throws DuplicateTaskException if updating the task's details causes the person to be equivalent to
+     *      another existing person in the list.
+     * @throws TaskNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
+            throws DuplicateTaskException, TaskNotFoundException;
+
+    void updateTaskTags(ReadOnlyTask task, Set<Tag> newTags)
+        throws DuplicateTaskException, TaskNotFoundException;
+
+    /** Returns an unmodifiable view of the filtered person list */
+    ObservableList<ReadOnlyTask> getFilteredTaskList();
+
+    /**
+     * Updates the filter of the filtered task list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
+    //@@author tby1994
+    /**Change the current command mode*/
+    void changeCommandMode(String mode) throws IllegalValueException;
+
+    /**Returns the current command mode*/
+    CommandMode getCommandMode();
+
+    //@@author
 }

@@ -21,6 +21,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -38,6 +39,7 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Model model;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -47,6 +49,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane browserPlaceholder;
+
+    @FXML
+    private StackPane taskListPanelPlaceHolder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -63,12 +68,19 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
-    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+    @FXML
+    private StackPane calendarPlaceholder;
+
+    @FXML
+    private StackPane commandModeStatusbarPlaceholder;
+
+    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic, Model model) {
         super(FXML);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.model = model;
         this.config = config;
         this.prefs = prefs;
 
@@ -121,13 +133,23 @@ public class MainWindow extends UiPart<Region> {
             }
         });
     }
-
+    //@@author tby1994
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        CalendarPanel calendarPanel = new CalendarPanel(logic, model);
+        calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
+
+        CommandModeStatusBarFooter commandModeStatusBarFooter =
+            new CommandModeStatusBarFooter(model);
+        commandModeStatusbarPlaceholder.getChildren().add(commandModeStatusBarFooter.getRoot());
+
+        TaskListPanel taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
+        taskListPanelPlaceHolder.getChildren().add(taskListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -141,7 +163,7 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
-
+    //@@author
     void hide() {
         primaryStage.hide();
     }

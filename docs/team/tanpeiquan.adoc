@@ -1,0 +1,89 @@
+= Tan Pei Quan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Mobilize
+Mobilize is a organizing and planning desktop application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B3/main/blob/master/collated/main/tpq95.md[Functional code]] [https://github.com/CS2103AUG2017-T11-B3/main/blob/master/collated/test/tpq95.md[Test code]]
+
+=== Enhancement Added: Detag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=detag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With many contacts added to the application, when one specific tag is no longer in used, it will be troublesome for the users to remove tag from the contacts individually.
+
+Hence, by specifying the tag to be removed and the contacts having the tag, users can determine multiple contacts to be removed with the tag. The command requires specifying of contacts so that it can function in the situation where the tag is currently still using but only certain group of contacts does not need it.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=detag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Calendar
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With many tasks and contacts added to the application, it is useful to have a calendar interface for the user to interact and view the overview of upcoming important events.
+
+Hence, with the marking of dates with colour on the calendar, users can easily identify what is upcoming and be more prepared.
+
+The returning of tasks list and contacts list afflicted with the date clicked is also important as users can easily find out what is happening on that specific date with just one click. Thus, saving users' time and effort to conduct `find` on contacts list and tasks list.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Commandline interface for calendar and adding of deadlines/birthdays directly through the calendar
+
+==== Justification
+
+As Mobilize is designed to be a Commandline interface application, interaction with the calendar should also be done with just the commandline.
+
+==== Possible idea
+
+One possible idea is the addition of `Calendar` mode to the current `AddressBook` and `TaskManager` mode. Under this mode, possible commands should include controlling the display month and year, controlling the current selected date with the arrow keys and adding of deadlines or birthday directly through the calendar.
+
+This idea allows for more convenience offered to the users when interacting with the application and will definitely save time and effort to organise and look through the upcoming events.
+
+=== Other contributions
+
+* Updated the GUI color scheme (Pull request https://github.com/CS2103AUG2017-T11-B3/main/pull/18[#18])
+* Added colour for task cards and sorting of task cards list and person cards list (Pull request https://github.com/CS2103AUG2017-T11-B3/main/pull/101[#101])
+* Helped reported bugs for other team's product (Issue https://github.com/CS2103AUG2017-W13-B4/main/issues/256[#256])
