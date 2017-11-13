@@ -63,13 +63,13 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL... a/ADDRESS [t/TAG] [w/WebLink]...`
 
 [TIP]
 A person can have any number of tags, email and weblinks (including 0)
-phone number, address, tags and weblinks are optional when adding a new contact
+email, phone number, address, tags and weblinks are optional when adding a new contact
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com e/betsy@workemail.com a/Newgate Prison p/1234567 t/criminal w/facebook.com`
-* `add n/LeBron James e/kingjames@nba.com
+* `add n/LeBron James
 // end::add[]
 
 === Listing all persons : `list`
@@ -100,14 +100,14 @@ Push nil entries to the back of the list.
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [t/TAG]... [w/WEBLINK]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [+t/TAG] [-t/TAG] or [clearTag/]... [w/WEBLINK]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, emails or weblinks, the existing valus of each component of the person will be removed i.e adding of these components is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it. Similarly, you can use `e/` and `w/` for emails and weblinks respectively.
+* You can remove all the person's tags by typing `clearTag/` without specifying any tags after it. Similarly, you can use `e/` and `w/` for emails and weblinks respectively.
 ****
 
 Examples:
@@ -122,10 +122,12 @@ For more about editing tags, read `Edit Individual Tag` below.
 ==== Edit individual Tag
 
 Use `+t/` or `-t/` in edit command to add or remove tag to specific person with corresponding index.
+Use `cleartag/` to clear all existing tags under the person.
 
 Examples:
 *`edit 1 +t/happy` adds a `happy` tag to the 1st person with his/her existing tags.
 *`edit 1 -/sad` removes the `sad` tag from the list of tags tagged to the 1st person.
+*`edit 1 clearTag/` clears all the tags under the 1st person.
 // end::editIndividualTag[]
 
 // tag::tagDelete[]
@@ -331,7 +333,7 @@ More information
 // end::updateUserPerson[]
 
 // tag::shareCommand[]
-=== Generate an add command for your contact: 'share'
+=== Generate an add command for your contact: `share`
 
 Generates an add command for the User Person in the AddressBook. The User Person is modified via the `update`
 command or via the User Profile Window (Press F2 in the main window). +
@@ -386,7 +388,11 @@ Contact must be selected before selecting the buttons.
 === Changing Theme
 
 Allows the user to switch between 1-dark, 2-darker, 3-light and 4-lighter theme.
-Format: `ChangeToTheme Index`
+Format: `changeToTheme Index`
+
+Example:
+*`changeToTheme 2`
+The socialbook should change to a darker theme.
 
 ****
 * The index refers to the corresponding number of the theme as shown above.
@@ -451,8 +457,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *tagDelete* : `tagDelete TAG` +
 e.g. `tagDelete friend`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [+t/TAG] [-t/TAG]...` +
+e.g. `edit 2 n/James Lee e/jameslee@example.com +t/friend`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
@@ -467,6 +473,7 @@ e.g `update n/James Leong p/92334311 e/james@gmail.com w/https://www.facebook.co
 * *Share* : `share`
 * *Redo* : `redo`
 * *Web* : `web facebook`
+* *Change Theme* : `changeToTheme 1, 2, 3, or 4`
 
 // tag::commandaliases[]
 === Alternative Command Aliases
@@ -483,5 +490,6 @@ e.g `update n/James Leong p/92334311 e/james@gmail.com w/https://www.facebook.co
 * *Undo* : `undo` or `u`
 * *Redo* : `redo` or `r`
 * *Web* : `web` or `w`
+* *ChangeTheme*: `changeToTheme` or `ct`
 
 // end::commandaliases[]

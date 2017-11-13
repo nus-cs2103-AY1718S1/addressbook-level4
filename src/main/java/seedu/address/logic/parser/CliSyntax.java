@@ -14,7 +14,7 @@ public class CliSyntax {
     //@@author zhoukai07
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_ADD_TAG = new Prefix("+t/");
-    public static final Prefix PREFIX_CLEAR_TAG = new Prefix("ClearTag");
+    public static final Prefix PREFIX_CLEAR_TAG = new Prefix("clearTag");
     public static final Prefix PREFIX_REM_TAG = new Prefix("-t/");
     //@@author
     public static final Prefix PREFIX_WEB_LINK = new Prefix("w/");
