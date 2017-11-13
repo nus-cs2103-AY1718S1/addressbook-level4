@@ -9,12 +9,19 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ChangeImageEvent;
+import seedu.address.commons.events.ui.MapPersonEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.RemoveImageEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -47,6 +54,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public String sortPerson(String sortType) {
+        String sortedType = addressBook.sortPersons(sortType);
+        indicateAddressBookChanged();
+        return sortedType;
     }
 
     @Override
@@ -91,6 +105,12 @@ public class ModelManager extends ComponentManager implements Model {
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
+    //@@author justintkj
+    @Override
+    public void updateListToShowAll() {
+        filteredPersons.setPredicate(null);
+    }
+    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
@@ -98,6 +118,34 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author liliwei25
+    @Override
+    public void removeTag(Tag target) throws UniqueTagList.TagNotFoundException {
+        addressBook.removeTag(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        raise(new MapPersonEvent(target));
+    }
+
+    @Override
+    public void changeImage(ReadOnlyPerson target) throws PersonNotFoundException {
+        raise(new ChangeImageEvent(target));
+    }
+
+    @Override
+    public void removeImage(ReadOnlyPerson target) throws PersonNotFoundException {
+        raise(new RemoveImageEvent(target));
+    }
+
+    @Override
+    public void clearInfoPanel() {
+        raise(new PersonPanelSelectionChangedEvent(null));
+    }
+
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

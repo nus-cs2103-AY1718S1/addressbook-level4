@@ -1,0 +1,223 @@
+= Li Liwei - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: PocketBook
+PocketBook is a desktop address book application targeted at lazy Singaporeans.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+*Code contributed*: +
+ [https://github.com/CS2103AUG2017-F09-B3/main/blob/master/collated/main/liliwei25.md[Functional code]] +
+ [https://github.com/CS2103AUG2017-F09-B3/main/blob/master/collated/test/liliwei25.md[Test code]]
+
+=== Enhancement Added: Delete Multiple `delete INDEX...`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=delete]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+When the user wants to delete multiple users at once, it is inconvenient to call the `delete` command several times.
+With the delete multiple enhancement, the user can just call `delete` once and enter all the persons he wants to delete.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=DeleteMultiple]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Map function `map INDEX`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=map]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Provides the user with convenience of searching for a contact's address and reduces the need to open
+an external browser to search for the address
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=Map]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: RemoveTag function `removetag [INDEX] tag`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=removetag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows the user to delete and remove the selected tag from all/selected contact in PocketBook.
+Since the user is able to add a tag, he should be able to remove a tag since it may not be relevant anymore.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=RemoveTag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Birthday function `birthday INDEX`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows the user to add/edit/remove birthday from a selected contact so that the user can keep track of the birthday
+of his contacts. Also shows a birthday notification when there is a birthday when user opens the app.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=BirthdayNotifier]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: App running in the background function
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=background]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The user can close the window or open the window from the tray icon.
+When the window is closed, the app does not exit but is minimized to the system tray.
+This allows user to have a faster start up and does not need to restart the app all the time.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=Background]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Image function `image INDEX`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=image]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Adds an profile picture to each person and enables user to choose picture for each person.
+Helps user to identify and remember the person.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=Image]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add a tutorial function `tutorial`
+
+==== External behavior
+
+* `Tutorial` function
+** Opens a pop-up dialog with instructions on how to use the application.
+** Can be called by using the `tutorial` command
+** Also shows when the user opens the application for the first time
+
+==== Justification
+
+When the user calls the `tutorial` function or when the user opens the app for the first time
+, a pop-up will show to guide the user through some basic commands such as add, edit, delete, etc.
+
+==== Implementation
+
+* `UI`
+** Tutorial popup window
+
+* `Logic`
+** Tutorial command parser
+** Tutorial
+
+* Design consideration:
+** Alternative 1: Use buttons for user to choose when to move on to next step.
+** Alternative 2: Detect when the user has entered the correct input and move on to next step.
+
+=== Other contributions
+
+* Updated the GUI color scheme and layout (Pull requests https://github.com/CS2103AUG2017-F09-B3/main/pull/88[#88])
+* Wrote additional tests to increase coverage (Pull requests https://github.com/CS2103AUG2017-F09-B3/main/pull/95[#95], https://github.com/CS2103AUG2017-F09-B3/main/pull/104[#104], https://github.com/CS2103AUG2017-F09-B3/main/pull/107[#107])
+* Highlighted bugs: https://github.com/CS2103AUG2017-T09-B2/main/issues/179[#179]
+* Offered features for reuse: +
+https://github.com/nus-cs2103-AY1718S1/forum/issues/119[#119 App icon in tray and runs in the background] +
+https://github.com/nus-cs2103-AY1718S1/forum/issues/124[#124 Map function to map Person's address on Google Maps]

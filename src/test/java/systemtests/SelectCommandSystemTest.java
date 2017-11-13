@@ -2,9 +2,9 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
@@ -32,12 +32,12 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, personCount);
 
         /* Case: undo previous selection -> rejected */
-        command = UndoCommand.COMMAND_WORD;
+        command = UndoCommand.COMMAND_WORD + "  ";
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: redo selecting last card in the list -> rejected */
-        command = RedoCommand.COMMAND_WORD;
+        command = RedoCommand.COMMAND_WORD + "  ";
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
@@ -57,13 +57,13 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        invalidIndex = getModel().getAddressBook().getPersonList().size();
+        invalidIndex = getModel().getAddressBook().getPersonList().size() + 1;
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: filtered person list, select index within bounds of address book and person list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assert validIndex.getZeroBased() < getModel().getFilteredPersonList().size();
-        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
+        command = SelectCommand.COMMAND_WORD + "  " + validIndex.getOneBased();
         assertCommandSuccess(command, validIndex);
 
         /* Case: invalid index (0) -> rejected */
@@ -82,13 +82,10 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
-
         /* Case: select from empty address book -> rejected */
         executeCommand(ClearCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getPersonList().size() == 0;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_SECOND_PERSON.getOneBased(),
                 MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 

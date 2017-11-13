@@ -11,6 +11,8 @@ import javafx.scene.web.WebView;
  */
 public class WebViewUtil {
 
+    public static final int TIME_OUT = 10000;
+
     /**
      * Returns the {@code URL} of the currently loaded page in the {@code webView}.
      */
@@ -27,5 +29,12 @@ public class WebViewUtil {
      */
     public static void waitUntilBrowserLoaded(BrowserPanelHandle browserPanelHandle) {
         new GuiRobot().waitForEvent(browserPanelHandle::isLoaded);
+    }
+
+    /**
+     * If the {@code mapWindowHandle}'s {@code WebView} is loading, sleeps the thread till it is successfully loaded.
+     */
+    public static void waitUntilMapBrowserLoaded(MapWindowHandle mapWindowHandle) {
+        new GuiRobot().waitForEvent(mapWindowHandle::isLoaded, TIME_OUT);
     }
 }

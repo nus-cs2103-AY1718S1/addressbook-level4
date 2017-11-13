@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_PERSON;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -29,7 +31,7 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_newPerson_success() throws Exception {
-        Person validPerson = new PersonBuilder().build();
+        Person validPerson = new PersonBuilder().withName(VALID_NAME_BOB).build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addPerson(validPerson);
@@ -41,7 +43,7 @@ public class AddCommandIntegrationTest {
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
         Person personInList = new Person(model.getAddressBook().getPersonList().get(0));
-        assertCommandFailure(prepareCommand(personInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(prepareCommand(personInList, model), model, MESSAGE_DUPLICATE_PERSON);
     }
 
     /**

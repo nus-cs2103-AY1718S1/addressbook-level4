@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= PocketBook - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F09-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `F09-B3`      Since: `AUG 2017`      Licence: `MIT`      Referenced from: `https://github.com/nus-cs2103-AY1718S1/addressbook-level4[AddressBook-Level 4]`
 
 == Setting up
 
@@ -345,6 +345,767 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::multipleundoredo[]
+==== Multiple undo/redo mechanism
+The undo and redo can be done multiple times, chosen by the user by a positive integer
+
+UndoCommandParser : Accepts one more (optional) postive integer after the command `undo`. +
+UndoCommand : Repeats the command for the requested number of times. +
+UndoCommandParser : Accepts one more (optional) postive integer after the command `redo`. +
+UndoCommand : Repeats the command for the requested number of times.
+
+Multiple undos are implemented this way
+[source,java]
+----
+for (int i = INDEX_ZERO; i < numUndo; i++) {
+    if (!undoRedoStack.canUndo()) {
+        throw new CommandException(MESSAGE_FAILURE);
+    }
+    undoRedoStack.popUndo().undo();
+}
+----
+Multiple redos are implemented this way
+[source,java]
+----
+for (int i = INDEX_ZERO; i < numRedo; i++) {
+    if (!undoRedoStack.canRedo()) {
+        throw new CommandException(MESSAGE_FAILURE);
+    }
+
+    undoRedoStack.popRedo().redo();
+}
+----
+==== Design Considerations
+
+**Aspect:** Implementation of `Multiple Undo Command` and `Multiple Redo Command` +
+**Alternative 1 (current choice):*undo/redo single undo/redo for chosen number of times one at a time*  +
+**Pros:** We will not lose any undone/redone functionality it is reusing the functionality of the original + undo/redo command
+
+---
+// end::multipleundoredo[]
+
+// tag::sort[]
+=== sort mechanism
+
+The sort mechanism operates from sorting the 'internalList' in 'UniquePersonList' which resides in the model componet. Sort supports reformatting the current list of person according to the user's chosen details in ascending order. Such commands will inherit from `Command`.
+
+With the help of sortCommandParser, the user's sorting type preference will be extracted from the CLI and passed into sortCommand.Invalid sorting type or command will not be sorted, and parseException will be generated:
+
+image::SortCommandDiagram.png[width="800"]
+
+As you can see from the diagram, `SortCommandParser` validates and extract the user's sorting type request. SortCommand will call the model component to sort the 'interalList'. Invalid Commands will be handled by ParseException command to prompt user for a correct sorting type.
+
+Commands that are not sortable are implemented this way:
+[source,java]
+----
+public SortCommand(String sortType) {
+    this.sortType = sortType;
+}
+
+@Override
+public CommandResult execute() throws CommandException {
+    //... list logic ...
+}
+----
+Commands that are not sortable will be handled by ParseException:
+[source,java]
+----
+catch (IllegalValueException ive) {
+    throw new ParseException(
+        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+}
+----
+
+Suppose that the user has just launched the application. The `internalList` is filled with these four persons. A sample of the outlook of internalist is shown below.
+
+image::OriginalInternalList.png[width="800"]
+
+The user executes a new `SortCommand`, `sort number`, to sort all person in the address book by their phone number. interalList in 'UniquePersonList' should then be sorted.
+
+image::SortedNumberList.png[width="800"]
+
+As the user continues to use the program, the user can request for a different sort command. For example, the user may execute sort name to interalList by their name.
+
+image::OriginalInternalList.png[width="800"]
+
+The following sequence diagram shows how the sort operation works:
+
+image::SortSequenceDiagram.png[width="800"]
+
+[NOTE]
+The user may choose to sort the persons by other parameters. The parameters includes : name, number, address, email, remark, birthday, favourite.
+
+If a command fails its execution, no sorting will be done and a parse Exception will be used to handle the format for incorrect Commands.
+
+A simple flow of Activity Diagram for how sort command operates is given:
+
+image::SortActivityDiagram.png[width="300"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SortCommand` +
+**Alternative 1 (current choice):** Sort the interalList via `Collections.sort()` and  +
+**Pros:** We will be able to sort using merge or Tim sort which offers a stable and efficient (O(n log n)) efficiency +
+**Cons:** May not be optimal when sorting again after adding one new person only. +
+**Alternative 2:** Implement different algorithm depends on different type or number of persons added +
+**Pros:** Able to obtain optimal efficiency for sorting everytime. +
+**Cons:** Alot of code needed for all the different types of persons added to ensure better efficiency than Tim sort.
+
+---
+
+**Aspect:** Sorting persons based on type +
+**Alternative 1 (current choice):** Uses Lambdas to sort. +
+**Pros:** Clean one line code to compare person to sort. +
+**Cons:** - +
+**Alternative 2:** Individual Comparator for person object based on sorting parameter. +
+*Pros:** Sort the persons based on comparator, more free play to the comparisons in sorting. +
+**Cons:** Less efficient as more context switch is needed, resulting in higher overhead time.
+// end::sort[]
+
+// tag::favourite[]
+=== Favourite mechanism
+The favourite command toggles the favourite variable in the person to toggle a change in the highlight of color around
+the person's name
+
+FavouriteCommandParser : Parses the valid argument (positive and valid indexes) +
+Favourite Command : Highlights the person chosen via model class to interact with the correct person. +
+Person : Contains a Favourite class as it's parameter. +
+Favourite : Contains two different state, to highlight or not to highlight. +
+PersonCard : Updates highlight color for person.
+
+Implementation to create a new person to replace the old person with the new favourite +
+[source,java]
+----
+ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
+ReadOnlyPerson editedPerson = personToEdit;
+toggleColor(editedPerson);
+editedPerson.setFavourite(favourite);
+----
+
+Implementation to toggle the color of the person shown in UI
+[source,java]
+----
+name.textProperty().bind(Bindings.convert(person.nameProperty()));
+if (person.getFavourite().toString().equals(TRUE_STRING)) {
+    name.setStyle(RED_COLOUR);
+} else if (person.getFavourite().toString().equals(FALSE_STRING)) {
+    name.setStyle(NO_COLOUR);
+}
+----
+==== Design Considerations
+
+**Aspect:** Toggle the color highlight of the person +
+**Alternative 1 (current choice):** use a string to indicate highlight +
+**Pros:** May add different colors in future for different priorities +
+**Cons:** More code, read string instead of boolean, typo may result in non-toggle +
+**Alternative 2:** use a boolean to indicate highlight +
+**Pros:** Rigid structure for red color and no color +
+**Cons:** Not good for further enhancements +
+
+---
+
+// end::favourite[]
+
+// tag::errorsound[]
+=== ErrorSound mechanism
+The Error sound mechanism plays a .mp3 sound file named "ErrorSound.mp3" whenevever an invalid Command
+is typed by the user. +
+User's invalid command are facilitated through ParseException and CommandException.
+The play sound function can then be called through these two exception.
+
+ErrorSound : Creates a mediaplayer and play the sound file chosen.
+ParseException : Calls invalidCommandSound() in Sound.
+CommandException : Calls invalidCommandSound() in Sound.
+
+Implementation to activate the sound file in invalidCommandSound()
+[source,java]
+----
+try {
+    createsNewMediaPlayer();
+    mediaPlayer.play();
+} catch (Exception ex) {
+    logger.info(ERROR_SOUND_LOG_MESSAGE);
+    ex.printStackTrace();
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Plays the sound file when given invalid command +
+**Alternative 1 (current choice):** use a mediaPlayer, look for the sound file and play +
+**Pros:** Sound file can be replaced easily +
+**Cons:** Reliant on ParseException and CommandException to play sound. If other Exceptions are added in future
+implementation, might not play sound.
+
+---
+// end::errorsound[]
+
+// tag::autocomplete[]
+=== AutoComplete mechanism
+
+The autocomplete mechanism uses controlsFX to bind an autocomplete drop-down list to the Command Line.
+Every time the user enters a valid command, the command used will be added to the storage file to expand the
+autocomplist of stored valid command.
+
+CommandBox : Binds textfield with the CLI UI. +
+XMLAutocomplete : Updates the list when given valid command and to store the list in an XML file. A new XML file will be created with a sample list of basic inputs if XML file is deleted.
+
+Implementation to bind the list of valid inputs to the CLI
+[source,java]
+----
+updateAutocompleteTextField();
+autocompletionbinding = TextFields.bindAutoCompletion(commandTextField, mainPossibleSuggestion);
+----
+
+Implementation to store the valid new command into an XML file
+[source,java]
+----
+if (!commandWord.equals(EMPTY_STRING)) {
+    mainPossibleSuggestion.add(commandWord.trim());
+}
+XMLEncoder e = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(AUTOCOMPLETE_FILE_NAME)));
+e.writeObject(mainPossibleSuggestion);
+e.close();
+----
+
+==== Design Considerations
+
+**Aspect:** Autocomplete drop-down list +
+**Alternative 1 (current choice):** use .bindAutoCompletion() to bind an array of valid string into the
+autocomplete drop-down list.
+**Pros:** Little code needed, storage base expands over usage time +
+**Cons:** May not be automated test friendly as invalid command may be interpreted as valid command due to using the
+Enter key.
+
+---
+// end::autocomplete[]
+
+// tag::EmailPerson[]
+
+=== Email mechanism
+The email mechanism uses JavaMail API to send an actualy E-mail using our team's designated email address. +
+The selected user will receive an email at their email address if there's a valid internet connection.
+
+EmailCommandParser : Validates and extract user's command for index, subject, and message. +
+EmailCommand : Sends an Email to the email of the person selected.
+
+Implementation to send the email
+[source,java]
+----
+//Initial Login credentials
+generateInitialLoginCred(personToEmail);
+
+//Adds signature to user's text
+String messageText = teamSignatureGenerator();
+boolean sessionDebug = false;
+
+Properties props = System.getProperties();
+
+//updates the properties of the session
+updateProperties(host, props);
+
+//Compose the message
+composeMethod(messageText, sessionDebug, props);
+
+//Sends the Message
+sendMessage(host, user, pass, mailSession, composedMessage);
+----
+
+==== Design Considerations
+
+**Aspect:** Sending an email +
+**Alternative 1 (current choice):** use your team's email address as the sender. +
+**Pros:** No login credentials on user's part needed +
+**Cons:** Users may use our team's email for illegal purpose. +
+**Alternative 2:** User sign in to their own email. +
+**Pros:** More secure on developer's email +
+**Cons:** An extra step needed to send the email.
+
+---
+// end::EmailPerson[]
+
+// tag::AddPerson[]
+
+=== Add mechanism (Alternative)
+The alternative add mechaism uses regex to search for valid input types in a given string. +
+By using regex for searching for valid fields, the order of parameters to add a person is not neccessary. +
+As PocketBook is made to target Singaporeans, the regex specifies the following to be true for the different parameters
+of a person.
+As name has no valid regex to it, it has to be the first parameter given, followed by `,`
+
+Implementation to add a person
+[source,java]
+----
+//Generate person's details
+email = new Email (getOutputFromString(args, emailPatterns, EMAIL_EXCEPTION_MESSAGE));
+blocknum = getOutputFromString(args, blockPatterns, BLOCK_EXCEPTION_MESSAGE);
+streetnum = getOutputFromString(args, streetPatterns, STREET_EXCEPTION_MESSAGE);
+unitnum = getOutputFromString(args, unitPatterns, UNIT_EXCEPTION_MESSAGE);
+postalnum = getOutputFromString(args, postalPatterns, EMPTY_STRING);
+phone = new Phone(getOutputFromString(args, phonePatterns, PHONE_EXCEPTION_MESSAGE)
+        .trim().replace(COMMA_STRING, EMPTY_STRING));
+birthday = validateBirthdayNotFuture(args);
+address = generatesAddress(blocknum, streetnum, unitnum, postalnum);
+Set<Tag> tagList = new HashSet<>();
+ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList, picture,
+        favourite);
+return new AddCommand(person);
+----
+==== Design Considerations
+
+**Aspect:** Adding a person to pocketBook(Alternative) +
+**Alternative 1 (current choice):** Searches the string given for valid regex. +
+**Pros:** No strict format to remember, natural for users to add user +
+**Cons:** Users may not be familiar with independent fields constraints. +
+**Alternative 2:** Uses a prefix for each individual field. +
+**Pros:** Less constraints on individual fields +
+**Cons:** Users have to refer for different prefixes meaning and how to use them.
+
+---
+// end::AddPerson[]
+
+
+// tag::remark[]
+
+=== Remark mechanism
+The remark mechanism enables an additional field for a person to have.
+It is used as a note for a specified person.
+RemarkCommandParser : Validates and extracts remark from the given input from the user. +
+RemarkCommand : Adds the remark to the person selected.
+
+Implementation to remark a person
+
+[source,java]
+----
+ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+Person editedPerson = generateNewEditedPerson(personToEdit);
+model.updatePerson(personToEdit, editedPerson);
+----
+==== Design Considerations
+
+**Aspect:** Editing a person's remark +
+**Alternative 1 (current choice):** Generate a new person with a new remark and replace the old one +
+**Pros:** Previous remark has nothing to do with current remark +
+**Cons:** A new person needs to be generated. +
+**Alternative 2:** Edits the current person's remark. +
+**Pros:** Old person object remains the same +
+**Cons:** Access to person needs to be given.
+
+---
+
+// end::remark[]
+
+// tag::DeleteMultiple[]
+=== Delete Multiple Mechanism
+
+The delete multiple mechanism is a edit of the previous `delete` command. It enables the user to delete several persons
+from the address book in one command.
+
+The `DeleteCommandParser` will parse all the given `Index`(es) provided by the user and creates a new `DeleteCommand` with the provided indices.
+The `DeleteCommand` will then go through the list of `Person` and delete all the `Person` of the given `Index`
+
+Implementation of deleting multiple `Person` from address book:
+[source, java]
+----
+private String deleteAllSelectedPersonFromAddressBook() throws CommandException {
+    StringJoiner joiner = new StringJoiner(COMMA);
+    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+    for (int i = targetIndex.length - 1; i >= 0; i--) {
+        if (targetIndex[i].getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToDelete =
+                        lastShownList.get(targetIndex[i].getZeroBased());
+
+        deletePersonFromAddressBook(joiner, personToDelete);
+    }
+    return joiner.toString();
+}
+----
+==== Design Considerations
+
+**Aspect:** Implementation of `DeleteCommandParser` +
+**Alternative 1 (current choice):** Edit the parser to take in several values  +
+**Pros:** Reduce the need for a new class and increases efficiency +
+**Cons:** Editing the previous `DeleteCommandParser` is not ideal +
+**Alternative 2:** Implement another parser called `DeleteMultipleCommandParser` +
+**Pros:** Can call the `DeleteCommandParser` several times rather than creating a new algorithm +
+**Cons:** Extra command. Extra classes. Reduces inefficiency as several `DeleteCommandParser` needs to be created
+
+**Aspect:** Implementation of `DeleteCommand` +
+**Alternative 1 (current choice):** Edit the command to take in several `Index`  +
+**Pros:** Reduce the need for a new class and increases efficiency +
+**Cons:** Editing the previous `DeleteCommand` is not ideal +
+**Alternative 2:** Implement another command called `DeleteMultipleCommand` +
+**Pros:** Can call `DeleteCommand` several times rather than creating a new algorithm +
+**Cons:** Extra command. Extra classes. Reduces inefficiency as several `DeleteCommand` needs to be created
+
+// end::DeleteMultiple[]
+
+// tag::Map[]
+=== Addressing Mapping Mechanism
+
+The mapping mechanism is facilitated by `MapWindow` and `MapCommand`, which resides within `UI` and `Model` component respectively.
+It creates a new pop-up browser showing the `Address` of the selected `Person` on Google Maps.
+This mechanism works side by side with the `Address` field of each `Person`.
+
+`MapCommandParser` parses the `Index` entered by the user and passes it to a new `MapCommand` which will call the `Model` function to show
+the selected `Person` address on a pop-up browser.
+
+[NOTE]
+Multiple maps can be opened at the same time.
+
+Implementation of mapping in `MapWindow`:
+[source, java]
+----
+private void displayMap(ReadOnlyPerson person) {
+    String mapUrl = GOOGLE_MAPS_URL_PREFIX
+                + person.getAddress().getMapableAddress().replaceAll(SPACE, PLUS)
+                + GOOGLE_SEARCH_URL_SUFFIX;
+    map.getEngine().load(mapUrl);
+}
+----
+==== Design Considerations
+
+**Aspect:** Implementation of browser +
+**Alternative 1 (current choice):** Shows map on new pop-up browser  +
+**Pros:** Allows multiple maps to be shown +
+**Cons:** Required more browsers to be shown and may slow down the processing speed of the app +
+**Alternative 2:** Shows map on the built-in browser on app UI +
+**Pros:** Removes the need for more pop-up windows +
+**Cons:** Unable to show several maps at once
+
+**Aspect:** Implementation with or without Google Maps API +
+**Alternative 1 (current choice):** Implement map with browser and Google Maps URl +
+**Pros:** Reduce the need to include Google Maps API with may slow down the app and increase size of app +
+**Cons:** The browser may not be as reliable compared to the API +
+**Alternative 2:** Implement map with Google Maps API +
+**Pros:** More stable and reliable compared to using browser and URL +
+**Cons:** Increases app size and may slow down app
+
+// end::Map[]
+
+// tag::RemoveTag[]
+=== RemoveTag mechanism
+
+The removetag mechanism is facilitated by `RemoveTagCommand` and `RemoveTagCommandParser`, which resides within the `Logic` component.
+It deletes the tag specified by the user from all or one `Person` selected by the user.
+This mechanism works side by side with the `Tag` list of each `Person`.
+
+`RemoveTagCommandParser` parses the `Index` specified by the user and passes it to a new `RemoveTagCommand`.
+If no `Index` were specified by the user, the `Tag` will be deleted from all the `Person` in the address book.
+
+[NOTE]
+The `Tag` will also be deleted from the list of tags in the address book if it is deleted from all `Person`
+
+Implementation of removing tag from single `Person`:
+[source, java]
+----
+private String removeTagFromPerson(int index) throws CommandException {
+    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+    ReadOnlyPerson person = lastShownList.get(index);
+    boolean result = removeAndUpdate(person);
+    if (!result) {
+        throw new CommandException(MESSAGE_TAG_NOT_FOUND_IN_PERSON);
+    }
+    return person.getName().fullName;
+}
+----
+
+Implementation of removing tag from all `Person`:
+[source, java]
+----
+ private void removeTagFromAllPerson() throws CommandException {
+    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+    for (ReadOnlyPerson person: lastShownList) {
+        removeAndUpdate(person);
+    }
+}
+----
+==== Design Considerations
+
+**Aspect:** Implementation to delete `Tag` from all or single `Person` +
+**Alternative 1 (current choice):** Allows users to choose between deleting from single or all `Person` +
+**Pros:** Allows more freedom for the user +
+**Cons:** Requires more processing and more prone to errors +
+**Alternative 2:** Only allow user to delete `Tag` from all `Person` +
+**Pros:** Reduces the complexity and reduces chances for errors +
+**Cons:** Very rigid. User cannot choose to delete from single user and may not be useful.
+
+// end::RemoveTag[]
+
+// tag::Background[]
+=== App running in background mechanism
+
+The background app mechanism is facilitated by the `MainApp`. It creates a system tray icon whenever a new PocketBook app is started.
+
+`MainApp` first determines if the system tray is supported in the current platform. It then creates a tray icon with a pop-up menu.
+It will try to add the tray icon to the system tray and provides an easier access to the app. Moreover, it will be able to reduce subsequent startup times of the app.
+
+[NOTE]
+The app can only be exited fully using the `Exit` command or menu option.
+
+Implementation to add icon to system tray:
+[source, java]
+----
+private void startTray() {
+    Platform.setImplicitExit(false);
+    if (!SystemTray.isSupported()) {
+        logger.warning(MESSAGE_TRAY_UNSUPPORTED);
+        return;
+    }
+    initTrayIcon();
+    try {
+        tray = SystemTray.getSystemTray();
+        tray.add(trayIcon);
+    } catch (AWTException e) {
+        logger.warning(MESSAGE_ADD_TRAY_ICON_FAIL);
+    }
+}
+----
+// end::Background[]
+
+// tag::Image[]
+
+=== Image mechanism
+
+The image mechanism is facilitated by the `ImageCommandParser` and `ImageCommand`, which resides within the `Logic` component,
+It adds/edits/removes the `ProfilePicture` of a `Person`.
+
+`ImageCommandParser` parses the `Index` provided by the user and passes it to a new `ImageCommand`. +
+If `remove` is detected in the input, the `ProfilePicture` of the selected by the user will be deleted and reset to default. +
+Else, a file browser pop-up to allow user to choose which picture they would like to choose as the `Person` 's `ProfilePicture`.
+
+Implementation of `ImageCommand`:
+[source, java]
+----
+private ReadOnlyPerson updateDisplayPicture(List<ReadOnlyPerson> lastShownList,
+    ReadOnlyPerson personToEdit) throws PersonNotFoundException {
+
+    ReadOnlyPerson editedPerson;
+    if (remove) {
+        editedPerson = removeDisplayPicture(personToEdit);
+    } else {
+        editedPerson = selectDisplayPicture(lastShownList, personToEdit);
+    }
+    return editedPerson;
+}
+----
+==== Design Considerations
+
+**Aspect:** Implementation of method to choose file +
+**Alternative 1 (current choice):** Opens a FileChooser dialog to allow user to choose photo +
+**Pros:** Allows more freedom for the user +
+**Cons:** Requires more processing and more prone to errors +
+**Alternative 2:** Only allow user to input the file location in CLI +
+**Pros:** Reduces the complexity and reduces chances for errors +
+**Cons:** Very rigid. User will have a hard time finding the file path of the image.
+// end::Image[]
+
+// tag::BirthdayNotifier[]
+=== Birthday and Birthday Notifier mechanism
+
+The birthday notifier mechanism is facilitated by a `BirthdayNotifier`, which resides within the `Model` component.
+It creates a pop-up every time the app is run to inform the user of any birthdays that happen to fall on that day.
+This mechanism works side by side with the `Birthday` field of each `Person`.
+
+`BirthdayNotifier` is created and run in the `MainApp` every time the app is run. `BirthdayNotifier` will then check
+through the `Birthday` of the list of `Person` that was passed in from `MainApp`. It will then create a
+`BirthdayPopup` to show the list of `Person` with birthdays on that day. These relationships are illustrated in the
+diagram below.
+
+image::BirthdayNotifierDiagram.png[width = "800"]
+
+Implementation of checking through all the `Person` in `BirthdayNotifier`:
+[source,java]
+----
+for (ReadOnlyPerson e: list) {
+    if (e.getDay() == date && e.getMonth() == month) {
+        people.add(e.getName().toString());
+    }
+}
+
+if(people.size() > 0) {
+    createPopup(people.toArray(new String[people.size()]));
+}
+----
+
+The popup creation is implemented this way:
+[source,java]
+----
+private JDialog frame = new JDialog();
+private GridBagConstraints constraints = new GridBagConstraints();
+
+public BirthdayPopup(String[] person) {
+    createFrame(person.length);
+    createIcon();
+    createCloseButton();
+    createMessage(person);
+    createPopup();
+}
+----
+
+Suppose that the user has just launched the application. The `MainApp` will create `BirthdayNotifier` to check
+through the `Birthday` s.
+
+If there is at least one `Person` with a birthday on that day, `BirthdayNotifier` will create a new `BirthdayPopup`
+at the bottom right hand corner to inform the user. An example is shown below.
+
+image::BirthdayPopup.png[width = "400"]
+
+[NOTE]
+If the `Person` 's birthday is not set, it'll not affect `BirthdayNotifier`.
+
+The following sequence diagram shows how the `BirthdayNotifier` works:
+
+image::BirthdayNotifierSequenceDiagram.png[width = "800"]
+
+[NOTE]
+If there are no birthdays on that day or if the address book is empty, no popup will be shown.
+
+The following activity diagram summarize what happens when a user runs the application:
+
+image::BirthdayNotifierActivityDiagram.png[width = "200"]
+
+==== Design Considerations
+
+**Aspect:** When to show popup +
+**Alternative 1 (current choice):** Show popup during startup of application +
+**Pros:** User will most likely see the popup since the user just started the application +
+**Cons:** Popup may not show when the date has changed +
+**Alternative 2:** Show popup when the date changes +
+**Pros:** The birthday list is constantly updated and shown to user +
+**Cons:** The user may not be paying attention and will miss the popup +
+**Additional Information:** planning to implement both options
+
+---
+
+**Aspect:** Implementation of `BirthdayPopup` frame +
+**Alternative 1 (current choice):** Using JDialog +
+**Pros:** JDialog does not create an application bar in the task bar +
+**Cons:** JDialog does not come with default buttons for maximizing or minimizing +
+**Alternative 2:** Using JFrame +
+**Pros:** JFrame comes with default buttons to close, maximize and minimize etc. +
+**Cons:** JFrame will create an application bar in the task bar (ugly)
+
+---
+
+**Aspect:** Implementation of `BirthdayPopup` timer +
+**Alternative 1 (current choice):** Use a timer to close the popup after 5 seconds +
+**Pros:** Closes the dialog automatically and duration of pause can be changed +
+**Cons:** The user may not get a chance to see the popup +
+**Alternative 2:** Don't use a timer +
+**Pros:** The user determines when to close it and gets a chance to see the popup +
+**Cons:** The user has to manually close it. Maybe be troublesome. +
+**Additional Information:** Planning to implement a timer reset when the mouse hovers above the popup
+
+---
+
+**Aspect:** Size of popup +
+**Alternative 1 (current choice):** Size of popup depends on the number of birthdays +
+**Pros:** The message will not be lost and it can contain any amount of names +
+**Cons:** The popup may get very large +
+**Alternative 2:** Fixed size for popup +
+**Pros:** Very neat and consistent +
+**Cons:** If the list of names gets too big, some names will not be shown +
+
+---
+// end::BirthdayNotifier[]
+
+// tag::findbytag[]
+=== Find command
+
+The 'find' command was originally used only to search for users by name. Now it can be used to display all members of a single tag. An example of its use is shown below:
+
+    AddressBook contains: Alfred (tagged as friend), Bruce (tagged as colleague), Richard (tagged as both friend and colleague)
+    User enters the command: find t\friend
+    ---------------------
+    The program returns by listing: Alfred and Richard
+
+The FindCommand class itself relies on having a search predicate passed to the constructor as input, so that class required fairly minimal modification to take a predicate of type TagContainsKeywordPredicate as well as NameContainsKeywordsPredicate.
+
+The FindCommandParser includes code to differentiate between a search by name and by tag, and produces either a TagContainsKeywordPredicate or NameContainsKeywordsPredicate as appropriate.
+
+image::FindCommandArchitecture.png[width="800"]
+
+
+==== Design Considerations
+
+**Aspect:** Specificity of user input +
+**Alternative 1 (current choice):** Users are required to enter the full and exact tag name, including case +
+**Pros:** System will not output persons not in the intended tag +
+**Cons:** Inconvenient for users who forget or misinput the exact names of tags +
+**Alternative 2:** System searches all tags that contain the given keyword +
+**Pros:** More convenient to users who do not wish to remember the exact name of every tag +
+**Cons:** May return output that is unintended by the user (e.g. listing members of "girlfriend" when the user searches for "friend") +
+
+---
+
+**Aspect:** Can only search by a single tag at a time +
+**Alternative 1 (current choice):** Users may enter one tag as a keyword by which to search by +
+**Cons:** Users may wish to search for the intersection of a tag and another tag, or a tag and a name (e.g. all friends named John) +
+**Alternative 2:** Searching for multiple tags returns the intersection of those tags +
+**Pros:** Allows users to very easily track down individuals by specifying which groups they are in +
+**Cons:** Makes it difficult to construct complex large subsets of the addressbook +
+**Alternative 3:** Searching for multiple tags returns the union of those tags +
+**Pros:** Useful when one 'category' of persons might be split across multiple tags +
+**Cons:** Makes it difficult to track down individuals by inputting all tags that they are in +
+
+---
+
+// end::findbytag[]
+
+
+// tag::numtimessearched[]
+=== Tracking and sorting by number of times searched
+
+Every person has an invisible numTimesSearched field that begins at 0 and is incremented by 1 every time they
+found by the `find` command.
+
+The `sort` command has been enhanced to allow for displayed users to be sorted by numTimesSearched,
+so that the most-searched persons appear at the top. An example of its use:
+
+    AddressBook contains: Malcolm (searched for 3 times), Tony (searched for 0 times), and Julia (searched 10 times).
+    User enters the command: 'sort numtimessearched'
+    ---------------------
+    The program returns by listing: Julia, Malcolm, Tony
+    ---------------------
+    User enters this command five times: 'find Tony'
+    User enters this command: 'sort numtimessearched'
+    ---------------------
+    The program returns by listing: Julia, Tony, Malcolm
+
+This field required the creation of the class numTimesSearched, which contains the integer value,
+and methods for incrementing and returning the value.
+
+ParserUtil.java was updated to implement the new sorting method: notably, while other fields are sorted lexicographically,
+this field had to be compared numerically
+(e.g. lexicographically, 5 would come after 10, which is not the intended way to sort).
+
+---
+// end::numtimessearched[]
+
+// tag::Fuzzyfinder[]
+=== Fuzzyfinder
+
+The 'fuzzyfind' command largely operates like the 'find' command, with the caveat that it searches all substrings of contact names, not just words of contact names. This can be illustrated with the following example:
+
+    AddressBook contains: Simon, Jim, Chrissi
+    User searches for: Si
+    ---------------------
+    'find' command: returns nothing
+    'fuzzyfind' command: returns Simon, Chrissi (both contain 'si')
+
+Fuzzyfind differs from Find by the predicate being used to test each user input string with each AddressBook Name string. In this case, a new Predicate Subclass called 'NameContainsSubstringsPredicate' was created that uses 'string.contains()' instead of 'string.equals()' to check for the existence of substrings.
+
+Firstly the FuzzfindCommandParser breaks up the user input string by whitespaces and stores each smaller string in a string array. It then initializes a new FuzzyfindCommand object with the aforementioned 'NameContainsSubstringsPredicate' attribute. This results in the predicate being called during the '.execute()' method of the FuzzyCommand class, which will in turn update FilteredList of the current model object. Thus displaying all the users that match the predicate.
+
+Note that a substring match can return a lot more unexpected results than a strict word match, so it is best used if the 'find' command does not return the person you are looking for, or if you cannot remember the exact name of the person.
+
+---
+// end::Fuzzyfinder[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -601,13 +1362,13 @@ By creating this command, you will get a chance to learn how to implement a feat
 
 ==== Description
 Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
+Format: `remark INDEX [REMARK]`
 
 Examples:
 
-* `remark 1 r/Likes to drink coffee.` +
+* `remark 1 Likes to drink coffee.` +
 Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
+* `remark 1 ` +
 Removes the remark for the first person.
 
 ==== Step-by-step Instructions
@@ -729,9 +1490,76 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |include email service | email my contacts through the app directly
+
+|`* * *` |user |sort the contact list by Name/contact number/email/address | view the people in ascending order of types of data chosen
+
+|`* *` |user |do a confirmation step before clearing the whole addressbook | no longer accidentally delete all my data
+
+|`* *` |user |see the next closest search results if search fails | find a person without getting their name exactly correct (fuzzy searching)
+
+|`* *` |user |have a quick reference bar pop up whenever a user enters a single word command (e.g. 'add' will show an example of the full add command structure) | use commands without always having to memorise the command structure or always open the help window
+
+|`* *` |user |get the time where the user is added | find person based on time added
+
+|`* *` |user |show all contacts within a certain tag | scan everyone relevant to one topic
+
+|`* *` |user |use shortcuts for commands | save time and access information easily
+
+|`* *` |user |be able to see the most searched person | find most relevant person
+
+|`* *` |user |be able to complete the command words itself | dont need to remember the command names
+
+|`* *` |user |see my most recently and commonly used commands when I focus the text entry bar | quickly access my most recent and commonly used commands quickly
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |add birthday to each person | "remember" birthdays :P
+
+|`* *` |user |Have a prompt beep when an incorrect command is entered | a sound reminder that i typed a wrong command
+
+|`* *` |user |able add another user without following strict format | not have to remember/ refer to help for adding a person
+
+|`* *` |user |able to create multiple copies of addressbooks | use different addressbooks for different situations
+
+|`* *` |user |able to favourite a selected user | find favourite users easily
+
+|`* *` |user |able to finish my commands automatically | save time on typing repeated commands
+
+|`*` |user that likes to use tags | remove a specified tag from every person with one command | minimize effort and
+ save time
+
+|`*` |user |use google maps to search for the address of person |plan a trip to his/her address easily
+
+|`*` |user |find a random person |conduct lucky draw winners
+
+|`*` |user |import contacts from another addressbook | reduce repetitive work to save time and effort
+
+|`*` |user |include Instagram link to person |keep track of his/her Instagram status
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |toggle privacy status by pressing a hotkey while cursor is over the field | make setting/unsetting privacy easier
+
+|`*` |user |choose which data columns are displayed |only see information that I am interested in
+
+|`*` |user |reverse the order data is listed in |quickly see the last item in the sorted list
+
+|`*` |user |rename tags automatically for every person with a tag |change the tag in many places much more easily than changing it for each person
+
+|`*` |user |add relationships between contacts |have the app automatically suggest contacts when I am using it based on which contacts are grouped together
+
+|`*` |user |choose between a light and a dark mode |use a colour scheme that is healthy for my eyes
+
+|`*` |user |let other uses add their data in for me by linking over the web |not have to enter in as much data for every contact
+
+|`*` |user |startup the app with a picture/inspirational quote instead of a blank background | decorate the GUI, make it look prettier
+
+|`*` |user |see when I added/last edited a contact to the addressbook | know when the data is out of date
+
+|`*` |user |prompted by sound when entered invalid command | know theres an error with the input
+
+|`*` |user |add a person without strict format | it is more user inituitive.
 |=======================================================================
 
 {More to be added}
@@ -767,6 +1595,524 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Delete multiple persons simultaneously
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to delete a number of specific person in the list
+4.  AddressBook deletes the persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a person
+2.  AddressBook shows the format to add a person
+3.  User provides relevant details according to format
+4.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Wrong format provided.
++
+[none]
+** 3a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list
+4.  AddressBook updates the information of person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The new information is in the wrong format.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find a person
+2.  AddressBook shows the format to find a person
+3.  User provides name of the person according to format
+4.  AddressBook finds and shows the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Wrong format provided.
++
+[none]
+** 3a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Show people in tag
+
+*MSS*
+
+1.  User requests to show a tag
+2.  AddressBook shows the format to show a tag
+3.  User provides name of the tag according to format
+4.  AddressBook finds and lists all people in tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Wrong format provided.
++
+[none]
+** 3a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Sort person
+
+*MSS*
+
+1.  User requests to sort all person
+2.  AddressBook shows the format to sort a person
+3.  User provides information on the type of sorting needed
+4.  AddressBook sorts all persons and display on list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Wrong format provided.
++
+[none]
+** 3a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Email person
+
+*MSS*
+
+1.  User requests a list of all persons
+2.  AddressBook shows the list of all persons
+3.  User provides information the person to Email
+4.  AddressBook opens up in Gmail webpage with the person's relevant details inside
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Wrong format provided.
++
+[none]
+** 3a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Change Tag Colour
+
+*MSS*
+
+1.  User requests to change color of tags
+2.  AddressBook changes color of the tag according to the color code provided by user.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Wrong format/ color code provided.
++
+[none]
+** 1a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Change Tag Font
+
+*MSS*
+
+1.  User requests to change font of tags
+2.  AddressBook changes font of the tag according to the font type provided by user.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Wrong format provided.
++
+[none]
+** 1a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Find Random Person
+
+*MSS*
+
+1.  User requests to find a random person
+2.  AddressBook shows one random person
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Wrong format provided.
++
+[none]
+** 1a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Removes tag from all persons
+
+*MSS*
+
+1.  User requests to remove a selected tag
+2.  AddressBook removes selected tag from all persons
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Wrong format provided.
++
+[none]
+** 1a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 1.
+
+[none]
+* 1b. No such tag found in AddressBook
++
+[none]
+** 1b1. AddressBook shows an error message, prompt user to enter a valid tag.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Add Birthday to person
+
+*MSS*
+
+1.  User requests a list of all persons
+2.  AddressBook shows the list of all persons
+3.  User requests to create birthday information for a person
+4.  AddressBook updates information on specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given birthday is in the wrong format.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit Birthday of person
+
+*MSS*
+
+1.  User requests a list of all persons
+2.  AddressBook shows the list of all persons
+3.  User requests to update birthday information for a person
+4.  AddressBook updates information on specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given birthday is in the wrong format.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Clone AddressBook
+
+*MSS*
+
+1.  User requests to clone AddressBook
+2.  AddressBook asks user to input name for new AddressBook
+3.  User inputs name of new AddressBook
+4.  AddressBook creates a new copy of the current AddressBook with the new name
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given name is invalid (wrong format or duplicate name).
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find Address on person using Google Maps
+
+*MSS*
+
+1.  User requests a list of all persons
+2.  AddressBook shows the list of all persons
+3.  User requests to find the location of a person's address
+4.  AddressBook shows the specified person's address on Google Maps API
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Import contacts from another AddressBook
+
+*MSS*
+
+1.  User requests to import AddressBook
+2.  AddressBook asks user to select AddressBook for import
+3.  User inputs name and location of new AddressBook
+4.  AddressBook imports all the contact (persons) listed in the AddressBook specified
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given location or name is invalid (wrong format or duplicate name).
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Adding a person
+
+*MSS*
+
+1.  User enters all relevant details of the person in no order (Except for name)
+2.  Addressbook reads and adds the person in
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Compulsary fields - Given detail of person in invalid format.
++
+[none]
+** 1a1. Addressbook prompts user with error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Using a command- shortcut
+
+*MSS*
+
+1.  User enters first alphabet of command instead of the entire word
+2.  Addressbook processes the command
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Compulsary fields - Given detail of command in invalid format.
++
+[none]
+** 1a1. Addressbook prompts user with error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: ErrorSound
+
+*MSS*
+
+1.  User enters an invalid command
+2.  Errou sound occurs
++
+Use case ends.
+
+[discrete]
+=== Use case: Favourite a person
+
+*MSS*
+
+1.  User requests favourite/unfavourite a selected person
+2.  Addressbook highlights/unhighlight the selected person
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given location or name is invalid (wrong format or duplicate name).
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Autocomplete
+
+*MSS*
+
+1.  User requests types a command halfway
+2.  Addressbook shows a drop-down list of most relevant commands that has been used.
+3.  User chooses command by arrow key or mouse click.
+4.  Command gets executed
+
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Too many commands to be shown.
++
+[none]
+** 2a1. Sliding bar allows user to access more relevant commands.
+** 2a2. User chooses the input needed.
++
+Use case resumes at step 3.
+
+[discrete]
+=== Use case: Add Instagram account information to person
+
+*MSS*
+
+1.  User requests a list of all persons
+2.  AddressBook shows the list of all persons
+3.  User requests to create Instagram information for a person
+4.  AddressBook updates information on specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given Instagram account link is in the wrong format.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
@@ -775,11 +2121,47 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work on both 32 bit and 64 bit environment.
+.  Should have features to protect data of persons
+.  Should be able to handle long names. (up to 26 characters)
+.  Should be able to change the font type and size easily.
+.  Latest version should be prompted to download when available.
+.  No lag should last more than two seconds for any command given.
+.  All changes in AddressBook should be stored in the log file.
+.  User should be able to intuitively learn the application of AddressBook with ease (No need to refer to helpguide for every usage)
+.  Colour contrast should be optimal for even color-blind users.
+.  User should be able to accomplish all task possible by using CommandLine only.
+.  Startup time should be less than 5 seconds.
+.  Database should be easily portable systems or users
+.  Application should not crash and burn from invalid data.
+.  Will back up data during errors to prevent loss of data
 
 {More to be added}
 
 [appendix]
 == Glossary
+
+[[PocketBook]]
+Name of the application
+
+....
+PocketBook
+....
+
+
+[[Format]]
+The specific method for input in the command Line.
+
+....
+sort, list, add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney
+....
+
+[[UI]]
+User Interface
+
+....
+The ways the application look from placement of buttons, to command lines
+....
 
 [[mainstream-os]]
 Mainstream OS
@@ -798,16 +2180,42 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+*Contacts*
 
-Author: ...
+Author: Samsung Galaxy S8+
 
 Pros:
 
-* ...
-* ...
+* Bright colour contrasts - Different buttons have different colours that brings user attention to their specific needs.
+* Intuitive User Interface - No words needed for use to know how to find/ add / delete persons
+* Large amount of contacts can be stored - Caters for people with a lot of Contacts
+* Sorted in AlphaNumerical Sequence - Easy to search for person via Name.
 
 Cons:
 
-* ...
-* ...
+* No undo button for last added person
+* No redo button to reverse undo
+* Unable to add more fields required for different persons.
+* Unable to sort via other means.
+* Unable to find person via tag
+
+*Contacts*
+
+Author: Xiaomi Redmi Note 4X
+
+Pros:
+
+* Shows recently searched persons
+* Able to pin a contact to the top of the list
+* Scroll bar to select contacts from any alphabet
+* Able to share contact
+* Able to backup contacts on a online server
+* Able to sync between multiple AddressBooks on different devices
+* Able to add picture to contact
+* Able to send email directly
+
+Cons:
+
+* Cannot undo changes made
+* Unable to add tags to persons
+* Unable to sort by other means

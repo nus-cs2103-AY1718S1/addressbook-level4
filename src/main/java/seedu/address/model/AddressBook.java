@@ -48,8 +48,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         this();
         resetData(toBeCopied);
     }
-
-    //// list overwrite operations
+    //@@author justintkj
+    /**
+     *     Sort Persons according to sortType
+     */
+    public String sortPersons(String sortType) {
+        String sortedType = persons.sort(sortType);
+        syncMasterTagListWith(persons);
+        return sortedType;
+    }
+    //@@author
 
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
@@ -83,14 +91,17 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
+    //@@author bokwoon95
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
+        try {
+            persons.add(newPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new DuplicatePersonException();
+        }
         syncMasterTagListWith(newPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.add(newPerson);
     }
+    //@@author
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
@@ -102,17 +113,22 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @see #syncMasterTagListWith(Person)
      */
+    //@@author bokwoon95
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
+        try {
+            persons.setPerson(target, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new DuplicatePersonException();
+        } catch (PersonNotFoundException pnfe) {
+            throw new PersonNotFoundException();
+        }
         syncMasterTagListWith(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.setPerson(target, editedPerson);
     }
+    //@@author
 
     /**
      * Ensures that every tag in this person:
@@ -161,6 +177,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
+
+    //@@author liliwei25
+    public void removeTag(Tag t) throws UniqueTagList.TagNotFoundException {
+        tags.remove(t);
+    }
+    //@@author
 
     //// util methods
 

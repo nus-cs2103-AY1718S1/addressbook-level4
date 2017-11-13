@@ -3,12 +3,13 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.AddCommandParser;
 
 /**
  * Represents a Person's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
-public class Address {
+public class Address implements Comparable {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
             "Person addresses can take any values, and it should not be blank";
@@ -46,6 +47,12 @@ public class Address {
         return value;
     }
 
+    /**
+     * Returns a string without unit that is suitable for google map
+     */
+    public String getMapableAddress() {
+        return value.replaceAll(AddCommandParser.UNIT_REGEX, "");
+    }
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -56,6 +63,12 @@ public class Address {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Address comparedAddress = (Address) o;
+        return this.value.toLowerCase().compareTo(comparedAddress.toString().toLowerCase());
     }
 
 }

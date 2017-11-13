@@ -1,0 +1,89 @@
+= Joseph Brough - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Pocketbook
+Pocketbook is a simple desktop application for recording, storing and managing contact details.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 6 kLoC.
+
+*Code contributed*:
+https://github.com/CS2103AUG2017-F09-B3/main/blob/master/collated/main/thehelpfulbees.md[Functional code]
+https://github.com/CS2103AUG2017-F09-B3/main/blob/master/collated/test/thehelpfulbees.md[Testing code]
+https://github.com/CS2103AUG2017-F09-B3/main/blob/master/collated/unused/thehelpfulbees.md[Unused code]
+
+=== Enhancement Added: Find by tag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findbytag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Tags exist as a convenient way for users to filter their addressbook and only see relevant persons.
+
+Whenever a user wishes to check the data for a group of people,
+it is more than likely that these people are connected by some attribute -
+e.g. being friends, coworkers, or relatives.
+The find by tag functionality is an easy-to-use way to filter out irrelevant persons.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findbytag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sorting by num times searched and with alternate keywords
+
+==== External behavior
+
+Note: I take credit only for the implementation of the numTimesSearched field
+and the inclusion of alternate sort keywords.
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+In any contact list with the potential to grow large (e.g. Facebook), it becomes important for the software itself to save
+the use some hassle and conveniently show them the people with which they interact the most.
+
+An example user story may be that the user uses `find` to list all their friends, but the list is so large that they
+can't find the person they're looking for. Now, they can type `sort timesSearched` and their best friends, who they
+look for the most, will rise to the top of the list.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=numtimessearched]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Allow users to export/import copies/backups of their addressbook
+
+Users may wish to share their contacts with other users, or transfer data to another machine.
+Giving them the option to save all contacts to a file, and then import from such a file,
+provides this functionality. Some functionality was implemented but is invisible to the user.

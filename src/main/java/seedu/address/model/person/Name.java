@@ -8,7 +8,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a Person's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
-public class Name {
+public class Name implements Comparable {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
             "Person names should only contain alphanumeric characters and spaces, and it should not be blank";
@@ -60,4 +60,9 @@ public class Name {
         return fullName.hashCode();
     }
 
+    @Override
+    public int compareTo(Object o) {
+        Name comparedName = (Name) o;
+        return this.fullName.toLowerCase().compareTo(comparedName.toString().toLowerCase());
+    }
 }

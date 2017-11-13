@@ -1,8 +1,10 @@
 package systemtests;
 
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
@@ -26,9 +28,11 @@ import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.PersonInfoPanelHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+
 import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -47,9 +51,10 @@ public abstract class AddressBookSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 
-    private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field");
+    private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field",
+            "entry-field");
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
-            Arrays.asList("text-input", "text-field", CommandBox.ERROR_STYLE_CLASS);
+            Arrays.asList("text-input", "text-field", "entry-field", CommandBox.ERROR_STYLE_CLASS);
 
     private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
@@ -76,6 +81,10 @@ public abstract class AddressBookSystemTest {
         EventsCenter.clearSubscribers();
     }
 
+    public MainWindowHandle getMainWindowHandle() {
+        return mainWindowHandle;
+    }
+
     public CommandBoxHandle getCommandBox() {
         return mainWindowHandle.getCommandBox();
     }
@@ -90,6 +99,10 @@ public abstract class AddressBookSystemTest {
 
     public BrowserPanelHandle getBrowserPanel() {
         return mainWindowHandle.getBrowserPanel();
+    }
+
+    public PersonInfoPanelHandle getInfoPanel() {
+        return mainWindowHandle.getInfoPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -111,7 +124,6 @@ public abstract class AddressBookSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
-
         waitUntilBrowserLoaded(getBrowserPanel());
     }
 
@@ -128,7 +140,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void showPersonsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assert getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size();
+        assert getModel().getFilteredPersonList().size() <= getModel().getAddressBook().getPersonList().size();
     }
 
     /**
@@ -172,6 +184,16 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertSelectedCardDeselected() {
         assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getPersonListPanel().isAnyCardSelected());
+    }
+
+    /**
+     * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
+     * of the previously selected person.
+     * @see BrowserPanelHandle#isUrlChanged()
+     */
+    protected void assertClearCardDeselected() {
+        assertTrue(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 

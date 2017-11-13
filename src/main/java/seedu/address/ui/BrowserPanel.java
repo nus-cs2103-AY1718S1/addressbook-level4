@@ -46,7 +46,7 @@ public class BrowserPanel extends UiPart<Region> {
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
-    public void loadPage(String url) {
+    private void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 
@@ -68,6 +68,10 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        if (event.getNewSelection() == null) {
+            loadDefaultPage();
+        } else {
+            loadPersonPage(event.getNewSelection().person);
+        }
     }
 }

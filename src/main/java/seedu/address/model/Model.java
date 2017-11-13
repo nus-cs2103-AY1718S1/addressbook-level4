@@ -6,6 +6,8 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
 /**
  * The API of the Model component.
@@ -22,6 +24,11 @@ public interface Model {
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    //@@author justintkj
+    /**Sorts all the people in the current database*/
+    String sortPerson(String sortType);
+    //@@author
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
@@ -43,6 +50,34 @@ public interface Model {
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
+
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    void updateListToShowAll();
+
+    //@@author liliwei25
+    /**
+     * Deletes the given tag from all persons in addressbook
+     */
+    void removeTag(Tag target) throws UniqueTagList.TagNotFoundException;
+
+    /**
+     * Shows the map for selected person in browser
+     */
+    void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /**
+     * Edits the profile picture for selected person
+     */
+    void changeImage(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /**
+     * Removes the profile picture for selected person
+     */
+    void removeImage(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /**
+     * Clears the info panel
+     */
+    void clearInfoPanel();
 }

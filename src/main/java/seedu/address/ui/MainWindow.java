@@ -1,9 +1,13 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.io.IOException;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -13,15 +17,22 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeImageEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.MapPersonEvent;
+import seedu.address.commons.events.ui.RemoveImageEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.XmlImageStorage;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -29,10 +40,14 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/PocketBookLogo.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static final String[] IMAGE_EXTENSIONS = {"*.jpg", "*.png", "*.jpeg"};
+    private static final String BUTTON_DESCRIPTION = "Any Image files";
+    private static final String MESSAGE_COPY_FAILURE = "Failed to copy image";
+    private static final String MESSAGE_DELETE_FAIL = "Image delete failed";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -45,8 +60,11 @@ public class MainWindow extends UiPart<Region> {
     private Config config;
     private UserPrefs prefs;
 
+    // Storage organizer for image command
+    private XmlImageStorage imageStorage;
+
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane infoPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -62,6 +80,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane browserPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -82,6 +103,8 @@ public class MainWindow extends UiPart<Region> {
 
         setAccelerators();
         registerAsAnEventHandler(this);
+
+        imageStorage = new XmlImageStorage();
     }
 
     public Stage getPrimaryStage() {
@@ -126,6 +149,9 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        PersonInfoPanel personInfoPanel = new PersonInfoPanel(null);
+        infoPlaceholder.getChildren().add(personInfoPanel.getRoot());
+
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
@@ -144,6 +170,10 @@ public class MainWindow extends UiPart<Region> {
 
     void hide() {
         primaryStage.hide();
+    }
+
+    boolean isShowing() {
+        return primaryStage.isShowing();
     }
 
     private void setTitle(String appTitle) {
@@ -187,7 +217,7 @@ public class MainWindow extends UiPart<Region> {
      * Opens the help window.
      */
     @FXML
-    public void handleHelp() {
+    private void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
@@ -204,17 +234,67 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    //@@author liliwei25
+    /**
+     * Opens the map window.
+     */
+    private void handleMapEvent(ReadOnlyPerson person) {
+        MapWindow mapWindow = new MapWindow(person);
+        Platform.runLater(mapWindow::show);
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
+    /**
+     * Opens file browser.
+     */
+    private void handleImageEvent(ReadOnlyPerson person) {
+        Stage parent = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter(BUTTON_DESCRIPTION, IMAGE_EXTENSIONS);
+        fileChooser.getExtensionFilters().add(filter);
+        File result = fileChooser.showOpenDialog(parent);
+        if (result != null) {
+            try {
+                person.setImage(imageStorage.saveImage(result, person.getName().toString()));
+            } catch (IOException io) {
+                logger.warning(MESSAGE_COPY_FAILURE);
+            }
+        }
+    }
+
+    @Subscribe
+    private void handleMapPanelEvent(MapPersonEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleMapEvent(event.getPerson());
+    }
+
+    @Subscribe
+    private void handleChangeImageEvent(ChangeImageEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleImageEvent(event.getPerson());
+    }
+
+    @Subscribe
+    private void handleRemoveImageEvent(RemoveImageEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        try {
+            imageStorage.removeImage(event.getPerson().getPicture().getLocation());
+        } catch (IOException ioe) {
+            logger.warning(MESSAGE_DELETE_FAIL);
+        }
+    }
+    //@@author
+
+    public PersonListPanel getPersonListPanel() {
+        return this.personListPanel;
     }
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    void releaseResources() {
+        browserPanel.freeResources();
     }
 }

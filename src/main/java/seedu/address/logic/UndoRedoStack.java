@@ -35,7 +35,22 @@ public class UndoRedoStack {
 
         undoStack.add((UndoableCommand) command);
     }
+    //@@author justintkj
+    /**
+     * Gets number of undoable tasks in integer
+     */
+    public int getUndoStackSize() {
+        return undoStack.size();
+    }
 
+    /**
+     * Gets number of redoable tasks in integer
+     */
+    public int getRedoStackSize() {
+        return redoStack.size();
+    }
+
+    //@@author
     /**
      * Pops and returns the next {@code UndoableCommand} to be undone in the stack.
      */

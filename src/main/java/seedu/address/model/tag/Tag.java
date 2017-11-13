@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Tag {
 
     public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-    public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
+    private static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String tagName;
 
@@ -32,7 +32,7 @@ public class Tag {
     /**
      * Returns true if a given string is a valid tag name.
      */
-    public static boolean isValidTagName(String test) {
+    private static boolean isValidTagName(String test) {
         return test.matches(TAG_VALIDATION_REGEX);
     }
 

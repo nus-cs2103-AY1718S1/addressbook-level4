@@ -2,6 +2,8 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -26,7 +28,7 @@ public class TypicalPersons {
 
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("85355255")
+            .withPhone("85355255").withBirthday("Not Set")
             .withTags("friends").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
@@ -51,10 +53,11 @@ public class TypicalPersons {
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY)
+            .withTags(VALID_TAG_FRIEND).build();
     public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .build();
+            .withBirthday(VALID_BIRTHDAY_BOB).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
@@ -73,6 +76,62 @@ public class TypicalPersons {
             }
         }
         return ab;
+    }
+
+    /**
+     * Returns an {@code AddressBook} with all the typical persons sorted by email.
+     */
+    public static AddressBook getSortedEmailAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (ReadOnlyPerson person : getSortedEmailPersons()) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
+    /**
+     * Returns an {@code AddressBook} with all the typical persons sorted by address.
+     */
+    public static AddressBook getSortedAddressAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (ReadOnlyPerson person : getSortedAddressPersons()) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
+
+    /**
+     * Returns an {@code AddressBook} with all the typical persons sorted by numbers.
+     */
+    public static AddressBook getSortedNumAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (ReadOnlyPerson person : getSortedNumPersons()) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
+
+    public static List<ReadOnlyPerson> getSortedNumPersons() {
+        return new ArrayList<>(Arrays.asList(ALICE, DANIEL, ELLE, FIONA, GEORGE, CARL, BENSON));
+    }
+
+    public static List<ReadOnlyPerson> getSortedAddressPersons() {
+        return new ArrayList<>(Arrays.asList(DANIEL, ALICE, BENSON, GEORGE, FIONA, ELLE, CARL));
+    }
+
+    public static List<ReadOnlyPerson> getSortedEmailPersons() {
+        return new ArrayList<>(Arrays.asList(ALICE, GEORGE, DANIEL, CARL, BENSON, FIONA, ELLE));
     }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {

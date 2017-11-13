@@ -1,6 +1,5 @@
 package systemtests;
 
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
@@ -25,22 +24,22 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: undo clearing address book -> original address book restored */
-        String command = UndoCommand.COMMAND_WORD;
+        String command = UndoCommand.COMMAND_WORD + "  ";
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command,  expectedResultMessage, defaultModel);
         assertSelectedCardUnchanged();
 
         /* Case: redo clearing address book -> cleared */
-        command = RedoCommand.COMMAND_WORD;
+        command = RedoCommand.COMMAND_WORD + "  ";
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedResultMessage, new ModelManager());
         assertSelectedCardUnchanged();
 
         /* Case: selects first card in person list and clears address book -> cleared and no card selected */
-        executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
+        executeCommand(UndoCommand.COMMAND_WORD + "  "); // restores the original address book
         selectPerson(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedCardDeselected();
+        assertClearCardDeselected();
 
         /* Case: filters the person list before clearing -> entire address book cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
@@ -52,8 +51,6 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
 
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("ClEaR", MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**

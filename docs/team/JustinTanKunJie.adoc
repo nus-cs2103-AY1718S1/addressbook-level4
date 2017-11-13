@@ -1,0 +1,289 @@
+= Justin Tan Kun Jie - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: PocketBook
+PocketBook is a desktop address book application targetted at Singaporeans. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+*Code contributed*: [https://github.com/justintkj/main/blob/master/collated/main/justintkj.md[Functional code]] [https://github.com/justintkj/main/blob/master/collated/test/justintkj.md[Test code]]
+
+=== Enhancement Added: `Multiple Undo/Redo`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=undoredo]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+When a large chunk of commands needs to be redone, it is inconvienent and inefficient to have to type the `undo` command. +
+With an attached positive integer chosen by the user, user can redo alot of commands instantly with just one line of command. +
+Original implementation of `undo` command is kept as it would be more inituitive for the user to not have to type the number of undos if only one is expected. +
+Vice versa, multiple `redo` is made to undo multiple number of undo.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=multipleundoredo]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `Sort`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+When the contacts list increases, the list of persons stored may be unorganized. +
+Sorting is made possible for various type of parameters of users depending on the type of organization needed. +
+The sort should be automatically updated in storage as it is inefficient for users who want a specified sort to need to type the same command everytime the application starts.
+
+
+==== Implementation
+
+---
+Note : I implemented the foundation of sort. +
+While Jo added the numsearched fields and command alias for sort, i refractored to use streams to reduce excessive "for loops". +
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `Favourite`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=favourite]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+When the contacts list increases, finding a person important to the user may be tough. +
+Favourite hightlights a person name with a red box to highlight importance of the person, becoming prominent when scrolling through the list. +
+A sort can be made to filter all the favourite persons to the top of the list, easier to find important persons.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=favourite]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `Error Sound for invalid command`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=errorsound]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It is important to notify the user whenever an invalid command is given into the application. While the commandBox shows the type of error the user made, +
+it is essential to prompt the user with a sound to notify an error, following which, then reads the commandBox for type of error. +
+ErrorSound is called from ParseException and CommandException as a user's input which is rejected by the application would have to handle and error of
+these two types.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=errorsound]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `Autocomplete`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It reduces the amout of time needed to type a specified command and acts as a quick reference to a list of vaid command. +
+When the user types a command in the CLI, recommended valid commmands are shown as a drop-down list for the user to choose. +
+User can choose from the list of valid command via the keyboard:[&uarr;] or keyboard:[&darr;] and select via keyboard:[Enter]. +
+Valid commands needs to be saved and increase the drop down list to provide more relevant commands for the user progressively. +
+When XML file is deleted, a new XML file will be created, populated with a standard list of commands.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `Email`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Provides a quick way to send an email to the selected person via our team's generated Gmail account. +
+Javamail API is used to provide an efficient route to create an email message and to connect to the host server.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=EmailPerson]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `Add (Alternative method)`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Provides an alternative way to add a person without using prefix, so user do not need to memorize a standard way to add a person. +
+Regex is used to scan the entire message given by the user to extract relevant information fields. +
+It is impractical to confirm a person's name to a certain regex, hence the name field must be the first field follow by a `,`
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=AddPerson]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `Remark (Logic)`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A field for user to attach a sentence to indicate relevance to user on a selected person. +
+It acts as a reminder for the user what the remarked person mean.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: import command `import`
+
+==== External behavior
+
+---
+Imports all the contacts from the user's chosen social media type into the application. +
+Valid type of imports to be used: +
+`import facebook` +
+`import instagram` +
+`import linkedin`
+
+---
+
+==== Justification
+
+It is not practical to manually add every contact when initialising the application for the first time. +
+By importing from the user's social media account, it provides a relevant base of contacts for the user to use.
+
+==== Implementation
+
+---
+ImportCommandParser : Validate type of import chosen by user +
+ImportCommand : Extract all contacts from the user's social media account and updates the storage with the new populated list of persons.
+
+---
+
+=== Other contributions
+
+* Added a command alias for addCommand.
+* Designed PocketBook logo.
+* Highlighted bugs using issue with team `TunedIn` (Pull requests https://github.com/CS2103AUG2017-T14-B2/main/issues/100[#100], https://github.com/CS2103AUG2017-T14-B2/main/issues/101[#101], https://github.com/CS2103AUG2017-T14-B2/main/issues/110[#110], https://github.com/CS2103AUG2017-T14-B2/main/issues/112[#112], https://github.com/CS2103AUG2017-T14-B2/main/issues/102[#102], https://github.com/CS2103AUG2017-T14-B2/main/issues/107[#107])
+* Offered features for reuse. Error Sound for invalid commands https://github.com/nus-cs2103-AY1718S1/forum/issues/123[#123],
+Autocomplete feature using ControlsFX https://github.com/nus-cs2103-AY1718S1/forum/issues/122[#122]
+

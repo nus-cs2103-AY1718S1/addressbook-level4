@@ -1,4 +1,4 @@
-= Address Book (Level 4)
+= PocketBook V1.1
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -15,19 +15,15 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
+* PocketBook is a Text-based contacts management applicationdeveloped by us. We are a team of NUS undergraduate students from different school and faculties.
+* The application is targetted at students and working adults to keep track and to extract details of their contacts through their daily applications.
+* This is a desktop PocketBook application. It has GUI but most of the user interactions are expected to be implemented using Command Line interface.
 ** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
@@ -35,5 +31,7 @@ endif::[]
 
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
+* The project is designed by Professor Damith C. Rajapakse and his team from http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+* The project is morphed based on https://github.com/nus-cs2103-AY1617S1/addressbook-level4[AddressBook-Level4] prepared by the teaching team.
 
 == Licence : link:LICENSE[MIT]

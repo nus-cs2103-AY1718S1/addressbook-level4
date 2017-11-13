@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.RedoCommand;
@@ -55,7 +56,7 @@ public class UndoRedoStackTest {
     }
 
     @Test
-    public void push_undoCommand_stackRemainsUnchanged() {
+    public void push_undoCommand_stackRemainsUnchanged() throws IllegalValueException {
         // non-empty redoStack
         undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne),
                 Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));
@@ -70,7 +71,7 @@ public class UndoRedoStackTest {
     }
 
     @Test
-    public void push_redoCommand_stackRemainsUnchanged() {
+    public void push_redoCommand_stackRemainsUnchanged() throws IllegalValueException {
         // non-empty redoStack
         undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne),
                 Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));

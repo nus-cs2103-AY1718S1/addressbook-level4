@@ -20,8 +20,23 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Remark> remarkProperty();
+    Remark getRemark();
+    void setRemark(Remark remark);
+    ObjectProperty<Birthday> birthdayProperty();
+    void setBirthday(Birthday birthday);
+    Birthday getBirthday();
+    int getDay();
+    int getMonth();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<ProfilePicture> imageProperty();
+    void setImage(String image);
+    ProfilePicture getPicture();
+    void setFavourite(Favourite favourite);
+    Favourite getFavourite();
+    NumTimesSearched getNumTimesSearched();
+    void incrementNumTimesSearched();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -32,7 +47,11 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getRemark().equals(this.getRemark())
+                && other.getBirthday().equals(this.getBirthday())
+                && other.getPicture().equals(this.getPicture()))
+                && other.getFavourite().equals(this.getFavourite());
     }
 
     /**
@@ -47,6 +66,12 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Remark: ")
+                .append(getRemark())
+                .append(" Birthday: ")
+                .append(getBirthday())
+                .append(" Favourite: ")
+                .append(getFavourite().toString())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

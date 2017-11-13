@@ -8,7 +8,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a Person's phone number in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
-public class Phone {
+public class Phone implements Comparable {
 
 
     public static final String MESSAGE_PHONE_CONSTRAINTS =
@@ -54,4 +54,9 @@ public class Phone {
         return value.hashCode();
     }
 
+    @Override
+    public int compareTo(Object o) {
+        Phone comparedPhone = (Phone) o;
+        return this.value.compareTo(comparedPhone.toString());
+    }
 }

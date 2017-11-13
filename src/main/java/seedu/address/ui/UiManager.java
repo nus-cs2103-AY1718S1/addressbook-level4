@@ -45,6 +45,21 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     @Override
+    public void show() {
+        mainWindow.show();
+    }
+
+    @Override
+    public void hide() {
+        mainWindow.hide();
+    }
+
+    @Override
+    public boolean isShowing() {
+        return mainWindow.isShowing();
+    }
+
+    @Override
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
         primaryStage.setTitle(config.getAppTitle());
@@ -67,7 +82,6 @@ public class UiManager extends ComponentManager implements Ui {
     public void stop() {
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
         mainWindow.hide();
-        mainWindow.releaseResources();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
@@ -90,7 +104,7 @@ public class UiManager extends ComponentManager implements Ui {
     private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
                                                String contentText) {
         final Alert alert = new Alert(type);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        alert.getDialogPane().getStylesheets().add("view/BrightTheme.css");
         alert.initOwner(owner);
         alert.setTitle(title);
         alert.setHeaderText(headerText);

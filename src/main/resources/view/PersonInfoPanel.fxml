@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- @@author liliwei25 -->
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane fx:id="personInfoPanel" styleClass="grid-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+        <ImageView fx:id="profileImage" fitHeight="200.0" preserveRatio="true" GridPane.columnIndex="0" />
+      <GridPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2" >
+         <columnConstraints>
+           <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+           <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="500.0" maxWidth="Infinity"/>
+         </columnConstraints>
+         <Label fx:id="name" styleClass="cell_small_label1" text="\$name" GridPane.columnIndex="0" GridPane.columnSpan="2" />
+         <Label styleClass="cell_small_label" text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+         <Label fx:id="phone" styleClass="cell_small_label1" text="\$phone" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         <Label styleClass="cell_small_label" text="Address:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+         <Label fx:id="address" styleClass="cell_small_label1" text="\$address" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         <Label styleClass="cell_small_label" text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+         <Label fx:id="email" styleClass="cell_small_label1" text="\$email" GridPane.columnIndex="1"  GridPane.rowIndex="3" />
+         <Label styleClass="cell_small_label" text="Birthday:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+         <Label fx:id="birthday" styleClass="cell_small_label1" text="\$birthday" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         <Label styleClass="cell_small_label" text="Remarks:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+         <Label fx:id="remark" styleClass="cell_small_label1" text="\$remark" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         <FlowPane fx:id="tags" prefHeight="23.0" prefWidth="172.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      </GridPane>
+        <columnConstraints>
+            <ColumnConstraints maxWidth="410.0" minWidth="-Infinity" prefWidth="220.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="200.0" minHeight="50.0" prefHeight="200.0" />
+        </rowConstraints>
+    </GridPane>
+</VBox>

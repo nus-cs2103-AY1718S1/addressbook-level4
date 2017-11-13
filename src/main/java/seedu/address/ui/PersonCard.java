@@ -3,7 +3,7 @@ package seedu.address.ui;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -13,8 +13,11 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonCard extends UiPart<Region> {
 
+    public static final String TRUE_STRING = "true";
+    public static final String RED_COLOUR = "-fx-background-color : #ff0000";
+    public static final String NO_COLOUR = "-fx-background-color : transparent";
+    public static final String FALSE_STRING = "false";
     private static final String FXML = "PersonListCard.fxml";
-
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -32,40 +35,29 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label phone;
-    @FXML
-    private Label address;
-    @FXML
-    private Label email;
-    @FXML
-    private FlowPane tags;
+    private GridPane cardBackground;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        initTags(person);
         bindListeners(person);
     }
-
+    //@@author justintkj
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
+     * Changes the color code of the person if favourite.
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        });
+        if (person.getFavourite().toString().equals(TRUE_STRING)) {
+            name.setStyle(RED_COLOUR);
+        } else if (person.getFavourite().toString().equals(FALSE_STRING)) {
+            name.setStyle(NO_COLOUR);
+        }
     }
-
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

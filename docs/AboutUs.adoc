@@ -4,53 +4,60 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+PocketBook was developed by the https://github.com/orgs/CS2103AUG2017-F09-B3/teams/developers/members[F09-B3]
+team. +
+This project was developed in AY17/18 Semester 1 for CS2103. +
 {empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+We are a group of students in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Li Liwei
+.Exhibit A  [https://github.com/liliwei25[github]] [<<liliwei25#, portfolio>>]
 
-Role: Project Advisor
+[.thumb]
+image::liliwei25.jpg[width="150", align="left"]
+
+{empty}
+
+Role: Team Lead + Developer +
+Responsibilities:
+
+* Model
+* Integration
+* Testing
+* Documentation (Backup)
+* Code Quality (Backup)
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Justin Tan Kun Jie
+image::justintkj.jpg[width="150", align="left"]
+{empty}[https://github.com/justintkj[github]] [<<JustinTanKunJie#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities:
+
+* Logic
+* Documentation
+* Code Quality
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Chua Bok Woon
+image::bokwoon95.jpg[width:"150", align="left"]
+{empty}[https://github.com/bokwoon95[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
+* UI
+* Deliverables and deadlines
+* Scheduling and tracking (Backup)
 
 '''
+
+=== Jo Brough
+image::jobrough.jpg[width:"150", align="left"]
+{empty}[https://github.com/thehelpfulbees[github]] [<<johndoe#, portfolio>>]
+
+* Storage
+* Scheduling and tracking
+* Testing (Backup)

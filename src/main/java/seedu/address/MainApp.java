@@ -1,5 +1,13 @@
 package seedu.address;
 
+import java.awt.AWTException;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -9,7 +17,10 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -21,6 +32,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
+import seedu.address.model.BirthdayNotifier;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -40,9 +52,15 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    private static final Version VERSION = new Version(1, 3, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+    private static final String TRAY_ICON = "images/PocketBookLogo.png";
+    private static final String MESSAGE_TRAY_UNSUPPORTED = "SystemTray is not supported";
+    private static final String APP_NAME = "PocketBook";
+    private static final String EXIT = "Exit";
+    private static final String MESSAGE_ADD_TRAY_ICON_FAIL = "TrayIcon could not be added.";
+    private static final int ICON_SIZE = 16;
 
     protected Ui ui;
     protected Logic logic;
@@ -50,7 +68,8 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-
+    protected TrayIcon trayIcon;
+    protected SystemTray tray;
 
     @Override
     public void init() throws Exception {
@@ -72,8 +91,97 @@ public class MainApp extends Application {
 
         ui = new UiManager(logic, config, userPrefs);
 
+        startTray();
+
         initEventsCenter();
     }
+
+    //@@author liliwei25
+    /**
+     * Start a tray icon running in background
+     */
+    private void startTray() {
+        Platform.setImplicitExit(false);
+        if (isNotSupported()) {
+            return;
+        }
+        initTrayIcon();
+        addTrayIcon();
+    }
+
+    /**
+     * Adds created tray icon to System tray
+     */
+    private void addTrayIcon() {
+        try {
+            tray = SystemTray.getSystemTray();
+            tray.add(trayIcon);
+        } catch (AWTException e) {
+            logger.warning(MESSAGE_ADD_TRAY_ICON_FAIL);
+        }
+    }
+
+    /**
+     * Checks if System tray is supported by OS
+     *
+     * @return True if system tray is not supported
+     */
+    private boolean isNotSupported() {
+        if (!SystemTray.isSupported()) {
+            logger.warning(MESSAGE_TRAY_UNSUPPORTED);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Initialize the tray icon for the app
+     */
+    private void initTrayIcon() {
+        Image image = new Image(TRAY_ICON, ICON_SIZE, ICON_SIZE, true, true);
+        PopupMenu popup = new PopupMenu();
+
+        setupTrayIcon(image, popup);
+        setupPopupMenu(popup);
+        setupMouseListener();
+    }
+
+    /**
+     * Sets up the tray icon
+     */
+    private void setupTrayIcon(Image image, PopupMenu popup) {
+        trayIcon = new TrayIcon(SwingFXUtils.fromFXImage(image, null), APP_NAME, popup);
+        trayIcon.setPopupMenu(popup);
+    }
+
+    /**
+     * Sets up the pop-up menu of the tray icon
+     */
+    private void setupPopupMenu(PopupMenu popup) {
+        MenuItem exitItem = new MenuItem(EXIT);
+        exitItem.addActionListener(e -> Platform.runLater(this::stop));
+        popup.add(exitItem);
+    }
+
+    /**
+     * Sets up the mouse listener for the tray icon
+     */
+    private void setupMouseListener() {
+        trayIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2 && !e.isConsumed()) {
+                    e.consume();
+                    if (ui.isShowing()) {
+                        Platform.runLater(() -> ui.hide());
+                    } else {
+                        Platform.runLater(() -> ui.show());
+                    }
+                }
+            }
+        });
+    }
+    //@@author
 
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
@@ -185,6 +293,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
+        new BirthdayNotifier(model.getFilteredPersonList());
     }
 
     @Override
@@ -196,6 +305,7 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }
+        tray.remove(trayIcon);
         Platform.exit();
         System.exit(0);
     }

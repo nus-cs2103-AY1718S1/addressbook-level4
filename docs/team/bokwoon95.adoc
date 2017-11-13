@@ -1,0 +1,69 @@
+= Bok Woon - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B3/main/blob/master/collated/main/bokwoon95.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B3/main/blob/master/collated/test/bokwoon95.md[Test code]]
+
+=== Enhancement Added: Fuzzyfind
+
+==== External behavior
+
+---
+
+The 'fuzzyfind' command largely operates like the 'find' command, with the caveat that it searches all substrings of contact names, not just words of contact names. This can be illustrated with the following example:
+
+    AddressBook contains: Simon, Jim, Chrissi
+    User searches for: Si
+    ---------------------
+    'find' command: returns nothing
+    'fuzzyfind' command: returns Simon, Chrissi (both contain 'si')
+
+==== Justification
+
+---
+
+Sometimes the user might not remember the exact name of the person he is searching for. Even if he is off by a letter, 'Find' will not return the correct results. Thus the user can 'Fuzzyfind' for a particular contact instead by searching for substrings instead of exact names.
+
+==== Implementation
+
+---
+
+Fuzzyfind differs from Find by the predicate being used to test each user input string with each AddressBook Name string. In this case, a new Predicate Subclass called 'NameContainsSubstringsPredicate' was created that uses 'string.contains()' instead of 'string.equals()' to check for the existence of substrings.
+
+Firstly the FuzzfindCommandParser breaks up the user input string by whitespaces and stores each smaller string in a string array. It then initializes a new FuzzyfindCommand object with the aforementioned 'NameContainsSubstringsPredicate' attribute. This results in the predicate being called during the '.execute()' method of the FuzzyCommand class, which will in turn update FilteredList of the current model object. Thus displaying all the users that match the predicate.
+
+Note that a substring match can return a lot more unexpected results than a strict word match, so it is best used if the 'find' command does not return the person you are looking for, or if you cannot remember the exact name of the person.
+
+=== Enhancement Proposed: Add Person field 'Instagram'
+
+==== External Behavior
+---
+
+`Add` takes in a new field prefix, `i/`, that initializes a contact's instagram account.
+
+E.g.: `Add n/John p/12345678 e/john@email.com a/23 Some Street i/john94`
+
+Clicking on the person's Instagram field will open up the contact's instagram account in PocketBook's browser.
+
+==== Justification
+
+---
+In this age of social media, it is convenient for users to store the instagram accounts of their contacts. It would also be very convenient if they could view their contact's instagram accounts directly in PocketBook without leaving the application.
+
+==== Implementation
+
+---
+A new class `SocialMedia` would be created, with separate attributes for Facebook, Instagram and Twitter respectively. The fxml element `PersonInfoPanel` would listen to the `Instagram` field and update the Instagram link reactively.
+
+When the user clicks on a contact's instgram field, it will trigger a function that updates PocketBook's web browser with the contact's instagram account instead.
+
+
+---
+=== Other contributions
+
+* Prevent Person's tags from being added to the master list if adding/editing person throws an exception (Pull request https://github.com/CS2103AUG2017-F09-B3/main/pull/63[#63])
+* Allow `Add` and `Edit` commands to operate on 'Remark' and 'Birthday' fields (Pull request https://github.com/CS2103AUG2017-F09-B3/main/pull/75[#75])
