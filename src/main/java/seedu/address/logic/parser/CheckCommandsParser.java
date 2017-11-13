@@ -12,14 +12,13 @@ import java.util.Set;
  * so that the user does not have to remember specific commands
  */
 public class CheckCommandsParser {
-
     /**
      * Parsers user input command and match it with the synonyms/aliases
      *
      * @param userCommand user input command string
      * @return the relevant command it matches
      */
-    public static String matchCommand(String userCommand) {
+    public String matchCommand(String userCommand) {
         /**
          * sets the initial finalUserCommand to error
          */
