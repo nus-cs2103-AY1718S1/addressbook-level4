@@ -362,7 +362,7 @@ changes the profile picture of the contact at index 1 to D://myPicture.png.
 // end::changePicture[]
 
 // tag::remark[]
-=== Add remark to a person
+=== Add remark to a contact: `remark`
 
 Adds a remark to an existing person in the address book.
 Format: remark INDEX r/REMARK
@@ -383,24 +383,40 @@ removes any remark from the person of index 4 in the address book.
 // end::remark[]
 
 // tag::sort[]
-=== Sort
+=== Sort: `sort`
 
 Sorts the contacts in the address book in alphabetical order
 Format: sort
 // end::sort[]
 
-=== Delete Tag : (Coming in v1.5)
+=== Delete tag : (Coming in v2.0)
 
 Delete specific tag from all contacts. +
 
-=== Clear Tag : (Coming in v1.5)
+=== Clear tag : (Coming in v2.0)
 
 Clear all tags from specific contact. +
 
-=== Recently Deleted : `recentlyDel` (Since v1.2)
+// tag::recentlydeleted[]
+=== Recently deleted : `recentlyDel` (Since v1.2)
 
 Shows recently deleted list of contacts for past 30 contacts. +
 Format: `recentlyDel`
+// end::recentlydeleted[]
+
+// tag::theme[]
+=== Changing theme : `theme` (Since v1.5)
+
+Changes the colour theme of TheYellowPage from `DarkTheme.css` to `LightTheme.css` and vice versa. +
+
+image::DarkTheme.png[width="790"]
+_Figure 4.22.1 : Screenshot of TheYellowPage in DarkTheme.css_ +
+
+image::LightTheme.png[width="790"]
+_Figure 4.22.2 : Screenshot of TheYellowPage in LightTheme.css_ +
+
+Format: `theme`
+// end::theme[]
 
 === Moving contacts : `move` (Coming in v2.0)
 

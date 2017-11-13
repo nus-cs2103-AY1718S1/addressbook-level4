@@ -50,11 +50,15 @@ public class DeleteMultipleCommand extends UndoableCommand {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
 
+            /*if (targetIndex.getZeroBased() <= 0) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }*/
+
             ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
             if (n == 0) {
-                listOfDeletedContacts = listOfDeletedContacts + personToDelete.getName();
+                listOfDeletedContacts = listOfDeletedContacts + personToDelete;
             } else {
-                listOfDeletedContacts = listOfDeletedContacts + ", " + personToDelete.getName();
+                listOfDeletedContacts = listOfDeletedContacts + ", " + personToDelete;
             }
 
             try {
@@ -80,7 +84,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
     //@@author vmlimshimin
     @Override
     public void setData(Model model, CommandHistory commandHistory,
-                        UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
+                        UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue, String theme) {
         this.model = model;
         this.queue = queue;
     }

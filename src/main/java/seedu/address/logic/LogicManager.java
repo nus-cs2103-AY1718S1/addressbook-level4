@@ -25,6 +25,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final UndoRedoStack undoRedoStack;
     //@@author vmlimshimin
     private final RecentlyDeletedQueue queue;
+    private String theme;
 
     //@@author
     public LogicManager(Model model) {
@@ -34,6 +35,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.undoRedoStack = new UndoRedoStack();
         //@@author vmlimshimin
         this.queue = new RecentlyDeletedQueue();
+        this.theme = "DarkTheme.css";
     }
 
     //@@author
@@ -43,7 +45,15 @@ public class LogicManager extends ComponentManager implements Logic {
         try {
             Command command = addressBookParser.parseCommand(commandText);
             //@@author vmlimshimin
-            command.setData(model, history, undoRedoStack, queue);
+            command.setData(model, history, undoRedoStack, queue, theme);
+            if (commandText.equals("theme")) {
+                String newTheme = theme;
+                if (newTheme.equals("DarkTheme.css")) {
+                    theme = "LightTheme.css";
+                } else {
+                    theme = "DarkTheme.css";
+                }
+            }
             //@@author
             CommandResult result = command.execute();
             undoRedoStack.push(command);

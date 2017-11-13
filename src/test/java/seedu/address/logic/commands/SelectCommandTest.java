@@ -136,7 +136,8 @@ public class SelectCommandTest {
      */
     private SelectCommand prepareCommand(Index index) {
         SelectCommand selectCommand = new SelectCommand(index);
-        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new RecentlyDeletedQueue());
+        selectCommand.setData(model, new CommandHistory(),
+                new UndoRedoStack(), new RecentlyDeletedQueue(), new String());
         return selectCommand;
     }
 }
