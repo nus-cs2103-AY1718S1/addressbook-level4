@@ -28,7 +28,19 @@ public class DeletesAllPhotosCommandTest {
 
         DeletesAllPhotosCommand deletesPhotoCommand = prepareCommand();
 
-        String expectedMessage = String.format(DeletesAllPhotosCommand.MESSAGE_DELETE_ALL_IMAGE_SUCCESS);
+        String expectedMessage = String.format(DeletesAllPhotosCommand.MESSAGE_DELETES_ALL_IMAGES_SUCCESS);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        assertCommandSuccess(deletesPhotoCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_success_noPhotosToDelete() throws Exception {
+
+        DeletesAllPhotosCommand deletesPhotoCommand = prepareCommand();
+
+        String expectedMessage = String.format(DeletesAllPhotosCommand.MESSAGE_DELETES_ALL_IMAGES_FAILURE);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 

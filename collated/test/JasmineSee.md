@@ -1,5 +1,5 @@
 # JasmineSee
-###### /java/seedu/address/logic/commands/DeletePhotoCommandTest.java
+###### \java\seedu\address\logic\commands\DeletePhotoCommandTest.java
 ``` java
 
 /**
@@ -81,7 +81,7 @@ public class DeletePhotoCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/DeletesAllPhotosCommandTest.java
+###### \java\seedu\address\logic\commands\DeletesAllPhotosCommandTest.java
 ``` java
 
 /**
@@ -96,7 +96,19 @@ public class DeletesAllPhotosCommandTest {
 
         DeletesAllPhotosCommand deletesPhotoCommand = prepareCommand();
 
-        String expectedMessage = String.format(DeletesAllPhotosCommand.MESSAGE_DELETE_ALL_IMAGE_SUCCESS);
+        String expectedMessage = String.format(DeletesAllPhotosCommand.MESSAGE_DELETES_ALL_IMAGES_SUCCESS);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        assertCommandSuccess(deletesPhotoCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_success_noPhotosToDelete() throws Exception {
+
+        DeletesAllPhotosCommand deletesPhotoCommand = prepareCommand();
+
+        String expectedMessage = String.format(DeletesAllPhotosCommand.MESSAGE_DELETES_ALL_IMAGES_FAILURE);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
@@ -128,7 +140,7 @@ public class DeletesAllPhotosCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/RemoveTagCommandTest.java
+###### \java\seedu\address\logic\commands\RemoveTagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemoveTagCommand.
@@ -208,7 +220,7 @@ public class RemoveTagCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/TagCommandTest.java
+###### \java\seedu\address\logic\commands\TagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code TagCommand}.
@@ -284,7 +296,7 @@ public class TagCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UploadPhotoCommandTest.java
+###### \java\seedu\address\logic\commands\UploadPhotoCommandTest.java
 ``` java
 
 /**
@@ -370,7 +382,7 @@ public class UploadPhotoCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ChangeThemeCommandParserTest.java
+###### \java\seedu\address\logic\parser\ChangeThemeCommandParserTest.java
 ``` java
 public class ChangeThemeCommandParserTest {
     private ChangeThemeCommandParser parser = new ChangeThemeCommandParser();
@@ -395,7 +407,7 @@ public class ChangeThemeCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/DeletePhotoCommandParserTest.java
+###### \java\seedu\address\logic\parser\DeletePhotoCommandParserTest.java
 ``` java
 public class DeletePhotoCommandParserTest {
     private DeletePhotoCommandParser parser = new DeletePhotoCommandParser();
@@ -412,7 +424,7 @@ public class DeletePhotoCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/RemoveTagCommandParserTest.java
+###### \java\seedu\address\logic\parser\RemoveTagCommandParserTest.java
 ``` java
 public class RemoveTagCommandParserTest {
     private RemoveTagCommandParser parser = new RemoveTagCommandParser();
@@ -433,7 +445,7 @@ public class RemoveTagCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/TagCommandParserTest.java
+###### \java\seedu\address\logic\parser\TagCommandParserTest.java
 ``` java
 public class TagCommandParserTest {
     private TagCommandParser parser = new TagCommandParser();
@@ -451,7 +463,7 @@ public class TagCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/UploadPhotoCommandParserTest.java
+###### \java\seedu\address\logic\parser\UploadPhotoCommandParserTest.java
 ``` java
 public class UploadPhotoCommandParserTest {
     private UploadPhotoCommandParser parser = new UploadPhotoCommandParser();
@@ -475,7 +487,7 @@ public class UploadPhotoCommandParserTest {
     }
 }
 ```
-###### /java/systemtests/TagCommandSystemTest.java
+###### \java\systemtests\TagCommandSystemTest.java
 ``` java
 public class TagCommandSystemTest extends AddressBookSystemTest {
 
