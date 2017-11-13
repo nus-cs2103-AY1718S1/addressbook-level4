@@ -36,9 +36,35 @@ Expected result: Command success, changes made by add command can be undone +
 Input: `undo` +
 Expected result: Command success, changes made by add command can be undone, so we can revert the sample data back to the original state +
 
-=== Undoing previous command : `undo`
+=== Undo/Redo command : `undo`/`redo`
 
-=== Redoing the previously undone command : `redo`
+Input: `delete 2` +
+Expected result: Command success. Person at index 2, Alex Yeoh has been deleted from the contact list.
+
+Input: `redo` +
+Expected result: Command failure. No command has been previously undone.
+
+Input: `undo` +
+Expected result: Command success. Alex Yeoh will be re-added to the contact list as `delete` is an undoable command.
+
+Input: `addtag 2 enemy` +
+Expected result: Command success. An enemy tag will be added to the person at index 2, Alex Yeoh.
+
+Input: `undo` +
+Expected result: Command success. The enemy tag will be removed.
+
+Input: `find n/Alex` +
+Expected result: Command success. Alex Yeoh will appear in the filtered list.
+
+Input: `redo` +
+Expected result: Command failure. Previously undone command has been purged upon execution of `find` command.
+
+Input: `list` +
+Expected result: Command success. Complete contact list displayed.
+
+Input: `undo` +
+Expected result: Command failure. `list` is not an undoable command.
+
 
 === Editing a person : `edit`
 Input: `edit` +
@@ -96,6 +122,28 @@ Input: `undo` +
 Expected result: Command success, tag change can be undone +
 
 === Finding persons : `find`
+
+Input: `find n/john` +
+Expected result: Command success. Ahmad Johnson will be displayed in the filtered list.
+
+Input: `find n/` +
+Expected result: Command failure. Missing input for `name` field.
+
+Input: `f n/al a/gey` +
+Expected result: Command success. Alex Yeoh, Foy Balakrishnan and Mua Wei Zong will be displayed in the filtered list as
+partial inputs are accepted.
+
+Input: `f t/       friends` +
+Expected result: Command success. Alex Yeoh, Bernice Yu, Mua Wei Zong and Orence Yu are displayed.
+
+Input: `find e/nus edu.sg t/enemy` +
+Expected result: Command success. Erfan Ibrahim, Lacob Yasim, Zack Jojo and Royston tan will be displayed as sentences are accepted as inputs.
+
+Input: `find Serangoon` +
+Expected result: Command failure. Invalid command format as no prefix was provided.
+
+Input: `list` +
+Expected result: Command success. Displays entire contact list.
 
 === Favouriting a person : `favourite`
 Input: `favourite` +
@@ -220,13 +268,108 @@ Expected result: Command success, the twitter link should be removed, and when p
 
 === Clearing all entries : `clear`
 
+Input: `clear` +
+Expected result: Command success. The contact list will be cleared of all contacts.
+
+Input: `undo` +
+Expected result: Command success. The contact list will be restored.
+
+Input: `clear 4` +
+Expected result: Command success. The contact list will be cleared of all contacts regardless of any words succeeding the `clear` term.
+
+Input: `undo` +
+Expected result: Command success. The contact list will be restored.
+
+Input: `c` +
+Expected result: Command success. The contact list will be cleared of all contacts.
+
+Input: `undo` +
+Expected result: Command success. The contact list will be restored.
+
 == Tag-related features
 
 === Listing all tags : `tags`
 
+Input: `tags` +
+Expected result: Command success. Tag list containing classmates, colleagues, enemy, family, friends and neighbours will be displayed.
+
+Input: `removetag family` +
+Expected result: Command success. Family tag will be removed from the entire contact list.
+
+Input: `tags` +
+Expected result: Command success. Tag list containing classmates, colleagues, enemy, friends and neighbours will be displayed.
+
+Input: `removetag classmates` +
+Expected result: Command success. Tag list containing colleagues, enemy, friends and neighbours will be displayed.
+
+Input: `undo` +
+Expected result: Command success. Whole contact list will be displayed and classmates tag has been re-added.
+
+Input: `tags` +
+Expected result: Command result. Tag list containing classmates, colleagues, enemy, friends and neighbours will be displayed.
+
+Input: `undo` +
+Expected result: Command success. Whole contact list will be displayed and family tag has been re-added.
+
+Input: `tags` +
+Expected result: Command result. Tag list containing classmates, colleagues, enemy, family, friends and neighbours will be displayed.
+
 === Adding tag(s) : `addtag`
 
+Input: `addtag 3 cousin` +
+Expected result: Command success. Cousin tag will be added to Ashley Ashley.
+
+Input: `at 2-4 6-8 7 cousin` +
+Expected result: Command success. Cousin tag will be added to Alex Yeoh, Bernice Yu, David Li, Erfan Ibrahim and Foy Balakrishnan.
+
+Input: `removetag cousin` +
+Expected result: Command success. Cousin tag will be removed from the entire contact list.
+
+Input: `addtag 5-3 enemy` +
+Expected result: Command failure. Range provided is invalid.
+
+Input: `addtag 2 what?` +
+Expected result: Command failure. Tag names must be alphanumeric.
+
+Input: `addtag 4-4 sister` +
+Expected result: Command success. Sister tag added to Bernice Yu.
+
+Input: `undo` +
+Expected result: Command success. Sister tag removed from Bernice Yu as `addtag` command is undoable.
+
+Input: `addtag 5 neighbours` +
+Expected result: Command failure. Neighbours tag already exists at index 5, Charlotte Oliveiro.
+
 === Removing tag(s) : `removetag`
+
+Input: `removetag family friends` +
+Expected result: Command success. Removed family and friends tag from entire contact list.
+
+Input: `tags` +
+Expected result: Command success. Tag list containing classmates, colleagues, enemy and neighbours will be displayed.
+
+Input: `undo` +
+Expected result: Command success. Family and friends tags are re-added to the contact list.
+
+Input: `rt 1-4 cousins` +
+Expected result: Command failure. Cousins tag does not exist in index 1-4.
+
+Input: `rt 5-9 classmates cousins` +
+Expected result: Command success. Classmates tag removed from Erfan Ibrahim and Games Willian. Since cousins tag does not exist
+, it will not be mentioned in the result display.
+
+Input: `undo` +
+Expected result: Command success. Classmates tags are re-added to Erfan Ibrahim and Games Willian.
+
+Input: `removetag 6 13 18 17-19 family` +
+Expected result: Command success. Removed family tag from David Li and Qavid Lee.
+
+Input: `undo` +
+Expected result: Command success. Family tags are re-added to David Li and Qavid Lee.
+
+Input: `remove friends` +
+Expected result: Command failure. Unknown command.
+
 
 == Remark-related features
 

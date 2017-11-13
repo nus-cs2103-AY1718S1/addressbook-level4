@@ -204,8 +204,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author NabeelZaheer
     @Override
-    public void removeTag(Set<Tag> tag, List<String> index) throws DuplicatePersonException,
+    public Set<Tag> removeTag(Set<Tag> tag, List<String> index) throws DuplicatePersonException,
             PersonNotFoundException {
+        Set<Tag> removedTags;
+        Set<Tag> displayTags = new HashSet<>();
         int totalSize = getFilteredPersonList().size();
         boolean tagExist = false;
         int decrease = 0;
@@ -229,25 +231,35 @@ public class ModelManager extends ComponentManager implements Model {
                 }
                 Person toUpdate = new Person(toDelete);
                 Set<Tag> oldTags = toDelete.getTags();
-                Set<Tag> newTags = deleteTag(tag, oldTags);
+                Set<Tag> newTags = deleteTagUpdate(tag, oldTags);
                 if (!(newTags.size() == oldTags.size())) {
                     toUpdate.setTags(newTags);
                     tagExist = true;
                     removed = true;
                     decrease++;
                     updatePerson(toDelete, toUpdate);
+                    removedTags = getTagsChanged(oldTags, newTags);
+                    displayTags = updateDisplayTags(displayTags, removedTags);
                 }
             }
         } else {
             for (int i = 0; i < totalSize; i++) {
-                Person toDelete = new Person(getFilteredPersonList().get(i));
+                int newSize = getFilteredPersonList().size();
+                Person toDelete;
+                if (newSize == totalSize) {
+                    toDelete = new Person(getFilteredPersonList().get(i));
+                } else {
+                    toDelete = new Person(getFilteredPersonList().get(0));
+                }
                 Person toUpdate = new Person(toDelete);
                 Set<Tag> oldTags = toDelete.getTags();
-                Set<Tag> newTags = deleteTag(tag, oldTags);
+                Set<Tag> newTags = deleteTagUpdate(tag, oldTags);
                 if (!(newTags.size() == oldTags.size())) {
                     toUpdate.setTags(newTags);
                     tagExist = true;
                     updatePerson(toDelete, toUpdate);
+                    removedTags = getTagsChanged(oldTags, newTags);
+                    displayTags = updateDisplayTags(displayTags, removedTags);
                 }
             }
         }
@@ -255,12 +267,14 @@ public class ModelManager extends ComponentManager implements Model {
         if (!tagExist) {
             throw new PersonNotFoundException();
         }
+        return displayTags;
     }
 
     @Override
-    public void addTag(Set<Tag> tag, Set<Index> index) throws PersonNotFoundException,
+    public Set<Tag> addTag(Set<Tag> tag, Set<Index> index) throws PersonNotFoundException,
             DuplicatePersonException {
-
+        Set<Tag> addedTags;
+        Set<Tag> displayTags = new HashSet<>();
         Iterator<Index> indexIt = index.iterator();
         boolean added = false;
 
@@ -274,14 +288,52 @@ public class ModelManager extends ComponentManager implements Model {
                 toUpdate.setTags(updated);
                 added = true;
                 updatePerson(toCheck, toUpdate);
+                addedTags = getTagsChanged(updated, current);
+                displayTags = updateDisplayTags(displayTags, addedTags);
             }
         }
 
         if (!added) {
             throw new PersonNotFoundException();
         }
+        return displayTags;
     }
 
+    /**
+     *
+     * @param currentDisplay
+     * @param changedTags
+     * @return updated set of removed tags
+     */
+    private Set<Tag> updateDisplayTags(Set<Tag> currentDisplay, Set<Tag> changedTags) {
+        Iterator<Tag> it = changedTags.iterator();
+        while (it.hasNext()) {
+            Tag checkTag = it.next();
+            if (!currentDisplay.contains(checkTag)) {
+                currentDisplay.add(checkTag);
+            }
+        }
+        return currentDisplay;
+    }
+
+    /**
+     *
+     * @param compareFrom set with tags to compare individually
+     * @param compareWith set to check if tags contain within
+     * @return set of tags that has been added/removed
+     */
+    private Set<Tag> getTagsChanged(Set<Tag> compareFrom, Set<Tag> compareWith) {
+        Set<Tag> changedSet = new HashSet<>();
+
+        Iterator<Tag> it = compareFrom.iterator();
+        while (it.hasNext()) {
+            Tag checkTag = it.next();
+            if (!compareWith.contains(checkTag)) {
+                changedSet.add(checkTag);
+            }
+        }
+        return changedSet;
+    }
 
     /**
      *
@@ -289,7 +341,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @param oldTags set of current tags
      * @return Set of Tags of new Person to be updated
      */
-    private Set<Tag> deleteTag(Set<Tag> tag, Set<Tag> oldTags) {
+    private Set<Tag> deleteTagUpdate(Set<Tag> tag, Set<Tag> oldTags) {
         Set<Tag> newTags = new HashSet<>();
 
         Iterator<Tag> it = oldTags.iterator();
