@@ -9,16 +9,17 @@ https://coveralls.io/github/CS2103AUG2017-T16-B2/main?branch=master[image:https:
 It's hard to be a teacher. We teach hundreds of students, take on extra administative roles and still have to monitor their grades.
 And if they perform poorly, we have to manually contact their parents and find other ways to help them.
 
-cherBook offers an easy one stop solution to all your problems. Our application helps you analyse and monitor your students' progress.
-And if you ever need to contact their parents, their number is only a click away. Download our cherBook now for greater convenience.
-
+cherBook offers an easy one stop solution to all your problems. Our application helps you analyse and monitor your students' progress. +
+On top of that, you can add your schedules with students to keep track of all your consultations within seconds, saving you the time of manually penning all of them down. +
+And if you ever need to contact your students' parents, their number is only a click away. +
+Download cherBook now for your convenience.
 
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
-image::images/Ui.png[width="600"]
+image::images/cherBook.png[width="600"]
 endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
