@@ -13,7 +13,7 @@ public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
     private static final String OWNER_FIELD_ID = "#owner";
     private static final String INSURED_FIELD_ID = "#insured";
     private static final String BENEFICIARY_FIELD_ID = "#beneficiary";
-    private static final String CONTRACT_NAME_ID = "#contractName";
+    private static final String CONTRACT_NAME_ID = "#contractFileName";
     private static final String PREMIUM_FIELD_ID = "#premium";
     private static final String SIGNING_DATE_ID = "#signingDate";
     private static final String EXPIRY_DATE_ID = "#expiryDate";
@@ -21,7 +21,7 @@ public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
     private final Label ownerLabel;
     private final Label insuredLabel;
     private final Label beneficiaryLabel;
-    private final Label contractNameLabel;
+    private final Label contractFileNameLabel;
     private final Label premiumLabel;
     private final Label signingDateLabel;
     private final Label expiryDateLabel;
@@ -32,7 +32,7 @@ public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
         this.ownerLabel = getChildNode(OWNER_FIELD_ID);
         this.insuredLabel = getChildNode(INSURED_FIELD_ID);
         this.beneficiaryLabel = getChildNode(BENEFICIARY_FIELD_ID);
-        this.contractNameLabel = getChildNode(CONTRACT_NAME_ID);
+        this.contractFileNameLabel = getChildNode(CONTRACT_NAME_ID);
         this.premiumLabel = getChildNode(PREMIUM_FIELD_ID);
         this.signingDateLabel = getChildNode(SIGNING_DATE_ID);
         this.expiryDateLabel = getChildNode(EXPIRY_DATE_ID);
@@ -52,7 +52,7 @@ public class InsuranceProfilePanelHandle extends NodeHandle<Node> {
     }
 
     public String getContractPathId() {
-        return contractNameLabel.getText();
+        return contractFileNameLabel.getText();
     }
 
     public String getPremium() {
