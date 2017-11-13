@@ -10,10 +10,9 @@ import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.MeetingTag;
 import seedu.address.model.meeting.NameMeeting;
-import seedu.address.model.meeting.PersonToMeet;
-import seedu.address.model.meeting.PhoneNum;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.ReadOnlyMeeting;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author nelsonqyj
 /**
@@ -27,10 +26,8 @@ public class XmlAdaptedMeeting {
     private String place;
     @XmlElement(required = true)
     private String date;
-    @XmlElement(required = true)
-    private String personToMeet;
-    @XmlElement(required = true)
-    private String phoneNum;
+    @XmlElement
+    private List<XmlAdaptedPerson> persons = new ArrayList<>();
     @XmlElement(required = true)
     private String meetTag;
 
@@ -54,8 +51,10 @@ public class XmlAdaptedMeeting {
         name = source.getName().fullName;
         place = source.getPlace().value;
         date = source.getDate().toString();
-        personToMeet = source.getPersonName().toString();
-        phoneNum = source.getPersonPhone().toString();
+        persons = new ArrayList<>();
+        for (ReadOnlyPerson person: source.getPersonsMeet()) {
+            persons.add(new XmlAdaptedPerson(person));
+        }
         meetTag = source.getMeetTag().toString();
     }
 
@@ -70,11 +69,13 @@ public class XmlAdaptedMeeting {
         final NameMeeting name = new NameMeeting(this.name);
         final DateTime dateTime = new DateTime(this.date);
         final Place place = new Place(this.place);
-        final PersonToMeet personToMeet = new PersonToMeet(this.personToMeet);
-        final PhoneNum phoneNum = new PhoneNum(this.phoneNum);
+        final List<ReadOnlyPerson> personsMeet = new ArrayList<>();
+        for (XmlAdaptedPerson person: this.persons) {
+            personsMeet.add(person.toModelType());
+        }
         final MeetingTag meetTag = new MeetingTag(this.meetTag);
 
-        return new Meeting(name, dateTime, place, personToMeet, phoneNum, meetTag);
+        return new Meeting(name, dateTime, place, personsMeet, meetTag);
     }
 
 }

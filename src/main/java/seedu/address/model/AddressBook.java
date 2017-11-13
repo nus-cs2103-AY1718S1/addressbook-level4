@@ -12,11 +12,12 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.UpdateChangeEvent;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.UniqueMeetingList;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
-//import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
 import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
@@ -157,8 +158,22 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
+
+        editPersonOfMeeting(target, editedPerson);
         persons.setPerson(target, editedPerson);
     }
+    //@@author Melvin-leo
+
+    /**
+     * Handle the edited person of persons list in the meeting list
+     * @param target
+     * @param editedReadOnlyPerson
+     */
+    public void editPersonOfMeeting(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
+        meetings.editPerson(target, editedReadOnlyPerson);
+        EventsCenter.getInstance().post(new UpdateChangeEvent());
+    }
+    //@@author
 
     /**
      * Replaces the given meeting {@code target} in the list with {@code editedReadOnlyMeeting}.

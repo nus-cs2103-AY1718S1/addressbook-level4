@@ -15,6 +15,7 @@ import seedu.address.testutil.MeetingBuilder;
 //@@author Melvin-leo
 public class MeetingCardTest extends GuiUnitTest {
 
+
     @Test
     public void display() {
         // no tags
@@ -28,8 +29,7 @@ public class MeetingCardTest extends GuiUnitTest {
             meeting.setName(DIVING.getName());
             meeting.setPlace(DIVING.getPlace());
             meeting.setDateTime(DIVING.getDate());
-            meeting.setPhoneNum(DIVING.getPersonPhone());
-            meeting.setPersonName(DIVING.getPersonName());
+            meeting.setPersonsMeet(DIVING.getPersonsMeet());
         });
         assertCardDisplay(meetingCard, meeting, 1);
     }

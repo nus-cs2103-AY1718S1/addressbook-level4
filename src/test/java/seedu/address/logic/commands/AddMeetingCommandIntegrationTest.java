@@ -4,6 +4,9 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +28,6 @@ import seedu.address.testutil.PersonBuilder;
 public class AddMeetingCommandIntegrationTest {
 
     private Model model;
-    private Index index;
 
     @Before
     public void setUp() {
@@ -60,9 +62,10 @@ public class AddMeetingCommandIntegrationTest {
      * Generates a new {@code AddMeetingCommand} which upon execution, adds {@code meeting} into the {@code model}.
      */
     private AddMeetingCommand prepareCommand(Meeting meeting, Model model) {
-        this.index = Index.fromOneBased(1);
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(Index.fromOneBased(1));
         AddMeetingCommand command =
-                new AddMeetingCommand(meeting.getName(), meeting.getDate(), meeting.getPlace(), index,
+                new AddMeetingCommand(meeting.getName(), meeting.getDate(), meeting.getPlace(), indexes,
                         meeting.getMeetTag());
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;

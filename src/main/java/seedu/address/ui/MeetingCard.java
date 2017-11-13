@@ -3,10 +3,14 @@ package seedu.address.ui;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -37,9 +41,7 @@ public class MeetingCard extends UiPart<Region> {
     @FXML
     private Label place;
     @FXML
-    private Label person;
-    @FXML
-    private Label phoneNum;
+    private ListView<Label> person;
     @FXML
     private ImageView icon;
 
@@ -59,8 +61,13 @@ public class MeetingCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(meeting.nameProperty()));
         date.textProperty().bind(Bindings.convert(meeting.dateProperty()));
         place.textProperty().bind(Bindings.convert(meeting.placeProperty()));
-        person.textProperty().bind(Bindings.convert(meeting.personMeetProperty()));
-        phoneNum.textProperty().bind(Bindings.convert(meeting.phoneMeetProperty()));
+        List<Label> labels = new ArrayList<>();
+        meeting.getPersonsMeet().forEach(person -> {
+            Label newPersonLabel = new PersonLabel(person.getName().toString() + "\n"
+                    + person.getPhone().toString());
+            labels.add(newPersonLabel);
+        });
+        person.setItems(FXCollections.observableList(labels));
         DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime meetingDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
         LocalDateTime currDate = LocalDateTime.now();

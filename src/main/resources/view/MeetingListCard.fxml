@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
@@ -38,8 +39,7 @@
             </HBox>
             <FlowPane fx:id="tags" />
             <Label fx:id="date" text="\$date" />
-         <Label fx:id="person" text="\$person" />
-         <Label fx:id="phoneNum" styleClass="cell_small_label" text="\$phoneNum" />
+         <ListView id="listViewCard" fx:id="person" prefHeight="42.0" prefWidth="200.0" />
             <Label fx:id="place" styleClass="cell_small_label" text="\$place" />
         </VBox>
       <rowConstraints>

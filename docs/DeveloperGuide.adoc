@@ -111,7 +111,7 @@ When you are ready to start coding,
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 4.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -143,7 +143,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 4.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -151,7 +151,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 4.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -159,7 +159,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 4.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -169,7 +169,7 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 4.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -186,10 +186,10 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 4.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 4.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -202,12 +202,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 4.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelComponentClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 4.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -221,7 +221,7 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 4.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -246,7 +246,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 3.1.1 : Inheritance Diagram for commands_
+_Figure 5.1.1 : Inheritance Diagram for commands_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -286,12 +286,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 3.1.2 : Diagram to show stack_
+_Figure 5.1.2 : Diagram to show stack_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 3.1.3 : Diagram to show stack with another command_
+_Figure 5.1.3 : Diagram to show stack with another command_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -301,7 +301,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 3.1.3 : Diagram to show how undo works_
+_Figure 5.1.3 : Diagram to show how undo works_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -309,7 +309,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
-_Figure 3.1.4 : Sequence diagram for undo_
+_Figure 5.1.4 : Sequence diagram for undo_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -319,17 +319,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 3.1.5 : Diagram to show stack with more commands_
+_Figure 5.1.5 : Diagram to show stack with more commands_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 3.1.6 : Diagram to show undoable command not added to stack_
+_Figure 5.1.6 : Diagram to show undoable command not added to stack_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 3.1.7 : Activity diagram to show UndoRedoStack_
+_Figure 5.1.7 : Activity diagram to show UndoRedoStack_
 
 ==== Design Considerations
 
@@ -392,22 +392,24 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 // tag::meetingClass[]
+
 === Implementing Meeting Class
 
 The Meeting class is a new class just like the Person class, which resides inside `model`. It features commands that modifies the state of the address book
-such as AddMeeting, DeleteMeeting, EditMeeting, ListMeeting and FindMeeting.
-The attributes of Meeting class include `NameMeeting`, `DateTime`, `Place`, `PersonToMeet` and `PhoneNum`.
+such as `addmeeting`, `deletemeeting`, `editmeeting`, `listmeeting` and `findmeeting`.
+The attributes of Meeting class include `NameMeeting`, `DateTime`, `Place`, `Persons` and `MeetingTag`.
 
+`Persons` are `ReadOnlyPerson` class from the contact list added by the users. In this meeting class, `List<ReadOnlyPerson> personsToMeet` are an object inside `Meeting` class which stores the information of the persons inside the class itself.
 
 ==== Design Considerations
 
 **Aspect:** Creation of Meeting class +
-**Alternative 1 (current choice):** Meeting class that is created with 'PersonToMeet' and 'PhoneNum' class +
-**Pros:** Easy to implement +
-**Cons:** More codes for developers to write and change +
-**Alternative 2:** Input a person class in Meeting class to retrieve their name and phone number +
-**Pros:** Allows developers to be more flexible to implement with meeting class  +
+**Alternative 1 (current choice):** Input a person class in Meeting class to retrieve their name and phone number +
+**Pros:** Allows developers to be more flexible to implement with meeting class, also simplify the creation of group meetings  +
 **Cons:** It is difficult to implement.
+**Alternative 2:** Meeting class that is created with 'PersonToMeet' and 'PhoneNum' class +
+**Pros:** Easy to implement +
+**Cons:** More codes for developers to write and change.
 //end::meetingClass[]
 
 // tag::addmeeting[]
@@ -443,7 +445,7 @@ of the corresponding contact as shown in the example above.
 The following sequence diagram below shows how AddMeeting operation works:
 
 image::addMeetingSequenceDiagram.png[width="800"]
-_Figure 3.5.1 : Sequence diagram of Add Meeting_
+_Figure 5.5.1 : Sequence diagram of Add Meeting_
 
 // end::addmeeting[]
 
@@ -495,6 +497,36 @@ KEYWORD: makan
 The `KEYWORD` of meeting provides the name, date and location of the meeting which is used to list it.
 
 If none of the meetings contains the `KEYWORD`, the results would show "No meetings found".
+
+// tag::findexactmeeting[]
+=== Find Exact Meeting
+
+The find exact meeting command inherits from Command which allows users to find meetings in the meeting list with persons whose name matches the [PHRASE].
+
+Implementation:
+
+When the `findexactmeeting` command is called with the appropriate parameters, a search for the instance of the `Meeting` object.
+
+The following sequence diagram shows how the command works:
+
+image::FindExactMeetingSequence.png[width="800"]
+_Figure 5.5.1 : Find Exact Meeting Sequence Diagram_
+
+For example,
+
+[source,java]
+----
+findexactmeeting john tan
+----
+
+Finds a meeting(s) with the following parameter as the name of the person stored in meeting
+[source,java]
+----
+PHRASE: john tan
+----
+
+If none of the meetings contains the `PHRASE`, the results would show "No meetings found".
+// end::findexactmeeting[]
 
 // tag::editmeeting[]
 === Edit Meeting
@@ -630,29 +662,29 @@ The implementation of meeting card starts of from creating 'Meeting' class which
 * These object properties of the meeting class are assigned to the labels in the Meeting card of MeetingCard.java, handled by UI manager.
 
 image::UiMeetingCardSequenceDiagram.png[width="800"]
-_Figure 3.9.1 : Sequence diagram of Ui of Meeting Card_
+_Figure 5.10.1 : Sequence diagram of Ui of Meeting Card_
 
 * The list of meeting cards are assigned to the panel at the right of the program. The list are created with 'UniqueMeetingList'. This list of meetings are always sorted according to date and time, with the nearest date and time first.
 
 image::MeetingCard.png[width="250"]
-_Figure 3.9.2 : Meeting Card_
+_Figure 5.10.2 : Meeting Card_
 
-To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
+To show the urgency of the meeting, as you can see from the examples below, colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
 
 * `darkRed` : Meeting is in next 24 hours.
 
 image::MeetingCard1.png[width="250"]
-_Figure 3.9.3 : Meeting card that due within 24 hours_
+_Figure 5.10.3 : Meeting card that due within 24 hours_
 
 * `red` : Meeting is in next 48 hours.
 
 image::MeetingCard2.png[width="250"]
-_Figure 3.9.4 : Meeting Card that due within 48 hours_
+_Figure 5.10.4 : Meeting Card that due within 48 hours_
 
 * `orangeRed` : Meeting is in next 72 hours.
 
 image::MeetingCard3.png[width="250"]
-_Figure 3.9.5 : Meeting Card that due within 72 hours_
+_Figure 5.10.5 : Meeting Card that due within 72 hours_
 
 ==== Design Considerations
 
@@ -670,13 +702,13 @@ _Figure 3.9.5 : Meeting Card that due within 72 hours_
 To maximise the ability to remind the users of their meetings, a pop up reminder with the details of the meetings are shown to the user. The user will just have to acknowledge it. The pop up reminder activates and provides the details of the users' next meeting in 24 hours. As you can see from the Figure 5.8.1, there are sufficient details of the next meeting and the extra button is for the user to confirm the reminder.
 
 image::Reminder.png[width="600"]
-_Figure 3.9.5 : Reminder for single meeting_
+_Figure 5.11.1 : Reminder for single meeting_
 
 Implementation: +
 The creation of the pop up starts from the calling of `MeetingAlert` class during the opening of the application. The implementation of meeting pop up reminder ultilises `javafx.stage.Stage`. Before the instantiation of the `MeetingAlert` class, there will be a check if the next meeting is a group meeting or normal meeting. Subsequently, the results will be shown on the reminder itself, shown in Figure 5.8.2.
 
 image::Reminder(1).png[width="600"]
-_Figure 5.8.2 : Reminder for group meeting_
+_Figure 5.11.2 : Reminder for group meeting_
 
 ==== Design Considerations
 
@@ -737,7 +769,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 6.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
