@@ -750,7 +750,7 @@ The following is the Sequence Diagram for RemoveTag command. The alias is "rm".
 image::SDforRemoveTagCommand.png[width="800"]
 
 [NOTE]
-The difference between the RemoveTag and Delete Person by Tag is that RemoveTag does not remove any Resident from the ResidentBook. It just removes all the specified tags attached to the Resident.
+The difference between the RemoveTag and DeleteByTag is that RemoveTag does not remove any Resident from the ResidentBook. It just removes all the specified tags attached to the Resident.
 
 The following shows the implementation method, where user will specify the tagName:
 [source,java]
