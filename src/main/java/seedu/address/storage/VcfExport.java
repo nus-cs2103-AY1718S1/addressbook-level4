@@ -6,9 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -17,14 +15,11 @@ import seedu.address.model.tag.Tag;
  * Parses a list of {@code ReadOnlyPerson} into a .vcf file.
  */
 public class VcfExport {
-    private static final Logger logger = LogsCenter.getLogger(VcfExport.class);
-
     /**
      * Parses a .vcf file into a list of {@code ReadOnlyPerson}.
      * Throws a IOException if file is not found.
      */
     public static void saveDataToFile(File file, List<ReadOnlyPerson> list) throws IOException {
-        logger.fine("Attempting to write to data file: " + file.getPath());
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
         for (ReadOnlyPerson person : list) {

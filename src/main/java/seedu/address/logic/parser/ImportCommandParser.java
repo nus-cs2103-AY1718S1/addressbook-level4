@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ImportFileChooseEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -23,6 +25,8 @@ import seedu.address.storage.XmlFileStorage;
  * a new ImportCommand Object.
  */
 public class ImportCommandParser implements Parser<ImportCommand> {
+
+    private final Logger logger = LogsCenter.getLogger(ImportCommandParser.class);
 
     @Override
     public ImportCommand parse(String userInput) throws ParseException {
@@ -51,6 +55,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
      */
     private ImportCommand importByVcf(File file) throws ParseException {
         try {
+
+            logger.info("Attempting to read data from file: " + file.getPath());
             List<ReadOnlyPerson> importList = VcfImport.getPersonList(file);
 
             return new ImportCommand(importList);
@@ -71,6 +77,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
      */
     private ImportCommand importByXml(File file) throws ParseException {
         try {
+
+            logger.info("Attempting to read data from file: " + file.getPath());
             ReadOnlyAddressBook importingBook = XmlFileStorage.loadDataFromSaveFile(file);
             List<ReadOnlyPerson> importList = importingBook.getPersonList();
 
