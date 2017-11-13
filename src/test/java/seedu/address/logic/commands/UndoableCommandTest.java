@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import seedu.address.logic.FindHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -17,7 +18,8 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private final DummyCommand dummyCommand = new DummyCommand(model);
+    private final FindHistory findHistory = new FindHistory();
+    private final DummyCommand dummyCommand = new DummyCommand(model, findHistory);
 
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -49,8 +51,9 @@ public class UndoableCommandTest {
      * Deletes the first person in the model's filtered list.
      */
     class DummyCommand extends UndoableCommand {
-        DummyCommand(Model model) {
+        DummyCommand(Model model, FindHistory findHistory) {
             this.model = model;
+            this.findHistory = findHistory;
         }
 
         @Override
@@ -58,6 +61,7 @@ public class UndoableCommandTest {
             ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(0);
             try {
                 model.deletePerson(personToDelete);
+                findHistory.deletePerson(personToDelete);
             } catch (PersonNotFoundException pnfe) {
                 fail("Impossible: personToDelete was retrieved from model.");
             }

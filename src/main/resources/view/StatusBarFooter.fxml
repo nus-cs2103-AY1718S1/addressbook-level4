@@ -4,11 +4,12 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 
-<GridPane styleClass="grid-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane styleClass="grid-pane" minHeight="10" maxHeight="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="100" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="100" />
   </columnConstraints>
   <StatusBar styleClass="anchor-pane" fx:id="syncStatus" />
-  <StatusBar styleClass="anchor-pane" fx:id="saveLocationStatus" GridPane.columnIndex="1" nodeOrientation="RIGHT_TO_LEFT" />
+  <StatusBar styleClass="anchor-pane" fx:id="totalPersons" GridPane.columnIndex="1" nodeOrientation="RIGHT_TO_LEFT"/>
+  <StatusBar styleClass="anchor-pane" fx:id="saveLocationStatus" GridPane.columnIndex="2" nodeOrientation="RIGHT_TO_LEFT" />
 </GridPane>

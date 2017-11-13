@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.ParserUtil.STRING_IF_EMPTY;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -11,13 +12,12 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Address {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person addresses can take any values, and it should not be blank";
+            "Person addresses can take any values, except \"<>%|$*\" and it should not be blank";
 
     /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
+     * Address should not contain special characters like "^<>%|$*"
      */
-    public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    public static final String ADDRESS_VALIDATION_REGEX = "^[^<>%|$*]+$";
 
     public final String value;
 
@@ -38,7 +38,7 @@ public class Address {
      * Returns true if a given string is a valid person email.
      */
     public static boolean isValidAddress(String test) {
-        return test.matches(ADDRESS_VALIDATION_REGEX);
+        return (test.matches(ADDRESS_VALIDATION_REGEX) || STRING_IF_EMPTY.equals(test));
     }
 
     @Override

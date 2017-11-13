@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.FindHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -49,7 +50,7 @@ public class AddCommandIntegrationTest {
      */
     private AddCommand prepareCommand(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new FindHistory(), new UndoRedoStack());
         return command;
     }
 }

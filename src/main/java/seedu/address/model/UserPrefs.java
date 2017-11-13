@@ -12,6 +12,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    private String avatarFileDirectoryPath = "data/avatar/";    // cannot be changed by user
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -43,6 +44,10 @@ public class UserPrefs {
 
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
+    }
+
+    public String getAvatarFileDirectoryPath() {
+        return avatarFileDirectoryPath;
     }
 
     @Override

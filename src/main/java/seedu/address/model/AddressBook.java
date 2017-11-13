@@ -84,7 +84,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
-        Person newPerson = new Person(p);
+        Person newPerson;
+        if (p.isHomepageManuallySet()) {
+            newPerson = new Person(p, p.getHomepage());
+        } else {
+            newPerson = new Person(p);
+        }
         syncMasterTagListWith(newPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
@@ -105,14 +110,25 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedReadOnlyPerson);
+        Person editedPerson;
 
-        Person editedPerson = new Person(editedReadOnlyPerson);
+        if (editedReadOnlyPerson.isHomepageManuallySet()) {
+            editedPerson = new Person(editedReadOnlyPerson, editedReadOnlyPerson.getHomepage());
+        } else {
+            editedPerson = new Person(editedReadOnlyPerson);
+        }
         syncMasterTagListWith(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
     }
+
+    //@@author karrui
+    public void sortAddressBook(boolean isDescendingSort) {
+        persons.sort(isDescendingSort);
+    }
+    //@@author
 
     /**
      * Ensures that every tag in this person:

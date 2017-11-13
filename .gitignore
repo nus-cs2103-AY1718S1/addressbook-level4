@@ -18,3 +18,11 @@ classes/
 /bin/
 src/main/resources/docs/
 out/
+src/main/resources/images/buttons/redoIcon.png
+src/main/resources/images/buttons/editIcon.png
+src/main/resources/images/buttons/clearIcon.png
+src/main/resources/images/buttons/addIcon.png
+src/main/resources/images/buttons/undoIcon.png
+src/main/resources/images/buttons/refreshIcon.png
+src/main/resources/images/buttons/deleteIcon.png
+src/main/resources/images/buttons/delete2Icon.png

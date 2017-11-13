@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -18,23 +19,27 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Homepage;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_PHONE = "+6512A34";
+    private static final String INVALID_ADDRESS = "%$";
+    private static final String INVALID_EMAIL = "//@$example.com";
+    private static final String INVALID_TAG = "#$@friend";
+    private static final String INVALID_HOMEPAGE = "%#google.ga";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_HOMEPAGE = "http://www.google.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -169,6 +174,14 @@ public class ParserUtilTest {
         ParserUtil.parseTags(null);
     }
 
+    //@@author yewshengkai
+    @Test
+    public void parseTag_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTag(null);
+    }
+    //@@author
+
     @Test
     public void parseTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
@@ -180,6 +193,85 @@ public class ParserUtilTest {
         assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());
     }
 
+    //@@author yewshengkai
+    @Test
+    public void parseAllDetail_withValidDetails() throws Exception {
+        Address expectedAddress = new Address(VALID_ADDRESS);
+        ArrayList<String> addressList = ParserUtil.parseAllDetail(
+                Arrays.asList(VALID_ADDRESS), FindCommand.COMMAND_WORD_ADDRESS);
+        assertEquals(expectedAddress.value, addressList.toString().replaceAll(
+                "['\\[\\],']", ""));
+        ParserUtil.parseAllDetail(addressList, FindCommand.COMMAND_WORD_ADDRESS);
+
+        Email expectedEmail = new Email(VALID_EMAIL);
+        ArrayList<String> emailList = ParserUtil.parseAllDetail(Arrays.asList(
+                VALID_EMAIL), FindCommand.COMMAND_WORD_EMAIL);
+        assertEquals(expectedEmail.value, emailList.toString().replaceAll(
+                "['\\[\\]']", ""));
+        ParserUtil.parseAllDetail(emailList, FindCommand.COMMAND_WORD_EMAIL);
+
+        //@@author karrui
+        Homepage expectedHomepage = new Homepage(VALID_HOMEPAGE);
+        ArrayList<String> homepageList = ParserUtil.parseAllDetail(Arrays.asList(
+                VALID_HOMEPAGE), FindCommand.COMMAND_WORD_HOMEPAGE);
+        assertEquals(expectedHomepage.value, homepageList.toString().replaceAll(
+                "['\\[\\]']", ""));
+
+        //@@author yewshengkai
+        ParserUtil.parseAllDetail(homepageList, FindCommand.COMMAND_WORD_HOMEPAGE);
+        Phone expectedPhone = new Phone(VALID_PHONE);
+        ArrayList<String> phoneList = ParserUtil.parseAllDetail(Arrays.asList(
+                VALID_PHONE), FindCommand.COMMAND_WORD_PHONE);
+        assertEquals(expectedPhone.value, phoneList.toString().replaceAll(
+                "['\\[\\]']", ""));
+        ParserUtil.parseAllDetail(phoneList, FindCommand.COMMAND_WORD_PHONE);
+
+        Tag expectedTag = new Tag(VALID_TAG_1);
+        ArrayList<String> tagList = ParserUtil.parseAllDetail(Arrays.asList(
+                VALID_TAG_1), FindCommand.COMMAND_WORD_TAG);
+        assertEquals(expectedTag.tagName, tagList.toString().replaceAll(
+                "['\\[\\]']", ""));
+        ParserUtil.parseAllDetail(tagList, FindCommand.COMMAND_WORD_TAG);
+    }
+
+    //@@author yewshengkai
+    @Test
+    public void parseAllDetail_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        Address expectedAddress = new Address(INVALID_ADDRESS);
+        ArrayList<String> invalidAddress = ParserUtil.parseAllDetail(
+                Arrays.asList(INVALID_ADDRESS), FindCommand.COMMAND_WORD_ADDRESS);
+        assertEquals(expectedAddress.value, invalidAddress.toString().replaceAll(
+                "['\\[\\],']", ""));
+        ParserUtil.parseAllDetail(invalidAddress, FindCommand.COMMAND_WORD_ADDRESS);
+        assertFalse(INVALID_ADDRESS, Address.isValidAddress(INVALID_ADDRESS));
+
+        Email expectedEmail = new Email(INVALID_EMAIL);
+        ArrayList<String> invalidEmail = ParserUtil.parseAllDetail(
+                Arrays.asList(INVALID_EMAIL), FindCommand.COMMAND_WORD_EMAIL);
+        assertEquals(expectedEmail.value, invalidEmail.toString());
+        ParserUtil.parseAllDetail(invalidEmail, FindCommand.COMMAND_WORD_EMAIL);
+
+        Homepage expectedHomepage = new Homepage(INVALID_HOMEPAGE);
+        ArrayList<String> invalidHomepage = ParserUtil.parseAllDetail(
+                Arrays.asList(INVALID_HOMEPAGE), FindCommand.COMMAND_WORD_HOMEPAGE);
+        assertEquals(expectedHomepage.value, invalidHomepage.toString());
+        ParserUtil.parseAllDetail(invalidHomepage, FindCommand.COMMAND_WORD_HOMEPAGE);
+
+        Phone expectedPhone = new Phone(INVALID_PHONE);
+        ArrayList<String> invalidPhone = ParserUtil.parseAllDetail(
+                Arrays.asList(INVALID_PHONE), FindCommand.COMMAND_WORD_PHONE);
+        assertEquals(expectedPhone.value, invalidPhone.toString());
+        ParserUtil.parseAllDetail(invalidPhone, FindCommand.COMMAND_WORD_PHONE);
+
+        Tag expectedTag = new Tag(INVALID_TAG);
+        ArrayList<String> invalidTag = ParserUtil.parseAllDetail(
+                Arrays.asList(INVALID_TAG), FindCommand.COMMAND_WORD_TAG);
+        assertEquals(expectedTag.tagName, invalidTag.toString());
+        ParserUtil.parseAllDetail(invalidTag, FindCommand.COMMAND_WORD_TAG);
+    }
+    //@@author
+
     @Test
     public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
         Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
@@ -188,3 +280,4 @@ public class ParserUtilTest {
         assertEquals(expectedTagSet, actualTagSet);
     }
 }
+

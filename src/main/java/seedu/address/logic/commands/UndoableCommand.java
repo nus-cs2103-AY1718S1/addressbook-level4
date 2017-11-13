@@ -4,15 +4,20 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
+    private List<ReadOnlyPerson> previousFindHistory;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -22,6 +27,7 @@ public abstract class UndoableCommand extends Command {
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
         this.previousAddressBook = new AddressBook(model.getAddressBook());
+        this.previousFindHistory = findHistory.getHistory();
     }
 
     /**
@@ -32,6 +38,7 @@ public abstract class UndoableCommand extends Command {
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
+        findHistory.resetData((LinkedList<ReadOnlyPerson>) previousFindHistory);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 

@@ -1,0 +1,173 @@
+= Lau Kar Rui - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: iungo
+iungo is a desktop address book application used for learning Software Engineering principles. The user interacts with
+it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F11-B3/main/blob/master/collated/main/karrui.md[Functional code]]
+[https://github.com/CS2103AUG2017-F11-B3/main/blob/master/collated/test/karrui.md[Test code]] +
+
+=== Enhancement Added: Setting of homepage
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide] written primarily by original author, with relevant homepage information by me#
+
+include::../UserGuide.adoc[tag=edit]
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Previous behaviour of both add and edit did not allow the user to set their homepage to something more useful.
+
+This implementation now enhances the usability of the application by allowing the user to set relevant homepages for
+each individual contact, such as their Facebook or LinkedIn profiles.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sethomepage]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sort
+
+==== External behavior
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Previously, the `list` view of the application would show contacts in the order they were added. For an address book
+with many contacts added, sorting would allow the user (who, for some reason, does not want to use the `find` command)
+to be able to view the contact list in alphabetical ascending/ descending order.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Set avatar
+
+==== External behavior
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=avatar]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Setting an avatar is a natural extension of an address book application
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=avatar]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Recent contacts
+
+==== External behavior
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=recent]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Finding recently searched for contacts is a natural extension of an address book application, provides convenience to user.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=recent]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Optional add command
+
+==== External behavior
+---
+#Start of Extract [from: User Guide] written by original author as my enhancement is just a modification of the method#
+
+include::../UserGuide.adoc[tag=add]
+
+
+#End of Extract#
+
+---
+
+==== Justification
+
+User might not always have all the details of the contact he/she wants to add. Only the name and phone number is compulsory.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=optadd]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+==== iungo
+* Wrote user stories
+* Wrote SampleData.xml and TestScript.adoc (Pull requests https://github.com/CS2103AUG2017-F11-B3/main/pull/92[#92])
+
+==== Volunteering own features for reuse
+
+* *Recent command:* [https://github.com/nus-cs2103-AY1718S1/forum/issues/168[forum post]] +
+* *Sort functionality:* [https://github.com/nus-cs2103-AY1718S1/forum/issues/117[forum post]] +
+* *Avatar command:* [https://github.com/nus-cs2103-AY1718S1/forum/issues/120#issuecomment-339020868[forum post]]
+
+==== Helped in finding bugs
+* Bug discovered in AB4: [https://github.com/se-edu/addressbook-level4/issues/727[forum post]] +
+* Bugs discovered in Planno: [https://github.com/CS2103AUG2017-W14-B4/main/issues/created_by/karrui[issues page]]
+
+==== Helping others with issues
+* Posts: [https://github.com/nus-cs2103-AY1718S1/forum/issues?utf8=%E2%9C%93&q=is%3Aissue%20commenter%3Akarrui[issues page]]

@@ -55,6 +55,7 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
+    private static final String EMPTY_STRING = "";
 
     @Test
     public void add() throws Exception {
@@ -152,13 +153,19 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing email -> rejected */
+        //@@author karrui
+        /* Case: missing email -> added */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(EMPTY_STRING)
+                .withAddress(VALID_ADDRESS_AMY).withTags().build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        assertCommandSuccess(command, toAdd);
 
-        /* Case: missing address -> rejected */
+        /* Case: missing address -> added */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(EMPTY_STRING).withTags().build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        assertCommandSuccess(command, toAdd);
+        //@@author
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);

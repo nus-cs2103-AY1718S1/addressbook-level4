@@ -1,8 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AVATAR_IMAGE_URL_ONE;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
@@ -11,6 +10,7 @@ import org.junit.Test;
 import guitests.guihandles.PersonCardHandle;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.util.ProcessImageUtil;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonCardTest extends GuiUnitTest {
@@ -32,38 +32,31 @@ public class PersonCardTest extends GuiUnitTest {
         // changes made to Person reflects on card
         guiRobot.interact(() -> {
             personWithTags.setName(ALICE.getName());
-            personWithTags.setAddress(ALICE.getAddress());
-            personWithTags.setEmail(ALICE.getEmail());
             personWithTags.setPhone(ALICE.getPhone());
             personWithTags.setTags(ALICE.getTags());
         });
         assertCardDisplay(personCard, personWithTags, 2);
     }
 
+    //@@author karrui
     @Test
-    public void equals() {
-        Person person = new PersonBuilder().build();
-        PersonCard personCard = new PersonCard(person, 0);
+    public void avatarCheck() {
+        Person personWithNoAvatar = new PersonBuilder().withAvatar("").build();
+        PersonCard personCard = new PersonCard(personWithNoAvatar, 1);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithNoAvatar, 1);
 
-        // same person, same index -> returns true
-        PersonCard copy = new PersonCard(person, 0);
-        assertTrue(personCard.equals(copy));
-
-        // same object -> returns true
-        assertTrue(personCard.equals(personCard));
-
-        // null -> returns false
-        assertFalse(personCard.equals(null));
-
-        // different types -> returns false
-        assertFalse(personCard.equals(0));
-
-        // different person, same index -> returns false
-        Person differentPerson = new PersonBuilder().withName("differentName").build();
-        assertFalse(personCard.equals(new PersonCard(differentPerson, 0)));
-
-        // same person, different index -> returns false
-        assertFalse(personCard.equals(new PersonCard(person, 1)));
+        Person personWithAvatar = null;
+        try {
+            personWithAvatar = new PersonBuilder().withAvatar(VALID_AVATAR_IMAGE_URL_ONE).build();
+            personCard = new PersonCard(personWithAvatar, 1);
+            uiPartRule.setUiPart(personCard);
+            assertCardDisplay(personCard, personWithAvatar, 1);
+        } finally {
+            if (personWithAvatar != null) {
+                ProcessImageUtil.removeImageFromStorage(personWithAvatar.getAvatar().path); // cleanup
+            }
+        }
     }
 
     /**

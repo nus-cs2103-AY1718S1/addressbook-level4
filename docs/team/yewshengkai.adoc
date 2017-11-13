@@ -1,0 +1,168 @@
+= Yew Sheng Kai - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: iungo
+iungo is a desktop address book application used for learning Software Engineering principles. The user interacts with
+it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F11-B3/main/blob/master/collated/main/yewshengkai.md[Functional code]]
+[https://github.com/CS2103AUG2017-F11-B3/main/blob/master/collated/main/yewshengkai-reused.md[Reused code]] [https://github.com/CS2103AUG2017-F11-B3/main/blob/master/collated/main/generated.md[Generated code]] [https://github.com/CS2103AUG2017-F11-B3/main/blob/master/collated/test/yewshengkai.md[Test code]] [https://github.com/CS2103AUG2017-F11-B3/main/blob/master/collated/unused/yewshengkai-unused.md[Unused code]] +
+
+=== Enhancement Added: Find/Findany feature with prefixes
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Previous behaviour of find operation does not allow user to search for other details except for their name.
+
+This implementation enhances the usability of the application by allowing the user to utilizes different prefixes to search
+for single/multiple contact or a portion of the details.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Theme
+
+==== External behavior
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The default address book application only support one theme which makes the address book looks dull and may not be suitable to be viewed by
+user under certain circumstances (e.g. At certain time or day, or user with photophobia (light sensitivity)  might opt for brighter look and feel on the address book)
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=theme]
+
+#End of Extract#
+---
+
+=== Enhancement Added: Gmap
+
+==== External behavior
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=gmap]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Previously, the application list its `Person` details using ListView. With the updated GUi, the person details will now be shown on
+the left panel beside the web browser. Gmap command is hence added so that user is able to search for `Person` details other than selecting its homepage.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=gmap]
+
+#End of Extract#
+---
+
+=== Enhancement Added: About
+
+==== External behavior
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=about]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allow user to view the AboutUs page and suggest feedback, report bugs to developers.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=about]
+
+#End of Extract#
+---
+
+=== Enhancement Added: Remark
+
+==== External behavior
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Previous application utilizes tag to briefly describe their contacts. The remark enhancement allow user to leave a long string of characters that is able to describe their contact.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remark]
+
+#End of Extract#
+---
+
+==== Enhancement Proposed: Import/Export addressbook data to different format (e.g. .xml, .pdf, .xlxs)
+---
+=== Justification
+User might want to print a contacts of address book in hardcopy, or export data to switch usage to other computers.
+
+---
+=== Other contributions
+* Updated the GUI layout and color scheme, logo (Pull requests https://github.com/CS2103AUG2017-F11-B3/main/pull/7[#7], https://github.com/CS2103AUG2017-F11-B3/main/pull/10[#10], https://github.com/CS2103AUG2017-F11-B3/main/pull/15[#15], https://github.com/CS2103AUG2017-F11-B3/main/pull/20[#20], https://github.com/CS2103AUG2017-F11-B3/main/pull/33[#33], https://github.com/CS2103AUG2017-F11-B3/main/pull/63[#63])
+* Wrote default functionality for developer guide 'Use case' (textual form) (Pull requests https://github.com/CS2103AUG2017-F11-B3/main/pull/10[#10])
+* Wrote additional tests to increase coverage (Pull requests https://github.com/CS2103AUG2017-F11-B3/main/pull/33[#33], https://github.com/CS2103AUG2017-F11-B3/main/pull/35[#35], https://github.com/CS2103AUG2017-F11-B3/main/pull/47[#47], https://github.com/CS2103AUG2017-F11-B3/main/pull/48[#48], https://github.com/CS2103AUG2017-F11-B3/main/pull/63[#63])
+* Wrote SampleData.xml and TestScript.adoc (Pull requests https://github.com/CS2103AUG2017-F11-B3/main/pull/92[#92])
+* Wrote Target Audience section README.adoc (Pull requests https://github.com/CS2103AUG2017-F11-B3/main/pull/90[#90])
+* Bug fixing pertaining to find, edit, gmap, tag color feature and window focus (Pull requests https://github.com/CS2103AUG2017-F11-B3/main/pull/70[#70], https://github.com/CS2103AUG2017-F11-B3/main/pull/75[#75], https://github.com/CS2103AUG2017-F11-B3/main/pull/79[#79], https://github.com/CS2103AUG2017-F11-B3/main/pull/90[#90])
+
+==== Helped in finding bugs
+* Bugs reported in other team's product (Issues https://github.com/CS2103AUG2017-W10-B2/main/issues/127[#127], https://github.com/CS2103AUG2017-W10-B2/main/issues/128[#128], https://github.com/CS2103AUG2017-W10-B2/main/issues/129[#129], https://github.com/CS2103AUG2017-W10-B2/main/issues/130[#130], https://github.com/CS2103AUG2017-W10-B2/main/issues/131[#131])
+
+==== Helping others with issues
+* Assisted group mate RemoveTag feature (Pull requests https://github.com/CS2103AUG2017-F11-B3/main/pull/14[#14], https://github.com/CS2103AUG2017-F11-B3/main/pull/78[#78])

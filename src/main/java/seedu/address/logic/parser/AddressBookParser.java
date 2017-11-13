@@ -6,6 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.logic.commands.AboutCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -13,11 +14,18 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GmapCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RecentCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetAvatarCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -49,28 +57,48 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
+        case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();
 
+        //@@author yewshengkai
         case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+        case FindCommand.COMMAND_ALIAS:
+            return new FindCommandParser().parse(arguments, false);
+
+        case FindCommand.COMMAND_WORD_ANY:
+        case FindCommand.COMMAND_ALIAS_ANY:
+            return new FindCommandParser().parse(arguments, true);
+        //@@author
 
         case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD:
+        case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
+
+        //@@author karrui
+        case RecentCommand.COMMAND_WORD:
+        case RecentCommand.COMMAND_ALIAS:
+            return new RecentCommand();
+        //@@author
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -78,11 +106,48 @@ public class AddressBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
+        //@@author yewshengkai
+        case AboutCommand.COMMAND_WORD:
+            return new AboutCommand();
+        //@@author
+
         case UndoCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_ALIAS:
             return new UndoCommand();
 
         case RedoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
+
+        //@@author yewshengkai-reused
+        case RemarkCommand.COMMAND_WORD:
+        case RemarkCommand.COMMAND_ALIAS:
+            return new RemarkCommandParser().parse(arguments);
+        //@@author
+
+
+        //@@author karrui
+        case SetAvatarCommand.COMMAND_WORD:
+        case SetAvatarCommand.COMMAND_ALIAS:
+            return new SetAvatarCommandParser().parse(arguments);
+
+        case SortCommand.COMMAND_WORD:
+            return new SortCommandParser().parse(arguments);
+        //@@author
+
+        //@@author yewshengkai
+        case ThemeCommand.COMMAND_WORD:
+        case ThemeCommand.COMMAND_ALIAS:
+            return new ThemeCommandParser().parse(arguments);
+
+        case GmapCommand.COMMAND_WORD:
+        case GmapCommand.COMMAND_ALIAS:
+            return new GmapCommandParser().parse(arguments);
+
+        case RemoveTagCommand.COMMAND_WORD:
+        case RemoveTagCommand.COMMAND_ALIAS:
+            return new RemoveTagCommandParser().parse(arguments);
+        //@@author
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

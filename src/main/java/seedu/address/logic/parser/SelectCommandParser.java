@@ -2,7 +2,9 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PersonSideCardRequestEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -22,6 +24,7 @@ public class SelectCommandParser implements Parser<SelectCommand> {
             Index index = ParserUtil.parseIndex(args);
             return new SelectCommand(index);
         } catch (IllegalValueException ive) {
+            EventsCenter.getInstance().post(new PersonSideCardRequestEvent(false));
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
         }

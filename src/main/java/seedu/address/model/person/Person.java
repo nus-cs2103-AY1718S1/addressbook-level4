@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -9,6 +11,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,28 +25,70 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Homepage> homepage;
+    private ObjectProperty<Remark> remark;
+    private ObjectProperty<Avatar> avatar;
+
+    private boolean isHomepageManuallySet;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Avatar avatar, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.remark = new SimpleObjectProperty<>(remark);
+        this.avatar = new SimpleObjectProperty<>(avatar);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.isHomepageManuallySet = false;
+        try {
+            this.homepage = new SimpleObjectProperty<>(new Homepage(
+                    GOOGLE_SEARCH_URL_PREFIX + name.fullName.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX));
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        }
+    }
+
+    /**
+     * Overloaded constructor for the setting of homepage
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Avatar avatar,
+                  Set<Tag> tags, Homepage homepage) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.remark = new SimpleObjectProperty<>(remark);
+        this.avatar = new SimpleObjectProperty<>(avatar);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.isHomepageManuallySet = true;
+        this.homepage = new SimpleObjectProperty<>(homepage);
     }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
+                source.getAvatar(), source.getTags());
+    }
+
+    /**
+     * Overloaded method to include the homepage
+     * Creates a copy of the given ReadOnlyPerson.
+     */
+    public Person(ReadOnlyPerson source, Homepage homepage) {
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
+                source.getAvatar(), source.getTags(), homepage);
     }
 
     public void setName(Name name) {
@@ -97,10 +142,62 @@ public class Person implements ReadOnlyPerson {
         return address;
     }
 
+    public void setHomepage(Homepage homepage) {
+        this.homepage.set(requireNonNull(homepage));
+    }
+
+    @Override
+    public Homepage getHomepage() {
+        return homepage.get();
+    }
+
+    @Override
+    public boolean isHomepageManuallySet() {
+        return isHomepageManuallySet;
+    }
+
+    public void setBooleanIsHomepageManuallySet(boolean isHomepageManuallySet) {
+        this.isHomepageManuallySet = isHomepageManuallySet;
+    }
+
+    public ObjectProperty<Homepage> homepageProperty() {
+        return homepage;
+    }
+
     @Override
     public Address getAddress() {
         return address.get();
     }
+
+    public void setRemark(Remark remark) {
+        this.remark.set(requireNonNull(remark));
+    }
+
+    @Override
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
+
+    @Override
+    public Remark getRemark() {
+        return remark.get();
+    }
+
+    public void setAvatar(Avatar avatar) {
+        this.avatar.set(requireNonNull(avatar));
+    }
+
+    @Override
+    public ObjectProperty<Avatar> avatarProperty() {
+        return avatar;
+    }
+
+    @Override
+    public Avatar getAvatar() {
+        return avatar.get();
+    }
+
+
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

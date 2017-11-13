@@ -219,7 +219,10 @@ task deployOfflineDocs(type: Copy) {
     from ("${asciidoctor.outputDir}/html5") {
         include 'stylesheets/*'
         include 'images/*'
+        include 'team/*'
         include 'UserGuide.html'
+        include 'DeveloperGuide.html'
+        include 'AboutUs.html'
     }
 }
 

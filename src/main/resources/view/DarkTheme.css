@@ -57,10 +57,10 @@
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
     -fx-border-color:
-        transparent
-        transparent
-        derive(-fx-base, 80%)
-        transparent;
+            transparent
+            transparent
+            derive(-fx-base, 80%)
+            transparent;
     -fx-border-insets: 0 10 1 0;
 }
 
@@ -90,12 +90,14 @@
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .list-cell {
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .list-cell:filled:even {
@@ -132,13 +134,13 @@
 }
 
 .anchor-pane {
-     -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .pane-with-border {
-     -fx-background-color: derive(#1d1d1d, 20%);
-     -fx-border-color: derive(#1d1d1d, 10%);
-     -fx-border-top-width: 1px;
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-border-color: derive(#1d1d1d, 10%);
+    -fx-border-top-width: 1px;
 }
 
 .status-bar {
@@ -154,7 +156,7 @@
 }
 
 .result-display .label {
-    -fx-text-fill: black !important;
+    -fx-text-fill: black;
 }
 
 .status-bar .label {
@@ -227,8 +229,8 @@
 }
 
 .button:pressed, .button:default:hover:pressed {
-  -fx-background-color: white;
-  -fx-text-fill: #1d1d1d;
+    -fx-background-color: white;
+    -fx-text-fill: #1d1d1d;
 }
 
 .button:focused {
@@ -348,3 +350,20 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+/*@@author yewshengkai*/
+
+#sidePersonPlaceholder {
+    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-border-width: 1;
+    -fx-border-radius:5px;
+    -fx-background-radius:5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 2, 2);
+}
+
+#sidePersonPlaceholder .label{
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill:white;
+}
+/*@@author*/

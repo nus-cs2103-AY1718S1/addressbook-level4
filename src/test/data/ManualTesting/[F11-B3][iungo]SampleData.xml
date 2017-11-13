@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <remark></remark>
+        <avatar></avatar>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remark>family of mouse</remark>
+        <avatar></avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <remark></remark>
+        <avatar></avatar>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <homepage>https://en.wikipedia.org/wiki/David_X._Li</homepage>
+        <remark>cousin</remark>
+        <avatar></avatar>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Evie May</name>
+        <phone>90013214</phone>
+        <email>eviemay@example.com</email>
+        <address>Blk 101 North Street 10, #21-02</address>
+        <remark>my sister</remark>
+        <avatar></avatar>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Fernan Do</name>
+        <phone>87412454</phone>
+        <email>fernando@hotmail.com</email>
+        <address>Blk 5 Bukit Merah Street 50, #01-05</address>
+        <remark>my brother</remark>
+        <avatar></avatar>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Geremy Hit</name>
+        <phone>99210789</phone>
+        <email>geremyhit@example.com</email>
+        <address>Blk 32 Upper Lower Street 90, #09-05</address>
+        <remark>salesman</remark>
+        <avatar></avatar>
+        <tagged>sales</tagged>
+    </persons>
+    <persons>
+        <name>Hit To</name>
+        <phone>99345678</phone>
+        <email>hitto@example.com</email>
+        <address>Blk 5 South Tima Street 58, #05-11</address>
+        <remark>salesman</remark>
+        <avatar></avatar>
+        <tagged>sales</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <avatar></avatar>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Jerkin Meat</name>
+        <phone>87513546</phone>
+        <email>jerkinmeat@gmail.com</email>
+        <address>Blk 99 Boon Lay 88, #05-05</address>
+        <remark></remark>
+        <avatar></avatar>
+        <tagged>sales</tagged>
+    </persons>
+    <persons>
+        <name>Kerlin Mon</name>
+        <phone>97235674</phone>
+        <email>kerlinmon@example.com</email>
+        <address>Blk 01 Strong Man Street 01, #01-01</address>
+        <remark>kungfu master</remark>
+        <avatar></avatar>
+        <tagged>teacher</tagged>
+    </persons>
+    <persons>
+        <name>Lima Tey</name>
+        <phone>91462550</phone>
+        <email>limatey@example.com</email>
+        <address>Blk 99 English Man Street 09, #09-09</address>
+        <remark>english teacher</remark>
+        <avatar></avatar>
+        <tagged>teacher</tagged>
+    </persons>
+    <persons>
+        <name>Mothe Rtongue</name>
+        <phone>81235874</phone>
+        <email>mothertongue@example.com</email>
+        <address>Blk 02 China Town Street 09, #02-02</address>
+        <remark>mandarin teacher</remark>
+        <avatar></avatar>
+        <tagged>teacher</tagged>
+    </persons>
+    <persons>
+        <name>Nina Ohya</name>
+        <phone>91035554</phone>
+        <email>nina@example.com</email>
+        <address>Blk 11 Upper Serangoon Street 18, #03-03</address>
+        <remark></remark>
+        <avatar></avatar>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Ohno Yee</name>
+        <phone>80458742</phone>
+        <email>ohnoyee@example.com</email>
+        <address>Blk 333 Sembawang Close, #16-429</address>
+        <remark></remark>
+        <avatar></avatar>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Phantagon Mis</name>
+        <phone>94235444</phone>
+        <email>phantagonmis@example.com</email>
+        <address>Blk 05 Mapletree 02, #01-05</address>
+        <remark>HR lady</remark>
+        <avatar></avatar>
+        <tagged>office</tagged>
+    </persons>
+    <persons>
+        <name>Miss Mon</name>
+        <phone>91467894</phone>
+        <email>missmon@gmail.com</email>
+        <address>Blk 01 Sheng Siong Market, #01-01</address>
+        <homepage>http://www.google.com</homepage>
+        <remark>supermarket aunty</remark>
+        <avatar></avatar>
+        <tagged>market</tagged>
+    </persons>
+    <persons>
+        <name>Rido Kuma</name>
+        <phone>91105170</phone>
+        <email>ridokuma@hotmail.com</email>
+        <address>Blk 51 Indian Street 09, #21-11</address>
+        <homepage>https://en.wikipedia.org/wiki/Rilakkuma</homepage>
+        <remark>my best friend</remark>
+        <avatar></avatar>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Seri Lanka</name>
+        <phone>92235202</phone>
+        <email>serilanka@hotmail.com</email>
+        <address>Blk 01 NotSingapore Street 01, #01-01</address>
+        <remark>doesn't stay in malaysia</remark>
+        <avatar></avatar>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark></remark>
+        <avatar></avatar>
+        <tagged>colleagues</tagged>
+    </persons>
+    <tags>market</tags>
+    <tags>teacher</tags>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>office</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+    <tags>sales</tags>
+</addressbook>

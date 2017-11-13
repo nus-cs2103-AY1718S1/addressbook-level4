@@ -23,11 +23,26 @@ public class MainMenuHandle extends NodeHandle<Node> {
     }
 
     /**
+     * Opens the {@code AboutWindow} using the menu bar in {@code MainWindow}.
+     */
+    public void openAboutWindowUsingMenu() {
+        clickOnMenuItemsSequentially("Help", "F9");
+    }
+
+    /**
      * Opens the {@code HelpWindow} by pressing the shortcut key associated
      * with the menu bar in {@code MainWindow}.
      */
     public void openHelpWindowUsingAccelerator() {
         guiRobot.push(KeyCode.F1);
+    }
+
+    /**
+     * Opens the {@code AboutWindow} by pressing the shortcut key associated
+     * with the menu bar in {@code MainWindow}.
+     */
+    public void openAboutWindowUsingAccelerator() {
+        guiRobot.push(KeyCode.F9);
     }
 
     /**

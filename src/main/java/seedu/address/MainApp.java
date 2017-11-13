@@ -1,5 +1,6 @@
 package seedu.address;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -27,6 +28,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.AvatarStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
@@ -40,7 +42,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, false);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -62,11 +64,12 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
+        AvatarStorage avatarStorage = new AvatarStorage(userPrefs.getAvatarFileDirectoryPath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
         initLogging(config);
 
-        model = initModelManager(storage, userPrefs);
+        model = initModelManager(storage, userPrefs, avatarStorage);
 
         logic = new LogicManager(model);
 
@@ -81,13 +84,17 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
+     * Returns a {@code ModelManager} with the data from {@code storage}'s address book, {@code userPrefs},
+     * and {@code avatarStorage}. <br>
      * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * A new directory for the storage of avatars will be created if {@code avatarStorage}'s directory does not exist.
      */
-    private Model initModelManager(Storage storage, UserPrefs userPrefs) {
+    private Model initModelManager(Storage storage, UserPrefs userPrefs, AvatarStorage avatarStorage) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        String avatarDirectoryPath;
         ReadOnlyAddressBook initialData;
+
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
@@ -100,6 +107,12 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+        }
+
+        avatarDirectoryPath = userPrefs.getAvatarFileDirectoryPath();
+        if (!new File(avatarDirectoryPath).exists()) {
+            logger.info("Directory not found. Will be attempting to create new directory");
+            avatarStorage.createDirectory(avatarDirectoryPath);
         }
 
         return new ModelManager(initialData, userPrefs);

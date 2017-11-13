@@ -3,6 +3,8 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,9 +14,11 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -80,6 +84,34 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+
+    //@@author basyiro
+    @Override
+    public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+
+            Person newPerson;
+            if (oldPerson.isHomepageManuallySet()) {
+                newPerson = new Person(oldPerson, oldPerson.getHomepage());
+            } else {
+                newPerson = new Person(oldPerson);
+            }
+            Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
+            newTags.remove(tag);
+            newPerson.setTags(newTags);
+            addressBook.updatePerson(oldPerson, newPerson);
+            indicateAddressBookChanged();
+        }
+    }
+
+    //@@author karrui
+    @Override
+    public void sortContactList(boolean isDescendingSort) {
+        addressBook.sortAddressBook(isDescendingSort);
+        indicateAddressBookChanged();
+    }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

@@ -1,0 +1,306 @@
+= iungo Manual Testing
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project configuration
+1. Run the *addressbook.jar* application to generate default files and folder. +
+2. Exit the application. +
+3. Copy *SampleData.xml* to the generated *Data* folder. +
+4. Rename *SampleData.xml* to *addressbook.xml*. +
+5. Run the `addressbook.jar` application to begin usage.
+
+=== Test sequence base on user interaction
+
+==== 1) Help feature
+
+---
+*User action* +
+1. User open help.
+
+*Command input* +
+1. help
+
+*Command output* +
+1. Opened help window.
+
+==== 2) Add<Optional Field>
+
+---
+*User actions* +
+1. User adding `Michael Jackson`. +
+2. User adding `Jackson Bin`.
+
+*Command input* +
+1. add n/Michael Jackson p/98765432 h/http://www.facebook.com +
+2. add n/Jackson Bin p/98712345 t/friends
+
+*Command output* +
+1. New person added: Michael Jackson Phone: 98765432 Homepage: http://www.facebook.com +
+2. New person added: Jackson Bin Phone: 98712345 Homepage: https://www.google.com.sg/search?safe=off&q=Jackson+Bin&cad=h Tags: [friends]
+
+==== 3) Add and Edit<Avatar>
+
+---
+*User actions* +
+1. User select `Michael Jackon`. +
+2. User set avatar to `Michael Jackson`. +
+3. User remove avatar from `Michael Jackson` +
+4. User set avatar to `Michael Jackson`.
+
+*Command input* +
+1. select 21 +
+2. setavatar 21 sa/https://pbs.twimg.com/profile_images/637552817234964480/pgA7lU3N.jpg +
+3. sa 21 +
+4. sa 21 sa/https://pbs.twimg.com/profile_images/637552817234964480/pgA7lU3N.jpg
+
+*Command output* +
+1. Selected Person: 21 +
+2. Set Avatar for Person: Michael Jackson Phone: 98765432 Homepage: http://www.facebook.com +
+3. Removed Avatar for Person: Michael Jackson Phone: 98765432 Homepage: http://www.facebook.com +
+4. Set Avatar for Person: Michael Jackson Phone: 98765432 Homepage: http://www.facebook.com
+
+==== 4) Add<Remarks>
+
+---
+*User actions* +
+1. User set remarks to `Michael Jackson`. +
+2. User remove remarks to `Michael Jackson`. +
+3. User request undo. +
+4. User select `Michael Jackson`.
+
+*Command input* +
+1. remark 21 re/Great singer, great career +
+2. re 21 re/ +
+3. undo +
+4. select 21
+
+*Command output* +
+1. Added remark to Person: Michael Jackson Phone: 98765432 Homepage: http://www.facebook.com +
+2. Removed remark from Person: Michael Jackson Phone: 98765432 Homepage: http://www.facebook.com +
+3. Undo success! +
+4. Selected Person: 21
+
+==== 5) Edit<Homepage>
+
+---
+*User actions* +
+1. User set `Michael Jackson` homepage. +
+2. User change `Michael Jackson` homepage. +
+3. User request undo. +
+4. User select `Michael Jackson`.
+
+*Command input* +
+1. edit 21 h/http://www.michaeljackson.com/ +
+2. edit 21 h/http://www.facebook.com +
+3. undo +
+4. select 21
+
+*Command output* +
+1. Michael Jackson homepage updated. +
+2. Michael Jackson homepage updated. +
+3. Undo success! +
+4. Selected Person: 21 +
+
+==== 6) Find<Name,Phone,Tag>
+
+---
+*User actions* +
+1. User request to list all persons. +
+2. User find all name that matches `Michael`. +
+3. User find phone number `98712345`. +
+4. User find tag `friends`.
+
+*Command input* +
+1. list +
+2. find michael +
+3. find p/98712345 +
+4. find t/friends +
+
+*Command output* +
+1. Listed all persons +
+2. 1 persons listed! +
+3. 1 persons listed! +
+4. 6 persons listed!
+
+==== 7)  Findany<Name, Phone, Homepage>
+
+---
+*User actions* +
+1. User request to list all persons. +
+2. User find a portion of name that matches `Jack` and `Mo`. +
+3. User find a portion of phone that matches `987` and `874`. +
+4. User find a portion of homepage that matches `http://www.mic`.
+
+*Command input* +
+1. list +
+2. findany jack mo +
+3. findany p/987 874 +
+4. findany h/http://www.michae
+
+*Command output* +
+1. Listed all persons +
+2. 5 persons listed! +
+3. 6 persons listed! +
+4. 1 persons listed!
+
+==== 8) Sort<Ascending,Descending>
+
+---
+*User actions* +
+1. User request to list all persons. +
+2. User sort all persons. +
+3. User sort all persons by descending order. +
+4. User sort all persons by ascending order. +
+5. User request undo. +
+6. User request redo.
+
+*Command input* +
+1. list +
+2. sort +
+3. sort d +
+4. sort a +
+5. undo +
+6. redo
+
+*Command output* +
+1. Contacts listed +
+2. Sorted all persons +
+3. Sorted all persons +
+4. Sorted all persons +
+5. Undo success! +
+6. Redo success!
+
+==== 9) Gmap<Homepage,GoogleMap>
+
+---
+*User actions* +
+1. User request to list all persons. +
+2. User select `Michael Jackson`. +
+3. User request `Michael Jackson` address search on Google Map. +
+4. User request `Michael Jackson` homepage. +
+5. User hide `side panel`.
+
+*Command input* +
+1. list +
+2. select 14 +
+3. gmap 14 +
+4. select 14 +
+5. select 0
+
+*Command output* +
+1. Listed all persons. +
+2. Selected Person: 14 +
+3. Mapping Person address: 14 +
+4. Selected Person: 14 +
+5. Invalid command format!
+
+==== 10) Theme
+
+---
+*User actions* +
+1. User list theme. +
+2. User request to switch darker theme. +
+3. User request to switch default theme. +
+4. User request to switch lighter theme.
+
+*Command input* +
+1. theme +
+2. theme 3 +
+3. theme 1 +
+4. theme 2
+
+*Command output* +
+1. Invalid command format and show list of theme. +
+2. Theme updated: 3 +
+3. Theme updated: 1 +
+4. Theme updated: 2
+
+==== 11) Recent
+
+---
+*User actions* +
+1. User request to view all recently searched persons. +
+
+*Command input* +
+1. recent
+
+*Command output* +
+1. Searched persons listed
+
+==== 12) RemoveTag<family>
+
+---
+*User actions* +
+1. User request to list all persons. +
+2. User decide to remove `family` tag. +
+3. User undo. +
+4. User redo.
+
+*Command input* +
+1. list +
+2. removetag family +
+3. undo +
+4. redo
+
+*Command output* +
+1. Listed all persons. +
+2. Tag specified removed from addressbook: [family] +
+3. Undo success! +
+4. Redo success!
+
+==== 13) Undo, Redo
+
+---
+*User actions* +
+1. User decide to remove `family` tag. +
+2. User undo. +
+3. User redo. +
+
+*Command input* +
+1. removetag family +
+2. undo +
+3. redo +
+
+*Command output* +
+1. Tag specified removed from addressbook: [family] +
+2. Undo success! +
+3. Redo success! +
+
+==== 14) Select
+
+---
+*User action* +
+1. User select `Michael Jackson`. +
+
+*Command input* +
+1. select 14
+
+*Command output* +
+1. Selected Person: 14 +
+
+==== 15) Delete
+
+---
+*User actions* +
+1. User decide to delete `Michael Jackson`.
+
+*Command input* +
+1. delete 14
+
+*Command output* +
+1. Deleted Person: Michael Jackson Phone: 98765432 Homepage: http://www.michaeljackson.com/
+
+==== 16) About
+
+---
+*User actions* +
+1. User request `about` page to check details and feedback to developers. +
+
+*Command input* +
+1. about
+
+*Command output* +
+1. Opened about window.
+
+=== End test sequence

@@ -9,11 +9,14 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Homepage;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,6 +32,12 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String homepage;
+    @XmlElement(required = true)
+    private String remark;
+    @XmlElement(required = true)
+    private String avatar;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -50,6 +59,11 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        remark = source.getRemark().value;
+        avatar = source.getAvatar().path;
+        if (source.isHomepageManuallySet()) {
+            homepage = source.getHomepage().value;
+        }
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -70,7 +84,13 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+        final Remark remark = new Remark(this.remark);
+        final Avatar avatar = new Avatar(this.avatar);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        if (this.homepage == null) {
+            return new Person(name, phone, email, address, remark, avatar, tags);
+        }
+        final Homepage homepage = new Homepage(this.homepage);
+        return new Person(name, phone, email, address, remark, avatar, tags, homepage);
     }
 }

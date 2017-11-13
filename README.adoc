@@ -1,11 +1,14 @@
-= Address Book (Level 4)
+= iungo
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-https://travis-ci.org/se-edu/addressbook-level4[image:https://travis-ci.org/se-edu/addressbook-level4.svg?branch=master[Build Status]]
-https://ci.appveyor.com/project/damithc/addressbook-level4[image:https://ci.appveyor.com/api/projects/status/3boko2x2vr5cc3w2?svg=true[Build status]]
-https://coveralls.io/github/se-edu/addressbook-level4?branch=master[image:https://coveralls.io/repos/github/se-edu/addressbook-level4/badge.svg?branch=master[Coverage Status]]
-https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_medium=referral&utm_content=se-edu/addressbook-level4&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/fc0b7775cf7f4fdeaf08776f3d8e364a[Codacy Badge]]
+image:https://travis-ci.org/CS2103AUG2017-F11-B3/main.svg?branch=master["Build Status", link="https://travis-ci.org/CS2103AUG2017-F11-B3/main"]
+https://ci.appveyor.com/project/karrui/iungo/[image:https://ci.appveyor.com/api/projects/status/v48dd7x6xo44nr7l/branch/master?svg=true[Build status]]
+https://coveralls.io/repos/github/CS2103AUG2017-F11-B3/main/badge.svg?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-F11-B3/main/badge.svg?branch=master[Coverage Status]]
+image:https://api.codacy.com/project/badge/Grade/e3e1a616ab2f47a7836dea6c8c7125e3["Codacy code quality", link="https://www.codacy.com/app/karrui/main?utm_source=github.com&utm_medium=referral&utm_content=CS2103AUG2017-F11-B3/main&utm_campaign=Badge_Grade"]
+
+image::docs/images/iungo-logo2.png[width="128", alight="left"]
+iungo aims to be an addressbook software for command-line aficionados. If you hate using the mouse for every small action, this application is for you!
 
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
@@ -15,13 +18,35 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+/ˈjun.ɡoː/, [ˈjʊŋ.ɡoː] +
+_verb_ - latin for _connect_
+
+== Target Audience
+---
+
+* iungo is designed primarily for the young and the sleepless college students who have to juggle both their entertainment
+ and work in their quest to secure better grades.
+
+* College students' issues:
+** You have meetings and interactions where you meet new contacts. Now that you have made friends and get along well, you might wish to save these interpersonal information on a single application solely built for the purpose of easy accessibility to their personal details!
+** While using other methods to save these information is great (like your mobile phone), adding a massive amount of information
+through the standard click and type method, may seem to be too slow and inefficient.
+** Sleep deprivation are common among college student who opt for entertainment (e.g. making new friends, travelling) and
+securing good grades.
+
+* Solutions:
+** iungo specifically targets these young adults who are more adept at using the keyboard, and prefers adding contacts solely
+with the keyboard, rather than using a mouse. As a result, most of the available commands can be done using just a keyboard.
+** iungo understands that college students often have to endure countless sleepless night and have specifically made
+GUI themes that is suitable for both day and nighttime usage.
+
+* Why is iungo addictive?
+** iungo offers a simple and efficient way to add, edit, sort, find, list, tag, add remarks, and delete contacts.
+** iungo offers a quick way to save and look up webpages of a specific contact.
+** It's the easiest application for remembering people.
+** It's better than Address Book - Level 4.
+
+=== Current version : `v1.5.0`
 
 == Site Map
 
@@ -33,7 +58,8 @@ endif::[]
 
 == Acknowledgements
 
-* Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
+* iungo is built on a fork of https://github.com/nus-cs2103-AY1718S1/addressbook-level4[AddressBook - Level 4], which was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
+* Some parts of this application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
 
 == Licence : link:LICENSE[MIT]
