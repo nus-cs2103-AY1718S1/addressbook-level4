@@ -19,7 +19,7 @@ By: `Team W13-B1`      Since: `AUG 2017`      Licence: `MIT`
 
 === Purpose
 
-UniCity is a contact management desktop application implemented in Java. This developer guide aims to provide
+UniCity is a contact management command line desktop application implemented in Java. This developer guide aims to provide
 adequate information for a new developer to understand the underlying structure of UniCity and how it works.
 
 === Overview
@@ -29,7 +29,7 @@ This guide covers the following: +
 * Design architecture of UniCity. +
 * Implementation details of main features such as undoing and redoing of previous commands, logging, configuration and
 etc. +
-* Testing and integrating the software for future releases. +
+* Software testing and integration for future releases. +
 * Additional information covered by the appendix section. +
 
 == Setting up
@@ -51,15 +51,16 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+. Fork this repository.
+. Clone the forked repository to your computer
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
@@ -72,14 +73,14 @@ This will generate all resources required by the application and tests.
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify:
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
@@ -87,18 +88,18 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
-==== Setting up CI
+==== Setting up Continuous Integration (CI)
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+Set up Travis to perform CI for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures UniCity works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+When you are ready to start coding:
 
 1. Get a sense of the overall design by reading the link:#architecture[Architecture] section.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
@@ -110,34 +111,34 @@ When you are ready to start coding,
 image::Architecture.png[width="600"]
 _Figure 2.1.1 : Architecture Diagram_
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+The *_Architecture Diagram_* given in Figure 2.1.1 explains the high-level design of UniCity. Information provided below is a quick overview of each component.
 
 [TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, simply modify the diagram in the pptx file, edit the objects of the diagram accordingly and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* At app launch: Initializing the components in the correct sequence, and connects them up with each other.
+* At shut down: Shutting down the components and invokes cleanup method where necessary.
 
-link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+* `LogsCenter` : This class is used by many other classes to write log messages to UniCity's log file.
 
-The rest of the App consists of four components.
+The rest of UniCity consists of four components:
 
-* link:#ui-component[*`UI`*] : The UI of the App.
-* link:#logic-component[*`Logic`*] : The command executor.
-* link:#model-component[*`Model`*] : Holds the data of the App in-memory.
-* link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+* link:#ui-component[*`User Interface(UI)`*] : The UI of UniCity to showcase the styling of UniCity.
+* link:#logic-component[*`Logic`*] : The command executor to execute commands.
+* link:#model-component[*`Model`*] : UniCity build-in memory to store data.
+* link:#storage-component[*`Storage`*] : The hard disk to read data from and writes data to.
 
-Each of the four components
+Each of the four components:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see figure 2.1.2 given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
@@ -145,7 +146,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ in figure 2.1.3a shows how the different components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
@@ -153,7 +154,7 @@ _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The diagram in figure 2.1.3b shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
 _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
@@ -163,18 +164,18 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
-=== UI component
+=== User Interface (UI) component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 2.2 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+As shown in figure 2.2, the `UI` component consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `ExtendedPersonList`, `CalendarView`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFX UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component,
+The `UI` component:
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
@@ -191,24 +192,24 @@ _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
+.  As shown in figure 2.3.1, `Logic` uses the `AddressBookParser` class to parse the user command.
+.  This results in a `Command` object which is executed by the `LogicManager` as shown in figure 2.3.2.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Figure 2.3.3 below shows the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 2.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 2.4 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model` shown in figure 2.4:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
@@ -218,11 +219,11 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 2.5 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component shown in figure 2.5:
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
@@ -559,14 +560,16 @@ some of his contacts may have tags that serve the same purpose but spelt differe
 
 The sorting mechanism is achieved by the `SortCommand`. In order to sort the list of contacts, the default constructor of `SortCommand` creates an empty editable array list of contacts as shown below:
 
-    private ArrayList<ReadOnlyPerson> contactList;
-    public SortCommand() {
-        contactList = new ArrayList<>();
-    }
+[source,java]
+----
+private ArrayList<ReadOnlyPerson> contactList;
+public SortCommand() {
+    contactList = new ArrayList<>();
+}
+----
 
-The new list will take in a list of contacts from address book, sort them and overwrites the existing list of contacts in address book sorted by alphabetical order.
-
-The `SortCommand` inherits from `Command` instead of `UndoableCommands` as explained by the Undo/Redo mechanism earlier. There is no mechanism for sorting to be undone.
+The new list will take in a list of contacts from address book, sort the contacts and overwrite the existing list of contacts in address book sorted by alphabetical order.
+The `SortCommand` inherits from `Command` instead of `UndoableCommands` so there is no mechanism for sorting to be undone.
 
 The `SortCommand` is implemented in the following way:
 [source,java]
@@ -578,9 +581,9 @@ public class SortCommand extends Command {
     }
 }
 ----
-When the command word `sort` or `st` is typed into UniCity, `AddressBookParser` will call `SortCommandParser`.
+When the command word `sort` or `st` is entered in UniCity, `AddressBookParser` will call `SortCommandParser`.
 
-Upon activating the application, an editable contactList containing ReadOnlyPerson will be empty at the beginning.
+Upon calling the function, an editable contactList containing ReadOnlyPerson will be empty at the beginning.
 
 When the user executes `SortCommand`, `sort` or `st`, to sort the list of contacts in address book. The current empty ArrayList of contactList will be sent to the model ........
 
@@ -608,15 +611,14 @@ public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
         indicateAddressBookChanged();
     }
     //...exceptions caught...
-
     return true;
 }
 ----
 
-Upon successful sorting, the `SortCommand` will correctly sort the contacts in alphabetical order and display under the contact column.
+Upon successful sorting, the `SortCommand` will correctly sort the contacts in alphabetical order and display the contacts under the `PersonListPanel`.
 
-If there is an empty list, the address book will reply with `No contact to be sorted.` +
-If the list is in correct order, the address book will reply with `Already sorted.`
+If there is an empty list, the address book will show a message saying `No contact to be sorted.` +
+If the list is in correct order, the address book will show a message saying `Already sorted.`
 
 [NOTE]
 The sorting process is case insensitive.
@@ -624,29 +626,98 @@ The sorting process is case insensitive.
 ==== Design considerations
 **Aspect:** Implementation of `SortCommand` +
 **Alternative 1 (current choice):** The `SortCommand` will inherit directly from `Command` without the undo/redo mechanism. +
-**Pros:** After user finished sorting his list of contacts, it will remain sorted without going back to the original list.  +
-**Cons:** The user cannot obtain the list of contacts with the original order +
-**Alternative 2:** Implement undo function for `SortCommand` +
-**Pros:** Everything will return to the original order when undo is applied. +
+**Pros:** After the user has finished sorting his list of contacts, it will remain sorted without reverting back to the original list.  +
+**Cons:** The user can no longer obtain the list of contacts with the original order. +
+**Alternative 2:** The `SortCommand` will implement undo/redo mechanism. +
+**Pros:** All contacts will be able to return to the original order when undo is applied. +
 **Cons:** It may be troublesome for the user as he may want to undo a delete/add function but the list of contacts becomes unsorted and he must sort again.
 
-**Aspect:** How sorting executes +
-**Alternative 1 (current choice):** Using the in build function in collections to sort the arrays according to alphabetical order. +
+**Aspect:** How sorting is executed +
+**Alternative 1 (current choice):** Sorting is accomplished using the in-built function in `Collections` to sort the arrays according to alphabetical order. +
 **Pros:** This method is straightforward and easy to implement. +
-**Cons:** The algorithm is in built so it is harder to debug if something went wrong. +
-**Alternative 2:** Write my own sorting algorithm. +
-**Pros:** Can cater to case sensitivity and other exceptions of the list when sorting is involved. +
-**Cons:** More prone to error and it may not be straightforward.
+**Cons:** The algorithm is in-built so it is harder to debug if something goes wrong. +
+**Alternative 2:** Writing my own sorting algorithm. +
+**Pros:** This method can cater to case sensitivity and other exceptions of the list when sorting is involved. +
+**Cons:** The algorithm may be more prone to error and may not be straightforward enough.
 
 **Aspect:** Data structure to support the sort command +
-**Alternative 1 (current choice):** Create an empty array list to obtain the values from the contact list and sort the contacts. It will overwrite the existing array list of unsorted contacts when sorted. +
-**Pros:** Easier to understand. The origin list of contacts are not changed to prevent any unexpected mistake from occurring. +
-**Cons:** May have performance issues due to additional memory usage and longer time taken to overwrite the given list of contacts. +
-**Alternative 2:** Edit the current list of contact list directly by adding a function to the Address Book class. +
-**Pros:** Less time and space consuming as sorting is achieved in a single array. +
-**Cons:** There is no way to obtain the origin list of contacts for other functions. If a mistake is made, the original list of contacts will be compromised. Need to update all classes that inherits from Address Book class as well which may be confusing.
+**Alternative 1 (current choice):** Create an empty array list to obtain the data from the contact list and sort the contacts. It will overwrite the existing array list of unsorted contacts when sorted. +
+**Pros:** This method is easier to understand and the original list of contacts is not changed to prevent any unexpected mistakes from occurring. +
+**Cons:** This method may have performance issues due to additional memory usage and longer time taken to overwrite the given list of contacts. +
+**Alternative 2:** Edit the current list of contacts directly by adding a function to the `AddressBook` class. +
+**Pros:** This method is less time and storage consuming as sorting is achieved in a single array. +
+**Cons:** There is no way to obtain the original list of contacts for other functions. If a mistake is made, the original list of contacts will be compromised. There is a need to update all classes that inherits from `AddressBook` class which may be confusing.
 
 // end::sort[]
+// birthday: birthday[]
+=== Birthday mechanism (Since v1.3)
+The birthday mechanism is achieved by the `AddBirthdayCommand`. In order to add a birthday value to a contact, the default constructor of `AddBirthdayCommand`
+takes in the index of the contact and the birthday value to be added to the contact.
+
+`AddBirthdayCommand` will use the arguments and parse to `AddressBookParser`. This instance is then sent to `AddBirthdayCommandParser` which parse the index and birthday entered.
+Invalid indexes and command format will be handled by throwing an exception as shown below:
+
+[source,java]
+----
+public class AddBirthdayCommandParser implements Parser<BirthdayCommand> {
+    public BirthdayCommand parse(String args) throws ParseException {
+        try {
+            // ... parse index and pass it to `BirthdayCommand`...
+        } catch (IllegalValueException ive) {
+            // ... throw an exception ...
+        }
+    }
+}
+----
+
+The following sequence diagram shows how `AddBirthdayCommand` is processed:
+
+image::BirthdaySequenceDiagram.png[width="800"]
+
+Upon successfully adding of the birthday value to the contact with the given index shown in the list, it will change the value of the `Birthday` field of a `Person`.
+
+At the same time, the `Birthday` class checks for the valid date entered by the user to ensure that it is in the format of DD/MM/YY or DD/MM/YYY. +
+As `Birthday` is an optional field, the default constructor of `Birthday` takes no arguments and set the default birthday to the `Birthday` field for `Person`. The default value to be used will be "No Birthday Added`.
+In some cases, `BirthdayCommand` needs to be initialized with a certain birthday for testing. Hence, another constructor is used to add a certain birthday to the `Birthday` field.
+
+[source,java]
+----
+public Birthday () {
+    this.birthdayNumber = DEFAULT_BIRTHDAY;
+}
+
+public Birthday(String birthday) throws IllegalValueException {
+    String trimmedBirthday = birthday.trim();
+    if (!isValidBirthdayFormat(trimmedBirthday)) {
+        throw new
+            IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+    }
+    this.birthdayNumber = trimmedBirthday;
+}
+----
+
+The `AddBirthdayCommand` inherits from the `UndoableCommand` so that users can undo the command of adding a birthday by accident.
+The birthday value added will be displayed in the `ExtendedPersonListPanel` instead of `PersonCard` as it is additional information for each contact.
+
+==== Design Considerations
+
+**Aspect:** Changing of the `Birthday` value of the selected `Person` +
+**Alternative 1 (current choice):** Copy values from all fields including the newly added birthday value to a newly created `Person`. Then replace this `Person` with the old `Person` in the `AddressBook` class. +
+**Pros:** This is easy to implement and it ensures that the original value will be intact in case any other information is changed. +
+**Cons:** Additional space is used to store the new `Person` instance. +
+**Alternative 2:** Edit the `Birthday` field in the given list of contacts directly.  +
+**Pros:** No additional space is needed to store the `Person` instance and more straightforward. +
+**Cons:** The data can no longer be retrieved if there is any error in the process of adding birthday to the contact.
+
+**Aspect:** Storing of the `Birthday` value of the selected `Person` +
+**Alternative 1 (current choice):** Add a new `Birthday` class. +
+**Pros:** Same coding format stored as `Name`, `Phone` and other information so the coding principle is standardized. It can also perform validation checks for the birthday value easily. +
+**Cons:** Add a new class affects many components of the code and much work needs to be done to make the changes. +
+**Alternative 2:** Use a `String` value to keep track of birthday for each `Person`. +
+**Pros:** This is easier and faster to implement. +
+**Cons:** It is prone to bugs as the `String` value can be overwritten easily.
+
+// end::birthday[]
 // tag::facebook[]
 === Facebook mechanism
 
@@ -654,6 +725,7 @@ The facebook mechanism is facilitated by `FacebookCommand`, which resides inside
 
 The facebook mechanism displays the Facebook search page of the person specified by the index number inputted.
 // end::facebook[]
+
 image::facebook-command-ui.png[width="800"]
 // tag::facebookcont[]
 Upon execution, the `FacebookCommand` posts a `ShowFacebookRequestEvent` event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load Facebook page. The `ShowFacebookRequestEvent` takes the name of the person specified by the index number as an argument.
@@ -994,16 +1066,16 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the method 3. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* Run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`.
+* Run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`.
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`).
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
@@ -1012,16 +1084,16 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+Run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`).
 
 === Types of tests
 
 We have two types of tests:
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+.  *GUI Tests* - These are tests involving the GUI. They include:
+.. _System Tests_ that test the entire UniCity by simulating user actions on the GUI. These are in the `systemtests` package.
 .. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
+.  *Non-GUI Tests* - These are tests not involving the GUI. They include:
 ..  _Unit tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
@@ -1040,15 +1112,15 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 === Build Automation
 
-See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+Refer to <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. Refer to <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Making a Release
 
-Here are the steps to create a new release.
+Here are the steps to create a new release:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
@@ -1057,7 +1129,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives: +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -1066,9 +1138,9 @@ b. Require developers to download those libraries manually (this creates extra w
 
 Suggested path for new programmers:
 
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
+Path 1: Add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
 
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
+Path 2: Add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
 === Improving each component
 
@@ -1316,17 +1388,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |connect to him or her when I need to
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |edit my friends' contact on UniCity |
+|`* * *` |user |edit my friends' contact on UniCity |make changes to their details when necessary
 
 |`* * *` |user |exit UniCity |continue using other functions in my operating system
 
 |`* * *` |forgetful user |I want a suggestion of the closest matching person when I type his name incorrectly |so that I can find that person quickly
+
+|`* *` |user |add a new person simply through their name and phone |stay connected with them
 
 |`* *` |user |I want to undo/redo multiple commands at once |so that I can revert/restore several changes back to a certain point of my choosing
 
@@ -1336,17 +1410,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |access my contacts' social media account through address book |
+|`* *` |user |access my contacts' social media account through address book |connect with my friends better on social media
 
 |`* *` |user |remove a tag from my friends' contact information |
 
-|`* *` |user |sort my contacts in alphabetical order |I can find my contacts easier
+|`* *` |user |sort my contacts in alphabetical order |I can find my contacts easily
 
 |`* *` |caring user |add birthday to my close friends |celebrate their birthday with them
 
+|`* *` |user |add and edit birthday field of my friends whenever possible |update their birthday when necessary
+
 |`* *` |lazy user |type shorter commands while ignoring their cases |access my friends' contact information faster
 
-|`* *` |curious user |search my contacts' information online with google |
+|`* *` |curious user |search my contacts' information online with google |read up news about them
 
 |`* *` |careless user |undo my previous commands |retrieve important information that I have accidentally deleted earlier on
 
@@ -1357,6 +1433,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |bored user |select a person with a certain index number |contact a random person in my contacts I tried
 
 |`* *` |lazy user |select a contact from my address book to call |I do not need to use other phone functions to call
+
+|`* *` |lazy user |better identify tags by viewing them in different colors |
+
+|`*` |careless user |add correct date for my friend's birthday |celebrate with them on the correct date
 
 |`*` |user with many tags in the address book |sort my contact list according to their tags |locate a person easily
 
