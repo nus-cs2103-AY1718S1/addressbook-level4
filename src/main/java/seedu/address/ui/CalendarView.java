@@ -3,7 +3,9 @@ package seedu.address.ui;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,6 +15,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.Logic;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author jacoblipech
 /**
@@ -20,18 +30,25 @@ import javafx.scene.text.Text;
  */
 public class CalendarView {
 
+    private final Logger logger = LogsCenter.getLogger(CommandBox.class);
+
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private VBox view;
     private Text calendarTitle;
+    private LocalDate calendarDate;
     private YearMonth currentYearMonth;
+    private ObservableList<ReadOnlyPerson> contactList;
+    private Logic logic;
 
     /**
      * Create a calendar view
      * @param yearMonth year month to create the calendar from
      */
-    public CalendarView(YearMonth yearMonth) {
+    public CalendarView(YearMonth yearMonth, ObservableList<ReadOnlyPerson> contactList, Logic logic) {
 
-        currentYearMonth = yearMonth;
+        this.currentYearMonth = yearMonth;
+        this.contactList = contactList;
+        this.logic = logic;
         // Create the calendar grid pane
         GridPane calendar = new GridPane();
         calendar.setPrefSize(600, 400);
@@ -89,7 +106,7 @@ public class CalendarView {
      */
     public void populateCalendar(YearMonth yearMonth) {
         // Get the date we want to start with on the calendar
-        LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
+        this.calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
         // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
         while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
             calendarDate = calendarDate.minusDays(1);
@@ -102,16 +119,56 @@ public class CalendarView {
             Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
             txt.setFill(Color.GHOSTWHITE);
             ap.setDate(calendarDate);
+
+            ap.setStyle("calendar-color");
             ap.setTopAnchor(txt, 5.0);
             ap.setLeftAnchor(txt, 5.0);
 
+            //populating birthday of contacts to the calendar
+            String dateValue = getFormatDate(calendarDate.getDayOfMonth() + "", calendarDate.getMonthValue() + "");
+            String birthdayValue = Birthday.DEFAULT_BIRTHDAY;
+            Boolean birthdayExist = false;
+            for(ReadOnlyPerson person : contactList ) {
+                if(!person.getBirthday().equals(Birthday.DEFAULT_BIRTHDAY)) {
+                    birthdayValue = person.getBirthday().toString();
+                    birthdayExist = true;
+                }
+                if(birthdayExist) {
+                    if(dateValue.equals(birthdayValue.substring(0,5))) {
+                        System.out.println("date value: " + dateValue);
+                        ap.getChildren();
+                        ap.setStyle("-fx-background-color: #CD5C5C");
+                        ap.setAccessibleText(person.getName().toString());
+                    }
+
+                    ap.setOnMouseClicked(event -> {
+
+                        String findCommandText = FindCommand.COMMAND_WORDVAR_1 + " " + ap.getAccessibleText();
+                        try {
+                            CommandResult commandResult = logic.execute(findCommandText);
+                            logger.info("Result: " + commandResult.feedbackToUser);
+                        } catch (CommandException | ParseException e) {
+                            logger.info("Invalid command: " + findCommandText);
+                        }
+                    });
+                } else {
+
+                }
+
+                //System.out.println("date value: " + dateValue);
+                //System.out.println("birthday value: " + birthdayValue.substring(0,5));
+            }
+
             ap.getChildren().add(txt);
             calendarDate = calendarDate.plusDays(1);
-
-            //missing step to add birthday being populated as well!
         }
         // Change the title of the calendar
         calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
+    }
+
+    public void populateUpdatedCalendar (ObservableList<ReadOnlyPerson> contactList) {
+        this.contactList = contactList;
+        populateCalendar(currentYearMonth);
     }
 
     /**
@@ -130,9 +187,22 @@ public class CalendarView {
         populateCalendar(currentYearMonth);
     }
 
-    //probably need update calendar view to show birthday when added!
     public VBox getView() {
         return view;
+    }
+
+    /**
+     * returns the correct format of the day in String format
+     */
+    private String getFormatDate(String day, String month) {
+        if(day.length() == 1) {
+            day = "0" + day;
+        }
+        if (month.length() == 1) {
+            month = "0" + month;
+        }
+        return day + "/" + month;
+
     }
 
 }
