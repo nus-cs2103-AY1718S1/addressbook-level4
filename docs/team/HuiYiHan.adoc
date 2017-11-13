@@ -1,0 +1,138 @@
+= Han Hui Yi @ Han Qing Yi - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Sales Navigator
+Sales Navigator is a desktop application built to alleviate the hassles that sales executives experience. The user
+interacts with it using a CLI (Command Line Interface), and it has a GUI created with Java FX. It is written using
+Java and was built by modifying an existing project, Address Book Level 4.
+
+*Code contributed*: [
+https://github.com/CS2103AUG2017-T14-B3/main/blob/master/collated/main/huiyiiih.md[Functional] ] [
+https://github.com/CS2103AUG2017-T14-B3/main/blob/master/collated/test/huiyiiih.md[Tests] ]
+
+=== Enhancement Added: Aliases
+
+==== External behavior
+
+---
+The aliases/synonyms are added for all commands available in [v1.5] in the user guide.
+
+==== Justification
+
+---
+This feature is to allow more flexibility to the user instead of having to remember specific command names.
+The user can choose to use a different command name whenever he/she wants. This is useful when the user that needs to
+type or user is lazy fast, they can choose to use shorter command names which takes slightly lesser time. It is also
+useful for users who are forgetful.
+
+*Instead of typing the command _add_, the user can type _a_.*
+
+image::checkCommand-add.png[width="1000"]
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=Aliases]
+
+---
+
+=== Enhancement Added: Sort
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=sort]
+
+==== Justification
+
+---
+This feature is essential for the Sales Navigator as it allows the user to view his/her person list with ease by
+arranging/sorting the list by different ways. It is required as this functional allows the user to sort the priority
+of his/her clients so that the user will know which client(s) is of a higher priority etc. Sorting by priority is one
+of the way the user can sort.
+
+The implementation is done creating different comparators to sort in the different ways. Sorting by priority and
+status requires specific ways to be sorted. Therefore a custom comparator would e needed to sort and display the list
+in a way that is most suited for the user.
+
+*Before sorting by _Priority_*
+
+image::beforeSortPriority.png[width="1000"]
+
+*After sorting by _Priority_*
+
+image::afterSortPriority.png[width="1000"]
+
+*After sorting by _Priority_, user decides to sort by _Name_*
+
+image::sortByName.png[width="1000"]
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=Sorting]
+
+---
+
+=== Enhancement Added: Setting Relationship
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=setrelationship]
+
+==== Justification
+
+---
+This feature is essential for the Sales Navigator as it lets the user make connection or set-up relationship among
+his/her clients. As a sales executive, the user may come across situations where the clients are related to one
+another. The connection/relationship may be siblings, colleagues, etc. Therefore, this enhancement allows the user to
+set connections among his/her clients.
+
+The implementation is done very similarly to have the field *Tag* is created. The key differences between them is
+them is that adding, deleting and clearing of relationships are not allowed to be executed in the *Add* and *Edit*
+command.
+
+*Setting relationship between indexes 1 and 2*
+
+image::addRelOne.png[width="1000"]
+
+*Setting relationship between indexes 1 and 3*
+
+image::addRel.png[width="1000"]
+
+*Setting relationship between indexes 1 and 3 again but fails*
+
+image::addRelFail.png[width="1000"]
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=SettingRelationship]
+
+
+=== Enhancement Proposed:
+
+** Enhance Set Relationship command to be able to edit relationship between two persons.
+** Add specific relationship groups that groups specific relationships together to enable easier viewing for grouping
+ for user
+
+=== Issue Reported:
+
+==== Documentation suggestion:
+
+** [https://github.com/CS2103AUG2017-W11-B2/main/issues/117[CS2103AUG2017-W11-B2-#117]]
+
+=== Other Contributions
+
+** Updated architecture diagram for Model, Storage Component (Pull request: [][#])
+** Updated the person panel with relationship information
+(Pull request: [https://github.com/CS2103AUG2017-T14-B3/main/pull/93[#93]])
+

@@ -234,17 +234,19 @@ last shown list.
 
 Synonyms/Aliases for the command: `arrange`, `organise` +
 Sorts list by different types +
-such as `name`, `tag`, `company`, `priority` or `status`. +
+such as `name`, `tag`, `company`, `priority` or `position`. +
 
 Format: `sort [TYPE]`
 
 [NOTE]
 ====
-1. Sorting by *priority* sorts the list by *_H, M and L_* repsectively. After sorting by H, M and L, they will then
+1. Sorting by *position* sorts the list according the person's position and and
+
+2. Sorting by *priority* sorts the list by *_H, M and L_* repsectively. After sorting by H, M and L, they will then
 sort them
 alphabetically by their names.
 
-2. Sorting by *status* sorts the list by making all the *_NIL_* status to be at the bottom of the list. After doing
+3. Sorting by *status* sorts the list by making all the *_NIL_* status to be at the bottom of the list. After doing
 that it will then also sort them alphabetically.
 ====
 
@@ -258,7 +260,7 @@ Examples:
 
 * `sort priority`
 
-* `sort status`
+* `sort position`
 // end::sort[]
 
 // tag::setrelationship[]
