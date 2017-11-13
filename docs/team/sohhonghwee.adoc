@@ -1,0 +1,133 @@
+= Soh Hong Hwee - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: MyBook
+MyBook is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F10-B4/main/blob/master/collated/main/aver0214.md[Functional code]] [https://github.com/CS2103AUG2017-F10-B4/main/blob/master/collated/test/aver0214.md[Test code]]
+
+=== Enhancement Added: Find by other details
+
+==== Command
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=finds]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To provide additional options for user to search for person(s) .
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=finds]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Important tag at the top
+
+==== Logic
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=important]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows user to access contacts that are important conveniently.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=important]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sorted contacts in alphabetical order
+
+==== Logic
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows user to scroll through the list to look for persons easily.
+
+=== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Quick adding of a person
+
+==== Logic
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+include::../UserGuide.adoc[tag=add2]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To facilitate quicker adding and making it possible to add when user do have all of a person's details.
+
+=== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Provide assistance to team members.
+* Assign repository labels and milestones.
+* Issuing the project version release.
+* Maintaining project documentations relevancy.
+
+
+

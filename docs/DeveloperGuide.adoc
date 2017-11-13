@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F10-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F10-B4`      Since: `Aug 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -363,6 +363,594 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+---
+
+// tag::finds[]
+=== Find person(s) using different details
+
+The `finds` command is an improved version from `find` command. It allows user to search using other details such as phone number, email or tag instead of just name.
+
+The user can use this command with only ONE of the following prefixes
+
+* `n/` : To search by name(s)
+* `p/` : To search by phone number(s)
+* `e/` : To search by email(s)
+* `t/` : To search by tag(s)
+
+The following sequence diagram shows how the find operation work:
+
+image::FindSequenceDiagram.png[width="800"]
+
+[NOTE]
+The `predicate` used depends on which type of detail the user is using to find.
+
+The 4 predicates are as follow:
+
+* if search by `name` then `NameContainsKeywordsPredicate` is used
+* if search by `phone number` then `PhoneContainsSpecifiedKeywordsPredicate` is used
+* if search by `email` then `EmailContainsSpecifiedKeywordsPredicate` is used
+* if search by `tag` then `TagContainsSpecifiedKeywordsPredicate` is used
+
+==== Design Considerations
+
+It is implemented to search with one type of detail only so that the returned results will be relevant to that type of detail used only. i.e. if a user search for a person with phone number then only the phone numbers of the returned contacts are relevant, and other details are irrelevant to the input phone number during the search.
+
+Alternative considered is to allow user input multiple details in each search. It may help to narrow down and shorten the list of contacts that will be returned, but it is not useful as user may only recall some details of a person only. For example:
+
+*Scenario one*
+
+* `Contact 1` : Name `John Tan` and phone number `12345678`
+* `Contact 2` : Name `John Doe` and phone number `12349875`
+* `Contact 3` : Name `Amy Chan` and phone number `98765432`
+* User wants to find `John Tan` but do not recall surname and key in `John` only
+* User cannot recall the number and key in a random number `43567823`
+* There will be no results returned in this scenario as input phone number does not match the phone numbers in `Contact 1` and `Contact 2` that contains `John`
+
+*Scenario two*
+
+* `Contact 1` : Name `John Tan` and phone number `12345678`
+* User wants to find `John Tan` and key in `John Tan`
+* User cannot recall the number and key in a random number `43567823`
+* There will be no results returned in this scenario as input phone number does not match the phone number in the `Contact 1` although the name matches exactly.
+
+From the two scenarios, we know that unless the user knows the exact details (i.e. full name, exact phone number, exact email and etc) otherwise `finds` command with multiple details input is practically not useful as no results will be returned.
+
+**Aspect:** Finding person with other details. +
+**Alternative 1 (current choice):** Able to search with other details but only one type of detail for each search +
+**Pros:** Easier to be implemented when only one type of detail is used. +
+**Cons:** Repeating functions for different details. +
+**Alternative 2:** Able to find with multiple details. +
+**Pros:** Lesser repeated functions is possible. +
+**Cons:** Harder to implement and increased complexity may affect efficiency.
+
+---
+// end::finds[]
+
+// tag::important[]
+=== Important tag
+
+Any person that has `important` tag will be filtered and then insert to the top of the list. +
+
+It is implemented to check whether any person in addressbook has `important` tag each time `add` or `list` command is executed
+
+[source,java]
+----
+@Override
+    public void filterImportantTag() throws PersonNotFoundException, DuplicatePersonException {
+        ArrayList<ReadOnlyPerson> notImportantPersons = new ArrayList<ReadOnlyPerson>();
+        ArrayList<ReadOnlyPerson> importantPersons = new ArrayList<ReadOnlyPerson>();
+
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            // ...Check through and filter all persons in addressbook with important tag to importantPersons list...
+        }
+
+        /**
+         * If any tags in addressbook contains the {@code keyword}
+         * then proceed to insert the contact(s) in {@code importantPersons} to the top of the addressbook
+         */
+
+        if (importantPersons.size() != 0) {
+            // ...Perform logic to insert persons with important tag to the top...
+        }
+    }
+----
+
+==== Design Considerations
+
+**Aspect:** Perform insertion of persons with important tag to the top quickly. +
+**Alternative 1 (current choice):** Filter person with `important` tag to a list and those without to another list then merge the lists together. +
+**Pros:** Easy to implement and works well when there are not a lot of persons. +
+**Cons:** Time complexity is O(n2) hence slows down as more persons are being added over time. +
+**Alternative 2:** Create additional addressbook that stores only important contacts and execute merge only when a new person is added to the addressbook. +
+**Pros:** Able to achieve O(n) time complexity. +
+**Cons:** Additional addressbook is redundant and takes up memory space.
+
+---
+// end::important[]
+
+// tag::sort[]
+=== Sorted persons
+
+Persons stored in the addressbook will be sorted in ascending alphabetical order based on their name.
+
+Persons in the addressbook will be sorted each time the user execute `add` or `list` command.
+
+Sorting is achieved by using java Collection.sort() method with a specified NameComparator.
+
+[source,java]
+----
+public class NameComparator implements Comparator <ReadOnlyPerson> {
+
+    @Override
+    public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
+        return p1.getName().fullName.compareToIgnoreCase(p2.getName().fullName);
+    }
+}
+----
+
+The NameComparator compares two names and ignore their case.
+
+The following sequence diagram shows how the add and sort operations work together:
+
+image::AddSortSequenceDiagram.png[width="800"]
+
+[NOTE]
+Executing `list` command calls sortAllPersons() and filterImportantTag().
+
+==== Design Considerations
+
+**Aspect:** Sort the persons in the list fast. +
+**Alternative 1 (current choice):** Use java Collection.sort() which is a merge sort algorithm. +
+**Pros:** Works well with few persons in the addressbook and merge sort algorithm is stable. +
+**Cons:** Time complexity is nlog(n) hence sorting time increases as more people are being added over time. +
+**Alternative 2:** Implement insertion sort algorithm. +
+**Pros:** Able to achieve O(n) time complexity which is the fastest. +
+**Cons:** Addressbook has to be almost sorted to achieved O(n) time complexity, otherwise can result in O(n2).
+
+---
+// end::sort[]
+
+// tag::add[]
+=== Quick add
+
+Only name and phone number are the required fields. +
+
+Program will handle and create default objects for all other fields that are not fulfilled by user. +
+
+The function below is the code to create objects with default values when empty field exists.
+
+[source, java]
+----
+ public static Optional <String> getDetails(Optional <String> value, Prefix prefix) throws ParseException {
+        if (!value.isPresent()) {
+            if (prefix.equals(PREFIX_BIRTHDAY)) {
+                return value.ofNullable("00/00/0000");
+            } else if (prefix.equals(PREFIX_EMAIL)) {
+                return value.ofNullable("No email");
+            } else if (prefix.equals(PREFIX_ADDRESS)) {
+                return value.ofNullable("No address");
+            } else if (prefix.equals(PREFIX_REMARK)) {
+                return value.ofNullable("No remark");
+            }
+        }
+
+        return value;
+    }
+----
+
+==== Design Considerations
+
+**Aspect:** Allow empty fields for `add` command. +
+**Alternative 1 (current choice):** Create objects for empty fields with default values. +
+**Pros:** Allow user to add a person even without full details. +
+**Cons:** Nil.
+
+---
+// end::add[]
+
+// tag::colortag[]
+=== Persisting colored tags
+
+Enhanced feature to allow unique colored tags to persist after the program exits without having to save color data on external files.
+
+Full Code:
+[source,java]
+----
+private static String getColorForTag(String tagValue) {
+
+        if (!tagColors.containsKey(tagValue)) {
+            int multiplier = 1;
+            int asciiSum = (tagValue.hashCode() > 1) ? tagValue.hashCode() : tagValue.hashCode() * -1;
+
+            int colorRed = asciiSum % 256;
+            int colorGreen = (asciiSum / 2) % 256;
+            int colorBlue = (asciiSum / 3) % 256;
+            while ((colorRed + colorGreen + colorBlue) > 700) {
+                asciiSum = (asciiSum / multiplier) * ++multiplier;
+                colorRed = asciiSum % 256;
+                colorGreen = (asciiSum / 2) % 256;
+                colorBlue = (asciiSum / 3) % 256;
+            }
+            String colorString = String.format("#%02x%02x%02x", colorRed, colorGreen, colorBlue);
+            tagColors.put(tagValue, colorString);
+        }
+
+        return tagColors.get(tagValue);
+    }
+----
+
+Java's `hashcode()` method from *String* library will be used to obtain a unique 32-bit integer hash value of the tag String. We first obtain the hashcode and ensure it is a positive value.
+Function *getColorForTag(String tagValue)* is supposedly implemented in the PersonCard class, as expected from suggestions on developer guide UI component.
+(Note: Identical strings will result in the same hashcode value)
+
+[source,java]
+----
+int asciiSum = (tagValue.hashCode() > 1) ? tagValue.hashCode() : tagValue.hashCode() * -1;
+----
+
+We then do a separate division of each color and modulus it by *256* to ensure that it will stay within the RGB limit of 0 - 255.
+
+[source,java]
+----
+int colorRed = asciiSum % 256;
+int colorGreen = (asciiSum / 2) % 256;
+int colorBlue = (asciiSum / 3) % 256;
+----
+
+To ensure that colors stays within visible range, we do a check if sum of RGB is above 700. If it is, it is likely that the color generated is too bright and would not be visible with the white font, hence regenerate the color again.
+We can use an incremental multiplier to regenerate another unique hashcode from the original hashcode. However, to prevent the numbers form getting exponentially large and exceeding the 32-bit sized integer, we shall first divide it by the previous multiplier.
+It is save to assume that chances of collision with other hashcodes is extremely low since we are using extremely large numbers.
+
+[source,java]
+----
+while ((colorRed + colorGreen + colorBlue) > 700) {
+                asciiSum = (asciiSum / multiplier) * ++multiplier;
+                colorRed = asciiSum % 256;
+                colorGreen = (asciiSum / 2) % 256;
+                colorBlue = (asciiSum / 3) % 256;
+}
+----
+
+Finally, we format the RBG values into hexadecimal format with a hex symbol in front to conform with conventional CSS color styling before adding it into the color tag.
+
+==== Design Considerations
+
+**Aspect:** Generating of colors for `colorTag`. +
+**Alternative 1 (current choice):** Generate unique color based on tag string. +
+**Pros:** Unique tags will always have unique colors. +
+**Cons:** Hard for new developers to understand the color code generation. +
+**Alternative 2:** Create a static list of limited colors and randomly retrieve colors from there. +
+**Pros:** Does not involve complex code generation, easier for new developers to understand. +
+**Cons:** Tag colors renew whenever program restarts.
+
+---
+
+**Aspect:** Saving colors retain color persistence after program shuts down. +
+**Alternative 1 (current choice):** Morph in-built `hashcode()` function output to obtain RBG colors. +
+**Pros:** Color persistence without the need to save color details onto offline files. +
+**Cons:** Chances of certain tags resulting in generating very similar RGB colors. +
+**Alternative 2:** Save chosen tag colors onto external file. +
+**Pros:** Hard for new developers to understand how colors are retained. +
+**Cons:** Must create additional file and include additional unnecessary codes for read/write.
+
+---
+// end::colortag[]
+
+// tag::gmap[]
+=== Google Map Mechanism
+
+The Google map mechanism resides in a `GmapCommand` which also inherits from the `Command` object.
+
+image::GmapClassDiagram.png[width:100]
+_Figure 3.9.0.1 : GmapCommand object class diagram_
+
+There are two ways the user can utilize the Google map feature, first by entering the command into CommandBox or selecting the **Google Map** option from the dropdown menu on each `PersonCard` panel.
+
+==== Method 1
+
+The `GmapCommand` object sequence diagram can be seen below:
+
+image::GmapSequenceDiagram1.png[width="750"]
+_Figure 3.9.1.1 : GmapCommand parser sequence diagram_
+
+As we can see, `GmapCommand` object is created after input has been validated from the `AddressBookParser`.
+After initialization, `GmapCommand` will post a `DisplayGmapEvent` event while returning a command success or command failed message in *result* and return it to the LogicManager for GUI display.
+The `DisplayGmapEvent` object contains information regarding the index of person in the addressbook.
+Address data of a person can then be retrieved later using this index.
+
+image::GmapSequenceDiagram2.png[width="750"]
+_Figure 3.9.1.2 : GmapCommand execution sequence diagram_
+
+
+Event handling of `DisplayGmapEvent` is done on the `BrowserPanel` that subsequently loads its **loadMapPage()** function.
+
+`GmapCommand` object has double constructor that takes in either index-based or a predicate containing names to be searched.
+
+[source,java]
+----
+public GmapCommand(Index targetIndex) {
+        this.usingIndex = true;
+        this.targetIndex = targetIndex;
+    }
+
+public GmapCommand(NameConsistsKeywordsPredicate predicate) {
+    this.usingIndex = false;
+    this.predicate = predicate;
+}
+----
+
+Command execution residing in **execute()** will then attempt to validate the given index if it exists or returning the first index of a list of persons that matches all the predicate that the user has indicated.
+
+Finally, **DisplayGmapEvent** will be raised with this index in its parameter.
+
+[source,java]
+----
+EventsCenter.getInstance().post(new DisplayGmapEvent(targetIndex));
+----
+
+==== Method 2
+
+The second way is to select the Google Map option under the dropdown list on the GUI. Each `PersonCard` has its own handler which will automatically raise a DisplayGmapEvent with the `PersonCard` index as parameter.
+
+[source,java]
+----
+public void handleGoogleMap() {
+    raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
+}
+----
+
+image::GmapSequenceDiagram3.png[width="750"]
+_Figure 3.9.2.1 : GmapCommand GUI sequence diagram_
+
+Since the GUI already has index tagged on every PersonCardPanel, there is no need for input validation.
+Hence, the event can be raised directly and be handled in the `BrowserPanel` similar to **Method 1**.
+
+==== Design Considerations
+
+**Aspect:** Loading of Google Map data. +
+**Alternative 1 (current choice):** Loading a modified URL into `WebView`. +
+**Pros:** Much lesser codes needed, very easy for new developers to understand. +
+**Cons:** Lacks flexibility in utilizing Google's map feature. +
+**Alternative 2:** Use Google's Java client libraries. +
+**Pros:** Allows much more flexibility and use directions, places and distance features. +
+**Cons:** Currently do not need all these extra features. Integrating external libraries induces unnecessary overhead and is hard for new developers to understand the code.
+
+---
+// end::gmap[]
+
+// tag::theme[]
+=== Theme Changer Mechanism
+
+This feature can be used from both the CLI and GUI.
+Similar to the Google Map mechanism, the `ThemeCommand` object created when using the CLI is also a subclass of `Command` object.
+
+*Refer to Figure 3.10.0.1*
+
+==== Method 1
+
+The creation of `ThemeCommand` object is also similar to most `Command` classes.
+
+image::ThemeSequenceDiagram1.png[width="750"]
+_Figure 3.10.1.1 : ThemeCommand parser sequence diagram_
+
+`ThemeCommand` is created after `AddressBookParser` validation is successful.
+
+image::ThemeSequenceDiagram2.png[width="750"]
+_Figure 3.10.1.2 : ThemeCommand execution sequence diagram_
+
+Validation within the **execute()** function will check for valid theme index or name.
+Once this validation is successful, a `ChangeThemeEvent` event will be raised to `EventsCenter`.
+
+[source,java]
+
+----
+
+@Override
+public CommandResult execute() throws CommandException {
+
+    // Theme name or index validation code
+
+    EventsCenter.getInstance().post(new ChangeThemeEvent(targetIndex));
+    return new CommandResult(String.format(MESSAGE_THEME_CHANGE_SUCCESS,
+                UiPart.getThemeNameByIndex(this.targetIndex.getZeroBased())));
+
+}
+----
+
+Event handling will then be done at `MainWindow` object class.
+
+[source,java]
+----
+private void handleChangeThemeEvent(ChangeThemeEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    setTheme(THEME_FILE_FOLDER + THEME_LIST_DIR.get(event.targetIndex));
+}
+----
+
+==== Method 2
+
+The second method of utilizing the theme feature is from the GUI. Each buttons from the menu toolbar is tied to its own theme url.
+
+For example:
+[source,java]
+----
+@FXML
+public void handleThemeModenaYoB() {
+    setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA_YELLOWONBLACK);
+}
+----
+
+The handling of theme buttons from Menu toolbar directly calls the **setTheme()** function.
+
+==== Updating default page
+
+The initial default web page displayed in `BrowserPanel` is a blank **default.html** page that uses a static darktheme CSS file for its styles.
+Changing of styles using Java 8 API by adding external stylesheet only changes the GUI for Java 8's components.
+The CSS styles for **default.html** will continue to reflect darktheme styles.
+
+Hence, **default.html** file was modified to allow reading of parameters to indicate which themes are currently used, and update its local CSS file accordingly.
+
+[source, javascript]
+----
+<script language="javascript">
+
+    <!-- Code to retrieve theme css URI from parameters -->
+
+    <!-- On page load, extract selected theme from parameter in the URL and edit respective css file -->
+		window.onload = function(e){
+			var theme  = getParameterByName('theme');
+			if (theme) {
+				var oldlink = document.getElementsByTagName("link").item(0);
+				var newlink = document.createElement("link");
+
+				newlink.setAttribute("rel", "stylesheet");
+				newlink.setAttribute("type", "text/css");
+				newlink.setAttribute("href", theme);
+
+				document.getElementsByTagName("head").item(0).replaceChild(newlink, oldlink);
+			}
+		}
+</script>
+----
+
+With this in place, whenever there's a change of themes, the **default.html** page will be reloaded with theme information supplied in its URL parameters.
+
+[NOTE]
+**Disclaimer:** +
+Stylesheets and images of available themes were obtained online with slight modification of the CSS file.
+
+==== Design Considerations
+
+**Aspect:** Storing of stylesheets. +
+**Alternative 1 (current choice):** Storing multiple CSS files offline and read on demand. +
+**Pros:** Easier to modify stylesheets and for new developer to understand. +
+**Cons:** Additional offline files to be stored. +
+**Alternative 2:** Creating a static set of styles in java itself. +
+**Pros:** Does not require additional offline files.  +
+**Cons:** Harder to edit styles. Codes get more complicated and harder to understand, especially when there's alot of CSS rules.
+
+---
+
+**Aspect:** Updating of default web page styles. +
+**Alternative 1 (current choice):** Indicating theme data with default web page parameters. +
+**Pros:** Can dynamically set web page css file to be accordance to current Java theme. +
+**Cons:** Harder for new developers to understand. Requires understanding of Javascript. +
+**Alternative 2:** Switching default web page to be transparent. +
+**Pros:** Much easier for new developers to understand.  +
+**Cons:** Default web page will be made obsolete. Unable to utilize it for other improvements and features in the future.
+
+---
+// end::theme[]
+
+// tag::import[]
+=== Import Mechanism
+
+Just like the Google Map and Theme Changing feature, the **Import** feature can also be used from both the CLI and GUI.
+Similarly, `ImportCommand` object is also a subclass of the `Command` object.
+
+[NOTE]
+Refer to Figure 3.9.0.1 for Class Diagram of ThemeCommand.
+
+==== Method 1
+
+Import feature can first be utilized using the CLI. The sequence diagram for parsing of import command input is also similar to **Theme Changer Mechanism**.
+
+[NOTE]
+Refer to Figure 3.10.1.1 for Sequence Diagram of Command Parsing.
+
+Upon command execution after `ImportCommand` has been initialized, `AddressBookImportEvent` will be raised to the `EventsCenter`.
+
+image::ImportSequenceDiagram1.png[width="750"]
+_Figure 3.11.1.1 : Import CLI execution sequence diagram_
+
+Event handling will then be done at the `Model` component by the `ModelManager`.
+It will first process all records of person in the new addressbook. If the person name does not exist, it will add that person into the local addressbook.
+If the person name already exist, it will check if both old and new person's details are identical. If it is not, it will update the local copy with the new one.
+
+==== Method 2
+
+Import command can also be accessed from the Menu toolbar.
+
+[NOTE]
+Refer to UserGuide 3.9 for screenshot of using Import from Menu toolbar.
+
+image::ImportSequenceDiagram2.png[width="750"]
+_Figure 3.11.1.1 : Import Feature GUI sequence diagram_
+
+Java 8's FileChooser object is used to retrieve File URI from user.
+File path validation will be done within the `MainWindow` when **handleImport()** is triggered.
+
+[source, java]
+----
+public void handleImport() {
+    try {
+        // Attempt to read XML file
+        addressBookOptional = XmlFileStorage.loadDataFromSaveFile(new File(selectedFile.getPath()));
+        raise(new AddressBookImportEvent(selectedFile.getPath(), addressBookOptional));
+
+        // Raise success message back to UI
+        cmdResult = new CommandResult(String.format(MESSAGE_IMPORT_SUCCESS, selectedFile.getPath()));
+        raise(new NewResultAvailableEvent(cmdResult.feedbackToUser, true));
+
+    } catch (DataConversionException e) { // Catch not well-formed XML files
+        cmdResult = new CommandResult(String.format(MESSAGE_INVALID_XML_FORMAT_ERROR, selectedFile.getPath()));
+        raise(new NewResultAvailableEvent(cmdResult.feedbackToUser, true));
+
+    } catch (IOException e) { // Catch missing files
+        cmdResult = new CommandResult(String.format(MESSAGE_INVALID_IMPORT_FILE_ERROR, selectedFile.getPath()));
+        raise(new NewResultAvailableEvent(cmdResult.feedbackToUser, true));
+    }
+}
+----
+
+To validate the xml file, it will first attempt to read its content.
+Non well-formed documents or file not found will be caught similar to **Method 1**.
+Results will then be created `CommandResult` and be wrapped with `NewResultAvailableEvent` objects before being raised.
+
+`NewResultAvailableEvent` will then be returned to `ResultDiplay` class for GUI update of action outcome.
+
+==== Design Considerations
+
+**Aspect:** Modes of import. +
+**Alternative 1 (current choice):** Append new person and update existing ones. +
+**Pros:** Gives flexibility replacing entire addressbook or appending existing addressbook. +
+**Cons:** Codes slightly more complex. +
+**Alternative 2:** Replace entire addressbook with new one. +
+**Pros:** Codes are more simple and easier for new developer to understand.  +
+**Cons:** Does not give the user option to append or replace existing addressbook.
+
+---
+// end::import[]
+
+// tag::birthday[]
+=== Add person(s) Birthday
+
+The `birthday` command is an improved version from `add` command. It allows user to add using with as phone number, birthday, email or tag.
+
+The user can use this command with 'b/dd/mm/yyyy'
+
+==== Design Considerations
+
+It is implemented to add birthday detail so that relevant to the user to identify the birthday for up coming event. i.e. if a user want to have an event they can identify who's birthday is on this month or next month.
+
+//end::birthday[]
+
+---
+
+// tag::photo[]
+=== Add photo to person(s)
+
+The adding `photo` is an new version for our app. It allows user to add photos for the person list that been added to Mybook, by clicking the command box and go to add photo
+it will sent a request to open an file from the local location, and import photo to Mybook.
+
+The user can use size of 100X100 of file 'png','jpg' or 'jpeg'
+
+==== Design Considerations
+
+It is implemented to add photo detail so that relevant to the user to identify user. i.e. if both user have same/similar pronunciation of name.
+
+//end::photo[]
 
 == Documentation
 
@@ -723,15 +1311,60 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |delete a person through a button |delete a person more conveniently
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |have the list arranged alphabetically |search through the list as well
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |have simpler add command |do a quick add
+
+|`* * *` |user |have a address button |view the person's address on the browser
+
+|`* * *` |user |find a person through other details |find a person in many ways
+
+|`* * *` |user |import data from other addressbook |save the hassle to reenter contacts
+
+|`* * *` |user |list persons according to a specified tag |to list them as a group easily
+
+|`* * *` |user |delete a group of people with names or similar tag |save time from deleting one by one
+
+|`* * *` |user |to be able to add birthday details to contacts |check for a person's birthday
+
+|`* *` |user |add birthday date to contact |save more details of a person
+
+|`* *` |user |hide details of a person |just see the name of the person
+
+|`* *` |user |sort contacts in UI by drag and drop |arrange them in the order of my preference
+
+|`* *` |user |choose different UI theme |customize to my preference
+
+|`* *` |user |set the style and size of the font |customize to my preference
+
+|`* *` |user |have different input languages |input different languages to my contacts.
+
+|`* *` |user |be able to open and close panels in UI |hide them when not needed.
+
+|`* *` |user |have important/favorite persons at top of the list |access to their details faster.
+
+|`* *` |user |to delete a group of people using tag |save time from deleting one by one.
+
+|`* *` |user |to see the different commands in a UI panel |refer to the command format conveniently
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |be able to add photo to a contact |identify a person quicker and distinguish people with almost similar names
+
+|`*` |user |auto suggestion list for recently used command |save time from being repetitive
+
+|`*` |user |to change color of tag in UI |customize to my preference
+
+|`*` |user |to synchronized addressbook with other online sources |my addressbook is up to date
+
+|`*` |user |to group contacts together |view them as a group
+
+|`*` |user |to be able to choose which search engine to use |customize to my preference.
+
 |=======================================================================
 
 {More to be added}

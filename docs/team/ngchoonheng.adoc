@@ -1,0 +1,143 @@
+= Ng Choon Heng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: MyBook
+MyBook is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F10-B4/main/blob/master/collated/main/Choony93.md[Functional code]] [https://github.com/CS2103AUG2017-F10-B4/main/blob/master/collated/test/Choony93.md[Test code]]
+
+=== Enhancement Added: Persistent Color tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=colortag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+User tend to remember and identify colors easier than words. Ever-changing colored tags is not user friendly.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=colortag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Google Maps
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=gmap]
+
+include::../UserGuide.adoc[tag=gmap2]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Having just textual data of person's address is not user friendly nor informative at all.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=gmap]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Theme Changer
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=theme1]
+
+include::../UserGuide.adoc[tag=theme2]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Having multiple themes to suit the user needs improves overall user experience, especially for younger target audience.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Import Addressbook
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=import1]
+
+include::../UserGuide.adoc[tag=import2]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Adds convenience for users to import persons from external addressbooks instead of having to add them manually one by one.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=import]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Set up Project environment for Travis, Appveyor and Coveralls
+* Creating and assigning most of the repository labels and milestones.
+* Issuing the project version release.
+* Provided suggestions and advices for external teams (
+https://github.com/CS2103AUG2017-F11-B1/main/issues/90[#90],
+https://github.com/CS2103AUG2017-F11-B1/main/issues/89[#89],
+https://github.com/CS2103AUG2017-F11-B1/main/issues/88[#88]).
+* Uploaded code reuse offer for persistent color tags on git forum
+https://github.com/nus-cs2103-AY1718S1/forum/issues/199[#199].
+* Persistent color tags reused by
+https://github.com/CS2103AUG2017-F11-B3/main/pull/79[F11-B3].
+
+

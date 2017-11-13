@@ -13,6 +13,7 @@ public class Email {
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
             "Person emails should be 2 alphanumeric/period strings separated by '@'";
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
+    public static final String NO_EMAIL = "No email";
 
     public final String value;
 
@@ -24,10 +25,14 @@ public class Email {
     public Email(String email) throws IllegalValueException {
         requireNonNull(email);
         String trimmedEmail = email.trim();
-        if (!isValidEmail(trimmedEmail)) {
+        //@@author aver0214
+        if (!isValidEmail(trimmedEmail) && !trimmedEmail.equals(NO_EMAIL)) {
             throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        this.value = trimmedEmail;
+        } else if (trimmedEmail.equals(NO_EMAIL)) {
+            this.value = NO_EMAIL;
+        } else {
+            this.value = trimmedEmail;
+        } //@@author
     }
 
     /**

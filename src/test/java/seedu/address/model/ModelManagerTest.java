@@ -25,6 +25,7 @@ public class ModelManagerTest {
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
     }
+    //TODO (Choony): Test HandleAddressBookImportedEvent
 
     @Test
     public void equals() {

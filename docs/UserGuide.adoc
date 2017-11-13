@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F10-B4/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -33,11 +33,13 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 b/21/07/1991 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
+
+.  Refer to the link:#command-summary[Command Summary] section below for summary of each command.
 
 == Features
 
@@ -54,28 +56,32 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+// tag::add[]
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Only `NAME` and `PHONE NUMBER` are compulsory fields +
+Format: `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 b/21/07/1991 e/johnd@example.com a/John street, block 123, #01-01 r/likes to swim`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison b/21/07/1991 p/1234567 t/criminal`
+* `add n/Adriana Danny p/98765432`
+// end::add[]
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the address book in sorted ascending alphabetical order. +
 Format: `list`
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -92,7 +98,11 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by name: `find` (obsoleted)
+
+[NOTE]
+This 'find' command is obsoleted. +
+Please refer to new link:#locating-persons-by-names-or-phone-numbers-or-emails-or-tags-code-finds-code-v1-1[finds] command.
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -112,12 +122,26 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Remarking a person: `add`
+
+Remarks a person to the address book +
+Format: `remark INDEX r/[REMARK]`
+
+Examples:
+
+* `remark 1 r/Likes to drink coffee`
+Edits the remark for the first person to Likes to drink coffee.
+* `remark 1 r/`
+Removes the remark for the first person.
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/jogging`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
 
 ****
+
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
@@ -227,6 +251,342 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== New Features
+
+// tag::colortag[]
+=== Static `colored` tags (v1.0)
+
+*Author*: Ng Choon Heng
+
+Tags generated will automatically be assigned a unique color.+
+Similar tags will also be assigned the same color as long as tags have the same spelling.
+// end::colortag[]
+
+=== Display of `total person` (v1.0)
+
+*Author*: Ng Choon Heng
+
+Total number of person in addressbook will now be displayed at the footer bar.
+
+// tag::finds[]
+=== Locating persons by names or phone numbers or emails or tags: `finds` (v1.1)
+
+*Author*: Soh Hong Hwee
+
+Finds persons who contain any of the given keywords. +
+Format: `finds n/[MORE_KEYWORDS] or p/[MORE_KEYWORDS] or e/[MORE_KEYWORDS] or t/[MORE_KEYWORDS]`
+
+[NOTE]
+Only can search using one type of details each time. +
+E.g. If `finds p/12345678` then `n/` and `t/` should not be included.
+
+****
+* The search for name is case insensitive. e.g `hans` will match `Hans`
+* The search for email is case sensitive. e.g `email@example.com` will not match `Email@example.com`
+* The search for tag is case sensitive. e.g `friends` will match `friends` but not `Friends`
+* The order of the keywords for name does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The order of the keywords when searching a few tags does not matter. e.g. `[friends] [colleagues]` will match `[colleagues] [friends]`
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `finds n/John` +
+Returns `john` and `John Doe`
+* `finds n/Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+* `finds p/91234567` +
+Returns any person having phone number `91234567` exactly
+* `finds p/91234567 12345678` +
+Returns any person having phone number `91234567` or `12345678` exactly
+* `finds e/amy@example.com` +
+Returns any person having email `amy@example.com` exactly
+* `finds e/amy@example.com` `john@example.com` +
+Returns any person having email `amy@example.com` or `john@example.com` exactly
+* `finds t/[friends]` +
+Returns any person having tag `[friends]` exactly
+* `finds t/[friends] [colleagues]` +
+Returns any person having tags `[friends]` or `[colleagues]` exactly
+//end::finds[]
+
+// tag::optionmenu[]
+=== Extra `Options` menu (v1.1)
+
+*Author*: Ng Choon Heng
+
+Each user will have an extra list of options to choose from beside their name. +
+Icon is similar to a down arrow.
+// end::optionmenu[]
+
+=== Option Menu `Delete` (v1.1)
+
+*Author*: Ng Choon Heng
+
+image::delete_selection.png[width="300"]
+_Figure 3.5.1 : Using delete option from Option Menu_
+
+This feature can be found under the new `options` menu
+Deletes the user according to the selected option's parent person.
+
+// tag::gmap[]
+=== Displaying google map : `gmap` (v1.2)
+
+*Author*: Ng Choon Heng
+
+Displays the google map of the person identified by the index number used in the last person listing. +
+Format: `gmap INDEX`
+
+****
+* Loads the peron's address into Google map page at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`gmap 2` +
+Display google map of the 2nd person in the address book.
+* `find Betsy` +
+`gmap 1` +
+Display google map the 1st person in the results of the `find` command.
+// end::gmap[]
+
+=== Option Menu `Google map` (v1.2)
+
+*Author*: Ng Choon Heng
+
+image::gmap_selection.png[width="300"]
+_Figure 3.7.1 : Using Google Map option from Option menu_
+
+This feature can be found under the new `options` menu. +
+Display the google map data into browser panel based on person's address.
+
+// tag::theme1[]
+=== Themes selection from `File` toolbar (v1.2)
+
+*Author*: Ng Choon Heng
+
+image::theme_selection.png[width="300"]
+_Figure 3.8.1 : Using Theme selection from Menu toolbar_
+
+Allows user to select from a range of user interface themes +
+Function will be found from under the `File` section of menu toolbar. +
+Selected themes will be saved into user preference file upon exit of program. +
+Reinitializing of myBook will display the previous choice of theme.
+// end::theme1[]
+
+// tag::important[]
+=== `Important` or `important` tag (v1.2)
+
+*Author*: Soh Hong Hwee
+
+Contacts in user myBook app that has `Important` or `important` tag will always appear at the top of the list. +
+User using versions before v1.2 should add a new person with `important` tag first to enjoy this feature.
+// end::important[]
+
+//tag::birthday[]
+=== Add Birthday
+
+*Author*: Wei Ren Kai
+
+All persons can now add in their birthday on the command line
+Format `b/dd/mm/yyyy` allow Mybook to keep track all students birthday
+Easy to identify who's birthday is coming up on that month.
+//end::birthday[]
+
+// tag::sort[]
+=== Sorted Contacts (v1.3)
+
+*Author*: Soh Hong Hwee
+
+All persons displayed will be sorted in ascending alphabetical order based on their name. +
+Using `List` command will always display all persons in sorted ascedning alphabetical order. +
+Persons with `Important` or `important` tag will be at the top in ascending alphabetical order then follow by other persons.
+// end::sort[]
+
+// tag::gmap2[]
+=== Gmap command accepts person name (v1.3)
+
+*Author*: Ng Choon Heng
+
+Gmap command can now accept person name instead of just Index only.
+
+Displays the google map of the person identified by the name used in the last person listing. +
+Format: `gmap NAME`
+
+****
+* Loads the peron's address into Google map page at the specified `NAME`.
+* The name reference is case-insensitive
+* The name *must be a whole word* such as `Bernice` and not `Bern`.
+****
+
+Examples:
+
+* `list` +
+`gmap Bernice` +
+Display google map of the person with name *Bernice* in the address book.
+* `find Yu` +
+`gmap Yu` +
+Display google map of the person in the results of the `find` command with *Yu* surname.
+// end::gmap2[]
+
+// tag::theme2[]
+=== Changing theme with CLI command (v1.3)
+
+*Author*: Ng Choon Heng
+
+Theme command can now accept both theme NAME and INDEX.
+
+Changes the theme of the main window with specified name or index. +
+Format: `theme NAME` +
+Format: `theme INDEX`
+
+****
+* Loads the theme based on `NAME` or `INDEX`.
+* The name reference is case-insensitive.
+* The name *must be a whole word* such as `darktheme` and not `dark`.
+* The index must be a positive integer.
+* Input command `theme` will display a current list of available themes.
+****
+
+*Available Themes:* +
+[INDEX]. [NAME] +
+1. DarkTheme +
+2. Bootstrap3 +
+3. Caspian +
+4. Modena +
+5. (Modena) BlackOnWhite +
+6. (Modena) WhiteOnBlack +
+7. (Modena) YellowOnBlack +
+
+Examples:
+
+`theme caspian` +
+Changes the addressbook theme to *Caspian* theme. +
+`theme 1` +
+Changes the addressbook theme to theme `INDEX` of one, which is default *DarkTheme*.
+// end::theme2[]
+
+=== Remarking a person with `remark` command (v1.3)
+
+*Author*: Teh Bee Yee
+
+Edits the remark for a person specified in the INDEX. +
+Format: `remark INDEX r/[REMARK]`
+
+****
+* Remark the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* You can remove all the person's tags by typing `r/` without specifying any tags after it.
+****
+
+Examples:
+
+* `remark 1 r/Likes to drink milk.` +
+Edits the remark for the first person in the existing to Likes to drink milk.
+* `remark 1 r/` +
+Removes the remark for the first person.
+
+// tag::add2[]
+=== Quick adding using improved `add` Command (v1.4)
+
+*Author*: Soh Hong Hwee
+
+User can now add a person with just name and phone details. +
+All other details that are not provided will be filled in by default values as shown in `Figure 3.15.1`.
+
+image::Default_for_empty_fields.png[width="400"]
+_Figure 3.15.1 : Default values for empty fields_
+// end::add2[]
+
+//tag::photo[]
+=== Option Menu `Add photo` (v1.4)
+
+*Author*: Wei Ren Kai
+
+This feature is to add photo to individual. +
+Display the photo data into browser panel with a photo size of 100X100.
+//end::photo[]
+
+// tag::import1[]
+=== Import XML addressbook command (v1.4)
+
+*Author*: Ng Choon Heng
+
+External addressbook can now be imported using `import` command
+
+Appends current addreessbook persons with given URL. +
+Format: `import [ABSOULTE_PATH]` +
+Format: `import [RELATIVE_PATH]`
+
+****
+* Loads the XML addressbook file from given path.
+* If person name from new addressbook does not exist, add into local addressbook.
+* If person name from new addressbook already exist, update into local addressbook.
+* The XML file from given path *must exist*.
+* The XML file from given path must be *well-formed*.
+****
+
+Examples:
+
+`import C:\Users\Test\newAddressbook.xml` +
+Add new persons from newAddressBook into local addressbook. +
+`import data\addressbok2.xml` +
+Add new persons from addressbook2 from local project +
+folder *data* into local addressbook.
+// end::import1[]
+
+=== Add a remark in `add` command (v1.4)
+
+*Author*: Teh Bee Yee
+
+Add remark to a person in `add` command with `r/` prefix. +
+Format: `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS r/[REMARK] [t/TAG]...`
+
+****
+* Adds a remark to a person together with `add` command.
+****
+
+Examples:
+
+* `add John Doe p/98765432 e/johnd@gmail.com a/John street, block 123, #01-01 r/Likes to drink milk.` +
+Adds a remark together with name, phone, email and address for the new person in the list.
+* `add Betsy Crowe pp/1234567 e/betsycrowe@gmail.com r/Jogging t/criminal t/friend.` +
+Adds a remark together with name, phone, email, address and tag for the new person in the list.
+
+// tag::import2[]
+=== Import feature from `File` toolbar (v1.5)
+
+image::import_selection.png[width="250"]
+_Figure 3.19.1 : Using import feature from Menu toolbar_
+
+Users can now import external addressbooks from the GUI. Clicking on the `Import Addressbook` button will pop up a File Chooser dialog to allow users to choose the addressbook file. File Chooser dailog has been set to restrict *.xml* extention files only.
+// end::import2[]
+
+=== Coming soon in `v2.0`
+
+==== Close panels in UI from `Button`
+
+Allows user to open or close panels in UI when not needed. +
+Functions will be found from the new `Button` feature.
+
+==== Deleting a group of persons from improved `delete command`
+
+Allows user to delete a group of people through name  or tags. +
+Functions will be found from improved `delete` command.
+
+==== Display all tags from `new UI panel`
+
+All the tags in user myBook App will be displayed in a new UI panel. +
+Functions wll be found from `new UI panel`.
+
+==== Export feature
+
+Allowing user to export current addressbook to other destinations and in various formats such as csv, xml or json.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -234,19 +594,28 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* : `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 b/21/07/1991 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+* *Find* : `finds n/KEYWORD [MORE_KEYWORDS]` or `finds p/KEYWORD [MORE_KEYWORDS]` or `finds e/KEYWORD [MORE_KEYWORDS]` or `finds t/[KEYWORD] [MORE_KEYWORDS]` +
+e.g. `finds n/James Jake` +
+e.g  `finds p/98765432` +
+e.g. `finds t/[Friends] [colleagues]`
+* *Google Map* : `gmap INDEX` +
+e.g. `gmap 1`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Theme* : `theme INDEX` or `theme NAME` +
+e.g. `theme 1` +
+e.g. `theme caspian`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Remark* : `remark INDEX r/REMARK` +
+e.g. `remark 1 r/CS2103 is fun`
