@@ -7,8 +7,6 @@ import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.UniqueScheduleList;
-import seedu.address.model.socialmedia.SocialMedia;
-import seedu.address.model.socialmedia.UniqueSocialMediaList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -36,8 +34,6 @@ public interface ReadOnlyPerson {
     Set<Group> getGroups();
     ObjectProperty<UniqueScheduleList> scheduleProperty();
     Set<Schedule> getSchedule();
-    ObjectProperty<UniqueSocialMediaList> socialMediaProperty();
-    Set<SocialMedia> getSocialMedia();
 
 
     /**

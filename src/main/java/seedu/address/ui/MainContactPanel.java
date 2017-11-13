@@ -15,7 +15,6 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -24,7 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
@@ -165,6 +163,8 @@ public class MainContactPanel extends UiPart<Region> {
                     socialIconPlaceholders[i].widthProperty().divide(3),
                     socialIconPlaceholders[i].heightProperty().divide(3))
             );
+            /*
+            //V2.0 FEATURE - SOCIAL MEDIA, NOT WORKING YET
             //Set up mouse click listeners to run method to open social pages
             cir.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -172,6 +172,7 @@ public class MainContactPanel extends UiPart<Region> {
                     openSocialIconPage(currentPerson);
                 }
             });
+            */
             cir.setFill(new ImagePattern(new Image(imgUrls[i])));
             socialIconPlaceholders[i].setCenter(cir);
             easeIn(cir);
@@ -179,6 +180,7 @@ public class MainContactPanel extends UiPart<Region> {
     }
 
     /**
+     * NOTE: V2.0 FEATURE - SOCIAL MEDIA, NO WORKING YET
      * Loads the social page in a new window.
      * There is no controller file for the social media window fxml
      * as it is essentially only a WebView.
@@ -191,8 +193,7 @@ public class MainContactPanel extends UiPart<Region> {
             AnchorPane parent = fxmlLoader.load();
             //Get the webview from the loaded component then put URL
             WebView socialPageView = (WebView) parent.getChildren().get(0);
-            String temp = person.getSocialMedia().iterator().next().getName().url;
-            socialPageView.getEngine().load(temp);
+            socialPageView.getEngine().load(person.getName().fullName);
             //Create the scene and stage
             Scene scene = new Scene(parent);
             Stage stage = new Stage();

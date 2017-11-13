@@ -11,7 +11,6 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.AddFavouriteCommand;
 import seedu.address.logic.commands.AddPersonToGroupCommand;
-import seedu.address.logic.commands.AddSocialMediaCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CreateGroupCommand;
@@ -148,10 +147,6 @@ public class AddressBookParser {
         case DeleteEventCommand.COMMAND_ALT:
             return new DeleteEventCommandParser().parse(arguments);
 
-        //@@author Procrastinatus
-        case AddSocialMediaCommand.COMMAND_WORD:
-        case AddSocialMediaCommand.COMMAND_ALT:
-            return new AddSocialMediaCommandParser().parse(arguments);
         //@@author nassy93
         case ResetPictureCommand.COMMAND_WORD:
         case ResetPictureCommand.COMMAND_ALT:

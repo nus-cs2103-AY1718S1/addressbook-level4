@@ -24,7 +24,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.ReadOnlySchedule;
 import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
-import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
 //@@author cjianhui
@@ -103,7 +102,6 @@ public class DeleteEventCommand extends UndoableCommand {
         Set<Tag> updatedTags = personToEdit.getTags();
         Set<Group> updatedGroups = personToEdit.getGroups();
         UniqueScheduleList updatedScheduleList = personToEdit.scheduleProperty().get();
-        Set<SocialMedia> updatedSocialMediaList = personToEdit.getSocialMedia();
 
         if (updatedScheduleList.asObservableList().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_NO_EVENTS, updatedName.fullName));
@@ -128,7 +126,7 @@ public class DeleteEventCommand extends UndoableCommand {
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                 updatedFavourite, updatedProfPic, updatedTags, updatedGroups,
-                updatedScheduleList.toSet(), updatedSocialMediaList);
+                updatedScheduleList.toSet());
     }
 
     @Override

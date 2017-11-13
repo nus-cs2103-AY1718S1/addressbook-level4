@@ -28,7 +28,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.ReadOnlySchedule;
 import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
-import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.tag.Tag;
 
 //@@author cjianhui
@@ -117,7 +116,6 @@ public class AddEventCommand extends UndoableCommand {
         Set<Tag> updatedTags = personToEdit.getTags();
         Set<Group> updatedGroups = personToEdit.getGroups();
         UniqueScheduleList updatedScheduleList = personToEdit.scheduleProperty().get();
-        Set<SocialMedia> updatedSocialMediaList = personToEdit.getSocialMedia();
 
         try {
             updatedScheduleList.add(this.schedule);
@@ -128,7 +126,7 @@ public class AddEventCommand extends UndoableCommand {
         /** Ensure scheduleList is in order **/
         updatedScheduleList.sort();
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
-                updatedProfPic, updatedTags, updatedGroups, updatedScheduleList.toSet(), updatedSocialMediaList);
+                updatedProfPic, updatedTags, updatedGroups, updatedScheduleList.toSet());
     }
 
     @Override
