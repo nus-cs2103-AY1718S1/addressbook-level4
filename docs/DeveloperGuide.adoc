@@ -505,7 +505,7 @@ image::addeventmodelseqdiagram.PNG[width="800"]
 _Figure 5.3.2 AddEventCommand Model Sequence Diagram_
 
 Code of `AddEventCommand`:
-
+[source,java]
 ----
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -518,7 +518,7 @@ Code of `AddEventCommand`:
         }
     }
 ----
-
+[source,java]
 ----
     public class UniqueEventList implements Iterable<Event> {
 
@@ -536,7 +536,7 @@ Code of `AddEventCommand`:
 ----
 
 Code from `ModelManager`
-
+[source,java]
 ----
     @Override
     public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
@@ -1764,6 +1764,7 @@ to add a contact which is not user friendly. +
 The Calendar is created with GridPanes and VBox. The following code snippets describes how the `AnchorPaneNode` object fills up the
 GridPane of the calendar. At the end of the method, the VBox gathers all the required parameters to get the view of the calendar.
 
+[source,java]
 ----
     public Calendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> eventList) {
         currentYearMonth = yearMonth;
@@ -1807,6 +1808,7 @@ Now, you have the Calendar outline, the populateCalendar method calendar called 
 During the process, we would check if is there any events that are on the date corresponding to the AnchorPaneNode. If it tallies, the AnchorPaneNode will
 be populated with a change in background color.
 
+[source,java]
 ----
     public void populateCalendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> events) {
         // Get the date we want to start with on the calendar
@@ -1883,6 +1885,7 @@ From the startDialog method in `AnchorPaneNode` class, after receiving a valid E
 Then with the `@Subscribe` function, a handleAddEvent() method in `ModelManager` will be called to addEvent of the `AddressBook` object. The following code snippets
 shows the key implementation of how an Event object is added to the addressbook.
 
+[source,java]
 ----
    dialog.setResultConverter(dialogButton -> {
         if (dialogButton == button) {
@@ -1898,6 +1901,7 @@ shows the key implementation of how an Event object is added to the addressbook.
    });
 ----
 
+[source,java]
 ----
     @Subscribe
     private void handleAddEvent(AddEventRequestEvent event) throws DuplicateEventException {
@@ -1911,6 +1915,7 @@ shows the key implementation of how an Event object is added to the addressbook.
 Population of the calendar after Adding or Delete of Events will be completed by this method in the `Calendar.java` class.
 It reverts every node to be of the same color, then runs through the events list to update the individual event node.
 
+[source,java]
 ----
     public void populateUpdatedCalendar(UniqueEventList eventList) {
         for (AnchorPaneNode ap : allCalendarDays) {
