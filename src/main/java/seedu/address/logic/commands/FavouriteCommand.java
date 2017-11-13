@@ -27,7 +27,7 @@ public class FavouriteCommand extends Command {
             + "by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD_1
-            + "OR "
+            + " OR "
             + COMMAND_WORD_2 + " 1 ";
 
     public static final String MESSAGE_ARGUMENTS = "INDEX: %1$d";

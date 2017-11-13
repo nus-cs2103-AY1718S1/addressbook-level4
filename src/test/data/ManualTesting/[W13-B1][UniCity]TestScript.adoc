@@ -18,7 +18,7 @@ This is by no means an exhaustive list of tests.
 . Rename it `addressbook.xml`.
 
 [NOTE]
-A common mistake is renaming the file name as `addressbook.xml` making the entire file to be read as
+A common mistake is renaming the file name as `addressbook.xml`, making the entire file to be read as
 `addressbook.xml.xml`. Make sure that the name is simply addressbook and the file type is xml.
 
 == Manual testing on UniCity commands
@@ -241,4 +241,142 @@ Parameters: WINDOWSIZE (Allowed sizes are small, med, big) +
 Example 1: ws small +
 Example 2: ws big
 
+=== Favourite command
 
+Command usage: `favourite INDEX` OR `fav INDEX`
+
+[NOTE]
+If the person is already a favourite person, performing `FavouriteCommand` on this person will remove the person from favourite.
+
+
+* `favourite 2` +
+Expected result: Favourite Person: Charlotte Oliverio Phone: 91031282 Email: charoli@gmail.com Address: Blk 436 Serangoon Gardens Street 26, #16-43 Favourite: True Birthday: 02/03/1994 Tags: [family]
++
+The star on the top right corner of Charlotte's person card will become yellow.
+
+* `fav 1` +
+Expected result: Remove Person from Favourites: Alex Yeoh Phone: 87438807 Email: alexyeoh@yahoo.com Address: Blk 30 Geylang Street 29, #06-40 Favourite: False Birthday: 04/05/1995 Tags: [colleagues][friends]
++
+The star on the top right corner of Alex's person card will become transparent.
+
+* `favourite 0` +
+Expected result: +
+Invalid command format! +
+favourite: Mark the person as favourite by the index number used in the last person listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: favourite OR fav 1
++
+
+* `fav 99999` +
+Expected result: The person index provided is invalid
++
+[NOTE]
+This result will only be displayed if and only if there are fewer than 99999 contacts in UniCity.
+
+* `favourite` +
+Expected result: +
+Invalid command format! +
+favourite: Mark the person as favourite by the index number used in the last person listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: favourite OR fav 1
++
+
+
+=== List all favourite person
+
+Command usage: `showFavourite` or `sf`
+
+* `sf` +
+Expected result: 5 persons listed!
++
+A list of the 5 favourite persons will be displayed.
+
+=== Display address on Google Maps
+
+Command usage: `locate INDEX` +
+
+* `list` +
+`locate 1` +
+Expected result: Address of the person is displayed
++
+Google Maps will be loaded in BrowsePanel. In the search box is the address of Alex Yeoh.
++
+
+* `locate 7` +
+Expected result:  Address of this person has not been inputted.
++
+In this case, Google Maps will not be loaded in BrowsePanel.
+
+* `locate` +
+Expected result: +
+Invalid command format! +
+locate: Displays the location of the person identified by the index number in the latest person listing.Parameters: INDEX (must be a positive integer) +
+Example: locate 1
++
+
+* `locate 99999` +
+Expected result: The person index provided is invalid
++
+
+[NOTE]
+This result will be displayed if and only if there are fewer than 99999 contacts in UniCity.
++
+
+* `locate 0` +
+Expected result: +
+Invalid command format! +
+locate: Displays the location of the person identified by the index number in the latest person listing.Parameters: INDEX (must be a positive integer) +
+Example: locate 1
+
+=== Facebook command
+
+Command usage: `facebook INDEX` OR `fb INDEX` +
+[NOTE]
+Facebook may ask you to login to proceed, or ask you key in the characters in a picture for verification purpose.
+
+* `facebook 2` +
+Expected result: Opened facebook window.
++
+Facebook search page will be loaded in BrowsePanel. In this search box is the name of the second person in UniCity, which is Charlotte Oliverio.
+[NOTE]
+It may take a few seconds for the Facebook page to be loaded.
++
+
+* `facebook` +
+Expected result: +
+Invalid command format! +
+facebook: Searches the name of the person specified by the index number in Facebook. +
+Parameters: INDEX (must be a positive integer) +
+Example: facebook 1 OR fb 1 +
+
+* `fb 0` +
+Expected result: +
+Invalid command format! +
+facebook: Searches the name of the person specified by the index number in Facebook. +
+Parameters: INDEX (must be a positive integer) +
+Example: facebook 1 OR fb 1 +
+
+* `fb 99999` +
+Expected result: The person index provided is invalid
++
+[NOTE]
+This result will be displayed if and only if there are fewer than 99999 contacts in UniCity.
+
+=== Exit
+
+Command usage: `exit` +
+
+* `exit` +
+Expected result: Type 'exit' again to confirm to exit
++
+
+* `list` +
+`exit`
+Expected result: Type 'exit' again to confirm to exit
++
+
+* `exit` +
+UniCity shuts down.
+
+[NOTE]
+Only two consecutive `exit` will be able to quit UniCity.
