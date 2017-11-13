@@ -177,7 +177,7 @@ Acceptance Testing for other applications
 
 * Found a bug for switch theme (Issue https://github.com/CS2103AUG2017-T09-B3/main/issues/194[#194])
 
-Contribution to Bluebird
+Contribution to Project Bluebird
 
 * Updated the UI of Bluebird
 (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/14[#14], https://github.com/CS2103AUG2017-T15-B4/main/pull/58[#58],
