@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import seedu.address.model.tag.Tag;
 
-
+//@@author aver0214
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
  */
@@ -18,7 +18,6 @@ public class TagContainsSpecifiedKeywordsPredicate implements Predicate<ReadOnly
         this.keywords = keywords;
     }
 
-    //@@author aver0214
     @Override
     public boolean test(ReadOnlyPerson person) {
         Set<Tag> tags = person.getTags();
@@ -27,7 +26,6 @@ public class TagContainsSpecifiedKeywordsPredicate implements Predicate<ReadOnly
         return keywords.stream()
                 .anyMatch(keyword -> tagList.stream().anyMatch(tagname -> keyword.contains(tagname.toString())) & true);
     }
-    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -36,4 +34,4 @@ public class TagContainsSpecifiedKeywordsPredicate implements Predicate<ReadOnly
                 && this.keywords.equals(((TagContainsSpecifiedKeywordsPredicate) other).keywords)); // state check
     }
 
-}
+} //@@author
