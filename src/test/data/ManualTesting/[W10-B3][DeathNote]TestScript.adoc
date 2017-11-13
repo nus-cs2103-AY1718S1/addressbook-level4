@@ -1,0 +1,287 @@
+= DeathNote v1.5 - Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-W10-B3/DeathNote
+
+By: `CS2103AUG2017-W10-B3`      Since: `Jun 2016`      Licence: `MIT`
+
+This is a document explaining the steps to perform manual testing.
+
+== Getting started
+
+=== Things to note before starting test
+
+* Ensure that DeathNote.jar is put in an empty folder or ensure that there is no folder called "data"
+
+* Data for DeathNote is saved into a folder called "data"
+
+* Pictures for DeathNote is loaded from folder called "data"
+
+=== Loading sample Data
+
+There are two ways to load sample data.
+
+. After downloading Sampledata.xml, rename it to addressbook.xml and put it in a folder named "data" beside DeathNote.jar
+
+. Open DeathNote.jar, type `open PATH` where path is the path to the .xml file.
+
+== Features to test
+
+`Highlighted` are the commands
+
+*Expected Output* will be what you can see in the command result box.
+
+*Observe* will be what you are able to observe.
+
+=== Help command
+
+* `help` +
+Observe: A new window appears showing a guide on how all commands are used.
+
+=== Add command
+
+Adds a person to DeathNote +
+
+    Format: add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
+
+When adding a person, *observe* that a new card will be shown on the left of the application with values that you have typed in.
+
+* `add` +
+*Expected Output:* Invalid command format!
+add: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS b/DD/MM/YYYY w/WEBSITE [t/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/15/02/1992 w/https://www.website.com pic/C:/Users/User/Picture/JohnDoe.png t/friends t/owesMoney.
+
+* `add n/Abel` +
+*Expected Output:* New person added: Abel Remarks:
+
+* `add n/Abel p/98732612` +
+*Expected Output:* New person added: Abel Phone: 98732612 Remarks:
+
+* `add n/Abel p/98732612 e/Abel@gmail.com` +
+*Expected Output:* New person added: Abel Phone: 98732612 Email: Abel@gmail.com Remarks:
+
+* `add n/Abel p/98732612 e/Abel@gmail.com a/311, Clementi Ave 2, #05-33` +
+*Expected Output:* New person added: Abel Phone: 98732612 Email: Abel@gmail.com Address: 311, Clementi Ave 2, #05-33 Remarks:
+
+* `add n/Abel p/98732612 e/Abel@gmail.com a/311, Clementi Ave 2, #05-33 b/19/03/1992` +
+*Expected Output:* New person added: Abel Phone: 98732612 Email: Abel@gmail.com Address: 311, Clementi Ave 2, #05-33 Birthday: 19/03/1992 Remarks:
+
+* `add n/Abel p/98732612 e/Abel@gmail.com a/311, Clementi Ave 2, #05-33 b/19/03/1992 w/http://www.abel.com/` +
+*Expected Output:* New person added: Abel Phone: 98732612 Email: Abel@gmail.com Address: 311, Clementi Ave 2, #05-33 Birthday: 19/03/1992 Remarks:  Website: http://www.abel.com
+
+* `add n/Abel p/98732612 e/Abel@gmail.com a/311, Clementi Ave 2, #05-33 b/19/03/1992 w/http://www.abel.com/ t/friend` +
+*Expected Output:* New person added: Abel Phone: 98732612 Email: Abel@gmail.com Address: 311, Clementi Ave 2, #05-33 Birthday: 19/03/1992 Remarks:  Website: http://www.abel.com Tags: friend
+
+* `add n/Abel pic/(Path to a picture in png format e.g.C:\picture\Abel.png)` +
+*Observe:* Contact has been added and there will be a picture added to the contact
+
+=== Remark command
+
+Adds or edits remarks to the person identified by the INDEX +
+
+    Format: remark INDEX r/[REMARK]
+
+*Ensure that there is at least 1 contact in DeathNote, in this case we have 1 contact named Abel*
+
+    add n/Abel
+
+* `remark`
+*Expected Output:* Invalid command format!
+remark: Edits the remark of the person identified by the index number used in the last person listing. Existing remark will be overwritten by the input.
+Parameters: INDEX (must be a positive integer) r/[REMARK]
+
+* `remark 2`
+*Expected Output:* The person index provided is invalid
+
+* `remark 1 r/Likes to have coffee`
+*Expected Output:* Added remark to Person: Abel Remarks: Has small eyes
+
+* `remark r/`
+*Expected Output: Removed remark from Person: Abel Remarks:*
+
+=== Edit command
+
+Edits an existing person in DeathNote. +
+
+  Format: edit INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...
+
+*Ensure that there is at least 1 contact in DeathNote, in this case we have 1 contact named Abel*
+
+    add n/Abel b/12/12/1993 t/friend
+    add n/Abe MisoSoup
+    add n/Bernice e/Bernice@gmail.com b/10/12/1990 t/friend
+    add n/Charlotte a/Jurong p/9876543 t/friend t/colleague
+    add n/Denise a/Clementi p/98789032 e/Denise@gmail.com
+
+* `edit`
+*Expected Output:* Invalid command format!
+edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PICTURE] [b/DD/MM/YYYY] [t/TAG]...
+Example: edit 1 p/91234567 e/johndoe@example.com
+
+=== Delete command
+
+Deletes the specified person from DeathNote.+
+
+    Format: delete INDEX
+
+*Ensure that there is at least 1 contact in DeathNote, in this case we have 1 contact named Abel*
+
+    add n/Abel
+
+* `delete`
+*Expected Output:* Invalid command format!
+delete: Deletes the person identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer)
+Example: delete 1
+
+* `delete 2`
+*Expected Output:* The person index provided is invalid
+
+* `delete 1`
+*Expected Output:* Deleted Person: Abel Remarks:
+
+=== Find command
+
+Finds persons who matches the given attributes. +
+
+    Format: find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...
+
+*Ensure that there is at least 1 contact in DeathNote, in this case we have a few contacts*
+
+    add n/Abel b/12/12/1993 t/friend
+    add n/Abe MisoSoup
+    add n/Bernice e/Bernice@gmail.com b/10/12/1990 t/friend
+    add n/Charlotte a/Jurong p/9876543 t/friend t/colleague
+    add n/Denise a/Clementi p/98789032 e/Denise@gmail.com
+
+* `find n/Abel` +
+*Expected Output:* 1 persons listed! +
+*Observe:* Contact Abel will be listed +
+
+* `find n/Abe` +
+*Expected Output:* 2 persons listed! +
+*Observe:* Contacts Abel and Abe MisoSoup will be listed +
+
+* `find n/Abe b/12/12/1993`
+*Expected Output:* 1 persons listed! +
+*Observe:* Contact Abel will be listed +
+
+* `find e/Bernice@gmail.com`
+*Expected Output:* 1 persons listed! +
+*Observe:* Contact Bernice will be listed +
+
+* `find t/friend`
+*Expected Output:* 3 persons listed! +
+*Observe:* Contact Abel, Bernice and Charlotte will be listed +
+
+* `find t/friend t/colleague`
+*Expected Output:* 1 persons listed! +
+*Observe:* Contact Charlotte will be listed +
+
+* `find a/Jurong`
+*Expected Output:* 1 persons listed! +
+*Observe:* Contact Charlotte will be listed +
+
+* `find a/Juro`
+*Expected Output:* 0 persons listed! +
+*Observe:* No contacts will be listed +
+
+* `find t/ frie`
+*Expected Output:* 0 persons listed! +
+*Observe:* No contacts will be listed +
+
+=== Select command
+
+Selects the person identified by the index number used in the last person listing. +
+
+  Format: select INDEX
+
+*Ensure that there is at least 1 contact in DeathNote, in this case we have a few contacts*
+
+  add n/Abel b/12/12/1993 t/friend
+  add n/Abe MisoSoup w/
+  add n/Bernice w/https://berniceyu.com/ e/Bernice@gmail.com b/10/12/1990 t/friend
+  add n/Charlotte a/Jurong p/9876543 t/friend t/colleague
+  add n/Denise a/Clementi p/98789032 e/Denise@gmail.com
+
+* `select` +
+*Expected Output:* Invalid command format!
+select: Selects the person identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer)
+Example: select 1
+
+* `select 1` +
+*Expected Output:* Selected Person: 1
+*Observe:* Browser will google "Abel"
+
+* `select 3` +
+*Expected Output:* Selected Person: 3
+*Observe:* Browser will load https://www.berniceyu.com/
+
+* `select 6` +
+*Expected Output:* The person index provided is invalid
+
+=== List command
+
+Shows a list of all persons in DeathNote. +
+
+  Format: list
+
+*Ensure that there is at least 1 contact in DeathNote, in this case we have a few contacts*
+
+  add n/Abel b/12/12/1993 t/friend
+  add n/Abe MisoSoup w/
+  add n/Bernice w/https://berniceyu.com/ e/Bernice@gmail.com b/10/12/1990 t/friend
+  add n/Charlotte a/Jurong p/9876543 t/friend t/colleague
+  add n/Denise a/Clementi p/98789032 e/Denise@gmail.com
+
+* `list` +
+*Observe:* Contacts will be shown
+
+=== Create command
+
+Opens a new instance of DeathNote.
+
+  Format: new PATH
+
+=== Open command
+
+Opens another existing instance of DeathNote.
+
+  Format: open PATH
+
+=== Exit command
+
+Exits DeathNote. +
+
+  Format: exit
+
+=== Clear command
+
+Clears all entries from DeathNote.
+
+  Format: clear
+
+=== Undo command
+
+Restores the DeathNote to the state before the previous _undoable_ command was executed. +
+
+  Format: undo
+
+=== Redo command
+
+Reverses the most recent `undo` command. +
+
+  Format: redo
+
+* `redo`
