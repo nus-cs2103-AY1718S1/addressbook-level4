@@ -399,15 +399,6 @@ The execution of `sort` results in the reordering of the in-memory `UniquePerson
 However, the change is transient and the order of the list will return to its
 original starting order as when the App initializes.
 
-=== Finding
-The finding mechanism is facilitated by `FindCommand`, which extends `Command`.
-It supports finding a list of specific persons by entering any substring of a person's contact field.
-This includes a person's name, phone number, email, address or even their tags with `PREFIX` specified.
-
-Finding a person is facilitated using `PartialSearchUtil`, which examines whether a base list contains any word whose
-substring appears in the target list. It maps each attribute to the `find` parser and returns a list of persons
-matching find condition.
-
 ==== Design Considerations
 
 **Aspect:** Implementation of `sort` +
@@ -431,6 +422,15 @@ any future changes to these classes may be more contrived and difficult.
 **Pros:** Sorting order is preserved after program exits. +
 **Cons:** The original order of the address book is lost during every sort.
 // end::sort[]
+
+=== Finding
+The finding mechanism is facilitated by `FindCommand`, which extends `Command`.
+It supports finding a list of specific persons by entering any substring of a person's contact field.
+This includes a person's name, phone number, email, address or even their tags with `PREFIX` specified.
+
+Finding a person is facilitated using `PartialSearchUtil`, which examines whether a base list contains any word whose
+substring appears in the target list. It maps each attribute to the `find` parser and returns a list of persons
+matching find condition.
 
 === Logging
 
