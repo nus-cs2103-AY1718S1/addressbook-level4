@@ -175,4 +175,11 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
             return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FacebookAddAllFriendsCommand); // instanceof handles nulls
+    }
 }
+//@@author

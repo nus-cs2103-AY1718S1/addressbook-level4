@@ -34,11 +34,13 @@ public class FacebookLinkCommand extends Command {
     private static String link;
     private static WebEngine webEngine;
 
+    private String toPost;
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
     public FacebookLinkCommand(String url) {
         link = url;
+        toPost = url;
     }
 
     /**
@@ -79,4 +81,12 @@ public class FacebookLinkCommand extends Command {
             return new CommandResult(MESSAGE_FACEBOOK_LINK_SUCCESS + " (to " + user + "'s page.)");
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FacebookLinkCommand // instanceof handles nulls
+                && toPost.equals(((FacebookLinkCommand) other).toPost));
+    }
 }
+//@@author

@@ -27,3 +27,4 @@ public class FacebookPostCommandParser implements Parser<FacebookPostCommand> {
         return new FacebookPostCommand(trimmedArgs);
     }
 }
+//@@author

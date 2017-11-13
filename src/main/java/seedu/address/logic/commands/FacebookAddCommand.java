@@ -144,4 +144,12 @@ public class FacebookAddCommand extends UndoableCommand {
         }
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FacebookAddCommand // instanceof handles nulls
+                && userName.equals(((FacebookAddCommand) other).userName));
+    }
+
 }
+//@@author

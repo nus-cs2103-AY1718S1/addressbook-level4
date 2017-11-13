@@ -126,33 +126,33 @@ public class AddressBookParserTest {
     public void parseCommand_facebookAddAllFriends() throws Exception {
         FacebookAddAllFriendsCommand command = (FacebookAddAllFriendsCommand) parser.parseCommand(
                 FacebookAddAllFriendsCommand.COMMAND_WORD);
-        assertTrue(command instanceof FacebookAddAllFriendsCommand);
+        assertEquals(new FacebookAddAllFriendsCommand(), command);
     }
 
     @Test
     public void parseCommand_facebookAdd() throws Exception {
         FacebookAddCommand command = (FacebookAddCommand) parser.parseCommand(
                 FacebookAddCommand.COMMAND_WORD + " " + FacebookAddCommand.EXAMPLE_NAME);
-        assertTrue(command instanceof FacebookAddCommand);
+        assertEquals(new FacebookAddCommand(FacebookAddCommand.EXAMPLE_NAME), command);
     }
 
     @Test
     public void parseCommand_facebookConnect() throws Exception {
         FacebookConnectCommand command = (FacebookConnectCommand) parser.parseCommand(
                 FacebookConnectCommand.COMMAND_WORD);
-        assertTrue(command instanceof FacebookConnectCommand);
+        assertEquals(new FacebookConnectCommand(), command);
     }
     @Test
     public void parseCommand_facebookLink() throws Exception {
         FacebookLinkCommand command = (FacebookLinkCommand) parser.parseCommand(
                 FacebookLinkCommand.COMMAND_WORD + " " + FacebookLinkCommand.EXAMPLE_LINK);
-        assertTrue(command instanceof FacebookLinkCommand);
+        assertEquals(new FacebookLinkCommand(FacebookLinkCommand.EXAMPLE_LINK), command);
     }
     @Test
     public void parseCommand_facebookPost() throws Exception {
         FacebookPostCommand command = (FacebookPostCommand) parser.parseCommand(
                 FacebookPostCommand.COMMAND_WORD + " " + FacebookPostCommand.EXAMPLE_POST);
-        assertTrue(command instanceof FacebookPostCommand);
+        assertEquals(new FacebookPostCommand(FacebookPostCommand.EXAMPLE_POST), command);
     }
     //@@author
 
