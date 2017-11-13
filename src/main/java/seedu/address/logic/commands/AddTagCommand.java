@@ -67,7 +67,7 @@ public class AddTagCommand extends UndoableCommand {
         tagInAllTargetIndexesChecker(lastShownList);
 
         try {
-            model.addTag(this.targetIndexes, this.tagToAdd);
+            model.addTag(this.targetIndexes, this.tagToAdd, COMMAND_WORDVAR_1);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {

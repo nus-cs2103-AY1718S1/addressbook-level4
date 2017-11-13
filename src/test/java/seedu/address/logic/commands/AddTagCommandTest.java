@@ -44,7 +44,7 @@ public class AddTagCommandTest {
         String expectedMessage = String.format(AddTagCommand.MESSAGE_ADD_TAG_SUCCESS, toAdd);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addTag(indexes, toAdd);
+        expectedModel.addTag(indexes, toAdd, AddTagCommand.COMMAND_WORDVAR_1);
 
         assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
     }
@@ -64,7 +64,7 @@ public class AddTagCommandTest {
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         showFirstPersonOnly(expectedModel);
-        expectedModel.addTag(indexes, toAdd);
+        expectedModel.addTag(indexes, toAdd, AddTagCommand.COMMAND_WORDVAR_1);
 
         assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
     }

@@ -7,6 +7,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.person.Address.DEFAULT_ADDRESS;
+import static seedu.address.model.person.Email.DEFAULT_EMAIL;
+
+import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -52,10 +56,19 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    private static boolean requiresHandling;
+    public static final String MESSAGE_DUPLICATE_FIELD = "This person's %1$s is already in use."
+            + "Would you like to continue? YES or NO?";
+    public static final String NAME_FIELD = "name";
+    public static final String PHONE_FIELD = "phone";
+    public static final String ADDRESS_FIELD = "address";
+    public static final String EMAIL_FIELD = "email";
+    public static final String FIELD_SEPERATOR = ", ";
 
+    private static boolean isWaitingforReply;
+    private CommandResult result;
 
     private final Person toAdd;
+    private String duplicateFields = "";
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
@@ -68,23 +81,29 @@ public class AddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
 
-        //resets AddCommand
+        //resets AddCommand to eliminate unhandled Add and Reply Command
         if (isWaitingforReply) {
             isWaitingforReply = false;
-            requiresHandling = false;
         }
 
-        /* Check if the person to add contains any duplicate fields.
+        /* Checks if the person to add contains any duplicate fields.
          * If so, ReplyCommand to store the AddCommand to wait for further instructions.
          */
-        checkDuplicateField(toAdd);
+        try {
+            checkDuplicateField(toAdd);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
 
+        /* checkDuplicateField method finds duplicate fields in the list of contacts, informs users and prompts them
+         * if they wish to proceed with the add feature. ReplyCommand stores the person toAdd and wait for further
+         * instructions.
+         */
         if (isWaitingforReply) {
-            requiresHandling = true;
             ReplyCommand.storeAddCommandParameter(toAdd);
             return result;
 
-        } else {
+        } else { //no duplicates found. AddCommand proceeds as normal.
             try {
                 model.addPerson(toAdd);
                 return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
@@ -94,8 +113,128 @@ public class AddCommand extends UndoableCommand {
         }
     }
 
-    public static boolean requiresHandling() {
-        return requiresHandling;
+    /**
+     * Checks for duplicate fields shared with {@code toAdd} in current UniCity contacts. Once duplicate(s) are found,
+     * isWaitingforReply is set to true and a message is crafted to prompt users whether they want to continue
+     * with the operation.
+     */
+    private void checkDuplicateField(Person toAdd) throws DuplicatePersonException {
+        requireNonNull(model);
+        List<ReadOnlyPerson> currentContacts = model.getFilteredPersonList();
+
+        if (currentContacts.contains(toAdd)) {
+            throw new DuplicatePersonException();
+        }
+
+        for (ReadOnlyPerson contact: currentContacts) {
+            if (duplicateFields.contains(NAME_FIELD) && duplicateFields.contains(PHONE_FIELD)
+                    && duplicateFields.contains(EMAIL_FIELD) && duplicateFields.contains(ADDRESS_FIELD)) {
+                //method found duplicates for all fields, no further concatenation of message. break from loop.
+                break;
+            }
+
+            /* The following conditional statements checks if duplicateFields already covers, or have yet to cover, any
+             * of the fields. It will keep checking the fields which have not been listed as a duplicate until it hits
+             * one or the loop ends.
+             */
+
+            if (!duplicateFields.contains(NAME_FIELD)) {
+                checkDuplicateName(toAdd, contact);
+            }
+
+            if (!duplicateFields.contains(PHONE_FIELD)) {
+                checkDuplicatePhone(toAdd, contact);
+
+            }
+
+            if (!duplicateFields.contains(ADDRESS_FIELD)) {
+                checkDuplicateAddress(toAdd, contact);
+            }
+
+            if (!duplicateFields.contains(EMAIL_FIELD)) {
+                checkDuplicateEmail(toAdd, contact);
+            }
+
+        }
+
+        result = new CommandResult(String.format(MESSAGE_DUPLICATE_FIELD, duplicateFields.trim()));
+    }
+
+    /**
+     * Checks for similarities between the email fields for {@code toAdd} and {@code contact}. Updates isWaitingforReply
+     * and duplicateFields accordingly.
+     */
+    private void checkDuplicateEmail(Person toAdd, ReadOnlyPerson contact) {
+        if ((toAdd.getEmail().toString().trim().equalsIgnoreCase(contact.getEmail().toString().trim()))
+                && (!toAdd.getEmail().toString().trim().equals(DEFAULT_EMAIL))) {
+            isWaitingforReply = true;
+            if (duplicateFields.isEmpty()) {
+                duplicateFields = EMAIL_FIELD;
+            } else {
+                duplicateFields += FIELD_SEPERATOR + EMAIL_FIELD;
+            }
+        }
+    }
+
+    /**
+     * Checks for similarities between the address fields for {@code toAdd} and {@code contact}. Updates
+     * isWaitingforReply and duplicateFields accordingly.
+     */
+    private void checkDuplicateAddress(Person toAdd, ReadOnlyPerson contact) {
+        if ((toAdd.getAddress().toString().trim().equalsIgnoreCase(contact.getAddress().toString().trim()))
+                && (!toAdd.getAddress().toString().trim().equals(DEFAULT_ADDRESS))) {
+            isWaitingforReply = true;
+            if (duplicateFields.isEmpty()) {
+                duplicateFields = ADDRESS_FIELD;
+            } else {
+                duplicateFields += FIELD_SEPERATOR + ADDRESS_FIELD;
+            }
+        }
+    }
+
+    /**
+     * Checks for similarities between the phone fields for {@code toAdd} and {@code contact}. Updates isWaitingforReply
+     * and duplicateFields accordingly.
+     */
+    private void checkDuplicatePhone(Person toAdd, ReadOnlyPerson contact) {
+        if (toAdd.getPhone().toString().trim().equalsIgnoreCase(contact.getPhone().toString().trim())) {
+            isWaitingforReply = true;
+            if (duplicateFields.isEmpty()) {
+                duplicateFields = PHONE_FIELD;
+            } else {
+                duplicateFields += FIELD_SEPERATOR + PHONE_FIELD;
+            }
+
+        }
+    }
+
+    /**
+     * Checks for similarities between the name fields for {@code toAdd} and {@code contact}. Updates isWaitingforReply
+     * and duplicateFields accordingly.
+     */
+    private void checkDuplicateName(Person toAdd, ReadOnlyPerson contact) {
+        if (toAdd.getName().toString().trim().equalsIgnoreCase(contact.getName().toString().trim())) {
+            isWaitingforReply = true;
+            if (duplicateFields.isEmpty()) {
+                duplicateFields = NAME_FIELD;
+            } else {
+                duplicateFields += FIELD_SEPERATOR + NAME_FIELD;
+            }
+        }
+    }
+
+    /**
+     * Checks if UniCity is awaiting for user's reply.
+     */
+    public static boolean isWaitingforReply() {
+        return isWaitingforReply;
+    }
+
+    /**
+     * Ensures continuation of AddCommand when user has replied.
+     */
+    public static void reply() {
+        isWaitingforReply = false;
     }
 
     //@@author
@@ -105,9 +244,5 @@ public class AddCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
                 && toAdd.equals(((AddCommand) other).toAdd));
-    }
-
-    public static void setHandlingFalse() {
-        requiresHandling = false;
     }
 }

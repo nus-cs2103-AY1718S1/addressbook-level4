@@ -38,12 +38,12 @@ public interface Model {
 
     //@@author vivekscl
     /** Deletes given tag from every of the given persons */
-    void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
+    void removeTag(ArrayList<Index> targetIndexes, Tag toRemove, String commandWord) throws PersonNotFoundException,
             DuplicatePersonException;
 
     //@@author vivekscl
     /** Adds given tag to every of the given persons */
-    void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
+    void addTag(ArrayList<Index> targetIndexes, Tag toAdd, String commandWord) throws PersonNotFoundException,
             DuplicatePersonException;
 
     /**

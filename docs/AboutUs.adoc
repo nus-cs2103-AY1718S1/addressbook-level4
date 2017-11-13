@@ -22,7 +22,7 @@ of the Model component.
 
 === Tao Jiashu
 image::taojiashu.png[width="150", align="left"]
-{empty}[http://github.com/taojiashu[github]]
+{empty}[http://github.com/taojiashu[github]][<<taojiashu#, portfolio>>]
 
 Role: Integration and Code Quality +
 Responsibilities: Ensures that code is up to standard and makes sure the software passes all integration tests.
